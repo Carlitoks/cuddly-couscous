@@ -1,5 +1,7 @@
 # Solo Mobile App #
 
+# Solo Platform API #
+
 ## Developing ##
 
 On your local machine you will need the following installed:
@@ -21,10 +23,10 @@ A few things are required to setup and run the project:
 After these commands, you should be able to see something at http://localhost:3000/.  `ctrl+c` to quit.
 
 ## Connecting to the GCP Docker Image Repository ##
-* ADMINS: After you have been added as a GCP user, run `gcloud-authorize` and follow the instructions to setup CLI access to the docker image repository
-* DEVS: run `TBD` to setup CLI access to the docker image repository
-* Run `gcloud-setproject` to point `gcloud` to the correct repo
-* Run `gcloud-connect-test` to ensure your credentials are working properly should return "Listed _some number_ items"
+* ADMINS: After you have been added as a GCP user, run `gcp-auth-admin` and follow the instructions to setup CLI access to the docker image repository
+* DEVS: Download and move the key file to the correct directory then run `gcp-auth-dev` to setup CLI access to the docker image repository
+* Run `gpc-setproject` to point `gcloud` to the correct repo
+* Run `gpc-connect-test` to ensure your credentials are working properly should return "Listed _some number_ items"
 
 ## Using the Makefile ##
 The `makefile` provides convenience commands for use while developing:
