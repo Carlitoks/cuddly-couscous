@@ -58,19 +58,39 @@ publish-image: build-image
 	docker-compose run --rm gcp gcloud docker -- push gcr.io/${PROJECT}/${APP}:latest
 	docker-compose run --rm gcp gcloud docker -- push gcr.io/${PROJECT}/${APP}:$(TAG)
 
-gcloud-authorize:
+push:
+	@if [ ! "$(TAG)" ]; then \
+        echo "TAG was not specified"; \
+        return 1; \
+    fi
+	docker-compose run --rm gcp gcloud docker -- push gcr.io/${PROJECT}/${APP}:$(TAG)
+
+pull:
+	@if [ ! "$(TAG)" ]; then \
+        echo "TAG was not specified"; \
+        return 1; \
+    fi
+	docker-compose run --rm gcp gcloud docker -- pull gcr.io/${PROJECT}/${APP}:$(TAG)
+
+gcp-auth-admin:
 	docker-compose run --rm gcp gcloud auth login
 
-gcloud-setproject:
+gcp-auth-dev:
+	docker-compose run --rm gcp gcloud auth activate-service-account container-admin@solo-infrastructure.iam.gserviceaccount.com --key-file=/root/gcp_auth_key/solo-infrastructure-2331850a68cb.json
+
+gcp-set-project:
 	docker-compose run --rm gcp gcloud config set project ${PROJECT}
 
-gcloud-connect-test:
+gcp-authorize:
+	docker-compose run --rm gcp gcloud auth login
+
+gcp-setproject:
+	docker-compose run --rm gcp gcloud config set project ${PROJECT}
+
+gcp-connect-test:
 	docker-compose run --rm gcp gcloud compute instances list
 
-gcloud-image-list:
+gcp-image-list:
 	docker-compose run --rm gcp gsutil ls
-
-project-name:
-	@echo ${PROJECT}
 
 .PHONY: dev-setup build run-server deps-update fmt docker-login publish-image aws-configure
