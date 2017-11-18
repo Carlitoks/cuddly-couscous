@@ -1,0 +1,36 @@
+version: '2'
+services:
+  # the api server w/ docs
+  solo-api-server:
+    image: gcr.io/solo-infrastructure/solo-platform-api:0.1.0
+    env_file: api.config.env
+    ports:
+      - 5000:80
+  
+  # database dependency for api server
+  postgres:
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: solo-platform
+      POSTGRES_PASSWORD: solo-platform-db-password
+      POSTGRES_DB: solo-platform
+
+  # for viewing/debugging raw data in postgres
+  adminer:
+    image: adminer
+    links:
+      - postgres:postgres
+    ports:
+      - 5001:8080
+  
+  # for viewing the api docs
+  swaggerui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - 5002:8080
+    environment:
+      API_URL: http://localhost:3000/_docs
+
+  # for pulling images hosted on gcr.io
+  gcp:
+    image: google/cloud-sdk:178.0.0
