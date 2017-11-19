@@ -33,7 +33,7 @@ services:
       API_URL: http://localhost:3000/_docs
 
  # to enable gcloud login for pushing/pulling images from GCP
- gcp:
+  gcp:
     image: google/cloud-sdk:178.0.0
     volumes:
       - solo-platform-api-data-volume:/root/.config
