@@ -9,7 +9,7 @@ The mobile app will depend on having access to the API server.  To get that runn
 * run `make setup` - authorizes via gcloud and logs into GCR
 * run `docker-compose up` - starts the api server and supporting services
 
-Once it's up, go to [http://localhost:5002/] to view the API docs.  Connect to the api server in your own code via `http://solo-api-server:5000/`
+Once it's up, go to [http://localhost:5002/]() to view the API docs.  Connect to the api server in your own code via `http://solo-api-server:5000/`
 
 When you need to pull a new version of the api server, modify the `docker-compose.yml` accordingly and run `docker-compose pull solo-api`.
 
