@@ -1,5 +1,5 @@
 .DS_Store
 api.config.env
 dev_auth/
-gcp_auth_key/
+.gcp/
 

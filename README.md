@@ -1,43 +1,14 @@
 # Solo Mobile App #
 
-# Solo Platform API #
-
 ## Developing ##
 
-On your local machine you will need the following installed:
+The mobile app will depend on having access to the API server.  To get that runming on your local machine you will need to do the following:
 
-* make
-* docker + docker-compose
-* go (not strictly required, but needed if you want helper tools for your editor)
+* get the credential json file needed for authorizing with Google, place it at `./.gcp/key.json`
+* copy the `api.config.env.dist` to `api.config.env`, and modify accordingly for your local dev environment (if necessary)
+* `make setup` - authorizes via gcloud and logs into GCR
+* `docker-compose up` - starts the api server and supporting services
 
-A few things are required to setup and run the project:
+Once it's up, go to [http://localhost:5002/] to view the API docs.  Connect to the api server in your own code via `http://localhost:5000/`
 
-* copy config.env.dist to config.env - these are test environment variables and credentials
-* run `mkdir static` in the root of the project to create the static folder for document builds
-* run `make deps-update` to install vendor dependencies
-* run `make dev-setup-local` to symlink the project directory into the `$GOPATH` on your local machine
-* (NOT IMPLEMENTED YET) run `make dev-setup-services` to configure database for service use
-* `docker-compose up -d` - start background services
-* `make run-server` - build & run the api server
-
-After these commands, you should be able to see something at http://localhost:3000/.  `ctrl+c` to quit.
-
-## Connecting to the GCP Docker Image Repository ##
-* ADMINS: After you have been added as a GCP user, run `gcp-auth-admin` and follow the instructions to setup CLI access to the docker image repository
-* Run `gpc-connect-test` to ensure your credentials are working properly should return "Listed _some number_ items"
-
-* DEVS: Download and move the key file to the `./gcp_auth_key` then run `gcp-auth-dev` to setup CLI access to the docker image repository
-* Run `gpc-setproject` to point `gcloud` to the correct repo
-
-## Using the Makefile ##
-The `makefile` provides convenience commands for use while developing:
-
-* `make build` - recompile the binary
-* `make run-server"` - recompile the binary & run the api server command
-* `make run CMD="another-subcommand"` - recompile the binary and run an arbitrary subcommand
-* `make test` - run all the tests
-* `make fmt` - run `go fmt` to format all `*.go` files
-
-Once changes are ready, publish an image with the changes, tagged properly:
-
-    make publish-image TAG=0.2.0
+If you need to pull a new version of the api server, modify the `docker-compose.yml` and `makefile` accordingly, then run `make pull` to get the latest changes.
