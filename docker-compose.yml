@@ -1,10 +1,14 @@
 version: '2'
 
 services:
-  # the api server w/ docs
-  solo-api-server:
+  # run ad hoc commands
+  solo-api: 
     image: gcr.io/solo-infrastructure/solo-platform-api:0.2.2
     env_file: api.config.env
+
+  # run the api server w/ docs
+  solo-api-server:
+    extends: solo-api
     command: ["api-server"]
     ports:
       - 5000:80
@@ -35,11 +39,9 @@ services:
 
  # to enable gcloud login for pushing/pulling images from GCP
   gcp:
-    image: google/cloud-sdk:178.0.0
+    image: google/cloud-sdk:178.0.0-alpine
     volumes:
-      - solo-platform-api-data-volume:/root/.config
-      - /var/run/docker.sock:/var/run/docker.sock
+      - gcp-data-volume:/root/.config
       - ./.gcp:/root/gcp
 volumes:
-  solo-platform-api-data-volume:
-  gcp_auth_key:
+  gcp-data-volume: {}

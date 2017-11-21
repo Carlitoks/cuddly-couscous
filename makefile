@@ -1,8 +1,3 @@
-API_VERSION := 0.2.2
-
-pull:
-	docker pull gcr.io/solo-infrastructure/solo-platform-api:$(API_VERSION)
-
 gcp-authorize:
 	docker-compose run --rm gcp gcloud auth activate-service-account container-admin@solo-infrastructure.iam.gserviceaccount.com --key-file=/root/gcp/key.json
 
@@ -17,4 +12,7 @@ setup:
 	make gcp-setproject && \
 	make docker-login
 
-.PHONY: dev-setup build run-server deps-update fmt docker-login publish-image aws-configure
+run-cmd:
+	docker-compose run --rm solo-api $(CMD)
+
+.PHONY: setup docker-login gcp-setproject gcp-authorize run-cmd
