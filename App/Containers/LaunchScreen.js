@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  ScrollView,
-  Text,
-  Image,
-  View,
-  Button,
-  StyleSheet
-} from "react-native";
+import { Text, View, Button } from "react-native";
 
 import TokBoxTest from "../Components/TokBoxTest";
 
@@ -15,6 +8,13 @@ import styles from "./Styles/LaunchScreenStyles";
 
 export default class LaunchScreen extends Component {
   render() {
-    return <TokBoxTest />;
+    const navigate = this.props.navigation.navigate;
+
+    return (
+      <View style={styles.container}>
+        <Button title="To Login" onPress={() => navigate("Login")} />
+        <TokBoxTest />
+      </View>
+    );
   }
 }

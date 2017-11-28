@@ -32,7 +32,7 @@ export default class TokBoxTest extends Component {
 
   render() {
     return (
-      <View style={styles.mainContainer}>
+      <View style={styles.container}>
         <Button
           onPress={() => {
             this.setState(prevState => {
