@@ -1,5 +1,5 @@
 # GPS
-api.config.env
+api.config.yml
 dev_auth/
 .gcp/
 
