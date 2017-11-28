@@ -5,7 +5,7 @@
 The mobile app will depend on having access to the API server.  To get that running on your local machine you will need to have `docker` installed, then must do the following:
 
 * get the credential json file needed for authorizing with Google, place it at `./.gcp/key.json`
-* copy the `api.config.env.dist` to `api.config.env`, and modify accordingly for your local dev environment (if necessary)
+* copy the `api.config.yml.dist` to `api.config.yml`, and modify accordingly for your local dev environment (if necessary)
 * run `make setup` - authorizes via gcloud and logs into GCR
 * run `docker-compose up` - starts the api server and supporting services
 
