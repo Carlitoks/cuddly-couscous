@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, Button } from "react-native";
-
+import { Login } from "../Containers/Login";
 import TokBoxTest from "../Components/TokBoxTest";
 
 // Styles

@@ -1,1 +1,27 @@
-{}
+{
+  "signIn": "Registrese",
+  "logOut": "Cerrar Sesión",
+  "loginLogoutExampleTitle": "Login/Logout Redux + Sagas Example",
+  "progressiveImageComponent": "Progressive Image Component",
+  "api": "API",
+  "locale": "I18n Locale",
+  "rnVectorIcons": "RN Vector Icons",
+  "loginWithFacebook": "Registrese con Facebook",
+  "rni18n": "RN i18n",
+  "igniteGenerated": "Ignite Generate Screens",
+  "forgotPassword": "¿Olvido su contraseña?",
+  "email": "Correo Electronico",
+  "username": "Nombre de Usuario",
+  "password": "Contraseña",
+  "cancel": "Cancel",
+  "welcome": "Bienvenido",
+  "login": "Iniciar Sesión",
+  "tempIndicator": "F",
+  "componentExamples": "Component Examples",
+  "usageExamples": "Usage Examples",
+  "apiTesting": "API Testing",
+  "themeSettings": "Theme Settings",
+  "deviceDetails": "Device Details",
+  "noItems": "No Items",
+  "search": "Buscar"
+}
