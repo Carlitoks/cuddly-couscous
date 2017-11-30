@@ -1,6 +1,7 @@
 import { StackNavigator } from "react-navigation";
 import LaunchScreen from "../Containers/LaunchScreen";
 import Login from "../Containers/Login";
+import CustomerAccount from "../Containers/CustomerAccountView/CustomerAccount";
 
 import styles from "./Styles/NavigationStyles";
 
@@ -8,7 +9,8 @@ import styles from "./Styles/NavigationStyles";
 const AppNavigation = StackNavigator(
   {
     LaunchScreen: { screen: LaunchScreen },
-    Login: { screen: Login }
+    Login: { screen: Login },
+    CustomerAccount: { screen: CustomerAccount }
   },
   {
     // Default config for all screens

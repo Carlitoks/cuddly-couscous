@@ -12,7 +12,11 @@ export default class LaunchScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <Button title="To Login" onPress={() => navigate("Login")} />
+        <Button title="to login" onPress={() => navigate("Login")} />
+        <Button
+          title="to Customer"
+          onPress={() => navigate("CustomerAccount")}
+        />
         <TokBoxTest />
       </View>
     );
