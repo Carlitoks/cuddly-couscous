@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, Button } from "react-native";
 import { Login } from "../Containers/Login";
+import { SelectRole } from "../Containers/SelectRole";
 import TokBoxTest from "../Components/TokBoxTest";
 
 // Styles
@@ -12,12 +13,11 @@ export default class LaunchScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <Button title="to login" onPress={() => navigate("Login")} />
         <Button
           title="to Customer"
           onPress={() => navigate("CustomerAccount")}
         />
-        <TokBoxTest />
+        <Button title="Select a role" onPress={() => navigate("SelectRole")} />
       </View>
     );
   }

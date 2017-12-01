@@ -16,10 +16,6 @@ I18n.translations = {
 };
 
 export class LoginView extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = { languages: [] };
   componentWillMount() {
     getLanguages().then(languages => {
@@ -29,7 +25,6 @@ export class LoginView extends Component {
 
   render() {
     const navigate = this.props.navigate;
-    console.log(navigate);
 
     return (
       <ScrollView

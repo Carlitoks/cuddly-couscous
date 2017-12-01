@@ -33,5 +33,11 @@
   "search": "Search",
   "newaccount": "Create new account?",
   "troubleshoot": "Troubleshoot",
-  "resetpassword": "Reset Password"
+  "resetpassword": "Reset Password",
+  "quicklyContact":
+    "Quickly contact a linguist to help with your languages needs",
+  "callLinguist": "Call a linguist",
+  "scanQR": "Scan QR Code",
+  "becomeOnVoy": "Become an OnVoy Linguist",
+  "alreadyAccount": "Already have an account?"
 }

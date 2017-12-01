@@ -3,6 +3,7 @@ import LaunchScreen from "../Containers/LaunchScreen";
 import Login from "../Containers/Login";
 import { ForgotPasswordView } from "../Containers/ForgotPasswordView/ForgotPasswordView";
 import CustomerAccount from "../Containers/CustomerAccountView/CustomerAccount";
+import SelectRole from "../Containers/SelectRole";
 
 import styles from "./Styles/NavigationStyles";
 
@@ -12,12 +13,14 @@ const AppNavigation = StackNavigator(
     LaunchScreen: { screen: LaunchScreen },
     Login: { screen: Login },
     ForgotPassword: { screen: ForgotPasswordView },
-    CustomerAccount: { screen: CustomerAccount }
+    CustomerAccount: { screen: CustomerAccount },
+    Login: { screen: Login },
+    SelectRole: { screen: SelectRole }
   },
   {
     // Default config for all screens
     headerMode: "none",
-    initialRouteName: "LaunchScreen",
+    initialRouteName: "SelectRole",
     navigationOptions: {
       headerStyle: styles.header
     }
