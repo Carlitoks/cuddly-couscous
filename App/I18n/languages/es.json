@@ -30,5 +30,8 @@
   "themeSettings": "Theme Settings",
   "deviceDetails": "Device Details",
   "noItems": "No Items",
-  "search": "Buscar"
+  "search": "Buscar",
+  "newaccount": "Crear nueva cuenta?",
+  "troubleshoot": "Solucionar problemas",
+  "resetpassword": "Restablecer la contraseña"
 }

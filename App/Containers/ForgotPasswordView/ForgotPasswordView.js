@@ -2,34 +2,13 @@ import React, { Component } from "react";
 import { StyleSheet, ScrollView, View, Alert } from "react-native";
 import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
 import I18n, { getLanguages } from "react-native-i18n";
-import PasswordInputText from "../../Components/PasswordInputText/PasswordInputText";
+
 import { styles } from "./style";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { LaunchScreen } from "../LaunchScreen";
 
-I18n.fallbacks = true;
-
-// Available languages
-I18n.translations = {
-  en: require("../../I18n/languages/english.json"),
-  es: require("../../I18n/languages/es.json")
-};
-
-export class LoginView extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  state = { languages: [] };
-  componentWillMount() {
-    getLanguages().then(languages => {
-      this.setState({ languages });
-    });
-  }
-
+export class ForgotPasswordView extends Component {
   render() {
-    const navigate = this.props.navigate;
-    console.log(navigate);
+    const navigate = this.props.navigation.navigate;
 
     return (
       <ScrollView
@@ -42,25 +21,28 @@ export class LoginView extends Component {
             name="arrow-back"
             size={30}
             color={"#1E90FF"}
-            onPress={() => navigate("LaunchScreen")}
+            onPress={() => navigate("Login")}
           />
-          <RkText style={styles.title}>{I18n.t("signIn")}</RkText>
+          <RkText style={styles.title}>{I18n.t("forgotPassword")}</RkText>
           <RkTextInput placeholder={I18n.t("email")} autoCorrect={false} />
-          <PasswordInputText
-            style={styles.PasswordInputText}
-            placeholder={I18n.t("password")}
-          />
           <RkButton
             style={styles.Button}
             onPress={() => Alert.alert("Sign In")}
           >
-            {I18n.t("signIn")}
+            {I18n.t("resetpassword")}
           </RkButton>
+
           <RkText
             style={{ color: "blue", padding: 10 }}
-            onPress={() => navigate("ForgotPassword")}
+            onPress={() => Alert.alert("new account")}
           >
-            {I18n.t("forgotPassword")}
+            {I18n.t("newaccount")}
+          </RkText>
+          <RkText
+            style={{ color: "blue", padding: 10 }}
+            onPress={() => Alert.alert("troubleshoot")}
+          >
+            {I18n.t("troubleshoot")}
           </RkText>
         </View>
       </ScrollView>
