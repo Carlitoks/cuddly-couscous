@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-
+import { Colors } from "../../Themes";
 export const styles = StyleSheet.create({
   logo: {
     width: 160,
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 25
   },
   button: {
-    backgroundColor: "#35A5A5",
+    backgroundColor: Colors.primaryColor,
     borderRadius: 30,
     width: 280,
     height: 60
@@ -51,11 +51,11 @@ export const styles = StyleSheet.create({
     paddingBottom: 30
   },
   textQR: {
-    color: "#35A5A5",
+    color: Colors.primaryColor,
     fontSize: 16
   },
   textBecome: {
-    color: "#35A5A5",
+    color: Colors.primaryColor,
     fontSize: 16,
     marginTop: 15,
     marginBottom: 20
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     marginTop: 10
   },
   linkLogin: {
-    color: "#35A5A5",
+    color: Colors.primaryColor,
     padding: 10
   },
   buttonText: {
