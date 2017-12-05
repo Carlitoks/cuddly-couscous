@@ -44,6 +44,13 @@ export default (reducer = (state, action) => {
       );
       break;
 
+    case "SelectRoleView":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.navigate({ routeName: "SelectRoleView" }),
+        state
+      );
+      break;
+
     default:
       newState = AppNavigation.router.getStateForAction(action, state);
       break;

@@ -33,6 +33,15 @@ class LandingContainer extends Component {
         >
           Profile
         </RkButton>
+
+        <RkButton
+          style={styles.Button}
+          onPress={() => {
+            this.props.navigation.dispatch({ type: "SelectRoleView" });
+          }}
+        >
+          SelectRoleView
+        </RkButton>
       </View>
     );
   }
