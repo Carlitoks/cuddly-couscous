@@ -3,11 +3,9 @@ import { View, Text, Button } from "react-native";
 
 import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
 
-class LandingContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
+import InputPassword from "../Components/InputPassword/InputPassword";
 
+class LandingContainer extends Component {
   componentDidMount() {
     // Splash Screen Around Here
     // Check if there is an active session and redirect to the appropiate view
@@ -18,7 +16,7 @@ class LandingContainer extends Component {
       <View>
         <RkButton
           onPress={() => {
-            this.props.navigation.dispatch({ type: "Login" });
+            this.props.navigation.dispatch({ type: "LoginView" });
           }}
         >
           Login

@@ -1,15 +1,16 @@
 import { StackNavigator, DrawerNavigator } from "react-navigation";
 
 import LandingContainer from "../Containers/LandingContainer";
-import Login from "../Onboarding/Login";
 import Profile from "../Profile";
+
+import LoginView from "../Onboarding/LoginView/LoginView";
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
 import MenuView from "../Components/MenuView/MenuView";
 
 const Navigation = StackNavigator(
   {
     LandingContainer: { screen: LandingContainer },
-    Login: { screen: Login },
+    LoginView: { screen: LoginView },
     Profile: { screen: Profile },
     SelectRoleView: { screen: SelectRoleView }
   },
