@@ -1,0 +1,14 @@
+{
+  "type": "service_account",
+  "project_id": "solo-infrastructure",
+  "private_key_id": "2331850a68cb646c73300af6f591856e6761e7cb",
+  "private_key":
+    "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDsFp+p7f7+STwc\nSD/kkrw2zzukd0MEs8dBFYSDXD/V/38uihHrXJBhF880hnEUk5SYCt9yXkSFwvIy\n+0nSYroObEfHMjjGzilrpQkRnEnX7WeEWFc9yXT4E76FqdsNJhQ1KY8IE/Dd65Kx\nMHEoUyzr59gnGSgqkAANRZJSj7Kit85zLIx/rerIfmOATinT5n792sQDvqDK65yw\no7sOZqe/682dJlwWiE0c+5rxF5TqtH01ioNs9mZK3CzFT+RHKrJf/WGGdSfThG/O\nP2iq3uP+UE0U9/cdOgMO6I++jNeY0kKoh5c+xn2Fzq8l5S55NFORg+Zsemwciwdw\n7SPtvKqhAgMBAAECggEACPTVw05UV2TDW0ZRaDQ54DFt75AXsoi4dStiDtKz2EQ8\nWLFjuyRUlN5gnbtA9Hkh0L/O2MmjO1jZM95tH0ZgDRaGBZRN65rcHumQpcKiWYb3\n36EzVBR9s8CaAHugZAgPCbJFKxcIkv6yHrc5/7/iCyQNQvR1HeI/IkHCqo+phPs1\n+KUpHOnQU9SBUXxJB+KyACGcfOaAP53+6k3QwWgXKg8QEqSvs1ncz3/2ZkL34Mvg\nHjg8OGvqX72IB3KcloL+2x56cs3QFJi2gyIra/bKdgCA9Crv8wEvh80r84RUvcu2\ni1m0kvTrGsL0slLYpuEdWeOi7NEroOVSzWdE7pEAzQKBgQD8g49IC911ojKnnxBu\nFyuKSFIMnIRlmzBiTVnLEXtK3+oX1yB8zNzOJisOGObFy4+ye8fFQpwNxRohI2TM\nGEVKIhr4QIg8vl+K79hOetuohU4pYATXt14VehfH6MPQ0fp0KL7hhHdo+eUHXTUt\nHBAFqS4P3o+NNgl5lcYVWIW6DQKBgQDvWQM0BYt/MyHjeKsOYDevggN90XA4wSv/\no/QieFcirwXXRJFN/5rZqnZ3C0aL236WW4KZ2oo/BbQQ1Z5hghwsVEvx2smwof9g\nmT38wExLbZUuECM4u8vcl9ukra0y76yAAa0SOe+6Jjot65a0MW5QOVHQ2DKk0hJ8\nC5dBdxPx5QKBgQC9nCAr7lTl7txwh31z3UwhcvrBY4n7LdPgDMsfM8pLx+Vk73IC\npGYtGfX8iPBIl/kYAeBZHBJIOLfNKGGY66Sj7QYpYXOrgRwHHOBk1dY5LZgqc2JP\nhO5N3DcdMohPNk0Fik8C0lBD8Fls9S1n6QmS5p2i5vEODQSCWte50ZXgxQKBgQDX\nkLK62redk17VMWvWYcAleRJN8iCBbTGEZ5TMqtfHrBy1mdLIjgpYOhfB9czOz5w+\nLSL+EH7sbeWUN+ESbw2Su0U/CU8Xn3+S79GNX2AXmxV9zBj80t6zya2PrsBMHOKe\n02OeA8IuRJmnnAQ6PD7fUBCo6N8L5Quy3vmWg3naJQKBgQD8c6gBQrKawmlynZWa\nEeSnC/4mwmj/I/A9WHRmsn729KRvOTHUz9W98HqYhNbdZjMQh2Ip9iB9u80cipOu\nFqiHN4SVg64e1VM/lDCJNogS5Nce6bOnCx3Wi31aAn/oiHKBLjmLjZgYENZ0OgDz\nd851ss3J8crxCLOJn07NBkthWA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "container-admin@solo-infrastructure.iam.gserviceaccount.com",
+  "client_id": "105574215973783073394",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url":
+    "https://www.googleapis.com/robot/v1/metadata/x509/container-admin%40solo-infrastructure.iam.gserviceaccount.com"
+}

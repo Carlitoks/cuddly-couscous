@@ -3,6 +3,7 @@ package com.ignitetest;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.rnopentok.RNOpenTokPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
@@ -25,7 +26,8 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new VectorIconsPackage(), new RNOpenTokPackage(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new ImagePickerPackage(), new VectorIconsPackage(), new RNOpenTokPackage(),
           new RNI18nPackage(), new ReactNativeConfigPackage());
     }
 

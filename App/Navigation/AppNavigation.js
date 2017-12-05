@@ -3,6 +3,10 @@ import LaunchScreen from "../Containers/LaunchScreen";
 import Login from "../Containers/Login";
 import { ForgotPasswordView } from "../Containers/ForgotPasswordView/ForgotPasswordView";
 import CustomerAccount from "../Containers/CustomerAccountView/CustomerAccount";
+import LinguistAccount from "../Containers/LinguistAccountView/LinguistAccountView";
+import CustomerProfile from "../Containers/CustomerProfileView/CustomerProfileView";
+import LinguistProfile from "../Containers/LinguistProfileView/LinguistProfileView";
+
 import SelectRole from "../Containers/SelectRole";
 
 import styles from "./Styles/NavigationStyles";
@@ -15,6 +19,10 @@ const AppNavigation = StackNavigator(
     Login: { screen: Login },
     ForgotPassword: { screen: ForgotPasswordView },
     CustomerAccount: { screen: CustomerAccount },
+    LinguistAccount: { screen: LinguistAccount },
+    CustomerProfile: { screen: CustomerProfile },
+    LinguistProfile: { screen: LinguistProfile },
+
     Login: { screen: Login },
     SelectRole: { screen: SelectRole },
     CallHistory: { screen: CallHistory }
