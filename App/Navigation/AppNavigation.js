@@ -6,6 +6,7 @@ import CustomerAccount from "../Containers/CustomerAccountView/CustomerAccount";
 import SelectRole from "../Containers/SelectRole";
 
 import styles from "./Styles/NavigationStyles";
+import { CallHistory } from "../Containers/CallHistory/CallHistory";
 
 // Manifest of possible screens
 const AppNavigation = StackNavigator(
@@ -15,7 +16,8 @@ const AppNavigation = StackNavigator(
     ForgotPassword: { screen: ForgotPasswordView },
     CustomerAccount: { screen: CustomerAccount },
     Login: { screen: Login },
-    SelectRole: { screen: SelectRole }
+    SelectRole: { screen: SelectRole },
+    CallHistory: { screen: CallHistory }
   },
   {
     // Default config for all screens

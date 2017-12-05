@@ -18,6 +18,7 @@ export default class LaunchScreen extends Component {
           onPress={() => navigate("CustomerAccount")}
         />
         <Button title="Select a role" onPress={() => navigate("SelectRole")} />
+        <Button title="Call History" onPress={() => navigate("CallHistory")} />
       </View>
     );
   }
