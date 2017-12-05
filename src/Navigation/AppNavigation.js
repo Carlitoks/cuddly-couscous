@@ -1,11 +1,12 @@
-import { StackNavigator } from "react-navigation";
+import { StackNavigator, DrawerNavigator } from "react-navigation";
 
 import LandingContainer from "../Containers/LandingContainer";
 import Login from "../Onboarding/Login";
 import Profile from "../Profile";
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
+import MenuView from "../Components/MenuView/MenuView";
 
-const AppNavigation = StackNavigator(
+const Navigation = StackNavigator(
   {
     LandingContainer: { screen: LandingContainer },
     Login: { screen: Login },
@@ -18,4 +19,24 @@ const AppNavigation = StackNavigator(
   }
 );
 
+const AppNavigation = DrawerNavigator(
+  {
+    Home: {
+      screen: Navigation
+    },
+    Stack: {
+      screen: MenuView
+    }
+  },
+  {
+    contentComponent: MenuView,
+    contentOptions: {
+      activeTintColor: "#e91e63",
+      style: {
+        flex: 1,
+        paddingTop: 15
+      }
+    }
+  }
+);
 export default AppNavigation;

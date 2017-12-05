@@ -17,7 +17,6 @@ class LandingContainer extends Component {
     return (
       <View>
         <RkButton
-          style={styles.Button}
           onPress={() => {
             this.props.navigation.dispatch({ type: "Login" });
           }}
@@ -26,7 +25,6 @@ class LandingContainer extends Component {
         </RkButton>
 
         <RkButton
-          style={styles.Button}
           onPress={() => {
             this.props.navigation.dispatch({ type: "Profile" });
           }}
@@ -35,7 +33,6 @@ class LandingContainer extends Component {
         </RkButton>
 
         <RkButton
-          style={styles.Button}
           onPress={() => {
             this.props.navigation.dispatch({ type: "SelectRoleView" });
           }}
