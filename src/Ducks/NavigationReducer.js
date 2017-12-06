@@ -16,10 +16,20 @@ const initialNavState = AppNavigation.router.getStateForAction(
 );
 */
 export default (reducer = (state, action) => {
-  newState = AppNavigation.router.getStateForAction(
-    NavigationActions.navigate({ routeName: action.type }),
-    state
-  );
+  switch (action.type) {
+    case "back":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.back(),
+        state
+      );
+      break;
+
+    default:
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.navigate({ routeName: action.type }),
+        state
+      );
+  }
 
   return newState || state;
 });

@@ -7,7 +7,6 @@ const MenuView = props => {
   const navigate = props.navigation.navigate;
   styles = StyleSheet.create({
     Button: {
-      borderRadius: 25,
       width: "90%",
       backgroundColor: "#FFFFFF",
       borderBottomWidth: 1,

@@ -16,7 +16,7 @@ class LoginView extends Component {
   }
 
   render() {
-    const navigate = this.props.navigate;
+    const navigation = this.props.navigation;
 
     return (
       <ScrollView
@@ -29,7 +29,7 @@ class LoginView extends Component {
             name="arrow-back"
             size={30}
             color={"#1E90FF"}
-            onPress={() => navigate("LaunchScreen")}
+            onPress={() => navigation.dispatch({ type: "back" })}
           />
           <RkText style={styles.title}>{EN["signIn"]}</RkText>
           <RkTextInput placeholder={EN["email"]} autoCorrect={false} />
@@ -45,7 +45,7 @@ class LoginView extends Component {
           </RkButton>
           <RkText
             style={{ color: "blue", padding: 10 }}
-            onPress={() => navigate("ForgotPassword")}
+            onPress={() => navigation.dispatch({ type: "ForgotPassword" })}
           >
             {EN["forgotPassword"]}
           </RkText>
