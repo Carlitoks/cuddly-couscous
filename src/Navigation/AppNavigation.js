@@ -4,11 +4,13 @@ import LandingContainer from "../Containers/LandingContainer";
 import Profile from "../Profile";
 
 import LoginView from "../Onboarding/LoginView/LoginView";
+import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
 import MenuView from "../Components/MenuView/MenuView";
 
 const Navigation = StackNavigator(
   {
+    ForgotPasswordView: { screen: ForgotPasswordView },
     LandingContainer: { screen: LandingContainer },
     LoginView: { screen: LoginView },
     Profile: { screen: Profile },

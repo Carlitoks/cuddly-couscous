@@ -3,18 +3,12 @@ import { ScrollView, View, Alert } from "react-native";
 import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-import InputPassword from "../../Components/InputPassword/InputPassword";
-
 import { styles } from "./styles";
 
 // For the moment
 import EN from "../../I18n/en";
 
-class LoginView extends Component {
-  componentWillMount() {
-    //
-  }
-
+class ForgotPasswordView extends Component {
   render() {
     const navigation = this.props.navigation;
 
@@ -31,23 +25,29 @@ class LoginView extends Component {
             color={"#1E90FF"}
             onPress={() => navigation.dispatch({ type: "back" })}
           />
-          <RkText style={styles.title}>{EN["signIn"]}</RkText>
+
+          <RkText style={styles.title}>{EN["forgotPassword"]}</RkText>
+
           <RkTextInput placeholder={EN["email"]} autoCorrect={false} />
-          <InputPassword
-            style={styles.InputPassword}
-            placeholder={EN["password"]}
-          />
+
           <RkButton
             style={styles.Button}
             onPress={() => Alert.alert("Sign In")}
           >
-            {EN["signIn"]}
+            {EN["resetpassword"]}
           </RkButton>
+
           <RkText
             style={{ color: "blue", padding: 10 }}
-            onPress={() => navigation.dispatch({ type: "ForgotPasswordView" })}
+            onPress={() => Alert.alert("new account")}
           >
-            {EN["forgotPassword"]}
+            {EN["newaccount"]}
+          </RkText>
+          <RkText
+            style={{ color: "blue", padding: 10 }}
+            onPress={() => Alert.alert("troubleshoot")}
+          >
+            {EN["troubleshoot"]}
           </RkText>
         </View>
       </ScrollView>
@@ -55,4 +55,4 @@ class LoginView extends Component {
   }
 }
 
-export default LoginView;
+export default ForgotPasswordView;

@@ -24,6 +24,14 @@ class LandingContainer extends Component {
 
         <RkButton
           onPress={() => {
+            this.props.navigation.dispatch({ type: "ForgotPasswordView" });
+          }}
+        >
+          ForgotPasswordView
+        </RkButton>
+
+        <RkButton
+          onPress={() => {
             this.props.navigation.dispatch({ type: "Profile" });
           }}
         >
