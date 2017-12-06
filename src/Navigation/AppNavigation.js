@@ -8,13 +8,18 @@ import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordV
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
 import MenuView from "../Components/MenuView/MenuView";
 
+import CustomerAccount from "../Onboarding/CustomerAccountView/CustomerAccountView";
+import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
+
 const Navigation = StackNavigator(
   {
     ForgotPasswordView: { screen: ForgotPasswordView },
     LandingContainer: { screen: LandingContainer },
     LoginView: { screen: LoginView },
     Profile: { screen: Profile },
-    SelectRoleView: { screen: SelectRoleView }
+    SelectRoleView: { screen: SelectRoleView },
+    CustomerAccount: { screen: CustomerAccount },
+    CustomerProfile: { screen: CustomerProfile }
   },
   {
     initialRouteName: "LandingContainer",

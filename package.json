@@ -13,6 +13,7 @@
   "dependencies": {
     "react": "16.0.0",
     "react-native": "0.50.4",
+    "react-native-interactive-avatar": "^2.0.0",
     "react-native-opentok": "^2.0.1",
     "react-native-ui-kitten": "^2.0.1",
     "react-native-vector-icons": "^4.4.2",
