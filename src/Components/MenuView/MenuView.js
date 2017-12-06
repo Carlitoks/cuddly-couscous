@@ -3,6 +3,7 @@ import { View, Text, Button, Image } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
 import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
 import Profile from "./../../Profile";
+
 const MenuView = props => {
   const navigate = props.navigation.navigate;
   styles = StyleSheet.create({
@@ -55,6 +56,8 @@ const MenuView = props => {
       marginBottom: 15
     }
   });
+
+  console.log(props);
   return (
     <View>
       <Image
@@ -64,24 +67,41 @@ const MenuView = props => {
       <RkText style={styles.textName}>Adele Gordon</RkText>
       <RkText style={styles.textCountry}>Oman</RkText>
       <RkText style={styles.textStars}>4.3</RkText>
+
+      {/* Home */}
       <RkButton
         style={styles.Button}
         onPress={() => navigate("LandingContainer")}
       >
         <Text style={styles.colorText}>Home</Text>
       </RkButton>
-      <RkButton style={styles.Button} onPress={() => navigate("Profile")}>
+
+      {/* My Profile */}
+      <RkButton
+        style={styles.Button}
+        onPress={() => {
+          props.navigation.dispatch({ type: "Profile" });
+        }}
+      >
         <RkText style={styles.colorText}>My Profile</RkText>
       </RkButton>
+
+      {/* History */}
       <RkButton style={styles.Button} onPress={() => navigate("Profile")}>
         <RkText style={styles.colorText}>History</RkText>
       </RkButton>
+
+      {/* Schedule */}
       <RkButton style={styles.Button} onPress={() => navigate("Profile")}>
         <RkText style={styles.colorText}>Schedule</RkText>
       </RkButton>
+
+      {/* Settings */}
       <RkButton style={styles.Button} onPress={() => navigate("Profile")}>
         <RkText style={styles.colorText}>Settings</RkText>
       </RkButton>
+
+      {/* Help */}
       <RkButton style={styles.Button} onPress={() => navigate("Profile")}>
         <RkText style={styles.colorText}>Help</RkText>
       </RkButton>
