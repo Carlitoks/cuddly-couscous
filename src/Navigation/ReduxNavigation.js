@@ -15,7 +15,7 @@ class ReduxNavigation extends Component {
       const { dispatch, navigation, nav } = this.props;
 
       // Include on the if to exit app from this views (nav.routes[0].routeName === "Login" || nav.routes[0].routeName === "Start")
-      if (nav.routes.length === 1) {
+      if (nav.routes.length === 0) {
         return false;
       }
       dispatch({ type: "back" });

@@ -5,7 +5,7 @@ import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { clearForm, updateForm } from "../../Ducks/LoginReducer";
-//import { loginUser } from "../../Ducks/AuthReducer";
+import { logInAsync } from "../../Ducks/AuthReducer";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
 
@@ -21,6 +21,18 @@ class LoginView extends Component {
 
   componentWillUnmount() {
     this.props.clearForm();
+  }
+
+  submit() {
+    if (!this.props.email) {
+      // alert or toast or whatever
+    }
+
+    if (!this.props.password) {
+      // alert or toast or whatever
+    }
+
+    this.props.logInAsync();
   }
 
   render() {
@@ -62,10 +74,7 @@ class LoginView extends Component {
           />
 
           {/* Sign In Button */}
-          <RkButton
-            style={styles.Button}
-            onPress={() => Alert.alert("Sign In")}
-          >
+          <RkButton style={styles.Button} onPress={() => this.submit()}>
             {EN["signIn"]}
           </RkButton>
 
@@ -91,7 +100,8 @@ const mS = state => ({
 
 const mD = {
   clearForm,
-  updateForm
+  updateForm,
+  logInAsync
 };
 
 export default connect(mS, mD)(LoginView);
