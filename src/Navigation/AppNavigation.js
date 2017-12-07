@@ -7,11 +7,12 @@ import LoginView from "../Onboarding/LoginView/LoginView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
 import MenuView from "../Components/MenuView/MenuView";
+import Home from "../Components/Home/Home";
 
 import CustomerAccount from "../Onboarding/CustomerAccountView/CustomerAccountView";
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
 
-import IncomingCallView from '../Containers/IncomingCallView/IncomingCallView'
+import IncomingCallView from "../Containers/IncomingCallView/IncomingCallView";
 
 const Navigation = StackNavigator(
   {
@@ -20,12 +21,13 @@ const Navigation = StackNavigator(
     LoginView: { screen: LoginView },
     Profile: { screen: Profile },
     SelectRoleView: { screen: SelectRoleView },
+    Home: { screen: Home },
     CustomerAccount: { screen: CustomerAccount },
     CustomerProfile: { screen: CustomerProfile },
     IncomingCallView: { screen: IncomingCallView }
   },
   {
-    initialRouteName: "LandingContainer",
+    initialRouteName: "Home",
     headerMode: "none"
   }
 );

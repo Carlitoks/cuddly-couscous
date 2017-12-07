@@ -53,6 +53,14 @@ class LandingContainer extends Component {
         >
           IncomingCallView
         </RkButton>
+
+        <RkButton
+          onPress={() => {
+            this.props.navigation.dispatch({ type: "Home" });
+          }}
+        >
+          Home
+        </RkButton>
       </View>
     );
   }
