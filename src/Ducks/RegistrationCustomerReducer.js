@@ -1,6 +1,6 @@
 const ACTIONS = {
-  CLEAR: "forgotPassword/clear",
-  UPDATE: "forgotPassword/update"
+  CLEAR: "registrationCustomer/clear",
+  UPDATE: "registrationCustomer/update"
 };
 
 export const clearForm = () => ({
@@ -14,10 +14,12 @@ export const updateForm = payload => ({
 
 const initialState = {
   email: "",
-  emailErrorMessage: ""
+  password: "",
+  emailErrorMessage: "",
+  passwordErrorMessage: ""
 };
 
-const resetPasswordReducer = (state = initialState, action = {}) => {
+const registrationCustomerReducer = (state = initialState, action = {}) => {
   const { payload, type } = action;
 
   switch (type) {
@@ -38,4 +40,4 @@ const resetPasswordReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default resetPasswordReducer;
+export default registrationCustomerReducer;

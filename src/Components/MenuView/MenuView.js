@@ -57,7 +57,6 @@ const MenuView = props => {
     }
   });
 
-  console.log(props);
   return (
     <View>
       <Image
