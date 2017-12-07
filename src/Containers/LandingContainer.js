@@ -46,6 +46,14 @@ class LandingContainer extends Component {
         >
           SelectRoleView
         </RkButton>
+
+        <RkButton
+          onPress={() => {
+            this.props.navigation.dispatch({ type: "IncomingCallView" });
+          }}
+        >
+          IncomingCallView
+        </RkButton>
       </View>
     );
   }

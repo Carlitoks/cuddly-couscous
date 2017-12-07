@@ -11,6 +11,8 @@ import MenuView from "../Components/MenuView/MenuView";
 import CustomerAccount from "../Onboarding/CustomerAccountView/CustomerAccountView";
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
 
+import IncomingCallView from '../Containers/IncomingCallView/IncomingCallView'
+
 const Navigation = StackNavigator(
   {
     ForgotPasswordView: { screen: ForgotPasswordView },
@@ -19,7 +21,8 @@ const Navigation = StackNavigator(
     Profile: { screen: Profile },
     SelectRoleView: { screen: SelectRoleView },
     CustomerAccount: { screen: CustomerAccount },
-    CustomerProfile: { screen: CustomerProfile }
+    CustomerProfile: { screen: CustomerProfile },
+    IncomingCallView: { screen: IncomingCallView }
   },
   {
     initialRouteName: "LandingContainer",
