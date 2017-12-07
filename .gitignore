@@ -2,7 +2,7 @@
 api.config.yml
 dev_auth/
 .gcp/
-App/config/env.js
+src/Config/env.js
 
 # OSX
 #
