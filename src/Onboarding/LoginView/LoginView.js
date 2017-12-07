@@ -83,10 +83,10 @@ class LoginView extends Component {
 }
 
 const mS = state => ({
-  email: state.loginReducer.email,
-  emailErrorMessage: state.loginReducer.emailErrorMessage,
-  password: state.loginReducer.password,
-  passwordErrorMessage: state.loginReducer.passwordErrorMessage
+  email: state.login.email,
+  emailErrorMessage: state.login.emailErrorMessage,
+  password: state.login.password,
+  passwordErrorMessage: state.login.passwordErrorMessage
 });
 
 const mD = {

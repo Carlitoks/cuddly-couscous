@@ -14,12 +14,10 @@ export const updateForm = payload => ({
 
 const initialState = {
   email: "",
-  password: "",
-  emailErrorMessage: "",
-  passwordErrorMessage: ""
+  emailErrorMessage: ""
 };
 
-const loginReducer = (state = initialState, action = {}) => {
+const resetPasswordReducer = (state = initialState, action = {}) => {
   const { payload, type } = action;
 
   switch (type) {
@@ -40,4 +38,4 @@ const loginReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default loginReducer;
+export default resetPasswordReducer;
