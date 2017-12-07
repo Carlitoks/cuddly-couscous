@@ -14,8 +14,8 @@ export const logIn = payload => ({
 export const logInAsync = () => dispatch => {
   setTimeout(() => {
     dispatch(logIn());
-    // console.log(NavigationActions);
-    dispatch({ type: "Profile" });
+
+    dispatch({ type: "Home" });
   }, 2000);
 };
 
