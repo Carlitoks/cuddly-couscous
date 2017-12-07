@@ -27,7 +27,7 @@ const Navigation = StackNavigator(
     IncomingCallView: { screen: IncomingCallView }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "SelectRoleView",
     headerMode: "none"
   }
 );
