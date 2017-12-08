@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Colors } from "../../Themes";
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   logo: {
     width: 160,
     height: 60,

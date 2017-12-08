@@ -1,7 +1,9 @@
 import { StyleSheet, Dimensions } from "react-native";
 
 const width = Dimensions.get("window").width - 20;
-export const styles = StyleSheet.create({
+const color = "#0487d4";
+
+export default StyleSheet.create({
   scrollContainer: {
     flex: 1,
     backgroundColor: "white"
@@ -19,16 +21,17 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    marginLeft: 10,
-    paddingTop: 30,
     fontFamily: "System",
-
+    marginLeft: 10,
+    marginTop: 20,
     alignSelf: "flex-start",
     width: width
   },
   Button: {
+    marginTop: 10,
     borderRadius: 25,
-    width: width
+    width: width,
+    backgroundColor: color
   },
   Icon: {
     width: width

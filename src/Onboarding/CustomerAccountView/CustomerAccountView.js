@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import { clearForm, updateForm } from "../../Ducks/RegistrationCustomerReducer";
 //import { loginUser } from "../../Ducks/AuthReducer";
 
-import { View, ScrollView } from "react-native";
-import { RkButton, RkTextInput, RkText, rkType } from "react-native-ui-kitten";
+import { View, ScrollView, Text } from "react-native";
+import { Button, FormLabel, FormInput } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import InputPassword from "../../Components/InputPassword/InputPassword";
 
-import { styles } from "./styles";
+import styles from "./styles";
 
 import EN from "../../I18n/en";
 
@@ -37,10 +37,10 @@ class CustomerAccountView extends Component {
           />
 
           {/* Title */}
-          <RkText style={styles.title}> {EN["CustomerAccount"]} </RkText>
+          <Text style={styles.title}> {EN["CustomerAccount"]} </Text>
 
           {/* Email */}
-          <RkTextInput
+          <FormInput
             placeholder={EN["email"]}
             autoCorrect={false}
             onChangeText={text => this.props.updateForm({ email: text })}
@@ -49,34 +49,33 @@ class CustomerAccountView extends Component {
           />
 
           {/* Password */}
-          <InputPassword
+          <FormInput
             style={styles.InputPassword}
             placeholder={EN["password"]}
             onChangeText={text => this.props.updateForm({ password: text })}
             value={this.props.password}
+            secureTextEntry={true}
           />
 
-          <RkButton
-            style={styles.Button}
+          <Button
+            buttonStyle={styles.Button}
             onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
-          >
-            {EN["CreateAccount"]}
-          </RkButton>
+            title={EN["CreateAccount"]}
+          />
 
-          <RkText style={{ padding: 10 }}>
+          <Text style={{ padding: 10 }}>
             {EN["CustomerAccountText"]}
-            <RkText style={{ color: "blue" }}> {EN["PrivacyPolicy"]}</RkText>
-            {EN["And"]}
-            <RkText style={{ color: "blue" }}>{EN["TermConditions"]}</RkText>
-          </RkText>
+            <Text style={{ color: "blue" }}> {EN["PrivacyPolicy"]}</Text>{" "}
+            {EN["And"]}{" "}
+            <Text style={{ color: "blue" }}>{EN["TermConditions"]}</Text>
+          </Text>
 
-          <RkButton
-            style={styles.transparentButton}
-            rkType="outline"
+          <Button
+            buttonStyle={styles.transparentButton}
+            icon={{ name: "qrcode", type: "font-awesome" }}
             onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
-          >
-            {EN["ScanQR"]}
-          </RkButton>
+            title={EN["ScanQR"]}
+          />
         </View>
       </ScrollView>
     );

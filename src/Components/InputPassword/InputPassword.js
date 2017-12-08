@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { RkTextInput } from "react-native-ui-kitten";
+import { FormInput } from "react-native-elements";
 import { View } from "react-native";
 
-import { styles } from "./styles";
+import styles from "./styles";
 
 class InputPassword extends Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class InputPassword extends Component {
   render() {
     return (
       <View style={styles.viewContainer}>
-        <RkTextInput
+        <FormInput
           {...this.props}
           autoCorrect={false}
           secureTextEntry={this.state.password}

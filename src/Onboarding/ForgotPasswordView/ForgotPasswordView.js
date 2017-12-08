@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { ScrollView, View, Alert } from "react-native";
-import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
+import { ScrollView, View, Alert, Text } from "react-native";
+import { Button, FormLabel, FormInput } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { clearForm, updateForm } from "../../Ducks/ForgotPassowrdReducer";
 //import { loginUser } from "../../Ducks/AuthReducer";
 
-import { styles } from "./styles";
+import styles from "./styles";
 
 // For the moment
 import EN from "../../I18n/en";
@@ -37,10 +37,10 @@ class ForgotPasswordView extends Component {
           />
 
           {/* Title */}
-          <RkText style={styles.title}>{EN["forgotPassword"]}</RkText>
+          <Text style={styles.title}>{EN["forgotPassword"]}</Text>
 
           {/* Email */}
-          <RkTextInput
+          <FormInput
             placeholder={EN["email"]}
             autoCorrect={false}
             onChangeText={text => this.props.updateForm({ email: text })}
@@ -49,28 +49,27 @@ class ForgotPasswordView extends Component {
           />
 
           {/* Forgot Password Button */}
-          <RkButton
-            style={styles.Button}
+          <Button
+            buttonStyle={styles.Button}
             onPress={() => Alert.alert("ForgotPassword")}
-          >
-            {EN["resetpassword"]}
-          </RkButton>
+            title={EN["resetpassword"]}
+          />
 
           {/* Register */}
-          <RkText
-            style={{ color: "blue", padding: 10 }}
+          <Text
+            style={styles.linksText}
             onPress={() => Alert.alert("new account")}
           >
             {EN["newaccount"]}
-          </RkText>
+          </Text>
 
           {/* Troubleshoot Button */}
-          <RkText
-            style={{ color: "blue", padding: 10 }}
+          <Text
+            style={styles.linksText}
             onPress={() => Alert.alert("troubleshoot")}
           >
             {EN["troubleshoot"]}
-          </RkText>
+          </Text>
         </View>
       </ScrollView>
     );

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { ScrollView, View, Alert } from "react-native";
-import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
+
+import { ScrollView, View, Alert, Text } from "react-native";
+import { Button, FormLabel, FormInput } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { clearForm, updateForm } from "../../Ducks/LoginReducer";
@@ -9,7 +10,7 @@ import { logInAsync } from "../../Ducks/AuthReducer";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
 
-import { styles } from "./styles";
+import styles from "./styles";
 
 // For the moment
 import EN from "../../I18n/en";
@@ -49,15 +50,14 @@ class LoginView extends Component {
             style={styles.Icon}
             name="arrow-back"
             size={30}
-            color={"#1E90FF"}
             onPress={() => navigation.dispatch({ type: "back" })}
           />
 
           {/* Title */}
-          <RkText style={styles.title}>{EN["signIn"]}</RkText>
+          <Text style={styles.title}>{EN["signIn"]}</Text>
 
           {/* Email */}
-          <RkTextInput
+          <FormInput
             placeholder={EN["email"]}
             autoCorrect={false}
             onChangeText={text => this.props.updateForm({ email: text })}
@@ -74,17 +74,19 @@ class LoginView extends Component {
           />
 
           {/* Sign In Button */}
-          <RkButton style={styles.Button} onPress={() => this.submit()}>
-            {EN["signIn"]}
-          </RkButton>
+          <Button
+            buttonStyle={styles.Button}
+            onPress={() => this.submit()}
+            title={EN["signIn"]}
+          />
 
           {/* Forgot Password */}
-          <RkText
-            style={{ color: "blue", padding: 10 }}
+          <Text
+            style={styles.forgotPasswordText}
             onPress={() => navigation.dispatch({ type: "ForgotPasswordView" })}
           >
             {EN["forgotPassword"]}
-          </RkText>
+          </Text>
         </View>
       </ScrollView>
     );
