@@ -39,7 +39,7 @@ const MenuView = props => {
       </RkButton>
 
       {/* History */}
-      <RkButton style={styles.Button} onPress={() => navigate("Profile")}>
+      <RkButton style={styles.Button} onPress={() => navigate("CallHistory")}>
         <RkText style={styles.colorText}>History</RkText>
       </RkButton>
 

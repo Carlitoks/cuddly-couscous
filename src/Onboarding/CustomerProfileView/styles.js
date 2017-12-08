@@ -6,6 +6,19 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f7f7f7"
   },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    paddingTop: 10
+  },
+  arrowBack: {
+    flex: 1,
+    alignItems: "flex-start"
+  },
+  nextText: {
+    flex: 1,
+    alignItems: "flex-end"
+  },
   formContainer: {
     marginTop: 20,
     marginRight: 11,

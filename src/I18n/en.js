@@ -47,5 +47,12 @@ export default (ENG = {
   callLinguist: "Call a linguist",
   scanQR: "Scan QR Code",
   becomeOnVoy: "Become an OnVoy Linguist",
-  alreadyAccount: "Already have an account?"
+  alreadyAccount: "Already have an account?",
+  selectLanguage: "Select the Language You Need a Linguist in",
+  howLongNeedHelp: "How Long Do You Need Help For?",
+  costOfCall: "Approx~$20",
+  english: "English",
+  spanish: "Spanish",
+  DescribeAssistance: "Describe What Assistance You Need",
+  Next: "Next"
 });

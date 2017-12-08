@@ -72,30 +72,29 @@ export class Home extends Component {
     },
     button: {
       backgroundColor: "#ffffff",
-      borderRadius: 20,
+      borderRadius: 15,
       width: "90%",
       height: 80,
       marginBottom: 20
     },
     buttonQR: {
       backgroundColor: "#e5e5ff",
-      borderRadius: 20,
+      borderRadius: 15,
       marginTop: 20,
       width: "90%",
       height: 80
     },
     buttonSchedule: {
       backgroundColor: "#e5e5ff",
-      borderRadius: 20,
+      borderRadius: 15,
       width: "90%",
       height: 80
     },
     buttonFavorites: {
       backgroundColor: "#e5e5ff",
-      borderRadius: 20,
+      borderRadius: 15,
       width: "90%",
-      height: 80,
-      marginBottom: 100
+      height: 80
     },
     buttonTextSecondary: {
       fontSize: 17,
@@ -103,7 +102,7 @@ export class Home extends Component {
       fontWeight: "500"
     },
     buttonText: {
-      fontSize: 17,
+      fontSize: 18,
       color: "#8f97e8",
       fontWeight: "500",
       display: "flex",
@@ -201,17 +200,17 @@ export class Home extends Component {
               <RkButton
                 style={[this.styles.button, this.styles.center]}
                 onPress={() =>
-                  this.props.navigation.dispatch({ type: "LandingContainer" })}
+                  this.props.navigation.dispatch({ type: "ContactLinguist" })}
               >
                 <View style={this.styles.callLinguistContainer}>
                   <Icon
                     style={this.styles.iconV}
                     name="videocam"
-                    size={50}
+                    size={45}
                     color={"#9391f7"}
                     onPress={() =>
                       this.props.navigation.dispatch({
-                        type: "LandingContainer"
+                        type: "ContactLinguist"
                       })}
                   />
                   <RkText style={[this.styles.buttonText, this.styles.center]}>
@@ -250,7 +249,7 @@ export class Home extends Component {
                 </View>
               </RkButton>
               <RkButton
-                style={[this.styles.buttonQR, this.styles.center]}
+                style={[this.styles.buttonSchedule, this.styles.center]}
                 onPress={() => navigate("LaunchScreen")}
               >
                 <View style={this.styles.callLinguistContainer}>

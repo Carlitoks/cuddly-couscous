@@ -38,6 +38,14 @@ class LandingContainer extends Component {
 
         <RkButton
           onPress={() => {
+            this.props.navigation.dispatch({ type: "ContactLinguist" });
+          }}
+        >
+          Contact Liguist
+        </RkButton>
+
+        <RkButton
+          onPress={() => {
             this.props.navigation.dispatch({ type: "SelectRoleView" });
           }}
         >

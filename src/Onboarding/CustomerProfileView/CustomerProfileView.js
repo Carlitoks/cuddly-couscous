@@ -23,14 +23,22 @@ export default class CustomerAccount extends Component {
         automaticallyAdjustContentInsets={true}
         style={styles.scrollContainer}
       >
+        <View style={styles.container}>
+          <View style={styles.arrowBack}>
+            <Icon
+              name="arrow-back"
+              size={30}
+              color={"#7c7cad"}
+              onPress={() => navigation.dispatch({ type: "back" })}
+            />
+          </View>
+          <View style={styles.nextText}>
+            <RkText onPress={() => navigation.dispatch({ type: "Home" })}>
+              {EN["Next"]}
+            </RkText>
+          </View>
+        </View>
         <View style={styles.formContainer}>
-          <Icon
-            style={styles.Icon}
-            name="arrow-back"
-            size={30}
-            color={"#03a6a7"}
-            onPress={() => navigation.dispatch({ type: "back" })}
-          />
           <Avatar
             style={{ paddingTop: 40 }}
             size={"default"}

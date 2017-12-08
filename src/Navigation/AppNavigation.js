@@ -11,7 +11,9 @@ import Home from "../Components/Home/Home";
 
 import CustomerAccount from "../Onboarding/CustomerAccountView/CustomerAccountView";
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
-
+import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
+import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
+import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
 import IncomingCallView from "../Containers/IncomingCallView/IncomingCallView";
 import CallHistory from "../Containers/CallHistory/CallHistory";
 
@@ -26,7 +28,10 @@ const Navigation = StackNavigator(
     CustomerAccount: { screen: CustomerAccount },
     CustomerProfile: { screen: CustomerProfile },
     IncomingCallView: { screen: IncomingCallView },
-    CallHistory: { screen: CallHistory }
+    ContactLinguist: { screen: ContactLinguist },
+    AssistanceView: { screen: AssistanceView },
+    CallHistory: { screen: CallHistory },
+    CallTimeView: { screen: CallTimeView }
   },
   {
     initialRouteName: "SelectRoleView",
