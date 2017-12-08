@@ -13,6 +13,7 @@ import CustomerAccount from "../Onboarding/CustomerAccountView/CustomerAccountVi
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
 
 import IncomingCallView from "../Containers/IncomingCallView/IncomingCallView";
+import CallHistory from "../Containers/CallHistory/CallHistory";
 
 const Navigation = StackNavigator(
   {
@@ -24,7 +25,8 @@ const Navigation = StackNavigator(
     Home: { screen: Home },
     CustomerAccount: { screen: CustomerAccount },
     CustomerProfile: { screen: CustomerProfile },
-    IncomingCallView: { screen: IncomingCallView }
+    IncomingCallView: { screen: IncomingCallView },
+    CallHistory: { screen: CallHistory }
   },
   {
     initialRouteName: "SelectRoleView",

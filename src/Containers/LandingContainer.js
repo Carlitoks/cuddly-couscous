@@ -3,8 +3,6 @@ import { View, Text, Button } from "react-native";
 
 import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
 
-import InputPassword from "../Components/InputPassword/InputPassword";
-
 class LandingContainer extends Component {
   componentDidMount() {
     // Splash Screen Around Here
@@ -60,6 +58,13 @@ class LandingContainer extends Component {
           }}
         >
           Home
+        </RkButton>
+        <RkButton
+          onPress={() => {
+            this.props.navigation.dispatch({ type: "CallHistory" });
+          }}
+        >
+          Call History
         </RkButton>
       </View>
     );
