@@ -1,54 +1,43 @@
 import React, { Component } from "react";
-import { Text, View, ScrollView, Alert, Image } from "react-native";
-import EN from "../../I18n/en";
-import { SearchBar, List, ListItem, Button } from "react-native-elements";
-import { Images } from "../../Themes";
+import { connect } from "react-redux";
+
 import {
-  RkButton,
-  RkTextInput,
-  RkText,
-  rkType,
-  RkCardImg
-} from "react-native-ui-kitten";
+  updateSettings,
+  ASSITANCE_LIST
+} from "../../Ducks/ContactLinguistReducer";
 
-import { styles } from "./styles";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { Text, View, ScrollView, Image } from "react-native";
+import { SearchBar, List, ListItem, Button } from "react-native-elements";
 
-export default class AssistanceView extends Component {
+import EN from "../../I18n/en";
+import { styles } from "./styles";
+import { Images } from "../../Themes";
+
+class AssistanceView extends Component {
+  filterList = assistance => {
+    return ASSITANCE_LIST.filter(as =>
+      as.toLowerCase().startsWith(assistance.toLowerCase())
+    ).map((as, i) => (
+      <ListItem
+        hideChevron
+        key={i}
+        title={as}
+        onPress={() => {
+          this.props.updateSettings({ selectedAssistance: as });
+        }}
+      />
+    ));
+  };
+
   render() {
-    const list = [
-      {
-        name: "Aiport-Customer Service"
-      },
-      {
-        name: "Airport - Check-In"
-      },
-      {
-        name: "Taxi"
-      },
-      {
-        name: "Taxi"
-      },
-      {
-        name: "Taxi"
-      },
-      {
-        name: "Airport - Check-In"
-      },
-      {
-        name: "Airport - Check-In"
-      }
-    ];
     const navigation = this.props.navigation;
-
-    handleIndexChange = index => {
-      this.setState({ ...this.state, selectedIndex: index });
-    };
 
     return (
       <View style={styles.scrollContainer}>
         <ScrollView automaticallyAdjustContentInsets={true}>
           <View style={styles.container}>
+            {/* Back Arrow */}
             <View style={styles.arrowBack}>
               <Icon
                 name="arrow-back"
@@ -57,6 +46,8 @@ export default class AssistanceView extends Component {
                 onPress={() => navigation.dispatch({ type: "back" })}
               />
             </View>
+
+            {/* Settings */}
             <View style={styles.settings}>
               <Icon
                 name="settings"
@@ -66,19 +57,24 @@ export default class AssistanceView extends Component {
               />
             </View>
           </View>
-          <RkText style={styles.mainTitle}>{EN["DescribeAssistance"]}</RkText>
+
+          {/* Select the Assistance */}
+          <Text style={styles.mainTitle}>{EN["DescribeAssistance"]}</Text>
+
+          {/* Searchbar */}
           <SearchBar
             containerStyle={styles.containerSearch}
             placeholder="Search"
             inputStyle={styles.inputSearch}
             icon={{ name: "search" }}
+            onChangeText={text =>
+              this.props.updateSettings({ searchAssistance: text })
+            }
           />
-          <List>
-            {list.map((item, i) => (
-              <ListItem hideChevron key={i} title={item.name} />
-            ))}
-          </List>
+          <List>{this.filterList(this.props.searchAssistance)}</List>
         </ScrollView>
+
+        {/* Call Button */}
         <Button
           textStyle={styles.textStep}
           icon={{ name: "video-call", size: 30 }}
@@ -90,3 +86,14 @@ export default class AssistanceView extends Component {
     );
   }
 }
+
+const mS = state => ({
+  searchAssistance: state.contactLinguist.searchAssistance,
+  selectedAssistance: state.contactLinguist.selectedAssistance
+});
+
+const mD = {
+  updateSettings
+};
+
+export default connect(mS, mD)(AssistanceView);

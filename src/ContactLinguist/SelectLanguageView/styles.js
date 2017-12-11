@@ -60,9 +60,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 10
   },
-  iconSearch: {
-    paddingLeft: "10"
-  },
   buttonStep: {
     backgroundColor: "#a3a3df",
     width: Dimensions.get("window").width

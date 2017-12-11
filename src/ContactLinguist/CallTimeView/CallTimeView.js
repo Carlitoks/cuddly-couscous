@@ -1,16 +1,35 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import { updateSettings } from "../../Ducks/ContactLinguistReducer";
+
 import { Text, View, Picker } from "react-native";
-import EN from "../../I18n/en";
-import { styles } from "./styles";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button } from "react-native-elements";
 
-export default class CallTimeView extends Component {
+import { styles } from "./styles";
+import EN from "../../I18n/en";
+
+class CallTimeView extends Component {
   render() {
     const navigation = this.props.navigation;
+
+    pickerOptions = n => {
+      return new Array(n).fill(10).map((el, i) => {
+        return (
+          <Picker.Item
+            label={`${el * (i + 1)} Min`}
+            value={el * (i + 1)}
+            key={i}
+          />
+        );
+      });
+    };
+
     return (
       <View style={styles.scrollContainer}>
         <View style={styles.container}>
+          {/* Back Arrow */}
           <View style={styles.arrowBack}>
             <Icon
               name="arrow-back"
@@ -19,6 +38,8 @@ export default class CallTimeView extends Component {
               onPress={() => navigation.dispatch({ type: "back" })}
             />
           </View>
+
+          {/* Settings */}
           <View style={styles.settings}>
             <Icon
               name="settings"
@@ -28,20 +49,31 @@ export default class CallTimeView extends Component {
             />
           </View>
         </View>
+
         <View style={styles.containerContent}>
+          {/* how Long Do You Need help For? */}
           <Text style={styles.mainTitle}>{EN["howLongNeedHelp"]}</Text>
-          <Picker style={styles.picker} selectedValue="10 Min">
-            <Picker.Item label="10 Min" value="10" />
-            <Picker.Item label="20 Min" value="20" />
-            <Picker.Item label="30 Min" value="30" />
-            <Picker.Item label="40 Min" value="40" />
-            <Picker.Item label="50 Min" value="50" />
-            <Picker.Item label="60min" value="60" />
+
+          {/* Time Picker */}
+          <Picker
+            style={styles.picker}
+            selectedValue={this.props.selectedTime}
+            onValueChange={(itemValue, itemIndex) =>
+              this.props.updateSettings({ selectedTime: itemValue })
+            }
+          >
+            {pickerOptions(this.props.timeOptions)}
           </Picker>
+
+          {/* Cost */}
           <View style={styles.costCallContainer}>
-            <Text style={styles.costCall}>{EN["costOfCall"]}</Text>
+            <Text style={styles.costCall}>{`${EN["costOfCall"]} ${
+              EN["currency"]
+            }${this.props.selectedTime * this.props.cost}`}</Text>
           </View>
         </View>
+
+        {/* Next Button */}
         <View style={styles.containerBottom}>
           <Button
             containerViewStyle={styles.buttonAccept}
@@ -54,3 +86,15 @@ export default class CallTimeView extends Component {
     );
   }
 }
+
+const mS = state => ({
+  timeOptions: state.contactLinguist.timeOptions,
+  selectedTime: state.contactLinguist.selectedTime,
+  cost: state.contactLinguist.cost
+});
+
+const mD = {
+  updateSettings
+};
+
+export default connect(mS, mD)(CallTimeView);

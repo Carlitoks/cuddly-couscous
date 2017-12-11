@@ -33,22 +33,6 @@ export const styles = StyleSheet.create({
     color: "#7c7cad",
     lineHeight: 40
   },
-  languages: {
-    flex: 1,
-    marginTop: 20,
-    flexDirection: "row",
-    justifyContent: "space-around"
-  },
-  english: {
-    fontSize: 24,
-    color: "#7c7cad",
-    marginLeft: 50
-  },
-  spanish: {
-    fontSize: 24,
-    color: "#7c7cad",
-    marginRight: 50
-  },
   containerSearch: {
     backgroundColor: "transparent",
     borderBottomWidth: 0,
@@ -59,9 +43,6 @@ export const styles = StyleSheet.create({
   inputSearch: {
     backgroundColor: "#ffffff",
     borderRadius: 10
-  },
-  iconSearch: {
-    paddingLeft: "10"
   },
   buttonStep: {
     backgroundColor: "#a3a3df",

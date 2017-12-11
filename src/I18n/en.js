@@ -1,4 +1,5 @@
 export default (ENG = {
+  currency: "$",
   signIn: "Sign In",
   logOut: "Log Out",
   loginLogoutExampleTitle: "Login/Logout Redux + Sagas Example",
@@ -50,7 +51,7 @@ export default (ENG = {
   alreadyAccount: "Already have an account?",
   selectLanguage: "Select the Language You Need a Linguist in",
   howLongNeedHelp: "How Long Do You Need Help For?",
-  costOfCall: "Approx~$20",
+  costOfCall: "Approx ~ ",
   english: "English",
   spanish: "Spanish",
   DescribeAssistance: "Describe What Assistance You Need",
