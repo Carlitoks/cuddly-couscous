@@ -7,6 +7,8 @@ src/Config/env.js
 # OSX
 #
 .DS_Store
+# Visual Studio
+.vscode
 
 # Xcode
 #

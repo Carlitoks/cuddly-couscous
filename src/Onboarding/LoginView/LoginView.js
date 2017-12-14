@@ -6,7 +6,7 @@ import { Button, FormLabel, FormInput } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { clearForm, updateForm } from "../../Ducks/LoginReducer";
-import { logInAsync } from "../../Ducks/AuthReducer";
+import { logInAsync, haveSession } from "../../Ducks/AuthReducer";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
 
@@ -33,7 +33,7 @@ class LoginView extends Component {
       // alert or toast or whatever
     }
 
-    this.props.logInAsync();
+    this.props.logInAsync(this.props.email, this.props.password);
   }
 
   render() {
@@ -103,7 +103,8 @@ const mS = state => ({
 const mD = {
   clearForm,
   updateForm,
-  logInAsync
+  logInAsync,
+  haveSession
 };
 
 export default connect(mS, mD)(LoginView);

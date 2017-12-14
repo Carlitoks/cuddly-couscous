@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { ScrollView, View, Alert, Text } from "react-native";
 import { Button, FormLabel, FormInput } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { resetPasswordAsync } from "../../Ducks/AuthReducer";
 import { clearForm, updateForm } from "../../Ducks/ForgotPassowrdReducer";
 //import { loginUser } from "../../Ducks/AuthReducer";
 
@@ -17,7 +17,13 @@ class ForgotPasswordView extends Component {
   componentWillUnmount() {
     this.props.clearForm();
   }
-
+  submit() {
+    this.props.resetPasswordAsync(this.props.email, error => {
+      if (!error) {
+        this.props.navigation.dispatch({ type: "LoginView" });
+      }
+    });
+  }
   render() {
     const navigation = this.props.navigation;
 
@@ -51,14 +57,16 @@ class ForgotPasswordView extends Component {
           {/* Forgot Password Button */}
           <Button
             buttonStyle={styles.Button}
-            onPress={() => Alert.alert("ForgotPassword")}
+            onPress={() => this.props.resetPasswordAsync(this.props.email)}
             title={EN["resetpassword"]}
           />
 
           {/* Register */}
           <Text
             style={styles.linksText}
-            onPress={() => Alert.alert("new account")}
+            onPress={() =>
+              this.props.navigation.dispatch({ type: "CustomerAccount" })
+            }
           >
             {EN["newaccount"]}
           </Text>
@@ -83,7 +91,8 @@ const mS = state => ({
 
 const mD = {
   clearForm,
-  updateForm
+  updateForm,
+  resetPasswordAsync
 };
 
 export default connect(mS, mD)(ForgotPasswordView);

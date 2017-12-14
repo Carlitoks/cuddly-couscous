@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { View, Text, Button, Image, ScrollView } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
 import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
@@ -6,11 +7,25 @@ import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Profile from "./../../Profile";
 import EN from "../../I18n/en";
-export class Home extends Component {
+import {
+  getProfileAsync,
+  clearView,
+  updateView
+} from "../../Ducks/HomeReducer";
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { starCount: 4.3 };
   }
+  componentWillMount() {
+    console.log("paso");
+    this.props.getProfileAsync();
+  }
+
+  componentWillUnmount() {
+    // this.props.clearView();
+  }
+
   onStarRatingPress(rating) {
     this.setState({
       starCount: rating
@@ -168,7 +183,8 @@ export class Home extends Component {
                   onPress={() =>
                     this.props.navigation.dispatch({
                       type: "LandingContainer"
-                    })}
+                    })
+                  }
                 />
               </View>
             </View>
@@ -177,7 +193,7 @@ export class Home extends Component {
                 style={[this.styles.logo, this.styles.center]}
                 source={require("../../Images/perfil.jpg")}
               />
-              <RkText style={this.styles.textName}>Adele G.</RkText>
+              <RkText style={this.styles.textName}>{this.props.firstName} {" "} {this.props.lastName}</RkText>
             </View>
             <View style={this.styles.starsContainer}>
               <View style={[this.styles.stars, this.styles.center]}>
@@ -235,7 +251,8 @@ export class Home extends Component {
                     onPress={() =>
                       this.props.navigation.dispatch({
                         type: "LandingContainer"
-                      })}
+                      })
+                    }
                   />
                   <RkText
                     style={[
@@ -261,7 +278,8 @@ export class Home extends Component {
                     onPress={() =>
                       this.props.navigation.dispatch({
                         type: "LandingContainer"
-                      })}
+                      })
+                    }
                   />
                   <RkText
                     style={[
@@ -287,7 +305,8 @@ export class Home extends Component {
                     onPress={() =>
                       this.props.navigation.dispatch({
                         type: "LandingContainer"
-                      })}
+                      })
+                    }
                   />
                   <RkText
                     style={[
@@ -308,4 +327,16 @@ export class Home extends Component {
   }
 }
 
-export default Home;
+const mS = state => ({
+  firstName: state.home.firstName,
+  lastName: state.home.lastName,
+  nativeLangCode: state.home.nativeLangCode
+});
+
+const mD = {
+  clearView,
+  updateView,
+  getProfileAsync
+};
+
+export default connect(mS, mD)(Home);

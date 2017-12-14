@@ -7,12 +7,13 @@ import contactLinguist from "./ContactLinguistReducer";
 import forgotPassword from "./ForgotPassowrdReducer";
 import login from "./LoginReducer";
 import nav from "./NavigationReducer";
+import home from "./HomeReducer";
 import registrationCustomer from "./RegistrationCustomerReducer";
 
 // Combine all the reducers
 const rootReducer = combineReducers({
   dataReducer, // Borrar
-
+  home,
   auth,
   contactLinguist,
   forgotPassword,
