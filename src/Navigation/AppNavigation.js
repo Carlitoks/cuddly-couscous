@@ -14,7 +14,7 @@ import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileVi
 import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
-import IncomingCallView from "../Containers/IncomingCallView/IncomingCallView";
+import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
 import CallHistory from "../Containers/CallHistory/CallHistory";
 
 const Navigation = StackNavigator(

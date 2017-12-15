@@ -6,8 +6,11 @@ import { clearForm, updateForm } from "../../Ducks/RegistrationCustomerReducer";
 
 import { View, ScrollView, Text } from "react-native";
 import { Button, FormLabel, FormInput } from "react-native-elements";
+import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
+
 import InputPassword from "../../Components/InputPassword/InputPassword";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 
 import styles from "./styles";
 
@@ -26,57 +29,55 @@ class CustomerAccountView extends Component {
         automaticallyAdjustContentInsets={true}
         style={styles.scrollContainer}
       >
-        <View style={styles.formContainer}>
-          {/* Back Arrow */}
-          <Icon
-            style={styles.Icon}
-            name="arrow-back"
-            size={30}
-            color={"#1E90FF"}
-            onPress={() => navigation.dispatch({ type: "back" })}
-          />
+        <Grid>
+          <Col>
+            {/* Go Back Component */}
+            <GoBackButton navigation={this.props.navigation} />
 
-          {/* Title */}
-          <Text style={styles.title}> {EN["CustomerAccount"]} </Text>
+            {/* Title */}
+            <Text style={styles.title}> {EN["CustomerAccount"]} </Text>
 
-          {/* Email */}
-          <FormInput
-            placeholder={EN["email"]}
-            autoCorrect={false}
-            onChangeText={text => this.props.updateForm({ email: text })}
-            value={this.props.email}
-            keyboardType={"email-address"}
-          />
+            {/* Email */}
+            <FormInput
+              placeholder={EN["email"]}
+              autoCorrect={false}
+              onChangeText={text => this.props.updateForm({ email: text })}
+              value={this.props.email}
+              keyboardType={"email-address"}
+            />
 
-          {/* Password */}
-          <FormInput
-            style={styles.InputPassword}
-            placeholder={EN["password"]}
-            onChangeText={text => this.props.updateForm({ password: text })}
-            value={this.props.password}
-            secureTextEntry={true}
-          />
+            {/* Password */}
+            <InputPassword
+              style={styles.InputPassword}
+              placeholder={EN["password"]}
+              onChangeText={text => this.props.updateForm({ password: text })}
+              value={this.props.password}
+            />
 
-          <Button
-            buttonStyle={styles.Button}
-            onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
-            title={EN["CreateAccount"]}
-          />
+            {/* Create */}
+            <Button
+              buttonStyle={styles.Button}
+              onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
+              title={EN["CreateAccount"]}
+            />
 
-          <Text style={{ padding: 10 }}>
-            {EN["CustomerAccountText"]}
-            <Text style={{ color: "blue" }}> {EN["PrivacyPolicy"]}</Text>{" "}
-            {EN["And"]}{" "}
-            <Text style={{ color: "blue" }}>{EN["TermConditions"]}</Text>
-          </Text>
+            {/* Terms */}
+            <Text style={{ padding: 10 }}>
+              {EN["CustomerAccountText"]}
+              <Text style={styles.Text}> {EN["PrivacyPolicy"]}</Text>{" "}
+              {EN["And"]}{" "}
+              <Text style={styles.Text}>{EN["TermConditions"]}</Text>
+            </Text>
 
-          <Button
-            buttonStyle={styles.transparentButton}
-            icon={{ name: "qrcode", type: "font-awesome" }}
-            onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
-            title={EN["ScanQR"]}
-          />
-        </View>
+            {/* QR */}
+            <Button
+              buttonStyle={styles.transparentButton}
+              icon={{ name: "qrcode", type: "font-awesome" }}
+              onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
+              title={EN["ScanQR"]}
+            />
+          </Col>
+        </Grid>
       </ScrollView>
     );
   }

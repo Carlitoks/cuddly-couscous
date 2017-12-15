@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 
 import { ScrollView, View, Alert, Text } from "react-native";
 import { Button, FormLabel, FormInput } from "react-native-elements";
+import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { resetPasswordAsync } from "../../Ducks/AuthReducer";
 import { clearForm, updateForm } from "../../Ducks/ForgotPassowrdReducer";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 //import { loginUser } from "../../Ducks/AuthReducer";
 
 import styles from "./styles";
@@ -32,27 +34,21 @@ class ForgotPasswordView extends Component {
         automaticallyAdjustContentInsets={true}
         style={styles.scrollContainer}
       >
-        <View style={styles.formContainer}>
-          {/* Back Arrow */}
-          <Icon
-            style={styles.Icon}
-            name="arrow-back"
-            size={30}
-            color={"#1E90FF"}
-            onPress={() => navigation.dispatch({ type: "back" })}
-          />
+        <Grid>
+          <Col>
+            <GoBackButton navigation={this.props.navigation} />
 
-          {/* Title */}
-          <Text style={styles.title}>{EN["forgotPassword"]}</Text>
+            {/* Title */}
+            <Text style={styles.title}>{EN["forgotPassword"]}</Text>
 
-          {/* Email */}
-          <FormInput
-            placeholder={EN["email"]}
-            autoCorrect={false}
-            onChangeText={text => this.props.updateForm({ email: text })}
-            value={this.props.email}
-            keyboardType={"email-address"}
-          />
+            {/* Email */}
+            <FormInput
+              placeholder={EN["email"]}
+              autoCorrect={false}
+              onChangeText={text => this.props.updateForm({ email: text })}
+              value={this.props.email}
+              keyboardType={"email-address"}
+            />
 
           {/* Forgot Password Button */}
           <Button
@@ -71,14 +67,15 @@ class ForgotPasswordView extends Component {
             {EN["newaccount"]}
           </Text>
 
-          {/* Troubleshoot Button */}
-          <Text
-            style={styles.linksText}
-            onPress={() => Alert.alert("troubleshoot")}
-          >
-            {EN["troubleshoot"]}
-          </Text>
-        </View>
+            {/* Troubleshoot Button */}
+            <Text
+              style={styles.linksText}
+              onPress={() => Alert.alert("troubleshoot")}
+            >
+              {EN["troubleshoot"]}
+            </Text>
+          </Col>
+        </Grid>
       </ScrollView>
     );
   }

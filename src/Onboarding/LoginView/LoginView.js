@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import { ScrollView, View, Alert, Text } from "react-native";
 import { Button, FormLabel, FormInput } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 import { clearForm, updateForm } from "../../Ducks/LoginReducer";
 import { logInAsync, haveSession } from "../../Ducks/AuthReducer";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 
 import styles from "./styles";
 
@@ -44,50 +46,50 @@ class LoginView extends Component {
         automaticallyAdjustContentInsets={true}
         style={styles.scrollContainer}
       >
-        <View style={styles.formContainer}>
-          {/* Back Arrow */}
-          <Icon
-            style={styles.Icon}
-            name="arrow-back"
-            size={30}
-            onPress={() => navigation.dispatch({ type: "back" })}
-          />
+        <Grid>
+          <Col>
+            {/* Go Back Component */}
+            <GoBackButton navigation={this.props.navigation} />
 
-          {/* Title */}
-          <Text style={styles.title}>{EN["signIn"]}</Text>
+            {/* Title */}
+            <Text style={styles.title}>{EN["signIn"]}</Text>
 
-          {/* Email */}
-          <FormInput
-            placeholder={EN["email"]}
-            autoCorrect={false}
-            onChangeText={text => this.props.updateForm({ email: text })}
-            value={this.props.email}
-            keyboardType={"email-address"}
-          />
+            {/* Email */}
+            <FormInput
+              style={styles.FormInput}
+              placeholder={EN["email"]}
+              autoCorrect={false}
+              onChangeText={text => this.props.updateForm({ email: text })}
+              value={this.props.email}
+              keyboardType={"email-address"}
+            />
 
-          {/* Password */}
-          <InputPassword
-            style={styles.InputPassword}
-            placeholder={EN["password"]}
-            onChangeText={text => this.props.updateForm({ password: text })}
-            value={this.props.password}
-          />
+            {/* Password */}
+            <InputPassword
+              style={styles.InputPassword}
+              placeholder={EN["password"]}
+              onChangeText={text => this.props.updateForm({ password: text })}
+              value={this.props.password}
+            />
 
-          {/* Sign In Button */}
-          <Button
-            buttonStyle={styles.Button}
-            onPress={() => this.submit()}
-            title={EN["signIn"]}
-          />
+            {/* Sign In Button */}
+            <Button
+              buttonStyle={styles.Button}
+              onPress={() => this.submit()}
+              title={EN["signIn"]}
+            />
 
-          {/* Forgot Password */}
-          <Text
-            style={styles.forgotPasswordText}
-            onPress={() => navigation.dispatch({ type: "ForgotPasswordView" })}
-          >
-            {EN["forgotPassword"]}
-          </Text>
-        </View>
+            {/* Forgot Password */}
+            <Text
+              style={styles.forgotPasswordText}
+              onPress={() =>
+                navigation.dispatch({ type: "ForgotPasswordView" })
+              }
+            >
+              {EN["forgotPassword"]}
+            </Text>
+          </Col>
+        </Grid>
       </ScrollView>
     );
   }

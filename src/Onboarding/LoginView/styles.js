@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { Colors, Fonts } from "../../Themes";
 
 const width = Dimensions.get("window").width - 20;
-const color = "#0487d4";
 
 export default StyleSheet.create({
   scrollContainer: {
@@ -13,32 +13,27 @@ export default StyleSheet.create({
     marginRight: 11,
     marginLeft: 10,
     backgroundColor: "white",
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
     alignItems: "center",
     width: width
   },
   title: {
     fontSize: 30,
     marginLeft: 10,
-    marginTop: 20,
-    fontFamily: "System",
-    alignSelf: "center",
+    marginTop: 15,
+    fontFamily: Fonts.primaryFont,
+    alignSelf: "flex-start",
     width: width
   },
   Button: {
     marginTop: 10,
     borderRadius: 25,
-    width: width,
-    backgroundColor: color
-  },
-  Icon: {
-    width: width,
-    color: color
+    backgroundColor: Colors.primaryColor,
+    width: "100%",
+    alignSelf: "center"
   },
   forgotPasswordText: {
-    color: color,
-    padding: 10
+    color: Colors.primaryColor,
+    padding: 10,
+    alignSelf: "center"
   }
 });

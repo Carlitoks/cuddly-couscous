@@ -1,25 +1,17 @@
 import { StyleSheet, Dimensions } from "react-native";
 
 const width = Dimensions.get("window").width - 20;
+
 export const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
-    backgroundColor: "#f7f7f7"
+    backgroundColor: "white"
   },
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    paddingTop: 10
+  avatar: {
+    justifyContent: "center",
+    alignItems: "center"
   },
-  arrowBack: {
-    flex: 1,
-    alignItems: "flex-start"
-  },
-  nextText: {
-    flex: 1,
-    alignItems: "flex-end"
-  },
-  formContainer: {
+  col: {
     marginTop: 20,
     marginRight: 11,
     marginLeft: 10,
@@ -30,13 +22,10 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     width: width
   },
-  Icon: {
-    width: width
-  },
   personalInformation: {
+    fontSize: 17,
     width: width,
-    backgroundColor: "white",
     paddingTop: 30,
-    paddingLeft: 20
+    paddingLeft: 15
   }
 });

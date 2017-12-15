@@ -33,7 +33,7 @@ class InputPassword extends Component {
 
   render() {
     return (
-      <View style={styles.viewContainer}>
+      <View>
         <FormInput
           {...this.props}
           autoCorrect={false}

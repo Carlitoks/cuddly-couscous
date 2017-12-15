@@ -1,12 +1,14 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { Colors } from "../../Themes";
+
+const width = Dimensions.get("window").width - 20;
 
 export default StyleSheet.create({
   logo: {
     width: 160,
     height: 60,
-    marginTop: 60,
-    marginBottom: 60
+    marginTop: 30,
+    marginBottom: 40
   },
   call: {
     width: 100,
@@ -26,7 +28,7 @@ export default StyleSheet.create({
   mainButton: {
     paddingTop: "50px",
     paddingBottom: "50px",
-    width: "90%"
+    width: width
   },
   card: {
     width: "90%",
@@ -37,7 +39,7 @@ export default StyleSheet.create({
   button: {
     backgroundColor: Colors.primaryColor,
     borderRadius: 30,
-    width: 280,
+    width: "100%",
     height: 60
   },
   buttonQR: {
