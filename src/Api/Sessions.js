@@ -80,6 +80,11 @@ const Session = {
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
+  },
+  GetInvitations: (userId, token) => {
+    return AXIOS.get(`/users/${userId}/linguist-profile/session-invitations`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   }
 };
 

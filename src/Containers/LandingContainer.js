@@ -14,65 +14,25 @@ class LandingContainer extends Component {
       <View>
         <RkButton
           onPress={() => {
+            this.props.navigation.dispatch({ type: "PublisherView" });
+          }}
+        >
+          Publisher
+        </RkButton>
+
+        <RkButton
+          onPress={() => {
+            this.props.navigation.dispatch({ type: "SubscriberView" });
+          }}
+        >
+          Suscriber
+        </RkButton>
+        <RkButton
+          onPress={() => {
             this.props.navigation.dispatch({ type: "LoginView" });
           }}
         >
-          Login
-        </RkButton>
-
-        <RkButton
-          onPress={() => {
-            this.props.navigation.dispatch({ type: "ForgotPasswordView" });
-          }}
-        >
-          ForgotPasswordView
-        </RkButton>
-
-        <RkButton
-          onPress={() => {
-            this.props.navigation.dispatch({ type: "CustomerAccount" });
-          }}
-        >
-          CustomerAccount
-        </RkButton>
-
-        <RkButton
-          onPress={() => {
-            this.props.navigation.dispatch({ type: "ContactLinguist" });
-          }}
-        >
-          Contact Liguist
-        </RkButton>
-
-        <RkButton
-          onPress={() => {
-            this.props.navigation.dispatch({ type: "SelectRoleView" });
-          }}
-        >
-          SelectRoleView
-        </RkButton>
-
-        <RkButton
-          onPress={() => {
-            this.props.navigation.dispatch({ type: "IncomingCallView" });
-          }}
-        >
-          IncomingCallView
-        </RkButton>
-
-        <RkButton
-          onPress={() => {
-            this.props.navigation.dispatch({ type: "Home" });
-          }}
-        >
-          Home
-        </RkButton>
-        <RkButton
-          onPress={() => {
-            this.props.navigation.dispatch({ type: "CallHistory" });
-          }}
-        >
-          Call History
+          Suscriber
         </RkButton>
       </View>
     );

@@ -37,18 +37,18 @@ export const haveSession = () => dispatch => {
     }
   });
 };
+
 //Reset password
-export const resetPasswordAsync = (email, callback) => dispatch => {
+export const resetPasswordAsync = email => dispatch => {
   Auth.resetPassword(email)
     .then(response => {
       // console.log(response.data);
-      callback();
     })
     .catch(error => {
       // console.log(error);
-      callback(error);
     });
 };
+
 //Login user
 export const logInAsync = (email, password) => dispatch => {
   Auth.login(email, password)
@@ -59,66 +59,14 @@ export const logInAsync = (email, password) => dispatch => {
       const token = data.token;
       saveAsync("userLogin", data, true);
       dispatch(logIn(data));
-      let sessionID;
-      let CustomerTokboxSessionID;
-      let CustomerTokboxSessionToken;
-      let LinguistTokboxSessionID;
-      let LinguistTokboxSessionToken;
-      let invitationID;
-      Sessions.createSession(
-        "immediate_virtual",
-        "manual",
-        "eng",
-        "cmn",
-        20,
-        token
-      )
-        .then(response => {
-          const data = response.data;
-          sessionID = data.sessionID;
-          CustomerTokboxSessionID = data.tokboxSessionID;
-          CustomerTokboxSessionToken = data.tokboxSessionToken;
-
-          Sessions.customerInvitation(
-            sessionID,
-            "11111111-1111-1111-1111-111111111111",
-            "linguist",
-            token
-          )
-            .then(response => {
-              const data = response.data;
-              invitationID = data.invitationID;
-              Sessions.LinguistFetchesInvite(invitationID, token).then(
-                response => {
-                  Sessions.LinguistAcceptsInvite(invitationID, true, token)
-                    .then(response => {
-                      const data = response.data;
-                      console.log("data", data);
-                      console.log({
-                        sessionID: sessionID,
-                        CustomerTokboxSessionID: CustomerTokboxSessionID,
-                        CustomerTokboxSessionToken: CustomerTokboxSessionToken,
-                        LinguistTokboxSessionID: data.tokboxSessionID,
-                        LinguistTokboxSessionToken: data.tokboxSessionToken
-                      });
-                    })
-                    .catch(errorLog);
-                }
-              );
-
-              dispatch({ type: "Home" });
-            })
-            .catch(errorLog);
-        })
-        .catch(errorLog);
-
-      // dispatch({ type: "Home" });
+      dispatch({ type: "Home" });
     })
     .catch(function(error) {
       errorLog(error);
       dispatch(logOut());
     });
 };
+// Error log function
 const errorLog = error => {
   console.log(error);
   console.log({

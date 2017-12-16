@@ -3,10 +3,10 @@ import React, { Component } from "react";
 import { Text, View, ScrollView, Image, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import { connect } from "react-redux";
 import contactLinguist from "../../Ducks/ContactLinguistReducer";
 import { CallButton } from "../../Components/CallButton/CallButton";
-
+import { updateSettings } from "../../Ducks/CallCustomerSettings.js";
 import styles from "./styles";
 import { Images } from "../../Themes";
 
@@ -19,10 +19,19 @@ class ContactingLinguist extends Component {
       customerLocation: this.props.customerLocation
     };
   }
+  componentDidMount() {
+    setTimeout(() => {
+      this.props.navigation.dispatch(
+        {
+          type: "SubscriberView"
+        },
+        50000
+      );
+    });
+  }
 
   render() {
     const navigate = this.props.navigation.navigate;
-
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
@@ -52,7 +61,9 @@ class ContactingLinguist extends Component {
                 <View style={styles.buttonColumn}>
                   {/* Switch Camera Button */}
                   <CallButton
-                    onPress={() => {}}
+                    onPress={() => {
+                      if (typeof this.ref !== "string") this.ref.switchCamera();
+                    }}
                     toggle={true}
                     icon="camera-front"
                     iconToggled="camera-rear"
@@ -64,7 +75,9 @@ class ContactingLinguist extends Component {
                   <View style={{ flex: 1 }}>
                     {/* Toggle Microphone Button */}
                     <CallButton
-                      onPress={() => {}}
+                      onPress={() => {
+                        this.props.updateSettings({ mute: !this.props.mute });
+                      }}
                       toggle={true}
                       icon="mic"
                       iconToggled="mic-off"
@@ -90,7 +103,9 @@ class ContactingLinguist extends Component {
                   <View style={{ flex: 1 }}>
                     {/* Toggle Videocam Button */}
                     <CallButton
-                      onPress={() => {}}
+                      onPress={() => {
+                        this.props.updateSettings({ video: !this.props.video });
+                      }}
                       toggle={true}
                       icon="videocam"
                       iconToggled="videocam-off"
@@ -106,7 +121,10 @@ class ContactingLinguist extends Component {
             <Row style={styles.bottomContainer}>
               {/* End Call */}
               <CallButton
-                onPress={() => {}}
+                onPress={() => {
+                  OpenTok.disconnect(sessionId);
+                  this.props.navigation.dispatch({ type: "Home" });
+                }}
                 buttonColor="red"
                 toggle={false}
                 icon="call-end"
@@ -119,4 +137,14 @@ class ContactingLinguist extends Component {
   }
 }
 
-export default ContactingLinguist;
+const mS = state => ({
+  mute: state.callCustomerSettings.mute,
+  video: state.callCustomerSettings.video,
+  speaker: state.callCustomerSettings.speaker
+});
+
+const mD = {
+  updateSettings
+};
+
+export default connect(mS, mD)(ContactingLinguist);

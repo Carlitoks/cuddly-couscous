@@ -9,12 +9,16 @@ import login from "./LoginReducer";
 import nav from "./NavigationReducer";
 import home from "./HomeReducer";
 import registrationCustomer from "./RegistrationCustomerReducer";
+import callCustomerSettings from "./CallCustomerSettings";
+import callLinguistSettings from "./CallLinguistSettings";
 
 // Combine all the reducers
 const rootReducer = combineReducers({
   dataReducer, // Borrar
   home,
   auth,
+  callCustomerSettings,
+  callLinguistSettings,
   contactLinguist,
   forgotPassword,
   login,

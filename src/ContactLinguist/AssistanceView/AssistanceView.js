@@ -68,8 +68,7 @@ class AssistanceView extends Component {
             inputStyle={styles.inputSearch}
             icon={{ name: "search" }}
             onChangeText={text =>
-              this.props.updateSettings({ searchAssistance: text })
-            }
+              this.props.updateSettings({ searchAssistance: text })}
           />
           <List>{this.filterList(this.props.searchAssistance)}</List>
         </ScrollView>
@@ -80,7 +79,7 @@ class AssistanceView extends Component {
           icon={{ name: "video-call", size: 30 }}
           buttonStyle={styles.buttonStep}
           title="Call"
-          onPress={() => navigation.dispatch({ type: "IncomingCallView" })}
+          onPress={() => navigation.dispatch({ type: "ContactingLinguist" })}
         />
       </View>
     );

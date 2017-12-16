@@ -16,6 +16,9 @@ import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
 import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
 import CallHistory from "../Containers/CallHistory/CallHistory";
+import CustomerView from "../Containers/CallConection/Customer/CustomerView";
+import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
+import ContactingLinguist from "../CallCustomer/ContactingLinguist/ContactingLinguistView";
 
 const Navigation = StackNavigator(
   {
@@ -31,10 +34,13 @@ const Navigation = StackNavigator(
     ContactLinguist: { screen: ContactLinguist },
     AssistanceView: { screen: AssistanceView },
     CallHistory: { screen: CallHistory },
-    CallTimeView: { screen: CallTimeView }
+    CallTimeView: { screen: CallTimeView },
+    CustomerView: { screen: CustomerView },
+    LinguistView: { screen: LinguistView },
+    ContactingLinguist: { screen: ContactingLinguist }
   },
   {
-    initialRouteName: "SelectRoleView",
+    initialRouteName: "Home",
     headerMode: "none"
   }
 );

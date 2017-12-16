@@ -6,8 +6,6 @@ import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
-import styles from "./styles";
-
 /**
  * @description Generic call button component
  *
@@ -38,17 +36,12 @@ export class CallButton extends Component {
   }*/
 
   toggleIcon = () => {
-    console.log("UHMMMMM");
-    if (this.props.toggle) {
-      this.setState(prevState => {
-        return {
-          isActive: !prevState.isActive,
-          iconName: prevState.isActive
-            ? this.props.icon
-            : this.props.iconToggled
-        };
-      });
-    }
+    this.setState(prevState => {
+      return {
+        isActive: !prevState.isActive,
+        iconName: prevState.isActive ? this.props.icon : this.props.iconToggled
+      };
+    });
   };
 
   render() {
@@ -61,11 +54,22 @@ export class CallButton extends Component {
             opacity: this.props.opacity
           }}
           backgroundColor={this.props.buttonColor}
-          onPress={this.toggleIcon}
-          buttonStyle={styles.buttonCommon}
+          onPress={() => {
+            if (this.props.toggle) {
+              this.toggleIcon();
+            }
+            this.props.onPress();
+          }}
+          buttonStyle={{
+            height: this.props.buttonSize,
+            width: this.props.buttonSize,
+            justifyContent: "center",
+            borderRadius: 100
+          }}
           icon={{
             name: this.state.iconName,
-            size: 40,
+            size: this.props.iconSize,
+            color: "white",
             buttonStyle: { textAlign: "center", right: 10 }
           }}
           textStyle={{ marginLeft: -9.8 }}
@@ -88,12 +92,16 @@ CallButton.propTypes = {
   onPress: func.isRequired,
   opacity: number,
   toggle: bool,
-  iconToggled: string
+  iconToggled: string,
+  buttonSize: number,
+  iconSize: number
 };
 
 CallButton.defaultProps = {
   buttonColor: "#616161",
   labelColor: "white",
   opacity: 1,
-  toggle: false
+  toggle: false,
+  buttonSize: 80,
+  iconSize: 40
 };

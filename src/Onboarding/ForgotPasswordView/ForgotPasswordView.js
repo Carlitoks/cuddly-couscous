@@ -20,12 +20,9 @@ class ForgotPasswordView extends Component {
     this.props.clearForm();
   }
   submit() {
-    this.props.resetPasswordAsync(this.props.email, error => {
-      if (!error) {
-        this.props.navigation.dispatch({ type: "LoginView" });
-      }
-    });
+    this.props.resetPasswordAsync(this.props.email);
   }
+
   render() {
     const navigation = this.props.navigation;
 
