@@ -23,7 +23,7 @@ class ContactingLinguist extends Component {
     setTimeout(() => {
       this.props.navigation.dispatch(
         {
-          type: "SubscriberView"
+          type: "CustomerView"
         },
         50000
       );

@@ -17,15 +17,22 @@ class LandingContainer extends Component {
             this.props.navigation.dispatch({ type: "CustomerView" });
           }}
         >
-          Publisher
+          Customer
         </RkButton>
 
+        <RkButton
+          onPress={() => {
+            this.props.navigation.dispatch({ type: "LinguistView" });
+          }}
+        >
+          Linguist
+        </RkButton>
         <RkButton
           onPress={() => {
             this.props.navigation.dispatch({ type: "LoginView" });
           }}
         >
-          Suscriber
+          Login
         </RkButton>
       </View>
     );
