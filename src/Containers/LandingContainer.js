@@ -14,19 +14,12 @@ class LandingContainer extends Component {
       <View>
         <RkButton
           onPress={() => {
-            this.props.navigation.dispatch({ type: "PublisherView" });
+            this.props.navigation.dispatch({ type: "CustomerView" });
           }}
         >
           Publisher
         </RkButton>
 
-        <RkButton
-          onPress={() => {
-            this.props.navigation.dispatch({ type: "SubscriberView" });
-          }}
-        >
-          Suscriber
-        </RkButton>
         <RkButton
           onPress={() => {
             this.props.navigation.dispatch({ type: "LoginView" });

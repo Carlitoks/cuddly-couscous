@@ -63,3 +63,7 @@ buck-out/
 # Misc
 #
 .env.example
+
+# Pods 
+# 
+ios/Pods
