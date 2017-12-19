@@ -1,53 +1,76 @@
 import { StackNavigator, DrawerNavigator } from "react-navigation";
 
+import { getS } from "../Config/CreateStore";
+
 import LandingContainer from "../Containers/LandingContainer";
 import Profile from "../Profile";
 
-import LoginView from "../Onboarding/LoginView/LoginView";
-import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
-import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
-import MenuView from "../Components/MenuView/MenuView";
-import Home from "../Components/Home/Home";
-
+import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
+import CallHistory from "../Containers/CallHistory/CallHistory";
+import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
+import ContactingLinguist from "../CallCustomer/ContactingLinguist/ContactingLinguistView";
+import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
 import CustomerAccount from "../Onboarding/CustomerAccountView/CustomerAccountView";
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
-import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
-import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
-import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
-import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
-import CallHistory from "../Containers/CallHistory/CallHistory";
 import CustomerView from "../Containers/CallConection/Customer/CustomerView";
+import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
+import Home from "../Components/Home/Home";
+import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
 import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
-import ContactingLinguist from "../CallCustomer/ContactingLinguist/ContactingLinguistView";
+import LoginView from "../Onboarding/LoginView/LoginView";
+import MenuView from "../Components/MenuView/MenuView";
+import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
 
 const Navigation = StackNavigator(
   {
-    ForgotPasswordView: { screen: ForgotPasswordView },
-    LandingContainer: { screen: LandingContainer },
-    LoginView: { screen: LoginView },
-    Profile: { screen: Profile },
-    SelectRoleView: { screen: SelectRoleView },
-    Home: { screen: Home },
-    CustomerAccount: { screen: CustomerAccount },
-    CustomerProfile: { screen: CustomerProfile },
-    IncomingCallView: { screen: IncomingCallView },
-    ContactLinguist: { screen: ContactLinguist },
     AssistanceView: { screen: AssistanceView },
     CallHistory: { screen: CallHistory },
     CallTimeView: { screen: CallTimeView },
+    ContactingLinguist: { screen: ContactingLinguist },
+    ContactLinguist: { screen: ContactLinguist },
+    CustomerAccount: {
+      screen: CustomerAccount,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    CustomerProfile: { screen: CustomerProfile },
     CustomerView: { screen: CustomerView },
+    ForgotPasswordView: {
+      screen: ForgotPasswordView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    Home: {
+      screen: Home
+    },
+    IncomingCallView: { screen: IncomingCallView },
+    LandingContainer: { screen: LandingContainer },
     LinguistView: { screen: LinguistView },
-    ContactingLinguist: { screen: ContactingLinguist }
+    LoginView: {
+      screen: LoginView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    Profile: { screen: Profile },
+    SelectRoleView: {
+      screen: SelectRoleView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "SelectRoleView",
     headerMode: "none"
   }
 );
 
 const AppNavigation = DrawerNavigator(
   {
-    Home: {
+    Navigation: {
       screen: Navigation
     },
     Stack: {
@@ -65,4 +88,5 @@ const AppNavigation = DrawerNavigator(
     }
   }
 );
+
 export default AppNavigation;

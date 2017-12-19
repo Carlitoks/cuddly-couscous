@@ -1,6 +1,7 @@
 const ACTIONS = {
   CLEAR: "login/clear",
-  UPDATE: "login/update"
+  UPDATE: "login/update",
+  ERROR: "login/error"
 };
 
 export const clearForm = () => ({
@@ -12,11 +13,18 @@ export const updateForm = payload => ({
   payload
 });
 
+export const loginError = error => ({
+  type: ACTIONS.ERROR,
+  payload: error
+});
+
 const initialState = {
   email: "",
   password: "",
   emailErrorMessage: "",
-  passwordErrorMessage: ""
+  passwordErrorMessage: "",
+  formHasErrors: false,
+  performingRequest: false
 };
 
 const loginReducer = (state = initialState, action = {}) => {
@@ -31,6 +39,29 @@ const loginReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         ...payload
+      };
+    }
+
+    case ACTIONS.ERROR: {
+      const errors = {};
+
+      switch (payload.data.errors[0]) {
+        case "Email not found":
+          errors.emailErrorMessage = "User not found";
+          errors.formHasErrors = true;
+          break;
+
+        case "Password incorrect":
+          errors.passwordErrorMessage = "Invalid password";
+          errors.formHasErrors = true;
+          break;
+
+        default:
+      }
+
+      return {
+        ...state,
+        ...errors
       };
     }
 

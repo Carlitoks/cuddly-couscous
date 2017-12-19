@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { Button, FormLabel, FormInput, Card } from "react-native-elements";
 import { View, Image, ScrollView, Text } from "react-native";
@@ -10,7 +11,15 @@ import styles from "./styles";
 // For the moment
 import EN from "../../I18n/en";
 
-export default class SelectRoleView extends Component {
+class SelectRoleView extends Component {
+  componentWillMount() {
+    const { navigation, isLoggedIn } = this.props;
+
+    if (isLoggedIn) {
+      navigation.dispatch({ type: "Home" });
+    }
+  }
+
   render() {
     const navigation = this.props.navigation;
 
@@ -78,3 +87,9 @@ export default class SelectRoleView extends Component {
     );
   }
 }
+
+ms = state => ({
+  isLoggedIn: state.auth.isLoggedIn
+});
+
+export default connect(ms, null)(SelectRoleView);

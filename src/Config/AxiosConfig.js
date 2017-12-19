@@ -1,6 +1,7 @@
 import axios from "axios";
 import { URL } from "./env";
 
+// TODO: Configure Timeout
 const AXIOS = axios.create({
   baseURL: URL,
   headers: {

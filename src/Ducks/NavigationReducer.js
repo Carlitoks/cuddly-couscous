@@ -2,6 +2,12 @@ import { NavigationActions } from "react-navigation";
 
 import AppNavigation from "../Navigation/AppNavigation";
 
+const initialState = AppNavigation.router.getStateForAction(
+  AppNavigation.router.getActionForPathAndParams("SelectRoleView")
+);
+
+// console.log(AppNavigation.router.getActionForPathAndParams("LoginView"));
+
 export default (reducer = (state, action) => {
   let newState;
 

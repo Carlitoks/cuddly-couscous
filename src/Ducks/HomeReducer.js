@@ -1,5 +1,4 @@
 import { User } from "../Api";
-import { saveAsync, getAsync } from "../Config/LocalStorage";
 
 // Actions
 const ACTIONS = {
@@ -21,12 +20,13 @@ export const getProfileAsync = () => dispatch => {
   getAsync("userLogin").then((userlogin, error) => {
     if (!error) {
       userlogin = JSON.parse(userlogin);
-      User.get(userlogin.id, userlogin.token).then((response) => {
-        saveAsync("userInfo", response.data, true);
-        dispatch(updateView(response.data));
-      }).catch(function (error) {
-        console.log(error);
-      })
+      User.get(userlogin.id, userlogin.token)
+        .then(response => {
+          dispatch(updateView(response.data));
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     } else {
       console.log(error);
     }

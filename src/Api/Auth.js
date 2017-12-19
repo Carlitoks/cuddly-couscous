@@ -9,6 +9,7 @@ const Auth = {
       password: password
     });
   },
+
   //endpoint not Implemented
   resetPassword: (email, token) => {
     return AXIOS.get(`${BASE_URI}/password-reset?email=${email}`, {

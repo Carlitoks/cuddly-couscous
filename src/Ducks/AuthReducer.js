@@ -1,7 +1,8 @@
 import { NavigationActions } from "react-navigation";
 
-import { saveAsync, getAsync } from "../Config/LocalStorage";
 import { Auth, User, Sessions } from "../Api";
+
+import { loginError } from "./LoginReducer";
 
 // Actions
 export const ACTIONS = {
@@ -20,22 +21,30 @@ export const logOut = payload => ({
   payload
 });
 
-///To get userLogin in the splash screen and refresh token
-export const haveSession = () => dispatch => {
-  getAsync("userLogin").then(userlogin => {
-    if (userlogin) {
-      userlogin = JSON.parse(userlogin);
+// To get userLogin in the splash screen and refresh token
+export const haveSession = () => {
+  getAsync("userLogin")
+    .then(userlogin => {
+      console.log("->", userlogin);
+
+      if (userlogin) {
+        userlogin = JSON.parse(userlogin);
+
+        /*
       Auth.refreshToken(userlogin.token).then(response => {
         const data = response.data;
 
         userlogin.token = data.token;
-        saveAsync("userLogin", userlogin, true).then(err => {
+
           dispatch(logIn(userlogin));
           dispatch({ type: "Home" });
-        });
+
       });
-    }
-  });
+
+      */
+      }
+    })
+    .catch(e => console.log(e));
 };
 
 //Reset password
@@ -51,31 +60,23 @@ export const resetPasswordAsync = email => dispatch => {
 
 //Login user
 export const logInAsync = (email, password) => dispatch => {
-  Auth.login(email, password)
+  return Auth.login(email, password)
     .then(response => {
-      // console.log(response);
-
-      const data = response.data;
-      const token = data.token;
-      saveAsync("userLogin", data, true);
-      dispatch(logIn(data));
-      dispatch({ type: "Home" });
+      return dispatch(
+        logIn({
+          token: response.data.token,
+          uuid: response.data.id
+        })
+      );
     })
-    .catch(function(error) {
-      errorLog(error);
-      dispatch(logOut());
-    });
+    .catch(error => dispatch(loginError(error.response)));
 };
+
 // Error log function
-const errorLog = error => {
-  console.log(error);
-  console.log({
-    config: error.config,
-    request: error.request,
-    response: error.response
-  });
-  if (error.data) console.log(error.data);
+const errorLog = (origin, error) => {
+  console.log(origin, error);
 };
+
 // Initial State
 const initialState = {
   isLoggedIn: false,

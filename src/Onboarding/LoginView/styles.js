@@ -31,6 +31,9 @@ export default StyleSheet.create({
     width: "100%",
     alignSelf: "center"
   },
+  ButtonDisabled: {
+    backgroundColor: Colors.primaryColorDisabled
+  },
   forgotPasswordText: {
     color: Colors.primaryColor,
     padding: 10,
