@@ -13,7 +13,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import TopViewIOS from "../Components/TopViewIOS/TopViewIOS";
 import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
 
 import styles from "./styles";
@@ -47,6 +47,7 @@ class Home extends Component {
         <ScrollView>
           <Grid>
             <Col style={styles.containerPerfil}>
+            <TopViewIOS/>
               <View>
                 <View style={styles.IconView}>
                   {/* Header - Navigation */}

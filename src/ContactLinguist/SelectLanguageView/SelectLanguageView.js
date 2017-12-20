@@ -19,6 +19,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 
 import EN from "../../I18n/en";
 import { styles } from "./styles";
@@ -45,6 +46,7 @@ class SelectLanguague extends Component {
 
     return (
       <View style={styles.scrollContainer}>
+      <TopViewIOS/>
         <ScrollView automaticallyAdjustContentInsets={true}>
           <Col>
             {/* Header - Navigation */}

@@ -10,6 +10,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 
 import styles from "./styles";
 import EN from "../../I18n/en";
@@ -32,6 +33,7 @@ class CallTimeView extends Component {
 
     return (
       <View style={styles.scrollContainer}>
+      <TopViewIOS/>
         <ScrollView automaticallyAdjustContentInsets={true}>
           <Col>
             {/* Header - Navigation */}

@@ -9,6 +9,7 @@ import {
 
 import { View, Text, Image } from "react-native";
 import { Button } from "react-native-elements";
+import TopViewIOS from "../TopViewIOS/TopViewIOS"
 
 import styles from "./styles";
 
@@ -26,6 +27,7 @@ class MenuView extends Component {
 
     return (
       <View>
+        <TopViewIOS/>
         <Image
           style={[styles.logo, styles.center]}
           source={require("../../Images/perfil.jpg")}

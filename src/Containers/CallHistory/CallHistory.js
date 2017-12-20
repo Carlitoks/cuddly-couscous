@@ -4,6 +4,7 @@ import { styles } from "./style";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { CallHistoryComponent } from "../../Components/CallHistory/CallHistory";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 
 export default class CallHistory extends Component {
   constructor() {
@@ -62,6 +63,7 @@ export default class CallHistory extends Component {
 
     return (
       <View style={{ flex: 1 }}>
+      <TopViewIOS large/>
         <Icon
           style={styles.Icon}
           name="arrow-back"
