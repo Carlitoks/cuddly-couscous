@@ -94,7 +94,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: true,
         token: payload.token,
-        uuid: payload.id
+        uuid: payload.uuid
       };
 
     case ACTIONS.LOG_OUT:
