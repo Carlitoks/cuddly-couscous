@@ -79,8 +79,7 @@ class LoginView extends Component {
     if (this.validateForm()) {
       this.props.logInAsync(this.props.email, this.props.password).then(() => {
         if (!this.props.formHasErrors) {
-          console.log("Navegando a Home");
-          // navigation.dispatch({ type: "Home" });
+          this.props.navigation.dispatch({ type: "Home" }); 
         } else {
           if (this.props.formHasErrors) {
             this.tempDisplayErrors(
