@@ -6,13 +6,13 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 import styles from "./styles";
 
-const GoBackButton = ({ navigation }) => {
+const SettingButton = ({ navigation }) => {
   return (
     <Col style={styles.container}>
-      {/* Back Arrow - Go back button */}
+      {/* Setting Button */}
       <Icon
         style={styles.Icon}
-        name="arrow-back"
+        name="settings"
         size={30}
         onPress={() => navigation.dispatch({ type: "back" })}
       />
@@ -20,4 +20,4 @@ const GoBackButton = ({ navigation }) => {
   );
 };
 
-export default GoBackButton;
+export default SettingButton;

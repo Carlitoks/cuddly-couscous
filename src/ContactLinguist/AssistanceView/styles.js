@@ -1,13 +1,15 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { Colors } from "../../Themes";
 
-const width = Dimensions.get("window").width;
+const { width, height } = Dimensions.get("window");
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   scrollContainer: {
+    width: "100%",
+    backgroundColor: Colors.primaryFillColor,
+    height: "100%",
     flex: 1,
-    backgroundColor: "#e4e4f7",
-    justifyContent: "center",
-    alignItems: "center"
+    flexDirection: "column"
   },
   Icon: {
     width: width
@@ -17,35 +19,32 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     paddingTop: 10
   },
-  arrowBack: {
-    flex: 1,
-    alignItems: "flex-start"
-  },
-  settings: {
-    flex: 1,
-    alignItems: "flex-end"
-  },
   mainTitle: {
     fontSize: 24,
     textAlign: "center",
     marginBottom: 15,
-    marginTop: 20,
-    color: "#7c7cad",
+    marginTop: 10,
+    color: Colors.primaryColor,
     lineHeight: 40
   },
   containerSearch: {
     backgroundColor: "transparent",
     borderBottomWidth: 0,
     borderTopWidth: 0,
-    marginTop: 20,
-    marginLeft: 5
+    marginTop: 20
   },
   inputSearch: {
     backgroundColor: "#ffffff",
     borderRadius: 10
   },
   buttonStep: {
-    backgroundColor: "#a3a3df",
-    width: Dimensions.get("window").width
+    backgroundColor: Colors.primaryColor,
+    width: width
+  },
+  containerBottom: {
+    alignItems: "flex-end",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });

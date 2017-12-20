@@ -14,7 +14,7 @@ import CustomerAccount from "../Onboarding/CustomerAccountView/CustomerAccountVi
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
 import CustomerView from "../Containers/CallConection/Customer/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
-import Home from "../Components/Home/Home";
+import Home from "../Home/Home";
 import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
 import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
 import LoginView from "../Onboarding/LoginView/LoginView";

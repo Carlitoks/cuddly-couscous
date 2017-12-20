@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Alert, Platform, ScrollView, Text, View } from "react-native";
-import { Button, FormLabel, FormInput } from "react-native-elements";
+import { Alert, Platform, ScrollView, View, Text } from "react-native";
+import { Button, FormLabel, FormInput, Header } from "react-native-elements";
+
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
@@ -119,8 +120,14 @@ class LoginView extends Component {
       >
         <Grid>
           <Col>
-            {/* Go Back Component */}
-            <GoBackButton navigation={this.props.navigation} />
+            {/* Header - Navigation */}
+            <Header
+              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+              backgroundColor="transparent"
+              leftComponent={
+                <GoBackButton navigation={this.props.navigation} />
+              }
+            />
 
             {/* Title */}
             <Text style={styles.title}>{EN["signIn"]}</Text>

@@ -20,7 +20,7 @@ export default StyleSheet.create({
     fontSize: 30,
     fontFamily: Fonts.primaryFont,
     marginLeft: 10,
-    marginTop: 15,
+    marginTop: 5,
     alignSelf: "flex-start",
     width: width
   },

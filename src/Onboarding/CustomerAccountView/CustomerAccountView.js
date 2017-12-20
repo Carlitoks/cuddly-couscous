@@ -5,7 +5,7 @@ import { clearForm, updateForm } from "../../Ducks/RegistrationCustomerReducer";
 //import { loginUser } from "../../Ducks/AuthReducer";
 
 import { View, ScrollView, Text } from "react-native";
-import { Button, FormLabel, FormInput } from "react-native-elements";
+import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -31,8 +31,14 @@ class CustomerAccountView extends Component {
       >
         <Grid>
           <Col>
-            {/* Go Back Component */}
-            <GoBackButton navigation={this.props.navigation} />
+            {/* Header - Navigation */}
+            <Header
+              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+              backgroundColor="transparent"
+              leftComponent={
+                <GoBackButton navigation={this.props.navigation} />
+              }
+            />
 
             {/* Title */}
             <Text style={styles.title}> {EN["CustomerAccount"]} </Text>

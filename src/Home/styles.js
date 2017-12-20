@@ -1,6 +1,9 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { Colors } from "../Themes";
 
-const styles = StyleSheet.create({
+const { width, height } = Dimensions.get("window");
+
+export default StyleSheet.create({
   Button: {
     width: "90%",
     backgroundColor: "#FFFFFF",
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontWeight: "400",
     marginBottom: 15,
-    color: "#9391f7"
+    color: Colors.primaryColor
   },
   button: {
     backgroundColor: "#ffffff",
@@ -61,20 +64,20 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   buttonQR: {
-    backgroundColor: "#e5e5ff",
+    backgroundColor: Colors.primaryBackgroundColor,
     borderRadius: 20,
     marginTop: 20,
     width: "90%",
     height: 80
   },
   buttonSchedule: {
-    backgroundColor: "#e5e5ff",
+    backgroundColor: Colors.primaryBackgroundColor,
     borderRadius: 20,
     width: "90%",
     height: 80
   },
   buttonFavorites: {
-    backgroundColor: "#e5e5ff",
+    backgroundColor: Colors.primaryBackgroundColor,
     borderRadius: 20,
     width: "90%",
     height: 80,
@@ -82,12 +85,12 @@ const styles = StyleSheet.create({
   },
   buttonTextSecondary: {
     fontSize: 17,
-    color: "#8f97e8",
+    color: Colors.primaryColor,
     fontWeight: "500"
   },
   buttonText: {
     fontSize: 17,
-    color: "#8f97e8",
+    color: Colors.primaryColor,
     fontWeight: "500",
     display: "flex",
     alignItems: "center"
@@ -103,7 +106,7 @@ const styles = StyleSheet.create({
     minHeight: 300
   },
   containerPerfil: {
-    backgroundColor: "#c1c0f9"
+    backgroundColor: Colors.primaryFillColor
   },
   starsContainer: {
     display: "flex",
@@ -135,6 +138,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     paddingLeft: 20
+  },
+  icon: {
+    color: "#9391f7"
   }
 });
-export default styles;

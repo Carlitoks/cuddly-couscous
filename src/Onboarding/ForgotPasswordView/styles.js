@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
 
-const width = Dimensions.get("window").width - 20;
+const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   scrollContainer: {
@@ -20,7 +20,7 @@ export default StyleSheet.create({
     fontSize: 30,
     marginLeft: 10,
     fontFamily: Fonts.primaryFont,
-    marginTop: 15,
+    marginTop: 5,
     alignSelf: "flex-start",
     width: width
   },

@@ -3,11 +3,15 @@ import { connect } from "react-redux";
 
 import { updateSettings } from "../../Ducks/ContactLinguistReducer";
 
-import { Text, View, Picker } from "react-native";
+import { Text, View, Picker, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Button } from "react-native-elements";
+import { Button, Header } from "react-native-elements";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
-import { styles } from "./styles";
+import SettingsButton from "../../Components/SettingsButton/SettingsButton";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+
+import styles from "./styles";
 import EN from "../../I18n/en";
 
 class CallTimeView extends Component {
@@ -28,56 +32,48 @@ class CallTimeView extends Component {
 
     return (
       <View style={styles.scrollContainer}>
-        <View style={styles.container}>
-          {/* Back Arrow */}
-          <View style={styles.arrowBack}>
-            <Icon
-              name="arrow-back"
-              size={30}
-              color={"#7c7cad"}
-              onPress={() => navigation.dispatch({ type: "back" })}
+        <ScrollView automaticallyAdjustContentInsets={true}>
+          <Col>
+            {/* Header - Navigation */}
+            <Header
+              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+              backgroundColor="transparent"
+              leftComponent={
+                <GoBackButton navigation={this.props.navigation} />
+              }
+              rightComponent={
+                <SettingsButton navigation={this.props.navigation} />
+              }
             />
-          </View>
+            <View style={styles.containerContent}>
+              {/* how Long Do You Need help For? */}
+              <Text style={styles.mainTitle}>{EN["howLongNeedHelp"]}</Text>
 
-          {/* Settings */}
-          <View style={styles.settings}>
-            <Icon
-              name="settings"
-              size={30}
-              color={"#7c7cad"}
-              onPress={() => navigation.dispatch({ type: "back" })}
-            />
-          </View>
-        </View>
+              {/* Time Picker */}
+              <Picker
+                style={styles.picker}
+                selectedValue={this.props.selectedTime}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.props.updateSettings({ selectedTime: itemValue })
+                }
+              >
+                {pickerOptions(this.props.timeOptions)}
+              </Picker>
 
-        <View style={styles.containerContent}>
-          {/* how Long Do You Need help For? */}
-          <Text style={styles.mainTitle}>{EN["howLongNeedHelp"]}</Text>
-
-          {/* Time Picker */}
-          <Picker
-            style={styles.picker}
-            selectedValue={this.props.selectedTime}
-            onValueChange={(itemValue, itemIndex) =>
-              this.props.updateSettings({ selectedTime: itemValue })
-            }
-          >
-            {pickerOptions(this.props.timeOptions)}
-          </Picker>
-
-          {/* Cost */}
-          <View style={styles.costCallContainer}>
-            <Text style={styles.costCall}>{`${EN["costOfCall"]} ${
-              EN["currency"]
-            }${this.props.selectedTime * this.props.cost}`}</Text>
-          </View>
-        </View>
-
+              {/* Cost */}
+              <View style={styles.costCallContainer}>
+                <Text style={styles.costCall}>{`${EN["costOfCall"]} ${
+                  EN["currency"]
+                }${this.props.selectedTime * this.props.cost}`}</Text>
+              </View>
+            </View>
+          </Col>
+        </ScrollView>
         {/* Next Button */}
         <View style={styles.containerBottom}>
           <Button
+            buttonStyle={styles.button}
             containerViewStyle={styles.buttonAccept}
-            backgroundColor="#a3a3df"
             title="Accept"
             onPress={() => navigation.dispatch({ type: "AssistanceView" })}
           />

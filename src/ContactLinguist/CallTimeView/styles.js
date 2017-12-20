@@ -1,19 +1,20 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { Colors } from "../../Themes";
 
-const width = Dimensions.get("window").width - 20;
-export const styles = StyleSheet.create({
+const { width, height } = Dimensions.get("window");
+
+export default StyleSheet.create({
   scrollContainer: {
     width: "100%",
-    backgroundColor: "#e4e4f7",
+    backgroundColor: Colors.primaryFillColor,
     height: "100%",
     flex: 1,
     flexDirection: "column"
   },
   containerContent: {
-    flex: 2,
+    flex: 1,
     flexDirection: "column",
-    alignItems: "flex-start",
-    backgroundColor: "#d0cffe"
+    alignItems: "flex-start"
   },
   Icon: {
     width: width
@@ -30,33 +31,27 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  arrowBack: {
-    flex: 1,
-    alignItems: "flex-start"
-  },
-  settings: {
-    flex: 1,
-    alignItems: "flex-end"
-  },
   buttonAccept: {
-    width: "100%",
-    backgroundColor: "#a3a3df"
+    width: width,
+    backgroundColor: Colors.primaryColor
+  },
+  button: {
+    backgroundColor: Colors.primaryColor
   },
   mainTitle: {
     fontSize: 28,
-    justifyContent: "center",
-    alignItems: "center",
     textAlign: "center",
     marginBottom: 15,
     marginTop: 20,
-    color: "#7c7cad",
-    lineHeight: 40
+    color: Colors.primaryColor,
+    lineHeight: 40,
+    margin: 5
   },
   costCall: {
     fontSize: 24,
     marginBottom: 15,
     marginTop: 35,
-    color: "#7c7cad",
+    color: Colors.primaryColor,
     width: "35%",
     alignItems: "center"
   },

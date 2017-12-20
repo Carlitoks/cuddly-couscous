@@ -1,5 +1,7 @@
 const colors = {
   primaryColor: "#1e90ff",
+  primaryFillColor: "#b6ddff",
+  primaryBackgroundColor: "#e6f3ff",
   primaryColorDisabled: "#63aff9",
   fontColor: "white",
   button: {

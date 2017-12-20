@@ -8,10 +8,20 @@ import {
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, View, ScrollView, Image } from "react-native";
-import { SearchBar, List, ListItem, Button } from "react-native-elements";
+import {
+  SearchBar,
+  List,
+  ListItem,
+  Button,
+  Header
+} from "react-native-elements";
+import { Col, Row, Grid } from "react-native-easy-grid";
+
+import SettingsButton from "../../Components/SettingsButton/SettingsButton";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 
 import EN from "../../I18n/en";
-import { styles } from "./styles";
+import styles from "./styles";
 import { Images } from "../../Themes";
 
 class AssistanceView extends Component {
@@ -36,51 +46,44 @@ class AssistanceView extends Component {
     return (
       <View style={styles.scrollContainer}>
         <ScrollView automaticallyAdjustContentInsets={true}>
-          <View style={styles.container}>
-            {/* Back Arrow */}
-            <View style={styles.arrowBack}>
-              <Icon
-                name="arrow-back"
-                size={30}
-                color={"#7c7cad"}
-                onPress={() => navigation.dispatch({ type: "back" })}
-              />
-            </View>
+          <Col>
+            {/* Header - Navigation */}
+            <Header
+              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+              backgroundColor="transparent"
+              leftComponent={
+                <GoBackButton navigation={this.props.navigation} />
+              }
+              rightComponent={
+                <SettingsButton navigation={this.props.navigation} />
+              }
+            />
 
-            {/* Settings */}
-            <View style={styles.settings}>
-              <Icon
-                name="settings"
-                size={30}
-                color={"#7c7cad"}
-                onPress={() => navigation.dispatch({ type: "back" })}
-              />
-            </View>
-          </View>
+            {/* Select the Assistance */}
+            <Text style={styles.mainTitle}>{EN["DescribeAssistance"]}</Text>
 
-          {/* Select the Assistance */}
-          <Text style={styles.mainTitle}>{EN["DescribeAssistance"]}</Text>
-
-          {/* Searchbar */}
-          <SearchBar
-            containerStyle={styles.containerSearch}
-            placeholder="Search"
-            inputStyle={styles.inputSearch}
-            icon={{ name: "search" }}
-            onChangeText={text =>
-              this.props.updateSettings({ searchAssistance: text })}
-          />
-          <List>{this.filterList(this.props.searchAssistance)}</List>
+            {/* Searchbar */}
+            <SearchBar
+              containerStyle={styles.containerSearch}
+              placeholder="Search"
+              inputStyle={styles.inputSearch}
+              icon={{ name: "search" }}
+              onChangeText={text =>
+                this.props.updateSettings({ searchAssistance: text })
+              }
+            />
+            <List>{this.filterList(this.props.searchAssistance)}</List>
+          </Col>
         </ScrollView>
-
-        {/* Call Button */}
-        <Button
-          textStyle={styles.textStep}
-          icon={{ name: "video-call", size: 30 }}
-          buttonStyle={styles.buttonStep}
-          title="Call"
-          onPress={() => navigation.dispatch({ type: "ContactingLinguist" })}
-        />
+        <View style={styles.containerBottom}>
+          {/* Call Button */}
+          <Button
+            icon={{ name: "video-call", size: 25 }}
+            buttonStyle={styles.buttonStep}
+            title="Call"
+            onPress={() => navigation.dispatch({ type: "ContactingLinguist" })}
+          />
+        </View>
       </View>
     );
   }

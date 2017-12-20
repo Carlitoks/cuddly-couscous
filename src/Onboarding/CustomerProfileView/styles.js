@@ -1,22 +1,19 @@
 import { StyleSheet, Dimensions } from "react-native";
 
-const width = Dimensions.get("window").width - 20;
+const { width, height } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     backgroundColor: "white"
   },
-  avatar: {
-    justifyContent: "center",
-    alignItems: "center"
+  avatarContainer: {
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10
   },
   col: {
-    marginTop: 20,
-    marginRight: 11,
-    marginLeft: 10,
     backgroundColor: "white",
-    flex: 1,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",

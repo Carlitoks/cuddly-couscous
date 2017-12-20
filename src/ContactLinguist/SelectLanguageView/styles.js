@@ -1,11 +1,12 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { Colors } from "../../Themes";
 
-const width = Dimensions.get("window").width;
+const { width, height } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
-    backgroundColor: "#e4e4f7",
+    backgroundColor: Colors.primaryFillColor,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -30,7 +31,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 15,
     marginTop: 20,
-    color: "#7c7cad",
+    color: Colors.primaryColor,
     lineHeight: 40
   },
   languages: {
@@ -41,12 +42,12 @@ export const styles = StyleSheet.create({
   },
   english: {
     fontSize: 24,
-    color: "#7c7cad",
+    color: Colors.primaryColor,
     marginLeft: 50
   },
   spanish: {
     fontSize: 24,
-    color: "#7c7cad",
+    color: Colors.primaryColor,
     marginRight: 50
   },
   containerSearch: {
@@ -61,10 +62,7 @@ export const styles = StyleSheet.create({
     borderRadius: 10
   },
   buttonStep: {
-    backgroundColor: "#a3a3df",
-    width: Dimensions.get("window").width
-  },
-  textStep: {
-    paddingTop: 10
+    backgroundColor: Colors.primaryColor,
+    width: width
   }
 });

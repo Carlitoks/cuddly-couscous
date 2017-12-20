@@ -8,7 +8,17 @@ import {
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, View, ScrollView, Alert, Image } from "react-native";
-import { SearchBar, List, ListItem, Button } from "react-native-elements";
+import {
+  SearchBar,
+  List,
+  ListItem,
+  Button,
+  Header
+} from "react-native-elements";
+import { Col, Row, Grid } from "react-native-easy-grid";
+
+import SettingsButton from "../../Components/SettingsButton/SettingsButton";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 
 import EN from "../../I18n/en";
 import { styles } from "./styles";
@@ -36,46 +46,38 @@ class SelectLanguague extends Component {
     return (
       <View style={styles.scrollContainer}>
         <ScrollView automaticallyAdjustContentInsets={true}>
-          <View style={styles.container}>
-            {/* Back Arrow */}
-            <View style={styles.arrowBack}>
-              <Icon
-                name="arrow-back"
-                size={30}
-                color={"#7c7cad"}
-                onPress={() => navigation.dispatch({ type: "back" })}
-              />
+          <Col>
+            {/* Header - Navigation */}
+            <Header
+              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+              backgroundColor="transparent"
+              leftComponent={
+                <GoBackButton navigation={this.props.navigation} />
+              }
+              rightComponent={
+                <SettingsButton navigation={this.props.navigation} />
+              }
+            />
+
+            {/* Select the Language You Need a Linguist in */}
+            <Text style={styles.mainTitle}>{EN["selectLanguage"]}</Text>
+            <View style={styles.languages}>
+              <Text style={styles.english}>{EN["english"]}</Text>
+              <Text style={styles.spanish}>{EN["spanish"]}</Text>
             </View>
 
-            {/* Settings */}
-            <View style={styles.settings}>
-              <Icon
-                name="settings"
-                size={30}
-                color={"#7c7cad"}
-                onPress={() => navigation.dispatch({ type: "back" })}
-              />
-            </View>
-          </View>
-
-          {/* Select the Language You Need a Linguist in */}
-          <Text style={styles.mainTitle}>{EN["selectLanguage"]}</Text>
-          <View style={styles.languages}>
-            <Text style={styles.english}>{EN["english"]}</Text>
-            <Text style={styles.spanish}>{EN["spanish"]}</Text>
-          </View>
-
-          {/* Searchbar */}
-          <SearchBar
-            containerStyle={styles.containerSearch}
-            placeholder="Search"
-            inputStyle={styles.inputSearch}
-            icon={{ name: "search" }}
-            onChangeText={text =>
-              this.props.updateSettings({ searchLanguage: text })
-            }
-          />
-          <List>{this.filterList(this.props.searchLanguage)}</List>
+            {/* Searchbar */}
+            <SearchBar
+              containerStyle={styles.containerSearch}
+              placeholder="Search"
+              inputStyle={styles.inputSearch}
+              icon={{ name: "search" }}
+              onChangeText={text =>
+                this.props.updateSettings({ searchLanguage: text })
+              }
+            />
+            <List>{this.filterList(this.props.searchLanguage)}</List>
+          </Col>
         </ScrollView>
 
         {/* Next Button */}

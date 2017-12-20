@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { ScrollView, View, Alert, Text } from "react-native";
-import { Button, FormLabel, FormInput } from "react-native-elements";
+import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { resetPasswordAsync } from "../../Ducks/AuthReducer";
@@ -33,7 +33,14 @@ class ForgotPasswordView extends Component {
       >
         <Grid>
           <Col>
-            <GoBackButton navigation={this.props.navigation} />
+            {/* Header - Navigation */}
+            <Header
+              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+              backgroundColor="transparent"
+              leftComponent={
+                <GoBackButton navigation={this.props.navigation} />
+              }
+            />
 
             {/* Title */}
             <Text style={styles.title}>{EN["forgotPassword"]}</Text>
@@ -47,22 +54,22 @@ class ForgotPasswordView extends Component {
               keyboardType={"email-address"}
             />
 
-          {/* Forgot Password Button */}
-          <Button
-            buttonStyle={styles.Button}
-            onPress={() => this.props.resetPasswordAsync(this.props.email)}
-            title={EN["resetpassword"]}
-          />
+            {/* Forgot Password Button */}
+            <Button
+              buttonStyle={styles.Button}
+              onPress={() => this.props.resetPasswordAsync(this.props.email)}
+              title={EN["resetpassword"]}
+            />
 
-          {/* Register */}
-          <Text
-            style={styles.linksText}
-            onPress={() =>
-              this.props.navigation.dispatch({ type: "CustomerAccount" })
-            }
-          >
-            {EN["newaccount"]}
-          </Text>
+            {/* Register */}
+            <Text
+              style={styles.linksText}
+              onPress={() =>
+                this.props.navigation.dispatch({ type: "CustomerAccount" })
+              }
+            >
+              {EN["newaccount"]}
+            </Text>
 
             {/* Troubleshoot Button */}
             <Text

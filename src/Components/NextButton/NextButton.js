@@ -7,7 +7,7 @@ import styles from "./styles";
 
 const NextButton = ({ navigation }) => {
   return (
-    <Col>
+    <Col style={styles.container}>
       {/* Next Button */}
       <Text
         style={styles.nextText}
