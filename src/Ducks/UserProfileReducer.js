@@ -37,10 +37,12 @@ export const getProfileAsync = () => dispatch => {
 const initialState = {
   firstName: "",
   lastName: "",
-  nativeLangCode: ""
+  nativeLangCode: "",
+  location: "San Diego, CA",
+  rate: 3.5
 };
 
-const HomeReducer = (state = initialState, action = {}) => {
+const UserProfileReducer = (state = initialState, action = {}) => {
   const { payload, type } = action;
 
   switch (type) {
@@ -63,4 +65,4 @@ const HomeReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default HomeReducer;
+export default UserProfileReducer;

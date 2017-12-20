@@ -9,19 +9,19 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     paddingLeft: 0,
     marginLeft: "10%",
-    paddingTop: 25,
-    paddingBottom: 25
+    paddingTop: 5,
+    paddingBottom: 5
   },
   colorText: {
-    color: "#000000",
+    color: "black",
     fontSize: 18,
     textAlign: "left",
     alignContent: "flex-start",
     width: "100%",
     marginLeft: 0,
     paddingLeft: 0,
-    paddingTop: 12,
-    paddingBottom: 12
+    paddingTop: 10,
+    paddingBottom: 10
   },
   center: {
     alignSelf: "center"

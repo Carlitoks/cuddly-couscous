@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { getProfileAsync, clearView, updateView } from "../Ducks/HomeReducer";
+import {
+  getProfileAsync,
+  clearView,
+  updateView
+} from "../Ducks/UserProfileReducer";
 
 import { View, Text, Image, ScrollView } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
@@ -74,11 +78,11 @@ class Home extends Component {
                     disabled={true}
                     maxStars={5}
                     starSize={22}
-                    rating={this.state.starCount}
+                    rating={this.props.rate}
                     starColor={Colors.primaryColor}
                   />
                 </View>
-                <Text style={styles.textStars}>4.3</Text>
+                <Text style={styles.textStars}>{this.props.rate}</Text>
               </View>
               {/* Home */}
               <View>
@@ -159,11 +163,12 @@ class Home extends Component {
 }
 
 const mS = state => ({
-  firstName: state.home.firstName,
-  lastName: state.home.lastName,
-  nativeLangCode: state.home.nativeLangCode,
+  firstName: state.userProfile.firstName,
+  lastName: state.userProfile.lastName,
+  nativeLangCode: state.userProfile.nativeLangCode,
   uuid: state.auth.uuid,
-  token: state.auth.token
+  token: state.auth.token,
+  rate: state.userProfile.rate
 });
 
 const mD = {

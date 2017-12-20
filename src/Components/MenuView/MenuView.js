@@ -1,64 +1,119 @@
-import React from "react";
-import { View, Text, Button, Image } from "react-native";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import { RkButton, RkTextInput, RkText } from "react-native-ui-kitten";
+import {
+  getProfileAsync,
+  clearView,
+  updateView
+} from "../../Ducks/UserProfileReducer";
+
+import { View, Text, Image } from "react-native";
+import { Button } from "react-native-elements";
 
 import styles from "./styles";
 
-const MenuView = props => {
-  const navigate = props.navigation.navigate;
+class MenuView extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <View>
-      <Image
-        style={[styles.logo, styles.center]}
-        source={require("../../Images/perfil.jpg")}
-      />
-      <RkText style={styles.textName}>Adele Gordon</RkText>
-      <RkText style={styles.textCountry}>Oman</RkText>
-      <RkText style={styles.textStars}>4.3</RkText>
+  componentWillMount() {
+    this.props.getProfileAsync(this.props.uuid, this.props.token);
+  }
 
-      {/* Home */}
-      <RkButton
-        style={styles.Button}
-        onPress={() => {
-          props.navigation.dispatch({ type: "Home" });
-        }}
-      >
-        <Text style={styles.colorText}>Home</Text>
-      </RkButton>
+  render() {
+    const navigation = this.props.navigation;
 
-      {/* My Profile */}
-      <RkButton
-        style={styles.Button}
-        onPress={() => {
-          props.navigation.dispatch({ type: "Profile" });
-        }}
-      >
-        <RkText style={styles.colorText}>My Profile</RkText>
-      </RkButton>
+    return (
+      <View>
+        <Image
+          style={[styles.logo, styles.center]}
+          source={require("../../Images/perfil.jpg")}
+        />
+        <Text style={styles.textName}>
+          {this.props.firstName} {this.props.lastName}
+        </Text>
+        <Text style={styles.textCountry}>{this.props.location}</Text>
+        <Text style={styles.textStars}>{this.props.rate}</Text>
 
-      {/* History */}
-      <RkButton style={styles.Button} onPress={() => navigate("CallHistory")}>
-        <RkText style={styles.colorText}>History</RkText>
-      </RkButton>
+        {/* Home */}
+        <Button
+          title="Home"
+          buttonStyle={styles.Button}
+          textStyle={styles.colorText}
+          onPress={() => {
+            navigation.dispatch({ type: "Home" });
+          }}
+        />
 
-      {/* Schedule */}
-      <RkButton style={styles.Button} onPress={() => navigate("Profile")}>
-        <RkText style={styles.colorText}>Schedule</RkText>
-      </RkButton>
+        {/* My Profile */}
+        <Button
+          title="My Profile"
+          buttonStyle={styles.Button}
+          textStyle={styles.colorText}
+          onPress={() => {
+            navigation.dispatch({ type: "Profile" });
+          }}
+        />
 
-      {/* Settings */}
-      <RkButton style={styles.Button} onPress={() => navigate("Profile")}>
-        <RkText style={styles.colorText}>Settings</RkText>
-      </RkButton>
+        {/* History */}
+        <Button
+          title="History"
+          buttonStyle={styles.Button}
+          textStyle={styles.colorText}
+          onPress={() => {
+            navigation.dispatch({ type: "CallHistory" });
+          }}
+        />
 
-      {/* Help */}
-      <RkButton style={styles.Button} onPress={() => navigate("Profile")}>
-        <RkText style={styles.colorText}>Help</RkText>
-      </RkButton>
-    </View>
-  );
+        {/* Schedule */}
+        <Button
+          buttonStyle={styles.Button}
+          textStyle={styles.colorText}
+          title="Schedule"
+          onPress={() => {
+            navigation.dispatch({ type: "Profile" });
+          }}
+        />
+
+        {/* Settings */}
+        <Button
+          buttonStyle={styles.Button}
+          textStyle={styles.colorText}
+          title="Settings"
+          onPress={() => {
+            navigation.dispatch({ type: "Profile" });
+          }}
+        />
+
+        {/* Help */}
+        <Button
+          buttonStyle={styles.Button}
+          textStyle={styles.colorText}
+          title="Help"
+          onPress={() => {
+            navigation.dispatch({ type: "Profile" });
+          }}
+        />
+      </View>
+    );
+  }
+}
+
+const mS = state => ({
+  firstName: state.userProfile.firstName,
+  lastName: state.userProfile.lastName,
+  location: state.userProfile.location,
+  rate: state.userProfile.rate,
+  nativeLangCode: state.userProfile.nativeLangCode,
+  uuid: state.auth.uuid,
+  token: state.auth.token
+});
+
+const mD = {
+  clearView,
+  updateView,
+  getProfileAsync
 };
 
-export default MenuView;
+export default connect(mS, mD)(MenuView);
