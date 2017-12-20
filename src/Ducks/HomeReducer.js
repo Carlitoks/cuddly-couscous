@@ -17,7 +17,7 @@ export const updateView = payload => ({
 });
 
 export const getProfileAsync = () => dispatch => {
-  getAsync("userLogin").then((userlogin, error) => {
+  /*getAsync("userLogin").then((userlogin, error) => {
     if (!error) {
       userlogin = JSON.parse(userlogin);
       User.get(userlogin.id, userlogin.token)
@@ -30,7 +30,7 @@ export const getProfileAsync = () => dispatch => {
     } else {
       console.log(error);
     }
-  });
+  });*/
 };
 
 // Initial State

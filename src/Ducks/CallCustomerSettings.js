@@ -64,11 +64,9 @@ export const AsyncCreateSession = ({
   primaryLangCode,
   secundaryLangCode,
   estimatedMinutes,
-  tokenBLAH
+  token
 }) => dispatch => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTM0MzQxMDcsImp0aSI6IjZlZTljMzRjLTU5Y2UtNDBlNi04NGUyLTMxZTAyZWIwZDMzMiIsImlhdCI6MTUxMzM0NzcwNywiaXNzIjoic29sby5hcGkuY29tIiwic3ViIjoiMjIyMjIyMjItMjIyMi0yMjIyLTIyMjItMjIyMjIyMjIyMjIyIiwidXNlciI6eyJpZCI6IjIyMjIyMjIyLTIyMjItMjIyMi0yMjIyLTIyMjIyMjIyMjIyMiIsImZpcnN0TmFtZSI6IkJvYiIsImxhc3ROYW1lIjoiQmFydG9uIiwiZW1haWwiOiJib2JAZXhhbXBsZS5jb20ifX0.A6sHR7hBMgdScZaSXVq1DSeCtCWJmVaXyJ4C2Ioa4Zo";
-
+  
   return Sessions.createSession(
     type,
     matchMethod,
@@ -78,6 +76,7 @@ export const AsyncCreateSession = ({
     token
   )
     .then(response => {
+      console.log(response);
       return dispatch(createSession(response.data));
     })
     .catch(error => {
