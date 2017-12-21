@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { resetPasswordAsync } from "../../Ducks/AuthReducer";
 import { clearForm, updateForm } from "../../Ducks/ForgotPassowrdReducer";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 //import { loginUser } from "../../Ducks/AuthReducer";
 
 import styles from "./styles";
@@ -31,6 +32,7 @@ class ForgotPasswordView extends Component {
         automaticallyAdjustContentInsets={true}
         style={styles.scrollContainer}
       >
+      <TopViewIOS/>
         <Grid>
           <Col>
             {/* Header - Navigation */}

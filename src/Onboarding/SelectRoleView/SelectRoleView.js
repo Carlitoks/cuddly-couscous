@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Button, FormLabel, FormInput, Card } from "react-native-elements";
 import { View, Image, ScrollView, Text } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 import { Images } from "../../Themes";
 import styles from "./styles";
 
@@ -28,6 +28,7 @@ class SelectRoleView extends Component {
         automaticallyAdjustContentInsets={true}
         style={styles.scrollContainer}
       >
+       <TopViewIOS large/>
         <Grid>
           <Col>
             {/* OnVoy Logo */}

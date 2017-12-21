@@ -12,7 +12,7 @@ import { logInAsync, haveSession } from "../../Ducks/AuthReducer";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 
@@ -117,6 +117,7 @@ class LoginView extends Component {
         automaticallyAdjustContentInsets={true}
         style={styles.scrollContainer}
       >
+      <TopViewIOS/>
         <Grid>
           <Col>
             {/* Header - Navigation */}
