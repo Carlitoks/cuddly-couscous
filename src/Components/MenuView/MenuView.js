@@ -54,7 +54,7 @@ class MenuView extends Component {
           buttonStyle={styles.Button}
           textStyle={styles.colorText}
           onPress={() => {
-            navigation.dispatch({ type: "Profile" });
+           // navigation.dispatch({ type: "Profile" });
           }}
         />
 
@@ -74,7 +74,7 @@ class MenuView extends Component {
           textStyle={styles.colorText}
           title="Schedule"
           onPress={() => {
-            navigation.dispatch({ type: "Profile" });
+           // navigation.dispatch({ type: "Profile" });
           }}
         />
 
@@ -84,7 +84,7 @@ class MenuView extends Component {
           textStyle={styles.colorText}
           title="Settings"
           onPress={() => {
-            navigation.dispatch({ type: "Profile" });
+           // navigation.dispatch({ type: "Profile" });
           }}
         />
 
@@ -94,7 +94,7 @@ class MenuView extends Component {
           textStyle={styles.colorText}
           title="Help"
           onPress={() => {
-            navigation.dispatch({ type: "Profile" });
+           // navigation.dispatch({ type: "Profile" });
           }}
         />
       </View>

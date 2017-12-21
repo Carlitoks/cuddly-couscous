@@ -104,7 +104,7 @@ class Home extends Component {
               <View style={styles.containerButtons}>
                 <Button
                   buttonStyle={[styles.buttonQR, styles.center]}
-                  onPress={() => navigate("LaunchScreen")}
+                  onPress={() => console.log("Press")}
                   icon={{
                     name: "dashboard",
                     size: 30,
@@ -115,7 +115,7 @@ class Home extends Component {
                 />
                 <Button
                   buttonStyle={[styles.buttonSchedule, styles.center]}
-                  onPress={() => navigate("LaunchScreen")}
+                  onPress={() => console.log("Press")}
                   icon={{ name: "today", size: 30, color: Colors.primaryColor }}
                   title="Schedule a Linguist"
                   textStyle={[styles.buttonTextSecondary, styles.center]}
@@ -123,9 +123,7 @@ class Home extends Component {
                 <Button
                   buttonStyle={[styles.buttonFavorites, styles.center]}
                   onPress={() =>
-                    this.props.navigation.dispatch({
-                      type: "LandingContainer"
-                    })
+                    console.log("Press")
                   }
                   title="Favorites"
                   textStyle={[styles.buttonTextSecondary, styles.center]}

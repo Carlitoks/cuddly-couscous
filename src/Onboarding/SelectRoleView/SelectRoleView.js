@@ -60,7 +60,7 @@ class SelectRoleView extends Component {
             {/* Scan a QR */}
             <Button
               buttonStyle={[styles.buttonQR, styles.center]}
-              onPress={() => navigate("LaunchScreen")}
+              onPress={() => console.log("QR")}
               title={EN["scanQR"]}
               color="#1e90ff"
               icon={{ name: "qrcode", type: "font-awesome", color: "#1e90ff" }}
