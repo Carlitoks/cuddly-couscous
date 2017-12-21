@@ -16,22 +16,15 @@ export const updateView = payload => ({
   payload
 });
 
-export const getProfileAsync = () => dispatch => {
-  /*getAsync("userLogin").then((userlogin, error) => {
-    if (!error) {
-      userlogin = JSON.parse(userlogin);
-      User.get(userlogin.id, userlogin.token)
-        .then(response => {
-          dispatch(updateView(response.data));
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    } else {
-      console.log(error);
-    }
-  });*/
-};
+export const getProfileAsync = (uid, token) => dispatch => {
+  User.get(uid, token)
+    .then(response => {
+      dispatch(updateView(response.data));
+    })
+    .catch(function(error) {
+      dispatch(networkError(error));
+    });
+ };
 
 // Initial State
 const initialState = {

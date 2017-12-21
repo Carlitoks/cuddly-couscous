@@ -47,7 +47,7 @@ class SelectLanguague extends Component {
     return (
       <View style={styles.scrollContainer}>
       <TopViewIOS/>
-        <ScrollView automaticallyAdjustContentInsets={true}>
+        <ScrollView style={styles.scroll} automaticallyAdjustContentInsets={true}>
           <Col>
             {/* Header - Navigation */}
             <Header

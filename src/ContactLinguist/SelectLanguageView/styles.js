@@ -6,6 +6,7 @@ const { width, height } = Dimensions.get("window");
 export const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
+    width: width,
     backgroundColor: Colors.primaryFillColor,
     justifyContent: "center",
     alignItems: "center"
@@ -64,5 +65,8 @@ export const styles = StyleSheet.create({
   buttonStep: {
     backgroundColor: Colors.primaryColor,
     width: width
+  },
+  scroll:{
+     width:width
   }
 });
