@@ -54,6 +54,7 @@ export default StyleSheet.create({
     justifyContent: "center"
   },
   callerNameText: {
+    backgroundColor: "rgba(0,0,0,0)", 
     fontSize: 30,
     marginLeft: 10,
     paddingTop: 10,
