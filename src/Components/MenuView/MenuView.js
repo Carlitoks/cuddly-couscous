@@ -10,7 +10,7 @@ import {
 import { View, Text, Image } from "react-native";
 import { Button } from "react-native-elements";
 import TopViewIOS from "../TopViewIOS/TopViewIOS"
-
+import { logOutAsync } from "../../Ducks/AuthReducer"; 
 import styles from "./styles";
 
 class MenuView extends Component {
@@ -88,14 +88,14 @@ class MenuView extends Component {
           }}
         />
 
-        {/* Help */}
-        <Button
-          buttonStyle={styles.Button}
-          textStyle={styles.colorText}
-          title="Help"
-          onPress={() => {
-           // navigation.dispatch({ type: "Profile" });
-          }}
+                {/* Help */} 
+                <Button 
+          buttonStyle={styles.Button} 
+          textStyle={styles.colorText} 
+          title="Logout" 
+          onPress={() => { 
+            this.props.logOutAsync(); 
+          }}  
         />
       </View>
     );
@@ -115,7 +115,8 @@ const mS = state => ({
 const mD = {
   clearView,
   updateView,
-  getProfileAsync
+  getProfileAsync, 
+  logOutAsync 
 };
 
 export default connect(mS, mD)(MenuView);

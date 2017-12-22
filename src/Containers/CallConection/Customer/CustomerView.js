@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Ref } from "react";
 import { connect } from "react-redux";
 import OpenTok, { Publisher, Subscriber } from "react-native-opentok";
 
@@ -6,8 +6,11 @@ import {
   updateSettings,
   AsyncCreateSession,
   incrementTimer,
-  resetTimerAsync
+  resetTimerAsync,
+  clearSettings,
+  EndCall
 } from "../../../Ducks/CallCustomerSettings.js";
+import { tokConnect, tokDisConnect } from "../../../Ducks/tokboxReducer";
 
 import { AppRegistry, Button, View, Text, Image } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -17,58 +20,37 @@ import { fmtMSS } from "../../../Util/Helpers";
 import styles from "../styles";
 
 class CustomerView extends Component {
-  async componentWillMount() {
-    const res = await this.props.AsyncCreateSession({
-      type: "immediate_virtual",
-      matchMethod: "manual",
-      primaryLangCode: "eng",
-      secundaryLangCode: "cmn",
-      estimatedMinutes: 20,
-      token: this.props.token
-    });
+  ref: Ref<Publisher>;
 
-    const tokboxSessionId = res.payload.tokboxSessionID;
-    const tokboxToken = res.payload.tokboxSessionToken;
+  async componentDidMount() {
+    const {
+      customerTokboxSessionToken,
+      customerTokboxSessionID,
+      tokConnect,
+      sessionID
+    } = this.props;
 
-    this.props.updateSettings({
-      customerTokboxSessionID: tokboxSessionId,
-      customerTokboxSessionToken: tokboxToken
-    });
+    // await OpenTok.connect(customerTokboxSessionID, customerTokboxSessionToken);
 
-    await OpenTok.connect(tokboxSessionId, tokboxToken);
+    // tokConnect(customerTokboxSessionID, customerTokboxSessionToken);
 
-    console.log("ESTO");
-
-    OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => {
-      console.log("ON_SIGNAL_RECEIVED", e);
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_CREATED, e => {
-      console.log("ON_SESSION_CONNECTION_CREATED", e);
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_DESTROYED, e => {
-      console.log("ON_SESSION_CONNECTION_DESTROYED", e);
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_DID_CONNECT, e => {
-      console.log("ON_SESSION_DID_CONNECT", e);
-    });
-
+    OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => console.log(e));
+    OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_DESTROYED, e =>
+      console.log("Session destroyed")
+    );
     OpenTok.on(OpenTok.events.ON_SESSION_DID_DISCONNECT, e => {
-      console.log("ON_SESSION_DID_DISCONNECT", e);
+      //console.log("ON_SESSION_DID_DISCONNECT", e);
+      //console.log(sessionID);
+      //this.props.EndCall(sessionID, "done", this.props.token);
+      //this.props.clearSettings();
+      // this.props.navigation.dispatch({ type: "Home" });
     });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_DID_FAIL_WITH_ERROR, e => {
-      console.log("ON_SESSION_DID_FAIL_WITH_ERROR", e);
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_STREAM_CREATED, e => {
-      console.log("ON_SESSION_STREAM_CREATED", e);
-    });
-
     OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
-      console.log("", e);
+      //console.log("Stream destroyed");
+      OpenTok.disconnect(customerTokboxSessionID);
+      //this.props.resetTimerAsync();
+      this.props.EndCall(sessionID, "done", this.props.token);
+      //this.props.navigation.dispatch({ type: "RateCallView" });
     });
   }
 
@@ -87,17 +69,15 @@ class CustomerView extends Component {
           )}
         </View>
         <View style={styles.subscriberBox}>
-          {this.props.customerTokboxSessionID && (
-            <Publisher
-              sessionId={this.props.customerTokboxSessionID}
-              style={styles.subscriber}
-              mute={this.props.mute}
-              video={this.props.video}
-              ref={ref => {
-                this.ref = ref;
-              }}
-            />
-          )}
+          <Publisher
+            sessionId={this.props.customerTokboxSessionID}
+            style={styles.subscriber}
+            mute={this.props.mute}
+            video={this.props.video}
+            ref={ref => {
+              this.ref = ref;
+            }}
+          />
         </View>
         <View style={styles.topContainer}>
           <View style={styles.inlineContainer}>
@@ -144,7 +124,14 @@ class CustomerView extends Component {
           <CallButton
             onPress={() => {
               OpenTok.disconnect(this.props.customerTokboxSessionID);
-              this.props.navigation.dispatch({ type: "Home" });
+              //this.props.tokDisConnect(this.props.customerTokboxSessionID);
+             // this.props.resetTimerAsync();
+              this.props.EndCall(
+                this.props.sessionID,
+                "done",
+                this.props.token
+              );
+             //this.props.navigation.dispatch({ type: "RateCallView" });
             }}
             buttonColor="red"
             toggle={false}
@@ -186,7 +173,6 @@ const mS = state => ({
   speaker: state.callCustomerSettings.speaker,
   timer: state.callCustomerSettings.timer,
   elapsedTime: state.callCustomerSettings.elapsedTime,
-  speaker: state.callCustomerSettings.speaker,
   sessionID: state.callCustomerSettings.sessionID,
   customerTokboxSessionID: state.callCustomerSettings.customerTokboxSessionID,
   customerTokboxSessionToken:
@@ -198,7 +184,11 @@ const mD = {
   AsyncCreateSession,
   incrementTimer,
   updateSettings,
-  resetTimerAsync
+  resetTimerAsync,
+  clearSettings,
+  tokConnect,
+  tokDisConnect,
+  EndCall
 };
 
 export default connect(mS, mD)(CustomerView);

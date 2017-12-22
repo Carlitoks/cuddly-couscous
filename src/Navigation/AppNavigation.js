@@ -14,6 +14,7 @@ import CustomerAccount from "../Onboarding/CustomerAccountView/CustomerAccountVi
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
 import CustomerView from "../Containers/CallConection/Customer/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
+import RateCallView from "../RateCall/RateExperience/RateExperienceView";
 import Home from "../Home/Home";
 import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
 import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
@@ -55,6 +56,7 @@ const Navigation = StackNavigator(
       }
     },
     Profile: { screen: Profile },
+    RateCallView: { screen: RateCallView },
     SelectRoleView: {
       screen: SelectRoleView,
       navigationOptions: {

@@ -75,7 +75,12 @@ export class CallButton extends Component {
           textStyle={{ marginLeft: -9.8 }}
         />
         {this.props.label && (
-          <Text style={{ color: this.props.labelColor }}>
+                    <Text 
+                    style={{ 
+                      color: this.props.labelColor, 
+                      backgroundColor: "rgba(0,0,0,0)" 
+                    }} 
+                  > 
             {this.props.label}
           </Text>
         )}

@@ -25,7 +25,35 @@ export default (reducer = (state, action) => {
         state
       );
       break;
+      
+      case "Home":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "Home" })]
+        })
+      );
+      break;
 
+    case "RateCallView":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "RateCallView" })]
+        })
+      );
+      break;
+
+    case "SelectRoleView/Reset":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "SelectRoleView" })]
+        })
+      );
+      break;
+   
+      
     default:
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.navigate({ routeName: action.type }),

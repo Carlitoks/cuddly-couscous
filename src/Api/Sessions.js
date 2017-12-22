@@ -64,7 +64,7 @@ const Session = {
   EndSession: (sessionID, reason, token) => {
     return AXIOS.put(
       `${BASE_URI}/${sessionID}/end`,
-      { reason: reason },
+      { reason },
       { headers: { Authorization: `Bearer ${token}` } }
     );
   },

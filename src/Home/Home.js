@@ -15,6 +15,8 @@ import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import TopViewIOS from "../Components/TopViewIOS/TopViewIOS";
 import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
+import { Sessions } from "../Api";
+import { AsyncAcceptsInvite } from "../Ducks/CallLinguistSettings";
 
 import styles from "./styles";
 import { Colors } from "../Themes";
@@ -32,6 +34,24 @@ class Home extends Component {
 
   componentWillUnmount() {
     // this.props.clearView();
+  }
+
+  onPoolingPress = () => { 
+    Sessions.GetInvitations(this.props.uuid, this.props.token)
+      .then( response => {
+        if(response.data.length > 0){
+          // There's at least one call. Let's attend the first one
+          const length = response.data.length;
+          const invitationId = response.data[0].id;
+          const accept = {"accept": true};
+          const { token } = this.props;
+
+          this.props.AsyncAcceptsInvite(invitationId, accept, token)
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   onStarRatingPress(rating) {
@@ -152,6 +172,31 @@ class Home extends Component {
                     <View style={styles.box3} />
                   </View>
                 </Button>
+                <Button
+                  buttonStyle={[styles.buttonFavorites, styles.center]}
+                  onPress={this.onPoolingPress}
+                  title="Polling"
+                  textStyle={[styles.buttonTextSecondary, styles.center]}
+                  icon={{
+                    name: "favorite",
+                    size: 30,
+                    color: Colors.primaryColor
+                  }}
+                  iconStyle={styles.icon}
+                >
+                  <View style={styles.callLinguistContainer}>
+                    <Icon
+                      style={styles.iconV}
+                      name="favorite"
+                      size={30}
+                      color={"#9391f7"}
+                    />
+                    <Text style={[styles.buttonTextSecondary, styles.center]}>
+                      Polling
+                    </Text>
+                    <View style={styles.box3} />
+                  </View>
+                </Button>
               </View>
             </Col>
           </Grid>
@@ -173,7 +218,8 @@ const mS = state => ({
 const mD = {
   clearView,
   updateView,
-  getProfileAsync
+  getProfileAsync,
+  AsyncAcceptsInvite
 };
 
 export default connect(mS, mD)(Home);

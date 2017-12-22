@@ -67,3 +67,5 @@ buck-out/
 # Pods 
 # 
 ios/Pods
+yarn.lock
+android/app/src/main/assets/index.android.bundle*

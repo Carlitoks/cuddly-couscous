@@ -4,11 +4,18 @@ import { Text, View, ScrollView, Image, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { connect } from "react-redux";
-import contactLinguist from "../../Ducks/ContactLinguistReducer";
+import {
+  AsyncCreateSession,
+  updateSettings,
+  EndCall,
+  AsyncCreateInvitation,
+  clearSettings
+} from "../../Ducks/CallCustomerSettings";
+import OpenTok from "react-native-opentok"; // eslint-disable-line
 import { CallButton } from "../../Components/CallButton/CallButton";
-import { updateSettings } from "../../Ducks/CallCustomerSettings.js";
 import styles from "./styles";
 import { Images } from "../../Themes";
+import { tokConnect, tokDisConnect } from "../../Ducks/tokboxReducer";
 
 class ContactingLinguist extends Component {
   constructor(props) {
@@ -19,15 +26,102 @@ class ContactingLinguist extends Component {
       customerLocation: this.props.customerLocation
     };
   }
-  componentDidMount() {
-    setTimeout(() => {
-      this.props.navigation.dispatch(
-        {
-          type: "CustomerView"
-        },
-        50000
-      );
+
+  async componentWillMount() {
+    const res = await this.props.AsyncCreateSession({
+      type: "immediate_virtual",
+      matchMethod: "manual",
+      primaryLangCode: "eng",
+      secundaryLangCode: "cmn",
+      estimatedMinutes: 20,
+      token: this.props.token
     });
+    console.log(res);
+    const tokboxSessionId = res.payload.tokboxSessionID;
+    const tokboxToken = res.payload.tokboxSessionToken;
+
+    this.props.updateSettings({
+      customerTokboxSessionID: tokboxSessionId,
+      customerTokboxSessionToken: tokboxToken,
+      sessionID: res.payload.sessionID
+    });
+
+    this.props.tokConnect(tokboxSessionId, tokboxToken);
+
+    // OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => console.log(e));
+    // OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_DESTROYED, e =>
+    //   console.log("Session destroyed")
+    // );
+    // OpenTok.on(OpenTok.events.ON_SESSION_DID_DISCONNECT, e => {
+    //   console.log("ON_SESSION_DID_DISCONNECT", e);
+    //   this.props.EndCall(this.props.sessionID, "done", this.props.token);
+    //   //this.props.clearSettings();
+    //   this.props.navigation.dispatch({ type: "Home" });
+    // });
+    // OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
+    //   console.log("Stream destroyed");
+    //   OpenTok.disconnect(this.props.customerTokboxSessionID);
+    //   this.props.EndCall(this.props.sessionID, "done", this.props.token);
+    //   this.props.navigation.dispatch({ type: "Home" });
+    // });
+
+    /*     await OpenTok.connect(tokboxSessionId, tokboxToken);
+    
+    OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => {
+      console.log("ON_SIGNAL_RECEIVED", e);
+    });
+
+    OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_CREATED, e => {
+      console.log("ON_SESSION_CONNECTION_CREATED", e);
+    });
+
+    OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_DESTROYED, e => {
+      console.log("ON_SESSION_CONNECTION_DESTROYED", e);
+    });
+
+    OpenTok.on(OpenTok.events.ON_SESSION_DID_CONNECT, e => {
+      console.log("ON_SESSION_DID_CONNECT", e);
+      this.props.AsyncCreateInvitation( res.payload.sessionID, linguistID, role, this.props.token)            
+    });
+
+    OpenTok.on(OpenTok.events.ON_SESSION_DID_DISCONNECT, e => {
+      console.log("ON_SESSION_DID_DISCONNECT", e);
+      EndCall(res.payload.sessionID, "done", this.props.token);
+      this.props.clearSettings();      
+    });
+
+    OpenTok.on(OpenTok.events.ON_SESSION_DID_FAIL_WITH_ERROR, e => {
+      console.log("ON_SESSION_DID_FAIL_WITH_ERROR", e);
+    });
+
+    OpenTok.on(OpenTok.events.ON_SESSION_STREAM_CREATED, e => {
+      console.log("ON_SESSION_STREAM_CREATED", e);
+      this.props.navigation.dispatch( { type: "CustomerView" } );
+    });
+
+    OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
+      console.log("", e);
+    }); */
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+
+    // TODO: unwire these values
+    const linguistID = "11111111-1111-1111-1111-111111111111";
+    const role = "linguist";
+    if (nextProps.tokboxStatus === 1) {
+      this.props.AsyncCreateInvitation(
+        this.props.sessionID,
+        linguistID,
+        role,
+        this.props.token
+      );
+
+      this.props.navigation.dispatch({
+        type: "CustomerView"
+      });
+    }
+    // You don't have to do this check first, but it can help prevent an unneeded render
   }
 
   render() {
@@ -122,7 +216,7 @@ class ContactingLinguist extends Component {
               {/* End Call */}
               <CallButton
                 onPress={() => {
-                  OpenTok.disconnect(sessionId);
+                  this.props.tokDisConnect(this.props.customerTokboxSessionID);
                   this.props.navigation.dispatch({ type: "Home" });
                 }}
                 buttonColor="red"
@@ -140,11 +234,22 @@ class ContactingLinguist extends Component {
 const mS = state => ({
   mute: state.callCustomerSettings.mute,
   video: state.callCustomerSettings.video,
-  speaker: state.callCustomerSettings.speaker
+  speaker: state.callCustomerSettings.speaker,
+  token: state.auth.token,
+  tokboxStatus: state.tokbox.status,
+  sessionID: state.callCustomerSettings.sessionID,
+  customerTokboxSessionID: state.callCustomerSettings.customerTokboxSessionID,
+  customerTokboxSessionToken: state.callCustomerSettings.customerTokboxSessionID
 });
 
 const mD = {
-  updateSettings
+  EndCall,
+  clearSettings,
+  AsyncCreateSession,
+  updateSettings,
+  AsyncCreateInvitation,
+  tokConnect,
+  tokDisConnect
 };
 
 export default connect(mS, mD)(ContactingLinguist);

@@ -6,7 +6,8 @@ export const ACTIONS = {
   INVITATIONDETAIL: "callLinguistSettings/invitationDetail",
   INVITATIONACCEPT: "callLinguistSettings/invitationAccept",
   INCREMENT_TIMER: "callLinguistSettings/incrementTimer",
-  RESET_TIMER: "callLinguistSettings/resetTimer"
+  RESET_TIMER: "callLinguistSettings/resetTimer",
+  ENDSESSION: "callLinguistSettings/endSession"
 };
 
 // Action Creator
@@ -45,12 +46,24 @@ export const resetTimerAsync = () => (dispatch, getState) => {
   );
 };
 
+export const endSession = () => ({ type: ACTIONS.ENDSESSION });
+
+export const EndCall = (sessionID, reason, token) => dispatch => {
+  Sessions.EndSession(sessionID, { reason: "done" }, token)
+    .then(response => {
+      dispatch(endSession("done"));
+    })
+    .catch(error => {
+      console.log(error.response);
+    });
+};
+
 export const resetTimer = () => ({
   type: ACTIONS.RESET_TIMER
 });
 
-export const AsyncFetchInvitationDetail = async (invitationID, token) => {
-  await Sessions.LinguistFetchesInvite(invitationID, token)
+export const AsyncFetchInvitationDetail = (invitationID, token) => dispatch => {
+  Sessions.LinguistFetchesInvite(invitationID, token)
     .then(response => {
       dispatch(invitationDetail(response.data));
     })
@@ -58,10 +71,11 @@ export const AsyncFetchInvitationDetail = async (invitationID, token) => {
       console.log(error);
     });
 };
-export const AsyncAcceptsInvite = async (invitationID, accept, token) => {
+export const AsyncAcceptsInvite = (invitationID, accept, token) => dispatch => {
   Sessions.LinguistAcceptsInvite(invitationID, accept, token)
-    .then(reponse => {
+    .then(response => {
       dispatch(invitationAccept(response.data));
+      dispatch({type: "LinguistView"});
     })
     .catch(error => {
       console.log(error);
@@ -92,19 +106,23 @@ const callLinguistSettings = (state = initialState, action) => {
     case ACTIONS.INVITATIONDETAIL: {
       return { ...state, ...payload };
     }
+    case ACTIONS.ENDSESSION: {
+      return {
+        ...state,
+        reason: payload
+      };
+    }
     case ACTIONS.INVITATIONACCEPT: {
       return {
         ...state,
         linguistTokboxSessionID: payload.tokboxSessionID,
-        LinguistTokboxSessionToken: payload.tokboxSessionToken,
-        accept: payload.accept
+        linguistTokboxSessionToken: payload.tokboxSessionToken,
+        accept: payload.accept,
+        sessionID:payload.sessionID
       };
     }
     case ACTIONS.INCREMENT_TIMER: {
-      return {
-        ...state,
-        elapsedTime: state.elapsedTime + 1
-      };
+      return { ...state, elapsedTime: state.elapsedTime + 1 };
     }
     case ACTIONS.CLEAR: {
       return { ...initialState };

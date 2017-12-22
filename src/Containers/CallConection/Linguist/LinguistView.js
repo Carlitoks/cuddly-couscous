@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Ref } from "react";
 import { AppRegistry, Button, View, Image, Text } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -9,34 +9,46 @@ import { CallButton } from "../../../Components/CallButton/CallButton";
 import {
   updateSettings,
   incrementTimer,
-  resetTimerAsync
+  resetTimerAsync,
+  EndCall,
+  clearSettings
 } from "../../../Ducks/CallLinguistSettings.js";
 
+import { tokDisConnect, tokConnect} from "../../../Ducks/tokboxReducer.js";
+
 import { fmtMSS } from "../../../Util/Helpers";
-const sessionId =
-  "2_MX40NjAxNjk4Mn5-MTUxMzM1MDUwNzE5MX52b0hkVE53Q3g4Mk1RTDJ6MFR2R1Bxa21-fg";
-const token =
-  "T1==cGFydG5lcl9pZD00NjAxNjk4MiZzaWc9ODc3YTgxMTEwMTY2YzdiNzE3YTk2NTY1OGJiMDBkNjZlNjhhYzZlODpzZXNzaW9uX2lkPTJfTVg0ME5qQXhOams0TW41LU1UVXhNek0xTURVd056RTVNWDUyYjBoa1ZFNTNRM2c0TWsxUlRESjZNRlIyUjFCeGEyMS1mZyZjcmVhdGVfdGltZT0xNTEzMzUwNTcyJm5vbmNlPTAuNjc1MzkyNDM5NTA4NDczOCZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNTE1OTQyNTcyJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
 
 class LinguistView extends Component {
   navigate = this.props.navigation.navigate;
+  ref: Ref<Publisher>;
+  
+   componentDidMount() {
+    const { linguistTokboxSessionToken, linguistTokboxSessionID, tokConnect,sessionID } = this.props;
 
-  async componentWillMount() {
-    await OpenTok.connect(sessionId, token);
+     tokConnect(linguistTokboxSessionID, linguistTokboxSessionToken);
+
+    //await OpenTok.connect(linguistTokboxSessionID, linguistTokboxSessionToken);
+
     OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => console.log(e));
     OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_DESTROYED, e =>
       console.log("Session destroyed")
     );
+    OpenTok.on(OpenTok.events.ON_SESSION_DID_DISCONNECT, e => {
+      console.log("ON_SESSION_DID_DISCONNECT", e);
+      console.log(sessionID);
+      this.props.EndCall(sessionID, "done", this.props.token);
+      //this.props.clearSettings();      
+      this.props.navigation.dispatch({ type: "Home" });      
+    });
     OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
       console.log("Stream destroyed");
-      OpenTok.disconnect(sessionId);
+      OpenTok.disconnect(linguistTokboxSessionID);
       this.props.resetTimerAsync();
+      this.props.EndCall(sessionID, "done", this.props.token);
       this.props.navigation.dispatch({ type: "Home" });
     });
-  }
 
-  componentDidMount() {
-    this.startTimer();
+   // this.startTimer();    
   }
 
   startTimer = () => {
@@ -48,16 +60,38 @@ class LinguistView extends Component {
     });
   };
 
+  getSubscriber = ( booleanVar ) => {
+    return (
+      booleanVar ? 
+        <Subscriber
+          sessionId={this.props.linguistTokboxSessionID}
+          style={styles.background}
+          ref={ref => {
+            this.ref = ref;
+          }}
+          onPublishStart={() => {
+            console.log("started");
+          }}
+          onSubscribeError={() =>{
+            console.log("error")
+          }}
+        /> :
+        null
+    )
+  }
+
   render() {
     return (
       <View style={styles.containerT}>
         <View style={styles.backgroundContainer}>
-          <Subscriber
-            sessionId={sessionId}
-            style={styles.background}
-            onPublishStart={() => {
-              console.log("started");
-            }}
+          { this.getSubscriber(this.props.linguistTokboxSessionID) }
+        </View>
+        <View style={styles.subscriberBox}>
+          <Publisher
+            sessionId={this.props.linguistTokboxSessionID}
+            style={styles.subscriber}
+            mute={this.props.mute}
+            video={this.props.video}
           />
         </View>
         <View style={styles.topContainer}>
@@ -103,9 +137,10 @@ class LinguistView extends Component {
           />
           <CallButton
             onPress={() => {
-              OpenTok.disconnect(sessionId);
+              this.props.tokDisConnect(this.props.linguistTokboxSessionID);              
+              OpenTok.disconnect(this.props.linguistTokboxSessionID);
+              this.props.clearSettings();              
               this.props.resetTimerAsync();
-              console.log("end");
               clearInterval(this.props.timer);
               this.props.navigation.dispatch({ type: "Home" });
             }}
@@ -136,20 +171,11 @@ class LinguistView extends Component {
             opacity={0.7}
             buttonSize={65}
             iconSize={30}
+            linguistTokboxSessionToken
           />
         </View>
 
-        <View style={styles.subscriberBox}>
-          <Publisher
-            sessionId={sessionId}
-            style={styles.subscriber}
-            mute={this.props.mute}
-            video={this.props.video}
-            ref={ref => {
-              this.ref = ref;
-            }}
-          />
-        </View>
+
       </View>
     );
   }
@@ -160,13 +186,23 @@ const mS = state => ({
   video: state.callLinguistSettings.video,
   speaker: state.callLinguistSettings.speaker,
   timer: state.callLinguistSettings.timer,
-  elapsedTime: state.callLinguistSettings.elapsedTime
+  elapsedTime: state.callLinguistSettings.elapsedTime,
+  linguistTokboxSessionToken:
+    state.callLinguistSettings.linguistTokboxSessionToken,
+  linguistTokboxSessionID: state.callLinguistSettings.linguistTokboxSessionID,
+  sessionID: state.callLinguistSettings.sessionID,
+  token:state.auth.token
+
 });
 
 const mD = {
   incrementTimer,
   updateSettings,
-  resetTimerAsync
+  resetTimerAsync,
+  EndCall,
+  clearSettings,
+  tokConnect,
+  tokDisConnect
 };
 
 export default connect(mS, mD)(LinguistView);

@@ -6,7 +6,7 @@ import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { resetPasswordAsync } from "../../Ducks/AuthReducer";
-import { clearForm, updateForm } from "../../Ducks/ForgotPassowrdReducer";
+import { clearForm, updateForm } from "../../Ducks/ForgotPasswordReducer";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 //import { loginUser } from "../../Ducks/AuthReducer";

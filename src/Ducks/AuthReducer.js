@@ -4,10 +4,12 @@ import { Auth, User, Sessions } from "../Api";
 
 import { loginError } from "./LoginReducer";
 
+import { clearView as clearUserProfile } from "./UserProfileReducer"; 
+
 // Actions
 export const ACTIONS = {
   LOG_IN: "auth/log_in",
-  LOG_OUT: "auth/log_in"
+  LOG_OUT: "auth/log_out" 
 };
 
 // Action Creators
@@ -17,9 +19,15 @@ export const logIn = payload => ({
 });
 
 export const logOut = payload => ({
-  type: ACTIONS.LOG_OUT,
-  payload
+  type: ACTIONS.LOG_OUT 
 });
+
+
+export const logOutAsync = () => dispatch => { 
+  dispatch(logOut()); 
+  dispatch(clearUserProfile()); 
+  dispatch({ type: "SelectRoleView/Reset" }); 
+}; 
 
 // To get userLogin in the splash screen and refresh token
 export const haveSession = () => {
@@ -98,7 +106,7 @@ const authReducer = (state = initialState, action) => {
       };
 
     case ACTIONS.LOG_OUT:
-      return { ...state, isLoggedIn: false };
+    return { ...initialState }; 
 
     default:
       return state;

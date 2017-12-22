@@ -1,3 +1,5 @@
+import { Sessions } from '../Api';
+
 // EXAMPLE DUCK
 
 // Constants
@@ -23,7 +25,8 @@ export const ASSITANCE_LIST = [
 // Actions
 export const ACTIONS = {
   CLEAR: "contactLinguist/clear",
-  UPDATE: "contactLinguist/update"
+  UPDATE: "contactLinguist/update",
+  ENDSESSION: "contactLinguist/endSession"
 };
 
 // Action Creator
@@ -52,6 +55,18 @@ const initialState = {
   selectedAssistance: ""
 };
 
+export const endSession = () => ({ type: ACTIONS.ENDSESSION });
+
+export const EndCall = (sessionID, reason, token) => dispatch => {
+  Sessions.EndSession(sessionID, { reason: "done" }, token)
+    .then(response => {
+      dispatch(endSession("done"));
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+
 // Reducer
 const contactLinguistReducer = (state = initialState, action) => {
   const { payload, type } = action;
@@ -61,6 +76,12 @@ const contactLinguistReducer = (state = initialState, action) => {
       return {
         ...state,
         ...payload
+      };
+    }
+    case ACTIONS.ENDSESSION: {
+      return {
+        ...state,
+        reason: payload
       };
     }
 

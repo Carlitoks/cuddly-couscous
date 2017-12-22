@@ -7,7 +7,8 @@ export const ACTIONS = {
   CREATESESSION: "callCustomerSettings/session",
   CREATEINVITATION: "callCustomerSettings/invitation",
   INCREMENT_TIMER: "callCustomerSettings/incrementTimer",
-  RESET_TIMER: "callCustomerSettings/resetTimer"
+  RESET_TIMER: "callCustomerSettings/resetTimer",
+  ENDSESSION: "callCustomerSettings/endSession"
 };
 
 // Action Creator
@@ -46,6 +47,19 @@ export const resetTimerAsync = () => (dispatch, getState) => {
   );
 };
 
+export const endSession = () => ({ type: ACTIONS.ENDSESSION });
+
+export const EndCall = (sessionID, reason, token) => dispatch => {
+  return Sessions.EndSession(sessionID, reason, token)
+    .then(response => {
+      dispatch(endSession());
+      dispatch({ type: "RateCallView" });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+
 export const resetTimer = () => ({
   type: ACTIONS.RESET_TIMER
 });
@@ -66,7 +80,6 @@ export const AsyncCreateSession = ({
   estimatedMinutes,
   token
 }) => dispatch => {
-  
   return Sessions.createSession(
     type,
     matchMethod,
@@ -80,7 +93,11 @@ export const AsyncCreateSession = ({
       return dispatch(createSession(response.data));
     })
     .catch(error => {
+      dispatch(networkError(error));
       console.log(error);
+      if (error.response) {
+        console.log(error.response);
+      }
     });
 };
 
@@ -88,13 +105,13 @@ export const AsyncCreateSession = ({
 // example input values
 // linguistID: "11111111-1111-1111-1111-111111111111"
 // role: "linguist";
-export const AsyncCreateInvitation = async (
+export const AsyncCreateInvitation = (
   sessionID,
   linguistID,
   role,
   token
-) => {
-  await Sessions.customerInvitation(sessionID, linguistID, role, token)
+) => dispatch => {
+  Sessions.customerInvitation(sessionID, linguistID, role, token)
     .then(response => {
       dispatch(createInvitation(response.data));
     })
@@ -139,6 +156,12 @@ const callCustomerSettings = (state = initialState, action) => {
       return {
         ...state,
         elapsedTime: state.elapsedTime + 1
+      };
+    }
+
+    case ACTIONS.ENDSESSION: {
+      return {
+        ...state
       };
     }
 
