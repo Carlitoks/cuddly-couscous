@@ -59,6 +59,60 @@ class RateCallView extends Component {
   };
 
   /// toogle Thumbs /////////////////////
+  GoodIcons = [
+    {
+      Name: "ios-time",
+      IconState: "iconClockFirstList",
+      IconName: "clock"
+    },
+    {
+      Name: "ios-volume-up",
+      IconState: "iconVolumeFirstList",
+      IconName: "volume"
+    },
+    {
+      Name: "ios-wifi",
+      IconState: "iconWifiFirstList",
+      IconName: "wifi"
+    },
+    {
+      Name: "ios-person",
+      IconState: "iconPersonFirstList",
+      IconName: "person"
+    }
+  ];
+
+  BadIcons = [
+    {
+      Name: "ios-time",
+      IconState: "iconClockSecondList",
+      IconName: "clock"
+    },
+    {
+      Name: "ios-volume-up",
+      IconState: "iconVolumeSecondList",
+      IconName: "volume"
+    },
+    {
+      Name: "ios-wifi",
+      IconState: "iconWifiSecondList",
+      IconName: "wifi"
+    },
+    {
+      Name: "ios-person",
+      IconState: "iconPersonSecondList",
+      IconName: "person"
+    }
+  ];
+
+
+  buttonTHumbs(selectedIndex) {
+    if (selectedIndex == 0) {
+      this.TogglethumbsUp();
+    } else {
+      this.TogglethumbsDown();
+    }
+  }
 
   TogglethumbsUp = () => {
     this.props.updateOptions({
@@ -74,6 +128,20 @@ class RateCallView extends Component {
     });
   };
 
+  ButtonsHandle(selectedIndex, flag) {
+    let icon;
+    if (flag == "positiveFlags") {
+      icon = this.GoodIcons[selectedIndex];
+    } else {
+      icon = this.BadIcons[selectedIndex];
+    }
+    this.GenericToggleFunction(
+      icon.IconName,
+      icon.IconState,
+      this.props[icon.IconState],
+      flag
+    );
+  }
   //////////// Toogle Icons function  /////
   GenericToggleFunction = (IconName, StateName, IconState, flagsStore) => {
     const ObjectState = {};
@@ -87,7 +155,6 @@ class RateCallView extends Component {
         style={
           this.props.thumbsUp ? { color: "#3b98b7" } : { color: "#cdcdcd" }
         }
-        onPress={() => this.TogglethumbsUp()}
         name="ios-thumbs-up"
         size={40}
       />,
@@ -95,100 +162,35 @@ class RateCallView extends Component {
         style={
           this.props.thumbsDown ? { color: "#3b98b7" } : { color: "#cdcdcd" }
         }
-        onPress={() => this.TogglethumbsDown()}
         name="ios-thumbs-down"
         size={40}
       />
     ];
 
-    const GoodIcons = [
-      {
-        Name: "ios-time",
-        IconState: "iconClockFirstList",
-        IconName: "clock"
-      },
-      {
-        Name: "ios-volume-up",
-        IconState: "iconVolumeFirstList",
-        IconName: "volume"
-      },
-      {
-        Name: "ios-wifi",
-        IconState: "iconWifiFirstList",
-        IconName: "wifi"
-      },
-      {
-        Name: "ios-person",
-        IconState: "iconPersonFirstList",
-        IconName: "person"
-      }
-    ];
-
-    const BadIcons = [
-      {
-        Name: "ios-time",
-        IconState: "iconClockSecondList",
-        IconName: "clock"
-      },
-      {
-        Name: "ios-volume-up",
-        IconState: "iconVolumeSecondList",
-        IconName: "volume"
-      },
-      {
-        Name: "ios-wifi",
-        IconState: "iconWifiSecondList",
-        IconName: "wifi"
-      },
-      {
-        Name: "ios-person",
-        IconState: "iconPersonSecondList",
-        IconName: "person"
-      }
-    ];
-
-    const WhatWasGoodIcons = GoodIcons.map(value => {
+    const WhatWasGoodIcons = this.GoodIcons.map(value => {
       return (
         <Icon
           style={
-            this.props[value.IconState] ? (
-              { color: "#3b98b7" }
-            ) : (
-              { color: "#cdcdcd" }
-            )
+            this.props[value.IconState]
+              ? { color: "#3b98b7" }
+              : { color: "#cdcdcd" }
           }
           name={value.Name}
           size={35}
-          onPress={() =>
-            this.GenericToggleFunction(
-              value.IconName,
-              value.IconState,
-              this.props[value.IconState],
-              "positiveFlags"
-            )}
         />
       );
     });
 
-    const WhatCouldBeBetterIcons = BadIcons.map(value => {
+    const WhatCouldBeBetterIcons = this.BadIcons.map(value => {
       return (
         <Icon
           style={
-            this.props[value.IconState] ? (
-              { color: "#3b98b7" }
-            ) : (
-              { color: "#cdcdcd" }
-            )
+            this.props[value.IconState]
+              ? { color: "#3b98b7" }
+              : { color: "#cdcdcd" }
           }
           name={value.Name}
           size={35}
-          onPress={() =>
-            this.GenericToggleFunction(
-              value.IconName,
-              value.IconState,
-              this.props[value.IconState],
-              "negativeFlags"
-            )}
         />
       );
     });
@@ -230,7 +232,8 @@ class RateCallView extends Component {
                   disabled={false}
                   rating={this.props.rating}
                   selectedStar={rating =>
-                    this.props.updateOptions({ rating: rating })}
+                    this.props.updateOptions({ rating: rating })
+                  }
                   maxStars={5}
                   starSize={45}
                   emptyStarColor={"#cccccc"}
@@ -251,6 +254,7 @@ class RateCallView extends Component {
                 buttons={thumbsButtons}
                 containerStyle={styles.tabsThumbsIcons}
                 innerBorderStyle={{ color: "white" }}
+                onPress={i => this.buttonTHumbs(i)}
               />
             </View>
           </Grid>
@@ -267,6 +271,7 @@ class RateCallView extends Component {
                   buttons={WhatWasGoodIcons}
                   containerStyle={styles.tabsIcons}
                   innerBorderStyle={{ color: "white" }}
+                  onPress={i => this.ButtonsHandle(i, "positiveFlags")}
                 />
               </ScrollView>
             </View>
@@ -284,6 +289,7 @@ class RateCallView extends Component {
                   buttons={WhatCouldBeBetterIcons}
                   containerStyle={styles.tabsIcons}
                   innerBorderStyle={{ color: "white" }}
+                  onPress={i => this.ButtonsHandle(i, "negativeFlags")}
                 />
               </ScrollView>
             </View>
