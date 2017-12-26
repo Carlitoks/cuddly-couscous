@@ -55,5 +55,9 @@ export default (ENG = {
   english: "English",
   spanish: "Spanish",
   DescribeAssistance: "Describe What Assistance You Need",
-  Next: "Next"
+  Next: "Next", 
+  RateLinguist: "Rate your linguist", 
+  WasGood: "What was Good?", 
+  NeedsAddress: "Were your needs addressed?", 
+  CouldBetter: "What could be better?"
 });

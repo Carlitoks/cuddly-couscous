@@ -23,12 +23,14 @@ export const styles = StyleSheet.create({
     alignItems: "flex-start"
   },
   LinguistName: {
+    backgroundColor: "rgba(0,0,0,0)",  
     fontSize: 25,
     fontWeight: "bold",
     color: "#888888",
     marginLeft: 30
   },
   LinguistAddress: {
+    backgroundColor: "rgba(0,0,0,0)",  
     fontSize: 20,
     fontWeight: "bold",
     color: "#888888",
@@ -41,6 +43,7 @@ export const styles = StyleSheet.create({
     marginBottom: 5
   },
   TextQuestions: {
+    backgroundColor: "rgba(0,0,0,0)",  
     fontSize: 20,
     fontWeight: "bold"
   },
@@ -74,7 +77,7 @@ export const styles = StyleSheet.create({
   buttonSubmit: {
     marginTop: 20,
     backgroundColor: "#3b98b7",
-    width: Dimensions.get("window").width - 30,
+    width: Dimensions.get("window").width,
     borderRadius: 10
   }
 });
