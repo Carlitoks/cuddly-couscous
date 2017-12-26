@@ -45,7 +45,7 @@ export default (ENG = {
   resetpassword: "Reset Password",
   quicklyContact:
     "Quickly contact a linguist to help with your languages needs",
-  callLinguist: "Call a linguist",
+  callLinguist: "Call a Linguist",
   scanQR: "Scan QR Code",
   becomeOnVoy: "Become an OnVoy Linguist",
   alreadyAccount: "Already have an account?",
