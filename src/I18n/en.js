@@ -51,7 +51,7 @@ export default (ENG = {
   alreadyAccount: "Already have an account?",
   selectLanguage: "Select the Language You Need a Linguist in",
   howLongNeedHelp: "How Long Do You Need Help For?",
-  costOfCall: "Approx ~ ",
+  costOfCall: "Approx Cost ~ ",
   english: "English",
   spanish: "Spanish",
   DescribeAssistance: "Describe What Assistance You Need",

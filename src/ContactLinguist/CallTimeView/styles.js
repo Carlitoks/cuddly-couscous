@@ -52,7 +52,7 @@ export default StyleSheet.create({
     marginBottom: 15,
     marginTop: 35,
     color: Colors.primaryColor,
-    width: "35%",
+    //width: "50%",
     alignItems: "center"
   },
   costCallContainer: {
