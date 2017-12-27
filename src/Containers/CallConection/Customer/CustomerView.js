@@ -11,6 +11,7 @@ import {
   EndCall
 } from "../../../Ducks/CallCustomerSettings.js";
 import { tokConnect, tokDisConnect } from "../../../Ducks/tokboxReducer";
+import { clearSettings as clearCallSettings } from "../../../Ducks/ContactLinguistReducer";
 
 import { AppRegistry, Button, View, Text, Image } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -48,11 +49,25 @@ class CustomerView extends Component {
     OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
       //console.log("Stream destroyed");
       OpenTok.disconnect(customerTokboxSessionID);
-      //this.props.resetTimerAsync();
       this.props.EndCall(sessionID, "done", this.props.token);
       //this.props.navigation.dispatch({ type: "RateCallView" });
     });
+    this.startTimer();
   }
+
+  componentWillUnmount() {
+    this.props.resetTimerAsync();
+    this.props.clearCallSettings();
+  }
+
+  startTimer = () => {
+    console.log("Start Timer");
+    this.props.updateSettings({
+      timer: setInterval(() => {
+        this.props.incrementTimer();
+      }, 1000)
+    });
+  };
 
   render() {
     return (
@@ -125,8 +140,7 @@ class CustomerView extends Component {
           <CallButton
             onPress={() => {
               OpenTok.disconnect(this.props.customerTokboxSessionID);
-              //this.props.tokDisConnect(this.props.customerTokboxSessionID);
-             // this.props.resetTimerAsync();
+              this.props.tokDisConnect(this.props.customerTokboxSessionID);
               this.props.EndCall(
                 this.props.sessionID,
                 "done",
@@ -191,7 +205,8 @@ const mD = {
   clearSettings,
   tokConnect,
   tokDisConnect,
-  EndCall
+  EndCall,
+  clearCallSettings
 };
 
 export default connect(mS, mD)(CustomerView);
