@@ -103,9 +103,7 @@ class ContactingLinguist extends Component {
                 <View style={styles.buttonColumn}>
                   {/* Switch Camera Button */}
                   <CallButton
-                    onPress={() => {
-                      if (typeof this.ref !== "string") this.ref.switchCamera();
-                    }}
+                    onPress={() => {}}
                     toggle={true}
                     icon="camera-front"
                     iconToggled="camera-rear"
@@ -133,7 +131,11 @@ class ContactingLinguist extends Component {
                 <View style={{ flex: 1 }}>
                   {/* Toggle Speaker Button */}
                   <CallButton
-                    onPress={() => {}}
+                    onPress={() => {
+                      this.props.updateSettings({
+                        speaker: !this.props.speaker
+                      });
+                    }}
                     toggle={true}
                     icon="volume-up"
                     iconToggled="volume-off"

@@ -27,10 +27,13 @@ export class CallButton extends Component {
     isActive: false
   };
 
-  /*componentDidMount() {
-    AppState.addEventListener("change", this.toggleIcon);
+  componentDidMount() {
+    if (this.props.active) {
+      this.toggleIcon();
+    }
   }
 
+  /*
   componentWillUnmount() {
     AppState.removeEventListener("change", this.toggleIcon);
   }*/
@@ -99,7 +102,8 @@ CallButton.propTypes = {
   toggle: bool,
   iconToggled: string,
   buttonSize: number,
-  iconSize: number
+  iconSize: number,
+  active: bool
 };
 
 CallButton.defaultProps = {
@@ -108,5 +112,6 @@ CallButton.defaultProps = {
   opacity: 1,
   toggle: false,
   buttonSize: 80,
-  iconSize: 40
+  iconSize: 40,
+  active: false
 };

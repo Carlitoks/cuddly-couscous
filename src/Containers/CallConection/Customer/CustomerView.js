@@ -115,6 +115,7 @@ class CustomerView extends Component {
           <CallButton
             onPress={() => {}}
             toggle={true}
+            active={!this.props.speaker}
             icon="volume-up"
             iconToggled="volume-off"
             opacity={0.7}
@@ -144,6 +145,7 @@ class CustomerView extends Component {
               this.props.updateSettings({ mute: !this.props.mute });
             }}
             toggle={true}
+            active={this.props.mute}
             icon="mic"
             iconToggled="mic-off"
             opacity={0.7}
@@ -155,6 +157,7 @@ class CustomerView extends Component {
               this.props.updateSettings({ video: !this.props.video });
             }}
             toggle={true}
+            active={!this.props.video}
             icon="videocam"
             iconToggled="videocam-off"
             opacity={0.7}

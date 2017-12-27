@@ -14,16 +14,21 @@ import {
   clearSettings
 } from "../../../Ducks/CallLinguistSettings.js";
 
-import { tokDisConnect, tokConnect} from "../../../Ducks/tokboxReducer.js";
+import { tokDisConnect, tokConnect } from "../../../Ducks/tokboxReducer.js";
 
 import { fmtMSS } from "../../../Util/Helpers";
 
 class LinguistView extends Component {
   navigate = this.props.navigation.navigate;
   ref: Ref<Publisher>;
-  
-   componentDidMount() {
-    const { linguistTokboxSessionToken, linguistTokboxSessionID, tokConnect,sessionID } = this.props;
+
+  componentDidMount() {
+    const {
+      linguistTokboxSessionToken,
+      linguistTokboxSessionID,
+      tokConnect,
+      sessionID
+    } = this.props;
 
      tokConnect(linguistTokboxSessionID, linguistTokboxSessionToken);
 
@@ -37,8 +42,8 @@ class LinguistView extends Component {
       console.log("ON_SESSION_DID_DISCONNECT", e);
       console.log(sessionID);
       this.props.EndCall(sessionID, "done", this.props.token);
-      //this.props.clearSettings();      
-      this.props.navigation.dispatch({ type: "Home" });      
+      //this.props.clearSettings();
+      this.props.navigation.dispatch({ type: "Home" });
     });
     OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
       console.log("Stream destroyed");
@@ -48,7 +53,7 @@ class LinguistView extends Component {
       this.props.navigation.dispatch({ type: "Home" });
     });
 
-   // this.startTimer();    
+    this.startTimer();
   }
 
   startTimer = () => {
@@ -60,31 +65,29 @@ class LinguistView extends Component {
     });
   };
 
-  getSubscriber = ( booleanVar ) => {
-    return (
-      booleanVar ? 
-        <Subscriber
-          sessionId={this.props.linguistTokboxSessionID}
-          style={styles.background}
-          ref={ref => {
-            this.ref = ref;
-          }}
-          onPublishStart={() => {
-            console.log("started");
-          }}
-          onSubscribeError={() =>{
-            console.log("error")
-          }}
-        /> :
-        null
-    )
-  }
+  getSubscriber = booleanVar => {
+    return booleanVar ? (
+      <Subscriber
+        sessionId={this.props.linguistTokboxSessionID}
+        style={styles.background}
+        ref={ref => {
+          this.ref = ref;
+        }}
+        onPublishStart={() => {
+          console.log("started");
+        }}
+        onSubscribeError={() => {
+          console.log("error");
+        }}
+      />
+    ) : null;
+  };
 
   render() {
     return (
       <View style={styles.containerT}>
         <View style={styles.backgroundContainer}>
-          { this.getSubscriber(this.props.linguistTokboxSessionID) }
+          {this.getSubscriber(this.props.linguistTokboxSessionID)}
         </View>
         <View style={styles.subscriberBox}>
           <Publisher
@@ -129,6 +132,7 @@ class LinguistView extends Component {
           <CallButton
             onPress={() => {}}
             toggle={true}
+            active={!this.props.speaker}
             icon="volume-up"
             iconToggled="volume-off"
             opacity={0.7}
@@ -137,9 +141,9 @@ class LinguistView extends Component {
           />
           <CallButton
             onPress={() => {
-              this.props.tokDisConnect(this.props.linguistTokboxSessionID);              
+              this.props.tokDisConnect(this.props.linguistTokboxSessionID);
               OpenTok.disconnect(this.props.linguistTokboxSessionID);
-              this.props.clearSettings();              
+              this.props.clearSettings();
               this.props.resetTimerAsync();
               clearInterval(this.props.timer);
               this.props.navigation.dispatch({ type: "Home" });
@@ -155,6 +159,7 @@ class LinguistView extends Component {
               this.props.updateSettings({ mute: !this.props.mute });
             }}
             toggle={true}
+            active={this.props.mute}
             icon="mic"
             iconToggled="mic-off"
             opacity={0.7}
@@ -166,6 +171,7 @@ class LinguistView extends Component {
               this.props.updateSettings({ video: !this.props.video });
             }}
             toggle={true}
+            active={!this.props.video}
             icon="videocam"
             iconToggled="videocam-off"
             opacity={0.7}
@@ -174,8 +180,6 @@ class LinguistView extends Component {
             linguistTokboxSessionToken
           />
         </View>
-
-
       </View>
     );
   }
@@ -191,8 +195,7 @@ const mS = state => ({
     state.callLinguistSettings.linguistTokboxSessionToken,
   linguistTokboxSessionID: state.callLinguistSettings.linguistTokboxSessionID,
   sessionID: state.callLinguistSettings.sessionID,
-  token:state.auth.token
-
+  token: state.auth.token
 });
 
 const mD = {

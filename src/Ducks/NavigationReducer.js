@@ -35,6 +35,24 @@ export default (reducer = (state, action) => {
       );
       break;
 
+    case "CustomerView":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "CustomerView" })]
+        })
+      );
+      break;
+
+    case "LinguistView":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "LinguistView" })]
+        })
+      );
+      break;
+
     case "RateCallView":
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
