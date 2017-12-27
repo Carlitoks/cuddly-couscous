@@ -26,7 +26,7 @@ export default (ENG = {
   CitizenOrpassport: "In which countries are you citizen or hold a passport?",
   SomeFamiliarity: "Which countries do you have some familiarity?",
   helpPeople:
-    "Which cities do you know well enough to help people get around in?",
+  "Which cities do you know well enough to help people get around in?",
   CityGrowUp: "Which cities did you grow up in?",
   password: "Password",
   cancel: "Cancel",
@@ -44,7 +44,7 @@ export default (ENG = {
   troubleshoot: "Troubleshoot",
   resetpassword: "Reset Password",
   quicklyContact:
-    "Quickly contact a linguist to help with your languages needs",
+  "Quickly contact a linguist to help with your languages needs",
   callLinguist: "Call a Linguist",
   scanQR: "Scan QR Code",
   becomeOnVoy: "Become an OnVoy Linguist",
@@ -55,9 +55,13 @@ export default (ENG = {
   english: "English",
   spanish: "Spanish",
   DescribeAssistance: "Describe What Assistance You Need",
-  Next: "Next", 
-  RateLinguist: "Rate your linguist", 
-  WasGood: "What was Good?", 
-  NeedsAddress: "Were your needs addressed?", 
-  CouldBetter: "What could be better?"
+  Next: "Next",
+  RateLinguist: "Rate your linguist",
+  WasGood: "What was Good?",
+  NeedsAddress: "Were your needs addressed?",
+  CouldBetter: "What could be better?",
+  Calls: "Calls",
+  Amount: "Amount",
+  Status: "You are",
+  LanguagePairs: "Language Pairs"
 });

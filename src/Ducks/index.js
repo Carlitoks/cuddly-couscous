@@ -13,6 +13,7 @@ import callCustomerSettings from "./CallCustomerSettings";
 import callLinguistSettings from "./CallLinguistSettings";
 import rateCall from "./RateCallReducer";
 import tokbox from "./tokboxReducer";
+import profileLinguist from "./ProfileLinguistReducer"
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   nav,
   registrationCustomer,
   rateCall,
-  tokbox
+  tokbox,
+  profileLinguist
 });
 
 export default rootReducer;
