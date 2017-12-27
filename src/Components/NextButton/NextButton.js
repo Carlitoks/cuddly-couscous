@@ -5,13 +5,18 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 import styles from "./styles";
 
-const NextButton = ({ navigation }) => {
+const NextButton = ({ navigation, onPressButton }) => {
+  console.log(this.props);
   return (
     <Col style={styles.container}>
       {/* Next Button */}
       <Text
         style={styles.nextText}
-        onPress={() => navigation.dispatch({ type: "Home" })}
+        onPress={() => {
+          onPressButton
+            ? onPressButton()
+            : navigation.dispatch({ type: "Home" });
+        }}
       >
         {EN["Next"]}
       </Text>

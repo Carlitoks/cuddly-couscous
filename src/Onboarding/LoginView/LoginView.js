@@ -20,10 +20,6 @@ import styles from "./styles";
 import EN from "../../I18n/en";
 
 class LoginView extends Component {
-  componentWillMount() {
-    //
-  }
-
   componentWillUnmount() {
     this.props.clearForm();
   }

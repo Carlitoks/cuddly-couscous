@@ -11,6 +11,7 @@ import userProfile from "./UserProfileReducer";
 import registrationCustomer from "./RegistrationCustomerReducer";
 import callCustomerSettings from "./CallCustomerSettings";
 import callLinguistSettings from "./CallLinguistSettings";
+import customerProfile from "./CustomerProfileReducer";
 import rateCall from "./RateCallReducer";
 import tokbox from "./tokboxReducer";
 import profileLinguist from "./ProfileLinguistReducer"
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   login,
   nav,
   registrationCustomer,
+  customerProfile,
   rateCall,
   tokbox,
   profileLinguist
