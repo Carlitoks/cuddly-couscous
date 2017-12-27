@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { clearForm, updateForm } from "../../Ducks/RegistrationCustomerReducer";
+import {
+  clearForm,
+  updateForm,
+  errorForm
+} from "../../Ducks/RegistrationCustomerReducer";
 //import { loginUser } from "../../Ducks/AuthReducer";
 
-import { View, ScrollView, Text } from "react-native";
+import { View, ScrollView, Text, Alert } from "react-native";
 import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-
+import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 
 import EN from "../../I18n/en";
@@ -19,6 +23,85 @@ import EN from "../../I18n/en";
 class CustomerAccountView extends Component {
   componentWillUnmount() {
     this.props.clearForm();
+  }
+
+  validateForm() {
+    const patt = new RegExp(EMAIL_REGEX);
+    let updates = {};
+    let valid = true;
+
+    if (!patt.test(this.props.email)) {
+      updates = {
+        ...updates,
+        emailErrorMessage: "Not A Valid Email"
+      };
+      valid = false;
+    }
+
+    if (!this.props.email) {
+      updates = {
+        ...updates,
+        emailErrorMessage: "Empty Email"
+      };
+      valid = false;
+    }
+
+    if (!this.props.password) {
+      updates = {
+        ...updates,
+        passwordErrorMessage: "Empty Password"
+      };
+      valid = false;
+    }
+
+    updates = {
+      ...updates,
+      formHasErrors: !valid
+    };
+
+    if (!valid) {
+      this.tempDisplayErrors(
+        updates.emailErrorMessage,
+        updates.passwordErrorMessage
+      );
+    }
+
+    this.props.updateForm(updates);
+    return valid;
+  }
+
+  submit() {
+    this.props.updateForm({ performingRequest: true });
+
+    if (this.validateForm()) {
+      if (!this.props.formHasErrors) {
+        this.props.navigation.dispatch({ type: "CustomerProfile" });
+      } else {
+        if (this.props.formHasErrors) {
+          this.tempDisplayErrors(
+            this.props.emailErrorMessage,
+            this.props.passwordErrorMessage
+          );
+        }
+      }
+    }
+
+    this.props.updateForm({ performingRequest: false });
+  }
+
+  // Will be changed according the designs
+  tempDisplayErrors(...errors) {
+    const errorStr = errors.reduce((last, current) => {
+      curr = "";
+      if (current) {
+        curr = `- ${current}\n`;
+      }
+      return last.concat(curr);
+    }, "");
+
+    Alert.alert("Errors", errorStr, [
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]);
   }
 
   render() {
@@ -63,7 +146,7 @@ class CustomerAccountView extends Component {
             {/* Create */}
             <Button
               buttonStyle={styles.Button}
-              onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
+              onPress={() => this.submit()}
               title={EN["CreateAccount"]}
             />
 
@@ -79,7 +162,7 @@ class CustomerAccountView extends Component {
             <Button
               buttonStyle={styles.transparentButton}
               icon={{ name: "qrcode", type: "font-awesome" }}
-              onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
+              onPress={() => this.submit()}
               title={EN["ScanQR"]}
             />
           </Col>
@@ -98,7 +181,8 @@ const mS = state => ({
 
 const mD = {
   clearForm,
-  updateForm
+  updateForm,
+  errorForm
 };
 
 export default connect(mS, mD)(CustomerAccountView);
