@@ -36,72 +36,20 @@ class ContactingLinguist extends Component {
       estimatedMinutes: 20,
       token: this.props.token
     });
-    console.log(res);
-    const tokboxSessionId = res.payload.tokboxSessionID;
-    const tokboxToken = res.payload.tokboxSessionToken;
-
-    this.props.updateSettings({
-      customerTokboxSessionID: tokboxSessionId,
-      customerTokboxSessionToken: tokboxToken,
-      sessionID: res.payload.sessionID
-    });
-
-    this.props.tokConnect(tokboxSessionId, tokboxToken);
-
-    // OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => console.log(e));
-    // OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_DESTROYED, e =>
-    //   console.log("Session destroyed")
-    // );
-    // OpenTok.on(OpenTok.events.ON_SESSION_DID_DISCONNECT, e => {
-    //   console.log("ON_SESSION_DID_DISCONNECT", e);
-    //   this.props.EndCall(this.props.sessionID, "done", this.props.token);
-    //   //this.props.clearSettings();
-    //   this.props.navigation.dispatch({ type: "Home" });
-    // });
-    // OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
-    //   console.log("Stream destroyed");
-    //   OpenTok.disconnect(this.props.customerTokboxSessionID);
-    //   this.props.EndCall(this.props.sessionID, "done", this.props.token);
-    //   this.props.navigation.dispatch({ type: "Home" });
-    // });
-
-    /*     await OpenTok.connect(tokboxSessionId, tokboxToken);
-    
-    OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => {
-      console.log("ON_SIGNAL_RECEIVED", e);
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_CREATED, e => {
-      console.log("ON_SESSION_CONNECTION_CREATED", e);
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_DESTROYED, e => {
-      console.log("ON_SESSION_CONNECTION_DESTROYED", e);
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_DID_CONNECT, e => {
-      console.log("ON_SESSION_DID_CONNECT", e);
-      this.props.AsyncCreateInvitation( res.payload.sessionID, linguistID, role, this.props.token)            
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_DID_DISCONNECT, e => {
-      console.log("ON_SESSION_DID_DISCONNECT", e);
-      EndCall(res.payload.sessionID, "done", this.props.token);
-      this.props.clearSettings();      
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_DID_FAIL_WITH_ERROR, e => {
-      console.log("ON_SESSION_DID_FAIL_WITH_ERROR", e);
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_STREAM_CREATED, e => {
-      console.log("ON_SESSION_STREAM_CREATED", e);
-      this.props.navigation.dispatch( { type: "CustomerView" } );
-    });
-
-    OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
-      console.log("", e);
-    }); */
+    if(res){
+      const tokboxSessionId = res.payload.tokboxSessionID;
+      const tokboxToken = res.payload.tokboxSessionToken;
+      
+      this.props.updateSettings({
+        customerTokboxSessionID: tokboxSessionId,
+        customerTokboxSessionToken: tokboxToken,
+        sessionID: res.payload.sessionID
+      });
+      
+      this.props.tokConnect(tokboxSessionId, tokboxToken);
+    } else {
+      console.log("The session could not be created")
+    }
   }
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
