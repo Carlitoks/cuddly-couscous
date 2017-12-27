@@ -128,7 +128,9 @@ class CustomerView extends Component {
             iconSize={30}
           />
           <CallButton
-            onPress={() => {}}
+            onPress={() => {
+              this.props.updateSettings({ mute: !this.props.speaker });
+            }}
             toggle={true}
             active={!this.props.speaker}
             icon="volume-up"
