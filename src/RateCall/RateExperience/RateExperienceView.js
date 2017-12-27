@@ -63,22 +63,26 @@ class RateCallView extends Component {
     {
       Name: "ios-time",
       IconState: "iconClockFirstList",
-      IconName: "clock"
+      IconName: "clock",
+      OffState: "iconClockSecondList"
     },
     {
       Name: "ios-volume-up",
       IconState: "iconVolumeFirstList",
-      IconName: "volume"
+      IconName: "volume",
+      OffState: "iconVolumeSecondList"
     },
     {
       Name: "ios-wifi",
       IconState: "iconWifiFirstList",
-      IconName: "wifi"
+      IconName: "wifi",
+      OffState: "iconWifiSecondList"
     },
     {
       Name: "ios-person",
       IconState: "iconPersonFirstList",
-      IconName: "person"
+      IconName: "person",
+      OffState: "iconPersonSecondList"
     }
   ];
 
@@ -86,22 +90,26 @@ class RateCallView extends Component {
     {
       Name: "ios-time",
       IconState: "iconClockSecondList",
-      IconName: "clock"
+      IconName: "clock",
+      OffState: "iconClockFirstList"
     },
     {
       Name: "ios-volume-up",
       IconState: "iconVolumeSecondList",
-      IconName: "volume"
+      IconName: "volume",
+      OffState: "iconVolumeFirstList"
     },
     {
       Name: "ios-wifi",
       IconState: "iconWifiSecondList",
-      IconName: "wifi"
+      IconName: "wifi",
+      OffState: "iconWifiFirstList"
     },
     {
       Name: "ios-person",
       IconState: "iconPersonSecondList",
-      IconName: "person"
+      IconName: "person",
+      OffState: "iconPersonFirstList"
     }
   ];
 
@@ -139,14 +147,26 @@ class RateCallView extends Component {
       icon.IconName,
       icon.IconState,
       this.props[icon.IconState],
-      flag
+      flag,
+      icon.OffState
     );
   }
   //////////// Toogle Icons function  /////
-  GenericToggleFunction = (IconName, StateName, IconState, flagsStore) => {
+
+  /*
+ * @param {string} IconName - Name of the Icon.
+ * @param {string} StateName - Name of the state
+ * @param {object} IconState - object that content the current state 
+ * @param {string} flagstore - The action asociated with the question that we are selecting at the moment
+ * @param {string} OffState - string used to identify the state of the icon that we are going to turn off   
+ */
+
+  GenericToggleFunction = (IconName, StateName, IconState, flagsStore, OffState) => {
     const ObjectState = {};
     ObjectState[StateName] = !IconState;
-    this.props.UpdateFlags(IconName, ObjectState, flagsStore, !IconState);
+    const ObjectOffState = {};
+    ObjectOffState[OffState] = false;
+    this.props.UpdateFlags(IconName, ObjectState, flagsStore, !IconState, ObjectOffState);
   };
 
   render() {
