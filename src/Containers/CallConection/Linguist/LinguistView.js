@@ -43,14 +43,14 @@ class LinguistView extends Component {
       console.log(sessionID);
       this.props.EndCall(sessionID, "done", this.props.token);
       //this.props.clearSettings();
-      this.props.navigation.dispatch({ type: "Home" });
+      this.props.navigation.dispatch({ type: "RateCallView" });
     });
     OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
       console.log("Stream destroyed");
       OpenTok.disconnect(linguistTokboxSessionID);
       this.props.resetTimerAsync();
       this.props.EndCall(sessionID, "done", this.props.token);
-      this.props.navigation.dispatch({ type: "Home" });
+      this.props.navigation.dispatch({ type: "RateCallView" });
     });
 
     this.startTimer();
@@ -148,7 +148,7 @@ class LinguistView extends Component {
               OpenTok.disconnect(this.props.linguistTokboxSessionID);
               this.props.clearSettings();
               clearInterval(this.props.timer);
-              this.props.navigation.dispatch({ type: "Home" });
+              this.props.navigation.dispatch({ type: "RateCallView" });
             }}
             buttonColor="red"
             toggle={false}
