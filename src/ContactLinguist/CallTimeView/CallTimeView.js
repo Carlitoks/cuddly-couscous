@@ -49,7 +49,9 @@ class CallTimeView extends Component {
             />
             <View style={styles.containerContent}>
               {/* how Long Do You Need help For? */}
+              <View style={styles.costCallContainer}>
               <Text style={styles.mainTitle}>{EN["howLongNeedHelp"]}</Text>
+              </View>
 
               {/* Time Picker */}
               <Picker
