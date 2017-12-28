@@ -61,7 +61,6 @@ class CustomerView extends Component {
   }
 
   startTimer = () => {
-    console.log("Start Timer");
     this.props.updateSettings({
       timer: setInterval(() => {
         this.props.incrementTimer();

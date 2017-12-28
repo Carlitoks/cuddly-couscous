@@ -56,8 +56,11 @@ class LinguistView extends Component {
     this.startTimer();
   }
 
+  componentWillUnmount() {
+    this.props.resetTimerAsync();
+  }
+
   startTimer = () => {
-    console.log("Start Timer");
     this.props.updateSettings({
       timer: setInterval(() => {
         this.props.incrementTimer();
@@ -144,7 +147,6 @@ class LinguistView extends Component {
               this.props.tokDisConnect(this.props.linguistTokboxSessionID);
               OpenTok.disconnect(this.props.linguistTokboxSessionID);
               this.props.clearSettings();
-              this.props.resetTimerAsync();
               clearInterval(this.props.timer);
               this.props.navigation.dispatch({ type: "Home" });
             }}
