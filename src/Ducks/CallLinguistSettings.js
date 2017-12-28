@@ -34,6 +34,27 @@ export const incrementTimer = () => ({
   type: ACTIONS.INCREMENT_TIMER
 });
 
+export const getInvitations = () => (dispatch, getState) => {
+  const { auth: {uuid, token}} = getState();
+
+  Sessions.GetInvitations(uuid, token)
+    .then( response => {
+      if(response.data.length > 0){
+        // There's at least one call. Let's attend the first one
+        const length = response.data.length;
+        const invitationId = response.data[0].id;
+        const accept = {"accept": true};
+
+        dispatch(AsyncAcceptsInvite(invitationId, accept, token));
+      } else {
+        console.log("There are no invitations")
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+
 export const resetTimerAsync = () => (dispatch, getState) => {
   const { callCustomerSettings } = getState();
 

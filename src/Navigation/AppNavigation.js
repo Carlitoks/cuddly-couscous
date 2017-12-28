@@ -16,7 +16,6 @@ import CustomerView from "../Containers/CallConection/Customer/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
 import RateCallView from "../RateCall/RateExperience/RateExperienceView";
 import Home from "../Home/Home";
-import HomeLinguist from "../HomeLinguist/HomeLinguist";
 import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
 import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
 import LoginView from "../Onboarding/LoginView/LoginView";
@@ -46,9 +45,6 @@ const Navigation = StackNavigator(
     },
     Home: {
       screen: Home
-    },
-    HomeLinguist: {
-      screen: HomeLinguist
     },
     IncomingCallView: { screen: IncomingCallView },
     LandingContainer: { screen: LandingContainer },

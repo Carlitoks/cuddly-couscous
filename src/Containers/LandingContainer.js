@@ -41,13 +41,6 @@ class LandingContainer extends Component {
         >
           Rate Call
         </RkButton>
-        <RkButton
-          onPress={() => {
-            this.props.navigation.dispatch({ type: "HomeLinguist" });
-          }}
-        >
-          Linguist Home
-        </RkButton>
       </View>
     );
   }

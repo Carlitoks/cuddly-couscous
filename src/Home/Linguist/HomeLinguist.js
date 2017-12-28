@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   updateSettings,
   GetOptions
-} from "../Ducks/ProfileLinguistReducer";
+} from "../../Ducks/ProfileLinguistReducer";
 
 import { View, Text, Image, ScrollView, Switch } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
@@ -13,24 +13,22 @@ import { Button, FormLabel, FormInput, Header, Card, List, ListItem } from "reac
 import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
-import SettingsButton from "../Components/SettingsButton/SettingsButton";
+import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
+import SettingsButton from "../../Components/SettingsButton/SettingsButton";
+
+import { Sessions } from "../../Api";
+import { getInvitations } from "../../Ducks/CallLinguistSettings";
 
 import styles from "./styles";
-import { Colors } from "../Themes";
-import { Images } from "../Themes";
-import EN from "../I18n/en";
+import { Colors } from "../../Themes";
+import { Images } from "../../Themes";
+import EN from "../../I18n/en";
 
-class HomeLinguist extends Component {
-
-
+class Home extends Component {
   navigate = this.props.navigation.navigate;
 
   render() {
-
     const { Amount, NumberOfCalls, status, Username } = this.props;
-    //const languagues = [];
-    console.log(this.props.GetOptions());
     const languagues = this.props.GetOptions();
 
     return (
@@ -148,6 +146,13 @@ class HomeLinguist extends Component {
               ))
             }
           </List>
+          <Button
+            containerStyle={styles.button}
+            onPress={this.props.getInvitations}
+            title="Polling"
+          >
+              Polling
+          </Button>
         </ScrollView>
       </View>
     );
@@ -160,12 +165,15 @@ const mS = state => ({
   NumberOfCalls: state.profileLinguist.NumberOfCalls,
   Amount: state.profileLinguist.Amount,
   status: state.profileLinguist.status,
+  uuid: state.auth.uuid,
+  token: state.auth.token,
   Username: state.profileLinguist.Username
 });
 
 const mD = {
   updateSettings,
-  GetOptions
+  GetOptions,
+  getInvitations
 };
 
-export default connect(mS, mD)(HomeLinguist);
+export default connect(mS, mD)(Home);
