@@ -20,22 +20,21 @@ export const styles = StyleSheet.create({
     marginRight: 50
   },
   LinguistInformation: {
-    alignItems: "flex-start"
+    alignItems: "center",
+    justifyContent: "center",
   },
   LinguistName: {
     backgroundColor: "rgba(0,0,0,0)",  
     fontSize: 25,
     fontWeight: "bold",
     color: "#888888",
-    marginLeft: 30
+    marginLeft: 20,
   },
   LinguistAddress: {
     backgroundColor: "rgba(0,0,0,0)",  
     fontSize: 20,
     fontWeight: "bold",
-    color: "#888888",
-    flexDirection: "column",
-    alignItems: "flex-end"
+    color: "#888888"
   },
   TextContainer: {
     justifyContent: "center",
@@ -77,7 +76,7 @@ export const styles = StyleSheet.create({
   buttonSubmit: {
     marginTop: 20,
     backgroundColor: "#3b98b7",
-    width: Dimensions.get("window").width,
+    width: Dimensions.get("window").width-30,
     borderRadius: 10
   }
 });

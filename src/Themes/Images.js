@@ -1,5 +1,6 @@
 // leave off @2x/@3x
 const images = {
+  avatar: require("../Images/smallAvatar.png"),
   call: require("../Images/call.png"),
   logo: require("../Images/logoTMP.png"),
   profile: require("../Images/profileIcon.png"),

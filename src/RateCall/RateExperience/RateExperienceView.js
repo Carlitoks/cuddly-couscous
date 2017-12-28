@@ -230,9 +230,11 @@ class RateCallView extends Component {
             </Col>
             <Col style={styles.LinguistInformation}>
               <Text style={styles.LinguistName}>Zhang W.</Text>
+              <View>
               <Text style={styles.LinguistAddress}>
-                <Icon name="ios-pin" size={20} />San Francisco
+                <Icon name="ios-pin" size={20} /> San Francisco
               </Text>
+              </View>
             </Col>
           </Grid>
 
