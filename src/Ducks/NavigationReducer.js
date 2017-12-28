@@ -11,6 +11,12 @@ const initialState = AppNavigation.router.getStateForAction(
 export default (reducer = (state, action) => {
   let newState;
 
+  if(state){
+    const [currentRoute] = state.routes[0].routes[0].routes.slice(-1);
+    
+    if(action.type === currentRoute.routeName) return state;
+  }
+
   switch (action.type) {
     case "back":
       newState = AppNavigation.router.getStateForAction(
