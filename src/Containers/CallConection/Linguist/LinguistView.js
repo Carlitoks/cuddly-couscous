@@ -98,6 +98,9 @@ class LinguistView extends Component {
             style={styles.subscriber}
             mute={this.props.mute}
             video={this.props.video}
+            ref={ref => {
+              this.ref = ref;
+            }}
           />
         </View>
         <View style={styles.topContainer}>
