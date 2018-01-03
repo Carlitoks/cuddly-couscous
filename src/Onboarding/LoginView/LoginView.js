@@ -185,7 +185,8 @@ const mS = state => ({
   password: state.login.password,
   passwordErrorMessage: state.login.passwordErrorMessage,
   formHasErrors: state.login.formHasErrors,
-  performingRequest: state.login.performingRequest
+  performingRequest: state.login.performingRequest,
+  networkError: state.network.errors
 });
 
 const mD = {

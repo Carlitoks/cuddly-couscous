@@ -3,6 +3,7 @@ import { NavigationActions } from "react-navigation";
 import { Auth, User, Sessions } from "../Api";
 
 import { loginError } from "./LoginReducer";
+import { networkError } from "./NetworkErrorsReducer";
 
 import { clearView as clearUserProfile } from "./UserProfileReducer"; 
 
@@ -77,7 +78,10 @@ export const logInAsync = (email, password) => dispatch => {
         })
       );
     })
-    .catch(error => dispatch(loginError(error.response)));
+    .catch(error => {
+      dispatch(networkError(error));
+      dispatch(loginError(error.response));
+    });
 };
 
 // Error log function

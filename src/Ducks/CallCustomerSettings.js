@@ -1,3 +1,4 @@
+import { networkError } from "./NetworkErrorsReducer";
 import { Sessions } from "../Api";
 
 // Actions
@@ -94,10 +95,6 @@ export const AsyncCreateSession = ({
     })
     .catch(error => {
       dispatch(networkError(error));
-      console.log(error);
-      if (error.response) {
-        console.log(error.response);
-      }
     });
 };
 
@@ -116,7 +113,7 @@ export const AsyncCreateInvitation = (
       dispatch(createInvitation(response.data));
     })
     .catch(error => {
-      console.log(error);
+      dispatch(networkError(error));
     });
 };
 

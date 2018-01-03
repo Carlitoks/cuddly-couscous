@@ -1,4 +1,5 @@
 import { Sessions } from "../Api";
+import { networkError } from "./NetworkErrorsReducer";
 // Actions
 export const ACTIONS = {
   CLEAR: "callLinguistSettings/clear",
@@ -89,7 +90,7 @@ export const AsyncFetchInvitationDetail = (invitationID, token) => dispatch => {
       dispatch(invitationDetail(response.data));
     })
     .catch(error => {
-      console.log(error);
+      dispatch(networkError(error));
     });
 };
 export const AsyncAcceptsInvite = (invitationID, accept, token) => dispatch => {
@@ -99,7 +100,7 @@ export const AsyncAcceptsInvite = (invitationID, accept, token) => dispatch => {
       dispatch({type: "LinguistView"});
     })
     .catch(error => {
-      console.log(error);
+      dispatch(networkError(error));
     });
 };
 

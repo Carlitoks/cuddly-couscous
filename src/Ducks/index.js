@@ -6,6 +6,7 @@ import auth from "./AuthReducer";
 import contactLinguist from "./ContactLinguistReducer";
 import forgotPassword from "./ForgotPasswordReducer";
 import login from "./LoginReducer";
+import network from "./NetworkErrorsReducer";
 import nav from "./NavigationReducer";
 import userProfile from "./UserProfileReducer";
 import registrationCustomer from "./RegistrationCustomerReducer";
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   contactLinguist,
   forgotPassword,
   login,
+  network,
   nav,
   registrationCustomer,
   customerProfile,
