@@ -56,12 +56,11 @@ export default StyleSheet.create({
   callerNameText: {
     backgroundColor: "rgba(0,0,0,0)", 
     fontSize: 30,
-    marginLeft: 10,
     paddingTop: 10,
     fontFamily: Fonts.primaryFont,
     color: Colors.fontColor,
     textAlign: "center",
-    width: width
+    width: "70%"
   },
   notificationText: {
     fontSize: 20,

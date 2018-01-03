@@ -103,12 +103,15 @@ class ContactingLinguist extends Component {
                 <View style={styles.buttonColumn}>
                   {/* Switch Camera Button */}
                   <CallButton
-                    onPress={() => {}}
+                    onPress={() => {
+                      // WIP Only set state
+                      console.log("Switch camera")
+                    }}
                     toggle={true}
                     icon="camera-front"
                     iconToggled="camera-rear"
                     opacity={0.7}
-                    label="Camera"
+                    label="Rotate"
                   />
                 </View>
                 <View style={styles.buttonColumn}>

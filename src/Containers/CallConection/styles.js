@@ -32,7 +32,7 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "transparent",
-    paddingTop: 10,
+    paddingTop: 30,
     transform: [{ translate: [0, 0, 1] }]
   },
   instructions: {
@@ -51,7 +51,7 @@ export default StyleSheet.create({
   smallAvatar: {
     width: 70,
     height: 70,
-    borderRadius: 50
+    borderRadius: 30
   },
   inlineContainer: {
     flexDirection: "row",
