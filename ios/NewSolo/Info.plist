@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>NewSolo</string>
+	<string>OnVoy</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -21,15 +21,23 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>749c6296c91d41e41ab7d64583d8149877eaa048</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>OPENTOK_API_KEY</key>
-	<string>46016982</string>
-	<key>NSCameraUsageDescription</key>
-	<string>${PRODUCT_NAME} Camera Usage</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>${PRODUCT_NAME} Microphone Usage</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -41,8 +49,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>${PRODUCT_NAME} Camera Usage</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>${PRODUCT_NAME} Microphone Usage</string>
+	<key>OPENTOK_API_KEY</key>
+	<string>46016982</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
