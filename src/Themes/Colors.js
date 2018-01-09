@@ -1,8 +1,16 @@
 const colors = {
-  primaryColor: "#1e90ff",
-  primaryFillColor: "#b6ddff",
+  primaryColor: "white",
+  primaryLightFillColor: "#e8f1ff",
+  primaryStrongFillColor: "#b6ddff",
   primaryBackgroundColor: "#e6f3ff",
   primaryColorDisabled: "#63aff9",
+  primaryAltFontColor: "#6B8FE0",
+  primarySelectedTabColor: "#c9c2ff",
+  gradientColor: {
+    top: "#6153CD",
+    middle: "#6B8FE0",
+    bottom: "#73BDEE"
+  },
   fontColor: "white",
   button: {
     CommonButton: "#434242",

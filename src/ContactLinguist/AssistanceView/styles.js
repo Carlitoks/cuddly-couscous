@@ -1,40 +1,31 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../Themes";
+import { Colors, Fonts } from "../../Themes";
+import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
-  scrollContainer: {
-    width: "100%",
-    backgroundColor: Colors.primaryFillColor,
-    height: "100%",
-    flex: 1,
-    flexDirection: "column"
-  },
   Icon: {
     width: width
   },
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    paddingTop: 10
-  },
   mainTitle: {
+    fontFamily: Fonts.primaryLightFont,
     fontSize: 24,
     textAlign: "center",
-    marginBottom: 15,
-    marginTop: 10,
+    marginBottom: moderateScale(15),
+    marginTop: moderateScale(20),
     color: Colors.primaryColor,
-    lineHeight: 40
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   containerSearch: {
     backgroundColor: "transparent",
     borderBottomWidth: 0,
     borderTopWidth: 0,
-    marginTop: 20
+    marginTop: moderateScale(10),
+    marginBottom: moderateScale(10)
   },
   inputSearch: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
     borderRadius: 10
   },
   buttonStep: {
@@ -46,5 +37,45 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center"
+  },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
+  scrollContainer: {
+    flex: 1,
+    height: "100%",
+    backgroundColor: "white"
+  },
+  contentScrollContainer: { flexGrow: 1 },
+  listContainer: {
+    marginTop: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0
+  },
+  buttonStep: {
+    alignSelf: "center",
+    backgroundColor: Colors.primaryLightFillColor,
+    width: width
+  },
+  textStep: {
+    fontSize: 16,
+    textAlign: "center",
+    color: Colors.primaryAltFontColor,
+    fontFamily: Fonts.primaryBoldFont
+  },
+  containerContent: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-start"
+  },
+  textChooseBelow: {
+    color: "gray",
+    fontFamily: Fonts.primaryLightFont,
+    alignSelf: "flex-start",
+    marginTop: moderateScale(25),
+    marginLeft: moderateScale(15),
+    marginBottom: moderateScale(-15)
   }
 });

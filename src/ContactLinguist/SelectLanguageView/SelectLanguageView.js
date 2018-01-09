@@ -16,6 +16,7 @@ import {
   Header
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import LinearGradient from "react-native-linear-gradient";
 
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
@@ -23,7 +24,7 @@ import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 
 import EN from "../../I18n/en";
 import { styles } from "./styles";
-import { Images } from "../../Themes";
+import { Images, Colors } from "../../Themes";
 
 class SelectLanguague extends Component {
   filterList = language => {
@@ -45,10 +46,24 @@ class SelectLanguague extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={styles.scrollContainer}>
-      <TopViewIOS/>
-        <ScrollView style={styles.scroll} automaticallyAdjustContentInsets={true}>
+            
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.contentScrollContainer}
+        >
           <Col>
+            {/* Linear Gradient */}
+            <TopViewIOS/>
+            <LinearGradient
+              colors={[
+                Colors.gradientColor.top,
+                Colors.gradientColor.middle,
+                Colors.gradientColor.bottom
+              ]}
+              style={styles.linearGradient}
+            />
             {/* Header - Navigation */}
             <Header
               outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
@@ -65,11 +80,13 @@ class SelectLanguague extends Component {
             <Text style={styles.mainTitle}>{EN["selectLanguage"]}</Text>
             <View style={styles.languages}>
               <Text style={styles.english}>{EN["english"]}</Text>
+              <Icon size={30} name="swap-horiz" color="white" style={styles.iconChange}/>
               <Text style={styles.spanish}>{EN["spanish"]}</Text>
             </View>
 
             {/* Searchbar */}
             <SearchBar
+              lightTheme
               containerStyle={styles.containerSearch}
               placeholder="Search"
               inputStyle={styles.inputSearch}
@@ -78,8 +95,10 @@ class SelectLanguague extends Component {
                 this.props.updateSettings({ searchLanguage: text })
               }
             />
-            <List>{this.filterList(this.props.searchLanguage)}</List>
           </Col>
+          <List containerStyle={styles.listContainer}>
+            {this.filterList(this.props.searchLanguage)}
+          </List>
         </ScrollView>
 
         {/* Next Button */}

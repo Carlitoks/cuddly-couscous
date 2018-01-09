@@ -1,16 +1,10 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../Themes";
+import { Colors, Fonts } from "../../Themes";
+import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
-  scrollContainer: {
-    width: "100%",
-    backgroundColor: Colors.primaryFillColor,
-    height: "100%",
-    flex: 1,
-    flexDirection: "column"
-  },
   containerContent: {
     flex: 1,
     flexDirection: "column",
@@ -18,12 +12,6 @@ export default StyleSheet.create({
   },
   Icon: {
     width: width
-  },
-  container: {
-    flex: 0.2,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#d0cffe"
   },
   containerBottom: {
     alignItems: "flex-end",
@@ -36,23 +24,29 @@ export default StyleSheet.create({
     backgroundColor: Colors.primaryColor
   },
   button: {
-    backgroundColor: Colors.primaryColor
+    backgroundColor: Colors.primaryLightFillColor
+  },
+  buttonText: {
+    fontFamily: Fonts.primaryBoldFont,
+    color: Colors.primaryAltFontColor
   },
   mainTitle: {
-    fontSize: 28,
-    textAlign: "center",
-    marginBottom: 15,
-    marginTop: 20,
+    fontSize: 24,
+    marginTop: moderateScale(10),
+    marginBottom: moderateScale(50),
     color: Colors.primaryColor,
-    lineHeight: 40,
-    margin: 5
+    textAlign: "center",
+    fontFamily: Fonts.primaryLightFont,
+    alignSelf: "center",
+    width: width,
+    backgroundColor: "rgba(255, 255, 255, 0)" 
   },
   costCall: {
     fontSize: 24,
-    marginBottom: 15,
-    marginTop: 35,
-    color: Colors.primaryColor,
-    //width: "50%",
+    fontFamily: Fonts.primaryLightFont,
+    marginBottom: moderateScale(10),
+    marginTop: moderateScale(10),
+    color: "gray",
     alignItems: "center"
   },
   costCallContainer: {
@@ -61,7 +55,25 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   picker: {
+    marginLeft: moderateScale(10),
+    marginRight: moderateScale(9),
+    width: "90%",
+    marginTop: verticalScale(15)
+  },
+  linearGradient: {
+    position: "absolute",
     width: "100%",
-    marginTop: 30
+    height: "100%"
+  },
+  scrollContainer: {
+    flex: 1,
+    height: "100%",
+    backgroundColor: "white"
+  },
+  contentScrollContainer: { flexGrow: 1 },
+  listContainer: {
+    marginTop: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0
   }
 });

@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { Colors, Fonts } from "../../Themes";
 
 const width = Dimensions.get("window").width;
 export const styles = StyleSheet.create({
@@ -7,24 +8,40 @@ export const styles = StyleSheet.create({
     width: width
   },
   title: {
-    fontSize: 30,
-    marginTop: 10,
-    fontFamily: "System",
-    textAlign: "center",
-    width: width
+    color: Colors.primaryColor,
+    fontSize: 25,
+    marginTop: 20,
+    marginBottom: 10,
+    marginLeft: 10,
+    fontFamily: Fonts.primaryBoldFont,
+    textAlign: "left",
+    width: width,
+    backgroundColor: "transparent"
   },
   tabTextStyle: {
-    color: "#ffffff",
+    color: Colors.primaryLightFillColor,
     fontWeight: "bold"
   },
   tabStyle: {
-    backgroundColor: "rgba(255, 255, 255,0)",
+    backgroundColor: "transparent",
     borderWidth: 1,
     borderColor: "white"
   },
   tabsContainerStyle: {
+    position: "absolute",
     marginLeft: 30,
     marginRight: 30,
-    marginTop: 40
+    width: "58%",
+    alignSelf: "center",
+    marginTop: 17
+  },
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: "white"
+  },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
   }
 });

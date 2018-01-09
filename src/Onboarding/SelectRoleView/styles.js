@@ -1,82 +1,93 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../Themes";
+import { Colors, Images, Fonts } from "../../Themes";
+import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 
-const width = Dimensions.get("window").width - 20;
+const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   logo: {
     width: 160,
     height: 60,
-    marginTop: 30,
-    marginBottom: 40
+    marginTop: verticalScale(70),
+    marginBottom: verticalScale(70)
   },
   call: {
-    width: 100,
-    height: 60,
-    marginBottom: 10
-  },
-  red: {
-    color: "red"
+    width: moderateScale(90),
+    height: moderateScale(80),
+    marginBottom: verticalScale(7.5)
   },
   center: {
     alignSelf: "center"
   },
-  background: {
-    backgroundColor: "#EFEFF4",
-    height: "100%"
-  },
-  mainButton: {
-    paddingTop: "50px",
-    paddingBottom: "50px",
-    width: width
-  },
   card: {
-    width: "90%",
-    borderRadius: 10,
-    paddingTop: 25,
-    paddingBottom: 25
+    height: moderateScale(130),
+    width: "100%",
+    marginTop: verticalScale(30)
+  },
+  cardContainer: {
+    borderRadius: 15
   },
   button: {
-    backgroundColor: Colors.primaryColor,
-    borderRadius: 30,
-    width: "100%",
-    height: 60
+    height: moderateScale(100),
+    backgroundColor: Colors.primaryLightFillColor,
+    width: "100%"
   },
   buttonQR: {
-    backgroundColor: "transparent",
-    borderRadius: 10,
-    width: "90%",
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
-    marginTop: 10,
-    marginBottom: 10,
-    paddingTop: 30,
-    paddingBottom: 30
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    width: "100%",
+    borderWidth: 0,
+    marginTop: moderateScale(15),
+    marginBottom: moderateScale(15),
+    height: moderateScale(100)
   },
   textQR: {
-    color: Colors.primaryColor,
-    fontSize: 16
+    fontFamily: Fonts.primaryBoldFont,
+    color: Colors.fontColor,
+    fontSize: 15
   },
   textBecome: {
-    color: Colors.primaryColor,
-    fontSize: 16,
+    fontFamily: Fonts.primaryBoldFont,
+    color: Colors.fontColor,
+    fontSize: 15,
     marginTop: 15,
-    marginBottom: 20
+    marginBottom: 20,
+    alignSelf: "flex-end",
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   textCenter: {
+    fontFamily: Fonts.primaryBaseFont,
+    color: "gray",
     justifyContent: "center",
     alignItems: "center",
     width: "80%",
     textAlign: "center",
-    marginBottom: 15,
-    marginTop: 10
+    marginBottom: moderateScale(15),
+    marginTop: moderateScale(10)
   },
   linkLogin: {
-    color: Colors.primaryColor,
-    padding: 10
+    fontFamily: Fonts.primaryBoldFont,
+    color: Colors.fontColor
+  },
+  textLogin: {
+    fontFamily: Fonts.primaryFont,
+    alignSelf: "flex-end",
+    color: Colors.fontColor,
+    marginTop: moderateScale(10),
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   buttonText: {
-    fontSize: 17,
-    color: "#ffffff"
-  }
+    fontFamily: Fonts.primaryBoldFont,
+    fontSize: 15,
+    color: Colors.primaryAltFontColor
+  },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
+  scrollContainer: {
+    flex: 1,
+    height: "100%"
+  },
+  contentScrollContainer: { flexGrow: 1 }
 });

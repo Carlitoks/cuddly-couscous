@@ -1,17 +1,15 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../Themes";
+import { Colors, Fonts } from "../../Themes";
 
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   Button: {
-    width: "90%",
     backgroundColor: "#FFFFFF",
     borderBottomWidth: 1,
     borderBottomColor: "#D3D3D3",
     borderRadius: 0,
     paddingLeft: 0,
-    marginLeft: "10%",
     paddingTop: 25,
     paddingBottom: 25
   },
@@ -29,6 +27,7 @@ export default StyleSheet.create({
   center: {
     alignSelf: "center"
   },
+  avatar: { alignSelf: "center" },
   logo: {
     marginTop: 20,
     marginBottom: 10,
@@ -57,47 +56,57 @@ export default StyleSheet.create({
     color: Colors.primaryColor
   },
   button: {
-    backgroundColor: "#ffffff",
-    borderRadius: 20,
+    backgroundColor: Colors.primaryLightFillColor,
     width: "90%",
     height: 80,
-    marginBottom: 20
+    borderRadius: 15
   },
   buttonQR: {
-    backgroundColor: Colors.primaryBackgroundColor,
-    borderRadius: 20,
-    marginTop: 20,
-    width: "90%",
-    height: 80
+    width: "100%",
+    height: 80,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#D3D3D3",
+    borderRadius: 0
   },
   buttonSchedule: {
     backgroundColor: Colors.primaryBackgroundColor,
     borderRadius: 20,
-    width: "90%",
+    width: "100%",
     height: 80
   },
   buttonFavorites: {
-    backgroundColor: Colors.primaryBackgroundColor,
+    marginBottom: 50,
+    marginTop: 20,
+    backgroundColor: Colors.primaryLightFillColor,
     borderRadius: 20,
-    width: "90%",
-    height: 80,
-    marginBottom: 100
+    width: "100%",
+    height: 80
   },
   buttonTextSecondary: {
-    fontSize: 17,
-    color: Colors.primaryColor,
-    fontWeight: "500"
-  },
-  buttonText: {
-    fontSize: 17,
-    color: Colors.primaryColor,
-    fontWeight: "500",
-    display: "flex",
+    fontSize: 16,
+    color: "gray",
+    fontFamily: Fonts.primaryBaseFont,
     alignItems: "center"
   },
+  buttonPollingText: {
+    fontSize: 16,
+    color: Colors.primaryAltFontColor,
+    fontFamily: Fonts.primaryBaseFont,
+    alignItems: "center"
+  },
+  buttonText: {
+    fontSize: 16,
+    color: Colors.primaryAltFontColor,
+    fontFamily: Fonts.primaryBoldFont,
+    alignItems: "center",
+    fontWeight: "bold"
+  },
   stars: {
-    width: 150,
-    marginBottom: 30
+    width: 100,
+    marginTop: 8,
+    marginBottom: 10,
+    backgroundColor: "rgba(255, 255, 255, 0)" 
   },
   containerButtons: {
     backgroundColor: "#ffffff",
@@ -114,7 +123,8 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "baseline",
     width: "100%",
-    height: 80
+    height: 80,
+    backgroundColor: "rgba(255, 255, 255, 0)" 
   },
   iconView: {
     flex: 1,
@@ -126,9 +136,16 @@ export default StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 10
   },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
   callLinguistContainer: {
-    display: "flex",
-    flexDirection: "row"
+    borderRadius: 15,
+    marginTop: 20,
+    marginBottom: 5,
+    width:"100%"
   },
   box3: {
     flex: 1
@@ -141,5 +158,24 @@ export default StyleSheet.create({
   },
   icon: {
     color: "#9391f7"
+  },
+  badgeContainer: {
+    backgroundColor: "white",
+    height: 30,
+    width: 42,
+    zIndex: 0,
+    alignSelf: "center",
+    position: "absolute",
+    margin: -20
+  },
+  badgeText: {
+    fontSize: 12,
+    color: "black",
+    fontFamily: Fonts.primaryLightFont
+  },
+  title: {
+    fontSize: 16,
+    color: Colors.primaryColor,
+    fontFamily: Fonts.primaryLightFont
   }
 });

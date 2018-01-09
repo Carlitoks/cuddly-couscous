@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
+import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 
 const { width, height } = Dimensions.get("window");
 
@@ -9,7 +10,7 @@ export default StyleSheet.create({
     backgroundColor: "white"
   },
   formContainer: {
-    marginTop: 20,
+    marginTop: moderateScale(100),
     marginRight: 11,
     marginLeft: 10,
     backgroundColor: "white",
@@ -18,25 +19,50 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    marginLeft: 10,
-    marginTop: 5,
-    fontFamily: Fonts.primaryFont,
-    alignSelf: "flex-start",
-    width: width
+    marginTop: moderateScale(10),
+    marginBottom: moderateScale(50),
+    color: Colors.primaryColor,
+    textAlign: "center",
+    fontFamily: Fonts.primaryLightFont,
+    alignSelf: "center",
+    width: width,
+    backgroundColor: "rgba(255, 255, 255, 0)" 
   },
   Button: {
-    marginTop: 10,
-    borderRadius: 25,
-    backgroundColor: Colors.primaryColor,
-    width: "100%",
+    backgroundColor: Colors.primaryLightFillColor,
+    width: width,
     alignSelf: "center"
   },
   ButtonDisabled: {
     backgroundColor: Colors.primaryColorDisabled
   },
   forgotPasswordText: {
-    color: Colors.primaryColor,
+    color: Colors.primaryAltFontColor,
     padding: 10,
+    alignSelf: "center",
+    fontFamily: Fonts.primaryBaseFont
+  },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
+  containerBottom: {
+    alignItems: "flex-end",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  signInText: {
+    color: Colors.primaryAltFontColor,
+    fontFamily: Fonts.primaryBoldFont,
+    textAlign: "center",
     alignSelf: "center"
+  },
+  formInput: {
+    fontFamily: Fonts.primaryBaseFont
+  },
+  formInputContainer: {
+    marginTop: moderateScale(20)
   }
 });

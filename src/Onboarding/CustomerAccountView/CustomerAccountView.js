@@ -12,11 +12,13 @@ import { View, ScrollView, Text, Alert } from "react-native";
 import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import LinearGradient from "react-native-linear-gradient";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
+import { Colors } from "../../Themes";
 
 import EN from "../../I18n/en";
 
@@ -108,66 +110,83 @@ class CustomerAccountView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <ScrollView
-        automaticallyAdjustContentInsets={true}
-        style={styles.scrollContainer}
-      >
-        <Grid>
-          <Col>
-            {/* Header - Navigation */}
-            <Header
-              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-              backgroundColor="transparent"
-              leftComponent={
-                <GoBackButton navigation={this.props.navigation} />
-              }
-            />
+      <View style={styles.scrollContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
+          <Grid>
+            <Col>
+              <Row>
+                {/* Linear Gradient */}
+                <LinearGradient
+                  colors={[
+                    Colors.gradientColor.top,
+                    Colors.gradientColor.middle,
+                    Colors.gradientColor.bottom
+                  ]}
+                  style={styles.linearGradient}
+                />
+                <Col>
+                  {/* Header - Navigation */}
+                  <Header
+                    outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
+                    backgroundColor="transparent"
+                    leftComponent={
+                      <GoBackButton navigation={this.props.navigation} />
+                    }
+                  />
 
-            {/* Title */}
-            <Text style={styles.title}> {EN["CustomerAccount"]} </Text>
+                  {/* Title */}
+                  <Text style={styles.title}> {EN["CustomerAccount"]} </Text>
+                </Col>
+              </Row>
+              {/* Email */}
+              <FormInput
+                containerStyle={styles.formInputContainer}
+                style={styles.formInput}
+                placeholder={EN["email"]}
+                autoCorrect={false}
+                onChangeText={text => this.props.updateForm({ email: text })}
+                value={this.props.email}
+                keyboardType={"email-address"}
+              />
 
-            {/* Email */}
-            <FormInput
-              placeholder={EN["email"]}
-              autoCorrect={false}
-              onChangeText={text => this.props.updateForm({ email: text })}
-              value={this.props.email}
-              keyboardType={"email-address"}
-            />
+              {/* Password */}
+              <InputPassword
+                style={styles.InputPassword}
+                placeholder={EN["password"]}
+                onChangeText={text => this.props.updateForm({ password: text })}
+                value={this.props.password}
+              />
 
-            {/* Password */}
-            <InputPassword
-              style={styles.InputPassword}
-              placeholder={EN["password"]}
-              onChangeText={text => this.props.updateForm({ password: text })}
-              value={this.props.password}
-            />
-
-            {/* Create */}
-            <Button
-              buttonStyle={styles.Button}
-              onPress={() => this.submit()}
-              title={EN["CreateAccount"]}
-            />
-
-            {/* Terms */}
-            <Text style={{ padding: 10 }}>
-              {EN["CustomerAccountText"]}
-              <Text style={styles.Text}> {EN["PrivacyPolicy"]}</Text>{" "}
-              {EN["And"]}{" "}
-              <Text style={styles.Text}>{EN["TermConditions"]}</Text>
-            </Text>
-
-            {/* QR */}
-            <Button
-              buttonStyle={styles.transparentButton}
-              icon={{ name: "qrcode", type: "font-awesome" }}
-              onPress={() => this.submit()}
-              title={EN["ScanQR"]}
-            />
-          </Col>
-        </Grid>
-      </ScrollView>
+              {/* Terms */}
+              <Text
+                style={{
+                  padding: 10,
+                  textAlign: "center",
+                  alignSelf: "center",
+                  alignItems: "center"
+                }}
+              >
+                {EN["CustomerAccountText"]}
+                <Text style={styles.Text}> {EN["PrivacyPolicy"]}</Text>{" "}
+                {EN["And"]}{" "}
+                <Text style={styles.Text}>{EN["TermConditions"]}</Text>
+              </Text>
+            </Col>
+          </Grid>
+        </ScrollView>
+        <View style={styles.containerBottom}>
+          {/* Create */}
+          <Button
+            textStyle={styles.createAccountText}
+            buttonStyle={styles.Button}
+            onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
+            title={EN["CreateAccount"]}
+          />
+        </View>
+      </View>
     );
   }
 }

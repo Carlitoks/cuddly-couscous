@@ -1,39 +1,21 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../Themes";
+import { Colors, Fonts } from "../../Themes";
+import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 
 const { width, height } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
-  scrollContainer: {
-    flex: 1,
-    width: width,
-    backgroundColor: Colors.primaryFillColor,
-    justifyContent: "center",
-    alignItems: "center"
-  },
   Icon: {
     width: width
   },
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    paddingTop: 10
-  },
-  arrowBack: {
-    flex: 1,
-    alignItems: "flex-start"
-  },
-  settings: {
-    flex: 1,
-    alignItems: "flex-end"
-  },
   mainTitle: {
+    fontFamily: Fonts.primaryLightFont,
     fontSize: 24,
     textAlign: "center",
-    marginBottom: 15,
-    marginTop: 20,
+    marginBottom: moderateScale(15),
+    marginTop: moderateScale(20),
     color: Colors.primaryColor,
-    lineHeight: 40
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   languages: {
     flex: 1,
@@ -42,31 +24,57 @@ export const styles = StyleSheet.create({
     justifyContent: "space-around"
   },
   english: {
-    fontSize: 24,
+    fontFamily: Fonts.primaryBaseFont,
+    fontSize: 19,
     color: Colors.primaryColor,
-    marginLeft: 50
+    marginLeft: 50,
+    backgroundColor: "rgba(255, 255, 255, 0)" 
   },
   spanish: {
-    fontSize: 24,
+    fontFamily: Fonts.primaryBaseFont,
+    fontSize: 19,
     color: Colors.primaryColor,
-    marginRight: 50
+    marginRight: 50,
+    backgroundColor: "rgba(255, 255, 255, 0)" 
   },
   containerSearch: {
     backgroundColor: "transparent",
     borderBottomWidth: 0,
     borderTopWidth: 0,
-    marginTop: 20,
-    marginLeft: 5
+    marginTop: moderateScale(10),
+    marginBottom: moderateScale(10)
   },
   inputSearch: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    color: "red",
     borderRadius: 10
   },
   buttonStep: {
-    backgroundColor: Colors.primaryColor,
+    alignSelf: "center",
+    backgroundColor: Colors.primaryLightFillColor,
     width: width
   },
-  scroll:{
-     width:width
-  }
+  textStep: {
+    fontSize: 16,
+    textAlign: "center",
+    color: Colors.primaryAltFontColor,
+    fontFamily: Fonts.primaryBoldFont
+  },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
+  scrollContainer: {
+    flex: 1,
+    height: "100%"
+  },
+  contentScrollContainer: { flexGrow: 1 },
+  listContainer: {
+    marginTop: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0
+  },
+  iconChange:
+  {  backgroundColor: "rgba(255, 255, 255, 0)" }
 });

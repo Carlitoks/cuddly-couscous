@@ -4,13 +4,13 @@ import { clearForm, updateForm } from "../../Ducks/CustomerProfileReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, View, ScrollView, Alert } from "react-native";
-import { FormInput, Avatar, Card, Button, Header } from "react-native-elements";
+import { FormInput, Avatar, Card, Button, Header,  FormLabel } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import LinearGradient from "react-native-linear-gradient";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NextButton from "../../Components/NextButton/NextButton";
 
-import { Images } from "../../Themes";
+import { Images, Colors } from "../../Themes";
 import { styles } from "./styles";
 import EN from "../../I18n/en";
 import { USER_NAME } from "../../Util/Constants";
@@ -106,6 +106,14 @@ class CustomerProfileView extends Component {
       >
         <Grid>
           <Col>
+          <LinearGradient
+                    colors={[
+                      Colors.gradientColor.top,
+                      Colors.gradientColor.middle,
+                      Colors.gradientColor.bottom
+                    ]}
+                    style={styles.linearGradient}
+                  />
             {/* Header - Navigation */}
             <Header
               outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
@@ -136,7 +144,7 @@ class CustomerProfileView extends Component {
             <Text style={styles.personalInformation}>
               {EN["PersonalInformation"]}
             </Text>
-
+            <View style={styles.backgroundForm}>
             <FormInput
               placeholder={EN["Firstname"]}
               autoCorrect={false}
@@ -159,6 +167,7 @@ class CustomerProfileView extends Component {
                 })
               }
             />
+            </View>
           </Col>
         </Grid>
       </ScrollView>

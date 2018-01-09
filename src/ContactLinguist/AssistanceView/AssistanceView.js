@@ -16,6 +16,7 @@ import {
   Header
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import LinearGradient from "react-native-linear-gradient";
 
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
@@ -23,7 +24,8 @@ import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 
 import EN from "../../I18n/en";
 import styles from "./styles";
-import { Images } from "../../Themes";
+import { Images, Colors } from "../../Themes";
+import Fonts from "../../Themes/Fonts";
 
 class AssistanceView extends Component {
   filterList = assistance => {
@@ -34,6 +36,13 @@ class AssistanceView extends Component {
         hideChevron
         key={i}
         title={as}
+        rightIcon={
+          this.props.selectedAssistance === as ? (
+            <Icon size={15} color={Colors.primaryAltFontColor} name="check" />
+          ) : (
+            undefined
+          )
+        }
         onPress={() => {
           this.props.updateSettings({ selectedAssistance: as });
         }}
@@ -46,46 +55,79 @@ class AssistanceView extends Component {
 
     return (
       <View style={styles.scrollContainer}>
-      <TopViewIOS/>
-        <ScrollView automaticallyAdjustContentInsets={true}>
-          <Col>
-            {/* Header - Navigation */}
-            <Header
-              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-              backgroundColor="transparent"
-              leftComponent={
-                <GoBackButton navigation={this.props.navigation} />
-              }
-              rightComponent={
-                <SettingsButton navigation={this.props.navigation} />
-              }
-            />
+      
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
+          <Grid>
+            <Col>
+              <Row>
+              <TopViewIOS/>
+                {/* Linear Gradient */}
+                <LinearGradient
+                  colors={[
+                    Colors.gradientColor.top,
+                    Colors.gradientColor.middle,
+                    Colors.gradientColor.bottom
+                  ]}
+                  style={styles.linearGradient}
+                />
+                <Col>
+                  {/* Header - Navigation */}
+                  <Header
+                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+                    backgroundColor="transparent"
+                    leftComponent={
+                      <GoBackButton navigation={this.props.navigation} />
+                    }
+                    rightComponent={
+                      <SettingsButton navigation={this.props.navigation} />
+                    }
+                  />
 
-            {/* Select the Assistance */}
-            <Text style={styles.mainTitle}>{EN["DescribeAssistance"]}</Text>
+                  {/* Select the Assistance */}
+                  <Text style={styles.mainTitle}>
+                    {EN["DescribeAssistance"]}
+                  </Text>
 
-            {/* Searchbar */}
-            <SearchBar
-              containerStyle={styles.containerSearch}
-              placeholder="Search"
-              inputStyle={styles.inputSearch}
-              icon={{ name: "search" }}
-              onChangeText={text =>
-                this.props.updateSettings({ searchAssistance: text })
-              }
-            />
-            <List>{this.filterList(this.props.searchAssistance)}</List>
-          </Col>
+                  {/* Searchbar */}
+                  <SearchBar
+                    containerStyle={styles.containerSearch}
+                    placeholder="Search"
+                    inputStyle={styles.inputSearch}
+                    icon={{ name: "search" }}
+                    onChangeText={text =>
+                      this.props.updateSettings({ searchAssistance: text })
+                    }
+                  />
+                </Col>
+              </Row>
+              <View style={{}}>
+                {/* Select the Assistance */}
+                <Text style={styles.textChooseBelow}>
+                  {EN["orChooseOneBelow"]}
+                </Text>
+                <List style={styles.listContainer}>
+                  {this.filterList(this.props.searchAssistance)}
+                </List>
+              </View>
+            </Col>
+          </Grid>
         </ScrollView>
-        <View style={styles.containerBottom}>
-          {/* Call Button */}
-          <Button
-            icon={{ name: "video-call", size: 25 }}
-            buttonStyle={styles.buttonStep}
-            title="Call"
-            onPress={() => navigation.dispatch({ type: "ContactingLinguist" })}
-          />
-        </View>
+        {/* Call Button */}
+        <Button
+          textStyle={styles.textStep}
+          buttonStyle={styles.buttonStep}
+          icon={{
+            name: "video-call",
+            size: 25,
+            color: Colors.primaryAltFontColor
+          }}
+          buttonStyle={styles.buttonStep}
+          title="Call"
+          onPress={() => navigation.dispatch({ type: "ContactingLinguist" })}
+        />
       </View>
     );
   }

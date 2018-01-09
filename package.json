@@ -23,6 +23,7 @@
     "react-native-easy-grid": "^0.1.15",
     "react-native-elements": "^0.18.5",
     "react-native-interactive-avatar": "^2.0.0",
+    "react-native-linear-gradient": "^2.4.0",
     "react-native-opentok": "^2.0.1",
     "react-native-segmented-control-tab": "^3.2.1",
     "react-native-star-rating": "^1.0.8",
@@ -42,5 +43,8 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": ["src/Assets/Fonts"]
   }
 }

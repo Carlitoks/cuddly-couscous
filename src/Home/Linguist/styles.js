@@ -1,5 +1,6 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../Themes";
+import { StyleSheet, Dimensions, Platform } from "react-native";
+import { Colors, Fonts } from "../../Themes";
+import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 
 const { width, height } = Dimensions.get("window");
 
@@ -8,10 +9,10 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   logo: {
-    marginTop: 20,
-    marginBottom: 10,
-    width: 120,
-    height: 120,
+    marginTop: moderateScale(23),
+    marginBottom: moderateScale(13),
+    width: moderateScale(123),
+    height: moderateScale(123),
     borderRadius: 60
   },
   textName: {
@@ -20,42 +21,42 @@ export default StyleSheet.create({
     alignSelf: "center",
     color: "#ffffff"
   },
-  textStars: {
-    fontSize: 22,
-    paddingLeft: 8,
-    lineHeight: 33,
-    alignSelf: "center",
-    fontWeight: "400",
-    marginBottom: 15,
-    color: Colors.primaryColor
-  },
   calls: {
     width: "50%"
   },
   button: {
-    backgroundColor: "#a6a6ff",
+    flex: 1,
+    ...Platform.select({
+      android: {
+        elevation: 4
+      }
+    }),
+    alignContent: "space-between",
     borderRadius: 10,
     height: 100,
-    marginBottom: 20
+    marginLeft: 0,
+    marginRight: 0,
+    marginTop: 0,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+    borderTopWidth: 0
   },
   amount: {
     width: "50%"
   },
   TitleText: {
     fontSize: 17,
-    color: Colors.fontColor,
-    display: "flex",
+    color: "gray",
     alignItems: "center"
   },
   callNumber: {
     fontSize: 30,
-    color: Colors.fontColor,
-    display: "flex",
+    color: "gray",
     alignItems: "center"
   },
   stars: {
     width: 150,
-    marginBottom: 30
+    marginBottom: moderateScale(25)
   },
   containerButtons: {
     backgroundColor: "#ffffff",
@@ -66,30 +67,66 @@ export default StyleSheet.create({
   containerPerfil: {
     backgroundColor: Colors.primaryFillColor
   },
-  starsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "baseline",
-    width: "100%",
-    height: 80
-  },
-  status: {
-    marginLeft: 20,
-  },
-
   StatusText: {
     fontSize: 20,
-    fontWeight: "500",
-    color: Colors.primaryColor
-  },
-  switch: {
-    width: "100%",
-    paddingRight: 65
+    fontFamily: Fonts.primaryBaseFont,
+    color: Colors.primaryColor,
+    marginLeft: moderateScale(15),
+    backgroundColor: "rgba(255, 255, 255, 0)" 
   },
   badgeText: {
     color: Colors.badgeColor,
     fontSize: 20
+  },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
+  statusContainer: {
+    justifyContent: "space-between",
+    marginBottom: 20
+  },
+  badgeContainer: {
+    backgroundColor: "white",
+    height: 30,
+    width: 42,
+    zIndex: 0,
+    alignSelf: "center",
+    position: "absolute",
+    margin: -20
+  },
+  badgeText: {
+    fontSize: 12,
+    color: "black",
+    fontFamily: Fonts.primaryLightFont
+  },
+  title: {
+    fontSize: 16,
+    color: Colors.primaryColor,
+    fontFamily: Fonts.primaryBoldFont
+  },
+  buttonText: {
+    fontSize: 16,
+    color: Colors.primaryAltFontColor,
+    fontFamily: Fonts.primaryBoldFont,
+    alignItems: "center",
+    fontWeight: "bold"
+  },
+  stars: {
+    width: 100,
+    marginTop: moderateScale(11),
+    marginBottom: moderateScale(13),
+    backgroundColor: "rgba(255, 255, 255, 0)" 
+  },
+  containerPerfil: {
+    backgroundColor: Colors.primaryFillColor
+  },
+  starsContainer: {
+    marginTop: moderateScale(13),
+    width: width,
+    alignSelf: "center",
+    alignItems: "center",
+    height: 70
   }
-
 });

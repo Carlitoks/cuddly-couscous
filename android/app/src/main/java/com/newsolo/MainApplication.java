@@ -3,6 +3,9 @@ package com.newsolo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.rnopentok.RNOpenTokPackage;
@@ -26,6 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
+            new ReactNativeExceptionHandlerPackage(),
+            new SplashScreenReactPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
             new RNOpenTokPackage()

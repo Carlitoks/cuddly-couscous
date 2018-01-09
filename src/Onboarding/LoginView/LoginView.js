@@ -6,6 +6,7 @@ import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import LinearGradient from "react-native-linear-gradient";
 
 import { clearForm, updateForm } from "../../Ducks/LoginReducer";
 import { logInAsync, haveSession } from "../../Ducks/AuthReducer";
@@ -15,6 +16,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
+import { Colors } from "../../Themes";
 
 // For the moment
 import EN from "../../I18n/en";
@@ -109,72 +111,89 @@ class LoginView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <ScrollView
-        automaticallyAdjustContentInsets={true}
-        style={styles.scrollContainer}
-      >
-      <TopViewIOS/>
-        <Grid>
-          <Col>
-            {/* Header - Navigation */}
-            <Header
-              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-              backgroundColor="transparent"
-              leftComponent={
-                <GoBackButton navigation={this.props.navigation} />
-              }
-            />
+      <View style={styles.scrollContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
+          <Grid>
+            <Col>
+              <Row>
+                {/* Linear Gradient */}
+                <LinearGradient
+                  colors={[
+                    Colors.gradientColor.top,
+                    Colors.gradientColor.middle,
+                    Colors.gradientColor.bottom
+                  ]}
+                  style={styles.linearGradient}
+                />
+                <Col>
+                  {/* Header - Navigation */}
+                  <TopViewIOS large/>                  
+                  <Header
+                    outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
+                    backgroundColor="transparent"
+                    leftComponent={
+                      <GoBackButton navigation={this.props.navigation} />
+                    }
+                  />
 
-            {/* Title */}
-            <Text style={styles.title}>{EN["signIn"]}</Text>
+                  {/* Title */}
+                  <Text style={styles.title}>{EN["signIn"]}</Text>
+                </Col>
+              </Row>
+              {/* Email */}
+              <FormInput
+                containerStyle={styles.formInputContainer}
+                style={styles.formInput}
+                placeholder={EN["email"]}
+                autoCorrect={false}
+                onChangeText={text =>
+                  this.props.updateForm({ email: text, emailErrorMessage: "" })
+                }
+                value={this.props.email}
+                keyboardType={"email-address"}
+              />
 
-            {/* Email */}
-            <FormInput
-              style={styles.FormInput}
-              placeholder={EN["email"]}
-              autoCorrect={false}
-              onChangeText={text =>
-                this.props.updateForm({ email: text, emailErrorMessage: "" })
-              }
-              value={this.props.email}
-              keyboardType={"email-address"}
-            />
+              {/* Password */}
+              <InputPassword
+                style={styles.InputPassword}
+                placeholder={EN["password"]}
+                onChangeText={text =>
+                  this.props.updateForm({
+                    password: text,
+                    passwordErrorMessage: ""
+                  })
+                }
+                value={this.props.password}
+              />
 
-            {/* Password */}
-            <InputPassword
-              style={styles.InputPassword}
-              placeholder={EN["password"]}
-              onChangeText={text =>
-                this.props.updateForm({
-                  password: text,
-                  passwordErrorMessage: ""
-                })
-              }
-              value={this.props.password}
-            />
-
-            {/* Sign In Button */}
-            <Button
-              buttonStyle={styles.Button}
-              onPress={() => this.submit()}
-              title={EN["signIn"]}
-              loading={this.props.performingRequest}
-              disabled={this.props.performingRequest}
-              disabledStyle={styles.ButtonDisabled}
-            />
-
-            {/* Forgot Password */}
-            <Text
-              style={styles.forgotPasswordText}
-              onPress={() =>
-                navigation.dispatch({ type: "ForgotPasswordView" })
-              }
-            >
-              {EN["forgotPassword"]}
-            </Text>
-          </Col>
-        </Grid>
-      </ScrollView>
+              {/* Forgot Password */}
+              <Text
+                style={styles.forgotPasswordText}
+                onPress={() =>
+                  navigation.dispatch({ type: "ForgotPasswordView" })
+                }
+              >
+                {EN["forgotPassword"]}
+              </Text>
+            </Col>
+          </Grid>
+        </ScrollView>
+        <View style={styles.containerBottom}>
+          {/* Sign In Button */}
+          <Button
+            textStyle={styles.signInText}
+            buttonStyle={styles.Button}
+            onPress={() => this.submit()}
+            title={EN["signIn"]}
+            loading={this.props.performingRequest}
+            disabled={this.props.performingRequest}
+            disabledStyle={styles.ButtonDisabled}
+          />
+        </View>
+      </View>
     );
   }
 }

@@ -1,158 +1,185 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  updateSettings,
-  GetOptions
-} from "../../Ducks/ProfileLinguistReducer";
+import { updateSettings, GetOptions } from "../../Ducks/ProfileLinguistReducer";
 
 import { View, Text, Image, ScrollView, Switch } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { Button, FormLabel, FormInput, Header, Card, List, ListItem } from "react-native-elements";
+import {
+  Button,
+  FormLabel,
+  FormInput,
+  Header,
+  Card,
+  List,
+  ListItem,
+  Avatar,
+  Badge
+} from "react-native-elements";
 import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import LinearGradient from "react-native-linear-gradient";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 
-import { Sessions } from "../../Api";
-import { getInvitations } from "../../Ducks/CallLinguistSettings";
-
 import styles from "./styles";
-import { Colors } from "../../Themes";
-import { Images } from "../../Themes";
+import { Colors, Images } from "../../Themes";
 import EN from "../../I18n/en";
 
-class Home extends Component {
+class HomeLinguist extends Component {
   navigate = this.props.navigation.navigate;
 
   render() {
-    const { Amount, NumberOfCalls, status, Username } = this.props;
+    const { Amount, NumberOfCalls, status, Username, rating } = this.props;
     const languagues = this.props.GetOptions();
 
     return (
-      <View style={styles.containerPerfil}>
-        <ScrollView>
+      <View style={styles.scrollContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
           <Grid>
             <Col>
-              <View>
-                <View style={styles.IconView}>
-                  {/* Header - Navigation */}
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <ShowMenuButton navigation={this.props.navigation} />
-                    }
-                    rightComponent={
-                      <SettingsButton navigation={this.props.navigation} />
-                    }
-                  />
-                </View>
-              </View>
-              <View>
-                <Image
-                  style={[styles.logo, styles.center]}
-                  source={Images.avatar}
+              <Col>
+                {/* Linear Gradient */}
+                <LinearGradient
+                  colors={[
+                    Colors.gradientColor.top,
+                    Colors.gradientColor.middle,
+                    Colors.gradientColor.bottom
+                  ]}
+                  style={styles.linearGradient}
                 />
-                <Text style={styles.textName}>
-                  {Username}
-                </Text>
-              </View>
-              <View style={styles.starsContainer}>
-                <View style={[styles.stars, styles.center]}>
-                  <StarRating
-                    emptyStar={"ios-star-outline"}
-                    fullStar={"ios-star"}
-                    halfStar={"ios-star-half"}
-                    iconSet={"Ionicons"}
-                    disabled={true}
-                    maxStars={5}
-                    starSize={22}
-                    rating={this.props.rating}
-                    starColor={Colors.primaryColor}
-                  />
-                </View>
-                <Text style={styles.textStars}>{this.props.rating}</Text>
-              </View>
-              {/* Home */}
-            </Col>
-          </Grid>
-          <Grid>
-            <Col style={styles.status}>
-              <Text style={styles.StatusText}>
-                {EN["Status"]} {status}
-              </Text>
-            </Col>
-            <Col>
-              <View style={styles.switch}>
-                <Switch
-                  onValueChange={available =>
-                    this.props.updateSettings({ available: available })
+                {/* Header - Navigation */}
+                <Header
+                  outerContainerStyles={{
+                    borderBottomWidth: 0,
+                    height: 60
+                  }}
+                  backgroundColor="transparent"
+                  leftComponent={
+                    <ShowMenuButton navigation={this.props.navigation} />
                   }
-                  style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
-                  value={this.props.available}
-                  onTintColor={Colors.onTintColor}
-                  thumbTintColor={Colors.thumbTintColor}
-                  tintColor={Colors.tintColor}
+                  centerComponent={{
+                    text: Username,
+                    style: styles.title
+                  }}
+                  rightComponent={
+                    <SettingsButton navigation={this.props.navigation} />
+                  }
                 />
-              </View>
-            </Col>
-          </Grid>
-          <Grid style={{ marginTop: 20 }}>
-            <Col style={styles.calls}>
-              <Card
-                containerStyle={styles.button}
-              >
-                <Text style={[styles.TitleText, styles.center]}>
-                  {EN["Calls"]}
-                </Text>
-                <Text style={[styles.callNumber, styles.center]}>
-                  {NumberOfCalls}
-                </Text>
-              </Card>
-            </Col>
-            <Col style={styles.amount}>
-              <Card
-                containerStyle={styles.button}
-              >
-                <Text style={[styles.TitleText, styles.center]}>
-                  {EN["Amount"]}
-                </Text>
-                <Text style={[styles.callNumber, styles.center]}>
-                  ${Amount}
-                </Text>
-              </Card>
-            </Col>
-          </Grid>
+                <View>
+                  <Avatar
+                    containerStyle={{
+                      alignSelf: "center"
+                    }}
+                    avatarStyle={styles.avatar}
+                    rounded
+                    xlarge
+                    source={Images.avatarCall}
+                    activeOpacity={0.7}
+                  />
+                  <Badge
+                    value={rating}
+                    textStyle={styles.badgeText}
+                    containerStyle={styles.badgeContainer}
+                  />
+                </View>
+                <View style={styles.starsContainer}>
+                  <View style={[styles.stars, styles.center]}>
+                    <StarRating
+                      emptyStarColor="gray"
+                      emptyStar={"ios-star-outline"}
+                      fullStar={"ios-star"}
+                      halfStar={"ios-star-half"}
+                      iconSet={"Ionicons"}
+                      disabled={true}
+                      maxStars={5}
+                      starSize={18}
+                      rating={rating}
+                      starColor={Colors.primaryColor}
+                    />
+                  </View>
+                </View>
+                <Row style={styles.statusContainer}>
+                  <Text style={styles.StatusText}>
+                    {EN["Status"]} {status}
+                  </Text>
+                  <View style={styles.switchContainer}>
+                    <Switch
+                      onValueChange={available =>
+                        this.props.updateSettings({ available: available })
+                      }
+                      style={styles.switch}
+                      value={this.props.available}
+                      onTintColor={Colors.onTintColor}
+                      thumbTintColor={Colors.thumbTintColor}
+                      tintColor={Colors.tintColor}
+                    />
+                  </View>
+                </Row>
+              </Col>
+              <Row>
+                <Col>
+                  <Card
+                    style={{ alignContent: "space-betwen" }}
+                    wrapperStyle={{
+                      flex: 1,
+                      alignContent: "space-around"
+                    }}
+                    containerStyle={styles.button}
+                  >
+                    <Row>
+                      <View style={styles.calls}>
+                        <Text style={[styles.TitleText, styles.center]}>
+                          {EN["Calls"]}
+                        </Text>
+                        <Text style={[styles.callNumber, styles.center]}>
+                          {NumberOfCalls}
+                        </Text>
+                      </View>
+                      <View style={styles.amount}>
+                        <Text style={[styles.TitleText, styles.center]}>
+                          {EN["Amount"]}
+                        </Text>
+                        <Text style={[styles.callNumber, styles.center]}>
+                          ${Amount}
+                        </Text>
+                      </View>
+                    </Row>
+                  </Card>
+                </Col>
+              </Row>
 
-          <List>
-            <ListItem
-              title={EN["LanguagePairs"]}
-              hideChevron
-              containerStyle={{ paddingBottom: 20, paddingTop: 20 }}
-              titleStyle={{ color: "#b7b7b7", fontSize: 20 }}
-            />
-            {
-              languagues.map((item, i) => (
+              <List containerStyle={{ borderTopWidth: 0 }}>
                 <ListItem
-                  key={i}
-                  title={item.language}
-                  leftIcon={{ name: "transform" }}
-                  titleStyle={{ fontSize: 20 }}
-                  badge={{ value: item.translates, textStyle: styles.badgeText, containerStyle: { backgroundColor: "transparent" } }}
+                  title={EN["sessionInQueue"]}
+                  hideChevron
+                  containerStyle={{
+                    paddingBottom: 20,
+                    paddingTop: 20
+                  }}
+                  titleStyle={{ color: "#b7b7b7", fontSize: 20 }}
                 />
-              ))
-            }
-          </List>
-          <Button
-            containerStyle={styles.button}
-            onPress={this.props.getInvitations}
-            title="Polling"
-          >
-              Polling
-          </Button>
+                {languagues.map((item, i) => (
+                  <ListItem
+                    key={i}
+                    title={item.language}
+                    leftIcon={{ name: "swap-horiz" }}
+                    titleStyle={{ fontSize: 20 }}
+                    badge={{
+                      value: item.translates,
+                      textStyle: styles.badgeText,
+                      containerStyle: { backgroundColor: "transparent" }
+                    }}
+                  />
+                ))}
+              </List>
+            </Col>
+          </Grid>
         </ScrollView>
       </View>
     );
@@ -165,15 +192,12 @@ const mS = state => ({
   NumberOfCalls: state.profileLinguist.NumberOfCalls,
   Amount: state.profileLinguist.Amount,
   status: state.profileLinguist.status,
-  uuid: state.auth.uuid,
-  token: state.auth.token,
   Username: state.profileLinguist.Username
 });
 
 const mD = {
   updateSettings,
-  GetOptions,
-  getInvitations
+  GetOptions
 };
 
-export default connect(mS, mD)(Home);
+export default connect(mS, mD)(HomeLinguist);

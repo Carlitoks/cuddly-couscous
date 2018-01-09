@@ -5,6 +5,7 @@ import { View } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 import styles from "./styles";
+import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
 
 class ShowMenuButton extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class ShowMenuButton extends Component {
         <Icon
           style={styles.Icon}
           name="menu"
-          size={30}
+          size={moderateScale(30)}
           onPress={() =>
             this.props.navigation.dispatch({ type: "LandingContainer" })
           }

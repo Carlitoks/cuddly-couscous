@@ -5,6 +5,7 @@ import { View } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 import styles from "./styles";
+import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
 
 const GoBackButton = ({ navigation }) => {
   return (
@@ -13,7 +14,7 @@ const GoBackButton = ({ navigation }) => {
       <Icon
         style={styles.Icon}
         name="arrow-back"
-        size={30}
+        size={moderateScale(30)}
         onPress={() => navigation.dispatch({ type: "back" })}
       />
     </Col>

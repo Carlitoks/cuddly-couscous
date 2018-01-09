@@ -8,8 +8,9 @@ target 'NewSolo' do
   pod 'yoga', path: "#{node_modules_path}/react-native/ReactCommon/yoga/yoga.podspec"
   pod 'React', path: "#{node_modules_path}/react-native"
   pod 'Fabric'
-pod 'Crashlytics'
+  pod 'Crashlytics'
   pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok/ios"
+  pod 'BVLinearGradient', :path => "#{node_modules_path}/react-native-linear-gradient"
 end
 
 post_install do |installer|
