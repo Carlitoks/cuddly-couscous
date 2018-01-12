@@ -95,5 +95,9 @@ export default (ENG = {
   orChooseOneBelow: "Or Choose one below",
   LanguagePairs: "Language Pairs",
   orChooseOneBelow: "Or Choose one below", 
-  sessionInQueue: "Session in Queue" 
+  sessionInQueue: "Session in Queue", 
+  callSettings: "Call Settings", 
+  maxTimeLimit: "Max Time Limit", 
+  iPreferAudioOrVideo: "I prefer to connect via audio and video", 
+  iPreferFemaleOrMale: "I prefer to speak with female"  
 });
