@@ -1,5 +1,5 @@
 const colors = {
-  primaryColor: "white",
+  primaryColor: "white", 
   primaryLightFillColor: "#e8f1ff",
   primaryStrongFillColor: "#b6ddff",
   primaryBackgroundColor: "#e6f3ff",
@@ -20,7 +20,10 @@ const colors = {
   onTintColor: "#4cd963",
   thumbTintColor: "#ffffff",
   tintColor: "#c1c1ff",
-  badgeColor: "#8e8eb5"
+  badgeColor: "#8e8eb5",
+  formColor: "#d2d3d8",
+  linguistFormButton: "#ebedfa",
+  linguistFormText: "#677bd8"
 };
 
 export default colors;

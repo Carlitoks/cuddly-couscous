@@ -13,3 +13,16 @@ JWT_SECRET: this-is-not-secret
 JWT_ISSUER: solo.api.com
 TOKBOX_APIKEY: 46016982
 TOKBOX_SECRET: e21523a457ab39083e5e75b2a2a80f9dc461dd17
+REDIS_URL: redis:6379
+
+# Note that these are URLs inteded for a browser, not for backend communication between docker services
+WEBAPP_URL: http://localhost:3003
+WEBAPP_URL_CONFIRM_EMAIL: http://localhost:3003/email/verify
+WEBAPP_URL_RESET_PASSWORD: http://localhost:3003/password/reset
+
+EMAIL_ENABLED: false
+EMAIL_FROM_ADDRESS: no-reply@example.com
+EMAIL_USER: user@example.com
+EMAIL_PASS: user-email-password
+EMAIL_PORT: "587"
+EMAIL_DOMAIN: smtp.example.com

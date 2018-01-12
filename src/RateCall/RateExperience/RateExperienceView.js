@@ -7,6 +7,9 @@ import {
   submitRateCall,
   clearOptions
 } from "../../Ducks/RateCallReducer";
+import { clearSettings as clearCallCustomerSettings } from "../../Ducks/CallCustomerSettings";
+import { clearSettings as clearCallLinguistSettings } from "../../Ducks/CallLinguistSettings";
+import { clearSettings as clearContactLinguist } from "../../Ducks/ContactLinguistReducer";
 
 import Icon from "react-native-vector-icons/Ionicons";
 import { Text, View, ScrollView, Image } from "react-native";
@@ -23,6 +26,9 @@ class RateCallView extends Component {
 
   componentWillUnmount() {
     this.props.clearOptions();
+    this.props.clearCallCustomerSettings();
+    this.props.clearCallLinguistSettings();
+    this.props.clearContactLinguist();
   }
 
   submit = () => {
@@ -353,14 +359,17 @@ const mS = state => ({
   iconWifiSecondList: state.rateCall.iconWifiSecondList,
   iconPersonSecondList: state.rateCall.iconPersonSecondList,
   token: state.auth.token,
-  sessionId: state.callCustomerSettings.sessionId
+  sessionId: state.callCustomerSettings.sessionID
 });
 
 const mD = {
   updateOptions,
   UpdateFlags,
   submitRateCall,
-  clearOptions
+  clearOptions,
+  clearCallCustomerSettings,
+  clearCallLinguistSettings,
+  clearContactLinguist
 };
 
 export default connect(mS, mD)(RateCallView);

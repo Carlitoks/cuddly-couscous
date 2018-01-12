@@ -20,10 +20,6 @@ const getComposeEnhancers = () => {
   return compose(applyMiddleware(...middleware));
 };
 
-export const getS = () => {
-  return store;
-};
-
 const getStore = () =>
   // Rehydrating the store
   loadState().then(persistedStore => {

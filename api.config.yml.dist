@@ -10,3 +10,19 @@ APP_FS_TYPE: local # local|gcs
 APP_FS_OS_PATH: static/uploads
 APP_FS_GCS_URL: ~
 JWT_SECRET: this-is-not-secret
+JWT_ISSUER: solo.api.com
+TOKBOX_APIKEY: ~
+TOKBOX_SECRET: ~
+REDIS_URL: redis:6379
+
+# Note that these are URLs inteded for a browser, not for backend communication between docker services
+WEBAPP_URL: http://localhost:3003
+WEBAPP_URL_CONFIRM_EMAIL: http://localhost:3003/email/verify
+WEBAPP_URL_RESET_PASSWORD: http://localhost:3003/password/reset
+
+EMAIL_ENABLED: false
+EMAIL_FROM_ADDRESS: no-reply@example.com
+EMAIL_USER: user@example.com
+EMAIL_PASS: user-email-password
+EMAIL_PORT: "587"
+EMAIL_DOMAIN: smtp.example.com

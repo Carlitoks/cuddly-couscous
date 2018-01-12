@@ -5,12 +5,19 @@ import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
-  logo: {
-    width: 160,
-    height: 60,
-    marginTop: verticalScale(70),
-    marginBottom: verticalScale(70)
-  },
+  logo: { 
+    fontFamily: Fonts.primaryBoldFont, 
+    textAlign: "center", 
+    fontSize: 60, 
+    color: Colors.primaryColor, 
+    borderColor: Colors.primaryAltFontColor, 
+    textShadowColor: "#585858", 
+    textShadowOffset: { width: 3, height: 3 }, 
+    textShadowRadius: 10, 
+    marginTop: verticalScale(70), 
+    marginBottom: verticalScale(70) ,
+    backgroundColor:"transparent"
+  }, 
   call: {
     width: moderateScale(90),
     height: moderateScale(80),

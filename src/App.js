@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { Text } from "react-native";
+import { Text, NetInfo } from "react-native";
 
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 
 
-import { haveSession } from "./Ducks/AuthReducer";
+import { updateNetworkInfo } from "./Ducks/NetworkInfoReducer";
 
 import { dumpAsyncStorage, clearState } from "./Config/LocalStorage";
 
@@ -22,14 +22,45 @@ class App extends Component {
   }
 
   componentWillMount() {
-    createStore().then(store => {
-      this.setState({
-        isLoggedIn: store.getState().auth.isLoggedIn,
-        loadingStore: false,
-        store
+    createStore()
+      .then(store => {
+        this.setState({
+          isLoggedIn: store.getState().auth.isLoggedIn,
+          loadingStore: false,
+          store
+        });
+      })
+      .then(() => {
+        // Even Listener to Detect Network Change
+        NetInfo.addEventListener(
+          "connectionChange",
+          this.handleFirstConnectivityChange
+        );
+
+        // We Get The Initial Network Information
+        return NetInfo.getConnectionInfo();
+      })
+      .then(connectionInfo => {
+        const { store } = this.state;
+
+        store.dispatch(updateNetworkInfo(connectionInfo));
       });
-    });
   }
+
+  componentWillUnmount() {
+    NetInfo.removeEventListener(
+      "connectionChange",
+      this.handleFirstConnectivityChange
+    );
+  }
+
+  handleFirstConnectivityChange = connectionInfo => {
+    const { store } = this.state;
+
+    if (store) {
+      store.dispatch(updateNetworkInfo(connectionInfo));
+    }
+  };
 
   componentDidMount() {
   }

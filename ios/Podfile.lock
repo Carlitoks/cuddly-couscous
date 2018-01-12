@@ -7,8 +7,14 @@ PODS:
   - OpenTok (2.12.1)
   - React (0.50.4):
     - React/Core (= 0.50.4)
+  - react-native-fetch-blob (0.10.6):
+    - React/Core
   - React/Core (0.50.4):
     - yoga (= 0.50.4.React)
+  - RNDeviceInfo (0.9.3):
+    - React
+  - RNFS (2.9.7):
+    - React
   - RNOpenTok (2.0.1):
     - OpenTok
     - React
@@ -19,6 +25,9 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - React (from `../node_modules/react-native`)
+  - react-native-fetch-blob (from `../node_modules/react-native-fetch-blob`)
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNOpenTok (from `../node_modules/react-native-opentok/ios`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
 
@@ -27,6 +36,12 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-linear-gradient
   React:
     :path: ../node_modules/react-native
+  react-native-fetch-blob:
+    :path: ../node_modules/react-native-fetch-blob
+  RNDeviceInfo:
+    :path: ../node_modules/react-native-device-info
+  RNFS:
+    :path: ../node_modules/react-native-fs
   RNOpenTok:
     :path: ../node_modules/react-native-opentok/ios
   yoga:
@@ -38,9 +53,12 @@ SPEC CHECKSUMS:
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   OpenTok: 869a96d84104b9de2b525c2e8a2a809561b47cec
   React: 6d7efef18e0241eb832cf4c085405169a15080ed
+  react-native-fetch-blob: 2bef9be702de8726f4d7bf58d2345579aaaee60d
+  RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
+  RNFS: c44a045cb06c6a496a27f37bd1b50f2c36422cf3
   RNOpenTok: cab5e455f81cd13ec6ac52b8f126ab00800c803a
   yoga: b9aebf996711e50fc31f5608c10aa108a5a0c29e
 
-PODFILE CHECKSUM: 3e9ea4a11a74cecd0bad60810fd4926b4f70f792
+PODFILE CHECKSUM: e8f2c6a88fb2e4669660d640cc4f673f21ed88e8
 
 COCOAPODS: 1.3.1

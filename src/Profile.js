@@ -6,10 +6,17 @@ import { connect } from "react-redux";
 
 import { getDataAsync } from "./Ducks/DataReducer"; //
 
+import { getGeolocationCoords } from "./Util/Helpers";
+
 class Profile extends Component {
   componentWillMount() {
     // LLAMADA DE EJEMPLO
     this.props.getDataAsync();
+
+    // Example Geolocation Call
+    getGeolocationCoords()
+      .then(pos => console.log(pos))
+      .catch(err => console.log(err));
   }
 
   render() {

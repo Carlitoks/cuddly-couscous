@@ -11,6 +11,9 @@ target 'NewSolo' do
   pod 'Crashlytics'
   pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok/ios"
   pod 'BVLinearGradient', :path => "#{node_modules_path}/react-native-linear-gradient"
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
 end
 
 post_install do |installer|

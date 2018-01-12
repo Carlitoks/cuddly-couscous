@@ -1,8 +1,6 @@
-import { Alert } from "react-native";
 const ACTIONS = {
-  CLEAR: "network/clear",
-
-  ERROR: "network/error"
+  CLEAR: "networkErrors/clear",
+  ERROR: "networkErrors/error"
 };
 
 export const clearError = () => ({
@@ -28,7 +26,6 @@ const networkErrors = (state = initialState, action = {}) => {
 
     case ACTIONS.ERROR: {
       if (payload.request._hasError) {
-        Alert.alert(payload.request._response);
         return {
           ...state,
           errors: payload.request._response

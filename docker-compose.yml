@@ -14,6 +14,14 @@ services:
     ports:
       - 5000:80
   
+  # run the web app
+  solo-web-app:
+    image: gcr.io/solo-infrastructure/solo-web-app:0.2.0
+    ports:
+      - 3003:80
+    environment:
+      API_URL: http://localhost:${SOLOAPI_PORT}
+  
   # database dependency for api server
   postgres:
     image: postgres:9.6-alpine

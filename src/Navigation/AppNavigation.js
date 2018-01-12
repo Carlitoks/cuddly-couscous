@@ -21,6 +21,11 @@ import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
 import LoginView from "../Onboarding/LoginView/LoginView";
 import MenuView from "../Components/MenuView/MenuView";
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
+import NameLinguistView from "../LinguistForm/NameLinguistView/NameLinguistView";
+import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguistView";
+import EmailLinguistView from "../LinguistForm/EmailLinguistView/EmailLinguistView";
+import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView"
+import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView"
 
 const Navigation = StackNavigator(
   {
@@ -32,7 +37,8 @@ const Navigation = StackNavigator(
     CustomerAccount: {
       screen: CustomerAccount,
       navigationOptions: {
-        gesturesEnabled: false
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
       }
     },
     CustomerProfile: { screen: CustomerProfile },
@@ -40,7 +46,8 @@ const Navigation = StackNavigator(
     ForgotPasswordView: {
       screen: ForgotPasswordView,
       navigationOptions: {
-        gesturesEnabled: false
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
       }
     },
     Home: {
@@ -48,11 +55,18 @@ const Navigation = StackNavigator(
     },
     IncomingCallView: { screen: IncomingCallView },
     LandingContainer: { screen: LandingContainer },
+    RateCallView: { screen: RateCallView },
+    NameLinguistView: { screen: NameLinguistView },
+    GenderLinguistView: { screen: GenderLinguistView },
+    EmailLinguistView: { screen: EmailLinguistView },
+    PhoneLinguistView: { screen: PhoneLinguistView },
+    VerifyPhoneLinguistView: { screen: VerifyPhoneLinguistView },
     LinguistView: { screen: LinguistView },
     LoginView: {
       screen: LoginView,
       navigationOptions: {
-        gesturesEnabled: false
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
       }
     },
     Profile: { screen: Profile },
@@ -60,7 +74,8 @@ const Navigation = StackNavigator(
     SelectRoleView: {
       screen: SelectRoleView,
       navigationOptions: {
-        gesturesEnabled: false
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
       }
     }
   },

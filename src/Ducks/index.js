@@ -6,7 +6,8 @@ import auth from "./AuthReducer";
 import contactLinguist from "./ContactLinguistReducer";
 import forgotPassword from "./ForgotPasswordReducer";
 import login from "./LoginReducer";
-import network from "./NetworkErrorsReducer";
+import networkInfo from "./NetworkInfoReducer";
+import networkErrors from "./NetworkErrorsReducer";
 import nav from "./NavigationReducer";
 import userProfile from "./UserProfileReducer";
 import registrationCustomer from "./RegistrationCustomerReducer";
@@ -15,7 +16,8 @@ import callLinguistSettings from "./CallLinguistSettings";
 import customerProfile from "./CustomerProfileReducer";
 import rateCall from "./RateCallReducer";
 import tokbox from "./tokboxReducer";
-import profileLinguist from "./ProfileLinguistReducer"
+import profileLinguist from "./ProfileLinguistReducer";
+import linguistForm from "./LinguistFormReducer"
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -27,13 +29,15 @@ const rootReducer = combineReducers({
   contactLinguist,
   forgotPassword,
   login,
-  network,
+  networkInfo,
+  networkErrors,
   nav,
   registrationCustomer,
   customerProfile,
   rateCall,
   tokbox,
-  profileLinguist
+  profileLinguist,
+  linguistForm
 });
 
 export default rootReducer;

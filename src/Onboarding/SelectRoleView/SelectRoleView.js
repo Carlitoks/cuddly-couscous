@@ -45,10 +45,9 @@ class SelectRoleView extends Component {
               />
 
               {/* OnVoy Logo */}
-              <Image
-                style={[styles.logo, styles.center]}
-                source={Images.logo}
-              />
+              <Text style={[styles.logo, styles.center]} source={Images.logo}> 
+                OnVoy 
+              </Text> 
 
               {/* Card */}
               <Card
