@@ -1,34 +1,19 @@
+
 import { StyleSheet, Dimensions } from "react-native";
 import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 import { Colors, Fonts } from "../../Themes";
+
 const { width, height } = Dimensions.get("window");
 
-export const styles = StyleSheet.create({
+export default StyleSheet.create({
   scrollContainer: {
     flex: 1,
-    backgroundColor: "white",
-    height: "100%"
+    backgroundColor: "white"
   },
   avatarContainer: {
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 10
-  },
-  col: {
-    backgroundColor: "white",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: width
-  },
-  backgroundForm:{
-    backgroundColor:"white"
-  },
-  personalInformation: {
-    fontSize: 17,
-    width: width,
-    paddingTop: 30,
-    paddingLeft: 15
   },
   myProfileText: {
     color: Colors.primaryAltFontColor,
@@ -39,7 +24,7 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: Colors.primaryColor,
-    fontFamily: Fonts.primaryLightFont
+    fontFamily: Fonts.primaryBoldFont
   },
   linearGradient: {
     position: "absolute",
@@ -60,5 +45,11 @@ export const styles = StyleSheet.create({
     fontFamily: Fonts.primaryBaseFont,
     fontSize: 16,
     fontWeight: "bold"
+  },
+  avatar: {
+    paddingVertical: 30,
+    width: 150,
+    height: 150,
+    borderRadius: 75
   }
 });

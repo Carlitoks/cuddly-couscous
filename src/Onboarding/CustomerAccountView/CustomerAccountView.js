@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import {
   clearForm,
   updateForm,
-  errorForm
+  errorForm,
+  registerDevice
 } from "../../Ducks/RegistrationCustomerReducer";
-//import { loginUser } from "../../Ducks/AuthReducer";
 
 import { View, ScrollView, Text, Alert } from "react-native";
 import { Button, FormLabel, FormInput, Header } from "react-native-elements";
@@ -26,6 +26,7 @@ class CustomerAccountView extends Component {
   componentWillUnmount() {
     this.props.clearForm();
   }
+  componentWillMount() {}
 
   validateForm() {
     const patt = new RegExp(EMAIL_REGEX);
@@ -72,12 +73,21 @@ class CustomerAccountView extends Component {
     return valid;
   }
 
-  submit() {
+  submit = () => {
     this.props.updateForm({ performingRequest: true });
 
     if (this.validateForm()) {
       if (!this.props.formHasErrors) {
-        this.props.navigation.dispatch({ type: "CustomerProfile" });
+        this.props.registerDevice().then(response => {
+          if (response.type !== "networkErrors/error") {
+            this.props.navigation.dispatch({
+              type: "CustomerProfile"
+            });
+          } else {
+            const errorMessage = response.payload.response.data.errors[0];
+            Alert.alert("error", errorMessage);
+          }
+        });
       } else {
         if (this.props.formHasErrors) {
           this.tempDisplayErrors(
@@ -89,7 +99,7 @@ class CustomerAccountView extends Component {
     }
 
     this.props.updateForm({ performingRequest: false });
-  }
+  };
 
   // Will be changed according the designs
   tempDisplayErrors(...errors) {
@@ -182,7 +192,7 @@ class CustomerAccountView extends Component {
           <Button
             textStyle={styles.createAccountText}
             buttonStyle={styles.Button}
-            onPress={() => navigation.dispatch({ type: "CustomerProfile" })}
+            onPress={this.submit}
             title={EN["CreateAccount"]}
           />
         </View>
@@ -201,7 +211,8 @@ const mS = state => ({
 const mD = {
   clearForm,
   updateForm,
-  errorForm
+  errorForm,
+  registerDevice
 };
 
 export default connect(mS, mD)(CustomerAccountView);

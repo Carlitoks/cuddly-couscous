@@ -6,7 +6,6 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import styles from "./styles";
 
 const NextButton = ({ navigation, onPressButton }) => {
-  console.log(this.props);
   return (
     <Col style={styles.container}>
       {/* Next Button */}

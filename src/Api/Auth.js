@@ -19,6 +19,12 @@ const Auth = {
 
   refreshToken: token => {
     return AXIOS.get(`${BASE_URI}/tokens/${token}`);
+  },
+
+  registerDevice: deviceInfo => {
+    return AXIOS.post(`${BASE_URI}/device`, {
+      ...deviceInfo
+    });
   }
 };
 

@@ -1,9 +1,11 @@
 import { User } from "../Api";
+import { networkError } from "./NetworkErrorsReducer";
+import { IMAGE_STORAGE_URL } from "../Config/env";
 
 // Actions
 const ACTIONS = {
-  CLEAR: "home/clear",
-  UPDATE: "home/update"
+  CLEAR: "userProfile/clear",
+  UPDATE: "userProfile/update"
 };
 
 // Action Creators
@@ -17,22 +19,27 @@ export const updateView = payload => ({
 });
 
 export const getProfileAsync = (uid, token) => dispatch => {
-  User.get(uid, token)
+  return User.get(uid, token)
     .then(response => {
-      dispatch(updateView(response.data));
+      console.log(response.data);
+      return dispatch(updateView(response.data));
     })
     .catch(function(error) {
-      dispatch(networkError(error));
+      return dispatch(networkError(error));
     });
- };
+};
 
 // Initial State
 const initialState = {
   firstName: "",
   lastName: "",
+  email: "",
   nativeLangCode: "",
-  location: "San Diego, CA",
-  rate: 3.5
+  location: "",
+  rate: 0,
+  preferences: {},
+  linguistProfile: null,
+  avatarUrl: ""
 };
 
 const UserProfileReducer = (state = initialState, action = {}) => {
@@ -48,7 +55,14 @@ const UserProfileReducer = (state = initialState, action = {}) => {
         ...state,
         firstName: payload.firstName,
         lastName: payload.lastName,
-        nativeLangCode: payload.nativeLangCode
+        email: payload.email,
+        rate: payload.averageStarRating ? payload.averageStarRating : 0,
+        nativeLangCode: payload.nativeLangCode,
+        preferences: payload.preferences,
+        linguistProfile: payload.linguistProfile,
+        avatarUrl: payload.avatarURL
+          ? IMAGE_STORAGE_URL + payload.avatarURL
+          : ""
       };
     }
 

@@ -64,7 +64,7 @@ class HomeLinguist extends Component {
                     <ShowMenuButton navigation={this.props.navigation} />
                   }
                   centerComponent={{
-                    text: Username,
+                    text: firstName + " " + lastName,
                     style: styles.title
                   }}
                   rightComponent={

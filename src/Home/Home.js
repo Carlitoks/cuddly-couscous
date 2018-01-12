@@ -6,39 +6,45 @@ import { View } from "react-native";
 import HomeCustomer from "./Customer/HomeCustomer";
 import HomeLinguist from "./Linguist/HomeLinguist";
 import LoginView from "../Onboarding/LoginView/LoginView";
-
+import { getProfileAsync } from "../Ducks/UserProfileReducer";
 class Home extends Component {
-  componentWillMount(){
-    if(!this.props.isLoggedIn){
-      this.props.navigation.dispatch({ type: "LoginView" })
+  constructor(props) {
+    super(props);
+    this.state = { HomeView: null };
+  }
+  componentWillMount() {
+    if (!this.props.isLoggedIn) {
+      this.props.navigation.dispatch({ type: "LoginView" });
+    } else {
+      this.props.getProfileAsync(this.props.uuid, this.props.token).then(() => {
+        const homeView = this.chooseComponent();
+        this.setState({ HomeView: homeView });
+      });
     }
   }
+
   chooseComponent = () => {
-    switch(this.props.uuid){
-      case '11111111-1111-1111-1111-111111111111': {
-        return <HomeLinguist navigation={this.props.navigation} />
-      }
-      case '22222222-2222-2222-2222-222222222222': {
-        return <HomeCustomer navigation={this.props.navigation} />        
-      }
+    if (this.props.linguistProfile) {
+      return <HomeLinguist navigation={this.props.navigation} />;
+    } else {
+      return <HomeCustomer navigation={this.props.navigation} />;
     }
-  }
+  };
 
   render() {
-    return (
-      <View>
-        { this.chooseComponent() }
-      </View>
-    );
+    return <View>{this.state.HomeView}</View>;
   }
 }
 
 const mS = state => ({
   isLoggedIn: state.auth.isLoggedIn,
+  token: state.auth.token,
   uuid: state.auth.uuid,
+  linguistProfile: state.userProfile.linguistProfile
 });
 
 const mD = {
+  getProfileAsync
 };
 
 export default connect(mS, mD)(Home);

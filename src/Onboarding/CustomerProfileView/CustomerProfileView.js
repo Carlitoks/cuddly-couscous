@@ -1,21 +1,40 @@
 import React, { Component } from "react";
+import { Text, View, ScrollView, Alert, Image } from "react-native";
 import { connect } from "react-redux";
-import { clearForm, updateForm } from "../../Ducks/CustomerProfileReducer";
 
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View, ScrollView, Alert } from "react-native";
-import { FormInput, Avatar, Card, Button, Header,  FormLabel } from "react-native-elements";
+import {
+  clearForm,
+  updateForm,
+  asyncCreateUser,
+  asyncUploadAvatar
+} from "../../Ducks/CustomerProfileReducer";
+import { logInAsync, logOutAsync } from "../../Ducks/AuthReducer";
+
+import {
+  FormInput,
+  Avatar,
+  Card,
+  Button,
+  Header,
+  FormLabel
+} from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import Icon from "react-native-vector-icons/MaterialIcons";
+
+import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import NextButton from "../../Components/NextButton/NextButton";
 
-import { Images, Colors } from "../../Themes";
-import { styles } from "./styles";
+import styles from "./styles";
 import EN from "../../I18n/en";
+import { Images, Colors } from "../../Themes";
 import { USER_NAME } from "../../Util/Constants";
 
 class CustomerProfileView extends Component {
+  state = {
+    name: ""
+  };
+
   componentWillUnmount() {
     this.props.clearForm();
   }
@@ -40,6 +59,8 @@ class CustomerProfileView extends Component {
       valid = false;
     }
 
+    /* Finish Validations */
+
     updates = { ...updates, formHasErrors: !valid };
 
     if (!valid) {
@@ -53,6 +74,50 @@ class CustomerProfileView extends Component {
     return valid;
   }
 
+  registerUser() {
+    const uinfo = {
+      email: this.props.email,
+      password: this.props.password,
+      firstName: this.props.firstName,
+      lastName: this.props.lastName
+    };
+    return this.props.asyncCreateUser(uinfo, this.props.deviceToken);
+  }
+
+  uploadAvatar(response) {
+    const uinfo = response.payload;
+
+    return this.props.navigation.dispatch({ type: "Home" });
+
+    /*
+    this.props
+      .asyncUploadAvatar(uinfo.uuid, this.props.avatar, uinfo.token)
+      .then(response => {
+        this.props.navigation.dispatch({ type: "Home" });
+      })
+      .catch(err => {
+        this.props.navigation.dispatch({ type: "Home" });
+      });*/
+  }
+
+  showError(err) {
+    console.log(err);
+    const errorMessage = err.payload.response.data.errors[0];
+    Alert.alert("error", errorMessage);
+  }
+
+  loginUser() {
+    this.props
+      .logInAsync(this.props.email, this.props.password)
+      .then(response => {
+        if (response.type !== "networkErrors/error") {
+          this.uploadAvatar(response);
+        } else {
+          this.showError(response);
+        }
+      });
+  }
+
   submit() {
     this.props.updateForm({
       performingRequest: true
@@ -60,8 +125,12 @@ class CustomerProfileView extends Component {
 
     if (this.validateForm()) {
       if (!this.props.formHasErrors) {
-        this.props.navigation.dispatch({
-          type: "Home"
+        this.registerUser().then(response => {
+          if (response.type !== "networkErrors/error") {
+            this.loginUser();
+          } else {
+            this.showError(response);
+          }
         });
       } else {
         if (this.props.formHasErrors) {
@@ -100,13 +169,18 @@ class CustomerProfileView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <ScrollView
-        automaticallyAdjustContentInsets={true}
-        style={styles.scrollContainer}
-      >
-        <Grid>
-          <Col>
-          <LinearGradient
+      <View style={{ flex: 1 }}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.contentScrollContainer}
+        >
+          <Grid>
+            <Col>
+              <View style={{ backgroundColor: "red" }}>
+                <Col style={{ height: 50 }}>
+                  {/* Linear Gradient */}
+                  <LinearGradient
                     colors={[
                       Colors.gradientColor.top,
                       Colors.gradientColor.middle,
@@ -114,63 +188,108 @@ class CustomerProfileView extends Component {
                     ]}
                     style={styles.linearGradient}
                   />
-            {/* Header - Navigation */}
-            <Header
-              outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-              backgroundColor="transparent"
-              leftComponent={
-                <GoBackButton navigation={this.props.navigation} />
-              }
-              rightComponent={
-                <NextButton
-                  navigation={this.props.navigation}
-                  onPressButton={() => {
-                    this.submit();
+
+                  {/* Header - Navigation */}
+                  <Header
+                    outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
+                    backgroundColor="transparent"
+                    leftComponent={
+                      <ShowMenuButton navigation={this.props.navigation} />
+                    }
+                    centerComponent={{
+                      text: EN["myProfile"],
+                      style: styles.title
+                    }}
+                    rightComponent={
+                      <NextButton
+                        navigation={this.props.navigation}
+                        onPressButton={() => {
+                          this.submit();
+                        }}
+                      />
+                    }
+                  />
+                </Col>
+              </View>
+              <View style={styles.avatarContainer}>
+                {/* Avatar */}
+                  <Image
+                    style={styles.avatar}
+                    resizeMode="cover"
+                    source={require("../../Images/perfil.jpg")}
+                  />
+              </View>
+              <View>
+                <FormLabel>{EN["name"]}</FormLabel>
+                <FormInput
+                  placeholder="Viola Lowe"
+                  autoCorrect={false}
+                  value={this.state.name}
+                  onChangeText={text => {
+                    this.setState({
+                      name: text
+                    });
+
+                    const fullName = text.trim().split(" ");
+
+                    this.props.updateForm({
+                      firstName: fullName[0],
+                      lastName: fullName[1],
+                      firsNameErrorMessage: "",
+                      lastNameErrorMessage: ""
+                    });
                   }}
                 />
-              }
-            />
-            <View style={styles.avatarContainer}>
-              {/* Avatar */}
-              <Avatar
-                xlarge
-                rounded
-                style={styles.avatar}
-                source={require("../../Images/perfil.jpg")}
-                activeOpacity={0.7}
-              />
-            </View>
-            {/* Title */}
-            <Text style={styles.personalInformation}>
-              {EN["PersonalInformation"]}
-            </Text>
-            <View style={styles.backgroundForm}>
-            <FormInput
-              placeholder={EN["Firstname"]}
-              autoCorrect={false}
-              value={this.props.firstName}
-              onChangeText={text =>
-                this.props.updateForm({
-                  firstName: text,
-                  firsNameErrorMessage: ""
-                })
-              }
-            />
-            <FormInput
-              placeholder={EN["Lastname"]}
-              autoCorrect={false}
-              value={this.props.lastName}
-              onChangeText={text =>
-                this.props.updateForm({
-                  lastName: text,
-                  lastNameErrorMessage: ""
-                })
-              }
-            />
-            </View>
-          </Col>
-        </Grid>
-      </ScrollView>
+              </View>
+              <View>
+                <FormLabel>{EN["preferredName"]}</FormLabel>
+                <FormInput placeholder="Viola-Viola" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{EN["genderName"]}</FormLabel>
+                <FormInput placeholder="Female" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{EN["nativeLanguage"]}</FormLabel>
+                <FormInput placeholder="English" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{EN["secondaryLanguage"]}</FormLabel>
+                <FormInput placeholder="Spanish, Russian" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{EN["citizenShip"]}</FormLabel>
+                <FormInput placeholder="English" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{EN["countryFamiliarity"]}</FormLabel>
+                <FormInput placeholder="UK, USA" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{EN["cityFamiliarity"]}</FormLabel>
+                <FormInput
+                  placeholder="London, San Diego, New York"
+                  autoCorrect={false}
+                />
+              </View>
+              <View>
+                <FormLabel>{EN["areasExpertise"]}</FormLabel>
+                <FormInput placeholder="Traveling, Sport" autoCorrect={false} />
+              </View>
+              <View style={styles.logoutContainer}>
+                <Text
+                  style={[styles.buttonText, styles.button]}
+                  onPress={() => {
+                    this.props.logOutAsync();
+                  }}
+                >
+                  {EN["logOut"]}
+                </Text>
+              </View>
+            </Col>
+          </Grid>
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -178,12 +297,22 @@ const mS = state => ({
   firstName: state.customerProfile.firstName,
   firstNameErrorMessage: state.customerProfile.firstNameErrorMessage,
   lastName: state.customerProfile.lastName,
-  lastNameErrorMessage: state.customerProfile.firstNameErrorMessage
+  lastNameErrorMessage: state.customerProfile.firstNameErrorMessage,
+  email: state.registrationCustomer.email,
+  password: state.registrationCustomer.password,
+  deviceToken: state.registrationCustomer.deviceToken,
+  avatar: state.customerProfile.avatar,
+  token: state.auth.token,
+  uuid: state.auth.uuid
 });
 
 const mD = {
   clearForm,
-  updateForm
+  updateForm,
+  asyncCreateUser,
+  asyncUploadAvatar,
+  logInAsync,
+  logOutAsync
 };
 
 export default connect(mS, mD)(CustomerProfileView);

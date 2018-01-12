@@ -1,14 +1,14 @@
 import AXIOS from "../Config/AxiosConfig";
-
+import { URL } from "../Config/env";
+import RNFetchBlob from "react-native-fetch-blob";
 const BASE_URI = "/users";
 
 const User = {
-  create: (email, token) => {
-    return AXIOS.post(
-      `${BASE_URI}`,
-      { email: email },
-      { headers: { Authorization: token } }
-    );
+  create: (userInfo, token) => {
+    console.log(userInfo, token);
+    return AXIOS.post(`${BASE_URI}`, userInfo, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   },
 
   get: (id, token) => {
@@ -27,7 +27,26 @@ const User = {
     return AXIOS.delete(`${BASE_URI}/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
-  }
+  },
+  /*uploadPhoto: (id, image, token) => {
+    return RNFetchBlob.fetch(
+      "put",
+      `${URL}users/${id}/profile-photo`,
+      {
+        Authorization: `Bearer ${token}`,
+
+        "Content-Type": "multipart/form-data"
+      },
+      [
+        {
+          name: "file",
+          filename: "avatar.jpg",
+          data: image,
+          type: "image/jpg"
+        }
+      ]
+    );
+  }*/
 };
 
 export default User;

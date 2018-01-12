@@ -81,7 +81,7 @@ class SelectRoleView extends Component {
               <Button
                 borderRadius={15}
                 buttonStyle={[styles.buttonQR, styles.center]}
-                onPress={() => navigate("LaunchScreen")}
+                onPress={() => console.log("Scan QR")}
                 title={EN["scanQR"]}
                 icon={{
                   name: "qrcode",

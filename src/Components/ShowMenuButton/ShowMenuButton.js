@@ -42,7 +42,7 @@ class ShowMenuButton extends Component {
           name="menu"
           size={moderateScale(30)}
           onPress={() =>
-            this.props.navigation.dispatch({ type: "LandingContainer" })
+            this.props.navigation.dispatch({ type: "DrawerOpen" })
           }
         />
       </Col>
