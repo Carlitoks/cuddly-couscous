@@ -21,7 +21,7 @@ class CallTimeView extends Component {
     const navigation = this.props.navigation;
 
     pickerOptions = n => {
-      return new Array(n).fill(10).map((el, i) => {
+      return new Array(n).fill(5).map((el, i) => {
         return (
           <Picker.Item
             label={`${el * (i + 1)} Min`}

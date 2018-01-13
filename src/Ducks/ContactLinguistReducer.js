@@ -46,7 +46,7 @@ const initialState = {
   selectedLanguage: "",
 
   // Time
-  timeOptions: 6, // Ammount of options on the Picker
+  timeOptions: 12, // Ammount of options on the Picker
   selectedTime: 10, // Initial time selected: 10 min
   cost: 7, // Per Minute
 
