@@ -17,18 +17,19 @@ export const styles = StyleSheet.create({
     color: Colors.primaryColor,
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
-  languages: {
-    flex: 1,
-    marginTop: 20,
-    flexDirection: "row",
-    justifyContent: "space-around"
-  },
-  english: {
+  primaryLanguage: {
     fontFamily: Fonts.primaryBaseFont,
     fontSize: 19,
     color: Colors.primaryColor,
     marginLeft: 50,
-    backgroundColor: "rgba(255, 255, 255, 0)" 
+    backgroundColor:"transparent"
+  },
+  secondaryLanguage: {
+    fontFamily: Fonts.primaryBaseFont,
+    fontSize: 19,
+    color: Colors.primaryColor,
+    marginRight: 50,
+    backgroundColor:"transparent"
   },
   spanish: {
     fontFamily: Fonts.primaryBaseFont,
@@ -75,5 +76,11 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 0
   },
   iconChange:
-  {  backgroundColor: "rgba(255, 255, 255, 0)" }
+  {  backgroundColor: "rgba(255, 255, 255, 0)" },
+  languages: {
+    flex: 1,
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-around"
+  }
 });

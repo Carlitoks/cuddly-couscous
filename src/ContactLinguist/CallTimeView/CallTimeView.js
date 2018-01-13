@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateSettings } from "../../Ducks/ContactLinguistReducer";
+import { updateSettings, getAssistanceList
+} from "../../Ducks/ContactLinguistReducer";
 
 import { Text, View, Picker, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -17,6 +18,9 @@ import styles from "./styles";
 import EN from "../../I18n/en";
 
 class CallTimeView extends Component {
+  loadAssitance() {
+    return this.props.getAssistanceList(this.props.token);
+  }
   render() {
     const navigation = this.props.navigation;
 
@@ -97,7 +101,11 @@ class CallTimeView extends Component {
             buttonStyle={styles.button}
             containerViewStyle={styles.buttonAccept}
             title="Accept"
-            onPress={() => navigation.dispatch({ type: "AssistanceView" })}
+            onPress={() =>
+              this.loadAssitance().then(() =>
+                navigation.dispatch({ type: "AssistanceView" })
+              )
+            }
           />
         </View>
       </View>
@@ -108,11 +116,14 @@ class CallTimeView extends Component {
 const mS = state => ({
   timeOptions: state.contactLinguist.timeOptions,
   selectedTime: state.contactLinguist.selectedTime,
-  cost: state.contactLinguist.cost
+  cost: state.contactLinguist.cost,
+  token: state.auth.token
 });
 
 const mD = {
-  updateSettings
+  updateSettings,
+  getAssistanceList
+
 };
 
 export default connect(mS, mD)(CallTimeView);

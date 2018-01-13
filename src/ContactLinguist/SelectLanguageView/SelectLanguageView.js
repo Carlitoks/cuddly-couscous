@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import Languages from "../../Config/Languages";
 import {
   updateSettings,
-  LANGUAGE_LIST
+  clearSettings
 } from "../../Ducks/ContactLinguistReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -20,23 +20,47 @@ import LinearGradient from "react-native-linear-gradient";
 
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 
 import EN from "../../I18n/en";
 import { styles } from "./styles";
 import { Images, Colors } from "../../Themes";
 
 class SelectLanguague extends Component {
+  componentDidMount() {
+    this.props.clearSettings();
+  }
+
+  validate() {
+    if (!this.props.selectedLanguage) {
+      Alert.alert("Please Select language");
+    } else {
+      navigation.dispatch({ type: "CallTimeView" });
+    }
+  }
+
   filterList = language => {
-    return LANGUAGE_LIST.filter(lang =>
-      lang.toLowerCase().startsWith(language.toLowerCase())
+    return Languages.filter(lang =>
+      lang.name.toLowerCase().startsWith(language.toLowerCase())
     ).map((lang, i) => (
       <ListItem
-        hideChevron
+        hideChevron={
+          this.props.selectedLanguage === "" ||
+          this.props.selectedLanguage !== lang.name
+        }
         key={i}
-        title={lang}
+        title={lang.name}
+        rightIcon={
+          this.props.selectedLanguage === lang.name ? (
+            <Icon name="check" />
+          ) : (
+            undefined
+          )
+        }
         onPress={() => {
-          this.props.updateSettings({ selectedLanguage: lang });
+          this.props.updateSettings({
+            selectedLanguage: lang.name,
+            selectedLanguageCode: lang["3"]
+          });
         }}
       />
     ));
@@ -46,7 +70,6 @@ class SelectLanguague extends Component {
     const navigation = this.props.navigation;
 
     return (
-            
       <View style={{ flex: 1 }}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
@@ -55,7 +78,6 @@ class SelectLanguague extends Component {
         >
           <Col>
             {/* Linear Gradient */}
-            <TopViewIOS/>
             <LinearGradient
               colors={[
                 Colors.gradientColor.top,
@@ -79,9 +101,11 @@ class SelectLanguague extends Component {
             {/* Select the Language You Need a Linguist in */}
             <Text style={styles.mainTitle}>{EN["selectLanguage"]}</Text>
             <View style={styles.languages}>
-              <Text style={styles.english}>{EN["english"]}</Text>
-              <Icon size={30} name="swap-horiz" color="white" style={styles.iconChange}/>
-              <Text style={styles.spanish}>{EN["spanish"]}</Text>
+              <Text style={styles.primaryLanguage}>{EN["english"]}</Text>
+              <Icon size={30} name="swap-horiz" color="white" style={styles.iconChange} />
+              <Text style={styles.secondaryLanguage}>
+                {this.props.selectedLanguage}
+              </Text>
             </View>
 
             {/* Searchbar */}
@@ -115,11 +139,13 @@ class SelectLanguague extends Component {
 
 const mS = state => ({
   searchLanguage: state.contactLinguist.searchLanguage,
-  selectedLanguage: state.contactLinguist.selectedLanguage
+  selectedLanguage: state.contactLinguist.selectedLanguage,
+  selectedLanguageCode: state.contactLinguist.selectedLanguageCode
 });
 
 const mD = {
-  updateSettings
+  updateSettings,
+  clearSettings
 };
 
 export default connect(mS, mD)(SelectLanguague);

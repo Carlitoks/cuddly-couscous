@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 
 import {
   updateSettings,
-  ASSITANCE_LIST
+  ASSITANCE_LIST,
+  getAssistanceList
 } from "../../Ducks/ContactLinguistReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -143,11 +144,14 @@ class AssistanceView extends Component {
 
 const mS = state => ({
   searchAssistance: state.contactLinguist.searchAssistance,
-  selectedAssistance: state.contactLinguist.selectedAssistance
+  selectedAssistance: state.contactLinguist.selectedAssistance,
+  assistanceList: state.contactLinguist.assistanceList,
+  token: state.auth.token
 });
 
 const mD = {
-  updateSettings
+  updateSettings,
+  getAssistanceList
 };
 
 export default connect(mS, mD)(AssistanceView);

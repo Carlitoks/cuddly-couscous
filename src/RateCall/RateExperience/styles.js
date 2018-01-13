@@ -13,70 +13,68 @@ export const styles = StyleSheet.create({
     paddingBottom: 30,
     backgroundColor: "#eeeeee"
   },
-  LinguistAvatar: {
+  linguistAvatar: {
     alignItems: "flex-end"
   },
   avatarContent: {
     marginRight: 50
   },
-  LinguistInformation: {
-    alignItems: "center",
-    justifyContent: "center",
+  linguistInformation: {
+    alignItems: "flex-start"
   },
-  LinguistName: {
-    backgroundColor: "rgba(0,0,0,0)",  
+  linguistName: {
     fontSize: 25,
     fontWeight: "bold",
     color: "#888888",
-    marginLeft: 20,
+    marginLeft: 20
   },
-  LinguistAddress: {
-    backgroundColor: "rgba(0,0,0,0)",  
+  linguistAddress: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#888888"
+    color: "#888888",
+    flexDirection: "column",
+    alignItems: "flex-end"
   },
-  TextContainer: {
+  textContainer: {
     justifyContent: "center",
     marginTop: 20,
     marginBottom: 5
   },
-  TextQuestions: {
-    backgroundColor: "rgba(0,0,0,0)",  
+  textQuestions: {
     fontSize: 20,
     fontWeight: "bold"
   },
-  StarContainer: {
+  starContainer: {
     justifyContent: "center"
   },
-  Stars: {
+  stars: {
     justifyContent: "space-between",
     width: "70%"
   },
-  ViewContainerThumbs: {
+  viewContainerThumbs: {
     flexDirection: "row",
-    justifyContent: "center"
-  },
-  tabsThumbsIcons: {
     justifyContent: "center",
-    width: width - 200,
-    height: 50,
-    backgroundColor: "transparent",
-    borderColor: "transparent"
+    alignContent: "space-between"
   },
-  tabsIcons: {
-    width: width,
-    height: 50,
-    backgroundColor: "transparent",
-    borderColor: "transparent"
-  },
-  borderTab: {
-    borderColor: "transparent"
+  viewContainerQuestion: {
+    justifyContent: "space-between",
+    flexDirection: "row"
   },
   buttonSubmit: {
     marginTop: 20,
     backgroundColor: "#3b98b7",
-    width: Dimensions.get("window").width-30,
+    width: width - 30,
     borderRadius: 10
+  },
+  thumbsUp: {
+    paddingRight: 30
+  },
+  thumbsDown: {
+    paddingLeft: 30
+  },
+  questionIcons: {
+    paddingLeft: 20,
+    paddingRight: 10
   }
+
 });

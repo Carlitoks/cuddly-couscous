@@ -1,21 +1,20 @@
-import { Sessions } from '../Api';
+import { Sessions, Scenarios } from "../Api";
+import { networkError } from "./NetworkErrorsReducer";
 
-// EXAMPLE DUCK
-
-// Constants
-
-export const LANGUAGE_LIST = [
-  "English",
-  "Spanish",
-  "Russian",
-  "German",
-  "Portugal",
-  "French",
-  "Esperanto"
-];
-
+export const getAssistanceList = token => dispatch => {
+  console.log("Llamada Reducer");
+  return Scenarios.get(token)
+    .then(response => {
+      console.log(response);
+      return dispatch(updateSettings({ assistanceList: response.data }));
+    })
+    .catch(error => {
+      console.log(error);
+      return dispatch(networkError(error));
+    });
+};
 export const ASSITANCE_LIST = [
-  "Aiport - Customer Service",
+  "Aiport - Customer selectedScenarioIdService",
   "Airport - Check-In",
   "Hotel - Customer Service",
   "Hotel - Check-In",
@@ -42,8 +41,8 @@ export const clearSettings = () => ({
 // Initial State
 const initialState = {
   // Language
+  assistanceList: [],
   searchLanguage: "",
-  selectedLanguage: "",
 
   // Time
   timeOptions: 12, // Ammount of options on the Picker
@@ -52,7 +51,10 @@ const initialState = {
 
   // Assistance
   searchAssistance: "",
-  selectedAssistance: ""
+  selectedAssistance: "",
+  selectedScenarioId: "",
+  selectedLanguage: "Spanish",
+  selectedLanguageCode: "spa"
 };
 
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
@@ -63,7 +65,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
       dispatch(endSession("done"));
     })
     .catch(error => {
-      console.log(error);
+      dispatch(networkError(error));
     });
 };
 

@@ -13,13 +13,15 @@ import { clearSettings as clearContactLinguist } from "../../Ducks/ContactLingui
 
 import Icon from "react-native-vector-icons/Ionicons";
 import { Text, View, ScrollView, Image } from "react-native";
-import { SearchBar, Button, Avatar, ButtonGroup } from "react-native-elements";
+import { SearchBar, Button, Avatar, ButtonGroup, Card, Title } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import StarRating from "react-native-star-rating";
 
 import EN from "../../I18n/en";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
+import TextButton from "../../Components/TextButton/TextButton";
+import ThumbsButton from "../../Components/ThumbsButton/ThumbsButton";
 
 class RateCallView extends Component {
   ///// validate form /////
@@ -34,31 +36,29 @@ class RateCallView extends Component {
   submit = () => {
     const { rating, thumbsUp, thumbsDown } = this.props;
 
-    console.log(rating);
-
-    let RateInformation;
+    let rateInformation;
 
     if (thumbsUp) {
-      RateInformation = {
-        ...RateInformation,
+      rateInformation = {
+        ...rateInformation,
         resolved: true
       };
     } else {
-      RateInformation = {
-        ...RateInformation,
+      rateInformation = {
+        ...rateInformation,
         resolved: false
       };
     }
 
     if (rating > 0) {
-      RateInformation = {
-        ...RateInformation,
+      rateInformation = {
+        ...rateInformation,
         stars: rating
       };
     }
 
     this.props
-      .submitRateCall(RateInformation, this.props.sessionId, this.props.token)
+      .submitRateCall(rateInformation, this.props.sessionId, this.props.token)
       .then(response => {
         this.props.navigation.dispatch({ type: "Home" });
       });
@@ -70,25 +70,29 @@ class RateCallView extends Component {
       Name: "ios-time",
       IconState: "iconClockFirstList",
       IconName: "clock",
-      OffState: "iconClockSecondList"
+      OffState: "iconClockSecondList",
+      label: "Wait Time"
     },
     {
       Name: "ios-volume-up",
       IconState: "iconVolumeFirstList",
       IconName: "volume",
-      OffState: "iconVolumeSecondList"
+      OffState: "iconVolumeSecondList",
+      label: "Audio Quality"
     },
     {
       Name: "ios-wifi",
       IconState: "iconWifiFirstList",
       IconName: "wifi",
-      OffState: "iconWifiSecondList"
+      OffState: "iconWifiSecondList",
+      label: "Connection Quality"
     },
     {
       Name: "ios-person",
       IconState: "iconPersonFirstList",
       IconName: "person",
-      OffState: "iconPersonSecondList"
+      OffState: "iconPersonSecondList",
+      label: "Professionalism"
     }
   ];
 
@@ -97,59 +101,57 @@ class RateCallView extends Component {
       Name: "ios-time",
       IconState: "iconClockSecondList",
       IconName: "clock",
-      OffState: "iconClockFirstList"
+      OffState: "iconClockFirstList",
+      label: "Wait Time"
     },
     {
       Name: "ios-volume-up",
       IconState: "iconVolumeSecondList",
       IconName: "volume",
-      OffState: "iconVolumeFirstList"
+      OffState: "iconVolumeFirstList",
+      label: "Audio Quality"
     },
     {
       Name: "ios-wifi",
       IconState: "iconWifiSecondList",
       IconName: "wifi",
-      OffState: "iconWifiFirstList"
+      OffState: "iconWifiFirstList",
+      label: "Connection Quality"
     },
     {
       Name: "ios-person",
       IconState: "iconPersonSecondList",
       IconName: "person",
-      OffState: "iconPersonFirstList"
+      OffState: "iconPersonFirstList",
+      label: "Professionalism"
     }
   ];
 
 
-  buttonTHumbs(selectedIndex) {
+  buttonThumbs(selectedIndex) {
     if (selectedIndex == 0) {
-      this.TogglethumbsUp();
+      this.togglethumbsUp();
     } else {
-      this.TogglethumbsDown();
+      this.togglethumbsDown();
     }
   }
 
-  TogglethumbsUp = () => {
+  togglethumbsUp = () => {
     this.props.updateOptions({
       thumbsUp: true,
       thumbsDown: false
     });
   };
 
-  TogglethumbsDown = () => {
+  togglethumbsDown = () => {
     this.props.updateOptions({
       thumbsDown: true,
       thumbsUp: false
     });
   };
 
-  ButtonsHandle(selectedIndex, flag) {
-    let icon;
-    if (flag == "positiveFlags") {
-      icon = this.GoodIcons[selectedIndex];
-    } else {
-      icon = this.BadIcons[selectedIndex];
-    }
-    this.GenericToggleFunction(
+  buttonsHandle = (icon, flag) => {
+    this.genericToggleFunction(
       icon.IconName,
       icon.IconState,
       this.props[icon.IconState],
@@ -167,7 +169,7 @@ class RateCallView extends Component {
  * @param {string} OffState - string used to identify the state of the icon that we are going to turn off   
  */
 
-  GenericToggleFunction = (IconName, StateName, IconState, flagsStore, OffState) => {
+  genericToggleFunction = (IconName, StateName, IconState, flagsStore, OffState) => {
     const ObjectState = {};
     ObjectState[StateName] = !IconState;
     const ObjectOffState = {};
@@ -176,57 +178,17 @@ class RateCallView extends Component {
   };
 
   render() {
-    const thumbsButtons = [
-      <Icon
-        style={
-          this.props.thumbsUp ? { color: "#3b98b7" } : { color: "#cdcdcd" }
-        }
-        name="ios-thumbs-up"
-        size={40}
-      />,
-      <Icon
-        style={
-          this.props.thumbsDown ? { color: "#3b98b7" } : { color: "#cdcdcd" }
-        }
-        name="ios-thumbs-down"
-        size={40}
-      />
-    ];
 
-    const WhatWasGoodIcons = this.GoodIcons.map(value => {
-      return (
-        <Icon
-          style={
-            this.props[value.IconState]
-              ? { color: "#3b98b7" }
-              : { color: "#cdcdcd" }
-          }
-          name={value.Name}
-          size={35}
-        />
-      );
-    });
+    const WhatWasGoodIcons = this.GoodIcons;
 
-    const WhatCouldBeBetterIcons = this.BadIcons.map(value => {
-      return (
-        <Icon
-          style={
-            this.props[value.IconState]
-              ? { color: "#3b98b7" }
-              : { color: "#cdcdcd" }
-          }
-          name={value.Name}
-          size={35}
-        />
-      );
-    });
+    const WhatCouldBeBetterIcons = this.BadIcons;
 
     return (
       <View style={styles.scrollContainer}>
         <ScrollView automaticallyAdjustContentInsets={true}>
           {/* Linguist Information */}
           <Grid style={styles.containerInformation}>
-            <Col style={styles.LinguistAvatar}>
+            <Col style={styles.linguistAvatar}>
               <Avatar
                 large
                 containerStyle={styles.avatarContent}
@@ -234,24 +196,22 @@ class RateCallView extends Component {
                 source={Images.avatar}
               />
             </Col>
-            <Col style={styles.LinguistInformation}>
-              <Text style={styles.LinguistName}>Zhang W.</Text>
-              <View>
-              <Text style={styles.LinguistAddress}>
-                <Icon name="ios-pin" size={20} /> San Francisco
+            <Col style={styles.linguistInformation}>
+              <Text style={styles.linguistName}>Zhang W.</Text>
+              <Text style={styles.linguistAddress}>
+                <Icon name="ios-pin" size={20} />San Francisco
               </Text>
-              </View>
             </Col>
           </Grid>
 
           {/* Rate Linguist */}
 
           <Grid>
-            <Row style={styles.TextContainer}>
-              <Text style={styles.TextQuestions}>{EN["RateLinguist"]}</Text>
+            <Row style={styles.textContainer}>
+              <Text style={styles.textQuestions}>{EN["RateLinguist"]}</Text>
             </Row>
-            <Row style={styles.StarContainer}>
-              <View style={styles.Stars}>
+            <Row style={styles.starContainer}>
+              <View style={styles.stars}>
                 <StarRating
                   emptyStar={"ios-star"}
                   fullStar={"ios-star"}
@@ -260,8 +220,7 @@ class RateCallView extends Component {
                   disabled={false}
                   rating={this.props.rating}
                   selectedStar={rating =>
-                    this.props.updateOptions({ rating: rating })
-                  }
+                    this.props.updateOptions({ rating: rating })}
                   maxStars={5}
                   starSize={45}
                   emptyStarColor={"#cccccc"}
@@ -274,33 +233,53 @@ class RateCallView extends Component {
           {/* Where you needs addressed*/}
 
           <Grid>
-            <Row style={styles.TextContainer}>
-              <Text style={styles.TextQuestions}>{EN["NeedsAddress"]}</Text>
+            <Row style={styles.textContainer}>
+              <Text style={styles.textQuestions}>{EN["NeedsAddress"]}</Text>
             </Row>
-            <View style={styles.ViewContainerThumbs}>
-              <ButtonGroup
-                buttons={thumbsButtons}
-                containerStyle={styles.tabsThumbsIcons}
-                innerBorderStyle={{ color: "white" }}
-                onPress={i => this.buttonTHumbs(i)}
-              />
+            <View style={styles.viewContainerThumbs}>
+              <View style={styles.thumbsUp}>
+                <ThumbsButton
+                  IconName="ios-thumbs-up"
+                  StateIcon={this.props.thumbsUp}
+                  onPress={() => this.buttonThumbs(0)}
+                  title="Yes"
+                  color="#36D896"
+                />
+              </View>
+              <View style={styles.thumbsDown}>
+                <ThumbsButton
+                  IconName="ios-thumbs-down"
+                  StateIcon={this.props.thumbsDown}
+                  onPress={() => this.buttonThumbs(1)}
+                  title="No"
+                  color="red"
+                />
+              </View>
             </View>
           </Grid>
 
           {/* What was good */}
 
           <Grid>
-            <Row style={styles.TextContainer}>
-              <Text style={styles.TextQuestions}>{EN["WasGood"]}</Text>
+            <Row style={styles.textContainer}>
+              <Text style={styles.textQuestions}>{EN["WasGood"]}</Text>
             </Row>
             <View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <ButtonGroup
-                  buttons={WhatWasGoodIcons}
-                  containerStyle={styles.tabsIcons}
-                  innerBorderStyle={{ color: "white" }}
-                  onPress={i => this.ButtonsHandle(i, "positiveFlags")}
-                />
+                <View style={styles.viewContainerQuestion}>
+                  {
+                    WhatWasGoodIcons.map((item, i) => (
+                      <View key={i} style={styles.questionIcons}>
+                        < TextButton
+                          IconName={item.Name}
+                          StateIcon={this.props[item.IconState]}
+                          onPress={() => this.buttonsHandle(item, "positiveFlags")}
+                          title={item.label}
+                        />
+                      </View>
+                    ))
+                  }
+                </View>
               </ScrollView>
             </View>
           </Grid>
@@ -308,17 +287,23 @@ class RateCallView extends Component {
           {/* What could be better*/}
 
           <Grid>
-            <Row style={styles.TextContainer}>
-              <Text style={styles.TextQuestions}>{EN["CouldBetter"]}</Text>
+            <Row style={styles.textContainer}>
+              <Text style={styles.textQuestions}>{EN["CouldBetter"]}</Text>
             </Row>
             <View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <ButtonGroup
-                  buttons={WhatCouldBeBetterIcons}
-                  containerStyle={styles.tabsIcons}
-                  innerBorderStyle={{ color: "white" }}
-                  onPress={i => this.ButtonsHandle(i, "negativeFlags")}
-                />
+                {
+                  WhatCouldBeBetterIcons.map((item, i) => (
+                    <View key={i} style={styles.questionIcons}>
+                      < TextButton
+                        IconName={item.Name}
+                        StateIcon={this.props[item.IconState]}
+                        onPress={() => this.buttonsHandle(item, "negativeFlags")}
+                        title={item.label}
+                      />
+                    </View>
+                  ))
+                }
               </ScrollView>
             </View>
           </Grid>
@@ -341,7 +326,7 @@ class RateCallView extends Component {
             </Row>
           </Grid>
         </ScrollView>
-      </View>
+      </View >
     );
   }
 }
