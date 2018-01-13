@@ -1,19 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  GetOptions,
-  updateForm
-} from "../../Ducks/LinguistFormReducer";
+import { GetOptions, updateForm } from "../../Ducks/LinguistFormReducer";
 
 import { View, Text, ScrollView, Alert } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormLabel, FormInput, Header, List, ListItem } from "react-native-elements";
+import {
+  Button,
+  FormLabel,
+  FormInput,
+  Header,
+  List,
+  ListItem
+} from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-
 
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -40,9 +43,7 @@ class GenderLinguist extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(
-        updates.GenderErrorMessage
-      );
+      this.tempDisplayErrors(updates.GenderErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -50,11 +51,11 @@ class GenderLinguist extends Component {
   }
 
   submit() {
+    const { navigation } = this.props;
 
     if (this.validateForm()) {
-      console.log('here');
+      navigation.dispatch({ type: "PhoneLinguistView" });
     }
-
   }
 
   // Will be changed according the designs
@@ -77,8 +78,10 @@ class GenderLinguist extends Component {
 
     return (
       <View style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
           <Grid>
             <Col>
               <Row>
@@ -101,36 +104,30 @@ class GenderLinguist extends Component {
                     }
                   />
                   {/* Enter your Name */}
-                  <Text style={styles.mainTitle}>
-                    {EN["genderName"]}
-                  </Text>
+                  <Text style={styles.mainTitle}>{EN["genderName"]}</Text>
                 </Col>
               </Row>
               <List containerStyle={{ borderTopWidth: 0 }}>
-                {
-                  genders.map((item, i) => (
-                    <ListItem
-                      key={i}
-                      containerStyle={styles.genderItem}
-                      title={item.gender}
-                      hideChevron={
-                        this.props.selectedGender === "" ||
-                        this.props.selectedGender !== item.gender
-                      }
-                      titleStyle={{ fontSize: 20 }}
-                      rightIcon={
-                        this.props.selectedGender !== "" ? (
-                          { name: "check" }
-                        ) : (
-                            undefined
-                          )
-                      }
-                      onPress={() => {
-                        this.props.updateForm({ selectedGender: item.gender });
-                      }}
-                    />
-                  ))
-                }
+                {genders.map((item, i) => (
+                  <ListItem
+                    key={i}
+                    containerStyle={styles.genderItem}
+                    title={item.gender}
+                    hideChevron={
+                      this.props.selectedGender === "" ||
+                      this.props.selectedGender !== item.gender
+                    }
+                    titleStyle={{ fontSize: 20 }}
+                    rightIcon={
+                      this.props.selectedGender !== ""
+                        ? { name: "check" }
+                        : undefined
+                    }
+                    onPress={() => {
+                      this.props.updateForm({ selectedGender: item.gender });
+                    }}
+                  />
+                ))}
               </List>
             </Col>
           </Grid>

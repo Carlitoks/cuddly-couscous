@@ -77,5 +77,8 @@ export default StyleSheet.create({
     marginTop: moderateScale(25),
     marginLeft: moderateScale(15),
     marginBottom: moderateScale(-15)
+  },
+  assitanceListItem: {
+    height: 30
   }
 });

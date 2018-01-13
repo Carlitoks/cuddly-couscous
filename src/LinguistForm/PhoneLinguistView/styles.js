@@ -5,7 +5,6 @@ import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
-
   linearGradient: {
     position: "absolute",
     width: "100%",
@@ -22,14 +21,16 @@ export default StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(10),
     marginTop: moderateScale(20),
-    color: Colors.primaryColor
+    color: "white",
+    backgroundColor: "transparent"
   },
   mainSubtitle: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: 18,
     textAlign: "center",
     marginBottom: moderateScale(30),
-    color: Colors.primaryColor
+    color: "white",
+    backgroundColor: "transparent"
   },
   phoneSection: {
     flex: 1,
@@ -59,11 +60,11 @@ export default StyleSheet.create({
     backgroundColor: "black",
     width: "100%",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   buttonContainer: {
     backgroundColor: Colors.linguistFormButton,
-    width: width,
+    width: width
   },
   buttonText: {
     color: Colors.linguistFormText

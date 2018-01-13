@@ -66,8 +66,7 @@ export const styles = StyleSheet.create({
     height: "100%"
   },
   scrollContainer: {
-    flex: 1,
-    height: "100%"
+    flex: 1
   },
   contentScrollContainer: { flexGrow: 1 },
   listContainer: {

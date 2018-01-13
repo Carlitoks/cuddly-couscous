@@ -85,6 +85,84 @@ const Session = {
     return AXIOS.get(`/users/${userId}/linguist-profile/session-invitations`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+  },
+  GetLanguages: () => {
+    const Languages = [
+      {
+        name: "English",
+        code: "eng"
+      },
+      {
+        name: "Albanian",
+        code: "sqi"
+      },
+      {
+        name: "Amharic",
+        code: "amh"
+      },
+      {
+        name: "Spanish",
+        code: "spa"
+      },
+      {
+        name: "Armenian",
+        code: "hye"
+      },
+      {
+        name: "Basque",
+        code: "eus"
+      },
+      {
+        name: "Bengali",
+        code: "ben"
+      },
+      {
+        name: "Russian",
+        code: "rus"
+      },
+      {
+        name: "Burmese",
+        code: "mya"
+      },
+      {
+        name: "Bulgarian",
+        code: "bul"
+      },
+      {
+        name: "Catalan",
+        code: "cat"
+      }
+    ];
+
+    return Languages;
+  },
+  GetCitizenships: () => {
+    const Citizenships = [
+      {
+        name: "English"
+      },
+      {
+        name: "Spanish"
+      },
+      {
+        name: "Russian"
+      },
+      {
+        name: "German"
+      }
+    ];
+
+    return Citizenships;
+  },
+  GetAreasOfExpertise: () => {
+    return [
+      { name: "Sport" },
+      { name: "Travel" },
+      { name: "Legal" },
+      { name: "Retail" },
+      { name: "Technology" },
+      { name: "Tourism" }
+    ];
   }
 };
 

@@ -20,6 +20,12 @@ import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView"
 import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
 import LoginView from "../Onboarding/LoginView/LoginView";
 import MenuView from "../Components/MenuView/MenuView";
+
+// Onboarding - Select Language
+import SelectLanguageView from "../LinguistForm/SelectLanguageView/SelectLanguageView";
+import SelectListView from "../LinguistForm/SelectListView/SelectListView";
+import LanguageSettingsView from "../LinguistForm/LanguageSettingsView/LanguageSettingsView";
+
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
 import NameLinguistView from "../LinguistForm/NameLinguistView/NameLinguistView";
 import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguistView";
@@ -74,7 +80,15 @@ const Navigation = StackNavigator(
     },
     Profile: { screen: Profile },
     ScanScreenView: { screen: ScanScreenView },
-    RateCallView: { screen: RateCallView },
+    SelectLanguageView: {
+      screen: SelectLanguageView
+    },
+    SelectListView: {
+      screen: SelectListView
+    },
+    LanguageSettingsView: {
+      screen: LanguageSettingsView
+    },
     SelectRoleView: {
       screen: SelectRoleView,
       navigationOptions: {

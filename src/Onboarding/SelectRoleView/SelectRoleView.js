@@ -93,7 +93,12 @@ class SelectRoleView extends Component {
               />
 
               {/* Become a Linguist */}
-              <Text style={[styles.textBecome, styles.center]}>
+              <Text
+                onPress={() =>
+                  navigation.dispatch({ type: "NameLinguistView" })
+                }
+                style={[styles.textBecome, styles.center]}
+              >
                 {EN["becomeOnVoy"]}
               </Text>
 

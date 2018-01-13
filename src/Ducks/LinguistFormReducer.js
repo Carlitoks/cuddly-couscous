@@ -1,10 +1,48 @@
+import { Sessions } from "../Api";
+import { Images } from "../Themes/Images";
+import EN from "../I18n/en";
+
+// Constants
+export const LANGUAGE_INTERPRETATION_LIST = [
+  { name: "Frequently" },
+  { name: "Occasionally" },
+  { name: "None" }
+];
+
+export const PROFICIENCY_LIST = [
+  {
+    name: "Basic",
+    avatar_url: "expertise_A1",
+    subtitle: EN["expertise_A1"]
+  },
+  {
+    name: "Intermediate",
+    avatar_url: "expertise_B1",
+    subtitle: EN["expertise_B1"]
+  },
+  {
+    name: "Fluent",
+    avatar_url: "expertise_C1",
+    subtitle: EN["expertise_C1"]
+  }
+];
+
 const ACTIONS = {
   CLEAR: "linguistForm/clear",
-  UPDATE: "linguistForm/update",
+  UPDATE: "linguistForm/update"
 };
 
 export const clearForm = () => ({
   type: ACTIONS.CLEAR
+});
+
+export const clearSettings = () => ({
+  type: ACTIONS.CLEAR
+});
+
+export const updateSettings = payload => ({
+  type: ACTIONS.UPDATE,
+  payload
 });
 
 export const updateForm = payload => ({
@@ -18,7 +56,7 @@ export const GetOptions = () => dispatch => {
     { gender: "Female" },
     { gender: "Other" },
     { gender: "Decline to spicify" }
-  ]
+  ];
 };
 
 const initialState = {
@@ -30,13 +68,36 @@ const initialState = {
   mainTitle: "Enter Your Name",
   // Linguist Email
   email: "",
-  // Gender 
+  // Gender
   selectedGender: "",
   // Phone number
   phoneNumber: "",
   // Verify Phone
-  VerifyPhoneNumber: ""
+  VerifyPhoneNumber: "",
+  // Language selection
+  languages: [],
+  citizenchips: [],
+  areasOfExpertise: [],
+  searchQuery: "",
+  selectionItemType: "",
+  selectedLanguage: null,
+  selectedNativeLanguage: [],
+  selectedAreasOfExpertise: [],
+  selectedSecondaryLanguages: [],
+  selectedCitizenship: [],
+  selectedProficiency: null,
+  selectedLanguageInterpretation: null
+};
 
+export const getItems = type => dispatch => {
+  const types = {
+    languages: Sessions.GetLanguages,
+    citizenchips: Sessions.GetCitizenships,
+    nativeLanguage: Sessions.GetLanguages,
+    areasOfExpertise: Sessions.GetAreasOfExpertise
+  };
+
+  dispatch(updateSettings({ [type]: types[type]() }));
 };
 
 const linguistFormReducer = (state = initialState, action = {}) => {

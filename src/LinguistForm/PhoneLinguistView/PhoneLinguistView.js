@@ -1,14 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  updateForm
-} from "../../Ducks/LinguistFormReducer";
+import { updateForm } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert, TextInput, Platform } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  TextInput,
+  Platform
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormLabel, FormInput, Header, Badge } from "react-native-elements";
+import {
+  Button,
+  FormLabel,
+  FormInput,
+  Header,
+  Badge
+} from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
@@ -21,7 +32,6 @@ class PhoneLinguist extends Component {
   navigate = this.props.navigation.navigate;
 
   mask = number => {
-    console.log(number);
     let numberWithMask = number.replace(/\D/g, "");
 
     if (numberWithMask.length > 7) {
@@ -55,9 +65,7 @@ class PhoneLinguist extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(
-        updates.phoneErrorMessage
-      );
+      this.tempDisplayErrors(updates.phoneErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -65,11 +73,9 @@ class PhoneLinguist extends Component {
   }
 
   submit() {
-
     if (this.validateForm()) {
-      this.props.navigation.dispatch({ type: "VerifyPhoneLinguistView" });
+      this.props.navigation.dispatch({ type: "SelectLanguageView" });
     }
-
   }
 
   tempDisplayErrors(...errors) {
@@ -87,11 +93,12 @@ class PhoneLinguist extends Component {
   }
 
   render() {
-
     return (
       <View style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
           <Grid>
             <Col>
               <Row>
@@ -114,9 +121,7 @@ class PhoneLinguist extends Component {
                     }
                   />
                   {/* Enter phone number */}
-                  <Text style={styles.mainTitle}>
-                    {EN["linguistNumber"]}
-                  </Text>
+                  <Text style={styles.mainTitle}>{EN["linguistNumber"]}</Text>
                   {/* subtitle */}
                   <Text style={styles.mainSubtitle}>
                     {EN["linguistNumberText"]}
@@ -129,7 +134,8 @@ class PhoneLinguist extends Component {
                   containerStyle={styles.tagCode}
                   textStyle={styles.codeText}
                 />
-                <TextInput style={styles.containerInput}
+                <TextInput
+                  style={styles.containerInput}
                   onChangeText={number => {
                     const phoneNumber = this.mask(number);
                     this.props.updateForm({
@@ -138,7 +144,9 @@ class PhoneLinguist extends Component {
                   }}
                   placeholder="(201) 555-0132"
                   value={this.props.phoneNumber}
-                  keyboardType={Platform.OS === 'ios' ? 'number-pad' : 'numeric'}
+                  keyboardType={
+                    Platform.OS === "ios" ? "number-pad" : "numeric"
+                  }
                 />
               </View>
             </Col>
@@ -160,11 +168,11 @@ class PhoneLinguist extends Component {
 
 const mS = state => ({
   phoneNumber: state.linguistForm.phoneNumber,
-  formHasErrors: state.linguistForm.formHasErrors,
+  formHasErrors: state.linguistForm.formHasErrors
 });
 
 const mD = {
-  updateForm,
+  updateForm
 };
 
 export default connect(mS, mD)(PhoneLinguist);

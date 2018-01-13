@@ -73,10 +73,6 @@ export default (ENG = {
   countryFamiliarity: "Country Familiarity",
   cityFamiliarity: "City Familiarity",
   areasExpertise: "Areas of Expertise",
-  CouldBetter: "What could be better?",
-  Calls: "Calls",
-  Amount: "Amount",
-  Status: "You are",
   LanguagePairs: "Language Pairs",
   scheduleLinguist: "Schedule a Linguist",
   mainTitle: "Enter Your Name",
@@ -93,11 +89,25 @@ export default (ENG = {
   verifyNumber: "Verify Phone",
   verifyNumberText: "Enter verfication code they receive via SMS",
   orChooseOneBelow: "Or Choose one below",
-  LanguagePairs: "Language Pairs",
-  orChooseOneBelow: "Or Choose one below", 
-  sessionInQueue: "Session in Queue", 
-  callSettings: "Call Settings", 
-  maxTimeLimit: "Max Time Limit", 
-  iPreferAudioOrVideo: "I prefer to connect via audio and video", 
-  iPreferFemaleOrMale: "I prefer to speak with female"  
+  sessionInQueue: "Session in Queue",
+  callSettings: "Call Settings",
+  maxTimeLimit: "Max Time Limit",
+  iPreferAudioOrVideo: "I prefer to connect via audio and video",
+  iPreferFemaleOrMale: "I prefer to speak with female",
+  Languages: "Languages",
+  NativeLanguage: "Native Language",
+  SecondaryLanguages: "Secondary Languages",
+  Add: "Add",
+  AddLanguage: "Add Language",
+  ProficiencyLevelOf: "Proficiency level of ",
+  LanguageInterpretation: "Have you done any interpretation in <lang> before?",
+  AreasExpertise: "Areas of Expertise",
+  LanguageSettings: "Language Settings",
+  expertise_A1:
+    "There are so many different hairstyles for different people and different",
+  expertise_B1:
+    "What is the loop of Creation How is there something from nothing? In Spite",
+  expertise_C1:
+    "Are we human, because of unique traits and attributes not shared with either",
+  citizenship: "Citizenship"
 });

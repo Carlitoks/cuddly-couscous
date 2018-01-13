@@ -29,25 +29,33 @@ import Fonts from "../../Themes/Fonts";
 
 class AssistanceView extends Component {
   filterList = assistance => {
-    return ASSITANCE_LIST.filter(as =>
-      as.toLowerCase().startsWith(assistance.toLowerCase())
-    ).map((as, i) => (
-      <ListItem
-        hideChevron
-        key={i}
-        title={as}
-        rightIcon={
-          this.props.selectedAssistance === as ? (
-            <Icon size={15} color={Colors.primaryAltFontColor} name="check" />
-          ) : (
-            undefined
-          )
-        }
-        onPress={() => {
-          this.props.updateSettings({ selectedAssistance: as });
-        }}
-      />
-    ));
+    return this.props.assistanceList
+      .filter(as => as.title.toLowerCase().startsWith(assistance.toLowerCase()))
+      .map((as, i) => (
+        <ListItem
+          wrapperStyle={styles.assitanceListItem}
+          hideChevron={
+            this.props.selectedAssistance === "" ||
+            this.props.selectedAssistance !== as.title
+          }
+          key={i}
+          title={as.title}
+          rightIcon={{ name: "check" }}
+          leftIcon={
+            as.title.includes("Taxi") ? (
+              <Icon size={15} color="gray" name="local-taxi" />
+            ) : (
+              <Icon size={15} color="gray" name="airplanemode-active" />
+            )
+          }
+          onPress={() => {
+            this.props.updateSettings({
+              selectedAssistance: as.title,
+              selectedScenarioId: as.id
+            });
+          }}
+        />
+      ));
   };
 
   render() {
