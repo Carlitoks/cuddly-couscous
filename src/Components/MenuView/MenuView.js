@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 import {
   getProfileAsync,
@@ -7,7 +8,7 @@ import {
   updateView
 } from "../../Ducks/UserProfileReducer";
 
-import { View, Text, Image } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
 import { Button } from "react-native-elements";
 import TopViewIOS from "../TopViewIOS/TopViewIOS"
 import { logOutAsync } from "../../Ducks/AuthReducer"; 
@@ -26,7 +27,7 @@ class MenuView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View>
+      <ScrollView>
         <TopViewIOS/>
         <Image
           style={[styles.logo, styles.center]}
@@ -39,65 +40,76 @@ class MenuView extends Component {
         <Text style={styles.textStars}>{this.props.rate}</Text>
 
         {/* Home */}
-        <Button
-          title="Home"
-          buttonStyle={styles.Button}
-          textStyle={styles.colorText}
+        <Icon.Button name="home" size={25} 
+          backgroundColor="#FFFFFF"
+          iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
             navigation.dispatch({ type: "Home" });
-          }}
-        />
+          }}>
+          <Text style={styles.colorText}>Home</Text>
+        </Icon.Button>
 
         {/* My Profile */}
-        <Button
-          title="My Profile"
-          buttonStyle={styles.Button}
-          textStyle={styles.colorText}
+        <Icon.Button name="person" size={25} 
+          backgroundColor="#FFFFFF"
+          iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
-           // navigation.dispatch({ type: "Profile" });
-          }}
-        />
+            navigation.dispatch({ type: "Profile" });
+          }}>
+          <Text style={styles.colorText}>My Profile</Text>
+        </Icon.Button>
 
         {/* History */}
-        <Button
-          title="History"
-          buttonStyle={styles.Button}
-          textStyle={styles.colorText}
+        <Icon.Button name="schedule" size={25} 
+          backgroundColor="#FFFFFF"
+          iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
             navigation.dispatch({ type: "CallHistory" });
-          }}
-        />
+          }}>
+          <Text style={styles.colorText}>History</Text>
+        </Icon.Button>
 
         {/* Schedule */}
-        <Button
-          buttonStyle={styles.Button}
-          textStyle={styles.colorText}
-          title="Schedule"
+        <Icon.Button name="event" size={25} 
+          backgroundColor="#FFFFFF"
+          iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
-           // navigation.dispatch({ type: "Profile" });
-          }}
-        />
+            navigation.dispatch({ type: "Profile" });
+          }}>
+          <Text style={styles.colorText}>Schedule</Text>
+        </Icon.Button>
 
         {/* Settings */}
-        <Button
-          buttonStyle={styles.Button}
-          textStyle={styles.colorText}
-          title="Settings"
+        <Icon.Button name="settings" size={25} 
+          backgroundColor="#FFFFFF"
+          iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
-           // navigation.dispatch({ type: "Profile" });
-          }}
-        />
+            navigation.dispatch({ type: "Profile" });
+          }}>
+          <Text style={styles.colorText}>Settings</Text>
+        </Icon.Button>
 
-                {/* Help */} 
-                <Button 
-          buttonStyle={styles.Button} 
-          textStyle={styles.colorText} 
-          title="Logout" 
-          onPress={() => { 
-            this.props.logOutAsync(); 
-          }}  
-        />
-      </View>
+        {/* Help */}
+        <Icon.Button name="help" size={25} 
+          backgroundColor="#FFFFFF"
+          iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
+          onPress={() => {
+            navigation.dispatch({ type: "Profile" })
+          }}>
+          <Text style={styles.colorText}>Help</Text>
+        </Icon.Button>
+
+        {/* Logout */}
+        <Icon.Button name="exit-to-app" size={25} 
+          backgroundColor="#FFFFFF"
+          iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
+          onPress={() => {
+            this.props.logOutAsync()
+          }}>
+          <Text style={styles.colorText}>Logout</Text>
+        </Icon.Button>
+
+      </ScrollView>
     );
   }
 }
