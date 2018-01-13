@@ -17,7 +17,9 @@ import customerProfile from "./CustomerProfileReducer";
 import rateCall from "./RateCallReducer";
 import tokbox from "./tokboxReducer";
 import profileLinguist from "./ProfileLinguistReducer";
-import linguistForm from "./LinguistFormReducer"
+import linguistForm from "./LinguistFormReducer";
+import sessionInfo from "./SessionInfoReducer";
+import editProfile from "./EditUserProfileReducer";
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -37,7 +39,9 @@ const rootReducer = combineReducers({
   rateCall,
   tokbox,
   profileLinguist,
-  linguistForm
+  linguistForm,
+  sessionInfo,
+  editProfile
 });
 
 export default rootReducer;

@@ -104,10 +104,11 @@ export default (ENG = {
   AreasExpertise: "Areas of Expertise",
   LanguageSettings: "Language Settings",
   expertise_A1:
-    "There are so many different hairstyles for different people and different",
+  "There are so many different hairstyles for different people and different",
   expertise_B1:
-    "What is the loop of Creation How is there something from nothing? In Spite",
+  "What is the loop of Creation How is there something from nothing? In Spite",
   expertise_C1:
-    "Are we human, because of unique traits and attributes not shared with either",
-  citizenship: "Citizenship"
+  "Are we human, because of unique traits and attributes not shared with either",
+  citizenship: "Citizenship",
+  userProfile: "My Profile"
 });

@@ -40,7 +40,7 @@ class MenuView extends Component {
         <Text style={styles.textStars}>{this.props.rate}</Text>
 
         {/* Home */}
-        <Icon.Button name="home" size={25} 
+        <Icon.Button name="home" size={25}
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
@@ -50,17 +50,18 @@ class MenuView extends Component {
         </Icon.Button>
 
         {/* My Profile */}
-        <Icon.Button name="person" size={25} 
+        <Icon.Button name="person" size={25}
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
-            navigation.dispatch({ type: "Profile" });
+            navigation.dispatch({ type: "UserProfileView" });
           }}>
-          <Text style={styles.colorText}>My Profile</Text>
+
+          <Text style={styles.colorText}>Profile</Text>
         </Icon.Button>
 
         {/* History */}
-        <Icon.Button name="schedule" size={25} 
+        <Icon.Button name="schedule" size={25}
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
@@ -70,7 +71,7 @@ class MenuView extends Component {
         </Icon.Button>
 
         {/* Schedule */}
-        <Icon.Button name="event" size={25} 
+        <Icon.Button name="event" size={25}
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
@@ -80,7 +81,7 @@ class MenuView extends Component {
         </Icon.Button>
 
         {/* Settings */}
-        <Icon.Button name="settings" size={25} 
+        <Icon.Button name="settings" size={25}
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
@@ -90,7 +91,7 @@ class MenuView extends Component {
         </Icon.Button>
 
         {/* Help */}
-        <Icon.Button name="help" size={25} 
+        <Icon.Button name="help" size={25}
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
@@ -100,7 +101,7 @@ class MenuView extends Component {
         </Icon.Button>
 
         {/* Logout */}
-        <Icon.Button name="exit-to-app" size={25} 
+        <Icon.Button name="exit-to-app" size={25}
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {

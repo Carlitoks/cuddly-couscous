@@ -33,8 +33,9 @@ import EmailLinguistView from "../LinguistForm/EmailLinguistView/EmailLinguistVi
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView"
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView"
 import CallSettingsCustomer from "../CallSettings/Customer/CustomerSettingsView";
-import ScanScreenView from "../Containers/ScanSreenView"; 
-import SessionInfoView from "../RateCall/SessionInfo/SessionInfoView";
+import UserProfileView from "../Profile/UserProfile/UserProfileView";
+import ScanScreenView from "../Containers/ScanSreenView";  
+import SessionInfoView from "../RateCall/SessionInfo/SessionInfoView"; 
 
 const Navigation = StackNavigator(
   {
@@ -97,7 +98,8 @@ const Navigation = StackNavigator(
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
       }
-    }
+    },  
+    UserProfileView: { screen: UserProfileView }
   },
   {
     initialRouteName: "SelectRoleView",
