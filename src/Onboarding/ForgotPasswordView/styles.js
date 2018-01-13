@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
+import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
 
 const { width, height } = Dimensions.get("window");
 
@@ -18,21 +19,45 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    marginLeft: 10,
-    fontFamily: Fonts.primaryFont,
-    marginTop: 5,
-    alignSelf: "flex-start",
-    width: width
+    marginTop: moderateScale(10),
+    marginBottom: moderateScale(50),
+    color: Colors.primaryColor,
+    textAlign: "center",
+    fontFamily: Fonts.primaryLightFont,
+    alignSelf: "center",
+    width: width,
+    backgroundColor:"transparent"
   },
   Button: {
-    marginTop: 10,
-    borderRadius: 25,
-    width: "100%",
-    backgroundColor: Colors.primaryColor
+    backgroundColor: Colors.primaryLightFillColor,
+    width: width,
+    alignSelf: "center"
+  },
+  buttonText: {
+    color: Colors.primaryAltFontColor,
+    fontFamily: Fonts.primaryBoldFont,
+    textAlign: "center",
+    alignSelf: "center"
   },
   linksText: {
-    color: Colors.primaryColor,
+    color: Colors.primaryAltFontColor,
+    padding: 10,
     alignSelf: "center",
-    padding: 10
+    fontFamily: Fonts.primaryBaseFont,
+    backgroundColor:"transparent"
+  },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
+  containerBottom: {
+    alignItems: "flex-end",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  formInputContainer: {
+    marginTop: moderateScale(20)
   }
 });
