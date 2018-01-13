@@ -34,6 +34,7 @@ import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistVi
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView"
 import CallSettingsCustomer from "../CallSettings/Customer/CustomerSettingsView";
 import ScanScreenView from "../Containers/ScanSreenView"; 
+import SessionInfoView from "../RateCall/SessionInfo/SessionInfoView";
 
 const Navigation = StackNavigator(
   {
@@ -71,6 +72,7 @@ const Navigation = StackNavigator(
     VerifyPhoneLinguistView: { screen: VerifyPhoneLinguistView },
     CallSettingsCustomer: { screen: CallSettingsCustomer }, 
     LinguistView: { screen: LinguistView },
+    SessionInfoView: { screen: SessionInfoView },
     LoginView: {
       screen: LoginView,
       navigationOptions: {

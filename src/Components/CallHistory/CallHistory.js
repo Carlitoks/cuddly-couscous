@@ -35,6 +35,7 @@ export class CallHistoryComponent extends Component {
     navigate("CallDetail");
   }
   render() {
+    const navigation = this.props.navigation; 
     return (
       <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
         <FlatList
@@ -47,9 +48,7 @@ export class CallHistoryComponent extends Component {
               avatar={{ uri: item.avatar }}
               rightTitle={"11-12-12"}
               containerStyle={{ borderBottomWidth: 0 }}
-              onPress={() => {
-                this.callDetail(item);
-              }}
+              onPress={() => navigation.dispatch({ type: "SessionInfoView" })} 
             />
           )}
           keyExtractor={item => item.key}

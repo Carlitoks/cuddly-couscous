@@ -69,17 +69,15 @@ const Session = {
     );
   },
   //  Participants rate the session
-  RatingSession: (stars, resolved, goodFlags, badFlags, sessionID, token) => {
-    return AXIOS.put(
-      `${BASE_URI}/${sessionID}/ratings`,
-      {
-        stars: stars,
-        resolved: resolved,
-        goodFlags: goodFlags,
-        badFlags: badFlags
-      },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+  RatingSession: (RateInformation, sessionID, token) => {
+    return AXIOS.post(`${BASE_URI}/${sessionID}/ratings`, RateInformation, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  },
+  GetSessionInfo: (sessionID, token) => {
+    return AXIOS.get(`${BASE_URI}/${sessionID}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   },
   GetInvitations: (userId, token) => {
     return AXIOS.get(`/users/${userId}/linguist-profile/session-invitations`, {
