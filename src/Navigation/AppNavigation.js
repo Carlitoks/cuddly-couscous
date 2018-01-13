@@ -26,7 +26,8 @@ import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguis
 import EmailLinguistView from "../LinguistForm/EmailLinguistView/EmailLinguistView";
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView"
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView"
-import CallSettingsCustomer from "../CallSettings/Customer/CustomerSettingsView"; 
+import CallSettingsCustomer from "../CallSettings/Customer/CustomerSettingsView";
+import ScanScreenView from "../Containers/ScanSreenView"; 
 
 const Navigation = StackNavigator(
   {
@@ -72,6 +73,7 @@ const Navigation = StackNavigator(
       }
     },
     Profile: { screen: Profile },
+    ScanScreenView: { screen: ScanScreenView },
     RateCallView: { screen: RateCallView },
     SelectRoleView: {
       screen: SelectRoleView,

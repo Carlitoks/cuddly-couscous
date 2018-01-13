@@ -32,7 +32,7 @@ class HomeLinguist extends Component {
   navigate = this.props.navigation.navigate;
 
   render() {
-    const { Amount, NumberOfCalls, status, Username, rating } = this.props;
+    const { Amount, NumberOfCalls, status, firstName, lastName, rating } = this.props;
     const languagues = this.props.GetOptions();
 
     return (
@@ -192,7 +192,9 @@ const mS = state => ({
   NumberOfCalls: state.profileLinguist.NumberOfCalls,
   Amount: state.profileLinguist.Amount,
   status: state.profileLinguist.status,
-  Username: state.profileLinguist.Username
+  Username: state.profileLinguist.Username,
+  firstName: state.userProfile.firstName,
+  lastName: state.userProfile.lastName,
 });
 
 const mD = {

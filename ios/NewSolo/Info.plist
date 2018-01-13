@@ -50,11 +50,13 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>${PRODUCT_NAME} Camera Usage</string>
+	<string>camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>${PRODUCT_NAME} Microphone Usage</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>photo</string>
 	<key>OPENTOK_API_KEY</key>
 	<string>46016982</string>
 	<key>UIAppFonts</key>
@@ -92,9 +94,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-    <string>photo</string>
-    <key>NSCameraUsageDescription</key>
-    <string>camera</string>
 </dict>
 </plist>

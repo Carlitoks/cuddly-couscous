@@ -10,6 +10,7 @@ export default StyleSheet.create({
   container: {
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop:50
   }
 });

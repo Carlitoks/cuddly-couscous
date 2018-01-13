@@ -47,7 +47,7 @@ class HomeCustomer extends Component {
       starCount: rating
     });
   }
-  navigate = this.props.navigation.navigate;
+  
 
   render() {
     return (
@@ -141,7 +141,7 @@ class HomeCustomer extends Component {
                     />
                   <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
-                    onPress={() => navigate("LaunchScreen")}
+                    onPress={() => this.props.navigation.dispatch({ type: "ScanScreenView" })} 
                     icon={{
                       name: "dashboard",
                       size: 30,
@@ -152,7 +152,7 @@ class HomeCustomer extends Component {
                   />
                   <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
-                    onPress={() => navigate("LaunchScreen")}
+                    onPress={() => console.log("")}
                     icon={{
                       name: "today",
                       size: 30,
@@ -164,9 +164,7 @@ class HomeCustomer extends Component {
                   <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
                     onPress={() =>
-                      this.props.navigation.dispatch({
-                        type: "LandingContainer"
-                      })
+                      console.log("")
                     }
                     title="Favorites"
                     textStyle={[styles.buttonTextSecondary, styles.center]}
@@ -183,11 +181,7 @@ class HomeCustomer extends Component {
                         name="favorite"
                         size={30}
                         color={"#9391f7"}
-                        onPress={() =>
-                          this.props.navigation.dispatch({
-                            type: "LandingContainer"
-                          })
-                        }
+                        onPress={() => console.log("")}
                       />
                       <Text style={[styles.buttonTextSecondary, styles.center]}>
                         Favorites
