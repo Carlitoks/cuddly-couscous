@@ -32,13 +32,6 @@ export default StyleSheet.create({
     height: "100%"
   },
   contentScrollContainer: { flexGrow: 1 },
-  logoutContainer: {
-    backgroundColor: "transparent",
-    marginTop: moderateScale(40),
-    width: width,
-    alignSelf: "center",
-    marginBottom: moderateScale(40)
-  },
   buttonText: {
     textAlign: "center",
     color: Colors.primaryAltFontColor,

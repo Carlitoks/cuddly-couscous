@@ -28,11 +28,6 @@ class SelectRoleView extends Component {
 
     return (
       <ViewWrapper style={{ flex: 1 }}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}
-          contentContainerStyle={styles.contentScrollContainer}
-        >
           <Grid>
             <Col>
               {/* Linear Gradient */}
@@ -44,6 +39,12 @@ class SelectRoleView extends Component {
                 ]}
                 style={styles.linearGradient}
               />
+                      <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.contentScrollContainer}
+          bounce="false"
+        >
               <TopViewIOS/>   
               {/* OnVoy Logo */}
               <Text style={[styles.logo, styles.center]} source={Images.logo}> 
@@ -112,9 +113,9 @@ class SelectRoleView extends Component {
                   {EN["signIn"]}
                 </Text>
               </Text>
+              </ScrollView>
             </Col>
           </Grid>
-        </ScrollView>
       </ViewWrapper>
     );
   }

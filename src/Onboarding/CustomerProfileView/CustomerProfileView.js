@@ -255,39 +255,6 @@ class CustomerProfileView extends Component {
                 <FormLabel>{EN["nativeLanguage"]}</FormLabel>
                 <FormInput placeholder="English" autoCorrect={false} />
               </View>
-              <View>
-                <FormLabel>{EN["secondaryLanguage"]}</FormLabel>
-                <FormInput placeholder="Spanish, Russian" autoCorrect={false} />
-              </View>
-              <View>
-                <FormLabel>{EN["citizenShip"]}</FormLabel>
-                <FormInput placeholder="English" autoCorrect={false} />
-              </View>
-              <View>
-                <FormLabel>{EN["countryFamiliarity"]}</FormLabel>
-                <FormInput placeholder="UK, USA" autoCorrect={false} />
-              </View>
-              <View>
-                <FormLabel>{EN["cityFamiliarity"]}</FormLabel>
-                <FormInput
-                  placeholder="London, San Diego, New York"
-                  autoCorrect={false}
-                />
-              </View>
-              <View>
-                <FormLabel>{EN["areasExpertise"]}</FormLabel>
-                <FormInput placeholder="Traveling, Sport" autoCorrect={false} />
-              </View>
-              <View style={styles.logoutContainer}>
-                <Text
-                  style={[styles.buttonText, styles.button]}
-                  onPress={() => {
-                    this.props.logOutAsync();
-                  }}
-                >
-                  {EN["logOut"]}
-                </Text>
-              </View>
             </Col>
           </Grid>
         </ScrollView>
