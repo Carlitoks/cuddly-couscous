@@ -21,8 +21,9 @@ import {
   Badge
 } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -94,7 +95,7 @@ class PhoneLinguist extends Component {
 
   render() {
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -113,6 +114,7 @@ class PhoneLinguist extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
+                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -161,7 +163,7 @@ class PhoneLinguist extends Component {
             onPress={() => this.submit()}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }

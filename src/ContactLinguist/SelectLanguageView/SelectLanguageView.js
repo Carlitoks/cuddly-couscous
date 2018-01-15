@@ -20,6 +20,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import EN from "../../I18n/en";
 import { styles } from "./styles";
@@ -70,7 +71,7 @@ class SelectLanguague extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={{ flex: 1 }}>
+      <ViewWrapper style={{ flex: 1 }}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -116,8 +117,7 @@ class SelectLanguague extends Component {
               inputStyle={styles.inputSearch}
               icon={{ name: "search" }}
               onChangeText={text =>
-                this.props.updateSettings({ searchLanguage: text })
-              }
+                this.props.updateSettings({ searchLanguage: text })}
             />
           </Col>
           <List containerStyle={styles.listContainer}>
@@ -132,7 +132,7 @@ class SelectLanguague extends Component {
           title="Next"
           onPress={() => navigation.dispatch({ type: "CallTimeView" })}
         />
-      </View>
+      </ViewWrapper>
     );
   }
 }

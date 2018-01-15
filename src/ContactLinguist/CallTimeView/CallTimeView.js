@@ -12,6 +12,7 @@ import LinearGradient from "react-native-linear-gradient";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import { Colors, Fonts } from "../../Themes";
 import styles from "./styles";
@@ -37,8 +38,7 @@ class CallTimeView extends Component {
     };
 
     return (
-      <View style={styles.scrollContainer}>
-     
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -78,17 +78,16 @@ class CallTimeView extends Component {
                   style={styles.picker}
                   selectedValue={this.props.selectedTime}
                   onValueChange={(itemValue, itemIndex) =>
-                    this.props.updateSettings({ selectedTime: itemValue })
-                  }
+                    this.props.updateSettings({ selectedTime: itemValue })}
                 >
                   {pickerOptions(this.props.timeOptions)}
                 </Picker>
 
                 {/* Cost */}
                 <View style={styles.costCallContainer}>
-                  <Text style={styles.costCall}>{`${EN["costOfCall"]} ${
-                    EN["currency"]
-                  }${this.props.selectedTime * this.props.cost}`}</Text>
+                  <Text style={styles.costCall}>{`${EN["costOfCall"]} ${EN[
+                    "currency"
+                  ]}${this.props.selectedTime * this.props.cost}`}</Text>
                 </View>
               </View>
             </Col>
@@ -104,11 +103,10 @@ class CallTimeView extends Component {
             onPress={() =>
               this.loadAssitance().then(() =>
                 navigation.dispatch({ type: "AssistanceView" })
-              )
-            }
+              )}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }

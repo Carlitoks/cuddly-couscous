@@ -13,7 +13,9 @@ import { logInAsync, haveSession } from "../../Ducks/AuthReducer";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -111,7 +113,7 @@ class LoginView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -130,7 +132,7 @@ class LoginView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
-                  <TopViewIOS large/>                  
+                  <TopViewIOS/>                  
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
                     backgroundColor="transparent"
@@ -150,8 +152,7 @@ class LoginView extends Component {
                 placeholder={EN["email"]}
                 autoCorrect={false}
                 onChangeText={text =>
-                  this.props.updateForm({ email: text, emailErrorMessage: "" })
-                }
+                  this.props.updateForm({ email: text, emailErrorMessage: "" })}
                 value={this.props.email}
                 keyboardType={"email-address"}
               />
@@ -164,8 +165,7 @@ class LoginView extends Component {
                   this.props.updateForm({
                     password: text,
                     passwordErrorMessage: ""
-                  })
-                }
+                  })}
                 value={this.props.password}
               />
 
@@ -173,8 +173,7 @@ class LoginView extends Component {
               <Text
                 style={styles.forgotPasswordText}
                 onPress={() =>
-                  navigation.dispatch({ type: "ForgotPasswordView" })
-                }
+                  navigation.dispatch({ type: "ForgotPasswordView" })}
               >
                 {EN["forgotPassword"]}
               </Text>
@@ -193,7 +192,7 @@ class LoginView extends Component {
             disabledStyle={styles.ButtonDisabled}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }

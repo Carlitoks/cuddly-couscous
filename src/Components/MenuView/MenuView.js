@@ -75,7 +75,7 @@ class MenuView extends Component {
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
-            navigation.dispatch({ type: "Profile" });
+            navigation.dispatch({ type: "Home" });
           }}>
           <Text style={styles.colorText}>Schedule</Text>
         </Icon.Button>
@@ -85,7 +85,7 @@ class MenuView extends Component {
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
-            navigation.dispatch({ type: "Profile" });
+            navigation.dispatch({ type: "Home" });
           }}>
           <Text style={styles.colorText}>Settings</Text>
         </Icon.Button>
@@ -95,7 +95,7 @@ class MenuView extends Component {
           backgroundColor="#FFFFFF"
           iconStyle={{ color: "#D9D9E6", marginLeft: 20 }}
           onPress={() => {
-            navigation.dispatch({ type: "Profile" })
+            navigation.dispatch({ type: "Home" })
           }}>
           <Text style={styles.colorText}>Help</Text>
         </Icon.Button>

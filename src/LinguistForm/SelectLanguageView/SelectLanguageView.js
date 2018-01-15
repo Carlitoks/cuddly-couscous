@@ -14,10 +14,11 @@ import {
   Header
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NextButton from "../../Components/NextButton/NextButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import EN from "../../I18n/en";
 import styles from "./styles";
@@ -85,7 +86,7 @@ class SelectLanguageView extends Component {
     const { selectedNativeLanguage, selectedSecondaryLanguages } = this.props;
 
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView automaticallyAdjustContentInsets={true}>
           <View style={styles.headerContainer}>
             {/* Linear Gradient */}
@@ -98,6 +99,7 @@ class SelectLanguageView extends Component {
               style={styles.linearGradient}
             />
             {/* Header - Navigation */}
+            <TopViewIOS/> 
             <Header
               outerContainerStyles={styles.header}
               backgroundColor="transparent"
@@ -163,7 +165,7 @@ class SelectLanguageView extends Component {
             }}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }

@@ -17,7 +17,8 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import EN from "../../I18n/en";
@@ -77,7 +78,7 @@ class GenderLinguist extends Component {
     const genders = this.props.GetOptions();
 
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -96,6 +97,7 @@ class GenderLinguist extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
+                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -119,9 +121,11 @@ class GenderLinguist extends Component {
                     }
                     titleStyle={{ fontSize: 20 }}
                     rightIcon={
-                      this.props.selectedGender !== ""
-                        ? { name: "check" }
-                        : undefined
+                      this.props.selectedGender !== "" ? (
+                        { name: "check" }
+                      ) : (
+                        undefined
+                      )
                     }
                     onPress={() => {
                       this.props.updateForm({ selectedGender: item.gender });
@@ -141,7 +145,7 @@ class GenderLinguist extends Component {
             onPress={() => this.submit()}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }

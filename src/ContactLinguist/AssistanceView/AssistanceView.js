@@ -22,6 +22,7 @@ import LinearGradient from "react-native-linear-gradient";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import EN from "../../I18n/en";
 import styles from "./styles";
@@ -63,8 +64,7 @@ class AssistanceView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={styles.scrollContainer}>
-      
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -107,8 +107,7 @@ class AssistanceView extends Component {
                     inputStyle={styles.inputSearch}
                     icon={{ name: "search" }}
                     onChangeText={text =>
-                      this.props.updateSettings({ searchAssistance: text })
-                    }
+                      this.props.updateSettings({ searchAssistance: text })}
                   />
                 </Col>
               </Row>
@@ -137,7 +136,7 @@ class AssistanceView extends Component {
           title="Call"
           onPress={() => navigation.dispatch({ type: "ContactingLinguist" })}
         />
-      </View>
+      </ViewWrapper>
     );
   }
 }

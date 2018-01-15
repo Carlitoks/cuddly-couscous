@@ -1,17 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  updateForm
-} from "../../Ducks/LinguistFormReducer";
+import { updateForm } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert, TextInput, Platform } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  TextInput,
+  Platform
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormLabel, FormInput, Header, Badge } from "react-native-elements";
+import {
+  Button,
+  FormLabel,
+  FormInput,
+  Header,
+  Badge
+} from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -21,11 +33,12 @@ class VerifyPhoneLinguist extends Component {
   navigate = this.props.navigation.navigate;
 
   render() {
-
     return (
-      <View style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
           <Grid>
             <Col>
               <Row>
@@ -48,9 +61,7 @@ class VerifyPhoneLinguist extends Component {
                     }
                   />
                   {/* Verify your phone */}
-                  <Text style={styles.mainTitle}>
-                    {EN["verifyNumber"]}
-                  </Text>
+                  <Text style={styles.mainTitle}>{EN["verifyNumber"]}</Text>
                   {/* subtitle */}
                   <Text style={styles.mainSubtitle}>
                     {EN["verifyNumberText"]}
@@ -98,18 +109,18 @@ class VerifyPhoneLinguist extends Component {
             onPress={() => this.submit()}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }
 
 const mS = state => ({
   VerifyPhoneNumber: state.linguistForm.VerifyPhoneNumber,
-  formHasErrors: state.linguistForm.formHasErrors,
+  formHasErrors: state.linguistForm.formHasErrors
 });
 
 const mD = {
-  updateForm,
+  updateForm
 };
 
 export default connect(mS, mD)(VerifyPhoneLinguist);

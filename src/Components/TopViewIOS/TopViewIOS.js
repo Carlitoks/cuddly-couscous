@@ -5,11 +5,11 @@ import { bool } from "prop-types";
 import styles from "./styles";
 
 const TopViewIOS = (props) => {
-  console.log(DeviceInfo.getModel());
+  const IphoneX = DeviceInfo.getModel() == "iPhone X";
   return (
     <View>
-    {!props.large && <View style={styles.topView}/>}
-    {props.large && <View style={styles.topViewLarge}/>}
+    {!IphoneX && <View style={styles.topView}/>}
+    {IphoneX && <View style={styles.topViewLarge}/>}
     </View>
   );
 };

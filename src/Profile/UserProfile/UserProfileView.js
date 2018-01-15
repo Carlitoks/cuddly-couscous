@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, ScrollView, Picker } from "react-native";
 import { connect } from "react-redux";
-import {
-  updateSettings
-} from "../../Ducks/LinguistFormReducer";
+import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { logOutAsync } from "../../Ducks/AuthReducer";
 
 import {
@@ -17,16 +15,15 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import EN from "../../I18n/en";
 import { Images, Colors, Fonts } from "../../Themes";
 
-
 class UserProfileView extends Component {
-
   componentWillMount() {
     const selectedNativeLanguage = [
       {
@@ -44,7 +41,7 @@ class UserProfileView extends Component {
     const { selectedNativeLanguage } = this.props;
 
     return (
-      <View style={styles.mainContainer}>
+      <ViewWrapper style={styles.mainContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -64,6 +61,7 @@ class UserProfileView extends Component {
                     style={styles.linearGradient}
                   />
                   {/* Header - Navigation */}
+                  <TopViewIOS/>   
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
                     backgroundColor="transparent"
@@ -94,12 +92,12 @@ class UserProfileView extends Component {
                 <Text style={styles.titlesForm}>Name</Text>
               </Row>
               <Row>
-                <FormInput containerStyle={styles.containerInput}
+                <FormInput
+                  containerStyle={styles.containerInput}
                   inputStyle={styles.inputText}
                   placeholder={EN["linguistName"]}
                   onChangeText={text =>
-                    this.props.updateForm({ profileName: text })
-                  }
+                    this.props.updateForm({ profileName: text })}
                   value={this.props.profileName}
                 />
               </Row>
@@ -107,12 +105,12 @@ class UserProfileView extends Component {
                 <Text style={styles.titlesForm}>Prefered Name</Text>
               </Row>
               <Row>
-                <FormInput containerStyle={styles.containerInput}
+                <FormInput
+                  containerStyle={styles.containerInput}
                   inputStyle={styles.inputText}
                   placeholder={EN["linguistName"]}
                   onChangeText={text =>
-                    this.props.updateForm({ preferredName: text })
-                  }
+                    this.props.updateForm({ preferredName: text })}
                   value={this.props.preferredName}
                 />
               </Row>
@@ -131,7 +129,9 @@ class UserProfileView extends Component {
                         selectionItemType: "languages",
                         selectionItemName: "nativeLanguage"
                       });
-                      this.props.navigation.dispatch({ type: "SelectListView" });
+                      this.props.navigation.dispatch({
+                        type: "SelectListView"
+                      });
                     }}
                   />
                 )}
@@ -155,7 +155,6 @@ class UserProfileView extends Component {
                   }}
                 />
               </List>
-
             </Col>
           </Grid>
         </ScrollView>
@@ -171,7 +170,7 @@ class UserProfileView extends Component {
             }}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }
@@ -179,7 +178,7 @@ class UserProfileView extends Component {
 const mS = state => ({
   profileName: state.editProfile.profileName,
   preferredName: state.editProfile.preferredName,
-  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage,
+  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage
 });
 
 const mD = {

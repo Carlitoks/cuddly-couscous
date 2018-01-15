@@ -18,11 +18,12 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import EN from "../../I18n/en";
 import Images from "../../Themes/Images";
-
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 class HomeCustomer extends Component {
   constructor(props) {
     super(props);
@@ -51,7 +52,7 @@ class HomeCustomer extends Component {
 
   render() {
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -69,6 +70,7 @@ class HomeCustomer extends Component {
                   style={styles.linearGradient}
                 />
                 {/* Header - Navigation */}
+                <TopViewIOS/> 
                 <Header
                   outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                   backgroundColor="transparent"
@@ -152,7 +154,7 @@ class HomeCustomer extends Component {
                   />
                   <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
-                    onPress={() => console.log("")}
+                    onPress={() =>  this.props.navigation.dispatch({ type: "Home" })}
                     icon={{
                       name: "today",
                       size: 30,
@@ -164,7 +166,7 @@ class HomeCustomer extends Component {
                   <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
                     onPress={() =>
-                      console.log("")
+                      this.props.navigation.dispatch({ type: "Home" })
                     }
                     title="Favorites"
                     textStyle={[styles.buttonTextSecondary, styles.center]}
@@ -181,7 +183,7 @@ class HomeCustomer extends Component {
                         name="favorite"
                         size={30}
                         color={"#9391f7"}
-                        onPress={() => console.log("")}
+                        onPress={() =>  this.props.navigation.dispatch({ type: "Home" })}
                       />
                       <Text style={[styles.buttonTextSecondary, styles.center]}>
                         Favorites
@@ -194,7 +196,7 @@ class HomeCustomer extends Component {
             </Col>
           </Grid>
         </ScrollView>
-      </View>
+      </ViewWrapper>
     );
   }
 }

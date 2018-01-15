@@ -13,15 +13,23 @@ import { clearSettings as clearContactLinguist } from "../../Ducks/ContactLingui
 
 import Icon from "react-native-vector-icons/Ionicons";
 import { Text, View, ScrollView, Image } from "react-native";
-import { SearchBar, Button, Avatar, ButtonGroup, Card, Title } from "react-native-elements";
+import {
+  SearchBar,
+  Button,
+  Avatar,
+  ButtonGroup,
+  Card,
+  Title
+} from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import StarRating from "react-native-star-rating";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import EN from "../../I18n/en";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
 import TextButton from "../../Components/TextButton/TextButton";
 import ThumbsButton from "../../Components/ThumbsButton/ThumbsButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 class RateCallView extends Component {
   ///// validate form /////
@@ -127,7 +135,6 @@ class RateCallView extends Component {
     }
   ];
 
-
   buttonThumbs(selectedIndex) {
     if (selectedIndex == 0) {
       this.togglethumbsUp();
@@ -158,7 +165,7 @@ class RateCallView extends Component {
       flag,
       icon.OffState
     );
-  }
+  };
   //////////// Toogle Icons function  /////
 
   /*
@@ -169,24 +176,36 @@ class RateCallView extends Component {
  * @param {string} OffState - string used to identify the state of the icon that we are going to turn off   
  */
 
-  genericToggleFunction = (IconName, StateName, IconState, flagsStore, OffState) => {
+  genericToggleFunction = (
+    IconName,
+    StateName,
+    IconState,
+    flagsStore,
+    OffState
+  ) => {
     const ObjectState = {};
     ObjectState[StateName] = !IconState;
     const ObjectOffState = {};
     ObjectOffState[OffState] = false;
-    this.props.UpdateFlags(IconName, ObjectState, flagsStore, !IconState, ObjectOffState);
+    this.props.UpdateFlags(
+      IconName,
+      ObjectState,
+      flagsStore,
+      !IconState,
+      ObjectOffState
+    );
   };
 
   render() {
-
     const WhatWasGoodIcons = this.GoodIcons;
 
     const WhatCouldBeBetterIcons = this.BadIcons;
 
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView automaticallyAdjustContentInsets={true}>
           {/* Linguist Information */}
+          <TopViewIOS/>
           <Grid style={styles.containerInformation}>
             <Col style={styles.linguistAvatar}>
               <Avatar
@@ -267,18 +286,17 @@ class RateCallView extends Component {
             <View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={styles.viewContainerQuestion}>
-                  {
-                    WhatWasGoodIcons.map((item, i) => (
-                      <View key={i} style={styles.questionIcons}>
-                        < TextButton
-                          IconName={item.Name}
-                          StateIcon={this.props[item.IconState]}
-                          onPress={() => this.buttonsHandle(item, "positiveFlags")}
-                          title={item.label}
-                        />
-                      </View>
-                    ))
-                  }
+                  {WhatWasGoodIcons.map((item, i) => (
+                    <View key={i} style={styles.questionIcons}>
+                      <TextButton
+                        IconName={item.Name}
+                        StateIcon={this.props[item.IconState]}
+                        onPress={() =>
+                          this.buttonsHandle(item, "positiveFlags")}
+                        title={item.label}
+                      />
+                    </View>
+                  ))}
                 </View>
               </ScrollView>
             </View>
@@ -292,18 +310,16 @@ class RateCallView extends Component {
             </Row>
             <View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {
-                  WhatCouldBeBetterIcons.map((item, i) => (
-                    <View key={i} style={styles.questionIcons}>
-                      < TextButton
-                        IconName={item.Name}
-                        StateIcon={this.props[item.IconState]}
-                        onPress={() => this.buttonsHandle(item, "negativeFlags")}
-                        title={item.label}
-                      />
-                    </View>
-                  ))
-                }
+                {WhatCouldBeBetterIcons.map((item, i) => (
+                  <View key={i} style={styles.questionIcons}>
+                    <TextButton
+                      IconName={item.Name}
+                      StateIcon={this.props[item.IconState]}
+                      onPress={() => this.buttonsHandle(item, "negativeFlags")}
+                      title={item.label}
+                    />
+                  </View>
+                ))}
               </ScrollView>
             </View>
           </Grid>
@@ -326,7 +342,7 @@ class RateCallView extends Component {
             </Row>
           </Grid>
         </ScrollView>
-      </View >
+      </ViewWrapper>
     );
   }
 }

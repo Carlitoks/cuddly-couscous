@@ -13,9 +13,11 @@ import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -120,7 +122,7 @@ class CustomerAccountView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -139,6 +141,7 @@ class CustomerAccountView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
+                  <TopViewIOS/>   
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
                     backgroundColor="transparent"
@@ -196,7 +199,7 @@ class CustomerAccountView extends Component {
             title={EN["CreateAccount"]}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }

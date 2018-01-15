@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  updateForm
-} from "../../Ducks/LinguistFormReducer";
+import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 
 import { View, Text, ScrollView, Alert } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -12,13 +10,17 @@ import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-
-
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import EN from "../../I18n/en";
 
 class NameLinguist extends Component {
+  componentWillUnmount() {
+    this.props.clearForm();
+  }
+
   navigate = this.props.navigation.navigate;
 
   validateForm() {
@@ -58,11 +60,9 @@ class NameLinguist extends Component {
   }
 
   submit() {
-
     if (this.validateForm()) {
       this.props.navigation.dispatch({ type: "EmailLinguistView" });
     }
-
   }
 
   // Will be changed according the designs
@@ -81,11 +81,12 @@ class NameLinguist extends Component {
   }
 
   render() {
-
     return (
-      <View style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
           <Grid>
             <Col>
               <Row>
@@ -100,6 +101,7 @@ class NameLinguist extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
+                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -118,26 +120,28 @@ class NameLinguist extends Component {
                 </Col>
               </Row>
               <Row>
-
                 <View>
-                  <FormInput containerStyle={styles.containerInput}
+                  <FormInput
+                    containerStyle={styles.containerInput}
                     inputStyle={styles.inputText}
                     placeholder={EN["linguistName"]}
                     onChangeText={text =>
-                      this.props.updateForm({ firstname: text, mainTitle: text })
-                    }
+                      this.props.updateForm({
+                        firstname: text,
+                        mainTitle: text
+                      })}
                     value={this.props.name}
                   />
                 </View>
               </Row>
               <Row>
                 <View>
-                  <FormInput containerStyle={styles.containerInput}
+                  <FormInput
+                    containerStyle={styles.containerInput}
                     inputStyle={styles.inputText}
                     placeholder={EN["linguistLastName"]}
                     onChangeText={text =>
-                      this.props.updateForm({ lastname: text })
-                    }
+                      this.props.updateForm({ lastname: text })}
                     value={this.props.name}
                   />
                 </View>
@@ -150,8 +154,7 @@ class NameLinguist extends Component {
                   placeholder={EN["preferredName"]}
                   value={this.props.preferredName}
                   onChangeText={text =>
-                    this.props.updateForm({ preferredName: text })
-                  }
+                    this.props.updateForm({ preferredName: text })}
                 />
                 <Text style={styles.formText}>
                   {EN["preferredLinguistText"]}
@@ -169,7 +172,7 @@ class NameLinguist extends Component {
             onPress={() => this.submit()}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }
@@ -184,6 +187,7 @@ const mS = state => ({
 
 const mD = {
   updateForm,
+  clearForm
 };
 
 export default connect(mS, mD)(NameLinguist);

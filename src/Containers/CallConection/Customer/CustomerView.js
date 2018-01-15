@@ -1,7 +1,7 @@
 import React, { Component, Ref } from "react";
 import { connect } from "react-redux";
 import OpenTok, { Publisher, Subscriber } from "react-native-opentok";
-
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import {
   updateSettings,
   AsyncCreateSession,
@@ -94,6 +94,7 @@ class CustomerView extends Component {
           />
         </View>
         <View style={styles.topContainer}>
+        <TopViewIOS/> 
           <View style={styles.inlineContainer}>
             <Image
               style={styles.smallAvatar}

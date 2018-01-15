@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { camelCase, some, filter, isEqual, isUndefined } from "lodash";
 
 import { updateSettings, getItems } from "../../Ducks/LinguistFormReducer";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, View, ScrollView, Image, Alert } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -15,8 +15,8 @@ import {
   Header
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import EN from "../../I18n/en";
 import styles from "./styles";
@@ -121,7 +121,7 @@ class SelectListView extends Component {
     const selectedItemsList = this.props[selectedItemsListName];
 
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView automaticallyAdjustContentInsets={true}>
           <View style={styles.headerContainer}>
             <LinearGradient
@@ -133,6 +133,7 @@ class SelectListView extends Component {
               style={styles.linearGradient}
             />
             {/* Header - Navigation */}
+            <TopViewIOS/>             
             <Header
               outerContainerStyles={styles.header}
               backgroundColor="transparent"
@@ -167,18 +168,16 @@ class SelectListView extends Component {
               icon={{ color: "rgba(255, 255, 255, 0.6)", name: "search" }}
               placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
               onChangeText={text =>
-                this.props.updateSettings({ searchQuery: text })
-              }
+                this.props.updateSettings({ searchQuery: text })}
               onClearText={text =>
-                this.props.updateSettings({ searchQuery: "" })
-              }
+                this.props.updateSettings({ searchQuery: "" })}
               clearIcon={{ color: "rgba(255, 255, 255, 0.6)" }}
             />
           </View>
 
           <List style={styles.list}>{this.renderList()}</List>
         </ScrollView>
-      </View>
+      </ViewWrapper>
     );
   }
 }

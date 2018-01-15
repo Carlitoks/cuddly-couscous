@@ -5,7 +5,8 @@ import { Button, FormLabel, FormInput, Card } from "react-native-elements";
 import { View, Image, ScrollView, Text } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import { Images, Fonts } from "../../Themes";
 import styles from "./styles";
 
@@ -26,7 +27,7 @@ class SelectRoleView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={{ flex: 1 }}>
+      <ViewWrapper style={{ flex: 1 }}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -43,7 +44,7 @@ class SelectRoleView extends Component {
                 ]}
                 style={styles.linearGradient}
               />
-
+              <TopViewIOS/>   
               {/* OnVoy Logo */}
               <Text style={[styles.logo, styles.center]} source={Images.logo}> 
                 OnVoy 
@@ -70,8 +71,7 @@ class SelectRoleView extends Component {
                   borderRadius={15}
                   buttonStyle={[styles.button, styles.center]}
                   onPress={() =>
-                    navigation.dispatch({ type: "CustomerAccount" })
-                  }
+                    navigation.dispatch({ type: "CustomerAccount" })}
                   title={EN["callLinguist"]}
                   textStyle={[styles.buttonText, styles.center]}
                 />
@@ -95,8 +95,7 @@ class SelectRoleView extends Component {
               {/* Become a Linguist */}
               <Text
                 onPress={() =>
-                  navigation.dispatch({ type: "NameLinguistView" })
-                }
+                  navigation.dispatch({ type: "NameLinguistView" })}
                 style={[styles.textBecome, styles.center]}
               >
                 {EN["becomeOnVoy"]}
@@ -116,7 +115,7 @@ class SelectRoleView extends Component {
             </Col>
           </Grid>
         </ScrollView>
-      </View>
+      </ViewWrapper>
     );
   }
 }

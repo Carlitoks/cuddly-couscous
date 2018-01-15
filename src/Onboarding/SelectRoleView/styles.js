@@ -8,7 +8,7 @@ export default StyleSheet.create({
   logo: { 
     fontFamily: Fonts.primaryBoldFont, 
     textAlign: "center", 
-    fontSize: 60, 
+    fontSize: 50, 
     color: Colors.primaryColor, 
     borderColor: Colors.primaryAltFontColor, 
     textShadowColor: "#585858", 

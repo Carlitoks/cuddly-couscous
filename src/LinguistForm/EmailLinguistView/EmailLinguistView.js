@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  updateForm
-} from "../../Ducks/LinguistFormReducer";
+import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 
 import { View, Text, ScrollView, Alert } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
@@ -19,7 +18,6 @@ import { Images, Colors } from "../../Themes";
 import EN from "../../I18n/en";
 
 class EmailLinguist extends Component {
-
   validateForm() {
     const patt = new RegExp(EMAIL_REGEX);
     let updates = {};
@@ -47,9 +45,7 @@ class EmailLinguist extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(
-        updates.emailErrorMessage
-      );
+      this.tempDisplayErrors(updates.emailErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -57,11 +53,9 @@ class EmailLinguist extends Component {
   }
 
   submit() {
-
     if (this.validateForm()) {
       this.props.navigation.dispatch({ type: "GenderLinguistView" });
     }
-
   }
 
   // Will be changed according the designs
@@ -80,11 +74,12 @@ class EmailLinguist extends Component {
   }
 
   render() {
-
     return (
-      <View style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
           <Grid>
             <Col>
               <Row>
@@ -99,6 +94,7 @@ class EmailLinguist extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
+                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -113,13 +109,12 @@ class EmailLinguist extends Component {
                 </Col>
               </Row>
               <View>
-                <FormInput containerStyle={styles.containerInput}
+                <FormInput
+                  containerStyle={styles.containerInput}
                   inputStyle={styles.inputText}
                   placeholder={EN["linguistEmail"]}
                   autoCorrect={false}
-                  onChangeText={text =>
-                    this.props.updateForm({ email: text })
-                  }
+                  onChangeText={text => this.props.updateForm({ email: text })}
                   value={this.props.email}
                   keyboardType={"email-address"}
                 />
@@ -136,14 +131,14 @@ class EmailLinguist extends Component {
             onPress={() => this.submit()}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }
 
 const mS = state => ({
   email: state.linguistForm.email,
-  formHasErrors: state.linguistForm.formHasErrors,
+  formHasErrors: state.linguistForm.formHasErrors
 });
 
 const mD = {

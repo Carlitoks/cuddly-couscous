@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateSettings, GetOptions } from "../../Ducks/ProfileLinguistReducer";
-
+import { getInvitations } from "../../Ducks/CallLinguistSettings";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { View, Text, Image, ScrollView, Switch } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -23,6 +24,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import { Colors, Images } from "../../Themes";
@@ -36,7 +38,7 @@ class HomeLinguist extends Component {
     const languagues = this.props.GetOptions();
 
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -54,6 +56,7 @@ class HomeLinguist extends Component {
                   style={styles.linearGradient}
                 />
                 {/* Header - Navigation */}
+                <TopViewIOS/>
                 <Header
                   outerContainerStyles={{
                     borderBottomWidth: 0,
@@ -111,8 +114,7 @@ class HomeLinguist extends Component {
                   <View style={styles.switchContainer}>
                     <Switch
                       onValueChange={available =>
-                        this.props.updateSettings({ available: available })
-                      }
+                        this.props.updateSettings({ available: available })}
                       style={styles.switch}
                       value={this.props.available}
                       onTintColor={Colors.onTintColor}
@@ -178,10 +180,17 @@ class HomeLinguist extends Component {
                   />
                 ))}
               </List>
+              <Button
+                containerStyle={styles.button}
+                onPress={this.props.getInvitations}
+                title="Polling"
+              >
+                Polling
+              </Button>
             </Col>
           </Grid>
         </ScrollView>
-      </View>
+      </ViewWrapper>
     );
   }
 }
@@ -199,7 +208,8 @@ const mS = state => ({
 
 const mD = {
   updateSettings,
-  GetOptions
+  GetOptions,
+  getInvitations
 };
 
 export default connect(mS, mD)(HomeLinguist);

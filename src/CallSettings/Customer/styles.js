@@ -50,7 +50,6 @@ export default StyleSheet.create({
     fontWeight: "bold"
   },
   picker: {
-    color: "gray",
     width: "30%"
   },
   pickerText: {

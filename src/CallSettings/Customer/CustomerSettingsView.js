@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, ScrollView, Picker } from "react-native";
 import { connect } from "react-redux";
+
 import {
   clearSettings,
   updateSettings
@@ -19,8 +20,9 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import EN from "../../I18n/en";
@@ -62,7 +64,7 @@ class CallSettingsView extends Component {
     ];
 
     pickerOptions = n => {
-      return new Array(n).fill(10).map((el, i) => {
+      return new Array(n).fill(5).map((el, i) => {
         return (
           <Picker.Item
             label={`${el * (i + 1)} Min`}
@@ -74,7 +76,7 @@ class CallSettingsView extends Component {
     };
 
     return (
-      <View style={{ flex: 1 }}>
+      <ViewWrapper style={{ flex: 1 }}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -94,6 +96,7 @@ class CallSettingsView extends Component {
                     style={styles.linearGradient}
                   />
                   {/* Header - Navigation */}
+                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
                     backgroundColor="transparent"
@@ -114,8 +117,7 @@ class CallSettingsView extends Component {
                   style={styles.picker}
                   selectedValue={this.props.selectedTime}
                   onValueChange={(itemValue, itemIndex) =>
-                    this.props.updateSettings({ selectedTime: itemValue })
-                  }
+                    this.props.updateSettings({ selectedTime: itemValue })}
                 >
                   {pickerOptions(this.props.timeOptions)}
                 </Picker>
@@ -245,7 +247,7 @@ class CallSettingsView extends Component {
             </Col>
           </Grid>
         </ScrollView>
-      </View>
+      </ViewWrapper>
     );
   }
 }

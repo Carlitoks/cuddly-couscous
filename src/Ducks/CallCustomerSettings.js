@@ -51,7 +51,7 @@ export const resetTimerAsync = () => (dispatch, getState) => {
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 
 export const EndCall = (sessionID, reason, token) => dispatch => {
-  return Sessions.EndSession(sessionID, reason, token)
+  Sessions.EndSession(sessionID, reason, token)
     .then(response => {
       dispatch(endSession());
       dispatch({ type: "RateCallView" });
@@ -90,11 +90,14 @@ export const AsyncCreateSession = ({
     token
   )
     .then(response => {
-      console.log(response);
       return dispatch(createSession(response.data));
     })
     .catch(error => {
       dispatch(networkError(error));
+      console.log(error);
+      if (error.response) {
+        console.log(error.response);
+      }
     });
 };
 
@@ -128,7 +131,12 @@ const initialState = {
   sessionID: null,
   customerTokboxSessionID: null,
   customerTokboxSessionToken: null,
-  invitationID: null
+  invitationID: null,
+  customerPreferredSex: "female",
+
+  // Max Call Time
+  timeOptions: 12, // Ammount of options on the Picker
+  selectedTime: 10 // Initial time selected: 10 min
 };
 
 // Reducer

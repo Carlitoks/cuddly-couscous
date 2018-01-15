@@ -21,9 +21,10 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
-import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NextButton from "../../Components/NextButton/NextButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import EN from "../../I18n/en";
@@ -169,7 +170,7 @@ class CustomerProfileView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={{ flex: 1 }}>
+      <ViewWrapper style={{ flex: 1 }}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -190,11 +191,12 @@ class CustomerProfileView extends Component {
                   />
 
                   {/* Header - Navigation */}
+                  <TopViewIOS/>   
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
                     backgroundColor="transparent"
                     leftComponent={
-                      <ShowMenuButton navigation={this.props.navigation} />
+                      <GoBackButton navigation={this.props.navigation} />
                     }
                     centerComponent={{
                       text: EN["myProfile"],
@@ -289,7 +291,7 @@ class CustomerProfileView extends Component {
             </Col>
           </Grid>
         </ScrollView>
-      </View>
+      </ViewWrapper>
     );
   }
 }

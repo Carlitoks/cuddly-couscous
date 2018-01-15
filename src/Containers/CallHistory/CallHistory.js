@@ -10,7 +10,7 @@ import { CallHistoryComponent } from "../../Components/CallHistory/CallHistory";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import { Colors } from "../../Themes";
-
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 export default class CallHistory extends Component {
   constructor() {
     super();
@@ -79,14 +79,13 @@ export default class CallHistory extends Component {
     const navigate = this.props.navigation;
 
     return (
-      <ScrollView
-        automaticallyAdjustContentInsets={true}
-        style={styles.scrollContainer}
-      >
-        <Grid>
-          <Col>
+      <ViewWrapper style={styles.scrollContainer}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+        >
+          <Grid>
             <Col>
-            <TopViewIOS large/>
               {/* Linear Gradient */}
               <LinearGradient
                 colors={[
@@ -97,6 +96,7 @@ export default class CallHistory extends Component {
                 style={styles.linearGradient}
               />
               {/* Header - Navigation */}
+              <TopViewIOS />
               <Header
                 outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                 backgroundColor="transparent"
@@ -116,42 +116,33 @@ export default class CallHistory extends Component {
                 }}
               />
               {this.state.selectedIndex === 0 && (
-                <Text style={styles.title}>{"All Calls"}</Text>
+                <View style={styles.container}>
+                  <CallHistoryComponent
+                    data={this.state.AllCalls}
+                    navigation={this.props.navigation}
+                  />
+                </View>
               )}
               {this.state.selectedIndex === 1 && (
-                <Text style={styles.title}>{"Missed"}</Text>
+                <View style={styles.container}>
+                  <CallHistoryComponent
+                    data={this.state.Missed}
+                    navigation={this.props.navigation}
+                  />
+                </View>
               )}
               {this.state.selectedIndex === 2 && (
-                <Text style={styles.title}>{"Recent"}</Text>
+                <View style={styles.container}>
+                  <CallHistoryComponent
+                    data={this.state.AllCalls}
+                    navigation={this.props.navigation}
+                  />
+                </View>
               )}
             </Col>
-            {this.state.selectedIndex === 0 && (
-              <View style={styles.container}>
-                <CallHistoryComponent
-                  data={this.state.AllCalls}
-                  navigation={this.props.navigation}
-                />
-              </View>
-            )}
-            {this.state.selectedIndex === 1 && (
-              <View style={styles.container}>
-                <CallHistoryComponent
-                  data={this.state.Missed}
-                  navigation={this.props.navigation}
-                />
-              </View>
-            )}
-            {this.state.selectedIndex === 2 && (
-              <View style={styles.container}>
-                <CallHistoryComponent
-                  data={this.state.AllCalls}
-                  navigation={this.props.navigation}
-                />
-              </View>
-            )}
-          </Col>
-        </Grid>
-      </ScrollView>
+          </Grid>
+        </ScrollView>
+      </ViewWrapper>
     );
   }
 }

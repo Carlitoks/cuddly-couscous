@@ -21,7 +21,6 @@ export const updateView = payload => ({
 export const getProfileAsync = (uid, token) => dispatch => {
   return User.get(uid, token)
     .then(response => {
-      console.log(response.data);
       return dispatch(updateView(response.data));
     })
     .catch(function(error) {

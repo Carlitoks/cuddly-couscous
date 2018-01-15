@@ -6,16 +6,12 @@ import { StyleSheet } from "react-native";
 
 class ScanScreenView extends Component {
   state = {
-    reactivate: false
+    reactivate: true
   };
 
   onSuccess = e => {
     try {
       const qrObj = e.data;
-
-      this.setState({
-        reactivate: false
-      });
 
       console.log(qrObj);
 
@@ -41,7 +37,6 @@ class ScanScreenView extends Component {
         backgroundColor: "#000"
       }
     });
-
     return (
       <QRCodeScanner
         // https://github.com/moaazsidat/react-native-qrcode-scanner#props

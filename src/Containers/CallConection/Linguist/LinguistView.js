@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint-disable-line
 import styles from "../styles";
 import { CallButton } from "../../../Components/CallButton/CallButton";
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 
 import {
   updateSettings,
@@ -104,6 +105,7 @@ class LinguistView extends Component {
           />
         </View>
         <View style={styles.topContainer}>
+        <TopViewIOS/> 
           <View style={styles.inlineContainer}>
             <Image
               style={styles.smallAvatar}
@@ -149,7 +151,6 @@ class LinguistView extends Component {
             onPress={() => {
               this.props.tokDisConnect(this.props.linguistTokboxSessionID);
               OpenTok.disconnect(this.props.linguistTokboxSessionID);
-              this.props.clearSettings();
               clearInterval(this.props.timer);
               this.props.navigation.dispatch({ type: "RateCallView" });
             }}

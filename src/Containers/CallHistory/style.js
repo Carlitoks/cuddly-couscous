@@ -1,7 +1,11 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
+import DeviceInfo from "react-native-device-info"
 
 const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
+const IphoneX = DeviceInfo.getModel() == "iPhone X";
+const heightTab = IphoneX ? parseInt(height*0.08) : parseInt(height*0.04);
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -33,7 +37,7 @@ export const styles = StyleSheet.create({
     marginRight: 30,
     width: "58%",
     alignSelf: "center",
-    marginTop: 17
+    marginTop: heightTab
   },
   scrollContainer: {
     flex: 1,

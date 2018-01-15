@@ -9,7 +9,7 @@ import {
   LANGUAGE_INTERPRETATION_LIST,
   PROFICIENCY_LIST
 } from "../../Ducks/LinguistFormReducer";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, View, ScrollView, Image, Alert } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -25,6 +25,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import RightNavigationButton from "../../Components/RightNavigationButton/RightNavigationButton.js";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import EN from "../../I18n/en";
 import styles from "./styles";
@@ -98,7 +99,7 @@ class LanguageSettingsView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={styles.scrollContainer}>
+      <ViewWrapper style={styles.scrollContainer}>
         <ScrollView automaticallyAdjustContentInsets={true}>
           <View style={styles.headerContainer}>
             <LinearGradient
@@ -110,6 +111,7 @@ class LanguageSettingsView extends Component {
               style={styles.linearGradient}
             />
             {/* Header - Navigation */}
+            <TopViewIOS/> 
             <Header
               outerContainerStyles={styles.header}
               backgroundColor="transparent"
@@ -177,7 +179,7 @@ class LanguageSettingsView extends Component {
             }}
           />
         </View>
-      </View>
+      </ViewWrapper>
     );
   }
 }
