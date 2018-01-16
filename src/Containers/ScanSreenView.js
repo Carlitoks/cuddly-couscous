@@ -55,4 +55,4 @@ const mS = state => ({
   token: state.auth.token
 });
 
-export default connect()(ScanScreenView);
+export default connect(mS)(ScanScreenView);
