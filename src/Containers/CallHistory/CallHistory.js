@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { StyleSheet, View, FlatList, Text, ScrollView } from "react-native";
 import { styles } from "./style";
 import { Header } from "react-native-elements";
@@ -11,7 +12,7 @@ import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import { Colors } from "../../Themes";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-export default class CallHistory extends Component {
+class CallHistory extends Component {
   constructor() {
     super();
     this.state = {
@@ -75,6 +76,34 @@ export default class CallHistory extends Component {
     this.setState({ ...this.state, selectedIndex: index });
   };
 
+  chooseControlTab = () => {
+    if (this.props.linguistProfile) {
+      return <SegmentedControlTab
+      tabsContainerStyle={styles.tabsContainerStyle}
+      values={["All", "Missed", "Recent"]}
+      tabStyle={styles.tabStyle}
+      tabTextStyle={styles.tabTextStyle}
+      selectedIndex={this.state.selectedIndex}
+      onTabPress={this.handleIndexChange}
+      activeTabStyle={{
+        backgroundColor: Colors.primarySelectedTabColor
+      }}
+    />;
+    } else {
+      return <SegmentedControlTab
+      tabsContainerStyle={styles.tabsContainerStyle}
+      values={["All", "Recent"]}
+      tabStyle={styles.tabStyle}
+      tabTextStyle={styles.tabTextStyle}
+      selectedIndex={this.state.selectedIndex}
+      onTabPress={this.handleIndexChange}
+      activeTabStyle={{
+        backgroundColor: Colors.primarySelectedTabColor
+      }}
+    />;
+    }
+  };
+
   render() {
     const navigate = this.props.navigation;
 
@@ -104,17 +133,8 @@ export default class CallHistory extends Component {
                   <ShowMenuButton navigation={this.props.navigation} />
                 }
               />
-              <SegmentedControlTab
-                tabsContainerStyle={styles.tabsContainerStyle}
-                values={["All", "Missed", "Recent"]}
-                tabStyle={styles.tabStyle}
-                tabTextStyle={styles.tabTextStyle}
-                selectedIndex={this.state.selectedIndex}
-                onTabPress={this.handleIndexChange}
-                activeTabStyle={{
-                  backgroundColor: Colors.primarySelectedTabColor
-                }}
-              />
+              {this.chooseControlTab()}
+
               {this.state.selectedIndex === 0 && (
                 <View style={styles.container}>
                   <CallHistoryComponent
@@ -146,3 +166,8 @@ export default class CallHistory extends Component {
     );
   }
 }
+const mS = state => ({
+  linguistProfile: state.userProfile.linguistProfile
+});
+
+export default connect(mS)(CallHistory);
