@@ -60,7 +60,7 @@ class SessionInfoView extends Component {
                     <Col>
                       <Text style={styles.linguistName}>Zhang W.</Text>
                       <Text style={styles.linguistAddress}>
-                        <Icon name="ios-pin" size={20} />San Francisco
+                        <Icon name="ios-pin" size={20} /> San Francisco
                       </Text>
                       <View style={styles.starContainer}>
                         <StarRating

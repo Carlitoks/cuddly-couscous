@@ -13,7 +13,7 @@ export default StyleSheet.create({
     width:"100%",
     ...Platform.select({
       ios: {
-        height: '8%'
+        height: '9%'
       }
     }),
   }
