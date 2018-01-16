@@ -33,6 +33,14 @@ import EN from "../../I18n/en";
 class HomeLinguist extends Component {
   navigate = this.props.navigation.navigate;
 
+  componentWillMount() { 
+    this.props.updateSettings({ 
+      polling: true 
+    }); 
+ 
+    this.props.getInvitations(); 
+  } 
+
   render() {
     const { Amount, NumberOfCalls, status, firstName, lastName, rating } = this.props;
     const languagues = this.props.GetOptions();
@@ -180,13 +188,6 @@ class HomeLinguist extends Component {
                   />
                 ))}
               </List>
-              <Button
-                containerStyle={styles.button}
-                onPress={this.props.getInvitations}
-                title="Polling"
-              >
-                Polling
-              </Button>
             </Col>
           </Grid>
         </ScrollView>

@@ -1,5 +1,9 @@
 import { Sessions } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
+
+import moment from "moment";
+import _sortBy from "lodash/sortBy";
+
 // Actions
 export const ACTIONS = {
   CLEAR: "callLinguistSettings/clear",
@@ -36,25 +40,55 @@ export const incrementTimer = () => ({
 });
 
 export const getInvitations = () => (dispatch, getState) => {
-  const { auth: {uuid, token}} = getState();
+  const {
+    auth: { uuid, token },
+    callLinguistSettings: { polling }
+  } = getState();
 
   Sessions.GetInvitations(uuid, token)
-    .then( response => {
-      if(response.data.length > 0){
-        // There's at least one call. Let's attend the first one
-        const length = response.data.length;
-        const invitationId = response.data[0].id;
-        const accept = {"accept": true};
+    .then(response => {
+      const length = response.data.length;
 
-        dispatch(AsyncAcceptsInvite(invitationId, accept, token));
+      // There's at least one call. Let's get the most recent one
+      if (length > 0) {
+        // We order the invitations by Date
+        const sortedResponse = _sortBy(
+          response.data,
+          o => new moment(o.createdAt)
+        );
+
+        // We get the most recent invitation
+        const lastInvitation = sortedResponse[length - 1];
+
+        // We Calculate de time difference, we are only going to take invitations
+        // from two minutes ago
+        const lastInvitationDate = new moment(lastInvitation.createdAt);
+
+        const minutesDiff = lastInvitationDate.diff(moment(), "minutes");
+
+        // If the call if 2 minutes old we take the call
+        if (minutesDiff <= 0 && minutesDiff >= -1 && polling) {
+          const iid = sortedResponse[length - 1].id;
+          const reason = { accept: true };
+
+          // We turn off polling until HomeLinguistView is mounted again
+          dispatch(updateSettings({ polling: false }));
+          dispatch(AsyncAcceptsInvite(iid, reason, token));
+        }
       } else {
-        console.log("There are no invitations")
+        console.log("There are no invitations");
+      }
+
+      if (polling) {
+        setTimeout(() => {
+          dispatch(getInvitations());
+        }, 10000);
       }
     })
     .catch(err => {
       console.log(err);
-    })
-}
+    });
+};
 
 export const resetTimerAsync = () => (dispatch, getState) => {
   const { callCustomerSettings } = getState();
@@ -97,7 +131,7 @@ export const AsyncAcceptsInvite = (invitationID, accept, token) => dispatch => {
   Sessions.LinguistAcceptsInvite(invitationID, accept, token)
     .then(response => {
       dispatch(invitationAccept(response.data));
-      dispatch({type: "LinguistView"});
+      dispatch({ type: "LinguistView" });
     })
     .catch(error => {
       dispatch(networkError(error));
@@ -114,7 +148,14 @@ const initialState = {
   elapsedTime: 0,
   linguistTokboxSessionID: null,
   linguistTokboxSessionToken: null,
-  accept: false
+  accept: false,
+  customerPreferredSex: "female",
+
+  // Max Call Time
+  timeOptions: 6, // Ammount of options on the Picker
+  selectedTime: 10, // Initial time selected: 10 min
+
+  polling: true
 };
 
 // Reducer
@@ -140,7 +181,7 @@ const callLinguistSettings = (state = initialState, action) => {
         linguistTokboxSessionID: payload.tokboxSessionID,
         linguistTokboxSessionToken: payload.tokboxSessionToken,
         accept: payload.accept,
-        sessionID:payload.sessionID
+        sessionID: payload.sessionID
       };
     }
     case ACTIONS.INCREMENT_TIMER: {

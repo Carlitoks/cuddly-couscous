@@ -85,7 +85,7 @@ export default StyleSheet.create({
   },
   statusContainer: {
     justifyContent: "space-between",
-    marginBottom: 20
+    marginBottom: 40
   },
   badgeContainer: {
     backgroundColor: "white",
