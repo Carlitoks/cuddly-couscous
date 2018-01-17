@@ -61,13 +61,13 @@ export const getInvitations = () => (dispatch, getState) => {
         const lastInvitation = sortedResponse[length - 1];
 
         // We Calculate de time difference, we are only going to take invitations
-        // from two minutes ago
+        // from 30 seconds ago
         const lastInvitationDate = new moment(lastInvitation.createdAt);
 
-        const minutesDiff = lastInvitationDate.diff(moment(), "minutes");
+        const minutesDiff = lastInvitationDate.diff(moment(), "seconds");
 
-        // If the call if 2 minutes old we take the call
-        if (minutesDiff <= 0 && minutesDiff >= -1 && polling) {
+        // If the call if 30 seconds old we take the call
+        if (minutesDiff <= 0 && minutesDiff >= -20 && polling) {
           const iid = sortedResponse[length - 1].id;
           const reason = { accept: true };
 

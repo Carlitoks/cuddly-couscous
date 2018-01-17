@@ -13,7 +13,9 @@ class ScanScreenView extends Component {
     try {
       const qrObj = e.data;
 
-      console.log(qrObj);
+      this.setState({
+        reactivate: false
+      });
 
       if (this.props.token) {
         this.props.navigation.dispatch({
@@ -24,6 +26,13 @@ class ScanScreenView extends Component {
           type: "LoginView"
         });
       }
+
+      setTimeout(()=>{
+        this.setState({
+          reactivate: true
+        });  
+      }, 2000);
+
     } catch (err) {
       this.setState({
         reactivate: true
@@ -37,6 +46,7 @@ class ScanScreenView extends Component {
         backgroundColor: "#000"
       }
     });
+
     return (
       <QRCodeScanner
         // https://github.com/moaazsidat/react-native-qrcode-scanner#props

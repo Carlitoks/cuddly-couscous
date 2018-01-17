@@ -33,13 +33,14 @@ import EN from "../../I18n/en";
 class HomeLinguist extends Component {
   navigate = this.props.navigation.navigate;
 
-  componentWillMount() { 
-    this.props.updateSettings({ 
-      polling: true 
-    }); 
- 
-    this.props.getInvitations(); 
-  } 
+  componentWillMount() {
+    this.props.updateSettings({
+      polling: true
+    });
+    setTimeout(() => {
+      this.props.getInvitations();
+    }, 10000);
+  }
 
   render() {
     const { Amount, NumberOfCalls, status, firstName, lastName, rating } = this.props;
