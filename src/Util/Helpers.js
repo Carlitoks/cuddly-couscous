@@ -43,3 +43,28 @@ export const getGeolocationCoords = () =>
       }
     );
   });
+
+/**
+ * @description Generate valid UUID from deviceId info (only for android)
+ *
+ * @param {string} deviceId - unique id of androd device (16 digits)
+ */
+export const androidDeviceIDToPseudoUUID = deviceId => {
+  const id = deviceId.toString();
+  return `${id.substring(0, 8)}-${id.substring(8, 12)}-${id.substring(
+    12,
+    id.length
+  )}-${id.substring(0, 4)}-${id.substring(4, id.length)}`;
+};
+
+/**
+ * @description Define if the current view matches with the viewName
+ * @param {AppNavigation} navigation redux-navigation object
+ * @param {String} viewName name of current view
+ * 
+ * @returns {Boolean} true when it's match and false if isn't
+ */
+export const isCurrentView = (navigation, viewName) =>
+  navigation
+    .state.routes[0].routes[navigation.state
+      .routes[0].routes.length - 1].routeName === viewName

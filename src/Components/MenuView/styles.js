@@ -48,6 +48,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontWeight: "bold",
     marginBottom: 15
+  },
+  optionMenu: {
+    color: "#D9D9E6", 
+    marginLeft: 20
+  },
+  selectedOptionMenu: {
+    color: "#6B8FE0",
+    marginLeft: 20
   }
 });
 
