@@ -72,7 +72,7 @@ class SelectRoleView extends Component {
                   borderRadius={15}
                   buttonStyle={[styles.button, styles.center]}
                   onPress={() =>
-                    navigation.dispatch({ type: "CustomerAccount" })}
+                    navigation.dispatch({ type: "NameCustomerView" })}
                   title={EN["callLinguist"]}
                   textStyle={[styles.buttonText, styles.center]}
                 />

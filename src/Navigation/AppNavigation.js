@@ -10,11 +10,15 @@ import CallHistory from "../Containers/CallHistory/CallHistory";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
 import ContactingLinguist from "../CallCustomer/ContactingLinguist/ContactingLinguistView";
 import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
-import CustomerAccount from "../Onboarding/CustomerAccountView/CustomerAccountView";
+import NameCustomerView from "../Onboarding/NameCustomerView/NameCustomerView";
+import EmailCustomerView from "../Onboarding/EmailCustomerView/EmailCustomerView";
+import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
+import GenderCustomerView from "../Onboarding/GenderCustomerView/GenderCustomerView";
+import PhoneCustomerView from "../Onboarding/PhoneCustomerView/PhoneCustomerView";
+import LanguageCustomerView from "../Onboarding/LanguageCustomerView/LanguageCustomerView";
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
 import CustomerView from "../Containers/CallConection/Customer/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
-import RateCallView from "../RateCall/RateExperience/RateExperienceView";
 import Home from "../Home/Home";
 import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
 import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
@@ -23,19 +27,21 @@ import MenuView from "../Components/MenuView/MenuView";
 
 // Onboarding - Select Language
 import SelectLanguageView from "../LinguistForm/SelectLanguageView/SelectLanguageView";
-import SelectListView from "../LinguistForm/SelectListView/SelectListView";
 import LanguageSettingsView from "../LinguistForm/LanguageSettingsView/LanguageSettingsView";
 
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
+import RateCallView from "../RateCall/RateExperience/RateExperienceView";
 import NameLinguistView from "../LinguistForm/NameLinguistView/NameLinguistView";
 import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguistView";
 import EmailLinguistView from "../LinguistForm/EmailLinguistView/EmailLinguistView";
-import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView"
-import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView"
-import CallSettingsCustomer from "../CallSettings/Customer/CustomerSettingsView";
+import SelectListView from "../LinguistForm/SelectListView/SelectListView";
+
+import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
+import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
+import SessionInfoView from "../RateCall/SessionInfo/SessionInfoView";
+import CallSettingsView from "../CallSettings/Customer/CustomerSettingsView";
+import ScanScreenView from "../Containers/ScanSreenView";
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
-import ScanScreenView from "../Containers/ScanSreenView";  
-import SessionInfoView from "../RateCall/SessionInfo/SessionInfoView"; 
 
 const Navigation = StackNavigator(
   {
@@ -44,8 +50,43 @@ const Navigation = StackNavigator(
     CallTimeView: { screen: CallTimeView },
     ContactingLinguist: { screen: ContactingLinguist },
     ContactLinguist: { screen: ContactLinguist },
-    CustomerAccount: {
-      screen: CustomerAccount,
+    NameCustomerView: {
+      screen: NameCustomerView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    EmailCustomerView: {
+      screen: EmailCustomerView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    PasswordCustomerView: {
+      screen: PasswordCustomerView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    GenderCustomerView: {
+      screen: GenderCustomerView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    PhoneCustomerView: {
+      screen: PhoneCustomerView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    LanguageCustomerView: {
+      screen: LanguageCustomerView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
@@ -71,7 +112,7 @@ const Navigation = StackNavigator(
     EmailLinguistView: { screen: EmailLinguistView },
     PhoneLinguistView: { screen: PhoneLinguistView },
     VerifyPhoneLinguistView: { screen: VerifyPhoneLinguistView },
-    CallSettingsCustomer: { screen: CallSettingsCustomer }, 
+    CallSettingsCustomer: { screen: CallSettingsView }, 
     LinguistView: { screen: LinguistView },
     SessionInfoView: { screen: SessionInfoView },
     LoginView: {

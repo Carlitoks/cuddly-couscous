@@ -19,6 +19,15 @@ export const updateForm = payload => ({
   payload
 });
 
+export const GetOptions = () => dispatch => {
+  return [
+    { gender: "Male" },
+    { gender: "Female" },
+    { gender: "Other" },
+    { gender: "Decline to spicify" }
+  ];
+};
+
 export const upateDeviceToken = payload => ({
   type: ACTIONS.DEVICETOKEN,
   payload
@@ -62,8 +71,25 @@ export const errorForm = payload => ({
   payload
 });
 const initialState = {
+  // Customer First Name and Last Name
+  firstname: "",
+  lastname: "",
+  preferredName: "",
+  mainTitle: "Enter Your Name",
+  formHasErrors: false,
+  // Customer Email
   email: "",
+  // Gender
+  selectedGender: "",
+  // Phone
+  phoneNumber: "",
+  // password
   password: "",
+  // selected Native Language
+  languages: [],
+  selectedNativeLanguage: [],
+  CustomerSelectItemType: "",
+  // error messages
   emailErrorMessage: "",
   passwordErrorMessage: "",
   deviceToken: ""

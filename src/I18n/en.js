@@ -110,5 +110,7 @@ export default (ENG = {
   expertise_C1:
   "Are we human, because of unique traits and attributes not shared with either",
   citizenship: "Citizenship",
-  userProfile: "My Profile"
+  userProfile: "My Profile",
+  linguistPassword: "Password",
+  linguistPasswordTitle: "Enter your password"
 });
