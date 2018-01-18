@@ -32,6 +32,12 @@ import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 
 class LanguageSettingsView extends Component {
+  componentWillMount() {
+    this.props.updateSettings({
+      selectedProficiency: null,
+      selectedLanguageIterpretation: null
+    });
+  }
   renderProficiencyList = proficiencyList => {
     return proficiencyList.map((item, i) => (
       <ListItem
