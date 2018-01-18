@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import {
   clearSettings,
   updateSettings
-} from "../../Ducks/CallCustomerSettings";
+} from "../../Ducks/CallLinguistSettings";
 
 import {
   FormInput,
@@ -20,7 +20,7 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
@@ -29,7 +29,7 @@ import EN from "../../I18n/en";
 import { Images, Colors, Fonts } from "../../Themes";
 import { USER_NAME } from "../../Util/Constants";
 
-class CustomerSettingsView extends Component {
+class LinguistSettingsView extends Component {
   render() {
     const navigation = this.props.navigation;
 
@@ -64,7 +64,7 @@ class CustomerSettingsView extends Component {
     ];
 
     pickerOptions = n => {
-      return new Array(n).fill(5).map((el, i) => {
+      return new Array(n).fill(10).map((el, i) => {
         return (
           <Picker.Item
             label={`${el * (i + 1)} Min`}
@@ -96,7 +96,6 @@ class CustomerSettingsView extends Component {
                     style={styles.linearGradient}
                   />
                   {/* Header - Navigation */}
-                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
                     backgroundColor="transparent"
@@ -117,7 +116,8 @@ class CustomerSettingsView extends Component {
                   style={styles.picker}
                   selectedValue={this.props.selectedTime}
                   onValueChange={(itemValue, itemIndex) =>
-                    this.props.updateSettings({ selectedTime: itemValue })}
+                    this.props.updateSettings({ selectedTime: itemValue })
+                  }
                 >
                   {pickerOptions(this.props.timeOptions)}
                 </Picker>
@@ -252,11 +252,11 @@ class CustomerSettingsView extends Component {
   }
 }
 const mS = state => ({
-  timeOptions: state.callCustomerSettings.timeOptions,
-  selectedTime: state.callCustomerSettings.selectedTime,
-  video: state.callCustomerSettings.video,
-  mute: state.callCustomerSettings.mute,
-  customerPreferredSex: state.callCustomerSettings.customerPreferredSex
+  timeOptions: state.callLinguistSettings.timeOptions,
+  selectedTime: state.callLinguistSettings.selectedTime,
+  video: state.callLinguistSettings.video,
+  mute: state.callLinguistSettings.mute,
+  customerPreferredSex: state.callLinguistSettings.customerPreferredSex
 });
 
 const mD = {
@@ -264,4 +264,4 @@ const mD = {
   updateSettings
 };
 
-export default connect(mS, mD)(CustomerSettingsView);
+export default connect(mS, mD)(LinguistSettingsView);

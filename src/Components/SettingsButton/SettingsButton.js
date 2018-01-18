@@ -15,7 +15,7 @@ const SettingButton = ({ navigation }) => {
         style={styles.Icon}
         name="settings"
         size={moderateScale(30)}
-        onPress={() => navigation.dispatch({ type: "CallSettingsCustomer" })} 
+        onPress={() => navigation.dispatch({ type: "CallSettings" })}
       />
     </Col>
   );

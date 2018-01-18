@@ -39,7 +39,7 @@ import SelectListView from "../LinguistForm/SelectListView/SelectListView";
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
 import SessionInfoView from "../RateCall/SessionInfo/SessionInfoView";
-import CallSettingsView from "../CallSettings/Customer/CustomerSettingsView";
+import CallSettings from "../CallSettings/CallSettings";
 import ScanScreenView from "../Containers/ScanSreenView";
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 
@@ -112,7 +112,6 @@ const Navigation = StackNavigator(
     EmailLinguistView: { screen: EmailLinguistView },
     PhoneLinguistView: { screen: PhoneLinguistView },
     VerifyPhoneLinguistView: { screen: VerifyPhoneLinguistView },
-    CallSettingsCustomer: { screen: CallSettingsView }, 
     LinguistView: { screen: LinguistView },
     SessionInfoView: { screen: SessionInfoView },
     LoginView: {
@@ -139,7 +138,8 @@ const Navigation = StackNavigator(
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
       }
-    },  
+    },
+    CallSettings: { screen: CallSettings },
     UserProfileView: { screen: UserProfileView }
   },
   {
