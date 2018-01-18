@@ -41,20 +41,26 @@ class SelectLanguageView extends Component {
     const { selectedSecondaryLanguages } = this.props;
 
     const selectedSecondaryLanguagesList = selectedSecondaryLanguages.map(
-      (language, i) => (
-        <ListItem
-          key={language.code}
-          title={language.name}
-          rightTitle={language.proficiency}
-          onPress={() => {
-            this.props.updateSettings({
-              selectionItemType: "languages",
-              selectionItemName: "secondaryLanguages"
-            });
-            this.props.navigation.dispatch({ type: "SelectListView" });
-          }}
-        />
-      )
+      (language, i) => {
+        const proficiency = language.proficiency
+          ? language.proficiency.name
+          : null;
+
+        return (
+          <ListItem
+            key={language["3"]}
+            title={language.name}
+            rightTitle={proficiency}
+            onPress={() => {
+              this.props.updateSettings({
+                selectionItemType: "languages",
+                selectionItemName: "secondaryLanguages"
+              });
+              this.props.navigation.dispatch({ type: "SelectListView" });
+            }}
+          />
+        );
+      }
     );
 
     const addLanguageListItem = (
