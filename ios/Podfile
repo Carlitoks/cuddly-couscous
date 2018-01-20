@@ -12,7 +12,6 @@ target 'NewSolo' do
   pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok/ios"
   pod 'BVLinearGradient', :path => "#{node_modules_path}/react-native-linear-gradient"
   pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
-  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
   pod 'react-native-camera', path: '../node_modules/react-native-camera'
 
 end

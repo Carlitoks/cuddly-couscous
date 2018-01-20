@@ -1,6 +1,5 @@
 import AXIOS from "../Config/AxiosConfig";
 import { URL } from "../Config/env";
-import RNFetchBlob from "react-native-fetch-blob";
 const BASE_URI = "/users";
 
 const User = {

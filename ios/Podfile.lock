@@ -9,8 +9,6 @@ PODS:
     - React/Core (= 0.50.4)
   - react-native-camera (0.12.0):
     - React
-  - react-native-fetch-blob (0.10.6):
-    - React/Core
   - React/Core (0.50.4):
     - yoga (= 0.50.4.React)
   - RNDeviceInfo (0.9.3):
@@ -26,7 +24,6 @@ DEPENDENCIES:
   - Fabric
   - React (from `../node_modules/react-native`)
   - react-native-camera (from `../node_modules/react-native-camera`)
-  - react-native-fetch-blob (from `../node_modules/react-native-fetch-blob`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNOpenTok (from `../node_modules/react-native-opentok/ios`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
@@ -38,8 +35,6 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native
   react-native-camera:
     :path: ../node_modules/react-native-camera
-  react-native-fetch-blob:
-    :path: ../node_modules/react-native-fetch-blob
   RNDeviceInfo:
     :path: ../node_modules/react-native-device-info
   RNOpenTok:
@@ -54,11 +49,10 @@ SPEC CHECKSUMS:
   OpenTok: 869a96d84104b9de2b525c2e8a2a809561b47cec
   React: 6d7efef18e0241eb832cf4c085405169a15080ed
   react-native-camera: 804909544eaaf6959089f517b86c1b159a234dea
-  react-native-fetch-blob: 2bef9be702de8726f4d7bf58d2345579aaaee60d
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
   RNOpenTok: cab5e455f81cd13ec6ac52b8f126ab00800c803a
   yoga: b9aebf996711e50fc31f5608c10aa108a5a0c29e
 
-PODFILE CHECKSUM: f8f8850023801fbd0ea8c1b13ef59611e4c1c10e
+PODFILE CHECKSUM: d53aa0383368c5a04904cf1e2b1774425f254bcf
 
 COCOAPODS: 1.3.1
