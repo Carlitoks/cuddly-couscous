@@ -7,10 +7,10 @@ import {
   registerDevice
 } from "../../Ducks/RegistrationCustomerReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, TextInput } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormInput, Header } from "react-native-elements";
+import { Button, Header } from "react-native-elements";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
@@ -132,45 +132,43 @@ class NameCustomerView extends Component {
                   </Text>
                 </Col>
               </Row>
-              <Row>
-                <View>
-                  <FormInput
-                    containerStyle={styles.containerInput}
-                    inputStyle={styles.inputText}
-                    placeholder={EN["linguistName"]}
-                    onChangeText={text =>
-                      this.props.updateForm({
-                        firstname: text,
-                        mainTitle: text
-                      })
-                    }
-                    value={this.props.firstname}
-                  />
-                </View>
-              </Row>
-              <Row>
-                <View>
-                  <FormInput
-                    containerStyle={styles.containerInput}
-                    inputStyle={styles.inputText}
-                    placeholder={EN["linguistLastName"]}
-                    onChangeText={text =>
-                      this.props.updateForm({ lastname: text })
-                    }
-                    value={this.props.lastname}
-                  />
-                </View>
-              </Row>
+
+              <View style={styles.containerView}>
+                <TextInput
+                  style={styles.containerInput}
+                  placeholder={EN["linguistName"]}
+                  onChangeText={text =>
+                    this.props.updateForm({
+                      firstname: text,
+                      mainTitle: text
+                    })
+                  }
+                  value={this.props.firstname}
+                  maxLength={20}
+                />
+              </View>
+
+              <View style={styles.containerView}>
+                <TextInput
+                  style={styles.containerInput}
+                  placeholder={EN["linguistLastName"]}
+                  onChangeText={text =>
+                    this.props.updateForm({ lastname: text })
+                  }
+                  value={this.props.lastname}
+                  maxLength={20}
+                />
+              </View>
 
               <View>
-                <FormInput
-                  containerStyle={styles.containerInput}
-                  inputStyle={styles.inputText}
+                <TextInput
+                  style={styles.containerInput}
                   placeholder={EN["preferredName"]}
                   value={this.props.preferredName}
                   onChangeText={text =>
                     this.props.updateForm({ preferredName: text })
                   }
+                  maxLength={20}
                 />
                 <Text style={styles.formText}>
                   {EN["preferredLinguistText"]}

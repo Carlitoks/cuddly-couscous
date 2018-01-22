@@ -24,13 +24,14 @@ export default StyleSheet.create({
     color: "white",
     backgroundColor: "transparent"
   },
-  inputText: {
-    fontSize: 20,
-    paddingBottom: 30,
-    color: "black"
+  containerView: {
+    marginTop: moderateScale(10)
   },
   containerInput: {
-    marginTop: 40
+    marginTop: moderateScale(20),
+    fontSize: 20,
+    color: "black",
+    paddingBottom: moderateScale(35)
   },
   formText: {
     paddingLeft: 18,
