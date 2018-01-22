@@ -54,8 +54,8 @@ class SelectLanguague extends Component {
           this.props.selectedLanguage === lang.name ? (
             <Icon name="check" />
           ) : (
-            undefined
-          )
+              undefined
+            )
         }
         onPress={() => {
           this.props.updateSettings({
@@ -77,7 +77,7 @@ class SelectLanguague extends Component {
           style={styles.scrollContainer}
           contentContainerStyle={styles.contentScrollContainer}
         >
-          <Col>
+          <View style={styles.header}>
             {/* Linear Gradient */}
             <LinearGradient
               colors={[
@@ -119,7 +119,7 @@ class SelectLanguague extends Component {
               onChangeText={text =>
                 this.props.updateSettings({ searchLanguage: text })}
             />
-          </Col>
+          </View>
           <List containerStyle={styles.listContainer}>
             {this.filterList(this.props.searchLanguage)}
           </List>

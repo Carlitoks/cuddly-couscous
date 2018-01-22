@@ -5,6 +5,9 @@ import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 const { width, height } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
+  header: {
+    height: 240
+  },
   Icon: {
     width: width
   },
