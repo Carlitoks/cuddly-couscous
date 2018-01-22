@@ -60,6 +60,11 @@ class CustomerSettingsView extends Component {
         title: "Male",
         icon: "male",
         customerPreferredSex
+      },
+      {
+        title: "Any",
+        icon: "venus-mars",
+        customerPreferredSex
       }
     ];
 
@@ -110,24 +115,13 @@ class CustomerSettingsView extends Component {
                   />
                 </Col>
               </View>
-              <View style={styles.avatarContainer}>
-                <Text style={styles.pickerText}> {EN["maxTimeLimit"]}</Text>
-                {/* Time Picker */}
-                <Picker
-                  style={styles.picker}
-                  selectedValue={this.props.selectedTime}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.props.updateSettings({ selectedTime: itemValue })}
-                >
-                  {pickerOptions(this.props.timeOptions)}
-                </Picker>
-              </View>
+
               <View>
                 <FormLabel
                   labelStyle={styles.listSelectionTitle}
                   fontFamily={Fonts.primaryBaseFont}
                 >
-                  {EN["iPreferAudioOrVideo"]}
+                  {EN["videoAssistance"]}
                 </FormLabel>
                 <List
                   containerStyle={{
@@ -199,7 +193,7 @@ class CustomerSettingsView extends Component {
                   labelStyle={styles.listSelectionTitle}
                   fontFamily={Fonts.primaryBaseFont}
                 >
-                  {EN["iPreferFemaleOrMale"]}
+                  {EN["genderPreferenceLinguist"]}
                 </FormLabel>
                 <List
                   containerStyle={{

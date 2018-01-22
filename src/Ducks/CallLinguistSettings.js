@@ -149,7 +149,7 @@ const initialState = {
   linguistTokboxSessionID: null,
   linguistTokboxSessionToken: null,
   accept: false,
-  customerPreferredSex: "female",
+  customerPreferredSex: "any",
 
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker

@@ -60,6 +60,11 @@ class LinguistSettingsView extends Component {
         title: "Male",
         icon: "male",
         customerPreferredSex
+      },
+      {
+        title: "Any",
+        icon: "venus-mars",
+        customerPreferredSex
       }
     ];
 
@@ -127,7 +132,7 @@ class LinguistSettingsView extends Component {
                   labelStyle={styles.listSelectionTitle}
                   fontFamily={Fonts.primaryBaseFont}
                 >
-                  {EN["iPreferAudioOrVideo"]}
+                  {EN["videoAssistance"]}
                 </FormLabel>
                 <List
                   containerStyle={{
@@ -199,7 +204,7 @@ class LinguistSettingsView extends Component {
                   labelStyle={styles.listSelectionTitle}
                   fontFamily={Fonts.primaryBaseFont}
                 >
-                  {EN["iPreferFemaleOrMale"]}
+                  {EN["genderPreferenceCustomer"]}
                 </FormLabel>
                 <List
                   containerStyle={{

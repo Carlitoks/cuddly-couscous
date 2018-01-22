@@ -132,7 +132,7 @@ const initialState = {
   customerTokboxSessionID: null,
   customerTokboxSessionToken: null,
   invitationID: null,
-  customerPreferredSex: "female",
+  customerPreferredSex: "any",
 
   // Max Call Time
   timeOptions: 12, // Ammount of options on the Picker
