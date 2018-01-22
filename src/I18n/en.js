@@ -112,5 +112,17 @@ export default (ENG = {
   citizenship: "Citizenship",
   userProfile: "My Profile",
   linguistPassword: "Password",
-  linguistPasswordTitle: "Enter your password"
+  passwordLinguistText: "By tapping Next you agree with our",
+  passwordAnd: "and",
+  privacyPolicy: "Privacy Policy",
+  termsConditions: "Term & Conditions",
+  userProfile: "My Profile",
+  online: "Online",
+  offline: "Offline",
+  home: "Home",
+  callHistory: "History",
+  schedule: "Schedule",
+  settings: "Settings",
+  help: "Help",
+  becomeLinguist: "Become a Linguist"
 });

@@ -25,7 +25,15 @@ const colors = {
   primarySelectedTabColor: "#b8affe",
   primaryStrongFillColor: "#b6ddff",
   thumbTintColor: "#ffffff",
-  tintColor: "#c1c1ff"
+  tintColor: "#c1c1ff",
+  badgeColor: "#8e8eb5",
+  formColor: "#d2d3d8",
+  linguistFormButton: "#ebedfa",
+  linguistFormText: "#677bd8",
+  selectedBackground: "#EBEDFA",
+  background: "#FFFFFF",
+  selectedOptionMenu: "#6B8FE0",
+  optionMenu: "#D9D9E6"
 };
 
 export default colors;
