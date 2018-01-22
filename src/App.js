@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { Text, NetInfo } from "react-native";
+import { Text, NetInfo, SafeAreaView, StyleSheet } from "react-native";
 
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
@@ -72,10 +72,19 @@ class App extends Component {
 
     return (
       <Provider store={this.state.store}>
+      <SafeAreaView style={styles.safeArea}>
         <ReduxNavigation />
+      </SafeAreaView>  
       </Provider>
     );
   }
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#ddd'
+  }
+})
