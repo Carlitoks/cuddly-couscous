@@ -44,16 +44,26 @@ class AssistanceView extends Component {
           title={as.title}
           rightIcon={{ name: "check" }}
           leftIcon={
-            as.title.includes("Taxi") ? (
-              <Icon size={15} color="gray" name="local-taxi" />
-            ) : (
-              <Icon size={15} color="gray" name="airplanemode-active" />
-            )
+            as.title.includes("Taxi")
+              ? { size: 15, color: "gray", name: "local-taxi" }
+              : { size: 15, color: "gray", name: "airplanemode-active" }
           }
           onPress={() => {
+            const { selectedAssistance, selectedScenarioId } = this.props;
+            let selectedAssistanceValue = "";
+            let selectedScenarioIdValue = "";
+
+            if (selectedAssistance === as.title) {
+              selectedAssistanceValue = "";
+              selectedScenarioIdValue = "";
+            } else {
+              selectedAssistanceValue = as.title;
+              selectedScenarioIdValue = as.id;
+            }
+
             this.props.updateSettings({
-              selectedAssistance: as.title,
-              selectedScenarioId: as.id
+              selectedAssistance: selectedAssistanceValue,
+              selectedScenarioId: selectedScenarioIdValue
             });
           }}
         />
@@ -107,7 +117,8 @@ class AssistanceView extends Component {
                     inputStyle={styles.inputSearch}
                     icon={{ name: "search" }}
                     onChangeText={text =>
-                      this.props.updateSettings({ searchAssistance: text })}
+                      this.props.updateSettings({ searchAssistance: text })
+                    }
                   />
                 </Col>
               </Row>

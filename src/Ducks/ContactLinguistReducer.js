@@ -5,7 +5,6 @@ export const getAssistanceList = token => dispatch => {
   console.log("Llamada Reducer");
   return Scenarios.get(token)
     .then(response => {
-      console.log(response);
       return dispatch(updateSettings({ assistanceList: response.data }));
     })
     .catch(error => {
