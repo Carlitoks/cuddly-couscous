@@ -148,24 +148,28 @@ class LoginView extends Component {
               {/* Email */}
               <FormInput
                 containerStyle={styles.formInputContainer}
-                style={styles.formInput}
+                inputStyle={styles.formInput}
                 placeholder={EN["email"]}
+                placeholderTextColor={Colors.placeholderColor}
                 autoCorrect={false}
                 onChangeText={text =>
                   this.props.updateForm({ email: text, emailErrorMessage: "" })}
                 value={this.props.email}
+                
                 keyboardType={"email-address"}
               />
 
               {/* Password */}
               <InputPassword
-                style={styles.InputPassword}
                 placeholder={EN["password"]}
+                inputStyle={styles.formInput}
+                placeholderTextColor={Colors.placeholderColor}
                 onChangeText={text =>
                   this.props.updateForm({
                     password: text,
                     passwordErrorMessage: ""
                   })}
+                
                 value={this.props.password}
               />
 

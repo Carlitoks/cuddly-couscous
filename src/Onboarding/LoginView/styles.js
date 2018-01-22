@@ -10,12 +10,12 @@ export default StyleSheet.create({
     backgroundColor: "white"
   },
   formContainer: {
-    marginTop: moderateScale(100),
-    marginRight: 11,
-    marginLeft: 10,
-    backgroundColor: "white",
     alignItems: "center",
-    width: width
+    backgroundColor: "white",
+    marginLeft: 10,
+    marginRight: 11,
+    marginTop: moderateScale(100),
+    width: width,
   },
   title: {
     fontSize: 30,
@@ -60,9 +60,10 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   formInput: {
-    fontFamily: Fonts.primaryBaseFont
+    fontFamily: Fonts.primaryBaseFont,
+    paddingBottom: 20
   },
   formInputContainer: {
-    marginTop: moderateScale(20)
+    marginTop: moderateScale(20),
   }
 });
