@@ -155,7 +155,7 @@ const initialState = {
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 10, // Initial time selected: 10 min
 
-  polling: true
+  polling: false
 };
 
 // Reducer

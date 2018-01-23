@@ -29,13 +29,14 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import styles from "./styles";
 import { Colors, Images } from "../../Themes";
 import EN from "../../I18n/en";
+import { IMAGE_STORAGE_URL } from "../../Config/env";
 
 class HomeLinguist extends Component {
   navigate = this.props.navigation.navigate;
 
   componentWillMount() {
     this.props.updateSettings({
-      polling: true
+      polling: false
     });
     setTimeout(() => {
       this.props.getInvitations();
@@ -43,7 +44,16 @@ class HomeLinguist extends Component {
   }
 
   render() {
-    const { Amount, NumberOfCalls, status, firstName, lastName, rating } = this.props;
+    const {
+      amount,
+      numberOfCalls,
+      status,
+      firstName,
+      lastName,
+      avatarURL,
+      available,
+      rate
+    } = this.props;
     const languagues = this.props.GetOptions();
 
     return (
@@ -91,7 +101,15 @@ class HomeLinguist extends Component {
                     avatarStyle={styles.avatar}
                     rounded
                     xlarge
-                    source={Images.avatarCall}
+                    source={
+                      avatarURL
+                        ? {
+                            uri: `${IMAGE_STORAGE_URL}${avatarURL}?${
+                              new Date().getMilliseconds
+                            }`
+                          }
+                        : Images.avatar
+                    }
                     activeOpacity={0.7}
                   />
                   <Badge
@@ -199,13 +217,16 @@ class HomeLinguist extends Component {
 
 const mS = state => ({
   available: state.profileLinguist.available,
-  rating: state.profileLinguist.rating,
+  rating: state.userProfile.averageStarRating,
   NumberOfCalls: state.profileLinguist.NumberOfCalls,
   Amount: state.profileLinguist.Amount,
   status: state.profileLinguist.status,
   Username: state.profileLinguist.Username,
   firstName: state.userProfile.firstName,
   lastName: state.userProfile.lastName,
+  avatarURL: state.userProfile.avatarURL,
+  linguistProfile: state.userProfile.linguistProfile,
+  rate: state.userProfile.averageStarRating
 });
 
 const mD = {

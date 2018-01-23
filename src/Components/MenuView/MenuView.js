@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { IMAGE_STORAGE_URL } from "../../Config/env";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import {
   getProfileAsync,
@@ -43,21 +44,24 @@ class MenuView extends Component {
   isACustomer = () => !this.props.linguistProfile;
 
   render() {
-    const { navigation, avatarUrl } = this.props;
+    const { navigation, avatarURL } = this.props;
 
     return (
       <ScrollView>
         <TopViewIOS/> 
         <View>
           <Avatar
-            containerStyle={{
-              alignSelf: "center",
-              marginTop: 30
-            }}
+            containerStyle={{ alignSelf: "center", marginTop: 30 }}
             avatarStyle={styles.center}
             rounded
             xlarge
-            source={avatarUrl ? { uri: avatarUrl } : Images.avatar}
+            source={
+              avatarURL
+                ? {
+                    uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getMinutes()}`
+                  }
+                : Images.avatar
+            }
             activeOpacity={0.7}
           />
         </View>
@@ -205,10 +209,10 @@ const mS = state => ({
   firstName: state.userProfile.firstName,
   lastName: state.userProfile.lastName,
   location: state.userProfile.location,
-  rate: state.userProfile.averageStarRating,
+  rate: state.userProfile.averageStarRating, 
   nativeLangCode: state.userProfile.nativeLangCode,
   linguistProfile: state.userProfile.linguistProfile,
-  avatarUrl: state.userProfile.avatarUrl,
+  avatarURL: state.userProfile.avatarURL,
   uuid: state.auth.uuid,
   token: state.auth.token
 });

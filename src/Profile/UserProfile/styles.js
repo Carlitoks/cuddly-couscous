@@ -9,6 +9,12 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "white"
   },
+  avatar: {
+    paddingVertical: 30,
+    width: 150,
+    height: 150,
+    borderRadius: 75
+  },
   headerContainer: {
     marginBottom: 20
   },
@@ -38,7 +44,9 @@ export default StyleSheet.create({
     color: "#b7a0aa"
   },
   containerAvatar: {
-    marginTop: moderateScale(30)
+    marginTop: moderateScale(30),
+    alignItems: "center",
+    marginBottom: 10
   },
   inputText: {
     color: "black"

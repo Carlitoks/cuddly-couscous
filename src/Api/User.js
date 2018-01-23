@@ -1,10 +1,10 @@
 import AXIOS from "../Config/AxiosConfig";
 import { URL } from "../Config/env";
+import RNFetchBlob from "react-native-fetch-blob";
 const BASE_URI = "/users";
 
 const User = {
   create: (userInfo, token) => {
-    console.log(userInfo, token);
     return AXIOS.post(`${BASE_URI}`, userInfo, {
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -17,6 +17,7 @@ const User = {
   },
 
   update: (id, data, token) => {
+    console.log("update", data);
     return AXIOS.patch(`${BASE_URI}/${id}`, data, {
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -27,25 +28,29 @@ const User = {
       headers: { Authorization: `Bearer ${token}` }
     });
   },
-  /*uploadPhoto: (id, image, token) => {
-    return RNFetchBlob.fetch(
-      "put",
-      `${URL}users/${id}/profile-photo`,
-      {
-        Authorization: `Bearer ${token}`,
-
-        "Content-Type": "multipart/form-data"
-      },
-      [
+  uploadPhoto: (id, image, token) => {
+    return AXIOS.delete(`${BASE_URI}/${id}/profile-photo`, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then(response => {
+      return RNFetchBlob.fetch(
+        "put",
+        `${URL}users/${id}/profile-photo`,
         {
-          name: "file",
-          filename: "avatar.jpg",
-          data: image,
-          type: "image/jpg"
-        }
-      ]
-    );
-  }*/
+          Authorization: `Bearer ${token}`,
+
+          "Content-Type": "multipart/form-data"
+        },
+        [
+          {
+            name: "file",
+            filename: "avatar.jpg",
+            data: image,
+            type: "image/jpg"
+          }
+        ]
+      );
+    });
+  }
 };
 
 export default User;

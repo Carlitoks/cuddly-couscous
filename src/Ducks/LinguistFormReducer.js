@@ -39,6 +39,34 @@ export const clearForm = () => ({
 export const clearSettings = () => ({
   type: ACTIONS.CLEAR
 });
+export const linguistUpdate = (id, token, payload) => dispatch => {
+  return Linguist.update(id, token, payload)
+    .then(response => {
+      dispatch(updateSettings({ linguistInfo: response.data }));
+    })
+    .catch(err => dispatch(networkError(err)));
+};
+export const updateLanguages = (id, langCode, token, payload) => dispatch => {
+  return Linguist.langUpdate(id, langCode, token, payload)
+    .then(response => {
+      dispatch(updateSettings({ linguistInfo: response.data }));
+    })
+    .catch(err => dispatch(networkError(err)));
+};
+export const deleteLanguages = (id, langCode, token, payload) => dispatch => {
+  return Linguist.langRemove(id, langCode, token)
+    .then(response => {
+      dispatch(updateSettings({ linguistInfo: response.data }));
+    })
+    .catch(err => dispatch(networkError(err)));
+};
+export const createLinguist = (id, token, payload) => dispatch => {
+  return Linguist.create(id, token, payload)
+    .then(response => {
+      dispatch(updateSettings({ linguistInfo: response.data }));
+    })
+    .catch(err => dispatch(networkError(err)));
+};
 
 export const updateSettings = payload => ({
   type: ACTIONS.UPDATE,
@@ -58,7 +86,16 @@ export const GetOptions = () => dispatch => {
     { gender: "Decline to spicify" }
   ];
 };
-
+export const GetAreasOfExpertise = () => {
+  return [
+    { name: "Sport" },
+    { name: "Travel" },
+    { name: "Legal" },
+    { name: "Retail" },
+    { name: "Technology" },
+    { name: "Tourism" }
+  ];
+};
 const initialState = {
   // Linguist First Name and Last Name
   firstname: "",
@@ -86,7 +123,10 @@ const initialState = {
   selectedSecondaryLanguages: [],
   selectedCitizenship: [],
   selectedProficiency: null,
-  selectedLanguageInterpretation: null
+  selectedLanguageInterpretation: null,
+  linguistInfo: null,
+  goTo: "SelectLanguageView",
+  currentView: null
 };
 
 export const getItems = type => dispatch => {

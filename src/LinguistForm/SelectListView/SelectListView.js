@@ -54,7 +54,9 @@ const itemMetadata = {
 class SelectListView extends Component {
   componentWillMount() {
     this.props.getItems(this.props.selectionItemType);
-    this.props.updateSettings({ searchQuery: "" });
+    this.props.updateSettings({
+      searchQuery: ""
+    });
   }
 
   selectListItem = ({ language, selectedItemsList, selectedItemsListName }) => {
@@ -103,6 +105,7 @@ class SelectListView extends Component {
                 });
               } else {
                 this.props.updateSettings({ selectedLanguage: language });
+
                 navigation.dispatch({ type: continueTo });
               }
             }}

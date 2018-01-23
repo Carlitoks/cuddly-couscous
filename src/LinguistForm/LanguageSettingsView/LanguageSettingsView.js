@@ -159,7 +159,9 @@ class LanguageSettingsView extends Component {
             onPress={() => {
               const {
                 selectedSecondaryLanguages,
-                selectedLanguage
+                selectedLanguage,
+                back,
+                goTo
               } = this.props;
 
               if (
@@ -180,7 +182,8 @@ class LanguageSettingsView extends Component {
                   selectedProficiency: null,
                   selectedLanguageIterpretation: null
                 });
-                navigation.dispatch({ type: "SelectLanguageView" });
+
+                navigation.dispatch({ type: goTo });
               }
             }}
           />
@@ -196,7 +199,8 @@ const mS = state => ({
   selectedLanguage: state.linguistForm.selectedLanguage,
   selectedProficiency: state.linguistForm.selectedProficiency,
   selectedLanguageIterpretation:
-    state.linguistForm.selectedLanguageIterpretation
+    state.linguistForm.selectedLanguageIterpretation,
+  goTo: state.linguistForm.goTo
 });
 
 const mD = { updateSettings };

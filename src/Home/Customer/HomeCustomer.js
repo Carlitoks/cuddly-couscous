@@ -24,6 +24,7 @@ import { Colors } from "../../Themes";
 import EN from "../../I18n/en";
 import Images from "../../Themes/Images";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import { IMAGE_STORAGE_URL } from "../../Config/env";
 class HomeCustomer extends Component {
   constructor(props) {
     super(props);
@@ -51,6 +52,11 @@ class HomeCustomer extends Component {
   
 
   render() {
+    const { firstName, lastName, avatarURL, navigation } = this.props;
+    console.log(
+      "avaratURL",
+      avatarURL ? { uri: `${IMAGE_STORAGE_URL}${avatarURL}` } : Images.avatar
+    );
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
@@ -87,13 +93,17 @@ class HomeCustomer extends Component {
                 />
                 <View>
                   <Avatar
-                    containerStyle={{
-                      alignSelf: "center"
-                    }}
+                    containerStyle={{ alignSelf: "center" }}
                     avatarStyle={styles.avatar}
                     rounded
                     xlarge
-                    source={Images.avatarCall}
+                    source={
+                      avatarURL
+                        ? {
+                            uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getMilliseconds()}`
+                          }
+                        : Images.avatar
+                    }
                     activeOpacity={0.7}
                   />
                   <Badge
@@ -143,23 +153,17 @@ class HomeCustomer extends Component {
                     />
                   <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
-                    onPress={() => this.props.navigation.dispatch({ type: "ScanScreenView" })} 
-                    icon={{
-                      name: "dashboard",
-                      size: 30,
-                      color: "gray"
-                    }}
+                    onPress={() =>
+                      navigation.dispatch({ type: "ScanScreenView" })
+                    }
+                    icon={{ name: "dashboard", size: 30, color: "gray" }}
                     textStyle={[styles.buttonTextSecondary, styles.center]}
                     title="Scan a QR Code"
                   />
                   <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
-                    onPress={() =>  this.props.navigation.dispatch({ type: "Home" })}
-                    icon={{
-                      name: "today",
-                      size: 30,
-                      color: "gray"
-                    }}
+                    onPress={() => console.log("navigating")}
+                    icon={{ name: "today", size: 30, color: "gray" }}
                     title="Schedule a Linguist"
                     textStyle={[styles.buttonTextSecondary, styles.center]}
                   />
@@ -170,11 +174,7 @@ class HomeCustomer extends Component {
                     }
                     title="Favorites"
                     textStyle={[styles.buttonTextSecondary, styles.center]}
-                    icon={{
-                      name: "favorite",
-                      size: 30,
-                      color: "gray"
-                    }}
+                    icon={{ name: "favorite", size: 30, color: "gray" }}
                     iconStyle={styles.icon}
                   >
                     <View style={styles.callLinguistContainer}>
@@ -206,9 +206,10 @@ const mS = state => ({
   firstName: state.userProfile.firstName,
   lastName: state.userProfile.lastName,
   nativeLangCode: state.userProfile.nativeLangCode,
+  avatarURL: state.userProfile.avatarURL,
   uuid: state.auth.uuid,
   token: state.auth.token,
-  rate: state.userProfile.rate
+  rate: state.userProfile.averageStarRating 
 });
 
 const mD = {

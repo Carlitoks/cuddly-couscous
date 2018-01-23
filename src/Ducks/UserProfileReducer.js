@@ -18,12 +18,39 @@ export const updateView = payload => ({
   payload
 });
 
+export const asyncUploadAvatar = (id, image, token) => dispatch => {
+  return User.uploadPhoto(id, image, token)
+    .then(response => {
+      dispatch(updateView({ avatarBase64: null }));
+      return dispatch(updateView(JSON.parse(response.data)));
+    })
+    .catch(error => {
+      return dispatch(networkError(error));
+    });
+};
+
 export const getProfileAsync = (uid, token) => dispatch => {
   return User.get(uid, token)
     .then(response => {
       return dispatch(updateView(response.data));
     })
-    .catch(function(error) {
+    .catch(error => {
+      return dispatch(networkError(error));
+    });
+};
+
+export const updateProfileAsync = (uid, payload, token) => dispatch => {
+  return User.update(uid, payload, token)
+    .then(response => {
+      return User.get(uid, token)
+        .then(response => {
+          return dispatch(updateView(response.data));
+        })
+        .catch(error => {
+          return dispatch(networkError(error));
+        });
+    })
+    .catch(error => {
       return dispatch(networkError(error));
     });
 };
@@ -34,11 +61,17 @@ const initialState = {
   lastName: "",
   email: "",
   nativeLangCode: "",
+  preferredName: "",
   location: "",
-  rate: 0,
+  averageStarRating: 0,
   preferences: {},
   linguistProfile: null,
-  avatarUrl: ""
+  avatarUrl: "",
+  avatarBase64: null,
+  selectedNativeLanguage: [],
+  selectedSecondaryLanguages: [],
+  selectionItemType: "",
+  selectedLanguage: null
 };
 
 const UserProfileReducer = (state = initialState, action = {}) => {
@@ -52,16 +85,20 @@ const UserProfileReducer = (state = initialState, action = {}) => {
     case ACTIONS.UPDATE: {
       return {
         ...state,
-        firstName: payload.firstName,
+        ...payload
+
+        /* firstName: payload.firstName,
         lastName: payload.lastName,
         email: payload.email,
-        rate: payload.averageStarRating ? payload.averageStarRating : 0,
+        preferredName: payload.preferredName,
+        rate: payload.averageStarRating ? payload.averageStarRating : 4.5,
         nativeLangCode: payload.nativeLangCode,
         preferences: payload.preferences,
         linguistProfile: payload.linguistProfile,
         avatarUrl: payload.avatarURL
           ? IMAGE_STORAGE_URL + payload.avatarURL
-          : ""
+          : "",
+        selectedNativeLanguage: payload.selectedNativeLanguage */
       };
     }
 

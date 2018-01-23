@@ -57,14 +57,86 @@ export const androidDeviceIDToPseudoUUID = deviceId => {
   )}-${id.substring(0, 4)}-${id.substring(4, id.length)}`;
 };
 
+export const compareArrays = (obj1, obj2) => {
+  var VALUE_CREATED = "created";
+  var VALUE_UPDATED = "updated";
+  var VALUE_DELETED = "deleted";
+  var VALUE_UNCHANGED = "unchanged";
+
+  function map(obj1, obj2) {
+    if (isValue(obj1) || isValue(obj2)) {
+      return {
+        type: compareValues(obj1, obj2),
+        old: obj1,
+        new: obj2
+      };
+    }
+
+    var diff = {};
+    for (var key in obj1) {
+      if (isFunction(obj1[key])) {
+        continue;
+      }
+
+      var value2 = undefined;
+      if ("undefined" != typeof obj2[key]) {
+        value2 = obj2[key];
+      }
+
+      diff[key] = map(obj1[key], value2);
+    }
+    for (var key in obj2) {
+      if (isFunction(obj2[key]) || "undefined" != typeof diff[key]) {
+        continue;
+      }
+
+      diff[key] = map(undefined, obj2[key]);
+    }
+
+    return diff;
+  }
+
+  function compareValues(value1, value2) {
+    if (value1 === value2) {
+      return VALUE_UNCHANGED;
+    }
+    if ("undefined" == typeof value1) {
+      return VALUE_CREATED;
+    }
+    if ("undefined" == typeof value2) {
+      return VALUE_DELETED;
+    }
+
+    return VALUE_UPDATED;
+  }
+
+  function isFunction(obj) {
+    return {}.toString.apply(obj) === "[object Function]";
+  }
+
+  function isArray(obj) {
+    return {}.toString.apply(obj) === "[object Array]";
+  }
+
+  function isObject(obj) {
+    return {}.toString.apply(obj) === "[object Object]";
+  }
+
+  function isValue(obj) {
+    return !isObject(obj) && !isArray(obj);
+  }
+
+  return map(obj1, obj2);
+};
+
 /**
  * @description Define if the current view matches with the viewName
  * @param {AppNavigation} navigation redux-navigation object
  * @param {String} viewName name of current view
- * 
+ *
  * @returns {Boolean} true when it's match and false if isn't
  */
 export const isCurrentView = (navigation, viewName) =>
-  navigation
-    .state.routes[0].routes[navigation.state
-      .routes[0].routes.length - 1].routeName === viewName
+  navigation.state.routes[0].routes[
+    navigation.state.routes[0].routes.length - 1
+  ].routeName === viewName;
