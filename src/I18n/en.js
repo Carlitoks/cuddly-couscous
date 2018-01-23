@@ -125,6 +125,5 @@ export default (ENG = {
   schedule: "Schedule",
   settings: "Settings",
   help: "Help",
-  becomeLinguist: "Become a Linguist",
-  holdToScan: "Hold the device's camera up to the QR code"
+  becomeLinguist: "Become a Linguist"
 });
