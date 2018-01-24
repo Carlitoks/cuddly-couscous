@@ -21,6 +21,7 @@ import { Button, Header, Badge } from "react-native-elements";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import { validatePhoneNumber } from "../../Util/Helpers.js";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -53,6 +54,14 @@ class PhoneCustomerView extends Component {
       updates = {
         ...updates,
         phoneErrorMessage: "Please enter your Phone Number"
+      };
+      valid = false;
+    }
+
+    if (!validatePhoneNumber(this.props.phoneNumber)) {
+      updates = {
+        ...updates,
+        phoneErrorMessage: "Please enter a valid Phone Number"
       };
       valid = false;
     }

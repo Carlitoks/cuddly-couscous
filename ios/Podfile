@@ -21,6 +21,8 @@ target 'NewSolo' do
   pod 'react-native-image-resizer', :path => '../node_modules/react-native-image-resizer' 
   pod 'RNFS', :path => '../node_modules/react-native-fs' 
 
+  pod 'react-native-keep-awake', :path => '../node_modules/react-native-keep-awake'
+
 end
 
 post_install do |installer|

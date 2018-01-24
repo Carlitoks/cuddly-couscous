@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { camelCase, some, filter, isEqual, isUndefined } from "lodash";
 
 import { updateSettings, getItems } from "../../Ducks/LinguistFormReducer";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, View, ScrollView, Image, Alert } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -15,6 +15,7 @@ import {
   Header
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
@@ -33,6 +34,16 @@ const itemMetadata = {
     multiselection: false,
     acceptsEmptySelection: false
   },
+  countryFamiliarity: {
+    title: EN["countryFamiliarity"],
+    multiselection: false,
+    acceptsEmptySelection: false
+  },
+  cityFamiliarity: {
+    title: EN["countryFamiliarity"],
+    multiselection: false,
+    acceptsEmptySelection: false
+  },
   nativeLanguage: {
     title: EN["NativeLanguage"],
     multiselection: false,
@@ -40,7 +51,7 @@ const itemMetadata = {
   },
   secondaryLanguages: {
     title: EN["SecondaryLanguages"],
-    multiselection: false,
+    multiselection: true,
     acceptsEmptySelection: false,
     continueTo: "LanguageSettingsView"
   },
@@ -60,8 +71,12 @@ class SelectListView extends Component {
   }
 
   selectListItem = ({ language, selectedItemsList, selectedItemsListName }) => {
-    const updatedSelectedItemsList = some(selectedItemsList, language)
-      ? selectedItemsList.filter(e => !isEqual(e, language))
+    const languageExistInList = some(selectedItemsList, language);
+
+    const updatedSelectedItemsList = languageExistInList
+      ? selectedItemsList.filter(e => {
+          return !isEqual(e["3"], language["3"]);
+        })
       : itemMetadata[this.props.selectionItemName].multiselection
         ? [...selectedItemsList, language]
         : [language];
@@ -69,6 +84,8 @@ class SelectListView extends Component {
     this.props.updateSettings({
       [selectedItemsListName]: updatedSelectedItemsList
     });
+
+    return languageExistInList;
   };
 
   renderList = assistance => {
@@ -95,15 +112,15 @@ class SelectListView extends Component {
             title={language.name}
             rightIcon={{ name: "check" }}
             onPress={() => {
-              const continueTo =
-                itemMetadata[this.props.selectionItemName].continueTo;
-              if (isUndefined(continueTo)) {
-                this.selectListItem({
-                  language,
-                  selectedItemsList,
-                  selectedItemsListName
-                });
-              } else {
+              const { continueTo } = itemMetadata[this.props.selectionItemName];
+
+              const deselectedItem = this.selectListItem({
+                language,
+                selectedItemsList,
+                selectedItemsListName
+              });
+
+              if (!isUndefined(continueTo) && !deselectedItem) {
                 this.props.updateSettings({ selectedLanguage: language });
 
                 navigation.dispatch({ type: continueTo });
@@ -136,7 +153,6 @@ class SelectListView extends Component {
               style={styles.linearGradient}
             />
             {/* Header - Navigation */}
-            <TopViewIOS/>             
             <Header
               outerContainerStyles={styles.header}
               backgroundColor="transparent"
@@ -171,9 +187,11 @@ class SelectListView extends Component {
               icon={{ color: "rgba(255, 255, 255, 0.6)", name: "search" }}
               placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
               onChangeText={text =>
-                this.props.updateSettings({ searchQuery: text })}
+                this.props.updateSettings({ searchQuery: text })
+              }
               onClearText={text =>
-                this.props.updateSettings({ searchQuery: "" })}
+                this.props.updateSettings({ searchQuery: "" })
+              }
               clearIcon={{ color: "rgba(255, 255, 255, 0.6)" }}
             />
           </View>
@@ -187,7 +205,9 @@ class SelectListView extends Component {
 
 const mS = state => ({
   languages: state.linguistForm.languages,
-  citizenchips: state.linguistForm.citizenchips,
+  citizenships: state.linguistForm.citizenships,
+  countryFamiliarities: state.linguistForm.countryFamiliarities,
+  cityFamiliarities: state.linguistForm.cityFamiliarities,
   nativeLanguage: state.linguistForm.nativeLanguage,
   areasOfExpertise: state.linguistForm.areasOfExpertise,
   searchQuery: state.linguistForm.searchQuery,
@@ -196,7 +216,9 @@ const mS = state => ({
   selectedAreasOfExpertise: state.linguistForm.selectedAreasOfExpertise,
   selectedSecondaryLanguages: state.linguistForm.selectedSecondaryLanguages,
   selectedNativeLanguage: state.linguistForm.selectedNativeLanguage,
-  selectedCitizenship: state.linguistForm.selectedCitizenship
+  selectedCitizenship: state.linguistForm.selectedCitizenship,
+  selectedCountryFamiliarity: state.linguistForm.selectedCountryFamiliarity,
+  selectedCityFamiliarity: state.linguistForm.selectedCityFamiliarity
 });
 
 const mD = {

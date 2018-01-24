@@ -65,6 +65,7 @@ const initialState = {
   location: "",
   averageStarRating: 0,
   preferences: {},
+  isLinguist: false,
   linguistProfile: null,
   avatarUrl: "",
   avatarBase64: null,
@@ -85,7 +86,8 @@ const UserProfileReducer = (state = initialState, action = {}) => {
     case ACTIONS.UPDATE: {
       return {
         ...state,
-        ...payload
+        ...payload,
+        isLinguist: !!payload.linguistProfile
 
         /* firstName: payload.firstName,
         lastName: payload.lastName,
@@ -95,6 +97,7 @@ const UserProfileReducer = (state = initialState, action = {}) => {
         nativeLangCode: payload.nativeLangCode,
         preferences: payload.preferences,
         linguistProfile: payload.linguistProfile,
+        isLinguist: !!payload.linguistProfile,
         avatarUrl: payload.avatarURL
           ? IMAGE_STORAGE_URL + payload.avatarURL
           : "",

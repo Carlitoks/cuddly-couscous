@@ -22,14 +22,16 @@ export default StyleSheet.create({
     marginBottom: moderateScale(10),
     marginTop: moderateScale(20),
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: "transparent" 
   },
-  inputText: {
-    fontSize: 20,
-    paddingBottom: 30
+  containerView: {
+    marginTop: moderateScale(10)
   },
   containerInput: {
-    marginTop: 40
+    marginTop: moderateScale(20),
+    fontSize: 20,
+    color: "black",
+    paddingBottom: moderateScale(35)
   },
   formText: {
     paddingLeft: 18,
@@ -40,8 +42,7 @@ export default StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     marginBottom: moderateScale(30),
-    color: "white",
-    backgroundColor: "transparent"
+    color: "white"
   },
   containerBottom: {
     backgroundColor: "black",

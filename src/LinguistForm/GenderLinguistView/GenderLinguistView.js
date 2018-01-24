@@ -10,7 +10,6 @@ import {
   Button,
   FormLabel,
   FormInput,
-  Header,
   List,
   ListItem
 } from "react-native-elements";
@@ -18,7 +17,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import Header from "../Header/Header";
+
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import EN from "../../I18n/en";
@@ -55,7 +55,7 @@ class GenderLinguist extends Component {
     const { navigation } = this.props;
 
     if (this.validateForm()) {
-      navigation.dispatch({ type: "PhoneLinguistView" });
+      navigation.dispatch({ type: "FamiliarityView" });
     }
   }
 
@@ -83,58 +83,34 @@ class GenderLinguist extends Component {
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
+          <View>
+            <Header
+              navigation={this.props.navigation}
+              mainTitle={EN["genderName"]}
+            />
+            <List containerStyle={{ borderTopWidth: 0 }}>
+              {genders.map((item, i) => (
+                <ListItem
+                  key={i}
+                  containerStyle={styles.genderItem}
+                  title={item.gender}
+                  hideChevron={
+                    this.props.selectedGender === "" ||
+                    this.props.selectedGender !== item.gender
+                  }
+                  titleStyle={{ fontSize: 20 }}
+                  rightIcon={
+                    this.props.selectedGender !== ""
+                      ? { name: "check" }
+                      : undefined
+                  }
+                  onPress={() => {
+                    this.props.updateForm({ selectedGender: item.gender });
+                  }}
                 />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS/> 
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
-                  />
-                  {/* Enter your Name */}
-                  <Text style={styles.mainTitle}>{EN["genderName"]}</Text>
-                </Col>
-              </Row>
-              <List containerStyle={{ borderTopWidth: 0 }}>
-                {genders.map((item, i) => (
-                  <ListItem
-                    key={i}
-                    containerStyle={styles.genderItem}
-                    title={item.gender}
-                    hideChevron={
-                      this.props.selectedGender === "" ||
-                      this.props.selectedGender !== item.gender
-                    }
-                    titleStyle={{ fontSize: 20 }}
-                    rightIcon={
-                      this.props.selectedGender !== "" ? (
-                        { name: "check" }
-                      ) : (
-                        undefined
-                      )
-                    }
-                    onPress={() => {
-                      this.props.updateForm({ selectedGender: item.gender });
-                    }}
-                  />
-                ))}
-              </List>
-            </Col>
-          </Grid>
+              ))}
+            </List>
+          </View>
         </ScrollView>
         <View style={styles.containerBottom}>
           {/* Next Button */}

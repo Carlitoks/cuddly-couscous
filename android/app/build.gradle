@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-keep-awake')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-exception-handler')
     compile project(':react-native-splash-screen')

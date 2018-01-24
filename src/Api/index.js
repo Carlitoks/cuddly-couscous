@@ -1,7 +1,8 @@
 import Auth from "./Auth";
-import User from "./User";
 import CallHistory from "./CallHistory";
-import Sessions from "./Sessions";
+import Linguist from "./Linguist";
 import Scenarios from "./Scenarios";
+import Sessions from "./Sessions";
+import User from "./User";
 
-export { Auth, User, CallHistory, Sessions, Scenarios };
+export { Auth, CallHistory, Linguist, Scenarios, Sessions, User };

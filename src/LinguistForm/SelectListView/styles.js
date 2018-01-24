@@ -11,7 +11,8 @@ export default StyleSheet.create({
     height: "100%"
   },
   headerContainer: {
-    marginBottom: -20
+    marginBottom: -20,
+    height: 180
   },
   header: {
     borderBottomWidth: 0,
@@ -26,13 +27,12 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryLightFont,
     fontSize: 24,
     textAlign: "center",
-    // marginBottom: 40,
     marginTop: moderateScale(20),
+    marginBottom: moderateScale(20),
     alignSelf: "center",
     color: "white",
     fontSize: 20,
-    backgroundColor: "transparent"
-    // margin: 20
+    backgroundColor: "transparent" 
   },
   containerSearch: {
     backgroundColor: "transparent",

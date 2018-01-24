@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateSettings, GetOptions } from "../../Ducks/ProfileLinguistReducer";
-import { getInvitations } from "../../Ducks/CallLinguistSettings";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+
 import { View, Text, Image, ScrollView, Switch } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -26,21 +25,35 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
+import { Sessions } from "../../Api";
+import { getInvitations } from "../../Ducks/CallLinguistSettings";
+
 import styles from "./styles";
 import { Colors, Images } from "../../Themes";
 import EN from "../../I18n/en";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 
-class HomeLinguist extends Component {
+class Home extends Component {
   navigate = this.props.navigation.navigate;
 
   componentWillMount() {
     this.props.updateSettings({
-      polling: false
+      polling: true
     });
-    setTimeout(() => {
-      this.props.getInvitations();
-    }, 10000);
+
+    if (this.props.available) {
+      setTimeout(() => {
+        this.props.getInvitations();
+      }, 10000);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.available) {
+      setTimeout(() => {
+        this.props.getInvitations();
+      }, 10000);
+    }
   }
 
   render() {
@@ -75,12 +88,8 @@ class HomeLinguist extends Component {
                   style={styles.linearGradient}
                 />
                 {/* Header - Navigation */}
-                <TopViewIOS/>
                 <Header
-                  outerContainerStyles={{
-                    borderBottomWidth: 0,
-                    height: 60
-                  }}
+                  outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                   backgroundColor="transparent"
                   leftComponent={
                     <ShowMenuButton navigation={this.props.navigation} />
@@ -95,25 +104,24 @@ class HomeLinguist extends Component {
                 />
                 <View>
                   <Avatar
-                    containerStyle={{
-                      alignSelf: "center"
-                    }}
+                    containerStyle={{ alignSelf: "center" }}
                     avatarStyle={styles.avatar}
                     rounded
                     xlarge
                     source={
-                      avatarURL
-                        ? {
-                            uri: `${IMAGE_STORAGE_URL}${avatarURL}?${
-                              new Date().getMilliseconds
-                            }`
-                          }
-                        : Images.avatar
+                      avatarURL ? (
+                        {
+                          uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date()
+                            .getMilliseconds}`
+                        }
+                      ) : (
+                        Images.avatar
+                      )
                     }
                     activeOpacity={0.7}
                   />
                   <Badge
-                    value={rating}
+                    value={rate}
                     textStyle={styles.badgeText}
                     containerStyle={styles.badgeContainer}
                   />
@@ -121,7 +129,7 @@ class HomeLinguist extends Component {
                 <View style={styles.starsContainer}>
                   <View style={[styles.stars, styles.center]}>
                     <StarRating
-                      emptyStarColor="gray"
+                      emptyStarratingColor="gray"
                       emptyStar={"ios-star-outline"}
                       fullStar={"ios-star"}
                       halfStar={"ios-star-half"}
@@ -129,14 +137,14 @@ class HomeLinguist extends Component {
                       disabled={true}
                       maxStars={5}
                       starSize={18}
-                      rating={rating}
+                      rating={rate}
                       starColor={Colors.primaryColor}
                     />
                   </View>
                 </View>
                 <Row style={styles.statusContainer}>
                   <Text style={styles.StatusText}>
-                    {EN["Status"]} {status}
+                    {EN["Status"]} {available ? EN["online"] : EN["offline"]}
                   </Text>
                   <View style={styles.switchContainer}>
                     <Switch
@@ -155,10 +163,7 @@ class HomeLinguist extends Component {
                 <Col>
                   <Card
                     style={{ alignContent: "space-betwen" }}
-                    wrapperStyle={{
-                      flex: 1,
-                      alignContent: "space-around"
-                    }}
+                    wrapperStyle={{ flex: 1, alignContent: "space-around" }}
                     containerStyle={styles.button}
                   >
                     <Row>
@@ -167,7 +172,7 @@ class HomeLinguist extends Component {
                           {EN["Calls"]}
                         </Text>
                         <Text style={[styles.callNumber, styles.center]}>
-                          {NumberOfCalls}
+                          {numberOfCalls}
                         </Text>
                       </View>
                       <View style={styles.amount}>
@@ -175,7 +180,7 @@ class HomeLinguist extends Component {
                           {EN["Amount"]}
                         </Text>
                         <Text style={[styles.callNumber, styles.center]}>
-                          ${Amount}
+                          ${amount}
                         </Text>
                       </View>
                     </Row>
@@ -187,10 +192,7 @@ class HomeLinguist extends Component {
                 <ListItem
                   title={EN["sessionInQueue"]}
                   hideChevron
-                  containerStyle={{
-                    paddingBottom: 20,
-                    paddingTop: 20
-                  }}
+                  containerStyle={{ paddingBottom: 20, paddingTop: 20 }}
                   titleStyle={{ color: "#b7b7b7", fontSize: 20 }}
                 />
                 {languagues.map((item, i) => (
@@ -217,11 +219,11 @@ class HomeLinguist extends Component {
 
 const mS = state => ({
   available: state.profileLinguist.available,
-  rating: state.userProfile.averageStarRating,
-  NumberOfCalls: state.profileLinguist.NumberOfCalls,
-  Amount: state.profileLinguist.Amount,
+  numberOfCalls: state.profileLinguist.NumberOfCalls,
+  amount: state.profileLinguist.Amount,
   status: state.profileLinguist.status,
-  Username: state.profileLinguist.Username,
+  uuid: state.auth.uuid,
+  token: state.auth.token,
   firstName: state.userProfile.firstName,
   lastName: state.userProfile.lastName,
   avatarURL: state.userProfile.avatarURL,
@@ -235,4 +237,4 @@ const mD = {
   getInvitations
 };
 
-export default connect(mS, mD)(HomeLinguist);
+export default connect(mS, mD)(Home);

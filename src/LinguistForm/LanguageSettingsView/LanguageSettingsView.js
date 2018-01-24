@@ -9,7 +9,7 @@ import {
   LANGUAGE_INTERPRETATION_LIST,
   PROFICIENCY_LIST
 } from "../../Ducks/LinguistFormReducer";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, View, ScrollView, Image, Alert } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -65,7 +65,7 @@ class LanguageSettingsView extends Component {
             selectedProficiency: item,
             selectedLanguage: {
               ...this.props.selectedLanguage,
-              proficiency: item.name
+              proficiency: item
             }
           });
         }}
@@ -89,7 +89,7 @@ class LanguageSettingsView extends Component {
             selectedLanguageIterpretation: item,
             selectedLanguage: {
               ...this.props.selectedLanguage,
-              interpretation: item.name
+              interpretation: item
             }
           });
         }}
@@ -117,7 +117,6 @@ class LanguageSettingsView extends Component {
               style={styles.linearGradient}
             />
             {/* Header - Navigation */}
-            <TopViewIOS/> 
             <Header
               outerContainerStyles={styles.header}
               backgroundColor="transparent"
@@ -171,7 +170,7 @@ class LanguageSettingsView extends Component {
                 Alert.alert("Please, select at least one item of each list");
               } else {
                 const selectedSecondaryLanguagesList = selectedSecondaryLanguages.filter(
-                  e => e.code !== selectedLanguage.code
+                  e => e["3"] !== selectedLanguage["3"]
                 );
 
                 this.props.updateSettings({

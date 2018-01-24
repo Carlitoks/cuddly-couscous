@@ -8,7 +8,8 @@ import Profile from "../Profile";
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallHistory from "../Containers/CallHistory/CallHistory";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
-import ContactingLinguist from "../CallCustomer/ContactingLinguist/ContactingLinguistView";
+// import ContactingLinguist from "../CallCustomer/ContactingLinguist/ContactingLinguistView";
+import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
 import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
 import NameCustomerView from "../Onboarding/NameCustomerView/NameCustomerView";
 import EmailCustomerView from "../Onboarding/EmailCustomerView/EmailCustomerView";
@@ -17,11 +18,15 @@ import GenderCustomerView from "../Onboarding/GenderCustomerView/GenderCustomerV
 import PhoneCustomerView from "../Onboarding/PhoneCustomerView/PhoneCustomerView";
 import LanguageCustomerView from "../Onboarding/LanguageCustomerView/LanguageCustomerView";
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
-import CustomerView from "../Containers/CallConection/Customer/CustomerView";
+// import CustomerView from "../Containers/CallConection/Customer/CustomerView";
+import CustomerView from "../Call/Customer/Call/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
 import Home from "../Home/Home";
-import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
-import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
+//import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
+import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
+//import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
+import LinguistView from "../Call/Linguist/Call/LinguistView";
+
 import LoginView from "../Onboarding/LoginView/LoginView";
 import MenuView from "../Components/MenuView/MenuView";
 
@@ -34,7 +39,9 @@ import RateCallView from "../RateCall/RateExperience/RateExperienceView";
 import NameLinguistView from "../LinguistForm/NameLinguistView/NameLinguistView";
 import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguistView";
 import EmailLinguistView from "../LinguistForm/EmailLinguistView/EmailLinguistView";
+import PasswordLinguistView from "../LinguistForm/PasswordLinguistView/PasswordLinguistView";
 import SelectListView from "../LinguistForm/SelectListView/SelectListView";
+import FamiliarityView from "../LinguistForm/FamiliarityView/FamiliarityView";
 
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
@@ -111,9 +118,10 @@ const Navigation = StackNavigator(
     GenderLinguistView: { screen: GenderLinguistView },
     EmailLinguistView: { screen: EmailLinguistView },
     PhoneLinguistView: { screen: PhoneLinguistView },
+    PasswordLinguistView: { screen: PasswordLinguistView },
     VerifyPhoneLinguistView: { screen: VerifyPhoneLinguistView },
-    LinguistView: { screen: LinguistView },
     SessionInfoView: { screen: SessionInfoView },
+    LinguistView: { screen: LinguistView },
     LoginView: {
       screen: LoginView,
       navigationOptions: {
@@ -131,6 +139,9 @@ const Navigation = StackNavigator(
     },
     LanguageSettingsView: {
       screen: LanguageSettingsView
+    },
+    FamiliarityView: {
+      screen: FamiliarityView
     },
     SelectRoleView: {
       screen: SelectRoleView,

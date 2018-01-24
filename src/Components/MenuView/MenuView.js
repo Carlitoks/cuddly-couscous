@@ -157,7 +157,8 @@ class MenuView extends Component {
               : styles.optionMenu
           }
           onPress={() => {
-            navigation.dispatch({ type: "Profile" });
+            // navigation.dispatch({ type: "Profile" });
+            console.log("Heeeelp");
           }}
         >
           <Text style={styles.colorText}>{EN["help"]}</Text>

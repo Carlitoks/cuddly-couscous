@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import {
   updateSettings,
-  ASSITANCE_LIST,
   getAssistanceList
 } from "../../Ducks/ContactLinguistReducer";
 
@@ -21,7 +20,6 @@ import LinearGradient from "react-native-linear-gradient";
 
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import EN from "../../I18n/en";
@@ -82,7 +80,6 @@ class AssistanceView extends Component {
           <Grid>
             <Col>
               <Row>
-              <TopViewIOS/>
                 {/* Linear Gradient */}
                 <LinearGradient
                   colors={[
@@ -145,7 +142,7 @@ class AssistanceView extends Component {
           }}
           buttonStyle={styles.buttonStep}
           title="Call"
-          onPress={() => navigation.dispatch({ type: "ContactingLinguist" })}
+          onPress={() => navigation.dispatch({ type: "CustomerView" })}
         />
       </ViewWrapper>
     );

@@ -17,7 +17,6 @@
 		0783BEC2D56942E9857915B2 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AFD24B217EF450CA33DDB3F /* MaterialCommunityIcons.ttf */; };
 		079A46DBEB214E899A948026 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA03D84021B546C48F0FF00A /* OpenSans-Light.ttf */; };
 		07ACDDC41FE6D74A00EDA234 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
-		07C9C1A82013152800524641 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C9C1A72013152800524641 /* StoreKit.framework */; };
 		0C727EBB73954DBBAF6503B9 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73CFB4E6098944B384CC73B0 /* OpenSans-Bold.ttf */; };
 		0D96E2411D0F4BFB9B74392D /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D04F8B78B9D14E3E87439552 /* Octicons.ttf */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
@@ -343,7 +342,6 @@
 		00E356EE1AD99517003FC87E /* NewSoloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewSoloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* NewSoloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewSoloTests.m; sourceTree = "<group>"; };
-		07C9C1A72013152800524641 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139C8285B0174D19BCF04E50 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Regular.ttf"; path = "../src/Assets/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -399,7 +397,6 @@
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				07ACDDC41FE6D74A00EDA234 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				07C9C1A82013152800524641 /* StoreKit.framework in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
@@ -527,7 +524,6 @@
 		07ACDDB31FE6D39500EDA234 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				07C9C1A72013152800524641 /* StoreKit.framework */,
 				9DBB547A6351E63F62E93EA5 /* libPods-NewSolo.a */,
 			);
 			name = Frameworks;
@@ -799,13 +795,13 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = ZBN2633FB9;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Maps.iOS = {
 								enabled = 0;
@@ -1439,11 +1435,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZBN2633FB9;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1458,8 +1454,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gps.solo;
 				PRODUCT_NAME = NewSolo;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a8d94708-d188-4565-8e42-a2667d5497b7";
+				PROVISIONING_PROFILE_SPECIFIER = "Test Onvoy";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1471,10 +1467,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZBN2633FB9;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1489,8 +1485,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gps.solo;
 				PRODUCT_NAME = NewSolo;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a8d94708-d188-4565-8e42-a2667d5497b7";
+				PROVISIONING_PROFILE_SPECIFIER = "Test Onvoy";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

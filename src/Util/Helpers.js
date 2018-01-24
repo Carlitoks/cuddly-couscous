@@ -140,3 +140,14 @@ export const isCurrentView = (navigation, viewName) =>
   navigation.state.routes[0].routes[
     navigation.state.routes[0].routes.length - 1
   ].routeName === viewName;
+
+/**
+ * @description Validates a phone number
+ * @param {String} phoneNumber phone number to check
+ *
+ * @returns {Boolean} true when it's match and false if isn't
+ */
+export const validatePhoneNumber = phoneNumber => {
+  const phoneRegex = /^\([\d]{3}\)\s[\d]{3}-[\d]{4}$/g;
+  return phoneRegex.test(phoneNumber);
+};

@@ -66,6 +66,9 @@ class UserProfileView extends Component {
             })[0];
           }
         );
+        this.props.updateSettings({
+          selectedAreasOfExpertise: areasOfExpertise
+        });
       }
     }
     if (this.props.selectedNativeLanguage.length === 0)
@@ -80,8 +83,7 @@ class UserProfileView extends Component {
       this.props.selectedSecondaryLanguages.length === 0
     ) {
       this.props.updateSettings({
-        selectedSecondaryLanguages: secondaryLanguages,
-        selectedAreasOfExpertise: areasOfExpertise
+        selectedSecondaryLanguages: secondaryLanguages
       });
     }
   }

@@ -1,4 +1,6 @@
 import AXIOS from "../Config/AxiosConfig";
+import Languages from "../Config/Languages";
+import Countries from "../Config/countries";
 
 const BASE_URI = "/sessions";
 
@@ -50,15 +52,11 @@ const Session = {
       headers: { Authorization: `Bearer ${token}` }
     });
   },
-  //The linguist accepts the invitation and creates the tokbox token, accept is boolean
-  LinguistAcceptsInvite: (invitationID, accept, token) => {
-    return AXIOS.put(
-      `session-invitations/${invitationID}`,
-      { accept: true },
-      {
-        headers: { Authorization: `Bearer ${token}` }
-      }
-    );
+  //The linguist accepts or declines the session invitation
+  LinguistIncomingCallResponse: (invitationID, reason, token) => {
+    return AXIOS.put(`session-invitations/${invitationID}`, reason, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   },
   // Customer ends session - signal kick to all participants
   EndSession: (sessionID, reason, token) => {
@@ -85,72 +83,16 @@ const Session = {
     });
   },
   GetLanguages: () => {
-    const Languages = [
-      {
-        name: "English",
-        code: "eng"
-      },
-      {
-        name: "Albanian",
-        code: "sqi"
-      },
-      {
-        name: "Amharic",
-        code: "amh"
-      },
-      {
-        name: "Spanish",
-        code: "spa"
-      },
-      {
-        name: "Armenian",
-        code: "hye"
-      },
-      {
-        name: "Basque",
-        code: "eus"
-      },
-      {
-        name: "Bengali",
-        code: "ben"
-      },
-      {
-        name: "Russian",
-        code: "rus"
-      },
-      {
-        name: "Burmese",
-        code: "mya"
-      },
-      {
-        name: "Bulgarian",
-        code: "bul"
-      },
-      {
-        name: "Catalan",
-        code: "cat"
-      }
-    ];
-
     return Languages;
   },
   GetCitizenships: () => {
-    const Citizenships = [
-      {
-        name: "English"
-      },
-      {
-        name: "Spanish"
-      },
-      {
-        name: "Russian"
-      },
-      {
-        name: "German"
-      }
-    ];
-
-    return Citizenships;
+    return Countries;
+  },
+  GetCountryFamiliarities: () => {
+    return Countries;
+  },
+  GetCityFamiliarities: () => {
+    return Countries;
   },
   GetAreasOfExpertise: () => {
     return [

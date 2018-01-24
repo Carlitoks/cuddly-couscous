@@ -22,16 +22,13 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     marginTop: moderateScale(20),
     color: "white",
-    backgroundColor: "transparent"
-  },
-  inputText: {
-    fontSize: 20,
-    color: "black",
-    paddingBottom: 30,
-    backgroundColor: "transparent"
+    backgroundColor: "transparent" 
   },
   containerInput: {
-    marginTop: 20
+    marginTop: moderateScale(20),
+    fontSize: 20,
+    color: "black",
+    paddingBottom: moderateScale(35)
   },
   containerBottom: {
     backgroundColor: "black",

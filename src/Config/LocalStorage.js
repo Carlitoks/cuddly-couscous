@@ -1,6 +1,5 @@
 import { AsyncStorage } from "react-native";
 import { Promise } from "bluebird";
-import { AsyncAcceptsInvite } from "../Ducks/CallLinguistSettings";
 
 export const clearState = () => {
   try {

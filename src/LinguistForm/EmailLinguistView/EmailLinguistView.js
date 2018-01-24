@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, TextInput } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormLabel, FormInput, Header } from "react-native-elements";
+import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import Header from "../Header/Header";
 
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
@@ -54,7 +55,7 @@ class EmailLinguist extends Component {
 
   submit() {
     if (this.validateForm()) {
-      this.props.navigation.dispatch({ type: "GenderLinguistView" });
+      this.props.navigation.dispatch({ type: "PasswordLinguistView" });
     }
   }
 
@@ -80,47 +81,21 @@ class EmailLinguist extends Component {
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS/> 
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
-                  />
-                  {/* Enter your Name */}
-                  <Text style={styles.mainTitle}>
-                    {EN["linguistEmailTitle"]}
-                  </Text>
-                </Col>
-              </Row>
-              <View>
-                <FormInput
-                  containerStyle={styles.containerInput}
-                  inputStyle={styles.inputText}
-                  placeholder={EN["linguistEmail"]}
-                  autoCorrect={false}
-                  onChangeText={text => this.props.updateForm({ email: text })}
-                  value={this.props.email}
-                  keyboardType={"email-address"}
-                />
-              </View>
-            </Col>
-          </Grid>
+          <Header
+            navigation={this.props.navigation}
+            mainTitle={EN["linguistEmailTitle"]}
+          />
+          <View>
+            <TextInput
+              style={styles.containerInput}
+              placeholder={EN["linguistEmail"]}
+              autoCorrect={false}
+              onChangeText={text => this.props.updateForm({ email: text })}
+              value={this.props.email}
+              keyboardType={"email-address"}
+              maxLength={64}
+            />
+          </View>
         </ScrollView>
         <View style={styles.containerBottom}>
           {/* Next Button */}
@@ -143,6 +118,7 @@ const mS = state => ({
 
 const mD = {
   updateForm,
+  clearForm
 };
 
 export default connect(mS, mD)(EmailLinguist);

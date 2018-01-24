@@ -13,20 +13,16 @@ import {
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import {
-  Button,
-  FormLabel,
-  FormInput,
-  Header,
-  Badge
-} from "react-native-elements";
+import { Button, Badge } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import Header from "../Header/Header";
+import { validatePhoneNumber } from "../../Util/Helpers.js";
 
 import styles from "./styles";
-import { Images, Colors } from "../../Themes";
+import { Colors } from "../../Themes";
 import EN from "../../I18n/en";
 
 class PhoneLinguist extends Component {
@@ -56,6 +52,14 @@ class PhoneLinguist extends Component {
       updates = {
         ...updates,
         phoneErrorMessage: "Please enter your Phone Number"
+      };
+      valid = false;
+    }
+
+    if (!validatePhoneNumber(this.props.phoneNumber)) {
+      updates = {
+        ...updates,
+        phoneErrorMessage: "Please enter a valid Phone Number"
       };
       valid = false;
     }
@@ -100,59 +104,33 @@ class PhoneLinguist extends Component {
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS/> 
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
-                  />
-                  {/* Enter phone number */}
-                  <Text style={styles.mainTitle}>{EN["linguistNumber"]}</Text>
-                  {/* subtitle */}
-                  <Text style={styles.mainSubtitle}>
-                    {EN["linguistNumberText"]}
-                  </Text>
-                </Col>
-              </Row>
-              <View style={styles.phoneSection}>
-                <Badge
-                  value="+1"
-                  containerStyle={styles.tagCode}
-                  textStyle={styles.codeText}
-                />
-                <TextInput
-                  style={styles.containerInput}
-                  onChangeText={number => {
-                    const phoneNumber = this.mask(number);
-                    this.props.updateForm({
-                      phoneNumber
-                    });
-                  }}
-                  placeholder="(201) 555-0132"
-                  value={this.props.phoneNumber}
-                  keyboardType={
-                    Platform.OS === "ios" ? "number-pad" : "numeric"
-                  }
-                />
-              </View>
-            </Col>
-          </Grid>
+          <View>
+            <Header
+              navigation={this.props.navigation}
+              mainTitle={EN["linguistNumber"]}
+              subtitle={EN["linguistNumberText"]}
+            />
+            <View style={styles.phoneSection}>
+              <Badge
+                value="+1"
+                containerStyle={styles.tagCode}
+                textStyle={styles.codeText}
+              />
+              <TextInput
+                style={styles.containerInput}
+                onChangeText={number => {
+                  const phoneNumber = this.mask(number);
+                  this.props.updateForm({
+                    phoneNumber
+                  });
+                }}
+                placeholder="(201) 555-0132"
+                maxLength={14}
+                value={this.props.phoneNumber}
+                keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
+              />
+            </View>
+          </View>
         </ScrollView>
         <View style={styles.containerBottom}>
           {/* Next Button */}

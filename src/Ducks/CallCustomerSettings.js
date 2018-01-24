@@ -1,6 +1,7 @@
 import { networkError } from "./NetworkErrorsReducer";
 import { Sessions } from "../Api";
 
+
 // Actions
 export const ACTIONS = {
   CLEAR: "callCustomerSettings/clear",
@@ -94,7 +95,6 @@ export const AsyncCreateSession = ({
     })
     .catch(error => {
       dispatch(networkError(error));
-      console.log(error);
       if (error.response) {
         console.log(error.response);
       }
@@ -111,12 +111,12 @@ export const AsyncCreateInvitation = (
   role,
   token
 ) => dispatch => {
-  Sessions.customerInvitation(sessionID, linguistID, role, token)
+  return Sessions.customerInvitation(sessionID, linguistID, role, token)
     .then(response => {
-      dispatch(createInvitation(response.data));
+      return dispatch(createInvitation(response.data));
     })
     .catch(error => {
-      dispatch(networkError(error));
+      return dispatch(networkError(error));
     });
 };
 
@@ -135,7 +135,7 @@ const initialState = {
   customerPreferredSex: "any",
 
   // Max Call Time
-  timeOptions: 12, // Ammount of options on the Picker
+  timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 10 // Initial time selected: 10 min
 };
 

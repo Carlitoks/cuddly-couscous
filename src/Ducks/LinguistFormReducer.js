@@ -1,29 +1,33 @@
-import { Sessions } from "../Api";
+import { Sessions, Linguist } from "../Api";
+import { networkError } from "./NetworkErrorsReducer";
 import { Images } from "../Themes/Images";
 import EN from "../I18n/en";
 
 // Constants
 export const LANGUAGE_INTERPRETATION_LIST = [
-  { name: "Frequently" },
-  { name: "Occasionally" },
-  { name: "None" }
+  { name: "Frequently", code: "frequent" },
+  { name: "Occasionally", code: "some" },
+  { name: "None", code: "none" }
 ];
 
 export const PROFICIENCY_LIST = [
   {
     name: "Basic",
     avatar_url: "expertise_A1",
-    subtitle: EN["expertise_A1"]
+    subtitle: EN["expertise_A1"],
+    code: "basic"
   },
   {
     name: "Intermediate",
     avatar_url: "expertise_B1",
-    subtitle: EN["expertise_B1"]
+    subtitle: EN["expertise_B1"],
+    code: "intermediate"
   },
   {
     name: "Fluent",
     avatar_url: "expertise_C1",
-    subtitle: EN["expertise_C1"]
+    subtitle: EN["expertise_C1"],
+    code: "fluent"
   }
 ];
 
@@ -111,9 +115,13 @@ const initialState = {
   phoneNumber: "",
   // Verify Phone
   VerifyPhoneNumber: "",
+  // Password
+  password: "",
   // Language selection
   languages: [],
-  citizenchips: [],
+  citizenships: [],
+  countryFamiliarities: [],
+  cityFamiliarities: [],
   areasOfExpertise: [],
   searchQuery: "",
   selectionItemType: "",
@@ -122,6 +130,8 @@ const initialState = {
   selectedAreasOfExpertise: [],
   selectedSecondaryLanguages: [],
   selectedCitizenship: [],
+  selectedCountryFamiliarity: [],
+  selectedCityFamiliarity: [],
   selectedProficiency: null,
   selectedLanguageInterpretation: null,
   linguistInfo: null,
@@ -132,9 +142,11 @@ const initialState = {
 export const getItems = type => dispatch => {
   const types = {
     languages: Sessions.GetLanguages,
-    citizenchips: Sessions.GetCitizenships,
+    citizenships: Sessions.GetCitizenships,
     nativeLanguage: Sessions.GetLanguages,
-    areasOfExpertise: Sessions.GetAreasOfExpertise
+    areasOfExpertise: Sessions.GetAreasOfExpertise,
+    countryFamiliarities: Sessions.GetCountryFamiliarities,
+    cityFamiliarities: Sessions.GetCityFamiliarities
   };
 
   dispatch(updateSettings({ [type]: types[type]() }));

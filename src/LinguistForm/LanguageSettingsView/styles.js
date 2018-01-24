@@ -19,7 +19,7 @@ export default StyleSheet.create({
     marginBottom: 40,
     marginTop: moderateScale(20),
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: "transparent" 
   },
   linearGradient: {
     position: "absolute",
@@ -45,8 +45,7 @@ export default StyleSheet.create({
     paddingRight: 10
   },
   title: {
-    paddingLeft: 10,
-    backgroundColor: "transparent"
+    paddingLeft: 10
   },
   interpretationItem: {
     height: 30

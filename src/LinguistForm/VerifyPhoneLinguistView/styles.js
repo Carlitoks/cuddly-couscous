@@ -22,15 +22,14 @@ export default StyleSheet.create({
     marginBottom: moderateScale(10),
     marginTop: moderateScale(20),
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: "transparent" 
   },
   mainSubtitle: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: 18,
     textAlign: "center",
     marginBottom: moderateScale(30),
-    color: "white",
-    backgroundColor: "transparent"
+    color: "white"
   },
   numberFields: {
     flexDirection: "row",

@@ -14,7 +14,7 @@ const { width, height } = Dimensions.get("window");
 
 class ScanScreenView extends Component {
   state = {
-    reactivate: true
+    reactivate: false
   };
 
   onSuccess = e => {
@@ -25,22 +25,17 @@ class ScanScreenView extends Component {
         reactivate: false
       });
 
+      console.log(qrObj);
+      console.log(this.props.token);
       if (this.props.token) {
         this.props.navigation.dispatch({
-          type: "ContactingLinguist"
+          type: "CustomerView"
         });
       } else {
         this.props.navigation.dispatch({
           type: "LoginView"
         });
       }
-
-      setTimeout(()=>{
-        this.setState({
-          reactivate: true
-        });  
-      }, 2000);
-
     } catch (err) {
       this.setState({
         reactivate: true

@@ -3,15 +3,16 @@ import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, TextInput } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormLabel, FormInput, Header } from "react-native-elements";
+import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import Header from "../Header/Header";
+
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import EN from "../../I18n/en";
@@ -87,81 +88,45 @@ class NameLinguist extends Component {
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS/> 
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
-                  />
-                  {/* Enter your Name */}
-                  <Text style={styles.mainTitle}>
-                    {this.props.mainTitle} {this.props.lastname}
-                  </Text>
-                  {/* subtitle */}
-                  <Text style={styles.mainSubtitle}>
-                    {EN["NameLinguistText"]}
-                  </Text>
-                </Col>
-              </Row>
-              <Row>
-                <View>
-                  <FormInput
-                    containerStyle={styles.containerInput}
-                    inputStyle={styles.inputText}
-                    placeholder={EN["linguistName"]}
-                    onChangeText={text =>
-                      this.props.updateForm({
-                        firstname: text,
-                        mainTitle: text
-                      })}
-                    value={this.props.name}
-                  />
-                </View>
-              </Row>
-              <Row>
-                <View>
-                  <FormInput
-                    containerStyle={styles.containerInput}
-                    inputStyle={styles.inputText}
-                    placeholder={EN["linguistLastName"]}
-                    onChangeText={text =>
-                      this.props.updateForm({ lastname: text })}
-                    value={this.props.name}
-                  />
-                </View>
-              </Row>
-
-              <View>
-                <FormInput
-                  containerStyle={styles.containerInput}
-                  inputStyle={styles.inputText}
-                  placeholder={EN["preferredName"]}
-                  value={this.props.preferredName}
-                  onChangeText={text =>
-                    this.props.updateForm({ preferredName: text })}
-                />
-                <Text style={styles.formText}>
-                  {EN["preferredLinguistText"]}
-                </Text>
-              </View>
-            </Col>
-          </Grid>
+          <View>
+            <Header
+              navigation={this.props.navigation}
+              mainTitle={`${this.props.mainTitle} ${this.props.lastname}`}
+              subtitle={EN["NameLinguistText"]}
+            />
+            <View>
+              <TextInput
+                style={styles.containerInput}
+                placeholder={EN["linguistName"]}
+                onChangeText={text =>
+                  this.props.updateForm({
+                    firstname: text,
+                    mainTitle: text
+                  })
+                }
+                value={this.props.name}
+              />
+            </View>
+            <View style={styles.containerView}>
+              <TextInput
+                style={styles.containerInput}
+                placeholder={EN["linguistLastName"]}
+                onChangeText={text => this.props.updateForm({ lastname: text })}
+                value={this.props.name}
+              />
+            </View>
+            <View style={styles.containerView}>
+              <TextInput
+                style={styles.containerInput}
+                placeholder={EN["preferredName"]}
+                value={this.props.preferredName}
+                onChangeText={text =>
+                  this.props.updateForm({ preferredName: text })
+                }
+              />
+              <Text style={styles.formText}>{EN["preferredLinguistText"]}</Text>
+            </View>
+          </View>
         </ScrollView>
         <View style={styles.containerBottom}>
           {/* Next Button */}

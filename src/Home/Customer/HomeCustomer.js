@@ -8,29 +8,32 @@ import {
 } from "../../Ducks/UserProfileReducer";
 
 import { View, Text, Image, ScrollView } from "react-native";
-import { StyleSheet, Dimensions } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { Button, FormLabel, FormInput, Header,  Badge,
+import {
+  Button,
+  FormLabel,
+  FormInput,
+  Header,
+  Badge,
   Rating,
-  Avatar } from "react-native-elements";
+  Avatar
+} from "react-native-elements";
 import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
+
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
-import styles from "./styles";
-import { Colors } from "../../Themes";
-import EN from "../../I18n/en";
-import Images from "../../Themes/Images";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import { IMAGE_STORAGE_URL } from "../../Config/env";
-class HomeCustomer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { starCount: 4.3 };
-  }
 
+import { Sessions } from "../../Api";
+
+import styles from "./styles";
+import { Colors, Images } from "../../Themes";
+import EN from "../../I18n/en";
+import { IMAGE_STORAGE_URL } from "../../Config/env";
+
+class Home extends Component {
   componentWillMount() {
     const { firstName, lastName } = this.props;
 
@@ -43,13 +46,12 @@ class HomeCustomer extends Component {
     // this.props.clearView();
   }
 
-
   onStarRatingPress(rating) {
     this.setState({
       starCount: rating
     });
   }
-  
+  navigate = this.props.navigation.navigate;
 
   render() {
     const { firstName, lastName, avatarURL, navigation } = this.props;
@@ -76,7 +78,6 @@ class HomeCustomer extends Component {
                   style={styles.linearGradient}
                 />
                 {/* Header - Navigation */}
-                <TopViewIOS/> 
                 <Header
                   outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                   backgroundColor="transparent"
@@ -84,7 +85,7 @@ class HomeCustomer extends Component {
                     <ShowMenuButton navigation={this.props.navigation} />
                   }
                   centerComponent={{
-                    text: `${this.props.firstName} ${this.props.lastName}`,
+                    text: `${firstName} ${lastName}`,
                     style: styles.title
                   }}
                   rightComponent={
@@ -98,11 +99,13 @@ class HomeCustomer extends Component {
                     rounded
                     xlarge
                     source={
-                      avatarURL
-                        ? {
-                            uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getMilliseconds()}`
-                          }
-                        : Images.avatar
+                      avatarURL ? (
+                        {
+                          uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getMilliseconds()}`
+                        }
+                      ) : (
+                        Images.avatar
+                      )
                     }
                     activeOpacity={0.7}
                   />
@@ -134,6 +137,7 @@ class HomeCustomer extends Component {
               </Col>
               <Col>
                 <View style={styles.containerButtons}>
+                  <View>
                     <Button
                       borderRadius={15}
                       containerViewStyle={styles.callLinguistContainer}
@@ -141,8 +145,7 @@ class HomeCustomer extends Component {
                       onPress={() =>
                         this.props.navigation.dispatch({
                           type: "ContactLinguist"
-                        })
-                      }
+                        })}
                       textStyle={[styles.buttonText, styles.center]}
                       title={EN["callLinguist"]}
                       icon={{
@@ -151,27 +154,30 @@ class HomeCustomer extends Component {
                         color: Colors.primaryAltFontColor
                       }}
                     />
+                  </View>
+
                   <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
                     onPress={() =>
-                      navigation.dispatch({ type: "ScanScreenView" })
-                    }
-                    icon={{ name: "dashboard", size: 30, color: "gray" }}
+                      navigation.dispatch({ type: "ScanScreenView" })}
+                    icon={{
+                      name: "dashboard",
+                      size: 30,
+                      color: "gray"
+                    }}
                     textStyle={[styles.buttonTextSecondary, styles.center]}
                     title="Scan a QR Code"
                   />
-                  <Button
+                  {/* <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
                     onPress={() => console.log("navigating")}
                     icon={{ name: "today", size: 30, color: "gray" }}
                     title="Schedule a Linguist"
                     textStyle={[styles.buttonTextSecondary, styles.center]}
-                  />
-                  <Button
+                  /> */}
+                  {/* <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
-                    onPress={() =>
-                      this.props.navigation.dispatch({ type: "Home" })
-                    }
+                    onPress={() => console.log("navigating")}
                     title="Favorites"
                     textStyle={[styles.buttonTextSecondary, styles.center]}
                     icon={{ name: "favorite", size: 30, color: "gray" }}
@@ -183,14 +189,17 @@ class HomeCustomer extends Component {
                         name="favorite"
                         size={30}
                         color={"#9391f7"}
-                        onPress={() =>  this.props.navigation.dispatch({ type: "Home" })}
+                        onPress={() =>
+                          this.props.navigation.dispatch({
+                            type: "LandingContainer"
+                          })}
                       />
                       <Text style={[styles.buttonTextSecondary, styles.center]}>
                         Favorites
                       </Text>
                       <View style={styles.box3} />
                     </View>
-                  </Button>
+                  </Button> */}
                 </View>
               </Col>
             </Col>
@@ -201,7 +210,6 @@ class HomeCustomer extends Component {
   }
 }
 
-
 const mS = state => ({
   firstName: state.userProfile.firstName,
   lastName: state.userProfile.lastName,
@@ -209,13 +217,13 @@ const mS = state => ({
   avatarURL: state.userProfile.avatarURL,
   uuid: state.auth.uuid,
   token: state.auth.token,
-  rate: state.userProfile.averageStarRating 
+  rate: state.userProfile.averageStarRating
 });
 
 const mD = {
   clearView,
   updateView,
-  getProfileAsync,
+  getProfileAsync
 };
 
-export default connect(mS, mD)(HomeCustomer);
+export default connect(mS, mD)(Home);

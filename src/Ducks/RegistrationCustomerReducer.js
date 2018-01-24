@@ -2,6 +2,7 @@ import { Auth, User } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
+import { androidDeviceIDToPseudoUUID } from "../Util/Helpers";
 
 const ACTIONS = {
   CLEAR: "registrationCustomer/clear",
@@ -60,7 +61,6 @@ export const registerDevice = () => dispatch => {
   };
   return Auth.registerDevice(deviceInfo)
     .then(response => {
-      console.log(response.data);
       return dispatch(upateDeviceToken(response.data));
     })
     .catch(err => dispatch(networkError(err)));
