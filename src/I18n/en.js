@@ -128,5 +128,9 @@ export default (ENG = {
   settings: "Settings",
   help: "Help",
   becomeLinguist: "Become a Linguist",
-  holdToScan: "Hold the device's camera up to the QR code"
+  holdToScan: "Hold the device's camera up to the QR code",
+  allowExtraTime: "Allow extra time",
+  call:"Call",
+  callInProgress: "Call in progress",
+  contacting: "Contacting",
 });

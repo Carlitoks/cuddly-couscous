@@ -19,10 +19,22 @@ import { AppRegistry, Button, View, Text, Image } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { CallButton } from "../../../Components/CallButton/CallButton";
 
+import { Colors, Images } from "../../../Themes";
 import { fmtMSS } from "../../../Util/Helpers";
 import styles from "./styles";
 
-import ContactingLinguistView from "../ContactingLinguist/ContactingLinguistView"
+import EN from "../../../I18n/en";
+import ContactingLinguistView from "../ContactingLinguist/ContactingLinguistView";
+import { 
+  EmitLocalCallNotification,
+  CleanCallNotifications
+} from '../../../Util/Notifications';
+import {
+  BackgroundInterval,
+  BackgroundCleanInterval,
+  BackgroundStart
+} from "../../../Util/Background"
+
 
 const STATUS_TOKBOX = {
   DISCONECTED: 0,
@@ -47,6 +59,25 @@ class CustomerView extends Component {
       AsyncCreateSession,
       updateSettings
     } = this.props;
+
+     /*if (InCallManager.recordPermission !== "granted") {
+      InCallManager.requestRecordPermission()
+        .then(requestedRecordPermissionResult => {
+          console.log(
+            "InCallManager.requestRecordPermission() requestedRecordPermissionResult: ",
+            requestedRecordPermissionResult
+          );
+        })
+        .catch(err => {
+          console.log("InCallManager.requestRecordPermission() catch: ", err);
+        });
+    }*/
+
+    // Generate calling notification
+    EmitLocalCallNotification({
+      title: "Call", 
+      message: EN["contacting"]+" ..."
+    });
     
     try {
       const res = await AsyncCreateSession({
@@ -80,13 +111,19 @@ class CustomerView extends Component {
         );
 
         await tokConnect(tokboxSessionId, tokboxToken);
+        
       }
     } catch (e) {
       console.log("The session could not be created", e);
     }
   }
 
+  componentWillMount(){
+    BackgroundStart()
+  }
+
   componentWillUnmount() {
+    BackgroundCleanInterval(this.props.timer);
     this.props.resetTimerAsync();
     this.props.clearCallSettings();
    // InCallManager.stop();
@@ -100,14 +137,23 @@ class CustomerView extends Component {
       selectedCallTime
     } = this.props;
     const callTime = selectedCallTime * 60
+
     this.props.updateSettings({
-      timer: setInterval(() => {
+      timer: BackgroundInterval(() => {
+        console.log("Backgorund Interval");
         if (this.props.elapsedTime > callTime) {
           OpenTok.disconnect(this.props.customerTokboxSessionID);
           this.props.tokDisConnect(this.props.customerTokboxSessionID);
           this.props.EndCall(sessionID, "done", token);
         } else {
           this.props.incrementTimer();
+          const min = (this.props.elapsedTime/60).toFixed(0)
+          const sec = this.props.elapsedTime%60
+
+          EmitLocalCallNotification({
+            title: EN["call"], 
+            message: EN["callInProgress"] + " " + (min < 10 ? "0" : "") + min +":"+ (sec < 10 ? "0" : "") + sec 
+          });
         }
       }, 1000)
     });

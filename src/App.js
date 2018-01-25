@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { Text, NetInfo, SafeAreaView, StyleSheet } from "react-native";
-
+import PushNotification from "react-native-push-notification"
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 
@@ -45,6 +45,11 @@ class App extends Component {
 
         store.dispatch(updateNetworkInfo(connectionInfo));
       });
+      //PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
+  //PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
+  // you could check the app state to respond differently to push notifications depending on if the app is running in the background or is currently active.
+     console.log(PushNotification);
+  PushNotification.requestPermissions();
   }
 
   componentWillUnmount() {
