@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Alert, Platform, ScrollView, View, Text } from "react-native";
+import { Alert, Platform, ScrollView, View, Text, KeyboardAvoidingView } from "react-native";
 import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -114,7 +114,7 @@ class LoginView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
+        <ScrollView alwaysBounceVertical={false}
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
         >
