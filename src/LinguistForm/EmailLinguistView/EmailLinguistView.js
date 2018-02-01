@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert, TextInput } from "react-native";
+import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button } from "react-native-elements";
+import { Button, FormInput } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
@@ -16,7 +16,7 @@ import Header from "../Header/Header";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class EmailLinguist extends Component {
   validateForm() {
@@ -27,7 +27,7 @@ class EmailLinguist extends Component {
     if (!patt.test(this.props.email)) {
       updates = {
         ...updates,
-        emailErrorMessage: "Not A Valid Email"
+        emailErrorMessage: I18n.t("noValidEmail")
       };
       valid = false;
     }
@@ -35,7 +35,7 @@ class EmailLinguist extends Component {
     if (!this.props.email) {
       updates = {
         ...updates,
-        emailErrorMessage: "Please enter your email"
+        emailErrorMessage: I18n.t("enterEmailField")
       };
       valid = false;
     }
@@ -79,16 +79,18 @@ class EmailLinguist extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Header
             navigation={this.props.navigation}
-            mainTitle={EN["linguistEmailTitle"]}
+            mainTitle={I18n.t("linguistEmailTitle")}
           />
           <View>
-            <TextInput
-              style={styles.containerInput}
-              placeholder={EN["linguistEmail"]}
+            <FormInput
+              containerStyle={styles.containerInput}
+              inputStyle={styles.inputText}
+              placeholder={I18n.t("linguistEmail")}
               autoCorrect={false}
               onChangeText={text => this.props.updateForm({ email: text })}
               value={this.props.email}
@@ -97,15 +99,17 @@ class EmailLinguist extends Component {
             />
           </View>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Next"
+            title={I18n.t("next")}
             onPress={() => this.submit()}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

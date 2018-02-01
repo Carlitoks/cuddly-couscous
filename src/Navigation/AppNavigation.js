@@ -21,11 +21,13 @@ import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileVi
 // import CustomerView from "../Containers/CallConection/Customer/CustomerView";
 import CustomerView from "../Call/Customer/Call/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
+import CheckYourEmailView from "../Onboarding/ForgotPasswordView/CheckYourEmailView";
 import Home from "../Home/Home";
 //import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
 import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
 //import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
 import LinguistView from "../Call/Linguist/Call/LinguistView";
+import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 
 import LoginView from "../Onboarding/LoginView/LoginView";
 import MenuView from "../Components/MenuView/MenuView";
@@ -45,10 +47,10 @@ import FamiliarityView from "../LinguistForm/FamiliarityView/FamiliarityView";
 
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
-import SessionInfoView from "../RateCall/SessionInfo/SessionInfoView";
 import CallSettings from "../CallSettings/CallSettings";
 import ScanScreenView from "../Containers/ScanSreenView";
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
+import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
 
 const Navigation = StackNavigator(
   {
@@ -108,6 +110,13 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
+    CheckYourEmailView: {
+      screen: CheckYourEmailView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
     Home: {
       screen: Home
     },
@@ -120,7 +129,6 @@ const Navigation = StackNavigator(
     PhoneLinguistView: { screen: PhoneLinguistView },
     PasswordLinguistView: { screen: PasswordLinguistView },
     VerifyPhoneLinguistView: { screen: VerifyPhoneLinguistView },
-    SessionInfoView: { screen: SessionInfoView },
     LinguistView: { screen: LinguistView },
     LoginView: {
       screen: LoginView,
@@ -151,7 +159,9 @@ const Navigation = StackNavigator(
       }
     },
     CallSettings: { screen: CallSettings },
-    UserProfileView: { screen: UserProfileView }
+    UserProfileView: { screen: UserProfileView },
+    CallConfirmationView: { screen: CallConfirmationView },
+    SessionDetails: { screen: SessionDetails }
   },
   {
     initialRouteName: "SelectRoleView",

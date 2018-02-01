@@ -33,7 +33,10 @@ const colors = {
   selectedBackground: "#EBEDFA",
   background: "#FFFFFF",
   selectedOptionMenu: "#6B8FE0",
-  optionMenu: "#D9D9E6"
+  optionMenu: "#D9D9E6",
+  callButton: "#71D781",
+  cancelButton: "#B0B0B0",
+  black: "#000000"
 };
 
 export default colors;

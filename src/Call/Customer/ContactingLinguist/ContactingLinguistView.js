@@ -20,6 +20,7 @@ import {
   AsyncCreateInvitation,
   clearSettings
 } from "../../../Ducks/CallCustomerSettings";
+import I18n from "../../../I18n/I18n";
 
 class ContactingLinguist extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class ContactingLinguist extends Component {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
+        alwaysBounceVertical={false} 
         style={styles.scrollContainer}
         contentContainerStyle={styles.contentContainerStyle}
       >
@@ -51,7 +53,8 @@ class ContactingLinguist extends Component {
 
               <Text style={styles.callerNameText}>
                 {" "}
-                Contacting available linguist{" "}
+                {I18n.t("contactingLinguist")}
+                {" "}
               </Text>
             </Row>
 
@@ -66,7 +69,7 @@ class ContactingLinguist extends Component {
                     icon="camera-front"
                     iconToggled="camera-rear"
                     opacity={0.7}
-                    label="Rotate"
+                    label={I18n.t("rotate")}
                   />
                 </View>
                 <View style={styles.buttonColumn}>
@@ -80,7 +83,7 @@ class ContactingLinguist extends Component {
                       icon="mic"
                       iconToggled="mic-off"
                       opacity={0.7}
-                      label="Mute"
+                      label={I18n.t("mute")}
                     />
                   </View>
                 </View>
@@ -98,7 +101,7 @@ class ContactingLinguist extends Component {
                     icon="volume-up"
                     iconToggled="volume-off"
                     opacity={0.7}
-                    label="Speaker"
+                    label={I18n.t("speaker")}
                   />
                 </View>
                 <View style={styles.buttonColumn}>
@@ -112,7 +115,7 @@ class ContactingLinguist extends Component {
                       icon="videocam"
                       iconToggled="videocam-off"
                       opacity={0.7}
-                      label="Video"
+                      label={I18n.t("video")}
                     />
                   </View>
                 </View>

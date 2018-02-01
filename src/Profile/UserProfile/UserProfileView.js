@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, ScrollView, Alert, Image } from "react-native";
+import { Text, View, ScrollView, Alert, Image, KeyboardAvoidingView } from "react-native";
 import { connect } from "react-redux";
 import PhotoUpload from "react-native-photo-upload";
 import {
@@ -34,7 +34,7 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import { compareArrays } from "../../Util/Helpers";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import { Images, Colors, Fonts } from "../../Themes";
 import images from "../../Themes/Images";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
@@ -57,6 +57,7 @@ class UserProfileView extends Component {
           return language;
         }
       );
+
       let areasOfExpertise = [];
       if (this.props.linguistProfile.areasOfExpertise) {
         areasOfExpertise = this.props.linguistProfile.areasOfExpertise.map(
@@ -78,10 +79,7 @@ class UserProfileView extends Component {
         )
       });
 
-    if (
-      this.props.linguistProfile &&
-      this.props.selectedSecondaryLanguages.length === 0
-    ) {
+    if (secondaryLanguages) {
       this.props.updateSettings({
         selectedSecondaryLanguages: secondaryLanguages
       });
@@ -98,16 +96,16 @@ class UserProfileView extends Component {
     return (
       <View>
         <Text style={styles.nativeLanguageTitle}>
-          {EN["SecondaryLanguages"]}
+          {I18n.t("SecondaryLanguages")}
         </Text>
         {this.renderSecundaryLanguagesList()}
         <Row style={styles.containerTitles}>
-          <Text style={styles.titlesForm}>Areas of Expertise</Text>
+          <Text style={styles.titlesForm}>{I18n.t("areasExpertise")}</Text>
         </Row>
 
         <List>
           <ListItem
-            title={EN["AreasExpertise"]}
+            title={I18n.t("areasExpertise")}
             onPress={() => {
               this.props.updateSettings({
                 selectionItemType: "areasOfExpertise",
@@ -158,7 +156,7 @@ class UserProfileView extends Component {
       <ListItem
         hideChevron
         titleStyle={styles.primaryColor}
-        title={EN["AddLanguage"]}
+        title={I18n.t("addLanguage")}
         leftIcon={{
           name: "add-circle-outline"
         }}
@@ -201,18 +199,21 @@ class UserProfileView extends Component {
   };
 
   makeListOfLanguages = () => {
-    return compareArrays(
-      this.props.linguistProfile.secondaryLanguages.map(lang => {
+    const linguistLangs = this.props.linguistProfile.secondaryLanguages.map(
+      lang => {
         return lang;
-      }),
-      this.props.selectedSecondaryLanguages.map(lang => {
-        return {
-          code: lang["3"],
-          proficiency: lang.proficiency.code,
-          interpretation: lang.interpretation.code
-        };
-      })
+      }
     );
+    const selectedLangs = this.props.selectedSecondaryLanguages.map(lang => {
+      const clang = {
+        code: lang["3"],
+        proficiency: !lang.proficiency ? null : lang.proficiency.code,
+        interpretation: !lang.interpretation ? null : lang.interpretation.code
+      };
+
+      return clang;
+    });
+    return compareArrays(linguistLangs, selectedLangs);
   };
 
   addLanguage = lang => {
@@ -276,11 +277,10 @@ class UserProfileView extends Component {
   }
 
   saveLinguistData = (uuid, token) => {
-    this.props
+    return this.props
       .linguistUpdate(uuid, token, this.makeLinguistObject())
       .then(() => {
         const lang = this.makeListOfLanguages();
-
         Object.keys(lang).forEach(key => {
           if (lang[key].new && lang[key].type === "created") {
             this.addLanguage(lang[key]).then(response => {
@@ -290,7 +290,7 @@ class UserProfileView extends Component {
             this.deleteLanguage(lang[key]).then(response => {
               this.getUserProfile();
             });
-          } else if (lang[key].code.type == "updated") {
+          } else if (lang[key].code && lang[key].code.type == "updated") {
             this.updatelanguage(lang[key]).then(() => {
               this.getUserProfile();
             });
@@ -352,6 +352,7 @@ class UserProfileView extends Component {
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
+          alwaysBounceVertical={false} 
           contentContainerStyle={styles.contentScrollContainer}
         >
           <Grid>
@@ -375,7 +376,7 @@ class UserProfileView extends Component {
                       <ShowMenuButton navigation={this.props.navigation} />
                     }
                     centerComponent={{
-                      text: EN["userProfile"],
+                      text: I18n.t("userProfile"),
                       style: styles.title
                     }}
                   />
@@ -403,13 +404,13 @@ class UserProfileView extends Component {
               </View>
 
               <Row style={styles.containerTitles}>
-                <Text style={styles.titlesForm}>{EN["Firstname"]}</Text>
+                <Text style={styles.titlesForm}>{I18n.t("firstname")}</Text>
               </Row>
               <Row>
                 <FormInput
                   containerStyle={styles.containerInput}
                   inputStyle={styles.inputText}
-                  placeholder={EN["linguistName"]}
+                  placeholder={I18n.t("linguistName")}
                   onChangeText={text =>
                     this.props.updateView({ firstName: text })
                   }
@@ -417,13 +418,13 @@ class UserProfileView extends Component {
                 />
               </Row>
               <Row style={styles.containerTitles}>
-                <Text style={styles.titlesForm}>{EN["Lastname"]}</Text>
+                <Text style={styles.titlesForm}>{I18n.t("lastname")}</Text>
               </Row>
               <Row>
                 <FormInput
                   containerStyle={styles.containerInput}
                   inputStyle={styles.inputText}
-                  placeholder={EN["linguistName"]}
+                  placeholder={I18n.t("linguistName")}
                   onChangeText={text =>
                     this.props.updateView({ lastName: text })
                   }
@@ -431,13 +432,13 @@ class UserProfileView extends Component {
                 />
               </Row>
               <Row style={styles.containerTitles}>
-                <Text style={styles.titlesForm}>Prefered Name</Text>
+                <Text style={styles.titlesForm}>{I18n.t("preferedNameTitle")}</Text>
               </Row>
               <Row>
                 <FormInput
                   containerStyle={styles.containerInput}
                   inputStyle={styles.inputText}
-                  placeholder={EN["preferredName"]}
+                  placeholder={I18n.t("preferredName")}
                   onChangeText={text =>
                     this.props.updateView({ preferredName: text })
                   }
@@ -446,7 +447,7 @@ class UserProfileView extends Component {
               </Row>
 
               <Row style={styles.containerTitles}>
-                <Text style={styles.titlesForm}>{EN["NativeLanguage"]}</Text>
+                <Text style={styles.titlesForm}>{I18n.t("nativeLanguage")}</Text>
               </Row>
               {/* Native Language */}
               <List containerStyle={styles.marginBottom10}>
@@ -470,18 +471,19 @@ class UserProfileView extends Component {
             </Col>
           </Grid>
         </ScrollView>
-
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Save"
+            title={I18n.t("save")}
             onPress={() => {
               this.submit();
             }}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

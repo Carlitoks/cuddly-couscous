@@ -82,7 +82,7 @@ export default StyleSheet.create({
   smallAvatar: {
     width: 70,
     height: 70,
-    borderRadius: 50
+    borderRadius: 35
   },
   inlineContainer: {
     flexDirection: "row",
@@ -140,6 +140,19 @@ export default StyleSheet.create({
     right: 10,
     position: "absolute",
     transform: [{ translate: [0, 0, 1] }]
+  },
+  containerSwitch: {
+    bottom: 120,
+    flexDirection: "row",
+    left: 10,
+    position: "absolute",
+    zIndex:1
+  },
+  extraTime: {
+    fontFamily: fontFamily,
+    color: fontColor,
+    fontSize: 18,
+    backgroundColor:"transparent"
   },
   containerButtons: {
     flex: 1,

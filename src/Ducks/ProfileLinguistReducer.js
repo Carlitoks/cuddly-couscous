@@ -1,4 +1,3 @@
-
 // Constants
 
 // Actions
@@ -13,13 +12,12 @@ export const updateSettings = payload => ({
   payload
 });
 
-
 export const GetOptions = () => dispatch => {
   return [
     { language: "English, Mandarin", translates: 34 },
     { language: "English, Spanish", translates: 12 },
     { language: "English, Russian", translates: 2 }
-  ]
+  ];
 };
 
 export const clearSettings = () => ({
@@ -28,12 +26,13 @@ export const clearSettings = () => ({
 
 // Initial State
 const initialState = {
+  polling: false,
   available: false,
   rating: 4.5,
-  NumberOfCalls: 28,
-  Amount: 493,
-  status: "offline",
-  Username: "Adele G"
+  numberOfCalls: 28,
+  amount: 493,
+  status: "Offline",
+  username: "Adele G"
 };
 
 // Reducer

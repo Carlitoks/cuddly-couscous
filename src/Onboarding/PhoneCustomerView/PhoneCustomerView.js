@@ -13,19 +13,20 @@ import {
   ScrollView,
   Alert,
   TextInput,
-  Platform
+  Platform, 
+  KeyboardAvoidingView
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, Header, Badge } from "react-native-elements";
-
+import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import { validatePhoneNumber } from "../../Util/Helpers.js";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class PhoneCustomerView extends Component {
   navigate = this.props.navigation.navigate;
@@ -53,7 +54,7 @@ class PhoneCustomerView extends Component {
     if (!this.props.phoneNumber) {
       updates = {
         ...updates,
-        phoneErrorMessage: "Please enter your Phone Number"
+        phoneErrorMessage: I18n.t("enterPhoneField")
       };
       valid = false;
     }
@@ -61,7 +62,7 @@ class PhoneCustomerView extends Component {
     if (!validatePhoneNumber(this.props.phoneNumber)) {
       updates = {
         ...updates,
-        phoneErrorMessage: "Please enter a valid Phone Number"
+        phoneErrorMessage: I18n.t("noValidPhone")
       };
       valid = false;
     }
@@ -148,6 +149,7 @@ class PhoneCustomerView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -172,10 +174,10 @@ class PhoneCustomerView extends Component {
                     }
                   />
                   {/* Enter phone number */}
-                  <Text style={styles.mainTitle}>{EN["linguistNumber"]}</Text>
+                  <Text style={styles.mainTitle}>{I18n.t("linguistNumber")}</Text>
                   {/* subtitle */}
                   <Text style={styles.mainSubtitle}>
-                    {EN["linguistNumberText"]}
+                    {I18n.t("linguistNumberText")}
                   </Text>
                 </Col>
               </Row>
@@ -203,15 +205,17 @@ class PhoneCustomerView extends Component {
             </Col>
           </Grid>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Create"
+            title={I18n.t("create")}
             onPress={() => this.submit()}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

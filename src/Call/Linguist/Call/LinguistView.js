@@ -6,7 +6,9 @@ import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint
 import KeepAwake from "react-native-keep-awake";
 
 import styles from "./styles";
+import { Images } from "../../../Themes";
 import { CallButton } from "../../../Components/CallButton/CallButton";
+import I18n from "../../../I18n/I18n";
 
 import {
   updateSettings,
@@ -16,9 +18,15 @@ import {
   clearSettings
 } from "../../../Ducks/CallLinguistSettings";
 
+import {
+  BackgroundInterval,
+  BackgroundCleanInterval,
+  BackgroundStart
+} from "../../../Util/Background";
+import { fmtMSS } from "../../../Util/Helpers";
+
 import { tokDisConnect, tokConnect } from "../../../Ducks/tokboxReducer";
 
-import { fmtMSS } from "../../../Util/Helpers";
 
 class LinguistView extends Component {
   navigate = this.props.navigation.navigate;
@@ -45,8 +53,9 @@ class LinguistView extends Component {
         });
     } */
   }
-
+   
   componentWillMount() {
+    BackgroundStart();
     const {
       linguistTokboxSessionToken,
       linguistTokboxSessionID,
@@ -59,7 +68,7 @@ class LinguistView extends Component {
 
   componentWillUnmount() {
     this.props.resetTimerAsync();
-    //InCallManager.stop();
+    BackgroundCleanInterval(this.props.timer);
   }
 
   startTimer = () => {
@@ -108,7 +117,7 @@ class LinguistView extends Component {
           <View style={styles.inlineContainer}>
             <Image
               style={styles.smallAvatar}
-              source={require("../../../Images/smallAvatar.png")}
+              source={Images.avatarCall}
             />
           </View>
           <Text style={styles.callerNameText}> Hanna C. </Text>

@@ -27,7 +27,7 @@ import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import { Images, Colors } from "../../Themes";
 import { USER_NAME } from "../../Util/Constants";
 
@@ -173,6 +173,7 @@ class CustomerProfileView extends Component {
       <ViewWrapper style={{ flex: 1 }}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
           contentContainerStyle={styles.contentScrollContainer}
         >
@@ -199,7 +200,7 @@ class CustomerProfileView extends Component {
                       <GoBackButton navigation={this.props.navigation} />
                     }
                     centerComponent={{
-                      text: EN["myProfile"],
+                      text: I18n.t("myProfile"),
                       style: styles.title
                     }}
                     rightComponent={
@@ -222,7 +223,7 @@ class CustomerProfileView extends Component {
                   />
               </View>
               <View>
-                <FormLabel>{EN["name"]}</FormLabel>
+                <FormLabel>{I18n.t("name")}</FormLabel>
                 <FormInput
                   placeholder="Viola Lowe"
                   autoCorrect={false}
@@ -244,16 +245,49 @@ class CustomerProfileView extends Component {
                 />
               </View>
               <View>
-                <FormLabel>{EN["preferredName"]}</FormLabel>
+                <FormLabel>{I18n.t("preferredName")}</FormLabel>
                 <FormInput placeholder="Viola-Viola" autoCorrect={false} />
               </View>
               <View>
-                <FormLabel>{EN["genderName"]}</FormLabel>
+                <FormLabel>{I18n.t("genderName")}</FormLabel>
                 <FormInput placeholder="Female" autoCorrect={false} />
               </View>
               <View>
-                <FormLabel>{EN["nativeLanguage"]}</FormLabel>
+                <FormLabel>{I18n.t("nativeLanguage")}</FormLabel>
                 <FormInput placeholder="English" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{I18n.t("secondaryLanguage")}</FormLabel>
+                <FormInput placeholder="Spanish, Russian" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{I18n.t("citizenShip")}</FormLabel>
+                <FormInput placeholder="English" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{I18n.t("countryFamiliarity")}</FormLabel>
+                <FormInput placeholder="UK, USA" autoCorrect={false} />
+              </View>
+              <View>
+                <FormLabel>{I18n.t("cityFamiliarity")}</FormLabel>
+                <FormInput
+                  placeholder="London, San Diego, New York"
+                  autoCorrect={false}
+                />
+              </View>
+              <View>
+                <FormLabel>{I18n.t("areasExpertise")}</FormLabel>
+                <FormInput placeholder="Traveling, Sport" autoCorrect={false} />
+              </View>
+              <View style={styles.logoutContainer}>
+                <Text
+                  style={[styles.buttonText, styles.button]}
+                  onPress={() => {
+                    this.props.logOutAsync();
+                  }}
+                >
+                  {I18n.t("logOut")}
+                </Text>
               </View>
             </Col>
           </Grid>

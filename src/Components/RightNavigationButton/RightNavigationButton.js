@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import { View, Text } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 

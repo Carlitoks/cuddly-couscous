@@ -15,7 +15,7 @@ import {
 import { tokConnect, tokDisConnect } from "../../../Ducks/tokboxReducer";
 import { clearSettings as clearCallSettings } from "../../../Ducks/ContactLinguistReducer";
 
-import { AppRegistry, Button, View, Text, Image } from "react-native";
+import { AppRegistry, Button, View, Text, Image, Switch } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { CallButton } from "../../../Components/CallButton/CallButton";
 
@@ -23,18 +23,14 @@ import { Colors, Images } from "../../../Themes";
 import { fmtMSS } from "../../../Util/Helpers";
 import styles from "./styles";
 
-import EN from "../../../I18n/en";
+import I18n from "../../../I18n/I18n";
 import ContactingLinguistView from "../ContactingLinguist/ContactingLinguistView";
-import { 
-  EmitLocalCallNotification,
-  CleanCallNotifications
-} from '../../../Util/Notifications';
+
 import {
   BackgroundInterval,
   BackgroundCleanInterval,
   BackgroundStart
-} from "../../../Util/Background"
-
+} from "../../../Util/Background";
 
 const STATUS_TOKBOX = {
   DISCONECTED: 0,
@@ -45,6 +41,10 @@ const STATUS_TOKBOX = {
 
 class CustomerView extends Component {
   ref: Ref<Publisher>;
+  
+  componentWillMount(){ 
+    BackgroundStart() 
+  } 
 
   async componentDidMount() {
     const {
@@ -74,11 +74,7 @@ class CustomerView extends Component {
     }*/
 
     // Generate calling notification
-    EmitLocalCallNotification({
-      title: "Call", 
-      message: EN["contacting"]+" ..."
-    });
-    
+
     try {
       const res = await AsyncCreateSession({
         type: "immediate_virtual",
@@ -111,17 +107,12 @@ class CustomerView extends Component {
         );
 
         await tokConnect(tokboxSessionId, tokboxToken);
-        
       }
     } catch (e) {
       console.log("The session could not be created", e);
     }
   }
-
-  componentWillMount(){
-    BackgroundStart()
-  }
-
+  
   componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer);
     this.props.resetTimerAsync();
@@ -131,29 +122,20 @@ class CustomerView extends Component {
   }
 
   startTimer = () => {
-    const {
-      sessionID, 
-      token,
-      selectedCallTime
-    } = this.props;
-    const callTime = selectedCallTime * 60
+    const { sessionID, token, selectedCallTime } = this.props;
+    const callTime = selectedCallTime * 60;
 
     this.props.updateSettings({
       timer: BackgroundInterval(() => {
-        console.log("Backgorund Interval");
-        if (this.props.elapsedTime > callTime) {
+        if (
+          this.props.elapsedTime > callTime &&
+          !this.props.customerExtraTime
+        ) {
           OpenTok.disconnect(this.props.customerTokboxSessionID);
           this.props.tokDisConnect(this.props.customerTokboxSessionID);
           this.props.EndCall(sessionID, "done", token);
         } else {
           this.props.incrementTimer();
-          const min = (this.props.elapsedTime/60).toFixed(0)
-          const sec = this.props.elapsedTime%60
-
-          EmitLocalCallNotification({
-            title: EN["call"], 
-            message: EN["callInProgress"] + " " + (min < 10 ? "0" : "") + min +":"+ (sec < 10 ? "0" : "") + sec 
-          });
         }
       }, 1000)
     });
@@ -161,15 +143,12 @@ class CustomerView extends Component {
 
   render() {
     return (
-      <View 
-        style={
-            styles.containerT 
-        }
-      >
-        <View  
-          style={ 
-            this.props.tokboxStatus === STATUS_TOKBOX.STREAM ? 
-              styles.containerCall : styles.containerHiddenCall 
+      <View style={styles.containerT}>
+        <View
+          style={
+            this.props.tokboxStatus === STATUS_TOKBOX.STREAM
+              ? styles.containerCall
+              : styles.containerHiddenCall
           }
         >
           <View style={styles.backgroundContainer}>
@@ -211,10 +190,7 @@ class CustomerView extends Component {
           </View>
           <View style={styles.topContainer}>
             <View style={styles.inlineContainer}>
-              <Image
-                style={styles.smallAvatar}
-                source={require("../../../Images/smallAvatar.png")}
-              />
+              <Image style={styles.smallAvatar} source={Images.avatarCall} />
             </View>
             <Text style={styles.callerNameText}> Caroline C. </Text>
 
@@ -229,6 +205,20 @@ class CustomerView extends Component {
                 {fmtMSS(this.props.elapsedTime)}
               </Text>
             </View>
+          </View>
+          <View style={styles.containerSwitch}>
+            <Switch
+              onValueChange={customerExtraTime =>
+                this.props.updateSettings({
+                  customerExtraTime: customerExtraTime
+                })
+              }
+              value={this.props.customerExtraTime}
+              onTintColor={Colors.onTintColor}
+              thumbTintColor={Colors.thumbTintColor}
+              tintColor={Colors.tintColor}
+            />
+            <Text style={styles.extraTime}> {I18n.t("allowExtraTime")}</Text>
           </View>
           <View style={styles.containerButtons}>
             <CallButton
@@ -297,15 +287,14 @@ class CustomerView extends Component {
             />
           </View>
         </View>
-              
         <KeepAwake />
-        
-        {((this.props.tokboxStatus !== STATUS_TOKBOX.STREAM) && (this.props.elapsedTime < 1)) && (
-        <View style={styles.containerContacting}>
-          <ContactingLinguistView navigation={this.props.navigation}/>
-        </View>
-        )}
-        
+
+        {this.props.tokboxStatus !== STATUS_TOKBOX.STREAM &&
+          this.props.elapsedTime < 1 && (
+            <View style={styles.containerContacting}>
+              <ContactingLinguistView navigation={this.props.navigation} />
+            </View>
+          )}
       </View>
     );
   }
@@ -325,7 +314,8 @@ const mS = state => ({
   tokboxStatus: state.tokbox.status,
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
   selectedLanguageCode: state.contactLinguist.selectedLanguageCode,
-  selectedCallTime: state.contactLinguist.selectedTime
+  selectedCallTime: state.callCustomerSettings.selectedTime,
+  customerExtraTime: state.callCustomerSettings.customerExtraTime
 });
 
 const mD = {

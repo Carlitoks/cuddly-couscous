@@ -48,7 +48,7 @@ export class CallHistoryComponent extends Component {
               avatar={{ uri: item.avatar }}
               rightTitle={"11-12-12"}
               containerStyle={{ borderBottomWidth: 0 }}
-              onPress={() => navigation.dispatch({ type: "SessionInfoView" })} 
+              onPress={() => navigation.dispatch({ type: "SessionDetails" })}
             />
           )}
           keyExtractor={item => item.key}

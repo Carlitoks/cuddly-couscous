@@ -49,7 +49,7 @@ export default StyleSheet.create({
   smallAvatar: {
     width: 70,
     height: 70,
-    borderRadius: 50
+    borderRadius: 35
   },
   inlineContainer: {
     flexDirection: "row",

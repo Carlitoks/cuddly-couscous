@@ -25,7 +25,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import { Images, Colors, Fonts } from "../../Themes";
 import { USER_NAME } from "../../Util/Constants";
 
@@ -37,13 +37,13 @@ class LinguistSettingsView extends Component {
 
     const listCallPreference = [
       {
-        title: "Video",
+        title: I18n.t("video"),
         slug: "video",
         icon: "videocam",
         enable: video
       },
       {
-        title: "Audio",
+        title: I18n.t("audio"),
         slug: "mute",
         icon: "call",
         enable: !mute
@@ -52,17 +52,17 @@ class LinguistSettingsView extends Component {
 
     const listSexPreference = [
       {
-        title: "Female",
+        title: I18n.t("female"),
         icon: "female",
         customerPreferredSex
       },
       {
-        title: "Male",
+        title: I18n.t("male"),
         icon: "male",
         customerPreferredSex
       },
       {
-        title: "Any",
+        title: I18n.t("any"),
         icon: "venus-mars",
         customerPreferredSex
       }
@@ -84,6 +84,7 @@ class LinguistSettingsView extends Component {
       <ViewWrapper style={{ flex: 1 }}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
           contentContainerStyle={styles.contentScrollContainer}
         >
@@ -108,14 +109,14 @@ class LinguistSettingsView extends Component {
                       <GoBackButton navigation={this.props.navigation} />
                     }
                     centerComponent={{
-                      text: EN["callSettings"],
+                      text: I18n.t("callSettings"),
                       style: styles.title
                     }}
                   />
                 </Col>
               </View>
               <View style={styles.avatarContainer}>
-                <Text style={styles.pickerText}> {EN["maxTimeLimit"]}</Text>
+                <Text style={styles.pickerText}> {I18n.t("maxTimeLimit")}</Text>
                 {/* Time Picker */}
                 <Picker
                   style={styles.picker}
@@ -132,7 +133,7 @@ class LinguistSettingsView extends Component {
                   labelStyle={styles.listSelectionTitle}
                   fontFamily={Fonts.primaryBaseFont}
                 >
-                  {EN["videoAssistance"]}
+                  {I18n.t("videoAssistance")}
                 </FormLabel>
                 <List
                   containerStyle={{
@@ -144,7 +145,7 @@ class LinguistSettingsView extends Component {
                   }}
                 >
                   <ListItem
-                    title="Video"
+                    title={I18n.t("video")}
                     leftIcon={{
                       name: "videocam",
                       color: Colors.primaryAltFontColor
@@ -171,7 +172,7 @@ class LinguistSettingsView extends Component {
                     }}
                   />
                   <ListItem
-                    title="Audio"
+                    title={I18n.t("audio")}
                     leftIcon={{
                       name: "call",
                       color: Colors.primaryAltFontColor
@@ -204,7 +205,7 @@ class LinguistSettingsView extends Component {
                   labelStyle={styles.listSelectionTitle}
                   fontFamily={Fonts.primaryBaseFont}
                 >
-                  {EN["genderPreferenceCustomer"]}
+                  {I18n.t("genderPreferenceCustomer")}
                 </FormLabel>
                 <List
                   containerStyle={{

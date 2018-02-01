@@ -59,5 +59,12 @@ export default StyleSheet.create({
   },
   formInputContainer: {
     marginTop: moderateScale(20)
+  },
+  checkEmailContainer: {
+    marginTop: moderateScale(50)
+  },
+  checkEmail: {
+    fontSize: 18,
+    marginLeft: 30
   }
 });

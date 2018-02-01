@@ -11,7 +11,7 @@ import { Images, Fonts } from "../../Themes";
 import styles from "./styles";
 
 // For the moment
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import Colors from "../../Themes/Colors";
 
 class SelectRoleView extends Component {
@@ -42,6 +42,7 @@ class SelectRoleView extends Component {
                       <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
+          alwaysBounceVertical={false} 
           contentContainerStyle={styles.contentScrollContainer}
           bounce="false"
         >
@@ -64,7 +65,7 @@ class SelectRoleView extends Component {
 
                 {/* Contact Linguist Text */}
                 <Text style={[styles.textCenter, styles.center]}>
-                  {EN["quicklyContact"]}
+                  {I18n.t("quicklyContact")}
                 </Text>
 
                 {/* Call A Linguist Button */}
@@ -73,7 +74,7 @@ class SelectRoleView extends Component {
                   buttonStyle={[styles.button, styles.center]}
                   onPress={() =>
                     navigation.dispatch({ type: "NameCustomerView" })}
-                  title={EN["callLinguist"]}
+                  title={I18n.t("callLinguist")}
                   textStyle={[styles.buttonText, styles.center]}
                 />
               </Card>
@@ -82,8 +83,8 @@ class SelectRoleView extends Component {
               <Button
                 borderRadius={15}
                 buttonStyle={[styles.buttonQR, styles.center]}
-                onPress={() => navigation.dispatch({ type: "ScanScreenView" })} 
-                title={EN["scanQR"]}
+                onPress={() => navigation.dispatch({ type: "ScanScreenView" })}
+                title={I18n.t("scanQR")}
                 icon={{
                   name: "qrcode",
                   type: "font-awesome",
@@ -99,18 +100,18 @@ class SelectRoleView extends Component {
                   navigation.dispatch({ type: "NameLinguistView" })}
                 style={[styles.textBecome, styles.center]}
               >
-                {EN["becomeOnVoy"]}
+                {I18n.t("becomeOnVoy")}
               </Text>
 
               {/* Sign In */}
               <Text style={[styles.textLogin, styles.center]}>
-                {EN["alreadyAccount"]}
+                {I18n.t("alreadyAccount")}
                 <Text
                   style={[styles.linkLogin, styles.center]}
                   onPress={() => navigation.dispatch({ type: "LoginView" })}
                 >
                   {" "}
-                  {EN["signIn"]}
+                  {I18n.t("signIn")}
                 </Text>
               </Text>
               </ScrollView>

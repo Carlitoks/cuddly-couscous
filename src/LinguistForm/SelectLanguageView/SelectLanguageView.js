@@ -23,7 +23,7 @@ import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 
@@ -51,9 +51,7 @@ class SelectLanguageView extends Component {
   }
   createLinguistProfile = (uuid, token) => {
     const linguistInfo = this.createLinguistObject();
-    console.log("Linguist ",linguistInfo);
     this.props.createLinguist(uuid, token, linguistInfo).then(response => {
-      console.log(response);
       this.props.navigation.dispatch({
         type: "Home"
       });
@@ -92,16 +90,16 @@ class SelectLanguageView extends Component {
             this.props.getProfileAsync(
               response.payload.uuid,
               response.payload.token
-            );
-            this.updateUserProfile(
-              response.payload.uuid,
-              response.payload.token
-            );
-            const linguistInfo = this.createLinguistObject();
-            this.createLinguistProfile(
-              response.payload.uuid,
-              response.payload.token
-            );
+            ).then( responseProfile => {
+              this.updateUserProfile(
+                response.payload.uuid,
+                response.payload.token
+              );
+              this.createLinguistProfile(
+                response.payload.uuid,
+                response.payload.token
+              );
+            });
           } else {
             Alert.alert(response.data);
           }
@@ -157,7 +155,6 @@ class SelectLanguageView extends Component {
   };
   renderSecundaryLanguagesList = () => {
     const { selectedSecondaryLanguages } = this.props;
-
     const selectedSecondaryLanguagesList = selectedSecondaryLanguages.map(
       (language, i) => {
         const proficiency = language.proficiency
@@ -185,7 +182,7 @@ class SelectLanguageView extends Component {
       <ListItem
         hideChevron
         titleStyle={styles.primaryColor}
-        title={EN["AddLanguage"]}
+        title={I18n.t("addLanguage")}
         leftIcon={{ name: "add-circle-outline" }}
         onPress={() => {
           this.props.updateSettings({
@@ -211,15 +208,15 @@ class SelectLanguageView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}>
+        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
           <Header
             navigation={this.props.navigation}
-            mainTitle={EN["Languages"]}
+            mainTitle={I18n.t("languages")}
           />
 
           {/* Native Language */}
           <Text style={[styles.sectionTitle, styles.marginTop20]}>
-            {EN["NativeLanguage"]}
+            {I18n.t("nativeLanguage")}
           </Text>
 
           <List containerStyle={styles.marginBottom20}>
@@ -241,14 +238,14 @@ class SelectLanguageView extends Component {
           </List>
 
           {/* Secondary Languages */}
-          <Text style={styles.sectionTitle}>{EN["SecondaryLanguages"]}</Text>
+          <Text style={styles.sectionTitle}>{I18n.t("SecondaryLanguages")}</Text>
 
           <List>{this.renderSecundaryLanguagesList()}</List>
 
           {/* Areas of expertise */}
           <List>
             <ListItem
-              title={EN["AreasExpertise"]}
+              title={I18n.t("areasExpertise")}
               onPress={() => {
                 this.props.updateSettings({
                   selectionItemType: "areasOfExpertise",
@@ -264,7 +261,7 @@ class SelectLanguageView extends Component {
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Create"
+            title={I18n.t("create")}
             onPress={() => {
               if (this.props.selectedSecondaryLanguages.length < 1) {
                 Alert.alert("Please, select at least secondary language");
@@ -281,6 +278,10 @@ class SelectLanguageView extends Component {
 
 // MAP STATE TO PROPS HERE
 const mS = state => ({
+  firstName: state.linguistForm.firstname,
+  lastName: state.linguistForm.lastname,
+  preferredName: state.linguistForm.preferredName,
+  phoneNumber: state.linguistForm.phoneNumber,
   selectedNativeLanguage: state.linguistForm.selectedNativeLanguage,
   selectedSecondaryLanguages: state.linguistForm.selectedSecondaryLanguages,
   selectedAreasOfExpertise: state.linguistForm.selectedAreasOfExpertise,

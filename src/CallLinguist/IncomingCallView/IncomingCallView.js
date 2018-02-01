@@ -26,6 +26,7 @@ class IncomingCall extends Component {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
+        alwaysBounceVertical={false} 
         style={styles.scrollContainer}
         contentContainerStyle={styles.contentContainerStyle}
       >

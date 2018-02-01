@@ -7,7 +7,7 @@ import {
 } from "../../Ducks/ContactLinguistReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View, ScrollView, Image } from "react-native";
+import { Text, View, ScrollView, Image, KeyboardAvoidingView } from "react-native";
 import {
   SearchBar,
   List,
@@ -17,12 +17,12 @@ import {
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-
+import { topIOS } from "../../Util/Devices";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import Fonts from "../../Themes/Fonts";
@@ -75,6 +75,7 @@ class AssistanceView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -104,13 +105,13 @@ class AssistanceView extends Component {
 
                   {/* Select the Assistance */}
                   <Text style={styles.mainTitle}>
-                    {EN["DescribeAssistance"]}
+                    {I18n.t("describeAssistance")}
                   </Text>
 
                   {/* Searchbar */}
                   <SearchBar
                     containerStyle={styles.containerSearch}
-                    placeholder="Search"
+                    placeholder={I18n.t("search")}
                     inputStyle={styles.inputSearch}
                     icon={{ name: "search" }}
                     onChangeText={text =>
@@ -122,7 +123,7 @@ class AssistanceView extends Component {
               <View style={{}}>
                 {/* Select the Assistance */}
                 <Text style={styles.textChooseBelow}>
-                  {EN["orChooseOneBelow"]}
+                  {I18n.t("orChooseOneBelow")}
                 </Text>
                 <List style={styles.listContainer}>
                   {this.filterList(this.props.searchAssistance)}
@@ -132,6 +133,7 @@ class AssistanceView extends Component {
           </Grid>
         </ScrollView>
         {/* Call Button */}
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <Button
           textStyle={styles.textStep}
           buttonStyle={styles.buttonStep}
@@ -141,9 +143,10 @@ class AssistanceView extends Component {
             color: Colors.primaryAltFontColor
           }}
           buttonStyle={styles.buttonStep}
-          title="Call"
-          onPress={() => navigation.dispatch({ type: "CustomerView" })}
+          title={I18n.t("call")}
+          onPress={() => navigation.dispatch({ type: "CallConfirmationView" })}
         />
+         </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

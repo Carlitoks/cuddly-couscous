@@ -1,32 +1,32 @@
 import { Sessions, Linguist } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
 import { Images } from "../Themes/Images";
-import EN from "../I18n/en";
+import I18n from "../I18n/I18n";
 
 // Constants
 export const LANGUAGE_INTERPRETATION_LIST = [
-  { name: "Frequently", code: "frequent" },
-  { name: "Occasionally", code: "some" },
-  { name: "None", code: "none" }
+  { name: I18n.t("frequently"), code: "frequent" },
+  { name: I18n.t("occasionally"), code: "some" },
+  { name: I18n.t("none"), code: "none" }
 ];
 
 export const PROFICIENCY_LIST = [
   {
-    name: "Basic",
+    name: I18n.t("basic"),
     avatar_url: "expertise_A1",
-    subtitle: EN["expertise_A1"],
+    subtitle: I18n.t("expertise_A1"),
     code: "basic"
   },
   {
-    name: "Intermediate",
+    name: I18n.t("intermediate"),
     avatar_url: "expertise_B1",
-    subtitle: EN["expertise_B1"],
+    subtitle: I18n.t("expertise_B1"),
     code: "intermediate"
   },
   {
-    name: "Fluent",
+    name: I18n.t("fluent"),
     avatar_url: "expertise_C1",
-    subtitle: EN["expertise_C1"],
+    subtitle: I18n.t("expertise_C1"),
     code: "fluent"
   }
 ];
@@ -84,20 +84,20 @@ export const updateForm = payload => ({
 
 export const GetOptions = () => dispatch => {
   return [
-    { gender: "Male" },
-    { gender: "Female" },
-    { gender: "Other" },
-    { gender: "Decline to spicify" }
+    { gender: I18n.t("male") },
+    { gender: I18n.t("female") },
+    { gender: I18n.t("other") },
+    { gender: I18n.t("specifyGender") }
   ];
 };
 export const GetAreasOfExpertise = () => {
   return [
-    { name: "Sport" },
-    { name: "Travel" },
-    { name: "Legal" },
-    { name: "Retail" },
-    { name: "Technology" },
-    { name: "Tourism" }
+    { name: I18n.t("sport") },
+    { name: I18n.t("travel") },
+    { name: I18n.t("legal") },
+    { name: I18n.t("retail") },
+    { name: I18n.t("technology") },
+    { name: I18n.t("tourism") }
   ];
 };
 const initialState = {
@@ -106,7 +106,7 @@ const initialState = {
   lastname: "",
   preferredName: "",
   formHasErrors: false,
-  mainTitle: "Enter Your Name",
+  mainTitle: I18n.t("mainTitle"),
   // Linguist Email
   email: "",
   // Gender

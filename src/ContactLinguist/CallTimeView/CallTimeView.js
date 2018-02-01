@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateSettings, getAssistanceList
-} from "../../Ducks/ContactLinguistReducer";
 
+import { getAssistanceList } from "../../Ducks/ContactLinguistReducer";
+import { updateSettings } from "../../Ducks/CallCustomerSettings";
 import { Text, View, Picker, ScrollView } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button, Header } from "react-native-elements";
@@ -16,7 +16,7 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import { Colors, Fonts } from "../../Themes";
 import styles from "./styles";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class CallTimeView extends Component {
   loadAssitance() {
@@ -41,6 +41,7 @@ class CallTimeView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -69,7 +70,9 @@ class CallTimeView extends Component {
                     }
                   />
                   {/* how Long Do You Need help For? */}
-                  <Text style={styles.mainTitle}>{EN["howLongNeedHelp"]}</Text>
+                  <Text style={styles.mainTitle}>
+                    {I18n.t("howLongNeedHelp")}
+                  </Text>
                 </Col>
               </Row>
               <View style={styles.containerContent}>
@@ -78,16 +81,18 @@ class CallTimeView extends Component {
                   style={styles.picker}
                   selectedValue={this.props.selectedTime}
                   onValueChange={(itemValue, itemIndex) =>
-                    this.props.updateSettings({ selectedTime: itemValue })}
+                    this.props.updateSettings({ selectedTime: itemValue })
+                  }
                 >
                   {pickerOptions(this.props.timeOptions)}
                 </Picker>
 
                 {/* Cost */}
                 <View style={styles.costCallContainer}>
-                  <Text style={styles.costCall}>{`${EN["costOfCall"]} ${EN[
-                    "currency"
-                  ]}${this.props.selectedTime * this.props.cost}`}</Text>
+                  <Text style={styles.costCall}>{`${I18n.t(
+                    "costOfCall"
+                  )} ${I18n.t("currency")}${this.props.selectedTime *
+                    this.props.cost}`}</Text>
                 </View>
               </View>
             </Col>
@@ -99,11 +104,12 @@ class CallTimeView extends Component {
             textStyle={styles.buttonText}
             buttonStyle={styles.button}
             containerViewStyle={styles.buttonAccept}
-            title="Accept"
+            title={I18n.t("accept")}
             onPress={() =>
               this.loadAssitance().then(() =>
                 navigation.dispatch({ type: "AssistanceView" })
-              )}
+              )
+            }
           />
         </View>
       </ViewWrapper>
@@ -113,7 +119,7 @@ class CallTimeView extends Component {
 
 const mS = state => ({
   timeOptions: state.contactLinguist.timeOptions,
-  selectedTime: state.contactLinguist.selectedTime,
+  selectedTime: state.callCustomerSettings.selectedTime,
   cost: state.contactLinguist.cost,
   token: state.auth.token
 });

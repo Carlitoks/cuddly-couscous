@@ -11,7 +11,7 @@ import {
 } from "../../Ducks/LinguistFormReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View, ScrollView, Image, Alert } from "react-native";
+import { Text, View, ScrollView, Image, Alert, KeyboardAvoidingView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
   SearchBar,
@@ -21,13 +21,13 @@ import {
   Header
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import { topIOS } from "../../Util/Devices";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import RightNavigationButton from "../../Components/RightNavigationButton/RightNavigationButton.js";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 
@@ -106,7 +106,7 @@ class LanguageSettingsView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}>
+        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
           <View style={styles.headerContainer}>
             <LinearGradient
               colors={[
@@ -125,11 +125,11 @@ class LanguageSettingsView extends Component {
               }
             />
 
-            <Text style={styles.windowTitle}>{EN["LanguageSettings"]}</Text>
+            <Text style={styles.windowTitle}>{I18n.t("languageSettings")}</Text>
           </View>
 
           <Text style={styles.title}>
-            {EN["ProficiencyLevelOf"]} {this.props.selectedLanguage.name}
+            {I18n.t("proficiencyLevelOf")} {this.props.selectedLanguage.name}
           </Text>
 
           <List containerStyle={styles.marginBottom20}>
@@ -138,7 +138,7 @@ class LanguageSettingsView extends Component {
 
           <Text style={styles.title}>
             {this.insertCurrentLanguage(
-              EN["LanguageInterpretation"],
+              I18n.t("languageInterpretation"),
               this.props.selectedLanguage.name
             )}
           </Text>
@@ -150,11 +150,12 @@ class LanguageSettingsView extends Component {
         </ScrollView>
 
         {/* Call Button */}
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title={EN["Add"]}
+            title={I18n.t("add")}
             onPress={() => {
               const {
                 selectedSecondaryLanguages,
@@ -167,7 +168,7 @@ class LanguageSettingsView extends Component {
                 isUndefined(selectedLanguage.proficiency) ||
                 isUndefined(selectedLanguage.interpretation)
               ) {
-                Alert.alert("Please, select at least one item of each list");
+                Alert.alert(I18n.t("selectListLanguage"));
               } else {
                 const selectedSecondaryLanguagesList = selectedSecondaryLanguages.filter(
                   e => e["3"] !== selectedLanguage["3"]
@@ -187,6 +188,7 @@ class LanguageSettingsView extends Component {
             }}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

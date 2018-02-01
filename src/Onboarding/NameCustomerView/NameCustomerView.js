@@ -7,17 +7,17 @@ import {
   registerDevice
 } from "../../Ducks/RegistrationCustomerReducer";
 
-import { View, Text, ScrollView, Alert, TextInput } from "react-native";
+import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, Header } from "react-native-elements";
-
+import { Button, Header, FormInput } from "react-native-elements";
+import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class NameCustomerView extends Component {
   navigate = this.props.navigation.navigate;
@@ -33,7 +33,7 @@ class NameCustomerView extends Component {
     if (!this.props.firstname) {
       updates = {
         ...updates,
-        FirstnameErrorMessage: "Please enter you First Name"
+        FirstnameErrorMessage: I18n.t("enterNameField")
       };
       valid = false;
     }
@@ -41,7 +41,7 @@ class NameCustomerView extends Component {
     if (!this.props.lastname) {
       updates = {
         ...updates,
-        LastnameErrorMessage: "Please enter you Last Name"
+        LastnameErrorMessage: I18n.t("enterLastNameField")
       };
       valid = false;
     }
@@ -99,6 +99,7 @@ class NameCustomerView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -128,15 +129,16 @@ class NameCustomerView extends Component {
                   </Text>
                   {/* subtitle */}
                   <Text style={styles.mainSubtitle}>
-                    {EN["NameLinguistText"]}
+                    {I18n.t("nameLinguistText")}
                   </Text>
                 </Col>
               </Row>
 
               <View style={styles.containerView}>
-                <TextInput
-                  style={styles.containerInput}
-                  placeholder={EN["linguistName"]}
+                <FormInput
+                  containerStyle={styles.containerInput}
+                  inputStyle={styles.inputText}
+                  placeholder={I18n.t("linguistName")}
                   onChangeText={text =>
                     this.props.updateForm({
                       firstname: text,
@@ -149,9 +151,10 @@ class NameCustomerView extends Component {
               </View>
 
               <View style={styles.containerView}>
-                <TextInput
-                  style={styles.containerInput}
-                  placeholder={EN["linguistLastName"]}
+                <FormInput
+                  containerStyle={styles.containerInput}
+                  inputStyle={styles.inputText}
+                  placeholder={I18n.t("linguistLastName")}
                   onChangeText={text =>
                     this.props.updateForm({ lastname: text })
                   }
@@ -161,9 +164,10 @@ class NameCustomerView extends Component {
               </View>
 
               <View>
-                <TextInput
-                  style={styles.containerInput}
-                  placeholder={EN["preferredName"]}
+                <FormInput
+                  containerStyle={styles.containerInput}
+                  inputStyle={styles.inputText}
+                  placeholder={I18n.t("preferredName")}
                   value={this.props.preferredName}
                   onChangeText={text =>
                     this.props.updateForm({ preferredName: text })
@@ -171,21 +175,23 @@ class NameCustomerView extends Component {
                   maxLength={20}
                 />
                 <Text style={styles.formText}>
-                  {EN["preferredLinguistText"]}
+                  {I18n.t("preferredLinguistText")}
                 </Text>
               </View>
             </Col>
           </Grid>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Next"
+            title={I18n.t("next")}
             onPress={() => this.submit()}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

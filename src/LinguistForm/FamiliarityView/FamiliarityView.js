@@ -4,18 +4,18 @@ import Countries from "../../Config/countries";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View, ScrollView, Image, Alert } from "react-native";
+import { Text, View, ScrollView, Image, Alert, KeyboardAvoidingView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { SearchBar, List, ListItem, Button } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import { topIOS } from "../../Util/Devices";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 
@@ -69,7 +69,7 @@ class FamiliarityView extends Component {
       <ListItem
         hideChevron
         titleStyle={styles.primaryColor}
-        title={EN["AddLanguage"]}
+        title={I18n.t("addLanguage")}
         leftIcon={{ name: "add-circle-outline" }}
         onPress={() => {
           this.props.updateSettings({
@@ -95,12 +95,15 @@ class FamiliarityView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}>
-          <Header navigation={this.props.navigation} mainTitle={null} />
+        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
+        <Header 
+            navigation={this.props.navigation} 
+            mainTitle={I18n.t("countryFamiliarity")} 
+          /> 
 
           {/* Cityzenship */}
           <Text style={[styles.sectionTitle, styles.marginTop20]}>
-            {EN["citizenship"]}
+            {I18n.t("citizenShip")} 
           </Text>
 
           <List containerStyle={styles.marginBottom20}>
@@ -120,7 +123,9 @@ class FamiliarityView extends Component {
           </List>
 
           {/* Country Familiarity */}
-          <Text style={styles.sectionTitle}>{EN["countryFamiliarity"]}</Text>
+          <Text style={styles.sectionTitle}> 
+            {I18n.t("countryFamiliarity")} 
+          </Text> 
 
           <List containerStyle={styles.marginBottom20}>
             {this.props.selectedCitizenship[0] && (
@@ -139,7 +144,7 @@ class FamiliarityView extends Component {
           </List>
 
           {/* City Familiarity */}
-          <Text style={styles.sectionTitle}>{EN["cityFamiliarity"]}</Text>
+          <Text style={styles.sectionTitle}>{I18n.t("cityFamiliarity")}</Text>
 
           <List containerStyle={styles.marginBottom20}>
             {this.props.selectedCityFamiliarity[0] && (
@@ -157,12 +162,13 @@ class FamiliarityView extends Component {
             )}
           </List>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={20}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Next"
+            title={I18n.t("next")}
             onPress={() => {
               if (
                 this.props.selectedCitizenship.length < 1 ||
@@ -176,6 +182,7 @@ class FamiliarityView extends Component {
             }}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

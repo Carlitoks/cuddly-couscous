@@ -14,6 +14,7 @@ import { CallButton } from "../../../Components/CallButton/CallButton";
 
 import styles from "./styles";
 import { Images } from "../../../Themes";
+import I18n from "../../../I18n/I18n";
 
 class IncomingCall extends Component {
   state = {
@@ -24,15 +25,18 @@ class IncomingCall extends Component {
   componentWillMount() {
     const { invitationID, token } = this.props;
 
-    this.props.asyncGetInvitationDetail(invitationID, token).then(() => {
-      console.log("DIME QUE NO");
-    });
+    this.props.asyncGetInvitationDetail(invitationID, token);
   }
 
   takeCall = () => {
-    const { invitationID, token } = this.props;
+    const { invitationID, token, linguistSessionId } = this.props;
 
-    this.props.asyncAcceptsInvite(invitationID, { accept: true }, token);
+    this.props.asyncAcceptsInvite(
+      invitationID,
+      { accept: true },
+      token,
+      linguistSessionId
+    );
   };
 
   rejectCall = () => {
@@ -45,6 +49,7 @@ class IncomingCall extends Component {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
+        alwaysBounceVertical={false} 
         style={styles.scrollContainer}
         contentContainerStyle={styles.contentContainerStyle}
       >
@@ -62,10 +67,10 @@ class IncomingCall extends Component {
               </Text>
               <View style={styles.inlineContainer}>
                 <Icon style={styles.icon} size={25} name="room" />
-                <Text style={styles.locationText}>San Diego, CA</Text>
+                <Text style={styles.locationText}>[San Diego, CA]</Text>
               </View>
               <Text style={styles.incomingCallText}>
-                Incoming video call...
+                {I18n.t("incomingCall")}
               </Text>
             </Row>
 
@@ -120,7 +125,8 @@ const mS = state => ({
   customerName: state.callLinguistSettings.customerName,
   estimatedMinutes: state.callLinguistSettings.estimatedMinutes,
   languages: state.callLinguistSettings.languages,
-  token: state.auth.token
+  token: state.auth.token,
+  linguistSessionId: state.callLinguistSettings.sessionID
 });
 
 const mD = {

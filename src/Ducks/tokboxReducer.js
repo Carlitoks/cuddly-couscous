@@ -58,8 +58,8 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
       );
 
       if (isLinguist) {
-        console.log("SOY LINGÜISTA");
-        OpenTok.sendSignal(id, "PickedCall", "done");
+        //console.log("SOY LINGÜISTA");
+        //OpenTok.sendSignal(id, "PickedCall", "done");
       }
     })
     .catch(error => {

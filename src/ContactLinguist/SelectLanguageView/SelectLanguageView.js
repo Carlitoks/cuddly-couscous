@@ -7,7 +7,7 @@ import {
 } from "../../Ducks/ContactLinguistReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View, ScrollView, Alert, Image } from "react-native";
+import { Text, View, ScrollView, Alert, Image, KeyboardAvoidingView } from "react-native";
 import {
   SearchBar,
   List,
@@ -17,12 +17,12 @@ import {
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-
+import { topIOS } from "../../Util/Devices";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import { styles } from "./styles";
 import { Images, Colors } from "../../Themes";
 
@@ -33,7 +33,7 @@ class SelectLanguague extends Component {
 
   validate() {
     if (!this.props.selectedLanguage) {
-      Alert.alert("Please Select language");
+      Alert.alert(I18n.t("selectLanguage"));
     } else {
       navigation.dispatch({ type: "CallTimeView" });
     }
@@ -75,6 +75,7 @@ class SelectLanguague extends Component {
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
+          alwaysBounceVertical={false} 
           contentContainerStyle={styles.contentScrollContainer}
         >
           <View style={styles.header}>
@@ -100,9 +101,9 @@ class SelectLanguague extends Component {
             />
 
             {/* Select the Language You Need a Linguist in */}
-            <Text style={styles.mainTitle}>{EN["selectLanguage"]}</Text>
+            <Text style={styles.mainTitle}>{I18n.t("selectLanguage")}</Text>
             <View style={styles.languages}>
-              <Text style={styles.primaryLanguage}>{EN["english"]}</Text>
+              <Text style={styles.primaryLanguage}>{I18n.t("english")}</Text>
               <Icon size={30} name="swap-horiz" color="white" style={styles.iconChange} />
               <Text style={styles.secondaryLanguage}>
                 {this.props.selectedLanguage}
@@ -113,7 +114,7 @@ class SelectLanguague extends Component {
             <SearchBar
               lightTheme
               containerStyle={styles.containerSearch}
-              placeholder="Search"
+              placeholder={I18n.t("search")}
               inputStyle={styles.inputSearch}
               icon={{ name: "search" }}
               onChangeText={text =>
@@ -126,12 +127,14 @@ class SelectLanguague extends Component {
         </ScrollView>
 
         {/* Next Button */}
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <Button
           textStyle={styles.textStep}
           buttonStyle={styles.buttonStep}
-          title="Next"
+          title={I18n.t("next")}
           onPress={() => navigation.dispatch({ type: "CallTimeView" })}
         />
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

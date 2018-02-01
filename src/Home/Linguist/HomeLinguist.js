@@ -2,10 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateSettings, GetOptions } from "../../Ducks/ProfileLinguistReducer";
-
+import {
+  asyncUploadAvatar,
+  updateView,
+  getProfileAsync
+} from "../../Ducks/UserProfileReducer";
 import { View, Text, Image, ScrollView, Switch } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import PhotoUpload from "react-native-photo-upload";
 import {
   Button,
   FormLabel,
@@ -14,7 +19,6 @@ import {
   Card,
   List,
   ListItem,
-  Avatar,
   Badge
 } from "react-native-elements";
 import StarRating from "react-native-star-rating";
@@ -30,8 +34,8 @@ import { getInvitations } from "../../Ducks/CallLinguistSettings";
 
 import styles from "./styles";
 import { Colors, Images } from "../../Themes";
-import EN from "../../I18n/en";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
+import I18n from "../../I18n/I18n";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -47,6 +51,31 @@ class Home extends Component {
       }, 10000);
     }
   }
+  uploadAvatar(avatar) {
+    if (avatar) {
+      const { token, uuid } = this.props;
+      this.props.asyncUploadAvatar(uuid, avatar, token).then(response => {
+        this.props.getProfileAsync(uuid, token).then(response => {
+          this.props.updateView({
+            avatarBase64: avatar,
+            avatarURL: response.payload.avatarURL
+          });
+        });
+      });
+    }
+  }
+  selectImage = () => {
+    let image = this.props.avatarBase64
+      ? { uri: `data:image/jpg;base64,${this.props.avatarBase64}` }
+      : Images.avatar;
+    return this.props.avatarURL
+      ? {
+          uri: `${IMAGE_STORAGE_URL}${
+            this.props.avatarURL
+          }?${new Date().getMilliseconds()}`
+        }
+      : image;
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.available) {
@@ -73,6 +102,7 @@ class Home extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -103,23 +133,19 @@ class Home extends Component {
                   }
                 />
                 <View>
-                  <Avatar
-                    containerStyle={{ alignSelf: "center" }}
-                    avatarStyle={styles.avatar}
-                    rounded
-                    xlarge
-                    source={
-                      avatarURL ? (
-                        {
-                          uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date()
-                            .getMilliseconds}`
-                        }
-                      ) : (
-                        Images.avatar
-                      )
-                    }
-                    activeOpacity={0.7}
-                  />
+                  <View style={styles.containerAvatar}>
+                    <PhotoUpload
+                      onPhotoSelect={avatar => this.uploadAvatar(avatar)}
+                    >
+                      {
+                        <Image
+                          style={styles.avatar}
+                          resizeMode="cover"
+                          source={this.selectImage()}
+                        />
+                      }
+                    </PhotoUpload>
+                  </View>
                   <Badge
                     value={rate}
                     textStyle={styles.badgeText}
@@ -144,12 +170,13 @@ class Home extends Component {
                 </View>
                 <Row style={styles.statusContainer}>
                   <Text style={styles.StatusText}>
-                    {EN["Status"]} {available ? EN["online"] : EN["offline"]}
+                    {I18n.t("status")} {available ? I18n.t("online") : I18n.t("offline")}
                   </Text>
                   <View style={styles.switchContainer}>
                     <Switch
                       onValueChange={available =>
-                        this.props.updateSettings({ available: available })}
+                        this.props.updateSettings({ available: available })
+                      }
                       style={styles.switch}
                       value={this.props.available}
                       onTintColor={Colors.onTintColor}
@@ -169,7 +196,7 @@ class Home extends Component {
                     <Row>
                       <View style={styles.calls}>
                         <Text style={[styles.TitleText, styles.center]}>
-                          {EN["Calls"]}
+                          {I18n.t("calls")}
                         </Text>
                         <Text style={[styles.callNumber, styles.center]}>
                           {numberOfCalls}
@@ -177,7 +204,7 @@ class Home extends Component {
                       </View>
                       <View style={styles.amount}>
                         <Text style={[styles.TitleText, styles.center]}>
-                          {EN["Amount"]}
+                          {I18n.t("amount")}
                         </Text>
                         <Text style={[styles.callNumber, styles.center]}>
                           ${amount}
@@ -190,7 +217,7 @@ class Home extends Component {
 
               <List containerStyle={{ borderTopWidth: 0 }}>
                 <ListItem
-                  title={EN["sessionInQueue"]}
+                  title={I18n.t("sessionInQueue")}
                   hideChevron
                   containerStyle={{ paddingBottom: 20, paddingTop: 20 }}
                   titleStyle={{ color: "#b7b7b7", fontSize: 20 }}
@@ -228,13 +255,17 @@ const mS = state => ({
   lastName: state.userProfile.lastName,
   avatarURL: state.userProfile.avatarURL,
   linguistProfile: state.userProfile.linguistProfile,
-  rate: state.userProfile.averageStarRating
+  rate: state.userProfile.averageStarRating,
+  avatarBase64: state.userProfile.avatarBase64
 });
 
 const mD = {
   updateSettings,
   GetOptions,
-  getInvitations
+  getInvitations,
+  asyncUploadAvatar,
+  updateView,
+  getProfileAsync
 };
 
 export default connect(mS, mD)(Home);

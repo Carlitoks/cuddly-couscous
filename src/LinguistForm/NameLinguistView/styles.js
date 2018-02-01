@@ -27,11 +27,13 @@ export default StyleSheet.create({
   containerView: {
     marginTop: moderateScale(10)
   },
-  containerInput: {
-    marginTop: moderateScale(20),
+  inputText: {
     fontSize: 20,
     color: "black",
     paddingBottom: moderateScale(35)
+  },
+  containerInput: {
+    marginTop: moderateScale(20)
   },
   formText: {
     paddingLeft: 18,

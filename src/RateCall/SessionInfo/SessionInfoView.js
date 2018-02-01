@@ -12,8 +12,9 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import StarRating from "react-native-star-rating";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+
+import I18n from "../../I18n/I18n";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
-import EN from "../../I18n/en";
 import { styles } from "./styles";
 import { Images, Colors } from "../../Themes";
 import LinearGradient from "react-native-linear-gradient";
@@ -25,7 +26,7 @@ class SessionInfoView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}>
+        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
           {/* Linguist Information */}
           <Grid>
             <Col>

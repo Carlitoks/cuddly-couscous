@@ -23,8 +23,8 @@ import {
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import StarRating from "react-native-star-rating";
+import I18n from "../../I18n/I18n";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
-import EN from "../../I18n/en";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
 import TextButton from "../../Components/TextButton/TextButton";
@@ -42,9 +42,16 @@ class RateCallView extends Component {
   }
 
   submit = () => {
-    const { rating, thumbsUp, thumbsDown } = this.props;
+    const {
+      rating,
+      thumbsUp,
+      thumbsDown,
+      customerSessionId,
+      linguistSessionId
+    } = this.props;
 
     let rateInformation;
+    const sessionId = linguistSessionId ? linguistSessionId : customerSessionId;
 
     if (thumbsUp) {
       rateInformation = {
@@ -66,7 +73,7 @@ class RateCallView extends Component {
     }
 
     this.props
-      .submitRateCall(rateInformation, this.props.sessionId, this.props.token)
+      .submitRateCall(rateInformation, sessionId, this.props.token)
       .then(response => {
         this.props.navigation.dispatch({ type: "Home" });
       });
@@ -203,7 +210,7 @@ class RateCallView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}>
+        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
           {/* Linguist Information */}
           <TopViewIOS/>
           <Grid style={styles.containerInformation}>
@@ -227,7 +234,10 @@ class RateCallView extends Component {
 
           <Grid>
             <Row style={styles.textContainer}>
-              <Text style={styles.textQuestions}>{EN["RateLinguist"]}</Text>
+              <Text style={styles.textQuestions}>
+                {I18n.t("rateYour")}{" "}
+                {this.props.linguistProfile ? I18n.t("customer") : I18n.t("linguist")}
+              </Text>
             </Row>
             <Row style={styles.starContainer}>
               <View style={styles.stars}>
@@ -239,7 +249,8 @@ class RateCallView extends Component {
                   disabled={false}
                   rating={this.props.rating}
                   selectedStar={rating =>
-                    this.props.updateOptions({ rating: rating })}
+                    this.props.updateOptions({ rating: rating })
+                  }
                   maxStars={5}
                   starSize={45}
                   emptyStarColor={"#cccccc"}
@@ -253,7 +264,7 @@ class RateCallView extends Component {
 
           <Grid>
             <Row style={styles.textContainer}>
-              <Text style={styles.textQuestions}>{EN["NeedsAddress"]}</Text>
+              <Text style={styles.textQuestions}>{I18n.t("needsAddress")}</Text>
             </Row>
             <View style={styles.viewContainerThumbs}>
               <View style={styles.thumbsUp}>
@@ -281,7 +292,7 @@ class RateCallView extends Component {
 
           <Grid>
             <Row style={styles.textContainer}>
-              <Text style={styles.textQuestions}>{EN["WasGood"]}</Text>
+              <Text style={styles.textQuestions}>{I18n.t("wasGood")}</Text>
             </Row>
             <View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -292,7 +303,8 @@ class RateCallView extends Component {
                         IconName={item.Name}
                         StateIcon={this.props[item.IconState]}
                         onPress={() =>
-                          this.buttonsHandle(item, "positiveFlags")}
+                          this.buttonsHandle(item, "positiveFlags")
+                        }
                         title={item.label}
                       />
                     </View>
@@ -306,7 +318,7 @@ class RateCallView extends Component {
 
           <Grid>
             <Row style={styles.textContainer}>
-              <Text style={styles.textQuestions}>{EN["CouldBetter"]}</Text>
+              <Text style={styles.textQuestions}>{I18n.t("couldBetter")}</Text>
             </Row>
             <View>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -360,7 +372,10 @@ const mS = state => ({
   iconWifiSecondList: state.rateCall.iconWifiSecondList,
   iconPersonSecondList: state.rateCall.iconPersonSecondList,
   token: state.auth.token,
-  sessionId: state.callCustomerSettings.sessionID
+  sessionId: state.callCustomerSettings.sessionID,
+  customerSessionId: state.callCustomerSettings.sessionID,
+  linguistSessionId: state.callLinguistSettings.sessionID,
+  linguistProfile: state.userProfile.linguistProfile
 });
 
 const mD = {

@@ -5,19 +5,19 @@ import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 import { registerDevice } from "../../Ducks/RegistrationCustomerReducer";
 import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormLabel, FormInput } from "react-native-elements";
+import { Button, FormInput } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class PasswordLinguist extends Component {
   componentWillUnmount() {
@@ -31,7 +31,13 @@ class PasswordLinguist extends Component {
     if (!this.props.password) {
       updates = {
         ...updates,
-        passwordErrorMessage: "Empty Password"
+        passwordErrorMessage: I18n.t("emptyPassword")
+      };
+      valid = false;
+    } else if (this.props.password.length < 5) {
+      updates = {
+        ...updates,
+        passwordErrorMessage: I18n.t("passwordLength")
       };
       valid = false;
     }
@@ -104,41 +110,45 @@ class PasswordLinguist extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <View>
             <Header
               navigation={this.props.navigation}
-              mainTitle={EN["linguistPasswordTitle"]}
+              mainTitle={I18n.t("linguistPasswordTitle")}
             />
             <View>
               {/* Password */}
               <FormInput
                 containerStyle={styles.containerInput}
                 inputStyle={styles.inputText}
-                placeholder={EN["linguistPassword"]}
+                placeholder={I18n.t("linguistPassword")}
                 onChangeText={text => this.props.updateForm({ password: text })}
                 autoCorrect={false}
                 secureTextEntry={true}
+                maxLength={20}
               />
               <Text style={styles.formText}>
-                {EN["passwordLinguistText"]}{" "}
-                <Text style={styles.links}>{EN["privacyPolicy"]}</Text>{" "}
-                {EN["passwordAnd"]}{" "}
-                <Text style={styles.links}>{EN["termsConditions"]}</Text>
+                {I18n.t("passwordLinguistText")}{" "}
+                <Text style={styles.links}>{I18n.t("privacyPolicy")}</Text>{" "}
+                {I18n.t("passwordAnd")}{" "}
+                <Text style={styles.links}>{I18n.t("termsConditions")}</Text>
               </Text>
             </View>
           </View>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Next"
+            title={I18n.t("next")}
             onPress={() => this.submit()}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

@@ -15,7 +15,7 @@ import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import styles from "./styles";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import { Sessions } from "../../Api";
 
 class Home extends Component {
@@ -62,7 +62,7 @@ class Home extends Component {
   render() {
     return (
       <View>
-        <ScrollView>
+        <ScrollView alwaysBounceVertical={false} >
           <View style={styles.containerPerfil}>
             <View>
               <View style={styles.IconView}>
@@ -125,7 +125,7 @@ class Home extends Component {
                     }
                   />
                   <RkText style={[styles.buttonText, styles.center]}>
-                    {EN["callLinguist"]}
+                    {I18n.t("callLinguist")}
                   </RkText>
                   <View style={styles.box3} />
                   <View />

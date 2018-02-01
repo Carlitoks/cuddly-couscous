@@ -4,7 +4,9 @@
  * @param {number} s - Time in seconds
  */
 export const fmtMSS = s => {
-  return (s - (s %= 60)) / 60 + (9 < s ? ":" : ":0") + s;
+  const min = Math.trunc(s/60)
+  const sec = s%60
+  return `${(min < 10 ? "0" : "")}${min}:${(sec < 10 ? "0" : "")}${sec}`;
 };
 
 /**

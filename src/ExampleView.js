@@ -20,7 +20,7 @@ import { Text, View, ScrollView, Image } from "react-native";
 import { SearchBar, List, ListItem, Button } from "react-native-elements";
 
 // Style, I18n, Config, ...
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
 
@@ -68,7 +68,7 @@ class AssistanceView extends Component {
     // GROUP RELATED THINGS IN BLOCKS
     return (
       <View style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}>
+        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
           {/* I've seen this same back arrow on like 10 components, maybe convert it into it's own component?? */}
           <View style={styles.container}>
             {/* Back Arrow */}
@@ -98,7 +98,7 @@ class AssistanceView extends Component {
           </View>
 
           {/* Select the Assistance */}
-          <Text style={styles.mainTitle}>{EN["DescribeAssistance"]}</Text>
+          <Text style={styles.mainTitle}>{I18n.t("describeAssistance")}</Text>
 
           {/* Searchbar */}
           <SearchBar

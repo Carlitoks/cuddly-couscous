@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateForm } from "../../Ducks/RegistrationCustomerReducer";
 import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
-
+import { topIOS } from "../../Util/Devices";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View, ScrollView, Image, Alert } from "react-native";
+import { Text, View, ScrollView, Image, Alert, KeyboardAvoidingView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
   SearchBar,
@@ -22,7 +22,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 
@@ -30,7 +30,7 @@ class LanguageCustomerView extends Component {
   componentWillMount() {
     const selectedNativeLanguage = [
       {
-        name: "English",
+        name: I18n.t("english"),
         code: "eng",
         proficiency: "Intermediate"
       }
@@ -60,7 +60,7 @@ class LanguageCustomerView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}>
+        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
           <View style={styles.headerContainer}>
             {/* Linear Gradient */}
             <LinearGradient
@@ -79,11 +79,11 @@ class LanguageCustomerView extends Component {
                 <GoBackButton navigation={this.props.navigation} />
               }
             />
-            <Text style={styles.windowTitle}>{EN["Languages"]}</Text>
+            <Text style={styles.windowTitle}>{I18n.t("languages")}</Text>
           </View>
 
           {/* Native Language */}
-          <Text style={styles.nativeLanguageTitle}>{EN["NativeLanguage"]}</Text>
+          <Text style={styles.nativeLanguageTitle}>{I18n.t("nativeLanguage")}</Text>
 
           <List containerStyle={styles.marginBottom10}>
             {this.props.selectedNativeLanguage[0] && (
@@ -101,15 +101,17 @@ class LanguageCustomerView extends Component {
             )}
           </List>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Next"
+            title={I18n.t("next")}
             onPress={() => navigation.dispatch({ type: "PhoneCustomerView" })}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

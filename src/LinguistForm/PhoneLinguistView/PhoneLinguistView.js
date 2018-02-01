@@ -9,21 +9,22 @@ import {
   ScrollView,
   Alert,
   TextInput,
-  Platform
+  Platform, 
+  KeyboardAvoidingView
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, Badge } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 import { validatePhoneNumber } from "../../Util/Helpers.js";
 
 import styles from "./styles";
+import I18n from "../../I18n/I18n";
 import { Colors } from "../../Themes";
-import EN from "../../I18n/en";
 
 class PhoneLinguist extends Component {
   navigate = this.props.navigation.navigate;
@@ -51,7 +52,7 @@ class PhoneLinguist extends Component {
     if (!this.props.phoneNumber) {
       updates = {
         ...updates,
-        phoneErrorMessage: "Please enter your Phone Number"
+        phoneErrorMessage: I18n.t("enterPhoneField")
       };
       valid = false;
     }
@@ -59,7 +60,7 @@ class PhoneLinguist extends Component {
     if (!validatePhoneNumber(this.props.phoneNumber)) {
       updates = {
         ...updates,
-        phoneErrorMessage: "Please enter a valid Phone Number"
+        phoneErrorMessage: I18n.t("noValidPhone")
       };
       valid = false;
     }
@@ -102,13 +103,14 @@ class PhoneLinguist extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <View>
             <Header
               navigation={this.props.navigation}
-              mainTitle={EN["linguistNumber"]}
-              subtitle={EN["linguistNumberText"]}
+              mainTitle={I18n.t("linguistNumber")}
+              subtitle={I18n.t("linguistNumberText")}
             />
             <View style={styles.phoneSection}>
               <Badge
@@ -132,15 +134,17 @@ class PhoneLinguist extends Component {
             </View>
           </View>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Next"
+            title={I18n.t("next")}
             onPress={() => this.submit()}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

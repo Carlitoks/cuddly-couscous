@@ -27,7 +27,14 @@ export default StyleSheet.create({
   center: {
     alignSelf: "center"
   },
-  avatar: { alignSelf: "center" },
+  avatar: {
+    paddingVertical: 30,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    alignSelf: "center"
+  },
+
   logo: {
     marginTop: 20,
     marginBottom: 10,

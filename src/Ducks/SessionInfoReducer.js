@@ -43,7 +43,10 @@ export const getSessionInfo = (sessionID, token) => dispatch => {
 
 const initialState = {
   // to be use when we have the information of the API
-  ShowInfo: {}
+  approxMinutes: 0,
+  scenario: "None",
+  translate: ["English", "Mandarin"],
+  estimatedPrice: 0
 };
 
 // Reducer

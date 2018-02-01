@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { ScrollView, View, Alert, Text } from "react-native";
-import { Button, FormLabel, FormInput, Header } from "react-native-elements";
+import { ScrollView, View, Alert, Text, KeyboardAvoidingView } from "react-native";
+import { Button, Header, FormInput } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
@@ -11,19 +11,69 @@ import { resetPasswordAsync } from "../../Ducks/AuthReducer";
 import { clearForm, updateForm } from "../../Ducks/ForgotPasswordReducer";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-
+import { topIOS } from "../../Util/Devices";
+import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Colors } from "../../Themes";
 
 // For the moment
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class ForgotPasswordView extends Component {
-  componentWillUnmount() {
-    this.props.clearForm();
+  validateForm() {
+    const patt = new RegExp(EMAIL_REGEX);
+    let updates = {};
+    let valid = true;
+
+    if (!patt.test(this.props.email)) {
+      updates = {
+        ...updates,
+        emailErrorMessage: I18n.t("noValidEmail")
+      };
+      valid = false;
+    }
+
+    if (!this.props.email) {
+      updates = {
+        ...updates,
+        emailErrorMessage: I18n.t("enterEmailField")
+      };
+      valid = false;
+    }
+
+    updates = {
+      ...updates,
+      formHasErrors: !valid
+    };
+
+    if (!valid) {
+      this.tempDisplayErrors(updates.emailErrorMessage);
+    }
+
+    this.props.updateForm(updates);
+    return valid;
   }
+
   submit() {
-    this.props.resetPasswordAsync(this.props.email);
+    if (this.validateForm()) {
+      this.props.navigation.dispatch({ type: "CheckYourEmailView" });
+      this.props.clearForm();
+    }
+  }
+
+  // Will be changed according the designs
+  tempDisplayErrors(...errors) {
+    const errorStr = errors.reduce((last, current) => {
+      curr = "";
+      if (current) {
+        curr = `- ${current}\n`;
+      }
+      return last.concat(curr);
+    }, "");
+
+    Alert.alert("Errors", errorStr, [
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]);
   }
 
   render() {
@@ -33,6 +83,7 @@ class ForgotPasswordView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -59,47 +110,41 @@ class ForgotPasswordView extends Component {
                   />
 
                   {/* Title */}
-                  <Text style={styles.title}>{EN["forgotPassword"]}</Text>
+                  <Text style={styles.title}>{I18n.t("forgotPassword")}</Text>
                 </Col>
               </Row>
               {/* Email */}
               <FormInput
                 containerStyle={styles.formInputContainer}
-                placeholder={EN["email"]}
+                placeholder={I18n.t("email")}
                 autoCorrect={false}
                 onChangeText={text => this.props.updateForm({ email: text })}
                 value={this.props.email}
                 keyboardType={"email-address"}
+                maxLength={64}
               />
 
-              {/* Register */}
-              <Text
+              {/* Troubleshoot Button (Comented until we have a view for this functionality)*/}
+              {/* <Text
                 style={styles.linksText}
-                onPress={() =>
-                  this.props.navigation.dispatch({ type: "CustomerAccount" })}
+                onPress={() => console.log("navigating")}
               >
-                {EN["newaccount"]}
-              </Text>
-
-              {/* Troubleshoot Button */}
-              <Text
-                style={styles.linksText}
-                onPress={() => Alert.alert("troubleshoot")}
-              >
-                {EN["troubleshoot"]}
-              </Text>
+                {I18n.t("troubleshoot")}
+              </Text> */}
             </Col>
           </Grid>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Forgot Password Button */}
           <Button
             buttonStyle={styles.Button}
             textStyle={styles.buttonText}
-            onPress={() => this.props.resetPasswordAsync(this.props.email)}
-            title={EN["resetpassword"]}
+            onPress={() => this.submit()}
+            title={I18n.t("resetpassword")}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }
@@ -107,7 +152,7 @@ class ForgotPasswordView extends Component {
 
 const mS = state => ({
   email: state.forgotPassword.email,
-  emailErrorMessage: state.forgotPassword.emailErrorMessage
+  formHasErrors: state.forgotPassword.formHasErrors
 });
 
 const mD = {

@@ -124,7 +124,7 @@ export const AsyncCreateInvitation = (
 const initialState = {
   // Call Settings
   mute: false,
-  video: true,
+  video: false,
   speaker: true,
   timer: null,
   elapsedTime: 0,
@@ -133,7 +133,7 @@ const initialState = {
   customerTokboxSessionToken: null,
   invitationID: null,
   customerPreferredSex: "any",
-
+  customerExtraTime: false,
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 10 // Initial time selected: 10 min

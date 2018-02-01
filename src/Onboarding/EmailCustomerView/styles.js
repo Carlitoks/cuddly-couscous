@@ -32,6 +32,9 @@ export default StyleSheet.create({
   containerInput: {
     marginTop: 20
   },
+  containerInput: {
+    marginTop: moderateScale(20)
+  },
   containerBottom: {
     backgroundColor: "black",
     width: "100%",

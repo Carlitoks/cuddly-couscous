@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { AppState } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
@@ -26,11 +27,12 @@ import { isCurrentView } from "../../Util/Helpers";
 import { Colors, Images } from "../../Themes";
 import styles from "./styles";
 
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class MenuView extends Component {
   constructor(props) {
     super(props);
+    state = { appState: AppState.currentState };
   }
 
   componentWillMount() {
@@ -40,14 +42,16 @@ class MenuView extends Component {
       this.props.getProfileAsync(this.props.uuid, this.props.token);
     }
   }
-
+  componentWillReceiveProps(nextProps) {
+    this.forceUpdate();
+  }
   isACustomer = () => !this.props.linguistProfile;
 
   render() {
     const { navigation, avatarURL } = this.props;
 
     return (
-      <ScrollView>
+      <ScrollView alwaysBounceVertical={false} >
         <TopViewIOS/> 
         <View>
           <Avatar
@@ -55,10 +59,11 @@ class MenuView extends Component {
             avatarStyle={styles.center}
             rounded
             xlarge
+            key={this.props.avatarBase64}
             source={
               avatarURL
                 ? {
-                    uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getMinutes()}`
+                    uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getUTCMilliseconds()}`
                   }
                 : Images.avatar
             }
@@ -118,7 +123,7 @@ class MenuView extends Component {
             navigation.dispatch({ type: "Home" });
           }}
         >
-          <Text style={styles.colorText}>{EN["home"]}</Text>
+          <Text style={styles.colorText}>{I18n.t("home")}</Text>
         </Icon.Button>
 
         {/* History */}
@@ -139,7 +144,7 @@ class MenuView extends Component {
             navigation.dispatch({ type: "CallHistory" });
           }}
         >
-          <Text style={styles.colorText}>{EN["callHistory"]}</Text>
+          <Text style={styles.colorText}>{I18n.t("callHistory")}</Text>
         </Icon.Button>
 
         {/* Help */}
@@ -161,7 +166,7 @@ class MenuView extends Component {
             console.log("Heeeelp");
           }}
         >
-          <Text style={styles.colorText}>{EN["help"]}</Text>
+          <Text style={styles.colorText}>{I18n.t("help")}</Text>
         </Icon.Button>
 
         {/* Logout */}
@@ -174,7 +179,7 @@ class MenuView extends Component {
             this.props.logOutAsync();
           }}
         >
-          <Text style={styles.colorText}>{EN["logOut"]}</Text>
+          <Text style={styles.colorText}>{I18n.t("logOut")}</Text>
         </Icon.Button>
 
         {/* Become a linguist */}
@@ -197,7 +202,7 @@ class MenuView extends Component {
             }}
           >
             <Text style={styles.colorText} icon>
-              {EN["becomeLinguist"]}
+              {I18n.t("becomeLinguist")}
             </Text>
           </Icon.Button>
         )}
@@ -214,6 +219,7 @@ const mS = state => ({
   nativeLangCode: state.userProfile.nativeLangCode,
   linguistProfile: state.userProfile.linguistProfile,
   avatarURL: state.userProfile.avatarURL,
+  avatarBase64: state.userProfile.avatarBase64,
   uuid: state.auth.uuid,
   token: state.auth.token
 });

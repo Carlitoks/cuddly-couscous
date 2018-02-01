@@ -14,7 +14,8 @@ export const updateForm = payload => ({
 
 const initialState = {
   email: "",
-  emailErrorMessage: ""
+  emailErrorMessage: "",
+  formHasErrors: false
 };
 
 const resetPasswordReducer = (state = initialState, action = {}) => {

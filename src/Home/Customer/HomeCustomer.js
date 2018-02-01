@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
+  asyncUploadAvatar,
   getProfileAsync,
   clearView,
   updateView
 } from "../../Ducks/UserProfileReducer";
-
+import PhotoUpload from "react-native-photo-upload";
 import { View, Text, Image, ScrollView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {
@@ -15,8 +16,7 @@ import {
   FormInput,
   Header,
   Badge,
-  Rating,
-  Avatar
+  Rating
 } from "react-native-elements";
 import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -30,7 +30,7 @@ import { Sessions } from "../../Api";
 
 import styles from "./styles";
 import { Colors, Images } from "../../Themes";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 
 class Home extends Component {
@@ -51,18 +51,41 @@ class Home extends Component {
       starCount: rating
     });
   }
+  uploadAvatar(avatar) {
+    if (avatar) {
+      const { token, uuid } = this.props;
+      this.props.asyncUploadAvatar(uuid, avatar, token).then(response => {
+        this.props.getProfileAsync(uuid, token).then(response => {
+          this.props.updateView({
+            avatarBase64: avatar,
+            avatarURL: response.payload.avatarURL
+          });
+        });
+      });
+    }
+  }
+  selectImage = () => {
+    let image = this.props.avatarBase64
+      ? { uri: `data:image/jpg;base64,${this.props.avatarBase64}` }
+      : Images.avatar;
+    return this.props.avatarURL
+      ? {
+          uri: `${IMAGE_STORAGE_URL}${
+            this.props.avatarURL
+          }?${new Date().getMilliseconds()}`
+        }
+      : image;
+  };
   navigate = this.props.navigation.navigate;
 
   render() {
     const { firstName, lastName, avatarURL, navigation } = this.props;
-    console.log(
-      "avaratURL",
-      avatarURL ? { uri: `${IMAGE_STORAGE_URL}${avatarURL}` } : Images.avatar
-    );
+
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -93,22 +116,19 @@ class Home extends Component {
                   }
                 />
                 <View>
-                  <Avatar
-                    containerStyle={{ alignSelf: "center" }}
-                    avatarStyle={styles.avatar}
-                    rounded
-                    xlarge
-                    source={
-                      avatarURL ? (
-                        {
-                          uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getMilliseconds()}`
-                        }
-                      ) : (
-                        Images.avatar
-                      )
-                    }
-                    activeOpacity={0.7}
-                  />
+                  <View style={styles.containerAvatar}>
+                    <PhotoUpload
+                      onPhotoSelect={avatar => this.uploadAvatar(avatar)}
+                    >
+                      {
+                        <Image
+                          style={styles.avatar}
+                          resizeMode="cover"
+                          source={this.selectImage()}
+                        />
+                      }
+                    </PhotoUpload>
+                  </View>
                   <Badge
                     value={this.props.rate}
                     textStyle={styles.badgeText}
@@ -145,9 +165,10 @@ class Home extends Component {
                       onPress={() =>
                         this.props.navigation.dispatch({
                           type: "ContactLinguist"
-                        })}
+                        })
+                      }
                       textStyle={[styles.buttonText, styles.center]}
-                      title={EN["callLinguist"]}
+                      title={I18n.t("callLinguist")}
                       icon={{
                         name: "videocam",
                         size: 35,
@@ -159,14 +180,11 @@ class Home extends Component {
                   <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
                     onPress={() =>
-                      navigation.dispatch({ type: "ScanScreenView" })}
-                    icon={{
-                      name: "dashboard",
-                      size: 30,
-                      color: "gray"
-                    }}
+                      navigation.dispatch({ type: "ScanScreenView" })
+                    }
+                    icon={{ name: "dashboard", size: 30, color: "gray" }}
                     textStyle={[styles.buttonTextSecondary, styles.center]}
-                    title="Scan a QR Code"
+                    title={I18n.t("scanQRCode")}
                   />
                   {/* <Button
                     buttonStyle={[styles.buttonQR, styles.center]}
@@ -223,7 +241,8 @@ const mS = state => ({
 const mD = {
   clearView,
   updateView,
-  getProfileAsync
+  getProfileAsync,
+  asyncUploadAvatar
 };
 
 export default connect(mS, mD)(Home);

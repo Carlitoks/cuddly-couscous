@@ -76,10 +76,15 @@ export const getInvitations = () => (dispatch, getState) => {
 
           // If the call if 30 seconds old we take the call
           if (secondsDiff <= 0 && secondsDiff >= -30 && polling) {
-            const iid = sortedResponse[length - 1].id;
+            const invitation = sortedResponse[length - 1];
 
             // We turn off polling until HomeLinguistView is mounted again
-            dispatch(updateSettings({ invitationID: iid }));
+            dispatch(
+              updateSettings({
+                invitationID: invitation.id,
+                sessionID: invitation.session.id
+              })
+            );
             dispatch(updateProfileLinguist({ polling: false }));
             dispatch({ type: "IncomingCallView" });
           }
@@ -139,8 +144,9 @@ export const asyncGetInvitationDetail = (invitationID, token) => dispatch => {
 
       dispatch(
         updateSettings({
-          customerName: `${res.createdBy.firstName} ${res.createdBy
-            .lastInitial}.`,
+          customerName: `${res.createdBy.firstName} ${
+            res.createdBy.lastInitial
+          }.`,
           estimatedMinutes: `~ ${res.session.estimatedMinutes} mins`,
           languages: `${LANG_CODES.get(
             res.session.primaryLangCode
@@ -153,11 +159,17 @@ export const asyncGetInvitationDetail = (invitationID, token) => dispatch => {
     });
 };
 
-export const asyncAcceptsInvite = (invitationID, reason, token) => dispatch => {
+export const asyncAcceptsInvite = (
+  invitationID,
+  reason,
+  token,
+  linguistSessionId
+) => dispatch => {
   Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
     .then(response => {
       dispatch(invitationAccept(response.data));
       dispatch({ type: "LinguistView" });
+      dispatch(updateSettings({ sessionID: linguistSessionId }));
     })
     .catch(error => {
       dispatch(networkError(error));
@@ -168,7 +180,7 @@ export const asyncAcceptsInvite = (invitationID, reason, token) => dispatch => {
 const initialState = {
   // Call Settings
   mute: false,
-  video: true,
+  video: false,
   speaker: true,
   timer: null,
   invitationID: null,
@@ -181,6 +193,7 @@ const initialState = {
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 10, // Initial time selected: 10 min
+  sessionID: null,
 
   // IncomingCall
   firstName: "",

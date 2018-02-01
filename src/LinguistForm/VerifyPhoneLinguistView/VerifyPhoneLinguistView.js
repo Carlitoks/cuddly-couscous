@@ -9,7 +9,8 @@ import {
   ScrollView,
   Alert,
   TextInput,
-  Platform
+  Platform,
+  KeyboardAvoidingView
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
@@ -21,13 +22,13 @@ import {
   Badge
 } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class VerifyPhoneLinguist extends Component {
   navigate = this.props.navigation.navigate;
@@ -37,6 +38,7 @@ class VerifyPhoneLinguist extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -61,10 +63,10 @@ class VerifyPhoneLinguist extends Component {
                     }
                   />
                   {/* Verify your phone */}
-                  <Text style={styles.mainTitle}>{EN["verifyNumber"]}</Text>
+                  <Text style={styles.mainTitle}>{I18n.t("verifyNumber")}</Text>
                   {/* subtitle */}
                   <Text style={styles.mainSubtitle}>
-                    {EN["verifyNumberText"]}
+                    {I18n.t("verifyNumberText")}
                   </Text>
                 </Col>
               </Row>
@@ -100,6 +102,7 @@ class VerifyPhoneLinguist extends Component {
             </Col>
           </Grid>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
@@ -109,6 +112,7 @@ class VerifyPhoneLinguist extends Component {
             onPress={() => this.submit()}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

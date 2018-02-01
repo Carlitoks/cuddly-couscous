@@ -6,7 +6,7 @@ import {
   updateForm
 } from "../../Ducks/RegistrationCustomerReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import {
@@ -16,13 +16,13 @@ import {
   List,
   ListItem
 } from "react-native-elements";
-
+import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class GenderCustomerView extends Component {
   navigate = this.props.navigation.navigate;
@@ -82,6 +82,7 @@ class GenderCustomerView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -106,7 +107,7 @@ class GenderCustomerView extends Component {
                     }
                   />
                   {/* Enter your Name */}
-                  <Text style={styles.mainTitle}>{EN["genderName"]}</Text>
+                  <Text style={styles.mainTitle}>{I18n.t("genderName")}</Text>
                 </Col>
               </Row>
               <List containerStyle={{ borderTopWidth: 0 }}>
@@ -134,6 +135,7 @@ class GenderCustomerView extends Component {
             </Col>
           </Grid>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
@@ -143,6 +145,7 @@ class GenderCustomerView extends Component {
             onPress={() => this.submit()}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

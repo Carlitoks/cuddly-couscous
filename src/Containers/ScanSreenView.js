@@ -8,7 +8,7 @@ import { Button, Header } from "react-native-elements";
 import GoBackButton from "../Components/GoBackButton/GoBackButton";
 import { Colors, Fonts } from "../Themes";
 import { moderateScale, verticalScale, scale } from "../Util/Scaling";
-import EN from "../I18n/en";
+import I18n from "../I18n/I18n";
 
 const { width, height } = Dimensions.get("window");
 
@@ -87,14 +87,14 @@ class ScanScreenView extends Component {
         showMarker={true}
         bottomViewStyle={styles.bottomView}
         topViewStyle={styles.containerStyle}
-        topContent={<Text style={styles.title}>{EN["holdToScan"]}</Text>}
+        topContent={<Text style={styles.title}>{I18n.t("holdToScan")}</Text>}
         bottomContent={
           <Button
             borderRadius={15}
             buttonStyle={styles.Button}
             textStyle={styles.buttonText}
             onPress={() => navigation.dispatch({ type: "back" })}
-            title={EN["cancel"]}
+            title={I18n.t("cancel")}
           />
         }
       />

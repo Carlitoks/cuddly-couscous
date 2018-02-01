@@ -19,44 +19,44 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 
 const itemMetadata = {
   languages: {
-    title: EN["NativeLanguage"],
+    title: I18n.t("nativeLanguage"),
     multiselection: false,
     acceptsEmptySelection: false
   },
   citizenship: {
-    title: EN["citizenship"],
+    title: I18n.t("citizenShip"),
     multiselection: false,
     acceptsEmptySelection: false
   },
   countryFamiliarity: {
-    title: EN["countryFamiliarity"],
+    title: I18n.t("countryFamiliarity"),
     multiselection: false,
     acceptsEmptySelection: false
   },
   cityFamiliarity: {
-    title: EN["countryFamiliarity"],
+    title: I18n.t("countryFamiliarity"),
     multiselection: false,
     acceptsEmptySelection: false
   },
   nativeLanguage: {
-    title: EN["NativeLanguage"],
+    title: I18n.t("nativeLanguage"),
     multiselection: false,
     acceptsEmptySelection: false
   },
   secondaryLanguages: {
-    title: EN["SecondaryLanguages"],
+    title: I18n.t("SecondaryLanguages"),
     multiselection: true,
     acceptsEmptySelection: false,
     continueTo: "LanguageSettingsView"
   },
   areasOfExpertise: {
-    title: EN["AreasExpertise"],
+    title: I18n.t("areasExpertise"),
     multiselection: true,
     acceptsEmptySelection: true
   }
@@ -142,7 +142,7 @@ class SelectListView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}>
+        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
           <View style={styles.headerContainer}>
             <LinearGradient
               colors={[

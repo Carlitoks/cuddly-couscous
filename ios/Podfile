@@ -20,7 +20,7 @@ target 'NewSolo' do
 ] 
   pod 'react-native-image-resizer', :path => '../node_modules/react-native-image-resizer' 
   pod 'RNFS', :path => '../node_modules/react-native-fs' 
-
+  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
   pod 'react-native-keep-awake', :path => '../node_modules/react-native-keep-awake'
   pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
 

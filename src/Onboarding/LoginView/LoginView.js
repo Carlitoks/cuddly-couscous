@@ -7,10 +7,9 @@ import { Button, FormLabel, FormInput, Header } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-
+import { topIOS } from "../../Util/Devices";
 import { clearForm, updateForm } from "../../Ducks/LoginReducer";
 import { logInAsync, haveSession } from "../../Ducks/AuthReducer";
-
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
@@ -21,7 +20,7 @@ import styles from "./styles";
 import { Colors } from "../../Themes";
 
 // For the moment
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class LoginView extends Component {
   componentWillUnmount() {
@@ -36,7 +35,7 @@ class LoginView extends Component {
     if (!patt.test(this.props.email)) {
       updates = {
         ...updates,
-        emailErrorMessage: "Not A Valid Email"
+        emailErrorMessage: I18n.t("noValidEmail")
       };
       valid = false;
     }
@@ -44,7 +43,7 @@ class LoginView extends Component {
     if (!this.props.email) {
       updates = {
         ...updates,
-        emailErrorMessage: "Empty Email"
+        emailErrorMessage: I18n.t("emptyEmail")
       };
       valid = false;
     }
@@ -52,7 +51,7 @@ class LoginView extends Component {
     if (!this.props.password) {
       updates = {
         ...updates,
-        passwordErrorMessage: "Empty Password"
+        passwordErrorMessage: I18n.t("emptyPassword")
       };
       valid = false;
     }
@@ -142,14 +141,14 @@ class LoginView extends Component {
                   />
 
                   {/* Title */}
-                  <Text style={styles.title}>{EN["signIn"]}</Text>
+                  <Text style={styles.title}>{I18n.t("signIn")}</Text>
                 </Col>
               </Row>
               {/* Email */}
               <FormInput
                 containerStyle={styles.formInputContainer}
                 inputStyle={styles.formInput}
-                placeholder={EN["email"]}
+                placeholder={I18n.t("email")}
                 placeholderTextColor={Colors.placeholderColor}
                 autoCorrect={false}
                 onChangeText={text =>
@@ -161,8 +160,8 @@ class LoginView extends Component {
 
               {/* Password */}
               <InputPassword
-                placeholder={EN["password"]}
                 inputStyle={styles.formInput}
+                placeholder={I18n.t("password")}
                 placeholderTextColor={Colors.placeholderColor}
                 onChangeText={text =>
                   this.props.updateForm({
@@ -179,23 +178,25 @@ class LoginView extends Component {
                 onPress={() =>
                   navigation.dispatch({ type: "ForgotPasswordView" })}
               >
-                {EN["forgotPassword"]}
+                {I18n.t("forgotPassword")}
               </Text>
             </Col>
           </Grid>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Sign In Button */}
           <Button
             textStyle={styles.signInText}
             buttonStyle={styles.Button}
             onPress={() => this.submit()}
-            title={EN["signIn"]}
+            title={I18n.t("signIn")}
             loading={this.props.performingRequest}
             disabled={this.props.performingRequest}
             disabledStyle={styles.ButtonDisabled}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

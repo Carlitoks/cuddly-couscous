@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { GetOptions, updateForm } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import {
@@ -14,14 +14,14 @@ import {
   ListItem
 } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
-import EN from "../../I18n/en";
+import I18n from "../../I18n/I18n";
 
 class GenderLinguist extends Component {
   navigate = this.props.navigation.navigate;
@@ -33,7 +33,7 @@ class GenderLinguist extends Component {
     if (!this.props.selectedGender) {
       updates = {
         ...updates,
-        GenderErrorMessage: "Please Select a Gender"
+        GenderErrorMessage: I18n.t("selectGender")
       };
       valid = false;
     }
@@ -81,12 +81,13 @@ class GenderLinguist extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <View>
             <Header
               navigation={this.props.navigation}
-              mainTitle={EN["genderName"]}
+              mainTitle={I18n.t("genderName")}
             />
             <List containerStyle={{ borderTopWidth: 0 }}>
               {genders.map((item, i) => (
@@ -112,15 +113,17 @@ class GenderLinguist extends Component {
             </List>
           </View>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <View style={styles.containerBottom}>
           {/* Next Button */}
           <Button
             buttonStyle={styles.buttonContainer}
             textStyle={styles.buttonText}
-            title="Next"
+            title={I18n.t("next")}
             onPress={() => this.submit()}
           />
         </View>
+        </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

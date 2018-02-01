@@ -11,10 +11,10 @@ const initialState = AppNavigation.router.getStateForAction(
 export default (reducer = (state, action) => {
   let newState;
 
-  if(state){
+  if (state) {
     const [currentRoute] = state.routes[0].routes[0].routes.slice(-1);
-    
-    if(action.type === currentRoute.routeName) return state;
+
+    if (action.type === currentRoute.routeName) return state;
   }
 
   switch (action.type) {
@@ -55,6 +55,17 @@ export default (reducer = (state, action) => {
         NavigationActions.reset({
           index: 0,
           actions: [NavigationActions.navigate({ routeName: "LinguistView" })]
+        })
+      );
+      break;
+
+    case "CheckYourEmailView":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: "CheckYourEmailView" })
+          ]
         })
       );
       break;

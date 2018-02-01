@@ -90,6 +90,7 @@ export default App;
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ddd'
+    backgroundColor: '#6153CD',
+    padding:10
   }
 })

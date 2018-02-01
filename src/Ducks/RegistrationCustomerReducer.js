@@ -3,6 +3,7 @@ import { networkError } from "./NetworkErrorsReducer";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { androidDeviceIDToPseudoUUID } from "../Util/Helpers";
+import I18n from "../I18n/I18n";
 
 const ACTIONS = {
   CLEAR: "registrationCustomer/clear",
@@ -22,10 +23,10 @@ export const updateForm = payload => ({
 
 export const GetOptions = () => dispatch => {
   return [
-    { gender: "Male" },
-    { gender: "Female" },
-    { gender: "Other" },
-    { gender: "Decline to spicify" }
+    { gender: I18n.t("male") },
+    { gender: I18n.t("female") },
+    { gender: I18n.t("other") },
+    { gender: I18n.t("specifyGender") }
   ];
 };
 
@@ -75,7 +76,7 @@ const initialState = {
   firstname: "",
   lastname: "",
   preferredName: "",
-  mainTitle: "Enter Your Name",
+  mainTitle: I18n.t("mainTitle"),
   formHasErrors: false,
   // Customer Email
   email: "",

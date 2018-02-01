@@ -6,6 +6,13 @@ import com.facebook.react.ReactApplication;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
+import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
+import com.zxcpoiu.incallmanager.InCallManagerPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
+import com.rnfs.RNFSPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -35,6 +42,13 @@ public class MainApplication extends Application implements ReactApplication {
             new BackgroundTimerPackage(),
             new ReactNativePushNotificationPackage(),
             new KCKeepAwakePackage(),
+            new RCTCameraPackage(),
+            new RNI18nPackage(),
+            new InCallManagerPackage(),
+            new RNFetchBlobPackage(),
+            new RNDeviceInfo(),
+            new ImageResizerPackage(),
+            new RNFSPackage(),
             new LinearGradientPackage(),
             new ReactNativeExceptionHandlerPackage(),
             new SplashScreenReactPackage(),

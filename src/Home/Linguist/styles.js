@@ -5,6 +5,12 @@ import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
+  avatar: {
+    paddingVertical: 30,
+    width: 150,
+    height: 150,
+    borderRadius: 75
+  },
   center: {
     alignSelf: "center"
   },
