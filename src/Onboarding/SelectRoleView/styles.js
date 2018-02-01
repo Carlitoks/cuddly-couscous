@@ -5,19 +5,18 @@ import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
-  logo: { 
-    fontFamily: Fonts.primaryBoldFont, 
-    textAlign: "center", 
-    fontSize: 50, 
-    color: Colors.primaryColor, 
-    borderColor: Colors.primaryAltFontColor, 
-    textShadowColor: "#585858", 
-    textShadowOffset: { width: 3, height: 3 }, 
-    textShadowRadius: 10, 
-    marginTop: verticalScale(70), 
-    marginBottom: verticalScale(70) ,
-    backgroundColor:"transparent"
-  }, 
+  logo: {
+    fontFamily: Fonts.primaryBoldFont,
+    textAlign: "center",
+    fontSize: moderateScale(63),
+    color: Colors.primaryColor,
+    borderColor: Colors.primaryAltFontColor,
+    textShadowColor: "#585858",
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowRadius: 10,
+    marginTop: verticalScale(60),
+    marginBottom: verticalScale(60)
+  },
   call: {
     width: moderateScale(90),
     height: moderateScale(80),
@@ -73,7 +72,8 @@ export default StyleSheet.create({
   },
   linkLogin: {
     fontFamily: Fonts.primaryBoldFont,
-    color: Colors.fontColor
+    color: Colors.fontColor,
+    marginBottom: moderateScale(15)
   },
   textLogin: {
     fontFamily: Fonts.primaryFont,
