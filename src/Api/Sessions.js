@@ -103,6 +103,34 @@ const Session = {
       { name: "Technology" },
       { name: "Tourism" }
     ];
+  },
+  GetCategories: () => {
+    return [
+      {
+        name: "Hotel",
+        icon: "hotel"
+      },
+      {
+        name: "Restaurant",
+        icon: "restaurant"
+      },
+      {
+        name: "Airport",
+        icon: "local-airport"
+      },
+      {
+        name: "Taxi/Bus/Train",
+        icon: "local-taxi"
+      },
+      {
+        name: "Shopping",
+        icon: "shopping-cart"
+      },
+      {
+        name: "General",
+        icon: "view-module"
+      }
+    ];
   }
 };
 

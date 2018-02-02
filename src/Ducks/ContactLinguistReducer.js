@@ -50,7 +50,7 @@ const initialState = {
 
   // Assistance
   searchAssistance: "",
-  selectedAssistance: "General",
+  selectedAssistance: "",
   selectedScenarioId: "",
   selectedLanguage: "Spanish",
   selectedLanguageCode: "spa"

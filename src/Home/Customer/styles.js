@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
+import { moderateScale, scale } from "../../Util/Scaling";
 
 const { width, height } = Dimensions.get("window");
 
@@ -29,12 +30,11 @@ export default StyleSheet.create({
   },
   avatar: {
     paddingVertical: 30,
-    width: 150,
-    height: 150,
-    borderRadius: 75,
+    width: moderateScale(150),
+    height: moderateScale(150),
+    borderRadius: moderateScale(75),
     alignSelf: "center"
   },
-
   logo: {
     marginTop: 20,
     marginBottom: 10,
@@ -90,18 +90,6 @@ export default StyleSheet.create({
     width: "100%",
     height: 80
   },
-  buttonTextSecondary: {
-    fontSize: 16,
-    color: "gray",
-    fontFamily: Fonts.primaryBaseFont,
-    alignItems: "center"
-  },
-  buttonPollingText: {
-    fontSize: 16,
-    color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBaseFont,
-    alignItems: "center"
-  },
   buttonText: {
     fontSize: 16,
     color: Colors.primaryAltFontColor,
@@ -110,27 +98,50 @@ export default StyleSheet.create({
     fontWeight: "bold"
   },
   stars: {
-    width: 100,
-    marginTop: 8,
+    //marginLeft: moderateScale(80),
+    width: scale(140),
     marginBottom: 10,
     backgroundColor: "rgba(255, 255, 255, 0)" 
   },
-  containerButtons: {
-    backgroundColor: "#ffffff",
-    bottom: 0,
-    width: "100%",
-    minHeight: 300
+  userName: {
+    fontFamily: Fonts.primaryLightFont,
+    color: Colors.primaryColor,
+    fontSize: scale(45),
+    textAlign: "center"
+  },
+  userContainer: {
+    width: width,
+    alignSelf: "center",
+    marginBottom: 30
+  },
+  containerTiles: {
+    width: width,
+    marginTop: 10,
+    marginBottom: 10,
+    // TODO: update this minHeight back to 300 when 'Favorites' and 'Schedule a Linguist' Buttons are back
+    minHeight: 335,
+    alignItems: "center",
+    justifyContent: "space-around"
+  },
+  tilesGrid: {
+    marginTop: 10,
+    marginLeft: moderateScale(20),
+    marginRight: moderateScale(20),
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    marginBottom: 30
   },
   containerPerfil: {
     backgroundColor: Colors.primaryFillColor
   },
   starsContainer: {
-    display: "flex",
-    flexDirection: "row",
     justifyContent: "center",
-    alignItems: "baseline",
-    width: "100%",
-    height: 80,
+    marginRight: 30,
+    marginTop: 10,
+    alignSelf: "center",
+    alignItems: "center",
+    marginLeft: 30,
     backgroundColor: "rgba(255, 255, 255, 0)" 
   },
   iconView: {
@@ -153,9 +164,6 @@ export default StyleSheet.create({
     marginTop: 20,
     marginBottom: 5,
     width:"100%"
-  },
-  box3: {
-    flex: 1
   },
   iconV: {
     display: "flex",
@@ -181,8 +189,25 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryLightFont
   },
   title: {
-    fontSize: 16,
-    color: Colors.primaryColor,
-    fontFamily: Fonts.primaryLightFont
+    fontSize: moderateScale(30),
+    color: "gray",
+    fontFamily: Fonts.primaryBaseFont
+  },
+  wrapperContainer: {
+    backgroundColor: "white"
+  },
+  scrollContainer: {
+    backgroundColor: "white",
+    height: height
+  },
+  avatarContainer: {
+    marginLeft: scale(60)
+  },
+  titleContainer: {
+    alignItems: "flex-start",
+    marginTop: 20,
+    marginBottom: 5,
+    width: "100%",
+    marginLeft: scale(30)
   }
 });

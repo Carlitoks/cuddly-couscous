@@ -2,7 +2,7 @@
 // Some comments about code style
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { filter, isUndefined } from "lodash";
+import { filter, isUndefined, isNull } from "lodash";
 
 import {
   updateSettings,
@@ -103,6 +103,12 @@ class LanguageSettingsView extends Component {
 
   render() {
     const navigation = this.props.navigation;
+    const { selectedLanguage } = this.props;
+
+    const languageName =
+      isUndefined(selectedLanguage) || isNull(selectedLanguage)
+        ? ""
+        : selectedLanguage.name;
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -129,7 +135,7 @@ class LanguageSettingsView extends Component {
           </View>
 
           <Text style={styles.title}>
-            {I18n.t("proficiencyLevelOf")} {this.props.selectedLanguage.name}
+            {I18n.t("proficiencyLevelOf")} {languageName}
           </Text>
 
           <List containerStyle={styles.marginBottom20}>
@@ -139,7 +145,7 @@ class LanguageSettingsView extends Component {
           <Text style={styles.title}>
             {this.insertCurrentLanguage(
               I18n.t("languageInterpretation"),
-              this.props.selectedLanguage.name
+              languageName
             )}
           </Text>
           <List>

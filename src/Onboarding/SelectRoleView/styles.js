@@ -15,7 +15,8 @@ export default StyleSheet.create({
     textShadowOffset: { width: 3, height: 3 },
     textShadowRadius: 10,
     marginTop: verticalScale(60),
-    marginBottom: verticalScale(60)
+    marginBottom: verticalScale(60),
+    backgroundColor:"transparent"
   },
   call: {
     width: moderateScale(90),

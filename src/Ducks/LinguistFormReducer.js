@@ -1,7 +1,10 @@
-import { Sessions, Linguist } from "../Api";
+import { Sessions, Linguist, Scenarios } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
 import { Images } from "../Themes/Images";
 import I18n from "../I18n/I18n";
+
+import store from "../Config/CreateStore";
+import { getAssistanceList } from "./ContactLinguistReducer";
 
 // Constants
 export const LANGUAGE_INTERPRETATION_LIST = [
@@ -117,6 +120,7 @@ const initialState = {
   VerifyPhoneNumber: "",
   // Password
   password: "",
+  scenarios: [],
   // Language selection
   languages: [],
   citizenships: [],
@@ -134,12 +138,13 @@ const initialState = {
   selectedCityFamiliarity: [],
   selectedProficiency: null,
   selectedLanguageInterpretation: null,
+  selectedScenarios: [],
   linguistInfo: null,
   goTo: "SelectLanguageView",
   currentView: null
 };
 
-export const getItems = type => dispatch => {
+export const getItems = (type, params) => (dispatch, getState) => {
   const types = {
     languages: Sessions.GetLanguages,
     citizenships: Sessions.GetCitizenships,
@@ -149,7 +154,30 @@ export const getItems = type => dispatch => {
     cityFamiliarities: Sessions.GetCityFamiliarities
   };
 
-  dispatch(updateSettings({ [type]: types[type]() }));
+  switch (type) {
+    case "scenarios":
+      Scenarios.get(getState().auth.token)
+        .then(response => {
+          let resp = [];
+          if (params) {
+            resp = response.data.filter(value => {
+              return value.category === params.category || value.category === "general";
+            });
+          } else {
+            resp = response.data;
+          }
+
+          dispatch(updateSettings({ [type]: resp }));
+        })
+        .catch(error => {
+          console.log(error);
+          return dispatch(networkError(error));
+        });
+      break;
+    default:
+      dispatch(updateSettings({ [type]: types[type]() }));
+      break;
+  }
 };
 
 const linguistFormReducer = (state = initialState, action = {}) => {

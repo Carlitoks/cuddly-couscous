@@ -49,7 +49,7 @@ class SelectRoleView extends Component {
               <TopViewIOS/>   
               {/* OnVoy Logo */}
               <Text style={[styles.logo, styles.center]} source={Images.logo}> 
-                OnVoy 
+                MeYu
               </Text> 
 
               {/* Card */}

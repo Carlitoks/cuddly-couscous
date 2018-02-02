@@ -48,9 +48,11 @@ import FamiliarityView from "../LinguistForm/FamiliarityView/FamiliarityView";
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
 import CallSettings from "../CallSettings/CallSettings";
-import ScanScreenView from "../Containers/ScanSreenView";
+import ScanScreenView from "../Containers/ScanScreenView";
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
+
+import CustomScenarioView from "../Home/CustomScenario/CustomScenarioView";
 
 const Navigation = StackNavigator(
   {
@@ -119,6 +121,9 @@ const Navigation = StackNavigator(
     },
     Home: {
       screen: Home
+    },
+    CustomScenarioView: {
+      screen: CustomScenarioView
     },
     IncomingCallView: { screen: IncomingCallView },
     LandingContainer: { screen: LandingContainer },

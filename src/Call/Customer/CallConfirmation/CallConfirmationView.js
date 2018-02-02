@@ -4,15 +4,19 @@ import { Text, View, ScrollView, Switch } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button, Header } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import { isUndefined } from "lodash";
+
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
 import SettingsButton from "../../../Components/SettingsButton/SettingsButton";
 
 import { connect } from "react-redux";
 import { GetInfo } from "../../../Ducks/SessionInfoReducer";
 import {
-  updateSettings,
-  clearSettings
+  clearSettings,
+  updateSettings as customerUpdateSettings
 } from "../../../Ducks/CallCustomerSettings.js";
+import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
+import { clearSettings as clearHomeReducer } from "../../../Ducks/HomeFlowReducer";
 
 import I18n from "../../../I18n/I18n";
 import { styles } from "./styles";
@@ -58,6 +62,7 @@ class CallConfirmationView extends Component {
               </Row>
 
               <Grid style={styles.summaryContainer}>
+                {/* Language */}
                 <Row style={styles.callInformation}>
                   <Col style={styles.alignIcon} size={25}>
                     <Icon
@@ -73,6 +78,7 @@ class CallConfirmationView extends Component {
                     </Text>
                   </Col>
                 </Row>
+                {/* Scenario */}
                 <Row style={styles.callInformation}>
                   <Col style={styles.alignIcon} size={25}>
                     <Icon
@@ -83,9 +89,14 @@ class CallConfirmationView extends Component {
                     />
                   </Col>
                   <Col style={styles.alignText} size={75}>
-                    <Text style={styles.textSize}>{this.props.scenario}</Text>
+                    <Text style={styles.textSize}>
+                      {this.props.customScenario
+                        ? this.props.customScenario
+                        : (this.props.scenario ? this.props.scenario.title : 'General') }
+                    </Text>
                   </Col>
                 </Row>
+                {/* Time */}
                 <Row style={styles.callInformation}>
                   <Col style={styles.alignIcon} size={25}>
                     <Icon
@@ -101,11 +112,12 @@ class CallConfirmationView extends Component {
                     </Text>
                   </Col>
                 </Row>
+                {/* Allow extra time */}
                 <Row style={styles.callInformation}>
                   <Col style={styles.alignIcon} size={25}>
                     <Switch
                       onValueChange={() => {
-                        this.props.updateSettings({
+                        this.props.customerUpdateSettings({
                           customerExtraTime: !this.props.customerExtraTime
                         });
                       }}
@@ -123,6 +135,7 @@ class CallConfirmationView extends Component {
                     </Text>
                   </Col>
                 </Row>
+                {/* Monetization */}
                 <Row style={styles.callInformation}>
                   <Col style={styles.alignIcon} size={25}>
                     <Icon
@@ -141,24 +154,29 @@ class CallConfirmationView extends Component {
                     </Text>
                   </Col>
                 </Row>
+                {/* Buttons */}
                 <Row style={styles.footerButtons}>
                   <Col style={styles.footerButtons}>
+                    {/* Cancel */}
                     <Button
                       buttonStyle={[styles.buttonStyle, styles.buttonCancel]}
                       textStyle={styles.textButtonStyle}
                       title={I18n.t("cancel")}
                       onPress={() => {
                         this.props.clearSettings();
+                        this.props.clearHomeReducer();
                         navigation.dispatch({ type: "Home" });
                       }}
                     />
                   </Col>
                   <Col style={styles.footerButtons}>
+                    {/* Call */}
                     <Button
                       buttonStyle={[styles.buttonStyle, styles.buttonCall]}
                       textStyle={styles.textButtonStyle}
                       title={I18n.t("call")}
                       onPress={() => {
+                        this.props.clearHomeReducer();
                         navigation.dispatch({ type: "CustomerView" });
                       }}
                     />
@@ -174,11 +192,12 @@ class CallConfirmationView extends Component {
 }
 
 const mS = state => ({
+  customScenario: state.homeFlow.customScenario,
   sessionId: state.callCustomerSettings.sessionID,
   token: state.auth.token,
   customerExtraTime: state.callCustomerSettings.customerExtraTime,
   approxTime: state.callCustomerSettings.selectedTime,
-  scenario: state.contactLinguist.selectedAssistance,
+  scenario: state.linguistForm.selectedLanguage,
   estimatedPrice:
     state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
   toLanguage: state.contactLinguist.selectedLanguage
@@ -187,7 +206,9 @@ const mS = state => ({
 const mD = {
   GetInfo,
   updateSettings,
-  clearSettings
+  customerUpdateSettings,
+  clearSettings,
+  clearHomeReducer
 };
 
 export default connect(mS, mD)(CallConfirmationView);

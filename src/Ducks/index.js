@@ -19,6 +19,8 @@ import tokbox from "./tokboxReducer";
 import profileLinguist from "./ProfileLinguistReducer";
 import linguistForm from "./LinguistFormReducer";
 import sessionInfo from "./SessionInfoReducer";
+import events from "./EventsReducer";
+import homeFlow from "./HomeFlowReducer";
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -39,7 +41,9 @@ const rootReducer = combineReducers({
   tokbox,
   profileLinguist,
   linguistForm,
-  sessionInfo
+  sessionInfo,
+  events,
+  homeFlow
 });
 
 export default rootReducer;

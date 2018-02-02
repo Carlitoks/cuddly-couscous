@@ -1,3 +1,4 @@
+//TODO: Create switch when we retrieve the categories array to add icon names
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
@@ -7,6 +8,7 @@ import {
   clearView,
   updateView
 } from "../../Ducks/UserProfileReducer";
+import { getCategories } from "../../Ducks/HomeFlowReducer";
 import PhotoUpload from "react-native-photo-upload";
 import { View, Text, Image, ScrollView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -16,7 +18,9 @@ import {
   FormInput,
   Header,
   Badge,
-  Rating
+  Rating,
+  Avatar,
+  Tile
 } from "react-native-elements";
 import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -24,22 +28,27 @@ import LinearGradient from "react-native-linear-gradient";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
+import TileButton from "../../Components/TileButton/TileButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import { updateSettings as updateSelectionList } from "../../Ducks/LinguistFormReducer";
 
 import { Sessions } from "../../Api";
 
 import styles from "./styles";
-import { Colors, Images } from "../../Themes";
+import { Colors, Images, Fonts } from "../../Themes";
 import I18n from "../../I18n/I18n";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
+import { moderateScale } from "../../Util/Scaling";
 
 class Home extends Component {
   componentWillMount() {
-    const { firstName, lastName } = this.props;
+    const { firstName, lastName, getCategories } = this.props;
 
     if (!firstName && !lastName) {
       this.props.getProfileAsync(this.props.uuid, this.props.token);
     }
+
+    getCategories();
   }
 
   componentWillUnmount() {
@@ -82,7 +91,7 @@ class Home extends Component {
     const { firstName, lastName, avatarURL, navigation } = this.props;
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
+      <ViewWrapper style={styles.wrapperContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           alwaysBounceVertical={false} 
@@ -107,16 +116,16 @@ class Home extends Component {
                   leftComponent={
                     <ShowMenuButton navigation={this.props.navigation} />
                   }
-                  centerComponent={{
+                  /* centerComponent={{
                     text: `${firstName} ${lastName}`,
                     style: styles.title
-                  }}
+                  }} */
                   rightComponent={
                     <SettingsButton navigation={this.props.navigation} />
                   }
                 />
-                <View>
-                  <View style={styles.containerAvatar}>
+                <Row style={styles.userContainer}>
+                  <View style={styles.avatarContainer}>
                     <PhotoUpload
                       onPhotoSelect={avatar => this.uploadAvatar(avatar)}
                     >
@@ -128,96 +137,78 @@ class Home extends Component {
                         />
                       }
                     </PhotoUpload>
-                  </View>
-                  <Badge
-                    value={this.props.rate}
-                    textStyle={styles.badgeText}
-                    containerStyle={styles.badgeContainer}
-                  />
-                </View>
-                <View style={styles.starsContainer}>
-                  <View style={[styles.stars, styles.center]}>
-                    <StarRating
-                      emptyStarColor="gray"
-                      emptyStar={"ios-star-outline"}
-                      fullStar={"ios-star"}
-                      halfStar={"ios-star-half"}
-                      iconSet={"Ionicons"}
-                      disabled={true}
-                      maxStars={5}
-                      starSize={18}
-                      rating={this.props.rate}
-                      starColor={Colors.primaryColor}
+                    <Badge
+                      value={this.props.rate}
+                      textStyle={styles.badgeText}
+                      containerStyle={styles.badgeContainer}
                     />
                   </View>
-                  <Text style={styles.textStars} />
-                </View>
+                  <View style={styles.starsContainer}>
+                    <Text style={styles.userName}>
+                      {firstName + " " + lastName}
+                    </Text>
 
+                    <View style={[styles.stars]}>
+                      <StarRating
+                        emptyStarColor="gray"
+                        emptyStar={"ios-star-outline"}
+                        fullStar={"ios-star"}
+                        halfStar={"ios-star-half"}
+                        iconSet={"Ionicons"}
+                        disabled={true}
+                        maxStars={5}
+                        starSize={moderateScale(20)}
+                        rating={this.props.rate}
+                        starColor={Colors.primaryColor}
+                      />
+                    </View>
+                    <Text style={styles.textStars} />
+                  </View>
+                </Row>
                 {/* Home */}
               </Col>
               <Col>
-                <View style={styles.containerButtons}>
-                  <View>
-                    <Button
-                      borderRadius={15}
-                      containerViewStyle={styles.callLinguistContainer}
-                      buttonStyle={styles.button}
-                      onPress={() =>
-                        this.props.navigation.dispatch({
-                          type: "ContactLinguist"
-                        })
-                      }
-                      textStyle={[styles.buttonText, styles.center]}
-                      title={I18n.t("callLinguist")}
-                      icon={{
-                        name: "videocam",
-                        size: 35,
-                        color: Colors.primaryAltFontColor
-                      }}
-                    />
-                  </View>
-
-                  <Button
-                    buttonStyle={[styles.buttonQR, styles.center]}
-                    onPress={() =>
-                      navigation.dispatch({ type: "ScanScreenView" })
-                    }
-                    icon={{ name: "dashboard", size: 30, color: "gray" }}
-                    textStyle={[styles.buttonTextSecondary, styles.center]}
-                    title={I18n.t("scanQRCode")}
-                  />
-                  {/* <Button
-                    buttonStyle={[styles.buttonQR, styles.center]}
-                    onPress={() => console.log("navigating")}
-                    icon={{ name: "today", size: 30, color: "gray" }}
-                    title="Schedule a Linguist"
-                    textStyle={[styles.buttonTextSecondary, styles.center]}
-                  /> */}
-                  {/* <Button
-                    buttonStyle={[styles.buttonQR, styles.center]}
-                    onPress={() => console.log("navigating")}
-                    title="Favorites"
-                    textStyle={[styles.buttonTextSecondary, styles.center]}
-                    icon={{ name: "favorite", size: 30, color: "gray" }}
-                    iconStyle={styles.icon}
-                  >
-                    <View style={styles.callLinguistContainer}>
-                      <Icon
-                        style={styles.iconV}
-                        name="favorite"
-                        size={30}
-                        color={"#9391f7"}
-                        onPress={() =>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.title}>
+                    {I18n.t("iNeedAssistanceWith")}
+                  </Text>
+                </View>
+                <View style={styles.containerTiles}>
+                  <Grid>
+                    <View style={styles.tilesGrid}>
+                      {this.props.categories.map((item, i) => (
+                        <TileButton
+                          iconName={item.icon}
+                          label={item.name}
+                          key={i}
+                          navigation={navigation}
+                          viewName="ContactLinguist"
+                          onPress={() => {
+                            this.props.updateSelectionList({
+                              selectionItemType: "scenarios",
+                              selectionItemName: "scenarios",
+                              scenarios: []
+                            });
+                            this.props.navigation.dispatch({
+                              type: "SelectListView",
+                              params: { category: item.name }
+                            });
+                          }}
+                        />
+                      ))}
+                      <TileButton
+                        iconType="font-awesome"
+                        iconName="qrcode"
+                        label={I18n.t("scanQR")}
+                        navigation={navigation}
+                        onPress={() => {
                           this.props.navigation.dispatch({
-                            type: "LandingContainer"
-                          })}
+                            type: "ScanScreenView"
+                          });
+                        }}
                       />
-                      <Text style={[styles.buttonTextSecondary, styles.center]}>
-                        Favorites
-                      </Text>
-                      <View style={styles.box3} />
                     </View>
-                  </Button> */}
+                  </Grid>
                 </View>
               </Col>
             </Col>
@@ -235,14 +226,17 @@ const mS = state => ({
   avatarURL: state.userProfile.avatarURL,
   uuid: state.auth.uuid,
   token: state.auth.token,
-  rate: state.userProfile.averageStarRating
+  rate: state.userProfile.averageStarRating,
+  categories: state.homeFlow.categories
 });
 
 const mD = {
   clearView,
   updateView,
   getProfileAsync,
-  asyncUploadAvatar
+  asyncUploadAvatar,
+  updateSelectionList,
+  getCategories
 };
 
 export default connect(mS, mD)(Home);
