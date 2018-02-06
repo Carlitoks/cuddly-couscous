@@ -33,7 +33,7 @@ export default StyleSheet.create({
     paddingBottom: moderateScale(35)
   },
   containerInput: {
-    marginTop: moderateScale(20)
+    marginTop: 30
   },
   formText: {
     paddingLeft: 18,

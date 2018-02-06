@@ -9,14 +9,14 @@ const colors = {
   formColor: "#d2d3d8",
   formInputIconColor: "#D1CFCF",
   gradientColor: {
-    top: "#6153CD",
-    middle: "#6B8FE0",
-    bottom: "#73BDEE"
+    top: "#FF5642",
+    middle: "#FC834E",
+    bottom: "#FDAD46"
   },
   linguistFormButton: "#ebedfa",
   linguistFormText: "#677bd8",
   onTintColor: "#4cd963",
-  placeholderColor:"#7D7E80",
+  placeholderColor: "#7D7E80",
   primaryAltFontColor: "#6B8FE0",
   primaryBackgroundColor: "#e6f3ff",
   primaryColor: "white",

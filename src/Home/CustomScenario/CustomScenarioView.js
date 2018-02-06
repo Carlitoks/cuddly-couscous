@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { View, ScrollView, TextInput, Alert } from "react-native";
+import { View, ScrollView, TextInput, Alert, KeyboardAvoidingView, Keyboard } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { updateSettings } from "../../Ducks/HomeFlowReducer";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-
+import { topIOS } from "../../Util/Devices";
 import Header from "./Header";
 import BottomButton from "./BottomButton";
 import styles from "./styles";
@@ -72,20 +72,11 @@ class CustomScenario extends Component {
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
+          alwaysBounceVertical={false} 
         >
           <Header
             mainTitle={I18n.t("iNeedAssistanceWith")}
             leftComponent={<GoBackButton navigation={this.props.navigation} />}
-            rightComponent={
-              <Icon
-                style={styles.Icon}
-                name="menu"
-                size={moderateScale(30)}
-                onPress={() => {
-                  console.log("open");
-                }}
-              />
-            }
           />
 
           <View>
@@ -98,15 +89,19 @@ class CustomScenario extends Component {
                 });
               }}
               value={this.props.customScenario}
+              maxLength={70}
             />
           </View>
         </ScrollView>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
         <BottomButton
           title={I18n.t("continue")}
           onPress={() => {
+            Keyboard.dismiss();
             this.submit();
           }}
         />
+         </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

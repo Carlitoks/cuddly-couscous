@@ -22,7 +22,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -208,7 +208,7 @@ class SelectLanguageView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
+        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} style={styles.scrollContainer}>
           <Header
             navigation={this.props.navigation}
             mainTitle={I18n.t("languages")}

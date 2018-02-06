@@ -25,7 +25,7 @@ import {
 import StarRating from "react-native-star-rating";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import TileButton from "../../Components/TileButton/TileButton";
@@ -109,6 +109,7 @@ class Home extends Component {
                   ]}
                   style={styles.linearGradient}
                 />
+                <TopViewIOS/> 
                 {/* Header - Navigation */}
                 <Header
                   outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}

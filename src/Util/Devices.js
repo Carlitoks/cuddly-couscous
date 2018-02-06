@@ -4,10 +4,10 @@ const IphoneX = DeviceInfo.getModel() == "iPhone X";
 let top;
 export const topIOS = () => {
     if(IphoneX){
-        top=40;
+        top=0;
     }
     else{
-        top=20;
+        top=0;
     }
     return top;
   };

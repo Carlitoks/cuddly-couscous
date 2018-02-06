@@ -4,12 +4,11 @@ import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint-disable-line
 import KeepAwake from "react-native-keep-awake";
-
 import styles from "./styles";
 import { Images } from "../../../Themes";
 import { CallButton } from "../../../Components/CallButton/CallButton";
 import I18n from "../../../I18n/I18n";
-
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import {
   updateSettings,
   incrementTimer,
@@ -40,18 +39,6 @@ class LinguistView extends Component {
       sessionID
     } = this.props;
 
-   /* if (InCallManager.recordPermission !== "granted") {
-      InCallManager.requestRecordPermission()
-        .then(requestedRecordPermissionResult => {
-          console.log(
-            "InCallManager.requestRecordPermission() requestedRecordPermissionResult: ",
-            requestedRecordPermissionResult
-          );
-        })
-        .catch(err => {
-          console.log("InCallManager.requestRecordPermission() catch: ", err);
-        });
-    } */
   }
    
   componentWillMount() {
@@ -87,6 +74,7 @@ class LinguistView extends Component {
           <Subscriber
             sessionId={this.props.linguistTokboxSessionID}
             style={styles.background}
+            mute={!this.props.speaker}
             onSubscribeStart={() => {
               console.log("Sub Started");
             }}
@@ -114,6 +102,7 @@ class LinguistView extends Component {
           />
         </View>
         <View style={styles.topContainer}>
+        <TopViewIOS/>
           <View style={styles.inlineContainer}>
             <Image
               style={styles.smallAvatar}
@@ -148,7 +137,6 @@ class LinguistView extends Component {
           <CallButton
             onPress={() => {
               this.props.updateSettings({ speaker: !this.props.speaker });
-              //InCallManager.setForceSpeakerphoneOn(!this.props.speaker);
             }}
             toggle={true}
             active={!this.props.speaker}

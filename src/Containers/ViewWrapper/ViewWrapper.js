@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Modal
 } from "react-native";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 
 import styles from "./styles";
 
@@ -28,7 +29,7 @@ const ViewWrapper = ({ children, status, style }) => {
         </View>
       </Modal>
 
-      {/* Render Child Components */}
+      {/* Render Child Components */}   
       {children}
     </View>
   );

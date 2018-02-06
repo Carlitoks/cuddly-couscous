@@ -8,6 +8,9 @@ export default StyleSheet.create({
   headerContainer: {
     height: 180
   },
+  headerContainerLarge: {
+    height: 210
+  },
   linearGradient: {
     position: "absolute",
     width: "100%",

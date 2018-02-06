@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Text, View, ScrollView } from "react-native";
 import { Header } from "react-native-elements";
 import LinearGradient from "react-native-linear-gradient";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -12,7 +12,7 @@ import { Colors } from "../../Themes";
 class AssistanceView extends Component {
   render() {
     return (
-      <View style={styles.headerContainer}>
+      <View style={this.props.large ? styles.headerContainerLarge : styles.headerContainer}>
         {/* Linear Gradient */}
         <LinearGradient
           colors={[
@@ -24,6 +24,7 @@ class AssistanceView extends Component {
         />
         <View>
           {/* Header */}
+          <TopViewIOS/> 
           <Header
             outerContainerStyles={styles.header}
             backgroundColor="transparent"

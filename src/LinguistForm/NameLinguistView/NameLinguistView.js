@@ -94,8 +94,9 @@ class NameLinguist extends Component {
               navigation={this.props.navigation}
               mainTitle={`${this.props.mainTitle} ${this.props.lastname}`}
               subtitle={I18n.t("nameLinguistText")}
+              large
             />
-            <View>
+            <View style={styles.allField}>
               <FormInput
                 containerStyle={styles.containerInput}
                 inputStyle={styles.inputText}

@@ -91,7 +91,7 @@ class CustomerSettingsView extends Component {
           <Grid>
             <Col>
               <View>
-                <Col style={{ height: 50 }}>
+                <Col>
                   {/* Linear Gradient */}
                   <LinearGradient
                     colors={[

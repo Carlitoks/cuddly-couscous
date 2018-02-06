@@ -76,10 +76,8 @@ class App extends Component {
     if (this.state.loadingStore) return null;
 
     return (
-      <Provider store={this.state.store}>
-      <SafeAreaView style={styles.safeArea}>
+      <Provider store={this.state.store}> 
         <ReduxNavigation />
-      </SafeAreaView>  
       </Provider>
     );
   }
@@ -90,7 +88,7 @@ export default App;
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#6153CD',
+    backgroundColor: 'transparent',
     padding:10
   }
 })

@@ -21,7 +21,7 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -176,6 +176,7 @@ class SelectListView extends Component {
               style={styles.linearGradient}
             />
             {/* Header - Navigation */}
+            <TopViewIOS/> 
             <Header
               outerContainerStyles={styles.header}
               backgroundColor="transparent"

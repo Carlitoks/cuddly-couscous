@@ -20,7 +20,7 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
@@ -91,7 +91,7 @@ class LinguistSettingsView extends Component {
           <Grid>
             <Col>
               <View>
-                <Col style={{ height: 50 }}>
+                <Col>
                   {/* Linear Gradient */}
                   <LinearGradient
                     colors={[
@@ -102,6 +102,7 @@ class LinguistSettingsView extends Component {
                     style={styles.linearGradient}
                   />
                   {/* Header - Navigation */}
+                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
                     backgroundColor="transparent"

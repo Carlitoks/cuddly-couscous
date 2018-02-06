@@ -16,7 +16,7 @@ import {
   Header
 } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NextButton from "../../Components/NextButton/NextButton";
@@ -72,6 +72,7 @@ class LanguageCustomerView extends Component {
               style={styles.linearGradient}
             />
             {/* Header - Navigation */}
+            <TopViewIOS/> 
             <Header
               outerContainerStyles={styles.header}
               backgroundColor="transparent"

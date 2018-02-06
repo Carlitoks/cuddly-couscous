@@ -10,7 +10,7 @@ import { Button, FormInput, Header } from "react-native-elements";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -94,6 +94,7 @@ class EmailCustomerView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
+                  <TopViewIOS/>  
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"

@@ -8,8 +8,8 @@ const TopViewIOS = (props) => {
   const IphoneX = DeviceInfo.getModel() == "iPhone X";
   return (
     <View>
-    {!props.large && <View style={styles.topView}/>}
-    {props.large && <View style={styles.topViewLarge}/>}
+        {!IphoneX && <View style={styles.topView}/>} 
+        {IphoneX && <View style={styles.topViewLarge}/>} 
     </View>
   );
 };

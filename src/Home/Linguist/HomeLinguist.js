@@ -36,7 +36,7 @@ import styles from "./styles";
 import { Colors, Images } from "../../Themes";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 import I18n from "../../I18n/I18n";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 class Home extends Component {
   navigate = this.props.navigation.navigate;
 
@@ -118,6 +118,7 @@ class Home extends Component {
                   style={styles.linearGradient}
                 />
                 {/* Header - Navigation */}
+                <TopViewIOS/> 
                 <Header
                   outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                   backgroundColor="transparent"
@@ -246,8 +247,8 @@ class Home extends Component {
 
 const mS = state => ({
   available: state.profileLinguist.available,
-  numberOfCalls: state.profileLinguist.NumberOfCalls,
-  amount: state.profileLinguist.Amount,
+  numberOfCalls: state.profileLinguist.numberOfCalls,
+  amount: state.profileLinguist.amount,
   status: state.profileLinguist.status,
   uuid: state.auth.uuid,
   token: state.auth.token,

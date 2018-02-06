@@ -14,11 +14,10 @@ import {
 } from "../../../Ducks/CallCustomerSettings";
 import { tokConnect, tokDisConnect } from "../../../Ducks/tokboxReducer";
 import { clearSettings as clearCallSettings } from "../../../Ducks/ContactLinguistReducer";
-
 import { AppRegistry, Button, View, Text, Image, Switch } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { CallButton } from "../../../Components/CallButton/CallButton";
-
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import { Colors, Images } from "../../../Themes";
 import { fmtMSS } from "../../../Util/Helpers";
 import styles from "./styles";
@@ -59,8 +58,7 @@ class CustomerView extends Component {
       AsyncCreateSession,
       updateSettings
     } = this.props;
-
-     /*if (InCallManager.recordPermission !== "granted") {
+     /* if (InCallManager.recordPermission !== "granted") {
       InCallManager.requestRecordPermission()
         .then(requestedRecordPermissionResult => {
           console.log(
@@ -71,7 +69,7 @@ class CustomerView extends Component {
         .catch(err => {
           console.log("InCallManager.requestRecordPermission() catch: ", err);
         });
-    }*/
+     } */
 
     // Generate calling notification
 
@@ -117,7 +115,7 @@ class CustomerView extends Component {
     BackgroundCleanInterval(this.props.timer);
     this.props.resetTimerAsync();
     this.props.clearCallSettings();
-   // InCallManager.stop();
+    // InCallManager.stop();
    console.log("componentWillUnmount");
   }
 
@@ -156,6 +154,7 @@ class CustomerView extends Component {
               <Subscriber
                 sessionId={this.props.customerTokboxSessionID}
                 style={styles.background}
+                mute={!this.props.speaker}
                 onSubscribeStart={() => {
                   this.startTimer();
                   console.log("SubscriberStart");
@@ -189,6 +188,7 @@ class CustomerView extends Component {
             )}
           </View>
           <View style={styles.topContainer}>
+          <TopViewIOS/>
             <View style={styles.inlineContainer}>
               <Image style={styles.smallAvatar} source={Images.avatarCall} />
             </View>
@@ -235,7 +235,7 @@ class CustomerView extends Component {
             <CallButton
               onPress={() => {
                 this.props.updateSettings({ speaker: !this.props.speaker });
-                // InCallManager.setForceSpeakerphoneOn(!this.props.speaker);
+               // InCallManager.setForceSpeakerphoneOn(!this.props.speaker);
               }}
               toggle={true}
               active={!this.props.speaker}

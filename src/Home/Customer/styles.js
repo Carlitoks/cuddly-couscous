@@ -198,7 +198,7 @@ export default StyleSheet.create({
   },
   scrollContainer: {
     backgroundColor: "white",
-    height: height
+    height: height,
   },
   avatarContainer: {
     marginLeft: scale(60)

@@ -3,9 +3,10 @@ import { StyleSheet, Platform } from "react-native";
 export default StyleSheet.create({
   topView:{
     width:"100%",
+    backgroundColor:"red",
     ...Platform.select({
       ios: {
-        height:15
+        height:20
       }
     }),
   },
@@ -13,7 +14,7 @@ export default StyleSheet.create({
     width:"100%",
     ...Platform.select({
       ios: {
-        height:30
+        height:32
       }
     }),
   }

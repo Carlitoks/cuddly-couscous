@@ -17,7 +17,7 @@ import {
 } from "../../../Ducks/CallCustomerSettings.js";
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
 import { clearSettings as clearHomeReducer } from "../../../Ducks/HomeFlowReducer";
-
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import I18n from "../../../I18n/I18n";
 import { styles } from "./styles";
 import { Images, Colors } from "../../../Themes";
@@ -45,6 +45,7 @@ class CallConfirmationView extends Component {
                 />
                 <Col style={{ height: 160 }}>
                   {/* Header - Navigation */}
+                  <TopViewIOS/>
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -62,22 +63,6 @@ class CallConfirmationView extends Component {
               </Row>
 
               <Grid style={styles.summaryContainer}>
-                {/* Language */}
-                <Row style={styles.callInformation}>
-                  <Col style={styles.alignIcon} size={25}>
-                    <Icon
-                      color={Colors.selectedOptionMenu}
-                      style={styles.iconStyle}
-                      name={"forum"}
-                      size={40}
-                    />
-                  </Col>
-                  <Col style={styles.alignText} size={75}>
-                    <Text style={styles.textSize}>
-                      English, {this.props.toLanguage}
-                    </Text>
-                  </Col>
-                </Row>
                 {/* Scenario */}
                 <Row style={styles.callInformation}>
                   <Col style={styles.alignIcon} size={25}>
@@ -92,7 +77,31 @@ class CallConfirmationView extends Component {
                     <Text style={styles.textSize}>
                       {this.props.customScenario
                         ? this.props.customScenario
-                        : (this.props.scenario ? this.props.scenario.title : 'General') }
+                        : this.props.scenario
+                          ? this.props.scenario.title
+                          : "General"}
+                    </Text>
+                  </Col>
+                </Row>
+                {/* Toggle Video */}
+                <Row style={styles.callInformation}>
+                  <Col style={styles.alignIcon} size={25}>
+                    <Switch
+                      onValueChange={() => {
+                        this.props.customerUpdateSettings({
+                          video: !this.props.video
+                        });
+                      }}
+                      value={this.props.video}
+                      onTintColor={Colors.onTintColor} 
+                      thumbTintColor={Colors.selectedOptionMenu}
+                      tintColor={Colors.tintColor} 
+                    />
+                  </Col>
+                  <Col style={styles.alignText} size={75}>
+                    <Text style={styles.textSize}>
+                      Video
+                      {this.props.video ? " on" : " off"}
                     </Text>
                   </Col>
                 </Row>
@@ -196,6 +205,7 @@ const mS = state => ({
   sessionId: state.callCustomerSettings.sessionID,
   token: state.auth.token,
   customerExtraTime: state.callCustomerSettings.customerExtraTime,
+  video: state.callCustomerSettings.video,
   approxTime: state.callCustomerSettings.selectedTime,
   scenario: state.linguistForm.selectedLanguage,
   estimatedPrice:

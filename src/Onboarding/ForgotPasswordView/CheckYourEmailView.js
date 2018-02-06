@@ -9,7 +9,7 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 // For the moment
 import I18n from "../../I18n/I18n";
 
@@ -38,6 +38,7 @@ class CheckYourEmailView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
+                  <TopViewIOS/>  
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"

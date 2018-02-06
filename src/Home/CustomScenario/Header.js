@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { View, Text } from "react-native";
 import { Header as NativeHeader } from "react-native-elements";
 import LinearGradient from "react-native-linear-gradient";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Colors } from "../../Themes";
 
@@ -21,6 +21,7 @@ const Header = ({ leftComponent, rightComponent, mainTitle }) => {
         style={styles.linearGradient}
       />
       {/* Header - Navigation */}
+      <TopViewIOS/> 
       <NativeHeader
         outerContainerStyles={styles.header}
         backgroundColor="transparent"

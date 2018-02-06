@@ -26,7 +26,7 @@ import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import RightNavigationButton from "../../Components/RightNavigationButton/RightNavigationButton.js";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -123,6 +123,7 @@ class LanguageSettingsView extends Component {
               style={styles.linearGradient}
             />
             {/* Header - Navigation */}
+            <TopViewIOS/> 
             <Header
               outerContainerStyles={styles.header}
               backgroundColor="transparent"

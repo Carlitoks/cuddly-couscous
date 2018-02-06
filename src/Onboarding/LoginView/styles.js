@@ -65,5 +65,11 @@ export default StyleSheet.create({
   },
   formInputContainer: {
     marginTop: moderateScale(20),
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    padding:10,
+    zIndex:0
   }
 });

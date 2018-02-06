@@ -9,7 +9,7 @@ import { CallButton } from "../../../Components/CallButton/CallButton";
 // STYLE AND THEMES
 import styles from "./styles";
 import { Images } from "../../../Themes";
-
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 // REDUCERS
 import { connect } from "react-redux";
 import { tokDisConnect } from "../../../Ducks/tokboxReducer";
@@ -46,6 +46,7 @@ class ContactingLinguist extends Component {
           style={styles.backgroundImage}
         />
         <Grid>
+        <TopViewIOS/>
           <Col style={{ justifyContent: "space-between" }}>
             {/* Top Container */}
             <Row style={styles.topContainer}>

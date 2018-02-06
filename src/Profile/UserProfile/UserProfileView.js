@@ -31,13 +31,14 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import Languages from "../../Config/Languages";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-
+import { topIOS } from "../../Util/Devices"
 import styles from "./styles";
 import { compareArrays } from "../../Util/Helpers";
 import I18n from "../../I18n/I18n";
 import { Images, Colors, Fonts } from "../../Themes";
 import images from "../../Themes/Images";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"; 
 class UserProfileView extends Component {
   componentWillMount() {
     let secondaryLanguages = [];
@@ -369,6 +370,7 @@ class UserProfileView extends Component {
                     style={styles.linearGradient}
                   />
                   {/* Header - Navigation */}
+                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
                     backgroundColor="transparent"

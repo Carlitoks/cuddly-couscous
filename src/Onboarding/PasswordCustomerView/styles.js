@@ -25,7 +25,9 @@ export default StyleSheet.create({
     backgroundColor: "transparent"
   },
   formText: {
+    textAlign: "center",
     paddingLeft: 18,
+    paddingRight: 18,
     fontSize: 15,
     paddingTop: 10
   },

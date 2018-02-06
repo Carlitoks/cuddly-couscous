@@ -10,7 +10,7 @@ import { Button, Header, FormInput } from "react-native-elements";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
@@ -93,6 +93,7 @@ class PasswordCustomerView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
+                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"

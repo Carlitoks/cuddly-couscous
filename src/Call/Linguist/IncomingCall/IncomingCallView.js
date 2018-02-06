@@ -11,7 +11,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 import { CallButton } from "../../../Components/CallButton/CallButton";
-
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Images } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
@@ -57,6 +57,7 @@ class IncomingCall extends Component {
         <Image source={Images.backgroundCall} style={styles.backgroundImage} />
         <Grid>
           <Col style={{ justifyContent: "space-between" }}>
+          <TopViewIOS/>
             {/* Top Container */}
             <Row style={styles.topContainer}>
               <Image style={styles.smallAvatar} source={Images.avatarCall} />
