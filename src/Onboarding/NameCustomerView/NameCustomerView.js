@@ -81,6 +81,20 @@ class NameCustomerView extends Component {
     this.props.updateForm({ performingRequest: false });
   }
 
+  getSubtitle = () => {
+    let subtitle = `${I18n.t("youWillBeKnown")}.... ${I18n.t(
+      "toOthersOnPlatform"
+    )} `;
+    if (this.props.firstname && this.props.lastname) {
+      subtitle = `${I18n.t("youWillBeKnown")} ${
+        this.props.firstname
+      } ${this.props.lastname.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
+      return subtitle;
+    } else {
+      return subtitle;
+    }
+  };
+
   // Will be changed according the designs
   tempDisplayErrors(...errors) {
     const errorStr = errors.reduce((last, current) => {
@@ -97,6 +111,8 @@ class NameCustomerView extends Component {
   }
 
   render() {
+    const initialLastName = `${this.props.lastname.charAt(0)}.`;
+
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
@@ -131,9 +147,7 @@ class NameCustomerView extends Component {
                     {this.props.mainTitle} {this.props.lastname}
                   </Text>
                   {/* subtitle */}
-                  <Text style={styles.mainSubtitle}>
-                    {I18n.t("nameLinguistText")}
-                  </Text>
+                  <Text style={styles.mainSubtitle}>{this.getSubtitle()}</Text>
                 </Col>
               </Row>
 
@@ -159,7 +173,9 @@ class NameCustomerView extends Component {
                 <InputRegular
                   containerStyle={styles.containerInput}
                   placeholder={I18n.t("linguistLastName")}
-                  onChangeText={text => this.props.updateForm({ lastname: text })}
+                  onChangeText={text =>
+                    this.props.updateForm({ lastname: text })
+                  }
                   maxLength={20}
                   value={this.props.lastname}
                 />
@@ -187,8 +203,6 @@ class NameCustomerView extends Component {
         <BottomButton
           title={I18n.t("next")}
           onPress={() => this.submit()}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
           bold={false}
         />
       </ViewWrapper>

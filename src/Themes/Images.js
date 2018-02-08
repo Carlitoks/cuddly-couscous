@@ -12,6 +12,13 @@ const images = {
   expertise_B1: require("../Images/onboarding-expertise-b1.png"),
   expertise_C1: require("../Images/onboarding-expertise-c1.png"),
   logo_call_pn: require("../Images/call_pushn.png"),
+  scan_qr_code: require("../Images/scanQR.png"),
+  hotel: require("../Images/hotel.png"),
+  restaurant: require("../Images/restaurant.png"),
+  "local-airport": require("../Images/local-airport.png"),
+  "local-taxi": require("../Images/local-taxi.png"),
+  "shopping-cart": require("../Images/shopping-cart.png"),
+  "view-module": require("../Images/view-module.png")
 };
 
 export default images;

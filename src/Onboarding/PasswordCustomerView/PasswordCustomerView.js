@@ -13,6 +13,11 @@ import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import {
+  TermsConditionsURI,
+  PrivacyPolicyURI
+} from "../../Config/StaticViewsURIS";
+
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
@@ -124,9 +129,35 @@ class PasswordCustomerView extends Component {
                 />
                 <Text style={styles.formText}>
                   {I18n.t("passwordLinguistText")}{" "}
-                  <Text style={styles.links}>{I18n.t("privacyPolicy")}</Text>{" "}
+                  <Text
+                    style={styles.links}
+                    onPress={() => {
+                      this.props.navigation.dispatch({
+                        type: "StaticView",
+                        params: {
+                          uri: PrivacyPolicyURI,
+                          title: I18n.t("privacyPolicy")
+                        }
+                      });
+                    }}
+                  >
+                    {I18n.t("privacyPolicy")}
+                  </Text>{" "}
                   {I18n.t("passwordAnd")}{" "}
-                  <Text style={styles.links}>{I18n.t("termsConditions")}</Text>
+                </Text>
+                <Text
+                  style={[styles.formText, styles.links]}
+                  onPress={() => {
+                    this.props.navigation.dispatch({
+                      type: "StaticView",
+                      params: {
+                        uri: TermsConditionsURI,
+                        title: I18n.t("termsConditions")
+                      }
+                    });
+                  }}
+                >
+                  {I18n.t("termsConditions")}
                 </Text>
               </View>
             </Col>
@@ -136,8 +167,6 @@ class PasswordCustomerView extends Component {
         <BottomButton
           title={I18n.t("next")}
           onPress={() => this.submit()}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
           bold={false}
         />
       </ViewWrapper>

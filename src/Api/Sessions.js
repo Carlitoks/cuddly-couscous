@@ -77,6 +77,11 @@ const Session = {
       headers: { Authorization: `Bearer ${token}` }
     });
   },
+  GetSessionInfoLinguist: (sessionID, token) => {
+    return AXIOS.get(`${BASE_URI}/${sessionID}/linguist`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  },
   GetInvitations: (userId, token) => {
     return AXIOS.get(`/users/${userId}/linguist-profile/session-invitations`, {
       headers: { Authorization: `Bearer ${token}` }

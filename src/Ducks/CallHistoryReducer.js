@@ -1,75 +1,97 @@
 import { CallHistory } from "../Api";
 
 const ACTIONS = {
-  CLEAR: "callHistory/clear",
-  ALL: "callHistory/AllCalls",
-  MISSED: "callHistory/MissedCalls",
-  RECENT: "callHistory/RecentCalls",
-  SELECTED: "callHistory/selected"
+  CLEAR: "callHistory/clearCallHistory",
+  CUSTOMERCALLS: "callHistory/customerCalls",
+  LINGUISTCALLS: "callHistory/linguistCalls",
+  MISSEDCALLS: "callHistory/linguistMissedCalls",
+  SELECTED: "callHistory/indexOnChange"
 };
-export const indexChanged = payload => ({
+
+export const customerCalls = payload => ({
+  type: ACTIONS.CUSTOMERCALLS,
+  payload
+});
+export const linguistCalls = payload => ({
+  type: ACTIONS.LINGUISTCALLS,
+  payload
+});
+export const linguistMissedCalls = payload => ({
+  type: ACTIONS.MISSEDCALLS,
+  payload
+});
+
+export const indexOnChange = payload => ({
   type: ACTIONS.SELECTED,
   payload
 });
 
-export const AllCalls = payload => ({
-  type: ACTIONS.ALL,
-  payload
-});
-export const MissedCalls = payload => ({
-  type: ACTIONS.MISSED,
-  payload
-});
-export const RecentCalls = payload => ({
-  type: ACTIONS.RECENT,
-  payload
+export const clearCallHistory = () => ({
+  type: ACTIONS.CLEAR
 });
 
-export const IndexOnChange = idx => dispatch => {
-  dispatch(indexChanged({ selectIndex: idx }));
-};
-export const getAllCalls = (id, token) => dispatch => {
-  CallHistory.getAll(id, token).then(response => {
-    dispatch(AllCalls(response));
-  });
+// get all calls for customers
+
+export const getAllCustomerCalls = (userId, token) => dispatch => {
+  return CallHistory.getAllCustomerCalls(userId, token)
+    .then(response => {
+      //console.log(response);
+      return response.data;
+    })
+    .catch(error => {
+      return dispatch(networkError(error));
+    });
 };
 
-export const getMissedCalls = (id, token) => dispatch => {
-  CallHistory.getMissed(id, token).then(response => {
-    dispatch(MissedCalls(response));
-  });
+//get all calls for linguist
+
+export const getAllLinguistCalls = (userId, token) => dispatch => {
+  return CallHistory.getAllLinguistCalls(userId, token)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return dispatch(networkError(error));
+    });
 };
-export const getRecentCalls = (id, token) => dispatch => {
-  CallHistory.getRecents(id, token).then(response => {
-    dispatch(RecentCalls(response));
-  });
+
+//get missed calls for linguist
+
+export const getMissedLinguistCalls = (userId, token) => dispatch => {
+  return CallHistory.getMissedLinguistCalls(userId, token)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      return dispatch(networkError(error));
+    });
 };
 
 const initialState = {
-  AllCalls: [],
-  MissedCalls: [],
-  RecentCalls: [],
+  allCustomerCalls: [],
+  allLinguistCalls: [],
+  linguistMissedCalls: [],
+  recentCalls: [],
   selectedIndex: 0
 };
 
 const callHistory = (state = initialState, action = {}) => {
   const { payload, type } = action;
-  console.log(type, payload);
   switch (type) {
     case ACTIONS.CLEAR: {
       return { ...initialState };
     }
     case ACTIONS.SELECTED: {
-      return { ...state, ...payload };
+      return { ...state, selectedIndex: payload };
     }
-    case ACTIONS.ALL: {
-      return { ...state, AllCalls: payload };
+    case ACTIONS.CUSTOMERCALLS: {
+      return { ...state, allCustomerCalls: payload };
     }
-    case ACTIONS.MISSED: {
-      return { ...state, MissedCalls: payload };
+    case ACTIONS.LINGUISTCALLS: {
+      return { ...state, allLinguistCalls: payload };
     }
-    case ACTIONS.RECENT: {
-      return { ...state, RecentCalls: payload };
+    case ACTIONS.MISSEDCALLS: {
+      return { ...state, linguistMissedCalls: payload };
     }
     default: {
       return state;

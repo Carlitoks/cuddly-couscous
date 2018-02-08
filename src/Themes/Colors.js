@@ -36,7 +36,10 @@ const colors = {
   optionMenu: "#D9D9E6",
   callButton: "#71D781",
   cancelButton: "#B0B0B0",
-  black: "#000000"
+  black: "#000000",
+  iconHistory: "#3b98b7",
+  emptyStarColor: "#cccccc",
+  starColor: "#ffcb00"
 };
 
 export default colors;

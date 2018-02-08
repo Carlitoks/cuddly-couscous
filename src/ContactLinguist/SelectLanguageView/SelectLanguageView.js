@@ -132,8 +132,6 @@ class SelectLanguague extends Component {
         <BottomButton
           title={I18n.t("next")}
           onPress={() => navigation.dispatch({ type: "CallTimeView" })}
-          color={Colors.primaryAltFontColor}
-          buttonColor={Colors.primaryLightFillColor}
           bold={true}
         />
       </ViewWrapper>

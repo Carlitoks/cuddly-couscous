@@ -68,6 +68,20 @@ class NameLinguist extends Component {
     }
   }
 
+  getSubtitle = () => {
+    let subtitle = `${I18n.t("youWillBeKnown")}.... ${I18n.t(
+      "toOthersOnPlatform"
+    )} `;
+    if (this.props.firstname && this.props.lastname) {
+      subtitle = `${I18n.t("youWillBeKnown")} ${
+        this.props.firstname
+      } ${this.props.lastname.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
+      return subtitle;
+    } else {
+      return subtitle;
+    }
+  };
+
   // Will be changed according the designs
   tempDisplayErrors(...errors) {
     const errorStr = errors.reduce((last, current) => {
@@ -84,6 +98,8 @@ class NameLinguist extends Component {
   }
 
   render() {
+    const initialLastName = `${this.props.lastname.charAt(0)}.`;
+
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
@@ -95,7 +111,7 @@ class NameLinguist extends Component {
             <Header
               navigation={this.props.navigation}
               mainTitle={`${this.props.mainTitle} ${this.props.lastname}`}
-              subtitle={I18n.t("nameLinguistText")}
+              subtitle={this.getSubtitle()}
               large
             />
             <View>
@@ -142,13 +158,7 @@ class NameLinguist extends Component {
           </View>
         </ScrollView>
         {/* Next Button */}
-        <BottomButton
-          title={I18n.t("next")}
-          onPress={() => this.submit()}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
-          bold={false}
-        />
+        <BottomButton title={I18n.t("next")} onPress={() => this.submit()} />
       </ViewWrapper>
     );
   }

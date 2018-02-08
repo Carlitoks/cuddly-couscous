@@ -12,7 +12,13 @@ export default StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    backgroundColor: "black",
+    backgroundColor: "#000"
+  },
+  backgroundView: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#000"
   },
   topContainer: {
     width: "100%",

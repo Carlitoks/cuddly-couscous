@@ -33,6 +33,15 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 class RateCallView extends Component {
   ///// validate form /////
+  handleSessionInfoName() {
+    if (this.props.customerName) {
+      return this.props.customerName;
+    } else if (this.props.linguist) {
+      return `${this.props.linguist.firstName} ${
+        this.props.linguist.lastInitial
+      }`;
+    } else return `Zhang W.`;
+  }
 
   componentWillUnmount() {
     this.props.clearOptions();
@@ -178,9 +187,9 @@ class RateCallView extends Component {
   /*
  * @param {string} IconName - Name of the Icon.
  * @param {string} StateName - Name of the state
- * @param {object} IconState - object that content the current state 
+ * @param {object} IconState - object that content the current state
  * @param {string} flagstore - The action asociated with the question that we are selecting at the moment
- * @param {string} OffState - string used to identify the state of the icon that we are going to turn off   
+ * @param {string} OffState - string used to identify the state of the icon that we are going to turn off
  */
 
   genericToggleFunction = (
@@ -223,9 +232,11 @@ class RateCallView extends Component {
               />
             </Col>
             <Col style={styles.linguistInformation}>
-              <Text style={styles.linguistName}>Zhang W.</Text>
+              <Text style={styles.linguistName}>
+                {this.handleSessionInfoName()}
+              </Text>
               <Text style={styles.linguistAddress}>
-                <Icon name="ios-pin" size={20} />San Francisco
+                <Icon name="ios-pin" size={20} />San Francisc
               </Text>
             </Col>
           </Grid>
@@ -236,7 +247,9 @@ class RateCallView extends Component {
             <Row style={styles.textContainer}>
               <Text style={styles.textQuestions}>
                 {I18n.t("rateYour")}{" "}
-                {this.props.linguistProfile ? I18n.t("customer") : I18n.t("linguist")}
+                {this.props.linguistProfile
+                  ? I18n.t("customer")
+                  : I18n.t("linguist")}
               </Text>
             </Row>
             <Row style={styles.starContainer}>
@@ -374,8 +387,10 @@ const mS = state => ({
   token: state.auth.token,
   sessionId: state.callCustomerSettings.sessionID,
   customerSessionId: state.callCustomerSettings.sessionID,
+  customerName: state.callLinguistSettings.customerName,
   linguistSessionId: state.callLinguistSettings.sessionID,
-  linguistProfile: state.userProfile.linguistProfile
+  linguistProfile: state.userProfile.linguistProfile,
+  linguist: state.sessionInfo.linguist
 });
 
 const mD = {

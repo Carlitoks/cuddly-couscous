@@ -107,9 +107,6 @@ class LanguageCustomerView extends Component {
         <BottomButton
           title={I18n.t("next")}
           onPress={() => navigation.dispatch({ type: "PhoneCustomerView" })}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
-          bold={false}
         />
       </ViewWrapper>
     );

@@ -12,6 +12,7 @@ import {
   clearSettings,
   EndCall
 } from "../../../Ducks/CallCustomerSettings";
+import { GetSessionInfoLinguist } from "../../../Ducks/SessionInfoReducer";
 import { tokConnect, tokDisConnect } from "../../../Ducks/tokboxReducer";
 import { clearSettings as clearCallSettings } from "../../../Ducks/ContactLinguistReducer";
 import { AppRegistry, Button, View, Text, Image, Switch } from "react-native";
@@ -61,18 +62,6 @@ class CustomerView extends Component {
       AsyncCreateSession,
       updateSettings
     } = this.props;
-    /* if (InCallManager.recordPermission !== "granted") {
-      InCallManager.requestRecordPermission()
-        .then(requestedRecordPermissionResult => {
-          console.log(
-            "InCallManager.requestRecordPermission() requestedRecordPermissionResult: ",
-            requestedRecordPermissionResult
-          );
-        })
-        .catch(err => {
-          console.log("InCallManager.requestRecordPermission() catch: ", err);
-        });
-     } */
 
     // Generate calling notification
 
@@ -114,18 +103,30 @@ class CustomerView extends Component {
     }
   }
 
+  handleSessionInfoName() {
+    if (this.props.linguist) {
+      return `${this.props.linguist.firstName} ${
+        this.props.linguist.lastInitial
+      }`;
+    } else if (this.props.customer) {
+      return `${this.props.customer.firstName} ${
+        this.props.customer.lastInitial
+      }`;
+    } else {
+      return `User`;
+    }
+  }
+
   componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer);
     this.props.resetTimerAsync();
     this.props.clearCallSettings();
-    // InCallManager.stop();
-    console.log("componentWillUnmount");
   }
 
   startTimer = () => {
     const { sessionID, token, selectedCallTime } = this.props;
     const callTime = selectedCallTime * 60;
-
+    this.props.GetSessionInfoLinguist(sessionID, token);
     this.props.updateSettings({
       timer: BackgroundInterval(() => {
         if (
@@ -150,8 +151,7 @@ class CustomerView extends Component {
             this.props.tokboxStatus === STATUS_TOKBOX.STREAM
               ? styles.containerCall
               : styles.containerHiddenCall
-          }
-        >
+          }>
           <View style={styles.backgroundContainer}>
             {this.props.customerTokboxSessionID && (
               <Subscriber
@@ -195,12 +195,14 @@ class CustomerView extends Component {
             <View style={styles.inlineContainer}>
               <Image style={styles.smallAvatar} source={Images.avatarCall} />
             </View>
-            <Text style={styles.callerNameText}> Caroline C. </Text>
+            <Text style={styles.callerNameText}>
+              {this.handleSessionInfoName()}
+            </Text>
 
-            <View style={styles.inlineContainer}>
+            {/*<View style={styles.inlineContainer}>
               <Icon style={styles.icon} size={25} name="room" />
               <Text style={styles.locationText}>San Diego, CA</Text>
-            </View>
+            </View>*/}
 
             <View style={styles.inlineContainer}>
               <Text style={styles.incomingCallText}>
@@ -238,7 +240,6 @@ class CustomerView extends Component {
             <CallButton
               onPress={() => {
                 this.props.updateSettings({ speaker: !this.props.speaker });
-                // InCallManager.setForceSpeakerphoneOn(!this.props.speaker);
               }}
               toggle={true}
               active={!this.props.speaker}
@@ -332,7 +333,8 @@ const mS = state => ({
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
   selectedLanguageCode: state.contactLinguist.selectedLanguageCode,
   selectedCallTime: state.callCustomerSettings.selectedTime,
-  customerExtraTime: state.callCustomerSettings.customerExtraTime
+  customerExtraTime: state.callCustomerSettings.customerExtraTime,
+  linguist: state.sessionInfo.linguist
 });
 
 const mD = {
@@ -345,7 +347,8 @@ const mD = {
   tokDisConnect,
   EndCall,
   clearCallSettings,
-  AsyncCreateInvitation
+  AsyncCreateInvitation,
+  GetSessionInfoLinguist
 };
 
 export default connect(mS, mD)(CustomerView);

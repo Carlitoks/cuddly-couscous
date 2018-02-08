@@ -108,6 +108,10 @@ class EmailCustomerView extends Component {
                   <Text style={styles.mainTitle}>
                     {I18n.t("linguistEmailTitle")}
                   </Text>
+                  {/* subtitle */}
+                  <Text style={styles.mainSubtitle}>
+                    {I18n.t("linguistEmailSubtitle")}
+                  </Text>
                 </Col>
               </Row>
               <View>
@@ -130,9 +134,6 @@ class EmailCustomerView extends Component {
         <BottomButton
           title={I18n.t("next")}
           onPress={() => this.submit()}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
-          bold={false}
         />
       </ViewWrapper>
     );

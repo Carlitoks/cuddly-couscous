@@ -128,7 +128,6 @@ const initialState = {
   cityFamiliarities: [],
   areasOfExpertise: [],
   searchQuery: "",
-  selectionItemType: "",
   selectedLanguage: null,
   selectedNativeLanguage: [],
   selectedAreasOfExpertise: [],
@@ -161,7 +160,10 @@ export const getItems = (type, params) => (dispatch, getState) => {
           let resp = [];
           if (params) {
             resp = response.data.filter(value => {
-              return value.category === params.category || value.category === "general";
+              return (
+                value.category === params.category ||
+                value.category === "general"
+              );
             });
           } else {
             resp = response.data;

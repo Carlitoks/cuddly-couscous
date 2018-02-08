@@ -1,25 +1,24 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
-import DeviceInfo from "react-native-device-info"
+import DeviceInfo from "react-native-device-info";
+import { moderateScale } from "../../Util/Scaling";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const IphoneX = DeviceInfo.getModel() == "iPhone X";
-const heightTab = IphoneX ? parseInt(height*0.08) : parseInt(height*0.04);
+const heightTab = IphoneX ? parseInt(height * 0.08) : parseInt(height * 0.04);
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: width
   },
-  title: {
+  mainTitle: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 24,
+    textAlign: "center",
+    marginBottom: moderateScale(20),
+    marginTop: moderateScale(10),
     color: Colors.primaryColor,
-    fontSize: 25,
-    marginTop: 20,
-    marginBottom: 10,
-    marginLeft: 10,
-    fontFamily: Fonts.primaryBoldFont,
-    textAlign: "left",
-    width: width,
     backgroundColor: "transparent"
   },
   tabTextStyle: {
@@ -32,12 +31,11 @@ export const styles = StyleSheet.create({
     borderColor: "white"
   },
   tabsContainerStyle: {
-    position: "absolute",
-    marginLeft: 30,
-    marginRight: 30,
-    width: "58%",
+    marginLeft: moderateScale(33),
+    marginRight: moderateScale(33),
+    width: "55%",
     alignSelf: "center",
-    marginTop: heightTab
+    marginBottom: moderateScale(30)
   },
   scrollContainer: {
     flex: 1,

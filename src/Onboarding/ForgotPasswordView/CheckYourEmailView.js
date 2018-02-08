@@ -58,8 +58,6 @@ class CheckYourEmailView extends Component {
         <BottomButton
           title={I18n.t("next")}
           onPress={() => navigation.dispatch({ type: "SelectRoleView" })}
-          color={Colors.primaryAltFontColor}
-          buttonColor={Colors.primaryLightFillColor}
           bold={true}
         />
       </ViewWrapper>

@@ -118,17 +118,17 @@ class ForgotPasswordView extends Component {
               </Row>
               {/* Email */}
               <InputRegular
-                  containerStyle={styles.formInputContainer}
-                  placeholder={I18n.t("email")}
+                containerStyle={styles.formInputContainer}
+                placeholder={I18n.t("email")}
                 autoCorrect={false}
                 onChangeText={text => this.props.updateForm({ email: text })}
                 value={this.props.email}
                 keyboardType={"email-address"}
                 maxLength={64}
                 autoFocus={true}
-                />
-              {/* Troubleshoot Button (Comented until we have a view for this functionality)*/}
-              <Text
+              />
+              {/* Troubleshoot Button (Commented as part of the issue SOLO-74)*/}
+              {/* <Text
                 style={styles.linksText}
                 onPress={() => {
                   navigation.dispatch({
@@ -141,7 +141,7 @@ class ForgotPasswordView extends Component {
                 }}
               >
                 {I18n.t("troubleshoot")}
-              </Text>
+              </Text> */}
             </Col>
           </Grid>
         </ScrollView>
@@ -149,8 +149,6 @@ class ForgotPasswordView extends Component {
         <BottomButton
           title={I18n.t("resetpassword")}
           onPress={() => this.submit()}
-          color={Colors.primaryAltFontColor}
-          buttonColor={Colors.primaryLightFillColor}
           bold={true}
         />
       </ViewWrapper>

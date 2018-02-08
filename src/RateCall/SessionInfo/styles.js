@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     backgroundColor:"transparent"
   },
   linguistAddress: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     color: Colors.primaryColor,
     flexDirection: "column",
@@ -59,10 +59,9 @@ export const styles = StyleSheet.create({
     alignItems: "center"
   },
   iconStyle: {
-    marginLeft: 70
+    marginLeft: 30
   },
   textLinguist: {
-    fontSize: 20
+    fontSize: 18
   }
-
 });

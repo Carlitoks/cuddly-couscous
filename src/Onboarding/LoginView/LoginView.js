@@ -188,8 +188,6 @@ class LoginView extends Component {
         <BottomButton
           title={I18n.t("signIn")}
           onPress={() => this.submit()}
-          color={Colors.primaryAltFontColor}
-          buttonColor={Colors.primaryLightFillColor}
           bold={true}
           loading={this.props.performingRequest}
           disabled={this.props.performingRequest}

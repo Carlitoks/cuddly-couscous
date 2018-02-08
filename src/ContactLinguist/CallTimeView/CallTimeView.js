@@ -109,8 +109,6 @@ class CallTimeView extends Component {
               navigation.dispatch({ type: "AssistanceView" })
             )
           }
-          color={Colors.primaryAltFontColor}
-          buttonColor={Colors.primaryLightFillColor}
           bold={true}
         />
       </ViewWrapper>

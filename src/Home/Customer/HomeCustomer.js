@@ -8,9 +8,10 @@ import {
   clearView,
   updateView
 } from "../../Ducks/UserProfileReducer";
+
 import { getCategories } from "../../Ducks/HomeFlowReducer";
 import PhotoUpload from "react-native-photo-upload";
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {
   Button,
@@ -98,6 +99,7 @@ class Home extends Component {
         >
           <Grid>
             <Col>
+              {/* Header */}
               <Col>
                 {/* Linear Gradient */}
                 <LinearGradient
@@ -137,42 +139,55 @@ class Home extends Component {
                         />
                       }
                     </PhotoUpload>
-                    <Badge
-                      value={this.props.rate}
-                      textStyle={styles.badgeText}
-                      containerStyle={styles.badgeContainer}
-                    />
                   </View>
                   <View style={styles.starsContainer}>
                     <Text style={styles.userName}>
-                      {firstName + " " + lastName}
+                      {I18n.t("hi")}, {firstName}!
                     </Text>
 
-                    <View style={[styles.stars]}>
-                      <StarRating
-                        emptyStarColor="gray"
-                        emptyStar={"ios-star-outline"}
-                        fullStar={"ios-star"}
-                        halfStar={"ios-star-half"}
-                        iconSet={"Ionicons"}
-                        disabled={true}
-                        maxStars={5}
-                        starSize={moderateScale(20)}
-                        rating={this.props.rate}
-                        starColor={Colors.primaryColor}
-                      />
-                    </View>
                     <Text style={styles.textStars} />
                   </View>
                 </Row>
                 {/* Home */}
               </Col>
+              {/* Main Buttons */}
               <Col>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.title}>
-                    {I18n.t("iNeedAssistanceWith")}
-                  </Text>
+                <View style={styles.mainButtons}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={[styles.button, styles.buttonQR, styles.center]}
+                    onPress={() =>
+                      navigation.dispatch({ type: "ScanScreenView" })
+                    }
+                  >
+                    <Grid style={styles.buttonGrid}>
+                      <Image
+                        style={styles.scanQRImage}
+                        source={Images.scan_qr_code}
+                      />
+
+                      <Text>{I18n.t("scanQRCode")}</Text>
+                    </Grid>
+                  </TouchableOpacity>
                 </View>
+              </Col>
+              <TouchableOpacity
+                style={styles.connectMeNow}
+                activeOpacity={0.8}
+                onPress={() =>
+                  navigation.dispatch({ type: "CallConfirmationView" })
+                }
+              >
+                <LinearGradient
+                  colors={["#521bb7", "#1f69b4"]}
+                  style={[styles.linearGradient, styles.gradientConnectMeNow]}
+                />
+                <Text style={styles.textConnectMeNow}>
+                  {I18n.t("connectMeNow").toUpperCase()}
+                </Text>
+              </TouchableOpacity>
+              {/* Tiles */}
+              <Col>
                 <View style={styles.containerTiles}>
                   <Grid>
                     <View style={styles.tilesGrid}>
@@ -196,17 +211,6 @@ class Home extends Component {
                           }}
                         />
                       ))}
-                      <TileButton
-                        iconType="font-awesome"
-                        iconName="qrcode"
-                        label={I18n.t("scanQR")}
-                        navigation={navigation}
-                        onPress={() => {
-                          this.props.navigation.dispatch({
-                            type: "ScanScreenView"
-                          });
-                        }}
-                      />
                     </View>
                   </Grid>
                 </View>

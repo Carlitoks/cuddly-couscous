@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { GetInfo } from "../../Ducks/SessionInfoReducer";
+import { GetInfo, updateSessionInfo } from "../../Ducks/SessionInfoReducer";
 
 import Icon from "react-native-vector-icons/Ionicons";
 import { Text, View, ScrollView } from "react-native";
@@ -12,17 +12,39 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import StarRating from "react-native-star-rating";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import _isUndefined from "lodash/isUndefined";
 
 import I18n from "../../I18n/I18n";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { styles } from "./styles";
 import { Images, Colors } from "../../Themes";
+import { IMAGE_STORAGE_URL } from "../../Config/env";
+import Languages from "../../Config/Languages";
 import LinearGradient from "react-native-linear-gradient";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 
 class SessionInfoView extends Component {
+  componentWillMount() {
+    this.props.updateSessionInfo(this.props.navigation.state.params);
+  }
+
+  filterList(langCode) {
+    return Languages.filter(lang => {
+      return lang["3"] === langCode;
+    });
+  }
+
   render() {
-    const linguistInfo = this.props.GetInfo();
+    const { sessionInfo } = this.props;
+    //console.log(this.props.sessionInfo.primaryLangCode);
+    let primaryLang = this.filterList(sessionInfo.primaryLangCode)[0];
+    primaryLang = !_isUndefined(primaryLang)
+      ? primaryLang.name
+      : "this languague not exits";
+    let secondLang = this.filterList(sessionInfo.secondaryLangCode)[0];
+    secondLang = !_isUndefined(secondLang)
+      ? secondLang.name
+      : I18n.t("english");
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -55,13 +77,20 @@ class SessionInfoView extends Component {
                         xlarge
                         containerStyle={styles.avatarContent}
                         rounded
-                        source={Images.avatar}
+                        source={
+                          sessionInfo.avatarURL
+                            ? {
+                                uri: `${IMAGE_STORAGE_URL}${
+                                  sessionInfo.avatarURL
+                                }`
+                              }
+                            : Images.avatar
+                        }
                       />
                     </Col>
                     <Col>
-                      <Text style={styles.linguistName}>Zhang W.</Text>
-                      <Text style={styles.linguistAddress}>
-                        <Icon name="ios-pin" size={20} /> San Francisco
+                      <Text style={styles.linguistName}>
+                        {sessionInfo.firstName} {sessionInfo.lastInitial}
                       </Text>
                       <View style={styles.starContainer}>
                         <StarRating
@@ -70,11 +99,11 @@ class SessionInfoView extends Component {
                           halfStar={"ios-star-half"}
                           iconSet={"Ionicons"}
                           disabled={false}
-                          rating={4.5}
+                          rating={sessionInfo.rating ? sessionInfo.rating : 0}
                           maxStars={5}
                           starSize={25}
-                          emptyStarColor={"#cccccc"}
-                          starColor={"#ffcb00"}
+                          emptyStarColor={Colors.emptyStarColor}
+                          starColor={Colors.starColor}
                         />
                       </View>
                     </Col>
@@ -83,23 +112,39 @@ class SessionInfoView extends Component {
               </Row>
 
               <Grid style={styles.callContainer}>
-                {linguistInfo.map((item, i) => (
-                  <Row style={styles.callInformation} key={i}>
-                    <Col style={styles.alignIcon}>
-                      <Icon
-                        color={"#3b98b7"}
-                        style={styles.iconStyle}
-                        name={item.iconName}
-                        size={40}
-                      />
-                    </Col>
-                    <Col>
-                      <Text style={styles.textLinguist}>
-                        {item.information}
-                      </Text>
-                    </Col>
-                  </Row>
-                ))}
+                <Row style={styles.callInformation}>
+                  <Col style={styles.alignIcon}>
+                    <Icon
+                      color={Colors.iconHistory}
+                      style={styles.iconStyle}
+                      name="ios-chatbubbles"
+                      size={40}
+                    />
+                  </Col>
+                  <Col>
+                    <Text style={styles.textLinguist}>
+                      {primaryLang} , {secondLang}
+                    </Text>
+                  </Col>
+                </Row>
+              </Grid>
+
+              <Grid>
+                <Row style={styles.callInformation}>
+                  <Col style={styles.alignIcon}>
+                    <Icon
+                      color={Colors.iconHistory}
+                      style={styles.iconStyle}
+                      name="ios-clock"
+                      size={40}
+                    />
+                  </Col>
+                  <Col>
+                    <Text style={styles.textLinguist}>
+                      {sessionInfo.duration}
+                    </Text>
+                  </Col>
+                </Row>
               </Grid>
             </Col>
           </Grid>
@@ -112,11 +157,13 @@ class SessionInfoView extends Component {
 // to be used when we have the Endpoint
 const mS = state => ({
   sessionId: state.callCustomerSettings.sessionID,
-  token: state.auth.token
+  token: state.auth.token,
+  sessionInfo: state.sessionInfo.info
 });
 
 const mD = {
-  GetInfo
+  GetInfo,
+  updateSessionInfo
 };
 
 export default connect(mS, mD)(SessionInfoView);

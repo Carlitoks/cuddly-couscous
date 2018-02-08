@@ -52,8 +52,6 @@ export default StyleSheet.create({
   },
   containerInput: {
     marginTop: moderateScale(20),
-    fontSize: 20,
-    color: "black",
     paddingBottom: moderateScale(35)
   }
 });

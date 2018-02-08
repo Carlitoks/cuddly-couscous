@@ -7,9 +7,10 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { updateSettings } from "../../Ducks/HomeFlowReducer";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import InputRegular from "../../Components/InputRegular/InputRegular";
 import { topIOS } from "../../Util/Devices";
 import Header from "./Header";
-import BottomButton from "./BottomButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
@@ -80,8 +81,9 @@ class CustomScenario extends Component {
           />
 
           <View>
-            <TextInput
-              style={styles.containerInput}
+            {/* Email */}
+            <InputRegular
+              containerStyle={styles.containerInput}
               placeholder={I18n.t("iNeedAssistanceWith")}
               onChangeText={text => {
                 this.props.updateSettings({
@@ -90,6 +92,7 @@ class CustomScenario extends Component {
               }}
               value={this.props.customScenario}
               maxLength={70}
+              autoFocus={true}
             />
           </View>
         </ScrollView>

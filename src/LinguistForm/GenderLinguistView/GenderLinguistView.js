@@ -117,9 +117,6 @@ class GenderLinguist extends Component {
         <BottomButton
           title={I18n.t("next")}
           onPress={() => this.submit()}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
-          bold={false}
         />
       </ViewWrapper>
     );

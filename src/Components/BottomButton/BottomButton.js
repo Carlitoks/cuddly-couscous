@@ -12,8 +12,6 @@ import { topIOS } from "../../Util/Devices";
  *
  * Props:
     onPress: function to execute when button is pressed,
-    buttonColor: Base button color,
-    color: Base button text color,
     disabledColor: Base button disabled color,
     title: Button text,
     bold: Boolean to specify if text is bold,
@@ -30,14 +28,15 @@ const BottomButton = ({ onPress, color, title, buttonColor, bold, loading, disab
         <Button
           buttonStyle={IphoneX ? styles.buttonContainerX : styles.buttonContainer}
           textStyle={bold ? styles.textBold : null}
-          color={color}
-          backgroundColor={buttonColor}
           title={title}
           onPress = {() => {onPress()}}
           loading={loading}
           disabled={disabled}
           disabledStyle={!!disabledColor ? {backgroundColor: disabledColor } : null }
           icon={!!icon ? icon : null}
+          color={Colors.primaryAltFontColor}
+          backgroundColor={Colors.primaryLightFillColor}
+          buttonStyle={styles.buttonContainer}
         />
         </View>
         </KeyboardAvoidingView>

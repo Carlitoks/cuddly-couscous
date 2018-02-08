@@ -21,6 +21,7 @@ import linguistForm from "./LinguistFormReducer";
 import sessionInfo from "./SessionInfoReducer";
 import events from "./EventsReducer";
 import homeFlow from "./HomeFlowReducer";
+import callHistory from "./CallHistoryReducer";
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   auth,
   callCustomerSettings,
   callLinguistSettings,
+  callHistory,
   contactLinguist,
   forgotPassword,
   login,

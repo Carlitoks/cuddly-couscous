@@ -2,7 +2,6 @@ import { StackNavigator, DrawerNavigator } from "react-navigation";
 
 import { getS } from "../Config/CreateStore";
 
-import LandingContainer from "../Containers/LandingContainer";
 import Profile from "../Profile";
 
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
@@ -43,6 +42,7 @@ import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguis
 import EmailLinguistView from "../LinguistForm/EmailLinguistView/EmailLinguistView";
 import PasswordLinguistView from "../LinguistForm/PasswordLinguistView/PasswordLinguistView";
 import SelectListView from "../LinguistForm/SelectListView/SelectListView";
+import GenericSelectListView from "../LinguistForm/GenericSelectListView/GenericSelectListView";
 import FamiliarityView from "../LinguistForm/FamiliarityView/FamiliarityView";
 
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
@@ -127,7 +127,6 @@ const Navigation = StackNavigator(
       screen: CustomScenarioView
     },
     IncomingCallView: { screen: IncomingCallView },
-    LandingContainer: { screen: LandingContainer },
     RateCallView: { screen: RateCallView },
     NameLinguistView: { screen: NameLinguistView },
     GenderLinguistView: { screen: GenderLinguistView },
@@ -153,6 +152,9 @@ const Navigation = StackNavigator(
     },
     SelectListView: {
       screen: SelectListView
+    },
+    GenericSelectListView: {
+      screen: GenericSelectListView
     },
     LanguageSettingsView: {
       screen: LanguageSettingsView

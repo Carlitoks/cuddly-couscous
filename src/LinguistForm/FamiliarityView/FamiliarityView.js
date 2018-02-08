@@ -177,9 +177,6 @@ class FamiliarityView extends Component {
               navigation.dispatch({ type: "PhoneLinguistView" });
             }
           }}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
-          bold={false}
         />
       </ViewWrapper>
     );

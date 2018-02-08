@@ -1,54 +1,49 @@
 import React, { Component } from "react";
 import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import { List, ListItem } from "react-native-elements";
+import UserInfo from "../UserInfo/UserInfo";
+import { Images } from "../../Themes";
+import _isUndefined from "lodash/isUndefined";
+import styles from "./styles";
+import { IMAGE_STORAGE_URL } from "../../Config/env";
 
 export class CallHistoryComponent extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: []
-    };
-  }
-
   renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "86%",
-          backgroundColor: "#CED0CE",
-          marginLeft: "14%"
-        }}
-      />
-    );
+    return <View style={styles.renderSeparator} />;
   };
-  componentDidMount() {
-    if (this.props.data) {
-      this.setState((prevState, props) => {
-        return { data: props.data };
-      });
-    }
-  }
-  callDetail(data) {
-    const navigate = this.props.navigation.navigate;
-    navigate("CallDetail");
-  }
+
   render() {
     const navigation = this.props.navigation; 
     return (
-      <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+      <List containerStyle={styles.containerList}>
         <FlatList
-          data={this.state.data}
+          data={this.props.data}
           renderItem={({ item }) => (
             <ListItem
               roundAvatar
-              title={item.title}
-              subtitle={item.subtitle}
-              avatar={{ uri: item.avatar }}
-              rightTitle={"11-12-12"}
-              containerStyle={{ borderBottomWidth: 0 }}
-              onPress={() => navigation.dispatch({ type: "SessionDetails" })}
+              title={
+                <UserInfo
+                  text={`${item.firstName} ${item.lastInitial}`}
+                  rating={item.rating}
+                />
+              }
+              hideChevron={item.chevron}
+              subtitle={item.duration}
+              avatar={
+                item.avatarURL
+                  ? { uri: `${IMAGE_STORAGE_URL}${item.avatarURL}` }
+                  : Images.avatar
+              }
+              containerStyle={styles.listItem}
+              rightTitle={item.createdAt}
+              onPress={() => {
+                if (!item.chevron)
+                  navigation.dispatch({
+                    type: "SessionDetails",
+                    params: item
+                  });
+              }}
+              subtitleStyle={styles.colorStyle}
             />
           )}
           keyExtractor={item => item.key}

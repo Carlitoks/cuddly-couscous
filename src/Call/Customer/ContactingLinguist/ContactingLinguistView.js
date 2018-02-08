@@ -52,9 +52,8 @@ class ContactingLinguist extends Component {
         contentContainerStyle={styles.contentContainerStyle}
       >
         {/* Background Image */}
-        <Image
-          source={Images.backgroundCustomer}
-          style={styles.backgroundImage}
+        <View
+          style={styles.backgroundView}
         />
         <Grid>
           <TopViewIOS />

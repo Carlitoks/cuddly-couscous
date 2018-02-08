@@ -3,12 +3,18 @@ import { networkError } from "./NetworkErrorsReducer";
 // Actions
 export const ACTIONS = {
   CLEAR: "sessionInfo/clear",
-  UPDATE: "sessionInfo/update"
+  UPDATESESSION: "sessionInfo/updateSessionInfo",
+  GET_LINGUIST: "sessionInfo/linguist"
 };
 
 // Action Creator
-export const updateSettings = payload => ({
-  type: ACTIONS.UPDATE,
+export const updateSessionInfo = payload => ({
+  type: ACTIONS.UPDATESESSION,
+  payload
+});
+
+export const updateLinguist = payload => ({
+  type: ACTIONS.GET_LINGUIST,
   payload
 });
 
@@ -18,11 +24,11 @@ export const GetInfo = () => dispatch => {
     { information: "English, Mandarin", iconName: "ios-chatbubbles" },
     { information: "13:28", iconName: "ios-clock" },
     { information: "Aiport lost and found", iconName: "md-help-circle" },
-    { information: "$14.04", iconName: "logo-usd" },
-  ]
+    { information: "$14.04", iconName: "logo-usd" }
+  ];
 };
 
-// Method to call the API when this is ready 
+// Method to call the API when this is ready
 
 export const getSessionInfo = (sessionID, token) => dispatch => {
   console.log("here");
@@ -41,12 +47,23 @@ export const getSessionInfo = (sessionID, token) => dispatch => {
     });
 };
 
+export const GetSessionInfoLinguist = (sessionID, token) => dispatch => {
+  return Sessions.GetSessionInfoLinguist(sessionID, token)
+    .then(response => {
+      return dispatch(updateLinguist(response.data));
+    })
+    .catch(error => {
+      return dispatch(networkError(error));
+    });
+};
+
 const initialState = {
   // to be use when we have the information of the API
   approxMinutes: 0,
   scenario: "None",
   translate: ["English", "Mandarin"],
-  estimatedPrice: 0
+  estimatedPrice: 0,
+  info: {}
 };
 
 // Reducer
@@ -54,7 +71,10 @@ const SessionInfoReducer = (state = initialState, action) => {
   const { payload, type } = action;
 
   switch (type) {
-    case ACTIONS.UPDATE: {
+    case ACTIONS.UPDATESESSION: {
+      return { ...state, info: payload };
+    }
+    case ACTIONS.GET_LINGUIST: {
       return {
         ...state,
         ...payload

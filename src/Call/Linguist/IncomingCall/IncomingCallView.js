@@ -6,7 +6,7 @@ import {
   asyncAcceptsInvite
 } from "../../../Ducks/CallLinguistSettings";
 
-import { Text, View, ScrollView, Image } from "react-native";
+import { Text, View, ScrollView, Image, Vibration } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
@@ -23,8 +23,9 @@ class IncomingCall extends Component {
   };
 
   componentWillMount() {
+    const PATTERN = [1000, 2000, 3000];
     const { invitationID, token } = this.props;
-
+    Vibration.vibrate(PATTERN, true);
     this.props.asyncGetInvitationDetail(invitationID, token);
   }
 
@@ -37,10 +38,12 @@ class IncomingCall extends Component {
       token,
       linguistSessionId
     );
+    Vibration.cancel();
   };
 
   rejectCall = () => {
     console.log("rejecting call");
+    Vibration.cancel();
   };
 
   render() {
@@ -66,10 +69,7 @@ class IncomingCall extends Component {
                 {" "}
                 {this.props.customerName}{" "}
               </Text>
-              <View style={styles.inlineContainer}>
-                <Icon style={styles.icon} size={25} name="room" />
-                <Text style={styles.locationText}>[San Diego, CA]</Text>
-              </View>
+
               <Text style={styles.incomingCallText}>
                 {I18n.t("incomingCall")}
               </Text>
@@ -86,7 +86,7 @@ class IncomingCall extends Component {
               <View style={styles.inlineContainer}>
                 <Icon style={styles.icon} size={25} name="help" />
                 <Text style={styles.notificationText}>
-                  Airport lost and found
+                  {/*Airport lost and found */}
                 </Text>
               </View>
               <View style={styles.inlineContainer}>

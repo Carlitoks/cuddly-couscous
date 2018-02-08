@@ -87,18 +87,19 @@ class EmailLinguist extends Component {
           <Header
             navigation={this.props.navigation}
             mainTitle={I18n.t("linguistEmailTitle")}
+            subtitle={I18n.t("linguistEmailSubtitle")}
           />
           <View>
             {/* Email */}
             <InputRegular
-            containerStyle={styles.containerInput}
-            placeholder={I18n.t("linguistEmail")}
-            autoCorrect={false}
-            onChangeText={text => this.props.updateForm({ email: text })}
-            value={this.props.email}
-            keyboardType={"email-address"}
-            maxLength={64}
-            autoFocus={true}
+              containerStyle={styles.containerInput}
+              placeholder={I18n.t("linguistEmail")}
+              autoCorrect={false}
+              onChangeText={text => this.props.updateForm({ email: text })}
+              value={this.props.email}
+              keyboardType={"email-address"}
+              maxLength={64}
+              autoFocus={true}
             />
           </View>
         </ScrollView>
@@ -106,8 +107,6 @@ class EmailLinguist extends Component {
         <BottomButton
           title={I18n.t("next")}
           onPress={() => this.submit()}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
           bold={false}
         />
       </ViewWrapper>

@@ -26,6 +26,7 @@ export default (ESP = {
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
   componentExamples: "Component Examples",
+  connectMeNow: "Connect me now",
   contactingLinguist: "Contacting available linguist",
   continue: "Continue",
   costOfCall: "Approx. cost - ",
@@ -62,6 +63,7 @@ export default (ESP = {
   help: "Help",
   helpPeople:
     "Which cities do you know well enough to help people get around in?",
+  hi: "Hi",
   holdToScan: "Hold the device's camera up to the QR code",
   home: "Home",
   howLongNeedHelp: "How Long Will You Need Assistance?",
@@ -76,7 +78,8 @@ export default (ESP = {
   legal: "Legal",
   linguist: "Linguist",
   linguistEmail: "Email",
-  linguistEmailTitle: "Enter an email address",
+  linguistEmailTitle: "Enter your email address",
+  linguistEmailSubtitle: "A confirmation email will be send to you",
   linguistLastName: " Last Name",
   linguistName: "First Name",
   linguistNumber: "Enter Phone Number",
@@ -155,6 +158,7 @@ export default (ESP = {
   tempIndicator: "F",
   termsConditions: "Term & Conditions",
   themeSettings: "Theme Settings",
+  toOthersOnPlatform: "to others on the platform.",
   toggleExtraTimeDisable: "This call will end automatically after time above",
   toggleExtraTimeEnable:
     "This call will continue until you end the call. You will be charged for usage beyond the time specified above.",
@@ -170,5 +174,6 @@ export default (ESP = {
   video: "Video",
   videoAssistance: "Video Assistance",
   wasGood: "What was Good?",
-  welcome: "Welcome"
+  welcome: "Welcome",
+  youWillBeKnown: "You'll be known as"
 });

@@ -1,33 +1,43 @@
-import AXIOS, { MOCK_DATA } from "../Config/AxiosConfig";
-import Promise from "bluebird"; //for testing emulating axios
+import AXIOS from "../Config/AxiosConfig";
 
 const BASE_URI = "/";
 
 //id is userId
 const callHistory = {
-  getRecents: (id, token) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        var data = MOCK_DATA.CALL_HISTORY.Recents;
-        resolve(data);
-      }, 2000);
+  // call of customer
+
+  getAllCustomerCalls: (userId, token) => {
+    return AXIOS.get(`/users/${userId}/sessions`, {
+      headers: { Authorization: `Bearer ${token}` }
     });
   },
-  getMissed: (id, token) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        var data = MOCK_DATA.CALL_HISTORY.Missed;
-        resolve(data);
-      }, 2000);
+
+  // call of linguist
+
+  getAllLinguistCalls: (userId, token) => {
+    return AXIOS.get(`/users/${userId}/linguist-profile/sessions`, {
+      headers: { Authorization: `Bearer ${token}` }
     });
   },
-  getAll: (id, token) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        var data = MOCK_DATA.CALL_HISTORY.AllCalls;
-        resolve(data);
-      }, 2000);
-    });
+
+  getMissedLinguistCalls: (userId, token) => {
+    return AXIOS.get(
+      `/users/${userId}/linguist-profile/session-invitations?status=missed`,
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
   }
+
+  // put here the properly url when we have this endpoint
+
+  // getRecents: (id, token) => {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       var data = MOCK_DATA.CALL_HISTORY.Recents;
+  //       resolve(data);
+  //     }, 2000);
+  //   });
+  // },
 };
 export default callHistory;

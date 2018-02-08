@@ -32,16 +32,18 @@ class ScanScreenView extends Component {
     try {
       const qrURL = e.data;
 
-      this.props
-        .asyncScanQR(this.getEventID(qrURL), this.props.token)
-        .then(response => {
-          const {
-            requireScenarioSelection,
-            restrictEventScenarios,
-            scenarios
-          } = response.payload;
+      this.props.asyncScanQR(
+        this.getEventID(qrURL),
+        this.props.token
+      ).then( response => {
+        const {
+          requireScenarioSelection,
+          restrictEventScenarios,
+          scenarios
+        } = response.payload;
 
-          if (requireScenarioSelection && restrictEventScenarios) {
+        if (this.props.token) {
+          if( requireScenarioSelection && restrictEventScenarios ){
             /* Dispatch to SelectListView with the scenarios involveds*/
             this.props.updateSettings({
               selectionItemType: "scenarios",
@@ -49,14 +51,21 @@ class ScanScreenView extends Component {
               scenarios: scenarios
             });
             this.props.navigation.dispatch({ type: "SelectListView" });
-          } else if (requireScenarioSelection && !restrictEventScenarios) {
+          } else if ( requireScenarioSelection && !restrictEventScenarios ){
             /* Dispatch to Category Selection View (Home) */
-            this.props.navigation.dispatch({ type: "Home" });
-          } else if (!requireScenarioSelection) {
+            this.props.navigation.dispatch({ type: "Home" })
+          } else if ( !requireScenarioSelection ){
             /* Dispatch to Call Confirmation view */
-            this.props.navigation.dispatch({ type: "CallConfirmationView" });
+            this.props.navigation.dispatch({ type: "CallConfirmationView" })
           }
-        });
+
+        } else {
+          this.props.navigation.dispatch({
+            type: "LoginView"
+          });
+        }
+                
+      })
 
       this.setState({
         reactivate: false
@@ -78,10 +87,10 @@ class ScanScreenView extends Component {
 
     const styles = StyleSheet.create({
       containerStyle: {
-        backgroundColor: "white"
+        backgroundColor: "black"
       },
       bottomView: {
-        backgroundColor: "white"
+        backgroundColor: "black"
       },
       Button: {
         backgroundColor: Colors.primaryLightFillColor,
@@ -100,7 +109,7 @@ class ScanScreenView extends Component {
       title: {
         fontSize: 20,
 
-        color: Colors.primaryAltFontColor,
+        color: Colors.primaryColor,
         textAlign: "center",
         fontFamily: Fonts.primaryLightFont,
         alignSelf: "center",

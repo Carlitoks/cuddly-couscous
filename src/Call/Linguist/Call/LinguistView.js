@@ -108,12 +108,12 @@ class LinguistView extends Component {
           <View style={styles.inlineContainer}>
             <Image style={styles.smallAvatar} source={Images.avatarCall} />
           </View>
-          <Text style={styles.callerNameText}> Hanna C. </Text>
+          <Text style={styles.callerNameText}>{this.props.customerName}</Text>
 
-          <View style={styles.inlineContainer}>
+          {/*<View style={styles.inlineContainer}>
             <Icon style={styles.icon} size={25} name="room" />
             <Text style={styles.locationText}>San Diego, CA</Text>
-          </View>
+          </View>*/}
 
           <View style={styles.inlineContainer}>
             <Text style={styles.incomingCallText}>
@@ -214,6 +214,7 @@ const mS = state => ({
     state.callLinguistSettings.linguistTokboxSessionToken,
   linguistTokboxSessionID: state.callLinguistSettings.linguistTokboxSessionID,
   sessionID: state.callLinguistSettings.sessionID,
+  customerName: state.callLinguistSettings.customerName,
   token: state.auth.token
 });
 

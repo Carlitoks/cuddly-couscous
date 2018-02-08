@@ -190,9 +190,6 @@ class LanguageSettingsView extends Component {
               navigation.dispatch({ type: goTo });
             }
           }}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
-          bold={false}
         />
       </ViewWrapper>
     );

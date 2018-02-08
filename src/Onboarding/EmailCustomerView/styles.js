@@ -19,8 +19,16 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryLightFont,
     fontSize: 24,
     textAlign: "center",
-    marginBottom: moderateScale(50),
+    marginBottom: moderateScale(10),
     marginTop: moderateScale(20),
+    color: "white",
+    backgroundColor: "transparent"
+  },
+  mainSubtitle: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 18,
+    textAlign: "center",
+    marginBottom: moderateScale(30),
     color: "white",
     backgroundColor: "transparent"
   },

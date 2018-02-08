@@ -33,7 +33,8 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#888888",
     flexDirection: "column",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    opacity: 0
   },
   textContainer: {
     justifyContent: "center",

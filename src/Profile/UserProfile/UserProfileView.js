@@ -478,9 +478,6 @@ class UserProfileView extends Component {
         <BottomButton
           title={I18n.t("save")}
           onPress={() => {this.submit();}}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.primaryLightFillColor}
-          bold={false}
         />
       </ViewWrapper>
     );

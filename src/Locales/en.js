@@ -21,13 +21,14 @@ export default (ENG = {
   callLinguist: "Call a Linguist",
   calls: "Calls",
   callSettings: "Call Settings",
+  callHistory: "Call History",
   cancel: "Cancel",
-  chargeAdvice:
-    "You will be charged for time over 10 minutes on a per-minute basis",
+  chargeAdvice: "You will be charged per minute for any time over 8 minutes.",
   changeSettings: "To change your settings, go to Settings > MeYu",
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
   componentExamples: "Component Examples",
+  connectMeNow: "Connect me now",
   confirmCall: "Confirm Details",
   contactingLinguist: "Contacting available linguist",
   continue: "Continue",
@@ -67,6 +68,7 @@ export default (ENG = {
   help: "Help",
   helpPeople:
     "Which cities do you know well enough to help people get around in?",
+  hi: "Hi",
   holdToScan: "Hold the device's camera up to the QR code",
   home: "Home",
   howLongNeedHelp: "How Long Will You Need Assistance?",
@@ -82,7 +84,8 @@ export default (ENG = {
   legal: "Legal",
   linguist: "Linguist",
   linguistEmail: "Email",
-  linguistEmailTitle: "Enter an email address",
+  linguistEmailTitle: "Enter your email address",
+  linguistEmailSubtitle: "A confirmation email will be send to you",
   linguistLastName: "Last Name",
   linguistName: "First Name",
   linguistNumber: "Enter Phone Number",
@@ -102,7 +105,7 @@ export default (ENG = {
   mute: "Mute",
   myProfile: "My Profile",
   name: "Name",
-  nameLinguistText: "You'll be Known as ....to others on the platform.",
+  nameLinguistText: "Others will see your name as ",
   nativeLanguage: "Native Language",
   needsAddress: "Were your needs addressed?",
   newaccount: "Create new account?",
@@ -127,8 +130,7 @@ export default (ENG = {
   privacyPolicy: "Privacy Policy",
   proficiencyLevelOf: "Proficiency level of ",
   progressiveImageComponent: "Progressive Image Component",
-  quicklyContact:
-    "Quickly contact a linguist to help with your languages needs",
+  quicklyContact: "Quickly contact a Linguist",
   rateYour: "Rate your",
   recent: "Recent",
   resetpassword: "Reset Password",
@@ -161,9 +163,11 @@ export default (ENG = {
   status: "You are",
   technology: "Technology",
   tempIndicator: "F",
-  termsConditions: "Term & Conditions",
+  termsConditions: "Terms & Conditions",
   themeSettings: "Theme Settings",
-  toggleExtraTimeDisable: "This call will end automatically after time above",
+  toOthersOnPlatform: "to others on the platform",
+  toggleExtraTimeDisable:
+    "This call will end automatically after the time specified above.",
   toggleExtraTimeEnable:
     "This call will continue until you end the call. You will be charged for usage beyond the time specified above.",
   tourism: "Tourism",
@@ -177,6 +181,7 @@ export default (ENG = {
   verifyNumberText: "Enter verfication code they receive via SMS",
   video: "Video",
   videoAssistance: "Video Assistance",
-  wasGood: "What was Good?",
-  welcome: "Welcome"
+  wasGood: "What was good?",
+  welcome: "Welcome",
+  youWillBeKnown: "You'll be known as"
 });

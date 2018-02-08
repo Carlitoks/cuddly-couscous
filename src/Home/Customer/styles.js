@@ -62,19 +62,58 @@ export default StyleSheet.create({
     marginBottom: 15,
     color: Colors.primaryColor
   },
+  mainButtons: {
+    flex: 1,
+    height: 140,
+    width: width,
+    backgroundColor: Colors.primaryColor,
+    paddingTop: 20,
+    paddingBottom: 20,
+    elevation: 3,
+    marginBottom: 20
+  },
+  scanQRImage: {
+    width: 30,
+    height: 30,
+    marginRight: scale(15)
+  },
+  buttonGrid: {
+    alignItems: "center"
+  },
   button: {
-    backgroundColor: Colors.primaryLightFillColor,
     width: "90%",
-    height: 80,
-    borderRadius: 15
+    height: 80
   },
   buttonQR: {
-    width: "100%",
-    height: 80,
-    backgroundColor: "#FFFFFF",
-    borderBottomWidth: 1,
-    borderBottomColor: "#D3D3D3",
-    borderRadius: 0
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: Colors.primaryColor,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderRadius: 15
+  },
+  textConnectMeNow: {
+    color: Colors.primaryColor
+  },
+  buttonConnectMeNow: {
+    height: 50,
+    borderRadius: 150,
+    marginTop: 20
+  },
+  gradientConnectMeNow: {
+    borderRadius: 150
+  },
+  connectMeNow: {
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    top: 344,
+    left: "5%",
+    width: "90%",
+    height: 50,
+    borderRadius: 150,
+    backgroundColor: "transparent",
+    elevation: 4
   },
   buttonSchedule: {
     backgroundColor: Colors.primaryBackgroundColor,
@@ -101,7 +140,7 @@ export default StyleSheet.create({
     //marginLeft: moderateScale(80),
     width: scale(140),
     marginBottom: 10,
-    backgroundColor: "rgba(255, 255, 255, 0)" 
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   userName: {
     fontFamily: Fonts.primaryLightFont,
@@ -142,7 +181,7 @@ export default StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     marginLeft: 30,
-    backgroundColor: "rgba(255, 255, 255, 0)" 
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   iconView: {
     flex: 1,
@@ -163,7 +202,7 @@ export default StyleSheet.create({
     borderRadius: 15,
     marginTop: 20,
     marginBottom: 5,
-    width:"100%"
+    width: "100%"
   },
   iconV: {
     display: "flex",
@@ -197,8 +236,8 @@ export default StyleSheet.create({
     backgroundColor: "white"
   },
   scrollContainer: {
-    backgroundColor: "white",
-    height: height,
+    backgroundColor: "#f2ebe6",
+    height: height
   },
   avatarContainer: {
     marginLeft: scale(60)

@@ -74,6 +74,8 @@ const styles = StyleSheet.create({
     borderRadius: 60
   },
   textName: {
+    marginTop: 10,
+    marginBottom: 10,
     fontSize: 20,
     fontWeight: "300",
     alignSelf: "center"

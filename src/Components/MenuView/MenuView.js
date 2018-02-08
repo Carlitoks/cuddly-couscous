@@ -17,7 +17,8 @@ import {
   ScrollView,
   Text,
   Image,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TouchableOpacity
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Button, Badge, Avatar } from "react-native-elements";
@@ -47,12 +48,23 @@ class MenuView extends Component {
   }
   isACustomer = () => !this.props.linguistProfile;
 
+  checkCurrentPage = (navigation, currentViewName) => {
+    isCurrentView(navigation, currentViewName)
+      ? this.props.navigation.dispatch({ type: "DrawerClose" })
+      : navigation.dispatch({ type: currentViewName });
+  };
+
   render() {
     const { navigation, avatarURL } = this.props;
 
     return (
       <ScrollView alwaysBounceVertical={false} >
         <TopViewIOS/> 
+        <TouchableOpacity
+          onPress={() => {
+            navigation.dispatch({ type: "UserProfileView" });
+          }}
+        >
         <View>
           <Avatar
             containerStyle={{ alignSelf: "center", marginTop: 30 }}
@@ -69,41 +81,11 @@ class MenuView extends Component {
             }
             activeOpacity={0.7}
           />
+          <Text style={styles.textName}>
+            {this.props.firstName} {this.props.lastName}
+          </Text>
         </View>
-        <View style={styles.starsContainer}>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              navigation.dispatch({ type: "UserProfileView" });
-            }}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={styles.textName}>
-                {this.props.firstName} {this.props.lastName}
-              </Text>
-              <Icon
-                name="mode-edit"
-                size={20}
-                style={{ marginLeft: 5 }}
-                color={Colors.selectedOptionMenu}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          <View style={[styles.stars, styles.center]}>
-            <StarRating
-              emptyStarColor="gray"
-              emptyStar={"ios-star-outline"}
-              fullStar={"ios-star"}
-              halfStar={"ios-star-half"}
-              iconSet={"Ionicons"}
-              disabled={true}
-              maxStars={5}
-              starSize={18}
-              rating={this.props.rate}
-              starColor={Colors.optionMenu}
-            />
-            <Text style={styles.textStars}>{this.props.rate}</Text>
-          </View>
-        </View>
+        </TouchableOpacity>
 
         {/* Home */}
         <Icon.Button
@@ -119,9 +101,7 @@ class MenuView extends Component {
               ? styles.selectedOptionMenu
               : styles.optionMenu
           }
-          onPress={() => {
-            navigation.dispatch({ type: "Home" });
-          }}
+          onPress={() => this.checkCurrentPage(navigation, "Home")}
         >
           <Text style={styles.colorText}>{I18n.t("home")}</Text>
         </Icon.Button>
@@ -140,9 +120,7 @@ class MenuView extends Component {
               ? styles.selectedOptionMenu
               : styles.optionMenu
           }
-          onPress={() => {
-            navigation.dispatch({ type: "CallHistory" });
-          }}
+          onPress={() => this.checkCurrentPage(navigation, "CallHistory")}
         >
           <Text style={styles.colorText}>{I18n.t("callHistory")}</Text>
         </Icon.Button>
@@ -202,9 +180,9 @@ class MenuView extends Component {
                 ? styles.selectedOptionMenu
                 : styles.optionMenu
             }
-            onPress={() => {
-              navigation.dispatch({ type: "SelectLanguageView" });
-            }}
+            onPress={() =>
+              this.checkCurrentPage(navigation, "SelectLanguageView")
+            }
           >
             <Text style={styles.colorText} icon>
               {I18n.t("becomeLinguist")}

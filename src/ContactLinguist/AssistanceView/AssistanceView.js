@@ -139,8 +139,6 @@ class AssistanceView extends Component {
         <BottomButton
           title={I18n.t("call")}
           onPress={() => navigation.dispatch({ type: "CallConfirmationView" })}
-          color={Colors.primaryAltFontColor}
-          buttonColor={Colors.primaryLightFillColor}
           bold={true}
           icon={{
             name: "video-call",

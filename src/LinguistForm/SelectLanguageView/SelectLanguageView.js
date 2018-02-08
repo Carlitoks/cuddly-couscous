@@ -23,12 +23,16 @@ import BottomButton from "../../Components/BottomButton/BottomButton";
 import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
+import { Sessions } from "../../Api";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 
 class SelectLanguageView extends Component {
+  state = {
+    languages: Sessions.GetLanguages()
+  };
   componentWillMount() {
     let selectedNativeLanguage = [
       {
@@ -88,19 +92,18 @@ class SelectLanguageView extends Component {
         .logInAsync(this.props.email, this.props.password)
         .then(response => {
           if (response.type !== "networkErrors") {
-            this.props.getProfileAsync(
-              response.payload.uuid,
-              response.payload.token
-            ).then( responseProfile => {
-              this.updateUserProfile(
-                response.payload.uuid,
-                response.payload.token
-              );
-              this.createLinguistProfile(
-                response.payload.uuid,
-                response.payload.token
-              );
-            });
+            this.props
+              .getProfileAsync(response.payload.uuid, response.payload.token)
+              .then(responseProfile => {
+                this.updateUserProfile(
+                  response.payload.uuid,
+                  response.payload.token
+                );
+                this.createLinguistProfile(
+                  response.payload.uuid,
+                  response.payload.token
+                );
+              });
           } else {
             Alert.alert(response.data);
           }
@@ -168,11 +171,17 @@ class SelectLanguageView extends Component {
             title={language.name}
             rightTitle={proficiency}
             onPress={() => {
-              this.props.updateSettings({
-                selectionItemType: "languages",
-                selectionItemName: "secondaryLanguages"
+              this.props.navigation.dispatch({
+                type: "GenericSelectListView",
+                params: {
+                  selectionItemType: "languages",
+                  selectionItemName: "secondaryLanguages",
+                  title: I18n.t("SecondaryLanguages"),
+                  multiselection: true,
+                  acceptsEmptySelection: false,
+                  continueTo: "LanguageSettingsView"
+                }
               });
-              this.props.navigation.dispatch({ type: "SelectListView" });
             }}
           />
         );
@@ -186,11 +195,17 @@ class SelectLanguageView extends Component {
         title={I18n.t("addLanguage")}
         leftIcon={{ name: "add-circle-outline" }}
         onPress={() => {
-          this.props.updateSettings({
-            selectionItemType: "languages",
-            selectionItemName: "secondaryLanguages"
+          this.props.navigation.dispatch({
+            type: "GenericSelectListView",
+            params: {
+              selectionItemType: "languages",
+              selectionItemName: "secondaryLanguages",
+              title: I18n.t("SecondaryLanguages"),
+              multiselection: true,
+              acceptsEmptySelection: false,
+              continueTo: "LanguageSettingsView"
+            }
           });
-          this.props.navigation.dispatch({ type: "SelectListView" });
         }}
       />
     );
@@ -226,12 +241,17 @@ class SelectLanguageView extends Component {
                 key={selectedNativeLanguage[0]["3"]}
                 title={selectedNativeLanguage[0].name}
                 onPress={() => {
-                  this.props.updateSettings({
-                    selectionItemType: "languages",
-                    selectionItemName: "nativeLanguage"
-                  });
                   this.props.navigation.dispatch({
-                    type: "SelectListView"
+                    type: "GenericSelectListView",
+                    params: {
+                      selectionItemType: "languages",
+                      selectionItemName: "nativeLanguage",
+                      items: this.state.languages,
+                      selectedItem: this.props.selectedNativeLanguage,
+                      title: I18n.t("nativeLanguage"),
+                      multiselection: false,
+                      acceptsEmptySelection: false
+                    }
                   });
                 }}
               />
@@ -248,11 +268,16 @@ class SelectLanguageView extends Component {
             <ListItem
               title={I18n.t("areasExpertise")}
               onPress={() => {
-                this.props.updateSettings({
-                  selectionItemType: "areasOfExpertise",
-                  selectionItemName: "areasOfExpertise"
+                this.props.navigation.dispatch({
+                  type: "GenericSelectListView",
+                  params: {
+                    selectionItemType: "areasOfExpertise",
+                    selectionItemName: "areasOfExpertise",
+                    title: I18n.t("areasExpertise"),
+                    multiselection: true,
+                    acceptsEmptySelection: false
+                  }
                 });
-                this.props.navigation.dispatch({ type: "SelectListView" });
               }}
             />
           </List>
@@ -267,9 +292,6 @@ class SelectLanguageView extends Component {
               this.submit();
             }
           }}
-          color={Colors.linguistFormText}
-          buttonColor={Colors.linguistFormButton}
-          bold={false}
         />
       </ViewWrapper>
     );
