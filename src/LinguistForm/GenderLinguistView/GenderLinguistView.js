@@ -9,13 +9,13 @@ import LinearGradient from "react-native-linear-gradient";
 import {
   Button,
   FormLabel,
-  FormInput,
   List,
   ListItem
 } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 
@@ -113,17 +113,14 @@ class GenderLinguist extends Component {
             </List>
           </View>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("next")}
-            onPress={() => this.submit()}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => this.submit()}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

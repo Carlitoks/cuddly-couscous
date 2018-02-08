@@ -18,6 +18,8 @@ import { Button, Badge } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
+import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 import { validatePhoneNumber } from "../../Util/Helpers.js";
@@ -118,33 +120,32 @@ class PhoneLinguist extends Component {
                 containerStyle={styles.tagCode}
                 textStyle={styles.codeText}
               />
-              <TextInput
-                style={styles.containerInput}
+              {/* Phone Number */}
+              <InputRegular
+                containerStyle={styles.containerInput}
+                placeholder="(201) 555-0132"
+                value={this.props.phoneNumber}
                 onChangeText={number => {
                   const phoneNumber = this.mask(number);
                   this.props.updateForm({
                     phoneNumber
                   });
                 }}
-                placeholder="(201) 555-0132"
                 maxLength={14}
-                value={this.props.phoneNumber}
                 keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
+                autoFocus={true}
               />
             </View>
           </View>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("next")}
-            onPress={() => this.submit()}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => this.submit()}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

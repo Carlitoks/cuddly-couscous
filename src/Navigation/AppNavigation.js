@@ -51,6 +51,7 @@ import CallSettings from "../CallSettings/CallSettings";
 import ScanScreenView from "../Containers/ScanScreenView";
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
+import StaticView from "../StaticView/StaticView";
 
 import CustomScenarioView from "../Home/CustomScenario/CustomScenarioView";
 
@@ -146,6 +147,9 @@ const Navigation = StackNavigator(
     ScanScreenView: { screen: ScanScreenView },
     SelectLanguageView: {
       screen: SelectLanguageView
+    },
+    StaticView: {
+      screen: StaticView
     },
     SelectListView: {
       screen: SelectListView

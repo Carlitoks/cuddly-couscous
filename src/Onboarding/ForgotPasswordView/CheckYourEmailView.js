@@ -6,6 +6,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { topIOS } from "../../Util/Devices";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -53,17 +54,14 @@ class CheckYourEmailView extends Component {
             <Text style={styles.checkEmail}>{I18n.t("checkYourEmail")}</Text>
           </View>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Check your email Button */}
-          <Button
-            buttonStyle={styles.Button}
-            textStyle={styles.buttonText}
-            onPress={() => navigation.dispatch({ type: "SelectRoleView" })}
-            title={I18n.t("next")}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => navigation.dispatch({ type: "SelectRoleView" })}
+          color={Colors.primaryAltFontColor}
+          buttonColor={Colors.primaryLightFillColor}
+          bold={true}
+        />
       </ViewWrapper>
     );
   }

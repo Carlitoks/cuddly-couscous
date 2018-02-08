@@ -11,7 +11,7 @@ export default StyleSheet.create({
     color: Colors.formInputIconColor,
     fontSize: 23,
     position: "absolute",
-    top: 12,
+    top: 19,
     right: 15
   }
 });

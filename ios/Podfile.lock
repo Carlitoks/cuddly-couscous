@@ -24,6 +24,8 @@ PODS:
     - React/RCTNetwork
   - React/RCTNetwork (0.50.4):
     - React/Core
+  - ReactNativePermissions (1.1.1):
+    - React
   - RNDeviceInfo (0.9.3):
     - React
   - RNFS (2.9.7):
@@ -46,6 +48,7 @@ DEPENDENCIES:
   - react-native-image-resizer (from `../node_modules/react-native-image-resizer`)
   - react-native-keep-awake (from `../node_modules/react-native-keep-awake`)
   - React/RCTImage (from `../node_modules/react-native`)
+  - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNI18n (from `../node_modules/react-native-i18n`)
@@ -67,6 +70,8 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-image-resizer
   react-native-keep-awake:
     :path: ../node_modules/react-native-keep-awake
+  ReactNativePermissions:
+    :path: ../node_modules/react-native-permissions
   RNDeviceInfo:
     :path: ../node_modules/react-native-device-info
   RNFS:
@@ -89,12 +94,13 @@ SPEC CHECKSUMS:
   react-native-fetch-blob: 2bef9be702de8726f4d7bf58d2345579aaaee60d
   react-native-image-resizer: 4516052af6ae0248caf4ccf356caecefe60072d7
   react-native-keep-awake: 7fc7d0a6886b38102fad5129c92fe7490eac1539
+  ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
   RNFS: c44a045cb06c6a496a27f37bd1b50f2c36422cf3
   RNI18n: 155baa432934b0ca208f34de13834f4720e0cc12
   RNOpenTok: cab5e455f81cd13ec6ac52b8f126ab00800c803a
   yoga: b9aebf996711e50fc31f5608c10aa108a5a0c29e
 
-PODFILE CHECKSUM: 532e6459ac2e560e2384af1a4b4aa78cf9342163
+PODFILE CHECKSUM: d2376b35011e9f9dac49ab276ad1cf489ea9b2a2
 
 COCOAPODS: 1.3.1

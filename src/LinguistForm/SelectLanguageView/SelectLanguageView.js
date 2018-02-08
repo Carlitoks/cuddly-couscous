@@ -19,6 +19,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import Languages from "../../Config/Languages";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
@@ -256,21 +257,20 @@ class SelectLanguageView extends Component {
             />
           </List>
         </ScrollView>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("create")}
-            onPress={() => {
-              if (this.props.selectedSecondaryLanguages.length < 1) {
-                Alert.alert("Please, select at least secondary language");
-              } else {
-                this.submit();
-              }
-            }}
-          />
-        </View>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("create")}
+          onPress={() => {
+            if (this.props.selectedSecondaryLanguages.length < 1) {
+              Alert.alert("Please, select at least secondary language");
+            } else {
+              this.submit();
+            }
+          }}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

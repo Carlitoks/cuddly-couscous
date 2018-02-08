@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { ScrollView, View, Alert, Text, KeyboardAvoidingView } from "react-native";
-import { Button, Header, FormInput } from "react-native-elements";
+import { ScrollView, View, Alert, Text } from "react-native";
+import { Button, Header } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
@@ -10,11 +10,14 @@ import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { resetPasswordAsync } from "../../Ducks/AuthReducer";
 import { clearForm, updateForm } from "../../Ducks/ForgotPasswordReducer";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import { topIOS } from "../../Util/Devices";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Colors } from "../../Themes";
+import { TroubleshootURI } from "../../Config/StaticViewsURIS";
 
 // For the moment
 import I18n from "../../I18n/I18n";
@@ -114,37 +117,42 @@ class ForgotPasswordView extends Component {
                 </Col>
               </Row>
               {/* Email */}
-              <FormInput
-                containerStyle={styles.formInputContainer}
-                placeholder={I18n.t("email")}
+              <InputRegular
+                  containerStyle={styles.formInputContainer}
+                  placeholder={I18n.t("email")}
                 autoCorrect={false}
                 onChangeText={text => this.props.updateForm({ email: text })}
                 value={this.props.email}
                 keyboardType={"email-address"}
                 maxLength={64}
-              />
-
+                autoFocus={true}
+                />
               {/* Troubleshoot Button (Comented until we have a view for this functionality)*/}
-              {/* <Text
+              <Text
                 style={styles.linksText}
-                onPress={() => console.log("navigating")}
+                onPress={() => {
+                  navigation.dispatch({
+                    type: "StaticView",
+                    params: {
+                      uri: TroubleshootURI,
+                      title: I18n.t("troubleshoot")
+                    }
+                  });
+                }}
               >
                 {I18n.t("troubleshoot")}
-              </Text> */}
+              </Text>
             </Col>
           </Grid>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Forgot Password Button */}
-          <Button
-            buttonStyle={styles.Button}
-            textStyle={styles.buttonText}
-            onPress={() => this.submit()}
-            title={I18n.t("resetpassword")}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Forgot Password Button */}
+        <BottomButton
+          title={I18n.t("resetpassword")}
+          onPress={() => this.submit()}
+          color={Colors.primaryAltFontColor}
+          buttonColor={Colors.primaryLightFillColor}
+          bold={true}
+        />
       </ViewWrapper>
     );
   }

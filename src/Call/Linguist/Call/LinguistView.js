@@ -5,6 +5,10 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint-disable-line
 import KeepAwake from "react-native-keep-awake";
 import styles from "./styles";
+import {
+  setPermission,
+  displayOpenSettingsAlert
+} from "../../../Util/Permission";
 import { Images } from "../../../Themes";
 import { CallButton } from "../../../Components/CallButton/CallButton";
 import I18n from "../../../I18n/I18n";
@@ -26,7 +30,6 @@ import { fmtMSS } from "../../../Util/Helpers";
 
 import { tokDisConnect, tokConnect } from "../../../Ducks/tokboxReducer";
 
-
 class LinguistView extends Component {
   navigate = this.props.navigation.navigate;
   ref: Ref<Publisher>;
@@ -38,9 +41,8 @@ class LinguistView extends Component {
       tokConnect,
       sessionID
     } = this.props;
-
   }
-   
+
   componentWillMount() {
     BackgroundStart();
     const {
@@ -102,12 +104,9 @@ class LinguistView extends Component {
           />
         </View>
         <View style={styles.topContainer}>
-        <TopViewIOS/>
+          <TopViewIOS />
           <View style={styles.inlineContainer}>
-            <Image
-              style={styles.smallAvatar}
-              source={Images.avatarCall}
-            />
+            <Image style={styles.smallAvatar} source={Images.avatarCall} />
           </View>
           <Text style={styles.callerNameText}> Hanna C. </Text>
 
@@ -162,7 +161,14 @@ class LinguistView extends Component {
           />
           <CallButton
             onPress={() => {
-              this.props.updateSettings({ mute: !this.props.mute });
+              setPermission("microphone").then(response => {
+                if (response == "denied" || response == "restricted") {
+                  displayOpenSettingsAlert();
+                }
+                this.props.updateSettings({
+                  video: !this.props.mute
+                });
+              });
             }}
             toggle={true}
             active={this.props.mute}
@@ -174,7 +180,14 @@ class LinguistView extends Component {
           />
           <CallButton
             onPress={() => {
-              this.props.updateSettings({ video: !this.props.video });
+              setPermission("camera").then(response => {
+                if (response == "denied" || response == "restricted") {
+                  displayOpenSettingsAlert();
+                }
+                this.props.updateSettings({
+                  video: !this.props.video
+                });
+              });
             }}
             toggle={true}
             active={!this.props.video}
@@ -198,7 +211,7 @@ const mS = state => ({
   timer: state.callLinguistSettings.timer,
   elapsedTime: state.callLinguistSettings.elapsedTime,
   linguistTokboxSessionToken:
-  state.callLinguistSettings.linguistTokboxSessionToken,
+    state.callLinguistSettings.linguistTokboxSessionToken,
   linguistTokboxSessionID: state.callLinguistSettings.linguistTokboxSessionID,
   sessionID: state.callLinguistSettings.sessionID,
   token: state.auth.token

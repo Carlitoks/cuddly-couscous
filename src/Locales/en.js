@@ -24,6 +24,7 @@ export default (ENG = {
   cancel: "Cancel",
   chargeAdvice:
     "You will be charged for time over 10 minutes on a per-minute basis",
+  changeSettings: "To change your settings, go to Settings > MeYu",
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
   componentExamples: "Component Examples",
@@ -119,6 +120,7 @@ export default (ENG = {
   passwordAnd: "and",
   passwordLinguistText: "By tapping Next you agree with our",
   passwordLength: "Your password must have more than fours characters",
+  permissionDenied: "App Permission Denied",
   preferedNameTitle: "Prefered Name",
   preferredLinguistText: "I preferred to be called ...",
   preferredName: "Preferred Name (optional)",

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Button, FormLabel, FormInput, Card } from "react-native-elements";
+import { Button, FormLabel, Card } from "react-native-elements";
 import { View, Image, ScrollView, Text } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";

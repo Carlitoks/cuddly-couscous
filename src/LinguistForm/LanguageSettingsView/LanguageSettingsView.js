@@ -24,6 +24,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { topIOS } from "../../Util/Devices";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import RightNavigationButton from "../../Components/RightNavigationButton/RightNavigationButton.js";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
@@ -156,46 +157,43 @@ class LanguageSettingsView extends Component {
           </List>
         </ScrollView>
 
-        {/* Call Button */}
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("add")}
-            onPress={() => {
-              const {
-                selectedSecondaryLanguages,
-                selectedLanguage,
-                back,
-                goTo
-              } = this.props;
+        {/* Add Button */}
+        <BottomButton
+          title={I18n.t("add")}
+          onPress={() => {
+            const {
+              selectedSecondaryLanguages,
+              selectedLanguage,
+              back,
+              goTo
+            } = this.props;
 
-              if (
-                isUndefined(selectedLanguage.proficiency) ||
-                isUndefined(selectedLanguage.interpretation)
-              ) {
-                Alert.alert(I18n.t("selectListLanguage"));
-              } else {
-                const selectedSecondaryLanguagesList = selectedSecondaryLanguages.filter(
-                  e => e["3"] !== selectedLanguage["3"]
-                );
+            if (
+              isUndefined(selectedLanguage.proficiency) ||
+              isUndefined(selectedLanguage.interpretation)
+            ) {
+              Alert.alert(I18n.t("selectListLanguage"));
+            } else {
+              const selectedSecondaryLanguagesList = selectedSecondaryLanguages.filter(
+                e => e["3"] !== selectedLanguage["3"]
+              );
 
-                this.props.updateSettings({
-                  selectedSecondaryLanguages: [
-                    ...selectedSecondaryLanguagesList,
-                    selectedLanguage
-                  ],
-                  selectedProficiency: null,
-                  selectedLanguageIterpretation: null
-                });
+              this.props.updateSettings({
+                selectedSecondaryLanguages: [
+                  ...selectedSecondaryLanguagesList,
+                  selectedLanguage
+                ],
+                selectedProficiency: null,
+                selectedLanguageIterpretation: null
+              });
 
-                navigation.dispatch({ type: goTo });
-              }
-            }}
-          />
-        </View>
-        </KeyboardAvoidingView>
+              navigation.dispatch({ type: goTo });
+            }
+          }}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

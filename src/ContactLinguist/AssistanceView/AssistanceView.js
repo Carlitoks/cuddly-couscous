@@ -20,6 +20,7 @@ import LinearGradient from "react-native-linear-gradient";
 import { topIOS } from "../../Util/Devices";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import I18n from "../../I18n/I18n";
@@ -98,9 +99,11 @@ class AssistanceView extends Component {
                     leftComponent={
                       <GoBackButton navigation={this.props.navigation} />
                     }
+                    /*
                     rightComponent={
                       <SettingsButton navigation={this.props.navigation} />
                     }
+                    */
                   />
 
                   {/* Select the Assistance */}
@@ -133,20 +136,18 @@ class AssistanceView extends Component {
           </Grid>
         </ScrollView>
         {/* Call Button */}
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <Button
-          textStyle={styles.textStep}
-          buttonStyle={styles.buttonStep}
+        <BottomButton
+          title={I18n.t("call")}
+          onPress={() => navigation.dispatch({ type: "CallConfirmationView" })}
+          color={Colors.primaryAltFontColor}
+          buttonColor={Colors.primaryLightFillColor}
+          bold={true}
           icon={{
             name: "video-call",
             size: 25,
             color: Colors.primaryAltFontColor
           }}
-          buttonStyle={styles.buttonStep}
-          title={I18n.t("call")}
-          onPress={() => navigation.dispatch({ type: "CallConfirmationView" })}
         />
-         </KeyboardAvoidingView>
       </ViewWrapper>
     );
   }

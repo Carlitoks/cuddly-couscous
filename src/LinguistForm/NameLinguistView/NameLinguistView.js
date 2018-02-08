@@ -6,10 +6,12 @@ import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormInput } from "react-native-elements";
+import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
+import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 
@@ -96,10 +98,10 @@ class NameLinguist extends Component {
               subtitle={I18n.t("nameLinguistText")}
               large
             />
-            <View style={styles.allField}>
-              <FormInput
+            <View>
+              {/* Name */}
+              <InputRegular
                 containerStyle={styles.containerInput}
-                inputStyle={styles.inputText}
                 placeholder={I18n.t("linguistName")}
                 onChangeText={text =>
                   this.props.updateForm({
@@ -109,12 +111,13 @@ class NameLinguist extends Component {
                 }
                 maxLength={20}
                 value={this.props.firstname}
+                autoFocus={true}
               />
             </View>
             <View style={styles.containerView}>
-              <FormInput
+              {/* Last Name */}
+              <InputRegular
                 containerStyle={styles.containerInput}
-                inputStyle={styles.inputText}
                 placeholder={I18n.t("linguistLastName")}
                 onChangeText={text => this.props.updateForm({ lastname: text })}
                 maxLength={20}
@@ -122,9 +125,9 @@ class NameLinguist extends Component {
               />
             </View>
             <View style={styles.containerView}>
-              <FormInput
+              {/* Prefered Name */}
+              <InputRegular
                 containerStyle={styles.containerInput}
-                inputStyle={styles.inputText}
                 placeholder={I18n.t("preferredName")}
                 value={this.props.preferredName}
                 onChangeText={text =>
@@ -138,17 +141,14 @@ class NameLinguist extends Component {
             </View>
           </View>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("next")}
-            onPress={() => this.submit()}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => this.submit()}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

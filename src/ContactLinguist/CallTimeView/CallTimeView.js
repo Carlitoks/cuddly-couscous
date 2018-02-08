@@ -11,6 +11,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
@@ -65,9 +66,11 @@ class CallTimeView extends Component {
                     leftComponent={
                       <GoBackButton navigation={this.props.navigation} />
                     }
+                    /*
                     rightComponent={
                       <SettingsButton navigation={this.props.navigation} />
                     }
+                    */
                   />
                   {/* how Long Do You Need help For? */}
                   <Text style={styles.mainTitle}>
@@ -99,19 +102,17 @@ class CallTimeView extends Component {
           </Grid>
         </ScrollView>
         {/* Next Button */}
-        <View style={styles.containerBottom}>
-          <Button
-            textStyle={styles.buttonText}
-            buttonStyle={styles.button}
-            containerViewStyle={styles.buttonAccept}
-            title={I18n.t("accept")}
-            onPress={() =>
-              this.loadAssitance().then(() =>
-                navigation.dispatch({ type: "AssistanceView" })
-              )
-            }
-          />
-        </View>
+        <BottomButton
+          title={I18n.t("accept")}
+          onPress={() =>
+            this.loadAssitance().then(() =>
+              navigation.dispatch({ type: "AssistanceView" })
+            )
+          }
+          color={Colors.primaryAltFontColor}
+          buttonColor={Colors.primaryLightFillColor}
+          bold={true}
+        />
       </ViewWrapper>
     );
   }

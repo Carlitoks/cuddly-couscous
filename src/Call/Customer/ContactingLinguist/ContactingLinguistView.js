@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 
 //COMPONENTS
-import { Text, View, ScrollView, Image, ActivityIndicator } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+  Alert
+} from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import { PermissionsAndroid } from "react-native";
 import { CallButton } from "../../../Components/CallButton/CallButton";
-
 // STYLE AND THEMES
 import styles from "./styles";
 import { Images } from "../../../Themes";
@@ -20,6 +27,10 @@ import {
   AsyncCreateInvitation,
   clearSettings
 } from "../../../Ducks/CallCustomerSettings";
+import {
+  setPermission,
+  displayOpenSettingsAlert
+} from "../../../Util/Permission";
 import I18n from "../../../I18n/I18n";
 
 class ContactingLinguist extends Component {
@@ -36,7 +47,7 @@ class ContactingLinguist extends Component {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
-        alwaysBounceVertical={false} 
+        alwaysBounceVertical={false}
         style={styles.scrollContainer}
         contentContainerStyle={styles.contentContainerStyle}
       >
@@ -46,16 +57,14 @@ class ContactingLinguist extends Component {
           style={styles.backgroundImage}
         />
         <Grid>
-        <TopViewIOS/>
+          <TopViewIOS />
           <Col style={{ justifyContent: "space-between" }}>
             {/* Top Container */}
             <Row style={styles.topContainer}>
               <ActivityIndicator size="large" color="white" />
 
               <Text style={styles.callerNameText}>
-                {" "}
                 {I18n.t("contactingLinguist")}
-                {" "}
               </Text>
             </Row>
 
@@ -78,7 +87,17 @@ class ContactingLinguist extends Component {
                     {/* Toggle Microphone Button */}
                     <CallButton
                       onPress={() => {
-                        this.props.updateSettings({ mute: !this.props.mute });
+                        setPermission("microphone").then(response => {
+                          if (
+                            response == "denied" ||
+                            response == "restricted"
+                          ) {
+                            displayOpenSettingsAlert();
+                          }
+                          this.props.updateSettings({
+                            video: !this.props.mute
+                          });
+                        });
                       }}
                       toggle={true}
                       icon="mic"
@@ -110,7 +129,17 @@ class ContactingLinguist extends Component {
                     {/* Toggle Videocam Button */}
                     <CallButton
                       onPress={() => {
-                        this.props.updateSettings({ video: !this.props.video });
+                        setPermission("camera").then(response => {
+                          if (
+                            response == "denied" ||
+                            response == "restricted"
+                          ) {
+                            displayOpenSettingsAlert();
+                          }
+                          this.props.updateSettings({
+                            video: !this.props.video
+                          });
+                        });
                       }}
                       toggle={true}
                       icon="videocam"
@@ -128,6 +157,11 @@ class ContactingLinguist extends Component {
               {/* End Call */}
               <CallButton
                 onPress={() => {
+                  this.props.EndCall(
+                    this.props.sessionID,
+                    "cancel",
+                    this.props.token
+                  );
                   this.props.tokDisConnect(this.props.customerTokboxSessionID);
                   this.props.navigation.dispatch({ type: "Home" });
                 }}
@@ -151,7 +185,8 @@ const mS = state => ({
   sessionID: state.callCustomerSettings.sessionID,
   customerTokboxSessionID: state.callCustomerSettings.customerTokboxSessionID,
   customerTokboxSessionToken:
-    state.callCustomerSettings.customerTokboxSessionID
+    state.callCustomerSettings.customerTokboxSessionID,
+  token: state.auth.token
 });
 
 const mD = {

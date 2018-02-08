@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Alert, Platform, ScrollView, View, Text, KeyboardAvoidingView } from "react-native";
-import { Button, FormLabel, FormInput, Header } from "react-native-elements";
+import { Alert, Platform, ScrollView, View, Text } from "react-native";
+import { Button, FormLabel, Header } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -11,8 +11,10 @@ import { topIOS } from "../../Util/Devices";
 import { clearForm, updateForm } from "../../Ducks/LoginReducer";
 import { logInAsync, haveSession } from "../../Ducks/AuthReducer";
 import InputPassword from "../../Components/InputPassword/InputPassword";
+import InputRegular from "../../Components/InputRegular/InputRegular";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { EMAIL_REGEX } from "../../Util/Constants";
@@ -144,18 +146,17 @@ class LoginView extends Component {
                   <Text style={styles.title}>{I18n.t("signIn")}</Text>
                 </Col>
               </Row>
+
               {/* Email */}
-              <FormInput
-                containerStyle={styles.formInputContainer}
-                inputStyle={styles.formInput}
-                placeholder={I18n.t("email")}
-                placeholderTextColor={Colors.placeholderColor}
-                autoCorrect={false}
-                onChangeText={text =>
-                  this.props.updateForm({ email: text, emailErrorMessage: "" })}
-                value={this.props.email}
-                
-                keyboardType={"email-address"}
+              <InputRegular
+              containerStyle={styles.formInputContainer}
+              placeholder={I18n.t("email")}
+              autoCorrect={false}
+              onChangeText={text =>
+                this.props.updateForm({ email: text, emailErrorMessage: "" })}
+              value={this.props.email}
+              keyboardType={"email-address"}
+              autoFocus={true}
               />
 
               {/* Password */}
@@ -183,20 +184,17 @@ class LoginView extends Component {
             </Col>
           </Grid>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Sign In Button */}
-          <Button
-            textStyle={styles.signInText}
-            buttonStyle={styles.Button}
-            onPress={() => this.submit()}
-            title={I18n.t("signIn")}
-            loading={this.props.performingRequest}
-            disabled={this.props.performingRequest}
-            disabledStyle={styles.ButtonDisabled}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Sign In Button */}
+        <BottomButton
+          title={I18n.t("signIn")}
+          onPress={() => this.submit()}
+          color={Colors.primaryAltFontColor}
+          buttonColor={Colors.primaryLightFillColor}
+          bold={true}
+          loading={this.props.performingRequest}
+          disabled={this.props.performingRequest}
+          disabledColor={Colors.primaryColorDisabled}
+        />
       </ViewWrapper>
     );
   }

@@ -51,8 +51,6 @@ export default StyleSheet.create({
     paddingRight: moderateScale(20),
     paddingLeft: 0,
     marginTop: moderateScale(20),
-    fontSize: 20,
-    color: "black",
     paddingBottom: moderateScale(35)
   },
   containerBottom: {

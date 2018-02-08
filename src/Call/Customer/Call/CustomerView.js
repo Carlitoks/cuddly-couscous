@@ -2,7 +2,7 @@ import React, { Component, Ref } from "react";
 import { connect } from "react-redux";
 import OpenTok, { Publisher, Subscriber } from "react-native-opentok";
 import KeepAwake from "react-native-keep-awake";
-
+import Permissions from "react-native-permissions";
 import {
   updateSettings,
   AsyncCreateSession,
@@ -21,7 +21,10 @@ import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import { Colors, Images } from "../../../Themes";
 import { fmtMSS } from "../../../Util/Helpers";
 import styles from "./styles";
-
+import {
+  setPermission,
+  displayOpenSettingsAlert
+} from "../../..//Util/Permission";
 import I18n from "../../../I18n/I18n";
 import ContactingLinguistView from "../ContactingLinguist/ContactingLinguistView";
 
@@ -40,10 +43,10 @@ const STATUS_TOKBOX = {
 
 class CustomerView extends Component {
   ref: Ref<Publisher>;
-  
-  componentWillMount(){ 
-    BackgroundStart() 
-  } 
+
+  componentWillMount() {
+    BackgroundStart();
+  }
 
   async componentDidMount() {
     const {
@@ -58,7 +61,7 @@ class CustomerView extends Component {
       AsyncCreateSession,
       updateSettings
     } = this.props;
-     /* if (InCallManager.recordPermission !== "granted") {
+    /* if (InCallManager.recordPermission !== "granted") {
       InCallManager.requestRecordPermission()
         .then(requestedRecordPermissionResult => {
           console.log(
@@ -110,13 +113,13 @@ class CustomerView extends Component {
       console.log("The session could not be created", e);
     }
   }
-  
+
   componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer);
     this.props.resetTimerAsync();
     this.props.clearCallSettings();
     // InCallManager.stop();
-   console.log("componentWillUnmount");
+    console.log("componentWillUnmount");
   }
 
   startTimer = () => {
@@ -188,7 +191,7 @@ class CustomerView extends Component {
             )}
           </View>
           <View style={styles.topContainer}>
-          <TopViewIOS/>
+            <TopViewIOS />
             <View style={styles.inlineContainer}>
               <Image style={styles.smallAvatar} source={Images.avatarCall} />
             </View>
@@ -235,7 +238,7 @@ class CustomerView extends Component {
             <CallButton
               onPress={() => {
                 this.props.updateSettings({ speaker: !this.props.speaker });
-               // InCallManager.setForceSpeakerphoneOn(!this.props.speaker);
+                // InCallManager.setForceSpeakerphoneOn(!this.props.speaker);
               }}
               toggle={true}
               active={!this.props.speaker}
@@ -263,7 +266,14 @@ class CustomerView extends Component {
             />
             <CallButton
               onPress={() => {
-                this.props.updateSettings({ mute: !this.props.mute });
+                setPermission("microphone").then(response => {
+                  if (response == "denied" || response == "restricted") {
+                    displayOpenSettingsAlert();
+                  }
+                  this.props.updateSettings({
+                    video: !this.props.mute
+                  });
+                });
               }}
               toggle={true}
               active={this.props.mute}
@@ -275,7 +285,14 @@ class CustomerView extends Component {
             />
             <CallButton
               onPress={() => {
-                this.props.updateSettings({ video: !this.props.video });
+                setPermission("camera").then(response => {
+                  if (response == "denied" || response == "restricted") {
+                    displayOpenSettingsAlert();
+                  }
+                  this.props.updateSettings({
+                    video: !this.props.video
+                  });
+                });
               }}
               toggle={true}
               active={!this.props.video}

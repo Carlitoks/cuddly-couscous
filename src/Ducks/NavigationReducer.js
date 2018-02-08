@@ -91,7 +91,10 @@ export default (reducer = (state, action) => {
       
     default:
       newState = AppNavigation.router.getStateForAction(
-        NavigationActions.navigate({ routeName: action.type }),
+        NavigationActions.navigate({
+          routeName: action.type,
+          params: action.params
+        }),
         state
       );
   }

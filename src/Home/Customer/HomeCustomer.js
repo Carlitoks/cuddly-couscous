@@ -15,7 +15,6 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import {
   Button,
   FormLabel,
-  FormInput,
   Header,
   Badge,
   Rating,
@@ -120,10 +119,10 @@ class Home extends Component {
                   /* centerComponent={{
                     text: `${firstName} ${lastName}`,
                     style: styles.title
-                  }} */
+                  }} 
                   rightComponent={
                     <SettingsButton navigation={this.props.navigation} />
-                  }
+                  }*/
                 />
                 <Row style={styles.userContainer}>
                   <View style={styles.avatarContainer}>

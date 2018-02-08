@@ -22,6 +22,7 @@ export default (ESP = {
   calls: "Calls",
   callSettings: "Call Settings",
   cancel: "Cancel",
+  changeSettings: "To change your settings, go to Settings > MeYu",
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
   componentExamples: "Component Examples",
@@ -111,6 +112,7 @@ export default (ESP = {
   password: "Password",
   passwordAnd: "and",
   passwordLinguistText: "By tapping Next you agree with our",
+  permissionDenied: "App Permission Denied",
   preferedNameTitle: "Prefered Name",
   preferredLinguistText: "I preferred to be called ...",
   preferredName: "Preferred Name (optional)",
@@ -168,5 +170,5 @@ export default (ESP = {
   video: "Video",
   videoAssistance: "Video Assistance",
   wasGood: "What was Good?",
-  welcome: "Welcome",
+  welcome: "Welcome"
 });

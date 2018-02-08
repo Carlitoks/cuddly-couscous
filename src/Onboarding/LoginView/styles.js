@@ -15,7 +15,7 @@ export default StyleSheet.create({
     marginLeft: 10,
     marginRight: 11,
     marginTop: moderateScale(100),
-    width: width,
+    width: width
   },
   title: {
     fontSize: 30,
@@ -60,16 +60,12 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   formInput: {
+    color: Colors.black,
     fontFamily: Fonts.primaryBaseFont,
-    paddingBottom: 20
+    paddingBottom: 20,
+    marginTop: moderateScale(20)
   },
   formInputContainer: {
-    marginTop: moderateScale(20),
-  },
-  safeArea: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    padding:10,
-    zIndex:0
+    marginTop: moderateScale(20)
   }
 });

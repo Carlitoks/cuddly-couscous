@@ -8,10 +8,12 @@ import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
 import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormInput } from "react-native-elements";
+import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
+import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 
@@ -120,14 +122,14 @@ class PasswordLinguist extends Component {
             />
             <View>
               {/* Password */}
-              <FormInput
+              <InputRegular
                 containerStyle={styles.containerInput}
-                inputStyle={styles.inputText}
                 placeholder={I18n.t("linguistPassword")}
                 onChangeText={text => this.props.updateForm({ password: text })}
                 autoCorrect={false}
                 secureTextEntry={true}
                 maxLength={20}
+                autoFocus={true}
               />
               <Text style={styles.formText}>
                 {I18n.t("passwordLinguistText")}{" "}
@@ -138,17 +140,14 @@ class PasswordLinguist extends Component {
             </View>
           </View>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("next")}
-            onPress={() => this.submit()}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => this.submit()}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

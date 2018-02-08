@@ -11,8 +11,8 @@ APP_FS_OS_PATH: static/uploads
 APP_FS_GCS_URL: ~
 JWT_SECRET: this-is-not-secret
 JWT_ISSUER: solo.api.com
-TOKBOX_APIKEY: 46016982
-TOKBOX_SECRET: e21523a457ab39083e5e75b2a2a80f9dc461dd17
+TOKBOX_APIKEY: 46003062
+TOKBOX_SECRET: 688ecb8f0804f57db0781aa829896a0b3301c9fa
 REDIS_URL: redis:6379
 
 # Note that these are URLs inteded for a browser, not for backend communication between docker services

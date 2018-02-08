@@ -11,6 +11,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { topIOS } from "../../Util/Devices";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
@@ -162,27 +163,24 @@ class FamiliarityView extends Component {
             )}
           </List>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={20}>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("next")}
-            onPress={() => {
-              if (
-                this.props.selectedCitizenship.length < 1 ||
-                this.props.selectedCountryFamiliarity.length < 1 ||
-                this.props.selectedCityFamiliarity.length < 1
-              ) {
-                Alert.alert("Please, select at least one item in each list");
-              } else {
-                navigation.dispatch({ type: "PhoneLinguistView" });
-              }
-            }}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => {
+            if (
+              this.props.selectedCitizenship.length < 1 ||
+              this.props.selectedCountryFamiliarity.length < 1 ||
+              this.props.selectedCityFamiliarity.length < 1
+            ) {
+              Alert.alert("Please, select at least one item in each list");
+            } else {
+              navigation.dispatch({ type: "PhoneLinguistView" });
+            }
+          }}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

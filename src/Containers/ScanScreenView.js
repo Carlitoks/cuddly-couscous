@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { StyleSheet, Text, Dimensions, View } from "react-native";
-
+import { setPermission, displayOpenSettingsAlert } from "../Util/Permission";
 import { Button, Header } from "react-native-elements";
 import GoBackButton from "../Components/GoBackButton/GoBackButton";
 import { Colors, Fonts } from "../Themes";
 import { moderateScale, verticalScale, scale } from "../Util/Scaling";
 import I18n from "../I18n/I18n";
-import { asyncScanQR } from "../Ducks/EventsReducer"
+import { asyncScanQR } from "../Ducks/EventsReducer";
 import { updateSettings } from "../Ducks/LinguistFormReducer";
 const { width, height } = Dimensions.get("window");
 
@@ -17,53 +16,56 @@ class ScanScreenView extends Component {
   state = {
     reactivate: false
   };
-
-  getEventID = URL => {
-    const tokens = URL.split('/');
-    return tokens[tokens.indexOf("events") + 1];
+  componentWillMount() {
+    setPermission("camera").then(response => {
+      if (response == "denied" || response == "restricted") {
+        displayOpenSettingsAlert();
+      }
+    });
   }
+  getEventID = URL => {
+    const tokens = URL.split("/");
+    return tokens[tokens.indexOf("events") + 1];
+  };
 
   onSuccess = e => {
     try {
       const qrURL = e.data;
 
-      this.props.asyncScanQR(
-        this.getEventID(qrURL),
-        this.props.token
-      ).then( response => {
-        const {
-          requireScenarioSelection,
-          restrictEventScenarios,
-          scenarios
-        } = response.payload;
-        
-        if( requireScenarioSelection && restrictEventScenarios ){
-          /* Dispatch to SelectListView with the scenarios involveds*/
-          this.props.updateSettings({
-            selectionItemType: "scenarios",
-            selectionItemName: "scenarios",
-            scenarios: scenarios
-          });
-          this.props.navigation.dispatch({ type: "SelectListView" });
-        } else if ( requireScenarioSelection && !restrictEventScenarios ){
-          /* Dispatch to Category Selection View (Home) */
-          this.props.navigation.dispatch({ type: "Home" })
-        } else if ( !requireScenarioSelection ){
-          /* Dispatch to Call Confirmation view */
-          this.props.navigation.dispatch({ type: "CallConfirmationView" })
-        }
+      this.props
+        .asyncScanQR(this.getEventID(qrURL), this.props.token)
+        .then(response => {
+          const {
+            requireScenarioSelection,
+            restrictEventScenarios,
+            scenarios
+          } = response.payload;
 
-      })
+          if (requireScenarioSelection && restrictEventScenarios) {
+            /* Dispatch to SelectListView with the scenarios involveds*/
+            this.props.updateSettings({
+              selectionItemType: "scenarios",
+              selectionItemName: "scenarios",
+              scenarios: scenarios
+            });
+            this.props.navigation.dispatch({ type: "SelectListView" });
+          } else if (requireScenarioSelection && !restrictEventScenarios) {
+            /* Dispatch to Category Selection View (Home) */
+            this.props.navigation.dispatch({ type: "Home" });
+          } else if (!requireScenarioSelection) {
+            /* Dispatch to Call Confirmation view */
+            this.props.navigation.dispatch({ type: "CallConfirmationView" });
+          }
+        });
 
       this.setState({
         reactivate: false
       });
-      setTimeout( () => {
+      setTimeout(() => {
         this.setState({
           reactivate: true
         });
-      }, 1000)
-
+      }, 1000);
     } catch (err) {
       this.setState({
         reactivate: true
@@ -137,6 +139,6 @@ const mS = state => ({
 const mD = {
   asyncScanQR,
   updateSettings
-}
+};
 
 export default connect(mS, mD)(ScanScreenView);

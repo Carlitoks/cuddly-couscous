@@ -14,7 +14,6 @@ import PhotoUpload from "react-native-photo-upload";
 import {
   Button,
   FormLabel,
-  FormInput,
   Header,
   Card,
   List,
@@ -129,9 +128,10 @@ class Home extends Component {
                     text: firstName + " " + lastName,
                     style: styles.title
                   }}
+                  /*
                   rightComponent={
                     <SettingsButton navigation={this.props.navigation} />
-                  }
+                  }*/
                 />
                 <View>
                   <View style={styles.containerAvatar}>

@@ -4671,6 +4671,10 @@ react-native-opentok@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-opentok/-/react-native-opentok-2.0.1.tgz#2bb6156a40290a6d203f5142d7f70249b76bf534"
 
+react-native-permissions@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
+
 react-native-photo-upload@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-photo-upload/-/react-native-photo-upload-1.2.0.tgz#035a49af45ebed6765b3e914b662f5aedc25bccd"

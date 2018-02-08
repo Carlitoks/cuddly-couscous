@@ -18,7 +18,6 @@ import {
   asyncUploadAvatar
 } from "../../Ducks/UserProfileReducer";
 import {
-  FormInput,
   Button,
   Header,
   List,
@@ -31,7 +30,9 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import Languages from "../../Config/Languages";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import { topIOS } from "../../Util/Devices"
+import BottomButton from "../../Components/BottomButton/BottomButton";
+import InputRegular from "../../Components/InputRegular/InputRegular";
+
 import styles from "./styles";
 import { compareArrays } from "../../Util/Helpers";
 import I18n from "../../I18n/I18n";
@@ -409,9 +410,9 @@ class UserProfileView extends Component {
                 <Text style={styles.titlesForm}>{I18n.t("firstname")}</Text>
               </Row>
               <Row>
-                <FormInput
+                {/* Name */}
+                <InputRegular
                   containerStyle={styles.containerInput}
-                  inputStyle={styles.inputText}
                   placeholder={I18n.t("linguistName")}
                   onChangeText={text =>
                     this.props.updateView({ firstName: text })
@@ -423,10 +424,10 @@ class UserProfileView extends Component {
                 <Text style={styles.titlesForm}>{I18n.t("lastname")}</Text>
               </Row>
               <Row>
-                <FormInput
+                {/* Last Name */}
+                <InputRegular
                   containerStyle={styles.containerInput}
-                  inputStyle={styles.inputText}
-                  placeholder={I18n.t("linguistName")}
+                  placeholder={I18n.t("linguistLastName")}
                   onChangeText={text =>
                     this.props.updateView({ lastName: text })
                   }
@@ -437,9 +438,9 @@ class UserProfileView extends Component {
                 <Text style={styles.titlesForm}>{I18n.t("preferedNameTitle")}</Text>
               </Row>
               <Row>
-                <FormInput
+                {/* Preferredj Name */}
+                <InputRegular
                   containerStyle={styles.containerInput}
-                  inputStyle={styles.inputText}
                   placeholder={I18n.t("preferredName")}
                   onChangeText={text =>
                     this.props.updateView({ preferredName: text })
@@ -473,19 +474,14 @@ class UserProfileView extends Component {
             </Col>
           </Grid>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("save")}
-            onPress={() => {
-              this.submit();
-            }}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("save")}
+          onPress={() => {this.submit();}}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.primaryLightFillColor}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

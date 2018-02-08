@@ -9,6 +9,8 @@ import LinearGradient from "react-native-linear-gradient";
 import { Button, FormInput, Header } from "react-native-elements";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
+import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { EMAIL_REGEX } from "../../Util/Constants";
@@ -109,30 +111,29 @@ class EmailCustomerView extends Component {
                 </Col>
               </Row>
               <View>
-                <FormInput
+                {/* Email */}
+                <InputRegular
                   containerStyle={styles.containerInput}
-                  inputStyle={styles.inputText}
                   placeholder={I18n.t("linguistEmail")}
                   autoCorrect={false}
                   onChangeText={text => this.props.updateForm({ email: text })}
                   value={this.props.email}
                   keyboardType={"email-address"}
+                  maxLength={64}
+                  autoFocus={true}
                 />
               </View>
             </Col>
           </Grid>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("next")}
-            onPress={() => this.submit()}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => this.submit()}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

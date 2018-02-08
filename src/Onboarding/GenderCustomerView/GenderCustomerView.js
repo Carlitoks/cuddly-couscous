@@ -11,13 +11,13 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import {
   Button,
-  FormInput,
   Header,
   List,
   ListItem
 } from "react-native-elements";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
@@ -136,17 +136,14 @@ class GenderCustomerView extends Component {
             </Col>
           </Grid>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title="Next"
-            onPress={() => this.submit()}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => this.submit()}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

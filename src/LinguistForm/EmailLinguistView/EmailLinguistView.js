@@ -6,10 +6,12 @@ import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormInput } from "react-native-elements";
+import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import InputRegular from "../../Components/InputRegular/InputRegular";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import Header from "../Header/Header";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
@@ -87,29 +89,27 @@ class EmailLinguist extends Component {
             mainTitle={I18n.t("linguistEmailTitle")}
           />
           <View>
-            <FormInput
-              containerStyle={styles.containerInput}
-              inputStyle={styles.inputText}
-              placeholder={I18n.t("linguistEmail")}
-              autoCorrect={false}
-              onChangeText={text => this.props.updateForm({ email: text })}
-              value={this.props.email}
-              keyboardType={"email-address"}
-              maxLength={64}
+            {/* Email */}
+            <InputRegular
+            containerStyle={styles.containerInput}
+            placeholder={I18n.t("linguistEmail")}
+            autoCorrect={false}
+            onChangeText={text => this.props.updateForm({ email: text })}
+            value={this.props.email}
+            keyboardType={"email-address"}
+            maxLength={64}
+            autoFocus={true}
             />
           </View>
         </ScrollView>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
-        <View style={styles.containerBottom}>
-          {/* Next Button */}
-          <Button
-            buttonStyle={styles.buttonContainer}
-            textStyle={styles.buttonText}
-            title={I18n.t("next")}
-            onPress={() => this.submit()}
-          />
-        </View>
-        </KeyboardAvoidingView>
+        {/* Next Button */}
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => this.submit()}
+          color={Colors.linguistFormText}
+          buttonColor={Colors.linguistFormButton}
+          bold={false}
+        />
       </ViewWrapper>
     );
   }

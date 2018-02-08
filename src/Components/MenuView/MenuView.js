@@ -26,7 +26,7 @@ import { isCurrentView } from "../../Util/Helpers";
 
 import { Colors, Images } from "../../Themes";
 import styles from "./styles";
-
+import { HelpURI } from "../../Config/StaticViewsURIS";
 import I18n from "../../I18n/I18n";
 
 class MenuView extends Component {
@@ -148,7 +148,7 @@ class MenuView extends Component {
         </Icon.Button>
 
         {/* Help */}
-        <Icon.Button
+        {/* <Icon.Button
           name="help"
           size={25}
           backgroundColor={
@@ -162,12 +162,17 @@ class MenuView extends Component {
               : styles.optionMenu
           }
           onPress={() => {
-            // navigation.dispatch({ type: "Profile" });
-            console.log("Heeeelp");
+            navigation.dispatch({
+              type: "StaticView",
+              params: {
+                uri: HelpURI,
+                title: I18n.t("help")
+              }
+            });
           }}
         >
           <Text style={styles.colorText}>{I18n.t("help")}</Text>
-        </Icon.Button>
+        </Icon.Button> */}
 
         {/* Logout */}
         <Icon.Button

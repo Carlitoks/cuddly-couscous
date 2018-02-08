@@ -15,6 +15,10 @@ import {
   clearSettings,
   updateSettings as customerUpdateSettings
 } from "../../../Ducks/CallCustomerSettings.js";
+import {
+  setPermission,
+  displayOpenSettingsAlert
+} from "../../../Util/Permission";
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
 import { clearSettings as clearHomeReducer } from "../../../Ducks/HomeFlowReducer";
 import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
@@ -30,7 +34,10 @@ class CallConfirmationView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false}
+        >
           <Grid>
             <Col>
               <Row>
@@ -45,16 +52,17 @@ class CallConfirmationView extends Component {
                 />
                 <Col style={{ height: 160 }}>
                   {/* Header - Navigation */}
-                  <TopViewIOS/>
+                  <TopViewIOS />
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
                     leftComponent={
                       <GoBackButton navigation={this.props.navigation} />
                     }
+                    /*
                     rightComponent={
                       <SettingsButton navigation={this.props.navigation} />
-                    }
+                    }*/
                   />
 
                   {/* Confirm call */}
@@ -88,14 +96,22 @@ class CallConfirmationView extends Component {
                   <Col style={styles.alignIcon} size={25}>
                     <Switch
                       onValueChange={() => {
-                        this.props.customerUpdateSettings({
-                          video: !this.props.video
+                        setPermission("camera").then(response => {
+                          if (
+                            response == "denied" ||
+                            response == "restricted"
+                          ) {
+                            displayOpenSettingsAlert();
+                          }
+                          this.props.customerUpdateSettings({
+                            video: !this.props.video
+                          });
                         });
                       }}
                       value={this.props.video}
-                      onTintColor={Colors.onTintColor} 
+                      onTintColor={Colors.onTintColor}
                       thumbTintColor={Colors.selectedOptionMenu}
-                      tintColor={Colors.tintColor} 
+                      tintColor={Colors.tintColor}
                     />
                   </Col>
                   <Col style={styles.alignText} size={75}>
@@ -131,9 +147,9 @@ class CallConfirmationView extends Component {
                         });
                       }}
                       value={this.props.customerExtraTime}
-                      onTintColor={Colors.onTintColor} 
+                      onTintColor={Colors.onTintColor}
                       thumbTintColor={Colors.selectedOptionMenu}
-                      tintColor={Colors.tintColor} 
+                      tintColor={Colors.tintColor}
                     />
                   </Col>
                   <Col style={styles.alignText} size={75}>

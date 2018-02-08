@@ -141,7 +141,6 @@ export const asyncGetInvitationDetail = (invitationID, token) => dispatch => {
   return Sessions.LinguistFetchesInvite(invitationID, token)
     .then(response => {
       const res = response.data;
-
       dispatch(
         updateSettings({
           customerName: `${res.createdBy.firstName} ${
@@ -165,14 +164,24 @@ export const asyncAcceptsInvite = (
   token,
   linguistSessionId
 ) => dispatch => {
-  Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
-    .then(response => {
-      dispatch(invitationAccept(response.data));
-      dispatch({ type: "LinguistView" });
-      dispatch(updateSettings({ sessionID: linguistSessionId }));
+  Sessions.LinguistFetchesInvite(invitationID, token)
+    .then(res => {
+      if (res.data.session.endReason !== "cancel") {
+        Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
+          .then(response => {
+            dispatch(invitationAccept(response.data));
+            dispatch({ type: "LinguistView" });
+            dispatch(updateSettings({ sessionID: linguistSessionId }));
+          })
+          .catch(error => {
+            dispatch(networkError(error));
+          });
+      } else {
+        dispatch({ type: "Home" });
+      }
     })
-    .catch(error => {
-      dispatch(networkError(error));
+    .catch(err => {
+      dispatch({ type: "Home" });
     });
 };
 
