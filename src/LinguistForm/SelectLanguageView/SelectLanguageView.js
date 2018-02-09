@@ -22,7 +22,8 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import Header from "../Header/Header";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+
 import { Sessions } from "../../Api";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import I18n from "../../I18n/I18n";
@@ -224,64 +225,71 @@ class SelectLanguageView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} style={styles.scrollContainer}>
-          <Header
-            navigation={this.props.navigation}
-            mainTitle={I18n.t("languages")}
-          />
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          title={I18n.t("languages")}
+        >
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+          >
+            {/* Native Language */}
+            <Text style={[styles.sectionTitle, styles.marginTop20]}>
+              {I18n.t("nativeLanguage")}
+            </Text>
 
-          {/* Native Language */}
-          <Text style={[styles.sectionTitle, styles.marginTop20]}>
-            {I18n.t("nativeLanguage")}
-          </Text>
+            <List containerStyle={styles.marginBottom20}>
+              {this.props.selectedNativeLanguage[0] && (
+                <ListItem
+                  key={selectedNativeLanguage[0]["3"]}
+                  title={selectedNativeLanguage[0].name}
+                  onPress={() => {
+                    this.props.navigation.dispatch({
+                      type: "GenericSelectListView",
+                      params: {
+                        selectionItemType: "languages",
+                        selectionItemName: "nativeLanguage",
+                        items: this.state.languages,
+                        selectedItem: this.props.selectedNativeLanguage,
+                        title: I18n.t("nativeLanguage"),
+                        multiselection: false,
+                        acceptsEmptySelection: false
+                      }
+                    });
+                  }}
+                />
+              )}
+            </List>
 
-          <List containerStyle={styles.marginBottom20}>
-            {this.props.selectedNativeLanguage[0] && (
+            {/* Secondary Languages */}
+            <Text style={styles.sectionTitle}>
+              {I18n.t("SecondaryLanguages")}
+            </Text>
+
+            <List>{this.renderSecundaryLanguagesList()}</List>
+
+            {/* Areas of expertise */}
+            <List>
               <ListItem
-                key={selectedNativeLanguage[0]["3"]}
-                title={selectedNativeLanguage[0].name}
+                title={I18n.t("areasExpertise")}
                 onPress={() => {
                   this.props.navigation.dispatch({
                     type: "GenericSelectListView",
                     params: {
-                      selectionItemType: "languages",
-                      selectionItemName: "nativeLanguage",
-                      items: this.state.languages,
-                      selectedItem: this.props.selectedNativeLanguage,
-                      title: I18n.t("nativeLanguage"),
-                      multiselection: false,
+                      selectionItemType: "areasOfExpertise",
+                      selectionItemName: "areasOfExpertise",
+                      title: I18n.t("areasExpertise"),
+                      multiselection: true,
                       acceptsEmptySelection: false
                     }
                   });
                 }}
               />
-            )}
-          </List>
-
-          {/* Secondary Languages */}
-          <Text style={styles.sectionTitle}>{I18n.t("SecondaryLanguages")}</Text>
-
-          <List>{this.renderSecundaryLanguagesList()}</List>
-
-          {/* Areas of expertise */}
-          <List>
-            <ListItem
-              title={I18n.t("areasExpertise")}
-              onPress={() => {
-                this.props.navigation.dispatch({
-                  type: "GenericSelectListView",
-                  params: {
-                    selectionItemType: "areasOfExpertise",
-                    selectionItemName: "areasOfExpertise",
-                    title: I18n.t("areasExpertise"),
-                    multiselection: true,
-                    acceptsEmptySelection: false
-                  }
-                });
-              }}
-            />
-          </List>
-        </ScrollView>
+            </List>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("create")}

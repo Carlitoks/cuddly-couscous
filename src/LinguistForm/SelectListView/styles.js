@@ -5,6 +5,9 @@ import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 const width = Dimensions.get("window").width - 20;
 
 export default StyleSheet.create({
+  scrollContainer:{
+    height: "100%"
+  },
   linearGradient: {
     position: "absolute",
     width: "100%",

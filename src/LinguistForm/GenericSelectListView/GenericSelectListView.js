@@ -170,7 +170,10 @@ class GenericSelectListView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true}>
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false}
+        >
           <View style={styles.headerContainer}>
             <LinearGradient
               colors={[

@@ -134,5 +134,9 @@ export default StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     height: 70
+  },
+  scrollContainer: {
+    backgroundColor: "white",
+    height:"100%"
   }
 });

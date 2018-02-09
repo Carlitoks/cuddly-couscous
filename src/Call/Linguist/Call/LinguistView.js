@@ -166,7 +166,7 @@ class LinguistView extends Component {
                   displayOpenSettingsAlert();
                 }
                 this.props.updateSettings({
-                  video: !this.props.mute
+                  mute: !this.props.mute
                 });
               });
             }}

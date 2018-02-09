@@ -3,7 +3,13 @@ import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button } from "react-native-elements";
@@ -13,7 +19,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import Header from "../Header/Header";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -102,61 +108,65 @@ class NameLinguist extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          title={`${this.props.mainTitle} ${this.props.lastname}`}
+          subtitle={this.getSubtitle()}
         >
-          <View>
-            <Header
-              navigation={this.props.navigation}
-              mainTitle={`${this.props.mainTitle} ${this.props.lastname}`}
-              subtitle={this.getSubtitle()}
-              large
-            />
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+          >
             <View>
-              {/* Name */}
-              <InputRegular
-                containerStyle={styles.containerInput}
-                placeholder={I18n.t("linguistName")}
-                onChangeText={text =>
-                  this.props.updateForm({
-                    firstname: text,
-                    mainTitle: text
-                  })
-                }
-                maxLength={20}
-                value={this.props.firstname}
-                autoFocus={true}
-              />
+              <View>
+                {/* Name */}
+                <InputRegular
+                  containerStyle={styles.containerInput}
+                  placeholder={I18n.t("linguistName")}
+                  onChangeText={text =>
+                    this.props.updateForm({
+                      firstname: text,
+                      mainTitle: text
+                    })
+                  }
+                  maxLength={20}
+                  value={this.props.firstname}
+                  autoFocus={true}
+                />
+              </View>
+              <View style={styles.containerView}>
+                {/* Last Name */}
+                <InputRegular
+                  containerStyle={styles.containerInput}
+                  placeholder={I18n.t("linguistLastName")}
+                  onChangeText={text =>
+                    this.props.updateForm({ lastname: text })
+                  }
+                  maxLength={20}
+                  value={this.props.lastname}
+                />
+              </View>
+              <View style={styles.containerView}>
+                {/* Prefered Name */}
+                <InputRegular
+                  containerStyle={styles.containerInput}
+                  placeholder={I18n.t("preferredName")}
+                  value={this.props.preferredName}
+                  onChangeText={text =>
+                    this.props.updateForm({ preferredName: text })
+                  }
+                  maxLength={20}
+                />
+                <Text style={styles.formText}>
+                  {I18n.t("preferredLinguistText")}
+                </Text>
+              </View>
             </View>
-            <View style={styles.containerView}>
-              {/* Last Name */}
-              <InputRegular
-                containerStyle={styles.containerInput}
-                placeholder={I18n.t("linguistLastName")}
-                onChangeText={text => this.props.updateForm({ lastname: text })}
-                maxLength={20}
-                value={this.props.lastname}
-              />
-            </View>
-            <View style={styles.containerView}>
-              {/* Prefered Name */}
-              <InputRegular
-                containerStyle={styles.containerInput}
-                placeholder={I18n.t("preferredName")}
-                value={this.props.preferredName}
-                onChangeText={text =>
-                  this.props.updateForm({ preferredName: text })
-                }
-                maxLength={20}
-              />
-              <Text style={styles.formText}>
-                {I18n.t("preferredLinguistText")}
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton title={I18n.t("next")} onPress={() => this.submit()} />
       </ViewWrapper>

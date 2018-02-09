@@ -37,6 +37,7 @@ export default StyleSheet.create({
   },
   formText: {
     paddingLeft: 18,
+    marginBottom: 15,
     fontSize: 15
   },
   mainSubtitle: {

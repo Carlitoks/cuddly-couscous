@@ -52,9 +52,7 @@ class ContactingLinguist extends Component {
         contentContainerStyle={styles.contentContainerStyle}
       >
         {/* Background Image */}
-        <View
-          style={styles.backgroundView}
-        />
+        <View style={styles.backgroundView} />
         <Grid>
           <TopViewIOS />
           <Col style={{ justifyContent: "space-between" }}>
@@ -67,107 +65,87 @@ class ContactingLinguist extends Component {
               </Text>
             </Row>
 
-            {/* Center Container */}
-            <Row style={styles.centerContainer}>
-              <Col style={styles.buttonContainerLeft}>
-                <View style={styles.buttonColumn}>
-                  {/* Switch Camera Button */}
-                  <CallButton
-                    onPress={() => {}}
-                    toggle={true}
-                    icon="camera-front"
-                    iconToggled="camera-rear"
-                    opacity={0.7}
-                    label={I18n.t("rotate")}
-                  />
-                </View>
-                <View style={styles.buttonColumn}>
-                  <View style={{ flex: 1 }}>
-                    {/* Toggle Microphone Button */}
-                    <CallButton
-                      onPress={() => {
-                        setPermission("microphone").then(response => {
-                          if (
-                            response == "denied" ||
-                            response == "restricted"
-                          ) {
-                            displayOpenSettingsAlert();
-                          }
-                          this.props.updateSettings({
-                            video: !this.props.mute
-                          });
-                        });
-                      }}
-                      toggle={true}
-                      icon="mic"
-                      iconToggled="mic-off"
-                      opacity={0.7}
-                      label={I18n.t("mute")}
-                    />
-                  </View>
-                </View>
-              </Col>
-              <Col style={styles.buttonContainerRight}>
-                <View style={{ flex: 1 }}>
-                  {/* Toggle Speaker Button */}
-                  <CallButton
-                    onPress={() => {
-                      this.props.updateSettings({
-                        speaker: !this.props.speaker
-                      });
-                    }}
-                    toggle={true}
-                    icon="volume-up"
-                    iconToggled="volume-off"
-                    opacity={0.7}
-                    label={I18n.t("speaker")}
-                  />
-                </View>
-                <View style={styles.buttonColumn}>
-                  <View style={{ flex: 1 }}>
-                    {/* Toggle Videocam Button */}
-                    <CallButton
-                      onPress={() => {
-                        setPermission("camera").then(response => {
-                          if (
-                            response == "denied" ||
-                            response == "restricted"
-                          ) {
-                            displayOpenSettingsAlert();
-                          }
-                          this.props.updateSettings({
-                            video: !this.props.video
-                          });
-                        });
-                      }}
-                      toggle={true}
-                      icon="videocam"
-                      iconToggled="videocam-off"
-                      opacity={0.7}
-                      label={I18n.t("video")}
-                    />
-                  </View>
-                </View>
-              </Col>
-            </Row>
-
             {/* Call Buttons */}
             <Row style={styles.bottomContainer}>
-              {/* End Call */}
-              <CallButton
-                onPress={() => {
-                  this.props.EndCall(
-                    this.props.sessionID,
-                    "cancel",
-                    this.props.token
-                  );
-                  this.props.tokDisConnect(this.props.customerTokboxSessionID);
-                  this.props.navigation.dispatch({ type: "Home" });
-                }}
-                buttonColor="red"
-                toggle={false}
-                icon="call-end"
-              />
+              <View style={styles.containerButtons}>
+                <CallButton
+                  onPress={() => {}}
+                  toggle={true}
+                  icon="camera-front"
+                  iconToggled="camera-rear"
+                  opacity={0.7}
+                  buttonSize={65}
+                  iconSize={30}
+                />
+                <CallButton
+                  onPress={() => {
+                    this.props.updateSettings({ speaker: !this.props.speaker });
+                  }}
+                  toggle={true}
+                  active={!this.props.speaker}
+                  icon="volume-up"
+                  iconToggled="volume-off"
+                  opacity={0.7}
+                  buttonSize={65}
+                  iconSize={30}
+                />
+                <CallButton
+                  onPress={() => {
+                    this.props.EndCall(
+                      this.props.sessionID,
+                      "cancel",
+                      this.props.token
+                    );
+                    this.props.tokDisConnect(
+                      this.props.customerTokboxSessionID
+                    );
+                    this.props.navigation.dispatch({ type: "Home" });
+                  }}
+                  buttonColor="red"
+                  toggle={false}
+                  icon="call-end"
+                  buttonSize={65}
+                  iconSize={30}
+                />
+                <CallButton
+                  onPress={() => {
+                    setPermission("microphone").then(response => {
+                      if (response == "denied" || response == "restricted") {
+                        displayOpenSettingsAlert();
+                      }
+                      this.props.updateSettings({
+                        mute: !this.props.mute
+                      });
+                    });
+                  }}
+                  toggle={true}
+                  active={this.props.mute}
+                  icon="mic"
+                  iconToggled="mic-off"
+                  opacity={0.7}
+                  buttonSize={65}
+                  iconSize={30}
+                />
+                <CallButton
+                  onPress={() => {
+                    setPermission("camera").then(response => {
+                      if (response == "denied" || response == "restricted") {
+                        displayOpenSettingsAlert();
+                      }
+                      this.props.updateSettings({
+                        video: !this.props.video
+                      });
+                    });
+                  }}
+                  toggle={true}
+                  active={!this.props.video}
+                  icon="videocam"
+                  iconToggled="videocam-off"
+                  opacity={0.7}
+                  buttonSize={65}
+                  iconSize={30}
+                />
+              </View>
             </Row>
           </Col>
         </Grid>

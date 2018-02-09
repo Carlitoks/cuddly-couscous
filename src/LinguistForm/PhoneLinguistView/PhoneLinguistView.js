@@ -9,7 +9,7 @@ import {
   ScrollView,
   Alert,
   TextInput,
-  Platform, 
+  Platform,
   KeyboardAvoidingView
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -21,7 +21,8 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import Header from "../Header/Header";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+
 import { validatePhoneNumber } from "../../Util/Helpers.js";
 
 import styles from "./styles";
@@ -103,46 +104,48 @@ class PhoneLinguist extends Component {
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          title={I18n.t("linguistNumber")}
+          subtitle={I18n.t("linguistNumberText")}
         >
-          <View>
-            <Header
-              navigation={this.props.navigation}
-              mainTitle={I18n.t("linguistNumber")}
-              subtitle={I18n.t("linguistNumberText")}
-            />
-            <View style={styles.phoneSection}>
-              <Badge
-                value="+1"
-                containerStyle={styles.tagCode}
-                textStyle={styles.codeText}
-              />
-              {/* Phone Number */}
-              <InputRegular
-                containerStyle={styles.containerInput}
-                placeholder="(201) 555-0132"
-                value={this.props.phoneNumber}
-                onChangeText={number => {
-                  const phoneNumber = this.mask(number);
-                  this.props.updateForm({
-                    phoneNumber
-                  });
-                }}
-                maxLength={14}
-                keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
-                autoFocus={true}
-              />
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+          >
+            <View>
+              <View style={styles.phoneSection}>
+                <Badge
+                  value="+1"
+                  containerStyle={styles.tagCode}
+                  textStyle={styles.codeText}
+                />
+                {/* Phone Number */}
+                <InputRegular
+                  containerStyle={styles.containerInput}
+                  placeholder="(201) 555-0132"
+                  value={this.props.phoneNumber}
+                  onChangeText={number => {
+                    const phoneNumber = this.mask(number);
+                    this.props.updateForm({
+                      phoneNumber
+                    });
+                  }}
+                  maxLength={14}
+                  keyboardType={
+                    Platform.OS === "ios" ? "number-pad" : "numeric"
+                  }
+                  autoFocus={true}
+                />
+              </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
-        <BottomButton
-          title={I18n.t("next")}
-          onPress={() => this.submit()}
-        />
+        <BottomButton title={I18n.t("next")} onPress={() => this.submit()} />
       </ViewWrapper>
     );
   }

@@ -15,7 +15,8 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import Header from "../Header/Header";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+
 import {
   TermsConditionsURI,
   PrivacyPolicyURI
@@ -114,62 +115,62 @@ class PasswordLinguist extends Component {
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          title={I18n.t("linguistPasswordTitle")}
         >
-          <View>
-            <Header
-              navigation={this.props.navigation}
-              mainTitle={I18n.t("linguistPasswordTitle")}
-            />
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+          >
             <View>
-              {/* Password */}
-              <InputRegular
-                containerStyle={styles.containerInput}
-                placeholder={I18n.t("linguistPassword")}
-                onChangeText={text => this.props.updateForm({ password: text })}
-                autoCorrect={false}
-                secureTextEntry={true}
-                maxLength={20}
-                autoFocus={true}
-              />
-              <Text style={styles.formText}>
-                {I18n.t("passwordLinguistText")}{" "}
+              <View>
+                {/* Password */}
+                <InputRegular
+                  containerStyle={styles.containerInput}
+                  placeholder={I18n.t("linguistPassword")}
+                  onChangeText={text => this.props.updateForm({ password: text })}
+                  autoCorrect={false}
+                  secureTextEntry={true}
+                  maxLength={20}
+                  autoFocus={true}
+                />
+                <Text style={styles.formText}>
+                  {I18n.t("passwordLinguistText")}{" "}
+                  <Text
+                    style={styles.links}
+                    onPress={() => {
+                      this.props.navigation.dispatch({
+                        type: "StaticView",
+                        params: {
+                          uri: PrivacyPolicyURI,
+                          title: I18n.t("privacyPolicy")
+                        }
+                      });
+                    }}
+                  >
+                    {I18n.t("privacyPolicy")}
+                  </Text>{" "}
+                  {I18n.t("passwordAnd")}{" "}
+                </Text>
                 <Text
-                  style={styles.links}
+                  style={[styles.formText, styles.links]}
                   onPress={() => {
                     this.props.navigation.dispatch({
                       type: "StaticView",
                       params: {
-                        uri: PrivacyPolicyURI,
-                        title: I18n.t("privacyPolicy")
+                        uri: TermsConditionsURI,
+                        title: I18n.t("termsConditions")
                       }
                     });
                   }}
                 >
-                  {I18n.t("privacyPolicy")}
-                </Text>{" "}
-                {I18n.t("passwordAnd")}{" "}
-              </Text>
-              <Text
-                style={[styles.formText, styles.links]}
-                onPress={() => {
-                  this.props.navigation.dispatch({
-                    type: "StaticView",
-                    params: {
-                      uri: TermsConditionsURI,
-                      title: I18n.t("termsConditions")
-                    }
-                  });
-                }}
-              >
-                {I18n.t("termsConditions")}
-              </Text>
+                  {I18n.t("termsConditions")}
+                </Text>
+              </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton title={I18n.t("next")} onPress={() => this.submit()} />
       </ViewWrapper>

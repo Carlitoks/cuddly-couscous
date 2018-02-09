@@ -13,7 +13,8 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import BottomButton from "../../Components/BottomButton/BottomButton";
-import { topIOS } from "../../Util/Devices";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -84,67 +85,49 @@ class ForgotPasswordView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          title={I18n.t("forgotPassword")}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+          >
+            <Grid>
+              <Col>
+                {/* Email */}
+                <InputRegular
+                  containerStyle={styles.formInputContainer}
+                  placeholder={I18n.t("email")}
+                  autoCorrect={false}
+                  onChangeText={text => this.props.updateForm({ email: text })}
+                  value={this.props.email}
+                  keyboardType={"email-address"}
+                  maxLength={64}
+                  autoFocus={true}
                 />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS/>   
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
-                  />
-
-                  {/* Title */}
-                  <Text style={styles.title}>{I18n.t("forgotPassword")}</Text>
-                </Col>
-              </Row>
-              {/* Email */}
-              <InputRegular
-                containerStyle={styles.formInputContainer}
-                placeholder={I18n.t("email")}
-                autoCorrect={false}
-                onChangeText={text => this.props.updateForm({ email: text })}
-                value={this.props.email}
-                keyboardType={"email-address"}
-                maxLength={64}
-                autoFocus={true}
-              />
-              {/* Troubleshoot Button (Commented as part of the issue SOLO-74)*/}
-              {/* <Text
-                style={styles.linksText}
-                onPress={() => {
-                  navigation.dispatch({
-                    type: "StaticView",
-                    params: {
-                      uri: TroubleshootURI,
-                      title: I18n.t("troubleshoot")
-                    }
-                  });
-                }}
-              >
-                {I18n.t("troubleshoot")}
-              </Text> */}
-            </Col>
-          </Grid>
-        </ScrollView>
+                {/* Troubleshoot Button (Commented as part of the issue SOLO-74)*/}
+                {/* <Text
+                  style={styles.linksText}
+                  onPress={() => {
+                    navigation.dispatch({
+                      type: "StaticView",
+                      params: {
+                        uri: TroubleshootURI,
+                        title: I18n.t("troubleshoot")
+                      }
+                    });
+                  }}
+                >
+                  {I18n.t("troubleshoot")}
+                </Text> */}
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
         {/* Forgot Password Button */}
         <BottomButton
           title={I18n.t("resetpassword")}

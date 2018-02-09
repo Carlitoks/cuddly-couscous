@@ -233,7 +233,8 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryBaseFont
   },
   wrapperContainer: {
-    backgroundColor: "white"
+    backgroundColor: "white",
+    height: "100%"
   },
   scrollContainer: {
     backgroundColor: "#f2ebe6",

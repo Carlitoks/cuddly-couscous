@@ -21,6 +21,7 @@ export default class StaticView extends Component {
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
+          alwaysBounceVertical={false}
           contentContainerStyle={styles.contentScrollContainer}
         >
           <View>

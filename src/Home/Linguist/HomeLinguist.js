@@ -26,6 +26,7 @@ import LinearGradient from "react-native-linear-gradient";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import { Sessions } from "../../Api";
@@ -99,147 +100,59 @@ class Home extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={
+            <ShowMenuButton navigation={this.props.navigation} />
+          }
+          headerCenterComponent={{
+            text: firstName + " " + lastName,
+            style: styles.title
+          }}
+          photoSelect={avatar => this.uploadAvatar(avatar)}
+          avatarSource={this.selectImage}
+          avatarHeight={150}
+          bigAvatar={true}
+          stars={rate ? rate : 0}
+          status={available}
+          switchOnChange={available =>
+            this.props.updateSettings({ available: available })
+          }
+          switchValue={this.props.available}
+          calls={numberOfCalls}
+          amount={amount}
         >
-          <Grid>
-            <Col>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+          >
+            <Grid>
               <Col>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                {/* Header - Navigation */}
-                <TopViewIOS/> 
-                <Header
-                  outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                  backgroundColor="transparent"
-                  leftComponent={
-                    <ShowMenuButton navigation={this.props.navigation} />
-                  }
-                  centerComponent={{
-                    text: firstName + " " + lastName,
-                    style: styles.title
-                  }}
-                  /*
-                  rightComponent={
-                    <SettingsButton navigation={this.props.navigation} />
-                  }*/
-                />
-                <View>
-                  <View style={styles.containerAvatar}>
-                    <PhotoUpload
-                      onPhotoSelect={avatar => this.uploadAvatar(avatar)}
-                    >
-                      {
-                        <Image
-                          style={styles.avatar}
-                          resizeMode="cover"
-                          source={this.selectImage()}
-                        />
-                      }
-                    </PhotoUpload>
-                  </View>
-                  <Badge
-                    value={rate}
-                    textStyle={styles.badgeText}
-                    containerStyle={styles.badgeContainer}
-                  />
-                </View>
-                <View style={styles.starsContainer}>
-                  <View style={[styles.stars, styles.center]}>
-                    <StarRating
-                      emptyStarratingColor="gray"
-                      emptyStar={"ios-star-outline"}
-                      fullStar={"ios-star"}
-                      halfStar={"ios-star-half"}
-                      iconSet={"Ionicons"}
-                      disabled={true}
-                      maxStars={5}
-                      starSize={18}
-                      rating={rate}
-                      starColor={Colors.primaryColor}
-                    />
-                  </View>
-                </View>
-                <Row style={styles.statusContainer}>
-                  <Text style={styles.StatusText}>
-                    {I18n.t("status")} {available ? I18n.t("online") : I18n.t("offline")}
-                  </Text>
-                  <View style={styles.switchContainer}>
-                    <Switch
-                      onValueChange={available =>
-                        this.props.updateSettings({ available: available })
-                      }
-                      style={styles.switch}
-                      value={this.props.available}
-                      onTintColor={Colors.onTintColor}
-                      thumbTintColor={Colors.thumbTintColor}
-                      tintColor={Colors.tintColor}
-                    />
-                  </View>
-                </Row>
-              </Col>
-              <Row>
-                <Col>
-                  <Card
-                    style={{ alignContent: "space-betwen" }}
-                    wrapperStyle={{ flex: 1, alignContent: "space-around" }}
-                    containerStyle={styles.button}
-                  >
-                    <Row>
-                      <View style={styles.calls}>
-                        <Text style={[styles.TitleText, styles.center]}>
-                          {I18n.t("calls")}
-                        </Text>
-                        <Text style={[styles.callNumber, styles.center]}>
-                          {numberOfCalls}
-                        </Text>
-                      </View>
-                      <View style={styles.amount}>
-                        <Text style={[styles.TitleText, styles.center]}>
-                          {I18n.t("amount")}
-                        </Text>
-                        <Text style={[styles.callNumber, styles.center]}>
-                          ${amount}
-                        </Text>
-                      </View>
-                    </Row>
-                  </Card>
-                </Col>
-              </Row>
-
-              <List containerStyle={{ borderTopWidth: 0 }}>
-                <ListItem
-                  title={I18n.t("sessionInQueue")}
-                  hideChevron
-                  containerStyle={{ paddingBottom: 20, paddingTop: 20 }}
-                  titleStyle={{ color: "#b7b7b7", fontSize: 20 }}
-                />
-                {languagues.map((item, i) => (
+                <List containerStyle={{ borderTopWidth: 0, marginTop: 0 }}>
                   <ListItem
-                    key={i}
-                    title={item.language}
-                    leftIcon={{ name: "swap-horiz" }}
-                    titleStyle={{ fontSize: 20 }}
-                    badge={{
-                      value: item.translates,
-                      textStyle: styles.badgeText,
-                      containerStyle: { backgroundColor: "transparent" }
-                    }}
+                    title={I18n.t("sessionInQueue")}
+                    hideChevron
+                    containerStyle={{ paddingBottom: 20, paddingTop: 20 }}
+                    titleStyle={{ color: "#b7b7b7", fontSize: 20 }}
                   />
-                ))}
-              </List>
-            </Col>
-          </Grid>
-        </ScrollView>
+                  {languagues.map((item, i) => (
+                    <ListItem
+                      key={i}
+                      title={item.language}
+                      leftIcon={{ name: "swap-horiz" }}
+                      titleStyle={{ fontSize: 20 }}
+                      badge={{
+                        value: item.translates,
+                        textStyle: styles.badgeText,
+                        containerStyle: { backgroundColor: "transparent" }
+                      }}
+                    />
+                  ))}
+                </List>
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
       </ViewWrapper>
     );
   }

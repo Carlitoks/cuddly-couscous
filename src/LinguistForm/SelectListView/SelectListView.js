@@ -21,7 +21,10 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+
+import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -165,71 +168,32 @@ class SelectListView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
-          <View style={styles.headerContainer}>
-            <LinearGradient
-              colors={[
-                Colors.gradientColor.top,
-                Colors.gradientColor.middle,
-                Colors.gradientColor.bottom
-              ]}
-              style={styles.linearGradient}
-            />
-            {/* Header - Navigation */}
-            <TopViewIOS/> 
-            <Header
-              outerContainerStyles={styles.header}
-              backgroundColor="transparent"
-              leftComponent={
-                <Icon
-                  style={styles.GoBackButton}
-                  color={"white"}
-                  name="arrow-back"
-                  size={30}
-                  onPress={() => {
-                    if (
-                      selectedItemsList.length === 0 &&
-                      !acceptsEmptySelection
-                    ) {
-                      Alert.alert("Please, select at least one item");
-                    } else {
-                      navigation.dispatch({ type: "back" });
-                    }
-                  }}
-                />
-              }
-            />
-            <Text style={styles.mainTitle}>{title}</Text>
-            {!isUndefined(showSearch) &&
-              showSearch && (
-                <SearchBar
-                  lightTheme
-                  containerStyle={styles.containerSearch}
-                  inputStyle={styles.inputSearch}
-                  placeholder="Search"
-                  icon={{ color: "rgba(255, 255, 255, 0.6)", name: "search" }}
-                  placeholderTextColor={"rgba(255, 255, 255, 0.6)"}
-                  onChangeText={text =>
-                    this.props.updateSettings({ searchQuery: text })
-                  }
-                  onClearText={text =>
-                    this.props.updateSettings({ searchQuery: "" })
-                  }
-                  clearIcon={{ color: "rgba(255, 255, 255, 0.6)" }}
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          title={title}
+          search={
+            !!showSearch
+              ? this.props.updateSettings({ searchQuery: text })
+              : null
+          }
+        >
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+          >
+            <List style={styles.list}>
+              {this.renderList()}
+              {!isUndefined(othersGoTo) && (
+                <ListItem
+                  title={"Other"}
+                  onPress={() => navigation.dispatch({ type: othersGoTo })}
                 />
               )}
-          </View>
-
-          <List style={styles.list}>
-            {this.renderList()}
-            {!isUndefined(othersGoTo) && (
-              <ListItem
-                title={"Other"}
-                onPress={() => navigation.dispatch({ type: othersGoTo })}
-              />
-            )}
-          </List>
-        </ScrollView>
+            </List>
+          </ScrollView>
+        </HeaderView>
       </ViewWrapper>
     );
   }

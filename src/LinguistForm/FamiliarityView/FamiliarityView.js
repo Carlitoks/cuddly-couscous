@@ -4,7 +4,14 @@ import Countries from "../../Config/countries";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View, ScrollView, Image, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { SearchBar, List, ListItem, Button } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -14,7 +21,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import Header from "../Header/Header";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
@@ -96,73 +103,78 @@ class FamiliarityView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
-        <Header 
-            navigation={this.props.navigation} 
-            mainTitle={I18n.t("countryFamiliarity")} 
-          /> 
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          title={I18n.t("countryFamiliarity")}
+        >
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+          >
+            {/* Cityzenship */}
+            <Text style={[styles.sectionTitle, styles.marginTop20]}>
+              {I18n.t("citizenShip")}
+            </Text>
 
-          {/* Cityzenship */}
-          <Text style={[styles.sectionTitle, styles.marginTop20]}>
-            {I18n.t("citizenShip")} 
-          </Text>
+            <List containerStyle={styles.marginBottom20}>
+              {this.props.selectedCitizenship[0] && (
+                <ListItem
+                  key={this.props.selectedCitizenship[0].name}
+                  title={this.props.selectedCitizenship[0].name}
+                  onPress={() => {
+                    this.props.updateSettings({
+                      selectionItemType: "citizenships",
+                      selectionItemName: "citizenship"
+                    });
+                    this.props.navigation.dispatch({ type: "SelectListView" });
+                  }}
+                />
+              )}
+            </List>
 
-          <List containerStyle={styles.marginBottom20}>
-            {this.props.selectedCitizenship[0] && (
-              <ListItem
-                key={this.props.selectedCitizenship[0].name}
-                title={this.props.selectedCitizenship[0].name}
-                onPress={() => {
-                  this.props.updateSettings({
-                    selectionItemType: "citizenships",
-                    selectionItemName: "citizenship"
-                  });
-                  this.props.navigation.dispatch({ type: "SelectListView" });
-                }}
-              />
-            )}
-          </List>
+            {/* Country Familiarity */}
+            <Text style={styles.sectionTitle}>
+              {I18n.t("countryFamiliarity")}
+            </Text>
 
-          {/* Country Familiarity */}
-          <Text style={styles.sectionTitle}> 
-            {I18n.t("countryFamiliarity")} 
-          </Text> 
+            <List containerStyle={styles.marginBottom20}>
+              {this.props.selectedCitizenship[0] && (
+                <ListItem
+                  key={this.props.selectedCountryFamiliarity[0].name}
+                  title={this.props.selectedCountryFamiliarity[0].name}
+                  onPress={() => {
+                    this.props.updateSettings({
+                      selectionItemType: "countryFamiliarities",
+                      selectionItemName: "countryFamiliarity"
+                    });
+                    this.props.navigation.dispatch({ type: "SelectListView" });
+                  }}
+                />
+              )}
+            </List>
 
-          <List containerStyle={styles.marginBottom20}>
-            {this.props.selectedCitizenship[0] && (
-              <ListItem
-                key={this.props.selectedCountryFamiliarity[0].name}
-                title={this.props.selectedCountryFamiliarity[0].name}
-                onPress={() => {
-                  this.props.updateSettings({
-                    selectionItemType: "countryFamiliarities",
-                    selectionItemName: "countryFamiliarity"
-                  });
-                  this.props.navigation.dispatch({ type: "SelectListView" });
-                }}
-              />
-            )}
-          </List>
+            {/* City Familiarity */}
+            <Text style={styles.sectionTitle}>{I18n.t("cityFamiliarity")}</Text>
 
-          {/* City Familiarity */}
-          <Text style={styles.sectionTitle}>{I18n.t("cityFamiliarity")}</Text>
-
-          <List containerStyle={styles.marginBottom20}>
-            {this.props.selectedCityFamiliarity[0] && (
-              <ListItem
-                key={this.props.selectedCityFamiliarity[0].name}
-                title={this.props.selectedCityFamiliarity[0].name}
-                onPress={() => {
-                  this.props.updateSettings({
-                    selectionItemType: "cityFamiliarities",
-                    selectionItemName: "cityFamiliarity"
-                  });
-                  this.props.navigation.dispatch({ type: "SelectListView" });
-                }}
-              />
-            )}
-          </List>
-        </ScrollView>
+            <List containerStyle={styles.marginBottom20}>
+              {this.props.selectedCityFamiliarity[0] && (
+                <ListItem
+                  key={this.props.selectedCityFamiliarity[0].name}
+                  title={this.props.selectedCityFamiliarity[0].name}
+                  onPress={() => {
+                    this.props.updateSettings({
+                      selectionItemType: "cityFamiliarities",
+                      selectionItemName: "cityFamiliarity"
+                    });
+                    this.props.navigation.dispatch({ type: "SelectListView" });
+                  }}
+                />
+              )}
+            </List>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("next")}

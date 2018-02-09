@@ -15,6 +15,7 @@ import InputRegular from "../../Components/InputRegular/InputRegular";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import BottomButton from "../../Components/BottomButton/BottomButton";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { EMAIL_REGEX } from "../../Util/Constants";
@@ -80,7 +81,7 @@ class LoginView extends Component {
     if (this.validateForm()) {
       this.props.logInAsync(this.props.email, this.props.password).then(() => {
         if (!this.props.formHasErrors) {
-          this.props.navigation.dispatch({ type: "Home" }); 
+          this.props.navigation.dispatch({ type: "Home" });
         } else {
           if (this.props.formHasErrors) {
             this.tempDisplayErrors(
@@ -115,75 +116,62 @@ class LoginView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView alwaysBounceVertical={false}
-          automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          title={I18n.t("signIn")}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+          >
+            <Grid>
+              <Col>
+                {/* Email */}
+                <InputRegular
+                  containerStyle={styles.formInputContainer}
+                  placeholder={I18n.t("email")}
+                  autoCorrect={false}
+                  onChangeText={text =>
+                    this.props.updateForm({
+                      email: text,
+                      emailErrorMessage: ""
+                    })
+                  }
+                  value={this.props.email}
+                  keyboardType={"email-address"}
+                  autoFocus={true}
                 />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS/>                  
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
-                  />
 
-                  {/* Title */}
-                  <Text style={styles.title}>{I18n.t("signIn")}</Text>
-                </Col>
-              </Row>
+                {/* Password */}
+                <InputPassword
+                  inputStyle={styles.formInput}
+                  placeholder={I18n.t("password")}
+                  placeholderTextColor={Colors.placeholderColor}
+                  onChangeText={text =>
+                    this.props.updateForm({
+                      password: text,
+                      passwordErrorMessage: ""
+                    })
+                  }
+                  value={this.props.password}
+                />
 
-              {/* Email */}
-              <InputRegular
-              containerStyle={styles.formInputContainer}
-              placeholder={I18n.t("email")}
-              autoCorrect={false}
-              onChangeText={text =>
-                this.props.updateForm({ email: text, emailErrorMessage: "" })}
-              value={this.props.email}
-              keyboardType={"email-address"}
-              autoFocus={true}
-              />
-
-              {/* Password */}
-              <InputPassword
-                inputStyle={styles.formInput}
-                placeholder={I18n.t("password")}
-                placeholderTextColor={Colors.placeholderColor}
-                onChangeText={text =>
-                  this.props.updateForm({
-                    password: text,
-                    passwordErrorMessage: ""
-                  })}
-                
-                value={this.props.password}
-              />
-
-              {/* Forgot Password */}
-              <Text
-                style={styles.forgotPasswordText}
-                onPress={() =>
-                  navigation.dispatch({ type: "ForgotPasswordView" })}
-              >
-                {I18n.t("forgotPassword")}
-              </Text>
-            </Col>
-          </Grid>
-        </ScrollView>
+                {/* Forgot Password */}
+                <Text
+                  style={styles.forgotPasswordText}
+                  onPress={() =>
+                    navigation.dispatch({ type: "ForgotPasswordView" })
+                  }
+                >
+                  {I18n.t("forgotPassword")}
+                </Text>
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
         {/* Sign In Button */}
         <BottomButton
           title={I18n.t("signIn")}

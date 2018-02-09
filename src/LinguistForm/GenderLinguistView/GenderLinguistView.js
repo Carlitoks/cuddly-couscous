@@ -3,21 +3,23 @@ import { connect } from "react-redux";
 
 import { GetOptions, updateForm } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import {
-  Button,
-  FormLabel,
-  List,
-  ListItem
-} from "react-native-elements";
+
+import { Button, FormLabel, List, ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import Header from "../Header/Header";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -79,45 +81,45 @@ class GenderLinguist extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          title={I18n.t("genderName")}
         >
-          <View>
-            <Header
-              navigation={this.props.navigation}
-              mainTitle={I18n.t("genderName")}
-            />
-            <List containerStyle={{ borderTopWidth: 0 }}>
-              {genders.map((item, i) => (
-                <ListItem
-                  key={i}
-                  containerStyle={styles.genderItem}
-                  title={item.gender}
-                  hideChevron={
-                    this.props.selectedGender === "" ||
-                    this.props.selectedGender !== item.gender
-                  }
-                  titleStyle={{ fontSize: 20 }}
-                  rightIcon={
-                    this.props.selectedGender !== ""
-                      ? { name: "check" }
-                      : undefined
-                  }
-                  onPress={() => {
-                    this.props.updateForm({ selectedGender: item.gender });
-                  }}
-                />
-              ))}
-            </List>
-          </View>
-        </ScrollView>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+          >
+            <View>
+              <List containerStyle={{ borderTopWidth: 0 }}>
+                {genders.map((item, i) => (
+                  <ListItem
+                    key={i}
+                    containerStyle={styles.genderItem}
+                    title={item.gender}
+                    hideChevron={
+                      this.props.selectedGender === "" ||
+                      this.props.selectedGender !== item.gender
+                    }
+                    titleStyle={{ fontSize: 20 }}
+                    rightIcon={
+                      this.props.selectedGender !== ""
+                        ? { name: "check" }
+                        : undefined
+                    }
+                    onPress={() => {
+                      this.props.updateForm({ selectedGender: item.gender });
+                    }}
+                  />
+                ))}
+              </List>
+            </View>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
-        <BottomButton
-          title={I18n.t("next")}
-          onPress={() => this.submit()}
-        />
+        <BottomButton title={I18n.t("next")} onPress={() => this.submit()} />
       </ViewWrapper>
     );
   }

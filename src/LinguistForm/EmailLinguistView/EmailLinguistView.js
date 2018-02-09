@@ -3,7 +3,13 @@ import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button } from "react-native-elements";
@@ -13,8 +19,8 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import Header from "../Header/Header";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
@@ -79,30 +85,33 @@ class EmailLinguist extends Component {
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          title={I18n.t("linguistEmailTitle")}
+          subtitle={I18n.t("linguistEmailSubtitle")}
         >
-          <Header
-            navigation={this.props.navigation}
-            mainTitle={I18n.t("linguistEmailTitle")}
-            subtitle={I18n.t("linguistEmailSubtitle")}
-          />
-          <View>
-            {/* Email */}
-            <InputRegular
-              containerStyle={styles.containerInput}
-              placeholder={I18n.t("linguistEmail")}
-              autoCorrect={false}
-              onChangeText={text => this.props.updateForm({ email: text })}
-              value={this.props.email}
-              keyboardType={"email-address"}
-              maxLength={64}
-              autoFocus={true}
-            />
-          </View>
-        </ScrollView>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+          >
+            <View>
+              {/* Email */}
+              <InputRegular
+                containerStyle={styles.containerInput}
+                placeholder={I18n.t("linguistEmail")}
+                autoCorrect={false}
+                onChangeText={text => this.props.updateForm({ email: text })}
+                value={this.props.email}
+                keyboardType={"email-address"}
+                maxLength={64}
+                autoFocus={true}
+              />
+            </View>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("next")}

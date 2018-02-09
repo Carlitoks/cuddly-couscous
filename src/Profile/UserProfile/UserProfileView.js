@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, View, ScrollView, Alert, Image, KeyboardAvoidingView } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Alert,
+  Image,
+  KeyboardAvoidingView
+} from "react-native";
 import { connect } from "react-redux";
 import PhotoUpload from "react-native-photo-upload";
 import {
@@ -17,13 +24,7 @@ import {
   updateView,
   asyncUploadAvatar
 } from "../../Ducks/UserProfileReducer";
-import {
-  Button,
-  Header,
-  List,
-  ListItem,
-  Avatar
-} from "react-native-elements";
+import { Button, Header, List, ListItem, Avatar } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -32,6 +33,7 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
 import { compareArrays } from "../../Util/Helpers";
@@ -39,7 +41,7 @@ import I18n from "../../I18n/I18n";
 import { Images, Colors, Fonts } from "../../Themes";
 import images from "../../Themes/Images";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"; 
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 class UserProfileView extends Component {
   componentWillMount() {
     let secondaryLanguages = [];
@@ -351,133 +353,106 @@ class UserProfileView extends Component {
 
     return (
       <ViewWrapper style={styles.mainContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}
-          alwaysBounceVertical={false} 
-          contentContainerStyle={styles.contentScrollContainer}
+        <HeaderView
+          headerLeftComponent={
+            <ShowMenuButton navigation={this.props.navigation} />
+          }
+          headerCenterComponent={{
+            text: I18n.t("userProfile"),
+            style: styles.title
+          }}
+          photoSelect={avatar => this.uploadAvatar(avatar)}
+          avatarSource={this.selectImage}
+          avatarHeight={150}
+          bigAvatar={true}
         >
-          <Grid>
-            <Col>
-              <View>
-                <Col style={{ height: 50 }}>
-                  {/* Linear Gradient */}
-                  <LinearGradient
-                    colors={[
-                      Colors.gradientColor.top,
-                      Colors.gradientColor.middle,
-                      Colors.gradientColor.bottom
-                    ]}
-                    style={styles.linearGradient}
-                  />
-                  {/* Header - Navigation */}
-                  <TopViewIOS/> 
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <ShowMenuButton navigation={this.props.navigation} />
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+            contentContainerStyle={styles.contentScrollContainer}
+          >
+            <Grid>
+              <Col>
+                <Row style={styles.containerTitles}>
+                  <Text style={styles.titlesForm}>{I18n.t("firstname")}</Text>
+                </Row>
+                <Row>
+                  {/* Name */}
+                  <InputRegular
+                    containerStyle={styles.containerInput}
+                    placeholder={I18n.t("linguistName")}
+                    onChangeText={text =>
+                      this.props.updateView({ firstName: text })
                     }
-                    centerComponent={{
-                      text: I18n.t("userProfile"),
-                      style: styles.title
-                    }}
+                    value={this.props.firstName}
                   />
-                </Col>
-              </View>
-              <View style={styles.containerAvatar}>
-                <PhotoUpload
-                  onPhotoSelect={avatar =>
-                    this.props.updateView({ avatarBase64: avatar })
-                  }
-                >
-                  {
-                    <Image
-                      style={{
-                        paddingVertical: 30,
-                        width: 150,
-                        height: 150,
-                        borderRadius: 75
+                </Row>
+                <Row style={styles.containerTitles}>
+                  <Text style={styles.titlesForm}>{I18n.t("lastname")}</Text>
+                </Row>
+                <Row>
+                  {/* Last Name */}
+                  <InputRegular
+                    containerStyle={styles.containerInput}
+                    placeholder={I18n.t("linguistLastName")}
+                    onChangeText={text =>
+                      this.props.updateView({ lastName: text })
+                    }
+                    value={this.props.lastName}
+                  />
+                </Row>
+                <Row style={styles.containerTitles}>
+                  <Text style={styles.titlesForm}>
+                    {I18n.t("preferedNameTitle")}
+                  </Text>
+                </Row>
+                <Row>
+                  {/* Preferredj Name */}
+                  <InputRegular
+                    containerStyle={styles.containerInput}
+                    placeholder={I18n.t("preferredName")}
+                    onChangeText={text =>
+                      this.props.updateView({ preferredName: text })
+                    }
+                    value={this.props.preferredName}
+                  />
+                </Row>
+
+                <Row style={styles.containerTitles}>
+                  <Text style={styles.titlesForm}>
+                    {I18n.t("nativeLanguage")}
+                  </Text>
+                </Row>
+                {/* Native Language */}
+                <List containerStyle={styles.marginBottom10}>
+                  {this.props.selectedNativeLanguage[0] && (
+                    <ListItem
+                      key={selectedNativeLanguage[0].code}
+                      title={selectedNativeLanguage[0].name}
+                      onPress={() => {
+                        this.props.updateSettings({
+                          selectionItemType: "languages",
+                          selectionItemName: "nativeLanguage"
+                        });
+                        this.props.navigation.dispatch({
+                          type: "SelectListView"
+                        });
                       }}
-                      resizeMode="cover"
-                      source={this.selectImage()}
                     />
-                  }
-                </PhotoUpload>
-              </View>
-
-              <Row style={styles.containerTitles}>
-                <Text style={styles.titlesForm}>{I18n.t("firstname")}</Text>
-              </Row>
-              <Row>
-                {/* Name */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("linguistName")}
-                  onChangeText={text =>
-                    this.props.updateView({ firstName: text })
-                  }
-                  value={this.props.firstName}
-                />
-              </Row>
-              <Row style={styles.containerTitles}>
-                <Text style={styles.titlesForm}>{I18n.t("lastname")}</Text>
-              </Row>
-              <Row>
-                {/* Last Name */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("linguistLastName")}
-                  onChangeText={text =>
-                    this.props.updateView({ lastName: text })
-                  }
-                  value={this.props.lastName}
-                />
-              </Row>
-              <Row style={styles.containerTitles}>
-                <Text style={styles.titlesForm}>{I18n.t("preferedNameTitle")}</Text>
-              </Row>
-              <Row>
-                {/* Preferredj Name */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("preferredName")}
-                  onChangeText={text =>
-                    this.props.updateView({ preferredName: text })
-                  }
-                  value={this.props.preferredName}
-                />
-              </Row>
-
-              <Row style={styles.containerTitles}>
-                <Text style={styles.titlesForm}>{I18n.t("nativeLanguage")}</Text>
-              </Row>
-              {/* Native Language */}
-              <List containerStyle={styles.marginBottom10}>
-                {this.props.selectedNativeLanguage[0] && (
-                  <ListItem
-                    key={selectedNativeLanguage[0].code}
-                    title={selectedNativeLanguage[0].name}
-                    onPress={() => {
-                      this.props.updateSettings({
-                        selectionItemType: "languages",
-                        selectionItemName: "nativeLanguage"
-                      });
-                      this.props.navigation.dispatch({
-                        type: "SelectListView"
-                      });
-                    }}
-                  />
-                )}
-              </List>
-              {this.props.linguistProfile && this.ShowLinguistOptions()}
-            </Col>
-          </Grid>
-        </ScrollView>
+                  )}
+                </List>
+                {this.props.linguistProfile && this.ShowLinguistOptions()}
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("save")}
-          onPress={() => {this.submit();}}
+          onPress={() => {
+            this.submit();
+          }}
         />
       </ViewWrapper>
     );
