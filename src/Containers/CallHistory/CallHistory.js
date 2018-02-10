@@ -184,6 +184,7 @@ class CallHistory extends Component {
                   style={styles.linearGradient}
                 />
                 {/* Header - Navigation */}
+                <TopViewIOS />
                 <Header
                   outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                   backgroundColor="transparent"

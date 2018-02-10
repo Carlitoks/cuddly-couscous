@@ -16,7 +16,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-
+import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
@@ -101,6 +101,7 @@ class NameCustomerView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
+                  <TopViewIOS />
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
