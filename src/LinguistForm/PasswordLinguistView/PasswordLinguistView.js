@@ -14,6 +14,7 @@ import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
+import InputPassword from "../../Components/InputPassword/InputPassword";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
@@ -116,7 +117,9 @@ class PasswordLinguist extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
           title={I18n.t("linguistPasswordTitle")}
         >
           <ScrollView
@@ -126,14 +129,20 @@ class PasswordLinguist extends Component {
             <View>
               <View>
                 {/* Password */}
-                <InputRegular
+                <InputPassword
                   containerStyle={styles.containerInput}
+                  inputStyle={styles.formInput}
                   placeholder={I18n.t("linguistPassword")}
-                  onChangeText={text => this.props.updateForm({ password: text })}
+                  placeholderTextColor={Colors.placeholderColor}
+                  onChangeText={text =>
+                    this.props.updateForm({
+                      password: text
+                    })
+                  }
                   autoCorrect={false}
-                  secureTextEntry={true}
                   maxLength={20}
                   autoFocus={true}
+                  value={this.props.password}
                 />
                 <Text style={styles.formText}>
                   {I18n.t("passwordLinguistText")}{" "}

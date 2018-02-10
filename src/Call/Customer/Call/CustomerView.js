@@ -34,6 +34,7 @@ import {
   BackgroundCleanInterval,
   BackgroundStart
 } from "../../../Util/Background";
+import { IMAGE_STORAGE_URL } from "../../../Config/env";
 
 const STATUS_TOKBOX = {
   DISCONECTED: 0,
@@ -117,6 +118,15 @@ class CustomerView extends Component {
     }
   }
 
+  selectImage = () => {
+    const { linguist } = this.props;
+
+    return linguist && linguist.avatarURL
+      ? {
+          uri: `${IMAGE_STORAGE_URL}${linguist.avatarURL}`
+        }
+      : Images.avatar;
+  };
   componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer);
     this.props.resetTimerAsync();
@@ -151,7 +161,8 @@ class CustomerView extends Component {
             this.props.tokboxStatus === STATUS_TOKBOX.STREAM
               ? styles.containerCall
               : styles.containerHiddenCall
-          }>
+          }
+        >
           <View style={styles.backgroundContainer}>
             {this.props.customerTokboxSessionID && (
               <Subscriber
@@ -193,7 +204,7 @@ class CustomerView extends Component {
           <View style={styles.topContainer}>
             <TopViewIOS />
             <View style={styles.inlineContainer}>
-              <Image style={styles.smallAvatar} source={Images.avatarCall} />
+              <Image style={styles.smallAvatar} source={this.selectImage()} />
             </View>
             <Text style={styles.callerNameText}>
               {this.handleSessionInfoName()}
@@ -271,9 +282,9 @@ class CustomerView extends Component {
                   if (response == "denied" || response == "restricted") {
                     displayOpenSettingsAlert();
                   }
-                  this.props.updateSettings({
-                    video: !this.props.mute
-                  });
+                });
+                this.props.updateSettings({
+                  video: !this.props.mute
                 });
               }}
               toggle={true}
@@ -290,9 +301,9 @@ class CustomerView extends Component {
                   if (response == "denied" || response == "restricted") {
                     displayOpenSettingsAlert();
                   }
-                  this.props.updateSettings({
-                    video: !this.props.video
-                  });
+                });
+                this.props.updateSettings({
+                  video: !this.props.video
                 });
               }}
               toggle={true}

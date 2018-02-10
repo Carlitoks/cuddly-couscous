@@ -73,7 +73,8 @@ class SelectRoleView extends Component {
                   borderRadius={15}
                   buttonStyle={[styles.button, styles.center]}
                   onPress={() =>
-                    navigation.dispatch({ type: "NameCustomerView" })}
+                    navigation.dispatch({ type: "EmailCustomerView" })
+                  }
                   title={I18n.t("callLinguist")}
                   textStyle={[styles.buttonText, styles.center]}
                 />
@@ -97,7 +98,8 @@ class SelectRoleView extends Component {
               {/* Become a Linguist */}
               <Text
                 onPress={() =>
-                  navigation.dispatch({ type: "NameLinguistView" })}
+                  navigation.dispatch({ type: "NameLinguistView" })
+                }
                 style={[styles.textBecome, styles.center]}
               >
                 {I18n.t("becomeOnVoy")}

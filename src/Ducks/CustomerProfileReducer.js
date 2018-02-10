@@ -20,6 +20,15 @@ export const userinfoUpdate = payload => ({
   payload
 });
 
+export const asyncUpdateUser = (payload, token) => dispatch => {
+  const { id, password } = payload;
+  return User.update(id, { password }, token)
+    .then(response => {
+      return dispatch(userinfoUpdate(response.data));
+    })
+    .catch(error => dispatch(networkError(error)));
+};
+
 export const asyncCreateUser = (payload, token) => dispatch => {
   return User.create(payload, token)
     .then(response => {

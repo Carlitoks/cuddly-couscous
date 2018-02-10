@@ -1,7 +1,10 @@
 import { Sessions } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
 
-import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReducer";
+import {
+  changeStatus,
+  updateSettings as updateProfileLinguist
+} from "./ProfileLinguistReducer";
 
 import moment from "moment";
 import _sortBy from "lodash/sortBy";
@@ -140,12 +143,14 @@ export const resetTimer = () => ({
 export const asyncGetInvitationDetail = (invitationID, token) => dispatch => {
   return Sessions.LinguistFetchesInvite(invitationID, token)
     .then(response => {
+      console.log(response.data);
       const res = response.data;
       dispatch(
         updateSettings({
           customerName: `${res.createdBy.firstName} ${
             res.createdBy.lastInitial
           }.`,
+          avatarURL: `${res.createdBy.avatarURL}`,
           estimatedMinutes: `~ ${res.session.estimatedMinutes} mins`,
           languages: `${LANG_CODES.get(
             res.session.primaryLangCode
@@ -164,25 +169,36 @@ export const asyncAcceptsInvite = (
   token,
   linguistSessionId
 ) => dispatch => {
-  Sessions.LinguistFetchesInvite(invitationID, token)
-    .then(res => {
-      if (res.data.session.endReason !== "cancel") {
-        Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
-          .then(response => {
-            dispatch(invitationAccept(response.data));
-            dispatch({ type: "LinguistView" });
-            dispatch(updateSettings({ sessionID: linguistSessionId }));
-          })
-          .catch(error => {
-            dispatch(networkError(error));
-          });
-      } else {
+  if (reason && reason.accept) {
+    Sessions.LinguistFetchesInvite(invitationID, token)
+      .then(res => {
+        if (res.data.session.endReason !== "cancel") {
+          Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
+            .then(response => {
+              dispatch(invitationAccept(response.data));
+              dispatch({ type: "LinguistView" });
+              dispatch(updateSettings({ sessionID: linguistSessionId }));
+            })
+            .catch(error => {
+              dispatch(networkError(error));
+            });
+        } else {
+          dispatch({ type: "Home" });
+        }
+      })
+      .catch(err => {
         dispatch({ type: "Home" });
-      }
-    })
-    .catch(err => {
-      dispatch({ type: "Home" });
-    });
+      });
+  } else {
+    Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
+      .then(response => {
+        dispatch(changeStatus());
+        dispatch({ type: "Home" });
+      })
+      .catch(error => {
+        dispatch(networkError(error));
+      });
+  }
 };
 
 // Initial State
@@ -207,6 +223,7 @@ const initialState = {
   // IncomingCall
   firstName: "",
   lastInitial: "",
+  avatarURL: "",
   estimatedMinutes: "",
   languages: ""
 };

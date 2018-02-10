@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { updateSettings, GetOptions } from "../../Ducks/ProfileLinguistReducer";
+import {
+  changeStatus,
+  updateSettings,
+  GetOptions
+} from "../../Ducks/ProfileLinguistReducer";
 import {
   asyncUploadAvatar,
   updateView,
@@ -41,8 +45,9 @@ class Home extends Component {
   navigate = this.props.navigation.navigate;
 
   componentWillMount() {
-    this.props.updateSettings({
-      polling: true
+    this.props.changeStatus({
+      polling: false,
+      available: false
     });
 
     if (this.props.available) {
@@ -114,13 +119,10 @@ class Home extends Component {
           bigAvatar={true}
           stars={rate ? rate : 0}
           status={available}
-          switchOnChange={available =>
-            this.props.updateSettings({ available: available })
-          }
+          switchOnChange={available => this.props.changeStatus()}
           switchValue={this.props.available}
           calls={numberOfCalls}
-          amount={amount}
-        >
+          amount={amount}>
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
@@ -179,7 +181,8 @@ const mD = {
   getInvitations,
   asyncUploadAvatar,
   updateView,
-  getProfileAsync
+  getProfileAsync,
+  changeStatus
 };
 
 export default connect(mS, mD)(Home);

@@ -11,7 +11,7 @@ const AXIOS = axios.create({
     "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
     "Content-Type": "application/json"
   },
-  timeout: 10000
+  timeout: 30000
 });
 
 export const MOCK_DATA = {

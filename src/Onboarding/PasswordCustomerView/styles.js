@@ -24,13 +24,6 @@ export default StyleSheet.create({
     color: "white",
     backgroundColor: "transparent"
   },
-  formText: {
-    textAlign: "center",
-    paddingLeft: 18,
-    paddingRight: 18,
-    fontSize: 15,
-    paddingTop: 10
-  },
   inputText: {
     fontSize: 20,
     color: "black",
@@ -44,9 +37,6 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center"
-  },
-  links: {
-    color: "black"
   },
   buttonContainer: {
     backgroundColor: Colors.linguistFormButton,

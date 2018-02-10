@@ -103,9 +103,9 @@ class CallConfirmationView extends Component {
                           ) {
                             displayOpenSettingsAlert();
                           }
-                          this.props.customerUpdateSettings({
-                            video: !this.props.video
-                          });
+                        });
+                        this.props.customerUpdateSettings({
+                          video: !this.props.video
                         });
                       }}
                       value={this.props.video}

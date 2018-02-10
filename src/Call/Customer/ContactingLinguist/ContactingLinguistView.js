@@ -113,9 +113,9 @@ class ContactingLinguist extends Component {
                       if (response == "denied" || response == "restricted") {
                         displayOpenSettingsAlert();
                       }
-                      this.props.updateSettings({
-                        mute: !this.props.mute
-                      });
+                    });
+                    this.props.updateSettings({
+                      mute: !this.props.mute
                     });
                   }}
                   toggle={true}
@@ -132,9 +132,9 @@ class ContactingLinguist extends Component {
                       if (response == "denied" || response == "restricted") {
                         displayOpenSettingsAlert();
                       }
-                      this.props.updateSettings({
-                        video: !this.props.video
-                      });
+                    });
+                    this.props.updateSettings({
+                      video: !this.props.video
                     });
                   }}
                   toggle={true}

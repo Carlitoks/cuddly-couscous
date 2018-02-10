@@ -25,7 +25,6 @@ export const GetOptions = () => dispatch => {
   return [
     { gender: I18n.t("male") },
     { gender: I18n.t("female") },
-    { gender: I18n.t("other") },
     { gender: I18n.t("specifyGender") }
   ];
 };
@@ -93,7 +92,8 @@ const initialState = {
   // error messages
   emailErrorMessage: "",
   passwordErrorMessage: "",
-  deviceToken: ""
+  deviceToken: "",
+  id: null
 };
 
 const registrationCustomerReducer = (state = initialState, action = {}) => {

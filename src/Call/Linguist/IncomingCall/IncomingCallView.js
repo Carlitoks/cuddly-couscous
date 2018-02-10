@@ -16,6 +16,8 @@ import styles from "./styles";
 import { Images } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
 
+import { IMAGE_STORAGE_URL } from "../../../Config/env";
+
 class IncomingCall extends Component {
   state = {
     customerName: this.props.customerName,
@@ -29,16 +31,26 @@ class IncomingCall extends Component {
     this.props.asyncGetInvitationDetail(invitationID, token);
   }
 
-  takeCall = () => {
+  takeCall = isAccept => {
     const { invitationID, token, linguistSessionId } = this.props;
 
     this.props.asyncAcceptsInvite(
       invitationID,
-      { accept: true },
+      { accept: isAccept },
       token,
       linguistSessionId
     );
     Vibration.cancel();
+  };
+
+  selectImage = () => {
+    const { avatarURL } = this.props;
+
+    return avatarURL
+      ? {
+          uri: `${IMAGE_STORAGE_URL}${avatarURL}`
+        }
+      : Images.avatar;
   };
 
   rejectCall = () => {
@@ -52,18 +64,17 @@ class IncomingCall extends Component {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
-        alwaysBounceVertical={false} 
+        alwaysBounceVertical={false}
         style={styles.scrollContainer}
-        contentContainerStyle={styles.contentContainerStyle}
-      >
+        contentContainerStyle={styles.contentContainerStyle}>
         {/* Background Image */}
-        <Image source={Images.backgroundCall} style={styles.backgroundImage} />
+        <Image source={this.selectImage()} style={styles.backgroundImage} />
         <Grid>
           <Col style={{ justifyContent: "space-between" }}>
-          <TopViewIOS/>
+            <TopViewIOS />
             {/* Top Container */}
             <Row style={styles.topContainer}>
-              <Image style={styles.smallAvatar} source={Images.avatarCall} />
+              <Image style={styles.smallAvatar} source={this.selectImage()} />
 
               <Text style={styles.callerNameText}>
                 {" "}
@@ -104,14 +115,14 @@ class IncomingCall extends Component {
                 buttonColor="red"
                 toggle={false}
                 icon="call-end"
-                onPress={this.rejectCall}
+                onPress={() => this.takeCall(false)}
               />
               {/* Accept Call */}
               <CallButton
                 buttonColor="green"
                 toggle={false}
                 icon="call"
-                onPress={this.takeCall}
+                onPress={() => this.takeCall(true)}
               />
             </Row>
           </Col>
@@ -124,6 +135,7 @@ class IncomingCall extends Component {
 const mS = state => ({
   invitationID: state.callLinguistSettings.invitationID,
   customerName: state.callLinguistSettings.customerName,
+  avatarURL: state.callLinguistSettings.avatarURL,
   estimatedMinutes: state.callLinguistSettings.estimatedMinutes,
   languages: state.callLinguistSettings.languages,
   token: state.auth.token,

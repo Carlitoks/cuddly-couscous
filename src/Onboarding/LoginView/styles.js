@@ -59,13 +59,7 @@ export default StyleSheet.create({
     textAlign: "center",
     alignSelf: "center"
   },
-  formInput: {
-    color: Colors.black,
-    fontFamily: Fonts.primaryBaseFont,
-    paddingBottom: 20,
-    marginTop: moderateScale(20)
-  },
-  formInputContainer: {
+  containerInput: {
     marginTop: moderateScale(20)
   }
 });

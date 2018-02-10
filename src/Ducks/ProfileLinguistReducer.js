@@ -1,3 +1,5 @@
+import { Linguist } from "../Api";
+
 // Constants
 
 // Actions
@@ -11,6 +13,26 @@ export const updateSettings = payload => ({
   type: ACTIONS.UPDATE,
   payload
 });
+
+export const changeStatus = status => (dispatch, getState) => {
+  const { auth, profileLinguist, userProfile } = getState();
+
+  Linguist.update(userProfile.id, auth.token, {
+    available: status ? status.available : !profileLinguist.available
+  })
+    .then(res => {
+      dispatch(
+        updateSettings({
+          available: status ? status.available : !profileLinguist.available,
+          polling: status ? status.polling : !profileLinguist.available
+        })
+      );
+    })
+    .catch(err => {
+      console.log(err);
+      console.log(err.response);
+    });
+};
 
 export const GetOptions = () => dispatch => {
   return [

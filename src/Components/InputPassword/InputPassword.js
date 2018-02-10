@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { FormInput } from "react-native-elements";
 import { View } from "react-native";
+import { Colors } from "../../Themes";
 
 import styles from "./styles";
 
@@ -38,6 +39,8 @@ class InputPassword extends Component {
           {...this.props}
           autoCorrect={false}
           secureTextEntry={this.state.password}
+          inputStyle={styles.formInput}
+          placeholderTextColor={Colors.placeholderColor}
         />
         <Icon
           style={styles.icon}

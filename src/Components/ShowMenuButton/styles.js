@@ -5,7 +5,9 @@ const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   Icon: {
-    color: Colors.primaryColor
+    color: Colors.primaryColor,
+    padding: 20,
+    paddingLeft: 0
   },
   container: {
     flexDirection: "column",

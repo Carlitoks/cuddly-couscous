@@ -5,6 +5,9 @@ import {
   GetOptions,
   updateForm
 } from "../../Ducks/RegistrationCustomerReducer";
+import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
+
+import { logInAsync } from "../../Ducks/AuthReducer";
 
 import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -75,6 +78,56 @@ class GenderCustomerView extends Component {
     ]);
   }
 
+  registerUser() {
+    console.log(this.props.selectedNativeLanguage);
+    const uinfo = {
+      email: this.props.email,
+      password: this.props.password,
+      firstName: this.props.firstname,
+      lastName: this.props.lastname,
+      preferredName: this.props.preferredName,
+      phone: this.props.phoneNumber,
+      nativeLangCode: this.props.selectedNativeLanguage[0]["3"],
+      gender: this.props.selectedGender
+    };
+    return this.props.asyncCreateUser(uinfo, this.props.deviceToken);
+  }
+
+  showError(err) {
+    console.log(err);
+    const errorMessage = err.payload.response.data.errors[0];
+    Alert.alert("error", errorMessage);
+  }
+
+  loginUser() {
+    this.props
+      .logInAsync(this.props.email, this.props.password)
+      .then(response => {
+        if (response.type !== "networkErrors/error") {
+          this.props.navigation.dispatch({ type: "Home" });
+        } else {
+          this.showError(response);
+        }
+      });
+  }
+
+  submit() {
+    this.props.updateForm({
+      performingRequest: true
+    });
+
+    this.registerUser().then(response => {
+      if (response.type !== "networkErrors/error") {
+        this.loginUser();
+      } else {
+        this.showError(response);
+      }
+    });
+    this.props.updateForm({
+      performingRequest: false
+    });
+  }
+
   render() {
     const genders = this.props.GetOptions();
 
@@ -124,7 +177,10 @@ class GenderCustomerView extends Component {
                     titleStyle={{ fontSize: 20 }}
                     rightIcon={
                       this.props.selectedGender !== ""
-                        ? { name: "check" }
+                        ? {
+                            name: "check",
+                            style: styles.genderCheck
+                          }
                         : undefined
                     }
                     onPress={() => {
@@ -137,22 +193,30 @@ class GenderCustomerView extends Component {
           </Grid>
         </ScrollView>
         {/* Next Button */}
-        <BottomButton
-          title={I18n.t("next")}
-          onPress={() => this.submit()}
-        />
+        <BottomButton title={I18n.t("create")} onPress={() => this.submit()} />
       </ViewWrapper>
     );
   }
 }
 
 const mS = state => ({
-  selectedGender: state.registrationCustomer.selectedGender
+  selectedGender: state.registrationCustomer.selectedGender,
+  firstname: state.registrationCustomer.firstname,
+  lastname: state.registrationCustomer.lastname,
+  preferredName: state.registrationCustomer.preferredName,
+  phoneNumber: state.registrationCustomer.phoneNumber,
+  formHasErrors: state.registrationCustomer.formHasErrors,
+  deviceToken: state.registrationCustomer.deviceToken,
+  email: state.registrationCustomer.email,
+  password: state.registrationCustomer.password,
+  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage
 });
 
 const mD = {
   GetOptions,
-  updateForm
+  updateForm,
+  logInAsync,
+  asyncCreateUser
 };
 
 export default connect(mS, mD)(GenderCustomerView);

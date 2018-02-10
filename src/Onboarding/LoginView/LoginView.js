@@ -131,7 +131,7 @@ class LoginView extends Component {
               <Col>
                 {/* Email */}
                 <InputRegular
-                  containerStyle={styles.formInputContainer}
+                  containerStyle={styles.containerInput}
                   placeholder={I18n.t("email")}
                   autoCorrect={false}
                   onChangeText={text =>
@@ -147,6 +147,7 @@ class LoginView extends Component {
 
                 {/* Password */}
                 <InputPassword
+                  containerStyle={styles.containerInput}
                   inputStyle={styles.formInput}
                   placeholder={I18n.t("password")}
                   placeholderTextColor={Colors.placeholderColor}

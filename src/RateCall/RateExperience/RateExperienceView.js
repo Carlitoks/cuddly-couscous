@@ -31,6 +31,8 @@ import TextButton from "../../Components/TextButton/TextButton";
 import ThumbsButton from "../../Components/ThumbsButton/ThumbsButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
+import { IMAGE_STORAGE_URL } from "../../Config/env";
+
 class RateCallView extends Component {
   ///// validate form /////
   handleSessionInfoName() {
@@ -49,6 +51,22 @@ class RateCallView extends Component {
     this.props.clearCallLinguistSettings();
     this.props.clearContactLinguist();
   }
+
+  selectImage = () => {
+    const { avatarURL, linguist } = this.props;
+
+    if (linguist && linguist.avatarURL) {
+      return {
+        uri: `${IMAGE_STORAGE_URL}${linguist.avatarURL}`
+      };
+    } else if (avatarURL) {
+      return {
+        uri: `${IMAGE_STORAGE_URL}${avatarURL}`
+      };
+    } else {
+      return Images.avatar;
+    }
+  };
 
   submit = () => {
     const {
@@ -228,7 +246,7 @@ class RateCallView extends Component {
                 large
                 containerStyle={styles.avatarContent}
                 rounded
-                source={Images.avatar}
+                source={this.selectImage()}
               />
             </Col>
             <Col style={styles.linguistInformation}>
@@ -388,6 +406,7 @@ const mS = state => ({
   sessionId: state.callCustomerSettings.sessionID,
   customerSessionId: state.callCustomerSettings.sessionID,
   customerName: state.callLinguistSettings.customerName,
+  avatarURL: state.callLinguistSettings.avatarURL,
   linguistSessionId: state.callLinguistSettings.sessionID,
   linguistProfile: state.userProfile.linguistProfile,
   linguist: state.sessionInfo.linguist

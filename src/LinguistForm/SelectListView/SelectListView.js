@@ -62,7 +62,9 @@ const itemMetadata = {
   nativeLanguage: {
     title: I18n.t("nativeLanguage"),
     multiselection: false,
-    acceptsEmptySelection: false
+    acceptsEmptySelection: false,
+    showSearch: true,
+    continueTo: "GenderCustomerView"
   },
   secondaryLanguages: {
     title: I18n.t("SecondaryLanguages"),
@@ -175,7 +177,7 @@ class SelectListView extends Component {
           title={title}
           search={
             !!showSearch
-              ? this.props.updateSettings({ searchQuery: text })
+              ? text => this.props.updateSettings({ searchQuery: text })
               : null
           }
         >

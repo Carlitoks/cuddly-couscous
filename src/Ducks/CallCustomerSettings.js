@@ -113,9 +113,11 @@ export const AsyncCreateInvitation = (
 ) => dispatch => {
   return Sessions.customerInvitation(sessionID, linguistID, role, token)
     .then(response => {
+      console.log(response);
       return dispatch(createInvitation(response.data));
     })
     .catch(error => {
+      console.log(error.response);
       return dispatch(networkError(error));
     });
 };

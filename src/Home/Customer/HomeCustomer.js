@@ -103,8 +103,7 @@ class Home extends Component {
           avatarHeight={150}
           avatarTitle={firstName}
           connectMe={true}
-          navigation={navigation}
-        >
+          navigation={navigation}>
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}

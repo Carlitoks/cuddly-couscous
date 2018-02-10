@@ -172,17 +172,11 @@ class SelectLanguageView extends Component {
             title={language.name}
             rightTitle={proficiency}
             onPress={() => {
-              this.props.navigation.dispatch({
-                type: "GenericSelectListView",
-                params: {
-                  selectionItemType: "languages",
-                  selectionItemName: "secondaryLanguages",
-                  title: I18n.t("SecondaryLanguages"),
-                  multiselection: true,
-                  acceptsEmptySelection: false,
-                  continueTo: "LanguageSettingsView"
-                }
+              this.props.updateSettings({
+                selectionItemType: "languages",
+                selectionItemName: "secondaryLanguages"
               });
+              this.props.navigation.dispatch({ type: "SelectListView" });
             }}
           />
         );
@@ -196,17 +190,11 @@ class SelectLanguageView extends Component {
         title={I18n.t("addLanguage")}
         leftIcon={{ name: "add-circle-outline" }}
         onPress={() => {
-          this.props.navigation.dispatch({
-            type: "GenericSelectListView",
-            params: {
-              selectionItemType: "languages",
-              selectionItemName: "secondaryLanguages",
-              title: I18n.t("SecondaryLanguages"),
-              multiselection: true,
-              acceptsEmptySelection: false,
-              continueTo: "LanguageSettingsView"
-            }
+          this.props.updateSettings({
+            selectionItemType: "languages",
+            selectionItemName: "secondaryLanguages"
           });
+          this.props.navigation.dispatch({ type: "SelectListView" });
         }}
       />
     );
@@ -246,17 +234,12 @@ class SelectLanguageView extends Component {
                   key={selectedNativeLanguage[0]["3"]}
                   title={selectedNativeLanguage[0].name}
                   onPress={() => {
+                    this.props.updateSettings({
+                      selectionItemType: "languages",
+                      selectionItemName: "nativeLanguage"
+                    });
                     this.props.navigation.dispatch({
-                      type: "GenericSelectListView",
-                      params: {
-                        selectionItemType: "languages",
-                        selectionItemName: "nativeLanguage",
-                        items: this.state.languages,
-                        selectedItem: this.props.selectedNativeLanguage,
-                        title: I18n.t("nativeLanguage"),
-                        multiselection: false,
-                        acceptsEmptySelection: false
-                      }
+                      type: "SelectListView"
                     });
                   }}
                 />
@@ -275,16 +258,11 @@ class SelectLanguageView extends Component {
               <ListItem
                 title={I18n.t("areasExpertise")}
                 onPress={() => {
-                  this.props.navigation.dispatch({
-                    type: "GenericSelectListView",
-                    params: {
-                      selectionItemType: "areasOfExpertise",
-                      selectionItemName: "areasOfExpertise",
-                      title: I18n.t("areasExpertise"),
-                      multiselection: true,
-                      acceptsEmptySelection: false
-                    }
+                  this.props.updateSettings({
+                    selectionItemType: "areasOfExpertise",
+                    selectionItemName: "areasOfExpertise"
                   });
+                  this.props.navigation.dispatch({ type: "SelectListView" });
                 }}
               />
             </List>

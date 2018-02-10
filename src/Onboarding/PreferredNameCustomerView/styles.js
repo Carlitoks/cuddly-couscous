@@ -19,8 +19,31 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryLightFont,
     fontSize: 24,
     textAlign: "center",
-    marginBottom: moderateScale(50),
+    marginBottom: moderateScale(10),
     marginTop: moderateScale(20),
+    color: "white",
+    backgroundColor: "transparent"
+  },
+  containerView: {
+    marginTop: moderateScale(10)
+  },
+  inputText: {
+    fontSize: 20,
+    color: "black",
+    paddingBottom: moderateScale(35)
+  },
+  containerInput: {
+    marginTop: moderateScale(20)
+  },
+  formText: {
+    paddingLeft: 18,
+    fontSize: 15
+  },
+  mainSubtitle: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 18,
+    textAlign: "center",
+    marginBottom: moderateScale(30),
     color: "white",
     backgroundColor: "transparent"
   },
@@ -36,13 +59,5 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: Colors.linguistFormText
-  },
-  genderItem: {
-    paddingTop: moderateScale(23),
-    paddingBottom: moderateScale(23)
-  },
-  genderCheck: {
-    height: moderateScale(30),
-    width: moderateScale(30)
   }
 });

@@ -29,6 +29,7 @@ import {
 import { fmtMSS } from "../../../Util/Helpers";
 
 import { tokDisConnect, tokConnect } from "../../../Ducks/tokboxReducer";
+import { IMAGE_STORAGE_URL } from "../../../Config/env";
 
 class LinguistView extends Component {
   navigate = this.props.navigation.navigate;
@@ -59,6 +60,16 @@ class LinguistView extends Component {
     this.props.resetTimerAsync();
     BackgroundCleanInterval(this.props.timer);
   }
+
+  selectImage = () => {
+    const { avatarURL } = this.props;
+
+    return avatarURL
+      ? {
+          uri: `${IMAGE_STORAGE_URL}${avatarURL}`
+        }
+      : Images.avatar;
+  };
 
   startTimer = () => {
     this.props.updateSettings({
@@ -106,7 +117,7 @@ class LinguistView extends Component {
         <View style={styles.topContainer}>
           <TopViewIOS />
           <View style={styles.inlineContainer}>
-            <Image style={styles.smallAvatar} source={Images.avatarCall} />
+            <Image style={styles.smallAvatar} source={this.selectImage()} />
           </View>
           <Text style={styles.callerNameText}>{this.props.customerName}</Text>
 
@@ -165,9 +176,9 @@ class LinguistView extends Component {
                 if (response == "denied" || response == "restricted") {
                   displayOpenSettingsAlert();
                 }
-                this.props.updateSettings({
-                  mute: !this.props.mute
-                });
+              });
+              this.props.updateSettings({
+                mute: !this.props.mute
               });
             }}
             toggle={true}
@@ -184,9 +195,9 @@ class LinguistView extends Component {
                 if (response == "denied" || response == "restricted") {
                   displayOpenSettingsAlert();
                 }
-                this.props.updateSettings({
-                  video: !this.props.video
-                });
+              });
+              this.props.updateSettings({
+                video: !this.props.video
               });
             }}
             toggle={true}
@@ -214,6 +225,7 @@ const mS = state => ({
     state.callLinguistSettings.linguistTokboxSessionToken,
   linguistTokboxSessionID: state.callLinguistSettings.linguistTokboxSessionID,
   sessionID: state.callLinguistSettings.sessionID,
+  avatarURL: state.callLinguistSettings.avatarURL,
   customerName: state.callLinguistSettings.customerName,
   token: state.auth.token
 });

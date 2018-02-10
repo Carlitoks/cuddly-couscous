@@ -7,16 +7,16 @@ import {
   registerDevice
 } from "../../Ducks/RegistrationCustomerReducer";
 
-import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, Header } from "react-native-elements";
-import { topIOS } from "../../Util/Devices";
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
@@ -31,22 +31,6 @@ class NameCustomerView extends Component {
   validateForm() {
     let updates = {};
     let valid = true;
-
-    if (!this.props.firstname) {
-      updates = {
-        ...updates,
-        FirstnameErrorMessage: I18n.t("enterNameField")
-      };
-      valid = false;
-    }
-
-    if (!this.props.lastname) {
-      updates = {
-        ...updates,
-        LastnameErrorMessage: I18n.t("enterLastNameField")
-      };
-      valid = false;
-    }
 
     updates = {
       ...updates,
@@ -70,7 +54,7 @@ class NameCustomerView extends Component {
       this.props.registerDevice().then(response => {
         if (response.type !== "networkErrors/error") {
           this.props.navigation.dispatch({
-            type: "PreferredNameCustomerView"
+            type: "LanguageCustomerView"
           });
         } else {
           const errorMessage = response.payload.response.data.errors[0];
@@ -80,20 +64,6 @@ class NameCustomerView extends Component {
     }
     this.props.updateForm({ performingRequest: false });
   }
-
-  getSubtitle = () => {
-    let subtitle = `${I18n.t("youWillBeKnown")}.... ${I18n.t(
-      "toOthersOnPlatform"
-    )} `;
-    if (this.props.firstname && this.props.lastname) {
-      subtitle = `${I18n.t("youWillBeKnown")} ${
-        this.props.firstname
-      } ${this.props.lastname.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
-      return subtitle;
-    } else {
-      return subtitle;
-    }
-  };
 
   // Will be changed according the designs
   tempDisplayErrors(...errors) {
@@ -111,13 +81,10 @@ class NameCustomerView extends Component {
   }
 
   render() {
-    const initialLastName = `${this.props.lastname.charAt(0)}.`;
-
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
           style={styles.scrollContainer}
         >
           <Grid>
@@ -134,7 +101,6 @@ class NameCustomerView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
-                  <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -142,43 +108,28 @@ class NameCustomerView extends Component {
                       <GoBackButton navigation={this.props.navigation} />
                     }
                   />
-                  {/* Enter your Name */}
                   <Text style={styles.mainTitle}>
-                    {this.props.mainTitle} {this.props.lastname}
+                    {I18n.t("preferredName")}
                   </Text>
                   {/* subtitle */}
-                  <Text style={styles.mainSubtitle}>{this.getSubtitle()}</Text>
+                  <Text style={styles.mainSubtitle}>{""}</Text>
                 </Col>
               </Row>
 
               <View style={styles.containerView}>
-                {/* Name */}
+                {/* Prefered Name */}
                 <InputRegular
                   containerStyle={styles.containerInput}
-                  placeholder={I18n.t("linguistName")}
+                  placeholder={I18n.t("preferredName")}
+                  value={this.props.preferredName}
                   onChangeText={text =>
-                    this.props.updateForm({
-                      firstname: text,
-                      mainTitle: text
-                    })
+                    this.props.updateForm({ preferredName: text })
                   }
                   maxLength={20}
-                  value={this.props.firstname}
-                  autoFocus={true}
                 />
-              </View>
-
-              <View style={styles.containerView}>
-                {/* Last Name */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("linguistLastName")}
-                  onChangeText={text =>
-                    this.props.updateForm({ lastname: text })
-                  }
-                  maxLength={20}
-                  value={this.props.lastname}
-                />
+                <Text style={styles.formText}>
+                  {I18n.t("preferredLinguistText")}
+                </Text>
               </View>
             </Col>
           </Grid>
@@ -195,11 +146,8 @@ class NameCustomerView extends Component {
 }
 
 const mS = state => ({
-  firstname: state.registrationCustomer.firstname,
-  lastname: state.registrationCustomer.lastname,
   formHasErrors: state.registrationCustomer.formHasErrors,
-  preferredName: state.registrationCustomer.preferredName,
-  mainTitle: state.registrationCustomer.mainTitle
+  preferredName: state.registrationCustomer.preferredName
 });
 
 const mD = {

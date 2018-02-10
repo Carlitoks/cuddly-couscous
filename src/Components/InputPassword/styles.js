@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../Themes";
+import { Colors, Fonts } from "../../Themes";
 
 const width = Dimensions.get("window").width - 20;
 
@@ -11,7 +11,12 @@ export default StyleSheet.create({
     color: Colors.formInputIconColor,
     fontSize: 23,
     position: "absolute",
-    top: 19,
+    top: 20,
     right: 15
+  },
+  formInput: {
+    color: Colors.black,
+    fontFamily: Fonts.primaryBaseFont,
+    paddingBottom: 20
   }
 });

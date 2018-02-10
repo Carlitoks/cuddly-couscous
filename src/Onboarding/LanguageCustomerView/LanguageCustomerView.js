@@ -31,9 +31,13 @@ class LanguageCustomerView extends Component {
   componentWillMount() {
     const selectedNativeLanguage = [
       {
-        name: I18n.t("english"),
-        code: "eng",
-        proficiency: "Intermediate"
+        1: "en",
+        2: "eng",
+        3: "eng",
+        name: "English",
+        local: "English",
+        "2T": "eng",
+        "2B": "eng"
       }
     ];
 
@@ -81,11 +85,13 @@ class LanguageCustomerView extends Component {
                 <GoBackButton navigation={this.props.navigation} />
               }
             />
-            <Text style={styles.windowTitle}>{I18n.t("languages")}</Text>
+            <Text style={styles.windowTitle}>{I18n.t("nativeLanguage")}</Text>
           </View>
 
           {/* Native Language */}
-          <Text style={styles.nativeLanguageTitle}>{I18n.t("nativeLanguage")}</Text>
+          <Text style={styles.nativeLanguageTitle}>
+            {I18n.t("nativeLanguage")}
+          </Text>
 
           <List containerStyle={styles.marginBottom10}>
             {this.props.selectedNativeLanguage[0] && (
@@ -106,7 +112,7 @@ class LanguageCustomerView extends Component {
         {/* Next Button */}
         <BottomButton
           title={I18n.t("next")}
-          onPress={() => navigation.dispatch({ type: "PhoneCustomerView" })}
+          onPress={() => navigation.dispatch({ type: "GenderCustomerView" })}
         />
       </ViewWrapper>
     );
