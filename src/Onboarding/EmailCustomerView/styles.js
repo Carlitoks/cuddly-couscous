@@ -19,7 +19,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryLightFont,
     fontSize: 24,
     textAlign: "center",
-    marginBottom: moderateScale(10),
+    marginBottom: moderateScale(50),
     marginTop: moderateScale(20),
     color: "white",
     backgroundColor: "transparent"
@@ -57,7 +57,8 @@ export default StyleSheet.create({
     color: Colors.linguistFormText
   },
   links: {
-    color: "black"
+    color: "black",
+    fontWeight: "bold"
   },
   formText: {
     textAlign: "center",

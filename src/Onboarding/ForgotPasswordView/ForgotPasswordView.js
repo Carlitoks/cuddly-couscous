@@ -90,6 +90,7 @@ class ForgotPasswordView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           title={I18n.t("forgotPassword")}
+          subtitle={I18n.t("weSendEmail")}
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}

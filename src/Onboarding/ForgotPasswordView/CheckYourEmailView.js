@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 
-import { ScrollView, View, Alert, Text, KeyboardAvoidingView } from "react-native";
+import {
+  ScrollView,
+  View,
+  Alert,
+  Text,
+  KeyboardAvoidingView
+} from "react-native";
 import { Button, Header } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
@@ -22,7 +28,7 @@ class CheckYourEmailView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
+          alwaysBounceVertical={false}
           style={styles.scrollContainer}
         >
           <Grid>
@@ -39,7 +45,7 @@ class CheckYourEmailView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
-                  <TopViewIOS/>  
+                  <TopViewIOS />
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -56,8 +62,8 @@ class CheckYourEmailView extends Component {
         </ScrollView>
         {/* Next Button */}
         <BottomButton
-          title={I18n.t("next")}
-          onPress={() => navigation.dispatch({ type: "SelectRoleView" })}
+          title={I18n.t("signIn")}
+          onPress={() => navigation.dispatch({ type: "LoginView" })}
           bold={true}
         />
       </ViewWrapper>

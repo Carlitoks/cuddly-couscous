@@ -25,7 +25,7 @@ export const GetOptions = () => dispatch => {
   return [
     { gender: I18n.t("male") },
     { gender: I18n.t("female") },
-    { gender: I18n.t("specifyGender") }
+    { gender: I18n.t("preferNotToDisclose") }
   ];
 };
 

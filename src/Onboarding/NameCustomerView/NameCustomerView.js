@@ -7,7 +7,13 @@ import {
   registerDevice
 } from "../../Ducks/RegistrationCustomerReducer";
 
-import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, Header } from "react-native-elements";
@@ -70,7 +76,7 @@ class NameCustomerView extends Component {
       this.props.registerDevice().then(response => {
         if (response.type !== "networkErrors/error") {
           this.props.navigation.dispatch({
-            type: "PreferredNameCustomerView"
+            type: "LanguageCustomerView"
           });
         } else {
           const errorMessage = response.payload.response.data.errors[0];
@@ -117,7 +123,7 @@ class NameCustomerView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
+          alwaysBounceVertical={false}
           style={styles.scrollContainer}
         >
           <Grid>
@@ -134,7 +140,7 @@ class NameCustomerView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
-                  <TopViewIOS/> 
+                  <TopViewIOS />
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -146,8 +152,6 @@ class NameCustomerView extends Component {
                   <Text style={styles.mainTitle}>
                     {this.props.mainTitle} {this.props.lastname}
                   </Text>
-                  {/* subtitle */}
-                  <Text style={styles.mainSubtitle}>{this.getSubtitle()}</Text>
                 </Col>
               </Row>
 
@@ -179,6 +183,22 @@ class NameCustomerView extends Component {
                   maxLength={20}
                   value={this.props.lastname}
                 />
+              </View>
+
+              <View style={styles.containerView}>
+                {/* Prefered Name */}
+                <InputRegular
+                  containerStyle={styles.containerInput}
+                  placeholder={I18n.t("preferredName")}
+                  value={this.props.preferredName}
+                  onChangeText={text =>
+                    this.props.updateForm({ preferredName: text })
+                  }
+                  maxLength={20}
+                />
+                <Text style={styles.formText}>
+                  {I18n.t("preferredLinguistText")}
+                </Text>
               </View>
             </Col>
           </Grid>

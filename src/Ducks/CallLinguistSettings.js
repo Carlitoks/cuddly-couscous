@@ -57,7 +57,7 @@ export const getInvitations = () => (dispatch, getState) => {
     Sessions.GetInvitations(uuid, token)
       .then(response => {
         const length = response.data.length;
-
+        console.log(response.data);
         // There's at least one call. Let's get the most recent one
         if (length > 0) {
           // We order the invitations by Date

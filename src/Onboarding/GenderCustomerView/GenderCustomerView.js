@@ -9,15 +9,16 @@ import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
 
 import { logInAsync } from "../../Ducks/AuthReducer";
 
-import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import {
-  Button,
-  Header,
-  List,
-  ListItem
-} from "react-native-elements";
+import { Button, Header, List, ListItem } from "react-native-elements";
 import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
@@ -135,7 +136,7 @@ class GenderCustomerView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
+          alwaysBounceVertical={false}
           style={styles.scrollContainer}
         >
           <Grid>
@@ -152,7 +153,7 @@ class GenderCustomerView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
-                  <TopViewIOS/>   
+                  <TopViewIOS />
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -193,7 +194,7 @@ class GenderCustomerView extends Component {
           </Grid>
         </ScrollView>
         {/* Next Button */}
-        <BottomButton title={I18n.t("create")} onPress={() => this.submit()} />
+        <BottomButton title={I18n.t("finish")} onPress={() => this.submit()} />
       </ViewWrapper>
     );
   }

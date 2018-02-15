@@ -8,7 +8,13 @@ import {
 } from "../../Ducks/RegistrationCustomerReducer";
 import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
 
-import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, FormInput, Header } from "react-native-elements";
@@ -134,7 +140,7 @@ class EmailCustomerView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
+          alwaysBounceVertical={false}
           style={styles.scrollContainer}
         >
           <Grid>
@@ -151,7 +157,7 @@ class EmailCustomerView extends Component {
                 />
                 <Col>
                   {/* Header - Navigation */}
-                  <TopViewIOS/>  
+                  <TopViewIOS />
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
                     backgroundColor="transparent"
@@ -162,10 +168,6 @@ class EmailCustomerView extends Component {
                   {/* Enter your Name */}
                   <Text style={styles.mainTitle}>
                     {I18n.t("linguistEmailTitle")}
-                  </Text>
-                  {/* subtitle */}
-                  <Text style={styles.mainSubtitle}>
-                    {I18n.t("linguistEmailSubtitle")}
                   </Text>
                 </Col>
               </Row>
