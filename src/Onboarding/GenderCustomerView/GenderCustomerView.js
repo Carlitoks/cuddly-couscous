@@ -23,7 +23,8 @@ import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
@@ -134,65 +135,45 @@ class GenderCustomerView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false}
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          title={I18n.t("genderName")}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS />
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
-                  />
-                  {/* Enter your Name */}
-                  <Text style={styles.mainTitle}>{I18n.t("genderName")}</Text>
-                </Col>
-              </Row>
-              <List containerStyle={{ borderTopWidth: 0 }}>
-                {genders.map((item, i) => (
-                  <ListItem
-                    key={i}
-                    containerStyle={styles.genderItem}
-                    title={item.gender}
-                    hideChevron={
-                      this.props.selectedGender === "" ||
-                      this.props.selectedGender !== item.gender
-                    }
-                    titleStyle={{ fontSize: 20 }}
-                    rightIcon={
-                      this.props.selectedGender !== ""
-                        ? {
-                            name: "check",
-                            style: styles.genderCheck
-                          }
-                        : undefined
-                    }
-                    onPress={() => {
-                      this.props.updateForm({ selectedGender: item.gender });
-                    }}
-                  />
-                ))}
-              </List>
-            </Col>
-          </Grid>
-        </ScrollView>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+          >
+            <Grid>
+              <Col>
+                <List containerStyle={{ borderTopWidth: 0 }}>
+                  {genders.map((item, i) => (
+                    <ListItem
+                      key={i}
+                      containerStyle={styles.genderItem}
+                      title={item.gender}
+                      hideChevron={
+                        this.props.selectedGender === "" ||
+                        this.props.selectedGender !== item.gender
+                      }
+                      titleStyle={{ fontSize: 20 }}
+                      rightIcon={
+                        this.props.selectedGender !== ""
+                          ? {
+                              name: "check",
+                              style: styles.genderCheck
+                            }
+                          : undefined
+                      }
+                      onPress={() => {
+                        this.props.updateForm({ selectedGender: item.gender });
+                      }}
+                    />
+                  ))}
+                </List>
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton title={I18n.t("finish")} onPress={() => this.submit()} />
       </ViewWrapper>

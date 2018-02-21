@@ -23,6 +23,7 @@ import { topIOS } from "../../Util/Devices";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import { validatePhoneNumber } from "../../Util/Helpers.js";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
@@ -149,68 +150,72 @@ class PhoneCustomerView extends Component {
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          title={I18n.t("linguistNumber")}
+          subtitle={I18n.t("linguistNumberText")}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS/> 
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+          >
+            <Grid>
+              <Col>
+                <Row>
+                  {/* Linear Gradient */}
+                  <LinearGradient
+                    colors={[
+                      Colors.gradientColor.top,
+                      Colors.gradientColor.middle,
+                      Colors.gradientColor.bottom
+                    ]}
+                    style={styles.linearGradient}
                   />
-                  {/* Enter phone number */}
-                  <Text style={styles.mainTitle}>{I18n.t("linguistNumber")}</Text>
-                  {/* subtitle */}
-                  <Text style={styles.mainSubtitle}>
-                    {I18n.t("linguistNumberText")}
-                  </Text>
-                </Col>
-              </Row>
-              <View style={styles.phoneSection}>
-                <Badge
-                  value="+1"
-                  containerStyle={styles.tagCode}
-                  textStyle={styles.codeText}
-                />
-                {/* Phone Number */}
-                <InputRegular
-                containerStyle={styles.containerInput}
-                placeholder="(201) 555-0132"
-                value={this.props.phoneNumber}
-                onChangeText={number => {
-                  const phoneNumber = this.mask(number);
-                  this.props.updateForm({
-                    phoneNumber
-                  });
-                }}
-                maxLength={14}
-                keyboardType={
-                  Platform.OS === "ios" ? "number-pad" : "numeric"
-                }
-                autoFocus={true}
-                />
-              </View>
-            </Col>
-          </Grid>
-        </ScrollView>
+                  <Col>
+                    {/* Header - Navigation */}
+                    <Header
+                      outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+                      backgroundColor="transparent"
+                      leftComponent={
+                        <GoBackButton navigation={this.props.navigation} />
+                      }
+                    />
+                    {/* Enter phone number */}
+                    <Text style={styles.mainTitle}>{I18n.t("linguistNumber")}</Text>
+                    {/* subtitle */}
+                    <Text style={styles.mainSubtitle}>
+                      {I18n.t("linguistNumberText")}
+                    </Text>
+                  </Col>
+                </Row>
+                <View style={styles.phoneSection}>
+                  <Badge
+                    value="+1"
+                    containerStyle={styles.tagCode}
+                    textStyle={styles.codeText}
+                  />
+                  {/* Phone Number */}
+                  <InputRegular
+                  containerStyle={styles.containerInput}
+                  placeholder="(201) 555-0132"
+                  value={this.props.phoneNumber}
+                  onChangeText={number => {
+                    const phoneNumber = this.mask(number);
+                    this.props.updateForm({
+                      phoneNumber
+                    });
+                  }}
+                  maxLength={14}
+                  keyboardType={
+                    Platform.OS === "ios" ? "number-pad" : "numeric"
+                  }
+                  autoFocus={true}
+                  />
+                </View>
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("create")}

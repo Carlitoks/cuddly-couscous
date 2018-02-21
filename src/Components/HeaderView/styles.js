@@ -77,6 +77,12 @@ export default StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "transparent"
   },
+  avatarTitleBold: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: Colors.primaryColor,
+    marginTop: scale(-60)
+  },
   badgeContainer: {
     backgroundColor: "white",
     height: 30,
@@ -123,6 +129,25 @@ export default StyleSheet.create({
     marginLeft: 30,
     flex: 1
   },
+  avatarStarsContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    marginRight: 30,
+    marginTop: 10,
+    alignSelf: "center",
+    alignItems: "center",
+    marginLeft: 30,
+    flex: 1
+  },
+  avatarBoldTitleContainer: {
+    justifyContent: "flex-start",
+    marginRight: 30,
+    marginTop: 10,
+    alignSelf: "center",
+    alignItems: "center",
+    marginLeft: 30,
+    flex: 1
+  },
   statusContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -135,6 +160,23 @@ export default StyleSheet.create({
     marginLeft: moderateScale(15),
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
+  tabTextStyle: {
+    fontFamily: Fonts.primaryBaseFont,
+    color: Colors.primaryLightFillColor,
+    fontSize: 12
+  },
+  tabStyle: {
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: Colors.primaryColor
+  },
+  tabsContainerStyle: {
+    marginLeft: moderateScale(33),
+    marginRight: moderateScale(33),
+    width: "55%",
+    alignSelf: "center",
+    marginBottom: moderateScale(30)
+  },
   mainButtons: {
     flex: 1,
     height: 500,
@@ -142,7 +184,11 @@ export default StyleSheet.create({
     backgroundColor: Colors.primaryColor,
     paddingTop: 20,
     paddingBottom: 20,
-    elevation: 3
+    ...Platform.select({
+      android: {
+        elevation: 3
+      }
+    })
   },
   scanQRImage: {
     width: 30,
@@ -172,15 +218,17 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    top: 120,
+    top: 310,
     left: "5%",
     width: "90%",
     height: 50,
     borderRadius: 150,
     backgroundColor: "transparent",
-    elevation: 4,
-    zIndex: 1111,
-    overflow: "visible"
+    ...Platform.select({
+      android: {
+        elevation: 4
+      }
+    })
   },
   gradientConnectMeNow: {
     borderRadius: 150

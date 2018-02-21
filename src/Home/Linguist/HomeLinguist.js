@@ -106,17 +106,14 @@ class Home extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={
-            <ShowMenuButton navigation={this.props.navigation} />
-          }
-          headerCenterComponent={{
-            text: firstName + " " + lastName,
-            style: styles.title
-          }}
+          headerLeftComponent={<ShowMenuButton navigation={this.props.navigation} />}
+          headerCenterComponent={{text: firstName + " " + lastName, style: styles.title}}
+          headerRightComponent={<SettingsButton navigation={this.props.navigation} />}
           photoSelect={avatar => this.uploadAvatar(avatar)}
-          avatarSource={this.selectImage}
+          avatarSource={this.selectImage()}
           avatarHeight={150}
           bigAvatar={true}
+          badge={true}
           stars={rate ? rate : 0}
           status={available}
           switchOnChange={available => this.props.changeStatus()}

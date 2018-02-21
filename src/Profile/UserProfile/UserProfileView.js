@@ -362,7 +362,7 @@ class UserProfileView extends Component {
             style: styles.title
           }}
           photoSelect={avatar => this.uploadAvatar(avatar)}
-          avatarSource={this.selectImage}
+          avatarSource={this.selectImage()}
           avatarHeight={150}
           bigAvatar={true}
         >

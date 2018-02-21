@@ -1,4 +1,3 @@
-
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
@@ -13,15 +12,17 @@ import StarRating from "react-native-star-rating";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import _isUndefined from "lodash/isUndefined";
+import moment from "moment";
 
 import I18n from "../../I18n/I18n";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { styles } from "./styles";
 import { Images, Colors } from "../../Themes";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 import Languages from "../../Config/Languages";
 import LinearGradient from "react-native-linear-gradient";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+import { moderateScale } from "../../Util/Scaling";
 
 class SessionInfoView extends Component {
   componentWillMount() {
@@ -48,107 +49,96 @@ class SessionInfoView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
-          {/* Linguist Information */}
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                <TopViewIOS/>
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
-                  />
-                  <Row style={styles.linguistAvatar}>
-                    <Col>
-                      <Avatar
-                        xlarge
-                        containerStyle={styles.avatarContent}
-                        rounded
-                        source={
-                          sessionInfo.avatarURL
-                            ? {
-                                uri: `${IMAGE_STORAGE_URL}${
-                                  sessionInfo.avatarURL
-                                }`
-                              }
-                            : Images.avatar
-                        }
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
+          avatarSource={
+            sessionInfo.avatarURL
+              ? {
+                  uri: `${IMAGE_STORAGE_URL}${sessionInfo.avatarURL}`
+                }
+              : Images.avatar
+          }
+          avatarHeight={150}
+          bigAvatar={true}
+          avatarTitle={sessionInfo.firstName + " " + sessionInfo.lastInitial}
+          stars={sessionInfo.rating ? sessionInfo.rating : 0}
+        >
+          <ScrollView automaticallyAdjustContentInsets={true}>
+            {/* Linguist Information */}
+            <Grid>
+              <Col>
+                <Grid style={styles.callContainer}>
+                  <Row style={styles.callInformation}>
+                    <Col style={styles.alignIcon}>
+                      <Icon
+                        color={Colors.iconHistory}
+                        style={styles.iconStyle}
+                        name="ios-chatbubbles"
+                        size={40}
                       />
                     </Col>
                     <Col>
-                      <Text style={styles.linguistName}>
-                        {sessionInfo.firstName} {sessionInfo.lastInitial}
+                      <Text style={styles.textLinguist}>
+                        {primaryLang} , {secondLang}
                       </Text>
-                      <View style={styles.starContainer}>
-                        <StarRating
-                          emptyStar={"ios-star"}
-                          fullStar={"ios-star"}
-                          halfStar={"ios-star-half"}
-                          iconSet={"Ionicons"}
-                          disabled={false}
-                          rating={sessionInfo.rating ? sessionInfo.rating : 0}
-                          maxStars={5}
-                          starSize={25}
-                          emptyStarColor={Colors.emptyStarColor}
-                          starColor={Colors.starColor}
-                        />
-                      </View>
                     </Col>
                   </Row>
-                </Col>
-              </Row>
+                </Grid>
 
-              <Grid style={styles.callContainer}>
-                <Row style={styles.callInformation}>
-                  <Col style={styles.alignIcon}>
-                    <Icon
-                      color={Colors.iconHistory}
-                      style={styles.iconStyle}
-                      name="ios-chatbubbles"
-                      size={40}
-                    />
-                  </Col>
-                  <Col>
-                    <Text style={styles.textLinguist}>
-                      {primaryLang} , {secondLang}
-                    </Text>
-                  </Col>
-                </Row>
-              </Grid>
-
-              <Grid>
-                <Row style={styles.callInformation}>
-                  <Col style={styles.alignIcon}>
-                    <Icon
-                      color={Colors.iconHistory}
-                      style={styles.iconStyle}
-                      name="ios-clock"
-                      size={40}
-                    />
-                  </Col>
-                  <Col>
-                    <Text style={styles.textLinguist}>
-                      {sessionInfo.duration}
-                    </Text>
-                  </Col>
-                </Row>
-              </Grid>
-            </Col>
-          </Grid>
-        </ScrollView>
+                <Grid>
+                  <Row style={styles.callInformation}>
+                    <Col style={styles.alignIcon}>
+                      <Icon
+                        color={Colors.iconHistory}
+                        style={styles.iconStyle}
+                        name="ios-clock"
+                        size={40}
+                      />
+                    </Col>
+                    <Col>
+                      <Text style={styles.textLinguist}>
+                        {sessionInfo.duration >= 60
+                          ? `${moment
+                              .utc(sessionInfo.duration * 1000)
+                              .format("mm:ss")} mins`
+                          : `${moment
+                              .utc(sessionInfo.duration * 1000)
+                              .format("mm:ss")} seconds`}
+                      </Text>
+                    </Col>
+                  </Row>
+                </Grid>
+                {sessionInfo.scenario ? (
+                  <Grid>
+                    <Row style={styles.callInformation}>
+                      <Col style={styles.alignIcon}>
+                        <Icon
+                          color={Colors.iconHistory}
+                          style={styles.iconStyle}
+                          name="ios-clock"
+                          size={40}
+                        />
+                      </Col>
+                      <Col>
+                        <Text style={styles.textLinguist}>
+                          {sessionInfo.duration >= 60
+                            ? `${moment
+                                .utc(sessionInfo.duration * 1000)
+                                .format("mm:ss")} mins`
+                            : `${moment
+                                .utc(sessionInfo.duration * 1000)
+                                .format("mm:ss")} seconds`}
+                        </Text>
+                      </Col>
+                    </Row>
+                  </Grid>
+                ) : null}
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
       </ViewWrapper>
     );
   }
@@ -156,7 +146,7 @@ class SessionInfoView extends Component {
 
 // to be used when we have the Endpoint
 const mS = state => ({
-  sessionId: state.callCustomerSettings.sessionID,
+  sessionId: state.tokbox.sessionID,
   token: state.auth.token,
   sessionInfo: state.sessionInfo.info
 });

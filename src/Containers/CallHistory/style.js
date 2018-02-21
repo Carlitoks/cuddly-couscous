@@ -1,13 +1,10 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
-import DeviceInfo from "react-native-device-info";
-import { moderateScale } from "../../Util/Scaling";
+import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 
 const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
-const IphoneX = DeviceInfo.getModel() == "iPhone X";
-const heightTab = IphoneX ? parseInt(height * 0.08) : parseInt(height * 0.04);
-export const styles = StyleSheet.create({
+
+export default StyleSheet.create({
   container: {
     flex: 1,
     width: width
@@ -18,17 +15,17 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(20),
     marginTop: moderateScale(10),
-    color: Colors.primaryColor,
-    backgroundColor: "transparent"
+    color: Colors.primaryColor
   },
   tabTextStyle: {
+    fontFamily: Fonts.primaryBaseFont,
     color: Colors.primaryLightFillColor,
-    fontWeight: "bold"
+    fontSize: 12
   },
   tabStyle: {
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: "white"
+    borderColor: Colors.primaryColor
   },
   tabsContainerStyle: {
     marginLeft: moderateScale(33),

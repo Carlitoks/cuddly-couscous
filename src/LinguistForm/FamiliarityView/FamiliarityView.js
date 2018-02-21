@@ -119,7 +119,7 @@ class FamiliarityView extends Component {
             </Text>
 
             <List containerStyle={styles.marginBottom20}>
-              {this.props.selectedCitizenship[0] && (
+              {this.props.selectedCountryFamiliarity[0] && (
                 <ListItem
                   key={this.props.selectedCitizenship[0].name}
                   title={this.props.selectedCitizenship[0].name}

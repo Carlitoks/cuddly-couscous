@@ -5,6 +5,7 @@ import UserInfo from "../UserInfo/UserInfo";
 import { Images } from "../../Themes";
 import _isUndefined from "lodash/isUndefined";
 import styles from "./styles";
+import moment from "moment";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 
 export class CallHistoryComponent extends Component {
@@ -13,7 +14,7 @@ export class CallHistoryComponent extends Component {
   };
 
   render() {
-    const navigation = this.props.navigation; 
+    const navigation = this.props.navigation;
     return (
       <List containerStyle={styles.containerList}>
         <FlatList
@@ -28,7 +29,13 @@ export class CallHistoryComponent extends Component {
                 />
               }
               hideChevron={item.chevron}
-              subtitle={item.duration}
+              subtitle={
+                item.duration >= 60
+                  ? `${moment.utc(item.duration * 1000).format("mm:ss")} mins`
+                  : `${moment
+                      .utc(item.duration * 1000)
+                      .format("mm:ss")} seconds`
+              }
               avatar={
                 item.avatarURL
                   ? { uri: `${IMAGE_STORAGE_URL}${item.avatarURL}` }

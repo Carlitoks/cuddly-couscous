@@ -28,29 +28,29 @@ class SelectRoleView extends Component {
 
     return (
       <ViewWrapper style={{ flex: 1 }}>
-          <Grid>
-            <Col>
-              {/* Linear Gradient */}
-              <LinearGradient
-                colors={[
-                  Colors.gradientColor.top,
-                  Colors.gradientColor.middle,
-                  Colors.gradientColor.bottom
-                ]}
-                style={styles.linearGradient}
-              />
-                      <ScrollView
-          automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}
-          alwaysBounceVertical={false} 
-          contentContainerStyle={styles.contentScrollContainer}
-          bounce="false"
-        >
-              <TopViewIOS/>   
+        <Grid>
+          <Col>
+            {/* Linear Gradient */}
+            <LinearGradient
+              colors={[
+                Colors.gradientColor.top,
+                Colors.gradientColor.middle,
+                Colors.gradientColor.bottom
+              ]}
+              style={styles.linearGradient}
+            />
+            <ScrollView
+              automaticallyAdjustContentInsets={true}
+              style={styles.scrollContainer}
+              alwaysBounceVertical={false}
+              contentContainerStyle={styles.contentScrollContainer}
+              bounce="false"
+            >
+              <TopViewIOS />
               {/* OnVoy Logo */}
-              <Text style={[styles.logo, styles.center]} source={Images.logo}> 
+              <Text style={[styles.logo, styles.center]} source={Images.logo}>
                 MeYu
-              </Text> 
+              </Text>
 
               {/* Card */}
               <Card
@@ -116,9 +116,9 @@ class SelectRoleView extends Component {
                   {I18n.t("signIn")}
                 </Text>
               </Text>
-              </ScrollView>
-            </Col>
-          </Grid>
+            </ScrollView>
+          </Col>
+        </Grid>
       </ViewWrapper>
     );
   }

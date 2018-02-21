@@ -99,9 +99,9 @@ class Home extends Component {
           }
           //headerRightComponent={<SettingsButton navigation={this.props.navigation} />}
           photoSelect={avatar => this.uploadAvatar(avatar)}
-          avatarSource={this.selectImage}
+          avatarSource={this.selectImage()}
           avatarHeight={150}
-          avatarTitle={firstName}
+          avatarTitle={I18n.t("hi") + " " + firstName + "!"}
           connectMe={true}
           navigation={navigation}>
           <ScrollView

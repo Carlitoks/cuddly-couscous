@@ -180,6 +180,11 @@ class SelectListView extends Component {
               ? text => this.props.updateSettings({ searchQuery: text })
               : null
           }
+          clearSearch={
+            !!showSearch
+              ? text => this.props.updateSettings({ searchQuery: "" })
+              : null
+          }
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}

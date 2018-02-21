@@ -22,6 +22,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
@@ -65,50 +66,33 @@ class LanguageCustomerView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
-          <View style={styles.headerContainer}>
-            {/* Linear Gradient */}
-            <LinearGradient
-              colors={[
-                Colors.gradientColor.top,
-                Colors.gradientColor.middle,
-                Colors.gradientColor.bottom
-              ]}
-              style={styles.linearGradient}
-            />
-            {/* Header - Navigation */}
-            <TopViewIOS/> 
-            <Header
-              outerContainerStyles={styles.header}
-              backgroundColor="transparent"
-              leftComponent={
-                <GoBackButton navigation={this.props.navigation} />
-              }
-            />
-            <Text style={styles.windowTitle}>{I18n.t("nativeLanguage")}</Text>
-          </View>
+        <HeaderView
+          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          title={I18n.t("nativeLanguage")}
+        >
+          <ScrollView automaticallyAdjustContentInsets={true}>
+            {/* Native Language */}
+            <Text style={styles.nativeLanguageTitle}>
+              {I18n.t("nativeLanguage")}
+            </Text>
 
-          {/* Native Language */}
-          <Text style={styles.nativeLanguageTitle}>
-            {I18n.t("nativeLanguage")}
-          </Text>
-
-          <List containerStyle={styles.marginBottom10}>
-            {this.props.selectedNativeLanguage[0] && (
-              <ListItem
-                key={selectedNativeLanguage[0].code}
-                title={selectedNativeLanguage[0].name}
-                onPress={() => {
-                  this.props.updateSettings({
-                    selectionItemType: "languages",
-                    selectionItemName: "nativeLanguage"
-                  });
-                  this.props.navigation.dispatch({ type: "SelectListView" });
-                }}
-              />
-            )}
-          </List>
-        </ScrollView>
+            <List containerStyle={styles.marginBottom10}>
+              {this.props.selectedNativeLanguage[0] && (
+                <ListItem
+                  key={selectedNativeLanguage[0].code}
+                  title={selectedNativeLanguage[0].name}
+                  onPress={() => {
+                    this.props.updateSettings({
+                      selectionItemType: "languages",
+                      selectionItemName: "nativeLanguage"
+                    });
+                    this.props.navigation.dispatch({ type: "SelectListView" });
+                  }}
+                />
+              )}
+            </List>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("next")}

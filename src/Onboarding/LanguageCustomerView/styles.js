@@ -36,6 +36,7 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   nativeLanguageTitle: {
+    marginTop: 20,
     paddingLeft: 10
   },
   marginBottom10: {

@@ -24,7 +24,8 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -138,86 +139,65 @@ class EmailCustomerView extends Component {
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false}
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          title={I18n.t("linguistEmailTitle")}
+          subtitle={I18n.t("linguistEmailSubtitle")}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS />
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+          >
+            <Grid>
+              <Col>
+                <View>
+                  {/* Email */}
+                  <InputRegular
+                    containerStyle={styles.containerInput}
+                    placeholder={I18n.t("linguistEmail")}
+                    autoCorrect={false}
+                    onChangeText={text => this.props.updateForm({ email: text })}
+                    value={this.props.email}
+                    keyboardType={"email-address"}
+                    maxLength={64}
+                    autoFocus={true}
                   />
-                  {/* Enter your Name */}
-                  <Text style={styles.mainTitle}>
-                    {I18n.t("linguistEmailTitle")}
-                  </Text>
-                </Col>
-              </Row>
-              <View>
-                {/* Email */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("linguistEmail")}
-                  autoCorrect={false}
-                  onChangeText={text => this.props.updateForm({ email: text })}
-                  value={this.props.email}
-                  keyboardType={"email-address"}
-                  maxLength={64}
-                  autoFocus={true}
-                />
 
-                <Text style={styles.formText}>
-                  {I18n.t("emailCustomerText")}
-                  <Text
-                    style={styles.links}
-                    onPress={() => {
-                      this.props.navigation.dispatch({
-                        type: "StaticView",
-                        params: {
-                          uri: PrivacyPolicyURI,
-                          title: I18n.t("privacyPolicy")
-                        }
-                      });
-                    }}
-                  >
-                    {I18n.t("termsOfUse")}
-                  </Text>{" "}
-                  {I18n.t("confirmEighteen")}
-                </Text>
-                <Text style={[styles.formText]}>
-                  {I18n.t("alreadyAccount")}
-                  <Text
-                    style={[styles.links]}
-                    onPress={() =>
-                      this.props.navigation.dispatch({ type: "LoginView" })
-                    }
-                  >
-                    {" "}
-                    {I18n.t("signIn")}
+                  <Text style={styles.formText}>
+                    {I18n.t("emailCustomerText")}
+                    <Text
+                      style={styles.links}
+                      onPress={() => {
+                        this.props.navigation.dispatch({
+                          type: "StaticView",
+                          params: {
+                            uri: PrivacyPolicyURI,
+                            title: I18n.t("privacyPolicy")
+                          }
+                        });
+                      }}
+                    >
+                      {I18n.t("termsOfUse")}
+                    </Text>{" "}
+                    {I18n.t("confirmEighteen")}
                   </Text>
-                </Text>
-              </View>
-            </Col>
-          </Grid>
-        </ScrollView>
+                  <Text style={[styles.formText]}>
+                    {I18n.t("alreadyAccount")}
+                    <Text
+                      style={[styles.links]}
+                      onPress={() =>
+                        this.props.navigation.dispatch({ type: "LoginView" })
+                      }
+                    >
+                      {" "}
+                      {I18n.t("signIn")}
+                    </Text>
+                  </Text>
+                </View>
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton title={I18n.t("next")} onPress={() => this.submit()} />
       </ViewWrapper>

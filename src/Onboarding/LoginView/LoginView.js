@@ -9,7 +9,12 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { topIOS } from "../../Util/Devices";
 import { clearForm, updateForm } from "../../Ducks/LoginReducer";
-import { logInAsync, haveSession } from "../../Ducks/AuthReducer";
+import {
+  logInAsync,
+  haveSession,
+  registerDevice
+} from "../../Ducks/AuthReducer";
+
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
@@ -79,17 +84,21 @@ class LoginView extends Component {
     this.props.updateForm({ performingRequest: true });
 
     if (this.validateForm()) {
-      this.props.logInAsync(this.props.email, this.props.password).then(() => {
-        if (!this.props.formHasErrors) {
-          this.props.navigation.dispatch({ type: "Home" });
-        } else {
-          if (this.props.formHasErrors) {
-            this.tempDisplayErrors(
-              this.props.emailErrorMessage,
-              this.props.passwordErrorMessage
-            );
-          }
-        }
+      this.props.registerDevice().then(() => {
+        this.props
+          .logInAsync(this.props.email, this.props.password)
+          .then(() => {
+            if (!this.props.formHasErrors) {
+              this.props.navigation.dispatch({ type: "Home" });
+            } else {
+              if (this.props.formHasErrors) {
+                this.tempDisplayErrors(
+                  this.props.emailErrorMessage,
+                  this.props.passwordErrorMessage
+                );
+              }
+            }
+          });
       });
     }
 
@@ -201,7 +210,8 @@ const mD = {
   clearForm,
   updateForm,
   logInAsync,
-  haveSession
+  haveSession,
+  registerDevice
 };
 
 export default connect(mS, mD)(LoginView);

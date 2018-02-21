@@ -16,7 +16,8 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
@@ -83,58 +84,35 @@ class NameCustomerView extends Component {
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          style={styles.scrollContainer}
+        <HeaderView
+          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          title={I18n.t("preferredName")}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS />
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+          >
+            <Grid>
+              <Col>
+                <View style={styles.containerView}>
+                  {/* Prefered Name */}
+                  <InputRegular
+                    containerStyle={styles.containerInput}
+                    placeholder={I18n.t("preferredName")}
+                    value={this.props.preferredName}
+                    onChangeText={text =>
+                      this.props.updateForm({ preferredName: text })
                     }
+                    maxLength={20}
                   />
-                  <Text style={styles.mainTitle}>
-                    {I18n.t("preferredName")}
+                  <Text style={styles.formText}>
+                    {I18n.t("preferredLinguistText")}
                   </Text>
-                  {/* subtitle */}
-                  <Text style={styles.mainSubtitle}>{""}</Text>
-                </Col>
-              </Row>
-
-              <View style={styles.containerView}>
-                {/* Prefered Name */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("preferredName")}
-                  value={this.props.preferredName}
-                  onChangeText={text =>
-                    this.props.updateForm({ preferredName: text })
-                  }
-                  maxLength={20}
-                />
-                <Text style={styles.formText}>
-                  {I18n.t("preferredLinguistText")}
-                </Text>
-              </View>
-            </Col>
-          </Grid>
-        </ScrollView>
+                </View>
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("next")}

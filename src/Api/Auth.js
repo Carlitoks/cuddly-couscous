@@ -3,11 +3,18 @@ import AXIOS from "../Config/AxiosConfig";
 const BASE_URI = "/auth";
 
 const Auth = {
-  login: (email, password) => {
-    return AXIOS.post(`${BASE_URI}/user`, {
-      email: email,
-      password: password
-    });
+  login: (email, password, token) => {
+    const headers = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+    return AXIOS.post(
+      `${BASE_URI}/user`,
+      {
+        email: email,
+        password: password
+      },
+      token ? headers : undefined
+    );
   },
 
   //endpoint not Implemented

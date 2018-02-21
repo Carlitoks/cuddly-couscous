@@ -27,6 +27,7 @@ import { styles } from "./styles";
 import { Images, Colors } from "../../../Themes";
 import LinearGradient from "react-native-linear-gradient";
 import GoBackButton from "../../../Components/GoBackButton/GoBackButton";
+import HeaderView from "../../../Components/HeaderView/HeaderView";
 
 class CallConfirmationView extends Component {
   render() {

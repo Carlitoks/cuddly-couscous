@@ -24,28 +24,24 @@ export const styles = StyleSheet.create({
     marginLeft: 20
   },
   linguistInformation: {
-    alignItems: "flex-start",
-    backgroundColor:"transparent"
+    alignItems: "flex-start"
   },
   linguistName: {
     fontSize: 25,
     fontWeight: "bold",
     color: Colors.primaryColor,
     marginLeft: 30,
-    marginTop: 25,
-    backgroundColor:"transparent"
+    marginTop: 25
   },
   linguistAddress: {
     fontSize: 16,
     fontWeight: "bold",
     color: Colors.primaryColor,
     flexDirection: "column",
-    alignItems: "flex-end",
-    backgroundColor:"transparent"
+    alignItems: "flex-end"
   },
   starContainer: {
-    width: "70%",
-    backgroundColor:"transparent"
+    width: "70%"
   },
   callContainer: {
     marginTop: 30

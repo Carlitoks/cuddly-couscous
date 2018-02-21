@@ -13,6 +13,7 @@ import LinearGradient from "react-native-linear-gradient";
 import { topIOS } from "../../Util/Devices";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import BottomButton from "../../Components/BottomButton/BottomButton";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -26,40 +27,18 @@ class CheckYourEmailView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false}
-          style={styles.scrollContainer}
+        <HeaderView
+          title={I18n.t("forgotPassword")}
         >
-          <Grid>
-            <Col>
-              <Row>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                  {/* Header - Navigation */}
-                  <TopViewIOS />
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                  />
-                  {/* Title */}
-                  <Text style={styles.title}>{I18n.t("forgotPassword")}</Text>
-                </Col>
-              </Row>
-            </Col>
-          </Grid>
-          <View style={styles.checkEmailContainer}>
-            <Text style={styles.checkEmail}>{I18n.t("checkYourEmail")}</Text>
-          </View>
-        </ScrollView>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+          >
+            <View style={styles.checkEmailContainer}>
+              <Text style={styles.checkEmail}>{I18n.t("checkYourEmail")}</Text>
+            </View>
+          </ScrollView>
+        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("signIn")}
