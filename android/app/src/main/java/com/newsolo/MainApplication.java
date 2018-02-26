@@ -3,6 +3,8 @@ package com.newsolo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.horcrux.svg.SvgPackage;
+import com.evollu.react.fcm.FIRMessagingPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
@@ -39,6 +41,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SvgPackage(),
+            new FIRMessagingPackage(),
             new BackgroundTimerPackage(),
             new ReactNativePushNotificationPackage(),
             new KCKeepAwakePackage(),

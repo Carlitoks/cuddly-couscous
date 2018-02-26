@@ -1,45 +1,39 @@
 import React, { Component } from "react";
 
 //COMPONENTS
-import {
-  Text,
-  View,
-  ScrollView,
-  Image,
-  ActivityIndicator,
-  Alert
-} from "react-native";
+import { Text, View, ScrollView, Image, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { PermissionsAndroid } from "react-native";
 import { CallButton } from "../../../Components/CallButton/CallButton";
+
 // STYLE AND THEMES
 import styles from "./styles";
 import { Images } from "../../../Themes";
-import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
+
 // REDUCERS
 import { connect } from "react-redux";
-import { tokDisConnect } from "../../../Ducks/tokboxReducer";
-import {
-  AsyncCreateSession,
-  updateSettings,
-  EndCall,
-  AsyncCreateInvitation,
-  clearSettings
-} from "../../../Ducks/CallCustomerSettings";
+import { updateSettings } from "../../../Ducks/CallCustomerSettings";
+import I18n from "../../../I18n/I18n";
+
 import {
   setPermission,
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
-import I18n from "../../../I18n/I18n";
+
+import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
 
 class ContactingLinguist extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      customerName: this.props.customerName,
-      customerLocation: this.props.customerLocation
-    };
+  }
+  componentWillMount() {
+    this.props.callTimeOut();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.tokboxStatus === STATUS_TOKBOX.STREAM) {
+      clearInterval(this.props.counterId);
+    }
   }
 
   render() {
@@ -47,18 +41,19 @@ class ContactingLinguist extends Component {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
-        alwaysBounceVertical={false}
         style={styles.scrollContainer}
         contentContainerStyle={styles.contentContainerStyle}
+        alwaysBounceVertical={false}
       >
         {/* Background Image */}
         <View style={styles.backgroundView} />
         <Grid>
-          <TopViewIOS />
           <Col style={{ justifyContent: "space-between" }}>
             {/* Top Container */}
             <Row style={styles.topContainer}>
-              <ActivityIndicator size="large" color="white" />
+              {!this.props.modalReconnect && (
+                <ActivityIndicator size="large" color="white" />
+              )}
 
               <Text style={styles.callerNameText}>
                 {I18n.t("contactingLinguist")}
@@ -89,23 +84,14 @@ class ContactingLinguist extends Component {
                   buttonSize={65}
                   iconSize={30}
                 />
+                {/* End Call */}
                 <CallButton
                   onPress={() => {
-                    this.props.EndCall(
-                      this.props.sessionID,
-                      "cancel",
-                      this.props.token
-                    );
-                    this.props.tokDisConnect(
-                      this.props.customerTokboxSessionID
-                    );
-                    this.props.navigation.dispatch({ type: "Home" });
+                    this.props.closeCall(REASON.CANCEL, true);
                   }}
                   buttonColor="red"
                   toggle={false}
                   icon="call-end"
-                  buttonSize={65}
-                  iconSize={30}
                 />
                 <CallButton
                   onPress={() => {
@@ -158,21 +144,13 @@ const mS = state => ({
   mute: state.callCustomerSettings.mute,
   video: state.callCustomerSettings.video,
   speaker: state.callCustomerSettings.speaker,
+  counterId: state.contactLinguist.counterId,
   tokboxStatus: state.tokbox.status,
-  sessionID: state.callCustomerSettings.sessionID,
-  customerTokboxSessionID: state.callCustomerSettings.customerTokboxSessionID,
-  customerTokboxSessionToken:
-    state.callCustomerSettings.customerTokboxSessionID,
-  token: state.auth.token
+  modalReconnect: state.contactLinguist.modalReconnect
 });
 
 const mD = {
-  EndCall,
-  clearSettings,
-  AsyncCreateSession,
-  updateSettings,
-  AsyncCreateInvitation,
-  tokDisConnect
+  updateSettings
 };
 
 export default connect(mS, mD)(ContactingLinguist);

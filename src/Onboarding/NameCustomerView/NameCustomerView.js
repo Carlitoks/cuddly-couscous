@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  updateForm,
-  clearForm,
-  registerDevice
-} from "../../Ducks/RegistrationCustomerReducer";
+import { updateForm, clearForm } from "../../Ducks/RegistrationCustomerReducer";
 
 import {
   View,
@@ -72,20 +68,11 @@ class NameCustomerView extends Component {
   }
 
   submit() {
-    this.props.updateForm({ performingRequest: true });
     if (this.validateForm()) {
-      this.props.registerDevice().then(response => {
-        if (response.type !== "networkErrors/error") {
-          this.props.navigation.dispatch({
-            type: "LanguageCustomerView"
-          });
-        } else {
-          const errorMessage = response.payload.response.data.errors[0];
-          Alert.alert("error", errorMessage);
-        }
+      this.props.navigation.dispatch({
+        type: "LanguageCustomerView"
       });
     }
-    this.props.updateForm({ performingRequest: false });
   }
 
   getSubtitle = () => {
@@ -123,13 +110,16 @@ class NameCustomerView extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
           title={this.props.mainTitle + " " + this.props.lastname}
           subtitle={this.getSubtitle()}
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             <Grid>
               <Col>
@@ -150,18 +140,32 @@ class NameCustomerView extends Component {
                   />
                 </View>
 
-                <View style={styles.containerView}>
-                  {/* Last Name */}
-                  <InputRegular
-                    containerStyle={styles.containerInput}
-                    placeholder={I18n.t("linguistLastName")}
-                    onChangeText={text =>
-                      this.props.updateForm({ lastname: text })
-                    }
-                    maxLength={20}
-                    value={this.props.lastname}
-                  />
-                </View>
+                {/* Last Name */}
+                <InputRegular
+                  containerStyle={styles.containerInput}
+                  placeholder={I18n.t("linguistLastName")}
+                  onChangeText={text =>
+                    this.props.updateForm({ lastname: text })
+                  }
+                  maxLength={20}
+                  value={this.props.lastname}
+                  sec
+                />
+
+                {/* Prefered Name */}
+                <InputRegular
+                  containerStyle={styles.containerInput}
+                  placeholder={I18n.t("preferredName")}
+                  value={this.props.preferredName}
+                  onChangeText={text =>
+                    this.props.updateForm({ preferredName: text })
+                  }
+                  maxLength={20}
+                  sec
+                />
+                <Text style={styles.formText}>
+                  {I18n.t("preferredLinguistText")}
+                </Text>
               </Col>
             </Grid>
           </ScrollView>
@@ -187,8 +191,7 @@ const mS = state => ({
 
 const mD = {
   updateForm,
-  clearForm,
-  registerDevice
+  clearForm
 };
 
 export default connect(mS, mD)(NameCustomerView);

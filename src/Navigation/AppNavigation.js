@@ -15,6 +15,7 @@ import PreferredNameCustomerView from "../Onboarding/PreferredNameCustomerView/P
 import EmailCustomerView from "../Onboarding/EmailCustomerView/EmailCustomerView";
 import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
 import GenderCustomerView from "../Onboarding/GenderCustomerView/GenderCustomerView";
+import WelcomeCustomerView from "../Onboarding/WelcomeCustomerView/WelcomeCustomerView";
 import PhoneCustomerView from "../Onboarding/PhoneCustomerView/PhoneCustomerView";
 import LanguageCustomerView from "../Onboarding/LanguageCustomerView/LanguageCustomerView";
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
@@ -48,12 +49,13 @@ import FamiliarityView from "../LinguistForm/FamiliarityView/FamiliarityView";
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
 import CallSettings from "../CallSettings/CallSettings";
-import ScanScreenView from "../Containers/ScanScreenView";
+import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
 import StaticView from "../StaticView/StaticView";
 
 import CustomScenarioView from "../Home/CustomScenario/CustomScenarioView";
+import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 
 const Navigation = StackNavigator(
   {
@@ -107,6 +109,13 @@ const Navigation = StackNavigator(
     },
     PhoneCustomerView: {
       screen: PhoneCustomerView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    WelcomeCustomerView: {
+      screen: WelcomeCustomerView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
@@ -206,7 +215,13 @@ const Navigation = StackNavigator(
       }
     },
     Profile: { screen: Profile },
-    ScanScreenView: { screen: ScanScreenView },
+    ScanScreenView: {
+      screen: ScanScreenView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
     SelectLanguageView: {
       screen: SelectLanguageView,
       navigationOptions: {
@@ -248,7 +263,14 @@ const Navigation = StackNavigator(
     CallSettings: { screen: CallSettings },
     UserProfileView: { screen: UserProfileView },
     CallConfirmationView: { screen: CallConfirmationView },
-    SessionDetails: { screen: SessionDetails }
+    SessionDetails: { screen: SessionDetails },
+    PromoCodeView: {
+      screen: PromoCodeView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    }
   },
   {
     initialRouteName: "SelectRoleView",

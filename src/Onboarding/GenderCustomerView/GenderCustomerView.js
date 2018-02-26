@@ -6,8 +6,7 @@ import {
   updateForm
 } from "../../Ducks/RegistrationCustomerReducer";
 import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
-
-import { logInAsync } from "../../Ducks/AuthReducer";
+import { logInAsync, registerDevice } from "../../Ducks/AuthReducer";
 
 import {
   View,
@@ -57,14 +56,6 @@ class GenderCustomerView extends Component {
     return valid;
   }
 
-  submit() {
-    const { navigation } = this.props;
-
-    if (this.validateForm()) {
-      navigation.dispatch({ type: "LanguageCustomerView" });
-    }
-  }
-
   // Will be changed according the designs
   tempDisplayErrors(...errors) {
     const errorStr = errors.reduce((last, current) => {
@@ -96,9 +87,20 @@ class GenderCustomerView extends Component {
   }
 
   showError(err) {
-    console.log(err);
     const errorMessage = err.payload.response.data.errors[0];
-    Alert.alert("error", errorMessage);
+    Alert.alert(
+      I18n.t("error"),
+      errorMessage,
+      [
+        {
+          text: I18n.t("ok"),
+          onPress: async () => {
+            this.props.navigation.dispatch({ type: "EmailCustomerView" });
+          }
+        }
+      ],
+      { cancelable: false }
+    );
   }
 
   loginUser() {
@@ -106,25 +108,34 @@ class GenderCustomerView extends Component {
       .logInAsync(this.props.email, this.props.password)
       .then(response => {
         if (response.type !== "networkErrors/error") {
-          this.props.navigation.dispatch({ type: "Home" });
+          this.props.navigation.dispatch({ type: "WelcomeCustomerView" });
         } else {
           this.showError(response);
         }
       });
   }
 
-  submit() {
-    this.props.updateForm({
+  async submit() {
+    await this.props.updateForm({
       performingRequest: true
     });
 
-    this.registerUser().then(response => {
+    this.props.registerDevice().then(response => {
       if (response.type !== "networkErrors/error") {
-        this.loginUser();
+        this.registerUser().then(response => {
+          if (response.type !== "networkErrors/error") {
+            this.loginUser();
+          } else {
+            this.showError(response);
+          }
+        });
       } else {
         this.showError(response);
       }
     });
+  }
+
+  componentWillMount() {
     this.props.updateForm({
       performingRequest: false
     });
@@ -136,7 +147,9 @@ class GenderCustomerView extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
           title={I18n.t("genderName")}
         >
           <ScrollView
@@ -175,7 +188,11 @@ class GenderCustomerView extends Component {
           </ScrollView>
         </HeaderView>
         {/* Next Button */}
-        <BottomButton title={I18n.t("finish")} onPress={() => this.submit()} />
+        <BottomButton
+          disabled={this.props.performingRequest}
+          title={I18n.t("finish")}
+          onPress={() => this.submit()}
+        />
       </ViewWrapper>
     );
   }
@@ -191,13 +208,15 @@ const mS = state => ({
   deviceToken: state.registrationCustomer.deviceToken,
   email: state.registrationCustomer.email,
   password: state.registrationCustomer.password,
-  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage
+  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage,
+  performingRequest: state.registrationCustomer.performingRequest
 });
 
 const mD = {
   GetOptions,
   updateForm,
   logInAsync,
+  registerDevice,
   asyncCreateUser
 };
 

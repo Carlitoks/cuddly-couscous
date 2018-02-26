@@ -8,6 +8,10 @@ import {
   clearView,
   updateView
 } from "../../Ducks/UserProfileReducer";
+import {
+  EndCall,
+  closeOpenConnections
+} from "../../Ducks/CallCustomerSettings";
 
 import { getCategories } from "../../Ducks/HomeFlowReducer";
 import PhotoUpload from "react-native-photo-upload";
@@ -40,20 +44,26 @@ import { Colors, Images, Fonts } from "../../Themes";
 import I18n from "../../I18n/I18n";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 import { moderateScale } from "../../Util/Scaling";
+import { REASON } from "../../Util/Constants";
 
 class Home extends Component {
   componentWillMount() {
+    if (this.props.tokbox && this.props.networkInfoType !== "none") {
+      this.props.closeOpenConnections();
+    }
     const { firstName, lastName, getCategories } = this.props;
 
     if (!firstName && !lastName) {
       this.props.getProfileAsync(this.props.uuid, this.props.token);
     }
 
-    getCategories();
+    getCategories(this.props.token);
   }
 
-  componentWillUnmount() {
-    // this.props.clearView();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.networkInfoType !== "none" && this.props.sessionID) {
+      this.props.EndCall(this.props.sessionID, REASON.CANCEL, this.props.token);
+    }
   }
 
   onStarRatingPress(rating) {
@@ -101,13 +111,13 @@ class Home extends Component {
           photoSelect={avatar => this.uploadAvatar(avatar)}
           avatarSource={this.selectImage()}
           avatarHeight={150}
-          avatarTitle={I18n.t("hi") + " " + firstName + "!"}
+          avatarTitle={`${I18n.t("hi")} ${firstName}!`}
           connectMe={true}
-          navigation={navigation}>
+          navigation={navigation}
+        >
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
-            alwaysBounceVertical={false}
           >
             <Grid>
               <Col>
@@ -118,8 +128,8 @@ class Home extends Component {
                       <View style={styles.tilesGrid}>
                         {this.props.categories.map((item, i) => (
                           <TileButton
-                            iconName={item.icon}
-                            label={item.name}
+                            iconName={item}
+                            label={item}
                             key={i}
                             navigation={navigation}
                             viewName="ContactLinguist"
@@ -131,7 +141,7 @@ class Home extends Component {
                               });
                               this.props.navigation.dispatch({
                                 type: "SelectListView",
-                                params: { category: item.name }
+                                params: { category: item }
                               });
                             }}
                           />
@@ -157,7 +167,11 @@ const mS = state => ({
   uuid: state.auth.uuid,
   token: state.auth.token,
   rate: state.userProfile.averageStarRating,
-  categories: state.homeFlow.categories
+  categories: state.homeFlow.categories,
+  sessionID: state.tokbox.sessionID,
+  networkInfoType: state.networkInfo.type,
+  tokbox: state.tokbox.tokboxID,
+  invitationID: state.callCustomerSettings.invitationID
 });
 
 const mD = {
@@ -166,7 +180,9 @@ const mD = {
   getProfileAsync,
   asyncUploadAvatar,
   updateSelectionList,
-  getCategories
+  getCategories,
+  EndCall,
+  closeOpenConnections
 };
 
 export default connect(mS, mD)(Home);

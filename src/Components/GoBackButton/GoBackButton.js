@@ -13,8 +13,8 @@ const GoBackButton = ({ navigation }) => {
       {/* Back Arrow - Go back button */}
       <Icon
         style={styles.Icon}
-        name="arrow-back"
-        size={moderateScale(30)}
+        name="chevron-left"
+        size={moderateScale(40)}
         onPress={() => navigation.dispatch({ type: "back" })}
       />
     </Col>

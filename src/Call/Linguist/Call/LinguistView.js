@@ -1,18 +1,22 @@
 import React, { Component, Ref } from "react";
-import { AppRegistry, Button, View, Image, Text } from "react-native";
+import { Button, View, Image, Text } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint-disable-line
 import KeepAwake from "react-native-keep-awake";
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
-import {
-  setPermission,
-  displayOpenSettingsAlert
-} from "../../../Util/Permission";
 import { Images } from "../../../Themes";
 import { CallButton } from "../../../Components/CallButton/CallButton";
+import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 import I18n from "../../../I18n/I18n";
-import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
+
+import {
+  updateSettings as updateContactLinguistSettings,
+  clearSettings as clearCallSettings,
+  resetCounter,
+  incrementCounter
+} from "../../../Ducks/ContactLinguistReducer";
 import {
   updateSettings,
   incrementTimer,
@@ -27,38 +31,43 @@ import {
   BackgroundStart
 } from "../../../Util/Background";
 import { fmtMSS } from "../../../Util/Helpers";
+import {
+  setPermission,
+  displayOpenSettingsAlert
+} from "../../../Util/Permission";
+import { REASON, TIME } from "../../../Util/Constants";
 
-import { tokDisConnect, tokConnect } from "../../../Ducks/tokboxReducer";
+import { tokDisConnect, tokConnect, clear } from "../../../Ducks/tokboxReducer";
 import { IMAGE_STORAGE_URL } from "../../../Config/env";
 
 class LinguistView extends Component {
   navigate = this.props.navigation.navigate;
   ref: Ref<Publisher>;
 
-  componentDidMount() {
-    const {
-      linguistTokboxSessionToken,
-      linguistTokboxSessionID,
-      tokConnect,
-      sessionID
-    } = this.props;
-  }
-
   componentWillMount() {
     BackgroundStart();
+  }
+  async componentDidMount() {
     const {
       linguistTokboxSessionToken,
       linguistTokboxSessionID,
       tokConnect,
       sessionID
     } = this.props;
-
-    tokConnect(linguistTokboxSessionID, linguistTokboxSessionToken);
+    await tokConnect(linguistTokboxSessionID, linguistTokboxSessionToken);
   }
 
   componentWillUnmount() {
-    this.props.resetTimerAsync();
     BackgroundCleanInterval(this.props.timer);
+    this.props.resetTimerAsync();
+    clearInterval(this.props.counterId);
+    this.props.resetCounter();
+    OpenTok.disconnectAll();
+    /*
+    if (this.props.networkInfoType !== "none") {
+      this.props.clear();
+      this.props.clearSettings(); // clean call info
+    }*/
   }
 
   selectImage = () => {
@@ -73,16 +82,47 @@ class LinguistView extends Component {
 
   startTimer = () => {
     this.props.updateSettings({
-      timer: setInterval(() => {
+      timer: BackgroundInterval(() => {
         this.props.incrementTimer();
       }, 1000)
+    });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.networkInfoType === "none") {
+      this.props.navigation.dispatch({ type: "Home" });
+    }
+
+    if (nextProps.counter > TIME.HIDEMODAL && this.props.counterId) {
+      clearInterval(this.props.counterId);
+      this.props.resetCounter();
+      this.closeCall();
+    }
+  }
+
+  closeCall = async () => {
+    const { linguistTokboxSessionID, sessionID, token } = this.props;
+
+    await this.props.tokDisConnect(linguistTokboxSessionID);
+
+    this.props.navigation.dispatch({ type: "Home" });
+
+    this.props.clear();
+    this.props.clearSettings();
+    this.props.clearCallSettings();
+  };
+
+  callTimeOut = () => {
+    const { incrementCounter } = this.props;
+    this.props.updateContactLinguistSettings({
+      counterId: setInterval(() => incrementCounter(), 1000)
     });
   };
 
   render() {
     return (
       <View style={styles.containerT}>
-        <KeepAwake />
+        <ModalReconnect closeCall={this.closeCall} />
         <View style={styles.backgroundContainer}>
           <Subscriber
             sessionId={this.props.linguistTokboxSessionID}
@@ -90,29 +130,43 @@ class LinguistView extends Component {
             mute={!this.props.speaker}
             onSubscribeStart={() => {
               console.log("Sub Started");
+              this.props.updateContactLinguistSettings({
+                modalReconnect: false
+              });
+              clearInterval(this.props.counterId);
             }}
             onSubscribeError={() => {
               console.log("Sub Error");
             }}
+            onSubscribeStop={() => {
+              console.log("SubscriberStop");
+              BackgroundCleanInterval(this.props.timer);
+              this.props.updateContactLinguistSettings({
+                modalReconnect: true
+              });
+              this.callTimeOut();
+            }}
           />
         </View>
         <View style={styles.publisherBox}>
-          <Publisher
-            sessionId={this.props.linguistTokboxSessionID}
-            style={styles.publisher}
-            mute={this.props.mute}
-            video={this.props.video}
-            ref={ref => {
-              this.ref = ref;
-            }}
-            onPublishStart={() => {
-              this.startTimer();
-              console.log("publish started");
-            }}
-            onPublishError={() => {
-              console.log("publish error");
-            }}
-          />
+          {this.props.linguistTokboxSessionID && (
+            <Publisher
+              sessionId={this.props.linguistTokboxSessionID}
+              style={styles.publisher}
+              mute={this.props.mute}
+              video={this.props.video}
+              ref={ref => {
+                this.ref = ref;
+              }}
+              onPublishStart={() => {
+                this.startTimer();
+                console.log("publish started");
+              }}
+              onPublishError={() => {
+                console.log("publish error");
+              }}
+            />
+          )}
         </View>
         <View style={styles.topContainer}>
           <TopViewIOS />
@@ -158,10 +212,11 @@ class LinguistView extends Component {
           />
           <CallButton
             onPress={async () => {
+              // start timer requst status session, wait 5 s
               await OpenTok.sendSignal(
                 this.props.linguistTokboxSessionID,
                 "EndCall",
-                "done"
+                REASON.DONE
               );
             }}
             buttonColor="red"
@@ -176,9 +231,9 @@ class LinguistView extends Component {
                 if (response == "denied" || response == "restricted") {
                   displayOpenSettingsAlert();
                 }
-              });
-              this.props.updateSettings({
-                mute: !this.props.mute
+                this.props.updateSettings({
+                  mute: !this.props.mute
+                });
               });
             }}
             toggle={true}
@@ -195,9 +250,9 @@ class LinguistView extends Component {
                 if (response == "denied" || response == "restricted") {
                   displayOpenSettingsAlert();
                 }
-              });
-              this.props.updateSettings({
-                video: !this.props.video
+                this.props.updateSettings({
+                  video: !this.props.video
+                });
               });
             }}
             toggle={true}
@@ -210,6 +265,7 @@ class LinguistView extends Component {
             linguistTokboxSessionToken
           />
         </View>
+        <KeepAwake />
       </View>
     );
   }
@@ -221,13 +277,15 @@ const mS = state => ({
   speaker: state.callLinguistSettings.speaker,
   timer: state.callLinguistSettings.timer,
   elapsedTime: state.callLinguistSettings.elapsedTime,
-  linguistTokboxSessionToken:
-    state.callLinguistSettings.linguistTokboxSessionToken,
-  linguistTokboxSessionID: state.callLinguistSettings.linguistTokboxSessionID,
-  sessionID: state.callLinguistSettings.sessionID,
-  avatarURL: state.callLinguistSettings.avatarURL,
+  linguistTokboxSessionToken: state.tokbox.tokboxToken,
+  linguistTokboxSessionID: state.tokbox.tokboxID,
+  sessionID: state.tokbox.sessionID,
+  token: state.auth.token,
+  networkInfoType: state.networkInfo.type,
   customerName: state.callLinguistSettings.customerName,
-  token: state.auth.token
+  avatarURL: state.callLinguistSettings.avatarURL,
+  counter: state.contactLinguist.counter,
+  counterId: state.contactLinguist.counterId
 });
 
 const mD = {
@@ -237,7 +295,12 @@ const mD = {
   EndCall,
   clearSettings,
   tokConnect,
-  tokDisConnect
+  tokDisConnect,
+  updateContactLinguistSettings,
+  resetCounter,
+  incrementCounter,
+  clearCallSettings,
+  clear
 };
 
 export default connect(mS, mD)(LinguistView);

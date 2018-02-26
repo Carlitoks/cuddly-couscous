@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  updateForm,
-  clearForm,
-  registerDevice
-} from "../../Ducks/RegistrationCustomerReducer";
+import { updateForm, clearForm } from "../../Ducks/RegistrationCustomerReducer";
 import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
 
 import {
@@ -25,6 +21,7 @@ import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
+import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
@@ -69,55 +66,13 @@ class EmailCustomerView extends Component {
     return valid;
   }
 
-  showError(err) {
-    const errorMessage = err.payload.response.data.errors[0];
-    Alert.alert("Error", _capitalize(errorMessage));
-  }
-
-  registerUser() {
-    const { email, asyncCreateUser, deviceToken } = this.props;
-    const uinfo = { email };
-
-    return asyncCreateUser(uinfo, deviceToken);
-  }
-
-  checkResponse(response) {
-    if (response.type === "networkErrors/error") {
-      throw response;
-    }
-  }
-
   submit() {
     const { registerDevice, navigation } = this.props;
 
     if (this.validateForm()) {
-      // this.props.updateForm({
-      //   performingRequest: true
-      // });
-      // registerDevice()
-      //   .then(response => {
-      //     this.checkResponse(response);
-      //     const { email, deviceToken, asyncCreateUser } = this.props;
-      //     return asyncCreateUser({ email }, deviceToken);
-      //   })
-      //   .then(response => {
-      //     this.checkResponse(response);
-      //     console.log(response.payload.id);
-      //     this.props.updateForm({
-      //       id: response.payload.id
-      //     });
       navigation.dispatch({
         type: "PasswordCustomerView"
       });
-      //   })
-      //   .catch(err => {
-      //     this.showError(err);
-      //   })
-      //   .finally(() => {
-      //     this.props.updateForm({
-      //       performingRequest: false
-      //     });
-      //   });
     }
   }
 
@@ -131,8 +86,8 @@ class EmailCustomerView extends Component {
       return last.concat(curr);
     }, "");
 
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
+    Alert.alert(I18n.t("error"), errorStr, [
+      { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
     ]);
   }
 
@@ -140,13 +95,16 @@ class EmailCustomerView extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
           title={I18n.t("linguistEmailTitle")}
           subtitle={I18n.t("linguistEmailSubtitle")}
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             <Grid>
               <Col>
@@ -156,7 +114,9 @@ class EmailCustomerView extends Component {
                     containerStyle={styles.containerInput}
                     placeholder={I18n.t("linguistEmail")}
                     autoCorrect={false}
-                    onChangeText={text => this.props.updateForm({ email: text })}
+                    onChangeText={text =>
+                      this.props.updateForm({ email: text })
+                    }
                     value={this.props.email}
                     keyboardType={"email-address"}
                     maxLength={64}
@@ -207,13 +167,11 @@ class EmailCustomerView extends Component {
 
 const mS = state => ({
   email: state.registrationCustomer.email,
-  deviceToken: state.registrationCustomer.deviceToken,
   formHasErrors: state.registrationCustomer.formHasErrors
 });
 
 const mD = {
   updateForm,
-  registerDevice,
   clearForm,
   asyncCreateUser
 };

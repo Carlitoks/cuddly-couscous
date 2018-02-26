@@ -7,12 +7,17 @@ import HomeCustomer from "./Customer/HomeCustomer";
 import HomeLinguist from "./Linguist/HomeLinguist";
 import LoginView from "../Onboarding/LoginView/LoginView";
 import { getProfileAsync } from "../Ducks/UserProfileReducer";
+import PushNotifications from "../Util/PushNotification";
+
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { HomeView: null };
   }
+
   componentWillMount() {
+    PushNotifications.getNotificationsBackground();
+
     if (!this.props.isLoggedIn) {
       this.props.navigation.dispatch({ type: "LoginView" });
     } else {

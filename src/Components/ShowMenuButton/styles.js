@@ -6,12 +6,11 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
   Icon: {
     color: Colors.primaryColor,
-    padding: 20,
-    paddingLeft: 0
+    padding: 0
   },
   container: {
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   }
 });

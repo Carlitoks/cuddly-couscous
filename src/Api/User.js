@@ -23,7 +23,6 @@ const User = {
     });
   },
 
-
   del: (id, token) => {
     return AXIOS.delete(`${BASE_URI}/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -53,8 +52,8 @@ const User = {
     });
   },
   updateDevice: (userId, deviceId, token, payload) => {
-    return AXIOS.put(`${BASE_URI}/${userId}/devices/${deviceId}`, payload, {
-      headers: { Authorization: `Bearer ${token}`}
+    return AXIOS.patch(`${BASE_URI}/${userId}/devices/${deviceId}`, payload, {
+      headers: { Authorization: `Bearer ${token}` }
     });
   }
 };

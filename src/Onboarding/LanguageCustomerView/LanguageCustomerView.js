@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateForm } from "../../Ducks/RegistrationCustomerReducer";
-import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
-import { topIOS } from "../../Util/Devices";
+
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, View, ScrollView, Image, Alert, KeyboardAvoidingView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -45,21 +44,6 @@ class LanguageCustomerView extends Component {
     this.props.updateSettings({ selectedNativeLanguage });
   }
 
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
-  }
-
   render() {
     const navigation = this.props.navigation;
     const { selectedNativeLanguage } = this.props;
@@ -67,7 +51,9 @@ class LanguageCustomerView extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
           title={I18n.t("nativeLanguage")}
         >
           <ScrollView automaticallyAdjustContentInsets={true}>
@@ -111,7 +97,6 @@ const mS = state => ({
 // MAP DISPATCH TO PROPS HERE
 const mD = {
   updateSettings,
-  asyncCreateUser,
   updateForm
 };
 

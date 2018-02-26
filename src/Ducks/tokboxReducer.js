@@ -1,19 +1,16 @@
 import OpenTok from "react-native-opentok";
 import { EndCall } from "./CallCustomerSettings";
-import { resetTimerAsync, clearSettings } from "./CallLinguistSettings";
+import { updateSettings } from "./ContactLinguistReducer";
+import { clearSettings } from "./CallLinguistSettings";
+import { REASON, STATUS_TOKBOX } from "../Util/Constants";
+import { Sessions } from "../Api";
 
 const ACTIONS = {
   CLEAR: "tokbox/clear",
   UPDATE: "tokbox/update",
   ERROR: "tokbox/error",
-  TOKEVENT: "tokbox/tokboxevent"
-};
-
-const STATUS = {
-  DISCONECTED: 0,
-  CONECTED: 1,
-  ERROR: 2,
-  STREAM: 3
+  TOKEVENT: "tokbox/tokboxevent",
+  SET_SESSION: "tokbox/setSession"
 };
 
 export const clear = () => ({
@@ -35,10 +32,16 @@ export const error = error => ({
   payload: error
 });
 
+export const setSession = payload => ({
+  type: ACTIONS.SET_SESSION,
+  payload
+});
+
 const initialState = {
-  tokboxID: "",
-  tokboxToken: "",
-  status: STATUS.DISCONECTED,
+  sessionID: null,
+  tokboxID: null,
+  tokboxToken: null,
+  status: STATUS_TOKBOX.DISCONECTED,
   error: null,
   tokevent: null
 };
@@ -52,14 +55,13 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
         update({
           tokboxID: id,
           tokboxToken: token,
-          status: STATUS.CONECTED,
+          status: STATUS_TOKBOX.CONECTED,
           error: null
         })
       );
-
+      console.log("isLinguist", isLinguist);
       if (isLinguist) {
-        //console.log("SOY LINGÜISTA");
-        //OpenTok.sendSignal(id, "PickedCall", "done");
+        OpenTok.sendSignal(id, "PickedCall", REASON.DONE);
       }
     })
     .catch(error => {
@@ -67,7 +69,7 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
         update({
           tokboxID: id,
           tokboxToken: token,
-          status: STATUS.ERROR,
+          status: STATUS_TOKBOX.ERROR,
           error: null
         })
       );
@@ -83,11 +85,10 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
       // Customer receives signal from Linguist
 
       // switch(signal) {}
-
-      dispatch(
-        EndCall(state.callCustomerSettings.sessionID, "done", state.auth.token)
-      );
-      dispatch(tokDisConnect());
+      console.log("sessionID", state.tokbox.sessionID);
+      console.log("token", state.auth.token);
+      dispatch(EndCall(state.tokbox.sessionID, REASON.DONE, state.auth.token));
+      dispatch(tokDisConnect(state.tokbox.tokboxID));
     }
   });
 
@@ -129,9 +130,10 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
     if (isLinguist) {
       //
     } else {
+      dispatch(updateSettings({ modalReconnect: false }));
       dispatch(
         update({
-          status: STATUS.STREAM
+          status: STATUS_TOKBOX.STREAM
         })
       );
     }
@@ -141,13 +143,28 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
     console.log("ON_SESSION_STREAM_DESTROYED", e);
 
     if (isLinguist) {
-      OpenTok.disconnect(state.callLinguistSettings.linguistTokboxSessionID);
-      console.log("Clear");
-      dispatch(resetTimerAsync());
-      // dispatch(clearSettings());
-      dispatch({ type: "RateCallView" });
+      const { callLinguistSettings, auth } = getState();
+      Sessions.linguistFetchesInvite(
+        callLinguistSettings.invitationID,
+        auth.token
+      )
+        .then(response => {
+          const res = response.data;
+          if (!res.session.endReason) {
+            //
+          } else if (res.session.endReason === REASON.DONE) {
+            dispatch({ type: "RateCallView" });
+          } else {
+            dispatch(clearSettings());
+            dispatch(clear());
+            dispatch({ type: "Home" });
+          }
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
     } else {
-      //
+      dispatch(updateSettings({ modalReconnect: true }));
     }
   });
 
@@ -177,13 +194,14 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
     );
 
     if (isLinguist) {
-      //
+      // linguist
     } else {
-      //
+      dispatch(updateSettings({ modalReconnect: true }));
     }
   });
 
   OpenTok.on(OpenTok.events.ON_SESSION_DID_FAIL_WITH_ERROR, e => {
+    console.log("ON_SESSION_DID_FAIL_WITH_ERROR", e);
     dispatch(update({ error: e }));
     dispatch(
       opentok_event({
@@ -195,13 +213,13 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
     if (isLinguist) {
       //
     } else {
-      //
+      dispatch(updateSettings({ modalReconnect: true }));
     }
   });
 };
 
 export const tokDisConnect = id => (dispatch, getState) => {
-  OpenTok.disconnect(getState().callCustomerSettings.customerTokboxSessionID);
+  OpenTok.disconnect(id);
   OpenTok.removeListener(OpenTok.events.ON_SIGNAL_RECEIVED);
   OpenTok.removeListener(OpenTok.events.ON_SESSION_CONNECTION_CREATED);
   OpenTok.removeListener(OpenTok.events.ON_SESSION_CONNECTION_DESTROYED);
@@ -215,7 +233,7 @@ export const tokDisConnect = id => (dispatch, getState) => {
     update({
       tokboxID: null,
       tokboxToken: null,
-      status: STATUS.DISCONECTED
+      status: STATUS_TOKBOX.DISCONECTED
     })
   );
 };
@@ -234,6 +252,15 @@ const tokboxReducer = (state = initialState, action = {}) => {
 
     case ACTIONS.TOKEVENT: {
       return { ...state, tokevent: payload };
+    }
+
+    case ACTIONS.SET_SESSION: {
+      return {
+        ...state,
+        tokboxID: payload.tokboxSessionID,
+        tokboxToken: payload.tokboxSessionToken,
+        sessionID: payload.sessionID
+      };
     }
 
     default: {

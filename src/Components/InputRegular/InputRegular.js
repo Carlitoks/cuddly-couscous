@@ -8,7 +8,7 @@ import styles from "./styles";
  * @description Generic form input component
  *
  * Props:
-    containerStyle: Styke for the Form Container,
+    containerStyle: Style for the Form Container,
     placeholder: Placeholder text to show on input, 
     autoCorrect: Boolean to activate/deactivate autocorrect,
     onChangeText: Function to execute when text changes,
@@ -16,16 +16,18 @@ import styles from "./styles";
     keyboardType: Type of keyboard to show when input is focused,
     maxLength: Input's maximum length,
     secureTextEntry: Boolean to make text secure (password),
-    autoFocus: Boolean to focus on input automatically (false by default)
+    autoFocus: Boolean to focus on input automatically (false by default),
+    sec: Boolean that indicates this input is at least the second on the form (Change styles)
  *
  * @export
  * @class InputRegular
  * @extends {Component}
  */
-const InputRegular = ({ containerStyle, placeholder, autoCorrect, onChangeText, value, keyboardType, maxLength, secureTextEntry, autoFocus}) => {
+const InputRegular = ({ containerStyle, placeholder, autoCorrect, onChangeText, value, keyboardType, maxLength, secureTextEntry, autoFocus, sec}) => {
   return (
     <FormInput
-      containerStyle={containerStyle}
+      underlineColorAndroid="transparent"
+      containerStyle={[styles.container, !!sec ? styles.secondary : null]}
       placeholder={placeholder}
       autoCorrect={autoCorrect}
       onChangeText={onChangeText}

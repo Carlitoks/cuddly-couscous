@@ -24,6 +24,9 @@ target 'NewSolo' do
   pod 'react-native-keep-awake', :path => '../node_modules/react-native-keep-awake'
   pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+  pod 'Firebase/Messaging'
+
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
 end
 

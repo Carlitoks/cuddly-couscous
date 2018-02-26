@@ -4,7 +4,38 @@ PODS:
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - Fabric (1.7.2)
+  - Firebase/Core (4.7.0):
+    - FirebaseAnalytics (= 4.0.5)
+    - FirebaseCore (= 4.0.12)
+  - Firebase/Messaging (4.7.0):
+    - Firebase/Core
+    - FirebaseMessaging (= 2.0.7)
+  - FirebaseAnalytics (4.0.5):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - nanopb (~> 0.3)
+  - FirebaseCore (4.0.12):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (2.0.7)
+  - FirebaseMessaging (2.0.7):
+    - FirebaseAnalytics (~> 4.0)
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
+  - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/Logger (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
   - OpenTok (2.12.1)
+  - Protobuf (3.5.0)
   - React (0.50.4):
     - React/Core (= 0.50.4)
   - react-native-background-timer (2.0.0):
@@ -35,12 +66,15 @@ PODS:
   - RNOpenTok (2.0.1):
     - OpenTok
     - React
+  - RNSVG (6.2.2):
+    - React
   - yoga (0.50.4.React)
 
 DEPENDENCIES:
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - Crashlytics
   - Fabric
+  - Firebase/Messaging
   - React (from `../node_modules/react-native`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-camera (from `../node_modules/react-native-camera`)
@@ -53,6 +87,7 @@ DEPENDENCIES:
   - RNFS (from `../node_modules/react-native-fs`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNOpenTok (from `../node_modules/react-native-opentok/ios`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
 
 EXTERNAL SOURCES:
@@ -80,6 +115,8 @@ EXTERNAL SOURCES:
     :path: ../node_modules/react-native-i18n
   RNOpenTok:
     :path: ../node_modules/react-native-opentok/ios
+  RNSVG:
+    :path: ../node_modules/react-native-svg
   yoga:
     :path: ../node_modules/react-native/ReactCommon/yoga/yoga.podspec
 
@@ -87,7 +124,15 @@ SPEC CHECKSUMS:
   BVLinearGradient: 8913bd8fdc47b85abc801ae8bae007bbfb6b4ce5
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
+  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
+  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
+  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
+  FirebaseMessaging: 1a11d1c0a9ed9b3f75a0685bb0ae5932e1062f5f
+  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   OpenTok: 869a96d84104b9de2b525c2e8a2a809561b47cec
+  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   React: 6d7efef18e0241eb832cf4c085405169a15080ed
   react-native-background-timer: d95668546a9cb0cb80efcf54f4d48475434a3015
   react-native-camera: 804909544eaaf6959089f517b86c1b159a234dea
@@ -99,8 +144,9 @@ SPEC CHECKSUMS:
   RNFS: c44a045cb06c6a496a27f37bd1b50f2c36422cf3
   RNI18n: 155baa432934b0ca208f34de13834f4720e0cc12
   RNOpenTok: cab5e455f81cd13ec6ac52b8f126ab00800c803a
+  RNSVG: aeeb222dd9cf2268385306108c20cf364872f5d2
   yoga: b9aebf996711e50fc31f5608c10aa108a5a0c29e
 
-PODFILE CHECKSUM: d2376b35011e9f9dac49ab276ad1cf489ea9b2a2
+PODFILE CHECKSUM: a89f3442c7c9720014a49547e670b73576b87225
 
 COCOAPODS: 1.3.1

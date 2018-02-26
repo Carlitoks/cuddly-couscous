@@ -45,12 +45,7 @@ class RateCallView extends Component {
     } else return `Zhang W.`;
   }
 
-  componentWillUnmount() {
-    this.props.clearOptions();
-    this.props.clearCallCustomerSettings();
-    this.props.clearCallLinguistSettings();
-    this.props.clearContactLinguist();
-  }
+  componentWillUnmount() {}
 
   selectImage = () => {
     const { avatarURL, linguist } = this.props;
@@ -69,16 +64,9 @@ class RateCallView extends Component {
   };
 
   submit = () => {
-    const {
-      rating,
-      thumbsUp,
-      thumbsDown,
-      customerSessionId,
-      linguistSessionId
-    } = this.props;
+    const { rating, thumbsUp, thumbsDown, sessionID } = this.props;
 
     let rateInformation;
-    const sessionId = linguistSessionId ? linguistSessionId : customerSessionId;
 
     if (thumbsUp) {
       rateInformation = {
@@ -98,10 +86,18 @@ class RateCallView extends Component {
         stars: rating
       };
     }
-
+    console.log("sessionID", sessionID);
     this.props
-      .submitRateCall(rateInformation, sessionId, this.props.token)
+      .submitRateCall(rateInformation, sessionID, this.props.token)
       .then(response => {
+        this.props.navigation.dispatch({ type: "Home" });
+        this.props.clearOptions();
+        this.props.clearCallCustomerSettings();
+        this.props.clearCallLinguistSettings();
+        this.props.clearContactLinguist();
+      })
+      .catch(err => {
+        console.log(err.response);
         this.props.navigation.dispatch({ type: "Home" });
       });
   };
@@ -237,9 +233,12 @@ class RateCallView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView automaticallyAdjustContentInsets={true} alwaysBounceVertical={false} >
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          alwaysBounceVertical={false}
+        >
           {/* Linguist Information */}
-          <TopViewIOS/>
+          <TopViewIOS />
           <Grid style={styles.containerInformation}>
             <Col style={styles.linguistAvatar}>
               <Avatar
@@ -403,11 +402,9 @@ const mS = state => ({
   iconWifiSecondList: state.rateCall.iconWifiSecondList,
   iconPersonSecondList: state.rateCall.iconPersonSecondList,
   token: state.auth.token,
-  sessionId: state.callCustomerSettings.sessionID,
-  customerSessionId: state.callCustomerSettings.sessionID,
+  sessionID: state.tokbox.sessionID,
   customerName: state.callLinguistSettings.customerName,
   avatarURL: state.callLinguistSettings.avatarURL,
-  linguistSessionId: state.callLinguistSettings.sessionID,
   linguistProfile: state.userProfile.linguistProfile,
   linguist: state.sessionInfo.linguist
 });

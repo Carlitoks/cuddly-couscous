@@ -97,12 +97,13 @@ class LoginView extends Component {
                   this.props.passwordErrorMessage
                 );
               }
+              this.props.updateForm({ performingRequest: false });
             }
           });
       });
-    }
-
-    this.props.updateForm({ performingRequest: false });
+    }else{
+      this.props.updateForm({ performingRequest: false });
+    }    
   }
 
   // Will be changed according the designs
@@ -167,13 +168,15 @@ class LoginView extends Component {
                     })
                   }
                   value={this.props.password}
+                  sec
                 />
 
                 {/* Forgot Password */}
                 <Text
                   style={styles.forgotPasswordText}
-                  onPress={() =>
-                    navigation.dispatch({ type: "ForgotPasswordView" })
+                  onPress={!this.props.performingRequest ? () =>
+                     navigation.dispatch({ type: "ForgotPasswordView" }) 
+                    : null
                   }
                 >
                   {I18n.t("forgotPassword")}
@@ -183,13 +186,11 @@ class LoginView extends Component {
           </ScrollView>
         </HeaderView>
         {/* Sign In Button */}
+        {console.log("performingRequest",this.props.performingRequest)}
         <BottomButton
           title={I18n.t("signIn")}
           onPress={() => this.submit()}
           bold={true}
-          loading={this.props.performingRequest}
-          disabled={this.props.performingRequest}
-          disabledColor={Colors.primaryColorDisabled}
         />
       </ViewWrapper>
     );

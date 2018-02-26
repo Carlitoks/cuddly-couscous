@@ -5,6 +5,7 @@ import dataReducer from "./DataReducer";
 import auth from "./AuthReducer";
 import contactLinguist from "./ContactLinguistReducer";
 import forgotPassword from "./ForgotPasswordReducer";
+import resetPassword from "./ResetPasswordReducer";
 import login from "./LoginReducer";
 import networkInfo from "./NetworkInfoReducer";
 import networkErrors from "./NetworkErrorsReducer";
@@ -22,6 +23,8 @@ import sessionInfo from "./SessionInfoReducer";
 import events from "./EventsReducer";
 import homeFlow from "./HomeFlowReducer";
 import callHistory from "./CallHistoryReducer";
+import pushNotification from "./PushNotificationReducer";
+import promoCode from "./PromoCodeReducer";
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -33,6 +36,7 @@ const rootReducer = combineReducers({
   callHistory,
   contactLinguist,
   forgotPassword,
+  resetPassword,
   login,
   networkInfo,
   networkErrors,
@@ -45,7 +49,9 @@ const rootReducer = combineReducers({
   linguistForm,
   sessionInfo,
   events,
-  homeFlow
+  pushNotification,
+  homeFlow,
+  promoCode
 });
 
 export default rootReducer;

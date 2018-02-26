@@ -21,7 +21,7 @@ export const userinfoUpdate = payload => ({
 });
 
 export const asyncUpdateUser = (payload, token) => dispatch => {
-  const { id, password } = payload;
+  const { id } = payload;
   return User.update(id, { password }, token)
     .then(response => {
       return dispatch(userinfoUpdate(response.data));

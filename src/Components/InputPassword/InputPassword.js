@@ -37,13 +37,15 @@ class InputPassword extends Component {
       <View>
         <FormInput
           {...this.props}
+          underlineColorAndroid="transparent"
           autoCorrect={false}
           secureTextEntry={this.state.password}
           inputStyle={styles.formInput}
           placeholderTextColor={Colors.placeholderColor}
+          containerStyle={[styles.container, !!this.props.sec ? styles.secondary : null]}
         />
         <Icon
-          style={styles.icon}
+          style={[styles.icon, !!this.props.sec ? styles.iconSecondary : null]}
           name={this.state.iconEye}
           size={25}
           onPress={this.toggleVisibility}

@@ -2,46 +2,55 @@ import React, { Component, Ref } from "react";
 import { connect } from "react-redux";
 import OpenTok, { Publisher, Subscriber } from "react-native-opentok";
 import KeepAwake from "react-native-keep-awake";
-import Permissions from "react-native-permissions";
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import {
   updateSettings,
   AsyncCreateSession,
-  AsyncCreateInvitation,
   incrementTimer,
   resetTimerAsync,
   clearSettings,
   EndCall
 } from "../../../Ducks/CallCustomerSettings";
+import {
+  tokConnect,
+  tokDisConnect,
+  update,
+  clear
+} from "../../../Ducks/tokboxReducer";
+import {
+  clearSettings as clearCallSettings,
+  updateSettings as updateContactLinguistSettings,
+  resetCounter,
+  incrementCounter
+} from "../../../Ducks/ContactLinguistReducer";
 import { GetSessionInfoLinguist } from "../../../Ducks/SessionInfoReducer";
-import { tokConnect, tokDisConnect } from "../../../Ducks/tokboxReducer";
-import { clearSettings as clearCallSettings } from "../../../Ducks/ContactLinguistReducer";
-import { AppRegistry, Button, View, Text, Image, Switch } from "react-native";
+
+import { Button, View, Text, Image, Switch } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { CallButton } from "../../../Components/CallButton/CallButton";
-import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
+import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
+
 import { Colors, Images } from "../../../Themes";
 import { fmtMSS } from "../../../Util/Helpers";
 import styles from "./styles";
-import {
-  setPermission,
-  displayOpenSettingsAlert
-} from "../../..//Util/Permission";
+
 import I18n from "../../../I18n/I18n";
 import ContactingLinguistView from "../ContactingLinguist/ContactingLinguistView";
-
+import {
+  emitLocalNotification,
+  cleanNotifications
+} from "../../../Util/PushNotification";
 import {
   BackgroundInterval,
   BackgroundCleanInterval,
   BackgroundStart
 } from "../../../Util/Background";
+import {
+  setPermission,
+  displayOpenSettingsAlert
+} from "../../../Util/Permission";
 import { IMAGE_STORAGE_URL } from "../../../Config/env";
-
-const STATUS_TOKBOX = {
-  DISCONECTED: 0,
-  CONECTED: 1,
-  ERROR: 2,
-  STREAM: 3
-};
+import { REASON, STATUS_TOKBOX, TIME } from "../../../Util/Constants";
 
 class CustomerView extends Component {
   ref: Ref<Publisher>;
@@ -51,57 +60,9 @@ class CustomerView extends Component {
   }
 
   async componentDidMount() {
-    const {
-      customerTokboxSessionToken,
-      customerTokboxSessionID,
-      tokConnect,
-      sessionID,
-      selectedLanguageCode,
-      selectedTime,
-      selectedScenarioId,
-      token,
-      AsyncCreateSession,
-      updateSettings
-    } = this.props;
+    const { customerTokboxSessionToken, customerTokboxSessionID } = this.props;
 
-    // Generate calling notification
-
-    try {
-      const res = await AsyncCreateSession({
-        type: "immediate_virtual",
-        matchMethod: "manual",
-        primaryLangCode: "eng",
-        secundaryLangCode: selectedLanguageCode,
-        estimatedMinutes: selectedTime,
-        scenarioID: selectedScenarioId,
-        token: token
-      });
-
-      if (res) {
-        const tokboxSessionId = res.payload.tokboxSessionID;
-        const tokboxToken = res.payload.tokboxSessionToken;
-
-        await updateSettings({
-          customerTokboxSessionID: tokboxSessionId,
-          customerTokboxSessionToken: tokboxToken,
-          sessionID: res.payload.sessionID
-        });
-
-        const linguistID = "11111111-1111-1111-1111-111111111111";
-        const role = "linguist";
-
-        await this.props.AsyncCreateInvitation(
-          res.payload.sessionID,
-          linguistID,
-          role,
-          this.props.token
-        );
-
-        await tokConnect(tokboxSessionId, tokboxToken);
-      }
-    } catch (e) {
-      console.log("The session could not be created", e);
-    }
+    this.reconnectCall();
   }
 
   handleSessionInfoName() {
@@ -128,9 +89,29 @@ class CustomerView extends Component {
       : Images.avatar;
   };
   componentWillUnmount() {
-    BackgroundCleanInterval(this.props.timer);
-    this.props.resetTimerAsync();
-    this.props.clearCallSettings();
+    BackgroundCleanInterval(this.props.timer); // remove interval of timer
+    this.props.resetTimerAsync(); // reset call timer
+    clearInterval(this.props.counterId);
+    clearInterval(this.props.timer);
+    this.props.resetCounter();
+    OpenTok.disconnectAll();
+    /*
+    if (this.props.networkInfoType !== "none") {
+      this.props.clear();
+      this.props.clearSettings(); // clean call info
+    }*/
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.networkInfoType === "none") {
+      this.props.navigation.dispatch({ type: "Home" });
+    }
+
+    if (nextProps.counter > TIME.TIMEOUT && this.props.counterId) {
+      clearInterval(this.props.counterId);
+      this.props.resetCounter();
+      if (this.props.sessionID) this.closeCall(REASON.TIMEOUT, false);
+    }
   }
 
   startTimer = () => {
@@ -143,9 +124,7 @@ class CustomerView extends Component {
           this.props.elapsedTime > callTime &&
           !this.props.customerExtraTime
         ) {
-          OpenTok.disconnect(this.props.customerTokboxSessionID);
-          this.props.tokDisConnect(this.props.customerTokboxSessionID);
-          this.props.EndCall(sessionID, "done", token);
+          this.closeCall(REASON.DONE);
         } else {
           this.props.incrementTimer();
         }
@@ -153,9 +132,82 @@ class CustomerView extends Component {
     });
   };
 
+  reconnectCall = async () => {
+    const {
+      customerTokboxSessionToken,
+      customerTokboxSessionID,
+      tokConnect,
+      sessionID,
+      primaryLangCode,
+      secundaryLangCode,
+      selectedTime,
+      selectedScenarioId,
+      token,
+      AsyncCreateSession,
+      updateSettings
+    } = this.props;
+
+    try {
+      const res = await AsyncCreateSession({
+        type: "immediate_virtual",
+        matchMethod: "first_available",
+        primaryLangCode: primaryLangCode,
+        secundaryLangCode: secundaryLangCode,
+        estimatedMinutes: selectedTime,
+        scenarioID: selectedScenarioId,
+        token: token
+      });
+
+      if (res) {
+        const tokboxSessionId = res.payload.tokboxSessionID;
+        const tokboxToken = res.payload.tokboxSessionToken;
+
+        await tokConnect(tokboxSessionId, tokboxToken);
+      }
+    } catch (e) {
+      console.log("The session could not be created", e);
+    }
+  };
+
+  closeCall = async reason => {
+    const { customerTokboxSessionID, sessionID, token } = this.props;
+
+    clearInterval(this.props.counterId);
+    this.props.updateContactLinguistSettings({ modalReconnect: false });
+    this.props.resetCounter();
+
+    if (reason === REASON.RETRY) {
+      BackgroundCleanInterval(this.props.timer);
+      this.props.resetTimerAsync();
+      cleanNotifications(); // remove call notifications
+    }
+
+    if (
+      reason === REASON.CANCEL ||
+      reason === REASON.DONE ||
+      reason === REASON.TIMEOUT
+    ) {
+      await this.props.tokDisConnect(customerTokboxSessionID);
+    }
+
+    await this.props.EndCall(sessionID, reason, token);
+  };
+
+  callTimeOut = () => {
+    const { incrementCounter } = this.props;
+    this.props.updateContactLinguistSettings({
+      counterId: setInterval(() => incrementCounter(), 1000)
+    });
+  };
+
   render() {
     return (
       <View style={styles.containerT}>
+        <ModalReconnect
+          closeCall={this.closeCall}
+          callTimeOut={this.callTimeOut}
+          reconnectCall={this.reconnectCall}
+        />
         <View
           style={
             this.props.tokboxStatus === STATUS_TOKBOX.STREAM
@@ -170,14 +222,23 @@ class CustomerView extends Component {
                 style={styles.background}
                 mute={!this.props.speaker}
                 onSubscribeStart={() => {
-                  this.startTimer();
                   console.log("SubscriberStart");
+                  this.startTimer();
+                  this.props.updateContactLinguistSettings({
+                    modalReconnect: false
+                  });
+                  clearInterval(this.props.counterId);
                 }}
                 onSubscribeError={() => {
                   console.log("SubscriberError");
                 }}
                 onSubscribeStop={() => {
                   console.log("SubscriberStop");
+                  BackgroundCleanInterval(this.props.timer);
+                  this.props.updateContactLinguistSettings({
+                    modalReconnect: true
+                  });
+                  this.callTimeOut();
                 }}
               />
             )}
@@ -217,7 +278,6 @@ class CustomerView extends Component {
 
             <View style={styles.inlineContainer}>
               <Text style={styles.incomingCallText}>
-                {" "}
                 {fmtMSS(this.props.elapsedTime)}
               </Text>
             </View>
@@ -234,7 +294,11 @@ class CustomerView extends Component {
               thumbTintColor={Colors.thumbTintColor}
               tintColor={Colors.tintColor}
             />
-            <Text style={styles.extraTime}> {I18n.t("allowExtraTime")}</Text>
+            <Text style={styles.extraTime}>
+              {this.props.customerExtraTime
+                ? I18n.t("disableExtraTime")
+                : I18n.t("allowExtraTime")}
+            </Text>
           </View>
           <View style={styles.containerButtons}>
             <CallButton
@@ -262,13 +326,7 @@ class CustomerView extends Component {
             />
             <CallButton
               onPress={() => {
-                OpenTok.disconnect(this.props.customerTokboxSessionID);
-                this.props.tokDisConnect(this.props.customerTokboxSessionID);
-                this.props.EndCall(
-                  this.props.sessionID,
-                  "done",
-                  this.props.token
-                );
+                this.closeCall(REASON.DONE);
               }}
               buttonColor="red"
               toggle={false}
@@ -284,7 +342,7 @@ class CustomerView extends Component {
                   }
                 });
                 this.props.updateSettings({
-                  video: !this.props.mute
+                  mute: !this.props.mute
                 });
               }}
               toggle={true}
@@ -321,7 +379,11 @@ class CustomerView extends Component {
         {this.props.tokboxStatus !== STATUS_TOKBOX.STREAM &&
           this.props.elapsedTime < 1 && (
             <View style={styles.containerContacting}>
-              <ContactingLinguistView navigation={this.props.navigation} />
+              <ContactingLinguistView
+                navigation={this.props.navigation}
+                callTimeOut={this.callTimeOut}
+                closeCall={this.closeCall}
+              />
             </View>
           )}
       </View>
@@ -335,17 +397,20 @@ const mS = state => ({
   speaker: state.callCustomerSettings.speaker,
   timer: state.callCustomerSettings.timer,
   elapsedTime: state.callCustomerSettings.elapsedTime,
-  sessionID: state.callCustomerSettings.sessionID,
-  customerTokboxSessionID: state.callCustomerSettings.customerTokboxSessionID,
-  customerTokboxSessionToken:
-    state.callCustomerSettings.customerTokboxSessionToken,
+  sessionID: state.tokbox.sessionID,
+  customerTokboxSessionID: state.tokbox.tokboxID,
+  customerTokboxSessionToken: state.tokbox.tokboxToken,
   token: state.auth.token,
   tokboxStatus: state.tokbox.status,
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
-  selectedLanguageCode: state.contactLinguist.selectedLanguageCode,
+  primaryLangCode: state.contactLinguist.primaryLangCode,
+  secundaryLangCode: state.contactLinguist.secundaryLangCode,
   selectedCallTime: state.callCustomerSettings.selectedTime,
   customerExtraTime: state.callCustomerSettings.customerExtraTime,
-  linguist: state.sessionInfo.linguist
+  linguist: state.sessionInfo.linguist,
+  counter: state.contactLinguist.counter,
+  networkInfoType: state.networkInfo.type,
+  counterId: state.contactLinguist.counterId
 });
 
 const mD = {
@@ -358,8 +423,12 @@ const mD = {
   tokDisConnect,
   EndCall,
   clearCallSettings,
-  AsyncCreateInvitation,
-  GetSessionInfoLinguist
+  update,
+  resetCounter,
+  GetSessionInfoLinguist,
+  updateContactLinguistSettings,
+  incrementCounter,
+  clear
 };
 
 export default connect(mS, mD)(CustomerView);

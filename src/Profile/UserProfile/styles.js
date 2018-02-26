@@ -32,7 +32,6 @@ export default StyleSheet.create({
     flex: 1
   },
   title: {
-    paddingLeft: 10,
     color: Colors.primaryColor,
     fontFamily: Fonts.primaryLightFont
   },
@@ -53,6 +52,9 @@ export default StyleSheet.create({
   },
   marginBottom10: {
     marginBottom: 20
+  },
+  marginBottom80: {
+    marginBottom: 80
   },
   nativeLanguageTitle: {
     paddingLeft: 10

@@ -22,7 +22,6 @@ import Languages from "../../Config/Languages";
 import LinearGradient from "react-native-linear-gradient";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
-import { moderateScale } from "../../Util/Scaling";
 
 class SessionInfoView extends Component {
   componentWillMount() {
@@ -61,7 +60,6 @@ class SessionInfoView extends Component {
               : Images.avatar
           }
           avatarHeight={150}
-          bigAvatar={true}
           avatarTitle={sessionInfo.firstName + " " + sessionInfo.lastInitial}
           stars={sessionInfo.rating ? sessionInfo.rating : 0}
         >
@@ -114,22 +112,18 @@ class SessionInfoView extends Component {
                   <Grid>
                     <Row style={styles.callInformation}>
                       <Col style={styles.alignIcon}>
-                        <Icon
-                          color={Colors.iconHistory}
-                          style={styles.iconStyle}
-                          name="ios-clock"
-                          size={40}
-                        />
+                        <Text>
+                          <Icon
+                            color={Colors.iconHistory}
+                            style={styles.iconStyle}
+                            name="md-help-circle"
+                            size={40}
+                          />
+                        </Text>
                       </Col>
                       <Col>
                         <Text style={styles.textLinguist}>
-                          {sessionInfo.duration >= 60
-                            ? `${moment
-                                .utc(sessionInfo.duration * 1000)
-                                .format("mm:ss")} mins`
-                            : `${moment
-                                .utc(sessionInfo.duration * 1000)
-                                .format("mm:ss")} seconds`}
+                          {sessionInfo.scenario}
                         </Text>
                       </Col>
                     </Row>

@@ -9,6 +9,11 @@ const colors = {
   formColor: "#d2d3d8",
   formInputIconColor: "#D1CFCF",
   gradientColor: {
+    top: "#401674",
+    middle: "#52389d",
+    bottom: "#6a64d2"
+  },
+  gradientColorButton: {
     top: "#FF5642",
     middle: "#FC834E",
     bottom: "#FDAD46"
@@ -24,6 +29,7 @@ const colors = {
   primaryLightFillColor: "#e8f1ff",
   primarySelectedTabColor: "#b8affe",
   primaryStrongFillColor: "#b6ddff",
+  primaryListRightItem: "gray",
   thumbTintColor: "#ffffff",
   tintColor: "#c1c1ff",
   badgeColor: "#8e8eb5",
@@ -37,9 +43,11 @@ const colors = {
   callButton: "#71D781",
   cancelButton: "#B0B0B0",
   black: "#000000",
+  white: "#FFF",
   iconHistory: "#3b98b7",
   emptyStarColor: "#cccccc",
-  starColor: "#ffcb00"
+  starColor: "#ffcb00",
+  listLabelColor: "#F96F2B"
 };
 
 export default colors;

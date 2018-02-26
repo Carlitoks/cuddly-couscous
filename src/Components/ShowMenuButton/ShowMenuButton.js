@@ -40,10 +40,8 @@ class ShowMenuButton extends Component {
         <Icon
           style={styles.Icon}
           name="menu"
-          size={moderateScale(30)}
-          onPress={() =>
-            this.props.navigation.dispatch({ type: "DrawerOpen" })
-          }
+          size={moderateScale(40)}
+          onPress={() => this.props.navigation.dispatch({ type: "DrawerOpen" })}
         />
       </Col>
     );

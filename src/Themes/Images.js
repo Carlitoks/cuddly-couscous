@@ -14,10 +14,11 @@ const images = {
   logo_call_pn: require("../Images/call_pushn.png"),
   scan_qr_code: require("../Images/scanQR.png"),
   hotel: require("../Images/hotel.png"),
-  restaurant: require("../Images/restaurant.png"),
-  "local-airport": require("../Images/local-airport.png"),
-  "local-taxi": require("../Images/local-taxi.png"),
-  "shopping-cart": require("../Images/shopping-cart.png"),
+  dining: require("../Images/restaurant.png"),
+  airport: require("../Images/local-airport.png"),
+  transit: require("../Images/local-taxi.png"),
+  retail: require("../Images/shopping-cart.png"),
+  conversations: require("../Images/view-module.png"),
   "view-module": require("../Images/view-module.png")
 };
 

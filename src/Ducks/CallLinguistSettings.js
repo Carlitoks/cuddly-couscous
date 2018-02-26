@@ -5,11 +5,12 @@ import {
   changeStatus,
   updateSettings as updateProfileLinguist
 } from "./ProfileLinguistReducer";
+import { setSession, clear, update } from "./tokboxReducer";
 
 import moment from "moment";
 import _sortBy from "lodash/sortBy";
 
-import { LANG_CODES } from "../Util/Constants";
+import { LANG_CODES, REASON } from "../Util/Constants";
 
 // Actions
 export const ACTIONS = {
@@ -53,11 +54,11 @@ export const getInvitations = () => (dispatch, getState) => {
     profileLinguist: { available, polling }
   } = getState();
 
-  if (isLinguist) {
+  if (isLinguist && polling && available) {
     Sessions.GetInvitations(uuid, token)
       .then(response => {
         const length = response.data.length;
-        console.log(response.data);
+
         // There's at least one call. Let's get the most recent one
         if (length > 0) {
           // We order the invitations by Date
@@ -84,38 +85,34 @@ export const getInvitations = () => (dispatch, getState) => {
             // We turn off polling until HomeLinguistView is mounted again
             dispatch(
               updateSettings({
-                invitationID: invitation.id,
-                sessionID: invitation.session.id
+                invitationID: invitation.id
               })
             );
+            dispatch(update({ sessionID: invitation.session.id }));
             dispatch(updateProfileLinguist({ polling: false }));
             dispatch({ type: "IncomingCallView" });
           }
         } else {
           console.log("There are no invitations");
         }
-
-        if (polling && available) {
-          setTimeout(() => {
-            dispatch(getInvitations());
-          }, 10000);
-        }
       })
       .catch(err => {
+        console.log(err.response);
+      })
+      .finally(() => {
         if (polling && available) {
-          setTimeout(() => {
+          this.setTimeout(() => {
             dispatch(getInvitations());
           }, 10000);
         }
-        console.log(err);
       });
   }
 };
 
+dispatchInvitations = () => dispatch => {};
+
 export const resetTimerAsync = () => (dispatch, getState) => {
   const { callLinguistSettings } = getState();
-
-  clearInterval(callLinguistSettings.timer);
   dispatch(
     updateSettings({
       timer: null,
@@ -127,9 +124,9 @@ export const resetTimerAsync = () => (dispatch, getState) => {
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 
 export const EndCall = (sessionID, reason, token) => dispatch => {
-  Sessions.EndSession(sessionID, { reason: "done" }, token)
+  Sessions.EndSession(sessionID, { reason: REASON.DONE }, token)
     .then(response => {
-      dispatch(endSession("done"));
+      dispatch(endSession(REASON.DONE));
     })
     .catch(error => {
       console.log(error.response);
@@ -140,25 +137,41 @@ export const resetTimer = () => ({
   type: ACTIONS.RESET_TIMER
 });
 
-export const asyncGetInvitationDetail = (invitationID, token) => dispatch => {
-  return Sessions.LinguistFetchesInvite(invitationID, token)
+export const asyncGetInvitationDetail = (
+  invitationID,
+  token,
+  redirect
+) => dispatch => {
+  return Sessions.linguistFetchesInvite(invitationID, token)
     .then(response => {
-      console.log(response.data);
       const res = response.data;
-      dispatch(
-        updateSettings({
-          customerName: `${res.createdBy.firstName} ${
-            res.createdBy.lastInitial
-          }.`,
-          avatarURL: `${res.createdBy.avatarURL}`,
-          estimatedMinutes: `~ ${res.session.estimatedMinutes} mins`,
-          languages: `${LANG_CODES.get(
-            res.session.primaryLangCode
-          )} - ${LANG_CODES.get(res.session.secondaryLangCode)}`
-        })
-      );
+      console.log(res);
+      if (!res.session.endReason) {
+        dispatch(
+          updateSettings({
+            customerName: res.createdBy
+              ? `${res.createdBy.firstName} ${res.createdBy.lastInitial}.`
+              : "",
+            estimatedMinutes: res.session.estimatedMinutes
+              ? `~ ${res.session.estimatedMinutes} mins`
+              : res.session.estimatedMinutes,
+            languages: `${LANG_CODES.get(
+              res.session.primaryLangCode
+            )} - ${LANG_CODES.get(res.session.secondaryLangCode)}`
+          })
+        );
+        if (redirect) {
+          dispatch({ type: "LinguistView" });
+        }
+      } else {
+        dispatch(clearSettings());
+        dispatch(clear());
+      }
     })
     .catch(error => {
+      console.log(error, error.response);
+      dispatch(clearSettings());
+      dispatch(clear());
       dispatch(networkError(error));
     });
 };
@@ -170,32 +183,35 @@ export const asyncAcceptsInvite = (
   linguistSessionId
 ) => dispatch => {
   if (reason && reason.accept) {
-    Sessions.LinguistFetchesInvite(invitationID, token)
+    Sessions.linguistFetchesInvite(invitationID, token)
       .then(res => {
-        if (res.data.session.endReason !== "cancel") {
+        if (res.data.session.endReason !== REASON.CANCEL) {
           Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
             .then(response => {
-              dispatch(invitationAccept(response.data));
+              dispatch(setSession(response.data));
               dispatch({ type: "LinguistView" });
-              dispatch(updateSettings({ sessionID: linguistSessionId }));
+              dispatch(update({ sessionID: linguistSessionId }));
             })
             .catch(error => {
               dispatch(networkError(error));
             });
         } else {
           dispatch({ type: "Home" });
+          console.log("Ended call by customer");
         }
       })
       .catch(err => {
         dispatch({ type: "Home" });
+        console.log("Ended call by customer");
       });
   } else {
     Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
       .then(response => {
-        dispatch(changeStatus());
         dispatch({ type: "Home" });
+        dispatch(changeStatus());
       })
       .catch(error => {
+        dispatch({ type: "Home" });
         dispatch(networkError(error));
       });
   }
@@ -210,15 +226,12 @@ const initialState = {
   timer: null,
   invitationID: null,
   elapsedTime: 0,
-  linguistTokboxSessionID: null,
-  linguistTokboxSessionToken: null,
   accept: false,
   customerPreferredSex: "any",
 
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 10, // Initial time selected: 10 min
-  sessionID: null,
 
   // IncomingCall
   firstName: "",
@@ -245,16 +258,6 @@ const callLinguistSettings = (state = initialState, action) => {
       return {
         ...state,
         reason: payload
-      };
-    }
-
-    case ACTIONS.INVITATIONACCEPT: {
-      return {
-        ...state,
-        linguistTokboxSessionID: payload.tokboxSessionID,
-        linguistTokboxSessionToken: payload.tokboxSessionToken,
-        accept: payload.accept,
-        sessionID: payload.sessionID
       };
     }
 

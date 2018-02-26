@@ -32,8 +32,7 @@ class CheckYourEmailView extends Component {
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-          >
+            style={styles.scrollContainer}>
             <View style={styles.checkEmailContainer}>
               <Text style={styles.checkEmail}>{I18n.t("checkYourEmail")}</Text>
             </View>
@@ -41,8 +40,8 @@ class CheckYourEmailView extends Component {
         </HeaderView>
         {/* Next Button */}
         <BottomButton
-          title={I18n.t("signIn")}
-          onPress={() => navigation.dispatch({ type: "LoginView" })}
+          title={I18n.t("next")}
+          onPress={() => navigation.dispatch({ type: "SelectRoleView" })}
           bold={true}
         />
       </ViewWrapper>

@@ -137,7 +137,7 @@ class NameLinguist extends Component {
                   autoFocus={true}
                 />
               </View>
-              <View style={styles.containerView}>
+              
                 {/* Last Name */}
                 <InputRegular
                   containerStyle={styles.containerInput}
@@ -147,9 +147,10 @@ class NameLinguist extends Component {
                   }
                   maxLength={20}
                   value={this.props.lastname}
+                  sec
                 />
-              </View>
-              <View style={styles.containerView}>
+              
+              
                 {/* Prefered Name */}
                 <InputRegular
                   containerStyle={styles.containerInput}
@@ -159,11 +160,11 @@ class NameLinguist extends Component {
                     this.props.updateForm({ preferredName: text })
                   }
                   maxLength={20}
+                  sec
                 />
                 <Text style={styles.formText}>
                   {I18n.t("preferredLinguistText")}
                 </Text>
-              </View>
             </View>
           </ScrollView>
         </HeaderView>

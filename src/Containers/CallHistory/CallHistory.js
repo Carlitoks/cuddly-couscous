@@ -24,7 +24,7 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
-import moment from "moment"; 
+import moment from "moment";
 
 import styles from "./style";
 import { Colors } from "../../Themes";
@@ -142,7 +142,9 @@ class CallHistory extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<ShowMenuButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <ShowMenuButton navigation={this.props.navigation} />
+          }
           title={I18n.t("callHistory")}
           tabValues={tabValues}
           tabSelectedIndex={this.props.selectedIndex}
@@ -151,6 +153,7 @@ class CallHistory extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             <Grid>
               <Col>

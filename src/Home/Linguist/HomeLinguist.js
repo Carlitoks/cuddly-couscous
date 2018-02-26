@@ -33,29 +33,34 @@ import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
-import { Sessions } from "../../Api";
-import { getInvitations } from "../../Ducks/CallLinguistSettings";
+import {
+  asyncGetInvitationDetail,
+  clearSettings
+} from "../../Ducks/CallLinguistSettings";
 
 import styles from "./styles";
 import { Colors, Images } from "../../Themes";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 import I18n from "../../I18n/I18n";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+
 class Home extends Component {
   navigate = this.props.navigation.navigate;
 
   componentWillMount() {
-    this.props.changeStatus({
-      polling: false,
-      available: false
-    });
-
-    if (this.props.available) {
-      setTimeout(() => {
-        this.props.getInvitations();
-      }, 10000);
+    if (this.props.tokbox && this.props.networkInfoType !== "none") {
+      this.props.asyncGetInvitationDetail(
+        this.props.invitationID,
+        this.props.token,
+        true
+      );
+    } else {
+      this.props.changeStatus({
+        polling: false,
+        available: false
+      });
     }
   }
+
   uploadAvatar(avatar) {
     if (avatar) {
       const { token, uuid } = this.props;
@@ -69,6 +74,7 @@ class Home extends Component {
       });
     }
   }
+
   selectImage = () => {
     let image = this.props.avatarBase64
       ? { uri: `data:image/jpg;base64,${this.props.avatarBase64}` }
@@ -83,10 +89,14 @@ class Home extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.available) {
-      setTimeout(() => {
-        this.props.getInvitations();
-      }, 10000);
+    if (nextProps.networkInfoType !== "none") {
+      if (this.props.tokbox) {
+        this.props.asyncGetInvitationDetail(
+          this.props.invitationID,
+          this.props.token,
+          true
+        );
+      }
     }
   }
 
@@ -106,9 +116,13 @@ class Home extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<ShowMenuButton navigation={this.props.navigation} />}
-          headerCenterComponent={{text: firstName + " " + lastName, style: styles.title}}
-          headerRightComponent={<SettingsButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <ShowMenuButton navigation={this.props.navigation} />
+          }
+          headerCenterComponent={{
+            text: firstName + " " + lastName,
+            style: styles.title
+          }}
           photoSelect={avatar => this.uploadAvatar(avatar)}
           avatarSource={this.selectImage()}
           avatarHeight={150}
@@ -169,17 +183,21 @@ const mS = state => ({
   avatarURL: state.userProfile.avatarURL,
   linguistProfile: state.userProfile.linguistProfile,
   rate: state.userProfile.averageStarRating,
-  avatarBase64: state.userProfile.avatarBase64
+  avatarBase64: state.userProfile.avatarBase64,
+  tokbox: state.tokbox.tokboxID,
+  invitationID: state.callLinguistSettings.invitationID,
+  networkInfoType: state.networkInfo.type
 });
 
 const mD = {
   updateSettings,
   GetOptions,
-  getInvitations,
   asyncUploadAvatar,
   updateView,
   getProfileAsync,
-  changeStatus
+  changeStatus,
+  clearSettings,
+  asyncGetInvitationDetail
 };
 
 export default connect(mS, mD)(Home);

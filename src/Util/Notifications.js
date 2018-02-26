@@ -1,27 +1,23 @@
-import PushNotification from 'react-native-push-notification';
 import { Platform } from "react-native";
 
 export const ActionNotificationRegister = () => {
-  // for register actions 
+  // for register actions
 };
 
-export const CleanCallNotifications = (details) => {
-  if(Platform.OS === "ios")
-    return
+export const CleanCallNotifications = details => {
+  if (Platform.OS === "ios") return;
 
-  PushNotification.clearAllNotifications();  
-  
-}
+  //PushNotification.clearAllNotifications();
+};
 
-export const EmitActionNotification = (details) => {
-  // for emit actions 
-}
+export const EmitActionNotification = details => {
+  // for emit actions
+};
 
-export const EmitLocalCallNotification = (details) => {
-  if(Platform.OS === "ios")
-    return
+export const EmitLocalCallNotification = details => {
+  if (Platform.OS === "ios") return;
 
-  PushNotification.localNotification({
+  /*PushNotification.localNotification({
     title: details.title, 
     message: details.message,
     vibrate: false,
@@ -30,7 +26,5 @@ export const EmitLocalCallNotification = (details) => {
     id: details.id || '0',
     largeIcon: "@drawable/src_images_call_pushn", // temp
     smallIcon: "@drawable/src_images_call_pushn", // temp
-  });
-  
-  
+  });*/
 };

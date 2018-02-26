@@ -19,6 +19,7 @@ const Session = {
     primaryLangCode,
     secondaryLangCode,
     estimatedMinutes,
+    scenarioID,
     token
   ) => {
     return AXIOS.post(
@@ -28,10 +29,14 @@ const Session = {
         matchMethod: matchMethod,
         primaryLangCode: primaryLangCode,
         secondaryLangCode: secondaryLangCode,
-        estimatedMinutes: estimatedMinutes
+        scenarioID: scenarioID,
+        estimatedMinutes: 8
       },
       { headers: { Authorization: `Bearer ${token}` } }
-    );
+    ).then(res => {
+      console.log(res);
+      return res;
+    });
   },
   // The customer invite a linguist
   // example:
@@ -47,7 +52,7 @@ const Session = {
     );
   },
   // Linguist fetches invite w/ session/user/event details
-  LinguistFetchesInvite: (invitationID, token) => {
+  linguistFetchesInvite: (invitationID, token) => {
     return AXIOS.get(`session-invitations/${invitationID}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
@@ -124,7 +129,7 @@ const Session = {
         icon: "local-airport"
       },
       {
-        name: "Taxi/Bus/Train",
+        name: "Transport",
         icon: "local-taxi"
       },
       {

@@ -4,11 +4,11 @@ const fontFamily = "Arial";
 const fontColor = "white";
 export default StyleSheet.create({
   containerCallHiden: {
-    width:"0%",
+    width: "0%",
     height: "0%"
   },
   containerCall: {
-    width:"100%",
+    width: "100%",
     height: "100%"
   },
   publisherVideo: {

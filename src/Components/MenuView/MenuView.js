@@ -58,33 +58,34 @@ class MenuView extends Component {
     const { navigation, avatarURL } = this.props;
 
     return (
-      <ScrollView alwaysBounceVertical={false} >
-        <TopViewIOS/> 
+      <ScrollView alwaysBounceVertical={false}>
+        <TopViewIOS />
         <TouchableOpacity
           onPress={() => {
             navigation.dispatch({ type: "UserProfileView" });
           }}
         >
-        <View>
-          <Avatar
-            containerStyle={{ alignSelf: "center", marginTop: 30 }}
-            avatarStyle={styles.center}
-            rounded
-            xlarge
-            key={this.props.avatarBase64}
-            source={
-              avatarURL
-                ? {
-                    uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getUTCMilliseconds()}`
-                  }
-                : Images.avatar
-            }
-            activeOpacity={0.7}
-          />
-          <Text style={styles.textName}>
-            {this.props.firstName} {this.props.lastName}
-          </Text>
-        </View>
+          <View>
+            <Avatar
+              containerStyle={{ alignSelf: "center", marginTop: 30 }}
+              avatarStyle={styles.center}
+              rounded
+              xlarge
+              key={this.props.avatarBase64}
+              source={
+                avatarURL
+                  ? {
+                      uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getUTCMilliseconds()}`
+                    }
+                  : Images.avatar
+              }
+              activeOpacity={0.7}
+            />
+            <Text style={styles.textName}>
+              {this.props.firstName} {this.props.lastName}
+            </Text>
+            <Text style={styles.textEditProfile}>{I18n.t("editProfile")}</Text>
+          </View>
         </TouchableOpacity>
 
         {/* Home */}
@@ -125,33 +126,23 @@ class MenuView extends Component {
           <Text style={styles.colorText}>{I18n.t("callHistory")}</Text>
         </Icon.Button>
 
-        {/* Help */}
-        {/* <Icon.Button
-          name="help"
+        <Icon.Button
+          name="receipt"
           size={25}
           backgroundColor={
-            isCurrentView(navigation, "Help")
+            isCurrentView(navigation, "PromoCodeView")
               ? Colors.selectedBackground
               : Colors.background
           }
           iconStyle={
-            isCurrentView(navigation, "Help")
+            isCurrentView(navigation, "PromoCodeView")
               ? styles.selectedOptionMenu
               : styles.optionMenu
           }
-          onPress={() => {
-            navigation.dispatch({
-              type: "StaticView",
-              params: {
-                uri: HelpURI,
-                title: I18n.t("help")
-              }
-            });
-          }}
+          onPress={() => this.checkCurrentPage(navigation, "PromoCodeView")}
         >
-          <Text style={styles.colorText}>{I18n.t("help")}</Text>
-        </Icon.Button> */}
-
+          <Text style={styles.colorText}>{I18n.t("promoCodeTitle")}</Text>
+        </Icon.Button>
         {/* Logout */}
         <Icon.Button
           name="exit-to-app"
@@ -198,7 +189,7 @@ const mS = state => ({
   firstName: state.userProfile.firstName,
   lastName: state.userProfile.lastName,
   location: state.userProfile.location,
-  rate: state.userProfile.averageStarRating, 
+  rate: state.userProfile.averageStarRating,
   nativeLangCode: state.userProfile.nativeLangCode,
   linguistProfile: state.userProfile.linguistProfile,
   avatarURL: state.userProfile.avatarURL,

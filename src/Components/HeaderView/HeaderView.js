@@ -6,7 +6,8 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Switch
+  Switch,
+  Dimensions
 } from "react-native";
 import { Header, SearchBar, Badge, Card } from "react-native-elements";
 import PhotoUpload from "react-native-photo-upload";
@@ -15,6 +16,9 @@ import LinearGradient from "react-native-linear-gradient";
 import { Colors, Images } from "../../Themes";
 import StarRating from "react-native-star-rating";
 import SegmentedControlTab from "react-native-segmented-control-tab";
+
+import Waves from "../../SVG/waves";
+
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 
@@ -51,18 +55,18 @@ import styles from "./styles";
 */
 
 const HeaderView = ({
-  isScrollable, 
-  headerLeftComponent, 
-  headerRightComponent, 
-  headerCenterComponent, 
-  title, 
-  subtitle, 
+  isScrollable,
+  headerLeftComponent,
+  headerRightComponent,
+  headerCenterComponent,
+  title,
+  subtitle,
   search,
   clearSearch,
-  photoSelect, 
-  avatarSource, 
-  avatarHeight, 
-  avatarTitle, 
+  photoSelect,
+  avatarSource,
+  avatarHeight,
+  avatarTitle,
   bigAvatar,
   badge,
   stars,
@@ -78,6 +82,7 @@ const HeaderView = ({
   navigation,
   children
 }) => {
+  const { width, height } = Dimensions.get("window");
   function getHeader() {
     return (
       <View>
@@ -92,18 +97,27 @@ const HeaderView = ({
             ]}
             style={styles.linearGradient}
           />
+
+          {/* SVG White Waves */}
+          <View
+            style={{ position: "absolute", bottom: 0, alignSelf: "flex-end" }}
+          >
+            <Waves
+              width={width}
+              height={width * 80 / 750}
+              viewBox={"0 0 750 80"}
+            />
+          </View>
+
           {/* Header - Navigation */}
           <TopViewIOS />
           <Header
-            outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
+            outerContainerStyles={styles.headerOuter}
             backgroundColor="transparent"
             leftComponent={headerLeftComponent}
             centerComponent={headerCenterComponent}
             rightComponent={headerRightComponent}
-            innerContainerStyles={{
-              alignItems: "center",
-              justifyContent: "space-between"
-            }}
+            innerContainerStyles={styles.headerInner}
           />
 
           {/* Title */}
@@ -130,8 +144,8 @@ const HeaderView = ({
               placeholderTextColor={"white"}
               inputStyle={styles.inputSearch}
               icon={{ name: "search", color: "#FFF" }}
-              onChangeText={ search }
-              onClearText={ !!clearSearch ? clearSearch : null}
+              onChangeText={search}
+              onClearText={!!clearSearch ? clearSearch : null}
             />
           ) : null}
 

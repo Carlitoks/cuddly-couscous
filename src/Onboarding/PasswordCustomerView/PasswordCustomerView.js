@@ -1,19 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
- 
+
 import { updateForm, clearForm } from "../../Ducks/RegistrationCustomerReducer";
-import {
-  asyncCreateUser,
-  asyncUpdateUser
-} from "../../Ducks/CustomerProfileReducer";
- 
+
 import { View, Text, ScrollView, Alert, TextInput } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, Header } from "react-native-elements";
 import { topIOS } from "../../Util/Devices";
 import _capitalize from "lodash/capitalize";
- 
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
@@ -29,15 +25,16 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
- 
+
 class PasswordCustomerView extends Component {
   componentWillUnmount() {
     this.props.clearForm();
   }
+
   validateForm() {
     let updates = {};
     let valid = true;
- 
+
     if (!this.props.password) {
       updates = {
         ...updates,
@@ -51,55 +48,25 @@ class PasswordCustomerView extends Component {
       };
       valid = false;
     }
- 
+
     updates = {
       ...updates,
       formHasErrors: !valid
     };
 
-    
     if (!valid) {
       this.tempDisplayErrors(updates.passwordErrorMessage);
     }
- 
+
     this.props.updateForm(updates);
     return valid;
   }
- 
-  showError(err) {
-    const errorMessage = err.payload.response.data.errors[0];
-    Alert.alert("Error", _capitalize(errorMessage));
-  }
- 
-  checkResponse(response) {
-    if (response.type === "networkErrors/error") {
-      throw response;
-    }
-  }
- 
+
   submit() {
-    const {
-      navigation,
-      id,
-      password,
-      deviceToken,
-      asyncUpdateUser
-    } = this.props;
- 
+    const { navigation, id, password } = this.props;
+
     if (this.validateForm()) {
-      // console.log(id);
- 
-      // // login, get token, keep going
- 
-      // return asyncUpdateUser({ id, password }, deviceToken)
-      //   .then(response => {
-      //     this.checkResponse(response);
- 
       navigation.dispatch({ type: "NameCustomerView" });
-      //   })
-      //   .catch(err => {
-      //     this.showError(err);
-      //   });
     }
   }
 
@@ -112,12 +79,12 @@ class PasswordCustomerView extends Component {
       }
       return last.concat(curr);
     }, "");
- 
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
+
+    Alert.alert(I18n.t("error"), errorStr, [
+      { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
     ]);
   }
-  
+
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -133,24 +100,22 @@ class PasswordCustomerView extends Component {
           >
             <Grid>
               <Col>
-                <View>
-                  {/* Password */}
-                  <InputPassword
-                    containerStyle={styles.containerInput}
-                    inputStyle={styles.formInput}
-                    placeholder={I18n.t("linguistPassword")}
-                    placeholderTextColor={Colors.placeholderColor}
-                    onChangeText={text =>
-                      this.props.updateForm({
-                        password: text
-                      })
-                    }
-                    autoCorrect={false}
-                    maxLength={20}
-                    autoFocus={true}
-                    value={this.props.password}
-                  />
-                </View>
+                {/* Password */}
+                <InputPassword
+                  containerStyle={styles.containerInput}
+                  inputStyle={styles.formInput}
+                  placeholder={I18n.t("linguistPassword")}
+                  placeholderTextColor={Colors.placeholderColor}
+                  onChangeText={text =>
+                    this.props.updateForm({
+                      password: text
+                    })
+                  }
+                  autoCorrect={false}
+                  maxLength={20}
+                  autoFocus={true}
+                  value={this.props.password}
+                />
               </Col>
             </Grid>
           </ScrollView>
@@ -170,14 +135,12 @@ const mS = state => ({
   password: state.registrationCustomer.password,
   email: state.registrationCustomer.email,
   formHasErrors: state.registrationCustomer.formHasErrors,
-  deviceToken: state.registrationCustomer.deviceToken,
   id: state.registrationCustomer.id
 });
- 
+
 const mD = {
   updateForm,
-  clearForm,
-  asyncUpdateUser
+  clearForm
 };
- 
+
 export default connect(mS, mD)(PasswordCustomerView);

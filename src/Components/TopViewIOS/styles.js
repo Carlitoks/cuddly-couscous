@@ -12,10 +12,14 @@ export default StyleSheet.create({
   },
   topViewLarge: {
     width: "100%",
+    backgroundColor: "transparent",
     ...Platform.select({
       ios: {
         height: 32
       }
     })
+  },
+  scanQR: {
+    backgroundColor: "rgba(0, 0, 0, 0.3)"
   }
 });

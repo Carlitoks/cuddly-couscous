@@ -13,8 +13,8 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(15),
     marginTop: moderateScale(10),
-    color: Colors.primaryColor,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent",
+    color: Colors.primaryColor
   },
   linearGradient: {
     position: "absolute",
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     height: "100%"
   },
   summaryContainer: {
-    marginTop: 30,
+    top: -8,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-around"
@@ -67,10 +67,30 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 25
   },
+  listItemContainer: {
+    minHeight: 60,
+    justifyContent: "center"
+  },
   alignText: {
     alignItems: "flex-start"
   },
   fixHeight: {
     height: 25
+  },
+  listRightTitle: {
+    fontSize: moderateScale(22),
+    color: Colors.primaryListRightItem
+  },
+  listRightTitleContainer: {
+    flex: 0.3
+  },
+  listSubtitle: {
+    fontSize: moderateScale(20),
+    fontWeight: "normal"
+  },
+  titleStyle: {
+    fontSize: moderateScale(15),
+    fontWeight: "bold",
+    color: Colors.listLabelColor
   }
 });

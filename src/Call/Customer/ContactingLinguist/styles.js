@@ -65,8 +65,8 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryFont,
     color: Colors.fontColor,
     textAlign: "center",
-    width: width,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent",
+    width: width
   },
   notificationText: {
     fontSize: 20,
@@ -81,7 +81,7 @@ export default StyleSheet.create({
     paddingTop: 5,
     fontFamily: Fonts.primaryFont,
     color: Colors.fontColor,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   incomingCallText: {
     fontSize: 20,
@@ -90,19 +90,19 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryFont,
     color: Colors.fontColor,
     textAlign: "center",
-    width: width,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent",
+    width: width
   },
   icon: {
     color: "white",
     paddingTop: 7,
-    paddingRight: 9,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent",
+    paddingRight: 9
   },
   smallAvatar: {
     width: 70,
     height: 70,
-    borderRadius: 50
+    borderRadius: 35
   },
   contentContainerStyle: {
     height: "100%"

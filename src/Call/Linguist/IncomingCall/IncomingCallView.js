@@ -28,17 +28,16 @@ class IncomingCall extends Component {
     const PATTERN = [1000, 2000, 3000];
     const { invitationID, token } = this.props;
     Vibration.vibrate(PATTERN, true);
-    this.props.asyncGetInvitationDetail(invitationID, token);
+    // this.props.asyncGetInvitationDetail(invitationID, token);
   }
 
   takeCall = isAccept => {
-    const { invitationID, token, linguistSessionId } = this.props;
-
+    const { invitationID, token, sessionID } = this.props;
     this.props.asyncAcceptsInvite(
       invitationID,
       { accept: isAccept },
       token,
-      linguistSessionId
+      sessionID
     );
     Vibration.cancel();
   };
@@ -100,6 +99,7 @@ class IncomingCall extends Component {
                   {/*Airport lost and found */}
                 </Text>
               </View>
+
               <View style={styles.inlineContainer}>
                 <Icon style={styles.icon} size={25} name="watch-later" />
                 <Text style={styles.notificationText}>
@@ -139,7 +139,7 @@ const mS = state => ({
   estimatedMinutes: state.callLinguistSettings.estimatedMinutes,
   languages: state.callLinguistSettings.languages,
   token: state.auth.token,
-  linguistSessionId: state.callLinguistSettings.sessionID
+  sessionID: state.tokbox.sessionID
 });
 
 const mD = {

@@ -75,9 +75,14 @@ const styles = StyleSheet.create({
   },
   textName: {
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,
     fontSize: 20,
     fontWeight: "300",
+    alignSelf: "center"
+  },
+  textEditProfile: {
+    marginBottom: 10,
+    fontSize: 15,
     alignSelf: "center"
   },
   textCountry: {

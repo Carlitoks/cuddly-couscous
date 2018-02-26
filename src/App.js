@@ -1,14 +1,20 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { Text, NetInfo, SafeAreaView, StyleSheet } from "react-native";
-import PushNotification from "react-native-push-notification"
+import { NetInfo } from "react-native";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 
-
 import { updateNetworkInfo } from "./Ducks/NetworkInfoReducer";
+import {
+  remoteNotificationReceived,
+  registerFCM
+} from "./Ducks/PushNotificationReducer";
 
 import { dumpAsyncStorage, clearState } from "./Config/LocalStorage";
+
+import PushNotifications, {
+  emitLocalNotification
+} from "./Util/PushNotification";
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +35,17 @@ class App extends Component {
           loadingStore: false,
           store
         });
+
+        // Listener to notificaciones received by the app in active state
+        PushNotifications.addListener(notif => {
+          store.dispatch(remoteNotificationReceived(notif.invitationID));
+        });
+        // set callback for the remote notifications received by the app in background state
+        PushNotifications.setCallbackRemoteNotifications(notif => {
+          if (notif) {
+            store.dispatch(remoteNotificationReceived(notif.invitationID));
+          }
+        });
       })
       .then(() => {
         // Even Listener to Detect Network Change
@@ -42,14 +59,12 @@ class App extends Component {
       })
       .then(connectionInfo => {
         const { store } = this.state;
-
+        //
         store.dispatch(updateNetworkInfo(connectionInfo));
       });
-      //PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
-  //PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
-  // you could check the app state to respond differently to push notifications depending on if the app is running in the background or is currently active.
-     console.log(PushNotification);
-  PushNotification.requestPermissions();
+    //PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
+    //PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
+    // you could check the app state to respond differently to push notifications depending on if the app is running in the background or is currently active.
   }
 
   componentWillUnmount() {
@@ -57,6 +72,8 @@ class App extends Component {
       "connectionChange",
       this.handleFirstConnectivityChange
     );
+
+    PushNotifications.cleanListeners();
   }
 
   handleFirstConnectivityChange = connectionInfo => {
@@ -67,8 +84,7 @@ class App extends Component {
     }
   };
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   // dumpAsyncStorage().then(data => console.log(data));
 
@@ -76,7 +92,7 @@ class App extends Component {
     if (this.state.loadingStore) return null;
 
     return (
-      <Provider store={this.state.store}> 
+      <Provider store={this.state.store}>
         <ReduxNavigation />
       </Provider>
     );
@@ -84,11 +100,3 @@ class App extends Component {
 }
 
 export default App;
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    padding:10
-  }
-})

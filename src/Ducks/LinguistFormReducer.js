@@ -137,10 +137,20 @@ const initialState = {
   selectedCityFamiliarity: [],
   selectedProficiency: null,
   selectedLanguageInterpretation: null,
-  selectedScenarios: [],
+  selectedScenarios: [
+    {
+      active: true,
+      category: "airport",
+      eventID: null,
+      id: "11111111-1111-1111-1111-111111111112",
+      title: "Help with baggage claim"
+    }
+  ],
   linguistInfo: null,
   goTo: "SelectLanguageView",
-  currentView: null
+  currentView: null,
+  selectionItemType: "scenarios",
+  selectionItemName: "scenarios"
 };
 
 export const getItems = (type, params) => (dispatch, getState) => {

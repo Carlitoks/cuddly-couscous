@@ -1,12 +1,14 @@
+import OpenTok from "react-native-opentok";
 import { networkError } from "./NetworkErrorsReducer";
 import { Sessions } from "../Api";
-
+import { REASON } from "../Util/Constants";
+import { updateSettings as updateContactLinguist } from "./ContactLinguistReducer";
+import { setSession, clear } from "./tokboxReducer";
 
 // Actions
 export const ACTIONS = {
   CLEAR: "callCustomerSettings/clear",
   UPDATE: "callCustomerSettings/update",
-  CREATESESSION: "callCustomerSettings/session",
   CREATEINVITATION: "callCustomerSettings/invitation",
   INCREMENT_TIMER: "callCustomerSettings/incrementTimer",
   RESET_TIMER: "callCustomerSettings/resetTimer",
@@ -16,11 +18,6 @@ export const ACTIONS = {
 // Action Creator
 export const updateSettings = payload => ({
   type: ACTIONS.UPDATE,
-  payload
-});
-
-export const createSession = payload => ({
-  type: ACTIONS.CREATESESSION,
   payload
 });
 
@@ -40,7 +37,6 @@ export const incrementTimer = () => ({
 export const resetTimerAsync = () => (dispatch, getState) => {
   const { callCustomerSettings } = getState();
 
-  clearInterval(callCustomerSettings.timer);
   dispatch(
     updateSettings({
       timer: null,
@@ -55,10 +51,24 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
   Sessions.EndSession(sessionID, reason, token)
     .then(response => {
       dispatch(endSession());
-      dispatch({ type: "RateCallView" });
+      if (reason === REASON.CANCEL) {
+        dispatch({ type: "Home" });
+        dispatch(clearSettings());
+        dispatch(clear());
+      } else if (reason === REASON.RETRY) {
+        dispatch(clearSettings());
+        dispatch(clear());
+        dispatch({ type: "CustomerView" });
+      } else if (reason === REASON.TIMEOUT) {
+        dispatch(updateContactLinguist({ modalReconnect: true, counter: 60 }));
+      } else {
+        dispatch({ type: "RateCallView" });
+      }
     })
     .catch(error => {
-      console.log(error);
+      dispatch(clearSettings());
+      dispatch(clear());
+      dispatch({ type: "Home" });
     });
 };
 
@@ -80,6 +90,7 @@ export const AsyncCreateSession = ({
   primaryLangCode,
   secundaryLangCode,
   estimatedMinutes,
+  scenarioID,
   token
 }) => dispatch => {
   return Sessions.createSession(
@@ -88,10 +99,20 @@ export const AsyncCreateSession = ({
     primaryLangCode,
     secundaryLangCode,
     estimatedMinutes,
+    scenarioID,
     token
   )
     .then(response => {
-      return dispatch(createSession(response.data));
+      // get status session
+      Sessions.GetSessionInfoLinguist(response.data.sessionID, token)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log("error ", err);
+        });
+
+      return dispatch(setSession(response.data));
     })
     .catch(error => {
       dispatch(networkError(error));
@@ -113,13 +134,17 @@ export const AsyncCreateInvitation = (
 ) => dispatch => {
   return Sessions.customerInvitation(sessionID, linguistID, role, token)
     .then(response => {
-      console.log(response);
       return dispatch(createInvitation(response.data));
     })
     .catch(error => {
-      console.log(error.response);
       return dispatch(networkError(error));
     });
+};
+
+export const closeOpenConnections = () => dispatch => {
+  OpenTok.disconnectAll();
+  dispatch(clearSettings());
+  dispatch(clear());
 };
 
 // Initial State
@@ -130,9 +155,6 @@ const initialState = {
   speaker: true,
   timer: null,
   elapsedTime: 0,
-  sessionID: null,
-  customerTokboxSessionID: null,
-  customerTokboxSessionToken: null,
   invitationID: null,
   customerPreferredSex: "any",
   customerExtraTime: true,
@@ -147,15 +169,6 @@ const callCustomerSettings = (state = initialState, action) => {
   const { payload, type } = action;
 
   switch (type) {
-    case ACTIONS.CREATESESSION: {
-      return {
-        ...state,
-        sessionID: payload.sessionID,
-        customerTokboxSessionID: payload.tokboxSessionID,
-        customerTokboxSessionToken: payload.tokboxSessionToken
-      };
-    }
-
     case ACTIONS.CREATEINVITATION: {
       return { ...state, invitationID: payload.invitationID };
     }

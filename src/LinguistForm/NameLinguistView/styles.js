@@ -36,9 +36,10 @@ export default StyleSheet.create({
     marginTop: 30
   },
   formText: {
-    paddingLeft: 18,
+    paddingLeft: "7.5%",
     marginBottom: 15,
-    fontSize: 15
+    fontSize: 15,
+    marginTop: 10
   },
   mainSubtitle: {
     fontFamily: Fonts.primaryLightFont,

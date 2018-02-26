@@ -443,6 +443,7 @@ class UserProfileView extends Component {
                   )}
                 </List>
                 {this.props.linguistProfile && this.ShowLinguistOptions()}
+                <View style={styles.marginBottom80} />
               </Col>
             </Grid>
           </ScrollView>

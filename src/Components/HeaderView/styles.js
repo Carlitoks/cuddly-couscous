@@ -13,32 +13,42 @@ export default StyleSheet.create({
     width: "100%",
     height: "100%"
   },
+  headerInner: {
+    padding: 10,
+    margin: 0,
+    paddingBottom: 0,
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  headerOuter: {
+    padding: 0,
+    borderBottomWidth: 0,
+    height: 40
+  },
   onlyTitle: {
-    fontSize: 30,
+    fontSize: 24,
     marginTop: moderateScale(10),
     marginBottom: moderateScale(50),
     color: Colors.primaryColor,
     textAlign: "center",
     fontFamily: Fonts.primaryLightFont,
-    alignSelf: "center",
-    width: width,
     backgroundColor: "transparent"
   },
   mainTitle: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 30,
+    fontSize: 24,
     textAlign: "center",
     marginBottom: moderateScale(10),
-    marginTop: moderateScale(20),
-    color: "white",
+    marginTop: moderateScale(10),
+    color: Colors.primaryColor,
     backgroundColor: "transparent"
   },
   subtitle: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 18,
+    fontSize: 16,
     textAlign: "center",
-    marginBottom: moderateScale(30),
-    color: "white",
+    marginBottom: moderateScale(10),
+    color: Colors.primaryColor,
     backgroundColor: "transparent"
   },
   containerSearch: {

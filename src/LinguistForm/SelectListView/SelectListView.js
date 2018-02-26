@@ -87,8 +87,7 @@ class SelectListView extends Component {
     );
     this.props.updateSettings({
       searchQuery: "",
-      selectedLanguage: null,
-      selectedScenarios: []
+      selectedLanguage: null
     });
   }
 

@@ -5,6 +5,8 @@ import throttle from "lodash/throttle";
 import { saveState, loadState } from "./LocalStorage";
 import rootReducer from "../Ducks";
 
+import { SETTINGS } from "../Util/Constants";
+
 const middleware = [thunk];
 
 const store = null;
@@ -30,8 +32,16 @@ const getStore = () =>
     // Persisting the store on the asyncStorage
     store.subscribe(
       throttle(() => {
+        const settings = store.getState().userProfile.linguistProfile
+          ? SETTINGS.LINGUIST
+          : SETTINGS.CUSTOMER;
         saveState({
-          auth: store.getState().auth
+          auth: store.getState().auth,
+          userProfile: store.getState().userProfile,
+          tokbox: store.getState().tokbox,
+          [settings]: store.getState()[settings],
+          profileLinguist: store.getState().profileLinguist,
+          pushNotification: store.getState().pushNotification
         }).then(() => {
           // console.log("STATE PERSISTED")
         });

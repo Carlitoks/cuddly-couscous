@@ -8,16 +8,46 @@ export default StyleSheet.create({
     alignItems: "flex-end",
     width: "100%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    paddingBottom: 15
   },
   buttonContainer: {
-    width: width,
+    width: width * 0.5 - 3,
+    borderColor: "transparent",
+    borderWidth: 2,
+    borderRadius: 50,
+    justifyContent: "center"
   },
-  buttonContainerX: {
-    width: width,
-    height:62
+  text: {
+    color: Colors.gradientColorButton.top
   },
   textBold: {
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.primaryBoldFont,
+    color: Colors.gradientColorButton.top
+  },
+  textDisabled: {
+    color: Colors.disabledColor
+  },
+  white: {
+    color: Colors.primaryColor
+  },
+  linearGradient: {
+    width: width * 0.5,
+    paddingRight: 3,
+    paddingLeft: 3,
+    paddingTop: 2,
+    paddingBottom: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50
+  },
+  long: {
+    width: width * 0.7
+  },
+  bottom: {
+    paddingBottom: 0
+  },
+  relative: {
+    position: "relative"
   }
 });

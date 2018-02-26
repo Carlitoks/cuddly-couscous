@@ -1,6 +1,11 @@
 import { User } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
 import { IMAGE_STORAGE_URL } from "../Config/env";
+import PushNotification from "../Util/PushNotification";
+import {
+  registerFCM,
+  remoteNotificationReceived
+} from "./PushNotificationReducer";
 
 // Actions
 const ACTIONS = {
@@ -21,7 +26,6 @@ export const updateView = payload => ({
 export const asyncUploadAvatar = (id, image, token) => dispatch => {
   return User.uploadPhoto(id, image, token)
     .then(response => {
-      dispatch(updateView({ avatarBase64: null }));
       return dispatch(updateView(JSON.parse(response.data)));
     })
     .catch(error => {
@@ -29,9 +33,22 @@ export const asyncUploadAvatar = (id, image, token) => dispatch => {
     });
 };
 
-export const getProfileAsync = (uid, token) => dispatch => {
+export const getProfileAsync = (uid, token) => (dispatch, getState) => {
+  const { pushNotification, auth } = getState();
   return User.get(uid, token)
     .then(response => {
+      console.log(response.data.devices);
+      if (!pushNotification.tokenFCM) {
+        PushNotification.registerDeviceInFCM(
+          response.data.id,
+          auth.deviceId,
+          token,
+          payload => {
+            dispatch(registerFCM(payload));
+          }
+        );
+      }
+
       return dispatch(updateView(response.data));
     })
     .catch(error => {

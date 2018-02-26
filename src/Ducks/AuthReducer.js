@@ -7,6 +7,9 @@ import { networkError } from "./NetworkErrorsReducer";
 
 import { clearView as clearUserProfile } from "./UserProfileReducer";
 import { clearCallHistory as clearHistory } from "./CallHistoryReducer";
+import PushNotification from "../Util/PushNotification";
+import { updateDeviceToken } from "./RegistrationCustomerReducer";
+import { registerFCM } from "./PushNotificationReducer";
 
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -37,6 +40,7 @@ export const logOutAsync = () => dispatch => {
   dispatch(logOut());
   dispatch(clearUserProfile());
   dispatch(clearHistory());
+  dispatch(registerFCM({ tokenFCM: null }));
   dispatch({ type: "SelectRoleView/Reset" });
 };
 
@@ -94,13 +98,18 @@ export const registerDevice = () => dispatch => {
   console.log("device info: ", deviceInfo);
   return Auth.registerDevice(deviceInfo)
     .then(response => {
+      dispatch(updateDeviceToken(response.data));
       return dispatch(
         update({
-          deviceToken: response.data.token
+          deviceToken: response.data.token,
+          deviceId: deviceInfo.id
         })
       );
     })
-    .catch(err => dispatch(networkError(err)));
+    .catch(err => {
+      console.log(err);
+      return dispatch(networkError(err));
+    });
 };
 
 //Reset password
@@ -118,6 +127,7 @@ export const resetPasswordAsync = email => dispatch => {
 export const logInAsync = (email, password) => async (dispatch, getState) => {
   // Register device
   const { auth } = getState();
+
   return Auth.login(email, password, auth.deviceToken)
     .then(response => {
       return dispatch(
@@ -128,6 +138,7 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
       );
     })
     .catch(error => {
+      console.log(error, error.response);
       dispatch(networkError(error));
       dispatch(loginError(error.response));
     });
@@ -143,7 +154,8 @@ const initialState = {
   isLoggedIn: false,
   token: null,
   uuid: "",
-  deviceToken: ""
+  deviceToken: "",
+  deviceId: ""
 };
 
 // Reducer

@@ -29,7 +29,7 @@ export const GetOptions = () => dispatch => {
   ];
 };
 
-export const upateDeviceToken = payload => ({
+export const updateDeviceToken = payload => ({
   type: ACTIONS.DEVICETOKEN,
   payload
 });
@@ -43,27 +43,6 @@ uuidv4 = () => {
       v = c == "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
-};
-
-export const registerDevice = () => dispatch => {
-  const deviceInfo = {
-    deviceOS: Platform.OS,
-    deviceOSVersion: Platform.Version.toString(),
-    deviceType: DeviceInfo.isTablet() ? "tablet" : "phone",
-    /*id:
-      Platform.OS === "ios"
-        ? DeviceInfo.getUniqueID()
-        : androidDeviceIDToPseudoUUID(DeviceInfo.getUniqueID()),*/
-    id: uuidv4(),
-    mobileAppVersion: DeviceInfo.getReadableVersion(),
-    name: DeviceInfo.getDeviceName(),
-    notificationToken: "string"
-  };
-  return Auth.registerDevice(deviceInfo)
-    .then(response => {
-      return dispatch(upateDeviceToken(response.data));
-    })
-    .catch(err => dispatch(networkError(err)));
 };
 
 export const errorForm = payload => ({
@@ -93,6 +72,7 @@ const initialState = {
   emailErrorMessage: "",
   passwordErrorMessage: "",
   deviceToken: "",
+  performingRequest: false,
   id: null
 };
 
