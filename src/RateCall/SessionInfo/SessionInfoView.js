@@ -112,14 +112,12 @@ class SessionInfoView extends Component {
                   <Grid>
                     <Row style={styles.callInformation}>
                       <Col style={styles.alignIcon}>
-                        <Text>
-                          <Icon
-                            color={Colors.iconHistory}
-                            style={styles.iconStyle}
-                            name="md-help-circle"
-                            size={40}
-                          />
-                        </Text>
+                        <Icon
+                          color={Colors.iconHistory}
+                          style={styles.iconStyle}
+                          name="md-help-circle"
+                          size={40}
+                        />
                       </Col>
                       <Col>
                         <Text style={styles.textLinguist}>
