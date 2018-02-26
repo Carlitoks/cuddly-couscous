@@ -29,29 +29,37 @@ import I18n from "../../I18n/I18n";
 class PromoCodeView extends Component {
   submit() {
     const { token, promoCode } = this.props;
-    this.props.asyncScanPromoCode(promoCode, token).then(response => {
-      const {
-        requireScenarioSelection,
-        restrictEventScenarios,
-        scenarios
-      } = response.payload;
-      this.props.clearPromoCode();
-      if (requireScenarioSelection && restrictEventScenarios) {
-        /* Dispatch to SelectListView with the scenarios involveds*/
-        this.props.updateSettings({
-          selectionItemType: "scenarios",
-          selectionItemName: "scenarios",
-          scenarios: scenarios
-        });
-        this.props.navigation.dispatch({ type: "SelectListView" });
-      } else if (requireScenarioSelection && !restrictEventScenarios) {
-        /* Dispatch to Category Selection View (Home) */
-        this.props.navigation.dispatch({ type: "Home" });
-      } else if (!requireScenarioSelection) {
-        /* Dispatch to Call Confirmation view */
-        this.props.navigation.dispatch({ type: "CallConfirmationView" });
-      }
-    });
+    this.props
+      .asyncScanPromoCode(promoCode, token)
+      .then(response => {
+        if (response.type === "networkErrors/error") {
+          throw new Error(response.payload.data.errors);
+        }
+        const {
+          requireScenarioSelection,
+          restrictEventScenarios,
+          scenarios
+        } = response.payload;
+        this.props.clearPromoCode();
+        if (requireScenarioSelection && restrictEventScenarios) {
+          /* Dispatch to SelectListView with the scenarios involveds*/
+          this.props.updateSettings({
+            selectionItemType: "scenarios",
+            selectionItemName: "scenarios",
+            scenarios: scenarios
+          });
+          this.props.navigation.dispatch({ type: "SelectListView" });
+        } else if (requireScenarioSelection && !restrictEventScenarios) {
+          /* Dispatch to Category Selection View (Home) */
+          this.props.navigation.dispatch({ type: "Home" });
+        } else if (!requireScenarioSelection) {
+          /* Dispatch to Call Confirmation view */
+          this.props.navigation.dispatch({ type: "CallConfirmationView" });
+        }
+      })
+      .catch(err => {
+        this.tempDisplayErrors(err);
+      });
   }
 
   // Will be changed according the designs

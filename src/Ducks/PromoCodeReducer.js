@@ -32,7 +32,7 @@ export const asyncScanPromoCode = (promoCode, token) => dispatch => {
       return dispatch(scanPromoCode(response.data));
     })
     .catch(error => {
-      return dispatch(networkError(error));
+      return dispatch(networkError(error.response));
     });
 };
 
