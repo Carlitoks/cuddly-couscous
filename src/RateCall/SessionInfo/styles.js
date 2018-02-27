@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors } from "../../Themes";
+import { moderateScale } from "../../Util/Scaling";
 
 export const styles = StyleSheet.create({
   scrollContainer: {
@@ -43,21 +44,29 @@ export const styles = StyleSheet.create({
   starContainer: {
     width: "70%"
   },
-  callContainer: {
-    marginTop: 30
+  summaryContainer: {
+    top: -8,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-around"
   },
-  callInformation: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 15
+  listItemContainer: {
+    minHeight: 60,
+    justifyContent: "center"
   },
-  alignIcon: {
-    alignItems: "center"
+  titleStyle: {
+    fontSize: moderateScale(15),
+    fontWeight: "bold",
+    color: Colors.listLabelColor
   },
-  iconStyle: {
-    marginLeft: 30
+  listSubtitle: {
+    fontSize: moderateScale(20),
+    fontWeight: "normal"
   },
-  textLinguist: {
-    fontSize: 18
+  languagesContainer: {
+    marginLeft: 10
+  },
+  languagesText: {
+    fontSize: moderateScale(20)
   }
 });

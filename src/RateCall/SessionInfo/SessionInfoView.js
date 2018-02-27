@@ -6,7 +6,7 @@ import { GetInfo, updateSessionInfo } from "../../Ducks/SessionInfoReducer";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Text, View, ScrollView } from "react-native";
 
-import { Button, Avatar, Header } from "react-native-elements";
+import { Button, Avatar, Header, List, ListItem } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import StarRating from "react-native-star-rating";
 
@@ -36,7 +36,6 @@ class SessionInfoView extends Component {
 
   render() {
     const { sessionInfo } = this.props;
-    //console.log(this.props.sessionInfo.primaryLangCode);
     let primaryLang = this.filterList(sessionInfo.primaryLangCode)[0];
     primaryLang = !_isUndefined(primaryLang)
       ? primaryLang.name
@@ -63,70 +62,68 @@ class SessionInfoView extends Component {
           avatarTitle={sessionInfo.firstName + " " + sessionInfo.lastInitial}
           stars={sessionInfo.rating ? sessionInfo.rating : 0}
         >
-          <ScrollView automaticallyAdjustContentInsets={true}>
-            {/* Linguist Information */}
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={{ flex: 1 }}
+          >
             <Grid>
               <Col>
-                <Grid style={styles.callContainer}>
-                  <Row style={styles.callInformation}>
-                    <Col style={styles.alignIcon}>
-                      <Icon
-                        color={Colors.iconHistory}
-                        style={styles.iconStyle}
-                        name="ios-chatbubbles"
-                        size={40}
+                <Grid style={styles.summaryContainer}>
+                  <List containerStyle={{ borderTopWidth: 0 }}>
+                    {/* Type of Assistance*/}
+                    {sessionInfo.scenario ? (
+                      <ListItem
+                        containerStyle={styles.listItemContainer}
+                        hideChevron
+                        title={I18n.t("generalAssistance").toUpperCase()}
+                        titleStyle={styles.titleStyle}
+                        subtitle={sessionInfo.scenario}
+                        subtitleStyle={styles.listSubtitle}
                       />
-                    </Col>
-                    <Col>
-                      <Text style={styles.textLinguist}>
-                        {primaryLang} , {secondLang}
-                      </Text>
-                    </Col>
-                  </Row>
-                </Grid>
+                    ) : null}
+                    {/* Languages */}
+                    <ListItem
+                      hideChevron
+                      containerStyle={styles.listItemContainer}
+                      title={I18n.t("languages").toUpperCase()}
+                      titleStyle={styles.titleStyle}
+                      subtitle={
+                        <View style={styles.languagesContainer}>
+                          <Text style={styles.languagesText}>
+                            {primaryLang} , {secondLang}
+                          </Text>
+                        </View>
+                      }
+                    />
 
-                <Grid>
-                  <Row style={styles.callInformation}>
-                    <Col style={styles.alignIcon}>
-                      <Icon
-                        color={Colors.iconHistory}
-                        style={styles.iconStyle}
-                        name="ios-clock"
-                        size={40}
-                      />
-                    </Col>
-                    <Col>
-                      <Text style={styles.textLinguist}>
-                        {sessionInfo.duration >= 60
+                    <ListItem
+                      containerStyle={styles.listItemContainer}
+                      hideChevron
+                      title={I18n.t("duration").toUpperCase()}
+                      titleStyle={styles.titleStyle}
+                      subtitle={
+                        sessionInfo.duration >= 60
                           ? `${moment
                               .utc(sessionInfo.duration * 1000)
                               .format("mm:ss")} mins`
                           : `${moment
                               .utc(sessionInfo.duration * 1000)
-                              .format("mm:ss")} seconds`}
-                      </Text>
-                    </Col>
-                  </Row>
+                              .format("mm:ss")} seconds`
+                      }
+                      subtitleStyle={styles.listSubtitle}
+                    />
+
+                    {/* Cost */}
+                    <ListItem
+                      containerStyle={styles.listItemContainer}
+                      hideChevron
+                      titleStyle={styles.titleStyle}
+                      title={I18n.t("cost").toUpperCase()}
+                      subtitle="0 $"
+                      subtitleStyle={styles.listSubtitle}
+                    />
+                  </List>
                 </Grid>
-                {sessionInfo.scenario ? (
-                  <Grid>
-                    <Row style={styles.callInformation}>
-                      <Col style={styles.alignIcon}>
-                        <Icon
-                          color={Colors.iconHistory}
-                          style={styles.iconStyle}
-                          name="md-help-circle"
-                          size={40}
-                        />
-                      </Col>
-                      <Col>
-                        <Text style={styles.textLinguist}>
-                          {sessionInfo.scenario}
-                        </Text>
-                      </Col>
-                    </Row>
-                  </Grid>
-                ) : null}
               </Col>
             </Grid>
           </ScrollView>
