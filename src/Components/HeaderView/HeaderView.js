@@ -155,9 +155,7 @@ const HeaderView = ({
               style={[
                 styles.containerAvatar,
                 {
-                  height: !!bigAvatar
-                    ? moderateScale(150)
-                    : moderateScale(avatarHeight)
+                  height: !!bigAvatar ? moderateScale(150) : avatarHeight
                 },
                 !!avatarTitle ? styles.avatarTitle : null
               ]}

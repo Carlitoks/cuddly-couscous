@@ -27,10 +27,13 @@ import I18n from "../../I18n/I18n";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 import TextButton from "../../Components/TextButton/TextButton";
 import ThumbsButton from "../../Components/ThumbsButton/ThumbsButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 
+import Colors from "../../Themes/Colors";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 
 class RateCallView extends Component {
@@ -97,7 +100,7 @@ class RateCallView extends Component {
         this.props.clearContactLinguist();
       })
       .catch(err => {
-        console.log(err.response);
+        console.log("rate infromation", err.response);
         this.props.navigation.dispatch({ type: "Home" });
       });
   };
@@ -106,62 +109,111 @@ class RateCallView extends Component {
   GoodIcons = [
     {
       Name: "ios-time",
-      IconState: "iconClockFirstList",
+      IconState: "iconWaitTimeFirstList",
       IconName: "clock",
-      OffState: "iconClockSecondList",
+      OffState: "iconWaitTimeSecondList",
       label: "Wait Time"
     },
     {
-      Name: "ios-volume-up",
-      IconState: "iconVolumeFirstList",
+      Name: "ios-body",
+      IconState: "iconProfessionalismFirstList",
       IconName: "volume",
-      OffState: "iconVolumeSecondList",
-      label: "Audio Quality"
+      OffState: "iconProfessionalismSecondList",
+      label: "Professionalism"
     },
     {
-      Name: "ios-wifi",
-      IconState: "iconWifiFirstList",
-      IconName: "wifi",
-      OffState: "iconWifiSecondList",
-      label: "Connection Quality"
+      Name: "ios-happy",
+      IconState: "iconFriendlinessFirstList",
+      IconName: "happy",
+      OffState: "iconFriendlinessSecondList",
+      label: "Friendliness"
     },
     {
       Name: "ios-person",
-      IconState: "iconPersonFirstList",
+      IconState: "iconLanguageAbilityFirstList",
       IconName: "person",
-      OffState: "iconPersonSecondList",
-      label: "Professionalism"
+      OffState: "iconLanguageAbilitySecondList",
+      label: "Language Ability"
+    },
+    {
+      Name: "ios-microphone",
+      IconState: "iconUnderstandFirstList",
+      IconName: "microphone",
+      OffState: "iconUnderstandSecondList",
+      label: "Easy to Understand"
+    },
+    {
+      Name: "ios-volume-up",
+      IconState: "iconAudioQualityFirstList",
+      IconName: "ios-body",
+      OffState: "iconAudioQualityFirstList",
+      label: "Audio Quality"
     }
   ];
 
   BadIcons = [
     {
       Name: "ios-time",
-      IconState: "iconClockSecondList",
+      IconState: "iconWaitTimeSecondList",
       IconName: "clock",
-      OffState: "iconClockFirstList",
+      OffState: "iconWaitTimeFirstList",
       label: "Wait Time"
     },
     {
-      Name: "ios-volume-up",
-      IconState: "iconVolumeSecondList",
+      Name: "ios-body",
+      IconState: "iconProfessionalismSecondList",
       IconName: "volume",
-      OffState: "iconVolumeFirstList",
-      label: "Audio Quality"
+      OffState: "iconProfessionalismFirstList",
+      label: "Professionalism"
     },
     {
-      Name: "ios-wifi",
-      IconState: "iconWifiSecondList",
-      IconName: "wifi",
-      OffState: "iconWifiFirstList",
-      label: "Connection Quality"
+      Name: "ios-happy",
+      IconState: "iconFriendlinessSecondList",
+      IconName: "happy",
+      OffState: "iconFriendlinessFirstList",
+      label: "Friendliness"
     },
     {
       Name: "ios-person",
-      IconState: "iconPersonSecondList",
+      IconState: "iconLanguageAbilitySecondList",
       IconName: "person",
-      OffState: "iconPersonFirstList",
-      label: "Professionalism"
+      OffState: "iconLanguageAbilityFirstList",
+      label: "Language Ability"
+    },
+    {
+      Name: "ios-microphone",
+      IconState: "iconUnderstandSecondList",
+      IconName: "microphone",
+      OffState: "iconUnderstandFirstList",
+      label: "Hard to Understand"
+    },
+    {
+      Name: "ios-wifi",
+      IconState: "iconConnectionSecondList",
+      IconName: "wifi",
+      OffState: "iconConnectionSecondList",
+      label: "Connection"
+    },
+    {
+      Name: "ios-musical-note",
+      IconState: "iconBackgroundNoiseSecondList",
+      IconName: "musical-note",
+      OffState: "iconBackgroundNoiseSecondList",
+      label: "Background Noise"
+    },
+    {
+      Name: "ios-recording",
+      IconState: "iconVoiceClaritySecondList",
+      IconName: "musical-note",
+      OffState: "iconVoiceClaritySecondList",
+      label: "Voice Clarity"
+    },
+    {
+      Name: "ios-outlet",
+      IconState: "iconDistractionsSecondList",
+      IconName: "outlet",
+      OffState: "iconDistractionsSecondList",
+      label: "Distractions"
     }
   ];
 
@@ -230,7 +282,7 @@ class RateCallView extends Component {
     const WhatWasGoodIcons = this.GoodIcons;
 
     const WhatCouldBeBetterIcons = this.BadIcons;
-
+    const { customerName } = this.props;
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <ScrollView
@@ -238,26 +290,11 @@ class RateCallView extends Component {
           alwaysBounceVertical={false}
         >
           {/* Linguist Information */}
-          <TopViewIOS />
-          <Grid style={styles.containerInformation}>
-            <Col style={styles.linguistAvatar}>
-              <Avatar
-                large
-                containerStyle={styles.avatarContent}
-                rounded
-                source={this.selectImage()}
-              />
-            </Col>
-            <Col style={styles.linguistInformation}>
-              <Text style={styles.linguistName}>
-                {this.handleSessionInfoName()}
-              </Text>
-              <Text style={styles.linguistAddress}>
-                <Icon name="ios-pin" size={20} />San Francisc
-              </Text>
-            </Col>
-          </Grid>
-
+          <HeaderView
+            avatarSource={this.selectImage()}
+            avatarHeight={150}
+            avatarTitle={this.handleSessionInfoName()}
+          />
           {/* Rate Linguist */}
 
           <Grid>
@@ -303,7 +340,7 @@ class RateCallView extends Component {
                   StateIcon={this.props.thumbsUp}
                   onPress={() => this.buttonThumbs(0)}
                   title="Yes"
-                  color="#36D896"
+                  color={Colors.gradientColorButton.middle}
                 />
               </View>
               <View style={styles.thumbsDown}>
@@ -312,7 +349,7 @@ class RateCallView extends Component {
                   StateIcon={this.props.thumbsDown}
                   onPress={() => this.buttonThumbs(1)}
                   title="No"
-                  color="red"
+                  color={Colors.gradientColorButton.middle}
                 />
               </View>
             </View>
@@ -357,7 +394,7 @@ class RateCallView extends Component {
                     <TextButton
                       IconName={item.Name}
                       StateIcon={this.props[item.IconState]}
-                      onPress={() => this.buttonsHandle(item, "negativeFlags")}
+                      onPress={() => this.buttonsHandle(item, "positiveFlags")}
                       title={item.label}
                     />
                   </View>
@@ -370,19 +407,21 @@ class RateCallView extends Component {
 
           <Grid>
             <Row>
-              <Button
-                buttonStyle={styles.buttonSubmit}
-                onPress={this.submit}
-                title="Submit"
-                disabled={
-                  !(
-                    (this.props.thumbsUp || this.props.thumbsDown) &&
-                    this.props.rating > 0
-                  )
-                }
-              />
+              <View style={{ marginBottom: 80 }} />
             </Row>
           </Grid>
+          <BottomButton
+            title="Submit"
+            onPress={() => {
+              this.submit();
+            }}
+            disabled={
+              !(
+                (this.props.thumbsUp || this.props.thumbsDown) &&
+                this.props.rating > 0
+              )
+            }
+          />
         </ScrollView>
       </ViewWrapper>
     );
@@ -393,14 +432,24 @@ const mS = state => ({
   rating: state.rateCall.rating,
   thumbsUp: state.rateCall.thumbsUp,
   thumbsDown: state.rateCall.thumbsDown,
-  iconClockFirstList: state.rateCall.iconClockFirstList,
-  iconVolumeFirstList: state.rateCall.iconVolumeFirstList,
-  iconWifiFirstList: state.rateCall.iconWifiFirstList,
-  iconPersonFirstList: state.rateCall.iconPersonFirstList,
-  iconClockSecondList: state.rateCall.iconClockSecondList,
-  iconVolumeSecondList: state.rateCall.iconVolumeSecondList,
-  iconWifiSecondList: state.rateCall.iconWifiSecondList,
-  iconPersonSecondList: state.rateCall.iconPersonSecondList,
+
+  iconWaitTimeFirstList: state.rateCall.iconWaitTimeFirstList,
+  iconProfessionalismFirstList: state.rateCall.iconProfessionalismFirstList,
+  iconFriendlinessFirstList: state.rateCall.iconFriendlinessFirstList,
+  iconLanguageAbilityFirstList: state.rateCall.iconLanguageAbilityFirstList,
+  iconUnderstandFirstList: state.rateCall.iconUnderstandFirstList,
+  iconAudioQualityFirstList: state.rateCall.iconAudioQualityFirstList,
+
+  iconWaitTimeSecondList: state.rateCall.iconWaitTimeSecondList,
+  iconProfessionalismSecondList: state.rateCall.iconProfessionalismSecondList,
+  iconFriendlinessSecondList: state.rateCall.iconFriendlinessSecondList,
+  iconLanguageAbilitySecondList: state.rateCall.iconLanguageAbilitySecondList,
+  iconUnderstandSecondList: state.rateCall.iconUnderstandSecondList,
+  iconConnectionSecondList: state.rateCall.iconConnectionSecondList,
+  iconBackgroundNoiseSecondList: state.rateCall.iconBackgroundNoiseSecondList,
+  iconVoiceClaritySecondList: state.rateCall.iconVoiceClaritySecondList,
+  iconDistractionsSecondList: state.rateCall.iconDistractionsSecondList,
+
   token: state.auth.token,
   sessionID: state.tokbox.sessionID,
   customerName: state.callLinguistSettings.customerName,

@@ -4,22 +4,32 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 import styles from "./styles";
+import Colors from "../../Themes/Colors";
 
 const TextButton = ({ IconName, StateIcon, onPress, title }) => {
-
   return (
     <TouchableOpacity style={styles.buttonText} onPress={onPress}>
       {/* Icon component with text used in rate experience  */}
       <Icon
         style={
-          StateIcon ? { color: "#3b98b7" } : { color: "#cdcdcd" }
+          StateIcon
+            ? { color: Colors.gradientColorButton.middle }
+            : { color: Colors.disabledIcons }
         }
         name={IconName}
         size={40}
       />
-      <Text style={
-        StateIcon ? { color: "#3b98b7", textAlignVertical: "bottom" } : { color: "#cdcdcd" }
-      }>{title}</Text>
+      <Text
+        style={
+          StateIcon
+            ? {
+                color: Colors.gradientColorButton.middle,
+                textAlignVertical: "bottom"
+              }
+            : { color: Colors.disabledIcons }
+        }>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };

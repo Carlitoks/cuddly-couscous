@@ -47,7 +47,12 @@ class Home extends Component {
   navigate = this.props.navigation.navigate;
 
   componentWillMount() {
-    if (this.props.tokbox && this.props.networkInfoType !== "none") {
+    if (
+      this.props.tokbox &&
+      this.props.networkInfoType !== "none" &&
+      this.props.invitationID
+    ) {
+      console.log("home", this.props.invitationID);
       this.props.asyncGetInvitationDetail(
         this.props.invitationID,
         this.props.token,
@@ -90,7 +95,7 @@ class Home extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.networkInfoType !== "none") {
-      if (this.props.tokbox) {
+      if (this.props.tokbox && this.props.invitationID) {
         this.props.asyncGetInvitationDetail(
           this.props.invitationID,
           this.props.token,
@@ -133,7 +138,8 @@ class Home extends Component {
           switchOnChange={available => this.props.changeStatus()}
           switchValue={this.props.available}
           calls={numberOfCalls}
-          amount={amount}>
+          amount={amount}
+        >
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}

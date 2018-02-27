@@ -5,6 +5,7 @@ const colors = {
     EndCall: "#ee0d33",
     AcceptCall: "#49e373"
   },
+  disabledColor: "#808080",
   fontColor: "white",
   formColor: "#d2d3d8",
   formInputIconColor: "#D1CFCF",
@@ -47,7 +48,8 @@ const colors = {
   iconHistory: "#3b98b7",
   emptyStarColor: "#cccccc",
   starColor: "#ffcb00",
-  listLabelColor: "#F96F2B"
+  listLabelColor: "#F96F2B",
+  disabledIcons: "#cdcdcd"
 };
 
 export default colors;

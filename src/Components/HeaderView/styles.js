@@ -69,10 +69,10 @@ export default StyleSheet.create({
   },
   avatar: {
     paddingVertical: 30,
-    width: moderateScale(150),
-    height: moderateScale(150),
+    width: 150,
+    height: 150,
     alignSelf: "center",
-    borderRadius: moderateScale(75)
+    borderRadius: 75
   },
   bigAvatar: {
     paddingVertical: 30,
