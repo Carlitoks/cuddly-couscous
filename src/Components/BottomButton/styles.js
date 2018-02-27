@@ -9,7 +9,8 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 15
+    paddingBottom: 15,
+    borderRadius: 50
   },
   buttonContainer: {
     width: width * 0.5 - 3,

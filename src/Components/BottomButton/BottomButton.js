@@ -71,13 +71,8 @@ const BottomButton = ({
           end={{ x: 1.0, y: 0.5 }}
         >
           <Button
-            textStyle={
-              bold
-                ? styles.textBold
-                : disabled
-                  ? styles.textDisabled
-                  : fill || whiteText ? styles.white : styles.text
-            }
+            borderRadius={50}
+            textStyle={bold ? styles.textBold : disabled ? styles.textDisabled : fill || whiteText ? styles.white : styles.text}
             title={title}
             onPress={() => {
               onPress();
