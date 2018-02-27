@@ -132,6 +132,7 @@ export default (ENG = {
   next: "Next",
   noItems: "No Items",
   none: "None",
+  notLinguistAvailable: "There's any linguist available at the moment",
   noValidEmail: "Not a valid email",
   noValidPhone: "Enter a valid phone number.",
   occasionally: "Occasionally",

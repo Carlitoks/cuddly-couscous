@@ -1,7 +1,7 @@
 import OpenTok from "react-native-opentok";
 import { networkError } from "./NetworkErrorsReducer";
 import { Sessions } from "../Api";
-import { REASON } from "../Util/Constants";
+import { REASON, TIME } from "../Util/Constants";
 import { updateSettings as updateContactLinguist } from "./ContactLinguistReducer";
 import { setSession, clear } from "./tokboxReducer";
 
@@ -48,7 +48,7 @@ export const resetTimerAsync = () => (dispatch, getState) => {
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 
 export const EndCall = (sessionID, reason, token) => dispatch => {
-  Sessions.EndSession(sessionID, reason, token)
+  return Sessions.EndSession(sessionID, reason, token)
     .then(response => {
       dispatch(endSession());
       if (reason === REASON.CANCEL) {
@@ -60,7 +60,12 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
         dispatch(clear());
         dispatch({ type: "CustomerView" });
       } else if (reason === REASON.TIMEOUT) {
-        dispatch(updateContactLinguist({ modalReconnect: true, counter: 60 }));
+        dispatch(
+          updateContactLinguist({
+            modalReconnect: true,
+            counter: TIME.RECONNECT
+          })
+        );
       } else {
         dispatch({ type: "RateCallView" });
       }
@@ -103,16 +108,18 @@ export const AsyncCreateSession = ({
     token
   )
     .then(response => {
-      // get status session
-      Sessions.GetSessionInfoLinguist(response.data.sessionID, token)
+      // verify if there is linguist available
+      return Sessions.GetSessionInfoLinguist(response.data.sessionID, token)
         .then(res => {
-          console.log(res.data);
+          dispatch(setSession(response.data));
+          if (!res.data.queue || !res.data.queue.pending) {
+            response.data.notLinguistAvailable = true;
+          }
+          return response;
         })
         .catch(err => {
           console.log("error ", err);
         });
-
-      return dispatch(setSession(response.data));
     })
     .catch(error => {
       dispatch(networkError(error));

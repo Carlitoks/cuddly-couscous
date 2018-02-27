@@ -16,7 +16,9 @@ class ModalReconnect extends Component {
     return (
       <View style={styles.modalWrapper}>
         <View style={styles.topContainer}>
-          <Text>{I18n.t("cantReachLinguist")}</Text>
+          <Text style={styles.mainMessage}>
+            {this.props.reconnectMessage || I18n.t("cantReachLinguist")}
+          </Text>
         </View>
         <ReconnectOptions
           closeCall={this.props.closeCall}
@@ -31,7 +33,7 @@ class ModalReconnect extends Component {
     return (
       <View style={styles.modalWrapper}>
         <View style={styles.topContainer}>
-          <Text>{I18n.t("cantReachCustomer")}</Text>
+          <Text style={styles.mainMessage}>{I18n.t("cantReachCustomer")}</Text>
         </View>
       </View>
     );
@@ -74,7 +76,8 @@ class ModalReconnect extends Component {
 const mS = state => ({
   visibility: state.contactLinguist.modalReconnect,
   counter: state.contactLinguist.counter,
-  isLinguist: !!state.userProfile.linguistProfile
+  isLinguist: !!state.userProfile.linguistProfile,
+  reconnectMessage: state.contactLinguist.reconnectMessage
 });
 
 const mD = {};

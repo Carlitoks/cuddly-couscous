@@ -67,9 +67,11 @@ const initialState = {
   primaryLangCode: "eng",
   secundaryLangCode: "cmn",
 
+  // reconnect modal
   counter: 0,
   counterId: null,
-  modalReconnect: false
+  modalReconnect: false,
+  messageReconnect: ""
 };
 
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });

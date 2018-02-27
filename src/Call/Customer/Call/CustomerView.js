@@ -132,7 +132,7 @@ class CustomerView extends Component {
     });
   };
 
-  reconnectCall = async () => {
+  reconnectCall = () => {
     const {
       customerTokboxSessionToken,
       customerTokboxSessionID,
@@ -148,7 +148,7 @@ class CustomerView extends Component {
     } = this.props;
 
     try {
-      const res = await AsyncCreateSession({
+      AsyncCreateSession({
         type: "immediate_virtual",
         matchMethod: "first_available",
         primaryLangCode: primaryLangCode,
@@ -156,14 +156,22 @@ class CustomerView extends Component {
         estimatedMinutes: selectedTime,
         scenarioID: selectedScenarioId,
         token: token
+      }).then(async result => {
+        if (result && !result.data.notLinguistAvailable) {
+          const tokboxSessionId = result.data.tokboxSessionID;
+          const tokboxToken = result.data.tokboxSessionToken;
+
+          await tokConnect(tokboxSessionId, tokboxToken);
+        } else {
+          // deploy reconnect modal
+          clearInterval(this.props.counterId);
+          this.props.updateContactLinguistSettings({
+            modalReconnect: true,
+            counter: TIME.RECONNECT,
+            messageReconnect: I18n.t("notLinguistAvailable")
+          });
+        }
       });
-
-      if (res) {
-        const tokboxSessionId = res.payload.tokboxSessionID;
-        const tokboxToken = res.payload.tokboxSessionToken;
-
-        await tokConnect(tokboxSessionId, tokboxToken);
-      }
     } catch (e) {
       console.log("The session could not be created", e);
     }
@@ -183,9 +191,10 @@ class CustomerView extends Component {
     }
 
     if (
-      reason === REASON.CANCEL ||
-      reason === REASON.DONE ||
-      reason === REASON.TIMEOUT
+      (reason === REASON.CANCEL ||
+        reason === REASON.DONE ||
+        reason === REASON.TIMEOUT) &&
+      customerTokboxSessionID
     ) {
       await this.props.tokDisConnect(customerTokboxSessionID);
     }

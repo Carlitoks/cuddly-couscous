@@ -126,6 +126,7 @@ export default (ESP = {
   next: "Next",
   noItems: "No Items",
   none: "None",
+  notLinguistAvailable: "There's any linguist available at the moment",
   noValidEmail: "Not a valid Email",
   noValidPhone: "Please enter a valid Phone Number",
   occasionally: "Occasionally",

@@ -61,9 +61,9 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.networkInfoType !== "none" && this.props.sessionID) {
-      this.props.EndCall(this.props.sessionID, REASON.CANCEL, this.props.token);
-    }
+    // if (nextProps.networkInfoType !== "none" && this.props.sessionID) {
+    //   this.props.EndCall(this.props.sessionID, REASON.CANCEL, this.props.token);
+    // }
   }
 
   onStarRatingPress(rating) {

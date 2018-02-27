@@ -103,7 +103,8 @@ class LinguistView extends Component {
   closeCall = async () => {
     const { linguistTokboxSessionID, sessionID, token } = this.props;
 
-    await this.props.tokDisConnect(linguistTokboxSessionID);
+    linguistTokboxSessionID &&
+      (await this.props.tokDisConnect(linguistTokboxSessionID));
 
     this.props.navigation.dispatch({ type: "Home" });
 
