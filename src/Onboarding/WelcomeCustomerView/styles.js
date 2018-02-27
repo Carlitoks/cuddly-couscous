@@ -1,17 +1,19 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
 import { moderateScale } from "../../Util/Scaling";
+
+const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   scrollContainer: {
     flex: 1,
-    height: "100%",
+    height: height,
     backgroundColor: Colors.primaryColor
   },
   linearGradient: {
     position: "absolute",
     width: "100%",
-    height: "85%"
+    height: "100%"
   },
   mainTitle: {
     fontFamily: Fonts.primaryLightFont,
@@ -46,15 +48,21 @@ export default StyleSheet.create({
   },
   waves: {
     position: "absolute",
-    bottom: 80,
+    bottom: 0,
     alignSelf: "flex-end"
   },
   wavesOrange: {
     position: "absolute",
-    bottom: 56,
+    top: 0,
     alignSelf: "flex-end"
   },
   getStarted: {
-    marginBottom: 40
+    marginTop: 80
+  },
+  blueContainer: {
+    flex: 3
+  },
+  orangeContainer: {
+    flex: 1
   }
 });

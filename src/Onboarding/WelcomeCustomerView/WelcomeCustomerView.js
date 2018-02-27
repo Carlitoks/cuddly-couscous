@@ -21,44 +21,47 @@ class WelcomeCustomerView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         {/* SVG White Waves */}
         <View style={styles.mainContainer}>
-          <LinearGradient
-            colors={[
-              Colors.gradientColor.top,
-              Colors.gradientColor.middle,
-              Colors.gradientColor.bottom
-            ]}
-            style={styles.linearGradient}
-          />
-          <Text style={styles.mainTitle}>{I18n.t("welcomeTo")}</Text>
-          <Text style={styles.appName}>
-            <Text style={styles.firstLetter}>J</Text>
-            EENIE
-          </Text>
-          <Text style={styles.mainTitle}>{I18n.t("thankYou")}</Text>
-          <Text style={styles.subtitle}>{I18n.t("forSignup")}</Text>
-          <View style={styles.waves}>
-            <Waves
-              width={width}
-              height={width * 80 / 750}
-              viewBox={"0 0 750 80"}
+          <View style={styles.blueContainer}>
+            <LinearGradient
+              colors={[
+                Colors.gradientColor.top,
+                Colors.gradientColor.middle,
+                Colors.gradientColor.bottom
+              ]}
+              style={styles.linearGradient}
             />
+            <Text style={styles.mainTitle}>{I18n.t("welcomeTo")}</Text>
+            <Text style={styles.appName}>
+              <Text style={styles.firstLetter}>J</Text>
+              EENIE
+            </Text>
+            <Text style={styles.mainTitle}>{I18n.t("thankYou")}</Text>
+            <Text style={styles.subtitle}>{I18n.t("forSignup")}</Text>
+            <View style={styles.waves}>
+              <Waves
+                width={width}
+                height={width * 80 / 750}
+                viewBox={"0 0 750 80"}
+              />
+            </View>
           </View>
-
-          <View style={styles.wavesOrange}>
-            <WavesOrange
-              width={width}
-              height={width * 71 / 750}
-              viewBox={"0 0 750 71"}
+          <View style={styles.orangeContainer}>
+            <View style={styles.wavesOrange}>
+              <WavesOrange
+                width={width}
+                height={width * 71 / 750}
+                viewBox={"0 0 750 71"}
+              />
+            </View>
+            <BottomButton
+              long
+              fill
+              customStyle={styles.getStarted}
+              title={I18n.t("getStarted").toUpperCase()}
+              onPress={() => navigation.dispatch({ type: "Home" })}
             />
           </View>
         </View>
-        <BottomButton
-          long
-          fill
-          customStyle={styles.getStarted}
-          title={I18n.t("getStarted").toUpperCase()}
-          onPress={() => navigation.dispatch({ type: "Home" })}
-        />
       </ViewWrapper>
     );
   }
