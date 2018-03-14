@@ -17,6 +17,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 import { TroubleshootURI } from "../../Config/StaticViewsURIS";
 
@@ -51,7 +52,7 @@ class ForgotPasswordView extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(updates.emailErrorMessage);
+      displayFormErrors(updates.emailErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -65,20 +66,10 @@ class ForgotPasswordView extends Component {
     }
   }
 
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
-  }
+  validateEmail = () => {
+    const patt = new RegExp(EMAIL_REGEX);
+    return !patt.test(this.props.email);
+  };
 
   render() {
     const navigation = this.props.navigation;
@@ -90,7 +81,6 @@ class ForgotPasswordView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           title={I18n.t("forgotPassword")}
-          subtitle={I18n.t("weSendEmail")}
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
@@ -110,6 +100,8 @@ class ForgotPasswordView extends Component {
                   maxLength={64}
                   autoFocus={true}
                 />
+                {/* Email subtitle */}
+                <Text style={styles.emailText}>{I18n.t("weSendEmail")}</Text>
                 {/* Troubleshoot Button (Commented as part of the issue SOLO-74)*/}
                 {/* <Text
                   style={styles.linksText}
@@ -134,6 +126,7 @@ class ForgotPasswordView extends Component {
           title={I18n.t("resetpassword")}
           onPress={() => this.submit()}
           bold={true}
+          disabled={this.validateEmail()}
         />
       </ViewWrapper>
     );

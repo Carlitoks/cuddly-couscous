@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { FormInput } from "react-native-elements";
+import { View, TextInput } from "react-native";
 import { Colors } from "../../Themes";
 
 import styles from "./styles";
@@ -17,28 +18,66 @@ import styles from "./styles";
     maxLength: Input's maximum length,
     secureTextEntry: Boolean to make text secure (password),
     autoFocus: Boolean to focus on input automatically (false by default),
-    sec: Boolean that indicates this input is at least the second on the form (Change styles)
+    sec: Boolean that indicates this input is at least the second on the form (Change styles),
+    multiline: Boolean to make input multiline
  *
  * @export
  * @class InputRegular
  * @extends {Component}
  */
-const InputRegular = ({ containerStyle, placeholder, autoCorrect, onChangeText, value, keyboardType, maxLength, secureTextEntry, autoFocus, sec}) => {
+const InputRegular = ({
+  containerStyle,
+  placeholder,
+  autoCorrect,
+  onChangeText,
+  value,
+  keyboardType,
+  maxLength,
+  secureTextEntry,
+  autoFocus,
+  sec,
+  multiline
+}) => {
   return (
-    <FormInput
-      underlineColorAndroid="transparent"
-      containerStyle={[styles.container, !!sec ? styles.secondary : null]}
-      placeholder={placeholder}
-      autoCorrect={autoCorrect}
-      onChangeText={onChangeText}
-      value={value}
-      keyboardType={keyboardType}
-      maxLength={maxLength}
-      secureTextEntry={secureTextEntry}
-      autoFocus={autoFocus}
-      inputStyle={styles.formInput}
-      placeholderTextColor={Colors.placeholderColor}
-    />
+    <View style={[styles.viewBorder, !!sec ? styles.secondary : null]}>
+      {!!multiline ? (
+        <TextInput
+          underlineColorAndroid="transparent"
+          style={[
+            styles.container,
+            styles.multilineContainer,
+            styles.formInputMultiline
+          ]}
+          placeholder={placeholder}
+          autoCorrect={autoCorrect}
+          onChangeText={onChangeText}
+          value={value}
+          keyboardType={keyboardType}
+          maxLength={maxLength}
+          secureTextEntry={secureTextEntry}
+          autoFocus={autoFocus}
+          inputStyle={styles.formInputMultiline}
+          placeholderTextColor={Colors.placeholderColor}
+          multiline={true}
+          numberOfLines={3}
+        />
+      ) : (
+        <FormInput
+          underlineColorAndroid="transparent"
+          containerStyle={styles.container}
+          placeholder={placeholder}
+          autoCorrect={autoCorrect}
+          onChangeText={onChangeText}
+          value={value}
+          keyboardType={keyboardType}
+          maxLength={maxLength}
+          secureTextEntry={secureTextEntry}
+          autoFocus={autoFocus}
+          inputStyle={styles.formInput}
+          placeholderTextColor={Colors.placeholderColor}
+        />
+      )}
+    </View>
   );
 };
 

@@ -1,7 +1,4 @@
-import { Auth, User } from "../Api";
-import { networkError } from "./NetworkErrorsReducer";
 import { Platform } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import { androidDeviceIDToPseudoUUID } from "../Util/Helpers";
 import I18n from "../I18n/I18n";
 
@@ -23,9 +20,18 @@ export const updateForm = payload => ({
 
 export const GetOptions = () => dispatch => {
   return [
-    { gender: I18n.t("male") },
-    { gender: I18n.t("female") },
-    { gender: I18n.t("preferNotToDisclose") }
+    {
+      label: I18n.t("male"),
+      value: "male"
+    },
+    {
+      label: I18n.t("female"),
+      value: "female"
+    },
+    {
+      label: I18n.t("preferNotToDisclose"),
+      value: "decline"
+    }
   ];
 };
 
@@ -66,7 +72,15 @@ const initialState = {
   password: "",
   // selected Native Language
   languages: [],
-  selectedNativeLanguage: [],
+  selectedNativeLanguage: {
+    1: "en",
+    2: "eng",
+    3: "eng",
+    name: "English",
+    local: "English",
+    "2T": "eng",
+    "2B": "eng"
+  },
   CustomerSelectItemType: "",
   // error messages
   emailErrorMessage: "",

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/RegistrationCustomerReducer";
+import { asyncSetPassword } from "../../Ducks/CustomerProfileReducer";
+import { logInAsync } from "../../Ducks/AuthReducer";
 
 import { View, Text, ScrollView, Alert, TextInput } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -23,6 +25,7 @@ import {
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
@@ -41,7 +44,7 @@ class PasswordCustomerView extends Component {
         passwordErrorMessage: I18n.t("emptyPassword")
       };
       valid = false;
-    } else if (this.props.password.length < 5) {
+    } else if (this.props.password.length < 8) {
       updates = {
         ...updates,
         passwordErrorMessage: I18n.t("passwordLength")
@@ -55,7 +58,7 @@ class PasswordCustomerView extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(updates.passwordErrorMessage);
+      displayFormErrors(updates.passwordErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -63,26 +66,37 @@ class PasswordCustomerView extends Component {
   }
 
   submit() {
-    const { navigation, id, password } = this.props;
+    const {
+      navigation,
+      id,
+      password,
+      asyncSetPassword,
+      deviceToken,
+      logInAsync,
+      email
+    } = this.props;
 
     if (this.validateForm()) {
-      navigation.dispatch({ type: "NameCustomerView" });
+      asyncSetPassword(id, password, deviceToken)
+        .then(response => {
+          return logInAsync(email, password);
+        })
+        .then(() => {
+          navigation.dispatch({ type: "NameCustomerView" });
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response);
+          } else {
+            console.log(error);
+          }
+          dispatch(networkError(error));
+        });
     }
   }
 
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert(I18n.t("error"), errorStr, [
-      { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
-    ]);
+  isDisabled() {
+    return this.props.password.length < 8;
   }
 
   render() {
@@ -95,6 +109,7 @@ class PasswordCustomerView extends Component {
           title={I18n.t("linguistPasswordTitle")}
         >
           <ScrollView
+            keyboardShouldPersistTaps="handled"
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
           >
@@ -125,6 +140,7 @@ class PasswordCustomerView extends Component {
           title={I18n.t("next")}
           onPress={() => this.submit()}
           bold={false}
+          disabled={this.isDisabled()}
         />
       </ViewWrapper>
     );
@@ -135,12 +151,16 @@ const mS = state => ({
   password: state.registrationCustomer.password,
   email: state.registrationCustomer.email,
   formHasErrors: state.registrationCustomer.formHasErrors,
-  id: state.registrationCustomer.id
+  id: state.customerProfile.userInfo.id,
+  deviceToken: state.registrationCustomer.deviceToken,
+  formHasErrors: state.login.formHasErrors
 });
 
 const mD = {
   updateForm,
-  clearForm
+  clearForm,
+  asyncSetPassword,
+  logInAsync
 };
 
 export default connect(mS, mD)(PasswordCustomerView);

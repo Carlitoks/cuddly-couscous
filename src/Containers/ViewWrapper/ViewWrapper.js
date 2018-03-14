@@ -6,7 +6,8 @@ import {
   View,
   Text,
   StyleSheet,
-  Modal
+  Modal,
+  StatusBar
 } from "react-native";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 
@@ -16,6 +17,13 @@ const ViewWrapper = ({ children, status, style }) => {
   return (
     <View style={style}>
       {/* No Connection Modal*/}
+      <StatusBar
+        barStyle="light-content"
+        hidden={false}
+        backgroundColor="transparent"
+        translucent={true}
+      />
+
       <Modal
         visible={status === "none"}
         animationType={"slide"}
@@ -29,7 +37,7 @@ const ViewWrapper = ({ children, status, style }) => {
         </View>
       </Modal>
 
-      {/* Render Child Components */}   
+      {/* Render Child Components */}
       {children}
     </View>
   );

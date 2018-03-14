@@ -126,6 +126,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Jeenie"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

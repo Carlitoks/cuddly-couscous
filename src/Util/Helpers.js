@@ -1,12 +1,13 @@
+import { Alert } from "react-native";
 /**
  * @description Seconds to minutes and seconds String
  * 
  * @param {number} s - Time in seconds
  */
 export const fmtMSS = s => {
-  const min = Math.trunc(s/60)
-  const sec = s%60
-  return `${(min < 10 ? "0" : "")}${min}:${(sec < 10 ? "0" : "")}${sec}`;
+  const min = Math.trunc(s / 60);
+  const sec = s % 60;
+  return `${min < 10 ? "0" : ""}${min}:${sec < 10 ? "0" : ""}${sec}`;
 };
 
 /**
@@ -38,7 +39,7 @@ export const getGeolocationCoords = () =>
         enableHighAccuracy: true,
 
         // How long does the API have to return the position before throwing an error?
-        timeout: 20000,
+        timeout: 2000000,
 
         // If a location exists in the device cache, how old can it be before it’s no longer valuable to your app?
         maximumAge: 3600000
@@ -152,4 +153,37 @@ export const isCurrentView = (navigation, viewName) =>
 export const validatePhoneNumber = phoneNumber => {
   const phoneRegex = /^\([\d]{3}\)\s[\d]{3}-[\d]{4}$/g;
   return phoneRegex.test(phoneNumber);
+};
+
+export const emtpyArray = array => (array && array.length > 0 ? array : []);
+
+/**
+ * @description Generic function to display form errors
+ *
+ * @param {array} Form errors
+ */
+export const displayFormErrors = (...errors) => {
+  const errorStr = errors.reduce((last, current) => {
+    curr = "";
+    if (current) {
+      curr = `- ${current}\n`;
+    }
+    return last.concat(curr);
+  }, "");
+
+  Alert.alert("Error", errorStr, [
+    { text: "OK", onPress: () => console.log("OK Pressed") }
+  ]);
+};
+
+/**
+ * @description Generic function to validate only letters
+ *
+ * @param {String} value string to check for only letter
+ *
+ * @returns {Boolean} true when it's match and false if isn't
+ */
+export const onlyLetters = str => {
+  const letterRegex = /^[a-zA-Z]+$/;
+  return letterRegex.test(str);
 };

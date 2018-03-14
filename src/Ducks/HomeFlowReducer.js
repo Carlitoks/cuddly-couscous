@@ -17,23 +17,44 @@ export const clearSettings = () => ({
   type: ACTIONS.CLEAR
 });
 
+export const cleanSelected = () => dispatch => {
+  dispatch(
+    updateSettings({
+      customScenario: "",
+      categoryIndex: -1,
+      listItemSelected: -1,
+      formHasErrors: false
+    })
+  );
+};
+
 export const getCategories = token => dispatch => {
   Scenarios.get(token)
     .then(response => {
-      let categories = response.data.map(index => index.category);
+      const categories = response.data.map(cat => cat.category);
+      categories.push("qr");
       dispatch(updateSettings({ categories: [...new Set(categories)] }));
     })
-    .catch(error => {
-      console.log(error);
-      return dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
+};
+
+export const getScenarios = token => dispatch => {
+  Scenarios.get(token)
+    .then(response => {
+      dispatch(updateSettings({ scenarios: response.data }));
+    })
+    .catch(error => dispatch(networkError(error)));
 };
 
 // Initial State
 const initialState = {
   categories: [],
   formHasErrors: false,
-  customScenario: ""
+  customScenario: "",
+  scenarios: [],
+  carouselFirstItem: 3,
+  categoryIndex: -1,
+  listItemSelected: -1
 };
 
 // Reducer

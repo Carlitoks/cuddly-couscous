@@ -13,6 +13,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 
 import styles from "./styles";
+import { displayFormErrorss } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
@@ -49,7 +50,7 @@ class ResetPasswordView extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(
+      displayFormErrors(
         updates.PasswordErrorMessage,
         updates.MatchErrorMessage
       );
@@ -65,26 +66,13 @@ class ResetPasswordView extends Component {
     }
   }
 
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
-  }
-
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
           title={I18n.t("resetpassword")}
         >
           <ScrollView
@@ -106,7 +94,10 @@ class ResetPasswordView extends Component {
                   <Col>
                     {/* Header - Navigation */}
                     <Header
-                      outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+                      outerContainerStyles={{
+                        borderBottomWidth: 0,
+                        height: 60
+                      }}
                       backgroundColor="transparent"
                     />
                     {/* Reset password */}
@@ -151,6 +142,7 @@ class ResetPasswordView extends Component {
         <BottomButton
           title={I18n.t("next")}
           onPress={() => this.submit()}
+          disabled={!this.props.password || !this.props.confirmPassword}
         />
       </ViewWrapper>
     );

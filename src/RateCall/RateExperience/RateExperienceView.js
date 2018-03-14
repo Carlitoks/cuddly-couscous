@@ -55,11 +55,11 @@ class RateCallView extends Component {
 
     if (linguist && linguist.avatarURL) {
       return {
-        uri: `${IMAGE_STORAGE_URL}${linguist.avatarURL}`
+        uri: this.props.linguist.avatarURL
       };
     } else if (avatarURL) {
       return {
-        uri: `${IMAGE_STORAGE_URL}${avatarURL}`
+        uri: this.props.avatarURL
       };
     } else {
       return Images.avatar;
@@ -89,20 +89,31 @@ class RateCallView extends Component {
         stars: rating
       };
     }
-    console.log("sessionID", sessionID);
-    this.props
-      .submitRateCall(rateInformation, sessionID, this.props.token)
-      .then(response => {
-        this.props.navigation.dispatch({ type: "Home" });
-        this.props.clearOptions();
-        this.props.clearCallCustomerSettings();
-        this.props.clearCallLinguistSettings();
-        this.props.clearContactLinguist();
-      })
-      .catch(err => {
-        console.log("rate infromation", err.response);
-        this.props.navigation.dispatch({ type: "Home" });
-      });
+    if (sessionID) {
+      this.props
+        .submitRateCall(rateInformation, sessionID, this.props.token)
+        .then(response => {
+          this.props.clearOptions();
+          this.props.clearCallCustomerSettings();
+          this.props.clearCallLinguistSettings();
+          this.props.clearContactLinguist();
+          this.props.navigation.dispatch({ type: "Home" });
+        })
+        .catch(err => {
+          console.log("Rate Fail");
+          this.props.clearOptions();
+          this.props.clearCallCustomerSettings();
+          this.props.clearCallLinguistSettings();
+          this.props.clearContactLinguist();
+          this.props.navigation.dispatch({ type: "Home" });
+        });
+    } else {
+      this.props.clearOptions();
+      this.props.clearCallCustomerSettings();
+      this.props.clearCallLinguistSettings();
+      this.props.clearContactLinguist();
+      this.props.navigation.dispatch({ type: "Home" });
+    }
   };
 
   /// toogle Thumbs /////////////////////
@@ -110,42 +121,42 @@ class RateCallView extends Component {
     {
       Name: "ios-time",
       IconState: "iconWaitTimeFirstList",
-      IconName: "clock",
+      IconName: "wait_time",
       OffState: "iconWaitTimeSecondList",
       label: "Wait Time"
     },
     {
       Name: "ios-body",
       IconState: "iconProfessionalismFirstList",
-      IconName: "volume",
+      IconName: "professionalism",
       OffState: "iconProfessionalismSecondList",
       label: "Professionalism"
     },
     {
       Name: "ios-happy",
       IconState: "iconFriendlinessFirstList",
-      IconName: "happy",
+      IconName: "friendliness",
       OffState: "iconFriendlinessSecondList",
       label: "Friendliness"
     },
     {
       Name: "ios-person",
       IconState: "iconLanguageAbilityFirstList",
-      IconName: "person",
+      IconName: "lang_ability",
       OffState: "iconLanguageAbilitySecondList",
       label: "Language Ability"
     },
     {
       Name: "ios-microphone",
       IconState: "iconUnderstandFirstList",
-      IconName: "microphone",
+      IconName: "understandable",
       OffState: "iconUnderstandSecondList",
       label: "Easy to Understand"
     },
     {
       Name: "ios-volume-up",
       IconState: "iconAudioQualityFirstList",
-      IconName: "ios-body",
+      IconName: "audio_quality",
       OffState: "iconAudioQualityFirstList",
       label: "Audio Quality"
     }
@@ -155,64 +166,64 @@ class RateCallView extends Component {
     {
       Name: "ios-time",
       IconState: "iconWaitTimeSecondList",
-      IconName: "clock",
+      IconName: "wait_time",
       OffState: "iconWaitTimeFirstList",
       label: "Wait Time"
     },
     {
       Name: "ios-body",
       IconState: "iconProfessionalismSecondList",
-      IconName: "volume",
+      IconName: "professionalism",
       OffState: "iconProfessionalismFirstList",
       label: "Professionalism"
     },
     {
       Name: "ios-happy",
       IconState: "iconFriendlinessSecondList",
-      IconName: "happy",
+      IconName: "friendliness",
       OffState: "iconFriendlinessFirstList",
       label: "Friendliness"
     },
     {
       Name: "ios-person",
       IconState: "iconLanguageAbilitySecondList",
-      IconName: "person",
+      IconName: "lang_ability",
       OffState: "iconLanguageAbilityFirstList",
       label: "Language Ability"
     },
     {
       Name: "ios-microphone",
       IconState: "iconUnderstandSecondList",
-      IconName: "microphone",
+      IconName: "understandable",
       OffState: "iconUnderstandFirstList",
       label: "Hard to Understand"
     },
     {
       Name: "ios-wifi",
       IconState: "iconConnectionSecondList",
-      IconName: "wifi",
-      OffState: "iconConnectionSecondList",
+      IconName: "connection",
+      OffState: "iconConnectionFirstList",
       label: "Connection"
     },
     {
       Name: "ios-musical-note",
       IconState: "iconBackgroundNoiseSecondList",
-      IconName: "musical-note",
-      OffState: "iconBackgroundNoiseSecondList",
+      IconName: "background_noise",
+      OffState: "iconBackgroundNoiseFirstList",
       label: "Background Noise"
     },
     {
       Name: "ios-recording",
       IconState: "iconVoiceClaritySecondList",
-      IconName: "musical-note",
-      OffState: "iconVoiceClaritySecondList",
+      IconName: "voice_clarity",
+      OffState: "iconVoiceClarityFirstList",
       label: "Voice Clarity"
     },
     {
       Name: "ios-outlet",
       IconState: "iconDistractionsSecondList",
-      IconName: "outlet",
-      OffState: "iconDistractionsSecondList",
+      IconName: "distractions",
+      OffState: "iconDistractionsFirstList",
       label: "Distractions"
     }
   ];
@@ -284,145 +295,144 @@ class RateCallView extends Component {
     const WhatCouldBeBetterIcons = this.BadIcons;
     const { customerName } = this.props;
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false}
+      <ViewWrapper style={[styles.scrollContainer]}>
+        {/* Linguist Information */}
+        <HeaderView
+          avatarSource={this.selectImage()}
+          avatarHeight={100}
+          avatarTitle={this.handleSessionInfoName()}
         >
-          {/* Linguist Information */}
-          <HeaderView
-            avatarSource={this.selectImage()}
-            avatarHeight={150}
-            avatarTitle={this.handleSessionInfoName()}
-          />
-          {/* Rate Linguist */}
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+          >
+            <Grid>
+              <Row style={styles.textContainer}>
+                <Text style={styles.textQuestions}>
+                  {I18n.t("rateYour")}{" "}
+                  {this.props.linguistProfile
+                    ? I18n.t("customer")
+                    : I18n.t("linguist")}
+                </Text>
+              </Row>
+              <Row style={styles.starContainer}>
+                <View style={styles.stars}>
+                  <StarRating
+                    emptyStar={"ios-star"}
+                    fullStar={"ios-star"}
+                    halfStar={"ios-star-half"}
+                    iconSet={"Ionicons"}
+                    disabled={false}
+                    rating={this.props.rating}
+                    selectedStar={rating =>
+                      this.props.updateOptions({ rating: rating })
+                    }
+                    maxStars={5}
+                    starSize={45}
+                    emptyStarColor={Colors.emptyStarColor}
+                    starColor={Colors.gradientColorButton.top}
+                  />
+                </View>
+              </Row>
+            </Grid>
 
-          <Grid>
-            <Row style={styles.textContainer}>
-              <Text style={styles.textQuestions}>
-                {I18n.t("rateYour")}{" "}
-                {this.props.linguistProfile
-                  ? I18n.t("customer")
-                  : I18n.t("linguist")}
-              </Text>
-            </Row>
-            <Row style={styles.starContainer}>
-              <View style={styles.stars}>
-                <StarRating
-                  emptyStar={"ios-star"}
-                  fullStar={"ios-star"}
-                  halfStar={"ios-star-half"}
-                  iconSet={"Ionicons"}
-                  disabled={false}
-                  rating={this.props.rating}
-                  selectedStar={rating =>
-                    this.props.updateOptions({ rating: rating })
-                  }
-                  maxStars={5}
-                  starSize={45}
-                  emptyStarColor={"#cccccc"}
-                  starColor={"#ffcb00"}
-                />
+            {/* Where you needs addressed*/}
+
+            <Grid>
+              <Row style={styles.textContainer}>
+                <Text style={styles.textQuestions}>
+                  {I18n.t("needsAddress")}
+                </Text>
+              </Row>
+              <View style={styles.viewContainerThumbs}>
+                <View style={styles.thumbsUp}>
+                  <ThumbsButton
+                    IconName="ios-thumbs-up"
+                    StateIcon={this.props.thumbsUp}
+                    onPress={() => this.buttonThumbs(0)}
+                    color={Colors.gradientColorButton.middle}
+                  />
+                </View>
+                <View style={styles.thumbsDown}>
+                  <ThumbsButton
+                    IconName="ios-thumbs-down"
+                    StateIcon={this.props.thumbsDown}
+                    onPress={() => this.buttonThumbs(1)}
+                    color={Colors.gradientColorButton.middle}
+                  />
+                </View>
               </View>
-            </Row>
-          </Grid>
+            </Grid>
 
-          {/* Where you needs addressed*/}
+            {/* What was good */}
 
-          <Grid>
-            <Row style={styles.textContainer}>
-              <Text style={styles.textQuestions}>{I18n.t("needsAddress")}</Text>
-            </Row>
-            <View style={styles.viewContainerThumbs}>
-              <View style={styles.thumbsUp}>
-                <ThumbsButton
-                  IconName="ios-thumbs-up"
-                  StateIcon={this.props.thumbsUp}
-                  onPress={() => this.buttonThumbs(0)}
-                  title="Yes"
-                  color={Colors.gradientColorButton.middle}
-                />
+            <Grid>
+              <Row style={styles.textContainer}>
+                <Text style={styles.textQuestions}>{I18n.t("wasGood")}</Text>
+              </Row>
+              <View>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <View style={styles.viewContainerQuestion}>
+                    {WhatWasGoodIcons.map((item, i) => (
+                      <View key={i} style={styles.questionIcons}>
+                        <TextButton
+                          IconName={item.Name}
+                          StateIcon={this.props[item.IconState]}
+                          onPress={() =>
+                            this.buttonsHandle(item, "positiveFlags")
+                          }
+                          title={item.label}
+                        />
+                      </View>
+                    ))}
+                  </View>
+                </ScrollView>
               </View>
-              <View style={styles.thumbsDown}>
-                <ThumbsButton
-                  IconName="ios-thumbs-down"
-                  StateIcon={this.props.thumbsDown}
-                  onPress={() => this.buttonThumbs(1)}
-                  title="No"
-                  color={Colors.gradientColorButton.middle}
-                />
-              </View>
-            </View>
-          </Grid>
+            </Grid>
 
-          {/* What was good */}
+            {/* What could be better*/}
 
-          <Grid>
-            <Row style={styles.textContainer}>
-              <Text style={styles.textQuestions}>{I18n.t("wasGood")}</Text>
-            </Row>
-            <View>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <View style={styles.viewContainerQuestion}>
-                  {WhatWasGoodIcons.map((item, i) => (
+            <Grid>
+              <Row style={styles.textContainer}>
+                <Text style={styles.textQuestions}>
+                  {I18n.t("couldBetter")}
+                </Text>
+              </Row>
+              <View>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {WhatCouldBeBetterIcons.map((item, i) => (
                     <View key={i} style={styles.questionIcons}>
                       <TextButton
                         IconName={item.Name}
                         StateIcon={this.props[item.IconState]}
                         onPress={() =>
-                          this.buttonsHandle(item, "positiveFlags")
+                          this.buttonsHandle(item, "negativeFlags")
                         }
                         title={item.label}
                       />
                     </View>
                   ))}
-                </View>
-              </ScrollView>
-            </View>
-          </Grid>
+                </ScrollView>
+              </View>
+            </Grid>
+            <View style={{ marginBottom: 80 }} />
+          </ScrollView>
+        </HeaderView>
+        {/* Rate Linguist */}
 
-          {/* What could be better*/}
-
-          <Grid>
-            <Row style={styles.textContainer}>
-              <Text style={styles.textQuestions}>{I18n.t("couldBetter")}</Text>
-            </Row>
-            <View>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {WhatCouldBeBetterIcons.map((item, i) => (
-                  <View key={i} style={styles.questionIcons}>
-                    <TextButton
-                      IconName={item.Name}
-                      StateIcon={this.props[item.IconState]}
-                      onPress={() => this.buttonsHandle(item, "positiveFlags")}
-                      title={item.label}
-                    />
-                  </View>
-                ))}
-              </ScrollView>
-            </View>
-          </Grid>
-
-          {/* Button Submit*/}
-
-          <Grid>
-            <Row>
-              <View style={{ marginBottom: 80 }} />
-            </Row>
-          </Grid>
-          <BottomButton
-            title="Submit"
-            onPress={() => {
-              this.submit();
-            }}
-            disabled={
-              !(
-                (this.props.thumbsUp || this.props.thumbsDown) &&
-                this.props.rating > 0
-              )
-            }
-          />
-        </ScrollView>
+        {/* Button Submit*/}
+        <BottomButton
+          title="Submit"
+          onPress={() => {
+            this.submit();
+          }}
+          disabled={
+            !(
+              (this.props.thumbsUp || this.props.thumbsDown) &&
+              this.props.rating > 0
+            )
+          }
+        />
       </ViewWrapper>
     );
   }

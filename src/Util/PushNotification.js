@@ -7,6 +7,8 @@ import FCM, {
 import { Platform } from "react-native";
 import { User } from "../Api";
 
+import { networkError } from "./../Ducks/NetworkErrorsReducer";
+
 class PushNotifications {
   constructor() {
     this.listeners = [];
@@ -26,10 +28,7 @@ class PushNotifications {
         .then(res => {
           cb({ tokenFCM: token });
         })
-        .catch(err => {
-          console.log(err);
-          console.log(err.response);
-        });
+        .catch(error => dispatch(networkError(error)));
     });
 
     // add handler for refresh token event
@@ -41,10 +40,7 @@ class PushNotifications {
           .then(res => {
             cb({ tokenFCM: token });
           })
-          .catch(err => {
-            console.log(err);
-            console.log(err.response);
-          });
+          .catch(error => dispatch(networkError(error)));
       })
     );
   }

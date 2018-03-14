@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/RegistrationCustomerReducer";
+import { asyncUpdateUser } from "../../Ducks/CustomerProfileReducer";
 
 import {
   View,
@@ -21,8 +22,10 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
+import { onlyLetters } from "../../Util/Helpers";
 
 class NameCustomerView extends Component {
   navigate = this.props.navigation.navigate;
@@ -43,6 +46,22 @@ class NameCustomerView extends Component {
       valid = false;
     }
 
+    if (!onlyLetters(this.props.firstname)) {
+      updates = {
+        ...updates,
+        FirstnameErrorMessage: I18n.t("errorLetters")
+      };
+      valid = false;
+    }
+
+    if (!onlyLetters(this.props.lastname)) {
+      updates = {
+        ...updates,
+        LastnameErrorMessage: I18n.t("errorLetters")
+      };
+      valid = false;
+    }
+
     if (!this.props.lastname) {
       updates = {
         ...updates,
@@ -57,7 +76,7 @@ class NameCustomerView extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(
+      displayFormErrors(
         updates.FirstnameErrorMessage,
         updates.LastnameErrorMessage
       );
@@ -68,10 +87,25 @@ class NameCustomerView extends Component {
   }
 
   submit() {
+    const {
+      id,
+      asyncUpdateUser,
+      firstname,
+      lastname,
+      preferredName,
+      token
+    } = this.props;
     if (this.validateForm()) {
-      this.props.navigation.dispatch({
-        type: "LanguageCustomerView"
-      });
+      const payload = { id, firstname, lastname, preferredName };
+
+      asyncUpdateUser(payload, token)
+        .then(response => {
+          this.props.navigation.dispatch({ type: "NativeLanguageView" });
+        })
+        .catch(error => {
+          console.log(error);
+          dispatch(networkError(error));
+        });
     }
   }
 
@@ -89,23 +123,13 @@ class NameCustomerView extends Component {
     }
   };
 
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
+  isDisabled() {
+    return !this.props.firstname || !this.props.lastname;
   }
 
   render() {
     const initialLastName = `${this.props.lastname.charAt(0)}.`;
+    const { preferredName, mainTitle, lastname } = this.props;
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -113,27 +137,35 @@ class NameCustomerView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={this.props.mainTitle + " " + this.props.lastname}
-          subtitle={this.getSubtitle()}
+          title={
+            preferredName
+              ? `${preferredName} ${lastname}`
+              : mainTitle || lastname
+                ? `${mainTitle} ${lastname}`
+                : I18n.t("mainTitle")
+          }
         >
           <ScrollView
+            keyboardShouldPersistTaps="handled"
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
             alwaysBounceVertical={false}
           >
             <Grid>
               <Col>
-                <View style={styles.containerView}>
+                <View>
                   {/* Name */}
                   <InputRegular
                     containerStyle={styles.containerInput}
                     placeholder={I18n.t("linguistName")}
-                    onChangeText={text =>
-                      this.props.updateForm({
-                        firstname: text,
-                        mainTitle: text
-                      })
-                    }
+                    onChangeText={text => {
+                      if (onlyLetters(text) || text == "") {
+                        this.props.updateForm({
+                          firstname: text,
+                          mainTitle: text
+                        });
+                      }
+                    }}
                     maxLength={20}
                     value={this.props.firstname}
                     autoFocus={true}
@@ -144,9 +176,13 @@ class NameCustomerView extends Component {
                 <InputRegular
                   containerStyle={styles.containerInput}
                   placeholder={I18n.t("linguistLastName")}
-                  onChangeText={text =>
-                    this.props.updateForm({ lastname: text })
-                  }
+                  onChangeText={text => {
+                    if (onlyLetters(text) || text == "") {
+                      this.props.updateForm({
+                        lastname: text
+                      });
+                    }
+                  }}
                   maxLength={20}
                   value={this.props.lastname}
                   sec
@@ -157,15 +193,16 @@ class NameCustomerView extends Component {
                   containerStyle={styles.containerInput}
                   placeholder={I18n.t("preferredName")}
                   value={this.props.preferredName}
-                  onChangeText={text =>
-                    this.props.updateForm({ preferredName: text })
-                  }
+                  onChangeText={text => {
+                    if (onlyLetters(text) || text == "") {
+                      this.props.updateForm({
+                        preferredName: text
+                      });
+                    }
+                  }}
                   maxLength={20}
                   sec
                 />
-                <Text style={styles.formText}>
-                  {I18n.t("preferredLinguistText")}
-                </Text>
               </Col>
             </Grid>
           </ScrollView>
@@ -175,6 +212,7 @@ class NameCustomerView extends Component {
           title={I18n.t("next")}
           onPress={() => this.submit()}
           bold={false}
+          disabled={this.isDisabled()}
         />
       </ViewWrapper>
     );
@@ -182,16 +220,19 @@ class NameCustomerView extends Component {
 }
 
 const mS = state => ({
+  id: state.customerProfile.userInfo.id,
   firstname: state.registrationCustomer.firstname,
   lastname: state.registrationCustomer.lastname,
   formHasErrors: state.registrationCustomer.formHasErrors,
   preferredName: state.registrationCustomer.preferredName,
-  mainTitle: state.registrationCustomer.mainTitle
+  mainTitle: state.registrationCustomer.mainTitle,
+  token: state.auth.token
 });
 
 const mD = {
   updateForm,
-  clearForm
+  clearForm,
+  asyncUpdateUser
 };
 
 export default connect(mS, mD)(NameCustomerView);

@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     marginBottom: 5
   },
   textQuestions: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold"
   },
   starContainer: {
@@ -77,5 +77,4 @@ export const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 10
   }
-
 });

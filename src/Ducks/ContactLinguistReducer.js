@@ -7,18 +7,8 @@ export const getAssistanceList = token => dispatch => {
     .then(response => {
       return dispatch(updateSettings({ assistanceList: response.data }));
     })
-    .catch(error => {
-      console.log(error);
-      return dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
-export const ASSITANCE_LIST = [
-  "Aiport - Customer selectedScenarioIdService",
-  "Airport - Check-In",
-  "Hotel - Customer Service",
-  "Hotel - Check-In",
-  "Taxi"
-];
 
 // Actions
 export const ACTIONS = {
@@ -56,13 +46,13 @@ const initialState = {
   // Time
   timeOptions: 12, // Ammount of options on the Picker
   selectedTime: 10, // Initial time selected: 10 min
-  cost: 7, // Per Minute
+  cost: 0, // Per Minute
 
   // Assistance
   searchAssistance: "",
   selectedAssistance: "",
   selectedScenarioId: "",
-  selectedLanguage: "Spanish",
+  selectedLanguage: "English & Mandarin Chinese",
   selectedLanguageCode: "spa",
   primaryLangCode: "eng",
   secundaryLangCode: "cmn",
@@ -81,9 +71,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
     .then(response => {
       dispatch(endSession(REASON.DONE));
     })
-    .catch(error => {
-      dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 // Reducer

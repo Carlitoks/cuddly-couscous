@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/RegistrationCustomerReducer";
 import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
+import { registerDevice } from "../../Ducks/AuthReducer";
 
 import {
   View,
   Text,
   ScrollView,
   Alert,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Keyboard
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
@@ -25,6 +27,7 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 import {
@@ -59,36 +62,55 @@ class EmailCustomerView extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(updates.emailErrorMessage);
+      displayFormErrors(updates.emailErrorMessage);
     }
 
     this.props.updateForm(updates);
     return valid;
   }
 
+  getResponseError = err => err.payload.response.data.errors[0];
+
   submit() {
     const { registerDevice, navigation } = this.props;
 
     if (this.validateForm()) {
-      navigation.dispatch({
-        type: "PasswordCustomerView"
-      });
+      registerDevice()
+        .then(response => {
+          if (response.type === "networkErrors/error") {
+            throw response;
+          }
+
+          const { email, deviceToken } = this.props;
+          return this.props.asyncCreateUser({ email }, deviceToken);
+        })
+        .then(response => {
+          if (response.type !== "networkErrors/error") {
+            navigation.dispatch({
+              type: "PasswordCustomerView"
+            });
+          } else {
+            if (this.getResponseError(response) === "user already exists") {
+              navigation.dispatch({
+                type: "LoginView"
+              });
+            }
+            throw response;
+          }
+        })
+        .catch(err => {
+          if (err.payload) {
+            displayFormErrors(err.payload.response.data.errors);
+          } else {
+            displayFormErrors(err);
+          }
+        });
     }
   }
 
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert(I18n.t("error"), errorStr, [
-      { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
-    ]);
+  isDisabled() {
+    const patt = new RegExp(EMAIL_REGEX);
+    return !patt.test(this.props.email);
   }
 
   render() {
@@ -99,9 +121,9 @@ class EmailCustomerView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           title={I18n.t("linguistEmailTitle")}
-          subtitle={I18n.t("linguistEmailSubtitle")}
         >
           <ScrollView
+            keyboardShouldPersistTaps="handled"
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
             alwaysBounceVertical={false}
@@ -122,12 +144,35 @@ class EmailCustomerView extends Component {
                     maxLength={64}
                     autoFocus={true}
                   />
-
                   <Text style={styles.formText}>
-                    {I18n.t("emailCustomerText")}
+                    {I18n.t("checkYourEmailOnBoarding")}
+                  </Text>
+                  <View style={styles.mainContainterText}>
+                    <Text style={styles.textCenter}>
+                      {I18n.t("emailCustomerText")}
+                    </Text>
                     <Text
-                      style={styles.links}
+                      style={[styles.links, styles.textCenter]}
                       onPress={() => {
+                        Keyboard.dismiss();
+                        this.props.navigation.dispatch({
+                          type: "StaticView",
+                          params: {
+                            uri: TermsConditionsURI,
+                            title: I18n.t("termsOfUse")
+                          }
+                        });
+                      }}
+                    >
+                      {I18n.t("termsOfUse")}
+                    </Text>
+                  </View>
+                  <View style={styles.mainContainterText}>
+                    <Text style={styles.textCenter}> {I18n.t("and")} </Text>
+                    <Text
+                      style={[styles.links, styles.textCenter]}
+                      onPress={() => {
+                        Keyboard.dismiss();
                         this.props.navigation.dispatch({
                           type: "StaticView",
                           params: {
@@ -137,21 +182,36 @@ class EmailCustomerView extends Component {
                         });
                       }}
                     >
-                      {I18n.t("termsOfUse")}
-                    </Text>{" "}
-                    {I18n.t("confirmEighteen")}
-                  </Text>
-                  <Text style={[styles.formText]}>
-                    {I18n.t("alreadyAccount")}
-                    <Text
-                      style={[styles.links]}
-                      onPress={() =>
-                        this.props.navigation.dispatch({ type: "LoginView" })
-                      }
-                    >
-                      {" "}
-                      {I18n.t("signIn")}
+                      {I18n.t("privacyPolicy")}
                     </Text>
+                    <Text style={styles.textCenter}>
+                      {", "}
+                      {I18n.t("confirmEighteen1")}
+                    </Text>
+                    <Text style={styles.textCenter}>
+                      {I18n.t("confirmEighteen2")}
+                    </Text>
+                  </View>
+                </View>
+
+                <View style={styles.mainContainterText}>
+                  <Text
+                    style={[
+                      styles.formText,
+                      styles.textCenter,
+                      styles.textAbove
+                    ]}
+                  >
+                    {I18n.t("alreadyAccount")}
+                  </Text>
+                  <Text
+                    style={[styles.links]}
+                    onPress={() => {
+                      Keyboard.dismiss();
+                      this.props.navigation.dispatch({ type: "LoginView" });
+                    }}
+                  >
+                    {I18n.t("signIn")}
                   </Text>
                 </View>
               </Col>
@@ -159,7 +219,11 @@ class EmailCustomerView extends Component {
           </ScrollView>
         </HeaderView>
         {/* Next Button */}
-        <BottomButton title={I18n.t("next")} onPress={() => this.submit()} />
+        <BottomButton
+          title={I18n.t("next")}
+          onPress={() => this.submit()}
+          disabled={this.isDisabled()}
+        />
       </ViewWrapper>
     );
   }
@@ -167,13 +231,15 @@ class EmailCustomerView extends Component {
 
 const mS = state => ({
   email: state.registrationCustomer.email,
-  formHasErrors: state.registrationCustomer.formHasErrors
+  formHasErrors: state.registrationCustomer.formHasErrors,
+  deviceToken: state.registrationCustomer.deviceToken
 });
 
 const mD = {
   updateForm,
   clearForm,
-  asyncCreateUser
+  asyncCreateUser,
+  registerDevice
 };
 
 export default connect(mS, mD)(EmailCustomerView);

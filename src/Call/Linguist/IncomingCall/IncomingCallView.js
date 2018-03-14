@@ -9,11 +9,12 @@ import {
 import { Text, View, ScrollView, Image, Vibration } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import LinearGradient from "react-native-linear-gradient";
 
 import { CallButton } from "../../../Components/CallButton/CallButton";
 import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
-import { Images } from "../../../Themes";
+import { Images, Colors } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
 
 import { IMAGE_STORAGE_URL } from "../../../Config/env";
@@ -43,11 +44,9 @@ class IncomingCall extends Component {
   };
 
   selectImage = () => {
-    const { avatarURL } = this.props;
-
-    return avatarURL
+    return this.props.avatarURL
       ? {
-          uri: `${IMAGE_STORAGE_URL}${avatarURL}`
+          uri: this.props.avatarURL
         }
       : Images.avatar;
   };
@@ -65,9 +64,17 @@ class IncomingCall extends Component {
         automaticallyAdjustContentInsets={true}
         alwaysBounceVertical={false}
         style={styles.scrollContainer}
-        contentContainerStyle={styles.contentContainerStyle}>
-        {/* Background Image */}
-        <Image source={this.selectImage()} style={styles.backgroundImage} />
+        contentContainerStyle={styles.contentContainerStyle}
+      >
+        {/* Linear Gradient */}
+        <LinearGradient
+          colors={[
+            Colors.gradientColor.top,
+            //Colors.gradientColor.middle,
+            Colors.gradientColor.bottom
+          ]}
+          style={styles.linearGradient}
+        />
         <Grid>
           <Col style={{ justifyContent: "space-between" }}>
             <TopViewIOS />
@@ -76,8 +83,7 @@ class IncomingCall extends Component {
               <Image style={styles.smallAvatar} source={this.selectImage()} />
 
               <Text style={styles.callerNameText}>
-                {" "}
-                {this.props.customerName}{" "}
+                {this.props.customerName}
               </Text>
 
               <Text style={styles.incomingCallText}>
@@ -96,10 +102,9 @@ class IncomingCall extends Component {
               <View style={styles.inlineContainer}>
                 <Icon style={styles.icon} size={25} name="help" />
                 <Text style={styles.notificationText}>
-                  {/*Airport lost and found */}
+                  {this.props.customerScenario}
                 </Text>
               </View>
-
               <View style={styles.inlineContainer}>
                 <Icon style={styles.icon} size={25} name="watch-later" />
                 <Text style={styles.notificationText}>
@@ -137,6 +142,7 @@ const mS = state => ({
   customerName: state.callLinguistSettings.customerName,
   avatarURL: state.callLinguistSettings.avatarURL,
   estimatedMinutes: state.callLinguistSettings.estimatedMinutes,
+  customerScenario: state.callLinguistSettings.customerScenario,
   languages: state.callLinguistSettings.languages,
   token: state.auth.token,
   sessionID: state.tokbox.sessionID

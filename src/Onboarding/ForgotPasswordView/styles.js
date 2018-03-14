@@ -26,7 +26,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryLightFont,
     alignSelf: "center",
     width: width,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   Button: {
     backgroundColor: Colors.primaryLightFillColor,
@@ -44,7 +44,7 @@ export default StyleSheet.create({
     padding: 10,
     alignSelf: "center",
     fontFamily: Fonts.primaryBaseFont,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   linearGradient: {
     position: "absolute",
@@ -66,5 +66,11 @@ export default StyleSheet.create({
   checkEmail: {
     fontSize: 18,
     marginLeft: 30
+  },
+  emailText: {
+    color: Colors.black,
+    padding: 10,
+    alignSelf: "center",
+    fontFamily: Fonts.primaryBaseFont
   }
 });

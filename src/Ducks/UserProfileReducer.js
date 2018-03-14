@@ -2,6 +2,7 @@ import { User } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
 import { IMAGE_STORAGE_URL } from "../Config/env";
 import PushNotification from "../Util/PushNotification";
+import Languages from "../Config/Languages";
 import {
   registerFCM,
   remoteNotificationReceived
@@ -28,16 +29,21 @@ export const asyncUploadAvatar = (id, image, token) => dispatch => {
     .then(response => {
       return dispatch(updateView(JSON.parse(response.data)));
     })
-    .catch(error => {
-      return dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
+};
+
+export const getNativeLang = code => {
+  return Languages.find(e => {
+    if (e["3"] === code) {
+      return e;
+    }
+  });
 };
 
 export const getProfileAsync = (uid, token) => (dispatch, getState) => {
   const { pushNotification, auth } = getState();
   return User.get(uid, token)
     .then(response => {
-      console.log(response.data.devices);
       if (!pushNotification.tokenFCM) {
         PushNotification.registerDeviceInFCM(
           response.data.id,
@@ -51,9 +57,7 @@ export const getProfileAsync = (uid, token) => (dispatch, getState) => {
 
       return dispatch(updateView(response.data));
     })
-    .catch(error => {
-      return dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 export const updateProfileAsync = (uid, payload, token) => dispatch => {
@@ -61,15 +65,17 @@ export const updateProfileAsync = (uid, payload, token) => dispatch => {
     .then(response => {
       return User.get(uid, token)
         .then(response => {
-          return dispatch(updateView(response.data));
+          const data = {
+            ...response.data,
+            preferredName: response.data.preferredName
+              ? response.data.preferredName
+              : ""
+          };
+          return dispatch(updateView(data));
         })
-        .catch(error => {
-          return dispatch(networkError(error));
-        });
+        .catch(error => dispatch(networkError(error)));
     })
-    .catch(error => {
-      return dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 // Initial State
@@ -80,13 +86,14 @@ const initialState = {
   nativeLangCode: "",
   preferredName: "",
   location: "",
+  gender: "",
   averageStarRating: 0,
   preferences: {},
   isLinguist: false,
   linguistProfile: null,
-  avatarUrl: "",
+  avatarURL: "",
   avatarBase64: null,
-  selectedNativeLanguage: [],
+  selectedNativeLanguage: {},
   selectedSecondaryLanguages: [],
   selectionItemType: "",
   selectedLanguage: null

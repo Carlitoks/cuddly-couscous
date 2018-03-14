@@ -25,6 +25,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 
 // For the moment
@@ -70,7 +71,7 @@ class LoginView extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(
+      displayFormErrors(
         updates.emailErrorMessage,
         updates.passwordErrorMessage
       );
@@ -92,7 +93,7 @@ class LoginView extends Component {
               this.props.navigation.dispatch({ type: "Home" });
             } else {
               if (this.props.formHasErrors) {
-                this.tempDisplayErrors(
+                displayFormErrors(
                   this.props.emailErrorMessage,
                   this.props.passwordErrorMessage
                 );
@@ -101,24 +102,9 @@ class LoginView extends Component {
             }
           });
       });
-    }else{
+    } else {
       this.props.updateForm({ performingRequest: false });
-    }    
-  }
-
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
+    }
   }
 
   render() {
@@ -133,6 +119,7 @@ class LoginView extends Component {
           title={I18n.t("signIn")}
         >
           <ScrollView
+            keyboardShouldPersistTaps="handled"
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
             alwaysBounceVertical={false}
@@ -174,9 +161,11 @@ class LoginView extends Component {
                 {/* Forgot Password */}
                 <Text
                   style={styles.forgotPasswordText}
-                  onPress={!this.props.performingRequest ? () =>
-                     navigation.dispatch({ type: "ForgotPasswordView" }) 
-                    : null
+                  onPress={
+                    !this.props.performingRequest
+                      ? () =>
+                          navigation.dispatch({ type: "ForgotPasswordView" })
+                      : null
                   }
                 >
                   {I18n.t("forgotPassword")}
@@ -186,11 +175,11 @@ class LoginView extends Component {
           </ScrollView>
         </HeaderView>
         {/* Sign In Button */}
-        {console.log("performingRequest",this.props.performingRequest)}
         <BottomButton
           title={I18n.t("signIn")}
           onPress={() => this.submit()}
           bold={true}
+          disabled={!this.props.email || !this.props.password}
         />
       </ViewWrapper>
     );

@@ -38,7 +38,9 @@ export class CallHistoryComponent extends Component {
               }
               avatar={
                 item.avatarURL
-                  ? { uri: `${IMAGE_STORAGE_URL}${item.avatarURL}` }
+                  ? {
+                      uri: item.avatarURL
+                    }
                   : Images.avatar
               }
               containerStyle={styles.listItem}

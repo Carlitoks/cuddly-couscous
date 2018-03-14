@@ -10,9 +10,11 @@ import { clearCallHistory as clearHistory } from "./CallHistoryReducer";
 import PushNotification from "../Util/PushNotification";
 import { updateDeviceToken } from "./RegistrationCustomerReducer";
 import { registerFCM } from "./PushNotificationReducer";
+import { changeStatus } from "./ProfileLinguistReducer";
 
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
+import { clearSettings } from "./LinguistFormReducer";
 
 // Actions
 export const ACTIONS = {
@@ -36,38 +38,31 @@ export const logOut = payload => ({
   type: ACTIONS.LOG_OUT
 });
 
-export const logOutAsync = () => dispatch => {
-  dispatch(logOut());
-  dispatch(clearUserProfile());
-  dispatch(clearHistory());
-  dispatch(registerFCM({ tokenFCM: null }));
-  dispatch({ type: "SelectRoleView/Reset" });
+export const logOutAsync = () => (dispatch, getState) => {
+  const { userProfile, auth } = getState();
+  // delete device in server
+  User.deleteDevice(userProfile.id, auth.deviceId, auth.token)
+    .catch(error => dispatch(networkError(error)))
+    .finally(res => {
+      // cleaning localstorage
+      dispatch(changeStatus({ available: false }));
+      dispatch(registerFCM({ tokenFCM: null }));
+      dispatch(logOut());
+      dispatch(clearUserProfile());
+      dispatch(clearHistory());
+      dispatch({ type: "SelectRoleView/Reset" });
+    });
 };
 
 // To get userLogin in the splash screen and refresh token
 export const haveSession = () => {
   getAsync("userLogin")
     .then(userlogin => {
-      console.log("->", userlogin);
-
       if (userlogin) {
         userlogin = JSON.parse(userlogin);
-
-        /*
-      Auth.refreshToken(userlogin.token).then(response => {
-        const data = response.data;
-
-        userlogin.token = data.token;
-
-          dispatch(logIn(userlogin));
-          dispatch({ type: "Home" });
-
-      });
-
-      */
       }
     })
-    .catch(e => console.log(e));
+    .catch(error => dispatch(networkError(error)));
 };
 
 // Temp Function to create UUID for the phone,
@@ -86,16 +81,12 @@ export const registerDevice = () => dispatch => {
     deviceOS: Platform.OS,
     deviceOSVersion: Platform.Version.toString(),
     deviceType: DeviceInfo.isTablet() ? "tablet" : "phone",
-    /*id:
-      Platform.OS === "ios"
-        ? DeviceInfo.getUniqueID()
-        : androidDeviceIDToPseudoUUID(DeviceInfo.getUniqueID()),*/
     id: uuidv4(),
     mobileAppVersion: DeviceInfo.getReadableVersion(),
     name: DeviceInfo.getDeviceName(),
-    notificationToken: "string"
+    notificationToken: null
   };
-  console.log("device info: ", deviceInfo);
+
   return Auth.registerDevice(deviceInfo)
     .then(response => {
       dispatch(updateDeviceToken(response.data));
@@ -106,10 +97,7 @@ export const registerDevice = () => dispatch => {
         })
       );
     })
-    .catch(err => {
-      console.log(err);
-      return dispatch(networkError(err));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 //Reset password
@@ -118,9 +106,7 @@ export const resetPasswordAsync = email => dispatch => {
     .then(response => {
       // console.log(response.data);
     })
-    .catch(error => {
-      // console.log(error);
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 //Login user
@@ -138,7 +124,6 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
       );
     })
     .catch(error => {
-      console.log(error, error.response);
       dispatch(networkError(error));
       dispatch(loginError(error.response));
     });

@@ -54,7 +54,7 @@ class SessionInfoView extends Component {
           avatarSource={
             sessionInfo.avatarURL
               ? {
-                  uri: `${IMAGE_STORAGE_URL}${sessionInfo.avatarURL}`
+                  uri: sessionInfo.avatarURL
                 }
               : Images.avatar
           }
@@ -77,7 +77,10 @@ class SessionInfoView extends Component {
                         hideChevron
                         title={I18n.t("generalAssistance").toUpperCase()}
                         titleStyle={styles.titleStyle}
-                        subtitle={sessionInfo.scenario}
+                        subtitle={
+                          sessionInfo.scenario.charAt(0).toUpperCase() +
+                          sessionInfo.scenario.slice(1)
+                        }
                         subtitleStyle={styles.listSubtitle}
                       />
                     ) : null}
@@ -90,7 +93,7 @@ class SessionInfoView extends Component {
                       subtitle={
                         <View style={styles.languagesContainer}>
                           <Text style={styles.languagesText}>
-                            {primaryLang} , {secondLang}
+                            {primaryLang}, {secondLang}
                           </Text>
                         </View>
                       }
@@ -99,28 +102,24 @@ class SessionInfoView extends Component {
                     <ListItem
                       containerStyle={styles.listItemContainer}
                       hideChevron
-                      title={I18n.t("duration").toUpperCase()}
-                      titleStyle={styles.titleStyle}
-                      subtitle={
-                        sessionInfo.duration >= 60
-                          ? `${moment
-                              .utc(sessionInfo.duration * 1000)
-                              .format("mm:ss")} mins`
-                          : `${moment
-                              .utc(sessionInfo.duration * 1000)
-                              .format("mm:ss")} seconds`
-                      }
-                      subtitleStyle={styles.listSubtitle}
+                      subtitle={I18n.t("duration").toUpperCase()}
+                      subtitleStyle={styles.titleStyle}
+                      rightTitle={`${moment
+                        .utc(sessionInfo.duration * 1000)
+                        .format("mm:ss")}`}
+                      rightTitleContainerStyle={styles.listRightTitleContainer}
+                      rightTitleStyle={styles.listRightTitle}
                     />
 
                     {/* Cost */}
                     <ListItem
                       containerStyle={styles.listItemContainer}
                       hideChevron
-                      titleStyle={styles.titleStyle}
-                      title={I18n.t("cost").toUpperCase()}
-                      subtitle="0 $"
-                      subtitleStyle={styles.listSubtitle}
+                      subtitle={I18n.t("cost").toUpperCase()}
+                      subtitleStyle={styles.titleStyle}
+                      rightTitle={"$ 0.00"}
+                      rightTitleContainerStyle={styles.listRightTitleContainer}
+                      rightTitleStyle={styles.listRightTitle}
                     />
                   </List>
                 </Grid>

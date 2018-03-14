@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { camelCase, some, filter, isEqual, isUndefined } from "lodash";
+import { camelCase, some, filter, isEqual, isUndefined, uniqBy } from "lodash";
 
 import {
   updateSettings,
   getItems,
   updateForm
 } from "../../Ducks/LinguistFormReducer";
+import { updateSettings as updateHomeSettings } from "../../Ducks/HomeFlowReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Text, View, ScrollView, Image, Alert } from "react-native";
@@ -28,6 +29,8 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
+
+import ListComponent from "../../Components/ListComponent/ListComponent";
 
 const itemMetadata = {
   languages: {
@@ -80,14 +83,13 @@ const itemMetadata = {
 };
 
 class SelectListView extends Component {
-  componentWillMount() {
-    this.props.getItems(
+  async componentWillMount() {
+    await this.props.getItems(
       this.props.selectionItemType,
       this.props.navigation.state.params
     );
-    this.props.updateSettings({
-      searchQuery: "",
-      selectedLanguage: null
+    this.props.updateHomeSettings({
+      categoryIndex: 6
     });
   }
 
@@ -110,7 +112,7 @@ class SelectListView extends Component {
   };
 
   renderList = assistance => {
-    const navigation = this.props.navigation;
+    const { scenarios, navigation } = this.props;
 
     const selectedItemsListName = camelCase(
       `selected ${this.props.selectionItemName}`
@@ -118,42 +120,32 @@ class SelectListView extends Component {
 
     const selectedItemsList = this.props[selectedItemsListName];
 
-    return this.props[this.props.selectionItemType]
-      .filter(language => {
-        const propertyToCompare = language.name
-          ? language.name
-          : language.title;
+    const list = (
+      <ListComponent
+        data={uniqBy(scenarios, "title")}
+        triangle={false}
+        titleProperty={"title"}
+        onPress={index => {
+          const { continueTo } = itemMetadata[this.props.selectionItemName];
+          console.log(uniqBy(scenarios, "title")[index], scenarios);
+          if (!isUndefined(continueTo)) {
+            this.props.updateSettings({
+              selectedScenarios: [uniqBy(scenarios, "title")[index]]
+            });
 
-        return propertyToCompare
-          .toLowerCase()
-          .startsWith(this.props.searchQuery.toLowerCase());
-      })
-      .map((language, i) => {
-        return (
-          <ListItem
-            wrapperStyle={styles.listItem}
-            hideChevron={!some(selectedItemsList, language)}
-            key={i}
-            title={language.name || language.title}
-            rightIcon={{ name: "check" }}
-            onPress={() => {
-              const { continueTo } = itemMetadata[this.props.selectionItemName];
+            navigation.dispatch({ type: continueTo });
+          }
+        }}
+        multiple={false}
+        selected={selectedItemsList}
+        other={{ other: true, title: "Other" }}
+        otherOnPress={() => {
+          navigation.dispatch({ type: "CustomScenarioView" });
+        }}
+      />
+    );
 
-              const deselectedItem = this.selectListItem({
-                language,
-                selectedItemsList,
-                selectedItemsListName
-              });
-
-              if (!isUndefined(continueTo) && !deselectedItem) {
-                this.props.updateSettings({ selectedLanguage: language });
-
-                navigation.dispatch({ type: continueTo });
-              }
-            }}
-          />
-        );
-      });
+    return list;
   };
 
   render() {
@@ -185,19 +177,8 @@ class SelectListView extends Component {
               : null
           }
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            alwaysBounceVertical={false}
-          >
-            <List style={styles.list}>
-              {this.renderList()}
-              {!isUndefined(othersGoTo) && (
-                <ListItem
-                  title={"Other"}
-                  onPress={() => navigation.dispatch({ type: othersGoTo })}
-                />
-              )}
-            </List>
+          <ScrollView automaticallyAdjustContentInsets={true}>
+            {this.renderList()}
           </ScrollView>
         </HeaderView>
       </ViewWrapper>
@@ -218,7 +199,7 @@ const mS = state => ({
   selectionItemName: state.linguistForm.selectionItemName,
   selectedAreasOfExpertise: state.linguistForm.selectedAreasOfExpertise,
   selectedSecondaryLanguages: state.linguistForm.selectedSecondaryLanguages,
-  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage,
+  selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,
   selectedCitizenship: state.linguistForm.selectedCitizenship,
   selectedCountryFamiliarity: state.linguistForm.selectedCountryFamiliarity,
   selectedCityFamiliarity: state.linguistForm.selectedCityFamiliarity,
@@ -226,6 +207,7 @@ const mS = state => ({
 });
 
 const mD = {
+  updateHomeSettings,
   updateSettings,
   getItems,
   updateForm

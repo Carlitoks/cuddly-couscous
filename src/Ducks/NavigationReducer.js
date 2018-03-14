@@ -36,7 +36,12 @@ export default (reducer = (state, action) => {
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: "Home" })]
+          actions: [
+            NavigationActions.navigate({
+              routeName: "Home",
+              params: action.params
+            })
+          ]
         })
       );
       break;
@@ -55,6 +60,17 @@ export default (reducer = (state, action) => {
         NavigationActions.reset({
           index: 0,
           actions: [NavigationActions.navigate({ routeName: "LinguistView" })]
+        })
+      );
+      break;
+
+    case "IncomingCallView":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: "IncomingCallView" })
+          ]
         })
       );
       break;

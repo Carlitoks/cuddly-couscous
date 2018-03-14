@@ -22,6 +22,7 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
@@ -46,7 +47,7 @@ class GenderLinguist extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(updates.GenderErrorMessage);
+      displayFormErrors(updates.GenderErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -59,21 +60,6 @@ class GenderLinguist extends Component {
     if (this.validateForm()) {
       navigation.dispatch({ type: "FamiliarityView" });
     }
-  }
-
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
   }
 
   render() {

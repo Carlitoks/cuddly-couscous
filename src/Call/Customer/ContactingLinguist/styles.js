@@ -113,5 +113,10 @@ export default StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "flex-start",
     paddingBottom: 20
+  },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
   }
 });

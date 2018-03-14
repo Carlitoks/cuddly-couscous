@@ -75,7 +75,7 @@ class LinguistView extends Component {
 
     return avatarURL
       ? {
-          uri: `${IMAGE_STORAGE_URL}${avatarURL}`
+          uri: this.props.avatarURL
         }
       : Images.avatar;
   };

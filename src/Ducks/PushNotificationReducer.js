@@ -37,19 +37,27 @@ export const remoteNotificationReceived = invitationId => (
             customerName: data.createdBy
               ? `${data.createdBy.firstName} ${data.createdBy.lastInitial}.`
               : "",
+            avatarURL: data.createdBy ? data.createdBy.avatarURL : "",
             estimatedMinutes: data.session.estimatedMinutes
               ? `~ ${data.session.estimatedMinutes} mins`
               : data.session.estimatedMinutes,
-            languages: `${LANG_CODES.get(
-              data.session.primaryLangCode
-            )} - ${LANG_CODES.get(data.session.secondaryLangCode)}`
+            languages:
+              data.session &&
+              `${LANG_CODES.get(
+                data.session.primaryLangCode
+              )} - ${LANG_CODES.get(data.session.secondaryLangCode)}`,
+            customerScenario:
+              data.session &&
+              data.session.scenario &&
+              `${data.session.scenario.category.length > 0 &&
+                `${data.session.scenario.category[0].toUpperCase()}${data.session.scenario.category.slice(
+                  1
+                )}`} - ${data.session.scenario.title}`
           })
         );
         dispatch({ type: "IncomingCallView" });
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(error => dispatch(networkError(error)));
   }
 };
 

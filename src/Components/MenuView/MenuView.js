@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { AppState } from "react-native";
+import { AppState, Linking } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
@@ -13,6 +13,7 @@ import {
 import { logOutAsync } from "../../Ducks/AuthReducer";
 
 import {
+  Alert,
   View,
   ScrollView,
   Text,
@@ -55,7 +56,7 @@ class MenuView extends Component {
   };
 
   render() {
-    const { navigation, avatarURL } = this.props;
+    const { navigation } = this.props;
 
     return (
       <ScrollView alwaysBounceVertical={false}>
@@ -73,9 +74,11 @@ class MenuView extends Component {
               xlarge
               key={this.props.avatarBase64}
               source={
-                avatarURL
+                this.props.avatarURL
                   ? {
-                      uri: `${IMAGE_STORAGE_URL}${avatarURL}?${new Date().getUTCMilliseconds()}`
+                      uri: `${
+                        this.props.avatarURL
+                      }?time=${new Date().getUTCMilliseconds()}`
                     }
                   : Images.avatar
               }
@@ -126,23 +129,53 @@ class MenuView extends Component {
           <Text style={styles.colorText}>{I18n.t("callHistory")}</Text>
         </Icon.Button>
 
-        <Icon.Button
-          name="receipt"
+        {this.isACustomer() && (
+          <Icon.Button
+            name="receipt"
+            size={25}
+            backgroundColor={
+              isCurrentView(navigation, "PromoCodeView")
+                ? Colors.selectedBackground
+                : Colors.background
+            }
+            iconStyle={
+              isCurrentView(navigation, "PromoCodeView")
+                ? styles.selectedOptionMenu
+                : styles.optionMenu
+            }
+            onPress={() => this.checkCurrentPage(navigation, "PromoCodeView")}
+          >
+            <Text style={styles.colorText}>{I18n.t("promoCodeTitle")}</Text>
+          </Icon.Button>
+        )}
+
+        {/* Help */}
+        {/* <Icon.Button
+          name="help"
           size={25}
           backgroundColor={
-            isCurrentView(navigation, "PromoCodeView")
+            isCurrentView(navigation, "Help")
               ? Colors.selectedBackground
               : Colors.background
           }
           iconStyle={
-            isCurrentView(navigation, "PromoCodeView")
+            isCurrentView(navigation, "Help")
               ? styles.selectedOptionMenu
               : styles.optionMenu
           }
-          onPress={() => this.checkCurrentPage(navigation, "PromoCodeView")}
+          onPress={() => {
+            navigation.dispatch({
+              type: "StaticView",
+              params: {
+                uri: HelpURI,
+                title: I18n.t("help")
+              }
+            });
+          }}
         >
-          <Text style={styles.colorText}>{I18n.t("promoCodeTitle")}</Text>
-        </Icon.Button>
+          <Text style={styles.colorText}>{I18n.t("help")}</Text>
+        </Icon.Button> */}
+
         {/* Logout */}
         <Icon.Button
           name="exit-to-app"
@@ -150,7 +183,15 @@ class MenuView extends Component {
           backgroundColor={Colors.background}
           iconStyle={styles.optionMenu}
           onPress={() => {
-            this.props.logOutAsync();
+            Alert.alert(I18n.t("logOut"), I18n.t("logOutConfirmation"), [
+              {
+                text: I18n.t("no")
+              },
+              {
+                text: I18n.t("yes"),
+                onPress: () => this.props.logOutAsync()
+              }
+            ]);
           }}
         >
           <Text style={styles.colorText}>{I18n.t("logOut")}</Text>
@@ -171,9 +212,7 @@ class MenuView extends Component {
                 ? styles.selectedOptionMenu
                 : styles.optionMenu
             }
-            onPress={() =>
-              this.checkCurrentPage(navigation, "SelectLanguageView")
-            }
+            onPress={() => Linking.openURL("https://signup.gps.network")}
           >
             <Text style={styles.colorText} icon>
               {I18n.t("becomeLinguist")}

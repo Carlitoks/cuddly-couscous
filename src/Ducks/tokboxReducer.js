@@ -59,10 +59,6 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
           error: null
         })
       );
-      console.log("isLinguist", isLinguist);
-      if (isLinguist) {
-        OpenTok.sendSignal(id, "PickedCall", REASON.DONE);
-      }
     })
     .catch(error => {
       dispatch(

@@ -6,23 +6,43 @@ const width = Dimensions.get("window").width - 20;
 
 export default StyleSheet.create({
   container: {
-    marginTop: moderateScale(45),
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: Colors.placeholderColor,
-    width: "85%",
-    alignSelf: "center",
+    borderBottomWidth: 0,
+    paddingTop: 0,
+    flex: 1,
+    height: 42
   },
-  secondary:{
+  multilineContainer: {
+    minHeight: 44,
+    height: null,
+    paddingLeft: 25
+  },
+  secondary: {
     borderTopWidth: 0,
-    marginTop: 0,
+    marginTop: 0
   },
   formInput: {
     color: Colors.black,
     fontFamily: Fonts.primaryBaseFont,
-    justifyContent: "center",
-    height: 37,
-    paddingTop:0,
-    paddingLeft:0,
+    paddingTop: 5,
+    margin: 0,
+    fontSize: 16,
+    overflow: "visible"
+  },
+  formInputMultiline: {
+    color: Colors.black,
+    fontFamily: Fonts.primaryBaseFont,
+    paddingTop: 12,
+    margin: 0,
+    fontSize: 16,
+    overflow: "visible"
+  },
+  viewBorder: {
+    marginTop: moderateScale(45),
+    width: "100%",
+    alignSelf: "center",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: Colors.bordersLightGrey,
+    flex: 1
   }
 });

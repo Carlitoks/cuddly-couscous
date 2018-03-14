@@ -23,7 +23,10 @@ export const clearPromoCode = () => ({
 
 const initialState = {
   scanned: "",
-  code: ""
+  code: "",
+  received: false,
+  categories: [],
+  scenarios: []
 };
 
 export const asyncScanPromoCode = (promoCode, token) => dispatch => {
@@ -31,9 +34,7 @@ export const asyncScanPromoCode = (promoCode, token) => dispatch => {
     .then(response => {
       return dispatch(scanPromoCode(response.data));
     })
-    .catch(error => {
-      return dispatch(networkError(error.response));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 const promoCodeReducer = (state = initialState, action = {}) => {
@@ -43,13 +44,14 @@ const promoCodeReducer = (state = initialState, action = {}) => {
     case ACTIONS.UPDATE:
       return {
         ...state,
-        code: payload
+        ...payload
       };
       break;
     case ACTIONS.SCAN:
       return {
         ...state,
-        scanned: payload
+        scanned: payload,
+        received: true
       };
       break;
     case ACTIONS.CLEAR:

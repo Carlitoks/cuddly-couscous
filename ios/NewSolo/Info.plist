@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.4</string>
+	<string>1.1.11</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -58,7 +58,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>${PRODUCT_NAME} Microphone Usage</string>
 	<key>NSMotionUsageDescription</key>
@@ -89,6 +89,9 @@
 		<string>Fontin-Italic.ttf</string>
 		<string>Fontin-Regular.ttf</string>
 		<string>Fontin-SmallCaps.ttf</string>
+		<string>SF-Pro-Display-Light.ttf</string>
+		<string>SF-Pro-Display-Medium.ttf</string>
+		<string>SF-Pro-Display-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -103,6 +106,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

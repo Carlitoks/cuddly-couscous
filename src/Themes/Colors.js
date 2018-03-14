@@ -5,24 +5,30 @@ const colors = {
     EndCall: "#ee0d33",
     AcceptCall: "#49e373"
   },
-  disabledColor: "#808080",
+  disabledColor: "#cccccc",
   fontColor: "white",
   formColor: "#d2d3d8",
   formInputIconColor: "#D1CFCF",
   gradientColor: {
     top: "#401674",
     middle: "#52389d",
-    bottom: "#6a64d2"
+    bottom: "#7171e2"
   },
   gradientColorButton: {
-    top: "#FF5642",
+    top: "#FB6A28",
     middle: "#FC834E",
-    bottom: "#FDAD46"
+    bottom: "#F39100"
+  },
+  carouselImagesGradient: {
+    top: "transparent",
+    bottom: "#fb6a28"
   },
   linguistFormButton: "#ebedfa",
   linguistFormText: "#677bd8",
   onTintColor: "#4cd963",
   placeholderColor: "#7D7E80",
+  bordersLightGrey: "#cccccc",
+  searchBarGrey: "#e0e0e0",
   primaryAltFontColor: "#6B8FE0",
   primaryBackgroundColor: "#e6f3ff",
   primaryColor: "white",
@@ -49,7 +55,12 @@ const colors = {
   emptyStarColor: "#cccccc",
   starColor: "#ffcb00",
   listLabelColor: "#F96F2B",
-  disabledIcons: "#cdcdcd"
+  disabledIcons: "#cdcdcd",
+  searchBackground: "#dedee0",
+  greyBackground: "#f7f7f7",
+  gray: "gray",
+  shadowColor: "#585858",
+  lightGrey: "#D9D9E6"
 };
 
 export default colors;

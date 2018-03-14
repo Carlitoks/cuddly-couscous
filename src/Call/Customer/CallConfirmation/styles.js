@@ -2,10 +2,24 @@ import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../../Themes";
 import { moderateScale } from "../../../Util/Scaling";
 
+const { width, height } = Dimensions.get("window");
+
 export const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
-    backgroundColor: "#ffffff"
+    backgroundColor: "white"
+  },
+  scroll: {
+    flexGrow: 1,
+    height: "100%"
+  },
+  buttons: {
+    flex: 1,
+    position: "absolute",
+    bottom: 0,
+    alignSelf: "center",
+    paddingBottom: 19,
+    width: "100%"
   },
   mainTitle: {
     fontFamily: Fonts.primaryLightFont,
@@ -22,10 +36,9 @@ export const styles = StyleSheet.create({
     height: "100%"
   },
   summaryContainer: {
-    top: -8,
-    flex: 1,
+    flex: 5,
     flexDirection: "column",
-    justifyContent: "space-around"
+    justifyContent: "flex-start"
   },
   callInformation: {
     marginLeft: 15,
@@ -64,8 +77,11 @@ export const styles = StyleSheet.create({
     fontSize: 24
   },
   footerButtons: {
+    alignSelf: "flex-end",
+    flexDirection: "column",
     alignItems: "center",
-    marginTop: 25
+    marginTop: 25,
+    marginBottom: 25
   },
   listItemContainer: {
     minHeight: 60,
@@ -85,11 +101,11 @@ export const styles = StyleSheet.create({
     flex: 0.3
   },
   listSubtitle: {
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(19),
     fontWeight: "normal"
   },
   titleStyle: {
-    fontSize: moderateScale(15),
+    fontSize: moderateScale(20),
     fontWeight: "bold",
     color: Colors.listLabelColor
   }

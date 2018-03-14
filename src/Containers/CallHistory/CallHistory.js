@@ -41,56 +41,64 @@ class CallHistory extends Component {
   }
 
   filterAllCalls = (allCalls, userType) => {
-    return allCalls
-      .map((item, i) => {
-        let result = {};
-        if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
-          result = {
-            key: i,
-            firstName: item[userType].firstName,
-            lastInitial: item[userType].lastInitial,
-            primaryLangCode: item.session.primaryLangCode,
-            secondaryLangCode: item.session.secondaryLangCode,
-            duration: !_isUndefined(item.session.duration)
-              ? item.session.duration
-              : 0,
-            rating: !_isUndefined(item.rating) ? item.rating.stars : "",
-            scenario: !_isUndefined(item.session.scenario)
-              ? item.session.scenario.title
-              : "",
-            avatarURL: item[userType].avatarURL,
-            chevron: false
-          };
-        }
-        return result;
-      })
-      .filter(item => {
-        return !_isEmpty(item);
-      });
+    if (!_isEmpty(allCalls)) {
+      return allCalls
+        .map((item, i) => {
+          let result = {};
+          if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
+            result = {
+              key: i,
+              firstName: item[userType].firstName,
+              lastInitial: item[userType].lastInitial,
+              primaryLangCode: item.session.primaryLangCode,
+              secondaryLangCode: item.session.secondaryLangCode,
+              duration: !_isUndefined(item.session.duration)
+                ? item.session.duration
+                : 0,
+              rating: !_isUndefined(item.rating) ? item.rating.stars : "",
+              scenario: !_isUndefined(item.session.scenario)
+                ? item.session.scenario.category
+                : "",
+              avatarURL: item[userType].avatarURL,
+              chevron: false
+            };
+          }
+          return result;
+        })
+        .filter(item => {
+          return !_isEmpty(item);
+        });
+    } else {
+      return [];
+    }
   };
 
   filterMissedCalls = missedCalls => {
-    return missedCalls
-      .map((item, i) => {
-        let result = {};
-        if (!_isUndefined(item.createdBy) && !_isUndefined(item.session)) {
-          result = {
-            key: i,
-            firstName: item.createdBy.firstName,
-            lastInitial: item.createdBy.lastInitial,
-            duration: 0,
-            primaryLangCode: item.session.primaryLangCode,
-            secondaryLangCode: item.session.secondaryLangCode,
-            avatarURL: item.createdBy.avatarURL,
-            createdAt: moment(item.createdAt).format("MM-DD-YYYY"),
-            chevron: true
-          };
-        }
-        return result;
-      })
-      .filter(item => {
-        return !_isEmpty(item);
-      });
+    if (!_isEmpty(missedCalls)) {
+      return missedCalls
+        .map((item, i) => {
+          let result = {};
+          if (!_isUndefined(item.createdBy) && !_isUndefined(item.session)) {
+            result = {
+              key: i,
+              firstName: item.createdBy.firstName,
+              lastInitial: item.createdBy.lastInitial,
+              duration: 0,
+              primaryLangCode: item.session.primaryLangCode,
+              secondaryLangCode: item.session.secondaryLangCode,
+              avatarURL: item.createdBy.avatarURL,
+              createdAt: moment(item.createdAt).format("MM-DD-YYYY"),
+              chevron: true
+            };
+          }
+          return result;
+        })
+        .filter(item => {
+          return !_isEmpty(item);
+        });
+    } else {
+      return [];
+    }
   };
 
   getAllCustomerCalls = (userId, token) => {

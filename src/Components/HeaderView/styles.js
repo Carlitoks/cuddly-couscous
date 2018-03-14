@@ -26,7 +26,7 @@ export default StyleSheet.create({
     height: 40
   },
   onlyTitle: {
-    fontSize: 24,
+    fontSize: 26,
     marginTop: moderateScale(10),
     marginBottom: moderateScale(50),
     color: Colors.primaryColor,
@@ -36,18 +36,17 @@ export default StyleSheet.create({
   },
   mainTitle: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 24,
-    textAlign: "center",
-    marginBottom: moderateScale(10),
-    marginTop: moderateScale(10),
+    fontSize: 26,
     color: Colors.primaryColor,
+    marginTop: moderateScale(10),
+    textAlign: "center",
     backgroundColor: "transparent"
   },
   subtitle: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 16,
+    fontSize: 20,
     textAlign: "center",
-    marginBottom: moderateScale(10),
+    marginBottom: moderateScale(20),
     color: Colors.primaryColor,
     backgroundColor: "transparent"
   },
@@ -65,7 +64,8 @@ export default StyleSheet.create({
   },
   containerAvatar: {
     alignItems: "center",
-    marginBottom: 30
+    marginBottom: 30,
+    marginTop: 30
   },
   avatar: {
     paddingVertical: 30,

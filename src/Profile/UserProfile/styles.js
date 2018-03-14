@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: Colors.white
   },
   avatar: {
     paddingVertical: 30,
@@ -48,7 +48,7 @@ export default StyleSheet.create({
     marginBottom: 10
   },
   inputText: {
-    color: "black"
+    color: Colors.black
   },
   marginBottom10: {
     marginBottom: 20
@@ -60,7 +60,7 @@ export default StyleSheet.create({
     paddingLeft: 10
   },
   containerBottom: {
-    backgroundColor: "black",
+    backgroundColor: Colors.black,
     width: "100%",
     justifyContent: "center",
     alignItems: "center"
@@ -71,5 +71,31 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: Colors.linguistFormText
+  },
+  listRightTitle: {
+    fontSize: moderateScale(22),
+    color: Colors.primaryListRightItem
+  },
+  listRightTitleContainer: {
+    flex: 0.3
+  },
+  listSubtitle: {
+    fontSize: moderateScale(19),
+    fontWeight: "normal"
+  },
+  titleStyle: {
+    fontSize: moderateScale(20),
+    fontWeight: "bold",
+    color: Colors.listLabelColor
+  },
+  listItemContainer: {
+    minHeight: 60,
+    justifyContent: "center"
+  },
+  summaryContainer: {
+    top: -8,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-around"
   }
 });

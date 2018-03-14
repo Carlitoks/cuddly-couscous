@@ -24,6 +24,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
+import { displayFormErrors } from "../../Util/Helpers";
 import I18n from "../../I18n/I18n";
 
 class EmailLinguist extends Component {
@@ -54,7 +55,7 @@ class EmailLinguist extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(updates.emailErrorMessage);
+      displayFormErrors(updates.emailErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -65,21 +66,6 @@ class EmailLinguist extends Component {
     if (this.validateForm()) {
       this.props.navigation.dispatch({ type: "PasswordLinguistView" });
     }
-  }
-
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
   }
 
   render() {

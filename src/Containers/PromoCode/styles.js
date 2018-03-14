@@ -43,5 +43,8 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: Colors.linguistFormText
+  },
+  marginSpinner: {
+    marginTop: 30
   }
 });

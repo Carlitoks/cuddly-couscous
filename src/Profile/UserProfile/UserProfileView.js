@@ -22,7 +22,8 @@ import {
   updateProfileAsync,
   getProfileAsync,
   updateView,
-  asyncUploadAvatar
+  asyncUploadAvatar,
+  getNativeLang
 } from "../../Ducks/UserProfileReducer";
 import { Button, Header, List, ListItem, Avatar } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -36,6 +37,7 @@ import InputRegular from "../../Components/InputRegular/InputRegular";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
+import _capitalize from "lodash/capitalize";
 import { compareArrays } from "../../Util/Helpers";
 import I18n from "../../I18n/I18n";
 import { Images, Colors, Fonts } from "../../Themes";
@@ -76,12 +78,9 @@ class UserProfileView extends Component {
         });
       }
     }
-    if (this.props.selectedNativeLanguage.length === 0)
-      this.props.updateSettings({
-        selectedNativeLanguage: this.getNativeLangCode(
-          this.props.nativeLangCode
-        )
-      });
+    this.props.updateSettings({
+      selectedNativeLanguage: this.getNativeLangCode(this.props.nativeLangCode)
+    });
 
     if (secondaryLanguages) {
       this.props.updateSettings({
@@ -92,7 +91,9 @@ class UserProfileView extends Component {
 
   getNativeLangCode = code => {
     return Languages.filter(e => {
-      return e["3"] === code;
+      if (e["3"] === code) {
+        return e;
+      }
     });
   };
 
@@ -123,139 +124,6 @@ class UserProfileView extends Component {
         </List>
       </View>
     );
-  };
-
-  renderSecundaryLanguagesList = () => {
-    const { selectedSecondaryLanguages } = this.props;
-
-    const selectedSecondaryLanguagesList = selectedSecondaryLanguages.map(
-      (language, i) => {
-        const proficiency = language.proficiency
-          ? language.proficiency.name
-          : null;
-        {
-          /*Add list icon*/
-        }
-        return (
-          <ListItem
-            key={language["3"]}
-            title={language.name}
-            rightTitle={proficiency}
-            onPress={() => {
-              this.props.updateSettings({
-                selectionItemType: "languages",
-                selectionItemName: "secondaryLanguages",
-                goTo: "UserProfileView"
-              });
-              this.props.navigation.dispatch({
-                type: "SelectListView"
-              });
-            }}
-          />
-        );
-      }
-    );
-
-    const addLanguageListItem = (
-      <ListItem
-        hideChevron
-        titleStyle={styles.primaryColor}
-        title={I18n.t("addLanguage")}
-        leftIcon={{
-          name: "add-circle-outline"
-        }}
-        onPress={() => {
-          this.props.updateSettings({
-            selectionItemType: "languages",
-            selectionItemName: "secondaryLanguages",
-            goTo: "UserProfileView"
-          });
-          this.props.navigation.dispatch({
-            type: "SelectListView"
-          });
-        }}
-      />
-    );
-
-    return (
-      <List>
-        {selectedSecondaryLanguagesList}
-        {addLanguageListItem}
-      </List>
-    );
-  };
-
-  makeLinguistObject = () => {
-    const { linguistProfile, selectedAreasOfExpertise } = this.props;
-    const areasOfExpertise = selectedAreasOfExpertise.map(area => {
-      return area.name;
-    });
-    return {
-      areasOfExpertise: areasOfExpertise,
-      familiarCountryCodes: linguistProfile.familiarCountryCodes,
-      citiesChildhood: linguistProfile.citiesChildhood,
-      citiesFamiliar: linguistProfile.citiesFamiliar,
-      allowVideo: linguistProfile.allowVideo,
-      available: linguistProfile.available,
-      canVideo: linguistProfile.canVideo,
-      maxMinutes: linguistProfile.maxMinutes
-    };
-  };
-
-  makeListOfLanguages = () => {
-    const linguistLangs = this.props.linguistProfile.secondaryLanguages.map(
-      lang => {
-        return lang;
-      }
-    );
-    const selectedLangs = this.props.selectedSecondaryLanguages.map(lang => {
-      const clang = {
-        code: lang["3"],
-        proficiency: !lang.proficiency ? null : lang.proficiency.code,
-        interpretation: !lang.interpretation ? null : lang.interpretation.code
-      };
-
-      return clang;
-    });
-    return compareArrays(linguistLangs, selectedLangs);
-  };
-
-  addLanguage = lang => {
-    const { token, uuid, updateLanguages } = this.props;
-
-    let payload = {};
-    if (lang.new) {
-      payload = lang.new;
-      delete payload.type;
-    } else {
-      payload = {
-        code: lang.code.new,
-        proficiency: lang.proficiency.new,
-        interpretation: lang.interpretation.new
-      };
-    }
-
-    return updateLanguages(uuid, payload.code, token, payload);
-  };
-
-  deleteLanguage = lang => {
-    const { token, uuid, deleteLanguages } = this.props;
-    const code = lang.old ? lang.old.code : lang.code.old;
-    return deleteLanguages(uuid, code, token);
-  };
-
-  updatelanguage = lang => {
-    const { token, uuid, updateLanguages, deleteLanguages } = this.props;
-
-    const addPayLoad = {
-      code: lang.code.new,
-      proficiency: lang.proficiency.new,
-      interpretation: lang.interpretation.new
-    };
-    const delCode = lang.code.old;
-    return deleteLanguages(uuid, delCode, token).then(() => {
-      return updateLanguages(uuid, addPayLoad.code, token, addPayLoad);
-    });
   };
 
   getUserProfile = () => {
@@ -309,9 +177,7 @@ class UserProfileView extends Component {
       : images.avatar;
     return this.props.avatarURL
       ? {
-          uri: `${IMAGE_STORAGE_URL}${
-            this.props.avatarURL
-          }?${new Date().getMilliseconds()}`
+          uri: `${this.props.avatarURL}?time=${new Date().getUTCMilliseconds()}`
         }
       : image;
   };
@@ -331,7 +197,7 @@ class UserProfileView extends Component {
       firstName,
       lastName,
       preferredName,
-      nativeLangCode: selectedNativeLanguage[0]["3"]
+      nativeLangCode: selectedNativeLanguage["3"]
     };
 
     this.props.updateProfileAsync(uuid, data, token).then(response => {
@@ -349,7 +215,7 @@ class UserProfileView extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    const { selectedNativeLanguage } = this.props;
+    const { selectedNativeLanguage, firstName, lastName, gender } = this.props;
 
     return (
       <ViewWrapper style={styles.mainContainer}>
@@ -372,89 +238,55 @@ class UserProfileView extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.contentScrollContainer}
           >
-            <Grid>
-              <Col>
-                <Row style={styles.containerTitles}>
-                  <Text style={styles.titlesForm}>{I18n.t("firstname")}</Text>
-                </Row>
-                <Row>
-                  {/* Name */}
-                  <InputRegular
-                    containerStyle={styles.containerInput}
-                    placeholder={I18n.t("linguistName")}
-                    onChangeText={text =>
-                      this.props.updateView({ firstName: text })
-                    }
-                    value={this.props.firstName}
-                  />
-                </Row>
-                <Row style={styles.containerTitles}>
-                  <Text style={styles.titlesForm}>{I18n.t("lastname")}</Text>
-                </Row>
-                <Row>
-                  {/* Last Name */}
-                  <InputRegular
-                    containerStyle={styles.containerInput}
-                    placeholder={I18n.t("linguistLastName")}
-                    onChangeText={text =>
-                      this.props.updateView({ lastName: text })
-                    }
-                    value={this.props.lastName}
-                  />
-                </Row>
-                <Row style={styles.containerTitles}>
-                  <Text style={styles.titlesForm}>
-                    {I18n.t("preferedNameTitle")}
-                  </Text>
-                </Row>
-                <Row>
-                  {/* Preferredj Name */}
-                  <InputRegular
-                    containerStyle={styles.containerInput}
-                    placeholder={I18n.t("preferredName")}
-                    onChangeText={text =>
-                      this.props.updateView({ preferredName: text })
-                    }
-                    value={this.props.preferredName}
-                  />
-                </Row>
-
-                <Row style={styles.containerTitles}>
-                  <Text style={styles.titlesForm}>
-                    {I18n.t("nativeLanguage")}
-                  </Text>
-                </Row>
+            <Grid style={styles.summaryContainer}>
+              <List containerStyle={{ borderTopWidth: 0 }}>
+                {/* Name */}
+                <ListItem
+                  containerStyle={styles.listItemContainer}
+                  title={I18n.t("name").toUpperCase()}
+                  titleStyle={styles.titleStyle}
+                  subtitle={`${firstName} ${lastName}`}
+                  subtitleStyle={styles.listSubtitle}
+                  onPress={() => {
+                    navigation.dispatch({
+                      type: "EditNameView"
+                    });
+                  }}
+                />
                 {/* Native Language */}
-                <List containerStyle={styles.marginBottom10}>
-                  {this.props.selectedNativeLanguage[0] && (
-                    <ListItem
-                      key={selectedNativeLanguage[0].code}
-                      title={selectedNativeLanguage[0].name}
-                      onPress={() => {
-                        this.props.updateSettings({
-                          selectionItemType: "languages",
-                          selectionItemName: "nativeLanguage"
-                        });
-                        this.props.navigation.dispatch({
-                          type: "SelectListView"
-                        });
-                      }}
-                    />
-                  )}
-                </List>
-                {this.props.linguistProfile && this.ShowLinguistOptions()}
-                <View style={styles.marginBottom80} />
-              </Col>
+                <ListItem
+                  containerStyle={styles.listItemContainer}
+                  title={I18n.t("nativeLanguageTitle").toUpperCase()}
+                  titleStyle={styles.titleStyle}
+                  subtitle={selectedNativeLanguage}
+                  subtitleStyle={styles.listSubtitle}
+                  onPress={() => {
+                    navigation.dispatch({
+                      type: "EditNativeLanguageView"
+                    });
+                  }}
+                />
+                {/* Gender */}
+                <ListItem
+                  containerStyle={styles.listItemContainer}
+                  title={I18n.t("gender").toUpperCase()}
+                  titleStyle={styles.titleStyle}
+                  subtitle={
+                    gender === "decline" || gender === ""
+                      ? I18n.t("unspecified")
+                      : _capitalize(gender)
+                  }
+                  subtitleStyle={styles.listSubtitle}
+                  onPress={() => {
+                    navigation.dispatch({
+                      type: "EditGenderView"
+                    });
+                  }}
+                />
+              </List>
             </Grid>
           </ScrollView>
         </HeaderView>
-        {/* Next Button */}
-        <BottomButton
-          title={I18n.t("save")}
-          onPress={() => {
-            this.submit();
-          }}
-        />
       </ViewWrapper>
     );
   }
@@ -466,7 +298,8 @@ const mS = state => ({
   nativeLangCode: state.userProfile.nativeLangCode,
   preferredName: state.userProfile.preferredName,
   linguistProfile: state.userProfile.linguistProfile,
-  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage,
+  gender: state.userProfile.gender,
+  selectedNativeLanguage: state.userProfile.selectedNativeLanguage.name,
   selectedSecondaryLanguages: state.linguistForm.selectedSecondaryLanguages,
   selectedAreasOfExpertise: state.linguistForm.selectedAreasOfExpertise,
   avatarURL: state.userProfile.avatarURL,

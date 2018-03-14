@@ -9,9 +9,10 @@ import {
 import {
   asyncUploadAvatar,
   updateView,
-  getProfileAsync
+  getProfileAsync,
+  getNativeLang
 } from "../../Ducks/UserProfileReducer";
-import { View, Text, Image, ScrollView, Switch } from "react-native";
+import { View, Text, Image, ScrollView, Switch, Alert } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import PhotoUpload from "react-native-photo-upload";
@@ -47,22 +48,24 @@ class Home extends Component {
   navigate = this.props.navigation.navigate;
 
   componentWillMount() {
+    this.props.updateSettings({ loading: false });
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alert
+    ) {
+      Alert.alert(I18n.t("notification"), I18n.t("cancelCallCustomer"));
+    }
+
     if (
       this.props.tokbox &&
       this.props.networkInfoType !== "none" &&
       this.props.invitationID
     ) {
-      console.log("home", this.props.invitationID);
       this.props.asyncGetInvitationDetail(
         this.props.invitationID,
         this.props.token,
         true
       );
-    } else {
-      this.props.changeStatus({
-        polling: false,
-        available: false
-      });
     }
   }
 
@@ -81,14 +84,14 @@ class Home extends Component {
   }
 
   selectImage = () => {
-    let image = this.props.avatarBase64
-      ? { uri: `data:image/jpg;base64,${this.props.avatarBase64}` }
+    let image = this.props.avatarURL
+      ? {
+          uri: `${this.props.avatarURL}?time=${new Date().getUTCMilliseconds()}`
+        }
       : Images.avatar;
     return this.props.avatarURL
       ? {
-          uri: `${IMAGE_STORAGE_URL}${
-            this.props.avatarURL
-          }?${new Date().getMilliseconds()}`
+          uri: `${this.props.avatarURL}?time=${new Date().getMilliseconds()}`
         }
       : image;
   };
@@ -135,10 +138,11 @@ class Home extends Component {
           badge={true}
           stars={rate ? rate : 0}
           status={available}
-          switchOnChange={available => this.props.changeStatus()}
+          switchOnChange={() => this.props.changeStatus()}
           switchValue={this.props.available}
           calls={numberOfCalls}
           amount={amount}
+          loading={this.props.loading}
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
@@ -182,6 +186,7 @@ const mS = state => ({
   numberOfCalls: state.profileLinguist.numberOfCalls,
   amount: state.profileLinguist.amount,
   status: state.profileLinguist.status,
+  loading: state.profileLinguist.loading,
   uuid: state.auth.uuid,
   token: state.auth.token,
   firstName: state.userProfile.firstName,
@@ -189,7 +194,6 @@ const mS = state => ({
   avatarURL: state.userProfile.avatarURL,
   linguistProfile: state.userProfile.linguistProfile,
   rate: state.userProfile.averageStarRating,
-  avatarBase64: state.userProfile.avatarBase64,
   tokbox: state.tokbox.tokboxID,
   invitationID: state.callLinguistSettings.invitationID,
   networkInfoType: state.networkInfo.type

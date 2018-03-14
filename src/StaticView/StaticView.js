@@ -10,7 +10,7 @@ import styles from "./styles";
 import { Colors } from "../Themes";
 import GoBackButton from "../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../Containers/ViewWrapper/ViewWrapper";
-
+import TopViewIOS from "../Components/TopViewIOS/TopViewIOS";
 export default class StaticView extends Component {
   render() {
     const navigation = this.props.navigation;
@@ -25,7 +25,7 @@ export default class StaticView extends Component {
           contentContainerStyle={styles.contentScrollContainer}
         >
           <View>
-            <Col style={{ height: 50 }}>
+            <Col style={{ height: 110 }}>
               {/* Linear Gradient */}
               <LinearGradient
                 colors={[
@@ -36,8 +36,14 @@ export default class StaticView extends Component {
                 style={styles.linearGradient}
               />
               {/* Header - Navigation */}
+              <TopViewIOS />
               <Header
-                outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
+                outerContainerStyles={{
+                  borderBottomWidth: 0,
+                  height: 70,
+                  paddingBottom: 20,
+                  paddingTop: 20
+                }}
                 backgroundColor="transparent"
                 leftComponent={
                   <GoBackButton navigation={this.props.navigation} />

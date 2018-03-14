@@ -71,6 +71,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
       }
     })
     .catch(error => {
+      dispatch(networkError(error));
       dispatch(clearSettings());
       dispatch(clear());
       dispatch({ type: "Home" });
@@ -117,16 +118,9 @@ export const AsyncCreateSession = ({
           }
           return response;
         })
-        .catch(err => {
-          console.log("error ", err);
-        });
+        .catch(error => dispatch(networkError(error)));
     })
-    .catch(error => {
-      dispatch(networkError(error));
-      if (error.response) {
-        console.log(error.response);
-      }
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 // create customer Invitation, and return invitationID
@@ -143,9 +137,7 @@ export const AsyncCreateInvitation = (
     .then(response => {
       return dispatch(createInvitation(response.data));
     })
-    .catch(error => {
-      return dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 export const closeOpenConnections = () => dispatch => {

@@ -28,11 +28,17 @@ export const UpdateFlags = (
         and we need to remove in what could be better question that element and update the state
         */
         WhatWasGood.push(IconName);
-        WhatCouldBetter.splice(WhatCouldBetter.indexOf(IconName), 1);
+        const index = WhatCouldBetter.indexOf(IconName);
+        if (index !== -1) {
+          WhatCouldBetter.splice(index, 1);
+        }
         dispatch(updateOptions(OffState));
         dispatch(updateOptions(IconState));
       } else {
-        WhatWasGood.splice(WhatWasGood.indexOf(IconName), 1);
+        const index = WhatWasGood.indexOf(IconName);
+        if (index !== -1) {
+          WhatWasGood.splice(index, 1);
+        }
         dispatch(updateOptions(IconState));
       }
       break;
@@ -47,9 +53,15 @@ export const UpdateFlags = (
         WhatCouldBetter.push(IconName);
         dispatch(updateOptions(IconState));
         dispatch(updateOptions(OffState));
-        WhatWasGood.splice(WhatWasGood.indexOf(IconName), 1);
+        const index = WhatWasGood.indexOf(IconName);
+        if (index !== -1) {
+          WhatWasGood.splice(index, 1);
+        }
       } else {
-        WhatCouldBetter.splice(WhatCouldBetter.indexOf(IconName), 1);
+        const index = WhatCouldBetter.indexOf(IconName);
+        if (index !== -1) {
+          WhatCouldBetter.splice(index, 1);
+        }
         dispatch(updateOptions(IconState));
       }
       break;
@@ -78,15 +90,11 @@ export const submitRateCall = (
     positiveFlags: WhatWasGood,
     comment: ""
   };
-
   return Sessions.RatingSession(RateInformation, sessionID, token)
     .then(response => {
-      console.log(response);
       return response;
     })
-    .catch(error => {
-      // return dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 let WhatWasGood = [];

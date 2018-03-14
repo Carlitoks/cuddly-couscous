@@ -263,8 +263,8 @@ const Languages = [
   {
     1: "zh",
     2: "zho",
-    3: "zho",
-    name: "Chinese",
+    3: "cmn",
+    name: "Chinese (Mandarin)",
     local: "中文",
     "2T": "zho",
     "2B": "chi"
@@ -272,9 +272,9 @@ const Languages = [
   {
     1: "zh",
     2: "zho",
-    3: "cmn",
-    name: "Mandarin Chinese",
-    local: "中文",
+    3: "yue",
+    name: "Chinese (Cantonese)",
+    local: "廣東話",
     "2T": "zho",
     "2B": "chi"
   },

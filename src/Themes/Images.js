@@ -13,13 +13,16 @@ const images = {
   expertise_C1: require("../Images/onboarding-expertise-c1.png"),
   logo_call_pn: require("../Images/call_pushn.png"),
   scan_qr_code: require("../Images/scanQR.png"),
-  hotel: require("../Images/hotel.png"),
-  dining: require("../Images/restaurant.png"),
-  airport: require("../Images/local-airport.png"),
-  transit: require("../Images/local-taxi.png"),
-  retail: require("../Images/shopping-cart.png"),
-  conversations: require("../Images/view-module.png"),
-  "view-module": require("../Images/view-module.png")
+  hotel: require("../Images/hotel.jpeg"),
+  dining: require("../Images/restaurant.jpeg"),
+  airport: require("../Images/airport.jpeg"),
+  transit: require("../Images/transit.jpeg"),
+  retail: require("../Images/shopping-cart.jpeg"),
+  conversations: require("../Images/conversations.jpeg"),
+  qr: require("../Images/qr.jpeg"),
+  other: require("../Images/other.jpeg"),
+  landing: require("../Images/role_image.png"),
+  jeenieLogo: require("../Images/jeenie_logo_white.png")
 };
 
 export default images;

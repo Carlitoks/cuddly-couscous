@@ -5,7 +5,8 @@ const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   scrollContainer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "black"
   },
   backgroundImage: {
     resizeMode: "cover",
@@ -50,7 +51,7 @@ export default StyleSheet.create({
     color: Colors.fontColor,
     textAlign: "center",
     width: width,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   notificationText: {
     fontSize: 20,
@@ -59,14 +60,14 @@ export default StyleSheet.create({
     color: Colors.fontColor,
     textAlign: "left",
     width: width,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   locationText: {
     fontSize: 15,
     paddingTop: 5,
     fontFamily: Fonts.primaryFont,
     color: Colors.fontColor,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   incomingCallText: {
     fontSize: 20,
@@ -76,13 +77,13 @@ export default StyleSheet.create({
     color: Colors.fontColor,
     textAlign: "center",
     width: width,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   icon: {
     color: "white",
     paddingTop: 7,
     paddingRight: 9,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   smallAvatar: {
     width: 70,
@@ -90,6 +91,11 @@ export default StyleSheet.create({
     borderRadius: 35
   },
   contentContainerStyle: {
+    height: "100%"
+  },
+  linearGradient: {
+    position: "absolute",
+    width: "100%",
     height: "100%"
   }
 });

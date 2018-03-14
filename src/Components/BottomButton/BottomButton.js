@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import I18n from "../../I18n/I18n";
-import { View, KeyboardAvoidingView } from "react-native";
+import { View, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import { Button } from "react-native-elements";
 import { Colors } from "../../Themes";
 import styles from "./styles";
@@ -50,21 +50,21 @@ const BottomButton = ({
           styles.containerBottom,
           !!customStyle ? customStyle : null,
           negative || bottom ? styles.bottom : null,
+          negative ? styles.negativeContainer : null,
           !!relative ? styles.relative : null
         ]}
       >
         <LinearGradient
           colors={
-            !!disabled
-              ? [Colors.disabledColor, Colors.disabledColor]
-              : !!negative
-                ? ["transparent", "transparent"]
-                : [
-                    Colors.gradientColorButton.top,
-                    Colors.gradientColorButton.middle,
-                    Colors.gradientColorButton.bottom
-                  ]
+            fill
+              ? [
+                  Colors.gradientColorButton.top,
+                  //Colors.gradientColorButton.middle,
+                  Colors.gradientColorButton.bottom
+                ]
+              : ["rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)"]
           }
+          locations={[0.0, 1.0]}
           style={[styles.linearGradient, long ? styles.long : null]}
           //Left to Right
           start={{ x: 0.0, y: 0.5 }}
@@ -72,33 +72,48 @@ const BottomButton = ({
         >
           <Button
             borderRadius={50}
-            textStyle={bold ? styles.textBold : disabled ? styles.textDisabled : fill || whiteText ? styles.white : styles.text}
+            textStyle={[
+              styles.text,
+              bold || long ? styles.textBold : null,
+              disabled
+                ? loading ? styles.transparent : styles.textDisabled
+                : null,
+              fill || whiteText ? styles.white : null
+            ]}
             title={title}
             onPress={() => {
               onPress();
             }}
-            loading={loading}
             disabled={disabled}
             disabledStyle={{ backgroundColor: Colors.primaryColor }}
-            icon={
+            iconRight={
               !!icon
                 ? {
                     name: icon,
                     size: 25,
                     color: fill
                       ? Colors.primaryColor
-                      : Colors.gradientColorButton.top,
-                    style: {
-                      position: "absolute",
-                      flexDirection: "row",
-                      left: !!long ? "85%" : "75%"
-                    }
+                      : Colors.gradientColorButton.top
                   }
                 : null
             }
             backgroundColor={fill ? "transparent" : Colors.primaryColor}
-            buttonStyle={[styles.buttonContainer, long ? styles.long : null]}
+            buttonStyle={[
+              styles.buttonContainer,
+              long ? styles.long : null,
+              fill ? styles.fillBtn : null,
+              disabled ? styles.disabledBtn : null,
+              negative ? styles.negative : null
+            ]}
           />
+          <View style={styles.spinner}>
+            {!!loading ? (
+              <ActivityIndicator
+                size="large"
+                color={Colors.gradientColorButton.top}
+              />
+            ) : null}
+          </View>
         </LinearGradient>
       </View>
     </KeyboardAvoidingView>

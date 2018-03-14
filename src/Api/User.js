@@ -17,10 +17,19 @@ const User = {
   },
 
   update: (id, data, token) => {
-    console.log("update", data);
     return AXIOS.patch(`${BASE_URI}/${id}`, data, {
       headers: { Authorization: `Bearer ${token}` }
     });
+  },
+
+  setPassword: (id, password, token) => {
+    return AXIOS.put(
+      `${BASE_URI}/${id}/password`,
+      { newPassword: password },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
   },
 
   del: (id, token) => {
@@ -53,6 +62,11 @@ const User = {
   },
   updateDevice: (userId, deviceId, token, payload) => {
     return AXIOS.patch(`${BASE_URI}/${userId}/devices/${deviceId}`, payload, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  },
+  deleteDevice: (userId, deviceId, token) => {
+    return AXIOS.delete(`${BASE_URI}/${userId}/devices/${deviceId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
   }

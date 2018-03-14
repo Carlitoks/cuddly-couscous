@@ -19,6 +19,7 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
@@ -39,7 +40,7 @@ class NameCustomerView extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(
+      displayFormErrors(
         updates.FirstnameErrorMessage,
         updates.LastnameErrorMessage
       );
@@ -66,26 +67,13 @@ class NameCustomerView extends Component {
     this.props.updateForm({ performingRequest: false });
   }
 
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
-  }
-
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
           title={I18n.t("preferredName")}
         >
           <ScrollView

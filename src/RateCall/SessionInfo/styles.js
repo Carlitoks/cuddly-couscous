@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center"
   },
   titleStyle: {
-    fontSize: moderateScale(15),
+    fontSize: moderateScale(20),
     fontWeight: "bold",
     color: Colors.listLabelColor
   },
@@ -67,6 +67,14 @@ export const styles = StyleSheet.create({
     marginLeft: 10
   },
   languagesText: {
-    fontSize: moderateScale(20)
+    fontSize: moderateScale(20),
+    color: Colors.gray
+  },
+  listRightTitleContainer: {
+    flex: 0.3
+  },
+  listRightTitle: {
+    fontSize: moderateScale(22),
+    color: Colors.primaryListRightItem
   }
 });

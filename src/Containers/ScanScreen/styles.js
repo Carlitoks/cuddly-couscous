@@ -53,7 +53,7 @@ export default StyleSheet.create({
     borderBottomWidth: 0
   },
   codeScanner: { flex: 1 },
-  textContainer: { flex: 0.3, alignContent: "center", zIndex: 1 },
+  textContainer: { flex: 0.4, alignContent: "center", zIndex: 1 },
   scanText: {
     alignSelf: "center",
     color: Colors.primaryColor,

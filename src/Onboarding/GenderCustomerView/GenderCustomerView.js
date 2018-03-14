@@ -5,7 +5,7 @@ import {
   GetOptions,
   updateForm
 } from "../../Ducks/RegistrationCustomerReducer";
-import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
+import { asyncUpdateUser } from "../../Ducks/CustomerProfileReducer";
 import { logInAsync, registerDevice } from "../../Ducks/AuthReducer";
 
 import {
@@ -23,13 +23,25 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
+import ListComponent from "../../Components/ListComponent/ListComponent";
 
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
+import DeviceInfo from "react-native-device-info";
+
 class GenderCustomerView extends Component {
   navigate = this.props.navigation.navigate;
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      genderIndex: -1
+    };
+  }
 
   validateForm() {
     let updates = {};
@@ -49,41 +61,11 @@ class GenderCustomerView extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(updates.GenderErrorMessage);
+      displayFormErrors(updates.GenderErrorMessage);
     }
 
     this.props.updateForm(updates);
     return valid;
-  }
-
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
-  }
-
-  registerUser() {
-    console.log(this.props.selectedNativeLanguage);
-    const uinfo = {
-      email: this.props.email,
-      password: this.props.password,
-      firstName: this.props.firstname,
-      lastName: this.props.lastname,
-      preferredName: this.props.preferredName,
-      phone: this.props.phoneNumber,
-      nativeLangCode: this.props.selectedNativeLanguage[0]["3"],
-      gender: this.props.selectedGender
-    };
-    return this.props.asyncCreateUser(uinfo, this.props.deviceToken);
   }
 
   showError(err) {
@@ -103,42 +85,51 @@ class GenderCustomerView extends Component {
     );
   }
 
-  loginUser() {
-    this.props
-      .logInAsync(this.props.email, this.props.password)
-      .then(response => {
-        if (response.type !== "networkErrors/error") {
-          this.props.navigation.dispatch({ type: "WelcomeCustomerView" });
-        } else {
-          this.showError(response);
-        }
-      });
-  }
-
   async submit() {
+    const {
+      id,
+      asyncUpdateUser,
+      selectedGender,
+      token,
+      navigation
+    } = this.props;
+
     await this.props.updateForm({
       performingRequest: true
     });
 
-    this.props.registerDevice().then(response => {
-      if (response.type !== "networkErrors/error") {
-        this.registerUser().then(response => {
-          if (response.type !== "networkErrors/error") {
-            this.loginUser();
-          } else {
-            this.showError(response);
-          }
-        });
-      } else {
-        this.showError(response);
-      }
-    });
+    const payload = {
+      id,
+      gender: selectedGender,
+      countryCode: DeviceInfo.getDeviceCountry()
+    };
+    asyncUpdateUser(payload, token)
+      .then(response => {
+        if (response.type === "networkErrors/error") {
+          throw new Error(response.payload.data.errors);
+        }
+
+        navigation.dispatch({ type: "WelcomeCustomerView" });
+      })
+      .catch(error => {
+        console.log(error);
+
+        dispatch(networkError(error));
+      });
   }
 
   componentWillMount() {
     this.props.updateForm({
       performingRequest: false
     });
+  }
+
+  changeSelected(index) {
+    this.setState({ genderIndex: index });
+  }
+
+  updateGender(gender) {
+    this.props.updateForm({ selectedGender: gender.value });
   }
 
   render() {
@@ -152,46 +143,29 @@ class GenderCustomerView extends Component {
           }
           title={I18n.t("genderName")}
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-          >
-            <Grid>
-              <Col>
-                <List containerStyle={{ borderTopWidth: 0 }}>
-                  {genders.map((item, i) => (
-                    <ListItem
-                      key={i}
-                      containerStyle={styles.genderItem}
-                      title={item.gender}
-                      hideChevron={
-                        this.props.selectedGender === "" ||
-                        this.props.selectedGender !== item.gender
-                      }
-                      titleStyle={{ fontSize: 20 }}
-                      rightIcon={
-                        this.props.selectedGender !== ""
-                          ? {
-                              name: "check",
-                              style: styles.genderCheck
-                            }
-                          : undefined
-                      }
-                      onPress={() => {
-                        this.props.updateForm({ selectedGender: item.gender });
-                      }}
-                    />
-                  ))}
-                </List>
-              </Col>
-            </Grid>
-          </ScrollView>
+          <View style={styles.scrollContainer}>
+            <ListComponent
+              data={genders}
+              selected={this.state.genderIndex}
+              onPress={index => {
+                this.updateGender(genders[index]);
+              }}
+              titleProperty={"label"}
+              changeSelected={index => {
+                this.changeSelected(index);
+              }}
+              leftText
+            />
+          </View>
         </HeaderView>
         {/* Next Button */}
         <BottomButton
-          disabled={this.props.performingRequest}
+          disabled={
+            this.props.performingRequest || this.state.genderIndex == -1
+          }
           title={I18n.t("finish")}
           onPress={() => this.submit()}
+          loading={this.props.performingRequest}
         />
       </ViewWrapper>
     );
@@ -199,6 +173,8 @@ class GenderCustomerView extends Component {
 }
 
 const mS = state => ({
+  id: state.customerProfile.userInfo.id,
+  token: state.auth.token,
   selectedGender: state.registrationCustomer.selectedGender,
   firstname: state.registrationCustomer.firstname,
   lastname: state.registrationCustomer.lastname,
@@ -208,7 +184,7 @@ const mS = state => ({
   deviceToken: state.registrationCustomer.deviceToken,
   email: state.registrationCustomer.email,
   password: state.registrationCustomer.password,
-  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage,
+  selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,
   performingRequest: state.registrationCustomer.performingRequest
 });
 
@@ -217,7 +193,7 @@ const mD = {
   updateForm,
   logInAsync,
   registerDevice,
-  asyncCreateUser
+  asyncUpdateUser
 };
 
 export default connect(mS, mD)(GenderCustomerView);

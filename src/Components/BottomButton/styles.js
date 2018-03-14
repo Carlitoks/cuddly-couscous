@@ -9,28 +9,44 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 15,
-    borderRadius: 50
+    paddingBottom: 22,
+    paddingTop: 22
   },
   buttonContainer: {
-    width: width * 0.5 - 3,
-    borderColor: "transparent",
+    width: width * 0.5,
+    borderColor: Colors.gradientColorButton.top,
     borderWidth: 2,
     borderRadius: 50,
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingTop: 6,
+    paddingBottom: 6
+  },
+  fillBtn: {
+    borderColor: "transparent"
+  },
+  disabledBtn: {
+    borderColor: Colors.disabledColor
   },
   text: {
+    fontSize: 16,
+    fontFamily: Fonts.primaryBaseFont,
     color: Colors.gradientColorButton.top
   },
   textBold: {
+    fontSize: 16,
     fontFamily: Fonts.primaryBoldFont,
     color: Colors.gradientColorButton.top
   },
   textDisabled: {
+    fontSize: 16,
+    //fontFamily: Fonts.primaryBaseFont,
     color: Colors.disabledColor
   },
   white: {
     color: Colors.primaryColor
+  },
+  transparent: {
+    color: "transparent"
   },
   linearGradient: {
     width: width * 0.5,
@@ -43,12 +59,23 @@ export default StyleSheet.create({
     borderRadius: 50
   },
   long: {
-    width: width * 0.7
+    width: width * 0.75
   },
   bottom: {
-    paddingBottom: 0
+    paddingBottom: 0,
+    paddingTop: 0
+  },
+  negative: {
+    borderWidth: 0
+  },
+  negativeContainer: {
+    paddingBottom: 22
   },
   relative: {
     position: "relative"
+  },
+  spinner: {
+    flex: 1,
+    position: "absolute"
   }
 });

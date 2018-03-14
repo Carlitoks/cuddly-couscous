@@ -31,20 +31,11 @@ export const GetInfo = () => dispatch => {
 // Method to call the API when this is ready
 
 export const getSessionInfo = (sessionID, token) => dispatch => {
-  console.log("here");
   return Sessions.GetSessionInfo(sessionID, token)
     .then(response => {
       console.log(response);
-      // return dispatch(
-      //   logIn({
-      //     token: response.data.token,
-      //     uuid: response.data.id
-      //   })
-      // );
     })
-    .catch(error => {
-      dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 export const GetSessionInfoLinguist = (sessionID, token) => dispatch => {
@@ -52,9 +43,7 @@ export const GetSessionInfoLinguist = (sessionID, token) => dispatch => {
     .then(response => {
       return dispatch(updateLinguist(response.data));
     })
-    .catch(error => {
-      return dispatch(networkError(error));
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 const initialState = {

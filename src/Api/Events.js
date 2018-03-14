@@ -14,10 +14,8 @@ const Events = {
   },
 
   getScan: (eventId, token) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(function() {
-        resolve(mockEvent);
-      }, 2000);
+    return AXIOS.get(`${BASE_URI}/${eventId}/scan`, {
+      headers: { Authorization: `Bearer ${token}` }
     });
   },
 

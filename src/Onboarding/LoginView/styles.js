@@ -37,10 +37,11 @@ export default StyleSheet.create({
     backgroundColor: Colors.primaryColorDisabled
   },
   forgotPasswordText: {
-    color: Colors.primaryAltFontColor,
+    color: Colors.gradientColorButton.top,
+    fontWeight: "bold",
+    textDecorationLine: "underline",
     padding: 10,
-    alignSelf: "center",
-    fontFamily: Fonts.primaryBaseFont
+    alignSelf: "center"
   },
   linearGradient: {
     position: "absolute",

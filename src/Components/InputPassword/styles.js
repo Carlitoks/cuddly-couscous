@@ -9,12 +9,10 @@ export default StyleSheet.create({
     width: width
   },
   container: {
-    marginTop: moderateScale(45),
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: Colors.placeholderColor,
-    width: "85%",
-    alignSelf: "center",
+    borderBottomWidth: 0, 
+    paddingTop: 0, 
+    flex: 1, 
+    height: 42
   },
   secondary:{
     borderTopWidth: 0,
@@ -24,8 +22,8 @@ export default StyleSheet.create({
     color: Colors.formInputIconColor,
     fontSize: 23,
     position: "absolute",
-    top: "58%",
-    right: "7.5%"
+    top: "20%",
+    right: "4%"
   },
   iconSecondary: {
     top: "20%",
@@ -33,9 +31,18 @@ export default StyleSheet.create({
   formInput: {
     color: Colors.black,
     fontFamily: Fonts.primaryBaseFont,
-    justifyContent: "center",
-    height: 37,
-    paddingTop:0,
-    paddingLeft:0,
-  }
+    paddingTop: 5,
+    paddingLeft: 0,
+    margin: 0,
+    fontSize: 16
+  }, 
+  viewBorder: { 
+    marginTop: moderateScale(45), 
+    width: "100%", 
+    alignSelf: "center", 
+    borderTopWidth: 1, 
+    borderBottomWidth: 1, 
+    borderColor: Colors.bordersLightGrey, 
+    flex: 1 
+  } 
 });

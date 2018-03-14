@@ -15,17 +15,19 @@ import {
   updateSettings as customerUpdateSettings
 } from "../../../Ducks/CallCustomerSettings.js";
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
-import { clearSettings as clearHomeReducer } from "../../../Ducks/HomeFlowReducer";
+import { cleanSelected } from "../../../Ducks/HomeFlowReducer";
 import { clearSettings as clearLinguistReducer } from "../../../Ducks/LinguistFormReducer";
 
 import I18n from "../../../I18n/I18n";
 import _isEmpty from "lodash/isEmpty";
+import _isUndefined from "lodash/isUndefined";
 import { styles } from "./styles";
 import { Images, Colors } from "../../../Themes";
 import LinearGradient from "react-native-linear-gradient";
 import GoBackButton from "../../../Components/GoBackButton/GoBackButton";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
+import { CATEGORIES } from "../../../Util/Constants";
 
 import {
   setPermission,
@@ -33,8 +35,18 @@ import {
 } from "../../../Util/Permission";
 
 class CallConfirmationView extends Component {
+  carouselTitleMapper = title => {
+    return CATEGORIES[title];
+  };
+
   render() {
     const navigation = this.props.navigation;
+    const { customScenario, selectedCategory, categoryIndex } = this.props;
+
+    const categorySelected =
+      categoryIndex > -1 && !!selectedCategory
+        ? this.carouselTitleMapper(selectedCategory[categoryIndex])
+        : null;
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -44,135 +56,128 @@ class CallConfirmationView extends Component {
           }
           title={I18n.t("confirmAndConnect")}
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            style={{ flex: 1 }}
-            alwaysBounceVertical={false}
-          >
-            <Grid>
-              <Col>
-                <Grid style={styles.summaryContainer}>
-                  <List containerStyle={{ borderTopWidth: 0 }}>
-                    {/* Type of Assistance*/}
-                    <ListItem
-                      containerStyle={styles.listItemContainer}
-                      hideChevron
-                      title={this.props.selectedScenario[0].category.toUpperCase()}
-                      titleStyle={styles.titleStyle}
-                      subtitle={
-                        this.props.customScenario
-                          ? this.props.customScenario
-                          : this.props.selectedScenario
-                            ? this.props.selectedScenario[0].title
-                            : "General"
+          <View style={{ flex: 1 }}>
+            <ScrollView
+              automaticallyAdjustContentInsets={true}
+              contentContainerStyle={styles.scroll}
+              alwaysBounceVertical={false}
+            >
+              <List containerStyle={{ borderTopWidth: 0, marginTop: 0 }}>
+                {/* Type of Assistance*/}
+                <ListItem
+                  containerStyle={styles.listItemContainer}
+                  hideChevron
+                  title={
+                    !!categorySelected ? categorySelected.toUpperCase() : null
+                  }
+                  titleStyle={styles.titleStyle}
+                  subtitle={
+                    customScenario
+                      ? customScenario
+                      : this.props.selectedScenario &&
+                        this.props.selectedScenario[0]
+                        ? this.props.selectedScenario[0].title
+                        : "General"
+                  }
+                  subtitleStyle={styles.listSubtitle}
+                />
+                {/* Time */}
+                <ListItem
+                  hideChevron
+                  containerStyle={styles.listItemContainer}
+                  title={I18n.t("estimatedDuration").toUpperCase()}
+                  titleStyle={styles.titleStyle}
+                  subtitle={I18n.t("youCanAddTime")}
+                  subtitleStyle={styles.listSubtitle}
+                  rightTitle={`${this.props.approxTime} ${I18n.t(
+                    "minutesAbbreviation"
+                  )}`}
+                  rightTitleContainerStyle={styles.listRightTitleContainer}
+                  rightTitleStyle={styles.listRightTitle}
+                />
+                {/* Languages */}
+                <ListItem
+                  containerStyle={styles.listItemContainer}
+                  hideChevron
+                  title={I18n.t("languages").toUpperCase()}
+                  titleStyle={styles.titleStyle}
+                  subtitle={this.props.toLanguage}
+                  subtitleStyle={styles.listSubtitle}
+                />
+                {/* Video Mode */}
+                <ListItem
+                  containerStyle={styles.listItemContainer}
+                  hideChevron
+                  title={I18n.t("videoMode").toUpperCase()}
+                  titleStyle={styles.titleStyle}
+                  subtitle={I18n.t("youCanChangeThis")}
+                  subtitleStyle={styles.listSubtitle}
+                  switchButton
+                  onSwitch={() => {
+                    setPermission("camera").then(response => {
+                      if (response == "denied" || response == "restricted") {
+                        displayOpenSettingsAlert();
                       }
-                      subtitleStyle={styles.listSubtitle}
-                    />
-                    {/* Time */}
-                    <ListItem
-                      hideChevron
-                      containerStyle={styles.listItemContainer}
-                      title={I18n.t("time").toUpperCase()}
-                      titleStyle={styles.titleStyle}
-                      subtitle={I18n.t("youCanAddTime")}
-                      subtitleStyle={styles.listSubtitle}
-                      rightTitle={`${this.props.approxTime} ${I18n.t(
-                        "minutesAbbreviation"
-                      )}`}
-                      rightTitleContainerStyle={styles.listRightTitleContainer}
-                      rightTitleStyle={styles.listRightTitle}
-                    />
-                    {/* Languages */}
-                    <ListItem
-                      containerStyle={styles.listItemContainer}
-                      hideChevron
-                      title={I18n.t("languages").toUpperCase()}
-                      titleStyle={styles.titleStyle}
-                      subtitle={this.props.toLanguage}
-                      subtitleStyle={styles.listSubtitle}
-                    />
-                    {/* Video Mode */}
-                    <ListItem
-                      containerStyle={styles.listItemContainer}
-                      hideChevron
-                      title={I18n.t("videoMode").toUpperCase()}
-                      titleStyle={styles.titleStyle}
-                      subtitle={I18n.t("youCanChangeThis")}
-                      subtitleStyle={styles.listSubtitle}
-                      switchButton
-                      onSwitch={() => {
-                        setPermission("camera").then(response => {
-                          if (
-                            response == "denied" ||
-                            response == "restricted"
-                          ) {
-                            displayOpenSettingsAlert();
-                          }
-                        });
-                        this.props.customerUpdateSettings({
-                          video: !this.props.video
-                        });
-                      }}
-                      switched={this.props.video}
-                      switchOnTintColor={Colors.onTintColor}
-                      switchThumbTintColor={Colors.thumbTintColor}
-                    />
-                    {/* Estimated Cost */}
-                    <ListItem
-                      containerStyle={styles.listItemContainer}
-                      hideChevron
-                      subtitle={I18n.t("estimatedCost")}
-                      subtitleStyle={styles.listSubtitle}
-                      rightTitle={`${I18n.t("currency")} ${
-                        this.props.estimatedPrice
-                      }`}
-                      rightTitleContainerStyle={styles.listRightTitleContainer}
-                      rightTitleStyle={styles.listRightTitle}
-                    />
-                  </List>
-
-                  {/* Buttons */}
-                  <Row style={styles.footerButtons}>
-                    <Col style={styles.footerButtons}>
-                      {/* Connect Now */}
-                      <BottomButton
-                        onPress={() => {
-                          this.props.updateSettings({
-                            selectedScenarioId: !_isEmpty(
-                              this.props.selectedScenario
-                            )
-                              ? this.props.selectedScenario[0].id
-                              : null
-                          });
-                          this.props.clearHomeReducer();
-                          navigation.dispatch({ type: "CustomerView" });
-                        }}
-                        title={I18n.t("connectNow").toUpperCase()}
-                        long
-                        fill
-                        bottom={false}
-                        relative
-                      />
-
-                      {/* Cancel */}
-                      <BottomButton
-                        onPress={() => {
-                          this.props.clearSettings();
-                          this.props.clearLinguistReducer();
-                          this.props.clearHomeReducer();
-                          navigation.dispatch({ type: "Home" });
-                        }}
-                        title={I18n.t("cancel")}
-                        negative
-                        bottom={false}
-                        relative
-                      />
-                    </Col>
-                  </Row>
-                </Grid>
-              </Col>
-            </Grid>
-          </ScrollView>
+                      this.props.customerUpdateSettings({
+                        video: !this.props.video
+                      });
+                    });
+                  }}
+                  switched={this.props.video}
+                  switchOnTintColor={Colors.onTintColor}
+                  switchTintColor={Colors.selectedBackground}
+                />
+                {/* Estimated Cost */}
+                <ListItem
+                  containerStyle={styles.listItemContainer}
+                  hideChevron
+                  subtitle={I18n.t("estimatedCost").toUpperCase()}
+                  subtitleStyle={styles.titleStyle}
+                  rightTitle={`${I18n.t("currency")} ${
+                    this.props.estimatedPrice
+                  }`}
+                  rightTitleContainerStyle={styles.listRightTitleContainer}
+                  rightTitleStyle={styles.listRightTitle}
+                />
+              </List>
+            </ScrollView>
+            <View style={styles.buttons}>
+              {/* Buttons */}
+              {/* Connect Now */}
+              <BottomButton
+                onPress={() => {
+                  this.props.updateSettings({
+                    selectedScenarioId:
+                      this.props.selectedScenario &&
+                      this.props.selectedScenario[0]
+                        ? this.props.selectedScenario[0].id
+                        : "11111111-1111-1111-1111-111111111126"
+                  });
+                  this.props.cleanSelected();
+                  navigation.dispatch({ type: "CustomerView" });
+                }}
+                title={I18n.t("connectNow").toUpperCase()}
+                icon="videocam"
+                long
+                fill
+                bottom={false}
+                relative
+              />
+              {/* Cancel */}
+              <BottomButton
+                onPress={() => {
+                  this.props.clearSettings();
+                  this.props.clearLinguistReducer();
+                  this.props.cleanSelected();
+                  navigation.dispatch({ type: "Home" });
+                }}
+                title={I18n.t("cancel")}
+                negative
+                bottom={false}
+                relative
+              />
+            </View>
+          </View>
         </HeaderView>
       </ViewWrapper>
     );
@@ -188,6 +193,8 @@ const mS = state => ({
   approxTime: state.callCustomerSettings.selectedTime,
   scenario: state.linguistForm.selectedLanguage,
   selectedScenario: state.linguistForm.selectedScenarios,
+  categoryIndex: state.homeFlow.categoryIndex,
+  selectedCategory: state.homeFlow.categories,
   estimatedPrice:
     state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
   toLanguage: state.contactLinguist.selectedLanguage
@@ -198,7 +205,7 @@ const mD = {
   updateSettings,
   customerUpdateSettings,
   clearSettings,
-  clearHomeReducer,
+  cleanSelected,
   clearLinguistReducer
 };
 

@@ -57,14 +57,32 @@ export default StyleSheet.create({
     color: Colors.linguistFormText
   },
   links: {
-    color: "black",
-    fontWeight: "bold"
+    color: Colors.gradientColorButton.top,
+    fontWeight: "bold",
+    textDecorationLine: "underline"
+  },
+  textAbove: {
+    paddingRight: 2
   },
   formText: {
     textAlign: "center",
     paddingLeft: 18,
     paddingRight: 18,
     fontSize: 15,
-    paddingTop: 10
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  mainContainterText: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+    marginLeft: 18,
+    marginRight: 18
+  },
+  textCenter: {
+    textAlign: "center",
+    fontSize: 14
   }
 });

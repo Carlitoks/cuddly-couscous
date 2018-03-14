@@ -5,7 +5,14 @@ import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateForm } from "../../Ducks/RegistrationCustomerReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View, ScrollView, Image, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Image,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
   SearchBar,
@@ -63,10 +70,10 @@ class LanguageCustomerView extends Component {
             </Text>
 
             <List containerStyle={styles.marginBottom10}>
-              {this.props.selectedNativeLanguage[0] && (
+              {this.props.selectedNativeLanguage ? (
                 <ListItem
-                  key={selectedNativeLanguage[0].code}
-                  title={selectedNativeLanguage[0].name}
+                  key={selectedNativeLanguage.code}
+                  title={selectedNativeLanguage.name}
                   onPress={() => {
                     this.props.updateSettings({
                       selectionItemType: "languages",
@@ -75,6 +82,8 @@ class LanguageCustomerView extends Component {
                     this.props.navigation.dispatch({ type: "SelectListView" });
                   }}
                 />
+              ) : (
+                <ListItem />
               )}
             </List>
           </ScrollView>
@@ -91,7 +100,7 @@ class LanguageCustomerView extends Component {
 
 // MAP STATE TO PROPS HERE
 const mS = state => ({
-  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage
+  selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage
 });
 
 // MAP DISPATCH TO PROPS HERE

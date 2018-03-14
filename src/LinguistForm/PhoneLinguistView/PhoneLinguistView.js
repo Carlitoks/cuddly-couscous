@@ -23,7 +23,7 @@ import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
-import { validatePhoneNumber } from "../../Util/Helpers.js";
+import { validatePhoneNumber, displayFormErrors } from "../../Util/Helpers.js";
 
 import styles from "./styles";
 import I18n from "../../I18n/I18n";
@@ -74,7 +74,7 @@ class PhoneLinguist extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(updates.phoneErrorMessage);
+      displayFormErrors(updates.phoneErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -85,20 +85,6 @@ class PhoneLinguist extends Component {
     if (this.validateForm()) {
       this.props.navigation.dispatch({ type: "SelectLanguageView" });
     }
-  }
-
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
   }
 
   render() {

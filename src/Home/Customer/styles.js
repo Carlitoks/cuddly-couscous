@@ -43,10 +43,18 @@ export default StyleSheet.create({
     borderRadius: 60
   },
   textName: {
-    fontSize: 22,
-    fontWeight: "300",
-    alignSelf: "center",
-    color: "#ffffff"
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 24,
+    textAlign: "center",
+    color: Colors.primaryColor
+  },
+  titleComponent: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 18,
+    textAlign: "center",
+    color: Colors.primaryColor,
+    marginTop: scale(35),
+    backgroundColor: "transparent"
   },
   textCountry: {
     fontSize: 15,
@@ -73,8 +81,8 @@ export default StyleSheet.create({
     marginBottom: 20
   },
   scanQRImage: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     marginRight: scale(15)
   },
   buttonGrid: {
@@ -237,8 +245,7 @@ export default StyleSheet.create({
     height: "100%"
   },
   scrollContainer: {
-    backgroundColor: "#f2ebe6",
-    height: height
+    backgroundColor: "transparent"
   },
   avatarContainer: {
     marginLeft: scale(60)
@@ -249,5 +256,33 @@ export default StyleSheet.create({
     marginBottom: 5,
     width: "100%",
     marginLeft: scale(30)
+  },
+  Icon: {
+    color: Colors.primaryColor,
+    padding: 20,
+    paddingRight: 0
+  },
+  listContainer: {
+    marginTop: 0
+  },
+  triangle: {
+    marginTop: -15,
+    marginBottom: 15,
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderStyle: "solid",
+    borderTopWidth: 0,
+    borderRightWidth: 12,
+    borderBottomWidth: 12,
+    borderLeftWidth: 12,
+    borderTopColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: Colors.gradientColorButton.top,
+    borderLeftColor: "transparent",
+    alignSelf: "center"
+  },
+  mainContainer: {
+    backgroundColor: "transparent"
   }
 });

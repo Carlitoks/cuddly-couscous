@@ -65,7 +65,7 @@ class SelectLanguageView extends Component {
   };
   updateUserProfile = (uuid, token) => {
     this.props.updateView({
-      nativeLangCode: this.props.selectedNativeLanguage[0]["3"]
+      nativeLangCode: this.props.selectedNativeLanguage["3"]
     });
     const {
       firstName,
@@ -76,7 +76,7 @@ class SelectLanguageView extends Component {
     const profile = {
       firstName,
       lastName,
-      nativeLangCode: this.props.selectedNativeLanguage[0]["3"],
+      nativeLangCode: this.props.selectedNativeLanguage["3"],
       preferredName
     };
 
@@ -229,10 +229,10 @@ class SelectLanguageView extends Component {
             </Text>
 
             <List containerStyle={styles.marginBottom20}>
-              {this.props.selectedNativeLanguage[0] && (
+              {this.props.selectedNativeLanguage && (
                 <ListItem
-                  key={selectedNativeLanguage[0]["3"]}
-                  title={selectedNativeLanguage[0].name}
+                  key={selectedNativeLanguage["3"]}
+                  title={selectedNativeLanguage.name}
                   onPress={() => {
                     this.props.updateSettings({
                       selectionItemType: "languages",
@@ -290,7 +290,7 @@ const mS = state => ({
   lastName: state.linguistForm.lastname,
   preferredName: state.linguistForm.preferredName,
   phoneNumber: state.linguistForm.phoneNumber,
-  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage,
+  selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,
   selectedSecondaryLanguages: state.linguistForm.selectedSecondaryLanguages,
   selectedAreasOfExpertise: state.linguistForm.selectedAreasOfExpertise,
   selectedCitizenship: state.linguistForm.selectedCitizenship,

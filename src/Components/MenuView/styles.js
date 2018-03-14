@@ -3,7 +3,6 @@ import { Fonts, Colors } from "../../Themes";
 import { verticalScale } from "../../Util/Scaling";
 const { width, height } = Dimensions.get("window");
 
-
 const styles = StyleSheet.create({
   Button: {
     width: "90%",
@@ -78,12 +77,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontSize: 20,
     fontWeight: "300",
-    alignSelf: "center"
+    alignSelf: "center",
+    color: Colors.black
   },
   textEditProfile: {
     marginBottom: 10,
     fontSize: 15,
-    alignSelf: "center"
+    alignSelf: "center",
+    color: Colors.gray
   },
   textCountry: {
     fontSize: 15,
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   optionMenu: {
-    color: "#D9D9E6", 
+    color: Colors.lightGrey,
     marginLeft: 20
   },
   selectedOptionMenu: {

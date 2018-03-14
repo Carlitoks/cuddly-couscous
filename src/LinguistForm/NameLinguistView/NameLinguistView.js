@@ -22,6 +22,7 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
@@ -58,7 +59,7 @@ class NameLinguist extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(
+      displayFormErrors(
         updates.FirstnameErrorMessage,
         updates.LastnameErrorMessage
       );
@@ -87,21 +88,6 @@ class NameLinguist extends Component {
       return subtitle;
     }
   };
-
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
-  }
 
   render() {
     const initialLastName = `${this.props.lastname.charAt(0)}.`;
@@ -137,34 +123,31 @@ class NameLinguist extends Component {
                   autoFocus={true}
                 />
               </View>
-              
-                {/* Last Name */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("linguistLastName")}
-                  onChangeText={text =>
-                    this.props.updateForm({ lastname: text })
-                  }
-                  maxLength={20}
-                  value={this.props.lastname}
-                  sec
-                />
-              
-              
-                {/* Prefered Name */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("preferredName")}
-                  value={this.props.preferredName}
-                  onChangeText={text =>
-                    this.props.updateForm({ preferredName: text })
-                  }
-                  maxLength={20}
-                  sec
-                />
-                <Text style={styles.formText}>
-                  {I18n.t("preferredLinguistText")}
-                </Text>
+
+              {/* Last Name */}
+              <InputRegular
+                containerStyle={styles.containerInput}
+                placeholder={I18n.t("linguistLastName")}
+                onChangeText={text => this.props.updateForm({ lastname: text })}
+                maxLength={20}
+                value={this.props.lastname}
+                sec
+              />
+
+              {/* Prefered Name */}
+              <InputRegular
+                containerStyle={styles.containerInput}
+                placeholder={I18n.t("preferredName")}
+                value={this.props.preferredName}
+                onChangeText={text =>
+                  this.props.updateForm({ preferredName: text })
+                }
+                maxLength={20}
+                sec
+              />
+              <Text style={styles.formText}>
+                {I18n.t("preferredLinguistText")}
+              </Text>
             </View>
           </ScrollView>
         </HeaderView>

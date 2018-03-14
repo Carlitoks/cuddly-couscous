@@ -4,11 +4,12 @@ import React, { Component } from "react";
 import { Text, View, ScrollView, Image, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import LinearGradient from "react-native-linear-gradient";
 import { CallButton } from "../../../Components/CallButton/CallButton";
 
 // STYLE AND THEMES
 import styles from "./styles";
-import { Images } from "../../../Themes";
+import { Images, Colors } from "../../../Themes";
 
 // REDUCERS
 import { connect } from "react-redux";
@@ -45,8 +46,15 @@ class ContactingLinguist extends Component {
         contentContainerStyle={styles.contentContainerStyle}
         alwaysBounceVertical={false}
       >
-        {/* Background Image */}
-        <View style={styles.backgroundView} />
+        {/* Linear Gradient */}
+        <LinearGradient
+          colors={[
+            Colors.gradientColor.top,
+            //Colors.gradientColor.middle,
+            Colors.gradientColor.bottom
+          ]}
+          style={styles.linearGradient}
+        />
         <Grid>
           <Col style={{ justifyContent: "space-between" }}>
             {/* Top Container */}

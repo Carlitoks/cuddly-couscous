@@ -25,7 +25,7 @@ import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import InputRegular from "../../Components/InputRegular/InputRegular";
-import { validatePhoneNumber } from "../../Util/Helpers.js";
+import { validatePhoneNumber, displayFormErrors } from "../../Util/Helpers.js";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -76,7 +76,7 @@ class PhoneCustomerView extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(updates.phoneErrorMessage);
+      displayFormErrors(updates.phoneErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -91,7 +91,7 @@ class PhoneCustomerView extends Component {
       lastName: this.props.lastname,
       preferredName: this.props.preferredName,
       phone: this.props.phoneNumber,
-      nativeLangCode: this.props.selectedNativeLanguage[0]["3"]
+      nativeLangCode: this.props.selectedNativeLanguage["3"]
     };
     return this.props.asyncCreateUser(uinfo, this.props.deviceToken);
   }
@@ -133,25 +133,13 @@ class PhoneCustomerView extends Component {
     });
   }
 
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
-  }
-
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={<GoBackButton navigation={this.props.navigation} />}
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
+          }
           title={I18n.t("linguistNumber")}
           subtitle={I18n.t("linguistNumberText")}
         >
@@ -174,14 +162,19 @@ class PhoneCustomerView extends Component {
                   <Col>
                     {/* Header - Navigation */}
                     <Header
-                      outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
+                      outerContainerStyles={{
+                        borderBottomWidth: 0,
+                        height: 60
+                      }}
                       backgroundColor="transparent"
                       leftComponent={
                         <GoBackButton navigation={this.props.navigation} />
                       }
                     />
                     {/* Enter phone number */}
-                    <Text style={styles.mainTitle}>{I18n.t("linguistNumber")}</Text>
+                    <Text style={styles.mainTitle}>
+                      {I18n.t("linguistNumber")}
+                    </Text>
                     {/* subtitle */}
                     <Text style={styles.mainSubtitle}>
                       {I18n.t("linguistNumberText")}
@@ -196,20 +189,20 @@ class PhoneCustomerView extends Component {
                   />
                   {/* Phone Number */}
                   <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder="(201) 555-0132"
-                  value={this.props.phoneNumber}
-                  onChangeText={number => {
-                    const phoneNumber = this.mask(number);
-                    this.props.updateForm({
-                      phoneNumber
-                    });
-                  }}
-                  maxLength={14}
-                  keyboardType={
-                    Platform.OS === "ios" ? "number-pad" : "numeric"
-                  }
-                  autoFocus={true}
+                    containerStyle={styles.containerInput}
+                    placeholder="(201) 555-0132"
+                    value={this.props.phoneNumber}
+                    onChangeText={number => {
+                      const phoneNumber = this.mask(number);
+                      this.props.updateForm({
+                        phoneNumber
+                      });
+                    }}
+                    maxLength={14}
+                    keyboardType={
+                      Platform.OS === "ios" ? "number-pad" : "numeric"
+                    }
+                    autoFocus={true}
                   />
                 </View>
               </Col>
@@ -217,10 +210,7 @@ class PhoneCustomerView extends Component {
           </ScrollView>
         </HeaderView>
         {/* Next Button */}
-        <BottomButton
-          title={I18n.t("create")}
-          onPress={() => this.submit()}
-        />
+        <BottomButton title={I18n.t("create")} onPress={() => this.submit()} />
       </ViewWrapper>
     );
   }
@@ -235,7 +225,7 @@ const mS = state => ({
   deviceToken: state.registrationCustomer.deviceToken,
   email: state.registrationCustomer.email,
   password: state.registrationCustomer.password,
-  selectedNativeLanguage: state.linguistForm.selectedNativeLanguage
+  selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage
 });
 
 const mD = {

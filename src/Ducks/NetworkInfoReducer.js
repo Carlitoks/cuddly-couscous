@@ -1,3 +1,5 @@
+import { NetInfo } from "react-native";
+
 const ACTIONS = {
   UPDATE: "networkInfo/update"
 };
@@ -6,6 +8,18 @@ export const updateNetworkInfo = payload => ({
   type: ACTIONS.UPDATE,
   payload
 });
+
+export const delayUpdateInfo = connectionInfo => (dispatch, getState) => {
+  if (connectionInfo.type == "none") {
+    setTimeout(() => {
+      NetInfo.getConnectionInfo().then(connectionInfo => {
+        dispatch(updateNetworkInfo(connectionInfo));
+      });
+    }, 2 * 1000);
+  } else {
+    dispatch(updateNetworkInfo(connectionInfo));
+  }
+};
 
 const initialState = {
   type: null,

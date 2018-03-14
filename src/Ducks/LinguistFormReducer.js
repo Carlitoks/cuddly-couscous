@@ -51,28 +51,28 @@ export const linguistUpdate = (id, token, payload) => dispatch => {
     .then(response => {
       dispatch(updateSettings({ linguistInfo: response.data }));
     })
-    .catch(err => dispatch(networkError(err)));
+    .catch(error => dispatch(networkError(error)));
 };
 export const updateLanguages = (id, langCode, token, payload) => dispatch => {
   return Linguist.langUpdate(id, langCode, token, payload)
     .then(response => {
       dispatch(updateSettings({ linguistInfo: response.data }));
     })
-    .catch(err => dispatch(networkError(err)));
+    .catch(error => dispatch(networkError(error)));
 };
 export const deleteLanguages = (id, langCode, token, payload) => dispatch => {
   return Linguist.langRemove(id, langCode, token)
     .then(response => {
       dispatch(updateSettings({ linguistInfo: response.data }));
     })
-    .catch(err => dispatch(networkError(err)));
+    .catch(error => dispatch(networkError(error)));
 };
 export const createLinguist = (id, token, payload) => dispatch => {
   return Linguist.create(id, token, payload)
     .then(response => {
       dispatch(updateSettings({ linguistInfo: response.data }));
     })
-    .catch(err => dispatch(networkError(err)));
+    .catch(error => dispatch(networkError(error)));
 };
 
 export const updateSettings = payload => ({
@@ -137,15 +137,7 @@ const initialState = {
   selectedCityFamiliarity: [],
   selectedProficiency: null,
   selectedLanguageInterpretation: null,
-  selectedScenarios: [
-    {
-      active: true,
-      category: "airport",
-      eventID: null,
-      id: "11111111-1111-1111-1111-111111111112",
-      title: "Help with baggage claim"
-    }
-  ],
+  selectedScenarios: [],
   linguistInfo: null,
   goTo: "SelectLanguageView",
   currentView: null,
@@ -181,10 +173,7 @@ export const getItems = (type, params) => (dispatch, getState) => {
 
           dispatch(updateSettings({ [type]: resp }));
         })
-        .catch(error => {
-          console.log(error);
-          return dispatch(networkError(error));
-        });
+        .catch(error => dispatch(networkError(error)));
       break;
     default:
       dispatch(updateSettings({ [type]: types[type]() }));

@@ -9,7 +9,7 @@ import {
 
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, Keyboard } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button } from "react-native-elements";
@@ -25,10 +25,12 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
+import { emptyArray, displayFormErrors } from "../../Util/Helpers";
 
 class PromoCodeView extends Component {
   submit() {
     const { token, promoCode } = this.props;
+    Keyboard.dismiss();
     this.props
       .asyncScanPromoCode(promoCode, token)
       .then(response => {
@@ -46,35 +48,30 @@ class PromoCodeView extends Component {
           this.props.updateSettings({
             selectionItemType: "scenarios",
             selectionItemName: "scenarios",
-            scenarios: scenarios
+            scenarios: []
           });
-          this.props.navigation.dispatch({ type: "SelectListView" });
+          this.props.navigation.dispatch({ type: "PromoCodeListView" });
         } else if (requireScenarioSelection && !restrictEventScenarios) {
           /* Dispatch to Category Selection View (Home) */
-          this.props.navigation.dispatch({ type: "Home" });
+
+          this.props.updateSettings({
+            selectionItemType: "scenarios",
+            selectionItemName: "scenarios",
+            scenarios: emptyArray(scenarios)
+          });
+          this.props.navigation.dispatch({ type: "PromotionView" });
         } else if (!requireScenarioSelection) {
           /* Dispatch to Call Confirmation view */
           this.props.navigation.dispatch({ type: "CallConfirmationView" });
         }
       })
       .catch(err => {
-        this.tempDisplayErrors(err);
+        displayFormErrors(err);
       });
   }
 
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
+  isDisabled() {
+    return !this.props.promoCode;
   }
 
   render() {
@@ -84,19 +81,19 @@ class PromoCodeView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={I18n.t("promoCodeTitle")}
-        >
+          title={I18n.t("promoCodeTitle")}>
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-          >
+            style={styles.scrollContainer}>
             <View>
               {/* Email */}
               <InputRegular
                 containerStyle={styles.containerInput}
                 placeholder={I18n.t("promoCodeInput")}
                 autoCorrect={false}
-                onChangeText={text => this.props.updatePromoCode(text)}
+                onChangeText={text =>
+                  this.props.updatePromoCode({ code: text })
+                }
                 value={this.props.promoCode}
                 keyboardType={"email-address"}
                 maxLength={64}
@@ -110,6 +107,7 @@ class PromoCodeView extends Component {
           title={I18n.t("next")}
           onPress={() => this.submit()}
           bold={false}
+          disabled={this.isDisabled()}
         />
       </ViewWrapper>
     );

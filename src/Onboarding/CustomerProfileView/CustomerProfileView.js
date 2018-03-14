@@ -27,6 +27,7 @@ import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import I18n from "../../I18n/I18n";
 import { Images, Colors } from "../../Themes";
 import { USER_NAME } from "../../Util/Constants";
@@ -65,7 +66,7 @@ class CustomerProfileView extends Component {
     updates = { ...updates, formHasErrors: !valid };
 
     if (!valid) {
-      this.tempDisplayErrors(
+      displayFormErrors(
         updates.fistNameErrorMessage,
         updates.lastNameErrorMessage
       );
@@ -135,7 +136,7 @@ class CustomerProfileView extends Component {
         });
       } else {
         if (this.props.formHasErrors) {
-          this.tempDisplayErrors(
+          displayFormErrors(
             this.props.firstNameErrorMessage,
             this.props.lastNameErrorMessage
           );
@@ -146,24 +147,6 @@ class CustomerProfileView extends Component {
     this.props.updateForm({
       performingRequest: false
     });
-  }
-
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      {
-        text: "OK",
-        onPress: () => console.log("OK Pressed")
-      }
-    ]);
   }
 
   render() {

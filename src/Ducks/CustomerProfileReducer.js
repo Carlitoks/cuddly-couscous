@@ -22,7 +22,7 @@ export const userinfoUpdate = payload => ({
 
 export const asyncUpdateUser = (payload, token) => dispatch => {
   const { id } = payload;
-  return User.update(id, { password }, token)
+  return User.update(id, payload, token)
     .then(response => {
       return dispatch(userinfoUpdate(response.data));
     })
@@ -35,6 +35,10 @@ export const asyncCreateUser = (payload, token) => dispatch => {
       return dispatch(userinfoUpdate(response.data));
     })
     .catch(error => dispatch(networkError(error)));
+};
+
+export const asyncSetPassword = (id, payload, token) => dispatch => {
+  return User.setPassword(id, payload, token);
 };
 
 export const asyncUploadAvatar = (id, image, token) => dispatch => {

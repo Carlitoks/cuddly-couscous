@@ -7,7 +7,8 @@ import {
   Image,
   TouchableOpacity,
   Switch,
-  Dimensions
+  Dimensions,
+  ActivityIndicator
 } from "react-native";
 import { Header, SearchBar, Badge, Card } from "react-native-elements";
 import PhotoUpload from "react-native-photo-upload";
@@ -31,6 +32,7 @@ import styles from "./styles";
     headerRightComponent: Content of the header's right side,
     headerCenterComponent: Content of the header's center,
     title: Text of the header's title,
+    titleComponent: Component of the header's title. Will replace title if provided
     subtitle: Text of the header's subtitle,
     search: Function to execute when search text changes,
     clearSearch: Function to execute when search text is empty,
@@ -60,6 +62,7 @@ const HeaderView = ({
   headerRightComponent,
   headerCenterComponent,
   title,
+  titleComponent,
   subtitle,
   search,
   clearSearch,
@@ -80,19 +83,22 @@ const HeaderView = ({
   calls,
   amount,
   navigation,
-  children
+  children,
+  loading
 }) => {
   const { width, height } = Dimensions.get("window");
   function getHeader() {
     return (
       <View>
         {/* Header */}
-        <View>
+        <View
+          style={{ height: !!avatarSource || !!switchOnChange ? null : 165 }}
+        >
           {/* Linear Gradient */}
           <LinearGradient
             colors={[
               Colors.gradientColor.top,
-              Colors.gradientColor.middle,
+              //Colors.gradientColor.middle,
               Colors.gradientColor.bottom
             ]}
             style={styles.linearGradient}
@@ -121,7 +127,9 @@ const HeaderView = ({
           />
 
           {/* Title */}
-          {!!title ? (
+          {!!titleComponent ? (
+            titleComponent
+          ) : !!title ? (
             <Text
               style={
                 !!subtitle || !!search || !!tabValues
@@ -253,14 +261,18 @@ const HeaderView = ({
                 {I18n.t("status")}{" "}
                 {status ? I18n.t("online") : I18n.t("offline")}
               </Text>
-              <Switch
-                onValueChange={switchOnChange}
-                style={styles.switch}
-                value={switchValue}
-                onTintColor={Colors.onTintColor}
-                thumbTintColor={Colors.thumbTintColor}
-                tintColor={Colors.tintColor}
-              />
+              {loading ? (
+                <ActivityIndicator size="large" color="white" />
+              ) : (
+                <Switch
+                  onValueChange={switchOnChange}
+                  style={styles.switch}
+                  value={switchValue}
+                  onTintColor={Colors.onTintColor}
+                  thumbTintColor={Colors.thumbTintColor}
+                  tintColor={Colors.tintColor}
+                />
+              )}
             </View>
           ) : null}
 
@@ -368,7 +380,17 @@ const HeaderView = ({
       style={styles.container}
     >
       {/* Header */}
-      {getHeader()}
+      <View
+        style={{
+          height: !!switchOnChange
+            ? 350
+            : !!bigAvatar
+              ? 250
+              : !!avatarSource ? moderateScale(200) : moderateScale(180)
+        }}
+      >
+        {getHeader()}
+      </View>
       {/* View Content */}
       {children}
       {/* Connect Me Btn */}

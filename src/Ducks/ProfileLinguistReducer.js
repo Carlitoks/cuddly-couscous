@@ -17,6 +17,8 @@ export const updateSettings = payload => ({
 export const changeStatus = status => (dispatch, getState) => {
   const { auth, profileLinguist, userProfile } = getState();
 
+  dispatch(updateSettings({ loading: true }));
+
   Linguist.update(userProfile.id, auth.token, {
     available: status ? status.available : !profileLinguist.available
   })
@@ -24,14 +26,12 @@ export const changeStatus = status => (dispatch, getState) => {
       dispatch(
         updateSettings({
           available: status ? status.available : !profileLinguist.available,
-          polling: status ? status.polling : !profileLinguist.available
+          polling: status ? status.polling : !profileLinguist.available,
+          loading: false
         })
       );
     })
-    .catch(err => {
-      console.log(err);
-      console.log(err.response);
-    });
+    .catch(err => dispatch(networkError(error)));
 };
 
 export const GetOptions = () => dispatch => {
@@ -48,13 +48,13 @@ export const clearSettings = () => ({
 
 // Initial State
 const initialState = {
-  polling: false,
   available: false,
   rating: 4.5,
   numberOfCalls: 28,
   amount: 493,
   status: "Offline",
-  username: "Adele G"
+  username: "Adele G",
+  loading: false
 };
 
 // Reducer

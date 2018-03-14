@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { View, Text, ScrollView, Dimensions } from "react-native";
+import { View, Text, ScrollView, Dimensions, Image } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
@@ -10,7 +10,7 @@ import Waves from "../../SVG/waves";
 import WavesOrange from "../../SVG/wavesOrange";
 
 import styles from "./styles";
-import { Colors } from "../../Themes";
+import { Colors, Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
 class WelcomeCustomerView extends Component {
@@ -30,13 +30,15 @@ class WelcomeCustomerView extends Component {
               ]}
               style={styles.linearGradient}
             />
-            <Text style={styles.mainTitle}>{I18n.t("welcomeTo")}</Text>
-            <Text style={styles.appName}>
-              <Text style={styles.firstLetter}>J</Text>
-              EENIE
-            </Text>
-            <Text style={styles.mainTitle}>{I18n.t("thankYou")}</Text>
-            <Text style={styles.subtitle}>{I18n.t("forSignup")}</Text>
+            <View style={styles.textContainer}>
+              <Text style={styles.mainTitle}>{I18n.t("welcomeTo")}</Text>
+              {/* Jeenie Logo */}
+              <View style={[styles.logo, styles.center]} source={Images.logo}>
+                <Image source={Images.jeenieLogo} style={styles.logoImage} />
+              </View>
+              <Text style={styles.mainTitle}>{I18n.t("thankYou")}</Text>
+              <Text style={styles.subtitle}>{I18n.t("forSignup")}</Text>
+            </View>
             <View style={styles.waves}>
               <Waves
                 width={width}
@@ -53,15 +55,15 @@ class WelcomeCustomerView extends Component {
                 viewBox={"0 0 750 71"}
               />
             </View>
-            <BottomButton
-              long
-              fill
-              customStyle={styles.getStarted}
-              title={I18n.t("getStarted").toUpperCase()}
-              onPress={() => navigation.dispatch({ type: "Home" })}
-            />
           </View>
         </View>
+        <BottomButton
+          long
+          fill
+          customStyle={styles.getStarted}
+          title={I18n.t("getLanguageHelp").toUpperCase()}
+          onPress={() => navigation.dispatch({ type: "Home" })}
+        />
       </ViewWrapper>
     );
   }

@@ -37,6 +37,9 @@ import MenuView from "../Components/MenuView/MenuView";
 import SelectLanguageView from "../LinguistForm/SelectLanguageView/SelectLanguageView";
 import LanguageSettingsView from "../LinguistForm/LanguageSettingsView/LanguageSettingsView";
 
+//List Views
+import NativeLanguageView from "../Lists/NativeLanguageView/NativeLanguageView";
+
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
 import RateCallView from "../RateCall/RateExperience/RateExperienceView";
 import NameLinguistView from "../LinguistForm/NameLinguistView/NameLinguistView";
@@ -46,24 +49,39 @@ import PasswordLinguistView from "../LinguistForm/PasswordLinguistView/PasswordL
 import SelectListView from "../LinguistForm/SelectListView/SelectListView";
 import FamiliarityView from "../LinguistForm/FamiliarityView/FamiliarityView";
 
+// User Profile
+import UserProfileView from "../Profile/UserProfile/UserProfileView";
+import EditNameView from "../Profile/EditName/EditNameView";
+import EditGenderView from "../Profile/EditGender/EditGenderView";
+import EditNativeLanguageView from "../Profile/EditNativeLanguage/EditNativeLanguageView";
+
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
 import CallSettings from "../CallSettings/CallSettings";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
-import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
 import StaticView from "../StaticView/StaticView";
 
 import CustomScenarioView from "../Home/CustomScenario/CustomScenarioView";
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
+import PromotionView from "../Containers/PromoCode/PromotionView";
+import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
 
 const Navigation = StackNavigator(
   {
     AssistanceView: { screen: AssistanceView },
     CallHistory: {
-      screen: CallHistory
+      screen: CallHistory,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
     },
-    CallTimeView: { screen: CallTimeView },
+    CallTimeView: {
+      screen: CallTimeView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
     ContactingLinguist: {
       screen: ContactingLinguist,
       navigationOptions: {
@@ -71,7 +89,12 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    ContactLinguist: { screen: ContactLinguist },
+    ContactLinguist: {
+      screen: ContactLinguist,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
     NameCustomerView: {
       screen: NameCustomerView,
       navigationOptions: {
@@ -128,7 +151,12 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    CustomerProfile: { screen: CustomerProfile },
+    CustomerProfile: {
+      screen: CustomerProfile,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
     CustomerView: {
       screen: CustomerView,
       navigationOptions: {
@@ -154,7 +182,10 @@ const Navigation = StackNavigator(
       screen: Home
     },
     CustomScenarioView: {
-      screen: CustomScenarioView
+      screen: CustomScenarioView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
     },
     IncomingCallView: {
       screen: IncomingCallView,
@@ -163,7 +194,13 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    RateCallView: { screen: RateCallView },
+    RateCallView: {
+      screen: RateCallView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
     NameLinguistView: {
       screen: NameLinguistView,
       navigationOptions: {
@@ -199,7 +236,12 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    VerifyPhoneLinguistView: { screen: VerifyPhoneLinguistView },
+    VerifyPhoneLinguistView: {
+      screen: VerifyPhoneLinguistView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
     LinguistView: {
       screen: LinguistView,
       navigationOptions: {
@@ -214,12 +256,35 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    Profile: { screen: Profile },
+    Profile: {
+      screen: Profile,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
     ScanScreenView: {
       screen: ScanScreenView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
+      }
+    },
+    EditNameView: {
+      screen: EditNameView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    EditGenderView: {
+      screen: EditGenderView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    EditNativeLanguageView: {
+      screen: EditNativeLanguageView,
+      navigationOptions: {
+        gesturesEnabled: false
       }
     },
     SelectLanguageView: {
@@ -230,7 +295,18 @@ const Navigation = StackNavigator(
       }
     },
     StaticView: {
-      screen: StaticView
+      screen: StaticView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    NativeLanguageView: {
+      screen: NativeLanguageView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
     },
     SelectListView: {
       screen: SelectListView,
@@ -260,12 +336,48 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    CallSettings: { screen: CallSettings },
-    UserProfileView: { screen: UserProfileView },
-    CallConfirmationView: { screen: CallConfirmationView },
-    SessionDetails: { screen: SessionDetails },
+
+    CallSettings: {
+      screen: CallSettings,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    UserProfileView: {
+      screen: UserProfileView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    CallConfirmationView: {
+      screen: CallConfirmationView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    SessionDetails: {
+      screen: SessionDetails,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
     PromoCodeView: {
       screen: PromoCodeView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    PromotionView: {
+      screen: PromotionView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    PromoCodeListView: {
+      screen: PromoCodeListView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"

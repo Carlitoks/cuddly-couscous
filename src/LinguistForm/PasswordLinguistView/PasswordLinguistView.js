@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
-import { registerDevice } from "../../Ducks/RegistrationCustomerReducer";
+import { registerDevice } from "../../Ducks/AuthReducer";
 import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
 
 import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
@@ -24,6 +24,7 @@ import {
 } from "../../Config/StaticViewsURIS";
 
 import styles from "./styles";
+import { displayFormErrors } from "../../Util/Helpers";
 import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
@@ -56,7 +57,7 @@ class PasswordLinguist extends Component {
     };
 
     if (!valid) {
-      this.tempDisplayErrors(updates.passwordErrorMessage);
+      displayFormErrors(updates.passwordErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -96,21 +97,6 @@ class PasswordLinguist extends Component {
         }
       });
     }
-  }
-
-  // Will be changed according the designs
-  tempDisplayErrors(...errors) {
-    const errorStr = errors.reduce((last, current) => {
-      curr = "";
-      if (current) {
-        curr = `- ${current}\n`;
-      }
-      return last.concat(curr);
-    }, "");
-
-    Alert.alert("Errors", errorStr, [
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]);
   }
 
   render() {

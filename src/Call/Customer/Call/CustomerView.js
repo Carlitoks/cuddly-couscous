@@ -84,7 +84,7 @@ class CustomerView extends Component {
 
     return linguist && linguist.avatarURL
       ? {
-          uri: `${IMAGE_STORAGE_URL}${linguist.avatarURL}`
+          uri: this.props.linguist.avatarURL
         }
       : Images.avatar;
   };
@@ -199,7 +199,7 @@ class CustomerView extends Component {
       await this.props.tokDisConnect(customerTokboxSessionID);
     }
 
-    await this.props.EndCall(sessionID, reason, token);
+    sessionID && (await this.props.EndCall(sessionID, reason, token));
   };
 
   callTimeOut = () => {

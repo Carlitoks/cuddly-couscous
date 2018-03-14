@@ -24,9 +24,6 @@ export default StyleSheet.create({
     color: "white",
     backgroundColor: "transparent"
   },
-  containerView: {
-    marginTop: moderateScale(10)
-  },
   inputText: {
     fontSize: 20,
     color: "black",
@@ -37,7 +34,7 @@ export default StyleSheet.create({
   },
   formText: {
     fontSize: 15,
-    paddingLeft: "7.5%",
+    paddingLeft: 15,
     marginBottom: 15,
     marginTop: 10
   },

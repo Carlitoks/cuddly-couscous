@@ -4,7 +4,7 @@ import { NetInfo } from "react-native";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 
-import { updateNetworkInfo } from "./Ducks/NetworkInfoReducer";
+import { delayUpdateInfo } from "./Ducks/NetworkInfoReducer";
 import {
   remoteNotificationReceived,
   registerFCM
@@ -59,8 +59,16 @@ class App extends Component {
       })
       .then(connectionInfo => {
         const { store } = this.state;
-        //
-        store.dispatch(updateNetworkInfo(connectionInfo));
+
+        NetInfo.getConnectionInfo().then(connectionInfo => {
+          store.dispatch(delayUpdateInfo(connectionInfo));
+        });
+
+        // Even Listener to Detect Network Change
+        NetInfo.addEventListener(
+          "connectionChange",
+          this.handleFirstConnectivityChange
+        );
       });
     //PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
     //PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
@@ -80,7 +88,7 @@ class App extends Component {
     const { store } = this.state;
 
     if (store) {
-      store.dispatch(updateNetworkInfo(connectionInfo));
+      store.dispatch(delayUpdateInfo(connectionInfo));
     }
   };
 

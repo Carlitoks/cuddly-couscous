@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   title: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 22,
     color: Colors.primaryColor,
     fontFamily: Fonts.primaryBoldFont
   },

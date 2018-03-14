@@ -47,70 +47,6 @@ export const incrementTimer = () => ({
   type: ACTIONS.INCREMENT_TIMER
 });
 
-export const getInvitations = () => (dispatch, getState) => {
-  const {
-    auth: { uuid, token },
-    userProfile: { isLinguist },
-    profileLinguist: { available, polling }
-  } = getState();
-
-  if (isLinguist && polling && available) {
-    Sessions.GetInvitations(uuid, token)
-      .then(response => {
-        const length = response.data.length;
-
-        // There's at least one call. Let's get the most recent one
-        if (length > 0) {
-          // We order the invitations by Date
-          const sortedResponse = _sortBy(
-            response.data,
-            o => new moment(o.createdAt)
-          );
-
-          // We get the most recent invitation
-          const lastInvitation = sortedResponse[length - 1];
-
-          // We Calculate de time difference, we are only going to take invitations
-          // from 30 seconds ago
-          const lastInvitationDate = new moment(lastInvitation.createdAt);
-
-          const secondsDiff = lastInvitationDate.diff(moment(), "seconds");
-
-          console.log(">> polling", secondsDiff);
-
-          // If the call if 30 seconds old we take the call
-          if (secondsDiff <= 0 && secondsDiff >= -30 && polling) {
-            const invitation = sortedResponse[length - 1];
-
-            // We turn off polling until HomeLinguistView is mounted again
-            dispatch(
-              updateSettings({
-                invitationID: invitation.id
-              })
-            );
-            dispatch(update({ sessionID: invitation.session.id }));
-            dispatch(updateProfileLinguist({ polling: false }));
-            dispatch({ type: "IncomingCallView" });
-          }
-        } else {
-          console.log("There are no invitations");
-        }
-      })
-      .catch(err => {
-        console.log(err.response);
-      })
-      .finally(() => {
-        if (polling && available) {
-          this.setTimeout(() => {
-            dispatch(getInvitations());
-          }, 10000);
-        }
-      });
-  }
-};
-
-dispatchInvitations = () => dispatch => {};
-
 export const resetTimerAsync = () => (dispatch, getState) => {
   const { callLinguistSettings } = getState();
   dispatch(
@@ -128,9 +64,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
     .then(response => {
       dispatch(endSession(REASON.DONE));
     })
-    .catch(error => {
-      console.log(error.response);
-    });
+    .catch(error => dispatch(networkError(error)));
 };
 
 export const resetTimer = () => ({
@@ -145,7 +79,6 @@ export const asyncGetInvitationDetail = (
   return Sessions.linguistFetchesInvite(invitationID, token)
     .then(response => {
       const res = response.data;
-      console.log(res);
       if (!res.session.endReason) {
         dispatch(
           updateSettings({
@@ -169,7 +102,6 @@ export const asyncGetInvitationDetail = (
       }
     })
     .catch(error => {
-      console.log(error, error.response);
       dispatch(clearSettings());
       dispatch(clear());
       dispatch(networkError(error));
@@ -182,10 +114,11 @@ export const asyncAcceptsInvite = (
   token,
   linguistSessionId
 ) => dispatch => {
+  dispatch(changeStatus());
   if (reason && reason.accept) {
     Sessions.linguistFetchesInvite(invitationID, token)
       .then(res => {
-        if (res.data.session.endReason !== REASON.CANCEL) {
+        if (!res.data.session.endReason) {
           Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
             .then(response => {
               dispatch(setSession(response.data));
@@ -193,24 +126,35 @@ export const asyncAcceptsInvite = (
               dispatch(update({ sessionID: linguistSessionId }));
             })
             .catch(error => {
+              dispatch(clear());
+              dispatch(clearSettings());
+              dispatch({ type: "Home" });
               dispatch(networkError(error));
             });
         } else {
-          dispatch({ type: "Home" });
-          console.log("Ended call by customer");
+          dispatch(clear());
+          dispatch(clearSettings());
+          dispatch({ type: "Home", params: { alert: true } });
+          dispatch(clear());
         }
       })
-      .catch(err => {
-        dispatch({ type: "Home" });
-        console.log("Ended call by customer");
+      .catch(error => {
+        dispatch(networkError(error));
+        dispatch(clear());
+        dispatch(clearSettings());
+        dispatch({ type: "Home", params: { alert: true } });
+        dispatch(clear());
       });
   } else {
     Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
       .then(response => {
+        dispatch(clear());
+        dispatch(clearSettings());
         dispatch({ type: "Home" });
-        dispatch(changeStatus());
       })
       .catch(error => {
+        dispatch(clear());
+        dispatch(clearSettings());
         dispatch({ type: "Home" });
         dispatch(networkError(error));
       });
@@ -238,7 +182,8 @@ const initialState = {
   lastInitial: "",
   avatarURL: "",
   estimatedMinutes: "",
-  languages: ""
+  languages: "",
+  customerScenario: ""
 };
 
 // Reducer

@@ -36,49 +36,62 @@ class ScanScreenView extends Component {
   };
 
   onSuccess = e => {
+    const { navigation } = this.props;
     try {
-      const qrURL = e.data;
+      if (navigation.state.routeName === "ScanScreenView") {
+        const qrURL = e.data;
+        this.props
+          .asyncScanQR(this.getEventID(qrURL), this.props.token)
+          .then(response => {
+            const {
+              requireScenarioSelection,
+              restrictEventScenarios,
+              scenarios
+            } = response.payload;
 
-      this.props
-        .asyncScanQR(this.getEventID(qrURL), this.props.token)
-        .then(response => {
-          const {
-            requireScenarioSelection,
-            restrictEventScenarios,
-            scenarios
-          } = response.payload;
-
-          if (this.props.token) {
-            if (requireScenarioSelection && restrictEventScenarios) {
-              /* Dispatch to SelectListView with the scenarios involveds*/
-              this.props.updateSettings({
-                selectionItemType: "scenarios",
-                selectionItemName: "scenarios",
-                scenarios: scenarios
+            if (this.props.token) {
+              if (requireScenarioSelection && restrictEventScenarios) {
+                /* Dispatch to SelectListView with the scenarios involveds*/
+                if (scenarios) {
+                  this.props.updateSettings({
+                    selectionItemType: "scenarios",
+                    selectionItemName: "scenarios",
+                    scenarios
+                  });
+                  this.props.navigation.dispatch({ type: "PromoCodeListView" });
+                } else {
+                  this.props.navigation.dispatch({
+                    type: "CustomScenarioView"
+                  });
+                }
+              } else if (requireScenarioSelection && !restrictEventScenarios) {
+                /* Dispatch to Category Selection View (Home) */
+                this.props.updateSettings({
+                  selectionItemType: "scenarios",
+                  selectionItemName: "scenarios",
+                  scenarios: scenarios
+                });
+                this.props.navigation.dispatch({ type: "PromotionView" });
+              } else if (!requireScenarioSelection) {
+                /* Dispatch to Call Confirmation view */
+                this.props.navigation.dispatch({
+                  type: "CallConfirmationView"
+                });
+              }
+            } else {
+              this.props.navigation.dispatch({
+                type: "LoginView"
               });
-              this.props.navigation.dispatch({ type: "SelectListView" });
-            } else if (requireScenarioSelection && !restrictEventScenarios) {
-              /* Dispatch to Category Selection View (Home) */
-              this.props.navigation.dispatch({ type: "Home" });
-            } else if (!requireScenarioSelection) {
-              /* Dispatch to Call Confirmation view */
-              this.props.navigation.dispatch({ type: "CallConfirmationView" });
             }
-          } else {
-            this.props.navigation.dispatch({
-              type: "LoginView"
-            });
-          }
-        });
+          })
+          .then(() => {
+            this.scanner.reactivate();
+          });
 
-      this.setState({
-        reactivate: false
-      });
-      setTimeout(() => {
         this.setState({
-          reactivate: true
+          reactivate: false
         });
-      }, 1000);
+      }
     } catch (err) {
       this.setState({
         reactivate: true
@@ -106,6 +119,9 @@ class ScanScreenView extends Component {
           onRead={this.onSuccess}
           fadeIn={true}
           cameraStyle={styles.cameraContainer}
+          ref={node => {
+            this.scanner = node;
+          }}
           reactivate={this.state.reactivate}
           showMarker={true}
           style={styles.codeScanner}
