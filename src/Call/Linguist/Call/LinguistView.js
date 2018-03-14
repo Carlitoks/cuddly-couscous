@@ -41,7 +41,6 @@ import { tokDisConnect, tokConnect, clear } from "../../../Ducks/tokboxReducer";
 import { IMAGE_STORAGE_URL } from "../../../Config/env";
 
 class LinguistView extends Component {
-  navigate = this.props.navigation.navigate;
   ref: Ref<Publisher>;
 
   componentWillMount() {
@@ -213,12 +212,12 @@ class LinguistView extends Component {
           />
           <CallButton
             onPress={async () => {
-              // start timer requst status session, wait 5 s
               await OpenTok.sendSignal(
                 this.props.linguistTokboxSessionID,
                 "EndCall",
                 REASON.DONE
               );
+              this.props.navigation.dispatch({ type: "RateCallView" });
             }}
             buttonColor="red"
             toggle={false}

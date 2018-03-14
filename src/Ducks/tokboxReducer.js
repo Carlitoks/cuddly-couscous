@@ -159,8 +159,6 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
         .catch(err => {
           console.log(err.response);
         });
-    } else {
-      dispatch(updateSettings({ modalReconnect: true }));
     }
   });
 
@@ -191,8 +189,6 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
 
     if (isLinguist) {
       // linguist
-    } else {
-      dispatch(updateSettings({ modalReconnect: true }));
     }
   });
 
@@ -205,12 +201,6 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
         payload: e
       })
     );
-
-    if (isLinguist) {
-      //
-    } else {
-      dispatch(updateSettings({ modalReconnect: true }));
-    }
   });
 };
 
