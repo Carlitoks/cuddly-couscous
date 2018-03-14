@@ -1,4 +1,5 @@
 import { Linguist } from "../Api";
+import { networkError } from "./NetworkErrorsReducer";
 
 // Constants
 
@@ -31,7 +32,7 @@ export const changeStatus = status => (dispatch, getState) => {
         })
       );
     })
-    .catch(err => dispatch(networkError(error)));
+    .catch(err => dispatch(networkError(err)));
 };
 
 export const GetOptions = () => dispatch => {
