@@ -114,7 +114,10 @@ class SelectListView extends Component {
           }
           title={I18n.t("describeAssistance")}
         >
-          <ScrollView automaticallyAdjustContentInsets={true}>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+          >
             {this.props.scenarios.length < 1 ? (
               <View style={styles.marginSpinner}>
                 <ActivityIndicator

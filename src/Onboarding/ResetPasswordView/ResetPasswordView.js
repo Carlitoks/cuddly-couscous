@@ -78,6 +78,7 @@ class ResetPasswordView extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             <Grid>
               <Col>

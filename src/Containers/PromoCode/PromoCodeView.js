@@ -81,10 +81,13 @@ class PromoCodeView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={I18n.t("promoCodeTitle")}>
+          title={I18n.t("promoCodeTitle")}
+        >
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}>
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+          >
             <View>
               {/* Email */}
               <InputRegular

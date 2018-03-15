@@ -177,7 +177,10 @@ class SelectListView extends Component {
               : null
           }
         >
-          <ScrollView automaticallyAdjustContentInsets={true}>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+          >
             {this.renderList()}
           </ScrollView>
         </HeaderView>

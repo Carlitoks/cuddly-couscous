@@ -167,6 +167,7 @@ class PromotionView extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             {/* SVG White Waves */}
             <View>

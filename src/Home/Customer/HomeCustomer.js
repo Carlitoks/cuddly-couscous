@@ -363,6 +363,7 @@ class Home extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             {this.state.other ? this.renderInput() : null}
             {!this.state.qr && !this.state.other ? this.renderList() : null}

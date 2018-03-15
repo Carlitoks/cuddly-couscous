@@ -115,6 +115,7 @@ class EditGenderView extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             <ListComponent
               data={genders}

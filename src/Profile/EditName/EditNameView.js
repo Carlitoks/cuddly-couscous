@@ -153,6 +153,7 @@ class EditNameView extends Component {
             keyboardShouldPersistTaps="handled"
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             <Grid>
               <Col>

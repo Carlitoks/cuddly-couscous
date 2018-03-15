@@ -13,7 +13,7 @@ import {
   ScrollView,
   Alert,
   TextInput,
-  Platform, 
+  Platform,
   KeyboardAvoidingView
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -146,6 +146,7 @@ class PhoneCustomerView extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             <Grid>
               <Col>

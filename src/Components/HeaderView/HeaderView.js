@@ -378,6 +378,7 @@ const HeaderView = ({
     <ScrollView
       automaticallyAdjustContentInsets={true}
       style={styles.container}
+      alwaysBounceVertical={false}
     >
       {/* Header */}
       <View

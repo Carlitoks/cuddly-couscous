@@ -5,7 +5,13 @@ import { updateForm, clearForm } from "../../Ducks/LinguistFormReducer";
 import { registerDevice } from "../../Ducks/AuthReducer";
 import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
 
-import { View, Text, ScrollView, Alert, KeyboardAvoidingView } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button } from "react-native-elements";
@@ -111,6 +117,7 @@ class PasswordLinguist extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             <View>
               <View>

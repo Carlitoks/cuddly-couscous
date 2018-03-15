@@ -63,7 +63,10 @@ class LanguageCustomerView extends Component {
           }
           title={I18n.t("nativeLanguage")}
         >
-          <ScrollView automaticallyAdjustContentInsets={true}>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+          >
             {/* Native Language */}
             <Text style={styles.nativeLanguageTitle}>
               {I18n.t("nativeLanguage")}

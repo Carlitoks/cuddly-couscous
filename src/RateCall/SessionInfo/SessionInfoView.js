@@ -65,6 +65,7 @@ class SessionInfoView extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={{ flex: 1 }}
+            alwaysBounceVertical={false}
           >
             <Grid>
               <Col>
