@@ -9,8 +9,9 @@
     "android:link": "react-native link",
     "android:run":
       "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
-    "android:shake":
-      "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82",
+    "android:shake": "adb shell input keyevent 82",
+    "android:install":
+      "adb install android/app/build/outputs/apk/app-debug.apk",
     "test": "jest",
     "api:run": "make setup && docker-compose up",
     "api:load-mock-data": "make run-cmd CMD=\"load-fixtures\""

@@ -2,23 +2,15 @@ import React, { Component } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import RateIcons from "../RateIcons/RateIcons";
 import styles from "./styles";
-import Colors from "../../Themes/Colors";
+import { Colors, Images } from "../../Themes";
 
 const TextButton = ({ IconName, StateIcon, onPress, title }) => {
   return (
     <TouchableOpacity style={styles.buttonText} onPress={onPress}>
       {/* Icon component with text used in rate experience  */}
-      <Icon
-        style={
-          StateIcon
-            ? { color: Colors.gradientColorButton.middle }
-            : { color: Colors.disabledIcons }
-        }
-        name={IconName}
-        size={40}
-      />
+      <RateIcons icon={IconName} active={StateIcon} />
       <Text
         style={
           StateIcon

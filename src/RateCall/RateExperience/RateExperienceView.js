@@ -121,7 +121,7 @@ class RateCallView extends Component {
     {
       Name: "ios-time",
       IconState: "iconWaitTimeFirstList",
-      IconName: "wait_time",
+      IconName: "waitTime",
       OffState: "iconWaitTimeSecondList",
       label: "Wait Time"
     },
@@ -142,21 +142,21 @@ class RateCallView extends Component {
     {
       Name: "ios-person",
       IconState: "iconLanguageAbilityFirstList",
-      IconName: "lang_ability",
+      IconName: "language",
       OffState: "iconLanguageAbilitySecondList",
       label: "Language Ability"
     },
     {
       Name: "ios-microphone",
       IconState: "iconUnderstandFirstList",
-      IconName: "understandable",
+      IconName: "easyUnderstand",
       OffState: "iconUnderstandSecondList",
       label: "Easy to Understand"
     },
     {
       Name: "ios-volume-up",
       IconState: "iconAudioQualityFirstList",
-      IconName: "audio_quality",
+      IconName: "audio",
       OffState: "iconAudioQualityFirstList",
       label: "Audio Quality"
     }
@@ -166,7 +166,7 @@ class RateCallView extends Component {
     {
       Name: "ios-time",
       IconState: "iconWaitTimeSecondList",
-      IconName: "wait_time",
+      IconName: "waitTime",
       OffState: "iconWaitTimeFirstList",
       label: "Wait Time"
     },
@@ -187,14 +187,14 @@ class RateCallView extends Component {
     {
       Name: "ios-person",
       IconState: "iconLanguageAbilitySecondList",
-      IconName: "lang_ability",
+      IconName: "language",
       OffState: "iconLanguageAbilityFirstList",
       label: "Language Ability"
     },
     {
       Name: "ios-microphone",
       IconState: "iconUnderstandSecondList",
-      IconName: "understandable",
+      IconName: "easyUnderstand",
       OffState: "iconUnderstandFirstList",
       label: "Hard to Understand"
     },
@@ -208,14 +208,14 @@ class RateCallView extends Component {
     {
       Name: "ios-musical-note",
       IconState: "iconBackgroundNoiseSecondList",
-      IconName: "background_noise",
+      IconName: "noise",
       OffState: "iconBackgroundNoiseFirstList",
       label: "Background Noise"
     },
     {
       Name: "ios-recording",
       IconState: "iconVoiceClaritySecondList",
-      IconName: "voice_clarity",
+      IconName: "voiceClarity",
       OffState: "iconVoiceClarityFirstList",
       label: "Voice Clarity"
     },
@@ -376,7 +376,7 @@ class RateCallView extends Component {
                     {WhatWasGoodIcons.map((item, i) => (
                       <View key={i} style={styles.questionIcons}>
                         <TextButton
-                          IconName={item.Name}
+                          IconName={item.IconName}
                           StateIcon={this.props[item.IconState]}
                           onPress={() =>
                             this.buttonsHandle(item, "positiveFlags")
@@ -403,7 +403,7 @@ class RateCallView extends Component {
                   {WhatCouldBeBetterIcons.map((item, i) => (
                     <View key={i} style={styles.questionIcons}>
                       <TextButton
-                        IconName={item.Name}
+                        IconName={item.IconName}
                         StateIcon={this.props[item.IconState]}
                         onPress={() =>
                           this.buttonsHandle(item, "negativeFlags")
