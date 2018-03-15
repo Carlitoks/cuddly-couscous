@@ -161,11 +161,13 @@ class EditNameView extends Component {
                   <InputRegular
                     containerStyle={styles.containerInput}
                     placeholder={I18n.t("linguistName")}
-                    onChangeText={text =>
-                      this.props.updateForm({
-                        firstname: text
-                      })
-                    }
+                    onChangeText={text => {
+                      if (onlyLetters(text) || text == "") {
+                        this.props.updateForm({
+                          firstname: text
+                        });
+                      }
+                    }}
                     maxLength={20}
                     value={formFirstName}
                     autoFocus={true}
@@ -175,9 +177,13 @@ class EditNameView extends Component {
                 <InputRegular
                   containerStyle={styles.containerInput}
                   placeholder={I18n.t("linguistLastName")}
-                  onChangeText={text =>
-                    this.props.updateForm({ lastname: text })
-                  }
+                  onChangeText={text => {
+                    if (onlyLetters(text) || text == "") {
+                      this.props.updateForm({
+                        lastname: text
+                      });
+                    }
+                  }}
                   maxLength={20}
                   value={formLastName}
                   sec
@@ -188,9 +194,13 @@ class EditNameView extends Component {
                   containerStyle={styles.containerInput}
                   placeholder={I18n.t("preferredName")}
                   value={formPreferredName}
-                  onChangeText={text =>
-                    this.props.updateForm({ preferredName: text })
-                  }
+                  onChangeText={text => {
+                    if (onlyLetters(text) || text == "") {
+                      this.props.updateForm({
+                        preferredName: text
+                      });
+                    }
+                  }}
                   maxLength={20}
                   sec
                 />

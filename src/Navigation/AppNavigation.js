@@ -385,7 +385,7 @@ const Navigation = StackNavigator(
     }
   },
   {
-    initialRouteName: "WelcomeCustomerView",
+    initialRouteName: "SelectRoleView",
     headerMode: "none"
   }
 );
