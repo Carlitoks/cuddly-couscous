@@ -69,7 +69,7 @@ class EmailCustomerView extends Component {
     return valid;
   }
 
-  getResponseError = err => err.payload.response.data.errors[0];
+  getResponseError = err => err.response.data.errors[0];
 
   submit() {
     const { registerDevice, navigation } = this.props;
@@ -81,8 +81,8 @@ class EmailCustomerView extends Component {
             throw response;
           }
 
-          const { email, deviceToken } = this.props;
-          return this.props.asyncCreateUser({ email }, deviceToken);
+          const { email, deviceToken, asyncCreateUser } = this.props;
+          return asyncCreateUser({ email }, deviceToken);
         })
         .then(response => {
           if (response.type !== "networkErrors/error") {
@@ -90,20 +90,21 @@ class EmailCustomerView extends Component {
               type: "PasswordCustomerView"
             });
           } else {
-            if (this.getResponseError(response) === "user already exists") {
-              navigation.dispatch({
-                type: "LoginView"
-              });
-            }
             throw response;
           }
         })
         .catch(err => {
-          if (err.payload) {
-            displayFormErrors(err.payload.response.data.errors);
-          } else {
-            displayFormErrors(err);
+          if (this.getResponseError(err) === "user already exists") {
+            navigation.dispatch({
+              type: "LoginView"
+            });
           }
+
+          const errors = err.payload
+            ? err.payload.response.data.errors
+            : err.response ? err.response.data.errors : err;
+
+          displayFormErrors(errors);
         });
     }
   }

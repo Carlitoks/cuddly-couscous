@@ -30,11 +30,9 @@ export const asyncUpdateUser = (payload, token) => dispatch => {
 };
 
 export const asyncCreateUser = (payload, token) => dispatch => {
-  return User.create(payload, token)
-    .then(response => {
-      return dispatch(userinfoUpdate(response.data));
-    })
-    .catch(error => dispatch(networkError(error)));
+  return User.create(payload, token).then(response => {
+    return dispatch(userinfoUpdate(response.data));
+  });
 };
 
 export const asyncSetPassword = (id, payload, token) => dispatch => {
