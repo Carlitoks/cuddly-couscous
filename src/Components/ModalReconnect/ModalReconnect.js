@@ -17,7 +17,7 @@ class ModalReconnect extends Component {
       <View style={styles.modalWrapper}>
         <View style={styles.topContainer}>
           <Text style={styles.mainMessage}>
-            {this.props.reconnectMessage || I18n.t("cantReachLinguist")}
+            {this.props.reconnectMessage || I18n.t("allLinguistsAreBusy")}
           </Text>
         </View>
         <ReconnectOptions

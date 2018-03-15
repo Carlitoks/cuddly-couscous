@@ -6,6 +6,7 @@ export default (ESP = {
   alignQRCode: "Align QR Code/barcode within the frame to scan",
   all: "All",
   allCalls: "All Calls",
+  allLinguistsAreBusy: "All linguists are currently busy.",
   allowExtraTime: "Allow extra time",
   alreadyAccount: "Already have an account?",
   amount: "Amount",
@@ -25,6 +26,7 @@ export default (ESP = {
   calls: "Calls",
   callSettings: "Call Settings",
   cancel: "Cancel",
+  cancelCall: "Cancel call",
   cancelCallCustomer: "Ended call by customer",
   changeSettings: "To change your settings, go to Settings > Jeenie",
   checkYourEmail:
@@ -218,6 +220,7 @@ export default (ESP = {
   tourism: "Tourism",
   travel: "Travel",
   transit: "In Transit",
+  tryAgain: "Try again",
   troubleshoot: "Troubleshoot",
   thankYou: " Thank You",
   undefined: "Undefined",

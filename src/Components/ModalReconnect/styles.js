@@ -7,17 +7,19 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(217, 217, 230, 0.9)"
+    backgroundColor: "rgba(0, 0, 0, 0.7)"
   },
   topContainer: {
     marginTop: 30,
+    marginBottom: 50,
     width: "100%",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center"
   },
   mainMessage: {
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: Colors.white
   },
   modalWrapper: {
     width: 300,

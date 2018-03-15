@@ -1,54 +1,48 @@
 import React, { Component } from "react";
 
-import { Text, View, TouchableWithoutFeedback } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { connect } from "react-redux";
+import BottomButton from "../BottomButton/BottomButton";
 
 import I18n from "../../I18n/I18n";
 import { styles } from "./styles";
 
 import { REASON } from "../../Util/Constants";
+import { Colors } from "../../Themes";
 
 class ReconnectOptions extends Component {
   render() {
     return (
       <View>
         <View style={styles.optionButton}>
-          <TouchableWithoutFeedback
+          <BottomButton
+            title={I18n.t("tryAgain")}
+            icon="search"
+            transparent
+            whiteText
+            color={Colors.white}
             onPress={async () => {
               await this.props.closeCall(REASON.RETRY);
               await this.props.reconnectCall();
               this.props.callTimeOut();
             }}
-          >
-            <Icon.Button
-              name="search"
-              backgroundColor="transparent"
-              size={25}
-              iconStyle={styles.iconStyle}
-            >
-              <Text style={styles.textStyle}>
-                {I18n.t("callAnotherLinguist")}
-              </Text>
-            </Icon.Button>
-          </TouchableWithoutFeedback>
+            relative
+          />
         </View>
         <View style={styles.optionButton}>
-          <TouchableWithoutFeedback
+          <BottomButton
+            title={I18n.t("cancelCall")}
+            icon="call-end"
+            transparent
+            whiteText
+            color={Colors.white}
             onPress={() => {
               this.props.closeCall(REASON.CANCEL);
             }}
-          >
-            <Icon.Button
-              name="call-end"
-              backgroundColor="transparent"
-              size={25}
-              iconStyle={styles.iconStyle}
-            >
-              <Text style={styles.textStyle}>{I18n.t("endCall")}</Text>
-            </Icon.Button>
-          </TouchableWithoutFeedback>
+            relative
+          />
         </View>
       </View>
     );

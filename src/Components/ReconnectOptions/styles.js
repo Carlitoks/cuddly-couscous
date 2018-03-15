@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     color: Colors.selectedOptionMenu
   },
   optionButton: {
-    marginTop: 5,
-    marginBottom: 10
+    marginTop: 15,
+    marginBottom: 15
   }
 });

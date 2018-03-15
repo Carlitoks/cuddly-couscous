@@ -77,5 +77,8 @@ export default StyleSheet.create({
   spinner: {
     flex: 1,
     position: "absolute"
+  },
+  transparent: {
+    backgroundColor: "transparent"
   }
 });
