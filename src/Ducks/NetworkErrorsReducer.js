@@ -36,13 +36,13 @@ const handleError = status => dispatch => {
       dispatch(notFoundError());
       break;
 
-    case 500:
-      dispatch(serverError());
-      break;
+    // case 500:
+    //   dispatch(serverError());
+    //   break;
 
-    default:
-      dispatch(serverError());
-      break;
+    // default:
+    //   dispatch(serverError());
+    //   break;
   }
 };
 
@@ -52,7 +52,7 @@ const unauthorizedError = () => dispatch => {
   dispatch(clearHistory());
   dispatch(clearSettings());
   dispatch(clearError());
-  dispatch({ type: "SelectRoleView" });
+  dispatch({ type: "SelectRoleView/Reset" });
 };
 
 const notFoundError = () => dispatch => {
@@ -61,7 +61,7 @@ const notFoundError = () => dispatch => {
   dispatch(clearHistory());
   dispatch(clearSettings());
   dispatch(clearError());
-  dispatch({ type: "SelectRoleView" });
+  dispatch({ type: "SelectRoleView/Reset" });
 };
 
 const serverError = () => (dispatch, getState) => {

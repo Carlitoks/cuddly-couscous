@@ -42,11 +42,14 @@ export const logOutAsync = () => (dispatch, getState) => {
   const { userProfile, auth } = getState();
   // delete device in server
   User.deleteDevice(userProfile.id, auth.deviceId, auth.token)
+    .then(() => {
+      dispatch(registerFCM({ tokenFCM: null }));
+      userProfile.linguistProfile &&
+        dispatch(changeStatus({ available: false }));
+    })
     .catch(error => dispatch(networkError(error)))
     .finally(res => {
       // cleaning localstorage
-      dispatch(changeStatus({ available: false }));
-      dispatch(registerFCM({ tokenFCM: null }));
       dispatch(logOut());
       dispatch(clearUserProfile());
       dispatch(clearHistory());
