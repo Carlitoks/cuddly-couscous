@@ -114,7 +114,6 @@ export const asyncAcceptsInvite = (
   token,
   linguistSessionId
 ) => dispatch => {
-  dispatch(changeStatus());
   if (reason && reason.accept) {
     Sessions.linguistFetchesInvite(invitationID, token)
       .then(res => {
