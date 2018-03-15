@@ -71,18 +71,20 @@ export default StyleSheet.create({
     alignSelf: "flex-end"
   },
   getStarted: {
-    marginBottom: 40
+    justifyContent: "center",
+    alignSelf: "center",
+    backgroundColor: "transparent"
   },
   blueContainer: {
-    flex: 3
+    flex: 4
   },
   orangeContainer: {
     flex: 1
   },
   logo: {
     borderColor: Colors.primaryAltFontColor,
-    marginTop: verticalScale(60),
-    marginBottom: verticalScale(10),
+    marginTop: verticalScale(30),
+    marginBottom: verticalScale(30),
     position: "relative"
   },
   logoImage: {

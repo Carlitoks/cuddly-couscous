@@ -55,15 +55,16 @@ class WelcomeCustomerView extends Component {
                 viewBox={"0 0 750 71"}
               />
             </View>
+            <BottomButton
+              long
+              fill
+              customStyle={[styles.getStarted, { marginTop: width * 71 / 750 }]}
+              relative
+              title={I18n.t("getLanguageHelp").toUpperCase()}
+              onPress={() => navigation.dispatch({ type: "Home" })}
+            />
           </View>
         </View>
-        <BottomButton
-          long
-          fill
-          customStyle={styles.getStarted}
-          title={I18n.t("getLanguageHelp").toUpperCase()}
-          onPress={() => navigation.dispatch({ type: "Home" })}
-        />
       </ViewWrapper>
     );
   }
