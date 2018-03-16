@@ -139,12 +139,12 @@ class UserProfileView extends Component {
     if (avatar) {
       const { token, uuid } = this.props;
       this.props.asyncUploadAvatar(uuid, avatar, token).then(response => {
-        this.props.navigation.dispatch({
-          type: "Home"
-        });
+        /*this.props.navigation.dispatch({
+          type: "back"
+        });*/
       });
     } else {
-      this.props.navigation.dispatch({ type: "Home" });
+      //this.props.navigation.dispatch({ type: "back" });
     }
   }
 
