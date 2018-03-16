@@ -136,6 +136,7 @@ class EditGenderView extends Component {
           bold={false}
           title={I18n.t("save")}
           onPress={() => this.submit()}
+          fill
         />
       </ViewWrapper>
     );

@@ -180,6 +180,7 @@ class LoginView extends Component {
           onPress={() => this.submit()}
           bold={true}
           disabled={!this.props.email || !this.props.password}
+          fill={this.props.email && this.props.password}
         />
       </ViewWrapper>
     );

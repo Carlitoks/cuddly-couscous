@@ -163,6 +163,7 @@ class GenderCustomerView extends Component {
           disabled={
             this.props.performingRequest || this.state.genderIndex == -1
           }
+          fill={!(this.props.performingRequest || this.state.genderIndex == -1)}
           title={I18n.t("finish")}
           onPress={() => this.submit()}
           loading={this.props.performingRequest}

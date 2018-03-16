@@ -224,6 +224,7 @@ class EmailCustomerView extends Component {
           title={I18n.t("next")}
           onPress={() => this.submit()}
           disabled={this.isDisabled()}
+          fill={!this.isDisabled()}
         />
       </ViewWrapper>
     );

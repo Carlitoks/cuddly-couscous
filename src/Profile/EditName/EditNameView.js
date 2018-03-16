@@ -216,6 +216,7 @@ class EditNameView extends Component {
             this.submit();
           }}
           bold={false}
+          fill
         />
       </ViewWrapper>
     );

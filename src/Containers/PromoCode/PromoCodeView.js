@@ -111,6 +111,7 @@ class PromoCodeView extends Component {
           onPress={() => this.submit()}
           bold={false}
           disabled={this.isDisabled()}
+          fill={!this.isDisabled()}
         />
       </ViewWrapper>
     );

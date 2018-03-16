@@ -372,6 +372,7 @@ class Home extends Component {
           <BottomButton
             title={this.bottomButtonTitle()}
             disabled={this.bottomButtonDisabled()}
+            fill={!this.bottomButtonDisabled()}
             onPress={this.bottomButtonOnPress}
             relative
           />

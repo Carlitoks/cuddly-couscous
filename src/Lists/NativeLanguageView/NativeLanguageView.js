@@ -152,7 +152,12 @@ class NativeLanguageView extends Component {
           </View>
         </HeaderView>
         {/* Next Button */}
-        <BottomButton title={I18n.t("next")} onPress={() => this.submit()} />
+        <BottomButton
+          title={I18n.t("next")}
+          relative
+          onPress={() => this.submit()}
+          fill
+        />
       </ViewWrapper>
     );
   }

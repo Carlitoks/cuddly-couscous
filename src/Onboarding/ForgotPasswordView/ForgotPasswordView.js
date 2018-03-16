@@ -127,6 +127,7 @@ class ForgotPasswordView extends Component {
           onPress={() => this.submit()}
           bold={true}
           disabled={this.validateEmail()}
+          fill={!this.validateEmail()}
         />
       </ViewWrapper>
     );

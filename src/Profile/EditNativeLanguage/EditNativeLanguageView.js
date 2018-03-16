@@ -160,6 +160,7 @@ class EditNativeLanguageView extends Component {
             this.submit();
           }}
           relative
+          fill
         />
       </ViewWrapper>
     );
