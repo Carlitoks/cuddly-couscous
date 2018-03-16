@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import QRCodeScanner from "react-native-qrcode-scanner";
-import { Text, Dimensions, View } from "react-native";
+import { Text, Dimensions, View, Alert } from "react-native";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { Button, Header } from "react-native-elements";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
@@ -32,16 +32,23 @@ class ScanScreenView extends Component {
 
   getEventID = URL => {
     const tokens = URL.split("/");
+
     return tokens[tokens.indexOf("events") + 1];
+  };
+  checkValidID = id => {
+    return /\d{8}-+\d{4}-+\d{4}-+\d{4}-+\d{12}/.test(id);
   };
 
   onSuccess = e => {
     const { navigation } = this.props;
     try {
-      if (navigation.state.routeName === "ScanScreenView") {
-        const qrURL = e.data;
+      const eventId = this.getEventID(e.data);
+      if (
+        navigation.state.routeName === "ScanScreenView" &&
+        !!this.checkValidID(eventId)
+      ) {
         this.props
-          .asyncScanQR(this.getEventID(qrURL), this.props.token)
+          .asyncScanQR(eventId, this.props.token)
           .then(response => {
             const {
               requireScenarioSelection,
@@ -91,6 +98,23 @@ class ScanScreenView extends Component {
         this.setState({
           reactivate: false
         });
+      } else {
+        if (navigation.state.routeName === "ScanScreenView") {
+          this.setState({
+            reactivate: false
+          });
+          Alert.alert("Error", "QR invalid, try again", [
+            {
+              text: "OK",
+              onPress: () => {
+                this.scanner.reactivate();
+                this.setState({
+                  reactivate: true
+                });
+              }
+            }
+          ]);
+        }
       }
     } catch (err) {
       this.setState({
