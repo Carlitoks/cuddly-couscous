@@ -17,6 +17,7 @@ import {
   update,
   clear
 } from "../../../Ducks/tokboxReducer";
+import CallButtonToggle from "./../../../Components/CallButtonToggle/CallButtonToggle";
 import {
   clearSettings as clearCallSettings,
   updateSettings as updateContactLinguistSettings,
@@ -310,23 +311,21 @@ class CustomerView extends Component {
             </Text>
           </View>
           <View style={styles.containerButtons}>
-            <CallButton
-              onPress={() => {
-                if (typeof this.ref !== "string") this.ref.switchCamera();
-              }}
+            <CallButtonToggle
               toggle={true}
+              active={this.props.rotate}
+              name="CustomerCamera"
               icon="camera-front"
               iconToggled="camera-rear"
+              ref={this.ref}
               opacity={0.7}
               buttonSize={65}
               iconSize={30}
             />
-            <CallButton
-              onPress={() => {
-                this.props.updateSettings({ speaker: !this.props.speaker });
-              }}
+            <CallButtonToggle
               toggle={true}
-              active={!this.props.speaker}
+              active={this.props.speaker}
+              name="CustomerSpeaker"
               icon="volume-up"
               iconToggled="volume-off"
               opacity={0.7}
@@ -343,38 +342,20 @@ class CustomerView extends Component {
               buttonSize={65}
               iconSize={30}
             />
-            <CallButton
-              onPress={() => {
-                setPermission("microphone").then(response => {
-                  if (response == "denied" || response == "restricted") {
-                    displayOpenSettingsAlert();
-                  }
-                });
-                this.props.updateSettings({
-                  mute: !this.props.mute
-                });
-              }}
+            <CallButtonToggle
               toggle={true}
               active={this.props.mute}
+              name="CustomerMute"
               icon="mic"
               iconToggled="mic-off"
               opacity={0.7}
               buttonSize={65}
               iconSize={30}
             />
-            <CallButton
-              onPress={() => {
-                setPermission("camera").then(response => {
-                  if (response == "denied" || response == "restricted") {
-                    displayOpenSettingsAlert();
-                  }
-                });
-                this.props.updateSettings({
-                  video: !this.props.video
-                });
-              }}
+            <CallButtonToggle
               toggle={true}
-              active={!this.props.video}
+              active={this.props.video}
+              name="CustomerVideo"
               icon="videocam"
               iconToggled="videocam-off"
               opacity={0.7}
@@ -403,6 +384,7 @@ class CustomerView extends Component {
 const mS = state => ({
   mute: state.callCustomerSettings.mute,
   video: state.callCustomerSettings.video,
+  rotate: state.callCustomerSettings.rotate,
   speaker: state.callCustomerSettings.speaker,
   timer: state.callCustomerSettings.timer,
   elapsedTime: state.callCustomerSettings.elapsedTime,

@@ -152,6 +152,7 @@ const initialState = {
   mute: false,
   video: false,
   speaker: true,
+  rotate: true,
   timer: null,
   elapsedTime: 0,
   invitationID: null,

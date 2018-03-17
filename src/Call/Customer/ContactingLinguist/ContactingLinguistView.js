@@ -15,7 +15,7 @@ import { Images, Colors } from "../../../Themes";
 import { connect } from "react-redux";
 import { updateSettings } from "../../../Ducks/CallCustomerSettings";
 import I18n from "../../../I18n/I18n";
-
+import CallButtonToggle from "./../../../Components/CallButtonToggle/CallButtonToggle";
 import {
   setPermission,
   displayOpenSettingsAlert
@@ -71,21 +71,21 @@ class ContactingLinguist extends Component {
             {/* Call Buttons */}
             <Row style={styles.bottomContainer}>
               <View style={styles.containerButtons}>
-                <CallButton
-                  onPress={() => {}}
+                <CallButtonToggle
                   toggle={true}
+                  active={this.props.rotate}
+                  name="CustomerCamera"
                   icon="camera-front"
                   iconToggled="camera-rear"
+                  ref={this.ref}
                   opacity={0.7}
                   buttonSize={65}
                   iconSize={30}
                 />
-                <CallButton
-                  onPress={() => {
-                    this.props.updateSettings({ speaker: !this.props.speaker });
-                  }}
+                <CallButtonToggle
                   toggle={true}
-                  active={!this.props.speaker}
+                  active={this.props.speaker}
+                  name="CustomerSpeaker"
                   icon="volume-up"
                   iconToggled="volume-off"
                   opacity={0.7}
@@ -101,38 +101,20 @@ class ContactingLinguist extends Component {
                   toggle={false}
                   icon="call-end"
                 />
-                <CallButton
-                  onPress={() => {
-                    setPermission("microphone").then(response => {
-                      if (response == "denied" || response == "restricted") {
-                        displayOpenSettingsAlert();
-                      }
-                    });
-                    this.props.updateSettings({
-                      mute: !this.props.mute
-                    });
-                  }}
+                <CallButtonToggle
                   toggle={true}
                   active={this.props.mute}
+                  name="CustomerMute"
                   icon="mic"
                   iconToggled="mic-off"
                   opacity={0.7}
                   buttonSize={65}
                   iconSize={30}
                 />
-                <CallButton
-                  onPress={() => {
-                    setPermission("camera").then(response => {
-                      if (response == "denied" || response == "restricted") {
-                        displayOpenSettingsAlert();
-                      }
-                    });
-                    this.props.updateSettings({
-                      video: !this.props.video
-                    });
-                  }}
+                <CallButtonToggle
                   toggle={true}
-                  active={!this.props.video}
+                  active={this.props.video}
+                  name="CustomerVideo"
                   icon="videocam"
                   iconToggled="videocam-off"
                   opacity={0.7}
@@ -152,6 +134,7 @@ const mS = state => ({
   mute: state.callCustomerSettings.mute,
   video: state.callCustomerSettings.video,
   speaker: state.callCustomerSettings.speaker,
+  rotate: state.callCustomerSettings.rotate,
   counterId: state.contactLinguist.counterId,
   tokboxStatus: state.tokbox.status,
   modalReconnect: state.contactLinguist.modalReconnect
