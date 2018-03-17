@@ -60,8 +60,12 @@ export class CallButton extends Component {
           onPress={() => {
             if (this.props.toggle) {
               this.toggleIcon();
+            } else {
+              if (!this.state.isActive) {
+                this.props.onPress();
+                this.setState({ ...this.state, isActive: true });
+              }
             }
-            this.props.onPress();
           }}
           buttonStyle={{
             height: this.props.buttonSize,

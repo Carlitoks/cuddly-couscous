@@ -113,7 +113,10 @@ export const AsyncCreateSession = ({
       return Sessions.GetSessionInfoLinguist(response.data.sessionID, token)
         .then(res => {
           dispatch(setSession(response.data));
-          if (!res.data.queue || !res.data.queue.pending) {
+          if (
+            (!res.data.queue || !res.data.queue.pending) &&
+            !res.data.queue.sending
+          ) {
             response.data.notLinguistAvailable = true;
           }
           return response;
