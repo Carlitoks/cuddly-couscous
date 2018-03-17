@@ -133,9 +133,10 @@ class CallConfirmationView extends Component {
                   hideChevron
                   subtitle={I18n.t("estimatedCost").toUpperCase()}
                   subtitleStyle={styles.titleStyle}
-                  rightTitle={`${I18n.t("currency")} ${
-                    this.props.estimatedPrice
-                  }`}
+                  // rightTitle={`${I18n.t("currency")} ${
+                  //   this.props.estimatedPrice
+                  // }`}
+                  rightTitle={`${I18n.t("freeTrial")}`}
                   rightTitleContainerStyle={styles.listRightTitleContainer}
                   rightTitleStyle={styles.listRightTitle}
                 />

@@ -93,6 +93,7 @@ export default (ENG = {
   forgotPassword: "Reset Your Password",
   forSignup: "For Signing Up!",
   frequently: "Frequently",
+  freeTrial: "Free Trial",
   gender: "Gender",
   genderName: "Select Your Gender",
   genderPreferenceCustomer: "I prefer customers with the following gender:",

@@ -88,6 +88,7 @@ export default (ESP = {
   forgotPassword: "Forgot your password?",
   forSignup: "for Signing Up!",
   frequently: "Frequently",
+  freeTrial: "Free Trial",
   gender: "Gender",
   genderName: "Select your Gender",
   genderPreferenceCustomer: "Gender preference for my customer",
