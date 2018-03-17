@@ -27,12 +27,14 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.primaryColor
   },
+  containerTab: {
+    flex: 1
+  },
   tabsContainerStyle: {
     marginLeft: moderateScale(33),
     marginRight: moderateScale(33),
-    width: "55%",
-    alignSelf: "center",
-    marginBottom: moderateScale(30)
+    width: 300,
+    alignSelf: "center"
   },
   scrollContainer: {
     flex: 1,

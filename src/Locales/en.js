@@ -59,6 +59,7 @@ export default (ENG = {
   customer: "Customer",
   describeAssistance: "How can we help you?",
   deviceDetails: "Device Details",
+  declined: "Declined",
   disableExtraTime: "Disable extra time",
   dining: "Restaurant",
   duration: "Duration",

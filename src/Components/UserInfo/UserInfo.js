@@ -10,10 +10,22 @@ const UserInfo = ({ text, rating }) => {
       {/* Component used for call history  */}
 
       <Text style={styles.userName}>{text}.</Text>
-      <Text style={styles.iconStyle}>
-        {rating ? <Icon name="ios-star" size={18} /> : ""}
-      </Text>
-      <Text style={styles.iconStyle}>{rating}</Text>
+      <View style={styles.containerStyle}>
+        {rating ? (
+          <StarRating
+            emptyStar={"ios-star-outline"}
+            fullStar={"ios-star"}
+            halfStar={"ios-star-half"}
+            iconSet={"Ionicons"}
+            disabled={true}
+            maxStars={5}
+            starSize={18}
+            rating={rating}
+            emptyStarColor={Colors.emptyStarColor}
+            starColor={Colors.gradientColorButton.top}
+          />
+        ) : null}
+      </View>
     </View>
   );
 };

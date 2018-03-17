@@ -73,6 +73,14 @@ class CallHistory extends Component {
     }
   };
 
+  compareCall = (accepted, responded) => {
+    if (!responded) {
+      return I18n.t("missed");
+    } else if (responded && !accepted) {
+      return I18n.t("declined");
+    }
+  };
+
   filterMissedCalls = missedCalls => {
     if (!_isEmpty(missedCalls)) {
       return missedCalls
@@ -88,7 +96,8 @@ class CallHistory extends Component {
               secondaryLangCode: item.session.secondaryLangCode,
               avatarURL: item.createdBy.avatarURL,
               createdAt: moment(item.createdAt).format("MM-DD-YYYY"),
-              chevron: true
+              chevron: true,
+              missedCall: this.compareCall(item.accepted, item.responded)
             };
           }
           return result;
@@ -153,10 +162,23 @@ class CallHistory extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          title={I18n.t("callHistory")}
           tabValues={tabValues}
-          tabSelectedIndex={this.props.selectedIndex}
-          onTabPress={this.handleIndexChange}
+          headerCenterComponent={
+            <View style={styles.containerTab}>
+              <SegmentedControlTab
+                tabsContainerStyle={styles.tabsContainerStyle}
+                values={tabValues}
+                tabStyle={styles.tabStyle}
+                tabTextStyle={styles.tabTextStyle}
+                selectedIndex={this.props.selectedIndex}
+                onTabPress={this.handleIndexChange}
+                activeTabStyle={{
+                  backgroundColor: Colors.primarySelectedTabColor
+                }}
+              />
+            </View>
+          }
+          title={I18n.t("callHistory")}
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}

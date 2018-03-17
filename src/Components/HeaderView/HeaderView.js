@@ -209,7 +209,6 @@ const HeaderView = ({
                   </Text>
                   {stars != null ? (
                     <StarRating
-                      emptyStarratingColor="gray"
                       emptyStar={"ios-star-outline"}
                       fullStar={"ios-star"}
                       halfStar={"ios-star-half"}
@@ -218,7 +217,8 @@ const HeaderView = ({
                       maxStars={5}
                       starSize={25}
                       rating={stars}
-                      starColor={Colors.primaryColor}
+                      emptyStarColor={Colors.emptyStarColor}
+                      starColor={Colors.gradientColorButton.top}
                     />
                   ) : null}
                 </View>

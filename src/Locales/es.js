@@ -56,6 +56,7 @@ export default (ESP = {
   customer: "Customer",
   describeAssistance: "What Do You Need Help With?",
   deviceDetails: "Device Details",
+  declined: "Declined",
   disableExtraTime: "Disable extra time",
   dining: "Restaurant",
   duration: "Duration",

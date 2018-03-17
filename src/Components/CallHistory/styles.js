@@ -16,6 +16,10 @@ export default (styles = StyleSheet.create({
     marginLeft: "14%"
   },
   colorStyle: {
+    color: Colors.black,
+    marginTop: 5
+  },
+  callStatus: {
     color: Colors.black
   }
 }));

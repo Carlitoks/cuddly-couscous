@@ -44,7 +44,8 @@ export class CallHistoryComponent extends Component {
                   : Images.avatar
               }
               containerStyle={styles.listItem}
-              rightTitle={item.createdAt}
+              rightTitle={item.missedCall}
+              rightTitleStyle={styles.callStatus}
               onPress={() => {
                 if (!item.chevron)
                   navigation.dispatch({

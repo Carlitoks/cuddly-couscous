@@ -99,7 +99,7 @@ class SessionInfoView extends Component {
                         </View>
                       }
                     />
-
+                    {/* Duration */}
                     <ListItem
                       containerStyle={styles.listItemContainer}
                       hideChevron
@@ -113,15 +113,19 @@ class SessionInfoView extends Component {
                     />
 
                     {/* Cost */}
-                    <ListItem
-                      containerStyle={styles.listItemContainer}
-                      hideChevron
-                      subtitle={I18n.t("cost").toUpperCase()}
-                      subtitleStyle={styles.titleStyle}
-                      rightTitle={"$ 0.00"}
-                      rightTitleContainerStyle={styles.listRightTitleContainer}
-                      rightTitleStyle={styles.listRightTitle}
-                    />
+                    {!this.props.linguistProfile ? (
+                      <ListItem
+                        containerStyle={styles.listItemContainer}
+                        hideChevron
+                        subtitle={I18n.t("cost").toUpperCase()}
+                        subtitleStyle={styles.titleStyle}
+                        rightTitle={"$ 0.00"}
+                        rightTitleContainerStyle={
+                          styles.listRightTitleContainer
+                        }
+                        rightTitleStyle={styles.listRightTitle}
+                      />
+                    ) : null}
                   </List>
                 </Grid>
               </Col>
@@ -137,7 +141,8 @@ class SessionInfoView extends Component {
 const mS = state => ({
   sessionId: state.tokbox.sessionID,
   token: state.auth.token,
-  sessionInfo: state.sessionInfo.info
+  sessionInfo: state.sessionInfo.info,
+  linguistProfile: state.userProfile.linguistProfile
 });
 
 const mD = {
