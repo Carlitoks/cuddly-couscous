@@ -312,22 +312,26 @@ class CustomerView extends Component {
           </View>
           <View style={styles.containerButtons}>
             <CallButtonToggle
+              onPress={() => {
+                if (typeof this.props.ref !== "string") {
+                  this.props.ref.switchCamera();
+                }
+              }}
               toggle={true}
               active={this.props.rotate}
               name="CustomerCamera"
               icon="camera-front"
               iconToggled="camera-rear"
-              ref={this.ref}
               opacity={0.7}
               buttonSize={65}
               iconSize={30}
             />
             <CallButtonToggle
               toggle={true}
-              active={this.props.speaker}
+              active={!this.props.speaker}
               name="CustomerSpeaker"
-              icon="volume-up"
-              iconToggled="volume-off"
+              icon="volume-off"
+              iconToggled="volume-up"
               opacity={0.7}
               buttonSize={65}
               iconSize={30}
@@ -346,8 +350,8 @@ class CustomerView extends Component {
               toggle={true}
               active={this.props.mute}
               name="CustomerMute"
-              icon="mic"
-              iconToggled="mic-off"
+              icon="mic-off"
+              iconToggled="mic"
               opacity={0.7}
               buttonSize={65}
               iconSize={30}

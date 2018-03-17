@@ -46,6 +46,7 @@ class CallButtonToggle extends Component {
   }
   componentDidMount() {
     this.changeIcon(this.props.active);
+    console.log(this.props);
   }
 
   changeIcon = value => {
@@ -80,11 +81,8 @@ class CallButtonToggle extends Component {
         this.changeIcon(this.props.speakerCustomer);
         break;
       case "CustomerCamera":
-        if (typeof this.props.ref !== "string") {
-          this.props.ref.switchCamera();
-          this.props.updateSettings({ rotate: !this.props.rotateCustomer });
-          this.changeIcon(this.props.rotateCustomer);
-        }
+        this.props.updateSettings({ rotate: !this.props.rotateCustomer });
+        this.changeIcon(this.props.rotateCustomer);
         break;
       case "LinguistVideo":
         console.log("LinguistVideo");
@@ -109,9 +107,10 @@ class CallButtonToggle extends Component {
           }}
           backgroundColor={this.props.buttonColor}
           onPress={() => {
-            if (this.props.toggle) {
-              this.toggleIcon();
+            {
+              this.props.onPress && this.props.onPress();
             }
+            this.toggleIcon();
           }}
           buttonStyle={{
             height: this.props.buttonSize,
@@ -136,6 +135,7 @@ CallButtonToggle.propTypes = {
   icon: string.isRequired,
   label: string,
   labelColor: string,
+  onPress: func,
   opacity: number,
   toggle: bool,
   iconToggled: string,
