@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint-disable-line
 import KeepAwake from "react-native-keep-awake";
 import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
+import CallButtonToggle from "../../../Components/CallButtonToggle/CallButtonToggle";
 import styles from "./styles";
 import { Images } from "../../../Themes";
 import { CallButton } from "../../../Components/CallButton/CallButton";
@@ -187,25 +188,25 @@ class LinguistView extends Component {
           </View>
         </View>
         <View style={styles.containerButtons}>
-          <CallButton
+          <CallButtonToggle
             onPress={() => {
               if (typeof this.ref !== "string") this.ref.switchCamera();
             }}
             toggle={true}
+            active={this.props.rotate}
+            name="LinguistCamera"
             icon="camera-front"
             iconToggled="camera-rear"
             opacity={0.7}
             buttonSize={65}
             iconSize={30}
           />
-          <CallButton
-            onPress={() => {
-              this.props.updateSettings({ speaker: !this.props.speaker });
-            }}
+          <CallButtonToggle
             toggle={true}
             active={!this.props.speaker}
-            icon="volume-up"
-            iconToggled="volume-off"
+            name="LinguistSpeaker"
+            icon="volume-off"
+            iconToggled="volume-up"
             opacity={0.7}
             buttonSize={65}
             iconSize={30}
@@ -225,44 +226,25 @@ class LinguistView extends Component {
             buttonSize={65}
             iconSize={30}
           />
-          <CallButton
-            onPress={() => {
-              setPermission("microphone").then(response => {
-                if (response == "denied" || response == "restricted") {
-                  displayOpenSettingsAlert();
-                }
-                this.props.updateSettings({
-                  mute: !this.props.mute
-                });
-              });
-            }}
+          <CallButtonToggle
             toggle={true}
             active={this.props.mute}
-            icon="mic"
-            iconToggled="mic-off"
+            name="LinguistMute"
+            icon="mic-off"
+            iconToggled="mic"
             opacity={0.7}
             buttonSize={65}
             iconSize={30}
           />
-          <CallButton
-            onPress={() => {
-              setPermission("camera").then(response => {
-                if (response == "denied" || response == "restricted") {
-                  displayOpenSettingsAlert();
-                }
-                this.props.updateSettings({
-                  video: !this.props.video
-                });
-              });
-            }}
+          <CallButtonToggle
             toggle={true}
-            active={!this.props.video}
+            active={this.props.video}
+            name="LinguistVideo"
             icon="videocam"
             iconToggled="videocam-off"
             opacity={0.7}
             buttonSize={65}
             iconSize={30}
-            linguistTokboxSessionToken
           />
         </View>
         <KeepAwake />
@@ -274,6 +256,7 @@ class LinguistView extends Component {
 const mS = state => ({
   mute: state.callLinguistSettings.mute,
   video: state.callLinguistSettings.video,
+  rotate: state.callLinguistSettings.rotate,
   speaker: state.callLinguistSettings.speaker,
   timer: state.callLinguistSettings.timer,
   elapsedTime: state.callLinguistSettings.elapsedTime,

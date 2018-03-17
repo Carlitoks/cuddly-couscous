@@ -313,8 +313,8 @@ class CustomerView extends Component {
           <View style={styles.containerButtons}>
             <CallButtonToggle
               onPress={() => {
-                if (typeof this.props.ref !== "string") {
-                  this.props.ref.switchCamera();
+                if (typeof this.ref !== "string") {
+                  this.ref.switchCamera();
                 }
               }}
               toggle={true}

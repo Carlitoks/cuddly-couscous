@@ -11,7 +11,7 @@ import {
 
 import {
   clearSettings as clearCallSettings,
-  updateSettings as updateContactLinguistSettings,
+  updateSettings as updateLinguistSettings,
   resetCounter,
   incrementCounter
 } from "../../Ducks/CallLinguistSettings.js";
@@ -85,13 +85,40 @@ class CallButtonToggle extends Component {
         this.changeIcon(this.props.rotateCustomer);
         break;
       case "LinguistVideo":
-        console.log("LinguistVideo");
+        setPermission("camera").then(response => {
+          if (response == "denied" || response == "restricted") {
+            displayOpenSettingsAlert();
+          } else {
+            this.props.updateLinguistSettings({
+              video: !this.props.videoLinguist
+            });
+            this.changeIcon(this.props.videoLinguist);
+          }
+        });
         break;
       case "LinguistSpeaker":
-        console.log("LinguistSpeaker");
+        this.props.updateLinguistSettings({
+          speaker: !this.props.speakerLinguist
+        });
+        this.changeIcon(this.props.speakerLinguist);
         break;
-      default:
-        console.log("Nothing");
+      case "LinguistMute":
+        setPermission("microphone").then(response => {
+          if (response == "denied" || response == "restricted") {
+            displayOpenSettingsAlert();
+          } else {
+            this.props.updateLinguistSettings({
+              mute: !this.props.muteLinguist
+            });
+            this.changeIcon(this.props.muteLinguist);
+          }
+        });
+        break;
+      case "LinguistCamera":
+        this.props.updateLinguistSettings({
+          rotate: !this.props.rotateLinguist
+        });
+        this.changeIcon(this.props.rotateLinguist);
         break;
     }
   };
@@ -152,12 +179,13 @@ const mS = state => ({
   rotateCustomer: state.callCustomerSettings.rotate,
   muteLinguist: state.callLinguistSettings.mute,
   videoLinguist: state.callLinguistSettings.video,
-  speakerLinguist: state.callLinguistSettings.speaker
+  speakerLinguist: state.callLinguistSettings.speaker,
+  rotateLinguist: state.callLinguistSettings.rotate
 });
 
 const mD = {
   updateSettings,
-  updateContactLinguistSettings
+  updateLinguistSettings
 };
 
 export default connect(mS, mD)(CallButtonToggle);
