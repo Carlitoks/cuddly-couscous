@@ -49,7 +49,8 @@ export default StyleSheet.create({
   selectedText: {
     fontFamily: Fonts.primaryBoldFont,
     fontWeight: "bold",
-    color: Colors.gradientColorButton.top
+    backgroundColor: Colors.gradientColor.bottom,
+    color: Colors.primaryColor
   },
   belowSelected: {
     borderBottomColor: Colors.gradientColorButton.top
