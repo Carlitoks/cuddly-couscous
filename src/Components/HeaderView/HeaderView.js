@@ -92,7 +92,7 @@ const HeaderView = ({
       <View>
         {/* Header */}
         <View
-          style={{ height: !!avatarSource || !!switchOnChange ? null : 165 }}
+          style={{ height: !!avatarSource || !!switchOnChange ? null : 145 }}
         >
           {/* Linear Gradient */}
           <LinearGradient
