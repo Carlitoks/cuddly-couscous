@@ -96,6 +96,8 @@ export default (ENG = {
   frequently: "Frequently",
   freeTrial: "Free Trial",
   gender: "Gender",
+  genderNotice:
+    "When being matched, customers and linguists can select a preferred gender",
   genderName: "Select Your Gender",
   genderPreferenceCustomer: "I prefer customers with the following gender:",
   genderPreferenceLinguist: "I prefer a Linguist with the following gender:",

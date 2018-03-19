@@ -43,5 +43,18 @@ export default StyleSheet.create({
   genderCheck: {
     height: moderateScale(30),
     width: moderateScale(30)
+  },
+  mainContainterText: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+    marginLeft: 18,
+    marginRight: 18
+  },
+  textCenter: {
+    textAlign: "center",
+    fontSize: 14
   }
 });

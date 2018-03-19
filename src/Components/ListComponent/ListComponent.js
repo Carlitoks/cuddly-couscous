@@ -27,6 +27,7 @@ const height = Dimensions.get("window").height;
     scrollable: Boolean to make list scroll,
     customContainerStyle: Custom styles for list container,
     leftText: Boolean to align text to the left
+    noFlex: when provided, the list will not display within a flex container
  *
  * @export
  * @class ListComponent
@@ -185,7 +186,12 @@ class ListComponent extends Component {
 
   render() {
     return (
-      <View style={[styles.container, this.props.customContainerStyle]}>
+      <View
+        style={[
+          this.props.noFlex ? null : styles.container,
+          this.props.customContainerStyle
+        ]}
+      >
         <View style={!!this.props.triangle ? styles.triangle : null} />
 
         <List

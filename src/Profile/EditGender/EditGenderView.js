@@ -128,7 +128,11 @@ class EditGenderView extends Component {
                 this.changeSelected(index);
               }}
               leftText
+              noFlex
             />
+            <View style={styles.mainContainterText}>
+              <Text style={styles.textCenter}>{I18n.t("genderNotice")}</Text>
+            </View>
           </ScrollView>
         </HeaderView>
         {/* Save Button */}

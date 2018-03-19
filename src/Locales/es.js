@@ -91,6 +91,8 @@ export default (ESP = {
   frequently: "Frequently",
   freeTrial: "Free Trial",
   gender: "Gender",
+  genderNotice:
+    "When being matched, customers and linguists can select a preferred gender",
   genderName: "Select your Gender",
   genderPreferenceCustomer: "Gender preference for my customer",
   genderPreferenceLinguist: "Gender preference for my linguist",
