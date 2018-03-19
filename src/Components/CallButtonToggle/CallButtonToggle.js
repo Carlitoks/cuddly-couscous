@@ -46,7 +46,6 @@ class CallButtonToggle extends Component {
   }
   componentDidMount() {
     this.changeIcon(this.props.active);
-    console.log(this.props);
   }
 
   changeIcon = value => {
