@@ -98,11 +98,22 @@ class CallConfirmationView extends Component {
                 {/* Languages */}
                 <ListItem
                   containerStyle={styles.listItemContainer}
-                  hideChevron
                   title={I18n.t("languages").toUpperCase()}
                   titleStyle={styles.titleStyle}
                   subtitle={this.props.toLanguage}
                   subtitleStyle={styles.listSubtitle}
+                  onPress={() =>
+                    navigation.dispatch({
+                      type: "TextView",
+                      params: {
+                        title: I18n.t("languages"),
+                        texts: [
+                          I18n.t("languagesStatic1"),
+                          I18n.t("languagesStatic2")
+                        ]
+                      }
+                    })
+                  }
                 />
                 {/* Video Mode */}
                 <ListItem
@@ -181,7 +192,9 @@ class CallConfirmationView extends Component {
                   this.props.clearSettings();
                   this.props.clearLinguistReducer();
                   this.props.cleanSelected();
-                  navigation.dispatch({ type: "Home" });
+                  navigation.dispatch({
+                    type: "Home"
+                  });
                 }}
                 title={I18n.t("cancel")}
                 negative

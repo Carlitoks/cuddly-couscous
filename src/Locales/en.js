@@ -131,6 +131,10 @@ export default (ENG = {
   LanguagePairs: "Language Pairs", // not use
   languages: "Languages",
   languageSettings: "Language Settings",
+  languagesStatic1:
+    "During the free trial period, Jeenie supports only Chinese (Mandarin) and English.",
+  languagesStatic2:
+    "Future versions of Jeenie will support all languages, and you will be able to select them here.",
   lastname: "Last name",
   legal: "Legal",
   linguist: "Linguist",
