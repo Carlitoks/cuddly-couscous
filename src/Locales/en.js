@@ -112,6 +112,8 @@ export default (ENG = {
   home: "Home",
   hotel: "Hotel",
   howLongNeedAssist: "How long will you need assistance?",
+  iAgree: "I agree to the ",
+  iAm18: "I am 18 years of age or older",
   igniteGenerated: "Ignite Generate Screens",
   incomingCall: "Incoming video call...",
   iNeedAssistanceWith: "(Optional) I need assistance with...",

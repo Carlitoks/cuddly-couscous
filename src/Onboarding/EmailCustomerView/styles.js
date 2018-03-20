@@ -84,5 +84,11 @@ export default StyleSheet.create({
   textCenter: {
     textAlign: "center",
     fontSize: 14
+  },
+  marginLeft10: {
+    marginLeft: 10
+  },
+  borderTransparent: {
+    borderColor: "transparent"
   }
 });

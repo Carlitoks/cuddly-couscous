@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/RegistrationCustomerReducer";
 import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
-import { registerDevice } from "../../Ducks/AuthReducer";
+import { registerDevice, logInAsync } from "../../Ducks/AuthReducer";
 
 import {
   View,
@@ -15,12 +15,13 @@ import {
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormInput, Header } from "react-native-elements";
+import { Button, FormInput, Header, CheckBox } from "react-native-elements";
 import { topIOS } from "../../Util/Devices";
 import _capitalize from "lodash/capitalize";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
+import InputPassword from "../../Components/InputPassword/InputPassword";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
@@ -56,6 +57,20 @@ class EmailCustomerView extends Component {
       valid = false;
     }
 
+    if (!this.props.password) {
+      updates = {
+        ...updates,
+        passwordErrorMessage: I18n.t("emptyPassword")
+      };
+      valid = false;
+    } else if (this.props.password.length < 8) {
+      updates = {
+        ...updates,
+        passwordErrorMessage: I18n.t("passwordLength")
+      };
+      valid = false;
+    }
+
     updates = {
       ...updates,
       formHasErrors: !valid
@@ -75,23 +90,33 @@ class EmailCustomerView extends Component {
     const { registerDevice, navigation } = this.props;
 
     if (this.validateForm()) {
+      const {
+        email,
+        password,
+        deviceToken,
+        asyncCreateUser,
+        logInAsync
+      } = this.props;
+
       registerDevice()
         .then(response => {
           if (response.type === "networkErrors/error") {
             throw response;
           }
 
-          const { email, deviceToken, asyncCreateUser } = this.props;
-          return asyncCreateUser({ email }, deviceToken);
+          const { deviceToken } = this.props;
+
+          return asyncCreateUser({ email, password }, deviceToken);
         })
         .then(response => {
           if (response.type !== "networkErrors/error") {
-            navigation.dispatch({
-              type: "PasswordCustomerView"
-            });
+            return logInAsync(email, password);
           } else {
             throw response;
           }
+        })
+        .then(response => {
+          navigation.dispatch({ type: "NameCustomerView" });
         })
         .catch(err => {
           if (this.getResponseError(err) === "user already exists") {
@@ -109,9 +134,34 @@ class EmailCustomerView extends Component {
     }
   }
 
+  staticLink = ({ title, uri }) => {
+    return (
+      <Text
+        style={[styles.links, styles.textCenter]}
+        onPress={() => {
+          Keyboard.dismiss();
+          this.props.navigation.dispatch({
+            type: "StaticView",
+            params: {
+              uri,
+              title
+            }
+          });
+        }}
+      >
+        {title}
+      </Text>
+    );
+  };
+
   isDisabled() {
     const patt = new RegExp(EMAIL_REGEX);
-    return !patt.test(this.props.email);
+    return (
+      !patt.test(this.props.email) ||
+      this.props.password.length < 8 ||
+      !this.props.termsCheck ||
+      !this.props.eighteenCheck
+    );
   }
 
   render() {
@@ -134,7 +184,6 @@ class EmailCustomerView extends Component {
                 <View>
                   {/* Email */}
                   <InputRegular
-                    containerStyle={styles.containerInput}
                     placeholder={I18n.t("linguistEmail")}
                     autoCorrect={false}
                     onChangeText={text =>
@@ -145,54 +194,66 @@ class EmailCustomerView extends Component {
                     maxLength={64}
                     autoFocus={true}
                   />
+                  <InputPassword
+                    inputStyle={styles.formInput}
+                    placeholder={I18n.t("linguistPassword")}
+                    placeholderTextColor={Colors.placeholderColor}
+                    onChangeText={text =>
+                      this.props.updateForm({
+                        password: text
+                      })
+                    }
+                    autoCorrect={false}
+                    maxLength={20}
+                    value={this.props.password}
+                    sec
+                  />
                   <Text style={styles.formText}>
                     {I18n.t("checkYourEmailOnBoarding")}
                   </Text>
-                  <View style={styles.mainContainterText}>
-                    <Text style={styles.textCenter}>
-                      {I18n.t("emailCustomerText")}
-                    </Text>
-                    <Text
-                      style={[styles.links, styles.textCenter]}
-                      onPress={() => {
-                        Keyboard.dismiss();
-                        this.props.navigation.dispatch({
-                          type: "StaticView",
-                          params: {
-                            uri: TermsConditionsURI,
-                            title: I18n.t("termsOfUse")
-                          }
-                        });
-                      }}
-                    >
-                      {I18n.t("termsOfUse")}
-                    </Text>
-                  </View>
-                  <View style={styles.mainContainterText}>
-                    <Text style={styles.textCenter}> {I18n.t("and")} </Text>
-                    <Text
-                      style={[styles.links, styles.textCenter]}
-                      onPress={() => {
-                        Keyboard.dismiss();
-                        this.props.navigation.dispatch({
-                          type: "StaticView",
-                          params: {
-                            uri: PrivacyPolicyURI,
-                            title: I18n.t("privacyPolicy")
-                          }
-                        });
-                      }}
-                    >
-                      {I18n.t("privacyPolicy")}
-                    </Text>
-                    <Text style={styles.textCenter}>
-                      {", "}
-                      {I18n.t("confirmEighteen1")}
-                    </Text>
-                    <Text style={styles.textCenter}>
-                      {I18n.t("confirmEighteen2")}
-                    </Text>
-                  </View>
+
+                  <CheckBox
+                    title={
+                      <View style={styles.marginLeft10}>
+                        <Text>
+                          {I18n.t("iAgree")}
+                          {this.staticLink({
+                            title: I18n.t("termsOfUse"),
+                            uri: TermsConditionsURI
+                          })}
+
+                          {" & "}
+
+                          {this.staticLink({
+                            title: I18n.t("privacyPolicy"),
+                            uri: PrivacyPolicyURI
+                          })}
+                        </Text>
+                      </View>
+                    }
+                    checked={this.props.termsCheck}
+                    onPress={() => {
+                      this.props.updateForm({
+                        termsCheck: !this.props.termsCheck
+                      });
+                    }}
+                    containerStyle={styles.borderTransparent}
+                  />
+
+                  <CheckBox
+                    title={
+                      <View style={styles.marginLeft10}>
+                        <Text>{I18n.t("iAm18")}</Text>
+                      </View>
+                    }
+                    checked={this.props.eighteenCheck}
+                    onPress={() => {
+                      this.props.updateForm({
+                        eighteenCheck: !this.props.eighteenCheck
+                      });
+                    }}
+                    containerStyle={styles.borderTransparent}
+                  />
                 </View>
 
                 <View style={styles.mainContainterText}>
@@ -233,6 +294,9 @@ class EmailCustomerView extends Component {
 
 const mS = state => ({
   email: state.registrationCustomer.email,
+  termsCheck: state.registrationCustomer.termsCheck,
+  eighteenCheck: state.registrationCustomer.eighteenCheck,
+  password: state.registrationCustomer.password,
   formHasErrors: state.registrationCustomer.formHasErrors,
   deviceToken: state.registrationCustomer.deviceToken
 });
@@ -241,7 +305,8 @@ const mD = {
   updateForm,
   clearForm,
   asyncCreateUser,
-  registerDevice
+  registerDevice,
+  logInAsync
 };
 
 export default connect(mS, mD)(EmailCustomerView);

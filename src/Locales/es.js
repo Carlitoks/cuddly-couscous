@@ -107,6 +107,8 @@ export default (ESP = {
   home: "Home",
   hotel: "Hotel",
   howLongNeedHelp: "How Long Will You Need Assistance?",
+  iAgreeTerms: "I agree to the ",
+  iAm18: "I am 18 years of age or older",
   igniteGenerated: "Ignite Generate Screens",
   incomingCall: "Incoming video call...",
   intermediate: "Intermediate",

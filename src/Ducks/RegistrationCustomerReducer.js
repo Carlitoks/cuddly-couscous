@@ -87,7 +87,9 @@ const initialState = {
   passwordErrorMessage: "",
   deviceToken: "",
   performingRequest: false,
-  id: null
+  id: null,
+  termsCheck: false,
+  eighteenCheck: false
 };
 
 const registrationCustomerReducer = (state = initialState, action = {}) => {
