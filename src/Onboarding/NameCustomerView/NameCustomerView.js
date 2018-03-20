@@ -134,9 +134,9 @@ class NameCustomerView extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          headerLeftComponent={
-            <GoBackButton navigation={this.props.navigation} />
-          }
+          // headerLeftComponent={
+          //   <GoBackButton navigation={this.props.navigation} />
+          // }
           title={
             preferredName
               ? `${preferredName} ${lastname}`
