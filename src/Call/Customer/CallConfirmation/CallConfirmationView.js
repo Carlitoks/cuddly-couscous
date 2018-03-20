@@ -130,7 +130,6 @@ class CallConfirmationView extends Component {
                 {/* Estimated Cost */}
                 <ListItem
                   containerStyle={styles.listItemContainer}
-                  hideChevron
                   subtitle={I18n.t("estimatedCost").toUpperCase()}
                   subtitleStyle={styles.titleStyle}
                   // rightTitle={`${I18n.t("currency")} ${
@@ -139,6 +138,18 @@ class CallConfirmationView extends Component {
                   rightTitle={`${I18n.t("freeTrial")}`}
                   rightTitleContainerStyle={styles.listRightTitleContainer}
                   rightTitleStyle={styles.listRightTitle}
+                  onPress={() =>
+                    navigation.dispatch({
+                      type: "TextView",
+                      params: {
+                        title: I18n.t("estimatedCost"),
+                        texts: [
+                          I18n.t("estimatedCostStatic1"),
+                          I18n.t("estimatedCostStatic2")
+                        ]
+                      }
+                    })
+                  }
                 />
               </List>
             </ScrollView>

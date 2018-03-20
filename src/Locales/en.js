@@ -81,6 +81,10 @@ export default (ENG = {
     "Invalid Characters (No numbers or special characters a!@#$&*()+={];, s)",
   estimatedCost: "Estimated cost",
   estimatedDuration: "Estimated Duration",
+  estimatedCostStatic1:
+    "Calls are preset to 8 minutes during the trial period.",
+  estimatedCostStatic2:
+    "If you need more time, you can add it during the call.",
   expertise_A1:
     "There are so many different hairstyles for different people and different",
   expertise_B1:

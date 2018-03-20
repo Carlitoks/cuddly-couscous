@@ -61,7 +61,7 @@ import CallSettings from "../CallSettings/CallSettings";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
 import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
 import StaticView from "../StaticView/StaticView";
-
+import TextView from "../Components/TextView/TextView";
 import CustomScenarioView from "../Home/CustomScenario/CustomScenarioView";
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import PromotionView from "../Containers/PromoCode/PromotionView";
@@ -300,6 +300,9 @@ const Navigation = StackNavigator(
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
       }
+    },
+    TextView: {
+      screen: TextView
     },
     NativeLanguageView: {
       screen: NativeLanguageView,
