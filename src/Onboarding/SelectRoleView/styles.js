@@ -61,7 +61,7 @@ export default StyleSheet.create({
   textBecome: {
     fontFamily: Fonts.primaryBoldFont,
     color: Colors.fontColor,
-    fontSize: 15,
+    fontSize: moderateScale(21),
     marginTop: moderateScale(15),
     textDecorationLine: "underline",
     backgroundColor: "rgba(255, 255, 255, 0)"
@@ -93,6 +93,7 @@ export default StyleSheet.create({
   },
   textLogin: {
     fontFamily: Fonts.primaryFont,
+    fontSize: moderateScale(21),
     color: Colors.fontColor,
     marginTop: moderateScale(15),
     textDecorationLine: "underline",
