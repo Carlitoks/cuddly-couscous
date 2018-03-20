@@ -139,10 +139,10 @@ class NameCustomerView extends Component {
           // }
           title={
             preferredName
-              ? `${preferredName} ${lastname}`
+              ? `${preferredName}`
               : mainTitle || lastname
                 ? `${mainTitle} ${lastname}`
-                : I18n.t("mainTitle")
+                : I18n.t("helpUsGet")
           }
         >
           <ScrollView

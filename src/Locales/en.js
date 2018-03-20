@@ -107,6 +107,7 @@ export default (ENG = {
   help: "Help",
   helpPeople:
     "Which cities do you know well enough to help people get around in?",
+  helpUsGet: "Help Us Get to Know You",
   hi: "Hi",
   holdToScan: "Hold the device's camera up to the QR code",
   home: "Home",

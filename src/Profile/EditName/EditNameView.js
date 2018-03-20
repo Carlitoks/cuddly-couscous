@@ -143,7 +143,7 @@ class EditNameView extends Component {
           }
           title={
             formPreferredName
-              ? `${formPreferredName} ${formLastName}`
+              ? `${formPreferredName}`
               : formFirstName || formLastName
                 ? `${formFirstName} ${formLastName}`
                 : I18n.t("mainTitle")
