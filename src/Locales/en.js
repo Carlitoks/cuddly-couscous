@@ -164,7 +164,7 @@ export default (ENG = {
   name: "Name",
   nameLinguistText: "Others will see your name as ",
   nativeLanguageTitle: "Native Language",
-  nativeLanguage: "Select Your Native Language",
+  nativeLanguage: "Select Native Language",
   needsAddress: "Were your needs addressed?",
   newaccount: "Create new account?",
   next: "Next",
