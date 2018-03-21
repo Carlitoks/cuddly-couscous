@@ -42,6 +42,7 @@ export default StyleSheet.create({
   loading: {
     alignSelf: "center",
     justifyContent: "center",
-    flex: 1
+    flex: 1,
+    backgroundColor: "transparent"
   }
 });
