@@ -104,6 +104,24 @@ const styles = StyleSheet.create({
   selectedOptionMenu: {
     color: "#6B8FE0",
     marginLeft: 20
+  },
+  scroll: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column"
+  },
+  container: {
+    flex: 1
+  },
+  version: {
+    bottom: 0,
+    position: "absolute",
+    alignSelf: "center",
+    marginBottom: 20
+  },
+  textVersion: {
+    color: Colors.gray,
+    marginTop: 20
   }
 });
 

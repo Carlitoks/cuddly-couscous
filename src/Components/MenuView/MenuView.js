@@ -25,7 +25,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { Button, Badge, Avatar } from "react-native-elements";
 import StarRating from "react-native-star-rating";
 import { isCurrentView } from "../../Util/Helpers";
-
+import DeviceInfo from "react-native-device-info";
 import { Colors, Images } from "../../Themes";
 import styles from "./styles";
 import { HelpURI } from "../../Config/StaticViewsURIS";
@@ -57,100 +57,103 @@ class MenuView extends Component {
 
   render() {
     const { navigation } = this.props;
-
+    const Version = DeviceInfo.getVersion();
     return (
-      <ScrollView alwaysBounceVertical={false}>
-        <TopViewIOS />
-        <TouchableOpacity
-          onPress={() => {
-            navigation.dispatch({ type: "UserProfileView" });
-          }}
-        >
-          <View>
-            <Avatar
-              containerStyle={{ alignSelf: "center", marginTop: 30 }}
-              avatarStyle={styles.center}
-              rounded
-              xlarge
-              key={this.props.avatarBase64}
-              source={
-                this.props.avatarURL
-                  ? {
-                      uri: `${
-                        this.props.avatarURL
-                      }?time=${new Date().getUTCMilliseconds()}`
-                    }
-                  : Images.avatar
-              }
-              activeOpacity={0.7}
-            />
-            <Text style={styles.textName}>
-              {this.props.firstName} {this.props.lastName}
-            </Text>
-            <Text style={styles.textEditProfile}>{I18n.t("editProfile")}</Text>
-          </View>
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <ScrollView alwaysBounceVertical={false} style={styles.scroll}>
+          <TopViewIOS />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.dispatch({ type: "UserProfileView" });
+            }}
+          >
+            <View>
+              <Avatar
+                containerStyle={{ alignSelf: "center", marginTop: 30 }}
+                avatarStyle={styles.center}
+                rounded
+                xlarge
+                key={this.props.avatarBase64}
+                source={
+                  this.props.avatarURL
+                    ? {
+                        uri: `${
+                          this.props.avatarURL
+                        }?time=${new Date().getUTCMilliseconds()}`
+                      }
+                    : Images.avatar
+                }
+                activeOpacity={0.7}
+              />
+              <Text style={styles.textName}>
+                {this.props.firstName} {this.props.lastName}
+              </Text>
+              <Text style={styles.textEditProfile}>
+                {I18n.t("editProfile")}
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-        {/* Home */}
-        <Icon.Button
-          name="home"
-          size={25}
-          backgroundColor={
-            isCurrentView(navigation, "Home")
-              ? Colors.selectedBackground
-              : Colors.background
-          }
-          iconStyle={
-            isCurrentView(navigation, "Home")
-              ? styles.selectedOptionMenu
-              : styles.optionMenu
-          }
-          onPress={() => this.checkCurrentPage(navigation, "Home")}
-        >
-          <Text style={styles.colorText}>{I18n.t("home")}</Text>
-        </Icon.Button>
-
-        {/* History */}
-        <Icon.Button
-          name="schedule"
-          size={25}
-          backgroundColor={
-            isCurrentView(navigation, "CallHistory")
-              ? Colors.selectedBackground
-              : Colors.background
-          }
-          iconStyle={
-            isCurrentView(navigation, "CallHistory")
-              ? styles.selectedOptionMenu
-              : styles.optionMenu
-          }
-          onPress={() => this.checkCurrentPage(navigation, "CallHistory")}
-        >
-          <Text style={styles.colorText}>{I18n.t("callHistory")}</Text>
-        </Icon.Button>
-
-        {this.isACustomer() && (
+          {/* Home */}
           <Icon.Button
-            name="receipt"
+            name="home"
             size={25}
             backgroundColor={
-              isCurrentView(navigation, "PromoCodeView")
+              isCurrentView(navigation, "Home")
                 ? Colors.selectedBackground
                 : Colors.background
             }
             iconStyle={
-              isCurrentView(navigation, "PromoCodeView")
+              isCurrentView(navigation, "Home")
                 ? styles.selectedOptionMenu
                 : styles.optionMenu
             }
-            onPress={() => this.checkCurrentPage(navigation, "PromoCodeView")}
+            onPress={() => this.checkCurrentPage(navigation, "Home")}
           >
-            <Text style={styles.colorText}>{I18n.t("promoCodeTitle")}</Text>
+            <Text style={styles.colorText}>{I18n.t("home")}</Text>
           </Icon.Button>
-        )}
 
-        {/* Help */}
-        {/* <Icon.Button
+          {/* History */}
+          <Icon.Button
+            name="schedule"
+            size={25}
+            backgroundColor={
+              isCurrentView(navigation, "CallHistory")
+                ? Colors.selectedBackground
+                : Colors.background
+            }
+            iconStyle={
+              isCurrentView(navigation, "CallHistory")
+                ? styles.selectedOptionMenu
+                : styles.optionMenu
+            }
+            onPress={() => this.checkCurrentPage(navigation, "CallHistory")}
+          >
+            <Text style={styles.colorText}>{I18n.t("callHistory")}</Text>
+          </Icon.Button>
+
+          {this.isACustomer() && (
+            <Icon.Button
+              name="receipt"
+              size={25}
+              backgroundColor={
+                isCurrentView(navigation, "PromoCodeView")
+                  ? Colors.selectedBackground
+                  : Colors.background
+              }
+              iconStyle={
+                isCurrentView(navigation, "PromoCodeView")
+                  ? styles.selectedOptionMenu
+                  : styles.optionMenu
+              }
+              onPress={() => this.checkCurrentPage(navigation, "PromoCodeView")}
+            >
+              <Text style={styles.colorText}>{I18n.t("promoCodeTitle")}</Text>
+            </Icon.Button>
+          )}
+
+          {/* Help */}
+          {/* <Icon.Button
           name="help"
           size={25}
           backgroundColor={
@@ -176,50 +179,54 @@ class MenuView extends Component {
           <Text style={styles.colorText}>{I18n.t("help")}</Text>
         </Icon.Button> */}
 
-        {/* Logout */}
-        <Icon.Button
-          name="exit-to-app"
-          size={25}
-          backgroundColor={Colors.background}
-          iconStyle={styles.optionMenu}
-          onPress={() => {
-            Alert.alert(I18n.t("logOut"), I18n.t("logOutConfirmation"), [
-              {
-                text: I18n.t("no")
-              },
-              {
-                text: I18n.t("yes"),
-                onPress: () => this.props.logOutAsync()
-              }
-            ]);
-          }}
-        >
-          <Text style={styles.colorText}>{I18n.t("logOut")}</Text>
-        </Icon.Button>
-
-        {/* Become a linguist */}
-        {this.isACustomer() && (
+          {/* Logout */}
           <Icon.Button
-            name="forum"
+            name="exit-to-app"
             size={25}
-            backgroundColor={
-              isCurrentView(navigation, "Help")
-                ? Colors.selectedBackground
-                : Colors.background
-            }
-            iconStyle={
-              isCurrentView(navigation, "Help")
-                ? styles.selectedOptionMenu
-                : styles.optionMenu
-            }
-            onPress={() => Linking.openURL("https://signup.gps.network")}
+            backgroundColor={Colors.background}
+            iconStyle={styles.optionMenu}
+            onPress={() => {
+              Alert.alert(I18n.t("logOut"), I18n.t("logOutConfirmation"), [
+                {
+                  text: I18n.t("no")
+                },
+                {
+                  text: I18n.t("yes"),
+                  onPress: () => this.props.logOutAsync()
+                }
+              ]);
+            }}
           >
-            <Text style={styles.colorText} icon>
-              {I18n.t("becomeLinguist")}
-            </Text>
+            <Text style={styles.colorText}>{I18n.t("logOut")}</Text>
           </Icon.Button>
-        )}
-      </ScrollView>
+
+          {/* Become a linguist */}
+          {this.isACustomer() && (
+            <Icon.Button
+              name="forum"
+              size={25}
+              backgroundColor={
+                isCurrentView(navigation, "Help")
+                  ? Colors.selectedBackground
+                  : Colors.background
+              }
+              iconStyle={
+                isCurrentView(navigation, "Help")
+                  ? styles.selectedOptionMenu
+                  : styles.optionMenu
+              }
+              onPress={() => Linking.openURL("https://signup.gps.network")}
+            >
+              <Text style={styles.colorText} icon>
+                {I18n.t("becomeLinguist")}
+              </Text>
+            </Icon.Button>
+          )}
+        </ScrollView>
+        <View style={styles.version}>
+          <Text style={styles.textVersion}>version {Version}</Text>
+        </View>
+      </View>
     );
   }
 }
