@@ -60,7 +60,8 @@ const colors = {
   greyBackground: "#f7f7f7",
   gray: "gray",
   shadowColor: "#585858",
-  lightGrey: "#D9D9E6"
+  lightGrey: "#D9D9E6",
+  green: "#228B22"
 };
 
 export default colors;

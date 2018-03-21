@@ -15,7 +15,6 @@ export default StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-
   mainTitle: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: 24,
@@ -24,67 +23,12 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     backgroundColor: "transparent"
   },
-  textContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignSelf: "center"
-  },
-  appName: {
-    fontFamily: Fonts.titleBoldFont,
-    fontSize: 60,
-    textAlign: "center",
-    color: Colors.primaryColor,
-    backgroundColor: "transparent"
-  },
-  secondTitle: {
-    marginTop: moderateScale(80),
-    fontFamily: Fonts.primaryLightFont,
-    fontSize: 24,
-    textAlign: "center",
-    marginBottom: moderateScale(5),
-    color: Colors.primaryColor,
-    backgroundColor: "transparent"
-  },
-  subtitle: {
-    fontFamily: Fonts.primaryLightFont,
-    fontSize: 24,
-    textAlign: "center",
-    marginBottom: moderateScale(5),
-    color: Colors.primaryColor,
-    backgroundColor: "transparent"
-  },
-  firstLetter: {
-    fontSize: 70,
-    backgroundColor: "transparent"
-  },
   mainContainer: {
-    flex: 1
-  },
-  waves: {
-    position: "absolute",
-    bottom: 0,
-    alignSelf: "flex-end"
-  },
-  wavesOrange: {
-    position: "absolute",
-    top: 0,
-    alignSelf: "flex-end"
-  },
-  getStarted: {
-    justifyContent: "center",
-    alignSelf: "center",
-    backgroundColor: "transparent"
-  },
-  blueContainer: {
-    flex: 4
-  },
-  orangeContainer: {
     flex: 1
   },
   logo: {
     borderColor: Colors.primaryAltFontColor,
-    marginTop: verticalScale(30),
-    marginBottom: verticalScale(30),
+    marginTop: verticalScale(120),
     position: "relative"
   },
   logoImage: {
@@ -94,5 +38,10 @@ export default StyleSheet.create({
   },
   center: {
     alignSelf: "center"
+  },
+  loading: {
+    alignSelf: "center",
+    justifyContent: "center",
+    flex: 1
   }
 });

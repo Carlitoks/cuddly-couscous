@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 
-import { View, Text, ScrollView, Dimensions, Image } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Dimensions,
+  Image,
+  ActivityIndicator
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
@@ -14,55 +22,54 @@ import { Colors, Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
 class WelcomeCustomerView extends Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true
+    };
+  }
+
+  componentDidMount() {
     const navigation = this.props.navigation;
+    setTimeout(() => {
+      this.setState({ loading: false });
+      setTimeout(() => {
+        navigation.dispatch({ type: "Home" });
+      }, 2000);
+    }, 2000);
+  }
+  render() {
     const { width, height } = Dimensions.get("window");
     return (
       <ViewWrapper style={styles.scrollContainer}>
         {/* SVG White Waves */}
         <View style={styles.mainContainer}>
-          <View style={styles.blueContainer}>
-            <LinearGradient
-              colors={[
-                Colors.gradientColor.top,
-                Colors.gradientColor.middle,
-                Colors.gradientColor.bottom
-              ]}
-              style={styles.linearGradient}
-            />
-            <View style={styles.textContainer}>
-              <Text style={styles.mainTitle}>{I18n.t("welcomeTo")}</Text>
-              {/* Jeenie Logo */}
-              <View style={[styles.logo, styles.center]} source={Images.logo}>
-                <Image source={Images.jeenieLogo} style={styles.logoImage} />
-              </View>
-              <Text style={styles.mainTitle}>{I18n.t("thankYou")}</Text>
-              <Text style={styles.subtitle}>{I18n.t("forSignup")}</Text>
-            </View>
-            <View style={styles.waves}>
-              <Waves
-                width={width}
-                height={width * 80 / 750}
-                viewBox={"0 0 750 80"}
-              />
-            </View>
+          <LinearGradient
+            colors={[
+              Colors.gradientColor.top,
+              Colors.gradientColor.middle,
+              Colors.gradientColor.bottom
+            ]}
+            style={styles.linearGradient}
+          />
+          {/* Jeenie Logo */}
+          <View style={[styles.logo, styles.center]} source={Images.logo}>
+            <Image source={Images.jeenieLogo} style={styles.logoImage} />
           </View>
-          <View style={styles.orangeContainer}>
-            <View style={styles.wavesOrange}>
-              <WavesOrange
-                width={width}
-                height={width * 71 / 750}
-                viewBox={"0 0 750 71"}
+          <View style={styles.loading}>
+            {this.state.loading ? (
+              <ActivityIndicator
+                size="large"
+                color={Colors.gradientColorButton.top}
               />
-            </View>
-            <BottomButton
-              long
-              fill
-              customStyle={[styles.getStarted, { marginTop: width * 71 / 750 }]}
-              relative
-              title={I18n.t("getLanguageHelp").toUpperCase()}
-              onPress={() => navigation.dispatch({ type: "Home" })}
-            />
+            ) : (
+              <Icon
+                name="check-circle"
+                size={140}
+                color={Colors.green}
+                iconStyle={styles.icon}
+              />
+            )}
           </View>
         </View>
       </ViewWrapper>
