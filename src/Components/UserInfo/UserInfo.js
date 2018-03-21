@@ -24,7 +24,7 @@ const UserInfo = ({ text, rating }) => {
             starSize={18}
             rating={rating}
             emptyStarColor={Colors.emptyStarColor}
-            starColor={Colors.gradientColorButton.top}
+            fullStarColor={Colors.gradientColorButton.top}
           />
         ) : null}
       </View>

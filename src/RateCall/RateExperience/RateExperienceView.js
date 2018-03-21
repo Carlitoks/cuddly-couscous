@@ -330,7 +330,7 @@ class RateCallView extends Component {
                     maxStars={5}
                     starSize={45}
                     emptyStarColor={Colors.emptyStarColor}
-                    starColor={Colors.gradientColorButton.top}
+                    fullStarColor={Colors.gradientColorButton.top}
                   />
                 </View>
               </Row>
