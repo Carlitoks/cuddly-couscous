@@ -1,5 +1,8 @@
-import { Linguist } from "../Api";
+import { Linguist, CallHistory } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
+import { linguistCalls } from "./CallHistoryReducer";
+
+import moment from "moment";
 
 // Constants
 
@@ -35,17 +38,37 @@ export const changeStatus = status => (dispatch, getState) => {
     .catch(err => dispatch(networkError(err)));
 };
 
-export const GetOptions = () => dispatch => {
-  return [
-    { language: "English, Mandarin", translates: 34 },
-    { language: "English, Spanish", translates: 12 },
-    { language: "English, Russian", translates: 2 }
-  ];
-};
-
 export const clearSettings = () => ({
   type: ACTIONS.CLEAR
 });
+
+export const asyncGetAccountInformation = () => (dispatch, getState) => {
+  const { auth, profileLinguist, userProfile } = getState();
+
+  return CallHistory.getAllLinguistCalls(userProfile.id, auth.token)
+    .then(response => {
+      const { data } = response;
+      dispatch(linguistCalls(data));
+      dispatch(
+        updateSettings({
+          numberOfCalls: data.length,
+          amount: getTotalDuration(data)
+        })
+      );
+    })
+    .catch(error => dispatch(networkError(error)));
+};
+
+export const getTotalDuration = callHistory => {
+  const amountDuration = callHistory
+    .map(
+      callDetail =>
+        callDetail.session.duration ? callDetail.session.duration : 0
+    )
+    .reduce((amount, duration) => amount + duration);
+
+  return moment.utc(amountDuration * 1000).format("mm:ss");
+};
 
 // Initial State
 const initialState = {

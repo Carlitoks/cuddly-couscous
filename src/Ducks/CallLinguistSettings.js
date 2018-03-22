@@ -1,4 +1,4 @@
-import { Sessions } from "../Api";
+import { Sessions, CallHistory } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
 
 import {

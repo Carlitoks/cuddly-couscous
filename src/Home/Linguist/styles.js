@@ -14,6 +14,10 @@ export default StyleSheet.create({
   center: {
     alignSelf: "center"
   },
+  container: {
+    flex: 1,
+    width: width
+  },
   logo: {
     marginTop: moderateScale(23),
     marginBottom: moderateScale(13),
@@ -128,6 +132,13 @@ export default StyleSheet.create({
   containerPerfil: {
     backgroundColor: Colors.primaryFillColor
   },
+  recentCallsTitle: {
+    marginLeft: 10,
+    paddingBottom: 10,
+    paddingTop: 20,
+    color: Colors.gray,
+    fontSize: 20
+  },
   starsContainer: {
     marginTop: moderateScale(13),
     width: width,
@@ -137,6 +148,6 @@ export default StyleSheet.create({
   },
   scrollContainer: {
     backgroundColor: "white",
-    height:"100%"
+    height: "100%"
   }
 });

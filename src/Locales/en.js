@@ -200,6 +200,7 @@ export default (ENG = {
   quicklyContact: "Quickly contact a Linguist",
   rateYour: "Rate your",
   recent: "Recent",
+  recentCalls: "Recent Calls",
   retail: "Shopping",
   reconnect: "Reconnecting",
   resetpassword: "Reset Password",

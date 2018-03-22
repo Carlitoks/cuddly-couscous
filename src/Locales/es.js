@@ -193,6 +193,7 @@ export default (ESP = {
   rateYour: "Rate your",
   retail: "Shopping",
   recent: "Recent",
+  recentCalls: "Recent Calls",
   reconnect: "Reconnecting",
   resetpassword: "Reset Password",
   retail: "Retail",

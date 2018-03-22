@@ -258,15 +258,16 @@ const HeaderView = ({
           {switchValue != null && !!switchOnChange && switchValue != null ? (
             <View style={styles.statusContainer}>
               <Text style={styles.statusText}>
-                {I18n.t("status")}{" "}
-                {status ? I18n.t("online") : I18n.t("offline")}
+                {`${I18n.t("status")} ${status ? I18n.t("online").toUpperCase() : I18n.t("offline").toUpperCase()}`}
               </Text>
               {loading ? (
-                <ActivityIndicator size="large" color="white" />
+                <View style={styles.switchContainer}>
+                  <ActivityIndicator size="large" color="white" />
+                </View>
               ) : (
                 <Switch
                   onValueChange={switchOnChange}
-                  style={styles.switch}
+                  style={styles.switchContainer}
                   value={switchValue}
                   onTintColor={Colors.onTintColor}
                   thumbTintColor={Colors.thumbTintColor}
@@ -333,10 +334,10 @@ const HeaderView = ({
                 </View>
                 <View style={{ width: "50%" }}>
                   <Text style={[styles.TitleText, styles.center]}>
-                    {I18n.t("amount")}
+                    {`${I18n.t("minutes")[0].toUpperCase()}${I18n.t("minutes").slice(1)}`}
                   </Text>
                   <Text style={[styles.callNumber, styles.center]}>
-                    ${amount}
+                    {amount}
                   </Text>
                 </View>
               </View>

@@ -160,8 +160,8 @@ export default StyleSheet.create({
   },
   statusContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20
+    justifyContent: "center",
+    marginBottom: 30
   },
   statusText: {
     fontSize: 20,
@@ -169,6 +169,10 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     marginLeft: moderateScale(15),
     backgroundColor: "rgba(255, 255, 255, 0)"
+  },
+  switchContainer: {
+    position: "absolute",
+    right: 5
   },
   tabTextStyle: {
     fontFamily: Fonts.primaryBaseFont,

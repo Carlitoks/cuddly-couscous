@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   changeStatus,
   updateSettings,
-  GetOptions
+  asyncGetAccountInformation
 } from "../../Ducks/ProfileLinguistReducer";
 import {
   asyncUploadAvatar,
@@ -14,7 +14,7 @@ import {
 } from "../../Ducks/UserProfileReducer";
 import { View, Text, Image, ScrollView, Switch, Alert } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
+import { Row, Grid } from "react-native-easy-grid";
 import PhotoUpload from "react-native-photo-upload";
 import {
   Button,
@@ -33,7 +33,10 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 
+import _isEmpty from "lodash/isEmpty";
+import _isUndefined from "lodash/isUndefined";
 import {
   asyncGetInvitationDetail,
   clearSettings
@@ -67,6 +70,7 @@ class Home extends Component {
         true
       );
     }
+    this.props.asyncGetAccountInformation();
   }
 
   uploadAvatar(avatar) {
@@ -108,6 +112,43 @@ class Home extends Component {
     }
   }
 
+  filterAllCalls = (allCalls, userType) => {
+    if (!_isEmpty(allCalls)) {
+      return allCalls
+        .slice(0, 10)
+        .sort((prev, next) => 
+          prev.session.createdAt - next.session.createdAt
+        )
+        .map((item, i) => {
+          let result = {};
+          if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
+            result = {
+              key: i,
+              firstName: item[userType].firstName,
+              lastInitial: item[userType].lastInitial,
+              primaryLangCode: item.session.primaryLangCode,
+              secondaryLangCode: item.session.secondaryLangCode,
+              duration: !_isUndefined(item.session.duration)
+                ? item.session.duration
+                : 0,
+              rating: !_isUndefined(item.rating) ? item.rating.stars : "",
+              scenario: !_isUndefined(item.session.scenario)
+                ? item.session.scenario.category
+                : "",
+              avatarURL: item[userType].avatarURL,
+              chevron: false
+            };
+          }
+          return result;
+        })
+        .filter(item => {
+          return !_isEmpty(item);
+        });
+    } else {
+      return [];
+    }
+  };
+
   render() {
     const {
       amount,
@@ -117,9 +158,11 @@ class Home extends Component {
       lastName,
       avatarURL,
       available,
-      rate
+      rate,
+      linguistCalls
     } = this.props;
-    const languagues = this.props.GetOptions();
+
+    const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -135,7 +178,7 @@ class Home extends Component {
           avatarSource={this.selectImage()}
           avatarHeight={150}
           bigAvatar={true}
-          badge={true}
+          badge={false}
           stars={rate ? rate : 0}
           status={available}
           switchOnChange={() => this.props.changeStatus()}
@@ -150,29 +193,19 @@ class Home extends Component {
             alwaysBounceVertical={false}
           >
             <Grid>
-              <Col>
-                <List containerStyle={{ borderTopWidth: 0, marginTop: 0 }}>
-                  <ListItem
-                    title={I18n.t("sessionInQueue")}
-                    hideChevron
-                    containerStyle={{ paddingBottom: 20, paddingTop: 20 }}
-                    titleStyle={{ color: "#b7b7b7", fontSize: 20 }}
-                  />
-                  {languagues.map((item, i) => (
-                    <ListItem
-                      key={i}
-                      title={item.language}
-                      leftIcon={{ name: "swap-horiz" }}
-                      titleStyle={{ fontSize: 20 }}
-                      badge={{
-                        value: item.translates,
-                        textStyle: styles.badgeText,
-                        containerStyle: { backgroundColor: "transparent" }
-                      }}
-                    />
-                  ))}
-                </List>
-              </Col>
+              <Row style={{ borderTopWidth: 0, marginTop: 0 }}>
+                <Text style={styles.recentCallsTitle}>
+                  {I18n.t("recentCalls")}
+                </Text>
+              </Row>
+              <Row>
+              <View style={styles.container}>
+                <CallHistoryComponent
+                  data={allCalls}
+                  navigation={this.props.navigation}
+                />
+                </View>
+              </Row>
             </Grid>
           </ScrollView>
         </HeaderView>
@@ -184,6 +217,7 @@ class Home extends Component {
 const mS = state => ({
   available: state.profileLinguist.available,
   numberOfCalls: state.profileLinguist.numberOfCalls,
+  linguistCalls: state.callHistory.allLinguistCalls,
   amount: state.profileLinguist.amount,
   status: state.profileLinguist.status,
   loading: state.profileLinguist.loading,
@@ -201,13 +235,13 @@ const mS = state => ({
 
 const mD = {
   updateSettings,
-  GetOptions,
   asyncUploadAvatar,
   updateView,
   getProfileAsync,
   changeStatus,
   clearSettings,
-  asyncGetInvitationDetail
+  asyncGetInvitationDetail,
+  asyncGetAccountInformation
 };
 
 export default connect(mS, mD)(Home);

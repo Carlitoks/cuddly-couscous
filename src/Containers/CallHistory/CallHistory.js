@@ -19,7 +19,7 @@ import SegmentedControlTab from "react-native-segmented-control-tab";
 import LinearGradient from "react-native-linear-gradient";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
-import { CallHistoryComponent } from "../../Components/CallHistory/CallHistory";
+import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";

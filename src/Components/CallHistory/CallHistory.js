@@ -8,7 +8,7 @@ import styles from "./styles";
 import moment from "moment";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 
-export class CallHistoryComponent extends Component {
+export default class CallHistoryComponent extends Component {
   renderSeparator = () => {
     return <View style={styles.renderSeparator} />;
   };
