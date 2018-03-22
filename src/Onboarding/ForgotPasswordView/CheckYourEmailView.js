@@ -43,6 +43,7 @@ class CheckYourEmailView extends Component {
           title={I18n.t("next")}
           onPress={() => navigation.dispatch({ type: "SelectRoleView" })}
           bold={true}
+          fill
         />
       </ViewWrapper>
     );
