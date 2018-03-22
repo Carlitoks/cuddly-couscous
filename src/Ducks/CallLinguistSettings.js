@@ -140,6 +140,7 @@ export const asyncAcceptsInvite = (
             .then(response => {
               dispatch(setSession(response.data));
               dispatch({ type: "LinguistView" });
+              dispatch(changeStatus(false));
               dispatch(update({ sessionID: linguistSessionId }));
             })
             .catch(error => {

@@ -258,7 +258,11 @@ const HeaderView = ({
           {switchValue != null && !!switchOnChange && switchValue != null ? (
             <View style={styles.statusContainer}>
               <Text style={styles.statusText}>
-                {`${I18n.t("status")} ${status ? I18n.t("online").toUpperCase() : I18n.t("offline").toUpperCase()}`}
+                {`${I18n.t("status")} ${
+                  status
+                    ? I18n.t("online").toUpperCase()
+                    : I18n.t("offline").toUpperCase()
+                }`}
               </Text>
               {loading ? (
                 <View style={styles.switchContainer}>
@@ -334,7 +338,9 @@ const HeaderView = ({
                 </View>
                 <View style={{ width: "50%" }}>
                   <Text style={[styles.TitleText, styles.center]}>
-                    {`${I18n.t("minutes")[0].toUpperCase()}${I18n.t("minutes").slice(1)}`}
+                    {`${I18n.t("minutes")[0].toUpperCase()}${I18n.t(
+                      "minutes"
+                    ).slice(1)}`}
                   </Text>
                   <Text style={[styles.callNumber, styles.center]}>
                     {amount}

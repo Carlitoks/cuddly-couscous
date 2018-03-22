@@ -44,8 +44,7 @@ export const logOutAsync = () => (dispatch, getState) => {
   User.deleteDevice(userProfile.id, auth.deviceId, auth.token)
     .then(() => {
       dispatch(registerFCM({ tokenFCM: null }));
-      userProfile.linguistProfile &&
-        dispatch(changeStatus({ available: false }));
+      userProfile.linguistProfile && dispatch(changeStatus(false));
     })
     .catch(error => dispatch(networkError(error)))
     .finally(res => {

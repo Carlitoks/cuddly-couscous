@@ -1,3 +1,4 @@
+import { changeStatus } from "./ProfileLinguistReducer";
 import { Sessions } from "../Api";
 // Actions
 export const ACTIONS = {
@@ -90,6 +91,7 @@ export const submitRateCall = (
     positiveFlags: WhatWasGood,
     comment: ""
   };
+  dispatch(changeStatus(true));
   return Sessions.RatingSession(RateInformation, sessionID, token)
     .then(response => {
       return response;

@@ -24,18 +24,24 @@ export const changeStatus = status => (dispatch, getState) => {
   dispatch(updateSettings({ loading: true }));
 
   Linguist.update(userProfile.id, auth.token, {
-    available: status ? status.available : !profileLinguist.available
+    available: status
   })
     .then(res => {
       dispatch(
         updateSettings({
-          available: status ? status.available : !profileLinguist.available,
-          polling: status ? status.polling : !profileLinguist.available,
+          available: status,
           loading: false
         })
       );
     })
-    .catch(err => dispatch(networkError(err)));
+    .catch(err => {
+      dispatch(networkError(err));
+      dispatch(
+        updateSettings({
+          loading: false
+        })
+      );
+    });
 };
 
 export const clearSettings = () => ({

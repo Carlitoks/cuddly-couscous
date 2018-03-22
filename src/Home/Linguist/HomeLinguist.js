@@ -116,9 +116,7 @@ class Home extends Component {
     if (!_isEmpty(allCalls)) {
       return allCalls
         .slice(0, 10)
-        .sort((prev, next) => 
-          prev.session.createdAt - next.session.createdAt
-        )
+        .sort((prev, next) => prev.session.createdAt - next.session.createdAt)
         .map((item, i) => {
           let result = {};
           if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
@@ -181,33 +179,33 @@ class Home extends Component {
           badge={false}
           stars={rate ? rate : 0}
           status={available}
-          switchOnChange={() => this.props.changeStatus()}
+          switchOnChange={status => this.props.changeStatus(status)}
           switchValue={this.props.available}
           calls={numberOfCalls}
           amount={amount}
           loading={this.props.loading}
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-            alwaysBounceVertical={false}
-          >
-            <Grid>
-              <Row style={{ borderTopWidth: 0, marginTop: 0 }}>
-                <Text style={styles.recentCallsTitle}>
-                  {I18n.t("recentCalls")}
-                </Text>
-              </Row>
-              <Row>
-              <View style={styles.container}>
-                <CallHistoryComponent
-                  data={allCalls}
-                  navigation={this.props.navigation}
-                />
+          <Grid>
+            <Row style={{ borderTopWidth: 0, marginTop: 0 }}>
+              <Text style={styles.recentCallsTitle}>
+                {I18n.t("recentCalls")}
+              </Text>
+            </Row>
+            <Row>
+              <ScrollView
+                automaticallyAdjustContentInsets={true}
+                style={styles.scrollContainer}
+                alwaysBounceVertical={false}
+              >
+                <View style={styles.container}>
+                  <CallHistoryComponent
+                    data={allCalls}
+                    navigation={this.props.navigation}
+                  />
                 </View>
-              </Row>
-            </Grid>
-          </ScrollView>
+              </ScrollView>
+            </Row>
+          </Grid>
         </HeaderView>
       </ViewWrapper>
     );
