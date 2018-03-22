@@ -54,7 +54,7 @@ class ScanScreenView extends Component {
               requireScenarioSelection,
               restrictEventScenarios,
               scenarios
-            } = response.payload;
+            } = response.payload.data;
 
             if (this.props.token) {
               if (requireScenarioSelection && restrictEventScenarios) {
