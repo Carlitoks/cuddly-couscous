@@ -9,7 +9,7 @@ import { setSession, clear, update } from "./tokboxReducer";
 
 import moment from "moment";
 import _sortBy from "lodash/sortBy";
-
+import { Vibration } from "react-native";
 import { LANG_CODES, REASON } from "../Util/Constants";
 
 // Actions
@@ -108,6 +108,24 @@ export const asyncGetInvitationDetail = (
     });
 };
 
+export const verifyCall = (sessionID, token, verifyCallId) => dispatch => {
+  Sessions.GetSessionInfoLinguist(sessionID, token)
+    .then(response => {
+      if (
+        response.data.status == "cancelled" ||
+        response.data.status == "assigned"
+      ) {
+        dispatch({ type: "Home", params: { alert: true } });
+        clearInterval(verifyCallId);
+        Vibration.cancel();
+      }
+    })
+    .catch(error => {
+      dispatch(networkError(error));
+      clearInterval(verifyCallId);
+      Vibration.cancel();
+    });
+};
 export const asyncAcceptsInvite = (
   invitationID,
   reason,
@@ -169,6 +187,7 @@ const initialState = {
   speaker: true,
   timer: null,
   invitationID: null,
+  verifyCallId: null,
   elapsedTime: 0,
   accept: false,
   customerPreferredSex: "any",

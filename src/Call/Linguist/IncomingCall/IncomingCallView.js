@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 
 import {
   asyncGetInvitationDetail,
-  asyncAcceptsInvite
+  asyncAcceptsInvite,
+  verifyCall,
+  updateSettings
 } from "../../../Ducks/CallLinguistSettings";
 
 import { Text, View, ScrollView, Image, Vibration } from "react-native";
@@ -32,8 +34,16 @@ class IncomingCall extends Component {
     // this.props.asyncGetInvitationDetail(invitationID, token);
   }
 
+  componentDidMount() {
+    this.verifyCallLinguist();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.props.verifyCallId);
+  }
   takeCall = isAccept => {
     const { invitationID, token, sessionID } = this.props;
+    clearInterval(this.props.verifyCallId);
     this.props.asyncAcceptsInvite(
       invitationID,
       { accept: isAccept },
@@ -43,6 +53,19 @@ class IncomingCall extends Component {
     Vibration.cancel();
   };
 
+  verifyCallLinguist = () => {
+    this.props.updateSettings({
+      verifyCallId: setInterval(
+        () =>
+          this.props.verifyCall(
+            this.props.sessionID,
+            this.props.token,
+            this.props.verifyCallId
+          ),
+        2000
+      )
+    });
+  };
   selectImage = () => {
     return this.props.avatarURL
       ? {
@@ -144,13 +167,16 @@ const mS = state => ({
   estimatedMinutes: state.callLinguistSettings.estimatedMinutes,
   customerScenario: state.callLinguistSettings.customerScenario,
   languages: state.callLinguistSettings.languages,
+  verifyCallId: state.callLinguistSettings.verifyCallId,
   token: state.auth.token,
   sessionID: state.tokbox.sessionID
 });
 
 const mD = {
   asyncGetInvitationDetail,
-  asyncAcceptsInvite
+  asyncAcceptsInvite,
+  verifyCall,
+  updateSettings
 };
 
 export default connect(mS, mD)(IncomingCall);

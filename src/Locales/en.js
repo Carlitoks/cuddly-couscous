@@ -29,7 +29,7 @@ export default (ENG = {
   cancel: "Cancel",
   cancelCall: "Cancel call",
   changeSettings: "To change your settings, go to Settings > Jeenie",
-  cancelCallCustomer: "Ended call by customer",
+  cancelCallCustomer: "The call isn't available",
   chargeAdvice: "You will be charged per minute for any time over 8 minutes.",
   checkYourEmail:
     "We have sent you a link to reset your password. Please check your email",
