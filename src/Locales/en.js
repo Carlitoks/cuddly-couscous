@@ -232,6 +232,8 @@ export default (ENG = {
   sport: "Sports",
   status: "You are",
   time: "Time",
+  timeStatic1: "Calls are preset to 8 minutes during the trial period.",
+  timeStatic2: "If you need more time, you can add it during the call.",
   technology: "Technology",
   tempIndicator: "F",
   termsConditions: "Terms & Conditions",

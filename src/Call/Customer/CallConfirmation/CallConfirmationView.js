@@ -83,7 +83,6 @@ class CallConfirmationView extends Component {
                 />
                 {/* Time */}
                 <ListItem
-                  hideChevron
                   containerStyle={styles.listItemContainer}
                   title={I18n.t("estimatedDuration").toUpperCase()}
                   titleStyle={styles.titleStyle}
@@ -94,6 +93,15 @@ class CallConfirmationView extends Component {
                   )}`}
                   rightTitleContainerStyle={styles.listRightTitleContainer}
                   rightTitleStyle={styles.listRightTitle}
+                  onPress={() =>
+                    navigation.dispatch({
+                      type: "TextView",
+                      params: {
+                        title: I18n.t("time"),
+                        texts: [I18n.t("timeStatic1"), I18n.t("timeStatic2")]
+                      }
+                    })
+                  }
                 />
                 {/* Languages */}
                 <ListItem
