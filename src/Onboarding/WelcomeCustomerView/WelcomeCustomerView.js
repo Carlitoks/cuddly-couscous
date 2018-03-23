@@ -58,10 +58,7 @@ class WelcomeCustomerView extends Component {
           </View>
           <View style={styles.loading}>
             {this.state.loading ? (
-              <ActivityIndicator
-                size="large"
-                color={Colors.gradientColorButton.top}
-              />
+              <ActivityIndicator size="large" color={Colors.primaryColor} />
             ) : (
               <Icon
                 name="check-circle"

@@ -60,7 +60,7 @@ const initialState = {
   firstname: "",
   lastname: "",
   preferredName: "",
-  mainTitle: I18n.t("mainTitle"),
+  mainTitle: I18n.t("helpUsGet"),
   formHasErrors: false,
   // Customer Email
   email: "",
