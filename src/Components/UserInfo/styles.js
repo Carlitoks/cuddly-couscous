@@ -13,6 +13,7 @@ export default (styles = StyleSheet.create({
   },
   userName: {
     marginLeft: 10,
+    marginTop: 2,
     color: Colors.black
   },
   iconStyle: {
