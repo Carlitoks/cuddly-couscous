@@ -148,7 +148,7 @@ class CallConfirmationView extends Component {
                   // }`}
                   rightTitle={`${I18n.t("freeTrial")}`}
                   rightTitleContainerStyle={styles.listRightTitleContainer}
-                  rightTitleStyle={styles.listRightTitle}
+                  rightTitleStyle={[styles.listRightTitle, styles.freeTrial]}
                   onPress={() =>
                     navigation.dispatch({
                       type: "TextView",

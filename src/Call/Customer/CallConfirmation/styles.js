@@ -97,6 +97,10 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(22),
     color: Colors.primaryListRightItem
   },
+  freeTrial: {
+    fontSize: moderateScale(16),
+    color: Colors.primaryListRightItem
+  },
   listRightTitleContainer: {
     flex: 0.3
   },
