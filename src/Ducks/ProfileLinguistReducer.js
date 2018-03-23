@@ -80,8 +80,8 @@ export const getTotalDuration = callHistory => {
 const initialState = {
   available: false,
   rating: 4.5,
-  numberOfCalls: 28,
-  amount: 493,
+  numberOfCalls: 0,
+  amount: "00:00",
   status: "Offline",
   username: "Adele G",
   loading: false

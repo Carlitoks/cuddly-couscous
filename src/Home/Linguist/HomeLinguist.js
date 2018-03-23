@@ -42,6 +42,8 @@ import {
   clearSettings
 } from "../../Ducks/CallLinguistSettings";
 
+import moment from "moment";
+
 import styles from "./styles";
 import { Colors, Images } from "../../Themes";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
@@ -133,6 +135,9 @@ class Home extends Component {
               scenario: !_isUndefined(item.session.scenario)
                 ? item.session.scenario.category
                 : "",
+              createdAt: moment(item.session.createdAt).format(
+                "MMM DD, h:mm A"
+              ),
               avatarURL: item[userType].avatarURL,
               chevron: false
             };
@@ -185,17 +190,12 @@ class Home extends Component {
           amount={amount}
           loading={this.props.loading}
         >
+          <Text style={styles.recentCallsTitle}>{I18n.t("recentCalls")}</Text>
           <Grid>
-            <Row style={{ borderTopWidth: 0, marginTop: 0 }}>
-              <Text style={styles.recentCallsTitle}>
-                {I18n.t("recentCalls")}
-              </Text>
-            </Row>
             <Row>
               <ScrollView
-                automaticallyAdjustContentInsets={true}
+                automaticallyAdjustContentInsets={false}
                 style={styles.scrollContainer}
-                alwaysBounceVertical={false}
               >
                 <View style={styles.container}>
                   <CallHistoryComponent

@@ -129,15 +129,12 @@ export default StyleSheet.create({
     marginBottom: moderateScale(13),
     backgroundColor: "rgba(255, 255, 255, 0)" 
   },
-  containerPerfil: {
-    backgroundColor: Colors.primaryFillColor
-  },
   recentCallsTitle: {
     marginLeft: 10,
     paddingBottom: 10,
     paddingTop: 20,
     color: Colors.gray,
-    fontSize: 20
+    fontSize: 25
   },
   starsContainer: {
     marginTop: moderateScale(13),
