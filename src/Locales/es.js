@@ -253,7 +253,7 @@ export default (ESP = {
   wasGood: "What was Good?",
   welcome: "Welcome",
   welcomeTo: "Welcome To",
-  weSendEmail: "We'll send you an email to reset your password",
+  weSendEmail: "Check your email to complete registration.",
   yes: "Si",
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during the call",

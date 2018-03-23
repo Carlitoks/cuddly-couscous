@@ -262,7 +262,7 @@ export default (ENG = {
   wasGood: "What was good?",
   welcome: "Welcome",
   welcomeTo: "Welcome to",
-  weSendEmail: "Check your email to reset your password.",
+  weSendEmail: "Check your email to complete registration.",
   yes: "Yes",
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during call",
