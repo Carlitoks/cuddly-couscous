@@ -31,7 +31,7 @@ export default (ESP = {
   changeSettings: "To change your settings, go to Settings > Jeenie",
   checkYourEmail:
     "We have sent you a link to reset your password. Please check your email",
-  checkYourEmailOnBoarding: "Check your email to confirm your account.",
+  checkYourEmailOnBoarding: "Check your email to complete registration.",
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
   cantReachCustomer: "It seems like the user lost connection",
@@ -253,7 +253,7 @@ export default (ESP = {
   wasGood: "What was Good?",
   welcome: "Welcome",
   welcomeTo: "Welcome To",
-  weSendEmail: "Check your email to complete registration.",
+  weSendEmail: "We'll send you an email to reset your password.",
   yes: "Si",
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during the call",

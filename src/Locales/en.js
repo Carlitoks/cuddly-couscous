@@ -33,7 +33,7 @@ export default (ENG = {
   chargeAdvice: "You will be charged per minute for any time over 8 minutes.",
   checkYourEmail:
     "We have sent you a link to reset your password. Please check your email",
-  checkYourEmailOnBoarding: "Check your email to confirm your account.",
+  checkYourEmailOnBoarding: "Check your email to complete registration.",
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
   cantReachCustomer: "It seems like the user lost connection",
@@ -262,7 +262,7 @@ export default (ENG = {
   wasGood: "What was good?",
   welcome: "Welcome",
   welcomeTo: "Welcome to",
-  weSendEmail: "Check your email to complete registration.",
+  weSendEmail: "Check your email to reset your password.",
   yes: "Yes",
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during call",
