@@ -20,28 +20,29 @@ export const updateSettings = payload => ({
 
 export const changeStatus = status => (dispatch, getState) => {
   const { auth, profileLinguist, userProfile } = getState();
+  if (userProfile.linguistProfile) {
+    dispatch(updateSettings({ loading: true }));
 
-  dispatch(updateSettings({ loading: true }));
-
-  Linguist.update(userProfile.id, auth.token, {
-    available: status
-  })
-    .then(res => {
-      dispatch(
-        updateSettings({
-          available: status,
-          loading: false
-        })
-      );
+    Linguist.update(userProfile.id, auth.token, {
+      available: status
     })
-    .catch(err => {
-      dispatch(networkError(err));
-      dispatch(
-        updateSettings({
-          loading: false
-        })
-      );
-    });
+      .then(res => {
+        dispatch(
+          updateSettings({
+            available: status,
+            loading: false
+          })
+        );
+      })
+      .catch(err => {
+        dispatch(networkError(err));
+        dispatch(
+          updateSettings({
+            loading: false
+          })
+        );
+      });
+  }
 };
 
 export const clearSettings = () => ({
