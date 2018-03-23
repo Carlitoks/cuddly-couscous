@@ -10,7 +10,10 @@ import { clearCallHistory as clearHistory } from "./CallHistoryReducer";
 import PushNotification from "../Util/PushNotification";
 import { updateDeviceToken } from "./RegistrationCustomerReducer";
 import { registerFCM } from "./PushNotificationReducer";
-import { changeStatus } from "./ProfileLinguistReducer";
+import {
+  changeStatus,
+  clearSettings as clearLinguistProfile
+} from "./ProfileLinguistReducer";
 
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -52,6 +55,7 @@ export const logOutAsync = () => (dispatch, getState) => {
       dispatch(logOut());
       dispatch(clearUserProfile());
       dispatch(clearHistory());
+      dispatch(clearLinguistProfile());
       dispatch({ type: "SelectRoleView/Reset" });
     });
 };

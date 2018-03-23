@@ -59,7 +59,7 @@ export const asyncGetAccountInformation = () => (dispatch, getState) => {
       dispatch(
         updateSettings({
           numberOfCalls: data.length,
-          amount: getTotalDuration(data)
+          amount: data.length > 0 ? getTotalDuration(data) : "00:00"
         })
       );
     })

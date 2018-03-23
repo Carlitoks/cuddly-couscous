@@ -423,7 +423,6 @@ class RateCallView extends Component {
         {/* Button Submit*/}
         <BottomButton
           title="Submit"
-          fill
           onPress={() => {
             this.submit();
           }}
