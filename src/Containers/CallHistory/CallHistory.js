@@ -50,12 +50,16 @@ class CallHistory extends Component {
               key: i,
               firstName: item[userType].firstName,
               lastInitial: item[userType].lastInitial,
+              missedTab: false,
               primaryLangCode: item.session.primaryLangCode,
               secondaryLangCode: item.session.secondaryLangCode,
               duration: !_isUndefined(item.session.duration)
                 ? item.session.duration
                 : 0,
               rating: !_isUndefined(item.rating) ? item.rating.stars : "",
+              createdAt: moment(item.session.createdAt).format(
+                "MMM DD, h:mm A"
+              ),
               scenario: !_isUndefined(item.session.scenario)
                 ? item.session.scenario.category
                 : "",
@@ -72,6 +76,8 @@ class CallHistory extends Component {
       return [];
     }
   };
+
+  //Jan 1, 5:23 PM
 
   compareCall = (accepted, responded) => {
     if (!responded) {
@@ -92,10 +98,13 @@ class CallHistory extends Component {
               firstName: item.createdBy.firstName,
               lastInitial: item.createdBy.lastInitial,
               duration: 0,
+              missedTab: true,
               primaryLangCode: item.session.primaryLangCode,
               secondaryLangCode: item.session.secondaryLangCode,
               avatarURL: item.createdBy.avatarURL,
-              createdAt: moment(item.createdAt).format("MM-DD-YYYY"),
+              createdAt: moment(item.session.createdAt).format(
+                "MMM DD, h:mm A"
+              ),
               chevron: true,
               missedCall: this.compareCall(item.accepted, item.responded)
             };
@@ -163,21 +172,8 @@ class CallHistory extends Component {
             <ShowMenuButton navigation={this.props.navigation} />
           }
           tabValues={tabValues}
-          headerCenterComponent={
-            <View style={styles.containerTab}>
-              <SegmentedControlTab
-                tabsContainerStyle={styles.tabsContainerStyle}
-                values={tabValues}
-                tabStyle={styles.tabStyle}
-                tabTextStyle={styles.tabTextStyle}
-                selectedIndex={this.props.selectedIndex}
-                onTabPress={this.handleIndexChange}
-                activeTabStyle={{
-                  backgroundColor: Colors.primarySelectedTabColor
-                }}
-              />
-            </View>
-          }
+          tabSelectedIndex={this.props.selectedIndex}
+          onTabPress={this.handleIndexChange}
           title={I18n.t("callHistory")}
         >
           <ScrollView

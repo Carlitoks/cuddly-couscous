@@ -45,6 +45,7 @@ const colors = {
   linguistFormText: "#677bd8",
   selectedBackground: "#EBEDFA",
   background: "#FFFFFF",
+  backgroundBlue: "#5d4cb6",
   selectedOptionMenu: "#6B8FE0",
   optionMenu: "#D9D9E6",
   callButton: "#71D781",

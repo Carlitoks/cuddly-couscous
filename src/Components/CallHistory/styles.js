@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../Themes";
+import { Colors, Fonts } from "../../Themes";
 
 export default (styles = StyleSheet.create({
   containerList: {
@@ -16,10 +16,10 @@ export default (styles = StyleSheet.create({
     marginLeft: "14%"
   },
   colorStyle: {
-    color: Colors.black,
-    marginTop: 5
+    color: Colors.black
   },
-  callStatus: {
+  textColor: {
+    marginTop: 6,
     color: Colors.black
   }
 }));

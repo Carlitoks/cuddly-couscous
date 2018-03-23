@@ -180,7 +180,7 @@ export default StyleSheet.create({
     fontSize: 12
   },
   tabStyle: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.backgroundBlue,
     borderWidth: 1,
     borderColor: Colors.primaryColor
   },
@@ -189,6 +189,7 @@ export default StyleSheet.create({
     marginRight: moderateScale(33),
     width: "55%",
     alignSelf: "center",
+    marginTop: moderateScale(20),
     marginBottom: moderateScale(30)
   },
   mainButtons: {

@@ -43,9 +43,24 @@ export default class CallHistoryComponent extends Component {
                     }
                   : Images.avatar
               }
+              subtitle={
+                !item.missedTab
+                  ? item.duration >= 60
+                    ? `${moment.utc(item.duration * 1000).format("mm:ss")} mins`
+                    : `${moment
+                        .utc(item.duration * 1000)
+                        .format("mm:ss")} seconds`
+                  : item.missedCall
+              }
+              subtitleStyle={styles.colorStyle}
               containerStyle={styles.listItem}
-              rightTitle={item.missedCall}
-              rightTitleStyle={styles.callStatus}
+              rightTitle={item.createdAt}
+              rightTitleStyle={styles.textColor}
+              badge={{
+                value: item.createdAt,
+                textStyle: styles.textColor,
+                containerStyle: { backgroundColor: "transparent" }
+              }}
               onPress={() => {
                 if (!item.chevron)
                   navigation.dispatch({
@@ -53,7 +68,6 @@ export default class CallHistoryComponent extends Component {
                     params: item
                   });
               }}
-              subtitleStyle={styles.colorStyle}
             />
           )}
           keyExtractor={item => item.key}
