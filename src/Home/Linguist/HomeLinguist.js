@@ -115,10 +115,8 @@ class Home extends Component {
   }
 
   filterAllCalls = (allCalls, userType) => {
-    console.log("Filter", allCalls);
     if (!_isEmpty(allCalls)) {
       const size = allCalls.length <= 10 ? allCalls.length : 10;
-      console.log(size);
       return allCalls
         .slice(0, size)
         .sort((prev, next) => prev.session.createdAt - next.session.createdAt)

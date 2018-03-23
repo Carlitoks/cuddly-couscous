@@ -232,12 +232,12 @@ class EmailCustomerView extends Component {
                       </View>
                     }
                     checked={this.props.termsCheck}
+                    containerStyle={styles.containerTransparent}
                     onPress={() => {
                       this.props.updateForm({
                         termsCheck: !this.props.termsCheck
                       });
                     }}
-                    containerStyle={styles.borderTransparent}
                   />
 
                   <CheckBox
@@ -252,7 +252,7 @@ class EmailCustomerView extends Component {
                         eighteenCheck: !this.props.eighteenCheck
                       });
                     }}
-                    containerStyle={styles.borderTransparent}
+                    containerStyle={styles.containerTransparent}
                   />
                 </View>
 

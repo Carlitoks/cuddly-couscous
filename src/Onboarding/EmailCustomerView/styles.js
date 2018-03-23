@@ -88,7 +88,8 @@ export default StyleSheet.create({
   marginLeft10: {
     marginLeft: 10
   },
-  borderTransparent: {
-    borderColor: "transparent"
+  containerTransparent: {
+    borderColor: "transparent",
+    backgroundColor: "transparent"
   }
 });
