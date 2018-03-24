@@ -45,12 +45,16 @@ class PromoCodeView extends Component {
         this.props.clearPromoCode();
         if (requireScenarioSelection && restrictEventScenarios) {
           /* Dispatch to SelectListView with the scenarios involveds*/
-          this.props.updateSettings({
-            selectionItemType: "scenarios",
-            selectionItemName: "scenarios",
-            scenarios: []
-          });
-          this.props.navigation.dispatch({ type: "PromoCodeListView" });
+          if (scenarios) {
+            this.props.updateSettings({
+              selectionItemType: "scenarios",
+              selectionItemName: "scenarios",
+              scenarios
+            });
+            this.props.navigation.dispatch({ type: "PromoCodeListView" });
+          } else {
+            this.props.navigation.dispatch({ type: "CustomScenarioView" });
+          }
         } else if (requireScenarioSelection && !restrictEventScenarios) {
           /* Dispatch to Category Selection View (Home) */
 
@@ -81,11 +85,11 @@ class PromoCodeView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={I18n.t("promoCodeTitle")}>
+          title={I18n.t("promoCodeTitle")}
+        >
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
-            alwaysBounceVertical={false}
           >
             <View>
               {/* Email */}
