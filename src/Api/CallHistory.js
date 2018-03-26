@@ -28,16 +28,5 @@ const callHistory = {
       }
     );
   }
-
-  // put here the properly url when we have this endpoint
-
-  // getRecents: (id, token) => {
-  //   return new Promise((resolve, reject) => {
-  //     setTimeout(() => {
-  //       var data = MOCK_DATA.CALL_HISTORY.Recents;
-  //       resolve(data);
-  //     }, 2000);
-  //   });
-  // },
 };
 export default callHistory;
