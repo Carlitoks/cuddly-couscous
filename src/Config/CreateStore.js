@@ -41,7 +41,8 @@ const getStore = () =>
           tokbox: store.getState().tokbox,
           [settings]: store.getState()[settings],
           profileLinguist: store.getState().profileLinguist,
-          pushNotification: store.getState().pushNotification
+          pushNotification: store.getState().pushNotification,
+          onboardingRecord: store.getState().onboardingRecord
         }).then(() => {
           // console.log("STATE PERSISTED")
         });
