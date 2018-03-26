@@ -108,7 +108,6 @@ class CustomerView extends Component {
     if (nextProps.networkInfoType === "none") {
       this.props.navigation.dispatch({ type: "Home" });
     }
-
   }
 
   startTimer = () => {
