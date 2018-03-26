@@ -82,5 +82,12 @@ export default StyleSheet.create({
     position: "absolute",
     right: 0,
     zIndex: 0
+  },
+  iconSelected: {
+    position: "absolute",
+    right: 0,
+    zIndex: 0,
+    backgroundColor: Colors.gradientColor.bottom,
+    color: "white"
   }
 });

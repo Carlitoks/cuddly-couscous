@@ -374,7 +374,6 @@ class Home extends Component {
             disabled={this.bottomButtonDisabled()}
             fill={!this.bottomButtonDisabled()}
             onPress={this.bottomButtonOnPress}
-            relative
           />
         </HeaderView>
       </ViewWrapper>

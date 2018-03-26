@@ -33,7 +33,7 @@ const handleError = status => dispatch => {
       break;
 
     case 404:
-      dispatch(notFoundError());
+      // dispatch(notFoundError());
       break;
 
     // case 500:

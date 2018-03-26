@@ -15,7 +15,13 @@ const GoBackButton = ({ navigation }) => {
         style={styles.Icon}
         name="chevron-left"
         size={moderateScale(40)}
-        onPress={() => navigation.dispatch({ type: "back" })}
+        onPress={() => {
+          if (navigation.state.routeName == "CustomScenarioView") {
+            navigation.dispatch({ type: "Home" });
+          } else {
+            navigation.dispatch({ type: "back" });
+          }
+        }}
       />
     </Col>
   );

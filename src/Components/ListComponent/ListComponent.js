@@ -242,7 +242,9 @@ class ListComponent extends Component {
                 {item.other ? (
                   <Icon
                     pointerEvents={"none"}
-                    style={styles.icon}
+                    style={
+                      this.isSelected(index) ? styles.iconSelected : styles.icon
+                    }
                     name="chevron-right"
                     size={moderateScale(40)}
                     color={Colors.gray}

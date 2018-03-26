@@ -2,8 +2,12 @@ import OpenTok from "react-native-opentok";
 import { networkError } from "./NetworkErrorsReducer";
 import { Sessions } from "../Api";
 import { REASON, TIME } from "../Util/Constants";
-import { updateSettings as updateContactLinguist } from "./ContactLinguistReducer";
+import {
+  updateSettings as updateContactLinguist,
+  resetCounter
+} from "./ContactLinguistReducer";
 import { setSession, clear } from "./tokboxReducer";
+import I18n from "../I18n/I18n";
 
 // Actions
 export const ACTIONS = {
@@ -110,37 +114,53 @@ export const AsyncCreateSession = ({
   )
     .then(response => {
       // verify if there is linguist available
-      return Sessions.GetSessionInfoLinguist(response.data.sessionID, token)
-        .then(res => {
-          dispatch(setSession(response.data));
-          if (
-            (!res.data.queue || !res.data.queue.pending) &&
-            !res.data.queue.sending
-          ) {
-            response.data.notLinguistAvailable = true;
-          }
-          return response;
-        })
-        .catch(error => dispatch(networkError(error)));
+      dispatch(setSession(response.data));
+      return response.data;
     })
     .catch(error => dispatch(networkError(error)));
 };
 
-// create customer Invitation, and return invitationID
-// example input values
-// linguistID: "11111111-1111-1111-1111-111111111111"
-// role: "linguist";
-export const AsyncCreateInvitation = (
-  sessionID,
-  linguistID,
-  role,
-  token
-) => dispatch => {
-  return Sessions.customerInvitation(sessionID, linguistID, role, token)
+export const verifyCall = (sessionID, token, verifyCallId) => (
+  dispatch,
+  getState
+) => {
+  const { contactLinguist } = getState();
+  Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
-      return dispatch(createInvitation(response.data));
+      const { data } = response;
+
+      if (
+        ((!data.queue || !data.queue.pending) && !data.queue.sending) ||
+        data.status == "cancelled" ||
+        data.status == "assigned" ||
+        data.queue.declined === data.queue.total
+      ) {
+        clearInterval(verifyCallId);
+      }
+      console.log("data", data);
+      if (
+        (contactLinguist.counter > 10 * data.queue.total + 30 &&
+          contactLinguist.counterId) ||
+        data.queue.declined === data.queue.total
+      ) {
+        clearInterval(contactLinguist.counterId);
+        dispatch(resetCounter());
+
+        dispatch(
+          updateContactLinguist({
+            modalReconnect: true,
+            counter: TIME.RECONNECT,
+            messageReconnect: I18n.t("notLinguistAvailable")
+          })
+        );
+
+        sessionID && dispatch(EndCall(sessionID, REASON.TIMEOUT, token));
+      }
     })
-    .catch(error => dispatch(networkError(error)));
+    .catch(error => {
+      dispatch(networkError(error));
+      clearInterval(verifyCallId);
+    });
 };
 
 export const closeOpenConnections = () => dispatch => {
@@ -161,6 +181,7 @@ const initialState = {
   invitationID: null,
   customerPreferredSex: "any",
   customerExtraTime: true,
+  verifyCallId: null,
 
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker

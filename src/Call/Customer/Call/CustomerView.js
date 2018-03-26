@@ -9,7 +9,8 @@ import {
   incrementTimer,
   resetTimerAsync,
   clearSettings,
-  EndCall
+  EndCall,
+  verifyCall
 } from "../../../Ducks/CallCustomerSettings";
 import {
   tokConnect,
@@ -108,11 +109,6 @@ class CustomerView extends Component {
       this.props.navigation.dispatch({ type: "Home" });
     }
 
-    if (nextProps.counter > TIME.TIMEOUT && this.props.counterId) {
-      clearInterval(this.props.counterId);
-      this.props.resetCounter();
-      if (this.props.sessionID) this.closeCall(REASON.TIMEOUT, false);
-    }
   }
 
   startTimer = () => {
@@ -130,6 +126,20 @@ class CustomerView extends Component {
           this.props.incrementTimer();
         }
       }, 1000)
+    });
+  };
+
+  verifyCallCustomer = () => {
+    this.props.updateSettings({
+      verifyCallId: setInterval(
+        () =>
+          this.props.verifyCall(
+            this.props.sessionID,
+            this.props.token,
+            this.props.verifyCallId
+          ),
+        5000
+      )
     });
   };
 
@@ -157,21 +167,10 @@ class CustomerView extends Component {
         estimatedMinutes: selectedTime,
         scenarioID: selectedScenarioId,
         token: token
-      }).then(async result => {
-        if (result && !result.data.notLinguistAvailable) {
-          const tokboxSessionId = result.data.tokboxSessionID;
-          const tokboxToken = result.data.tokboxSessionToken;
-
-          await tokConnect(tokboxSessionId, tokboxToken);
-        } else {
-          // deploy reconnect modal
-          clearInterval(this.props.counterId);
-          this.props.updateContactLinguistSettings({
-            modalReconnect: true,
-            counter: TIME.RECONNECT,
-            messageReconnect: I18n.t("notLinguistAvailable")
-          });
-        }
+      }).then(async response => {
+        const { tokboxSessionID, tokboxSessionToken } = response;
+        this.verifyCallCustomer();
+        await tokConnect(tokboxSessionID, tokboxSessionToken);
       });
     } catch (e) {
       console.log("The session could not be created", e);
@@ -405,7 +404,8 @@ const mS = state => ({
   linguist: state.sessionInfo.linguist,
   counter: state.contactLinguist.counter,
   networkInfoType: state.networkInfo.type,
-  counterId: state.contactLinguist.counterId
+  counterId: state.contactLinguist.counterId,
+  verifyCallId: state.callCustomerSettings.verifyCallId
 });
 
 const mD = {
@@ -423,7 +423,8 @@ const mD = {
   GetSessionInfoLinguist,
   updateContactLinguistSettings,
   incrementCounter,
-  clear
+  clear,
+  verifyCall
 };
 
 export default connect(mS, mD)(CustomerView);
