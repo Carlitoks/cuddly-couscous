@@ -34,28 +34,6 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center"
   },
-  containerHiddenCall: {
-    flex: 0,
-    position: "relative",
-    justifyContent: "flex-start",
-    alignItems: "center"
-  },
-  containerTHidden: {
-    width: "100%",
-    height: "100%",
-    flex: 1,
-    position: "relative",
-    justifyContent: "flex-start",
-    alignItems: "center"
-  },
-  containerContacting: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    left: 0,
-    top: 0,
-    zIndex: 9999
-  },
   topContainer: {
     flex: 0.5,
     flexDirection: "column",
@@ -73,8 +51,7 @@ export default StyleSheet.create({
   icon: {
     color: "white",
     paddingTop: 7,
-    paddingRight: 9,
-    backgroundColor:"transparent"
+    paddingRight: 9
   },
   text: {
     color: "#ff0000"
@@ -146,13 +123,13 @@ export default StyleSheet.create({
     flexDirection: "row",
     left: 10,
     position: "absolute",
-    zIndex:1
+    zIndex: 1
   },
   extraTime: {
     fontFamily: fontFamily,
     color: fontColor,
     fontSize: 18,
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   containerButtons: {
     flex: 1,
@@ -163,5 +140,27 @@ export default StyleSheet.create({
   },
   button: {
     zIndex: 1
+  },
+  containerHiddenCall: {
+    flex: 0,
+    position: "relative",
+    justifyContent: "flex-start",
+    alignItems: "center"
+  },
+  containerTHidden: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    position: "relative",
+    justifyContent: "flex-start",
+    alignItems: "center"
+  },
+  containerContacting: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    left: 0,
+    top: 0,
+    zIndex: 9999
   }
 });
