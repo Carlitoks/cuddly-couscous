@@ -93,6 +93,9 @@ export default (ENG = {
     "Are we human, because of unique traits and attributes not shared with either",
   female: "Female",
   finish: "Finish",
+  finishOnboarding: "Finish onboarding", 
+  finishOnboardingMessage: 
+    "Please finish your registration in order to use the app",
   firstname: "First name",
   fluent: "Fluent",
   forgotPassword: "Reset Your Password",
