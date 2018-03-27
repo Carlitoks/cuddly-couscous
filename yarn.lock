@@ -3537,6 +3537,10 @@ react-native-elements@^0.18.5:
     opencollective "^1.0.3"
     prop-types "^15.5.8"
 
+react-native-exception-handler@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.7.1.tgz#96eb20493050f4bccc88b9e3270afc40580f8dba"
+
 react-native-fcm@^13.3.1:
   version "13.3.1"
   resolved "https://registry.yarnpkg.com/react-native-fcm/-/react-native-fcm-13.3.1.tgz#cb5798daff2ad8f3e5803dc257960e0d9c3d425f"
@@ -3629,6 +3633,10 @@ react-native-snap-carousel@^3.6.0:
   dependencies:
     prop-types "^15.6.0"
     react-addons-shallow-compare "15.6.2"
+
+react-native-splash-screen@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.0.6.tgz#c0bbf2c8ae40a313c4c7044f55e569414ff68332"
 
 react-native-star-rating@^1.0.8:
   version "1.0.8"
