@@ -10,14 +10,10 @@ import { clearCallHistory as clearHistory } from "./CallHistoryReducer";
 import PushNotification from "../Util/PushNotification";
 import { updateDeviceToken } from "./RegistrationCustomerReducer";
 import { registerFCM } from "./PushNotificationReducer";
-import {
-  changeStatus,
-  clearSettings as clearLinguistProfile
-} from "./ProfileLinguistReducer";
+import { changeStatus, clearSettings as clearLinguistProfile  } from "./ProfileLinguistReducer";
 
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import { clearSettings } from "./LinguistFormReducer";
 
 // Actions
 export const ACTIONS = {
@@ -47,7 +43,7 @@ export const logOutAsync = () => (dispatch, getState) => {
   User.deleteDevice(userProfile.id, auth.deviceId, auth.token)
     .then(() => {
       dispatch(registerFCM({ tokenFCM: null }));
-      dispatch(changeStatus(false));
+      userProfile.linguistProfile && dispatch(changeStatus(false));
     })
     .catch(error => dispatch(networkError(error)))
     .finally(res => {
