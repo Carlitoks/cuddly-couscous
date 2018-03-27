@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import StarRating from "react-native-star-rating";
 import { View, Text } from "react-native";
+import { Colors } from "../../Themes";
 
-import Colors from "./../../Themes/Colors";
 import styles from "./styles";
 
 const UserInfo = ({ text, rating }) => {
@@ -24,6 +24,7 @@ const UserInfo = ({ text, rating }) => {
             starSize={18}
             rating={rating}
             emptyStarColor={Colors.emptyStarColor}
+            starColor={Colors.gradientColorButton.top}
             fullStarColor={Colors.gradientColorButton.top}
           />
         ) : null}

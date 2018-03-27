@@ -19,5 +19,8 @@ export default (styles = StyleSheet.create({
   iconStyle: {
     marginLeft: 5,
     color: Colors.black
+  },
+  containerStyle: {
+    marginLeft: 5
   }
 }));
