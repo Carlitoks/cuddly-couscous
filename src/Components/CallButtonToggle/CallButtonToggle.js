@@ -32,6 +32,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
     toggle: "True" if icon can be toggled,
     iconToggled: Name of the toggled icon,
     opacity: "True" to set opacity on button
+    active: Initial state of the button
  *
  * @export
  * @class CallButton
@@ -167,8 +168,7 @@ CallButtonToggle.propTypes = {
   iconToggled: string,
   buttonSize: number,
   iconSize: number,
-  active: bool,
-  ref: string
+  active: bool
 };
 
 const mS = state => ({
