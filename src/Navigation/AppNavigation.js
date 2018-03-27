@@ -7,7 +7,6 @@ import Profile from "../Profile";
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallHistory from "../Containers/CallHistory/CallHistory";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
-// import ContactingLinguist from "../CallCustomer/ContactingLinguist/ContactingLinguistView";
 import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
 import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
 import NameCustomerView from "../Onboarding/NameCustomerView/NameCustomerView";
@@ -19,14 +18,11 @@ import WelcomeCustomerView from "../Onboarding/WelcomeCustomerView/WelcomeCustom
 import PhoneCustomerView from "../Onboarding/PhoneCustomerView/PhoneCustomerView";
 import LanguageCustomerView from "../Onboarding/LanguageCustomerView/LanguageCustomerView";
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
-// import CustomerView from "../Containers/CallConection/Customer/CustomerView";
 import CustomerView from "../Call/Customer/Call/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
 import CheckYourEmailView from "../Onboarding/ForgotPasswordView/CheckYourEmailView";
 import Home from "../Home/Home";
-//import IncomingCallView from "../CallLinguist/IncomingCallView/IncomingCallView";
 import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
-//import LinguistView from "../Containers/CallConection/Linguist/LinguistView";
 import LinguistView from "../Call/Linguist/Call/LinguistView";
 import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 
@@ -36,6 +32,7 @@ import MenuView from "../Components/MenuView/MenuView";
 // Onboarding - Select Language
 import SelectLanguageView from "../LinguistForm/SelectLanguageView/SelectLanguageView";
 import LanguageSettingsView from "../LinguistForm/LanguageSettingsView/LanguageSettingsView";
+import ResetPasswordView from "../Onboarding/ResetPasswordView/ResetPasswordView"; 
 
 //List Views
 import NativeLanguageView from "../Lists/NativeLanguageView/NativeLanguageView";
