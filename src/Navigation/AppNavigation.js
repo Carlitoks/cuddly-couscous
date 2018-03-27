@@ -2,8 +2,6 @@ import { StackNavigator, DrawerNavigator } from "react-navigation";
 
 import { getS } from "../Config/CreateStore";
 
-import Profile from "../Profile";
-
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallHistory from "../Containers/CallHistory/CallHistory";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
@@ -251,12 +249,6 @@ const Navigation = StackNavigator(
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
-      }
-    },
-    Profile: {
-      screen: Profile,
-      navigationOptions: {
-        gesturesEnabled: false
       }
     },
     ScanScreenView: {
