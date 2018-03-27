@@ -10,19 +10,17 @@ export const BackgroundStart = () => {
 };
 
 export const BackgroundInterval = (exec, interval) => {
-  var id;
+  let id;
   if (Platform.OS !== "ios") {
     id = BackgroundTimer.setInterval(exec, interval);
   } else {
     id = setInterval(exec, interval);
-    console.log("Background", id);
   }
-
   return id;
 };
 
 export const BackgroundCleanInterval = id => {
-  if (Platform.OS !== "ios") BackgroundTimer.clearTimeout(id);
+  if (Platform.OS !== "ios") BackgroundTimer.clearInterval(id);
   else {
     clearInterval(id);
     BackgroundTimer.stop();
