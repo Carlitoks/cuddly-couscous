@@ -57,6 +57,11 @@ class ListComponent extends Component {
     );
   }
 
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
   componentDidMount() {
     setTimeout(() => {
       this.scrollToIndex(true);
