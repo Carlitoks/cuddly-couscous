@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateForm } from "../../Ducks/RegistrationCustomerReducer";
 import { asyncUpdateUser } from "../../Ducks/CustomerProfileReducer";
+import { update, checkRecord } from "../../Ducks/OnboardingRecordReducer";
 
 import { filter, findIndex } from "lodash";
 
@@ -37,7 +38,7 @@ class NativeLanguageView extends Component {
   }
 
   componentWillMount() {
-    const { selectedNativeLanguage } = this.props;
+    const { selectedNativeLanguage, update, email } = this.props;
 
     this.setState({
       selectedIndex: findIndex(languages, selectedNativeLanguage),
@@ -51,6 +52,8 @@ class NativeLanguageView extends Component {
     Keyboard.addListener("keyboardDidHide", () => {
       Keyboard.dismiss();
     });
+
+    update({ email, lastStage: "NativeLanguageView" });
   }
 
   filterList() {
@@ -85,15 +88,26 @@ class NativeLanguageView extends Component {
   }
 
   submit() {
-    const { id, asyncUpdateUser, token, navigation } = this.props;
+    const {
+      id,
+      asyncUpdateUser,
+      token,
+      navigation,
+      checkRecord,
+      email
+    } = this.props;
 
     const selectedLanguage = {
       nativeLangCode: this.state.selectedLanguage["3"]
     };
 
-    const payload = { id, ...selectedLanguage };
+    const record = checkRecord(email);
+    const storedToken = record ? record.token : token;
+    const storedId = record ? record.id : id;
 
-    asyncUpdateUser(payload, token)
+    const payload = { id: storedId, ...selectedLanguage };
+
+    asyncUpdateUser(payload, storedToken)
       .then(response => {
         if (response.type === "networkErrors/error") {
           throw new Error(response.payload.data.errors);
@@ -166,6 +180,7 @@ class NativeLanguageView extends Component {
 // MAP STATE TO PROPS HERE
 const mS = state => ({
   id: state.customerProfile.userInfo.id,
+  email: state.registrationCustomer.email,
   selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,
   searchQuery: state.linguistForm.searchQuery,
   token: state.auth.token
@@ -175,7 +190,9 @@ const mS = state => ({
 const mD = {
   updateSettings,
   asyncUpdateUser,
-  updateForm
+  updateForm,
+  update,
+  checkRecord
 };
 
 // EXPORT DEFAULT HERE AT THE BOTTOM
