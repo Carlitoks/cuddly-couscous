@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -35,8 +34,6 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1DECD2398B2E4FBCBEED3F3A /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24B14C468BB94593ACB98949 /* libRNImagePicker.a */; };
-		26118E208BC74A4C9C5C8FB2 /* Fontin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 806C6008FAE54368AC65C28A /* Fontin-Regular.ttf */; };
-		2C1A352DB36045E8A2BC715B /* Fontin-SmallCaps.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E8A6FEDDF7843409A6DB1A0 /* Fontin-SmallCaps.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -54,14 +51,12 @@
 		6179BF11DDFA4BE79AC7B14D /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C2AF617199042F586363316 /* SimpleLineIcons.ttf */; };
 		6BB7F2EF032C4819B67A322E /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A678DE2936DF4F61B5F22B33 /* libRNVectorIcons.a */; };
 		784610254B1F4F1C9970F2F1 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 139C8285B0174D19BCF04E50 /* OpenSans-Regular.ttf */; };
-		7A39110B5C994500BDDDBF4A /* Fontin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D6C9BC5D8CD4CD99EB6A409 /* Fontin-Bold.ttf */; };
 		7D6431490DEB4EF383BDFFFA /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BDE58F472E461891436189 /* EvilIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		84F0420AB56345AE8824A84B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 30EF032C1D104FA8AE075464 /* Entypo.ttf */; };
 		AB8CDCB2AB921EF93BF18BEF /* libPods-NewSolo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBB547A6351E63F62E93EA5 /* libPods-NewSolo.a */; };
 		ABB74B0E064F4CAAA6C67FE7 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 96C43E5743FC407292BFEE56 /* Zocial.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		B4E59D9294214136B41E023E /* Fontin-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B9FA589AD454D67B689C067 /* Fontin-Italic.ttf */; };
 		B81D72A4D93D405A9B78DF49 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6967F930B23413993090200 /* FontAwesome.ttf */; };
 		BD94A7F3ECA24DCEB4742473 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D18DA0EB8B844801AD910DB9 /* Ionicons.ttf */; };
 /* End PBXBuildFile section */
@@ -1319,10 +1314,6 @@
 				0C727EBB73954DBBAF6503B9 /* OpenSans-Bold.ttf in Resources */,
 				079A46DBEB214E899A948026 /* OpenSans-Light.ttf in Resources */,
 				784610254B1F4F1C9970F2F1 /* OpenSans-Regular.ttf in Resources */,
-				7A39110B5C994500BDDDBF4A /* Fontin-Bold.ttf in Resources */,
-				B4E59D9294214136B41E023E /* Fontin-Italic.ttf in Resources */,
-				26118E208BC74A4C9C5C8FB2 /* Fontin-Regular.ttf in Resources */,
-				2C1A352DB36045E8A2BC715B /* Fontin-SmallCaps.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

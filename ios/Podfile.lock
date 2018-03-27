@@ -38,8 +38,7 @@ PODS:
   - Protobuf (3.5.0)
   - React (0.50.4):
     - React/Core (= 0.50.4)
-  - react-native-background-timer (2.0.0):
-    - React
+  - react-native-background-timer (2.0.1)
   - react-native-camera (0.12.0):
     - React
   - react-native-fetch-blob (0.10.6):
@@ -59,14 +58,14 @@ PODS:
     - React
   - RNDeviceInfo (0.9.3):
     - React
-  - RNFS (2.9.7):
+  - RNFS (2.9.11):
     - React
-  - RNI18n (2.0.11):
+  - RNI18n (2.0.12):
     - React
   - RNOpenTok (2.0.1):
     - OpenTok
     - React
-  - RNSVG (6.2.2):
+  - RNSVG (6.3.1):
     - React
   - yoga (0.50.4.React)
 
@@ -134,17 +133,17 @@ SPEC CHECKSUMS:
   OpenTok: 869a96d84104b9de2b525c2e8a2a809561b47cec
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   React: 6d7efef18e0241eb832cf4c085405169a15080ed
-  react-native-background-timer: d95668546a9cb0cb80efcf54f4d48475434a3015
+  react-native-background-timer: 4fda8572a1439e22cd3cc050e27b0eb090a2ff06
   react-native-camera: 804909544eaaf6959089f517b86c1b159a234dea
   react-native-fetch-blob: 2bef9be702de8726f4d7bf58d2345579aaaee60d
   react-native-image-resizer: 4516052af6ae0248caf4ccf356caecefe60072d7
   react-native-keep-awake: 7fc7d0a6886b38102fad5129c92fe7490eac1539
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
-  RNFS: c44a045cb06c6a496a27f37bd1b50f2c36422cf3
-  RNI18n: 155baa432934b0ca208f34de13834f4720e0cc12
+  RNFS: 422c45bbeb7efc41e9d39fbfaa8a533f94cd3e45
+  RNI18n: ee831694f1eaa69b270d345e4617f70735d4cdb9
   RNOpenTok: cab5e455f81cd13ec6ac52b8f126ab00800c803a
-  RNSVG: aeeb222dd9cf2268385306108c20cf364872f5d2
+  RNSVG: 7fdf22f11089f3842539c4081f9d3be364d91f55
   yoga: b9aebf996711e50fc31f5608c10aa108a5a0c29e
 
 PODFILE CHECKSUM: a89f3442c7c9720014a49547e670b73576b87225

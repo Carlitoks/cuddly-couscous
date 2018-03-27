@@ -58,7 +58,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>${PRODUCT_NAME} Microphone Usage</string>
 	<key>NSMotionUsageDescription</key>
@@ -85,9 +85,6 @@
 		<string>OpenSans-Bold.ttf</string>
 		<string>OpenSans-Light.ttf</string>
 		<string>OpenSans-Regular.ttf</string>
-		<string>Fontin-Bold.ttf</string>
-		<string>Fontin-Italic.ttf</string>
-		<string>Fontin-Regular.ttf</string>
 		<string>SF-Pro-Display-Bold.otf</string>
 		<string>SF-Pro-Display-Light.otf</string>
 		<string>SF-Pro-Display-Regular.otf</string>
