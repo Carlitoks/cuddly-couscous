@@ -18,7 +18,7 @@ const initialState = {
   formHasErrors: false
 };
 
-const resetPasswordReducer = (state = initialState, action = {}) => {
+const forgotPasswordReducer = (state = initialState, action = {}) => {
   const { payload, type } = action;
 
   switch (type) {
@@ -39,4 +39,4 @@ const resetPasswordReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default resetPasswordReducer;
+export default forgotPasswordReducer;
