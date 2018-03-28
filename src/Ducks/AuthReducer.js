@@ -120,12 +120,14 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
     .then(response => {
       return dispatch(
         logIn({
+          email,
           token: response.data.token,
           uuid: response.data.id
         })
       );
     })
     .catch(error => {
+      throw error.response;
       dispatch(networkError(error));
       dispatch(loginError(error.response));
     });
@@ -141,6 +143,7 @@ const initialState = {
   isLoggedIn: false,
   token: null,
   uuid: "",
+  email: "",
   deviceToken: "",
   deviceId: ""
 };
@@ -154,6 +157,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: true,
+        email: payload.email,
         token: payload.token,
         uuid: payload.uuid
       };

@@ -22,11 +22,9 @@ export const userinfoUpdate = payload => ({
 
 export const asyncUpdateUser = (payload, token) => dispatch => {
   const { id } = payload;
-  return User.update(id, payload, token)
-    .then(response => {
-      return dispatch(userinfoUpdate(response.data));
-    })
-    .catch(error => dispatch(networkError(error)));
+  return User.update(id, payload, token).then(response => {
+    return dispatch(userinfoUpdate(response.data));
+  });
 };
 
 export const asyncCreateUser = (payload, token) => dispatch => {

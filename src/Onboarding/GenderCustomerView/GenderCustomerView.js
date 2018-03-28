@@ -109,16 +109,34 @@ class GenderCustomerView extends Component {
           throw new Error(response.payload.data.errors);
         }
 
+        removeRecord();
+      })
+      .then(() => {
+        this.props.clearForm();
+      })
+      .then(() => {
         navigation.dispatch({ type: "WelcomeCustomerView" });
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
+        console.log(error.response);
 
-        dispatch(networkError(error));
+        error.response
+          ? displayFormErrors(error.response.data)
+          : displayFormErrors(error);
       });
   }
 
   componentWillMount() {
+    const { email, emailUserProfile, update } = this.props;
+
+    const emailStored = email.length === 0 ? emailUserProfile : email;
+
+    update({
+      email: emailStored.toLowerCase(),
+      lastStage: "GenderCustomerView"
+    });
+
     this.props.updateForm({
       performingRequest: false
     });
@@ -188,6 +206,7 @@ const mS = state => ({
   formHasErrors: state.registrationCustomer.formHasErrors,
   deviceToken: state.registrationCustomer.deviceToken,
   email: state.registrationCustomer.email,
+  emailUserProfile: state.userProfile.email,
   password: state.registrationCustomer.password,
   selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,
   performingRequest: state.registrationCustomer.performingRequest

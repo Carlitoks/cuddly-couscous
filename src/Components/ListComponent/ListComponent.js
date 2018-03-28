@@ -105,12 +105,14 @@ class ListComponent extends Component {
       !this.state.keyboard &&
       this.verifyPosition()
     ) {
-      this.refs.list.scrollToIndex({
-        animated: true,
-        index: this.props.selected > -1 ? this.props.selected : 0,
-        viewOffset: height / 4,
-        viewPosition: 0
-      });
+      if (this.refs.list) {
+        this.refs.list.scrollToIndex({
+          animated: true,
+          index: this.props.selected > -1 ? this.props.selected : 0,
+          viewOffset: height / 4,
+          viewPosition: 0
+        });
+      }
     }
   }
 

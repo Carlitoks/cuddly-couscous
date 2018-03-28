@@ -8,6 +8,7 @@ import { Platform } from "react-native";
 import { User } from "../Api";
 
 import { networkError } from "./../Ducks/NetworkErrorsReducer";
+import { displayFormErrors } from "../Util/Helpers";
 
 class PushNotifications {
   constructor() {
@@ -28,7 +29,12 @@ class PushNotifications {
         .then(res => {
           cb({ tokenFCM: token });
         })
-        .catch(error => dispatch(networkError(error)));
+        .catch(error => {
+          console.log(error.response);
+          error.response
+            ? displayFormErrors(error.response.data.errors[0])
+            : displayFormErrors(error);
+        });
     });
 
     // add handler for refresh token event

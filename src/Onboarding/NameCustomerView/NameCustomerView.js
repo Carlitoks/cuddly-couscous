@@ -30,8 +30,15 @@ import { onlyLetters } from "../../Util/Helpers";
 class NameCustomerView extends Component {
   navigate = this.props.navigation.navigate;
 
-  componentWillUnmount() {
-    this.props.clearForm();
+  componentWillMount() {
+    const { id, token, email, record } = this.props;
+
+    record({
+      lastStage: "NameCustomerView",
+      token,
+      email: email.toLowerCase(),
+      id
+    });
   }
 
   validateForm() {
@@ -104,7 +111,11 @@ class NameCustomerView extends Component {
         })
         .catch(error => {
           console.log(error);
-          dispatch(networkError(error));
+          console.log(error.response.data);
+
+          error.response
+            ? displayFormErrors(error.response.data)
+            : displayFormErrors(error);
         });
     }
   }

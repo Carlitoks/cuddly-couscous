@@ -29,15 +29,17 @@ export const checkRecord = providedEmail => (dispatch, getState) => {
   const { onboardingRecord: { records }, userProfile: { email } } = getState();
 
   return providedEmail
-    ? _find(records, { email: providedEmail })
-    : _find(records, { email });
+    ? _find(records, { email: providedEmail.toLowerCase() })
+    : _find(records, { email: email.toLowerCase() });
 };
 
 export const removeRecord = () => (dispatch, getState) => {
-  const { onboardingRecord: { records }, userProfile: { email } } = getState();
+  const { onboardingRecord: { records }, userProfile, auth } = getState();
+
+  const email = userProfile.email.length === 0 ? auth.email : userProfile.email;
 
   const filteredRecords = _filter(records, record => {
-    return record.email !== email;
+    return record.email.toLowerCase() !== email.toLowerCase();
   });
 
   dispatch(replace(filteredRecords));
@@ -56,11 +58,11 @@ const onboardingRecordReducer = (state = initialState, action) => {
   switch (type) {
     case ACTIONS.UPDATE:
       // Find record
-      record = _find(state.records, { email: payload.email });
+      record = _find(state.records, { email: payload.email.toLowerCase() });
 
       // Filter records
       const filteredRecords = _filter(state.records, record => {
-        return record.email !== payload.email;
+        return record.email.toLowerCase() !== payload.email.toLowerCase();
       });
 
       // Update record
@@ -73,9 +75,9 @@ const onboardingRecordReducer = (state = initialState, action) => {
       return { records: payload };
 
     case ACTIONS.RECORD:
-      record = _find(state.records, { email: payload.email });
+      record = _find(state.records, { email: payload.email.toLowerCase() });
 
-      return payload.email && record === undefined
+      return payload.email && payload.email.length > 0 && record === undefined
         ? { ...state, records: [...state.records, payload] }
         : { ...state };
 

@@ -17,6 +17,8 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import ListComponent from "../../Components/ListComponent/ListComponent";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 
+import { displayFormErrors } from "../../Util/Helpers";
+
 import I18n from "../../I18n/I18n";
 import { Colors } from "../../Themes";
 import languages from "../../Config/Languages";
@@ -38,7 +40,12 @@ class NativeLanguageView extends Component {
   }
 
   componentWillMount() {
-    const { selectedNativeLanguage, update, email } = this.props;
+    const {
+      selectedNativeLanguage,
+      update,
+      email,
+      emailUserProfile
+    } = this.props;
 
     this.setState({
       selectedIndex: findIndex(languages, selectedNativeLanguage),
@@ -53,7 +60,12 @@ class NativeLanguageView extends Component {
       Keyboard.dismiss();
     });
 
-    update({ email, lastStage: "NativeLanguageView" });
+    const emailStored = email.length === 0 ? emailUserProfile : email;
+
+    update({
+      email: emailStored.toLowerCase(),
+      lastStage: "NativeLanguageView"
+    });
   }
 
   filterList() {
@@ -94,14 +106,18 @@ class NativeLanguageView extends Component {
       token,
       navigation,
       checkRecord,
-      email
+      email,
+      emailUserProfile
     } = this.props;
 
     const selectedLanguage = {
       nativeLangCode: this.state.selectedLanguage["3"]
     };
 
-    const record = checkRecord(email);
+    const emailStored = email.length === 0 ? emailUserProfile : email;
+
+    const record = checkRecord(emailStored);
+
     const storedToken = record ? record.token : token;
     const storedId = record ? record.id : id;
 
@@ -119,7 +135,11 @@ class NativeLanguageView extends Component {
       })
       .catch(error => {
         console.log(error);
-        dispatch(networkError(error));
+        console.log(error.response);
+
+        error.response
+          ? displayFormErrors(error.response.data)
+          : displayFormErrors(error);
       });
   }
 
@@ -181,6 +201,7 @@ class NativeLanguageView extends Component {
 const mS = state => ({
   id: state.customerProfile.userInfo.id,
   email: state.registrationCustomer.email,
+  emailUserProfile: state.userProfile.email,
   selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,
   searchQuery: state.linguistForm.searchQuery,
   token: state.auth.token

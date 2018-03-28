@@ -85,12 +85,9 @@ class PasswordCustomerView extends Component {
           navigation.dispatch({ type: "NameCustomerView" });
         })
         .catch(error => {
-          if (error.response) {
-            console.log(error.response);
-          } else {
-            console.log(error);
-          }
-          dispatch(networkError(error));
+          error.response
+            ? displayFormErrors(error.response)
+            : displayFormErrors(error);
         });
     }
   }

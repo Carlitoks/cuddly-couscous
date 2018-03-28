@@ -22,14 +22,23 @@ class Home extends Component {
   }
 
   componentWillMount() {
+    const {
+      isLoggedIn,
+      navigation,
+      uuid,
+      token,
+      updateView,
+      nativeLangCode,
+      getProfileAsync
+    } = this.props;
     PushNotifications.getNotificationsBackground();
 
-    if (!this.props.isLoggedIn) {
-      this.props.navigation.dispatch({ type: "LoginView" });
+    if (!isLoggedIn) {
+      navigation.dispatch({ type: "LoginView" });
     } else {
-      this.props.getProfileAsync(this.props.uuid, this.props.token).then(() => {
-        this.props.updateView({
-          selectedNativeLanguage: getNativeLang(this.props.nativeLangCode)
+      getProfileAsync(uuid, token).then(() => {
+        updateView({
+          selectedNativeLanguage: getNativeLang(nativeLangCode)
         });
         const homeView = this.chooseComponent();
         this.setState({ HomeView: homeView });

@@ -14,6 +14,8 @@ import {
   haveSession,
   registerDevice
 } from "../../Ducks/AuthReducer";
+import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
+import { updateForm as updateCustomer } from "../../Ducks/CustomerProfileReducer";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import InputRegular from "../../Components/InputRegular/InputRegular";
@@ -82,28 +84,65 @@ class LoginView extends Component {
   }
 
   submit() {
-    this.props.updateForm({ performingRequest: true });
+    const {
+      updateForm,
+      registerDevice,
+      logInAsync,
+      email,
+      password,
+      formHasErrors,
+      navigation,
+      emailErrorMessage,
+      passwordErrorMessage,
+
+      checkRecord,
+      updateCustomer
+    } = this.props;
+
+    updateForm({ performingRequest: true });
 
     if (this.validateForm()) {
-      this.props.registerDevice().then(() => {
-        this.props
-          .logInAsync(this.props.email, this.props.password)
+      registerDevice().then(() => {
+        logInAsync(email, password)
           .then(() => {
-            if (!this.props.formHasErrors) {
-              this.props.navigation.dispatch({ type: "Home" });
-            } else {
-              if (this.props.formHasErrors) {
-                displayFormErrors(
-                  this.props.emailErrorMessage,
-                  this.props.passwordErrorMessage
+            if (!formHasErrors) {
+              const record = checkRecord(email);
+
+              Keyboard.dismiss();
+
+              if (record) {
+                updateCustomer({ userInfo: { id: record.id } });
+
+                Alert.alert(
+                  I18n.t("finishOnboarding"),
+                  I18n.t("finishOnboardingMessage"),
+                  [
+                    {
+                      text: I18n.t("ok")
+                    }
+                  ]
                 );
+                navigation.dispatch({ type: record.lastStage });
+              } else {
+                navigation.dispatch({ type: "Home" });
               }
-              this.props.updateForm({ performingRequest: false });
+            } else {
+              if (formHasErrors) {
+                displayFormErrors(emailErrorMessage, passwordErrorMessage);
+              }
+              updateForm({ performingRequest: false });
             }
+          })
+          .catch(error => {
+            console.log(error);
+            console.log(error.data);
+            error.data
+              ? displayFormErrors(error.data.errors)
+              : displayFormErrors(error);
           });
       });
     } else {
-      this.props.updateForm({ performingRequest: false });
+      updateForm({ performingRequest: false });
     }
   }
 
@@ -202,7 +241,9 @@ const mD = {
   updateForm,
   logInAsync,
   haveSession,
-  registerDevice
+  registerDevice,
+  checkRecord,
+  updateCustomer
 };
 
 export default connect(mS, mD)(LoginView);

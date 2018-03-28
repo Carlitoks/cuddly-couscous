@@ -125,9 +125,17 @@ class EmailCustomerView extends Component {
             });
           }
 
-          const errors = err.payload
-            ? err.payload.response.data.errors
-            : err.response ? err.response.data.errors : err;
+            if (record) {
+              updateCustomer({ userInfo: { id } });
+              updateView({ email: email.toLowerCase() });
+              navigation.dispatch({ type: record.lastStage });
+            } else {
+              navigation.dispatch({
+                type: "LoginView"
+              });
+              const errors = err.payload
+                ? err.payload.response.data.errors
+                : err.response ? err.response.data.errors : err;
 
           displayFormErrors(errors);
         });

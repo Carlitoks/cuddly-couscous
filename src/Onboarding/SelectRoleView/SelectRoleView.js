@@ -20,7 +20,9 @@ class SelectRoleView extends Component {
   componentWillMount() {
     const { navigation, isLoggedIn } = this.props;
 
-    if (isLoggedIn) {
+    const record = checkRecord(email);
+
+    if (isLoggedIn && token && !record) {
       navigation.dispatch({ type: "Home" });
     }
   }
@@ -97,7 +99,10 @@ class SelectRoleView extends Component {
 }
 
 ms = state => ({
-  isLoggedIn: state.auth.isLoggedIn
+  isLoggedIn: state.auth.isLoggedIn,
+  token: state.auth.token,
+  email: state.auth.email,
+  id: state.userProfile.id
 });
 
 export default connect(ms, null)(SelectRoleView);
