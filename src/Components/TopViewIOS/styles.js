@@ -7,6 +7,9 @@ export default StyleSheet.create({
     ...Platform.select({
       ios: {
         height: 20
+      },
+      android: {
+        height: 20
       }
     })
   },
