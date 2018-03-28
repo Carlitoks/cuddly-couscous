@@ -3,6 +3,7 @@ package com.newsolo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.horcrux.svg.SvgPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
@@ -40,6 +41,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            		new RNInstabugReactnativePackage.Builder("YOUR_ANDROID_APPLICATION_TOKEN",MainApplication.this)
+							.setInvocationEvent("shake")
+							.setPrimaryColor("#1D82DC")
+							.setFloatingEdge("left")
+							.setFloatingButtonOffsetFromTop(250)
+							.build(),
             new SvgPackage(),
             new FIRMessagingPackage(),
             new BackgroundTimerPackage(),
