@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Alert, Platform, ScrollView, View, Text } from "react-native";
+import { Alert, Platform, ScrollView, View, Text, Keyboard } from "react-native";
 import { Button, FormLabel, Header } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/MaterialIcons";

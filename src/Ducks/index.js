@@ -25,6 +25,7 @@ import homeFlow from "./HomeFlowReducer";
 import callHistory from "./CallHistoryReducer";
 import pushNotification from "./PushNotificationReducer";
 import promoCode from "./PromoCodeReducer";
+import onboardingRecord from "./OnboardingRecordReducer";
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -51,7 +52,8 @@ const rootReducer = combineReducers({
   events,
   pushNotification,
   homeFlow,
-  promoCode
+  promoCode,
+  onboardingRecord
 });
 
 export default rootReducer;

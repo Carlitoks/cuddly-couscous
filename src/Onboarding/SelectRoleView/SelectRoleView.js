@@ -12,13 +12,24 @@ import { Images, Fonts } from "../../Themes";
 import styles from "./styles";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 
+import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
+import { updateForm as updateCustomer } from "../../Ducks/CustomerProfileReducer";
+
 // For the moment
 import I18n from "../../I18n/I18n";
 import Colors from "../../Themes/Colors";
 
 class SelectRoleView extends Component {
   componentWillMount() {
-    const { navigation, isLoggedIn } = this.props;
+    const {
+      navigation,
+      isLoggedIn,
+      token,
+      checkRecord,
+      email,
+      id,
+      updateCustomer
+    } = this.props;
 
     const record = checkRecord(email);
 
@@ -105,4 +116,9 @@ ms = state => ({
   id: state.userProfile.id
 });
 
-export default connect(ms, null)(SelectRoleView);
+mD = {
+  checkRecord,
+  updateCustomer
+};
+
+export default connect(ms, mD)(SelectRoleView);
