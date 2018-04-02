@@ -1,20 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { updateForm, clearForm } from "../../Ducks/RegistrationCustomerReducer";
+import { updateForm } from "../../Ducks/RegistrationCustomerReducer";
+import { record } from "../../Ducks/OnboardingRecordReducer";
 import { asyncUpdateUser } from "../../Ducks/CustomerProfileReducer";
+import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
 
-import {
-  View,
-  Text,
-  ScrollView,
-  Alert,
-  KeyboardAvoidingView
-} from "react-native";
+import { View, Text, ScrollView, Alert, Keyboard } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, Header } from "react-native-elements";
-import { topIOS } from "../../Util/Devices";
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
@@ -100,14 +96,22 @@ class NameCustomerView extends Component {
       firstname,
       lastname,
       preferredName,
-      token
+      token,
+      checkRecord,
+      email
     } = this.props;
-    if (this.validateForm()) {
-      const payload = { id, firstname, lastname, preferredName };
 
-      asyncUpdateUser(payload, token)
+    if (this.validateForm()) {
+      const record = checkRecord(email);
+      const storedToken = record ? record.token : token;
+      const storedId = record ? record.id : id;
+
+      const payload = { id: storedId, firstname, lastname, preferredName };
+
+      asyncUpdateUser(payload, storedToken)
         .then(response => {
           this.props.navigation.dispatch({ type: "NativeLanguageView" });
+          Keyboard.dismiss();
         })
         .catch(error => {
           console.log(error);
@@ -234,6 +238,7 @@ class NameCustomerView extends Component {
 const mS = state => ({
   id: state.customerProfile.userInfo.id,
   firstname: state.registrationCustomer.firstname,
+  email: state.registrationCustomer.email,
   lastname: state.registrationCustomer.lastname,
   formHasErrors: state.registrationCustomer.formHasErrors,
   preferredName: state.registrationCustomer.preferredName,
@@ -243,8 +248,9 @@ const mS = state => ({
 
 const mD = {
   updateForm,
-  clearForm,
-  asyncUpdateUser
+  asyncUpdateUser,
+  record,
+  checkRecord
 };
 
 export default connect(mS, mD)(NameCustomerView);

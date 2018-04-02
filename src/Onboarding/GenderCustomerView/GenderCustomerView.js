@@ -3,22 +3,22 @@ import { connect } from "react-redux";
 
 import {
   GetOptions,
-  updateForm
+  updateForm,
+  clearForm
 } from "../../Ducks/RegistrationCustomerReducer";
 import { asyncUpdateUser } from "../../Ducks/CustomerProfileReducer";
 import { logInAsync, registerDevice } from "../../Ducks/AuthReducer";
-
 import {
-  View,
-  Text,
-  ScrollView,
-  Alert,
-  KeyboardAvoidingView
-} from "react-native";
+  update,
+  checkRecord,
+  removeRecord
+} from "../../Ducks/OnboardingRecordReducer";
+
+import { View, Text, ScrollView, Alert } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, Header, List, ListItem } from "react-native-elements";
-import { topIOS } from "../../Util/Devices";
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
@@ -91,19 +91,26 @@ class GenderCustomerView extends Component {
       asyncUpdateUser,
       selectedGender,
       token,
-      navigation
+      navigation,
+      email,
+      checkRecord,
+      removeRecord
     } = this.props;
 
     await this.props.updateForm({
       performingRequest: true
     });
 
+    const record = checkRecord(email);
+    const storedToken = record ? record.token : token;
+    const storedId = record ? record.id : id;
+
     const payload = {
-      id,
+      id: storedId,
       gender: selectedGender,
       countryCode: DeviceInfo.getDeviceCountry()
     };
-    asyncUpdateUser(payload, token)
+    asyncUpdateUser(payload, storedToken)
       .then(response => {
         if (response.type === "networkErrors/error") {
           throw new Error(response.payload.data.errors);
@@ -215,9 +222,13 @@ const mS = state => ({
 const mD = {
   GetOptions,
   updateForm,
+  clearForm,
   logInAsync,
   registerDevice,
-  asyncUpdateUser
+  asyncUpdateUser,
+  update,
+  checkRecord,
+  removeRecord
 };
 
 export default connect(mS, mD)(GenderCustomerView);
