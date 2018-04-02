@@ -17,7 +17,6 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.rnfs.RNFSPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.rnopentok.RNOpenTokPackage;
@@ -60,7 +59,6 @@ public class MainApplication extends Application implements ReactApplication {
             new ImageResizerPackage(),
             new RNFSPackage(),
             new LinearGradientPackage(),
-            new SplashScreenReactPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
             new RNOpenTokPackage()
