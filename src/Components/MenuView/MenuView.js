@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { AppState, Linking } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import Instabug from "instabug-reactnative";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import {
@@ -25,6 +26,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import { Button, Badge, Avatar } from "react-native-elements";
 import StarRating from "react-native-star-rating";
 import { isCurrentView } from "../../Util/Helpers";
+import LocaleLanguage from "./../../Util/Devices";
 import DeviceInfo from "react-native-device-info";
 import { Colors, Images } from "../../Themes";
 import styles from "./styles";
@@ -43,6 +45,12 @@ class MenuView extends Component {
     if (!firstName && !lastName) {
       this.props.getProfileAsync(this.props.uuid, this.props.token);
     }
+    Instabug.startWithToken(
+      "f2a7d3f6c14664046f7f03b0c1cc7e7d",
+      Instabug.invocationEvent.none
+    );
+    console.log(DeviceInfo);
+    // Instabug.setLocale(locale);
   }
   componentWillReceiveProps(nextProps) {
     this.forceUpdate();
@@ -178,6 +186,19 @@ class MenuView extends Component {
         >
           <Text style={styles.colorText}>{I18n.t("help")}</Text>
         </Icon.Button> */}
+
+          {/* Report a problem */}
+          <Icon.Button
+            name="report-problem"
+            size={25}
+            backgroundColor={Colors.background}
+            iconStyle={styles.optionMenu}
+            onPress={() => {
+              Instabug.invoke();
+            }}
+          >
+            <Text style={styles.colorText}>{I18n.t("reportProblem")}</Text>
+          </Icon.Button>
 
           {/* Logout */}
           <Icon.Button

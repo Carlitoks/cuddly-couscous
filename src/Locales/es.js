@@ -88,8 +88,8 @@ export default (ESP = {
     "Are we human, because of unique traits and attributes not shared with either",
   female: "Female",
   finish: "Finish",
-  finishOnboarding: "Finish onboarding", 
-  finishOnboardingMessage: 
+  finishOnboarding: "Finish onboarding",
+  finishOnboardingMessage:
     "Please finish your registration in order to use the app",
   firstname: "First Name",
   fluent: "Fluent",
@@ -198,6 +198,7 @@ export default (ESP = {
   recent: "Recent",
   recentCalls: "Recent Calls",
   reconnect: "Reconnecting",
+  reportProblem: "Report a Problem",
   resetpassword: "Reset Password",
   retail: "Retail",
   rni18n: "RN i18n",
