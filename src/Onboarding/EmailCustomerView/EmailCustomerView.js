@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateForm, clearForm } from "../../Ducks/RegistrationCustomerReducer";
-import { asyncCreateUser } from "../../Ducks/CustomerProfileReducer";
+import {
+  updateForm as updateCustomer,
+  asyncCreateUser
+} from "../../Ducks/CustomerProfileReducer";
+import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
+import { updateView } from "../../Ducks/UserProfileReducer";
 import { registerDevice, logInAsync } from "../../Ducks/AuthReducer";
 
 import {
@@ -15,9 +20,10 @@ import {
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { Button, FormInput, Header, CheckBox } from "react-native-elements";
+import { Button, Header, CheckBox } from "react-native-elements";
 import { topIOS } from "../../Util/Devices";
 import _capitalize from "lodash/capitalize";
+
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
@@ -95,7 +101,11 @@ class EmailCustomerView extends Component {
         password,
         deviceToken,
         asyncCreateUser,
-        logInAsync
+        logInAsync,
+        checkRecord,
+        updateCustomer,
+        id,
+        updateView
       } = this.props;
 
       registerDevice()
@@ -120,24 +130,23 @@ class EmailCustomerView extends Component {
         })
         .catch(err => {
           if (this.getResponseError(err) === "user already exists") {
-            navigation.dispatch({
-              type: "LoginView"
-            });
-          }
+            const record = checkRecord(email);
 
-          if (record) {
-            updateCustomer({ userInfo: { id } });
-            updateView({ email: email.toLowerCase() });
-            navigation.dispatch({ type: record.lastStage });
-          } else {
-            navigation.dispatch({
-              type: "LoginView"
-            });
-            const errors = err.payload
-              ? err.payload.response.data.errors
-              : err.response ? err.response.data.errors : err;
+            if (record) {
+              updateCustomer({ userInfo: { id } });
+              updateView({ email: email.toLowerCase() });
+              navigation.dispatch({ type: record.lastStage });
+            } else {
+              navigation.dispatch({
+                type: "LoginView"
+              });
+              const errors = err.payload
+                ? err.payload.response.data.errors
+                : err.response ? err.response.data.errors : err;
+
+              displayFormErrors(errors);
+            }
           }
-          displayFormErrors(errors);
         });
     }
   }
@@ -255,15 +264,14 @@ class EmailCustomerView extends Component {
                       </View>
                     }
                     checked={this.props.eighteenCheck}
+                    containerStyle={styles.containerTransparent}
                     onPress={() => {
                       this.props.updateForm({
                         eighteenCheck: !this.props.eighteenCheck
                       });
                     }}
-                    containerStyle={styles.containerTransparent}
                   />
                 </View>
-
                 <View style={styles.mainContainterText}>
                   <Text
                     style={[
@@ -306,7 +314,9 @@ const mS = state => ({
   eighteenCheck: state.registrationCustomer.eighteenCheck,
   password: state.registrationCustomer.password,
   formHasErrors: state.registrationCustomer.formHasErrors,
-  deviceToken: state.registrationCustomer.deviceToken
+  deviceToken: state.registrationCustomer.deviceToken,
+  id: state.userProfile.id,
+  records: state.onboardingRecord.records
 });
 
 const mD = {
@@ -314,7 +324,10 @@ const mD = {
   clearForm,
   asyncCreateUser,
   registerDevice,
-  logInAsync
+  logInAsync,
+  checkRecord,
+  updateCustomer,
+  updateView
 };
 
 export default connect(mS, mD)(EmailCustomerView);
