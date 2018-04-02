@@ -25,6 +25,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import StarRating from "react-native-star-rating";
 import I18n from "../../I18n/I18n";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import Instabug from "instabug-reactnative";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
 import BottomButton from "../../Components/BottomButton/BottomButton";
@@ -47,7 +48,12 @@ class RateCallView extends Component {
       }`;
     } else return `Zhang W.`;
   }
-
+  componentWillMount() {
+    Instabug.startWithToken(
+      "f2a7d3f6c14664046f7f03b0c1cc7e7d",
+      Instabug.invocationEvent.none
+    );
+  }
   componentWillUnmount() {}
 
   selectImage = () => {
@@ -331,6 +337,7 @@ class RateCallView extends Component {
                     starSize={45}
                     emptyStarColor={Colors.emptyStarColor}
                     fullStarColor={Colors.gradientColorButton.top}
+                    starColor={Colors.gradientColorButton.top}
                   />
                 </View>
               </Row>
@@ -415,7 +422,11 @@ class RateCallView extends Component {
                 </ScrollView>
               </View>
             </Grid>
-            <View style={{ marginBottom: 80 }} />
+            {/* Report a problem */}
+            <Text style={styles.forgotPasswordText} onPress={Instabug.invoke}>
+              {I18n.t("reportProblem")}
+            </Text>
+            <View style={{ marginBottom: 10 }} />
           </ScrollView>
         </HeaderView>
         {/* Rate Linguist */}

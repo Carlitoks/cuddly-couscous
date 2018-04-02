@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-
+import { Fonts, Colors } from "../../Themes";
 const width = Dimensions.get("window").width;
 
 export const styles = StyleSheet.create({
@@ -76,5 +76,13 @@ export const styles = StyleSheet.create({
   questionIcons: {
     paddingLeft: 20,
     paddingRight: 10
+  },
+  forgotPasswordText: {
+    color: Colors.gradientColorButton.top,
+    fontWeight: "bold",
+    textDecorationLine: "underline",
+    padding: 10,
+    marginTop: 15,
+    alignSelf: "center"
   }
 });
