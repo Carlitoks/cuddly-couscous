@@ -112,5 +112,9 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(20),
     fontWeight: "bold",
     color: Colors.listLabelColor
+  },
+  headerButtonCancel: {
+    fontSize: moderateScale(20),
+    color: Colors.primaryColor
   }
 });

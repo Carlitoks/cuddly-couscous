@@ -53,6 +53,16 @@ class CallConfirmationView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
+          headerRightComponent={
+            <Text
+              style={styles.headerButtonCancel}
+              onPress={() => {
+                navigation.dispatch({ type: "Home" });
+              }}
+            >
+              {I18n.t("cancel")}
+            </Text>
+          }
           title={I18n.t("confirmAndConnect")}
         >
           <View style={{ flex: 1 }}>
@@ -188,22 +198,7 @@ class CallConfirmationView extends Component {
                 icon="videocam"
                 long
                 fill
-                bottom={false}
-                relative
-              />
-              {/* Cancel */}
-              <BottomButton
-                onPress={() => {
-                  this.props.clearSettings();
-                  this.props.clearLinguistReducer();
-                  this.props.cleanSelected();
-                  navigation.dispatch({
-                    type: "Home"
-                  });
-                }}
-                title={I18n.t("cancel")}
-                negative
-                bottom={false}
+                bottom={true}
                 relative
               />
             </View>
