@@ -30,9 +30,6 @@ export default StyleSheet.create({
   textBetweenView: {
     borderTopWidth: 0
   },
-  selected: {
-    borderColor: Colors.gradientColorButton.top
-  },
   regText: {
     textAlign: "center",
     justifyContent: "center",
@@ -51,9 +48,6 @@ export default StyleSheet.create({
     fontWeight: "bold",
     backgroundColor: Colors.gradientColor.bottom,
     color: Colors.primaryColor
-  },
-  belowSelected: {
-    borderBottomColor: Colors.gradientColorButton.top
   },
   triangle: {
     marginTop: -15,

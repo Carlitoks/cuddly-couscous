@@ -159,24 +159,6 @@ class ListComponent extends Component {
     }
   };
 
-  getSelectedStyle = index => {
-    if (index >= 0) {
-      if (!!this.props.multiple) {
-        return this.props.selected.indexOf(index) > -1
-          ? styles.selected
-          : this.props.selected.indexOf(index + 1) > -1
-            ? styles.belowSelected
-            : null;
-      } else {
-        return index == this.props.selected
-          ? styles.selected
-          : index == this.props.selected - 1 ? styles.belowSelected : null;
-      }
-    } else {
-      return null;
-    }
-  };
-
   isSelected = index => {
     if (!!this.props.multiple) {
       return this.props.selected.indexOf(index) > -1 ? true : false;
@@ -218,7 +200,6 @@ class ListComponent extends Component {
                 style={[
                   styles.textView,
                   index > 0 ? styles.textBetweenView : null,
-                  this.getSelectedStyle(index)
                 ]}
               >
                 <Text
