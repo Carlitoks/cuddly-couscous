@@ -1,5 +1,5 @@
 import React, { Component, Ref } from "react";
-import { Button, View, Image, Text } from "react-native";
+import { Button, View, Image, Text, Alert } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint-disable-line
@@ -221,13 +221,31 @@ class LinguistView extends Component {
           />
           <CallButton
             onPress={async () => {
-              await OpenTok.sendSignal(
-                this.props.linguistTokboxSessionID,
-                "EndCall",
-                REASON.DONE
-              );
-              this.props.navigation.dispatch({ type: "RateCallView" });
-            }}
+              Alert.alert( 
+                I18n.t("endCall"), 
+                I18n.t("logOutConfirmation"), 
+                [ 
+                  { 
+                    text: I18n.t("cancel"), 
+                    onPress: () => console.log("Cancel Pressed"), 
+                    style: "cancel" 
+                  }, 
+                  { 
+                    text: I18n.t("endCall"), 
+                    onPress: () => { 
+                      await OpenTok.sendSignal( 
+                        this.props.linguistTokboxSessionID, 
+                        "EndCall", 
+                        REASON.DONE 
+                      ); 
+                      this.props.navigation.dispatch({ type: "RateCallView" }); 
+                    } 
+                  } 
+                ], 
+                { cancelable: true } 
+              ); 
+             
+            }} 
             buttonColor="red"
             toggle={false}
             icon="call-end"
