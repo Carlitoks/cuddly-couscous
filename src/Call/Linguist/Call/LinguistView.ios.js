@@ -213,31 +213,30 @@ class LinguistView extends Component {
           />
           <CallButton
             onPress={async () => {
-            Alert.alert(
-              I18n.t("endCall"),
-              I18n.t("logOutConfirmation"),
-              [
-                {
-                  text: I18n.t("cancel"),
-                  onPress: () => console.log("Cancel Pressed"),
-                  style: "cancel"
-                },
-                {
-                  text: I18n.t("endCall"),
-                  onPress: () => {
-                    await OpenTok.sendSignal(
-                      this.props.linguistTokboxSessionID,
-                      "EndCall",
-                      REASON.DONE
-                    );
-                    this.props.navigation.dispatch({ type: "RateCallView" });
+              Alert.alert(
+                I18n.t("endCall"),
+                I18n.t("logOutConfirmation"),
+                [
+                  {
+                    text: I18n.t("cancel"),
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  {
+                    text: I18n.t("endCall"),
+                    onPress: async () => {
+                      await OpenTok.sendSignal(
+                        this.props.linguistTokboxSessionID,
+                        "EndCall",
+                        REASON.DONE
+                      );
+                      this.props.navigation.dispatch({ type: "RateCallView" });
+                    }
                   }
-                }
-              ],
-              { cancelable: true }
-            );
-          
-          }}
+                ],
+                { cancelable: true }
+              );
+            }}
             buttonColor="red"
             toggle={false}
             icon="call-end"
