@@ -209,7 +209,6 @@ class EmailCustomerView extends Component {
                     value={this.props.email}
                     keyboardType={"email-address"}
                     maxLength={64}
-                    autoFocus={true}
                   />
                   <InputPassword
                     inputStyle={styles.formInput}
