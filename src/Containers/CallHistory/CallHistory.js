@@ -60,8 +60,11 @@ class CallHistory extends Component {
               createdAt: moment(item.session.createdAt).format(
                 "MMM DD, h:mm A"
               ),
-              scenario: !_isUndefined(item.session.scenario)
+              category: !_isUndefined(item.session.scenario)
                 ? item.session.scenario.category
+                : "",
+              title: !_isUndefined(item.session.scenario)
+                ? item.session.scenario.title
                 : "",
               avatarURL: item[userType].avatarURL,
               chevron: false

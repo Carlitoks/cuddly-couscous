@@ -72,15 +72,18 @@ class SessionInfoView extends Component {
                 <Grid style={styles.summaryContainer}>
                   <List containerStyle={{ borderTopWidth: 0 }}>
                     {/* Type of Assistance*/}
-                    {sessionInfo.scenario ? (
+                    {sessionInfo.category && sessionInfo.title ? (
                       <ListItem
                         containerStyle={styles.listItemContainer}
                         hideChevron
-                        title={I18n.t("generalAssistance").toUpperCase()}
+                        title={
+                          sessionInfo.category.charAt(0).toUpperCase() +
+                          sessionInfo.category.slice(1)
+                        }
                         titleStyle={styles.titleStyle}
                         subtitle={
-                          sessionInfo.scenario.charAt(0).toUpperCase() +
-                          sessionInfo.scenario.slice(1)
+                          sessionInfo.title.charAt(0).toUpperCase() +
+                          sessionInfo.title.slice(1)
                         }
                         subtitleStyle={styles.listSubtitle}
                       />
