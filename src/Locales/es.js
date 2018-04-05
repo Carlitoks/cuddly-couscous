@@ -180,6 +180,7 @@ export default (ESP = {
   password: "Password",
   passwordAnd: "and",
   passwordLinguistText: "By tapping Next you agree with our",
+  passwordLength: "Your password must be at least 5 characters long.",
   permissionDenied: "App Permission Denied",
   preferedNameTitle: "Prefered Name",
   preferredLinguistText: "I preferred to be called ...",

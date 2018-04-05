@@ -224,10 +224,12 @@ class EmailCustomerView extends Component {
                     value={this.props.password}
                     sec
                   />
-                  <Text style={styles.formText}>
-                    {I18n.t("checkYourEmailOnBoarding")}
-                  </Text>
-
+                  {this.props.password != "" &&
+                  this.props.password.length < 8 ? (
+                    <Text style={styles.passwordValidationText}>
+                      {I18n.t("passwordLengthValidation")}
+                    </Text>
+                  ) : null}
                   <CheckBox
                     title={
                       <View style={styles.marginLeft10}>

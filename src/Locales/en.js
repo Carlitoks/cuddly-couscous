@@ -190,6 +190,7 @@ export default (ENG = {
   passwordLinguistText: "By tapping Next you agree with our",
   permissionDenied: "App Permission Denied",
   passwordMatch: "The passwords do not match.",
+  passwordLengthValidation: "Password must be 8 or more characters.",
   preferedNameTitle: "Preferred name",
   preferNotToDisclose: "Prefer not to disclose",
   preferredLinguistText: "I prefer to be called ...",

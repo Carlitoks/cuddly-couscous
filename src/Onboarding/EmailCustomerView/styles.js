@@ -91,5 +91,15 @@ export default StyleSheet.create({
   containerTransparent: {
     borderColor: "transparent",
     backgroundColor: "transparent"
+  },
+  borderTransparent: {
+    borderColor: "transparent"
+  },
+  passwordValidationText: {
+    fontSize: 15,
+    color: Colors.gradientColorButton.top,
+    paddingTop: moderateScale(10),
+    paddingBottom: moderateScale(15),
+    marginLeft: 18
   }
 });
