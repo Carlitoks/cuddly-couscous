@@ -16,11 +16,6 @@ import PushNotifications from "../Util/PushNotification";
 import { getGeolocationCoords } from "../Util/Helpers";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { HomeView: null };
-  }
-
   componentWillMount() {
     const {
       isLoggedIn,
@@ -40,22 +35,20 @@ class Home extends Component {
         updateView({
           selectedNativeLanguage: getNativeLang(nativeLangCode)
         });
-        const homeView = this.chooseComponent();
-        this.setState({ HomeView: homeView });
       });
     }
   }
 
-  chooseComponent = () => {
-    if (this.props.linguistProfile) {
-      return <HomeLinguist navigation={this.props.navigation} />;
-    } else {
-      return <HomeCustomer navigation={this.props.navigation} />;
-    }
-  };
-
   render() {
-    return <View>{this.state.HomeView}</View>;
+    return (
+      <View>
+        {this.props.linguistProfile ? (
+          <HomeLinguist navigation={this.props.navigation} />
+        ) : (
+          <HomeCustomer navigation={this.props.navigation} />
+        )}
+      </View>
+    );
   }
 }
 
