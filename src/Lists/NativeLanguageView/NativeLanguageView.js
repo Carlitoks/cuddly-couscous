@@ -181,6 +181,7 @@ class NativeLanguageView extends Component {
               changeSelected={index => this.changeSelected(index)}
               gradient
               scrollable
+              leftText
               initial={this.state.selectedIndex}
             />
           </View>

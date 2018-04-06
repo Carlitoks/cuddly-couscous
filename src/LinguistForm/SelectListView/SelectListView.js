@@ -136,6 +136,7 @@ class SelectListView extends Component {
             navigation.dispatch({ type: continueTo });
           }
         }}
+        leftText
         multiple={false}
         selected={selectedItemsList}
         other={{ other: true, title: "Other" }}

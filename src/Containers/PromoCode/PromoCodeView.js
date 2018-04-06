@@ -15,7 +15,7 @@ import LinearGradient from "react-native-linear-gradient";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
@@ -83,14 +83,12 @@ class PromoCodeView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
           headerLeftComponent={
-            <GoBackButton navigation={this.props.navigation} />
+            <ShowMenuButton navigation={this.props.navigation} />
           }
-          title={I18n.t("promoCodeTitle")}
-        >
+          title={I18n.t("promoCodeTitle")}>
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-          >
+            style={styles.scrollContainer}>
             <View>
               {/* Email */}
               <InputRegular

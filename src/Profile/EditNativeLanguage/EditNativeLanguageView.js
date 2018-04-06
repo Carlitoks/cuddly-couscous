@@ -148,6 +148,7 @@ class EditNativeLanguageView extends Component {
               }}
               changeSelected={index => this.changeSelected(index)}
               gradient
+              leftText
               scrollable
             />
           </View>

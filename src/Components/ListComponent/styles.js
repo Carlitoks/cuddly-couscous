@@ -24,6 +24,7 @@ export default StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: Colors.bordersLightGrey,
+    backgroundColor: Colors.lighterPurple,
     width: "100%",
     height: 38
   },
@@ -46,8 +47,8 @@ export default StyleSheet.create({
   selectedText: {
     fontFamily: Fonts.primaryBoldFont,
     fontWeight: "bold",
-    backgroundColor: Colors.gradientColor.bottom,
-    color: Colors.primaryColor
+    backgroundColor: Colors.lightPurple,
+    color: Colors.gradientColor.bottom
   },
   triangle: {
     marginTop: -15,
@@ -81,7 +82,7 @@ export default StyleSheet.create({
     position: "absolute",
     right: 0,
     zIndex: 0,
-    backgroundColor: Colors.gradientColor.bottom,
-    color: "white"
+    backgroundColor: "transparent",
+    color: Colors.gradientColor.bottom
   }
 });

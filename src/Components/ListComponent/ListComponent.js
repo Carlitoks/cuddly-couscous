@@ -199,7 +199,7 @@ class ListComponent extends Component {
               <View
                 style={[
                   styles.textView,
-                  index > 0 ? styles.textBetweenView : null,
+                  index > 0 ? styles.textBetweenView : null
                 ]}
               >
                 <Text
@@ -227,13 +227,13 @@ class ListComponent extends Component {
                 >
                   {this.getTitle(item)}
                 </Text>
-                {item.other ? (
+                {item.other || this.isSelected(index) ? (
                   <Icon
                     pointerEvents={"none"}
                     style={
                       this.isSelected(index) ? styles.iconSelected : styles.icon
                     }
-                    name="chevron-right"
+                    name={item.other ? "chevron-right" : "check"}
                     size={moderateScale(40)}
                     color={Colors.gray}
                   />

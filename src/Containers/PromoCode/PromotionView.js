@@ -107,6 +107,7 @@ class PromotionView extends Component {
 
           navigation.dispatch({ type: "CallConfirmationView" });
         }}
+        leftText
         multiple={false}
         selected={listItemSelected}
         other={{ other: true, title: "Other" }}

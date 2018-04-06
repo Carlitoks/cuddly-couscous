@@ -93,6 +93,7 @@ class SelectListView extends Component {
 
           this.props.navigation.dispatch({ type: "CallConfirmationView" });
         }}
+        leftText
         multiple={false}
         selected={this.state.scenarioIndex}
         other={{ other: true, title: "Other" }}
