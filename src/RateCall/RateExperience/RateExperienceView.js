@@ -50,7 +50,7 @@ class RateCallView extends Component {
   }
   componentWillMount() {
     Instabug.startWithToken(
-      "f2a7d3f6c14664046f7f03b0c1cc7e7d",
+      "83f07c5f8dcb8496e3287f280ce6f61d",
       Instabug.invocationEvent.none
     );
   }
