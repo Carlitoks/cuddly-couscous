@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions, Platform } from "react-native";
 import { Fonts, Colors } from "../../Themes";
 import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
-
+import { Iphone5 } from "../../Util/Devices";
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
@@ -113,7 +113,7 @@ export default StyleSheet.create({
     width: width,
     alignSelf: "center",
     alignItems: "center",
-    height: 70
+    height: Iphone5 ? 30 : 70
   },
   stars: {
     width: 100,

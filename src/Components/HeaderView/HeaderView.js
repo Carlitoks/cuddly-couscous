@@ -321,7 +321,7 @@ const HeaderView = ({
 
         {/* Linguist Home Calls/Amount Section */}
         {calls != null && !!amount != null ? (
-          <View style={{ height: 100 }}>
+          <View style={{ height: 70 }}>
             <Card
               style={{ alignContent: "space-betwen", height: 50 }}
               wrapperStyle={{ flex: 1, alignContent: "space-around" }}

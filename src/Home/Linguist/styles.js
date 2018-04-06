@@ -16,7 +16,8 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: width
+    width: width,
+    marginTop: -20
   },
   logo: {
     marginTop: moderateScale(23),
@@ -82,7 +83,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryBaseFont,
     color: Colors.primaryColor,
     marginLeft: moderateScale(15),
-    backgroundColor: "rgba(255, 255, 255, 0)" 
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   badgeText: {
     color: Colors.badgeColor,
@@ -127,7 +128,7 @@ export default StyleSheet.create({
     width: 100,
     marginTop: moderateScale(11),
     marginBottom: moderateScale(13),
-    backgroundColor: "rgba(255, 255, 255, 0)" 
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   recentCallsTitle: {
     marginLeft: 10,
