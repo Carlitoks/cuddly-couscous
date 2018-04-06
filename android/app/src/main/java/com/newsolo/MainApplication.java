@@ -41,7 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             		new RNInstabugReactnativePackage.Builder("YOUR_ANDROID_APPLICATION_TOKEN",MainApplication.this)
-							.setInvocationEvent("shake")
+							.setInvocationEvent("screenshot")
 							.setPrimaryColor("#1D82DC")
 							.setFloatingEdge("left")
 							.setFloatingButtonOffsetFromTop(250)

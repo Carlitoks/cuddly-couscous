@@ -9,7 +9,8 @@ import {
   incrementTimer,
   resetTimerAsync,
   clearSettings,
-  EndCall
+  EndCall,
+  verifyCall
 } from "../../../Ducks/CallCustomerSettings";
 import {
   tokConnect,
@@ -17,6 +18,7 @@ import {
   update,
   clear
 } from "../../../Ducks/tokboxReducer";
+import CallButtonToggle from "./../../../Components/CallButtonToggle/CallButtonToggle";
 import {
   clearSettings as clearCallSettings,
   updateSettings as updateContactLinguistSettings,
@@ -144,6 +146,20 @@ class CustomerView extends Component {
     });
   };
 
+  verifyCallCustomer = () => {
+    this.props.updateSettings({
+      verifyCallId: setInterval(
+        () =>
+          this.props.verifyCall(
+            this.props.sessionID,
+            this.props.token,
+            this.props.verifyCallId
+          ),
+        5000
+      )
+    });
+  };
+
   reconnectCall = () => {
     const {
       customerTokboxSessionToken,
@@ -168,21 +184,10 @@ class CustomerView extends Component {
         estimatedMinutes: selectedTime,
         scenarioID: selectedScenarioId,
         token: token
-      }).then(async result => {
-        if (result && !result.data.notLinguistAvailable) {
-          const tokboxSessionId = result.data.tokboxSessionID;
-          const tokboxToken = result.data.tokboxSessionToken;
-
-          await tokConnect(tokboxSessionId, tokboxToken);
-        } else {
-          // deploy reconnect modal
-          clearInterval(this.props.counterId);
-          this.props.updateContactLinguistSettings({
-            modalReconnect: true,
-            counter: TIME.RECONNECT,
-            messageReconnect: I18n.t("notLinguistAvailable")
-          });
-        }
+      }).then(async response => {
+        const { tokboxSessionID, tokboxSessionToken } = response;
+        this.verifyCallCustomer();
+        await tokConnect(tokboxSessionID, tokboxSessionToken);
       });
     } catch (e) {
       console.log("The session could not be created", e);
@@ -321,25 +326,27 @@ class CustomerView extends Component {
             </Text>
           </View>
           <View style={styles.containerButtons}>
-            <CallButton
+            <CallButtonToggle
               onPress={() => {
-                if (typeof this.ref !== "string") this.ref.switchCamera();
+                if (typeof this.ref !== "string") {
+                  this.ref.switchCamera();
+                }
               }}
               toggle={true}
+              active={this.props.rotate}
+              name="CustomerCamera"
               icon="camera-front"
               iconToggled="camera-rear"
               opacity={0.7}
               buttonSize={65}
               iconSize={30}
             />
-            <CallButton
-              onPress={() => {
-                this.props.updateSettings({ speaker: !this.props.speaker });
-              }}
+            <CallButtonToggle
               toggle={true}
               active={!this.props.speaker}
-              icon="volume-up"
-              iconToggled="volume-off"
+              name="CustomerSpeaker"
+              icon="volume-off"
+              iconToggled="volume-up"
               opacity={0.7}
               buttonSize={65}
               iconSize={30}
@@ -354,38 +361,20 @@ class CustomerView extends Component {
               buttonSize={65}
               iconSize={30}
             />
-            <CallButton
-              onPress={() => {
-                setPermission("microphone").then(response => {
-                  if (response == "denied" || response == "restricted") {
-                    displayOpenSettingsAlert();
-                  }
-                  this.props.updateSettings({
-                    mute: !this.props.mute
-                  });
-                });
-              }}
+            <CallButtonToggle
               toggle={true}
               active={this.props.mute}
-              icon="mic"
-              iconToggled="mic-off"
+              name="CustomerMute"
+              icon="mic-off"
+              iconToggled="mic"
               opacity={0.7}
               buttonSize={65}
               iconSize={30}
             />
-            <CallButton
-              onPress={() => {
-                setPermission("camera").then(response => {
-                  if (response == "denied" || response == "restricted") {
-                    displayOpenSettingsAlert();
-                  }
-                  this.props.updateSettings({
-                    video: !this.props.video
-                  });
-                });
-              }}
+            <CallButtonToggle
               toggle={true}
-              active={!this.props.video}
+              active={this.props.video}
+              name="CustomerVideo"
               icon="videocam"
               iconToggled="videocam-off"
               opacity={0.7}
@@ -430,7 +419,8 @@ const mS = state => ({
   linguist: state.sessionInfo.linguist,
   counter: state.contactLinguist.counter,
   networkInfoType: state.networkInfo.type,
-  counterId: state.contactLinguist.counterId
+  counterId: state.contactLinguist.counterId,
+  verifyCallId: state.callCustomerSettings.verifyCallId
 });
 
 const mD = {
@@ -448,7 +438,8 @@ const mD = {
   GetSessionInfoLinguist,
   updateContactLinguistSettings,
   incrementCounter,
-  clear
+  clear,
+  verifyCall
 };
 
 export default connect(mS, mD)(CustomerView);
