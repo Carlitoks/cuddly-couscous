@@ -118,9 +118,9 @@ class GenderCustomerView extends Component {
 
         removeRecord();
       })
-      .then(() => {
-        this.props.clearForm();
-      })
+      // .then(() => {
+      //   this.props.clearForm();
+      // })
       .then(() => {
         navigation.dispatch({ type: "WelcomeCustomerView" });
       })

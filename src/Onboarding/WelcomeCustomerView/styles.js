@@ -32,7 +32,7 @@ export default StyleSheet.create({
     position: "relative"
   },
   logoImage: {
-    width: 250,
+    width: 200,
     height: 80,
     resizeMode: "contain"
   },
@@ -43,6 +43,12 @@ export default StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     flex: 1,
+    backgroundColor: "transparent"
+  },
+  subtitle: {
+    fontSize: 20,
+    color: Colors.primaryColor,
+    alignSelf: "center",
     backgroundColor: "transparent"
   }
 });

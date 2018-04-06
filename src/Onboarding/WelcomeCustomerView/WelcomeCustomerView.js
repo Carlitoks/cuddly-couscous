@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
 import {
   View,
   Text,
@@ -8,7 +8,8 @@ import {
   Image,
   ActivityIndicator
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { clearForm } from "../../Ducks/RegistrationCustomerReducer";
+import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
@@ -16,6 +17,7 @@ import BottomButton from "../../Components/BottomButton/BottomButton";
 
 import Waves from "../../SVG/waves";
 import WavesOrange from "../../SVG/wavesOrange";
+import { SkypeIndicator } from "react-native-indicators";
 
 import styles from "./styles";
 import { Colors, Images } from "../../Themes";
@@ -38,8 +40,14 @@ class WelcomeCustomerView extends Component {
       }, 2000);
     }, 2000);
   }
+
+  componentWillUnmount() {
+    this.props.clearForm();
+  }
+
   render() {
     const { width, height } = Dimensions.get("window");
+    const { firstname } = this.props;
     return (
       <ViewWrapper style={styles.scrollContainer}>
         {/* SVG White Waves */}
@@ -56,15 +64,18 @@ class WelcomeCustomerView extends Component {
           <View style={[styles.logo, styles.center]} source={Images.logo}>
             <Image source={Images.jeenieLogo} style={styles.logoImage} />
           </View>
+          <Text style={styles.subtitle}>
+            {I18n.t("niceToMeetYou")}
+            {firstname}!
+          </Text>
           <View style={styles.loading}>
             {this.state.loading ? (
-              <ActivityIndicator size="large" color={Colors.primaryColor} />
+              <SkypeIndicator size={100} color="white" />
             ) : (
               <Icon
-                name="check-circle"
-                size={140}
-                color={Colors.green}
-                iconStyle={styles.icon}
+                name="ios-checkmark-circle-outline"
+                size={120}
+                color={Colors.white}
               />
             )}
           </View>
@@ -74,4 +85,12 @@ class WelcomeCustomerView extends Component {
   }
 }
 
-export default WelcomeCustomerView;
+const mD = {
+  clearForm
+};
+
+const mS = state => ({
+  firstname: state.registrationCustomer.firstname
+});
+
+export default connect(mS, mD)(WelcomeCustomerView);

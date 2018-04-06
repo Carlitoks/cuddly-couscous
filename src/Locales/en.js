@@ -170,6 +170,7 @@ export default (ENG = {
   nativeLanguage: "Select Native Language",
   needsAddress: "Were your needs addressed?",
   newaccount: "Create new account?",
+  niceToMeetYou: "Nice To Meet You, ",
   next: "Next",
   no: "No",
   noItems: "No Items",
