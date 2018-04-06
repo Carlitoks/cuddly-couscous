@@ -22,6 +22,8 @@ import DeviceInfo from "react-native-device-info";
     negative: Boolean to make button negative ie. transparent with colored text,
     bottom: Boolean to make button paddingBottom property 0.
     relative: Boolean to make View style changes from absolute to relative,
+    absolute: Boolean to make View style changes from absolute to absolute,    
+    grafient: Boolean to make add a white to transparent gradient as background,
     icon: String containing the Icon name,
     customStyle: Custom styles for View Component,
     whiteText: Boolean to turn text color white,
@@ -41,6 +43,8 @@ const BottomButton = ({
   negative,
   bottom,
   relative,
+  absolute,
+  gradient,
   icon,
   whiteText,
   customStyle,
@@ -58,6 +62,15 @@ const BottomButton = ({
           !!relative ? styles.relative : null
         ]}
       >
+        {gradient ? (
+          <LinearGradient
+            colors={[
+              Colors.bottomButtonGradient.top,
+              Colors.bottomButtonGradient.bottom
+            ]}
+            style={[styles.linearGradientBackground]}
+          />
+        ) : null}
         <LinearGradient
           colors={
             fill
@@ -69,7 +82,11 @@ const BottomButton = ({
               : ["rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)"]
           }
           locations={[0.0, 1.0]}
-          style={[styles.linearGradient, long ? styles.long : null]}
+          style={[
+            styles.linearGradient,
+            long ? styles.long : null,
+            absolute ? styles.spaceBottom : null
+          ]}
           //Left to Right
           start={{ x: 0.0, y: 0.5 }}
           end={{ x: 1.0, y: 0.5 }}

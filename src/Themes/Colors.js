@@ -23,6 +23,10 @@ const colors = {
     top: "transparent",
     bottom: "#fb6a28"
   },
+  bottomButtonGradient: {
+    top: "rgba(255,255,255,0.1)",
+    bottom: "white"
+  },
   linguistFormButton: "#ebedfa",
   linguistFormText: "#677bd8",
   onTintColor: "#4cd963",

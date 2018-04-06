@@ -208,16 +208,19 @@ class EditNameView extends Component {
               </Col>
             </Grid>
           </ScrollView>
+          {/* Save Button */}
+          <BottomButton
+            title={I18n.t("save")}
+            onPress={() => {
+              this.submit();
+            }}
+            bold={false}
+            fill
+            absolute
+            gradient
+            bottom
+          />
         </HeaderView>
-        {/* Save Button */}
-        <BottomButton
-          title={I18n.t("save")}
-          onPress={() => {
-            this.submit();
-          }}
-          bold={false}
-          fill
-        />
       </ViewWrapper>
     );
   }

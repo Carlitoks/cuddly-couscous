@@ -152,17 +152,20 @@ class EditNativeLanguageView extends Component {
               scrollable
             />
           </View>
+          {/* Save Button */}
+          <BottomButton
+            title={I18n.t("save")}
+            onPress={() => {
+              this.props.updateSettings({ searchQuery: "" });
+              this.submit();
+            }}
+            relative
+            fill
+            absolute
+            gradient
+            bottom
+          />
         </HeaderView>
-        {/* Save Button */}
-        <BottomButton
-          title={I18n.t("save")}
-          onPress={() => {
-            this.props.updateSettings({ searchQuery: "" });
-            this.submit();
-          }}
-          relative
-          fill
-        />
       </ViewWrapper>
     );
   }

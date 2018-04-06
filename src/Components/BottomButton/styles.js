@@ -74,11 +74,23 @@ export default StyleSheet.create({
   relative: {
     position: "relative"
   },
+  absolute: {
+    position: "absolute",
+    bottom: 0
+  },
   spinner: {
     flex: 1,
     position: "absolute"
   },
   transparent: {
     backgroundColor: "transparent"
+  },
+  linearGradientBackground: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
+  spaceBottom: {
+    marginBottom: 15
   }
 });

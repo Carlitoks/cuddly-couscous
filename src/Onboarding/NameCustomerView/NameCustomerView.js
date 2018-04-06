@@ -221,15 +221,18 @@ class NameCustomerView extends Component {
               </Col>
             </Grid>
           </ScrollView>
+          {/* Next Button */}
+          <BottomButton
+            title={I18n.t("next")}
+            onPress={() => this.submit()}
+            bold={false}
+            disabled={this.isDisabled()}
+            fill={!this.isDisabled()}
+            absolute
+            gradient
+            bottom
+          />
         </HeaderView>
-        {/* Next Button */}
-        <BottomButton
-          title={I18n.t("next")}
-          onPress={() => this.submit()}
-          bold={false}
-          disabled={this.isDisabled()}
-          fill={!this.isDisabled()}
-        />
       </ViewWrapper>
     );
   }

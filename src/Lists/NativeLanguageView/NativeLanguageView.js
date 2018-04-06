@@ -185,14 +185,17 @@ class NativeLanguageView extends Component {
               initial={this.state.selectedIndex}
             />
           </View>
+          {/* Next Button */}
+          <BottomButton
+            title={I18n.t("next")}
+            relative
+            onPress={() => this.submit()}
+            fill
+            absolute
+            gradient
+            bottom
+          />
         </HeaderView>
-        {/* Next Button */}
-        <BottomButton
-          title={I18n.t("next")}
-          relative
-          onPress={() => this.submit()}
-          fill
-        />
       </ViewWrapper>
     );
   }
@@ -200,7 +203,7 @@ class NativeLanguageView extends Component {
 
 // MAP STATE TO PROPS HERE
 const mS = state => ({
-  id: state.customerProfile.userInfo.id,
+  // id: state.customerProfile.userInfo.id,
   email: state.registrationCustomer.email,
   emailUserProfile: state.userProfile.email,
   selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,

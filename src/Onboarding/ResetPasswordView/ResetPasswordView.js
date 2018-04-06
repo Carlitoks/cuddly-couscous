@@ -138,13 +138,16 @@ class ResetPasswordView extends Component {
               </Col>
             </Grid>
           </ScrollView>
+          {/* Next Button */}
+          <BottomButton
+            title={I18n.t("next")}
+            onPress={() => this.submit()}
+            disabled={!this.props.password || !this.props.confirmPassword}
+            absolute
+            gradient
+            bottom
+          />
         </HeaderView>
-        {/* Next Button */}
-        <BottomButton
-          title={I18n.t("next")}
-          onPress={() => this.submit()}
-          disabled={!this.props.password || !this.props.confirmPassword}
-        />
       </ViewWrapper>
     );
   }

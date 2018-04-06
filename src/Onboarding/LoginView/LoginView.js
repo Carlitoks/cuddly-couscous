@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Alert, Platform, ScrollView, View, Text, Keyboard } from "react-native";
+import {
+  Alert,
+  Platform,
+  ScrollView,
+  View,
+  Text,
+  Keyboard
+} from "react-native";
 import { Button, FormLabel, Header } from "react-native-elements";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -212,15 +219,18 @@ class LoginView extends Component {
               </Col>
             </Grid>
           </ScrollView>
+          {/* Sign In Button */}
+          <BottomButton
+            title={I18n.t("signIn")}
+            onPress={() => this.submit()}
+            bold={true}
+            disabled={!this.props.email || !this.props.password}
+            fill={this.props.email && this.props.password}
+            absolute
+            gradient
+            bottom
+          />
         </HeaderView>
-        {/* Sign In Button */}
-        <BottomButton
-          title={I18n.t("signIn")}
-          onPress={() => this.submit()}
-          bold={true}
-          disabled={!this.props.email || !this.props.password}
-          fill={this.props.email && this.props.password}
-        />
       </ViewWrapper>
     );
   }
