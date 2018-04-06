@@ -21,6 +21,7 @@ import { View, AppState, Text } from "react-native";
 import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import { Iphone5 } from "../../Util/Devices";
 
 /**
  * @description Generic call button component
@@ -140,14 +141,14 @@ class CallButtonToggle extends Component {
             this.toggleIcon();
           }}
           buttonStyle={{
-            height: this.props.buttonSize,
-            width: this.props.buttonSize,
+            height: !Iphone5 ? this.props.buttonSize : 55,
+            width: !Iphone5 ? this.props.buttonSize : 55,
             justifyContent: "center",
             borderRadius: 100
           }}
           icon={{
             name: this.state.iconName,
-            size: this.props.iconSize,
+            size: !Iphone5 ? this.props.iconSize : 23,
             color: "white",
             buttonStyle: { textAlign: "center", right: 10 }
           }}

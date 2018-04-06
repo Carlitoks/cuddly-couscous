@@ -244,8 +244,10 @@ class MenuView extends Component {
             </Icon.Button>
           )}
         </ScrollView>
-        <View style={styles.version}>
-          <Text style={styles.textVersion}>version {Version}</Text>
+        <View style={styles.containerVersion}>
+          <View style={styles.version}>
+            <Text style={styles.textVersion}>version {Version}</Text>
+          </View>
         </View>
       </View>
     );

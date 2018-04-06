@@ -108,16 +108,21 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    marginBottom: 50
   },
   container: {
     flex: 1
   },
   version: {
-    bottom: 0,
-    position: "absolute",
     alignSelf: "center",
     marginBottom: 20
+  },
+  containerVersion: {
+    width: "100%",
+    bottom: 0,
+    backgroundColor: "white",
+    position: "absolute"
   },
   textVersion: {
     color: Colors.gray,
