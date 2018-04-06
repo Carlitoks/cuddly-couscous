@@ -302,11 +302,7 @@ class CustomerView extends Component {
               thumbTintColor={Colors.thumbTintColor}
               tintColor={Colors.tintColor}
             />
-            <Text style={styles.extraTime}>
-              {this.props.customerExtraTime
-                ? I18n.t("disableExtraTime")
-                : I18n.t("allowExtraTime")}
-            </Text>
+            <Text style={styles.extraTime}>{I18n.t("allowExtraTime")}</Text>
           </View>
           <View style={styles.containerButtons}>
             <CallButtonToggle
