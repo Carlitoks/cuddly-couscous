@@ -133,6 +133,7 @@ export default (ESP = {
     "Future versions of Jeenie will support all languages, and you will be able to select them here.",
   lastname: "Last Name",
   legal: "Legal",
+  letsGoToKwon: "Let’s Get to Know You",
   linguist: "Linguist",
   linguistEmail: "Email",
   linguistEmailTitle: "Create Your Account",

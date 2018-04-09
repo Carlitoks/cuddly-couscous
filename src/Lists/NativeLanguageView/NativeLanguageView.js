@@ -8,7 +8,7 @@ import { update, checkRecord } from "../../Ducks/OnboardingRecordReducer";
 
 import { filter, findIndex } from "lodash";
 
-import { View, ActivityIndicator, Keyboard } from "react-native";
+import { View, ActivityIndicator, Keyboard, Text } from "react-native";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
@@ -153,7 +153,10 @@ class NativeLanguageView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={I18n.t("nativeLanguage")}
+          headerCenterComponent={
+            <Text style={styles.mainTitle}>{I18n.t("nativeLanguage")}</Text>
+          }
+          NoWaves
         >
           <View style={styles.scrollContainer}>
             <SearchBar

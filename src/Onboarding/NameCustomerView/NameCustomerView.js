@@ -152,13 +152,16 @@ class NameCustomerView extends Component {
           // headerLeftComponent={
           //   <GoBackButton navigation={this.props.navigation} />
           // }
-          title={
-            preferredName
-              ? `${preferredName}`
-              : mainTitle || lastname
-                ? `${mainTitle} ${lastname}`
-                : I18n.t("helpUsGet")
+          headerCenterComponent={
+            <Text style={styles.mainTitle}>
+              {preferredName
+                ? `${preferredName}`
+                : mainTitle || lastname
+                  ? `${mainTitle} ${lastname}`
+                  : I18n.t("letsGoToKwon")}
+            </Text>
           }
+          NoWaves
         >
           <ScrollView
             keyboardShouldPersistTaps="handled"

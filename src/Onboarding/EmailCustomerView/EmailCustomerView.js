@@ -188,7 +188,10 @@ class EmailCustomerView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={I18n.t("linguistEmailTitle")}
+          headerCenterComponent={
+            <Text style={styles.mainTitle}>{I18n.t("linguistEmailTitle")}</Text>
+          }
+          NoWaves
         >
           <ScrollView
             keyboardShouldPersistTaps="handled"

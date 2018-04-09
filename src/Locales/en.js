@@ -140,6 +140,7 @@ export default (ENG = {
     "Future versions of Jeenie will support all languages, and you will be able to select them here.",
   lastname: "Last name",
   legal: "Legal",
+  letsGoToKwon: "Let’s Get to Know You",
   linguist: "Linguist",
   linguistEmail: "Email",
   linguistEmailSubtitle: "A confirmation email will be sent to you",

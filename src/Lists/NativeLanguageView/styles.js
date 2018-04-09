@@ -50,5 +50,13 @@ export default StyleSheet.create({
     width: "100%",
     position: "absolute",
     zIndex: 10
+  },
+  mainTitle: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 20,
+    color: Colors.primaryColor,
+    marginTop: moderateScale(10),
+    textAlign: "center",
+    backgroundColor: "transparent"
   }
 });

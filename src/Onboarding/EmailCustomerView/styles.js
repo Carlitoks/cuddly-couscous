@@ -17,10 +17,10 @@ export default StyleSheet.create({
   },
   mainTitle: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 24,
+    fontSize: 20,
     textAlign: "center",
     marginBottom: moderateScale(50),
-    marginTop: moderateScale(20),
+    marginTop: 38,
     color: "white",
     backgroundColor: "transparent"
   },
