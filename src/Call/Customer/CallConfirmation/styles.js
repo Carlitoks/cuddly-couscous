@@ -30,6 +30,13 @@ export const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: Colors.primaryColor
   },
+  titleCall: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 20,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    backgroundColor: "transparent"
+  },
   linearGradient: {
     position: "absolute",
     width: "100%",

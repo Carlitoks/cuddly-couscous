@@ -64,7 +64,10 @@ class CallConfirmationView extends Component {
               {I18n.t("cancel")}
             </Text>
           }
-          title={I18n.t("confirmAndConnect")}
+          headerCenterComponent={
+            <Text style={styles.titleCall}>{I18n.t("confirmAndConnect")}</Text>
+          }
+          NoWaves
         >
           <View style={{ flex: 1 }}>
             <ScrollView

@@ -54,6 +54,7 @@ import styles from "./styles";
     amount: Amount of money earned by linguist,
     navigation: In case ConnectMe is true send the navigation component
  *
+ * The gradient appears when the header have waves
 */
 
 const HeaderView = ({
@@ -84,7 +85,8 @@ const HeaderView = ({
   amount,
   navigation,
   children,
-  loading
+  loading,
+  NoWaves
 }) => {
   const { width, height } = Dimensions.get("window");
   function getHeader() {
@@ -92,14 +94,17 @@ const HeaderView = ({
       <View>
         {/* Header */}
         <View
-          style={{ height: !!avatarSource || !!switchOnChange ? null : 145 }}
+          style={{
+            height:
+              !!avatarSource || !!switchOnChange ? null : !!title ? 145 : 75
+          }}
         >
           {/* Linear Gradient */}
           <LinearGradient
             colors={[
               Colors.gradientColor.top,
               //Colors.gradientColor.middle,
-              Colors.gradientColor.bottom
+              !NoWaves ? Colors.gradientColor.bottom : Colors.gradientColor.top
             ]}
             style={styles.linearGradient}
           />
@@ -108,11 +113,13 @@ const HeaderView = ({
           <View
             style={{ position: "absolute", bottom: 0, alignSelf: "flex-end" }}
           >
-            <Waves
-              width={width}
-              height={width * 80 / 750}
-              viewBox={"0 0 750 80"}
-            />
+            {!NoWaves && (
+              <Waves
+                width={width}
+                height={width * 80 / 750}
+                viewBox={"0 0 750 80"}
+              />
+            )}
           </View>
 
           {/* Header - Navigation */}
