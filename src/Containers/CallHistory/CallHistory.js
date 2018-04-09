@@ -174,10 +174,13 @@ class CallHistory extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
+          headerCenterComponent={
+            <Text style={styles.mainTitle}>{I18n.t("callHistory")}</Text>
+          }
           tabValues={tabValues}
           tabSelectedIndex={this.props.selectedIndex}
           onTabPress={this.handleIndexChange}
-          title={I18n.t("callHistory")}
+          NoWaves
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}

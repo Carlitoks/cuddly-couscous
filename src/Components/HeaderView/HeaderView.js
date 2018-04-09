@@ -96,7 +96,9 @@ const HeaderView = ({
         <View
           style={{
             height:
-              !!avatarSource || !!switchOnChange ? null : !!title ? 145 : 75
+              !!avatarSource || !!switchOnChange || !!tabValues
+                ? null
+                : !!title ? 145 : 75
           }}
         >
           {/* Linear Gradient */}
@@ -134,18 +136,20 @@ const HeaderView = ({
           />
 
           {/* Title */}
-          {!!titleComponent ? (
-            titleComponent
-          ) : !!title ? (
-            <Text
-              style={
-                !!subtitle || !!search || !!tabValues
-                  ? styles.mainTitle
-                  : styles.onlyTitle
-              }
-            >
-              {title}
-            </Text>
+          {!!!tabValues ? (
+            !!titleComponent ? (
+              titleComponent
+            ) : !!title ? (
+              <Text
+                style={
+                  !!subtitle || !!search || !!tabValues
+                    ? styles.mainTitle
+                    : styles.onlyTitle
+                }
+              >
+                {title}
+              </Text>
+            ) : null
           ) : null}
 
           {/* Subtitle */}

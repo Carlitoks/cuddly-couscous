@@ -44,5 +44,22 @@ export default StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%"
+  },
+  onlyTitle: {
+    fontSize: 26,
+    marginTop: moderateScale(10),
+    marginBottom: moderateScale(50),
+    color: Colors.primaryColor,
+    textAlign: "center",
+    fontFamily: Fonts.primaryLightFont,
+    backgroundColor: "transparent"
+  },
+  mainTitle: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 26,
+    color: Colors.primaryColor,
+    marginTop: moderateScale(10),
+    textAlign: "center",
+    backgroundColor: "transparent"
   }
 });
