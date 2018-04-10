@@ -1,6 +1,13 @@
 import React, { Component } from "react";
 
-import { Text, View, ScrollView, Switch } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Switch,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button, Header, List, ListItem } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -20,7 +27,6 @@ import { clearSettings as clearLinguistReducer } from "../../../Ducks/LinguistFo
 
 import I18n from "../../../I18n/I18n";
 import _isEmpty from "lodash/isEmpty";
-import _isUndefined from "lodash/isUndefined";
 import { styles } from "./styles";
 import { Images, Colors } from "../../../Themes";
 import LinearGradient from "react-native-linear-gradient";
@@ -59,6 +65,7 @@ class CallConfirmationView extends Component {
               style={styles.headerButtonCancel}
               onPress={() => {
                 navigation.dispatch({ type: "Home" });
+                this.props.updateSettings({ customScenarioNote: "" });
               }}
             >
               {I18n.t("cancel")}
@@ -69,134 +76,146 @@ class CallConfirmationView extends Component {
           }
           NoWaves
         >
-          <View style={{ flex: 1 }}>
-            <ScrollView
-              automaticallyAdjustContentInsets={true}
-              contentContainerStyle={styles.scroll}
-              alwaysBounceVertical={false}
-            >
-              <List containerStyle={{ borderTopWidth: 0, marginTop: 0 }}>
-                {/* Type of Assistance*/}
-                <ListItem
-                  containerStyle={styles.listItemContainer}
-                  hideChevron
-                  title={
-                    !!categorySelected ? categorySelected.toUpperCase() : null
-                  }
-                  titleStyle={styles.titleStyle}
-                  subtitle={
-                    customScenario
+          <View style={styles.flex}>
+            <View style={styles.category}>
+              <View>
+                <Text style={styles.titleStyle}>
+                  {!!categorySelected ? `${categorySelected}: ` : null}
+
+                  <Text style={styles.scenarioText}>
+                    {customScenario
                       ? customScenario
                       : this.props.selectedScenario &&
                         this.props.selectedScenario[0]
                         ? this.props.selectedScenario[0].title
-                        : "General"
+                        : I18n.t("generalAssistance")}
+                  </Text>
+                </Text>
+                <TextInput
+                  style={styles.textInput}
+                  underlineColorAndroid="transparent"
+                  value={this.props.scenarioNotes}
+                  fontStyle={
+                    this.props.scenarioNotes.length == 0 ? "italic" : "normal"
                   }
-                  subtitleStyle={styles.listSubtitle}
+                  placeholder={I18n.t("scenarioNotes")}
+                  editable={true}
+                  onChangeText={text =>
+                    this.props.updateSettings({ customScenarioNote: text })
+                  }
                 />
-                {/* Time */}
-                <ListItem
-                  containerStyle={styles.listItemContainer}
-                  title={I18n.t("estimatedDuration").toUpperCase()}
-                  titleStyle={styles.titleStyle}
-                  subtitle={I18n.t("youCanAddTime")}
-                  subtitleStyle={styles.listSubtitle}
-                  rightTitle={`${this.props.approxTime} ${I18n.t(
+              </View>
+            </View>
+            <View style={styles.firstLanguage}>
+              <View style={styles.secondLanguage}>
+                <Text style={styles.titleStyle}>{I18n.t("languageFrom")} </Text>
+                <Text>{this.props.fromLanguage}</Text>
+              </View>
+              <TouchableOpacity
+                style={styles.selectionLanguage}
+                onPress={() =>
+                  navigation.dispatch({ type: "SessionLanguageView" })
+                }
+              >
+                <View style={styles.direction}>
+                  <Text style={styles.titleStyle}>{I18n.t("languageTo")}</Text>
+                  <Text>{this.props.toLanguage}</Text>
+                </View>
+                <View style={styles.justifyCenter}>
+                  <Icon name="chevron-right" color="gray" />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.dispatch({ type: "SessionLanguageView" })
+              }
+              style={styles.time}
+            >
+              <View style={styles.flexColumn}>
+                <Text style={styles.titleStyle}>
+                  {`${this.props.approxTime} ${I18n.t(
                     "minutesAbbreviation"
-                  )}`}
-                  rightTitleContainerStyle={styles.listRightTitleContainer}
-                  rightTitleStyle={styles.listRightTitle}
-                  onPress={() =>
-                    navigation.dispatch({
-                      type: "TextView",
-                      params: {
-                        title: I18n.t("time"),
-                        texts: [I18n.t("timeStatic1"), I18n.t("timeStatic2")]
-                      }
-                    })
+                  )}: `}
+                  <Text style={styles.timeItalic}>
+                    {I18n.t("timeCompliments")}
+                  </Text>
+                </Text>
+                <Text style={styles.timeItalic}>{I18n.t("timeAddMore")}</Text>
+              </View>
+              <View style={styles.iconAlign}>
+                <Icon name="chevron-right" color="gray" />
+              </View>
+            </TouchableOpacity>
+            <View style={styles.bottomWidth}>
+              <View style={styles.flexit}>
+                <TouchableOpacity
+                  style={
+                    this.props.video ? styles.audioBoxActive : styles.audioBox
                   }
-                />
-                {/* Languages */}
-                <ListItem
-                  containerStyle={styles.listItemContainer}
-                  title={I18n.t("languages").toUpperCase()}
-                  titleStyle={styles.titleStyle}
-                  subtitle={this.props.toLanguage}
-                  subtitleStyle={styles.listSubtitle}
-                  onPress={() =>
-                    navigation.dispatch({
-                      type: "TextView",
-                      params: {
-                        title: I18n.t("languages"),
-                        texts: [
-                          I18n.t("languagesStatic1"),
-                          I18n.t("languagesStatic2")
-                        ]
-                      }
-                    })
-                  }
-                />
-                {/* Video Mode */}
-                <ListItem
-                  containerStyle={styles.listItemContainer}
-                  hideChevron
-                  title={I18n.t("videoMode").toUpperCase()}
-                  titleStyle={styles.titleStyle}
-                  subtitle={I18n.t("youCanChangeThis")}
-                  subtitleStyle={styles.listSubtitle}
-                  switchButton
-                  onSwitch={() => {
+                  onPress={() => {
                     setPermission("camera").then(response => {
                       if (response == "denied" || response == "restricted") {
                         displayOpenSettingsAlert();
                       }
                       this.props.customerUpdateSettings({
-                        video: !this.props.video
+                        video: true
                       });
                     });
                   }}
-                  switched={this.props.video}
-                  switchOnTintColor={Colors.onTintColor}
-                  switchTintColor={Colors.selectedBackground}
-                />
-                {/* Estimated Cost */}
-                <ListItem
-                  hideChevron
-                  containerStyle={styles.listItemContainer}
-                  subtitle={I18n.t("estimatedCost").toUpperCase()}
-                  subtitleStyle={styles.titleStyle}
-                  // rightTitle={`${I18n.t("currency")} ${
-                  //   this.props.estimatedPrice
-                  // }`}
-                  rightTitle={`${I18n.t("freeTrial")}`}
-                  rightTitleContainerStyle={styles.listRightTitleContainer}
-                  rightTitleStyle={[styles.listRightTitle, styles.freeTrial]}
-                  // onPress={() =>
-                  //   navigation.dispatch({
-                  //     type: "TextView",
-                  //     params: {
-                  //       title: I18n.t("estimatedCost"),
-                  //       texts: [
-                  //         I18n.t("estimatedCostStatic1"),
-                  //         I18n.t("estimatedCostStatic2")
-                  //       ]
-                  //     }
-                  //   })
-                  // }
-                />
-              </List>
-            </ScrollView>
+                >
+                  <View style={styles.justifyCenter}>
+                    <Icon name="check" color={Colors.white} />
+                    <Text
+                      style={
+                        this.props.video
+                          ? styles.textAudioActive
+                          : styles.textAudioInactive
+                      }
+                    >
+                      {I18n.t("audioVideo")}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={
+                    !this.props.video ? styles.audioBoxActive : styles.audioBox
+                  }
+                  onPress={() => {
+                    setPermission("camera").then(response => {
+                      if (response == "denied" || response == "restricted") {
+                        displayOpenSettingsAlert();
+                      }
+                      this.props.customerUpdateSettings({
+                        video: false
+                      });
+                    });
+                  }}
+                >
+                  <View style={styles.justifyCenter}>
+                    <Icon name="check" color={Colors.white} />
+                    <Text
+                      style={
+                        !this.props.video
+                          ? styles.textAudioActive
+                          : styles.textAudioInactive
+                      }
+                    >
+                      {I18n.t("audioOnly")}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
             <View style={styles.buttons}>
               {/* Buttons */}
               {/* Connect Now */}
               <BottomButton
                 onPress={() => {
                   this.props.updateSettings({
-                    selectedScenarioId:
-                      this.props.selectedScenario &&
-                      this.props.selectedScenario[0]
-                        ? this.props.selectedScenario[0].id
-                        : "11111111-1111-1111-1111-111111111126"
+                    selectedScenarioId: !_isEmpty(this.props.selectedScenario)
+                      ? this.props.selectedScenario[0].id
+                      : null
                   });
                   this.props.cleanSelected();
                   navigation.dispatch({ type: "CustomerView" });
@@ -224,12 +243,14 @@ const mS = state => ({
   video: state.callCustomerSettings.video,
   approxTime: state.callCustomerSettings.selectedTime,
   scenario: state.linguistForm.selectedLanguage,
+  scenarioNotes: state.contactLinguist.customScenarioNote,
   selectedScenario: state.linguistForm.selectedScenarios,
   categoryIndex: state.homeFlow.categoryIndex,
   selectedCategory: state.homeFlow.categories,
   estimatedPrice:
     state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
-  toLanguage: state.contactLinguist.selectedLanguage
+  toLanguage: state.contactLinguist.selectedLanguageTo,
+  fromLanguage: state.contactLinguist.selectedLanguageFrom
 });
 
 const mD = {

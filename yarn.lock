@@ -3577,6 +3577,12 @@ react-native-incall-manager@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-native-incall-manager/-/react-native-incall-manager-3.1.0.tgz#51a53c48f03110fbb34507cd8d8a4f880a482f0d"
 
+react-native-indicators@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/react-native-indicators/-/react-native-indicators-0.12.0.tgz#97e7f0eff7dbef719ec4017d7909ba1677536175"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-interactive-avatar@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-interactive-avatar/-/react-native-interactive-avatar-2.0.0.tgz#869d8697eb1f1bdbe766e98218ddc3e13a07e987"
