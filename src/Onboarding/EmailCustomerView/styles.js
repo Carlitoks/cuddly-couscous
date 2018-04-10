@@ -97,7 +97,7 @@ export default StyleSheet.create({
   },
   passwordValidationText: {
     fontSize: 15,
-    color: Colors.gradientColorButton.top,
+    color: Colors.redError,
     paddingTop: moderateScale(10),
     paddingBottom: moderateScale(15),
     marginLeft: 18

@@ -68,7 +68,8 @@ const colors = {
   lightGrey: "#D9D9E6",
   green: "#228B22",
   lightPurple: "#E4E3F4",
-  lighterPurple: "#F7F7F7"
+  lighterPurple: "#F7F7F7",
+  redError: '#ff0000'
 };
 
 export default colors;
