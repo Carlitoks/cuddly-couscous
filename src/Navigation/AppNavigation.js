@@ -30,7 +30,7 @@ import MenuView from "../Components/MenuView/MenuView";
 // Onboarding - Select Language
 import SelectLanguageView from "../LinguistForm/SelectLanguageView/SelectLanguageView";
 import LanguageSettingsView from "../LinguistForm/LanguageSettingsView/LanguageSettingsView";
-import ResetPasswordView from "../Onboarding/ResetPasswordView/ResetPasswordView"; 
+import ResetPasswordView from "../Onboarding/ResetPasswordView/ResetPasswordView";
 
 //List Views
 import NativeLanguageView from "../Lists/NativeLanguageView/NativeLanguageView";
@@ -55,6 +55,7 @@ import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/Ver
 import CallSettings from "../CallSettings/CallSettings";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
 import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
+import SessionLanguageView from "../Call/Customer/SessionLanguageView/SessionLanguageView";
 import StaticView from "../StaticView/StaticView";
 import TextView from "../Components/TextView/TextView";
 import CustomScenarioView from "../Home/CustomScenario/CustomScenarioView";
@@ -343,6 +344,12 @@ const Navigation = StackNavigator(
     },
     CallConfirmationView: {
       screen: CallConfirmationView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    SessionLanguageView: {
+      screen: SessionLanguageView,
       navigationOptions: {
         gesturesEnabled: false
       }

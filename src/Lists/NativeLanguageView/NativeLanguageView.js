@@ -206,7 +206,7 @@ class NativeLanguageView extends Component {
 
 // MAP STATE TO PROPS HERE
 const mS = state => ({
-  // id: state.customerProfile.userInfo.id,
+  id: state.customerProfile.userInfo.id,
   email: state.registrationCustomer.email,
   emailUserProfile: state.userProfile.email,
   selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,
