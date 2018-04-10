@@ -34,7 +34,6 @@ import GoBackButton from "../../../Components/GoBackButton/GoBackButton";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import { CATEGORIES } from "../../../Util/Constants";
-import ListItemB from "./ListItemB";
 
 import {
   setPermission,
@@ -242,7 +241,7 @@ const mS = state => ({
   categoryIndex: state.homeFlow.categoryIndex,
   selectedCategory: state.homeFlow.categories,
   estimatedPrice:
-    state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
+  state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
   toLanguage: state.contactLinguist.selectedLanguageTo,
   fromLanguage: state.contactLinguist.selectedLanguageFrom
 });
