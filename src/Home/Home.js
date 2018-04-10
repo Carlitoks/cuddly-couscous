@@ -31,9 +31,9 @@ class Home extends Component {
     if (!isLoggedIn) {
       navigation.dispatch({ type: "LoginView" });
     } else {
-      getProfileAsync(uuid, token).then(() => {
+      getProfileAsync(uuid, token).then(res => {
         updateView({
-          selectedNativeLanguage: getNativeLang(nativeLangCode)
+          selectedNativeLanguage: getNativeLang(res.payload.nativeLangCode)
         });
       });
     }
