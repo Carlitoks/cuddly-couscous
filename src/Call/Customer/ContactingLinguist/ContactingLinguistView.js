@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 //COMPONENTS
-import { Text, View, ScrollView, Image, ActivityIndicator } from "react-native";
+import { Text, View, ScrollView, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
@@ -13,7 +13,6 @@ import { Images, Colors } from "../../../Themes";
 
 // REDUCERS
 import { connect } from "react-redux";
-import { updateSettings } from "../../../Ducks/CallCustomerSettings";
 import I18n from "../../../I18n/I18n";
 import CallButtonToggle from "./../../../Components/CallButtonToggle/CallButtonToggle";
 import {
@@ -140,8 +139,6 @@ const mS = state => ({
   modalReconnect: state.contactLinguist.modalReconnect
 });
 
-const mD = {
-  updateSettings
-};
+const mD = {};
 
 export default connect(mS, mD)(ContactingLinguist);
