@@ -1,5 +1,5 @@
 import React, { Component, Ref } from "react";
-import { Button, View, Image, Text, Alert } from "react-native";
+import { Button, View, Image, Text, Alert, Platform } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint-disable-line
@@ -25,7 +25,10 @@ import {
   EndCall,
   clearSettings
 } from "../../../Ducks/CallLinguistSettings";
-
+import {
+  emitLocalNotification,
+  cleanNotifications
+} from "../../../Util/PushNotification";
 import {
   BackgroundInterval,
   BackgroundCleanInterval,
@@ -36,10 +39,9 @@ import {
   setPermission,
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
-import { REASON, TIME } from "../../../Util/Constants";
+import { REASON, TIME, PLATFORM } from "../../../Util/Constants";
 
 import { tokDisConnect, tokConnect, clear } from "../../../Ducks/tokboxReducer";
-import { IMAGE_STORAGE_URL } from "../../../Config/env";
 
 class LinguistView extends Component {
   ref: Ref<Publisher>;
@@ -60,6 +62,7 @@ class LinguistView extends Component {
   componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer);
     this.props.resetTimerAsync();
+    Platform.OS === PLATFORM.ANDROID && cleanNotifications();
     clearInterval(this.props.counterId);
     this.props.resetCounter();
     OpenTok.disconnectAll();
@@ -84,6 +87,14 @@ class LinguistView extends Component {
     this.props.updateSettings({
       timer: BackgroundInterval(() => {
         this.props.incrementTimer();
+        if (Platform.OS === PLATFORM.ANDROID) {
+          emitLocalNotification({
+            title: I18n.t("call"),
+            message: `${I18n.t("callInProgress")} ${fmtMSS(
+              this.props.elapsedTime
+            )}`
+          });
+        }
       }, 1000)
     });
   };

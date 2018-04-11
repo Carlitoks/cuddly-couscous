@@ -56,3 +56,8 @@ export const TIME = {
   RECONNECT: 50,
   HIDEMODAL: 55
 };
+
+export const PLATFORM = {
+  ANDROID: "android",
+  IOS: "ios"
+};

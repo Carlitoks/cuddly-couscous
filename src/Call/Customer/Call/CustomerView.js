@@ -27,7 +27,7 @@ import {
 } from "../../../Ducks/ContactLinguistReducer";
 import { GetSessionInfoLinguist } from "../../../Ducks/SessionInfoReducer";
 
-import { Button, View, Text, Image, Switch } from "react-native";
+import { Button, View, Text, Image, Switch, Platform } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { CallButton } from "../../../Components/CallButton/CallButton";
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
@@ -52,7 +52,7 @@ import {
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
 import { IMAGE_STORAGE_URL } from "../../../Config/env";
-import { REASON, STATUS_TOKBOX, TIME } from "../../../Util/Constants";
+import { REASON, STATUS_TOKBOX, TIME, PLATFORM } from "../../../Util/Constants";
 
 class CustomerView extends Component {
   ref: Ref<Publisher>;
@@ -63,6 +63,13 @@ class CustomerView extends Component {
 
   async componentDidMount() {
     const { customerTokboxSessionToken, customerTokboxSessionID } = this.props;
+
+    if (Platform.OS === PLATFORM.ANDROID) {
+      emitLocalNotification({
+        title: "Call",
+        message: `${I18n.t("contactingLinguist")} ...`
+      });
+    }
 
     this.reconnectCall();
   }
@@ -92,6 +99,7 @@ class CustomerView extends Component {
   };
   componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer); // remove interval of timer
+    Platform.OS === PLATFORM.ANDROID && cleanNotifications();
     this.props.resetTimerAsync(); // reset call timer
     clearInterval(this.props.counterId);
     clearInterval(this.props.timer);
@@ -123,6 +131,15 @@ class CustomerView extends Component {
           this.closeCall(REASON.DONE);
         } else {
           this.props.incrementTimer();
+
+          if (Platform.OS === PLATFORM.ANDROID) {
+            emitLocalNotification({
+              title: I18n.t("call"),
+              message: `${I18n.t("callInProgress")} ${fmtMSS(
+                this.props.elapsedTime
+              )}`
+            });
+          }
         }
       }, 1000)
     });
@@ -186,7 +203,7 @@ class CustomerView extends Component {
     if (reason === REASON.RETRY) {
       BackgroundCleanInterval(this.props.timer);
       this.props.resetTimerAsync();
-      cleanNotifications(); // remove call notifications
+      Platform.OS === PLATFORM.ANDROID && cleanNotifications();
     }
 
     if (
