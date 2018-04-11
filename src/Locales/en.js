@@ -31,7 +31,7 @@ export default (ENG = {
   callSettings: "Call Settings",
   callTimeButtonText: "minutes for FREE",
   callTimeButtonSubtitle: "Compliments of Jeenie",
-  callTimeMinutes: "Call Time: 8 Minutes",
+  callTimeMinutes: "Call time: 8 Minutes",
   callTimeMinutesSub: "Recommended for this situation",
   callTimeTitle: "Celebrate our launch with us!",
   callTimeSubtitle: "Enjoy Jeenie over the next few weeks for FREE.",
@@ -41,7 +41,7 @@ export default (ENG = {
   cancelCallCustomer: "The call isn't available",
   chargeAdvice: "You will be charged per minute for any time over 8 minutes.",
   checkYourEmail:
-  "We have sent you a link to reset your password. Please check your email",
+    "We have sent you a link to reset your password. Please check your email",
   checkYourEmailOnBoarding: "Check your email to complete registration.",
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
@@ -90,20 +90,20 @@ export default (ENG = {
   estimatedCost: "Estimated cost",
   estimatedDuration: "Estimated Duration",
   estimatedCostStatic1:
-  "Calls are preset to 8 minutes during the trial period.",
+    "Calls are preset to 8 minutes during the trial period.",
   estimatedCostStatic2:
-  "If you need more time, you can add it during the call.",
+    "If you need more time, you can add it during the call.",
   expertise_A1:
-  "There are so many different hairstyles for different people and different",
+    "There are so many different hairstyles for different people and different",
   expertise_B1:
-  "What is the loop of Creation? How is there something from nothing? In Spite",
+    "What is the loop of Creation? How is there something from nothing? In Spite",
   expertise_C1:
-  "Are we human, because of unique traits and attributes not shared with either",
+    "Are we human, because of unique traits and attributes not shared with either",
   female: "Female",
   finish: "Finish",
   finishOnboarding: "Finish onboarding",
   finishOnboardingMessage:
-  "Please finish your registration in order to use the app",
+    "Please finish your registration in order to use the app",
   firstname: "First name",
   fluent: "Fluent",
   forgotPassword: "Reset Your Password",
@@ -112,7 +112,7 @@ export default (ENG = {
   freeTrial: "Free Trial",
   gender: "Gender",
   genderNotice:
-  "When being matched, customers and linguists can select a preferred gender",
+    "When being matched, customers and linguists can select a preferred gender",
   genderName: "Select Your Gender",
   genderPreferenceCustomer: "I prefer customers with the following gender:",
   genderPreferenceLinguist: "I prefer a Linguist with the following gender:",
@@ -121,7 +121,7 @@ export default (ENG = {
   getLanguageHelp: "Get Language Help",
   help: "Help",
   helpPeople:
-  "Which cities do you know well enough to help people get around in?",
+    "Which cities do you know well enough to help people get around in?",
   helpUsGet: "Help Us Get to Know You",
   hi: "Hi",
   holdToScan: "Hold the device's camera up to the QR code",
@@ -143,9 +143,9 @@ export default (ENG = {
   languages: "Languages",
   languageSettings: "Language Settings",
   languagesStatic1:
-  "During the free trial period, Jeenie supports only Chinese (Mandarin) and English.",
+    "During the free trial period, Jeenie supports only Chinese (Mandarin) and English.",
   languagesStatic2:
-  "Future versions of Jeenie will support all languages, and you will be able to select them here.",
+    "Future versions of Jeenie will support all languages, and you will be able to select them here.",
   languageFrom: "From:",
   languageTo: "To:",
   lastname: "Last name",
@@ -260,9 +260,9 @@ export default (ENG = {
   termsOfUse: "Terms of Use",
   themeSettings: "Theme Settings",
   toggleExtraTimeDisable:
-  "This call will end automatically after the time specified above.",
+    "This call will end automatically after the time specified above.",
   toggleExtraTimeEnable:
-  "This call will continue until you end it. You will be charged per minute over the time specified above.",
+    "This call will continue until you end it. You will be charged per minute over the time specified above.",
   toOthersOnPlatform: "to others on the platform",
   tourism: "Tourism",
   travel: "Travel",
