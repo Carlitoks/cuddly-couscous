@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  asyncGetInvitationDetail,
-  asyncAcceptsInvite
+  asyncAcceptsInvite,
+  verifyCall,
+  updateSettings
 } from "../../../Ducks/CallLinguistSettings";
 
 import { Text, View, ScrollView, Image, Vibration } from "react-native";
@@ -12,12 +13,10 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 
 import { CallButton } from "../../../Components/CallButton/CallButton";
-
+import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
-
-import { IMAGE_STORAGE_URL } from "../../../Config/env";
 
 class IncomingCall extends Component {
   state = {
@@ -29,11 +28,18 @@ class IncomingCall extends Component {
     const PATTERN = [1000, 2000, 3000];
     const { invitationID, token } = this.props;
     Vibration.vibrate(PATTERN, true);
-    // this.props.asyncGetInvitationDetail(invitationID, token);
   }
 
+  componentDidMount() {
+    this.verifyCallLinguist();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.props.verifyCallId);
+  }
   takeCall = isAccept => {
     const { invitationID, token, sessionID } = this.props;
+    clearInterval(this.props.verifyCallId);
     this.props.asyncAcceptsInvite(
       invitationID,
       { accept: isAccept },
@@ -43,6 +49,19 @@ class IncomingCall extends Component {
     Vibration.cancel();
   };
 
+  verifyCallLinguist = () => {
+    this.props.updateSettings({
+      verifyCallId: setInterval(
+        () =>
+          this.props.verifyCall(
+            this.props.sessionID,
+            this.props.token,
+            this.props.verifyCallId
+          ),
+        2000
+      )
+    });
+  };
   selectImage = () => {
     return this.props.avatarURL
       ? {
@@ -62,6 +81,7 @@ class IncomingCall extends Component {
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
+        alwaysBounceVertical={false}
         style={styles.scrollContainer}
         contentContainerStyle={styles.contentContainerStyle}
       >
@@ -76,6 +96,7 @@ class IncomingCall extends Component {
         />
         <Grid>
           <Col style={{ justifyContent: "space-between" }}>
+            <TopViewIOS />
             {/* Top Container */}
             <Row style={styles.topContainer}>
               <Image style={styles.smallAvatar} source={this.selectImage()} />
@@ -142,13 +163,15 @@ const mS = state => ({
   estimatedMinutes: state.callLinguistSettings.estimatedMinutes,
   customerScenario: state.callLinguistSettings.customerScenario,
   languages: state.callLinguistSettings.languages,
+  verifyCallId: state.callLinguistSettings.verifyCallId,
   token: state.auth.token,
   sessionID: state.tokbox.sessionID
 });
 
 const mD = {
-  asyncGetInvitationDetail,
-  asyncAcceptsInvite
+  asyncAcceptsInvite,
+  verifyCall,
+  updateSettings
 };
 
 export default connect(mS, mD)(IncomingCall);
