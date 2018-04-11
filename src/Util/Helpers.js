@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 /**
  * @description Seconds to minutes and seconds String
- * 
+ *
  * @param {number} s - Time in seconds
  */
 export const fmtMSS = s => {
@@ -13,7 +13,7 @@ export const fmtMSS = s => {
 /**
  * @description Gets navigator geolocation from navigator global object
  * http://facebook.github.io/react-native/docs/geolocation.html
- * 
+ *
  * @returns {object} Geolocation object
  */
 export const getGeolocationObject = () => navigator.geolocation;
@@ -21,7 +21,7 @@ export const getGeolocationObject = () => navigator.geolocation;
 /**
  * @description Gets Geolocation Coords Object
  * http://facebook.github.io/react-native/docs/geolocation.html#getcurrentposition
- * 
+ *
  * @returns {Promise.<coordsObject>} Geolocation coords object
  */
 export const getGeolocationCoords = () =>
@@ -143,6 +143,16 @@ export const isCurrentView = (navigation, viewName) =>
   navigation.state.routes[0].routes[
     navigation.state.routes[0].routes.length - 1
   ].routeName === viewName;
+
+/**
+ * @description Get the routename of the previous view
+ * @param {AppNavigation} navigation redux-navigation object
+ * @param {Array} routes routes' stack
+ *
+ * @returns {String} name of the previous route
+ */
+export const previousView = routes =>
+  routes.length > 1 && routes[routes.length - 2].routeName;
 
 /**
  * @description Validates a phone number

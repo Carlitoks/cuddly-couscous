@@ -98,7 +98,7 @@ const HeaderView = ({
             height:
               !!avatarSource || !!switchOnChange || !!tabValues
                 ? null
-                : !!title ? 145 : 75
+                : !!title || !!titleComponent ? 145 : 75
           }}
         >
           {/* Linear Gradient */}

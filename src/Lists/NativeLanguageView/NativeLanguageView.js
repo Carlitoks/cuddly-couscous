@@ -36,7 +36,11 @@ class NativeLanguageView extends Component {
   }
 
   componentWillUnmount() {
-    Keyboard.removeAllListeners("keyboardDidHide");
+    try {
+      Keyboard.removeAllListeners("keyboardDidHide");
+    } catch (e) {
+      //console.log(e);
+    }
   }
 
   componentWillMount() {

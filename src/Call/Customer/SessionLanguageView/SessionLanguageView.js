@@ -13,7 +13,7 @@ import SearchBar from "../../../Components/SearchBar/SearchBar";
 
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
 
-import { displayFormErrors } from "../../../Util/Helpers";
+import { displayFormErrors, previousView } from "../../../Util/Helpers";
 import I18n from "../../../I18n/I18n";
 import { Colors } from "../../../Themes";
 import languages from "../../../Config/Languages";
@@ -67,7 +67,7 @@ class SessionLanguageView extends Component {
     );
     const secondaryLanguage = languages[index];
 
-    return `${primaryLanguage.name} & ${secondaryLanguage.name}`;
+    return secondaryLanguage.name;
   }
 
   changeLanguage(index) {
@@ -87,14 +87,12 @@ class SessionLanguageView extends Component {
     });
   }
 
-  submit() {
-    const { navigation } = this.props;
-    navigation.dispatch({ type: "back" });
+  submit(navigation) {
+    navigation.dispatch({ type: "CallConfirmationView" });
   }
 
   render() {
-    const navigation = this.props.navigation;
-    const { selectedNativeLanguage } = this.props;
+    const { navigation, selectedNativeLanguage } = this.props;
 
     return (
       <ViewWrapper style={styles.mainContainer}>
@@ -102,7 +100,31 @@ class SessionLanguageView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={I18n.t("languages")}
+          headerCenterComponent={
+            <Text style={[styles.titleCall]}>{`English - ${
+              this.state.selectedLanguage.name
+            }`}</Text>
+          }
+          headerRightComponent={
+            <Text
+              style={styles.headerButtonCancel}
+              onPress={() => {
+                navigation.dispatch({ type: "Home" });
+              }}
+            >
+              {I18n.t("cancel")}
+            </Text>
+          }
+          titleComponent={
+            <View>
+              <Text style={[styles.mainTitle, styles.smallFont, styles.bottom]}>
+                {I18n.t("callTimeTitle")}
+              </Text>
+              <Text style={[styles.mainTitle, styles.smallFont]}>
+                {I18n.t("callTimeSubtitle")}
+              </Text>
+            </View>
+          }
         >
           <View style={styles.scrollContainer}>
             <SearchBar
@@ -138,7 +160,7 @@ class SessionLanguageView extends Component {
           <BottomButton
             title={I18n.t("ok")}
             relative
-            onPress={() => this.submit()}
+            onPress={() => this.submit(navigation)}
             fill
             absolute
             gradient
@@ -153,7 +175,8 @@ class SessionLanguageView extends Component {
 // MAP STATE TO PROPS HERE
 const mS = state => ({
   primaryLangCode: state.contactLinguist.primaryLangCode,
-  secundaryLangCode: state.contactLinguist.secundaryLangCode
+  secundaryLangCode: state.contactLinguist.secundaryLangCode,
+  routes: state.nav.routes[0].routes[0].routes
 });
 
 // MAP DISPATCH TO PROPS HERE

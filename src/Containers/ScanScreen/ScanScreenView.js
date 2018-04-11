@@ -11,6 +11,7 @@ import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
 import I18n from "../../I18n/I18n";
 import { asyncScanQR } from "../../Ducks/EventsReducer";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
+import { updateSettings as updateCustomerSettings } from "../../Ducks/CallCustomerSettings";
 import styles from "./styles";
 
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
@@ -53,7 +54,9 @@ class ScanScreenView extends Component {
             const {
               requireScenarioSelection,
               restrictEventScenarios,
-              scenarios
+              scenarios,
+              defaultMinutes,
+              allowMinuteSelection
             } = response.payload.data;
 
             if (this.props.token) {
@@ -71,6 +74,10 @@ class ScanScreenView extends Component {
                     type: "CustomScenarioView"
                   });
                 }
+                this.props.updateCustomerSettings({
+                  selectedTime: defaultMinutes,
+                  allowTimeSelection: allowMinuteSelection
+                });
               } else if (requireScenarioSelection && !restrictEventScenarios) {
                 /* Dispatch to Category Selection View (Home) */
                 this.props.updateSettings({
@@ -167,7 +174,8 @@ const mS = state => ({
 
 const mD = {
   asyncScanQR,
-  updateSettings
+  updateSettings,
+  updateCustomerSettings
 };
 
 export default connect(mS, mD)(ScanScreenView);

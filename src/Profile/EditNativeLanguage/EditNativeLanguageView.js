@@ -39,7 +39,11 @@ class EditNativeLanguageView extends Component {
   }
   componentWillUnmount() {
     this.props.registrationClearForm();
-    Keyboard.removeAllListeners("keyboardDidHide");
+    try {
+      Keyboard.removeAllListeners("keyboardDidHide");
+    } catch (e) {
+      //console.log(e);
+    }
   }
 
   componentWillMount() {

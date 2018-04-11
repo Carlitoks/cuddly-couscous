@@ -12,6 +12,15 @@ export const LANG_CODES = new Map([
   ["yue", "Chinese (Cantonese)"]
 ]);
 
+export const TIME_OPTIONS = [
+  { duration: 8, cost: 10 },
+  { duration: 10, cost: 11 },
+  { duration: 15, cost: 13 },
+  { duration: 20, cost: 16 },
+  { duration: 25, cost: 19 },
+  { duration: 30, cost: 22 }
+];
+
 export const REASON = {
   RETRY: "retry",
   CANCEL: "cancel",

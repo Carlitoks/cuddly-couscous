@@ -1,132 +1,184 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { getAssistanceList } from "../../Ducks/ContactLinguistReducer";
 import { updateSettings } from "../../Ducks/CallCustomerSettings";
-import { Text, View, Picker, ScrollView } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import { Button, Header } from "react-native-elements";
+import { Text, View, ScrollView } from "react-native";
+import { List, ListItem } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import LinearGradient from "react-native-linear-gradient";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
-import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS"
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import { Colors, Fonts } from "../../Themes";
+import { moderateScale } from "../../Util/Scaling";
+import { TIME_OPTIONS } from "../../Util/Constants";
+import { previousView } from "../../Util/Helpers";
+import { findIndex } from "lodash";
 import styles from "./styles";
 import I18n from "../../I18n/I18n";
 
 class CallTimeView extends Component {
-  loadAssitance() {
-    return this.props.getAssistanceList(this.props.token);
-  }
-  render() {
-    const navigation = this.props.navigation;
+  constructor(props) {
+    super(props);
 
-    pickerOptions = n => {
-      return new Array(n).fill(5).map((el, i) => {
-        return (
-          <Picker.Item
-            label={`${el * (i + 1)} Min`}
-            value={el * (i + 1)}
-            key={i}
-          />
-        );
+    this.state = {
+      timeIndex: -1
+    };
+  }
+
+  componentWillMount() {
+    this.setState({
+      timeIndex: findIndex(TIME_OPTIONS, { duration: this.props.selectedTime })
+    });
+  }
+
+  isSelected = index => {
+    return index == this.state.timeIndex ? true : false;
+  };
+
+  submit(navigation) {
+    const { routes } = this.props;
+    if (previousView(routes) === "CallConfirmationView") {
+      navigation.dispatch({ type: "back" });
+    } else {
+      navigation.dispatch({ type: "SessionLanguageView" });
+    }
+  }
+
+  render() {
+    const { navigation, routes } = this.props;
+    setIndex = index => {
+      this.setState({
+        timeIndex: index
       });
     };
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <ScrollView
-          automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
-          style={styles.scrollContainer}
-        >
-          <Grid>
-            <Col>
-              <Row>
-              <TopViewIOS/>
-                {/* Linear Gradient */}
-                <LinearGradient
-                  colors={[
-                    Colors.gradientColor.top,
-                    Colors.gradientColor.middle,
-                    Colors.gradientColor.bottom
-                  ]}
-                  style={styles.linearGradient}
-                />
-                <Col>
-                  {/* Header - Navigation */}
-                  <Header
-                    outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
-                    leftComponent={
-                      <GoBackButton navigation={this.props.navigation} />
-                    }
-                    /*
-                    rightComponent={
-                      <SettingsButton navigation={this.props.navigation} />
-                    }
-                    */
-                  />
-                  {/* how Long Do You Need help For? */}
-                  <Text style={styles.mainTitle}>
-                    {I18n.t("howLongNeedHelp")}
-                  </Text>
-                </Col>
-              </Row>
-              <View style={styles.containerContent}>
-                {/* Time Picker */}
-                <Picker
-                  style={styles.picker}
-                  selectedValue={this.props.selectedTime}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.props.updateSettings({ selectedTime: itemValue })
-                  }
-                >
-                  {pickerOptions(this.props.timeOptions)}
-                </Picker>
-
-                {/* Cost */}
-                <View style={styles.costCallContainer}>
-                  <Text style={styles.costCall}>{`${I18n.t(
-                    "costOfCall"
-                  )} ${I18n.t("currency")}${this.props.selectedTime *
-                    this.props.cost}`}</Text>
-                </View>
-              </View>
-            </Col>
-          </Grid>
-        </ScrollView>
-        {/* Next Button */}
-        <BottomButton
-          title={I18n.t("accept")}
-          onPress={() =>
-            this.loadAssitance().then(() =>
-              navigation.dispatch({ type: "AssistanceView" })
-            )
+        <HeaderView
+          headerLeftComponent={
+            <GoBackButton navigation={this.props.navigation} />
           }
-          bold={true}
-        />
+          headerCenterComponent={
+            <View>
+              <Text style={[styles.titleCall]}>
+                {I18n.t("callTimeMinutes")}
+              </Text>
+              <Text style={[styles.subTitleCall]}>
+                {I18n.t("callTimeMinutesSub")}
+              </Text>
+            </View>
+          }
+          headerRightComponent={
+            <Text
+              style={styles.headerButtonCancel}
+              onPress={() => {
+                navigation.dispatch({ type: "Home" });
+              }}
+            >
+              {I18n.t("cancel")}
+            </Text>
+          }
+          titleComponent={
+            <View>
+              <Text style={[styles.mainTitle, styles.smallFont, styles.bottom]}>
+                {I18n.t("callTimeTitle")}
+              </Text>
+              <Text style={[styles.mainTitle, styles.smallFont]}>
+                {I18n.t("callTimeSubtitle")}
+              </Text>
+            </View>
+          }
+        >
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+            style={styles.scrollContainer}
+          >
+            <List automaticallyAdjustContentInsets={false}>
+              {TIME_OPTIONS.map((timeOption, index) => (
+                <ListItem
+                  key={index}
+                  title={`${timeOption.duration} ${I18n.t("minutes")}`}
+                  titleStyle={[
+                    styles.regText,
+                    this.isSelected(index) ? styles.selectedText : null
+                  ]}
+                  rightTitle={`US $${timeOption.cost}`}
+                  rightTitleStyle={[
+                    styles.regText,
+                    styles.crossLineText,
+                    this.isSelected(index) ? styles.selectedText : null
+                  ]}
+                  wrapperStyle={styles.paddingContainer}
+                  containerStyle={
+                    this.isSelected(index) ? styles.selectedBackground : null
+                  }
+                  rightIcon={
+                    <Icon
+                      pointerEvents={"none"}
+                      style={
+                        this.isSelected(index)
+                          ? styles.iconSelected
+                          : styles.icon
+                      }
+                      name={"check"}
+                      size={moderateScale(30)}
+                      color={Colors.gray}
+                    />
+                  }
+                  onPress={() => {
+                    setIndex(index);
+                    this.props.updateSettings({
+                      selectedTime: timeOption.duration
+                    });
+                  }}
+                />
+              ))}
+            </List>
+          </ScrollView>
+          {/* Next Button */}
+          <View>
+            <Text
+              style={[styles.mainTitle, styles.smallFont, styles.buttonText]}
+            >
+              {`${this.props.selectedTime} ${I18n.t("callTimeButtonText")}`}
+            </Text>
+            <Text
+              style={[
+                styles.mainTitle,
+                styles.smallFont,
+                styles.buttonText,
+                styles.buttonTextSubtitle
+              ]}
+            >
+              {I18n.t("callTimeButtonSubtitle")}
+            </Text>
+          </View>
+          <BottomButton
+            title={I18n.t("accept")}
+            onPress={() => this.submit(navigation)}
+            fill
+            bold={true}
+          />
+        </HeaderView>
       </ViewWrapper>
     );
   }
 }
 
 const mS = state => ({
-  timeOptions: state.contactLinguist.timeOptions,
   selectedTime: state.callCustomerSettings.selectedTime,
   cost: state.contactLinguist.cost,
-  token: state.auth.token
+  token: state.auth.token,
+  routes: state.nav.routes[0].routes[0].routes
 });
 
 const mD = {
-  updateSettings,
-  getAssistanceList
-
+  updateSettings
 };
 
 export default connect(mS, mD)(CallTimeView);

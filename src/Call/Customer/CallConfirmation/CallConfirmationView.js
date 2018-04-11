@@ -46,8 +46,12 @@ class CallConfirmationView extends Component {
   };
 
   render() {
-    const navigation = this.props.navigation;
-    const { customScenario, selectedCategory, categoryIndex } = this.props;
+    const {
+      navigation,
+      customScenario,
+      selectedCategory,
+      categoryIndex
+    } = this.props;
 
     const categorySelected =
       categoryIndex > -1 && !!selectedCategory
@@ -66,7 +70,8 @@ class CallConfirmationView extends Component {
               onPress={() => {
                 navigation.dispatch({ type: "Home" });
                 this.props.updateSettings({ customScenarioNote: "" });
-              }}>
+              }}
+            >
               {I18n.t("cancel")}
             </Text>
           }
@@ -76,6 +81,7 @@ class CallConfirmationView extends Component {
           NoWaves
         >
           <View style={styles.flex}>
+            {/* Category / Scenario */}
             <View style={styles.category}>
               <View>
                 <Text style={styles.titleStyle}>
@@ -105,6 +111,8 @@ class CallConfirmationView extends Component {
                 />
               </View>
             </View>
+
+            {/* Languages */}
             <View style={styles.firstLanguage}>
               <View style={styles.secondLanguage}>
                 <Text style={styles.titleStyle}>{I18n.t("languageFrom")} </Text>
@@ -114,21 +122,29 @@ class CallConfirmationView extends Component {
                 style={styles.selectionLanguage}
                 onPress={() =>
                   navigation.dispatch({ type: "SessionLanguageView" })
-                }>
+                }
+              >
                 <View style={styles.direction}>
                   <Text style={styles.titleStyle}>{I18n.t("languageTo")}</Text>
-                  <Text>{this.props.toLanguage}</Text>
+                  <Text>{this.props.selectedLanguageTo}</Text>
                 </View>
                 <View style={styles.justifyCenter}>
                   <Icon name="chevron-right" color="gray" />
                 </View>
               </TouchableOpacity>
             </View>
+
+            {/* Time selection */}
             <TouchableOpacity
-              onPress={() =>
-                navigation.dispatch({ type: "SessionLanguageView" })
-              }
-              style={styles.time}>
+              onPress={() => {
+                if (this.props.allowTimeSelection) {
+                  navigation.dispatch({
+                    type: "CallTimeView"
+                  });
+                }
+              }}
+              style={styles.time}
+            >
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
                   {`${this.props.approxTime} ${I18n.t(
@@ -141,9 +157,13 @@ class CallConfirmationView extends Component {
                 <Text style={styles.timeItalic}>{I18n.t("timeAddMore")}</Text>
               </View>
               <View style={styles.iconAlign}>
-                <Icon name="chevron-right" color="gray" />
+                {this.props.allowTimeSelection && (
+                  <Icon name="chevron-right" color="gray" />
+                )}
               </View>
             </TouchableOpacity>
+
+            {/* Audio + Video */}
             <View style={styles.bottomWidth}>
               <View style={styles.flexit}>
                 <TouchableOpacity
@@ -159,7 +179,8 @@ class CallConfirmationView extends Component {
                         video: true
                       });
                     });
-                  }}>
+                  }}
+                >
                   <View style={styles.justifyCenter}>
                     <Icon name="check" color={Colors.white} />
                     <Text
@@ -167,11 +188,14 @@ class CallConfirmationView extends Component {
                         this.props.video
                           ? styles.textAudioActive
                           : styles.textAudioInactive
-                      }>
+                      }
+                    >
                       {I18n.t("audioVideo")}
                     </Text>
                   </View>
                 </TouchableOpacity>
+
+                {/* Audio only */}
                 <TouchableOpacity
                   style={
                     !this.props.video ? styles.audioBoxActive : styles.audioBox
@@ -185,7 +209,8 @@ class CallConfirmationView extends Component {
                         video: false
                       });
                     });
-                  }}>
+                  }}
+                >
                   <View style={styles.justifyCenter}>
                     <Icon name="check" color={Colors.white} />
                     <Text
@@ -193,7 +218,8 @@ class CallConfirmationView extends Component {
                         !this.props.video
                           ? styles.textAudioActive
                           : styles.textAudioInactive
-                      }>
+                      }
+                    >
                       {I18n.t("audioOnly")}
                     </Text>
                   </View>
@@ -206,9 +232,11 @@ class CallConfirmationView extends Component {
               <BottomButton
                 onPress={() => {
                   this.props.updateSettings({
-                    selectedScenarioId: !_isEmpty(this.props.selectedScenario)
-                      ? this.props.selectedScenario[0].id
-                      : null
+                    selectedScenarioId:
+                      this.props.selectedScenario &&
+                      this.props.selectedScenario[0]
+                        ? this.props.selectedScenario[0].id
+                        : "11111111-1111-1111-1111-111111111126"
                   });
                   this.props.cleanSelected();
                   navigation.dispatch({ type: "CustomerView" });
@@ -241,9 +269,10 @@ const mS = state => ({
   categoryIndex: state.homeFlow.categoryIndex,
   selectedCategory: state.homeFlow.categories,
   estimatedPrice:
-  state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
-  toLanguage: state.contactLinguist.selectedLanguageTo,
-  fromLanguage: state.contactLinguist.selectedLanguageFrom
+    state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
+  selectedLanguageTo: state.contactLinguist.selectedLanguage,
+  fromLanguage: state.contactLinguist.selectedLanguageFrom,
+  allowTimeSelection: state.callCustomerSettings.allowTimeSelection
 });
 
 const mD = {

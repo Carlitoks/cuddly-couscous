@@ -6,11 +6,15 @@ import { loginError } from "./LoginReducer";
 import { networkError } from "./NetworkErrorsReducer";
 
 import { clearView as clearUserProfile } from "./UserProfileReducer";
+import { clearSettings as clearHome } from "./HomeFlowReducer";
 import { clearCallHistory as clearHistory } from "./CallHistoryReducer";
 import PushNotification from "../Util/PushNotification";
 import { updateDeviceToken } from "./RegistrationCustomerReducer";
 import { registerFCM } from "./PushNotificationReducer";
-import { changeStatus, clearSettings as clearLinguistProfile  } from "./ProfileLinguistReducer";
+import {
+  changeStatus,
+  clearSettings as clearLinguistProfile
+} from "./ProfileLinguistReducer";
 
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -50,6 +54,7 @@ export const logOutAsync = () => (dispatch, getState) => {
       // cleaning localstorage
       dispatch(logOut());
       dispatch(clearUserProfile());
+      dispatch(clearHome());
       dispatch(clearHistory());
       dispatch(clearLinguistProfile());
       dispatch({ type: "SelectRoleView/Reset" });

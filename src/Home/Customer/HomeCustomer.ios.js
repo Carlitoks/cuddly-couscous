@@ -11,7 +11,8 @@ import {
 } from "../../Ducks/UserProfileReducer";
 import {
   EndCall,
-  closeOpenConnections
+  closeOpenConnections,
+  updateSettings as updateCustomerSettings
 } from "../../Ducks/CallCustomerSettings";
 
 import { getCategories, updateSettings } from "../../Ducks/HomeFlowReducer";
@@ -89,6 +90,10 @@ class Home extends Component {
 
     this.props.updateSettings({
       categoryIndex: this.props.carouselFirstItem
+    });
+
+    this.props.updateCustomerSettings({
+      allowTimeSelection: true
     });
 
     this.setState({
@@ -171,7 +176,7 @@ class Home extends Component {
 
     this.state.otherSelected
       ? navigation.dispatch({ type: "CustomScenarioView" })
-      : navigation.dispatch({ type: "CallConfirmationView" });
+      : navigation.dispatch({ type: "CallTimeView" });
   }
 
   renderList = () => {
@@ -306,7 +311,7 @@ class Home extends Component {
     return qr
       ? this.props.navigation.dispatch({ type: "ScanScreenView" })
       : other
-        ? this.props.navigation.dispatch({ type: "CallConfirmationView" })
+        ? this.props.navigation.dispatch({ type: "CallTimeView" })
         : this.submit();
   };
 
@@ -411,7 +416,8 @@ const mD = {
   EndCall,
   closeOpenConnections,
   getScenarios,
-  updateSettings
+  updateSettings,
+  updateCustomerSettings
 };
 
 export default connect(mS, mD)(Home);

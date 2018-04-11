@@ -49,7 +49,6 @@ class MenuView extends Component {
       "83f07c5f8dcb8496e3287f280ce6f61d",
       Instabug.invocationEvent.none
     );
-    console.log(DeviceInfo);
     // Instabug.setLocale(locale);
   }
   componentWillReceiveProps(nextProps) {

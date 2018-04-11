@@ -185,7 +185,8 @@ const initialState = {
 
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
-  selectedTime: 8 // Initial time selected: 10 min
+  selectedTime: 8, // Initial time selected: 10 min
+  allowTimeSelection: true
 };
 
 // Reducer
