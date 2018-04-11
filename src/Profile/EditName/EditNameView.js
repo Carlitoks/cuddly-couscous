@@ -79,10 +79,14 @@ class EditNameView extends Component {
     };
 
     if (!valid) {
-      displayFormErrors(
-        updates.FirstnameErrorMessage,
-        updates.LastnameErrorMessage
-      );
+      if (updates.FirstnameErrorMessage && updates.LastnameErrorMessage) {
+        displayFormErrors(updates.FirstnameErrorMessage);
+      } else {
+        displayFormErrors(
+          updates.FirstnameErrorMessage,
+          updates.LastnameErrorMessage
+        );
+      }
     }
 
     this.props.updateForm(updates);
@@ -123,7 +127,7 @@ class EditNameView extends Component {
     if (this.props.firstName && this.props.lastName) {
       subtitle = `${I18n.t("youWillBeKnown")} ${
         this.props.firstName
-      } ${this.props.lastName.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
+        } ${this.props.lastName.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
       return subtitle;
     } else {
       return subtitle;
