@@ -162,7 +162,10 @@ class LoginView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={I18n.t("signIn")}
+          headerCenterComponent={
+            <Text style={styles.titleCall}>{I18n.t("signIn")}</Text>
+          }
+          NoWaves
         >
           <ScrollView
             keyboardShouldPersistTaps="handled"

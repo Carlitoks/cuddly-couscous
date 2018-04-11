@@ -26,7 +26,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryLightFont,
     alignSelf: "center",
     width: width,
-    backgroundColor: "rgba(255, 255, 255, 0)" 
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   Button: {
     backgroundColor: Colors.primaryLightFillColor,
@@ -62,5 +62,12 @@ export default StyleSheet.create({
   },
   containerInput: {
     marginTop: moderateScale(20)
+  },
+  titleCall: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 16,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    backgroundColor: "transparent"
   }
 });

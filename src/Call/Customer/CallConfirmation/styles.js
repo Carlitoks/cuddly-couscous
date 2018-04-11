@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   },
   titleCall: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 20,
+    fontSize: 16,
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: "transparent"
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     color: Colors.listLabelColor
   },
   headerButtonCancel: {
-    fontSize: moderateScale(20),
+    fontSize: 13,
     color: Colors.primaryColor
   },
   audioBox: {

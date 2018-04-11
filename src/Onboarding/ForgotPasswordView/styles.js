@@ -72,5 +72,12 @@ export default StyleSheet.create({
     padding: 10,
     alignSelf: "center",
     fontFamily: Fonts.primaryBaseFont
+  },
+  titleCall: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 16,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    backgroundColor: "transparent"
   }
 });

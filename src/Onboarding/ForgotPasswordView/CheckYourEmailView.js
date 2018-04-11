@@ -27,7 +27,12 @@ class CheckYourEmailView extends Component {
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView title={I18n.t("forgotPassword")}>
+        <HeaderView
+          headerCenterComponent={
+            <Text style={styles.titleCall}>{I18n.t("forgotPassword")}</Text>
+          }
+          NoWaves
+        >
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}

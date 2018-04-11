@@ -50,5 +50,12 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: Colors.linguistFormText
+  },
+  titleCall: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 16,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    backgroundColor: "transparent"
   }
 });
