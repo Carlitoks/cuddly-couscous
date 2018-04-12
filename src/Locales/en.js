@@ -124,6 +124,7 @@ export default (ENG = {
     "Which cities do you know well enough to help people get around in?",
   helpUsGet: "Help Us Get to Know You",
   hi: "Hi",
+  historyNotFound: "No History found",
   holdToScan: "Hold the device's camera up to the QR code",
   home: "Home",
   hotel: "Hotel",

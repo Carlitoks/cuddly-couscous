@@ -21,5 +21,10 @@ export default (styles = StyleSheet.create({
   textColor: {
     marginTop: 6,
     color: Colors.black
+  },
+  notFound: {
+    marginTop: 6,
+    textAlign: "center",
+    backgroundColor: "transparent",
   }
 }));
