@@ -198,7 +198,6 @@ class PromotionView extends Component {
 }
 
 const mS = state => ({
-  nativeLangCode: state.userProfile.nativeLangCode,
   uuid: state.auth.uuid,
   token: state.auth.token,
   categories: state.promoCode.categories,

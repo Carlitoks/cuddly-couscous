@@ -389,7 +389,6 @@ class Home extends Component {
 const mS = state => ({
   firstName: state.userProfile.firstName,
   lastName: state.userProfile.lastName,
-  nativeLangCode: state.userProfile.nativeLangCode,
   avatarURL: state.userProfile.avatarURL,
   uuid: state.auth.uuid,
   token: state.auth.token,

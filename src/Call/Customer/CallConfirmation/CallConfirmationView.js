@@ -116,7 +116,7 @@ class CallConfirmationView extends Component {
             <View style={styles.firstLanguage}>
               <View style={styles.secondLanguage}>
                 <Text style={styles.titleStyle}>{I18n.t("languageFrom")} </Text>
-                <Text>{this.props.fromLanguage}</Text>
+                <Text>{this.props.fromLanguage.name}</Text>
               </View>
               <TouchableOpacity
                 style={styles.selectionLanguage}
@@ -271,7 +271,7 @@ const mS = state => ({
   estimatedPrice:
     state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
   selectedLanguageTo: state.contactLinguist.selectedLanguage,
-  fromLanguage: state.contactLinguist.selectedLanguageFrom,
+  fromLanguage: state.userProfile.selectedNativeLanguage,
   allowTimeSelection: state.callCustomerSettings.allowTimeSelection
 });
 

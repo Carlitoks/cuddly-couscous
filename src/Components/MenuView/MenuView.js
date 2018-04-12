@@ -258,7 +258,6 @@ const mS = state => ({
   lastName: state.userProfile.lastName,
   location: state.userProfile.location,
   rate: state.userProfile.averageStarRating,
-  nativeLangCode: state.userProfile.nativeLangCode,
   linguistProfile: state.userProfile.linguistProfile,
   avatarURL: state.userProfile.avatarURL,
   avatarBase64: state.userProfile.avatarBase64,

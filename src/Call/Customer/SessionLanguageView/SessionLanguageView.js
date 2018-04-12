@@ -101,7 +101,7 @@ class SessionLanguageView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <Text style={[styles.titleCall]}>{`English - ${
+            <Text style={[styles.titleCall]}>{`${this.props.nativeLanguage.name} - ${
               this.state.selectedLanguage.name
             }`}</Text>
           }
@@ -176,7 +176,8 @@ class SessionLanguageView extends Component {
 const mS = state => ({
   primaryLangCode: state.contactLinguist.primaryLangCode,
   secundaryLangCode: state.contactLinguist.secundaryLangCode,
-  routes: state.nav.routes[0].routes[0].routes
+  routes: state.nav.routes[0].routes[0].routes,
+  nativeLanguage: state.userProfile.selectedNativeLanguage
 });
 
 // MAP DISPATCH TO PROPS HERE
