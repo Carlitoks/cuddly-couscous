@@ -98,11 +98,6 @@ class Home extends Component {
     this.setState({
       indexSelected: listItemSelected
     });
-    this.props.getProfileAsync(this.props.uuid, this.props.token).then(() => {
-      this.props.updateView({
-        selectedNativeLanguage: getNativeLang(this.props.nativeLangCode)
-      });
-    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -244,7 +239,7 @@ class Home extends Component {
     const carousel = (
       <Carousel
         ref={c => (this._slider1Ref = c)}
-        data={categories.filter(item => item !== "other")}
+        data={categories}
         renderItem={({ item, index }) => {
           return (
             <CarouselEntry
@@ -275,9 +270,7 @@ class Home extends Component {
 
   renderInput = () => {
     return (
-      /* Custom Scenario */
       <InputRegular
-        //containerStyle={styles.containerInput}
         placeholder={I18n.t("iNeedSomethingElse")}
         value={this.props.customScenario}
         onChangeText={text => {
@@ -373,6 +366,7 @@ class Home extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            alwaysBounceVertical={false}
           >
             {this.state.other ? this.renderInput() : null}
             {!this.state.qr && !this.state.other ? this.renderList() : null}
@@ -383,7 +377,6 @@ class Home extends Component {
             disabled={this.bottomButtonDisabled()}
             fill={!this.bottomButtonDisabled()}
             onPress={this.bottomButtonOnPress}
-            relative
           />
         </HeaderView>
       </ViewWrapper>
@@ -394,7 +387,6 @@ class Home extends Component {
 const mS = state => ({
   firstName: state.userProfile.firstName,
   lastName: state.userProfile.lastName,
-  nativeLangCode: state.userProfile.nativeLangCode,
   avatarURL: state.userProfile.avatarURL,
   uuid: state.auth.uuid,
   token: state.auth.token,
