@@ -33,7 +33,8 @@ export default StyleSheet.create({
   },
   title: {
     color: Colors.primaryColor,
-    fontFamily: Fonts.primaryLightFont
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 20
   },
   containerTitles: {
     paddingLeft: 20,
