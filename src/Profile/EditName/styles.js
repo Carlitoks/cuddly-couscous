@@ -56,5 +56,14 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: Colors.linguistFormText
+  },
+  mainTitle: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 20,
+    textAlign: "center",
+    marginBottom: moderateScale(50),
+    marginTop: 38,
+    color: "white",
+    backgroundColor: "transparent"
   }
 });

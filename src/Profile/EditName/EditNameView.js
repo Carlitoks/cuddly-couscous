@@ -127,7 +127,7 @@ class EditNameView extends Component {
     if (this.props.firstName && this.props.lastName) {
       subtitle = `${I18n.t("youWillBeKnown")} ${
         this.props.firstName
-        } ${this.props.lastName.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
+      } ${this.props.lastName.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
       return subtitle;
     } else {
       return subtitle;
@@ -145,13 +145,16 @@ class EditNameView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={
-            formPreferredName
-              ? `${formPreferredName}`
-              : formFirstName || formLastName
-                ? `${formFirstName} ${formLastName}`
-                : I18n.t("mainTitle")
+          headerCenterComponent={
+            <Text style={styles.mainTitle}>
+              {formPreferredName
+                ? `${formPreferredName}`
+                : formFirstName || formLastName
+                  ? `${formFirstName} ${formLastName}`
+                  : I18n.t("mainTitle")}
+            </Text>
           }
+          NoWaves
         >
           <ScrollView
             keyboardShouldPersistTaps="handled"

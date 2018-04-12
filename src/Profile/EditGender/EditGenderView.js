@@ -110,7 +110,10 @@ class EditGenderView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={I18n.t("genderName")}
+          headerCenterComponent={
+            <Text style={styles.mainTitle}>{I18n.t("genderName")}</Text>
+          }
+          NoWaves
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}

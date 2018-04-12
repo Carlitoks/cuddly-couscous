@@ -56,5 +56,14 @@ export default StyleSheet.create({
   textCenter: {
     textAlign: "center",
     fontSize: 14
+  },
+  mainTitle: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 20,
+    textAlign: "center",
+    marginBottom: moderateScale(50),
+    marginTop: 38,
+    color: "white",
+    backgroundColor: "transparent"
   }
 });
