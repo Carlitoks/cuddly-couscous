@@ -58,7 +58,7 @@ import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirma
 import SessionLanguageView from "../Call/Customer/SessionLanguageView/SessionLanguageView";
 import StaticView from "../StaticView/StaticView";
 import TextView from "../Components/TextView/TextView";
-import CustomScenarioView from "../Home/CustomScenario/CustomScenarioView";
+import CustomScenarioView from "../Call/Customer/CustomScenario/CustomScenarioView";
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";

@@ -11,18 +11,18 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-import { updateSettings } from "../../Ducks/HomeFlowReducer";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-import InputRegular from "../../Components/InputRegular/InputRegular";
+import { updateSettings } from "../../../Ducks/HomeFlowReducer";
+import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
+import GoBackButton from "../../../Components/GoBackButton/GoBackButton";
+import InputRegular from "../../../Components/InputRegular/InputRegular";
 
-import HeaderView from "../../Components/HeaderView/HeaderView";
-import BottomButton from "../../Components/BottomButton/BottomButton";
+import HeaderView from "../../../Components/HeaderView/HeaderView";
+import BottomButton from "../../../Components/BottomButton/BottomButton";
 import styles from "./styles";
-import { Colors } from "../../Themes";
-import I18n from "../../I18n/I18n";
-import { moderateScale } from "../../Util/Scaling";
-import { CATEGORIES } from "../../Util/Constants";
+import { Colors } from "../../../Themes";
+import I18n from "../../../I18n/I18n";
+import { moderateScale } from "../../../Util/Scaling";
+import { CATEGORIES } from "../../../Util/Constants";
 
 class CustomScenario extends Component {
   navigate = this.props.navigation.navigate;
