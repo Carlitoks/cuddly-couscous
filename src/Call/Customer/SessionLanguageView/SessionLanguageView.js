@@ -101,9 +101,9 @@ class SessionLanguageView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <Text style={[styles.titleCall]}>{`${this.props.nativeLanguage.name} - ${
-              this.state.selectedLanguage.name
-            }`}</Text>
+            <Text style={[styles.titleCall]}>{`${
+              this.props.nativeLanguage.name
+            } - ${this.state.selectedLanguage.name}`}</Text>
           }
           headerRightComponent={
             <Text
@@ -116,11 +116,9 @@ class SessionLanguageView extends Component {
             </Text>
           }
           titleComponent={
-            <View>
-              <Text style={[styles.mainTitle, styles.smallFont, styles.bottom]}>
-                {I18n.t("callTimeTitle")}
-              </Text>
-              <Text style={[styles.mainTitle, styles.smallFont]}>
+            <View style={styles.bottom}>
+              <Text style={styles.bottomText}>{I18n.t("callTimeTitle")}</Text>
+              <Text style={styles.bottomText}>
                 {I18n.t("callTimeSubtitle")}
               </Text>
             </View>

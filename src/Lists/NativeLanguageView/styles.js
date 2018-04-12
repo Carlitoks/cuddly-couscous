@@ -51,11 +51,10 @@ export default StyleSheet.create({
     position: "absolute",
     zIndex: 10
   },
-  mainTitle: {
+  titleCall: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 20,
+    fontSize: 16,
     color: Colors.primaryColor,
-    marginTop: moderateScale(10),
     textAlign: "center",
     backgroundColor: "transparent"
   }

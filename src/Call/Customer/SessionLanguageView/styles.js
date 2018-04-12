@@ -56,7 +56,12 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
+    alignSelf: "center",
+    position: "absolute",
+    top: 0,
+    width: 300,
+    marginTop: -10
   },
   subTitleCall: {
     fontFamily: Fonts.primaryLightFont,
@@ -81,7 +86,19 @@ export const styles = StyleSheet.create({
     fontSize: 16
   },
   headerButtonCancel: {
-    fontSize: moderateScale(20),
+    fontSize: 13,
     color: Colors.primaryColor
+  },
+  bottom: {
+    marginTop: 30
+  },
+  bottomText: {
+    fontSize: 12,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    fontFamily: Fonts.primaryLightFont,
+    alignSelf: "center",
+    width: width,
+    backgroundColor: "rgba(255, 255, 255, 0)"
   }
 });

@@ -46,5 +46,12 @@ export default StyleSheet.create({
   },
   marginSpinner: {
     marginTop: 30
+  },
+  titleCall: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 20,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    backgroundColor: "transparent"
   }
 });

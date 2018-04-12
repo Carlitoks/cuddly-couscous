@@ -32,7 +32,7 @@ export default StyleSheet.create({
     marginBottom: moderateScale(10),
     marginTop: moderateScale(10),
     color: "white",
-    backgroundColor:"transparent"
+    backgroundColor: "transparent"
   },
   userContainer: {
     width: width,
@@ -53,5 +53,12 @@ export default StyleSheet.create({
   containerInput: {
     marginTop: moderateScale(20),
     paddingBottom: moderateScale(35)
+  },
+  titleCall: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 20,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    backgroundColor: "transparent"
   }
 });

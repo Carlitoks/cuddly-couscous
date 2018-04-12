@@ -175,7 +175,7 @@ class CallHistory extends Component {
             <ShowMenuButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <Text style={styles.mainTitle}>{I18n.t("callHistory")}</Text>
+            <Text style={styles.titleCall}>{I18n.t("callHistory")}</Text>
           }
           tabValues={tabValues}
           tabSelectedIndex={this.props.selectedIndex}

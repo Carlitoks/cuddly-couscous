@@ -113,7 +113,10 @@ class SelectListView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={I18n.t("describeAssistance")}
+          headerCenterComponent={
+            <Text style={styles.titleCall}>{I18n.t("describeAssistance")}</Text>
+          }
+          NoWaves
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}

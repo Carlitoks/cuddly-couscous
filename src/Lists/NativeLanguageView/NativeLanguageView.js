@@ -158,7 +158,7 @@ class NativeLanguageView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <Text style={styles.mainTitle}>{I18n.t("nativeLanguage")}</Text>
+            <Text style={styles.titleCall}>{I18n.t("nativeLanguage")}</Text>
           }
           NoWaves
         >

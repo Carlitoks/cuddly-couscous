@@ -7,7 +7,8 @@ import {
   TextInput,
   Alert,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
+  Text
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -53,7 +54,10 @@ class CustomScenario extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          title={categorySelected}
+          headerCenterComponent={
+            <Text style={styles.titleCall}>{categorySelected}</Text>
+          }
+          NoWaves
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}

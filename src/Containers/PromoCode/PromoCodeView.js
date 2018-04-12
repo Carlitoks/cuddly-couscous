@@ -85,10 +85,15 @@ class PromoCodeView extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          title={I18n.t("promoCodeTitle")}>
+          headerCenterComponent={
+            <Text style={styles.titleCall}>{I18n.t("promoCodeTitle")}</Text>
+          }
+          NoWaves
+        >
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}>
+            style={styles.scrollContainer}
+          >
             <View>
               {/* Email */}
               <InputRegular
