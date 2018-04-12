@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { AppState, Linking } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import Instabug from "instabug-reactnative";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import {
@@ -45,10 +44,6 @@ class MenuView extends Component {
     if (!firstName && !lastName) {
       this.props.getProfileAsync(this.props.uuid, this.props.token);
     }
-    Instabug.startWithToken(
-      "83f07c5f8dcb8496e3287f280ce6f61d",
-      Instabug.invocationEvent.none
-    );
     // Instabug.setLocale(locale);
   }
   componentWillReceiveProps(nextProps) {
@@ -186,7 +181,7 @@ class MenuView extends Component {
           <Text style={styles.colorText}>{I18n.t("help")}</Text>
         </Icon.Button> */}
 
-          {/* Report a problem */}
+          {/* Report a problem 
           <Icon.Button
             name="report-problem"
             size={25}
@@ -197,7 +192,7 @@ class MenuView extends Component {
             }}
           >
             <Text style={styles.colorText}>{I18n.t("reportProblem")}</Text>
-          </Icon.Button>
+          </Icon.Button>*/}
 
           {/* Logout */}
           <Icon.Button

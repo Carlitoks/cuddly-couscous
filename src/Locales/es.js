@@ -38,7 +38,7 @@ export default (ESP = {
   cancelCallCustomer: "Ended call by customer",
   changeSettings: "To change your settings, go to Settings > Jeenie",
   checkYourEmail:
-  "We have sent you a link to reset your password. Please check your email",
+    "We have sent you a link to reset your password. Please check your email",
   checkYourEmailOnBoarding: "Check your email to complete registration.",
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
@@ -84,20 +84,20 @@ export default (ESP = {
   estimatedCost: "Estimated cost",
   estimatedDuration: "Estimated Duration",
   estimatedCostStatic1:
-  "Calls are preset to 8 minutes during the trial period.",
+    "Calls are preset to 8 minutes during the trial period.",
   estimatedCostStatic2:
-  "If you need more time, you can add it during the call.",
+    "If you need more time, you can add it during the call.",
   expertise_A1:
-  "There are so many different hairstyles for different people and different",
+    "There are so many different hairstyles for different people and different",
   expertise_B1:
-  "What is the loop of Creation? How is there something from nothing? In Spite",
+    "What is the loop of Creation? How is there something from nothing? In Spite",
   expertise_C1:
-  "Are we human, because of unique traits and attributes not shared with either",
+    "Are we human, because of unique traits and attributes not shared with either",
   female: "Female",
   finish: "Finish",
   finishOnboarding: "Finish onboarding",
   finishOnboardingMessage:
-  "Please finish your registration in order to use the app",
+    "Please finish your registration in order to use the app",
   firstname: "First Name",
   fluent: "Fluent",
   forgotPassword: "Forgot your password?",
@@ -106,7 +106,7 @@ export default (ESP = {
   freeTrial: "Free Trial",
   gender: "Gender",
   genderNotice:
-  "When being matched, customers and linguists can select a preferred gender",
+    "When being matched, customers and linguists can select a preferred gender",
   genderName: "Select your Gender",
   genderPreferenceCustomer: "Gender preference for my customer",
   genderPreferenceLinguist: "Gender preference for my linguist",
@@ -115,7 +115,7 @@ export default (ESP = {
   getLanguageHelp: "Get Language Help",
   help: "Help",
   helpPeople:
-  "Which cities do you know well enough to help people get around in?",
+    "Which cities do you know well enough to help people get around in?",
   helpUsGet: "Help Us Get to Know You",
   hi: "Hi",
   historyNotFound: "No History found",
@@ -136,9 +136,9 @@ export default (ESP = {
   languages: "Languages",
   languageSettings: "Language Settings",
   languagesStatic1:
-  "During the free trial period, Jeenie supports only Chinese (Mandarin) and English.",
+    "During the free trial period, Jeenie supports only Chinese (Mandarin) and English.",
   languagesStatic2:
-  "Future versions of Jeenie will support all languages, and you will be able to select them here.",
+    "Future versions of Jeenie will support all languages, and you will be able to select them here.",
   languageFrom: "From:",
   languageTo: "To:",
   lastname: "Last Name",
@@ -205,13 +205,13 @@ export default (ESP = {
   progressiveImageComponent: "Progressive Image Component",
   qr: "Qr code",
   quicklyContact:
-  "Quickly contact a linguist to help with your languages needs",
+    "Quickly contact a linguist to help with your languages needs",
   rateYour: "Rate your",
   retail: "Shopping",
   recent: "Recent",
   recentCalls: "Recent Calls",
   reconnect: "Reconnecting",
-  reportProblem: "Report a Problem",
+  reportProblem: "Shake de phone to Report a Problem",
   resetpassword: "Reset Password",
   retail: "Retail",
   rni18n: "RN i18n",
@@ -252,7 +252,7 @@ export default (ESP = {
   toOthersOnPlatform: "to others on the platform.",
   toggleExtraTimeDisable: "This call will end automatically after time above",
   toggleExtraTimeEnable:
-  "This call will continue until you end the call. You will be charged for usage beyond the time specified above.",
+    "This call will continue until you end the call. You will be charged for usage beyond the time specified above.",
   tourism: "Tourism",
   travel: "Travel",
   transit: "In Transit",

@@ -220,7 +220,7 @@ export default (ENG = {
   recentCalls: "Recent Calls",
   retail: "Shopping",
   reconnect: "Reconnecting",
-  reportProblem: "Report a Problem",
+  reportProblem: "Shake de phone to Report a Problem",
   resetpassword: "Reset Password",
   retail: "Shopping",
   rni18n: "RN i18n",

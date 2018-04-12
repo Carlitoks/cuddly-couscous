@@ -25,7 +25,6 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import StarRating from "react-native-star-rating";
 import I18n from "../../I18n/I18n";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
-import Instabug from "instabug-reactnative";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
 import BottomButton from "../../Components/BottomButton/BottomButton";
@@ -47,12 +46,6 @@ class RateCallView extends Component {
         this.props.linguist.lastInitial
       }`;
     } else return `Zhang W.`;
-  }
-  componentWillMount() {
-    Instabug.startWithToken(
-      "83f07c5f8dcb8496e3287f280ce6f61d",
-      Instabug.invocationEvent.none
-    );
   }
   componentWillUnmount() {}
 
@@ -423,7 +416,7 @@ class RateCallView extends Component {
               </View>
             </Grid>
             {/* Report a problem */}
-            <Text style={styles.forgotPasswordText} onPress={Instabug.invoke}>
+            <Text style={styles.forgotPasswordText}>
               {I18n.t("reportProblem")}
             </Text>
             <View style={{ marginBottom: 10 }} />

@@ -9,11 +9,33 @@ import {
   Modal,
   StatusBar
 } from "react-native";
+import Instabug from "instabug-reactnative";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 
 import styles from "./styles";
 
-const ViewWrapper = ({ children, status, style }) => {
+const ViewWrapper = ({
+  children,
+  status,
+  style,
+  firstName,
+  lastName,
+  preferredName,
+  linguistProfile,
+  email
+}) => {
+  const name = preferredName ? preferredName : firstName;
+  const role = !!linguistProfile ? "Linguist" : "Customer";
+  Instabug.startWithToken(
+    "83f07c5f8dcb8496e3287f280ce6f61d",
+    Instabug.invocationEvent.shake
+  );
+  if (email) {
+    Instabug.setUserData(`${name} ${lastName} (${role})`);
+    Instabug.setUserEmail(email);
+  } else {
+    Instabug.setUserData(`User  anonymous`);
+  }
   return (
     <View style={style}>
       {/* No Connection Modal*/}
@@ -44,7 +66,12 @@ const ViewWrapper = ({ children, status, style }) => {
 };
 
 const mS = state => ({
-  status: state.networkInfo.type
+  status: state.networkInfo.type,
+  firstName: state.userProfile.firstName,
+  lastName: state.userProfile.lastName,
+  preferredName: state.userProfile.preferredName,
+  linguistProfile: state.userProfile.linguistProfile,
+  email: state.userProfile.email
 });
 
 export default connect(mS)(ViewWrapper);
