@@ -184,7 +184,7 @@ const initialState = {
   // Call Settings
   mute: false,
   video: false,
-  rotate: false,
+  rotate: true,
   speaker: true,
   timer: null,
   invitationID: null,

@@ -22,6 +22,7 @@ import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Iphone5 } from "../../Util/Devices";
+import Colors from "../../Themes/Colors";
 
 /**
  * @description Generic call button component
@@ -43,7 +44,8 @@ class CallButtonToggle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      iconName: this.props.icon
+      iconName: this.props.icon,
+      buttonColor: this.props.buttonColor
     };
   }
   componentDidMount() {
@@ -52,7 +54,7 @@ class CallButtonToggle extends Component {
 
   changeIcon = value => {
     this.setState({
-      iconName: value ? this.props.icon : this.props.iconToggled
+      buttonColor: value ? Colors.enabledColor : this.props.buttonColor
     });
   };
   toggleIcon = () => {
@@ -133,7 +135,7 @@ class CallButtonToggle extends Component {
             borderRadius: 100,
             opacity: this.props.opacity
           }}
-          backgroundColor={this.props.buttonColor}
+          backgroundColor={this.state.buttonColor}
           onPress={() => {
             {
               this.props.onPress && this.props.onPress();

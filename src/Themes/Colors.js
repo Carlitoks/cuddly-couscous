@@ -6,6 +6,7 @@ const colors = {
     AcceptCall: "#49e373"
   },
   disabledColor: "#cccccc",
+  enabledColor: "#e3e3e3",
   fontColor: "white",
   formColor: "#d2d3d8",
   formInputIconColor: "#D1CFCF",

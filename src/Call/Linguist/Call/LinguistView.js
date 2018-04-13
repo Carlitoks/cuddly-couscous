@@ -78,8 +78,8 @@ class LinguistView extends Component {
 
     return avatarURL
       ? {
-          uri: this.props.avatarURL
-        }
+        uri: this.props.avatarURL
+      }
       : Images.avatar;
   };
 
@@ -206,17 +206,17 @@ class LinguistView extends Component {
             toggle={true}
             active={this.props.rotate}
             name="LinguistCamera"
-            icon="camera-front"
-            iconToggled="camera-rear"
+            icon="switch-camera"
+            iconToggled="switch-camera"
             opacity={0.7}
             buttonSize={65}
             iconSize={30}
           />
           <CallButtonToggle
             toggle={true}
-            active={!this.props.speaker}
+            active={this.props.speaker}
             name="LinguistSpeaker"
-            icon="volume-off"
+            icon="volume-up"
             iconToggled="volume-up"
             opacity={0.7}
             buttonSize={65}
@@ -256,9 +256,9 @@ class LinguistView extends Component {
           />
           <CallButtonToggle
             toggle={true}
-            active={this.props.mute}
+            active={!this.props.mute}
             name="LinguistMute"
-            icon="mic-off"
+            icon="mic"
             iconToggled="mic"
             opacity={0.7}
             buttonSize={65}
@@ -269,7 +269,7 @@ class LinguistView extends Component {
             active={this.props.video}
             name="LinguistVideo"
             icon="videocam"
-            iconToggled="videocam-off"
+            iconToggled="videocam"
             opacity={0.7}
             buttonSize={65}
             iconSize={30}
