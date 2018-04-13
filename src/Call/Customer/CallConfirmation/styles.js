@@ -77,9 +77,7 @@ export const styles = StyleSheet.create({
     borderTopWidth: 0
   },
   timeItalic: {
-    color: Colors.textDefault,
-    fontStyle: "italic",
-    fontWeight: "normal"
+    fontStyle: "italic"
   },
   iconAlign: {
     alignItems: "flex-end",
@@ -107,7 +105,6 @@ export const styles = StyleSheet.create({
     borderWidth: 0,
     borderBottomColor: "transparent"
   },
-  scenarioText: { color: Colors.textDefault, fontWeight: "normal" },
   direction: { flexDirection: "column", flex: 1 },
   flexColumn: { flexDirection: "column" },
   iconSize: {
@@ -117,5 +114,9 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 0.8,
     borderColor: Colors.disabledColor,
     borderTopWidth: 0
+  },
+  regularText: {
+    color: Colors.textDefault,
+    fontWeight: "normal"
   }
 });

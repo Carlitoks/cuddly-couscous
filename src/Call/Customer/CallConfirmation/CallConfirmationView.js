@@ -87,7 +87,7 @@ class CallConfirmationView extends Component {
                 <Text style={styles.titleStyle}>
                   {!!categorySelected ? `${categorySelected}: ` : null}
 
-                  <Text style={styles.scenarioText}>
+                  <Text style={styles.regularText}>
                     {customScenario
                       ? customScenario
                       : this.props.selectedScenario &&
@@ -117,7 +117,7 @@ class CallConfirmationView extends Component {
             <View style={styles.firstLanguage}>
               <View style={styles.secondLanguage}>
                 <Text style={styles.titleStyle}>{I18n.t("languageFrom")} </Text>
-                <Text>{this.props.fromLanguage.name}</Text>
+                <Text style={styles.regularText}>{this.props.fromLanguage.name}</Text>
               </View>
               <TouchableOpacity
                 style={styles.selectionLanguage}
@@ -127,7 +127,7 @@ class CallConfirmationView extends Component {
               >
                 <View style={styles.direction}>
                   <Text style={styles.titleStyle}>{I18n.t("languageTo")}</Text>
-                  <Text>{this.props.selectedLanguageTo}</Text>
+                  <Text style={styles.regularText}>{this.props.selectedLanguageTo}</Text>
                 </View>
                 <View style={styles.justifyCenter}>
                   <Icon name="chevron-right" style={styles.iconSize} color={Colors.defaultChevron}/>
@@ -151,11 +151,11 @@ class CallConfirmationView extends Component {
                   {`${this.props.approxTime} ${I18n.t(
                     "minutes"
                   )}: `}
-                  <Text style={styles.timeItalic}>
+                  <Text style={[styles.regularText, styles.timeItalic]}>
                     {I18n.t("timeCompliments")}
                   </Text>
                 </Text>
-                <Text style={styles.timeItalic}>{I18n.t("timeAddMore")}</Text>
+                <Text style={[styles.regularText, styles.timeItalic]}>{I18n.t("timeAddMore")}</Text>
               </View>
               <View style={styles.iconAlign}>
                 {this.props.allowTimeSelection && (
