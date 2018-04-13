@@ -53,7 +53,7 @@ export default StyleSheet.create({
   },
   mainTitle: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 20,
+    fontSize: moderateScale(26),
     textAlign: "center",
     marginBottom: moderateScale(50),
     marginTop: 38,

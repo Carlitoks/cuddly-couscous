@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
   },
   titleCall: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 16,
+    fontSize: moderateScale(24),
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: "transparent",
@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
   },
   subTitleCall: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 10,
+    fontSize: moderateScale(20),
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: "transparent"
@@ -82,14 +82,14 @@ export const styles = StyleSheet.create({
     fontSize: 16
   },
   headerButtonCancel: {
-    fontSize: 13,
+    fontSize: moderateScale(20),
     color: Colors.primaryColor
   },
   bottom: {
     marginTop: 30
   },
   bottomText: {
-    fontSize: 12,
+    fontSize: moderateScale(20),
     color: Colors.primaryColor,
     textAlign: "center",
     fontFamily: Fonts.primaryLightFont,

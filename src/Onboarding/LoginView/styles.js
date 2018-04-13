@@ -65,7 +65,7 @@ export default StyleSheet.create({
   },
   titleCall: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 20,
+    fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: "transparent"
