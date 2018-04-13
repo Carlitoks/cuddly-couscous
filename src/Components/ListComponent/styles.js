@@ -24,7 +24,6 @@ export default StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: Colors.bordersLightGrey,
-    backgroundColor: Colors.lighterPurple,
     width: "100%",
     height: 38
   },
@@ -76,13 +75,15 @@ export default StyleSheet.create({
   icon: {
     position: "absolute",
     right: 0,
-    zIndex: 0
+    zIndex: 0,
+    fontSize: 28
   },
   iconSelected: {
     position: "absolute",
     right: 0,
     zIndex: 0,
     backgroundColor: "transparent",
-    color: Colors.gradientColor.bottom
+    color: Colors.gradientColor.bottom,
+    fontSize: 28
   }
 });
