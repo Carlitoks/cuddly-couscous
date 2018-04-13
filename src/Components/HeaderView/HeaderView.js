@@ -89,6 +89,13 @@ const HeaderView = ({
   NoWaves
 }) => {
   const { width, height } = Dimensions.get("window");
+  console.log(
+    "Height",
+    !!avatarSource || !!switchOnChange || !!tabValues
+      ? null
+      : !!title || !!titleComponent ? 145 : 75
+  );
+  const history = tabValues ? (tabValues.length > 0 ? true : false) : false;
   function getHeader() {
     return (
       <View>
@@ -96,7 +103,7 @@ const HeaderView = ({
         <View
           style={{
             height:
-              !!avatarSource || !!switchOnChange || !!tabValues
+              !!avatarSource || !!switchOnChange || history
                 ? null
                 : !!title || !!titleComponent ? 145 : 75
           }}
