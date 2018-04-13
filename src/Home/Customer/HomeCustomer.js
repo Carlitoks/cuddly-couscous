@@ -319,6 +319,7 @@ class Home extends Component {
     const {
       firstName,
       lastName,
+      preferredName,
       avatarURL,
       navigation,
       categories,
@@ -329,7 +330,10 @@ class Home extends Component {
 
     const categoryName = categories[categoryIndex];
 
-    const salute = `${I18n.t("hi")} ${firstName}!`;
+    const salute =
+      preferredName.length > 0
+        ? `${I18n.t("hi")} ${preferredName}!`
+        : `${I18n.t("hi")} ${firstName}!`;
 
     return (
       <ViewWrapper style={styles.wrapperContainer}>
@@ -387,6 +391,7 @@ class Home extends Component {
 const mS = state => ({
   firstName: state.userProfile.firstName,
   lastName: state.userProfile.lastName,
+  preferredName: state.userProfile.preferredName,
   avatarURL: state.userProfile.avatarURL,
   uuid: state.auth.uuid,
   token: state.auth.token,

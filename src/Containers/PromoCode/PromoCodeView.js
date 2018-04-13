@@ -104,8 +104,7 @@ class PromoCodeView extends Component {
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-          >
+            style={styles.scrollContainer}>
             <View>
               {/* Email */}
               <InputRegular
