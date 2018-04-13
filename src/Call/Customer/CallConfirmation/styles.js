@@ -76,15 +76,21 @@ export const styles = StyleSheet.create({
     borderColor: Colors.disabledColor,
     borderTopWidth: 0
   },
-  timeItalic: { color: "gray", fontStyle: "italic", fontWeight: "normal" },
+  timeItalic: {
+    color: Colors.textDefault,
+    fontStyle: "italic",
+    fontWeight: "normal"
+  },
   iconAlign: {
     alignItems: "flex-end",
     justifyContent: "center",
     alignSelf: "center"
   },
-  bottomWidth: {     borderBottomWidth: 0.8,
+  bottomWidth: {
+    borderBottomWidth: 0.8,
     borderColor: Colors.disabledColor,
-    borderTopWidth: 0 },
+    borderTopWidth: 0
+  },
   flexit: { flexDirection: "row", height: 100 },
   justifyCenter: { justifyContent: "center", alignItems: "center" },
   flex: { flex: 1 },
@@ -101,12 +107,12 @@ export const styles = StyleSheet.create({
     borderWidth: 0,
     borderBottomColor: "transparent"
   },
-  scenarioText: { color: "gray", fontWeight: "normal" },
+  scenarioText: { color: Colors.textDefault, fontWeight: "normal" },
   direction: { flexDirection: "column", flex: 1 },
   flexColumn: { flexDirection: "column" },
   iconSize: {
     fontSize: 28
-  }, 
+  },
   borderContainer: {
     borderBottomWidth: 0.8,
     borderColor: Colors.disabledColor,
