@@ -112,7 +112,7 @@ const HeaderView = ({
           <LinearGradient
             colors={[
               Colors.gradientColor.top,
-              //Colors.gradientColor.middle,
+              Colors.gradientColor.top,
               !NoWaves ? Colors.gradientColor.bottom : Colors.gradientColor.top
             ]}
             style={styles.linearGradient}
