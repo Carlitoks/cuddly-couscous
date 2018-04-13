@@ -96,7 +96,10 @@ class CallTimeView extends Component {
             alwaysBounceVertical={false}
             style={styles.scrollContainer}
           >
-            <List automaticallyAdjustContentInsets={false}>
+            <List
+              containerStyle={styles.listContainer}
+              automaticallyAdjustContentInsets={false}
+            >
               {TIME_OPTIONS.map((timeOption, index) => (
                 <ListItem
                   key={index}

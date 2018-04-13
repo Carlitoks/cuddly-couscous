@@ -57,11 +57,7 @@ export const styles = StyleSheet.create({
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: "transparent",
-    alignSelf: "center",
-    position: "absolute",
-    top: 0,
-    width: 300,
-    marginTop: -10
+    alignSelf: "center"
   },
   subTitleCall: {
     fontFamily: Fonts.primaryLightFont,
@@ -100,5 +96,21 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
+  },
+  headerIcon: {
+    color: Colors.white,
+    fontSize: 16,
+    paddingLeft: 2,
+    paddingRight: 2,
+    marginLeft: 2,
+    marginRight: 2
+  },
+  titleContainer: {
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    top: 0,
+    width: 250
   }
 });

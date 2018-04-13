@@ -14,7 +14,7 @@ export default StyleSheet.create({
     height: "100%"
   },
   headerInner: {
-    padding: 10,
+    padding: 5,
     margin: 0,
     paddingBottom: 0,
     alignItems: "center",
@@ -23,7 +23,7 @@ export default StyleSheet.create({
   headerOuter: {
     padding: 0,
     borderBottomWidth: 0,
-    height: 40
+    height: 45
   },
   onlyTitle: {
     fontSize: 26,

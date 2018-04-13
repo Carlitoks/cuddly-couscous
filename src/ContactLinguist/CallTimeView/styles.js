@@ -49,14 +49,14 @@ export default StyleSheet.create({
     display: "none",
     position: "absolute",
     right: 0,
-    top: 5,
+    top: "5%",
     marginLeft: moderateScale(40),
     zIndex: 0
   },
   iconSelected: {
     position: "absolute",
     right: 0,
-    top: 5,
+    top: "5%",
     marginLeft: moderateScale(40),
     zIndex: 0,
     backgroundColor: "transparent",
@@ -93,6 +93,9 @@ export default StyleSheet.create({
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
+  },
+  listContainer: {
+    marginTop: 0
   },
   bottom: {
     marginTop: 30

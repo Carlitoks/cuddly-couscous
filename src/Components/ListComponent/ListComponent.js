@@ -235,7 +235,7 @@ class ListComponent extends Component {
                     }
                     name={item.other ? "chevron-right" : "check"}
                     size={moderateScale(40)}
-                    color={Colors.gray}
+                    color={Colors.defaultChevron}
                   />
                 ) : null}
               </View>

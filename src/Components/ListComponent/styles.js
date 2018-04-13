@@ -7,8 +7,6 @@ const width = Dimensions.get("window").width;
 export default StyleSheet.create({
   container: {
     flex: 1
-    //marginTop: moderateScale(45),
-    //marginBottom: moderateScale(45)
   },
   listContainer: {
     marginTop: 0,

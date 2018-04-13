@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, ActivityIndicator, Keyboard, Text } from "react-native";
 import { filter, findIndex } from "lodash";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
 
@@ -101,9 +102,15 @@ class SessionLanguageView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <Text style={[styles.titleCall]}>{`${
-              this.props.nativeLanguage.name
-            } - ${this.state.selectedLanguage.name}`}</Text>
+            <View style={styles.titleContainer}>
+              <Text style={styles.titleCall}>
+                {this.props.nativeLanguage.name}
+              </Text>
+              <Icon style={styles.headerIcon} name={"compare-arrows"} />
+              <Text style={styles.titleCall}>
+                {this.state.selectedLanguage.name}
+              </Text>
+            </View>
           }
           headerRightComponent={
             <Text
