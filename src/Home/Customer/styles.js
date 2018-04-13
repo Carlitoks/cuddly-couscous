@@ -284,5 +284,38 @@ export default StyleSheet.create({
   },
   mainContainer: {
     backgroundColor: "transparent"
+  },
+  titleCall: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 20,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    backgroundColor: "transparent"
+  },
+  titleCallSub: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 16,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    backgroundColor: "transparent"
+  },
+  subTitleCall: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 10,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    backgroundColor: "transparent"
+  },
+  bottom: {
+    marginTop: 30
+  },
+  bottomText: {
+    fontSize: 14,
+    color: Colors.primaryColor,
+    textAlign: "center",
+    fontFamily: Fonts.primaryLightFont,
+    alignSelf: "center",
+    width: width,
+    backgroundColor: "rgba(255, 255, 255, 0)"
   }
 });

@@ -31,21 +31,20 @@ import styles from "../../Home/Customer/styles";
 import I18n from "../../I18n/I18n";
 import { moderateScale } from "../../Util/Scaling";
 import { REASON } from "../../Util/Constants";
-import { emtpyArray } from "../../Util/Helpers";
 import { sliderWidth, itemWidth } from "../../Components/CarouselEntry/styles";
 
 class PromotionView extends Component {
   componentWillMount() {
     let categories = [];
     const { scenarios } = this.props;
-    if (emtpyArray(scenarios).length > 0) {
+    if (scenarios.length > 0) {
       categories = scenarios.map(index => index.category);
     }
-
+    this.updateCategoryIndex(0);
     let filteredCat = [...new Set(categories)];
     this.props.updateSettings({
       categories: filteredCat,
-      scenarios: this.props.promotion.scenarios
+      scenarios: this.props.scenarios
     });
   }
 
@@ -91,10 +90,9 @@ class PromotionView extends Component {
     const categoryName = categories[categoryIndex];
 
     const scenariosFiltered = this.getScenariosByCategory(
-      emtpyArray(scenarios),
+      scenarios,
       categoryName
     );
-
     const list = (
       <ListComponent
         data={scenariosFiltered}
@@ -162,8 +160,16 @@ class PromotionView extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          title={`${this.props.promotion.name}`}
-          subtitle={I18n.t("languageHelp")}
+          headerCenterComponent={
+            <Text style={[styles.titleCallSub]}>
+              {this.props.organization.Name}
+            </Text>
+          }
+          titleComponent={
+            <View style={styles.bottom}>
+              <Text style={styles.bottomText}>{this.props.eventName}</Text>
+            </View>
+          }
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
@@ -183,13 +189,12 @@ class PromotionView extends Component {
             {this.renderList()}
           </ScrollView>
           <BottomButton
-            title={I18n.t("connectMeNow")}
+            title={I18n.t("next")}
             onPress={() =>
               navigation.dispatch({ type: "CallConfirmationView" })
             }
             fill={true}
             long={true}
-            icon={"videocam"}
           />
         </HeaderView>
       </ViewWrapper>
@@ -201,15 +206,16 @@ const mS = state => ({
   uuid: state.auth.uuid,
   token: state.auth.token,
   categories: state.promoCode.categories,
-  scenarios: state.promoCode.scenarios,
   sessionID: state.tokbox.sessionID,
   networkInfoType: state.networkInfo.type,
   tokbox: state.tokbox.tokboxID,
   invitationID: state.callCustomerSettings.invitationID,
   carouselFirstItem: state.homeFlow.carouselFirstItem,
-  categoryIndex: state.homeFlow.categoryIndex,
+  categoryIndex: state.promoCode.categoryIndex,
   listItemSelected: state.homeFlow.listItemSelected,
-  promotion: state.promoCode.scanned
+  organization: state.events.organization,
+  scenarios: state.events.scenarios,
+  eventName: state.events.name
 });
 
 const mD = {

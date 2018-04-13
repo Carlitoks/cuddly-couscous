@@ -18,7 +18,7 @@ const initialState = {
 export const asyncScanQR = (id, token) => dispatch => {
   return Events.getScan(id, token)
     .then(response => {
-      return dispatch(scanQR(response));
+      return dispatch(scanQR(response.data));
     })
     .catch(error => dispatch(networkError(error)));
 };

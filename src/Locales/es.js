@@ -111,6 +111,7 @@ export default (ESP = {
   genderPreferenceCustomer: "Gender preference for my customer",
   genderPreferenceLinguist: "Gender preference for my linguist",
   generalAssistance: "General assistance",
+  general: "General",
   getStarted: "Get Started",
   getLanguageHelp: "Get Language Help",
   help: "Help",

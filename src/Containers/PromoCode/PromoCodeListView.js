@@ -114,9 +114,19 @@ class SelectListView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <Text style={styles.titleCall}>{I18n.t("describeAssistance")}</Text>
+            <Text style={[styles.titleCallSub]}>
+              {this.props.organization && this.props.organization.Name
+                ? this.props.organization.Name
+                : I18n.t("describeAssistance")}
+            </Text>
           }
-          NoWaves
+          titleComponent={
+            <View style={styles.bottom}>
+              <Text style={styles.bottomText}>
+                {this.props.eventName ? this.props.eventName : null}
+              </Text>
+            </View>
+          }
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
@@ -142,7 +152,9 @@ class SelectListView extends Component {
 const mS = state => ({
   scenarios: state.linguistForm.scenarios,
   selectedScenario: state.linguistForm.selectedScenarios,
-  listItemSelected: state.homeFlow.listItemSelected
+  listItemSelected: state.homeFlow.listItemSelected,
+  organization: state.events.organization,
+  eventName: state.events.name
 });
 
 const mD = {

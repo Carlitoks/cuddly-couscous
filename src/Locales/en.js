@@ -117,6 +117,7 @@ export default (ENG = {
   genderPreferenceCustomer: "I prefer customers with the following gender:",
   genderPreferenceLinguist: "I prefer a Linguist with the following gender:",
   generalAssistance: "General assistance",
+  general: "General",
   getStarted: "Get Started",
   getLanguageHelp: "Get Language Help",
   help: "Help",

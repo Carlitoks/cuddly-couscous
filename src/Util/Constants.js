@@ -48,7 +48,8 @@ export const CATEGORIES = {
   retail: I18n.t("retail"),
   conversations: I18n.t("conversations"),
   qr: I18n.t("qr"),
-  other: I18n.t("other")
+  other: I18n.t("other"),
+  general: I18n.t("general")
 };
 
 export const TIME = {

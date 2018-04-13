@@ -1,5 +1,6 @@
 import { Events } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
+import { scanQR } from "./EventsReducer";
 
 const ACTIONS = {
   SCAN: "promocode/scan",
@@ -32,7 +33,7 @@ const initialState = {
 export const asyncScanPromoCode = (promoCode, token) => dispatch => {
   return Events.getPromoCode(promoCode, token)
     .then(response => {
-      return dispatch(scanPromoCode(response.data));
+      return dispatch(scanQR(response.data));
     })
     .catch(error => dispatch(networkError(error)));
 };

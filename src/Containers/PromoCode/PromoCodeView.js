@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { findIndex } from "lodash";
 import {
   updatePromoCode,
   asyncScanPromoCode,
@@ -8,6 +8,7 @@ import {
 } from "../../Ducks/PromoCodeReducer";
 
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
+import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 
 import { View, Text, ScrollView, Alert, Keyboard } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -25,7 +26,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
-import { emptyArray, displayFormErrors } from "../../Util/Helpers";
+import { displayFormErrors } from "../../Util/Helpers";
 
 class PromoCodeView extends Component {
   submit() {
@@ -46,12 +47,23 @@ class PromoCodeView extends Component {
         if (requireScenarioSelection && restrictEventScenarios) {
           /* Dispatch to SelectListView with the scenarios involveds*/
           if (scenarios) {
+            let actualCats = this.props.categories;
+            actualCats.includes(scenarios[0].category)
+              ? null
+              : actualCats.push(scenarios[0].category);
+            const catIndex = findIndex(actualCats, scenario => {
+              return scenario === scenarios[0].category;
+            });
+            this.props.updateHomeFlow({
+              categoryIndex: catIndex,
+              categories: actualCats
+            });
             this.props.updateSettings({
               selectionItemType: "scenarios",
               selectionItemName: "scenarios",
               scenarios
             });
-            this.props.navigation.dispatch({ type: "PromoCodeListView" });
+            this.props.navigation.dispatch({ type: "PromotionView" });
           } else {
             this.props.navigation.dispatch({ type: "CustomScenarioView" });
           }
@@ -61,9 +73,9 @@ class PromoCodeView extends Component {
           this.props.updateSettings({
             selectionItemType: "scenarios",
             selectionItemName: "scenarios",
-            scenarios: emptyArray(scenarios)
+            scenarios: []
           });
-          this.props.navigation.dispatch({ type: "PromotionView" });
+          this.props.navigation.dispatch({ type: "PromoCodeListView" });
         } else if (!requireScenarioSelection) {
           /* Dispatch to Call Confirmation view */
           this.props.navigation.dispatch({ type: "CallConfirmationView" });
@@ -92,7 +104,8 @@ class PromoCodeView extends Component {
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}>
+            style={styles.scrollContainer}
+          >
             <View>
               {/* Email */}
               <InputRegular
@@ -125,14 +138,16 @@ class PromoCodeView extends Component {
 
 const mS = state => ({
   promoCode: state.promoCode.code,
-  token: state.auth.token
+  token: state.auth.token,
+  categories: state.homeFlow.categories
 });
 
 const mD = {
   updatePromoCode,
   asyncScanPromoCode,
   clearPromoCode,
-  updateSettings
+  updateSettings,
+  updateHomeFlow
 };
 
 export default connect(mS, mD)(PromoCodeView);
