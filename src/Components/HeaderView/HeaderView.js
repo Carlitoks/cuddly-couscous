@@ -125,8 +125,8 @@ const HeaderView = ({
             {!NoWaves && (
               <Waves
                 width={width}
-                height={width * 80 / 750}
-                viewBox={"0 0 750 80"}
+                height={width * 129 / 1175.7}
+                viewBox={"0 0 1175.7 129"}
               />
             )}
           </View>

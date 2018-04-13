@@ -14,39 +14,32 @@ import Svg, { G, LinearGradient, Path, Stop } from "react-native-svg";
 const Waves = ({ width, height, viewBox, style }) => {
   return (
     <Svg width={width} height={height} viewBox={viewBox} style={style}>
-      <G fillOpacity="0.28">
+      <G fillOpacity="0.6">
         <LinearGradient
           id="SVGID_1_"
           gradientUnits="userSpaceOnUse"
-          x1="0"
-          y1="46.8121"
-          x2="750"
-          y2="46.8121"
+          x1="587.8459"
+          y1="205.1573"
+          x2="587.8459"
+          y2="9.1573"
         >
-          <Stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.4" />
-          <Stop offset="100%" stopColor="#FFFFFF" />
+          <Stop offset="0" stopColor="#7171E2" />
+          <Stop offset="2.218318e-02" stopColor="#706EDF" />
+          <Stop offset="0.3226" stopColorr="#5F4EB6" />
+          <Stop offset="0.596" stopColor="#543698" />
+          <Stop offset="0.8309" stopColor="#4D2786" />
+          <Stop offset="1" stopColor="#4A2280" />
         </LinearGradient>
         <Path
-          d="M735.3,13c-56.8-2-97.1,68-157,65.9c-47.4-1.7-56.6-46.7-104.2-47.6c-48.7-0.9-68.6,45.6-125.9,46.4c-55.8,0.7-76-21.5-123.3-18.4c-40.5,2.6-53.7,16.6-99.1,16.6c-41.6,0-58.2-50.1-125.3-50.1c-0.2,0-0.3,0-0.5,0v54.9c238.2-0.2,496.6-0.2,750-0.3V15.3C745.5,14,740.6,13.2,735.3,13z"
+          d="M1175.7,129V11.9c-0.1,0-0.2,0-0.4,0c-91,0-155.4,108.8-251.2,105.4c-75.8-2.7-90.6-74.7-166.6-76.1c-77.8-1.5-109.7,73-201.4,74.2c-89.3,1.2-104.6-47.3-180.2-42.4c-64.8,4.2-79.6,39.5-152.2,39.5C157.3,112.4,129.4,12.1,0,11.9V129H1175.7z"
           fill="url(#SVGID_1_)"
         />
       </G>
 
-      <G fillOpacity="0.23">
-        <LinearGradient
-          id="SVGID_2_"
-          gradientUnits="userSpaceOnUse"
-          x1="-73.1614"
-          y1="39.1927"
-          x2="637.803"
-          y2="46.6923"
-        >
-          <Stop offset="0%" stopColor="#FFFFFF" />
-          <Stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.5" />
-        </LinearGradient>
+      <G fillOpacity="0.35">
         <Path
-          d="M726.5,75.2c-79.7-3.4-98.8-69.6-160.6-69.7c-61.2,0-78,64.4-160.6,68.9c-60.2,3.3-84.5-46.6-160.6-45.8c-70,0.7-90.7,43.4-160.6,45.8c-28.8,1-57-5.2-84.3-16.4v22.2c250.3,0,500.7,0,751,0v-7.4C743.4,74.7,735.4,75.6,726.5,75.2z"
-          fill="url(#SVGID_2_)"
+          d="M1175.7,129v-17.6C1048.1,111.4,1003.3,0.1,904.5,0c-97.9-0.1-124.8,102.9-256.8,110.3c-96.3,5.3-159.3-74.5-280.9-73.2c-111.9,1.2-97,74-366.7,74v18H1175.7z"
+          fill="#7171E2"
         />
       </G>
     </Svg>
