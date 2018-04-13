@@ -84,6 +84,7 @@ class CustomScenario extends Component {
               Keyboard.dismiss();
               navigation.dispatch({ type: "CallConfirmationView" });
             }}
+            fill
           />
         </HeaderView>
       </ViewWrapper>

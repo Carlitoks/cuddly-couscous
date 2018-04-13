@@ -52,44 +52,64 @@ export const styles = StyleSheet.create({
   },
   textAudioInactive: {
     color: "#401674",
-    fontWeight: "bold"
+    fontWeight: "normal"
   },
   firstLanguage: {
-    borderBottomWidth: 1,
-    flexDirection: "row"
+    flexDirection: "row",
+    borderBottomWidth: 0.8,
+    borderColor: Colors.disabledColor,
+    borderTopWidth: 0
   },
   secondLanguage: {
-    borderRightWidth: 1,
+    borderRightWidth: 0.8,
+    borderColor: Colors.disabledColor,
     flex: 0.5,
     padding: 20
   },
   selectionLanguage: { flex: 0.5, margin: 20, flexDirection: "row" },
   time: {
-    borderBottomWidth: 1,
     padding: 20,
     height: 80,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    borderBottomWidth: 0.8,
+    borderColor: Colors.disabledColor,
+    borderTopWidth: 0
   },
-  timeItalic: { color: "gray", fontStyle: "italic" },
+  timeItalic: { color: "gray", fontStyle: "italic", fontWeight: "normal" },
   iconAlign: {
     alignItems: "flex-end",
     justifyContent: "center",
     alignSelf: "center"
   },
-  bottomWidth: { borderBottomWidth: 1 },
+  bottomWidth: {     borderBottomWidth: 0.8,
+    borderColor: Colors.disabledColor,
+    borderTopWidth: 0 },
   flexit: { flexDirection: "row", height: 100 },
   justifyCenter: { justifyContent: "center", alignItems: "center" },
   flex: { flex: 1 },
-  category: { borderBottomWidth: 1, padding: 20 },
+  category: {
+    padding: 20,
+    borderBottomWidth: 0.8,
+    borderColor: Colors.disabledColor,
+    borderTopWidth: 0
+  },
   textInput: {
     height: 40,
-    marginLeft: 10,
+    marginLeft: 0,
     borderColor: Colors.white,
     borderWidth: 0,
     borderBottomColor: "transparent"
   },
   scenarioText: { color: "gray", fontWeight: "normal" },
   direction: { flexDirection: "column", flex: 1 },
-  flexColumn: { flexDirection: "column" }
+  flexColumn: { flexDirection: "column" },
+  iconSize: {
+    fontSize: 28
+  }, 
+  borderContainer: {
+    borderBottomWidth: 0.8,
+    borderColor: Colors.disabledColor,
+    borderTopWidth: 0
+  }
 });

@@ -108,6 +108,7 @@ class CallConfirmationView extends Component {
                   onChangeText={text =>
                     this.props.updateSettings({ customScenarioNote: text })
                   }
+                  multiline
                 />
               </View>
             </View>
@@ -129,7 +130,7 @@ class CallConfirmationView extends Component {
                   <Text>{this.props.selectedLanguageTo}</Text>
                 </View>
                 <View style={styles.justifyCenter}>
-                  <Icon name="chevron-right" color="gray" />
+                  <Icon name="chevron-right" style={styles.iconSize} color={Colors.defaultChevron}/>
                 </View>
               </TouchableOpacity>
             </View>
@@ -148,7 +149,7 @@ class CallConfirmationView extends Component {
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
                   {`${this.props.approxTime} ${I18n.t(
-                    "minutesAbbreviation"
+                    "minutes"
                   )}: `}
                   <Text style={styles.timeItalic}>
                     {I18n.t("timeCompliments")}
@@ -158,7 +159,7 @@ class CallConfirmationView extends Component {
               </View>
               <View style={styles.iconAlign}>
                 {this.props.allowTimeSelection && (
-                  <Icon name="chevron-right" color="gray" />
+                  <Icon name="chevron-right" style={styles.iconSize} color={Colors.defaultChevron} />
                 )}
               </View>
             </TouchableOpacity>
@@ -182,7 +183,7 @@ class CallConfirmationView extends Component {
                   }}
                 >
                   <View style={styles.justifyCenter}>
-                    <Icon name="check" color={Colors.white} />
+                    <Icon name="check" color={Colors.white} style={styles.iconSize} />
                     <Text
                       style={
                         this.props.video
@@ -212,7 +213,7 @@ class CallConfirmationView extends Component {
                   }}
                 >
                   <View style={styles.justifyCenter}>
-                    <Icon name="check" color={Colors.white} />
+                    <Icon name="check" color={Colors.white} style={styles.iconSize} />
                     <Text
                       style={
                         !this.props.video
