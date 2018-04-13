@@ -7,7 +7,8 @@ import {
   Text,
   StyleSheet,
   Modal,
-  StatusBar
+  StatusBar,
+  processColor
 } from "react-native";
 import Instabug from "instabug-reactnative";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
@@ -30,6 +31,7 @@ const ViewWrapper = ({
     "83f07c5f8dcb8496e3287f280ce6f61d",
     Instabug.invocationEvent.shake
   );
+  Instabug.setPrimaryColor(processColor("#52389d"));
   if (email) {
     Instabug.setUserData(`${name} ${lastName} (${role})`);
     Instabug.setUserEmail(email);
