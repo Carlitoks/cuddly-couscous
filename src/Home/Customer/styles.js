@@ -307,10 +307,10 @@ export default StyleSheet.create({
     backgroundColor: "transparent"
   },
   bottom: {
-    marginTop: 30
+    marginTop: 25
   },
   bottomText: {
-    fontSize: 14,
+    fontSize: moderateScale(18),
     color: Colors.primaryColor,
     textAlign: "center",
     fontFamily: Fonts.primaryLightFont,

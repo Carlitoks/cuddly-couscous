@@ -13,7 +13,7 @@ import ListComponent from "../../../Components/ListComponent/ListComponent";
 import SearchBar from "../../../Components/SearchBar/SearchBar";
 
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
-
+import { Iphone5 } from "../../../Util/Devices";
 import { displayFormErrors, previousView } from "../../../Util/Helpers";
 import I18n from "../../../I18n/I18n";
 import { Colors } from "../../../Themes";
@@ -102,7 +102,9 @@ class SessionLanguageView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <View style={styles.titleContainer}>
+            <View
+              style={Iphone5 ? styles.titleContainer5 : styles.titleContainer}
+            >
               <Text style={styles.titleCall}>
                 {this.props.nativeLanguage.name}
               </Text>

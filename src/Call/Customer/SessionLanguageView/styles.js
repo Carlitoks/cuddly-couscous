@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
   },
   titleCall: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: moderateScale(24),
+    fontSize: moderateScale(22),
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: "transparent",
@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
   },
   subTitleCall: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(18),
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: "transparent"
@@ -86,10 +86,10 @@ export const styles = StyleSheet.create({
     color: Colors.primaryColor
   },
   bottom: {
-    marginTop: 30
+    marginTop: 25
   },
   bottomText: {
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(18),
     color: Colors.primaryColor,
     textAlign: "center",
     fontFamily: Fonts.primaryLightFont,
@@ -112,5 +112,13 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     top: 0,
     width: 250
+  },
+  titleContainer5: {
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    top: 0,
+    width: 200
   }
 });

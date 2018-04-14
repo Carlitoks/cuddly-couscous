@@ -80,13 +80,13 @@ export default StyleSheet.create({
   },
   subTitleCall: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(16),
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: "transparent"
   },
   bottomText: {
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(18),
     color: Colors.primaryColor,
     textAlign: "center",
     fontFamily: Fonts.primaryLightFont,
@@ -98,6 +98,6 @@ export default StyleSheet.create({
     marginTop: 0
   },
   bottom: {
-    marginTop: 30
+    marginTop: 25
   }
 });
