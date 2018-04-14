@@ -237,6 +237,7 @@ const HeaderView = ({
                       rating={stars}
                       emptyStarColor={Colors.emptyStarColor}
                       fullStarColor={Colors.gradientColorButton.top}
+                      starColor={Colors.gradientColorButton.top}
                     />
                   ) : null}
                 </View>
