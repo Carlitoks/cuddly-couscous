@@ -78,11 +78,11 @@ class CustomerView extends Component {
     if (this.props.linguist) {
       return `${this.props.linguist.firstName} ${
         this.props.linguist.lastInitial
-        }`;
+      }`;
     } else if (this.props.customer) {
       return `${this.props.customer.firstName} ${
         this.props.customer.lastInitial
-        }`;
+      }`;
     } else {
       return `User`;
     }
@@ -93,8 +93,8 @@ class CustomerView extends Component {
 
     return linguist && linguist.avatarURL
       ? {
-        uri: this.props.linguist.avatarURL
-      }
+          uri: this.props.linguist.avatarURL
+        }
       : Images.avatar;
   };
   componentWillUnmount() {
@@ -339,9 +339,9 @@ class CustomerView extends Component {
             />
             <CallButtonToggle
               toggle={true}
-              active={this.props.speaker}
+              active={!this.props.speaker}
               name="CustomerSpeaker"
-              icon="volume-up"
+              icon="volume-off"
               iconToggled="volume-up"
               opacity={0.7}
               buttonSize={65}
@@ -359,9 +359,9 @@ class CustomerView extends Component {
             />
             <CallButtonToggle
               toggle={true}
-              active={!this.props.mute}
+              active={this.props.mute}
               name="CustomerMute"
-              icon="mic"
+              icon="mic-off"
               iconToggled="mic"
               opacity={0.7}
               buttonSize={65}
@@ -372,7 +372,7 @@ class CustomerView extends Component {
               active={this.props.video}
               name="CustomerVideo"
               icon="videocam"
-              iconToggled="videocam"
+              iconToggled="videocam-off"
               opacity={0.7}
               buttonSize={65}
               iconSize={30}

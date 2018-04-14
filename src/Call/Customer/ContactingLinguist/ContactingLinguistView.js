@@ -83,9 +83,9 @@ class ContactingLinguist extends Component {
                 />
                 <CallButtonToggle
                   toggle={true}
-                  active={this.props.speaker}
+                  active={!this.props.speaker}
                   name="CustomerSpeaker"
-                  icon="volume-up"
+                  icon="volume-off"
                   iconToggled="volume-up"
                   opacity={0.7}
                   buttonSize={65}
@@ -102,9 +102,9 @@ class ContactingLinguist extends Component {
                 />
                 <CallButtonToggle
                   toggle={true}
-                  active={!this.props.mute}
+                  active={this.props.mute}
                   name="CustomerMute"
-                  icon="mic"
+                  icon="mic-off"
                   iconToggled="mic"
                   opacity={0.7}
                   buttonSize={65}
@@ -115,7 +115,7 @@ class ContactingLinguist extends Component {
                   active={this.props.video}
                   name="CustomerVideo"
                   icon="videocam"
-                  iconToggled="videocam"
+                  iconToggled="videocam-off"
                   opacity={0.7}
                   buttonSize={65}
                   iconSize={30}
