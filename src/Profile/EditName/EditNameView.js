@@ -28,7 +28,9 @@ class EditNameView extends Component {
   componentWillUnmount() {
     this.props.clearForm();
   }
-
+  isDisabled() {
+    return !this.props.formFirstName > 0 || !this.props.formLastName > 0;
+  }
   async componentWillMount() {
     await this.props.updateForm({
       firstname: this.props.firstName,
@@ -154,8 +156,7 @@ class EditNameView extends Component {
                   : I18n.t("mainTitle")}
             </Text>
           }
-          NoWaves
-        >
+          NoWaves>
           <ScrollView
             keyboardShouldPersistTaps="handled"
             automaticallyAdjustContentInsets={true}
@@ -221,7 +222,8 @@ class EditNameView extends Component {
               this.submit();
             }}
             bold={false}
-            fill
+            disabled={this.isDisabled()}
+            fill={!this.isDisabled()}
             absolute
             gradient
             bottom
