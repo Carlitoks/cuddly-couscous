@@ -87,6 +87,7 @@ export default (ENG = {
   enterYourPassword: "Create a new password",
   error: "Error",
   errorLetters: "Invalid or Missing Characters",
+  errorPromo: "Promo Code not found",
   estimatedCost: "Estimated cost",
   estimatedDuration: "Estimated Duration",
   estimatedCostStatic1:

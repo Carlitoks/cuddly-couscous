@@ -36,7 +36,7 @@ class PromoCodeView extends Component {
       .asyncScanPromoCode(promoCode, token)
       .then(response => {
         if (response.type === "networkErrors/error") {
-          throw new Error(response.payload.data.errors);
+          throw new Error(I18n.t("errorPromo"));
         }
         const {
           requireScenarioSelection,
@@ -82,7 +82,7 @@ class PromoCodeView extends Component {
         }
       })
       .catch(err => {
-        displayFormErrors(err);
+        displayFormErrors(I18n.t("errorPromo"));
       });
   }
 
@@ -100,8 +100,7 @@ class PromoCodeView extends Component {
           headerCenterComponent={
             <Text style={styles.titleCall}>{I18n.t("promoCodeTitle")}</Text>
           }
-          NoWaves
-        >
+          NoWaves>
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}>

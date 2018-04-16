@@ -35,7 +35,9 @@ export const asyncScanPromoCode = (promoCode, token) => dispatch => {
     .then(response => {
       return dispatch(scanQR(response.data));
     })
-    .catch(error => dispatch(networkError(error)));
+    .catch(error => {
+      dispatch(networkError(error));
+    });
 };
 
 const promoCodeReducer = (state = initialState, action = {}) => {
