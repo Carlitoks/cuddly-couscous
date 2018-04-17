@@ -11,6 +11,11 @@ export const scanQR = payload => ({
   payload
 });
 
+export const clear = payload => ({
+  type: ACTIONS.CLEAR,
+  payload
+});
+
 const initialState = {
   scanned: ""
 };
@@ -31,6 +36,11 @@ const eventReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         ...payload
+      };
+      break;
+    case ACTIONS.CLEAR:
+      return {
+        ...initialState
       };
       break;
 

@@ -23,6 +23,8 @@ import {
 } from "../../../Ducks/CallCustomerSettings.js";
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
 import { cleanSelected } from "../../../Ducks/HomeFlowReducer";
+import { clear as clearEvents } from "../../../Ducks/EventsReducer";
+import { clearPromoCode } from "../../../Ducks/PromoCodeReducer";
 import { clearSettings as clearLinguistReducer } from "../../../Ducks/LinguistFormReducer";
 
 import I18n from "../../../I18n/I18n";
@@ -34,6 +36,7 @@ import GoBackButton from "../../../Components/GoBackButton/GoBackButton";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import { CATEGORIES } from "../../../Util/Constants";
+import languages from "../../../Config/Languages";
 
 import {
   setPermission,
@@ -45,13 +48,42 @@ class CallConfirmationView extends Component {
     return CATEGORIES[title];
   };
 
+  componentWillMount() {
+    const { promotion, event } = this.props;
+
+    if (promotion || event) {
+      const scannedEvent = promotion ? promotion : event.data;
+
+      const {
+        allowSecondaryLangSelection,
+        defaultSecondaryLangCode
+      } = scannedEvent;
+
+      if (!allowSecondaryLangSelection && defaultSecondaryLangCode) {
+        const selectedLangTo = languages.filter(
+          language => language[3] === defaultSecondaryLangCode
+        );
+
+        this.props.updateSettings({
+          secondaryLangCode: defaultSecondaryLangCode,
+          selectedLanguageTo: selectedLangTo[0].name,
+          selectedLanguage: selectedLangTo[0].name
+        });
+      }
+    }
+  }
+
   render() {
     const {
       navigation,
       customScenario,
       selectedCategory,
-      categoryIndex
+      categoryIndex,
+      promotion,
+      event
     } = this.props;
+
+    const scannedEvent = promotion ? promotion : event.data;
 
     const categorySelected =
       categoryIndex > -1 && !!selectedCategory
@@ -121,16 +153,23 @@ class CallConfirmationView extends Component {
               </View>
               <TouchableOpacity
                 style={styles.selectionLanguage}
-                onPress={() =>
-                  navigation.dispatch({ type: "SessionLanguageView" })
-                }
+                onPress={() => {
+                  if (
+                    scannedEvent &&
+                    scannedEvent.allowSecondaryLangSelection
+                  ) {
+                    navigation.dispatch({ type: "SessionLanguageView" });
+                  }
+                }}
               >
                 <View style={styles.direction}>
                   <Text style={styles.titleStyle}>{I18n.t("languageTo")}</Text>
                   <Text style={styles.regularText}>{this.props.selectedLanguageTo}</Text>
                 </View>
                 <View style={styles.justifyCenter}>
-                  <Icon name="chevron-right" style={styles.iconSize} color={Colors.defaultChevron}/>
+                  {scannedEvent && scannedEvent.allowSecondaryLangSelection ? (
+                    <Icon name="chevron-right" color="gray" />
+                  ) : null}
                 </View>
               </TouchableOpacity>
             </View>
@@ -159,7 +198,11 @@ class CallConfirmationView extends Component {
               </View>
               <View style={styles.iconAlign}>
                 {this.props.allowTimeSelection && (
-                  <Icon name="chevron-right" style={styles.iconSize} color={Colors.defaultChevron} />
+                  <Icon
+                    name="chevron-right"
+                    style={styles.iconSize}
+                    color={Colors.defaultChevron}
+                  />
                 )}
               </View>
             </TouchableOpacity>
@@ -183,7 +226,11 @@ class CallConfirmationView extends Component {
                   }}
                 >
                   <View style={styles.justifyCenter}>
-                    <Icon name="check" color={Colors.white} style={styles.iconSize} />
+                    <Icon
+                      name="check"
+                      color={Colors.white}
+                      style={styles.iconSize}
+                    />
                     <Text
                       style={
                         this.props.video
@@ -213,7 +260,11 @@ class CallConfirmationView extends Component {
                   }}
                 >
                   <View style={styles.justifyCenter}>
-                    <Icon name="check" color={Colors.white} style={styles.iconSize} />
+                    <Icon
+                      name="check"
+                      color={Colors.white}
+                      style={styles.iconSize}
+                    />
                     <Text
                       style={
                         !this.props.video
@@ -240,6 +291,8 @@ class CallConfirmationView extends Component {
                         : "11111111-1111-1111-1111-111111111126"
                   });
                   this.props.cleanSelected();
+                  this.props.clearEvents();
+                  this.props.clearPromoCode();
                   navigation.dispatch({ type: "CustomerView" });
                 }}
                 title={I18n.t("connectNow").toUpperCase()}
@@ -272,8 +325,11 @@ const mS = state => ({
   estimatedPrice:
     state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
   selectedLanguageTo: state.contactLinguist.selectedLanguage,
+  selectedLanguageFrom: state.contactLinguist.selectedLanguageFrom,
   fromLanguage: state.userProfile.selectedNativeLanguage,
-  allowTimeSelection: state.callCustomerSettings.allowTimeSelection
+  allowTimeSelection: state.callCustomerSettings.allowTimeSelection,
+  promotion: state.promoCode.scanned,
+  event: state.events
 });
 
 const mD = {
@@ -282,7 +338,8 @@ const mD = {
   customerUpdateSettings,
   clearSettings,
   cleanSelected,
-  clearLinguistReducer
+  clearLinguistReducer,
+  clearEvents
 };
 
 export default connect(mS, mD)(CallConfirmationView);
