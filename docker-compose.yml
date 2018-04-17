@@ -3,7 +3,7 @@ version: '2'
 services:
   # run ad hoc commands
   solo-api: 
-    image: gcr.io/solo-infrastructure/solo-platform-api:0.12.1
+    image: gcr.io/solo-infrastructure/solo-platform-api:0.43.0
     volumes:
       - ./api.config.yml:/app/config/config.yml
 
