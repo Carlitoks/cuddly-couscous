@@ -5,22 +5,29 @@ services:
   solo-api: 
     image: gcr.io/solo-infrastructure/solo-platform-api:0.43.0
     volumes:
+      - ./.gcp/app-key.json:/app/gcp/app-key.json
       - ./api.config.yml:/app/config/config.yml
 
   # run the api server w/ docs
   solo-api-server:
     extends: solo-api
+    restart: always
     command: ["api-server"]
     ports:
-      - 5000:80
+      - ${SOLOAPI_PORT}:80
   
   # run the web app
   solo-web-app:
     image: gcr.io/solo-infrastructure/solo-web-app:0.2.0
+    restart: always
     ports:
       - 3003:80
     environment:
       API_URL: http://localhost:${SOLOAPI_PORT}
+
+  # redis dependency for api server  
+  redis:
+    image: redis:4.0-alpine
   
   # database dependency for api server
   postgres:
@@ -36,15 +43,15 @@ services:
     links:
       - postgres:postgres
     ports:
-      - 5001:8080
+      - ${ADMINER_PORT}:8080
   
   # for viewing the api docs
   swaggerui:
     image: swaggerapi/swagger-ui
     ports:
-      - 5002:8080
+      - ${SWAGGER_PORT}:8080
     environment:
-       API_URL: ${API_URL} 
+       API_URL: ${API_URL}
 
  # to enable gcloud login for pushing/pulling images from GCP
   gcp:

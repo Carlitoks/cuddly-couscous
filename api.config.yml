@@ -1,11 +1,14 @@
 # copy this file to "api.config.yml" and modify as needed for your local dev environment
 
 APP_ENV: dev # dev|prod
+APP_ROOT: /app
+APP_URL: http://localhost:3000
+
 POSTGRES_USER: solo-platform
 POSTGRES_PASS: solo-platform-db-password
 POSTGRES_DB: solo-platform
 POSTGRES_HOST: postgres:5432
-APP_PUBLIC_UPLOADS_BASEURL: http://localhost:3000/_public
+APP_PUBLIC_UPLOADS_BASEURL: http://localhost:5000/_public
 APP_FS_TYPE: local # local|gcs
 APP_FS_OS_PATH: static/uploads
 APP_FS_GCS_URL: ~
@@ -14,11 +17,16 @@ JWT_ISSUER: solo.api.com
 TOKBOX_APIKEY: 46003062
 TOKBOX_SECRET: 688ecb8f0804f57db0781aa829896a0b3301c9fa
 REDIS_URL: redis:6379
+GCP_PROJECT_ID: solo-infrastructure
+GCP_AUTH_FILE: /app/gcp/app-key.json
+GCS_PUBLIC_BUCKET: solo-platform-api-test-storage
+GCS_PROFILE_PHOTO_PREFIX: profile-photos
+GCS_PROFILE_PHOTO_BASEURL: https://storage.googleapis.com/solo-platform-api-test-storage/profile-photos
 
 # Note that these are URLs inteded for a browser, not for backend communication between docker services
 WEBAPP_URL: http://localhost:3003
-WEBAPP_URL_CONFIRM_EMAIL: http://localhost:3003/email/verify
-WEBAPP_URL_RESET_PASSWORD: http://localhost:3003/password/reset
+WEBAPP_URL_CONFIRM_EMAIL: http://localhost:3003/#/email/verify
+WEBAPP_URL_RESET_PASSWORD: http://localhost:3003/#/password/reset
 
 EMAIL_ENABLED: false
 EMAIL_FROM_ADDRESS: no-reply@example.com
@@ -26,3 +34,13 @@ EMAIL_USER: user@example.com
 EMAIL_PASS: user-email-password
 EMAIL_PORT: "587"
 EMAIL_DOMAIN: smtp.example.com
+
+APPLE_APP_STORE_URL: https://www.example.com/
+PROBLEM_REPORT_EMAIL: no-reply@example.com
+
+INVITER_BATCH_SIZE: 1 # num invites to send at once
+INVITER_INTERVAL: 2 # seconds
+INVITER_QUEUE_TIMEOUT: 10 # seconds
+
+FCM_ENABLED: true
+FCM_SERVER_KEY: AIzaSyBxJgyQygsw44iRj23gD5JGCtJNN3o5yS8
