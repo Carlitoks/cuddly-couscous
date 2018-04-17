@@ -99,7 +99,9 @@ const HeaderView = ({
             height:
               !!avatarSource || !!switchOnChange || history
                 ? null
-                : !!title || !!titleComponent ? 145 : 75
+                : !!title || !!titleComponent
+                  ? 145
+                  : 75
           }}
         >
           {/* Linear Gradient */}
@@ -342,7 +344,9 @@ const HeaderView = ({
             >
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: "50%" }}>
-                  <Text style={[styles.TitleText, styles.center]}>
+                  <Text
+                    style={[styles.TitleText, styles.center, styles.callsText]}
+                  >
                     {I18n.t("calls")}
                   </Text>
                   <Text style={[styles.callNumber, styles.center]}>
@@ -350,7 +354,9 @@ const HeaderView = ({
                   </Text>
                 </View>
                 <View style={{ width: "50%" }}>
-                  <Text style={[styles.TitleText, styles.center]}>
+                  <Text
+                    style={[styles.TitleText, styles.center, styles.callsText]}
+                  >
                     {`${I18n.t("minutes")[0].toUpperCase()}${I18n.t(
                       "minutes"
                     ).slice(1)}`}
@@ -407,7 +413,9 @@ const HeaderView = ({
             ? 350
             : !!bigAvatar
               ? 250
-              : !!avatarSource ? moderateScale(200) : moderateScale(180)
+              : !!avatarSource
+                ? moderateScale(200)
+                : moderateScale(180)
         }}
       >
         {getHeader()}

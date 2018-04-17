@@ -275,8 +275,11 @@ export default StyleSheet.create({
     backgroundColor: "transparent"
   },
   callNumber: {
-    fontSize: 30,
+    fontSize: 20,
     color: "gray",
     alignItems: "center"
+  },
+  callsText: {
+    fontSize: 12
   }
 });
