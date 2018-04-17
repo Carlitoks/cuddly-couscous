@@ -64,11 +64,21 @@ class EditNativeLanguageView extends Component {
   }
 
   filterList() {
-    return languages.filter(language => {
-      return language.name
-        .toLowerCase()
-        .startsWith(this.props.searchQuery.toLowerCase());
-    });
+    return languages
+      .filter(language => {
+        return language.name
+          .toLowerCase()
+          .startsWith(this.props.searchQuery.toLowerCase());
+      })
+      .map(language => {
+        if (language[3] === "eng" || language[3] === "cmn") {
+          language.disabled = false;
+        } else {
+          language.disabled = true;
+        }
+
+        return language;
+      });
   }
 
   changeSearch(queryString) {

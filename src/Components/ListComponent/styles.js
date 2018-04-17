@@ -83,5 +83,11 @@ export default StyleSheet.create({
     backgroundColor: "transparent",
     color: Colors.gradientColor.bottom,
     fontSize: 28
+  },
+  disabledItemView: {
+    // backgroundColor: Colors.lightGrey
+  },
+  disabledItemText: {
+    color: Colors.lightGrey
   }
 });

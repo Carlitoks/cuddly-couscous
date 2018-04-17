@@ -39,7 +39,9 @@ class ListComponent extends Component {
 
     this.state = {
       selected: !!this.props.multiple
-        ? !!this.props.selected ? this.props.selected : []
+        ? !!this.props.selected
+          ? this.props.selected
+          : []
         : -1,
       keyboard: false
     };
@@ -198,6 +200,7 @@ class ListComponent extends Component {
             renderItem={({ item, index }) => (
               <View
                 style={[
+                  item.disabled ? styles.disabledItemView : null,
                   styles.textView,
                   index > 0 ? styles.textBetweenView : null
                 ]}
@@ -205,23 +208,28 @@ class ListComponent extends Component {
                 <Text
                   style={[
                     styles.regText,
+                    item.disabled ? styles.disabledItemText : null,
                     this.isSelected(index) ? styles.selectedText : null,
                     this.props.leftText ? styles.leftText : null
                   ]}
                   onPress={() => {
-                    !!item.onPress
-                      ? item.onPress()
-                      : !!this.props.changeSelected
-                        ? this.props.changeSelected(index)
-                        : null;
-                    this.selectItem(index);
-                    !!this.props.other
-                      ? !!this.props.otherOnPress && this.isOther(item)
-                        ? this.props.otherOnPress()
+                    if (!item.disabled) {
+                      !!item.onPress
+                        ? item.onPress()
+                        : !!this.props.changeSelected
+                          ? this.props.changeSelected(index)
+                          : null;
+                      this.selectItem(index);
+                      !!this.props.other
+                        ? !!this.props.otherOnPress && this.isOther(item)
+                          ? this.props.otherOnPress()
+                          : !!this.props.onPress
+                            ? this.props.onPress(index)
+                            : null
                         : !!this.props.onPress
                           ? this.props.onPress(index)
-                          : null
-                      : !!this.props.onPress ? this.props.onPress(index) : null;
+                          : null;
+                    }
                     this.state.keyboard ? Keyboard.dismiss() : null;
                   }}
                 >

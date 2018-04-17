@@ -28,16 +28,16 @@ class SessionLanguageView extends Component {
       searchQuery: "",
       selectedIndex: -1,
       selectedLanguage: {},
-      loading: true
+      loading: true,
+      languagesMapper: { eng: "cmn", cnm: "eng" }
     };
   }
 
   componentWillMount() {
     const { primaryLangCode, secundaryLangCode } = this.props;
-    const languagesMapper = { eng: "cmn", cnm: "eng" };
 
-    const langString = languagesMapper["primaryLangCode"]
-      ? languagesMapper[primaryLangCode]
+    const langString = this.state.languagesMapper["primaryLangCode"]
+      ? this.state.languagesMapper[primaryLangCode]
       : secundaryLangCode;
 
     const index = findIndex(languages, language => language[3] === langString);
@@ -49,11 +49,23 @@ class SessionLanguageView extends Component {
   }
 
   filterList() {
-    return languages.filter(language => {
-      return language.name
-        .toLowerCase()
-        .startsWith(this.state.searchQuery.toLowerCase());
-    });
+    return languages
+      .filter(language => {
+        return language.name
+          .toLowerCase()
+          .startsWith(this.state.searchQuery.toLowerCase());
+      })
+      .map(language => {
+        const { primaryLangCode } = this.props;
+        const { languagesMapper } = this.state;
+        const currentLangCode = language[3];
+
+        if (primaryLangCode !== languagesMapper[currentLangCode]) {
+          language.disabled = true;
+        }
+
+        return language;
+      });
   }
 
   changeSelected(index) {
