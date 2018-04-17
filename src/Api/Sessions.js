@@ -25,12 +25,12 @@ const Session = {
     return AXIOS.post(
       `${BASE_URI}`,
       {
-        type: type,
-        matchMethod: matchMethod,
-        primaryLangCode: primaryLangCode,
-        secondaryLangCode: secondaryLangCode,
-        scenarioID: scenarioID,
-        estimatedMinutes: 8
+        type,
+        matchMethod,
+        primaryLangCode,
+        secondaryLangCode,
+        scenarioID,
+        estimatedMinutes
       },
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {
