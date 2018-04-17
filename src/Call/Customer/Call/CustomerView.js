@@ -167,7 +167,7 @@ class CustomerView extends Component {
       sessionID,
       primaryLangCode,
       secundaryLangCode,
-      selectedTime,
+      selectedCallTime,
       selectedScenarioId,
       token,
       AsyncCreateSession,
@@ -180,7 +180,7 @@ class CustomerView extends Component {
         matchMethod: "first_available",
         primaryLangCode: primaryLangCode,
         secundaryLangCode: secundaryLangCode,
-        estimatedMinutes: selectedTime,
+        estimatedMinutes: selectedCallTime,
         scenarioID: selectedScenarioId,
         token: token
       }).then(async response => {
