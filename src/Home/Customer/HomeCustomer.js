@@ -14,7 +14,7 @@ import {
   closeOpenConnections,
   updateSettings as updateCustomerSettings
 } from "../../Ducks/CallCustomerSettings";
-
+import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { getCategories, updateSettings } from "../../Ducks/HomeFlowReducer";
 import PhotoUpload from "react-native-photo-upload";
 import {
@@ -170,7 +170,9 @@ class Home extends Component {
   };
 
   submit() {
-    const { navigation } = this.props;
+    const { navigation, updateContactLinguist } = this.props;
+
+    updateContactLinguist({ customScenarioNote: "" });
 
     this.state.otherSelected
       ? navigation.dispatch({ type: "CustomScenarioView" })
@@ -303,7 +305,12 @@ class Home extends Component {
 
   bottomButtonOnPress = () => {
     const { qr, other, indexSelected } = this.state;
-    const { customScenario } = this.props;
+    const { customScenario, updateSettings } = this.props;
+
+    updateSettings({ listItemSelected: -1 });
+    this.setState({
+      indexSelected: -1
+    });
 
     return qr
       ? this.props.navigation.dispatch({ type: "ScanScreenView" })
@@ -416,7 +423,8 @@ const mD = {
   closeOpenConnections,
   getScenarios,
   updateSettings,
-  updateCustomerSettings
+  updateCustomerSettings,
+  updateContactLinguist
 };
 
 export default connect(mS, mD)(Home);

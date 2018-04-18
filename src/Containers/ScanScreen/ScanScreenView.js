@@ -13,6 +13,7 @@ import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
 import I18n from "../../I18n/I18n";
 import { asyncScanQR } from "../../Ducks/EventsReducer";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
+import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import { updateSettings as updateCustomerSettings } from "../../Ducks/CallCustomerSettings";
 import styles from "./styles";
@@ -27,6 +28,8 @@ class ScanScreenView extends Component {
   };
 
   componentWillMount() {
+    this.props.updateContactLinguist({ customScenarioNote: "" });
+
     setPermission("camera").then(response => {
       if (response == "denied" || response == "restricted") {
         displayOpenSettingsAlert();
@@ -193,7 +196,8 @@ const mD = {
   asyncScanQR,
   updateSettings,
   updateCustomerSettings,
-  updateHomeFlow
+  updateHomeFlow,
+  updateContactLinguist
 };
 
 export default connect(mS, mD)(ScanScreenView);

@@ -9,6 +9,7 @@ import {
 
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
+import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 
 import { View, Text, ScrollView, Alert, Keyboard } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -31,6 +32,9 @@ import { displayFormErrors } from "../../Util/Helpers";
 class PromoCodeView extends Component {
   submit() {
     const { token, promoCode } = this.props;
+
+    this.props.updateContactLinguist({ customScenarioNote: "" });
+
     Keyboard.dismiss();
     this.props
       .asyncScanPromoCode(promoCode, token)
@@ -100,10 +104,12 @@ class PromoCodeView extends Component {
           headerCenterComponent={
             <Text style={styles.titleCall}>{I18n.t("promoCodeTitle")}</Text>
           }
-          NoWaves>
+          NoWaves
+        >
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}>
+            style={styles.scrollContainer}
+          >
             <View>
               {/* Email */}
               <InputRegular
@@ -145,7 +151,8 @@ const mD = {
   asyncScanPromoCode,
   clearPromoCode,
   updateSettings,
-  updateHomeFlow
+  updateHomeFlow,
+  updateContactLinguist
 };
 
 export default connect(mS, mD)(PromoCodeView);
