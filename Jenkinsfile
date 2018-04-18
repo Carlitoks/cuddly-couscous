@@ -53,7 +53,7 @@ pipeline {
         sh "make setup"
         sh "docker-compose -p solodev up --build -d ${RUNNING_APPS_DEV}"
         sh 'docker-compose -p solodev run --rm solo-api dev:load-fixtures'
-        sh 'docker-compose -p solodev run --rm solo-api index-linguists'
+        sh 'docker-compose -p solodev run --rm solo-api dev:index-linguists'
       }
     }
   }
