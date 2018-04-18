@@ -31,8 +31,8 @@ export default (reducer = (state, action) => {
         state
       );
       break;
-      
-      case "Home":
+
+    case "Home":
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -86,11 +86,11 @@ export default (reducer = (state, action) => {
       );
       break;
 
-    case "RateCallView":
+    case "RateView":
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: "RateCallView" })]
+          actions: [NavigationActions.navigate({ routeName: "RateView" })]
         })
       );
       break;
@@ -103,8 +103,7 @@ export default (reducer = (state, action) => {
         })
       );
       break;
-   
-      
+
     default:
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.navigate({

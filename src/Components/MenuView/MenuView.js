@@ -67,7 +67,8 @@ class MenuView extends Component {
           <TouchableOpacity
             onPress={() => {
               navigation.dispatch({ type: "UserProfileView" });
-            }}>
+            }}
+          >
             <View>
               <Avatar
                 containerStyle={{ alignSelf: "center", marginTop: 30 }}
@@ -109,7 +110,8 @@ class MenuView extends Component {
                 ? styles.selectedOptionMenu
                 : styles.optionMenu
             }
-            onPress={() => this.checkCurrentPage(navigation, "Home")}>
+            onPress={() => this.checkCurrentPage(navigation, "Home")}
+          >
             <Text style={styles.colorText}>{I18n.t("home")}</Text>
           </Icon.Button>
 
@@ -127,7 +129,8 @@ class MenuView extends Component {
                 ? styles.selectedOptionMenu
                 : styles.optionMenu
             }
-            onPress={() => this.checkCurrentPage(navigation, "CallHistory")}>
+            onPress={() => this.checkCurrentPage(navigation, "CallHistory")}
+          >
             <Text style={styles.colorText}>{I18n.t("callHistory")}</Text>
           </Icon.Button>
 
@@ -145,9 +148,8 @@ class MenuView extends Component {
                   ? styles.selectedOptionMenu
                   : styles.optionMenu
               }
-              onPress={() =>
-                this.checkCurrentPage(navigation, "PromoCodeView")
-              }>
+              onPress={() => this.checkCurrentPage(navigation, "PromoCodeView")}
+            >
               <Text style={styles.colorText}>{I18n.t("promoCodeTitle")}</Text>
             </Icon.Button>
           )}
@@ -186,7 +188,7 @@ class MenuView extends Component {
             backgroundColor={Colors.background}
             iconStyle={styles.optionMenu}
             onPress={() => {
-              this.props.navigation.dispatch({ type: "RateCallView" });
+              this.props.navigation.dispatch({ type: "RateView" });
             }}>
             <Text style={styles.colorText}>{I18n.t("reportProblem")}</Text>
           </Icon.Button>*/}
@@ -207,7 +209,8 @@ class MenuView extends Component {
                   onPress: () => this.props.logOutAsync()
                 }
               ]);
-            }}>
+            }}
+          >
             <Text style={styles.colorText}>{I18n.t("logOut")}</Text>
           </Icon.Button>
 
@@ -226,7 +229,8 @@ class MenuView extends Component {
                   ? styles.selectedOptionMenu
                   : styles.optionMenu
               }
-              onPress={() => Linking.openURL("https://signup.gps.network")}>
+              onPress={() => Linking.openURL("https://signup.gps.network")}
+            >
               <Text style={styles.colorText} icon>
                 {I18n.t("becomeLinguist")}
               </Text>

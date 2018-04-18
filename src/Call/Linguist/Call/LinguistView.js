@@ -78,8 +78,8 @@ class LinguistView extends Component {
 
     return avatarURL
       ? {
-        uri: this.props.avatarURL
-      }
+          uri: this.props.avatarURL
+        }
       : Images.avatar;
   };
 
@@ -239,7 +239,7 @@ class LinguistView extends Component {
                         "EndCall",
                         REASON.DONE
                       );
-                      this.props.navigation.dispatch({ type: "RateCallView" });
+                      this.props.navigation.dispatch({ type: "RateView" });
                     }
                   }
                 ],

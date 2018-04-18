@@ -71,7 +71,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
           })
         );
       } else {
-        dispatch({ type: "RateCallView" });
+        dispatch({ type: "RateView" });
       }
     })
     .catch(error => {
@@ -103,22 +103,22 @@ export const AsyncCreateSession = ({
   scenarioID,
   token
 }) => dispatch => {
-    return Sessions.createSession(
-      type,
-      matchMethod,
-      primaryLangCode,
-      secundaryLangCode,
-      estimatedMinutes,
-      scenarioID,
-      token
-    )
-      .then(response => {
-        // verify if there is linguist available
-        dispatch(setSession(response.data));
-        return response.data;
-      })
-      .catch(error => dispatch(networkError(error)));
-  };
+  return Sessions.createSession(
+    type,
+    matchMethod,
+    primaryLangCode,
+    secundaryLangCode,
+    estimatedMinutes,
+    scenarioID,
+    token
+  )
+    .then(response => {
+      // verify if there is linguist available
+      dispatch(setSession(response.data));
+      return response.data;
+    })
+    .catch(error => dispatch(networkError(error)));
+};
 
 export const verifyCall = (sessionID, token, verifyCallId) => (
   dispatch,

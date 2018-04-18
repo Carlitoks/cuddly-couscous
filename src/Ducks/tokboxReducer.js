@@ -149,7 +149,7 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
           if (!res.session.endReason) {
             //
           } else if (res.session.endReason === REASON.DONE) {
-            dispatch({ type: "RateCallView" });
+            dispatch({ type: "RateView" });
           } else {
             dispatch(clearSettings());
             dispatch(clear());
