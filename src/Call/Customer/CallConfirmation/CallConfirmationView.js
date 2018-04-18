@@ -176,7 +176,9 @@ class CallConfirmationView extends Component {
                 </View>
                 <View style={styles.justifyCenter}>
                   {allowSecondaryLangSelection ? (
-                    <Icon name="chevron-right" color="gray" />
+                    <Icon name="chevron-right"                     
+                      style={styles.iconSize}
+                      color={Colors.defaultChevron} />
                   ) : null}
                 </View>
               </TouchableOpacity>
