@@ -78,8 +78,8 @@ class LinguistView extends Component {
 
     return avatarURL
       ? {
-          uri: this.props.avatarURL
-        }
+        uri: this.props.avatarURL
+      }
       : Images.avatar;
   };
 
@@ -165,7 +165,7 @@ class LinguistView extends Component {
             <Publisher
               sessionId={this.props.linguistTokboxSessionID}
               style={styles.publisher}
-              mute={this.props.mute}
+              mute={!this.props.mic}
               video={this.props.video}
               ref={ref => {
                 this.ref = ref;
@@ -208,17 +208,15 @@ class LinguistView extends Component {
             name="LinguistCamera"
             icon="switch-camera"
             iconToggled="switch-camera"
-            opacity={0.7}
             buttonSize={65}
             iconSize={30}
           />
           <CallButtonToggle
             toggle={true}
-            active={!this.props.speaker}
+            active={this.props.speaker}
             name="LinguistSpeaker"
-            icon="volume-off"
+            icon="volume-up"
             iconToggled="volume-up"
-            opacity={0.7}
             buttonSize={65}
             iconSize={30}
           />
@@ -256,11 +254,10 @@ class LinguistView extends Component {
           />
           <CallButtonToggle
             toggle={true}
-            active={this.props.mute}
+            active={this.props.mic}
             name="LinguistMute"
-            icon="mic-off"
+            icon="mic"
             iconToggled="mic"
-            opacity={0.7}
             buttonSize={65}
             iconSize={30}
           />
@@ -269,7 +266,7 @@ class LinguistView extends Component {
             active={this.props.video}
             name="LinguistVideo"
             icon="videocam"
-            iconToggled="videocam-off"
+            iconToggled="videocam"
             opacity={0.7}
             buttonSize={65}
             iconSize={30}
@@ -282,7 +279,7 @@ class LinguistView extends Component {
 }
 
 const mS = state => ({
-  mute: state.callLinguistSettings.mute,
+  mic: state.callLinguistSettings.mic,
   video: state.callLinguistSettings.video,
   rotate: state.callLinguistSettings.rotate,
   speaker: state.callLinguistSettings.speaker,

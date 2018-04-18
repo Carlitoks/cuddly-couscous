@@ -22,6 +22,8 @@ import { Button } from "react-native-elements";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Iphone5 } from "../../Util/Devices";
+import Colors from "../../Themes/Colors";
+
 
 /**
  * @description Generic call button component
@@ -32,7 +34,6 @@ import { Iphone5 } from "../../Util/Devices";
     icon: Base icon name,
     toggle: "True" if icon can be toggled,
     iconToggled: Name of the toggled icon,
-    opacity: "True" to set opacity on button
     active: Initial state of the button
  *
  * @export
@@ -46,15 +47,7 @@ class CallButtonToggle extends Component {
       iconName: this.props.icon
     };
   }
-  componentDidMount() {
-    this.changeIcon(this.props.active);
-  }
 
-  changeIcon = value => {
-    this.setState({
-      iconName: value ? this.props.icon : this.props.iconToggled
-    });
-  };
   toggleIcon = () => {
     switch (this.props.name) {
       case "CustomerMute":
@@ -62,8 +55,7 @@ class CallButtonToggle extends Component {
           if (response == "denied" || response == "restricted") {
             displayOpenSettingsAlert();
           } else {
-            this.props.updateSettings({ mute: !this.props.muteCustomer });
-            this.changeIcon(this.props.muteCustomer);
+            this.props.updateSettings({ mic: !this.props.muteCustomer });
           }
         });
         break;
@@ -73,17 +65,14 @@ class CallButtonToggle extends Component {
             displayOpenSettingsAlert();
           } else {
             this.props.updateSettings({ video: !this.props.videoCustomer });
-            this.changeIcon(this.props.videoCustomer);
           }
         });
         break;
       case "CustomerSpeaker":
         this.props.updateSettings({ speaker: !this.props.speakerCustomer });
-        this.changeIcon(this.props.speakerCustomer);
         break;
       case "CustomerCamera":
         this.props.updateSettings({ rotate: !this.props.rotateCustomer });
-        this.changeIcon(this.props.rotateCustomer);
         break;
       case "LinguistVideo":
         setPermission("camera").then(response => {
@@ -93,7 +82,6 @@ class CallButtonToggle extends Component {
             this.props.updateLinguistSettings({
               video: !this.props.videoLinguist
             });
-            this.changeIcon(this.props.videoLinguist);
           }
         });
         break;
@@ -101,7 +89,6 @@ class CallButtonToggle extends Component {
         this.props.updateLinguistSettings({
           speaker: !this.props.speakerLinguist
         });
-        this.changeIcon(this.props.speakerLinguist);
         break;
       case "LinguistMute":
         setPermission("microphone").then(response => {
@@ -109,9 +96,8 @@ class CallButtonToggle extends Component {
             displayOpenSettingsAlert();
           } else {
             this.props.updateLinguistSettings({
-              mute: !this.props.muteLinguist
+              mic: !this.props.muteLinguist
             });
-            this.changeIcon(this.props.muteLinguist);
           }
         });
         break;
@@ -119,36 +105,36 @@ class CallButtonToggle extends Component {
         this.props.updateLinguistSettings({
           rotate: !this.props.rotateLinguist
         });
-        this.changeIcon(this.props.rotateLinguist);
         break;
     }
   };
 
   render() {
+    const { buttonColor, onPress, buttonSize, iconSize, active } = this.props;
     return (
       <View style={{ flex: 1, alignItems: "center" }}>
         <Button
           borderRadius={100}
           containerViewStyle={{
             borderRadius: 100,
-            opacity: this.props.opacity
+            opacity: 0.7
           }}
-          backgroundColor={this.props.buttonColor}
+          backgroundColor={active ? Colors.enabledColor : Colors.callButtonColor}
           onPress={() => {
             {
-              this.props.onPress && this.props.onPress();
+              onPress && onPress();
             }
             this.toggleIcon();
           }}
           buttonStyle={{
-            height: !Iphone5 ? this.props.buttonSize : 55,
-            width: !Iphone5 ? this.props.buttonSize : 55,
+            height: !Iphone5 ? buttonSize : 55,
+            width: !Iphone5 ? buttonSize : 55,
             justifyContent: "center",
             borderRadius: 100
           }}
           icon={{
             name: this.state.iconName,
-            size: !Iphone5 ? this.props.iconSize : 23,
+            size: !Iphone5 ? iconSize : 23,
             color: "white",
             buttonStyle: { textAlign: "center", right: 10 }
           }}
@@ -164,7 +150,6 @@ CallButtonToggle.propTypes = {
   label: string,
   labelColor: string,
   onPress: func,
-  opacity: number,
   toggle: bool,
   iconToggled: string,
   buttonSize: number,
@@ -172,12 +157,13 @@ CallButtonToggle.propTypes = {
   active: bool
 };
 
+
 const mS = state => ({
-  muteCustomer: state.callCustomerSettings.mute,
+  muteCustomer: state.callCustomerSettings.mic,
   videoCustomer: state.callCustomerSettings.video,
   speakerCustomer: state.callCustomerSettings.speaker,
   rotateCustomer: state.callCustomerSettings.rotate,
-  muteLinguist: state.callLinguistSettings.mute,
+  muteLinguist: state.callLinguistSettings.mic,
   videoLinguist: state.callLinguistSettings.video,
   speakerLinguist: state.callLinguistSettings.speaker,
   rotateLinguist: state.callLinguistSettings.rotate

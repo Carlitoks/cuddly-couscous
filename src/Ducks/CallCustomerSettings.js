@@ -103,22 +103,22 @@ export const AsyncCreateSession = ({
   scenarioID,
   token
 }) => dispatch => {
-  return Sessions.createSession(
-    type,
-    matchMethod,
-    primaryLangCode,
-    secundaryLangCode,
-    estimatedMinutes,
-    scenarioID,
-    token
-  )
-    .then(response => {
-      // verify if there is linguist available
-      dispatch(setSession(response.data));
-      return response.data;
-    })
-    .catch(error => dispatch(networkError(error)));
-};
+    return Sessions.createSession(
+      type,
+      matchMethod,
+      primaryLangCode,
+      secundaryLangCode,
+      estimatedMinutes,
+      scenarioID,
+      token
+    )
+      .then(response => {
+        // verify if there is linguist available
+        dispatch(setSession(response.data));
+        return response.data;
+      })
+      .catch(error => dispatch(networkError(error)));
+  };
 
 export const verifyCall = (sessionID, token, verifyCallId) => (
   dispatch,
@@ -137,7 +137,6 @@ export const verifyCall = (sessionID, token, verifyCallId) => (
       ) {
         clearInterval(verifyCallId);
       }
-      console.log("data", data);
       if (
         (contactLinguist.counter > 10 * data.queue.total + 30 &&
           contactLinguist.counterId) ||
@@ -172,10 +171,10 @@ export const closeOpenConnections = () => dispatch => {
 // Initial State
 const initialState = {
   // Call Settings
-  mute: false,
+  mic: true,
   video: false,
   speaker: true,
-  rotate: false,
+  rotate: true,
   timer: null,
   elapsedTime: 0,
   invitationID: null,

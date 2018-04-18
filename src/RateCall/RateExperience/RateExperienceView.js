@@ -436,6 +436,7 @@ class RateCallView extends Component {
               this.props.rating > 0
             )
           }
+          fill
         />
       </ViewWrapper>
     );

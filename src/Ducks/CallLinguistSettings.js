@@ -182,7 +182,7 @@ export const asyncAcceptsInvite = (
 // Initial State
 const initialState = {
   // Call Settings
-  mute: false,
+  mic: true,
   video: false,
   rotate: true,
   speaker: true,

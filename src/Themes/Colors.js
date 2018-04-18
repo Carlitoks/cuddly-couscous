@@ -54,6 +54,7 @@ const colors = {
   selectedOptionMenu: "#6B8FE0",
   optionMenu: "#D9D9E6",
   callButton: "#71D781",
+  callButtonColor: "#616161",
   cancelButton: "#B0B0B0",
   black: "#000000",
   white: "#FFF",

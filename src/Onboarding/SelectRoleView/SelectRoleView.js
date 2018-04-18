@@ -40,7 +40,6 @@ class SelectRoleView extends Component {
   IphoneX = DeviceInfo.getModel() == "iPhone X";
   render() {
     const navigation = this.props.navigation;
-
     return (
       <ViewWrapper style={{ flex: 1 }}>
         <ScrollView
