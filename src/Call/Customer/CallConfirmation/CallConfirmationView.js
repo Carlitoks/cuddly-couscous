@@ -348,7 +348,8 @@ const mD = {
   clearSettings,
   cleanSelected,
   clearLinguistReducer,
-  clearEvents
+  clearEvents,
+  clearPromoCode
 };
 
 export default connect(mS, mD)(CallConfirmationView);
