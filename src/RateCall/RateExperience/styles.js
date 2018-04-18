@@ -43,19 +43,28 @@ export const styles = StyleSheet.create({
   },
   textQuestions: {
     fontSize: 15,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    alignSelf: "center",
+    flexDirection: "row",
+    justifyContent: "center"
   },
   starContainer: {
     justifyContent: "center"
   },
   stars: {
-    justifyContent: "space-between",
-    width: "70%"
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    marginBottom: 5
   },
   viewContainerThumbs: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
-    alignContent: "space-between"
+    alignContent: "center",
+    alignSelf: "center",
+    marginTop: 20,
+    marginBottom: 5
   },
   viewContainerQuestion: {
     justifyContent: "space-between",
@@ -77,12 +86,16 @@ export const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 10
   },
-  forgotPasswordText: {
-    color: Colors.gradientColorButton.top,
-    fontWeight: "bold",
+  instabugText: {
+    color: Colors.gray,
+    fontStyle: "italic",
     textDecorationLine: "underline",
     padding: 10,
     marginTop: 15,
     alignSelf: "center"
+  },
+  iconList: {
+    marginTop: 20,
+    marginBottom: 5
   }
 });

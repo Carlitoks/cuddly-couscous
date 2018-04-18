@@ -1,5 +1,6 @@
 import { StackNavigator, DrawerNavigator } from "react-navigation";
-
+import CardStackStyleInterpolator from "react-navigation/src/views/CardStack/CardStackStyleInterpolator";
+import { Animated, Easing } from "react-native";
 import { getS } from "../Config/CreateStore";
 
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
@@ -36,7 +37,7 @@ import ResetPasswordView from "../Onboarding/ResetPasswordView/ResetPasswordView
 import NativeLanguageView from "../Lists/NativeLanguageView/NativeLanguageView";
 
 import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
-import RateCallView from "../RateCall/RateExperience/RateExperienceView";
+import RateView from "../RateCall/RateExperience/RateView";
 import NameLinguistView from "../LinguistForm/NameLinguistView/NameLinguistView";
 import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguistView";
 import EmailLinguistView from "../LinguistForm/EmailLinguistView/EmailLinguistView";
@@ -185,13 +186,6 @@ const Navigation = StackNavigator(
     },
     IncomingCallView: {
       screen: IncomingCallView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    RateCallView: {
-      screen: RateCallView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
@@ -381,11 +375,40 @@ const Navigation = StackNavigator(
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
       }
+    },
+    RateView: {
+      screen: RateView,
+      navigationOptions: {
+        navigationOptions: {
+          gesturesEnabled: false,
+          drawerLockMode: "locked-closed"
+        }
+      }
     }
   },
   {
     initialRouteName: "SelectRoleView",
-    headerMode: "none"
+    headerMode: "none",
+    transitionConfig: () => ({
+      screenInterpolator: sceneProps => {
+        // Disable the transition animation when resetting to the home screen.
+        // if (
+        //   sceneProps.index === 0 &&
+        //   sceneProps.scene.route.routeName !== "Home" &&
+        //   sceneProps.scenes.length > 2
+        // )
+        //   return null;
+
+        if (sceneProps.scene.route.routeName === "RateView") {
+          return CardStackStyleInterpolator.forFadeFromBottomAndroid(
+            sceneProps
+          );
+        } else {
+          return CardStackStyleInterpolator.forHorizontal(sceneProps);
+        }
+        // Otherwise, use the usual horizontal animation.
+      }
+    })
   }
 );
 

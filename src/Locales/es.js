@@ -213,7 +213,7 @@ export default (ESP = {
   recent: "Recent",
   recentCalls: "Recent Calls",
   reconnect: "Reconnecting",
-  reportProblem: "Shake de phone to Report a Problem",
+  reportProblem: "Report a problem by gently shaking your device.",
   resetpassword: "Reset Password",
   retail: "Retail",
   rni18n: "RN i18n",

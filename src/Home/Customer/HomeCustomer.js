@@ -125,8 +125,7 @@ class Home extends Component {
     return (
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => navigation.dispatch({ type: "ScanScreenView" })}
-      >
+        onPress={() => navigation.dispatch({ type: "ScanScreenView" })}>
         <View style={styles.buttonGrid}>
           <Image style={styles.scanQRImage} source={Images.scan_qr_code} />
         </View>
@@ -349,8 +348,7 @@ class Home extends Component {
           titleComponent={
             <Text style={styles.titleComponent}>{I18n.t("languageHelp")}</Text>
           }
-          subtitle={" "}
-        >
+          subtitle={" "}>
           <View style={styles.mainContainer}>
             {/* SVG White Waves */}
             <View>
@@ -370,8 +368,7 @@ class Home extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
-            alwaysBounceVertical={false}
-          >
+            alwaysBounceVertical={false}>
             {this.state.other ? this.renderInput() : null}
             {!this.state.qr && !this.state.other ? this.renderList() : null}
           </ScrollView>
