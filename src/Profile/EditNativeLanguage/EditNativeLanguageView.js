@@ -71,7 +71,11 @@ class EditNativeLanguageView extends Component {
           .startsWith(this.props.searchQuery.toLowerCase());
       })
       .map(language => {
-        if (language[3] === "eng" || language[3] === "cmn") {
+        if (
+          language[3] === "eng" ||
+          language[3] === "cmn" ||
+          language[3] === "yue"
+        ) {
           language.disabled = false;
         } else {
           language.disabled = true;

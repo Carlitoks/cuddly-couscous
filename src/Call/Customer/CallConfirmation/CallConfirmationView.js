@@ -51,7 +51,7 @@ class CallConfirmationView extends Component {
   componentWillMount() {
     const { promotion, event } = this.props;
 
-    if (promotion || event) {
+    if (promotion || event.id) {
       const scannedEvent = promotion ? promotion : event.data;
 
       const {
@@ -80,10 +80,14 @@ class CallConfirmationView extends Component {
       selectedCategory,
       categoryIndex,
       promotion,
-      event
+      event,
+      secundaryLangCode
     } = this.props;
 
-    const scannedEvent = promotion ? promotion : event.data;
+    const scannedEvent = promotion ? promotion : event;
+
+    const allowSecondaryLangSelection =
+      !scannedEvent.id || scannedEvent.allowSecondaryLangSelection;
 
     const categorySelected =
       categoryIndex > -1 && !!selectedCategory
@@ -149,25 +153,29 @@ class CallConfirmationView extends Component {
             <View style={styles.firstLanguage}>
               <View style={styles.secondLanguage}>
                 <Text style={styles.titleStyle}>{I18n.t("languageFrom")} </Text>
-                <Text style={styles.regularText}>{this.props.fromLanguage.name}</Text>
+                <Text style={styles.regularText}>
+                  {this.props.fromLanguage.name}
+                </Text>
               </View>
               <TouchableOpacity
                 style={styles.selectionLanguage}
                 onPress={() => {
-                  if (
-                    scannedEvent &&
-                    scannedEvent.allowSecondaryLangSelection
-                  ) {
-                    navigation.dispatch({ type: "SessionLanguageView" });
+                  if (allowSecondaryLangSelection) {
+                    navigation.dispatch({
+                      type: "SessionLanguageView",
+                      params: { noautoselect: true, secundaryLangCode }
+                    });
                   }
                 }}
               >
                 <View style={styles.direction}>
                   <Text style={styles.titleStyle}>{I18n.t("languageTo")}</Text>
-                  <Text style={styles.regularText}>{this.props.selectedLanguageTo}</Text>
+                  <Text style={styles.regularText}>
+                    {this.props.selectedLanguageTo}
+                  </Text>
                 </View>
                 <View style={styles.justifyCenter}>
-                  {scannedEvent && scannedEvent.allowSecondaryLangSelection ? (
+                  {allowSecondaryLangSelection ? (
                     <Icon name="chevron-right" color="gray" />
                   ) : null}
                 </View>
@@ -187,14 +195,14 @@ class CallConfirmationView extends Component {
             >
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
-                  {`${this.props.approxTime} ${I18n.t(
-                    "minutes"
-                  )}: `}
+                  {`${this.props.approxTime} ${I18n.t("minutes")}: `}
                   <Text style={[styles.regularText, styles.timeItalic]}>
                     {I18n.t("timeCompliments")}
                   </Text>
                 </Text>
-                <Text style={[styles.regularText, styles.timeItalic]}>{I18n.t("timeAddMore")}</Text>
+                <Text style={[styles.regularText, styles.timeItalic]}>
+                  {I18n.t("timeAddMore")}
+                </Text>
               </View>
               <View style={styles.iconAlign}>
                 {this.props.allowTimeSelection && (
@@ -325,6 +333,7 @@ const mS = state => ({
   estimatedPrice:
     state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
   selectedLanguageTo: state.contactLinguist.selectedLanguage,
+  secundaryLangCode: state.contactLinguist.secundaryLangCode,
   selectedLanguageFrom: state.contactLinguist.selectedLanguageFrom,
   fromLanguage: state.userProfile.selectedNativeLanguage,
   allowTimeSelection: state.callCustomerSettings.allowTimeSelection,

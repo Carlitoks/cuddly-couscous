@@ -29,18 +29,30 @@ class SessionLanguageView extends Component {
       selectedIndex: -1,
       selectedLanguage: {},
       loading: true,
-      languagesMapper: { eng: "cmn", cnm: "eng" }
+      languagesMapper: { eng: "cmn", cmn: "eng" }
     };
   }
 
   componentWillMount() {
-    const { primaryLangCode, secundaryLangCode } = this.props;
+    const {
+      userProfileNativeLangCode,
+      secundaryLangCode,
+      updateSettings,
+      navigation
+    } = this.props;
+    const { params } = navigation.state;
+    const { languagesMapper } = this.state;
 
-    const langString = this.state.languagesMapper["primaryLangCode"]
-      ? this.state.languagesMapper[primaryLangCode]
-      : secundaryLangCode;
+    const langString =
+      params && params.noautoselect
+        ? params.secundaryLangCode
+        : languagesMapper[userProfileNativeLangCode]
+          ? languagesMapper[userProfileNativeLangCode]
+          : secundaryLangCode;
 
     const index = findIndex(languages, language => language[3] === langString);
+
+    updateSettings({ primaryLangCode: userProfileNativeLangCode });
 
     this.setState({
       selectedIndex: index,
@@ -56,11 +68,13 @@ class SessionLanguageView extends Component {
           .startsWith(this.state.searchQuery.toLowerCase());
       })
       .map(language => {
-        const { primaryLangCode } = this.props;
-        const { languagesMapper } = this.state;
-        const currentLangCode = language[3];
-
-        if (primaryLangCode !== languagesMapper[currentLangCode]) {
+        if (
+          language[3] === "eng" ||
+          language[3] === "cmn" ||
+          language[3] === "yue"
+        ) {
+          language.disabled = false;
+        } else {
           language.disabled = true;
         }
 
@@ -193,6 +207,7 @@ class SessionLanguageView extends Component {
 
 // MAP STATE TO PROPS HERE
 const mS = state => ({
+  userProfileNativeLangCode: state.userProfile.nativeLangCode,
   primaryLangCode: state.contactLinguist.primaryLangCode,
   secundaryLangCode: state.contactLinguist.secundaryLangCode,
   routes: state.nav.routes[0].routes[0].routes,
