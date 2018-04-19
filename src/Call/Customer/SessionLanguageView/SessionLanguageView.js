@@ -191,7 +191,7 @@ class SessionLanguageView extends Component {
           </View>
           {/* Next Button */}
           <BottomButton
-            title={I18n.t("ok")}
+            title={I18n.t("next")}
             relative
             onPress={() => this.submit(navigation)}
             fill
