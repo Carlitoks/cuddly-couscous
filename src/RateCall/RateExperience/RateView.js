@@ -97,10 +97,12 @@ class RateView extends Component {
         <HeaderView
           avatarSource={this.selectImage()}
           avatarHeight={150}
-          avatarTitle={this.handleSessionInfoName()}>
+          avatarTitle={this.handleSessionInfoName()}
+        >
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            alwaysBounceVertical={false}>
+            alwaysBounceVertical={false}
+          >
             <RateExperienceStars />
             <RateExperienceThumbs />
             <WhatWasGood />
@@ -111,7 +113,7 @@ class RateView extends Component {
         <BottomButton
           title="Submit"
           onPress={() => {
-            this.props.navigation.dispatch({ type: "Home" });
+            this.submit();
           }}
           disabled={
             !(
