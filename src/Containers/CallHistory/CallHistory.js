@@ -189,22 +189,12 @@ class CallHistory extends Component {
           >
             <Grid>
               <Col>
-                {this.props.selectedIndex === 0 && (
-                  <View style={styles.container}>
-                    <CallHistoryComponent
-                      data={allCalls}
-                      navigation={this.props.navigation}
-                    />
-                  </View>
-                )}
-                {this.props.selectedIndex === 1 && (
-                  <View style={styles.container}>
-                    <CallHistoryComponent
-                      data={missedCalls}
-                      navigation={this.props.navigation}
-                    />
-                  </View>
-                )}
+                <View style={styles.container}>
+                  <CallHistoryComponent
+                    data={this.props.selectedIndex === 0 ? allCalls : missedCalls}
+                    navigation={this.props.navigation}
+                  />
+                </View>
               </Col>
             </Grid>
           </ScrollView>

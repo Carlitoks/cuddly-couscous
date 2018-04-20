@@ -20,9 +20,10 @@ export default class CallHistoryComponent extends Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({ data: this.props.data })
+  componentWillReceiveProps(nextProps) {
+    this.setState({ data: nextProps.data })
   }
+
 
   renderSeparator = () => {
     return <View style={styles.renderSeparator} />;
