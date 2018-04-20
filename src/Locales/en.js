@@ -31,7 +31,7 @@ export default (ENG = {
   callSettings: "Call Settings",
   callTimeButtonText: "minutes for FREE",
   callTimeButtonSubtitle: "Compliments of Jeenie",
-  callTimeMinutes: "Call time: 8 Minutes",
+  callTimeMinutes: "Call time:",
   callTimeMinutesSub: "Recommended for this situation",
   callTimeTitle: "Celebrate our launch with us!",
   callTimeSubtitle: "Enjoy Jeenie over the next few weeks for FREE.",

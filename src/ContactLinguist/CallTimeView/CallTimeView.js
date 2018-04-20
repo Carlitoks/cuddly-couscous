@@ -65,7 +65,9 @@ class CallTimeView extends Component {
           headerCenterComponent={
             <View>
               <Text style={[styles.titleCall]}>
-                {I18n.t("callTimeMinutes")}
+                {`${I18n.t("callTimeMinutes")} ${
+                  this.props.selectedTime
+                } ${I18n.t("minutes")}`}
               </Text>
               <Text style={[styles.subTitleCall]}>
                 {I18n.t("callTimeMinutesSub")}

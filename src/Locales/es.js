@@ -29,7 +29,7 @@ export default (ESP = {
   callSettings: "Call Settings",
   callTimeButtonText: "minutes for FREE",
   callTimeButtonSubtitle: "Compliments of Jeenie",
-  callTimeMinutes: "Call Time: 8 Minutes",
+  callTimeMinutes: "Call Time:",
   callTimeMinutesSub: "Recommended for this situation",
   callTimeTitle: "Celebrate our launch with us!",
   callTimeSubtitle: "Enjoy Jeenie over the next few weeks for FREE.",
