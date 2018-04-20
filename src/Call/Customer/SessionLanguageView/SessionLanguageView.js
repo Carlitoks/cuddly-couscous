@@ -52,7 +52,11 @@ class SessionLanguageView extends Component {
 
     const index = findIndex(languages, language => language[3] === langString);
 
-    updateSettings({ primaryLangCode: userProfileNativeLangCode });
+    updateSettings({
+      primaryLangCode: userProfileNativeLangCode,
+      secundaryLangCode: languages[index][3],
+      selectedLanguage: languages[index]["name"]
+    });
 
     this.setState({
       selectedIndex: index,
