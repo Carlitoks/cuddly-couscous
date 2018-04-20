@@ -20,7 +20,8 @@ const Session = {
     secondaryLangCode,
     estimatedMinutes,
     scenarioID,
-    token
+    token,
+    customScenario
   ) => {
     return AXIOS.post(
       `${BASE_URI}`,
@@ -30,7 +31,8 @@ const Session = {
         primaryLangCode,
         secondaryLangCode,
         scenarioID,
-        estimatedMinutes
+        estimatedMinutes,
+        customScenario
       },
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {

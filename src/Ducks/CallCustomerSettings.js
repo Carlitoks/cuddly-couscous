@@ -101,7 +101,8 @@ export const AsyncCreateSession = ({
   secundaryLangCode,
   estimatedMinutes,
   scenarioID,
-  token
+  token,
+  customScenarioNote
 }) => dispatch => {
   return Sessions.createSession(
     type,
@@ -110,7 +111,8 @@ export const AsyncCreateSession = ({
     secundaryLangCode,
     estimatedMinutes,
     scenarioID,
-    token
+    token,
+    customScenarioNote
   )
     .then(response => {
       // verify if there is linguist available

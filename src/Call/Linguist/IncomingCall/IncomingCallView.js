@@ -124,6 +124,14 @@ class IncomingCall extends Component {
                   {this.props.customerScenario}
                 </Text>
               </View>
+              {this.props.customScenarioNote && (
+                <View style={styles.inlineContainer}>
+                  <Icon style={styles.icon} size={25} name="help" />
+                  <Text style={styles.notificationText}>
+                    {this.props.customScenarioNote}
+                  </Text>
+                </View>
+              )}
               <View style={styles.inlineContainer}>
                 <Icon style={styles.icon} size={25} name="watch-later" />
                 <Text style={styles.notificationText}>
@@ -162,6 +170,7 @@ const mS = state => ({
   avatarURL: state.callLinguistSettings.avatarURL,
   estimatedMinutes: state.callLinguistSettings.estimatedMinutes,
   customerScenario: state.callLinguistSettings.customerScenario,
+  customScenarioNote: state.callLinguistSettings.customScenarioNote,
   languages: state.callLinguistSettings.languages,
   verifyCallId: state.callLinguistSettings.verifyCallId,
   token: state.auth.token,

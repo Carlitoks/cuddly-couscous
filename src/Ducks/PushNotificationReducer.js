@@ -46,6 +46,7 @@ export const remoteNotificationReceived = invitationId => (
               `${LANG_CODES.get(
                 data.session.primaryLangCode
               )} - ${LANG_CODES.get(data.session.secondaryLangCode)}`,
+            customScenarioNote: data.session && data.session.customScenarioNote,
             customerScenario:
               data.session &&
               data.session.scenario &&

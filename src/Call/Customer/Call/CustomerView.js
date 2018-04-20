@@ -78,11 +78,11 @@ class CustomerView extends Component {
     if (this.props.linguist) {
       return `${this.props.linguist.firstName} ${
         this.props.linguist.lastInitial
-        }`;
+      }`;
     } else if (this.props.customer) {
       return `${this.props.customer.firstName} ${
         this.props.customer.lastInitial
-        }`;
+      }`;
     } else {
       return `User`;
     }
@@ -93,8 +93,8 @@ class CustomerView extends Component {
 
     return linguist && linguist.avatarURL
       ? {
-        uri: this.props.linguist.avatarURL
-      }
+          uri: this.props.linguist.avatarURL
+        }
       : Images.avatar;
   };
   componentWillUnmount() {
@@ -171,7 +171,8 @@ class CustomerView extends Component {
       selectedScenarioId,
       token,
       AsyncCreateSession,
-      updateSettings
+      updateSettings,
+      customScenarioNote
     } = this.props;
 
     try {
@@ -182,6 +183,7 @@ class CustomerView extends Component {
         secundaryLangCode: secundaryLangCode,
         estimatedMinutes: selectedCallTime,
         scenarioID: selectedScenarioId,
+        customScenarioNote,
         token: token
       }).then(async response => {
         const { tokboxSessionID, tokboxSessionToken } = response;
@@ -408,6 +410,7 @@ const mS = state => ({
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
   primaryLangCode: state.contactLinguist.primaryLangCode,
   secundaryLangCode: state.contactLinguist.secundaryLangCode,
+  customScenarioNote: state.contactLinguist.customScenarioNote,
   selectedCallTime: state.callCustomerSettings.selectedTime,
   customerExtraTime: state.callCustomerSettings.customerExtraTime,
   linguist: state.sessionInfo.linguist,
