@@ -21,6 +21,6 @@ export default (styles = StyleSheet.create({
     color: Colors.black
   },
   containerStyle: {
-    marginLeft: 5
+    marginLeft: 10
   }
 }));
