@@ -89,7 +89,6 @@ export const styles = StyleSheet.create({
   instabugText: {
     color: Colors.gray,
     fontStyle: "italic",
-    textDecorationLine: "underline",
     padding: 10,
     marginTop: 15,
     alignSelf: "center"
