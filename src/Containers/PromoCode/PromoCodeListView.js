@@ -48,7 +48,7 @@ import { Images, Colors } from "../../Themes";
 
 import ListComponent from "../../Components/ListComponent/ListComponent";
 
-class SelectListView extends Component {
+class PromoCodeListView extends Component {
   constructor(props) {
     super(props);
 
@@ -165,4 +165,4 @@ const mD = {
   clearForm
 };
 
-export default connect(mS, mD)(SelectListView);
+export default connect(mS, mD)(PromoCodeListView);

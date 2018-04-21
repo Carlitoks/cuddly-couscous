@@ -53,7 +53,7 @@ const initialState = {
   selectedAssistance: "",
   selectedScenarioId: "",
   customScenarioNote: "",
-  selectedLanguage: "English & Mandarin Chinese",
+  selectedLanguage: "English",
   selectedLanguageFrom: "English",
   selectedLanguageTo: "Mandarin Chinese",
   selectedLanguageCode: "spa",

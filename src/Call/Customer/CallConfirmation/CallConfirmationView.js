@@ -52,7 +52,7 @@ class CallConfirmationView extends Component {
     const { promotion, event } = this.props;
 
     if (promotion || event.id) {
-      const scannedEvent = promotion ? promotion : event.data;
+      const scannedEvent = promotion ? promotion : event;
 
       const {
         allowSecondaryLangSelection,

@@ -77,7 +77,7 @@ class PromoCodeView extends Component {
           this.props.updateSettings({
             selectionItemType: "scenarios",
             selectionItemName: "scenarios",
-            scenarios: []
+            scenarios: scenarios || []
           });
           this.props.navigation.dispatch({ type: "PromoCodeListView" });
         } else if (!requireScenarioSelection) {
