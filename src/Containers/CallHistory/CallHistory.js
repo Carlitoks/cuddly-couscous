@@ -93,6 +93,9 @@ class CallHistory extends Component {
   filterMissedCalls = missedCalls => {
     if (!_isEmpty(missedCalls)) {
       return missedCalls
+          .sort((prev, next) =>
+          moment(next.session.createdAt).diff(moment(prev.session.createdAt))
+        )
         .map((item, i) => {
           let result = {};
           if (!_isUndefined(item.createdBy) && !_isUndefined(item.session)) {

@@ -119,7 +119,9 @@ class Home extends Component {
       const size = allCalls.length <= 10 ? allCalls.length : 10;
       return allCalls
         .slice(0, size)
-        .sort((prev, next) => prev.session.createdAt - next.session.createdAt)
+        .sort((prev, next) =>
+          moment(next.session.createdAt).diff(moment(prev.session.createdAt))
+        )
         .map((item, i) => {
           let result = {};
           if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
