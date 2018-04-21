@@ -106,16 +106,14 @@ class CallConfirmationView extends Component {
               onPress={() => {
                 navigation.dispatch({ type: "Home" });
                 this.props.updateSettings({ customScenarioNote: "" });
-              }}
-            >
+              }}>
               {I18n.t("cancel")}
             </Text>
           }
           headerCenterComponent={
             <Text style={styles.titleCall}>{I18n.t("confirmAndConnect")}</Text>
           }
-          NoWaves
-        >
+          NoWaves>
           <View style={styles.flex}>
             {/* Category / Scenario */}
             <View style={styles.category}>
@@ -139,12 +137,13 @@ class CallConfirmationView extends Component {
                   fontStyle={
                     this.props.scenarioNotes.length == 0 ? "italic" : "normal"
                   }
+                  multiline
+                  blurOnSubmit
+                  returnKeyType={"done"}
                   placeholder={I18n.t("scenarioNotes")}
-                  editable={true}
                   onChangeText={text =>
                     this.props.updateSettings({ customScenarioNote: text })
                   }
-                  multiline
                 />
               </View>
             </View>
@@ -166,8 +165,7 @@ class CallConfirmationView extends Component {
                       params: { noautoselect: true, secundaryLangCode }
                     });
                   }
-                }}
-              >
+                }}>
                 <View style={styles.direction}>
                   <Text style={styles.titleStyle}>{I18n.t("languageTo")}</Text>
                   <Text style={styles.regularText}>
@@ -176,9 +174,11 @@ class CallConfirmationView extends Component {
                 </View>
                 <View style={styles.justifyCenter}>
                   {allowSecondaryLangSelection ? (
-                    <Icon name="chevron-right"                     
+                    <Icon
+                      name="chevron-right"
                       style={styles.iconSize}
-                      color={Colors.defaultChevron} />
+                      color={Colors.defaultChevron}
+                    />
                   ) : null}
                 </View>
               </TouchableOpacity>
@@ -193,8 +193,7 @@ class CallConfirmationView extends Component {
                   });
                 }
               }}
-              style={styles.time}
-            >
+              style={styles.time}>
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
                   {`${this.props.approxTime} ${I18n.t("minutes")}: `}
@@ -233,8 +232,7 @@ class CallConfirmationView extends Component {
                         video: true
                       });
                     });
-                  }}
-                >
+                  }}>
                   <View style={styles.justifyCenter}>
                     <Icon
                       name="check"
@@ -246,8 +244,7 @@ class CallConfirmationView extends Component {
                         this.props.video
                           ? styles.textAudioActive
                           : styles.textAudioInactive
-                      }
-                    >
+                      }>
                       {I18n.t("audioVideo")}
                     </Text>
                   </View>
@@ -267,8 +264,7 @@ class CallConfirmationView extends Component {
                         video: false
                       });
                     });
-                  }}
-                >
+                  }}>
                   <View style={styles.justifyCenter}>
                     <Icon
                       name="check"
@@ -280,8 +276,7 @@ class CallConfirmationView extends Component {
                         !this.props.video
                           ? styles.textAudioActive
                           : styles.textAudioInactive
-                      }
-                    >
+                      }>
                       {I18n.t("audioOnly")}
                     </Text>
                   </View>
