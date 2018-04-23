@@ -15,6 +15,7 @@ import {
   resetCounter,
   incrementCounter
 } from "../../Ducks/CallLinguistSettings.js";
+import InCallManager from "react-native-incall-manager";
 import { bool, func, number, object, string } from "prop-types";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
 import { View, AppState, Text } from "react-native";
@@ -23,7 +24,6 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Iphone5 } from "../../Util/Devices";
 import Colors from "../../Themes/Colors";
-
 
 /**
  * @description Generic call button component
@@ -69,6 +69,11 @@ class CallButtonToggle extends Component {
         });
         break;
       case "CustomerSpeaker":
+        if (this.props.speakerCustomer) {
+          InCallManager.setForceSpeakerphoneOn(false);
+        } else {
+          InCallManager.setForceSpeakerphoneOn(true);
+        }
         this.props.updateSettings({ speaker: !this.props.speakerCustomer });
         break;
       case "CustomerCamera":
@@ -86,6 +91,12 @@ class CallButtonToggle extends Component {
         });
         break;
       case "LinguistSpeaker":
+        console.log("Linguist Speaker ", this.props.speakerLinguist);
+        if (this.props.speakerLinguist) {
+          InCallManager.setForceSpeakerphoneOn(false);
+        } else {
+          InCallManager.setForceSpeakerphoneOn(true);
+        }
         this.props.updateLinguistSettings({
           speaker: !this.props.speakerLinguist
         });
@@ -119,7 +130,9 @@ class CallButtonToggle extends Component {
             borderRadius: 100,
             opacity: 0.7
           }}
-          backgroundColor={active ? Colors.enabledColor : Colors.callButtonColor}
+          backgroundColor={
+            active ? Colors.enabledColor : Colors.callButtonColor
+          }
           onPress={() => {
             {
               onPress && onPress();
@@ -156,7 +169,6 @@ CallButtonToggle.propTypes = {
   iconSize: number,
   active: bool
 };
-
 
 const mS = state => ({
   muteCustomer: state.callCustomerSettings.mic,

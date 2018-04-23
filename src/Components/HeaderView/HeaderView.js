@@ -99,9 +99,7 @@ const HeaderView = ({
             height:
               !!avatarSource || !!switchOnChange || history
                 ? null
-                : !!title || !!titleComponent
-                  ? 145
-                  : 75
+                : !!title || !!titleComponent ? 145 : 85
           }}
         >
           {/* Linear Gradient */}
@@ -413,9 +411,7 @@ const HeaderView = ({
             ? 350
             : !!bigAvatar
               ? 250
-              : !!avatarSource
-                ? moderateScale(200)
-                : moderateScale(180)
+              : !!avatarSource ? moderateScale(200) : moderateScale(180)
         }}
       >
         {getHeader()}

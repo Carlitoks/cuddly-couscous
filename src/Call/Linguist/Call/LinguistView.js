@@ -11,6 +11,7 @@ import { Images } from "../../../Themes";
 import { CallButton } from "../../../Components/CallButton/CallButton";
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 import I18n from "../../../I18n/I18n";
+import InCallManager from "react-native-incall-manager";
 
 import {
   updateSettings as updateContactLinguistSettings,
@@ -48,6 +49,18 @@ class LinguistView extends Component {
 
   componentWillMount() {
     BackgroundStart();
+    if (InCallManager.recordPermission !== "granted") {
+      InCallManager.requestRecordPermission()
+        .then(requestedRecordPermissionResult => {
+          console.log(
+            "InCallManager.requestRecordPermission() requestedRecordPermissionResult: ",
+            requestedRecordPermissionResult
+          );
+        })
+        .catch(err => {
+          console.log("InCallManager.requestRecordPermission() catch: ", err);
+        });
+    }
   }
   async componentDidMount() {
     const {
@@ -66,6 +79,7 @@ class LinguistView extends Component {
     clearInterval(this.props.counterId);
     this.props.resetCounter();
     OpenTok.disconnectAll();
+    InCallManager.stop();
     /*
     if (this.props.networkInfoType !== "none") {
       this.props.clear();
@@ -139,13 +153,14 @@ class LinguistView extends Component {
           <Subscriber
             sessionId={this.props.linguistTokboxSessionID}
             style={styles.background}
-            mute={!this.props.speaker}
             onSubscribeStart={() => {
               console.log("Sub Started");
               this.props.updateContactLinguistSettings({
                 modalReconnect: false
               });
               clearInterval(this.props.counterId);
+              InCallManager.start({ media: "audio" });
+              InCallManager.setForceSpeakerphoneOn(true);
             }}
             onSubscribeError={() => {
               console.log("Sub Error");

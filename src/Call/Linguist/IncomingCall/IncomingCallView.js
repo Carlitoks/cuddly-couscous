@@ -17,6 +17,7 @@ import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
+import InCallManager from "react-native-incall-manager";
 
 class IncomingCall extends Component {
   state = {
@@ -32,10 +33,15 @@ class IncomingCall extends Component {
 
   componentDidMount() {
     this.verifyCallLinguist();
+    InCallManager.start({ media: "video", ringback: "_BUNDLE_" });
+    /*InCallManager.startRingtone({
+      ringtone: "_DTMF_"
+    });*/
   }
 
   componentWillUnmount() {
     clearInterval(this.props.verifyCallId);
+    InCallManager.stop();
   }
   takeCall = isAccept => {
     const { invitationID, token, sessionID } = this.props;
@@ -73,6 +79,7 @@ class IncomingCall extends Component {
   rejectCall = () => {
     console.log("rejecting call");
     Vibration.cancel();
+    InCallManager.stop();
   };
 
   render() {

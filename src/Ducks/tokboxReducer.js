@@ -4,6 +4,7 @@ import { updateSettings } from "./ContactLinguistReducer";
 import { clearSettings } from "./CallLinguistSettings";
 import { REASON, STATUS_TOKBOX } from "../Util/Constants";
 import { Sessions } from "../Api";
+import InCallManager from "react-native-incall-manager";
 
 const ACTIONS = {
   CLEAR: "tokbox/clear",
@@ -122,10 +123,11 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
 
   OpenTok.on(OpenTok.events.ON_SESSION_STREAM_CREATED, e => {
     console.log("ON_SESSION_STREAM_CREATED", e);
-
     if (isLinguist) {
       //
     } else {
+      InCallManager.start({ media: "audio" });
+      InCallManager.setForceSpeakerphoneOn(true);
       dispatch(updateSettings({ modalReconnect: false }));
       dispatch(
         update({

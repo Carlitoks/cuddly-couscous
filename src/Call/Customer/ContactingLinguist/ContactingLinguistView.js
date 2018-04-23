@@ -21,6 +21,7 @@ import {
 } from "../../../Util/Permission";
 
 import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
+import InCallManager from "react-native-incall-manager";
 
 class ContactingLinguist extends Component {
   constructor(props) {
@@ -28,6 +29,18 @@ class ContactingLinguist extends Component {
   }
   componentWillMount() {
     this.props.callTimeOut();
+    if (InCallManager.recordPermission !== "granted") {
+      InCallManager.requestRecordPermission()
+        .then(requestedRecordPermissionResult => {
+          console.log(
+            "InCallManager.requestRecordPermission() requestedRecordPermissionResult: ",
+            requestedRecordPermissionResult
+          );
+        })
+        .catch(err => {
+          console.log("InCallManager.requestRecordPermission() catch: ", err);
+        });
+    }
   }
 
   componentWillReceiveProps(nextProps) {

@@ -53,7 +53,7 @@ import {
 } from "../../../Util/Permission";
 import { IMAGE_STORAGE_URL } from "../../../Config/env";
 import { REASON, STATUS_TOKBOX, TIME, PLATFORM } from "../../../Util/Constants";
-
+import InCallManager from "react-native-incall-manager";
 class CustomerView extends Component {
   ref: Ref<Publisher>;
 
@@ -105,6 +105,7 @@ class CustomerView extends Component {
     clearInterval(this.props.timer);
     this.props.resetCounter();
     OpenTok.disconnectAll();
+    InCallManager.stop();
     /*
     if (this.props.networkInfoType !== "none") {
       this.props.clear();
@@ -247,7 +248,6 @@ class CustomerView extends Component {
               <Subscriber
                 sessionId={this.props.customerTokboxSessionID}
                 style={styles.background}
-                mute={!this.props.speaker}
                 onSubscribeStart={() => {
                   console.log("SubscriberStart");
                   this.startTimer();
