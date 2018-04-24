@@ -126,6 +126,13 @@
 			remoteGlobalIDString = 24DF11ED1DA3A2B90056F77C;
 			remoteInfo = RNInstabug;
 		};
+		079EC07D208FA4E10024BBDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B755116ACA3441F8628A51F /* RNInCallManager.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 231CD2561FD68A17004DD25D;
+			remoteInfo = RNInCallManager;
+		};
 		07ACDD931FE6BF1100EDA234 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -425,6 +432,7 @@
 		7C47EB3A497C478AAA08A7A3 /* RNInstabug.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNInstabug.xcodeproj; path = "../node_modules/instabug-reactnative/ios/RNInstabug.xcodeproj"; sourceTree = "<group>"; };
 		806C6008FAE54368AC65C28A /* Fontin-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Fontin-Regular.ttf"; path = "../src/Assets/Fonts/Fontin-Regular.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		8B755116ACA3441F8628A51F /* RNInCallManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNInCallManager.xcodeproj; path = "../node_modules/react-native-incall-manager/ios/RNInCallManager.xcodeproj"; sourceTree = "<group>"; };
 		96C43E5743FC407292BFEE56 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		9DBB547A6351E63F62E93EA5 /* libPods-NewSolo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewSolo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A678DE2936DF4F61B5F22B33 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
@@ -570,6 +578,14 @@
 			isa = PBXGroup;
 			children = (
 				0758DEE6206C25B0002518AF /* libRNInstabug.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		079EC055208FA4E10024BBDA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				079EC07E208FA4E10024BBDA /* libRNInCallManager.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -732,6 +748,7 @@
 				491575FABCD2415BB592AC8D /* RNVectorIcons.xcodeproj */,
 				49E74BA361A34786B9E0CA11 /* RNImagePicker.xcodeproj */,
 				7C47EB3A497C478AAA08A7A3 /* RNInstabug.xcodeproj */,
+				8B755116ACA3441F8628A51F /* RNInCallManager.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -991,6 +1008,10 @@
 					ProjectRef = 49E74BA361A34786B9E0CA11 /* RNImagePicker.xcodeproj */;
 				},
 				{
+					ProductGroup = 079EC055208FA4E10024BBDA /* Products */;
+					ProjectRef = 8B755116ACA3441F8628A51F /* RNInCallManager.xcodeproj */;
+				},
+				{
 					ProductGroup = 0758DEE2206C25AF002518AF /* Products */;
 					ProjectRef = 7C47EB3A497C478AAA08A7A3 /* RNInstabug.xcodeproj */;
 				},
@@ -1057,6 +1078,13 @@
 			fileType = archive.ar;
 			path = libRNInstabug.a;
 			remoteRef = 0758DEE5206C25B0002518AF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		079EC07E208FA4E10024BBDA /* libRNInCallManager.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNInCallManager.a;
+			remoteRef = 079EC07D208FA4E10024BBDA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		07ACDD941FE6BF1100EDA234 /* libRCTBlob-tvOS.a */ = {
@@ -1523,6 +1551,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager",
 					"$(SRCROOT)/../node_modules/instabug-reactnative/ios/RNInstabug/**",
+					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager",
 				);
 				INFOPLIST_FILE = NewSoloTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1559,6 +1588,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager",
 					"$(SRCROOT)/../node_modules/instabug-reactnative/ios/RNInstabug/**",
+					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager",
 				);
 				INFOPLIST_FILE = NewSoloTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1675,6 +1705,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager",
 					"$(SRCROOT)/../node_modules/instabug-reactnative/ios/RNInstabug/**",
+					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager",
 				);
 				INFOPLIST_FILE = "NewSolo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1715,6 +1746,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager",
 					"$(SRCROOT)/../node_modules/instabug-reactnative/ios/RNInstabug/**",
+					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager",
 				);
 				INFOPLIST_FILE = "NewSolo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
