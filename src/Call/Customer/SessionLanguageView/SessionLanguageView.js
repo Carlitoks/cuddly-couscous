@@ -72,11 +72,7 @@ class SessionLanguageView extends Component {
           .startsWith(this.state.searchQuery.toLowerCase());
       })
       .map(language => {
-        if (
-          language[3] === "eng" ||
-          language[3] === "cmn" ||
-          language[3] === "yue"
-        ) {
+        if (language[3] === "eng" || language[3] === "cmn") {
           language.disabled = false;
         } else {
           language.disabled = true;
@@ -104,7 +100,6 @@ class SessionLanguageView extends Component {
   changeLanguage(index) {
     const newLanguage = this.filterList()[index];
 
-    this.search.clearText();
     this.setState({ searchQuery: "" });
 
     this.props.updateSettings({
@@ -164,11 +159,11 @@ class SessionLanguageView extends Component {
           }
         >
           <View style={styles.scrollContainer}>
-            <SearchBar
+            {/* <SearchBar
               ref={search => (this.search = search)}
               onChangeText={text => this.setState({ searchQuery: text })}
               onClearText={text => this.setState({ searchQuery: "" })}
-            />
+            /> */}
 
             {this.state.loading ? (
               <View />

@@ -73,25 +73,11 @@ class NativeLanguageView extends Component {
   }
 
   filterList() {
-    return languages
-      .filter(language => {
-        return language.name
-          .toLowerCase()
-          .startsWith(this.props.searchQuery.toLowerCase());
-      })
-      .map(language => {
-        if (
-          language[3] === "eng" ||
-          language[3] === "cmn" ||
-          language[3] === "yue"
-        ) {
-          language.disabled = false;
-        } else {
-          language.disabled = true;
-        }
-
-        return language;
-      });
+    return languages.filter(language => {
+      return language.name
+        .toLowerCase()
+        .startsWith(this.props.searchQuery.toLowerCase());
+    });
   }
 
   changeSearch(queryString) {
