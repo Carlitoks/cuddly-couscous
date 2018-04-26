@@ -129,7 +129,7 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(20)
   },
   centerIcon: {
-    fontSize: 24,
+    fontSize: moderateScale(24),
     paddingLeft: 6,
     paddingRight: 6,
     marginLeft: 6,
