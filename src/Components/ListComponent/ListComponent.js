@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FlatList, View, Text, Dimensions, Keyboard } from "react-native";
-import { List } from "react-native-elements";
+import { List, ListItem } from "react-native-elements";
 import { Colors } from "../../Themes";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -132,11 +132,19 @@ class ListComponent extends Component {
   }
 
   getTitle = item => {
-    const { titleProperty } = this.props;
+    const { titleProperty, complementTitle } = this.props;
     const titleParam = titleProperty ? titleProperty : "id";
 
-    return item[titleParam];
+    return complementTitle
+      ? `${item[titleParam]} ${complementTitle}`
+      : item[titleParam];
   };
+
+  getSubtitle = item => {
+    const { subtitleProperty, complementSubtitle } = this.props;
+
+    return complementSubtitle ? `${complementSubtitle} ${item[subtitleProperty]}` : item[subtitleProperty];
+  }
 
   keyExtractor = item => {
     return this.getTitle(item);
@@ -197,67 +205,76 @@ class ListComponent extends Component {
             initialScrollIndex={this.props.initial}
             ref="list"
             getItemLayout={this.getItemLayout}
+            keyExtractor={this.keyExtractor}
             renderItem={({ item, index }) => (
-              <View
+              <ListItem
                 style={[
-                  item.disabled ? styles.disabledItemView : null,
                   styles.textView,
                   index > 0 ? styles.textBetweenView : null
                 ]}
-              >
-                <Text
-                  style={[
-                    styles.regText,
-                    item.disabled ? styles.disabledItemText : null,
-                    this.isSelected(index) ? styles.selectedText : null,
-                    this.props.leftText ? styles.leftText : null
-                  ]}
-                  onPress={() => {
-                    if (!item.disabled) {
-                      !!item.onPress
-                        ? item.onPress()
-                        : !!this.props.changeSelected
-                          ? this.props.changeSelected(index)
-                          : null;
-                      this.selectItem(index);
-                      !!this.props.other
-                        ? !!this.props.otherOnPress && this.isOther(item)
-                          ? this.props.otherOnPress()
-                          : !!this.props.onPress
-                            ? this.props.onPress(index)
-                            : null
+                containerStyle={
+                  this.isSelected(index) ? styles.selectedBackground : null
+                }
+                title={
+                  <Text
+                    style={[
+                      styles.regText,
+                      item.disabled ? styles.disabledItemText : null,
+                      this.isSelected(index) ? styles.selectedText : null,
+                      this.props.leftText ? styles.leftText : null
+                    ]}
+                  >
+                    {this.getTitle(item)}
+                  </Text>
+                }
+                rightTitle={this.props.rightTitle ? this.getSubtitle(item) : null}
+                rightTitleStyle={this.props.rightTitle ? [
+                  styles.regText,
+                  styles.crossLineText,
+                  this.isSelected(index) ? styles.selectedText : null
+                ] : null}
+                wrapperStyle={this.props.rightTitle ? styles.paddingContainer : null }
+                rightIcon={
+                  item.other || this.isSelected(index) ? (
+                    <Icon
+                      pointerEvents={"none"}
+                      style={
+                        item.other || this.isSelected(index)
+                          ? styles.iconSelected
+                          : styles.icon
+                      }
+                      name={item.other ? "chevron-right" : "check"}
+                      size={moderateScale(30)}
+                      color={Colors.defaultChevron}
+                    />
+                  ) : (
+                    <Icon />
+                  )
+                }
+                onPress={() => {
+                  if (!item.disabled) {
+                    !!item.onPress
+                      ? item.onPress()
+                      : !!this.props.changeSelected
+                        ? this.props.changeSelected(index)
+                        : null;
+                    this.selectItem(index);
+                    !!this.props.other
+                      ? !!this.props.otherOnPress && this.isOther(item)
+                        ? this.props.otherOnPress()
                         : !!this.props.onPress
                           ? this.props.onPress(index)
-                          : null;
-                    }
-                    this.state.keyboard ? Keyboard.dismiss() : null;
-                  }}
-                >
-                  {this.getTitle(item)}
-                </Text>
-                {item.other || this.isSelected(index) ? (
-                  <Icon
-                    pointerEvents={"none"}
-                    style={
-                      this.isSelected(index) ? styles.iconSelected : styles.icon
-                    }
-                    name={item.other ? "chevron-right" : "check"}
-                    size={moderateScale(40)}
-                    color={Colors.defaultChevron}
-                  />
-                ) : null}
-              </View>
+                          : null
+                      : !!this.props.onPress
+                        ? this.props.onPress(index)
+                        : null;
+                  }
+                  this.state.keyboard ? Keyboard.dismiss() : null;
+                }}
+              />
             )}
-            keyExtractor={this.keyExtractor}
           />
         </List>
-        {this.props.gradient ? (
-          <LinearGradient
-            pointerEvents={"none"}
-            colors={["rgba(247, 247, 247, 0.2)", Colors.greyBackground]}
-            style={styles.linearGradient}
-          />
-        ) : null}
       </View>
     );
   }

@@ -11,6 +11,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
+import ListComponent from "../../Components/ListComponent/ListComponent";
 
 import { Colors, Fonts } from "../../Themes";
 import { moderateScale } from "../../Util/Scaling";
@@ -38,6 +39,16 @@ class CallTimeView extends Component {
   isSelected = index => {
     return index == this.state.timeIndex ? true : false;
   };
+
+  changeSelected(index) {
+    this.setState({ timeIndex: index });
+  }
+
+  updateTime(duration) {
+    this.props.updateSettings({
+      selectedTime: duration
+    });
+  }
 
   submit(navigation) {
     const { routes } = this.props;
@@ -95,50 +106,23 @@ class CallTimeView extends Component {
             alwaysBounceVertical={false}
             style={styles.scrollContainer}
           >
-            <List
-              containerStyle={styles.listContainer}
-              automaticallyAdjustContentInsets={false}
-            >
-              {TIME_OPTIONS.map((timeOption, index) => (
-                <ListItem
-                  key={index}
-                  title={`${timeOption.duration} ${I18n.t("minutes")}`}
-                  titleStyle={[
-                    styles.regText,
-                    this.isSelected(index) ? styles.selectedText : null
-                  ]}
-                  rightTitle={`US $${timeOption.cost}`}
-                  rightTitleStyle={[
-                    styles.regText,
-                    styles.crossLineText,
-                    this.isSelected(index) ? styles.selectedText : null
-                  ]}
-                  wrapperStyle={styles.paddingContainer}
-                  containerStyle={
-                    this.isSelected(index) ? styles.selectedBackground : null
-                  }
-                  rightIcon={
-                    <Icon
-                      pointerEvents={"none"}
-                      style={
-                        this.isSelected(index)
-                          ? styles.iconSelected
-                          : styles.icon
-                      }
-                      name={"check"}
-                      size={moderateScale(30)}
-                      color={Colors.gray}
-                    />
-                  }
-                  onPress={() => {
-                    setIndex(index);
-                    this.props.updateSettings({
-                      selectedTime: timeOption.duration
-                    });
-                  }}
-                />
-              ))}
-            </List>
+            <ListComponent
+              data={TIME_OPTIONS}
+              selected={this.state.timeIndex}
+              titleProperty={"duration"}
+              subtitleProperty={"cost"}
+              complementTitle={I18n.t("minutes")}
+              complementSubtitle={"US $"}
+              onPress={index => {
+                this.updateTime(TIME_OPTIONS[index].duration);
+              }}
+              changeSelected={index => {
+                this.changeSelected(index);
+              }}
+              rightTitle
+              leftText
+              noFlex
+            />
           </ScrollView>
           {/* Next Button */}
           <View>

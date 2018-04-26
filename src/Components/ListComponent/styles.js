@@ -31,9 +31,7 @@ export default StyleSheet.create({
   regText: {
     textAlign: "center",
     justifyContent: "center",
-    padding: 8,
-    width: "100%",
-    height: "100%",
+    padding: 3,
     fontFamily: Fonts.primaryBaseFont,
     fontSize: 16
   },
@@ -44,7 +42,6 @@ export default StyleSheet.create({
   selectedText: {
     fontFamily: Fonts.primaryBoldFont,
     fontWeight: "bold",
-    backgroundColor: Colors.lightPurple,
     color: Colors.gradientColor.bottom
   },
   triangle: {
@@ -73,21 +70,27 @@ export default StyleSheet.create({
   icon: {
     position: "absolute",
     right: 0,
-    zIndex: 0,
-    fontSize: 28
+    zIndex: 0
   },
   iconSelected: {
     position: "absolute",
     right: 0,
     zIndex: 0,
     backgroundColor: "transparent",
-    color: Colors.gradientColor.bottom,
-    fontSize: 28
-  },
-  disabledItemView: {
-    // backgroundColor: Colors.lightGrey
+    color: Colors.gradientColor.bottom
   },
   disabledItemText: {
     color: Colors.lightGrey
+  },
+  selectedBackground: {
+    backgroundColor: Colors.lightPurple
+  },
+  crossLineText: {
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid"
+  },
+  paddingContainer: {
+    marginLeft: moderateScale(40),
+    paddingRight: moderateScale(40)
   }
 });
