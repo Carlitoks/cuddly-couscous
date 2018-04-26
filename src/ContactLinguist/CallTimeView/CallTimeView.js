@@ -69,9 +69,6 @@ class CallTimeView extends Component {
                   this.props.selectedTime
                 } ${I18n.t("minutes")}`}
               </Text>
-              <Text style={[styles.subTitleCall]}>
-                {I18n.t("callTimeMinutesSub")}
-              </Text>
             </View>
           }
           headerRightComponent={
