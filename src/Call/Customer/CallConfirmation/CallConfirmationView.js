@@ -36,6 +36,7 @@ import GoBackButton from "../../../Components/GoBackButton/GoBackButton";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import { CATEGORIES } from "../../../Util/Constants";
+import { Iphone5 } from "../../../Util/Devices";
 import languages from "../../../Config/Languages";
 
 import {
@@ -107,7 +108,7 @@ class CallConfirmationView extends Component {
                 navigation.dispatch({ type: "Home" });
                 this.props.updateSettings({ customScenarioNote: "" });
               }}>
-              {I18n.t("cancel")}
+              <Icon style={styles.iconSize} name={"clear"} />
             </Text>
           }
           headerCenterComponent={
@@ -149,40 +150,37 @@ class CallConfirmationView extends Component {
             </View>
 
             {/* Languages */}
-            <View style={styles.firstLanguage}>
-              <View style={styles.secondLanguage}>
-                <Text style={styles.titleStyle}>{I18n.t("languageFrom")} </Text>
-                <Text style={styles.regularText}>
-                  {this.props.fromLanguage.name}
-                </Text>
-              </View>
-              <TouchableOpacity
-                style={styles.selectionLanguage}
-                onPress={() => {
-                  if (allowSecondaryLangSelection) {
-                    navigation.dispatch({
-                      type: "SessionLanguageView",
-                      params: { noautoselect: true, secundaryLangCode }
-                    });
-                  }
-                }}>
-                <View style={styles.direction}>
-                  <Text style={styles.titleStyle}>{I18n.t("languageTo")}</Text>
-                  <Text style={styles.regularText}>
+            <TouchableOpacity
+              onPress={() => {
+                if (allowSecondaryLangSelection) {
+                  navigation.dispatch({
+                    type: "SessionLanguageView",
+                    params: { noautoselect: true, secundaryLangCode }
+                  });
+                }
+              }}
+              style={styles.time}>
+              <View style={styles.flexColumn}>
+                <View style={styles.languagesContainer}>
+                  <Text style={[styles.regularText, styles.largeText, styles.orangeTitle]}>
+                    {this.props.fromLanguage.name}
+                  </Text>
+                  <Icon style={styles.centerIcon} name={"compare-arrows"} />
+                  <Text style={[styles.regularText, styles.largeText]}>
                     {this.props.selectedLanguageTo}
                   </Text>
                 </View>
-                <View style={styles.justifyCenter}>
-                  {allowSecondaryLangSelection ? (
-                    <Icon
-                      name="chevron-right"
-                      style={styles.iconSize}
-                      color={Colors.defaultChevron}
-                    />
-                  ) : null}
-                </View>
-              </TouchableOpacity>
-            </View>
+              </View>
+              <View style={styles.iconAlign}>
+                {allowSecondaryLangSelection && (
+                  <Icon
+                    name="chevron-right"
+                    style={styles.iconSize}
+                    color={Colors.defaultChevron}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
 
             {/* Time selection */}
             <TouchableOpacity
@@ -197,11 +195,11 @@ class CallConfirmationView extends Component {
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
                   {`${this.props.approxTime} ${I18n.t("minutes")}: `}
-                  <Text style={[styles.regularText, styles.timeItalic]}>
+                  <Text style={[styles.regularText]}>
                     {I18n.t("timeCompliments")}
                   </Text>
                 </Text>
-                <Text style={[styles.regularText, styles.timeItalic]}>
+                <Text style={[styles.regularText]}>
                   {I18n.t("timeAddMore")}
                 </Text>
               </View>
@@ -220,9 +218,10 @@ class CallConfirmationView extends Component {
             <View style={styles.bottomWidth}>
               <View style={styles.flexit}>
                 <TouchableOpacity
-                  style={
-                    this.props.video ? styles.audioBoxActive : styles.audioBox
-                  }
+                  style={[
+                    this.props.video ? styles.audioBoxActive : styles.audioBox,
+                    styles.rightSpace
+                  ]}
                   onPress={() => {
                     setPermission("camera").then(response => {
                       if (response == "denied" || response == "restricted") {
@@ -233,12 +232,14 @@ class CallConfirmationView extends Component {
                       });
                     });
                   }}>
-                  <View style={styles.justifyCenter}>
-                    <Icon
-                      name="check"
-                      color={Colors.white}
-                      style={styles.iconSize}
-                    />
+                  <View style={[styles.justifyCenter, styles.roundBox]}>
+                    <View style={styles.iconContainer}>
+                      { this.props.video && (<Icon
+                        name="check"
+                        color={Colors.white}
+                        style={styles.iconSize}
+                      />) }
+                    </View>
                     <Text
                       style={
                         this.props.video
@@ -252,9 +253,10 @@ class CallConfirmationView extends Component {
 
                 {/* Audio only */}
                 <TouchableOpacity
-                  style={
-                    !this.props.video ? styles.audioBoxActive : styles.audioBox
-                  }
+                  style={[
+                    !this.props.video ? styles.audioBoxActive : styles.audioBox,
+                    styles.leftSpace
+                  ]}
                   onPress={() => {
                     setPermission("camera").then(response => {
                       if (response == "denied" || response == "restricted") {
@@ -265,12 +267,14 @@ class CallConfirmationView extends Component {
                       });
                     });
                   }}>
-                  <View style={styles.justifyCenter}>
-                    <Icon
+                  <View style={[styles.justifyCenter, styles.roundBox]}>
+                    <View style={styles.iconContainer}>
+                    { !this.props.video && (<Icon
                       name="check"
                       color={Colors.white}
                       style={styles.iconSize}
-                    />
+                    />) }
+                    </View>
                     <Text
                       style={
                         !this.props.video
@@ -301,7 +305,6 @@ class CallConfirmationView extends Component {
                   navigation.dispatch({ type: "CustomerView" });
                 }}
                 title={I18n.t("connectNow").toUpperCase()}
-                icon="videocam"
                 long
                 fill
                 bottom={true}

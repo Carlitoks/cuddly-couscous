@@ -27,21 +27,27 @@ export const styles = StyleSheet.create({
   titleStyle: {
     fontSize: moderateScale(20),
     fontWeight: "bold",
-    color: Colors.listLabelColor
+    color: Colors.listLabelColor,
+    paddingBottom: 5
   },
   headerButtonCancel: {
     fontSize: moderateScale(20),
     color: Colors.primaryColor
   },
   audioBox: {
+    backgroundColor: Colors.lightPurple,
+    borderRadius: 10,
     flex: 0.5,
+    margin: 10,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row"
   },
   audioBoxActive: {
     backgroundColor: "#401674",
+    borderRadius: 10,
     flex: 0.5,
+    margin: 10,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row"
@@ -69,7 +75,7 @@ export const styles = StyleSheet.create({
   selectionLanguage: { flex: 0.5, margin: 20, flexDirection: "row" },
   time: {
     padding: 20,
-    height: 80,
+    height: 85,
     flexDirection: "row",
     justifyContent: "space-between",
     borderBottomWidth: 0.8,
@@ -106,7 +112,7 @@ export const styles = StyleSheet.create({
     borderBottomColor: "transparent"
   },
   direction: { flexDirection: "column", flex: 1 },
-  flexColumn: { flexDirection: "column" },
+  flexColumn: { flexDirection: "column", justifyContent: "center" },
   iconSize: {
     fontSize: 28
   },
@@ -118,5 +124,35 @@ export const styles = StyleSheet.create({
   regularText: {
     color: Colors.textDefault,
     fontWeight: "normal"
+  },
+  largeText: {
+    fontSize: moderateScale(20)
+  },
+  centerIcon: {
+    fontSize: 24,
+    paddingLeft: 6,
+    paddingRight: 6,
+    marginLeft: 6,
+    marginRight: 6
+  },
+  rightSpace: {
+    marginRight: 5
+  },
+  leftSpace: {
+    marginLeft: 5
+  },
+  iconContainer: {
+    justifyContent: "center",
+    flex: 0.6
+  },
+  languagesContainer: {
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap"
+  },
+  orangeTitle: {
+    color: Colors.listLabelColor,
+    fontWeight: "bold"
   }
 });
