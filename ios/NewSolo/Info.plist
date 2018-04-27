@@ -58,11 +58,15 @@
 	<key>NSCameraUsageDescription</key>
 	<string>camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>location</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>${PRODUCT_NAME} Microphone Usage</string>
 	<key>NSMotionUsageDescription</key>
 	<string>purpose for using</string>
+	  <key>NSLocationWhenInUseUsageDescription</key> 
+  <string>location</string> 
+	  <key>NSLocationAlwaysUsageDescription</key> 
+  <string>location</string> 
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>photo</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
