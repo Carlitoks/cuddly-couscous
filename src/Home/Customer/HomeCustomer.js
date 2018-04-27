@@ -95,23 +95,8 @@ class Home extends Component {
     };
   }
 
-  getAllCustomerCalls = (userId, token) => {
-    return this.props.getAllCustomerCalls(userId, token).then(response => {
-      this.props.customerCalls(response);
-    });
-  };
-
-  componentWillMount() {
-    const {
-      firstName,
-      lastName,
-      getCategories,
-      getScenarios,
-      getAllCustomerCalls,
-      userId,
-      token,
-      listItemSelected
-    } = this.props;
+  componentDidMount() {
+    const { getAllCustomerCalls, userId, token } = this.props;
 
     getAllCustomerCalls(userId, token)
       .then(response => {
@@ -120,7 +105,7 @@ class Home extends Component {
       .then(response => {
         const { allCustomerCalls } = this.props;
 
-        const scenariosList = take(allCustomerCalls, 15)
+        const scenariosList = take(allCustomerCalls, 10)
           .filter(call => {
             return call.session.scenario !== undefined;
           })
@@ -154,6 +139,16 @@ class Home extends Component {
 
         this.props.updateHomeFlow({ scenariosList });
       });
+  }
+
+  componentWillMount() {
+    const {
+      firstName,
+      lastName,
+      getCategories,
+      getScenarios,
+      listItemSelected
+    } = this.props;
 
     if (this.props.tokbox && this.props.networkInfoType !== "none") {
       this.props.closeOpenConnections();
