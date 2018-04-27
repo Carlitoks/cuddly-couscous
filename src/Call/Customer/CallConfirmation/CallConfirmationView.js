@@ -230,7 +230,7 @@ class CallConfirmationView extends Component {
                 <TouchableOpacity
                   style={[
                     this.props.video ? styles.audioBoxActive : styles.audioBox,
-                    styles.rightSpace
+                    styles.extraMarginLeft
                   ]}
                   onPress={() => {
                     setPermission("camera").then(response => {
@@ -269,7 +269,7 @@ class CallConfirmationView extends Component {
                 <TouchableOpacity
                   style={[
                     !this.props.video ? styles.audioBoxActive : styles.audioBox,
-                    styles.leftSpace
+                    styles.extraMarginRight
                   ]}
                   onPress={() => {
                     setPermission("camera").then(response => {

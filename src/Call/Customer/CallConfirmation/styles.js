@@ -54,11 +54,13 @@ export const styles = StyleSheet.create({
   },
   textAudioActive: {
     color: "white",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontSize: moderateScale(20)
   },
   textAudioInactive: {
     color: "#401674",
-    fontWeight: "normal"
+    fontWeight: "normal",
+    fontSize: moderateScale(20)
   },
   firstLanguage: {
     flexDirection: "row",
@@ -135,11 +137,13 @@ export const styles = StyleSheet.create({
     marginLeft: 6,
     marginRight: 6
   },
-  rightSpace: {
-    marginRight: 5
+  extraMarginRight: {
+    marginLeft: 6,
+    marginRight: 15
   },
-  leftSpace: {
-    marginLeft: 5
+  extraMarginLeft: {
+    marginLeft: 15,
+    marginRight: 6
   },
   iconContainer: {
     justifyContent: "center",
