@@ -31,6 +31,8 @@ const ViewWrapper = ({
     "83f07c5f8dcb8496e3287f280ce6f61d",
     Instabug.invocationEvent.shake
   );
+  Instabug.setPromptOptionsEnabled(false, true, true);
+  Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
   Instabug.setPrimaryColor(processColor("#52389d"));
   if (email) {
     Instabug.setUserData(`${name} ${lastName} (${role})`);

@@ -1,7 +1,7 @@
 import { NavigationActions } from "react-navigation";
 
 import AppNavigation from "../Navigation/AppNavigation";
-
+import Instabug from "instabug-reactnative";
 const initialState = AppNavigation.router.getStateForAction(
   AppNavigation.router.getActionForPathAndParams("SelectRoleView")
 );
@@ -26,6 +26,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "Navigation/NAVIGATE":
+      Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.navigate({ routeName: action.routeName }),
         state

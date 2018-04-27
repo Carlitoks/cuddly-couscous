@@ -223,6 +223,7 @@ export default (ENG = {
   retail: "Shopping",
   reconnect: "Reconnecting",
   reportProblem: "Report a problem by gently shaking your device.",
+  reportProblemMenu: "Report a problem",
   resetpassword: "Reset Password",
   retail: "Shopping",
   rni18n: "RN i18n",

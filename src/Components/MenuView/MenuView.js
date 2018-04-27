@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { AppState, Linking } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import Instabug from "instabug-reactnative";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import {
@@ -40,14 +41,18 @@ class MenuView extends Component {
 
   componentWillMount() {
     const { firstName, lastName } = this.props;
-
     if (!firstName && !lastName) {
       this.props.getProfileAsync(this.props.uuid, this.props.token);
     }
     // Instabug.setLocale(locale);
+    //Instabug.setWillSkipScreenshotAnnotation(false);
   }
   componentWillReceiveProps(nextProps) {
     this.forceUpdate();
+  }
+
+  componentWillUnmount() {
+    Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
   }
   isACustomer = () => !this.props.linguistProfile;
 
@@ -181,17 +186,20 @@ class MenuView extends Component {
           <Text style={styles.colorText}>{I18n.t("help")}</Text>
         </Icon.Button> */}
 
-          {/* Report a problem 
+          {/* Report a problem  */}
           <Icon.Button
             name="report-problem"
             size={25}
             backgroundColor={Colors.background}
             iconStyle={styles.optionMenu}
             onPress={() => {
-              this.props.navigation.dispatch({ type: "RateView" });
-            }}>
-            <Text style={styles.colorText}>{I18n.t("reportProblem")}</Text>
-          </Icon.Button>*/}
+              //Instabug.setWillSkipScreenshotAnnotation(true);
+              Instabug.setAttachmentTypesEnabled(false, true, true, true, true);
+              Instabug.invoke();
+            }}
+          >
+            <Text style={styles.colorText}>{I18n.t("reportProblemMenu")}</Text>
+          </Icon.Button>
 
           {/* Logout */}
           <Icon.Button
