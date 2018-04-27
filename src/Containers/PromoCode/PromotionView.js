@@ -13,6 +13,7 @@ import {
   ActivityIndicator
 } from "react-native";
 
+import LinearGradient from "react-native-linear-gradient";
 import Carousel from "react-native-snap-carousel";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
@@ -22,15 +23,16 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import { updateSettings as updateSelectionList } from "../../Ducks/LinguistFormReducer";
-import ListComponent from "../../Components/ListComponent/ListComponent";
+import BoxedListComponent from "../../Components/BoxedListComponent/BoxedListComponent";
 import CarouselEntry from "../../Components/CarouselEntry/CarouselEntry";
 
-import Waves from "../../SVG/wavesOrange";
+import Waves from "../../SVG/waves";
+import { Colors } from "../../Themes";
 
 import styles from "../../Home/Customer/styles";
 import I18n from "../../I18n/I18n";
 import { moderateScale } from "../../Util/Scaling";
-import { REASON } from "../../Util/Constants";
+import { REASON, CATEGORIES } from "../../Util/Constants";
 import { sliderWidth, itemWidth } from "../../Components/CarouselEntry/styles";
 
 class PromotionView extends Component {
@@ -94,9 +96,8 @@ class PromotionView extends Component {
       categoryName
     );
     const list = (
-      <ListComponent
+      <BoxedListComponent
         data={scenariosFiltered}
-        triangle={true}
         titleProperty={"title"}
         onPress={index => {
           updateSelectionList({
@@ -126,7 +127,14 @@ class PromotionView extends Component {
         ref={c => (this._slider1Ref = c)}
         data={categories}
         renderItem={({ item, index }) => {
-          return <CarouselEntry data={item} />;
+          return (
+            <CarouselEntry
+              data={item}
+              mapper={title => {
+                return CATEGORIES[title];
+              }}
+            />
+          );
         }}
         sliderWidth={sliderWidth}
         itemWidth={itemWidth}
@@ -161,41 +169,30 @@ class PromotionView extends Component {
             <ShowMenuButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <Text style={[styles.titleCallSub]}>
-              {this.props.organization.Name}
-            </Text>
+            <Text style={[styles.titleCallSub]}>{this.props.eventName}</Text>
           }
-          titleComponent={
-            <View style={styles.bottom}>
-              <Text style={styles.bottomText}>{this.props.eventName}</Text>
-            </View>
-          }
+          NoWaves
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-            alwaysBounceVertical={false}
-          >
-            {/* SVG White Waves */}
-            <View>
-              <Waves
-                width={width}
-                height={width * 80 / 750}
-                viewBox={"0 0 750 80"}
-              />
-            </View>
-
+          <View style={styles.mainContainer}>
+            <LinearGradient
+              colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
+              style={styles.linearGradient}
+            />
+            <Waves
+              width={width}
+              height={width * 80 / 750}
+              viewBox={"0 0 750 80"}
+              style={styles.waves}
+            />
             {this.renderCarousel()}
-            {this.renderList()}
-          </ScrollView>
-          <BottomButton
-            title={I18n.t("next")}
-            onPress={() =>
-              navigation.dispatch({ type: "CallConfirmationView" })
-            }
-            fill={true}
-            long={true}
-          />
+            <ScrollView
+              automaticallyAdjustContentInsets={true}
+              style={styles.scrollContainer}
+              alwaysBounceVertical={false}
+            >
+              {this.renderList()}
+            </ScrollView>
+          </View>
         </HeaderView>
       </ViewWrapper>
     );

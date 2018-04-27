@@ -16,23 +16,17 @@ const CarouselEntry = ({ data, mapper, onPress }) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      style={styles.slideInnerContainer}
+      style={styles.sliderInnerContainer}
       onPress={onPress}
     >
+      <Text style={styles.slideItemTextContainer}>{title}</Text>
+
       <Image
         style={[styles.image, styles.roundedCorners]}
         source={Images[data]}
         resizeMode="contain"
         borderRadius={10}
       />
-      <View
-        style={[
-          styles.slideItemTextContainer,
-          title === I18n.t("qr") ? null : styles.orangeBackground
-        ]}
-      >
-        <Text style={[styles.slideItemText]}>{title.toUpperCase()}</Text>
-      </View>
     </TouchableOpacity>
   );
 };

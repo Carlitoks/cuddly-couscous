@@ -60,6 +60,7 @@ import SessionLanguageView from "../Call/Customer/SessionLanguageView/SessionLan
 import StaticView from "../StaticView/StaticView";
 import TextView from "../Components/TextView/TextView";
 import CustomScenarioView from "../Call/Customer/CustomScenario/CustomScenarioView";
+import ScenarioSelectionView from "../Call/Customer/ScenarioSelectionView/ScenarioSelectionView";
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
@@ -180,6 +181,12 @@ const Navigation = StackNavigator(
     },
     CustomScenarioView: {
       screen: CustomScenarioView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    ScenarioSelectionView: {
+      screen: ScenarioSelectionView,
       navigationOptions: {
         gesturesEnabled: false
       }

@@ -52,7 +52,9 @@ import styles from "./styles";
     connectMe: Boolean to display the Connect Me Now View for Customer Home,
     calls: Amount of calls answered by linguist,
     amount: Amount of money earned by linguist,
-    navigation: In case ConnectMe is true send the navigation component
+    navigation: In case ConnectMe is true send the navigation component,
+    NoWaves: Boolean to hide waves
+    NoBackground: Boolean to hide backgroud
  *
  * The gradient appears when the header have waves
 */
@@ -86,31 +88,38 @@ const HeaderView = ({
   navigation,
   children,
   loading,
-  NoWaves
+  NoWaves,
+  NoBackground
 }) => {
   const { width, height } = Dimensions.get("window");
   const history = tabValues ? (tabValues.length > 0 ? true : false) : false;
   function getHeader() {
     return (
-      <View>
+      <View style={{ zIndex: 2 }}>
         {/* Header */}
         <View
           style={{
             height:
               !!avatarSource || !!switchOnChange || history
                 ? null
-                : !!title || !!titleComponent ? 145 : 85
+                : !!title || !!titleComponent
+                  ? 145
+                  : 85
           }}
         >
           {/* Linear Gradient */}
-          <LinearGradient
-            colors={[
-              Colors.gradientColor.top,
-              Colors.gradientColor.top,
-              !NoWaves ? Colors.gradientColor.bottom : Colors.gradientColor.top
-            ]}
-            style={styles.linearGradient}
-          />
+          {NoBackground ? null : (
+            <LinearGradient
+              colors={[
+                Colors.gradientColor.top,
+                Colors.gradientColor.top,
+                !NoWaves
+                  ? Colors.gradientColor.bottom
+                  : Colors.gradientColor.top
+              ]}
+              style={styles.linearGradient}
+            />
+          )}
 
           {/* SVG White Waves */}
           <View
@@ -411,7 +420,9 @@ const HeaderView = ({
             ? 350
             : !!bigAvatar
               ? 250
-              : !!avatarSource ? moderateScale(200) : moderateScale(180)
+              : !!avatarSource
+                ? moderateScale(200)
+                : moderateScale(180)
         }}
       >
         {getHeader()}

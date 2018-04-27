@@ -5,10 +5,15 @@ import { moderateScale } from "../../Util/Scaling";
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
+  mainContainer: {
+    backgroundColor: Colors.gradientColor.top,
+    flex: 1
+  },
   linearGradient: {
     position: "absolute",
     width: "100%",
-    height: "100%"
+    height: "50%",
+    bottom: 0
   },
   scrollContainer: {
     flex: 1,
@@ -79,5 +84,9 @@ export default StyleSheet.create({
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
+  },
+  waves: {
+    position: "absolute",
+    bottom: 0
   }
 });

@@ -79,6 +79,7 @@ class CallConfirmationView extends Component {
       navigation,
       customScenario,
       selectedCategory,
+      selectedScenario,
       categoryIndex,
       promotion,
       event,
@@ -89,11 +90,6 @@ class CallConfirmationView extends Component {
 
     const allowSecondaryLangSelection =
       !scannedEvent.id || scannedEvent.allowSecondaryLangSelection;
-
-    const categorySelected =
-      categoryIndex > -1 && !!selectedCategory
-        ? this.carouselTitleMapper(selectedCategory[categoryIndex])
-        : null;
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -107,20 +103,26 @@ class CallConfirmationView extends Component {
               onPress={() => {
                 navigation.dispatch({ type: "Home" });
                 this.props.updateSettings({ customScenarioNote: "" });
-              }}>
+              }}
+            >
               <Icon style={styles.iconSize} name={"clear"} />
             </Text>
           }
           headerCenterComponent={
             <Text style={styles.titleCall}>{I18n.t("confirmAndConnect")}</Text>
           }
-          NoWaves>
+          NoWaves
+        >
           <View style={styles.flex}>
             {/* Category / Scenario */}
             <View style={styles.category}>
               <View>
                 <Text style={styles.titleStyle}>
-                  {!!categorySelected ? `${categorySelected}: ` : null}
+                  {selectedScenario[0]
+                    ? `${this.carouselTitleMapper(
+                        selectedScenario[0].category
+                      )}: `
+                    : null}
 
                   <Text style={styles.regularText}>
                     {customScenario
@@ -159,10 +161,17 @@ class CallConfirmationView extends Component {
                   });
                 }
               }}
-              style={styles.time}>
+              style={styles.time}
+            >
               <View style={styles.flexColumn}>
                 <View style={styles.languagesContainer}>
-                  <Text style={[styles.regularText, styles.largeText, styles.orangeTitle]}>
+                  <Text
+                    style={[
+                      styles.regularText,
+                      styles.largeText,
+                      styles.orangeTitle
+                    ]}
+                  >
                     {this.props.fromLanguage.name}
                   </Text>
                   <Icon style={styles.centerIcon} name={"compare-arrows"} />
@@ -191,7 +200,8 @@ class CallConfirmationView extends Component {
                   });
                 }
               }}
-              style={styles.time}>
+              style={styles.time}
+            >
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
                   {`${this.props.approxTime} ${I18n.t("minutes")}: `}
@@ -231,21 +241,25 @@ class CallConfirmationView extends Component {
                         video: true
                       });
                     });
-                  }}>
+                  }}
+                >
                   <View style={[styles.justifyCenter, styles.roundBox]}>
                     <View style={styles.iconContainer}>
-                      { this.props.video && (<Icon
-                        name="check"
-                        color={Colors.white}
-                        style={styles.iconSize}
-                      />) }
+                      {this.props.video && (
+                        <Icon
+                          name="check"
+                          color={Colors.white}
+                          style={styles.iconSize}
+                        />
+                      )}
                     </View>
                     <Text
                       style={
                         this.props.video
                           ? styles.textAudioActive
                           : styles.textAudioInactive
-                      }>
+                      }
+                    >
                       {I18n.t("audioVideo")}
                     </Text>
                   </View>
@@ -266,21 +280,25 @@ class CallConfirmationView extends Component {
                         video: false
                       });
                     });
-                  }}>
+                  }}
+                >
                   <View style={[styles.justifyCenter, styles.roundBox]}>
                     <View style={styles.iconContainer}>
-                    { !this.props.video && (<Icon
-                      name="check"
-                      color={Colors.white}
-                      style={styles.iconSize}
-                    />) }
+                      {!this.props.video && (
+                        <Icon
+                          name="check"
+                          color={Colors.white}
+                          style={styles.iconSize}
+                        />
+                      )}
                     </View>
                     <Text
                       style={
                         !this.props.video
                           ? styles.textAudioActive
                           : styles.textAudioInactive
-                      }>
+                      }
+                    >
                       {I18n.t("audioOnly")}
                     </Text>
                   </View>

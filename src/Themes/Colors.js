@@ -13,7 +13,8 @@ const colors = {
   gradientColor: {
     top: "#401674",
     middle: "#52389d",
-    bottom: "#7171e2"
+    bottom: "#7171e2",
+    semiTransparent: "rgba(64, 22, 116, 0.8)"
   },
   gradientColorButton: {
     top: "#FB6A28",

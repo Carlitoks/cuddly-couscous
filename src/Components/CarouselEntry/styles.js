@@ -12,7 +12,7 @@ function wp(percentage) {
 }
 
 const slideHeight = viewportHeight * 0.36;
-const slideWidth = wp(40);
+const slideWidth = wp(70);
 const itemHorizontalMargin = wp(2);
 
 export const sliderWidth = viewportWidth;
@@ -21,23 +21,15 @@ export const itemWidth = slideWidth + itemHorizontalMargin * 2;
 const entryBorderRadius = 8;
 
 export default StyleSheet.create({
-  slideInnerContainer: {
+  sliderInnerContainer: {
     width: itemWidth,
     height: itemWidth,
-    paddingHorizontal: itemHorizontalMargin,
-    paddingBottom: 18 // needed for shadow
-  },
-  orangeBackground: {
-    backgroundColor: Colors.carouselImagesGradient.bottom
+    marginBottom: 10
   },
   slideItemTextContainer: {
-    width: "98.7%",
-    zIndex: 0,
-    alignSelf: "center",
-    position: "absolute",
-    bottom: 15,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5
+    marginLeft: 12,
+    fontSize: 20,
+    color: Colors.white
   },
   slideItemText: {
     marginTop: 7,
@@ -59,26 +51,5 @@ export default StyleSheet.create({
     borderTopRightRadius: 5,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5
-  },
-  sliderItemGradient: {
-    left: 7,
-    bottom: 18,
-    height: "40%"
-  },
-  linearGradient: {
-    position: "absolute",
-    width: "97%",
-    height: "40%",
-    alignSelf: "center",
-    bottom: 18,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-    borderWidth: 0
-  },
-  icon: {
-    // marginTop: 15
-    // position: "absolute",
-    // top: 5,
-    // right: 0
   }
 });

@@ -25,7 +25,8 @@ import {
   ScrollView,
   Image,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
@@ -41,12 +42,13 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
+import Waves from "../../SVG/waves";
 
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
 
-import ListComponent from "../../Components/ListComponent/ListComponent";
+import BoxedListComponent from "../../Components/BoxedListComponent/BoxedListComponent";
 
 class PromoCodeListView extends Component {
   constructor(props) {
@@ -58,6 +60,7 @@ class PromoCodeListView extends Component {
   }
 
   componentWillMount() {
+    console.log("promocodelistview");
     if (this.props.scenarios < 1) {
       this.props.getItems("scenarios", this.props.navigation.state.params);
     }
@@ -81,7 +84,7 @@ class PromoCodeListView extends Component {
     const { scenarios, listItemSelected } = this.props;
 
     const list = (
-      <ListComponent
+      <BoxedListComponent
         data={uniqBy(scenarios, "title")}
         triangle={false}
         titleProperty={"title"}
@@ -100,6 +103,7 @@ class PromoCodeListView extends Component {
         otherOnPress={() => {
           this.props.navigation.dispatch({ type: "CustomScenarioView" });
         }}
+        chevron
       />
     );
 
@@ -107,6 +111,8 @@ class PromoCodeListView extends Component {
   };
 
   render() {
+    const { width, height } = Dimensions.get("window");
+
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
@@ -116,33 +122,39 @@ class PromoCodeListView extends Component {
           headerCenterComponent={
             <Text style={[styles.titleCallSub]}>
               {this.props.organization && this.props.organization.Name
-                ? this.props.organization.Name
+                ? this.props.eventName
                 : I18n.t("describeAssistance")}
             </Text>
           }
-          titleComponent={
-            <View style={styles.bottom}>
-              <Text style={styles.bottomText}>
-                {this.props.eventName ? this.props.eventName : null}
-              </Text>
-            </View>
-          }
+          NoWaves
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            alwaysBounceVertical={false}
-          >
-            {this.props.scenarios.length < 1 ? (
-              <View style={styles.marginSpinner}>
-                <ActivityIndicator
-                  size="large"
-                  color={Colors.selectedOptionMenu}
-                />
-              </View>
-            ) : (
-              this.renderList()
-            )}
-          </ScrollView>
+          <View style={styles.mainContainer}>
+            <LinearGradient
+              colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
+              style={styles.linearGradient}
+            />
+            <Waves
+              width={width}
+              height={width * 80 / 750}
+              viewBox={"0 0 750 80"}
+              style={styles.waves}
+            />
+            <ScrollView
+              automaticallyAdjustContentInsets={true}
+              alwaysBounceVertical={false}
+            >
+              {this.props.scenarios.length < 1 ? (
+                <View style={styles.marginSpinner}>
+                  <ActivityIndicator
+                    size="large"
+                    color={Colors.selectedOptionMenu}
+                  />
+                </View>
+              ) : (
+                this.renderList()
+              )}
+            </ScrollView>
+          </View>
         </HeaderView>
       </ViewWrapper>
     );

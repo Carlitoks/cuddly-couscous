@@ -3,6 +3,7 @@ import { Colors, Fonts } from "../../Themes";
 import { moderateScale, scale } from "../../Util/Scaling";
 
 const { width, height } = Dimensions.get("window");
+const headerHeight = 85;
 
 export default StyleSheet.create({
   Button: {
@@ -204,7 +205,8 @@ export default StyleSheet.create({
   linearGradient: {
     position: "absolute",
     width: "100%",
-    height: "100%"
+    height: "50%",
+    bottom: 0
   },
   callLinguistContainer: {
     borderRadius: 15,
@@ -244,8 +246,11 @@ export default StyleSheet.create({
     backgroundColor: "white",
     height: "100%"
   },
+  mainContainer: {
+    backgroundColor: Colors.gradientColor.top
+  },
   scrollContainer: {
-    backgroundColor: "transparent"
+    height: "60%"
   },
   avatarContainer: {
     marginLeft: scale(60)
@@ -263,6 +268,7 @@ export default StyleSheet.create({
     paddingRight: 0
   },
   listContainer: {
+    backgroundColor: "transparent",
     marginTop: 0
   },
   triangle: {
@@ -283,7 +289,9 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   mainContainer: {
-    backgroundColor: "transparent"
+    backgroundColor: Colors.gradientColor.top,
+    height: height - headerHeight
+    // flex: 1
   },
   titleCall: {
     fontFamily: Fonts.primaryLightFont,
@@ -298,6 +306,14 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: "transparent"
+  },
+  subtitle: {
+    fontFamily: Fonts.primaryLightFont,
+    fontSize: 14,
+    color: Colors.white,
+    textAlign: "left",
+    backgroundColor: "transparent",
+    marginLeft: 10
   },
   subTitleCall: {
     fontFamily: Fonts.primaryLightFont,
@@ -317,5 +333,15 @@ export default StyleSheet.create({
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
+  },
+  marginBottom20: {
+    marginBottom: 20
+  },
+  marginBottom10: {
+    marginBottom: 10
+  },
+  waves: {
+    position: "absolute",
+    bottom: 0
   }
 });

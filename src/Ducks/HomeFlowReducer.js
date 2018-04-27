@@ -52,9 +52,11 @@ const initialState = {
   formHasErrors: false,
   customScenario: "",
   scenarios: [],
-  carouselFirstItem: 3,
+  carouselFirstItem: 0,
   categoryIndex: -1,
-  listItemSelected: -1
+  listItemSelected: -1,
+  categorySelected: "",
+  selectedScenarioIndex: -1
 };
 
 // Reducer
