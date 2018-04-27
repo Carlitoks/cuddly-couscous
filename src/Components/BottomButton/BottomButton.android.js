@@ -21,12 +21,13 @@ import LinearGradient from "react-native-linear-gradient";
     bottom: Boolean to make button paddingBottom property 0.
     relative: Boolean to make View style changes from absolute to relative,
     absolute: Boolean to make View style changes from absolute to absolute,
-    grafient: Boolean to make add a white to transparent gradient as background,    
+    gradient: Boolean to add a white to transparent gradient as background,    
     icon: String containing the Icon name,
     customStyle: Custom styles for View Component,
     whiteText: Boolean to turn text color white,
     transparent: Boolean to make the button background transparent
     color: String set the color of the button
+    whiteDisabled: boolean to make disabled button white
  *
 */
 
@@ -47,7 +48,8 @@ const BottomButton = ({
   whiteText,
   customStyle,
   transparent,
-  color
+  color,
+  whiteDisabled
 }) => {
   return (
     <View
@@ -59,82 +61,65 @@ const BottomButton = ({
         !!absolute ? styles.absolute : null
       ]}
     >
-      {gradient ? (
-        <LinearGradient
-          colors={[
-            Colors.bottomButtonGradient.top,
-            Colors.bottomButtonGradient.bottom
-          ]}
-          style={[styles.linearGradientBackground]}
-        />
-      ) : null}
-      <LinearGradient
-        colors={
-          fill
-            ? [
-                Colors.gradientColorButton.top,
-                //Colors.gradientColorButton.middle,
-                Colors.gradientColorButton.bottom
-              ]
-            : ["rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)"]
-        }
-        locations={[0.0, 1.0]}
-        style={[
-          styles.linearGradient,
-          long ? styles.long : null,
-          absolute ? styles.spaceBottom : null
+      <Button
+        borderRadius={50}
+        textStyle={[
+          styles.text,
+          bold || long ? styles.textBold : null,
+          disabled
+            ? loading
+              ? styles.transparent
+              : whiteDisabled
+                ? styles.textWhiteDisabled
+                : styles.textDisabled
+            : null,
+          fill || whiteText ? styles.white : null
         ]}
-        //Left to Right
-        start={{ x: 0.0, y: 0.5 }}
-        end={{ x: 1.0, y: 0.5 }}
-      >
-        <Button
-          borderRadius={50}
-          textStyle={[
-            styles.text,
-            bold || long ? styles.textBold : null,
-            disabled
-              ? loading ? styles.transparent : styles.textDisabled
-              : null,
-            fill || whiteText ? styles.white : null
-          ]}
-          title={title}
-          onPress={() => {
-            onPress();
-          }}
-          disabled={disabled}
-          disabledStyle={{ backgroundColor: Colors.primaryColor }}
-          iconRight={
-            !!icon
-              ? {
-                  name: icon,
-                  size: 25,
-                  color: fill
-                    ? Colors.primaryColor
-                    : color ? color : Colors.gradientColorButton.top
-                }
-              : null
-          }
-          backgroundColor={fill ? "transparent" : Colors.primaryColor}
-          buttonStyle={[
-            styles.buttonContainer,
-            transparent ? styles.transparent : null,
-            long ? styles.long : null,
-            fill ? styles.fillBtn : null,
-            disabled ? styles.disabledBtn : null,
-            negative ? styles.negative : null,
-            color ? { borderColor: color } : null
-          ]}
-        />
-        <View style={styles.spinner}>
-          {!!loading ? (
-            <ActivityIndicator
-              size="large"
-              color={Colors.gradientColorButton.top}
-            />
-          ) : null}
-        </View>
-      </LinearGradient>
+        title={title}
+        onPress={() => {
+          onPress();
+        }}
+        disabled={disabled}
+        disabledStyle={
+          whiteDisabled ? styles.transparentBackground : styles.whiteBackground
+        }
+        iconRight={
+          !!icon
+            ? {
+                name: icon,
+                size: 25,
+                color: fill
+                  ? Colors.primaryColor
+                  : color
+                    ? color
+                    : Colors.gradientColorButton.top
+              }
+            : null
+        }
+        backgroundColor={fill ? "transparent" : Colors.primaryColor}
+        buttonStyle={[
+          styles.buttonContainer,
+          whiteDisabled ? styles.whiteBorder : styles.normalBorder,
+          transparent ? styles.transparent : null,
+          long ? styles.long : null,
+          fill ? styles.fillBtn : null,
+          disabled
+            ? whiteDisabled
+              ? styles.disabledWhiteBtn
+              : styles.disabledBtn
+            : styles.enabledBtn,
+          negative ? styles.negative : null,
+          color ? { borderColor: color } : null
+        ]}
+      />
+      <View style={styles.spinner}>
+        {!!loading ? (
+          <ActivityIndicator
+            size="large"
+            color={Colors.gradientColorButton.top}
+          />
+        ) : null}
+      </View>
     </View>
   );
 };

@@ -168,9 +168,6 @@ class EditNativeLanguageView extends Component {
             }}
             relative
             fill
-            absolute
-            gradient
-            bottom
           />
         </HeaderView>
       </ViewWrapper>

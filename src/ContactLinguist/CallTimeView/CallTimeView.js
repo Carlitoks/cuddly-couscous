@@ -143,7 +143,7 @@ class CallTimeView extends Component {
             </Text>
           </View>
           <BottomButton
-            title={I18n.t("accept")}
+            title={I18n.t("continue")}
             onPress={() => this.submit(navigation)}
             fill
             bold={true}

@@ -156,12 +156,14 @@ class EditNameView extends Component {
                   : I18n.t("mainTitle")}
             </Text>
           }
-          NoWaves>
+          NoWaves
+        >
           <ScrollView
             keyboardShouldPersistTaps="handled"
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
-            alwaysBounceVertical={false}>
+            alwaysBounceVertical={false}
+          >
             <Grid>
               <Col>
                 <View>
@@ -224,9 +226,6 @@ class EditNameView extends Component {
             bold={false}
             disabled={this.isDisabled()}
             fill={!this.isDisabled()}
-            absolute
-            gradient
-            bottom
           />
         </HeaderView>
       </ViewWrapper>

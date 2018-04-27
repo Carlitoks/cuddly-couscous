@@ -231,9 +231,6 @@ class NameCustomerView extends Component {
             bold={false}
             disabled={this.isDisabled()}
             fill={!this.isDisabled()}
-            absolute
-            gradient
-            bottom
           />
         </HeaderView>
       </ViewWrapper>

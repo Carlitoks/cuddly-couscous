@@ -229,9 +229,6 @@ class LoginView extends Component {
             bold={true}
             disabled={!this.props.email || !this.props.password}
             fill={this.props.email && this.props.password}
-            absolute
-            gradient
-            bottom
           />
         </HeaderView>
       </ViewWrapper>

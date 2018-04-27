@@ -305,9 +305,6 @@ class EmailCustomerView extends Component {
             onPress={() => this.submit()}
             disabled={this.isDisabled()}
             fill={!this.isDisabled()}
-            absolute
-            gradient
-            bottom
           />
         </HeaderView>
       </ViewWrapper>

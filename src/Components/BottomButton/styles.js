@@ -15,17 +15,29 @@ export default StyleSheet.create({
   buttonContainer: {
     width: width * 0.5,
     borderColor: Colors.gradientColorButton.top,
-    borderWidth: 2,
     borderRadius: 50,
     justifyContent: "center",
-    paddingTop: 6,
-    paddingBottom: 6
+    paddingTop: 8,
+    paddingBottom: 8
+  },
+  whiteBorder: {
+    borderWidth: 0.8
+  },
+  normalBorder: {
+    borderWidth: 2
   },
   fillBtn: {
     borderColor: "transparent"
   },
   disabledBtn: {
     borderColor: Colors.disabledColor
+  },
+  disabledWhiteBtn: {
+    borderColor: Colors.white
+  },
+  enabledBtn: {
+    backgroundColor: Colors.gradientColorButton.top,
+    borderColor: Colors.white
   },
   text: {
     fontSize: 16,
@@ -39,14 +51,23 @@ export default StyleSheet.create({
   },
   textDisabled: {
     fontSize: 16,
-    //fontFamily: Fonts.primaryBaseFont,
     color: Colors.disabledColor
+  },
+  textWhiteDisabled: {
+    fontSize: 16,
+    color: Colors.white
   },
   white: {
     color: Colors.primaryColor
   },
+  whiteBackground: {
+    backgroundColor: Colors.primaryColor
+  },
   transparent: {
     color: "transparent"
+  },
+  transparentBackground: {
+    backgroundColor: "transparent"
   },
   linearGradient: {
     width: width * 0.5,

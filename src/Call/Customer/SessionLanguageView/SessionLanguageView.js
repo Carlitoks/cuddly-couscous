@@ -190,13 +190,12 @@ class SessionLanguageView extends Component {
           </View>
           {/* Next Button */}
           <BottomButton
-            title={I18n.t("next")}
+            title={I18n.t("continue")}
             relative
             onPress={() => this.submit(navigation)}
             fill
             absolute
             gradient
-            bottom
           />
         </HeaderView>
       </ViewWrapper>
