@@ -86,7 +86,7 @@ export const styles = StyleSheet.create({
     color: Colors.primaryColor
   },
   bottom: {
-    marginTop: 25
+    marginTop: 15
   },
   bottomText: {
     fontSize: moderateScale(18),

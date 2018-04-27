@@ -98,6 +98,6 @@ export default StyleSheet.create({
     marginTop: 0
   },
   bottom: {
-    marginTop: 25
+    marginTop: 15
   }
 });

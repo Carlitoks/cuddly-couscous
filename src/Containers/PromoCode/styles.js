@@ -69,7 +69,7 @@ export default StyleSheet.create({
     backgroundColor: "transparent"
   },
   bottom: {
-    marginTop: 25
+    marginTop: 15
   },
   bottomText: {
     fontSize: moderateScale(18),
