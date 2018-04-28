@@ -12,7 +12,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 
-import { CallButton } from "../../../Components/CallButton/CallButton";
+import CallButton from "../../../Components/CallButton/CallButton";
 import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Images, Colors } from "../../../Themes";

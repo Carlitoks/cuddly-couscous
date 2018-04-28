@@ -1,15 +1,24 @@
 import React, { Component, Ref } from "react";
-import { Button, View, Image, Text, Alert, Platform } from "react-native";
+import {
+  Button,
+  View,
+  Image,
+  Text,
+  Alert,
+  Platform,
+  TouchableWithoutFeedback
+} from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint-disable-line
 import KeepAwake from "react-native-keep-awake";
 import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
-import CallButtonToggle from "../../../Components/CallButtonToggle/CallButtonToggle";
 import styles from "./styles";
 import { Images } from "../../../Themes";
-import { CallButton } from "../../../Components/CallButton/CallButton";
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
+import SessionControls from "../../../Components/SessionControls/SessionControls";
+import Fade from "../../../Effects/Fade/Fade";
+
 import I18n from "../../../I18n/I18n";
 import InCallManager from "react-native-incall-manager";
 
@@ -36,15 +45,17 @@ import {
   BackgroundStart
 } from "../../../Util/Background";
 import { fmtMSS } from "../../../Util/Helpers";
-import {
-  setPermission,
-  displayOpenSettingsAlert
-} from "../../../Util/Permission";
 import { REASON, TIME, PLATFORM } from "../../../Util/Constants";
 
 import { tokDisConnect, tokConnect, clear } from "../../../Ducks/tokboxReducer";
 
 class LinguistView extends Component {
+  constructor() {
+    super();
+    this.state = {
+      visible: true
+    };
+  }
   ref: Ref<Publisher>;
 
   componentWillMount() {
@@ -80,11 +91,6 @@ class LinguistView extends Component {
     this.props.resetCounter();
     OpenTok.disconnectAll();
     InCallManager.stop();
-    /*
-    if (this.props.networkInfoType !== "none") {
-      this.props.clear();
-      this.props.clearSettings(); // clean call info
-    }*/
   }
 
   selectImage = () => {
@@ -125,6 +131,32 @@ class LinguistView extends Component {
     }
   }
 
+  closeLinguist = async reason => {
+    Alert.alert(
+      I18n.t("endCall"),
+      I18n.t("logOutConfirmation"),
+      [
+        {
+          text: I18n.t("cancel"),
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("endCall"),
+          onPress: async () => {
+            await OpenTok.sendSignal(
+              this.props.linguistTokboxSessionID,
+              "EndCall",
+              reason
+            );
+            this.props.navigation.dispatch({ type: "RateView" });
+          }
+        }
+      ],
+      { cancelable: true }
+    );
+  };
+
   closeCall = async () => {
     const { linguistTokboxSessionID, sessionID, token } = this.props;
 
@@ -146,149 +178,95 @@ class LinguistView extends Component {
   };
 
   render() {
+    const { visible } = this.state;
     return (
-      <View style={styles.containerT}>
-        <ModalReconnect closeCall={this.closeCall} />
-        <View style={styles.backgroundContainer}>
-          <Subscriber
-            sessionId={this.props.linguistTokboxSessionID}
-            style={styles.background}
-            onSubscribeStart={() => {
-              console.log("Sub Started");
-              this.props.updateContactLinguistSettings({
-                modalReconnect: false
-              });
-              clearInterval(this.props.counterId);
-              InCallManager.start({ media: "audio" });
-              InCallManager.setForceSpeakerphoneOn(true);
-            }}
-            onSubscribeError={() => {
-              console.log("Sub Error");
-            }}
-            onSubscribeStop={() => {
-              console.log("SubscriberStop");
-              BackgroundCleanInterval(this.props.timer);
-              this.props.updateContactLinguistSettings({
-                modalReconnect: true
-              });
-              this.callTimeOut();
-            }}
-          />
-        </View>
-        <View style={styles.publisherBox}>
-          {this.props.linguistTokboxSessionID && (
-            <Publisher
+      <TouchableWithoutFeedback
+        onPress={() => {
+          console.log(visible);
+          this.setState({ visible: !visible });
+        }}
+      >
+        <View style={styles.containerT}>
+          <ModalReconnect closeCall={this.closeCall} />
+          <View style={styles.backgroundContainer}>
+            <Subscriber
               sessionId={this.props.linguistTokboxSessionID}
-              style={styles.publisher}
-              mute={!this.props.mic}
-              video={this.props.video}
-              ref={ref => {
-                this.ref = ref;
+              style={styles.background}
+              onSubscribeStart={() => {
+                console.log("Sub Started");
+                this.props.updateContactLinguistSettings({
+                  modalReconnect: false
+                });
+                clearInterval(this.props.counterId);
+                InCallManager.start({ media: "audio" });
+                InCallManager.setForceSpeakerphoneOn(true);
               }}
-              onPublishStart={() => {
-                this.startTimer();
-                console.log("publish started");
+              onSubscribeError={() => {
+                console.log("Sub Error");
               }}
-              onPublishError={() => {
-                console.log("publish error");
+              onSubscribeStop={() => {
+                console.log("SubscriberStop");
+                BackgroundCleanInterval(this.props.timer);
+                this.props.updateContactLinguistSettings({
+                  modalReconnect: true
+                });
+                this.callTimeOut();
               }}
             />
-          )}
-        </View>
-        <View style={styles.topContainer}>
-          <TopViewIOS />
-          <View style={styles.inlineContainer}>
-            <Image style={styles.smallAvatar} source={this.selectImage()} />
           </View>
-          <Text style={styles.callerNameText}>{this.props.customerName}</Text>
-
-          {/*<View style={styles.inlineContainer}>
-            <Icon style={styles.icon} size={25} name="room" />
-            <Text style={styles.locationText}>San Diego, CA</Text>
-          </View>*/}
-
-          <View style={styles.inlineContainer}>
-            <Text style={styles.incomingCallText}>
-              {fmtMSS(this.props.elapsedTime)}
-            </Text>
+          <View style={styles.publisherBox}>
+            {this.props.linguistTokboxSessionID && (
+              <Publisher
+                sessionId={this.props.linguistTokboxSessionID}
+                style={styles.publisher}
+                mute={!this.props.mic}
+                video={this.props.video}
+                ref={ref => {
+                  this.ref = ref;
+                }}
+                onPublishStart={() => {
+                  this.startTimer();
+                  console.log("publish started");
+                }}
+                onPublishError={() => {
+                  console.log("publish error");
+                }}
+              />
+            )}
           </View>
-        </View>
-        <View style={styles.containerButtons}>
-          <CallButtonToggle
-            onPress={() => {
-              if (typeof this.ref !== "string") this.ref.switchCamera();
+          <View style={styles.topContainer}>
+            <TopViewIOS />
+            <View style={styles.inlineContainer}>
+              <Image style={styles.smallAvatar} source={this.selectImage()} />
+            </View>
+            <Text style={styles.callerNameText}>{this.props.customerName}</Text>
+
+            <View style={styles.inlineContainer}>
+              <Text style={styles.incomingCallText}>
+                {fmtMSS(this.props.elapsedTime)}
+              </Text>
+            </View>
+          </View>
+          <Fade
+            visible={visible}
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
+              paddingBottom: 20
             }}
-            toggle={true}
-            active={this.props.rotate}
-            name="LinguistCamera"
-            icon="switch-camera"
-            iconToggled="switch-camera"
-            buttonSize={65}
-            iconSize={30}
-          />
-          <CallButtonToggle
-            toggle={true}
-            active={this.props.speaker}
-            name="LinguistSpeaker"
-            icon="volume-up"
-            iconToggled="volume-up"
-            buttonSize={65}
-            iconSize={30}
-          />
-          <CallButton
-            onPress={async () => {
-              Alert.alert(
-                I18n.t("endCall"),
-                I18n.t("logOutConfirmation"),
-                [
-                  {
-                    text: I18n.t("cancel"),
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                  },
-                  {
-                    text: I18n.t("endCall"),
-                    onPress: async () => {
-                      await OpenTok.sendSignal(
-                        this.props.linguistTokboxSessionID,
-                        "EndCall",
-                        REASON.DONE
-                      );
-                      this.props.navigation.dispatch({ type: "RateView" });
-                    }
-                  }
-                ],
-                { cancelable: true }
-              );
-            }}
-            buttonColor="red"
-            toggle={false}
-            icon="call-end"
-            buttonSize={65}
-            iconSize={30}
-          />
-          <CallButtonToggle
-            toggle={true}
-            active={this.props.mic}
-            name="LinguistMute"
-            icon="mic"
-            iconToggled="mic"
-            buttonSize={65}
-            iconSize={30}
-          />
-          <CallButtonToggle
-            toggle={true}
-            active={this.props.video}
-            name="LinguistVideo"
-            icon="videocam"
-            iconToggled="videocam"
-            opacity={0.7}
-            buttonSize={65}
-            iconSize={30}
-          />
+          >
+            <SessionControls
+              ref={this.ref}
+              closeCall={this.closeLinguist}
+              reason={REASON.DONE}
+              linguist
+            />
+          </Fade>
+          <KeepAwake />
         </View>
-        <KeepAwake />
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

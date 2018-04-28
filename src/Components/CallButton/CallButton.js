@@ -22,7 +22,7 @@ import { Iphone5 } from "../../Util/Devices";
  * @class CallButton
  * @extends {Component}
  */
-export class CallButton extends Component {
+export default class CallButton extends Component {
   state = {
     iconName: this.props.icon,
     isActive: false
@@ -69,14 +69,14 @@ export class CallButton extends Component {
             }
           }}
           buttonStyle={{
-            height: !Iphone5 ? this.props.buttonSize : 55,
-            width: !Iphone5 ? this.props.buttonSize : 55,
+            height: !Iphone5 ? 65 : 55,
+            width: !Iphone5 ? 65 : 55,
             justifyContent: "center",
             borderRadius: 100
           }}
           icon={{
             name: this.state.iconName,
-            size: !Iphone5 ? this.props.iconSize : 23,
+            size: !Iphone5 ? 30 : 23,
             color: "white",
             buttonStyle: { textAlign: "center", right: 10 }
           }}
@@ -106,8 +106,6 @@ CallButton.propTypes = {
   opacity: number,
   toggle: bool,
   iconToggled: string,
-  buttonSize: number,
-  iconSize: number,
   active: bool
 };
 
@@ -116,7 +114,5 @@ CallButton.defaultProps = {
   labelColor: "white",
   opacity: 1,
   toggle: false,
-  buttonSize: 80,
-  iconSize: 40,
   active: false
 };

@@ -5,7 +5,7 @@ import { Text, View, ScrollView, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
-import { CallButton } from "../../../Components/CallButton/CallButton";
+import SessionControls from "../../../Components/SessionControls/SessionControls";
 
 // STYLE AND THEMES
 import styles from "./styles";
@@ -14,7 +14,6 @@ import { Images, Colors } from "../../../Themes";
 // REDUCERS
 import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
-import CallButtonToggle from "./../../../Components/CallButtonToggle/CallButtonToggle";
 import {
   setPermission,
   displayOpenSettingsAlert
@@ -82,55 +81,11 @@ class ContactingLinguist extends Component {
 
             {/* Call Buttons */}
             <Row style={styles.bottomContainer}>
-              <View style={styles.containerButtons}>
-                <CallButtonToggle
-                  toggle={true}
-                  active={this.props.rotate}
-                  name="CustomerCamera"
-                  icon="switch-camera"
-                  iconToggled="switch-camera"
-                  ref={this.ref}
-                  buttonSize={65}
-                  iconSize={30}
-                />
-                <CallButtonToggle
-                  toggle={true}
-                  active={this.props.speaker}
-                  name="CustomerSpeaker"
-                  icon="volume-up"
-                  iconToggled="volume-up"
-                  buttonSize={65}
-                  iconSize={30}
-                />
-                {/* End Call */}
-                <CallButton
-                  onPress={() => {
-                    this.props.closeCall(REASON.CANCEL, true);
-                  }}
-                  buttonColor="red"
-                  toggle={false}
-                  icon="call-end"
-                />
-                <CallButtonToggle
-                  toggle={true}
-                  active={this.props.mic}
-                  name="CustomerMute"
-                  icon="mic"
-                  iconToggled="mic"
-                  buttonSize={65}
-                  iconSize={30}
-                />
-                <CallButtonToggle
-                  toggle={true}
-                  active={this.props.video}
-                  name="CustomerVideo"
-                  icon="videocam"
-                  iconToggled="videocam"
-                  opacity={0.7}
-                  buttonSize={65}
-                  iconSize={30}
-                />
-              </View>
+              <SessionControls
+                ref={this.ref}
+                closeCall={this.props.closeCall}
+                reason={REASON.CANCEL}
+              />
             </Row>
           </Col>
         </Grid>
@@ -140,10 +95,6 @@ class ContactingLinguist extends Component {
 }
 
 const mS = state => ({
-  mic: state.callCustomerSettings.mic,
-  video: state.callCustomerSettings.video,
-  speaker: state.callCustomerSettings.speaker,
-  rotate: state.callCustomerSettings.rotate,
   counterId: state.contactLinguist.counterId,
   tokboxStatus: state.tokbox.status,
   modalReconnect: state.contactLinguist.modalReconnect

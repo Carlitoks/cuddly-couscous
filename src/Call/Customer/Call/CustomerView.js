@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import OpenTok, { Publisher, Subscriber } from "react-native-opentok";
 import KeepAwake from "react-native-keep-awake";
 import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
+import SessionControls from "../../../Components/SessionControls/SessionControls";
 import {
   updateSettings,
   AsyncCreateSession,
@@ -18,7 +19,7 @@ import {
   update,
   clear
 } from "../../../Ducks/tokboxReducer";
-import CallButtonToggle from "./../../../Components/CallButtonToggle/CallButtonToggle";
+
 import {
   clearSettings as clearCallSettings,
   updateSettings as updateContactLinguistSettings,
@@ -27,11 +28,19 @@ import {
 } from "../../../Ducks/ContactLinguistReducer";
 import { GetSessionInfoLinguist } from "../../../Ducks/SessionInfoReducer";
 
-import { Button, View, Text, Image, Switch, Platform } from "react-native";
+import {
+  Button,
+  View,
+  Text,
+  Image,
+  Switch,
+  Platform,
+  TouchableWithoutFeedback
+} from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { CallButton } from "../../../Components/CallButton/CallButton";
-import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 
+import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
+import Fade from "../../../Effects/Fade/Fade";
 import { Colors, Images } from "../../../Themes";
 import { fmtMSS } from "../../../Util/Helpers";
 import styles from "./styles";
@@ -55,6 +64,13 @@ import { IMAGE_STORAGE_URL } from "../../../Config/env";
 import { REASON, STATUS_TOKBOX, TIME, PLATFORM } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
 class CustomerView extends Component {
+  constructor() {
+    super();
+    this.state = {
+      visible: true
+    };
+  }
+
   ref: Ref<Publisher>;
 
   componentWillMount() {
@@ -106,11 +122,6 @@ class CustomerView extends Component {
     this.props.resetCounter();
     OpenTok.disconnectAll();
     InCallManager.stop();
-    /*
-    if (this.props.networkInfoType !== "none") {
-      this.props.clear();
-      this.props.clearSettings(); // clean call info
-    }*/
   }
 
   componentWillReceiveProps(nextProps) {
@@ -229,168 +240,141 @@ class CustomerView extends Component {
   };
 
   render() {
+    const { visible } = this.state;
     return (
-      <View style={styles.containerT}>
-        <ModalReconnect
-          closeCall={this.closeCall}
-          callTimeOut={this.callTimeOut}
-          reconnectCall={this.reconnectCall}
-        />
-        <View
-          style={
-            this.props.tokboxStatus === STATUS_TOKBOX.STREAM
-              ? styles.containerCall
-              : styles.containerHiddenCall
-          }
-        >
-          <View style={styles.backgroundContainer}>
-            {this.props.customerTokboxSessionID && (
-              <Subscriber
-                sessionId={this.props.customerTokboxSessionID}
-                style={styles.background}
-                onSubscribeStart={() => {
-                  console.log("SubscriberStart");
-                  this.startTimer();
-                  this.props.updateContactLinguistSettings({
-                    modalReconnect: false
-                  });
-                  clearInterval(this.props.counterId);
-                }}
-                onSubscribeError={() => {
-                  console.log("SubscriberError");
-                }}
-                onSubscribeStop={() => {
-                  console.log("SubscriberStop");
-                  BackgroundCleanInterval(this.props.timer);
-                  this.props.updateContactLinguistSettings({
-                    modalReconnect: true
-                  });
-                  this.callTimeOut();
-                }}
-              />
-            )}
-          </View>
-          <View style={styles.publisherBox}>
-            {this.props.customerTokboxSessionID && (
-              <Publisher
-                sessionId={this.props.customerTokboxSessionID}
-                style={styles.publisher}
-                mute={!this.props.mic}
-                video={this.props.video}
-                ref={ref => {
-                  this.ref = ref;
-                }}
-                onPublishStart={() => {
-                  console.log("Publisher started");
-                }}
-                onPublishError={() => {
-                  console.log("Publisher started error");
-                }}
-              />
-            )}
-          </View>
-          <View style={styles.topContainer}>
-            <TopViewIOS />
-            <View style={styles.inlineContainer}>
-              <Image style={styles.smallAvatar} source={this.selectImage()} />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          console.log(visible);
+          this.setState({ visible: !visible });
+        }}
+      >
+        <View style={styles.containerT}>
+          <ModalReconnect
+            closeCall={this.closeCall}
+            callTimeOut={this.callTimeOut}
+            reconnectCall={this.reconnectCall}
+          />
+          <View
+            style={
+              this.props.tokboxStatus === STATUS_TOKBOX.STREAM
+                ? styles.containerCall
+                : styles.containerHiddenCall
+            }
+          >
+            <View style={styles.backgroundContainer}>
+              {this.props.customerTokboxSessionID && (
+                <Subscriber
+                  sessionId={this.props.customerTokboxSessionID}
+                  style={styles.background}
+                  onSubscribeStart={() => {
+                    console.log("SubscriberStart");
+                    this.startTimer();
+                    this.props.updateContactLinguistSettings({
+                      modalReconnect: false
+                    });
+                    clearInterval(this.props.counterId);
+                  }}
+                  onSubscribeError={() => {
+                    console.log("SubscriberError");
+                  }}
+                  onSubscribeStop={() => {
+                    console.log("SubscriberStop");
+                    BackgroundCleanInterval(this.props.timer);
+                    this.props.updateContactLinguistSettings({
+                      modalReconnect: true
+                    });
+                    this.callTimeOut();
+                  }}
+                />
+              )}
             </View>
-            <Text style={styles.callerNameText}>
-              {this.handleSessionInfoName()}
-            </Text>
+            <View style={styles.publisherBox}>
+              {this.props.customerTokboxSessionID && (
+                <Publisher
+                  sessionId={this.props.customerTokboxSessionID}
+                  style={styles.publisher}
+                  mute={!this.props.mic}
+                  video={this.props.video}
+                  ref={ref => {
+                    this.ref = ref;
+                  }}
+                  onPublishStart={() => {
+                    console.log("Publisher started");
+                  }}
+                  onPublishError={() => {
+                    console.log("Publisher started error");
+                  }}
+                />
+              )}
+            </View>
+            <View style={styles.topContainer}>
+              <TopViewIOS />
+              <View style={styles.inlineContainer}>
+                <Image style={styles.smallAvatar} source={this.selectImage()} />
+              </View>
+              <Text style={styles.callerNameText}>
+                {this.handleSessionInfoName()}
+              </Text>
 
-            {/*<View style={styles.inlineContainer}>
+              {/*<View style={styles.inlineContainer}>
               <Icon style={styles.icon} size={25} name="room" />
               <Text style={styles.locationText}>San Diego, CA</Text>
             </View>*/}
 
-            <View style={styles.inlineContainer}>
-              <Text style={styles.incomingCallText}>
-                {fmtMSS(this.props.elapsedTime)}
-              </Text>
+              <View style={styles.inlineContainer}>
+                <Text style={styles.incomingCallText}>
+                  {fmtMSS(this.props.elapsedTime)}
+                </Text>
+              </View>
             </View>
-          </View>
-          <View style={styles.containerSwitch}>
-            <Switch
-              onValueChange={customerExtraTime =>
-                this.props.updateSettings({
-                  customerExtraTime: customerExtraTime
-                })
-              }
-              value={this.props.customerExtraTime}
-              onTintColor={Colors.onTintColor}
-              thumbTintColor={Colors.thumbTintColor}
-              tintColor={Colors.tintColor}
-            />
-            <Text style={styles.extraTime}>{I18n.t("allowExtraTime")}</Text>
-          </View>
-          <View style={styles.containerButtons}>
-            <CallButtonToggle
-              onPress={() => {
-                if (typeof this.ref !== "string") {
-                  this.ref.switchCamera();
-                }
-              }}
-              toggle={true}
-              active={this.props.rotate}
-              name="CustomerCamera"
-              icon="switch-camera"
-              iconToggled="switch-camera"
-              buttonSize={65}
-              iconSize={30}
-            />
-            <CallButtonToggle
-              toggle={true}
-              active={this.props.speaker}
-              name="CustomerSpeaker"
-              icon="volume-up"
-              iconToggled="volume-up"
-              buttonSize={65}
-              iconSize={30}
-            />
-            <CallButton
-              onPress={() => {
-                this.closeCall(REASON.DONE);
-              }}
-              buttonColor="red"
-              toggle={false}
-              icon="call-end"
-              buttonSize={65}
-              iconSize={30}
-            />
-            <CallButtonToggle
-              toggle={true}
-              active={this.props.mic}
-              name="CustomerMute"
-              icon="mic"
-              iconToggled="mic"
-              buttonSize={65}
-              iconSize={30}
-            />
-            <CallButtonToggle
-              toggle={true}
-              active={this.props.video}
-              name="CustomerVideo"
-              icon="videocam"
-              iconToggled="videocam"
-              opacity={0.7}
-              buttonSize={65}
-              iconSize={30}
-            />
-          </View>
-        </View>
-        <KeepAwake />
-
-        {this.props.tokboxStatus !== STATUS_TOKBOX.STREAM &&
-          this.props.elapsedTime < 1 && (
-            <View style={styles.containerContacting}>
-              <ContactingLinguistView
-                navigation={this.props.navigation}
-                callTimeOut={this.callTimeOut}
-                closeCall={this.closeCall}
+            <View style={styles.containerSwitch}>
+              <Switch
+                onValueChange={customerExtraTime => {
+                  this.props.updateSettings({
+                    customerExtraTime: customerExtraTime
+                  });
+                  console.log(visible);
+                  this.setState({ visible: !visible });
+                }}
+                value={this.props.customerExtraTime}
+                onTintColor={Colors.onTintColor}
+                thumbTintColor={Colors.thumbTintColor}
+                tintColor={Colors.tintColor}
               />
+              <Text style={styles.extraTime}>{I18n.t("allowExtraTime")}</Text>
             </View>
-          )}
-      </View>
+
+            <Fade
+              visible={visible}
+              style={{
+                flex: 1,
+                flexDirection: "column",
+                alignItems: "flex-end",
+                justifyContent: "flex-end",
+                paddingBottom: 20
+              }}
+            >
+              <SessionControls
+                ref={this.ref}
+                closeCall={this.closeCall}
+                reason={REASON.DONE}
+              />
+            </Fade>
+          </View>
+          <KeepAwake />
+
+          {this.props.tokboxStatus !== STATUS_TOKBOX.STREAM &&
+            this.props.elapsedTime < 1 && (
+              <View style={styles.containerContacting}>
+                <ContactingLinguistView
+                  navigation={this.props.navigation}
+                  callTimeOut={this.callTimeOut}
+                  closeCall={this.closeCall}
+                />
+              </View>
+            )}
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -398,8 +382,6 @@ class CustomerView extends Component {
 const mS = state => ({
   mic: state.callCustomerSettings.mic,
   video: state.callCustomerSettings.video,
-  rotate: state.callCustomerSettings.rotate,
-  speaker: state.callCustomerSettings.speaker,
   timer: state.callCustomerSettings.timer,
   elapsedTime: state.callCustomerSettings.elapsedTime,
   sessionID: state.tokbox.sessionID,

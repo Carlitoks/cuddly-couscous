@@ -121,7 +121,7 @@ class CallButtonToggle extends Component {
   };
 
   render() {
-    const { buttonColor, onPress, buttonSize, iconSize, active } = this.props;
+    const { buttonColor, onPress, active } = this.props;
     return (
       <View style={{ flex: 1, alignItems: "center" }}>
         <Button
@@ -140,14 +140,14 @@ class CallButtonToggle extends Component {
             this.toggleIcon();
           }}
           buttonStyle={{
-            height: !Iphone5 ? buttonSize : 55,
-            width: !Iphone5 ? buttonSize : 55,
+            height: !Iphone5 ? 65 : 55,
+            width: !Iphone5 ? 65 : 55,
             justifyContent: "center",
             borderRadius: 100
           }}
           icon={{
             name: this.state.iconName,
-            size: !Iphone5 ? iconSize : 23,
+            size: !Iphone5 ? 30 : 23,
             color: "white",
             buttonStyle: { textAlign: "center", right: 10 }
           }}
@@ -165,8 +165,6 @@ CallButtonToggle.propTypes = {
   onPress: func,
   toggle: bool,
   iconToggled: string,
-  buttonSize: number,
-  iconSize: number,
   active: bool
 };
 

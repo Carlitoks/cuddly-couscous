@@ -235,7 +235,7 @@ export default (ENG = {
   save: "Save",
   scanQR: "Scan QR",
   scanQRCode: "Scan QR Code",
-  scenarioNotes: "Type in any additional information for your linguist",
+  scenarioNotes: "Type in additional information for your linguist",
   schedule: "Schedule",
   scheduleLinguist: "Schedule a Linguist",
   search: "Search",
