@@ -31,10 +31,7 @@ class SessionControls extends Component {
       <View style={styles.containerButtons}>
         <CallButtonToggle
           onPress={() => {
-            console.log(ref);
-            if (typeof ref !== "string") {
-              ref.switchCamera();
-            }
+            this.props.switch();
           }}
           toggle={true}
           active={rotate}

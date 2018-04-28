@@ -52,11 +52,11 @@ import { tokDisConnect, tokConnect, clear } from "../../../Ducks/tokboxReducer";
 class LinguistView extends Component {
   constructor() {
     super();
+    this.ref;
     this.state = {
       visible: true
     };
   }
-  ref: Ref<Publisher>;
 
   componentWillMount() {
     BackgroundStart();
@@ -177,6 +177,12 @@ class LinguistView extends Component {
     });
   };
 
+  switchCamera() {
+    if (this.ref && typeof this.ref !== "string") {
+      this.ref.switchCamera();
+    }
+  }
+
   render() {
     const { visible } = this.state;
     return (
@@ -222,7 +228,9 @@ class LinguistView extends Component {
                 mute={!this.props.mic}
                 video={this.props.video}
                 ref={ref => {
-                  this.ref = ref;
+                  if (ref) {
+                    this.ref = ref;
+                  }
                 }}
                 onPublishStart={() => {
                   this.startTimer();
@@ -261,6 +269,7 @@ class LinguistView extends Component {
               ref={this.ref}
               closeCall={this.closeLinguist}
               reason={REASON.DONE}
+              switch={this.switchCamera.bind(this)}
               linguist
             />
           </Fade>

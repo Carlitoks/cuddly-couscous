@@ -66,12 +66,11 @@ import InCallManager from "react-native-incall-manager";
 class CustomerView extends Component {
   constructor() {
     super();
+    this.ref;
     this.state = {
       visible: true
     };
   }
-
-  ref: Ref<Publisher>;
 
   componentWillMount() {
     BackgroundStart();
@@ -239,6 +238,12 @@ class CustomerView extends Component {
     });
   };
 
+  switchCamera() {
+    if (typeof this.ref !== "string") {
+      this.ref.switchCamera();
+    }
+  }
+
   render() {
     const { visible } = this.state;
     return (
@@ -296,7 +301,9 @@ class CustomerView extends Component {
                   mute={!this.props.mic}
                   video={this.props.video}
                   ref={ref => {
-                    this.ref = ref;
+                    if (ref) {
+                      this.ref = ref;
+                    }
                   }}
                   onPublishStart={() => {
                     console.log("Publisher started");
@@ -358,6 +365,7 @@ class CustomerView extends Component {
                 ref={this.ref}
                 closeCall={this.closeCall}
                 reason={REASON.DONE}
+                switch={this.switchCamera.bind(this)}
               />
             </Fade>
           </View>
