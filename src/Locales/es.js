@@ -124,6 +124,7 @@ export default (ESP = {
   historyNotFound: "No History found",
   holdToScan: "Hold the device's camera up to the QR code",
   home: "Home",
+  homeSubtitle: "Where are you now?",
   hotel: "Hotel",
   howLongNeedHelp: "How Long Will You Need Assistance?",
   iAgreeTerms: "I agree to the ",

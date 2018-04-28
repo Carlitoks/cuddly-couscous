@@ -307,6 +307,10 @@ export default StyleSheet.create({
     textAlign: "center",
     backgroundColor: "transparent"
   },
+  largeSubtitle: {
+    fontSize: 24,
+    marginBottom: 15
+  },
   subtitle: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: 14,

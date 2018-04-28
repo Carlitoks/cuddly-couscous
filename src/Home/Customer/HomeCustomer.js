@@ -96,9 +96,9 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const { getAllCustomerCalls, userId, token } = this.props;
+    const { getAllCustomerCalls, uuid, token } = this.props;
 
-    getAllCustomerCalls(userId, token)
+    getAllCustomerCalls(uuid, token)
       .then(response => {
         this.props.customerCalls(response);
       })
@@ -319,15 +319,13 @@ class Home extends Component {
 
     const salute =
       preferredName.length > 0
-        ? `${I18n.t("hi")} ${preferredName}!`
-        : `${I18n.t("hi")} ${firstName}!`;
+        ? `${I18n.t("hi")}, ${preferredName}!`
+        : `${I18n.t("hi")}, ${firstName}!`;
 
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <HeaderView
-          headerCenterComponent={
-            <Text style={styles.textName}>{I18n.t("appName")}</Text>
-          }
+          headerCenterComponent={<Text style={styles.textName}>{salute}</Text>}
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
@@ -348,9 +346,8 @@ class Home extends Component {
               viewBox={"0 0 750 80"}
               style={styles.waves}
             />
-            <Text style={styles.subtitle}>{I18n.t("homeSubtitle1")}</Text>
-            <Text style={[styles.subtitle, styles.marginBottom20]}>
-              {I18n.t("homeSubtitle2")}
+            <Text style={[styles.subtitle, styles.largeSubtitle]}>
+              {I18n.t("homeSubtitle")}
             </Text>
             {this.renderCarousel()}
             <Text style={[styles.subtitle, styles.marginBottom10]}>
