@@ -22,7 +22,7 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     marginTop: 38,
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   mainSubtitle: {
     fontFamily: Fonts.primaryLightFont,
@@ -30,7 +30,7 @@ export default StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(30),
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   inputText: {
     fontSize: 20,
@@ -89,11 +89,11 @@ export default StyleSheet.create({
     marginLeft: 10
   },
   containerTransparent: {
-    borderColor: "transparent",
-    backgroundColor: "transparent"
+    borderColor: Colors.transparent,
+    backgroundColor: Colors.transparent
   },
   borderTransparent: {
-    borderColor: "transparent"
+    borderColor: Colors.transparent
   },
   passwordValidationText: {
     fontSize: 15,

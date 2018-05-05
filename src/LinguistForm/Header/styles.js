@@ -27,13 +27,13 @@ export default StyleSheet.create({
     marginBottom: moderateScale(10),
     marginTop: moderateScale(20),
     color: "white",
-    backgroundColor: "transparent" 
+    backgroundColor: Colors.transparent 
   },
   mainSubtitle: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: 18,
     textAlign: "center",
     color: "white",
-    backgroundColor: "transparent" 
+    backgroundColor: Colors.transparent 
   }
 });

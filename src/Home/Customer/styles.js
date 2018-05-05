@@ -55,7 +55,7 @@ export default StyleSheet.create({
     textAlign: "center",
     color: Colors.primaryColor,
     marginTop: scale(35),
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   textCountry: {
     fontSize: 15,
@@ -121,7 +121,7 @@ export default StyleSheet.create({
     width: "90%",
     height: 50,
     borderRadius: 150,
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     elevation: 4
   },
   buttonSchedule: {
@@ -268,7 +268,7 @@ export default StyleSheet.create({
     paddingRight: 0
   },
   listContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     marginTop: 0
   },
   triangle: {
@@ -276,16 +276,16 @@ export default StyleSheet.create({
     marginBottom: 15,
     width: 0,
     height: 0,
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     borderStyle: "solid",
     borderTopWidth: 0,
     borderRightWidth: 12,
     borderBottomWidth: 12,
     borderLeftWidth: 12,
-    borderTopColor: "transparent",
-    borderRightColor: "transparent",
+    borderTopColor: Colors.transparent,
+    borderRightColor: Colors.transparent,
     borderBottomColor: Colors.gradientColorButton.top,
-    borderLeftColor: "transparent",
+    borderLeftColor: Colors.transparent,
     alignSelf: "center"
   },
   mainContainer: {
@@ -298,14 +298,14 @@ export default StyleSheet.create({
     fontSize: 20,
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   titleCallSub: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: 16,
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   largeSubtitle: {
     fontSize: 24,
@@ -313,10 +313,10 @@ export default StyleSheet.create({
   },
   subtitle: {
     fontFamily: Fonts.primaryLightFont,
-    fontSize: 14,
+    fontSize: 18,
     color: Colors.white,
     textAlign: "left",
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     marginLeft: 10
   },
   subTitleCall: {
@@ -324,7 +324,7 @@ export default StyleSheet.create({
     fontSize: 10,
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   bottom: {
     marginTop: 25

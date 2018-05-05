@@ -44,7 +44,7 @@ export default class StaticView extends Component {
                   paddingBottom: 20,
                   paddingTop: 20
                 }}
-                backgroundColor="transparent"
+                backgroundColor={Colors.transparent}
                 leftComponent={
                   <GoBackButton navigation={this.props.navigation} />
                 }

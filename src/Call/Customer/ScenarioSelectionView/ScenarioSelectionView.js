@@ -99,10 +99,13 @@ class CustomScenario extends Component {
           NoWaves
           NoBackground
         >
-          <Image style={styles.image} source={Images[categorySelected]} />
+          <View style={styles.imageContainer}>
+            <Image style={styles.image} source={Images[categorySelected]} />
+          </View>
           <LinearGradient
             colors={[
               Colors.gradientColor.semiTransparent,
+              Colors.gradientColor.bottom,
               Colors.gradientColor.bottom
             ]}
             style={styles.linearGradient}
@@ -125,8 +128,8 @@ class CustomScenario extends Component {
           </ScrollView>
           <Waves
             width={width}
-            height={width * 80 / 750}
-            viewBox={"0 0 750 80"}
+            height={width * 129 / 1175.7}
+            viewBox={"0 0 1175.7 129"}
             style={styles.waves}
           />
           <BottomButton

@@ -61,6 +61,12 @@ const BottomButton = ({
         !!absolute ? styles.absolute : null
       ]}
     >
+      {gradient && (
+        <LinearGradient
+          colors={[Colors.transparent, Colors.white]}
+          style={styles.linearGradientBackground}
+        />
+      )}
       <Button
         borderRadius={50}
         textStyle={[
@@ -96,7 +102,7 @@ const BottomButton = ({
               }
             : null
         }
-        backgroundColor={fill ? "transparent" : Colors.primaryColor}
+        backgroundColor={fill ? Colors.transparent : Colors.primaryColor}
         buttonStyle={[
           styles.buttonContainer,
           whiteDisabled ? styles.whiteBorder : styles.normalBorder,

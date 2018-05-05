@@ -9,8 +9,7 @@ import {
 import {
   asyncUploadAvatar,
   updateView,
-  getProfileAsync,
-  getNativeLang
+  getProfileAsync
 } from "../../Ducks/UserProfileReducer";
 import { View, Text, Image, ScrollView, Switch, Alert } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";

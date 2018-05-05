@@ -93,17 +93,26 @@ class EditNativeLanguageView extends Component {
   }
 
   submit() {
-    const { token, uuid } = this.props;
+    const {
+      token,
+      uuid,
+      updateProfileAsync,
+      updateView,
+      navigation,
+      getNativeLang
+    } = this.props;
     const { formNativeLanguage } = this.state;
     const data = {
       nativeLangCode: formNativeLanguage["3"]
     };
-    this.props.updateProfileAsync(uuid, data, token).then(response => {
+    updateProfileAsync(uuid, data, token).then(response => {
+      const { payload, payload: { nativeLangCode } } = response;
+
       if (response.type !== "networkErrors/error") {
-        this.props.updateView({
-          selectedNativeLanguage: getNativeLang(response.payload.nativeLangCode)
+        updateView({
+          selectedNativeLanguage: getNativeLang(nativeLangCode)
         });
-        this.props.navigation.dispatch({
+        navigation.dispatch({
           type: "back"
         });
       } else {
@@ -166,8 +175,9 @@ class EditNativeLanguageView extends Component {
               this.props.updateSettings({ searchQuery: "" });
               this.submit();
             }}
-            relative
             fill
+            absolute
+            gradient
           />
         </HeaderView>
       </ViewWrapper>
@@ -191,7 +201,8 @@ const mD = {
   clearForm,
   updateForm,
   registrationClearForm,
-  updateView
+  updateView,
+  getNativeLang
 };
 
 // EXPORT DEFAULT HERE AT THE BOTTOM

@@ -40,7 +40,7 @@ export default StyleSheet.create({
   cameraContainer: {
     height: height
   },
-  mainContainer: { flex: 1, backgroundColor: "transparent" },
+  mainContainer: { flex: 1, backgroundColor: Colors.transparent },
   headerContainer: {
     backgroundColor: "rgba(0, 0, 0, 0.3)",
     alignSelf: "flex-start",

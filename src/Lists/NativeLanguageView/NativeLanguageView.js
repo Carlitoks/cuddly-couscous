@@ -198,6 +198,8 @@ class NativeLanguageView extends Component {
             relative
             onPress={() => this.submit()}
             fill
+            absolute
+            gradient
           />
         </HeaderView>
       </ViewWrapper>

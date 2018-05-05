@@ -77,7 +77,7 @@ export default class CallHistoryComponent extends Component {
                   badge={{
                     value: item.createdAt,
                     textStyle: styles.textColor,
-                    containerStyle: { backgroundColor: "transparent" }
+                    containerStyle: { backgroundColor: Colors.transparent }
                   }}
                   onPress={() => {
                     if (!item.chevron)

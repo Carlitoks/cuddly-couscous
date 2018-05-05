@@ -48,21 +48,21 @@ class UserProfileView extends Component {
   componentWillMount() {
     let secondaryLanguages = [];
     if (this.props.linguistProfile) {
-      secondaryLanguages = this.props.linguistProfile.secondaryLanguages.map(
-        lang => {
-          let language = this.getNativeLangCode(lang.code)[0];
+      // secondaryLanguages = this.props.linguistProfile.secondaryLanguages.map(
+      //   lang => {
+      //     let language = this.props.getNativeLang(lang.code)[0];
 
-          language["proficiency"] = PROFICIENCY_LIST.filter(proficiency => {
-            return proficiency.code === lang.proficiency;
-          })[0];
-          language["interpretation"] = LANGUAGE_INTERPRETATION_LIST.filter(
-            interpretation => {
-              return interpretation.code === lang.interpretation;
-            }
-          )[0];
-          return language;
-        }
-      );
+      //     language["proficiency"] = PROFICIENCY_LIST.filter(proficiency => {
+      //       return proficiency.code === lang.proficiency;
+      //     })[0];
+      //     language["interpretation"] = LANGUAGE_INTERPRETATION_LIST.filter(
+      //       interpretation => {
+      //         return interpretation.code === lang.interpretation;
+      //       }
+      //     )[0];
+      //     return language;
+      //   }
+      // );
 
       let areasOfExpertise = [];
       if (this.props.linguistProfile.areasOfExpertise) {
@@ -79,7 +79,9 @@ class UserProfileView extends Component {
       }
     }
     this.props.updateSettings({
-      selectedNativeLanguage: this.getNativeLangCode(this.props.nativeLangCode)
+      selectedNativeLanguage: this.props.getNativeLang(
+        this.props.nativeLangCode
+      )
     });
 
     if (secondaryLanguages) {
@@ -88,14 +90,6 @@ class UserProfileView extends Component {
       });
     }
   }
-
-  getNativeLangCode = code => {
-    return Languages.filter(e => {
-      if (e["3"] === code) {
-        return e;
-      }
-    });
-  };
 
   ShowLinguistOptions = () => {
     return (
@@ -239,7 +233,7 @@ class UserProfileView extends Component {
             contentContainerStyle={styles.contentScrollContainer}
           >
             <Grid style={styles.summaryContainer}>
-              <List containerStyle={{ borderTopWidth: 0 }}>
+              <List containerStyle={styles.listContainer}>
                 {/* Name */}
                 <ListItem
                   containerStyle={styles.listItemContainer}
@@ -318,7 +312,8 @@ const mD = {
   deleteLanguages,
   getProfileAsync,
   linguistUpdate,
-  asyncUploadAvatar
+  asyncUploadAvatar,
+  getNativeLang
 };
 
 export default connect(mS, mD)(UserProfileView);

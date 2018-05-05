@@ -20,7 +20,7 @@ import { bool, func, number, object, string } from "prop-types";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
 import { View, AppState, Text } from "react-native";
 import { Button } from "react-native-elements";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Iphone5 } from "../../Util/Devices";
 import Colors from "../../Themes/Colors";
@@ -91,7 +91,6 @@ class CallButtonToggle extends Component {
         });
         break;
       case "LinguistSpeaker":
-        console.log("Linguist Speaker ", this.props.speakerLinguist);
         if (this.props.speakerLinguist) {
           InCallManager.setForceSpeakerphoneOn(false);
         } else {
@@ -124,14 +123,16 @@ class CallButtonToggle extends Component {
     const { buttonColor, onPress, active } = this.props;
     return (
       <View style={{ flex: 1, alignItems: "center" }}>
-        <Button
+        <Icon.Button
+          name={this.state.iconName}
           borderRadius={100}
           containerViewStyle={{
             borderRadius: 100,
-            opacity: 0.7
+            opacity: 0.7,
+            textAlign: "center"
           }}
           backgroundColor={
-            active ? Colors.enabledColor : Colors.callButtonColor
+            active ? Colors.callButtonColor : Colors.enabledColor
           }
           onPress={() => {
             {
@@ -139,18 +140,17 @@ class CallButtonToggle extends Component {
             }
             this.toggleIcon();
           }}
-          buttonStyle={{
+          style={{
             height: !Iphone5 ? 65 : 55,
             width: !Iphone5 ? 65 : 55,
             justifyContent: "center",
             borderRadius: 100
           }}
-          icon={{
-            name: this.state.iconName,
-            size: !Iphone5 ? 30 : 23,
-            color: "white",
-            buttonStyle: { textAlign: "center", right: 10 }
+          iconStyle={{
+            marginRight: 0
           }}
+          size={!Iphone5 ? 30 : 23}
+          color={"white"}
           textStyle={{ marginLeft: -9.8 }}
         />
       </View>

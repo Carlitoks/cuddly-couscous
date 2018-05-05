@@ -6,11 +6,11 @@ const width = Dimensions.get("window").width;
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     flex: 1
   },
   listContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
 
     marginTop: 0,
     marginBottom: "3%",
@@ -70,16 +70,16 @@ export default StyleSheet.create({
     marginBottom: 15,
     width: 0,
     height: 0,
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     borderStyle: "solid",
     borderTopWidth: 0,
     borderRightWidth: 12,
     borderBottomWidth: 12,
     borderLeftWidth: 12,
-    borderTopColor: "transparent",
-    borderRightColor: "transparent",
+    borderTopColor: Colors.transparent,
+    borderRightColor: Colors.transparent,
     borderBottomColor: Colors.gradientColorButton.top,
-    borderLeftColor: "transparent",
+    borderLeftColor: Colors.transparent,
     alignSelf: "center"
   },
   linearGradient: {
@@ -98,7 +98,7 @@ export default StyleSheet.create({
     position: "absolute",
     right: 0,
     zIndex: 0,
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     color: Colors.gradientColor.bottom,
     fontSize: 28
   },

@@ -57,21 +57,21 @@ export default StyleSheet.create({
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   titleCallSub: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: moderateScale(20),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   subTitleCall: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: moderateScale(20),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   bottom: {
     marginTop: 15

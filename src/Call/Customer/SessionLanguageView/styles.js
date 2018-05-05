@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.greyBackground
   },
   searchContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     margin: 0,
     padding: 0,
     borderTopWidth: 0,
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(22),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     alignSelf: "center"
   },
   subTitleCall: {
@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(18),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   bottom: {
     marginTop: 10
@@ -102,8 +102,8 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: 2,
     paddingRight: 2,
-    marginLeft: 2,
-    marginRight: 2
+    marginLeft: 5,
+    marginRight: 5
   },
   titleContainer: {
     justifyContent: "center",
@@ -120,5 +120,28 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     top: 0,
     width: 200
+  },
+  title: {
+    top: 20,
+    alignSelf: "center"
+  },
+  box: {
+    backgroundColor: Colors.white,
+    height: 100,
+    justifyContent: "center",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.lightGrey
+  },
+  boxText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: Colors.gradientColor.bottom
+  },
+  iconSize: {
+    fontSize: 28
   }
 });

@@ -23,6 +23,11 @@ import {
 } from "../../Ducks/AuthReducer";
 import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
 import { updateForm as updateCustomer } from "../../Ducks/CustomerProfileReducer";
+import {
+  getProfileAsync,
+  updateView,
+  getNativeLang
+} from "../../Ducks/UserProfileReducer";
 
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import InputRegular from "../../Components/InputRegular/InputRegular";
@@ -103,7 +108,12 @@ class LoginView extends Component {
       passwordErrorMessage,
 
       checkRecord,
-      updateCustomer
+      updateCustomer,
+      getProfileAsync,
+      updateView,
+      getNativeLang,
+      uuid,
+      token
     } = this.props;
 
     updateForm({ performingRequest: true });
@@ -112,14 +122,20 @@ class LoginView extends Component {
       registerDevice().then(() => {
         logInAsync(email, password)
           .then(() => {
+            const { getProfileAsync, uuid, token } = this.props;
+            return getProfileAsync(uuid, token);
+          })
+          .then(res => {
+            return this.props.updateView({
+              selectedNativeLanguage: getNativeLang(res.payload.nativeLangCode)
+            });
+          })
+          .then(() => {
             if (!formHasErrors) {
               const record = checkRecord(email);
-
               Keyboard.dismiss();
-
               if (record) {
                 updateCustomer({ userInfo: { id: record.id } });
-
                 Alert.alert(
                   I18n.t("finishOnboarding"),
                   I18n.t("finishOnboardingMessage"),
@@ -133,6 +149,7 @@ class LoginView extends Component {
               } else {
                 navigation.dispatch({ type: "Home" });
               }
+              updateForm({ performingRequest: false });
             } else {
               if (formHasErrors) {
                 displayFormErrors(emailErrorMessage, passwordErrorMessage);
@@ -146,6 +163,7 @@ class LoginView extends Component {
             error.data
               ? displayFormErrors(error.data.errors)
               : displayFormErrors(error);
+            updateForm({ performingRequest: false });
           });
       });
     } else {
@@ -227,8 +245,16 @@ class LoginView extends Component {
             title={I18n.t("signIn")}
             onPress={() => this.submit()}
             bold={true}
-            disabled={!this.props.email || !this.props.password}
-            fill={this.props.email && this.props.password}
+            disabled={
+              this.props.performingRequest ||
+              !this.props.email ||
+              !this.props.password
+            }
+            fill={
+              this.props.performingRequest ||
+              (this.props.email && this.props.password)
+            }
+            loading={this.props.performingRequest}
           />
         </HeaderView>
       </ViewWrapper>
@@ -243,7 +269,9 @@ const mS = state => ({
   passwordErrorMessage: state.login.passwordErrorMessage,
   formHasErrors: state.login.formHasErrors,
   performingRequest: state.login.performingRequest,
-  networkError: state.networkErrors.errors
+  networkError: state.networkErrors.errors,
+  uuid: state.auth.uuid,
+  token: state.auth.token
 });
 
 const mD = {
@@ -253,7 +281,10 @@ const mD = {
   haveSession,
   registerDevice,
   checkRecord,
-  updateCustomer
+  updateCustomer,
+  getProfileAsync,
+  updateView,
+  getNativeLang
 };
 
 export default connect(mS, mD)(LoginView);

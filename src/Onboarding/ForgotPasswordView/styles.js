@@ -26,7 +26,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.primaryLightFont,
     alignSelf: "center",
     width: width,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   Button: {
     backgroundColor: Colors.primaryLightFillColor,
@@ -44,7 +44,7 @@ export default StyleSheet.create({
     padding: 10,
     alignSelf: "center",
     fontFamily: Fonts.primaryBaseFont,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   linearGradient: {
     position: "absolute",
@@ -78,6 +78,6 @@ export default StyleSheet.create({
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   }
 });

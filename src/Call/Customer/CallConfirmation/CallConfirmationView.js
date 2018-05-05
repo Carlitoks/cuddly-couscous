@@ -135,7 +135,7 @@ class CallConfirmationView extends Component {
                 </Text>
                 <TextInput
                   style={styles.textInput}
-                  underlineColorAndroid="transparent"
+                  underlineColorAndroid={Colors.transparent}
                   value={this.props.scenarioNotes}
                   fontStyle={
                     this.props.scenarioNotes.length == 0 ? "italic" : "normal"
@@ -168,14 +168,13 @@ class CallConfirmationView extends Component {
                   <Text
                     style={[
                       styles.regularText,
-                      styles.largeText,
-                      styles.orangeTitle
+                      styles.largeText
                     ]}
                   >
                     {this.props.fromLanguage.name}
                   </Text>
                   <Icon style={styles.centerIcon} name={"compare-arrows"} />
-                  <Text style={[styles.regularText, styles.largeText]}>
+                  <Text style={[styles.regularText, styles.largeText, styles.orangeTitle]}>
                     {this.props.selectedLanguageTo}
                   </Text>
                 </View>

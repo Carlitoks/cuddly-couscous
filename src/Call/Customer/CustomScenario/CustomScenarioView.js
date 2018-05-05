@@ -82,7 +82,7 @@ class CustomScenario extends Component {
             title={I18n.t("continue")}
             onPress={() => {
               Keyboard.dismiss();
-              navigation.dispatch({ type: "CallConfirmationView" });
+              navigation.dispatch({ type: "CallTimeView" });
             }}
             fill
           />

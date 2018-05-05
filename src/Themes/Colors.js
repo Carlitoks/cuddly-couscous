@@ -22,7 +22,7 @@ const colors = {
     bottom: "#F39100"
   },
   carouselImagesGradient: {
-    top: "transparent",
+    top: "rgba(255,255,255,0)",
     bottom: "#fb6a28"
   },
   bottomButtonGradient: {
@@ -74,7 +74,8 @@ const colors = {
   lighterPurple: "#F7F7F7",
   redError: "#ff0000",
   defaultChevron: "#bdc6cf",
-  textDefault: "#5F5F5F"
+  textDefault: "#5F5F5F",
+  transparent: "rgba(255,255,255,0)"
 };
 
 export default colors;

@@ -85,6 +85,7 @@ class ContactingLinguist extends Component {
                 ref={this.ref}
                 closeCall={this.props.closeCall}
                 reason={REASON.CANCEL}
+                switch={this.props.switch}
               />
             </Row>
           </Col>

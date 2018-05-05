@@ -190,7 +190,7 @@ class CustomerView extends Component {
       AsyncCreateSession({
         type: "immediate_virtual",
         matchMethod: "first_available",
-        primaryLangCode: primaryLangCode,
+        primaryLangCode: primaryLangCode[3],
         secundaryLangCode: secundaryLangCode,
         estimatedMinutes: selectedCallTime,
         scenarioID: selectedScenarioId,
@@ -239,7 +239,7 @@ class CustomerView extends Component {
   };
 
   switchCamera() {
-    if (typeof this.ref !== "string") {
+    if (this.ref && typeof this.ref !== "string") {
       this.ref.switchCamera();
     }
   }
@@ -378,6 +378,7 @@ class CustomerView extends Component {
                   navigation={this.props.navigation}
                   callTimeOut={this.callTimeOut}
                   closeCall={this.closeCall}
+                  switch={this.switchCamera.bind(this)}
                 />
               </View>
             )}
@@ -398,7 +399,7 @@ const mS = state => ({
   token: state.auth.token,
   tokboxStatus: state.tokbox.status,
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
-  primaryLangCode: state.contactLinguist.primaryLangCode,
+  primaryLangCode: state.userProfile.selectedNativeLanguage,
   secundaryLangCode: state.contactLinguist.secundaryLangCode,
   customScenarioNote: state.contactLinguist.customScenarioNote,
   selectedCallTime: state.callCustomerSettings.selectedTime,

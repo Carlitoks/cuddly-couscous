@@ -39,9 +39,13 @@ class EditGenderView extends Component {
   componentWillMount() {
     const genders = this.props.GetOptions();
     this.props.updateForm({ selectedGender: this.props.gender });
-    this.setState({
-      genderIndex: findIndex(genders, { value: this.props.gender })
-    });
+
+    const genderIndex =
+      this.props.gender.length === 0
+        ? 2
+        : findIndex(genders, { value: this.props.gender });
+
+    this.setState({ genderIndex });
   }
 
   componentWillUnmount() {

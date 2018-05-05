@@ -89,6 +89,11 @@ export default StyleSheet.create({
     fontWeight: "bold",
     color: Colors.listLabelColor
   },
+  listContainer: {
+    borderTopWidth: 0,
+    marginTop: moderateScale(10),
+    height: moderateScale(400)
+  },
   listItemContainer: {
     minHeight: 60,
     justifyContent: "center"

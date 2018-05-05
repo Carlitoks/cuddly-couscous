@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, Alert } from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { bool, func, string } from "prop-types";
 
 import styles from "./styles";
 
@@ -22,7 +22,6 @@ class SessionControls extends Component {
       speaker,
       mic,
       video,
-      ref,
       closeCall,
       reason,
       linguist
@@ -36,13 +35,13 @@ class SessionControls extends Component {
           toggle={true}
           active={rotate}
           name={linguist ? "LinguistCamera" : "CustomerCamera"}
-          icon="switch-camera"
+          icon="camera-switch"
         />
         <CallButtonToggle
           toggle={true}
-          active={speaker}
+          active={!speaker}
           name={linguist ? "LinguistSpeaker" : "CustomerSpeaker"}
-          icon="volume-up"
+          icon="volume-high"
         />
         <CallButton
           onPress={() => closeCall(reason)}
@@ -54,20 +53,24 @@ class SessionControls extends Component {
           toggle={true}
           active={mic}
           name={linguist ? "LinguistMute" : "CustomerMute"}
-          icon="mic"
+          icon="microphone-off"
         />
         <CallButtonToggle
           toggle={true}
           active={video}
           name={linguist ? "LinguistVideo" : "CustomerVideo"}
-          icon="videocam"
+          icon="video-off"
         />
       </View>
     );
   }
 }
 
-SessionControls.propTypes = {};
+SessionControls.propTypes = {
+  closeCall: func.isRequired,
+  reason: string.isRequired,
+  linguist: bool
+};
 
 const mS = state => {
   const settings = state.userProfile.linguistProfile

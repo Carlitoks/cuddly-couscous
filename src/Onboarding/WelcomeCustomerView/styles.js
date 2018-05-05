@@ -21,7 +21,7 @@ export default StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(5),
     color: Colors.primaryColor,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   mainContainer: {
     flex: 1
@@ -43,12 +43,12 @@ export default StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   subtitle: {
     fontSize: 20,
     color: Colors.primaryColor,
     alignSelf: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   }
 });

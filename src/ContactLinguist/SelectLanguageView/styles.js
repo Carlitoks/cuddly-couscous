@@ -25,14 +25,14 @@ export const styles = StyleSheet.create({
     fontSize: 19,
     color: Colors.primaryColor,
     marginLeft: 50,
-    backgroundColor:"transparent"
+    backgroundColor:Colors.transparent
   },
   secondaryLanguage: {
     fontFamily: Fonts.primaryBaseFont,
     fontSize: 19,
     color: Colors.primaryColor,
     marginRight: 50,
-    backgroundColor:"transparent"
+    backgroundColor:Colors.transparent
   },
   spanish: {
     fontFamily: Fonts.primaryBaseFont,
@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0)" 
   },
   containerSearch: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginTop: moderateScale(10),

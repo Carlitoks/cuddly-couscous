@@ -35,10 +35,10 @@ export default StyleSheet.create({
     alignSelf: "center",
     color: "white",
     fontSize: 20,
-    backgroundColor: "transparent" 
+    backgroundColor: Colors.transparent 
   },
   containerSearch: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     borderTopWidth: 0,
     borderBottomWidth: 0
   },

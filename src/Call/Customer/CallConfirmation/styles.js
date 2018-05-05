@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   titleStyle: {
     fontSize: moderateScale(20),
@@ -111,7 +111,7 @@ export const styles = StyleSheet.create({
     marginLeft: 0,
     borderColor: Colors.white,
     borderWidth: 0,
-    borderBottomColor: "transparent"
+    borderBottomColor: Colors.transparent
   },
   direction: { flexDirection: "column", flex: 1 },
   flexColumn: { flexDirection: "column", justifyContent: "center" },

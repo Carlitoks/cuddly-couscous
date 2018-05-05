@@ -39,7 +39,7 @@ export default StyleSheet.create({
     alignSelf: "center",
     color: Colors.white,
     fontFamily: Fonts.primaryBoldFont,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   image: {
     flex: 1,

@@ -18,7 +18,7 @@ export default StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   containerSearch: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginTop: moderateScale(10),

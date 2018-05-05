@@ -138,7 +138,7 @@ const HeaderView = ({
           <TopViewIOS />
           <Header
             outerContainerStyles={styles.headerOuter}
-            backgroundColor="transparent"
+            backgroundColor={Colors.transparent}
             leftComponent={headerLeftComponent}
             centerComponent={headerCenterComponent}
             rightComponent={headerRightComponent}

@@ -22,7 +22,7 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     marginTop: moderateScale(20),
     color: "white",
-    backgroundColor: "transparent" 
+    backgroundColor: Colors.transparent 
   },
   formText: {
     textAlign: "center",

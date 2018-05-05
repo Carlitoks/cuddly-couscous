@@ -1,9 +1,10 @@
 import { StyleSheet, Platform } from "react-native";
+import { Colors } from "../../Themes";
 
 export default StyleSheet.create({
   topView: {
     width: "100%",
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     ...Platform.select({
       ios: {
         height: 20
@@ -15,7 +16,7 @@ export default StyleSheet.create({
   },
   topViewLarge: {
     width: "100%",
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     ...Platform.select({
       ios: {
         height: 32

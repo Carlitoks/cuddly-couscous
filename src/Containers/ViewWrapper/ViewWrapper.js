@@ -13,6 +13,8 @@ import {
 import Instabug from "instabug-reactnative";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 
+import { Colors } from "../../Themes";
+
 import styles from "./styles";
 
 const ViewWrapper = ({
@@ -46,7 +48,7 @@ const ViewWrapper = ({
       <StatusBar
         barStyle="light-content"
         hidden={false}
-        backgroundColor="transparent"
+        backgroundColor={Colors.transparent}
         translucent={true}
       />
 

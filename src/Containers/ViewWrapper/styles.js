@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "../../Themes";
 
 export default StyleSheet.create({
   modalContainer: {
@@ -10,7 +11,7 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     color: "#fff",
     fontSize: 18
   }

@@ -22,7 +22,7 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     marginTop: 38,
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   containerBottom: {
     backgroundColor: "black",

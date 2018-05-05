@@ -102,7 +102,7 @@ class ResetPasswordView extends Component {
                         borderBottomWidth: 0,
                         height: 60
                       }}
-                      backgroundColor="transparent"
+                      backgroundColor={Colors.transparent}
                     />
                     {/* Reset password */}
                     <Text style={styles.mainTitle}>

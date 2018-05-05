@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, ActivityIndicator, Keyboard, Text } from "react-native";
-import { filter, findIndex } from "lodash";
+import { filter, findIndex, cloneDeep } from "lodash";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
@@ -72,13 +72,13 @@ class SessionLanguageView extends Component {
           .startsWith(this.state.searchQuery.toLowerCase());
       })
       .map(language => {
-        if (language[3] === "eng" || language[3] === "cmn") {
-          language.disabled = false;
-        } else {
-          language.disabled = true;
-        }
+        let languageClone = cloneDeep(language);
 
-        return language;
+        languageClone.disabled = !(
+          language[3] === "eng" || language[3] === "cmn"
+        );
+
+        return languageClone;
       });
   }
 
@@ -130,13 +130,7 @@ class SessionLanguageView extends Component {
             <View
               style={Iphone5 ? styles.titleContainer5 : styles.titleContainer}
             >
-              <Text style={styles.titleCall}>
-                {this.props.nativeLanguage.name}
-              </Text>
-              <Icon style={styles.headerIcon} name={"compare-arrows"} />
-              <Text style={styles.titleCall}>
-                {this.state.selectedLanguage.name}
-              </Text>
+              <Text style={styles.titleCall}>{I18n.t("languages")}</Text>
             </View>
           }
           headerRightComponent={
@@ -146,14 +140,15 @@ class SessionLanguageView extends Component {
                 navigation.dispatch({ type: "Home" });
               }}
             >
-              {I18n.t("cancel")}
+              <Icon style={styles.iconSize} name={"clear"} />
             </Text>
           }
           titleComponent={
-            <View style={styles.bottom}>
-              <Text style={styles.bottomText}>{I18n.t("callTimeTitle")}</Text>
-              <Text style={styles.bottomText}>
-                {I18n.t("callTimeSubtitle")}
+            <View style={[styles.title]}>
+              <Text style={styles.titleCall}>
+                {this.props.nativeLanguage.name}
+                <Icon style={styles.headerIcon} name={"compare-arrows"} />
+                {this.state.selectedLanguage.name}
               </Text>
             </View>
           }
@@ -175,6 +170,11 @@ class SessionLanguageView extends Component {
                 />
               </View>
             )}
+
+            <View style={styles.box}>
+              <Text style={styles.boxText}>{I18n.t("callTimeTitle")}</Text>
+              <Text style={styles.boxText}>{I18n.t("callTimeSubtitle")}</Text>
+            </View>
 
             <ListComponent
               data={this.filterList()}

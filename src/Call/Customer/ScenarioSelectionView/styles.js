@@ -24,10 +24,16 @@ export default StyleSheet.create({
     height: "100%",
     bottom: 0
   },
+  imageContainer: {
+    width,
+    position: "absolute",
+    top: scale(-150) // 95 without scale
+  },
   image: {
     position: "absolute",
-    // flex: 1,
-    height: "100%",
+    resizeMode: "contain",
+    top: 0,
+    width: "100%",
     zIndex: 0
   },
   title: {
@@ -35,7 +41,7 @@ export default StyleSheet.create({
     marginBottom: 10,
     fontSize: 20,
     color: Colors.white,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   waves: {
     position: "absolute",

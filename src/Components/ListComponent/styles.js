@@ -6,14 +6,16 @@ const width = Dimensions.get("window").width;
 
 export default StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: Colors.transparent
   },
   listContainer: {
     marginTop: 0,
     marginBottom: "3%",
     paddingBottom: 0,
     borderTopWidth: 0,
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
+    backgroundColor: Colors.transparent
   },
   textView: {
     flex: 1,
@@ -49,16 +51,16 @@ export default StyleSheet.create({
     marginBottom: 15,
     width: 0,
     height: 0,
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     borderStyle: "solid",
     borderTopWidth: 0,
     borderRightWidth: 12,
     borderBottomWidth: 12,
     borderLeftWidth: 12,
-    borderTopColor: "transparent",
-    borderRightColor: "transparent",
+    borderTopColor: Colors.transparent,
+    borderRightColor: Colors.transparent,
     borderBottomColor: Colors.gradientColorButton.top,
-    borderLeftColor: "transparent",
+    borderLeftColor: Colors.transparent,
     alignSelf: "center"
   },
   linearGradient: {
@@ -76,7 +78,7 @@ export default StyleSheet.create({
     position: "absolute",
     right: 0,
     zIndex: 0,
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     color: Colors.gradientColor.bottom
   },
   disabledItemText: {

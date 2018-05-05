@@ -60,7 +60,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
         dispatch(clearSettings());
         dispatch(clear());
       } else if (reason === REASON.RETRY) {
-        dispatch(clearSettings());
+        dispatch(updateSettings({ verifyCallId: null }));
         dispatch(clear());
         dispatch({ type: "CustomerView" });
       } else if (reason === REASON.TIMEOUT) {

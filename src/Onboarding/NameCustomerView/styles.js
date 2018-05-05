@@ -22,7 +22,7 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     marginTop: 38,
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   inputText: {
     fontSize: 20,
@@ -44,7 +44,7 @@ export default StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(30),
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   containerBottom: {
     backgroundColor: "black",

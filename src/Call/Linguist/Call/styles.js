@@ -26,7 +26,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     paddingTop: 10,
     transform: [{ translate: [0, 0, 1] }]
   },
@@ -34,17 +34,17 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#333333",
     marginBottom: 5,
-    backgroundColor:"transparent"
+    backgroundColor:Colors.transparent
   },
   icon: {
     color: "white",
     paddingTop: 7,
     paddingRight: 9,
-    backgroundColor:"transparent"
+    backgroundColor:Colors.transparent
   },
   text: {
     color: "#ff0000",
-    backgroundColor:"transparent"
+    backgroundColor:Colors.transparent
   },
   smallAvatar: {
     width: 70,
@@ -64,14 +64,14 @@ export default StyleSheet.create({
     color: fontColor,
     textAlign: "center",
     width: "100%",
-    backgroundColor:"transparent"
+    backgroundColor:Colors.transparent
   },
   locationText: {
     fontSize: 15,
     paddingTop: 5,
     fontFamily: fontFamily,
     color: fontColor,
-    backgroundColor:"transparent"
+    backgroundColor:Colors.transparent
   },
   incomingCallText: {
     fontSize: 20,
@@ -81,7 +81,7 @@ export default StyleSheet.create({
     color: fontColor,
     textAlign: "center",
     width: "100%",
-    backgroundColor:"transparent"
+    backgroundColor:Colors.transparent
   },
   background: {
     width: "100%",

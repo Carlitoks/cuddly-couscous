@@ -13,6 +13,11 @@ import {
   checkRecord,
   removeRecord
 } from "../../Ducks/OnboardingRecordReducer";
+import {
+  getProfileAsync,
+  updateView,
+  getNativeLang
+} from "../../Ducks/UserProfileReducer";
 
 import { View, Text, ScrollView, Alert } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -118,14 +123,21 @@ class GenderCustomerView extends Component {
 
         removeRecord();
       })
-      // .then(() => {
-      //   this.props.clearForm();
-      // })
+      .then(() => {
+        const { getProfileAsync, id, token } = this.props;
+        return getProfileAsync(id, token);
+      })
+      .then(res => {
+        return this.props.updateView({
+          selectedNativeLanguage: this.props.getNativeLang(
+            res.payload.nativeLangCode
+          )
+        });
+      })
       .then(() => {
         navigation.dispatch({ type: "WelcomeCustomerView" });
       })
       .catch(error => {
-        console.log(error.response);
         console.log(error.response);
 
         error.response
@@ -231,7 +243,10 @@ const mD = {
   asyncUpdateUser,
   update,
   checkRecord,
-  removeRecord
+  removeRecord,
+  getProfileAsync,
+  updateView,
+  getNativeLang
 };
 
 export default connect(mS, mD)(GenderCustomerView);

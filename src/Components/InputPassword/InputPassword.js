@@ -37,7 +37,7 @@ class InputPassword extends Component {
       <View style={[styles.viewBorder, !!this.props.sec ? styles.secondary : null]}>
         <FormInput
           {...this.props}
-          underlineColorAndroid="transparent"
+          underlineColorAndroid={Colors.transparent}
           autoCorrect={false}
           secureTextEntry={this.state.password}
           inputStyle={styles.formInput}

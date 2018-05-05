@@ -22,7 +22,7 @@ export default StyleSheet.create({
     marginBottom: moderateScale(10),
     marginTop: moderateScale(20),
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   mainSubtitle: {
     fontFamily: Fonts.primaryLightFont,
@@ -30,7 +30,7 @@ export default StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(30),
     color: "white",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   phoneSection: {
     flex: 1,

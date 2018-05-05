@@ -59,7 +59,7 @@ export default StyleSheet.create({
     top: "5%",
     marginLeft: moderateScale(40),
     zIndex: 0,
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     color: Colors.gradientColor.bottom
   },
   regText: {
@@ -76,17 +76,17 @@ export default StyleSheet.create({
     fontSize: moderateScale(24),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   subTitleCall: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: moderateScale(16),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   bottomText: {
-    fontSize: moderateScale(18),
+    fontSize: moderateScale(24),
     color: Colors.primaryColor,
     textAlign: "center",
     fontFamily: Fonts.primaryLightFont,
@@ -99,5 +99,24 @@ export default StyleSheet.create({
   },
   bottom: {
     marginTop: 15
+  },
+  box: {
+    height: 100,
+    backgroundColor: Colors.white,
+    justifyContent: "center",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.lightGrey
+  },
+  boxText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: Colors.gradientColor.bottom
+  },
+  iconSize: {
+    fontSize: 28
   }
 });

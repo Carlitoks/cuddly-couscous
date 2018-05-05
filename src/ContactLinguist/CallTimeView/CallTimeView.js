@@ -74,13 +74,7 @@ class CallTimeView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <View>
-              <Text style={[styles.titleCall]}>
-                {`${I18n.t("callTimeMinutes")} ${
-                  this.props.selectedTime
-                } ${I18n.t("minutes")}`}
-              </Text>
-            </View>
+            <Text style={[styles.titleCall]}>{I18n.t("callTimeMinutes")}</Text>
           }
           headerRightComponent={
             <Text
@@ -89,16 +83,13 @@ class CallTimeView extends Component {
                 navigation.dispatch({ type: "Home" });
               }}
             >
-              {I18n.t("cancel")}
+              <Icon style={styles.iconSize} name={"clear"} />
             </Text>
           }
           titleComponent={
-            <View style={styles.bottom}>
-              <Text style={styles.bottomText}>{I18n.t("callTimeTitle")}</Text>
-              <Text style={styles.bottomText}>
-                {I18n.t("callTimeSubtitle")}
-              </Text>
-            </View>
+            <Text style={[styles.bottom, styles.bottomText]}>
+              {`${this.props.selectedTime} ${I18n.t("minutes")}`}
+            </Text>
           }
         >
           <ScrollView
@@ -106,6 +97,13 @@ class CallTimeView extends Component {
             alwaysBounceVertical={false}
             style={styles.scrollContainer}
           >
+            <View style={styles.box}>
+              <Text
+                style={[styles.mainTitle, styles.buttonText, styles.boxText]}
+              >
+                {I18n.t("callTimeBoxText")}
+              </Text>
+            </View>
             <ListComponent
               data={TIME_OPTIONS}
               selected={this.state.timeIndex}
@@ -125,23 +123,6 @@ class CallTimeView extends Component {
             />
           </ScrollView>
           {/* Next Button */}
-          <View>
-            <Text
-              style={[styles.mainTitle, styles.smallFont, styles.buttonText]}
-            >
-              {`${this.props.selectedTime} ${I18n.t("callTimeButtonText")}`}
-            </Text>
-            <Text
-              style={[
-                styles.mainTitle,
-                styles.smallFont,
-                styles.buttonText,
-                styles.buttonTextSubtitle
-              ]}
-            >
-              {I18n.t("callTimeButtonSubtitle")}
-            </Text>
-          </View>
           <BottomButton
             title={I18n.t("continue")}
             onPress={() => this.submit(navigation)}

@@ -39,7 +39,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     paddingTop: 10,
     transform: [{ translate: [0, 0, 1] }]
   },
@@ -129,7 +129,7 @@ export default StyleSheet.create({
     fontFamily: fontFamily,
     color: fontColor,
     fontSize: 18,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   containerButtons: {
     flex: 1,

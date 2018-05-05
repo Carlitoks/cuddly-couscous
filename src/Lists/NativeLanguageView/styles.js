@@ -7,14 +7,14 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: Colors.greyBackground
+    backgroundColor: Colors.primaryColor
   },
   scrollContainer: {
     flex: 1,
-    backgroundColor: Colors.greyBackground
+    backgroundColor: Colors.primaryColor
   },
   searchContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     margin: 0,
     padding: 0,
     borderTopWidth: 0,
@@ -56,6 +56,6 @@ export default StyleSheet.create({
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   }
 });

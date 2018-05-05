@@ -42,7 +42,7 @@ const InputRegular = ({
     <View style={[styles.viewBorder, !!sec ? styles.secondary : null]}>
       {!!multiline ? (
         <TextInput
-          underlineColorAndroid="transparent"
+          underlineColorAndroid={Colors.transparent}
           style={[
             styles.container,
             styles.multilineContainer,
@@ -63,7 +63,7 @@ const InputRegular = ({
         />
       ) : (
         <FormInput
-          underlineColorAndroid="transparent"
+          underlineColorAndroid={Colors.transparent}
           containerStyle={styles.container}
           placeholder={placeholder}
           autoCorrect={autoCorrect}

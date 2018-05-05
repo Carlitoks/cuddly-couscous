@@ -10,8 +10,7 @@ import {
   asyncUploadAvatar,
   getProfileAsync,
   clearView,
-  updateView,
-  getNativeLang
+  updateView
 } from "../../Ducks/UserProfileReducer";
 import {
   EndCall,
@@ -194,7 +193,7 @@ class Home extends Component {
   checkCallsLength = (component, loader) => {
     const { scenariosList } = this.props;
 
-    return scenariosList && scenariosList.length > 0 ? (
+    return scenariosList ? (
       component
     ) : loader ? (
       <ActivityIndicator size="large" color="#fb6a28" />
@@ -311,6 +310,7 @@ class Home extends Component {
       navigation,
       categories,
       scenarios,
+      scenariosList,
       categoryIndex
     } = this.props;
     const { width, height } = Dimensions.get("window");
@@ -342,8 +342,8 @@ class Home extends Component {
             )}
             <Waves
               width={width}
-              height={width * 80 / 750}
-              viewBox={"0 0 750 80"}
+              height={width * 129 / 1175.7}
+              viewBox={"0 0 1175.7 129"}
               style={styles.waves}
             />
             <Text style={[styles.subtitle, styles.largeSubtitle]}>
@@ -351,6 +351,8 @@ class Home extends Component {
             </Text>
             {this.renderCarousel()}
             <Text style={[styles.subtitle, styles.marginBottom10]}>
+              {(!scenariosList || scenariosList.length === 0) &&
+                `${I18n.t("no")} `}
               {I18n.t("recentInteractions")}
             </Text>
             <ScrollView

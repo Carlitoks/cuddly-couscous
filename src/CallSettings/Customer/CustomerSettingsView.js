@@ -104,7 +104,7 @@ class CustomerSettingsView extends Component {
                   <TopViewIOS/> 
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
-                    backgroundColor="transparent"
+                    backgroundColor={Colors.transparent}
                     leftComponent={
                       <GoBackButton navigation={this.props.navigation} />
                     }

@@ -10,14 +10,14 @@ export default StyleSheet.create({
     marginTop: verticalScale(60),
     marginBottom: verticalScale(10),
     position: "relative",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   logoX: {
     borderColor: Colors.primaryAltFontColor,
     marginTop: 70,
     marginBottom: verticalScale(10),
     position: "relative",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   logoImage: {
     width: 250,
@@ -104,7 +104,7 @@ export default StyleSheet.create({
     color: Colors.fontColor,
     marginBottom: 15,
     textDecorationLine: "underline",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   buttonText: {
     fontFamily: Fonts.primaryBoldFont,

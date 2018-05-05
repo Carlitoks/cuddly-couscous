@@ -1,5 +1,8 @@
 import { changeStatus } from "./ProfileLinguistReducer";
 import { Sessions } from "../Api";
+
+import { networkError } from "./NetworkErrorsReducer";
+
 // Actions
 export const ACTIONS = {
   CLEAR: "rateCall/clear",
@@ -84,14 +87,16 @@ export const submitRateCall = (
   RateInformation,
   sessionID,
   token
-) => dispatch => {
+) => (dispatch, getState) => {
+  const { userProfile } = getState();
+
   RateInformation = {
     ...RateInformation,
     negativeFlags: WhatCouldBetter,
     positiveFlags: WhatWasGood,
     comment: ""
   };
-  dispatch(changeStatus(true));
+  userProfile.linguistProfile && dispatch(changeStatus(true));
   return Sessions.RatingSession(RateInformation, sessionID, token)
     .then(response => {
       return response;

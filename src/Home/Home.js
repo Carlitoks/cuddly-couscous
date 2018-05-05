@@ -6,36 +6,17 @@ import { View } from "react-native";
 import HomeCustomer from "./Customer/HomeCustomer";
 import HomeLinguist from "./Linguist/HomeLinguist";
 import LoginView from "../Onboarding/LoginView/LoginView";
-import {
-  getProfileAsync,
-  updateView,
-  getNativeLang
-} from "../Ducks/UserProfileReducer";
 import PushNotifications from "../Util/PushNotification";
 
 import { getGeolocationCoords } from "../Util/Helpers";
 
 class Home extends Component {
   componentWillMount() {
-    const {
-      isLoggedIn,
-      navigation,
-      uuid,
-      token,
-      updateView,
-      nativeLangCode,
-      getProfileAsync
-    } = this.props;
+    const { isLoggedIn, navigation, uuid, token, nativeLangCode } = this.props;
     PushNotifications.getNotificationsBackground();
 
     if (!isLoggedIn) {
       navigation.dispatch({ type: "LoginView" });
-    } else {
-      getProfileAsync(uuid, token).then(res => {
-        updateView({
-          selectedNativeLanguage: getNativeLang(res.payload.nativeLangCode)
-        });
-      });
     }
   }
 
@@ -60,9 +41,6 @@ const mS = state => ({
   nativeLangCode: state.userProfile.nativeLangCode
 });
 
-const mD = {
-  getProfileAsync,
-  updateView
-};
+const mD = {};
 
 export default connect(mS, mD)(Home);

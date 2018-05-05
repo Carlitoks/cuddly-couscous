@@ -64,6 +64,12 @@ const BottomButton = ({
           !!relative ? styles.relative : null
         ]}
       >
+        {gradient && (
+          <LinearGradient
+            colors={[Colors.white, Colors.transparent]}
+            style={styles.linearGradientBackground}
+          />
+        )}
         <Button
           borderRadius={50}
           textStyle={[
@@ -72,9 +78,7 @@ const BottomButton = ({
             disabled
               ? loading
                 ? styles.transparent
-                : whiteDisabled
-                  ? styles.textWhiteDisabled
-                  : styles.textDisabled
+                : whiteDisabled ? styles.textWhiteDisabled : styles.textDisabled
               : null,
             fill || whiteText ? styles.white : null
           ]}
@@ -95,13 +99,11 @@ const BottomButton = ({
                   size: 25,
                   color: fill
                     ? Colors.primaryColor
-                    : color
-                      ? color
-                      : Colors.gradientColorButton.top
+                    : color ? color : Colors.gradientColorButton.top
                 }
               : null
           }
-          backgroundColor={fill ? "transparent" : Colors.primaryColor}
+          backgroundColor={fill ? Colors.transparent : Colors.primaryColor}
           buttonStyle={[
             styles.buttonContainer,
             whiteDisabled ? styles.whiteBorder : styles.normalBorder,
@@ -109,9 +111,7 @@ const BottomButton = ({
             long ? styles.long : null,
             fill ? styles.fillBtn : null,
             disabled
-              ? whiteDisabled
-                ? styles.disabledWhiteBtn
-                : styles.disabledBtn
+              ? whiteDisabled ? styles.disabledWhiteBtn : styles.disabledBtn
               : styles.enabledBtn,
             negative ? styles.negative : null,
             color ? { borderColor: color } : null

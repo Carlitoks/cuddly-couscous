@@ -95,7 +95,7 @@ class AssistanceView extends Component {
                   {/* Header - Navigation */}
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 60 }}
-                    backgroundColor="transparent"
+                    backgroundColor={Colors.transparent}
                     leftComponent={
                       <GoBackButton navigation={this.props.navigation} />
                     }

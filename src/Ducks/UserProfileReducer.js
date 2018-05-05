@@ -32,7 +32,7 @@ export const asyncUploadAvatar = (id, image, token) => dispatch => {
     .catch(error => dispatch(networkError(error)));
 };
 
-export const getNativeLang = code => {
+export const getNativeLang = code => (dispatch, getState) => {
   return Languages.find(e => {
     if (e["3"] === code) {
       return e;

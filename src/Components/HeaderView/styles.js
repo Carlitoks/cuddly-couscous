@@ -32,7 +32,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     textAlign: "center",
     fontFamily: Fonts.primaryLightFont,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   mainTitle: {
     fontFamily: Fonts.primaryLightFont,
@@ -40,7 +40,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     marginTop: moderateScale(10),
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   subtitle: {
     fontFamily: Fonts.primaryLightFont,
@@ -48,10 +48,10 @@ export default StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(20),
     color: Colors.primaryColor,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   containerSearch: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     marginTop: moderateScale(10),
@@ -85,7 +85,7 @@ export default StyleSheet.create({
     marginLeft: scale(35),
     flexDirection: "row",
     alignSelf: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   avatarTitleBold: {
     fontSize: 25,
@@ -106,7 +106,7 @@ export default StyleSheet.create({
     fontSize: 12,
     color: "black",
     fontFamily: Fonts.primaryLightFont,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   starsContainer: {
     marginTop: moderateScale(-25),
@@ -128,7 +128,7 @@ export default StyleSheet.create({
     alignSelf: "flex-start",
     justifyContent: "center",
     marginRight: scale(0),
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   avatarTitleContainer: {
     justifyContent: "center",
@@ -238,7 +238,7 @@ export default StyleSheet.create({
     width: "90%",
     height: 50,
     borderRadius: 150,
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     ...Platform.select({
       android: {
         elevation: 4
@@ -272,7 +272,7 @@ export default StyleSheet.create({
     fontSize: 17,
     color: "gray",
     alignItems: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   callNumber: {
     fontSize: 20,

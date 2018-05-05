@@ -19,7 +19,7 @@ export default StyleSheet.create({
     marginBottom: 40,
     marginTop: moderateScale(20),
     color: "white",
-    backgroundColor: "transparent" 
+    backgroundColor: Colors.transparent 
   },
   linearGradient: {
     position: "absolute",
@@ -36,7 +36,7 @@ export default StyleSheet.create({
   },
   sectionTitle: {
     paddingLeft: 10,
-    backgroundColor: "transparent" 
+    backgroundColor: Colors.transparent 
   },
   marginBottom20: {
     marginBottom: 20

@@ -58,7 +58,7 @@ import styles from "./styles";
           />
           <TextInput
             ref={(input) => this.input = input}
-            underlineColorAndroid="transparent"
+            underlineColorAndroid={Colors.transparent}
             placeholder={!!this.props.placeholder ? this.props.placeholder : I18n.t("search")}
             onChangeText={this.props.onChangeText}
             value={this.props.value}

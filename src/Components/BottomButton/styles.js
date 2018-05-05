@@ -10,7 +10,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: 22,
-    paddingTop: 22
+    backgroundColor: Colors.transparent
   },
   buttonContainer: {
     width: width * 0.5,
@@ -18,7 +18,8 @@ export default StyleSheet.create({
     borderRadius: 50,
     justifyContent: "center",
     paddingTop: 8,
-    paddingBottom: 8
+    paddingBottom: 8,
+    backgroundColor: "blue"
   },
   whiteBorder: {
     borderWidth: 0.8
@@ -27,7 +28,7 @@ export default StyleSheet.create({
     borderWidth: 2
   },
   fillBtn: {
-    borderColor: "transparent"
+    borderColor: Colors.transparent
   },
   disabledBtn: {
     borderColor: Colors.disabledColor
@@ -64,10 +65,10 @@ export default StyleSheet.create({
     backgroundColor: Colors.primaryColor
   },
   transparent: {
-    color: "transparent"
+    color: Colors.transparent
   },
   transparentBackground: {
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   linearGradient: {
     width: width * 0.5,
@@ -101,17 +102,15 @@ export default StyleSheet.create({
   },
   spinner: {
     flex: 1,
-    position: "absolute"
+    position: "absolute",
+    bottom: 24
   },
   transparent: {
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   linearGradientBackground: {
     position: "absolute",
     width: "100%",
     height: "100%"
-  },
-  spaceBottom: {
-    marginBottom: 15
   }
 });

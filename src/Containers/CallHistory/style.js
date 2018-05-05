@@ -23,7 +23,7 @@ export default StyleSheet.create({
     fontSize: 12
   },
   tabStyle: {
-    backgroundColor: "transparent",
+    backgroundColor: Colors.transparent,
     borderWidth: 1,
     borderColor: Colors.primaryColor
   },
@@ -52,7 +52,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     textAlign: "center",
     fontFamily: Fonts.primaryLightFont,
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   mainTitle: {
     fontFamily: Fonts.primaryLightFont,
@@ -60,13 +60,13 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     marginTop: moderateScale(10),
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   },
   titleCall: {
     fontFamily: Fonts.primaryLightFont,
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: "transparent"
+    backgroundColor: Colors.transparent
   }
 });
