@@ -54,12 +54,12 @@ export default StyleSheet.create({
     height: moderateScale(100)
   },
   textQR: {
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     color: Colors.fontColor,
     fontSize: 15
   },
   textBecome: {
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     color: Colors.fontColor,
     fontSize: moderateScale(21),
     marginTop: moderateScale(15),
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   textBecomeX: {
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     color: Colors.fontColor,
     fontSize: 15,
     marginBottom: 15,
@@ -75,14 +75,14 @@ export default StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   textLanguageCommand: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     color: Colors.fontColor,
     fontSize: moderateScale(30),
     alignSelf: "center",
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   textCenter: {
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     color: Colors.gray,
     justifyContent: "center",
     alignItems: "center",
@@ -107,7 +107,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent
   },
   buttonText: {
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     fontSize: 15,
     color: Colors.primaryAltFontColor
   },

@@ -27,7 +27,7 @@ export default StyleSheet.create({
     alignSelf: "flex-start"
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 24,
     textAlign: "center",
     marginTop: moderateScale(20),

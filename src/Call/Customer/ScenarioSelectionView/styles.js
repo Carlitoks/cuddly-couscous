@@ -37,7 +37,7 @@ export default StyleSheet.create({
     zIndex: 0
   },
   title: {
-    marginLeft: 10,
+    marginLeft: 16,
     marginBottom: 10,
     fontSize: 20,
     color: Colors.white,

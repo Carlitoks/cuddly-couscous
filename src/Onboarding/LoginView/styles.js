@@ -23,7 +23,7 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
@@ -56,7 +56,7 @@ export default StyleSheet.create({
   },
   signInText: {
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     textAlign: "center",
     alignSelf: "center"
   },
@@ -64,7 +64,7 @@ export default StyleSheet.create({
     marginTop: moderateScale(20)
   },
   titleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",

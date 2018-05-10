@@ -21,7 +21,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     textAlign: "center",
     alignSelf: "center"
   },
@@ -29,7 +29,7 @@ export default StyleSheet.create({
     fontSize: 20,
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: "90%"
   },
@@ -59,7 +59,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     marginLeft: 30,
     marginRight: 30,
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     fontSize: scale(35),
     textAlign: "center"
   }

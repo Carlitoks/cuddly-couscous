@@ -16,7 +16,7 @@ export default StyleSheet.create({
     height: "100%"
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 24,
     textAlign: "center",
     marginBottom: moderateScale(5),

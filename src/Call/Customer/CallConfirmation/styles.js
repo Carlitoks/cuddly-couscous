@@ -14,11 +14,10 @@ export const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     alignSelf: "center",
-    paddingBottom: 19,
     width: "100%"
   },
   titleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",
@@ -30,10 +29,6 @@ export const styles = StyleSheet.create({
     color: Colors.listLabelColor,
     paddingBottom: 5
   },
-  headerButtonCancel: {
-    fontSize: moderateScale(20),
-    color: Colors.primaryColor
-  },
   audioBox: {
     backgroundColor: Colors.lightPurple,
     borderRadius: 10,
@@ -44,7 +39,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row"
   },
   audioBoxActive: {
-    backgroundColor: "#401674",
+    backgroundColor: "#5E57B2",
     borderRadius: 10,
     flex: 0.5,
     margin: 10,
@@ -58,9 +53,11 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(20)
   },
   textAudioInactive: {
-    color: "#401674",
+    color: "#5E57B2",
     fontWeight: "normal",
-    fontSize: moderateScale(20)
+    fontFamily: Fonts.LightFont,
+    fontSize: moderateScale(20),
+    opacity: 0.4
   },
   firstLanguage: {
     flexDirection: "row",
@@ -131,19 +128,19 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(20)
   },
   centerIcon: {
-    fontSize: moderateScale(24),
+    marginTop: 4,
     paddingLeft: 6,
     paddingRight: 6,
     marginLeft: 6,
     marginRight: 6
   },
   extraMarginRight: {
-    marginLeft: 6,
-    marginRight: 15
+    marginLeft: 7,
+    marginRight: 25
   },
   extraMarginLeft: {
-    marginLeft: 15,
-    marginRight: 6
+    marginLeft: 25,
+    marginRight: 7
   },
   iconContainer: {
     justifyContent: "center",

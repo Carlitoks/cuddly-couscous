@@ -7,18 +7,22 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
 
 import GoBackButton from "../../../Components/GoBackButton/GoBackButton";
+import Close from "../../../Components/Close/Close";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import ListComponent from "../../../Components/ListComponent/ListComponent";
 import SearchBar from "../../../Components/SearchBar/SearchBar";
+import LanguageSelection from "../../../Components/LanguageSelection/LanguageSelection";
 
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
 import { Iphone5 } from "../../../Util/Devices";
 import { displayFormErrors, previousView } from "../../../Util/Helpers";
+import { moderateScale } from "../../../Util/Scaling";
 import I18n from "../../../I18n/I18n";
 import { Colors } from "../../../Themes";
 import languages from "../../../Config/Languages";
 import { styles } from "./styles";
+import { SUPPORTED_LANGS } from "../../../Util/Constants";
 
 class SessionLanguageView extends Component {
   constructor(props) {
@@ -52,10 +56,23 @@ class SessionLanguageView extends Component {
 
     const index = findIndex(languages, language => language[3] === langString);
 
+    const userNativeLangIsSupported =
+      SUPPORTED_LANGS.indexOf(userProfileNativeLangCode) >= 0;
+
+    const primaryLangCode = userNativeLangIsSupported
+      ? userProfileNativeLangCode
+      : "eng";
+
+    const selectedLanguageFromIndex = findIndex(
+      languages,
+      language => language[3] === primaryLangCode
+    );
+
     updateSettings({
-      primaryLangCode: userProfileNativeLangCode,
+      primaryLangCode,
       secundaryLangCode: languages[index][3],
-      selectedLanguage: languages[index]["name"]
+      selectedLanguage: languages[index]["name"],
+      selectedLanguageFrom: languages[selectedLanguageFromIndex]["name"]
     });
 
     this.setState({
@@ -65,6 +82,7 @@ class SessionLanguageView extends Component {
   }
 
   filterList() {
+    const { userProfileNativeLangCode } = this.props;
     return languages
       .filter(language => {
         return language.name
@@ -74,9 +92,10 @@ class SessionLanguageView extends Component {
       .map(language => {
         let languageClone = cloneDeep(language);
 
-        languageClone.disabled = !(
-          language[3] === "eng" || language[3] === "cmn"
-        );
+        languageClone.disabled =
+          userProfileNativeLangCode === "cmn"
+            ? !(language[3] === "eng")
+            : !(language[3] === "cmn");
 
         return languageClone;
       });
@@ -134,23 +153,18 @@ class SessionLanguageView extends Component {
             </View>
           }
           headerRightComponent={
-            <Text
-              style={styles.headerButtonCancel}
-              onPress={() => {
+            <Close
+              action={() => {
                 navigation.dispatch({ type: "Home" });
               }}
-            >
-              <Icon style={styles.iconSize} name={"clear"} />
-            </Text>
+            />
           }
           titleComponent={
-            <View style={[styles.title]}>
-              <Text style={styles.titleCall}>
-                {this.props.nativeLanguage.name}
-                <Icon style={styles.headerIcon} name={"compare-arrows"} />
-                {this.state.selectedLanguage.name}
-              </Text>
-            </View>
+            <LanguageSelection
+              firstLanguage={this.props.nativeLanguage.name}
+              secondLanguage={this.state.selectedLanguage.name}
+              header
+            />
           }
         >
           <View style={styles.scrollContainer}>
@@ -185,6 +199,7 @@ class SessionLanguageView extends Component {
               gradient
               scrollable
               leftText
+              noFlex
               initial={this.state.selectedIndex}
             />
           </View>
@@ -209,7 +224,8 @@ const mS = state => ({
   primaryLangCode: state.contactLinguist.primaryLangCode,
   secundaryLangCode: state.contactLinguist.secundaryLangCode,
   routes: state.nav.routes[0].routes[0].routes,
-  nativeLanguage: state.userProfile.selectedNativeLanguage
+  nativeLanguage: state.userProfile.selectedNativeLanguage,
+  selectedLanguageFrom: state.contactLinguist.selectedLanguageFrom
 });
 
 // MAP DISPATCH TO PROPS HERE

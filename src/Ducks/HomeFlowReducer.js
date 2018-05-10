@@ -57,7 +57,8 @@ const initialState = {
   listItemSelected: -1,
   categorySelected: "",
   selectedScenarioIndex: -1,
-  scenariosList: null
+  scenariosList: null,
+  lastSelectedTile: -1
 };
 
 // Reducer

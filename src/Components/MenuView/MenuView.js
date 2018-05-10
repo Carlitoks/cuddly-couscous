@@ -11,6 +11,8 @@ import {
   updateView
 } from "../../Ducks/UserProfileReducer";
 
+import { clearSettings as clearHomeFlow } from "../../Ducks/HomeFlowReducer";
+
 import { logOutAsync } from "../../Ducks/AuthReducer";
 
 import {
@@ -214,7 +216,9 @@ class MenuView extends Component {
                 },
                 {
                   text: I18n.t("yes"),
-                  onPress: () => this.props.logOutAsync()
+                  onPress: () => {
+                    this.props.logOutAsync();
+                  }
                 }
               ]);
             }}
@@ -271,7 +275,8 @@ const mD = {
   clearView,
   updateView,
   getProfileAsync,
-  logOutAsync
+  logOutAsync,
+  clearHomeFlow
 };
 
 export default connect(mS, mD)(MenuView);

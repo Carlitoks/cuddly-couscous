@@ -44,13 +44,14 @@ export default StyleSheet.create({
     borderRadius: 60
   },
   textName: {
-    fontFamily: Fonts.primaryLightFont,
-    fontSize: 24,
+    fontFamily: Fonts.LightFont,
+    fontSize: 18,
+    fontWeight: "500",
     textAlign: "center",
     color: Colors.primaryColor
   },
   titleComponent: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 18,
     textAlign: "center",
     color: Colors.primaryColor,
@@ -141,7 +142,7 @@ export default StyleSheet.create({
   buttonText: {
     fontSize: 16,
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     alignItems: "center",
     fontWeight: "bold"
   },
@@ -152,7 +153,7 @@ export default StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   userName: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     color: Colors.primaryColor,
     fontSize: scale(45),
     textAlign: "center"
@@ -235,12 +236,13 @@ export default StyleSheet.create({
   badgeText: {
     fontSize: 12,
     color: "black",
-    fontFamily: Fonts.primaryLightFont
+    fontFamily: Fonts.LightFont
   },
   title: {
+    marginTop: 15,
     fontSize: moderateScale(30),
     color: "gray",
-    fontFamily: Fonts.primaryBaseFont
+    fontFamily: Fonts.BaseFont
   },
   wrapperContainer: {
     backgroundColor: "white",
@@ -294,33 +296,50 @@ export default StyleSheet.create({
     // flex: 1
   },
   titleCall: {
-    fontFamily: Fonts.primaryLightFont,
-    fontSize: 20,
+    fontFamily: Fonts.LightFont,
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: Colors.transparent
   },
-  titleCallSub: {
-    fontFamily: Fonts.primaryLightFont,
-    fontSize: 16,
+  titleCallEvent: {
+    fontSize: 14
+  },
+  titleCallOrganization: {
+    fontSize: 16
+  },
+  subtitleCallContainer: {
+    margin: 16
+  },
+  subtitleCall: {
+    marginBottom: 5,
+    fontSize: 26,
+    fontFamily: Fonts.LightFont,
     color: Colors.primaryColor,
-    textAlign: "center",
     backgroundColor: Colors.transparent
   },
   largeSubtitle: {
-    fontSize: 24,
+    fontSize: 22,
     marginBottom: 15
   },
   subtitle: {
-    fontFamily: Fonts.primaryLightFont,
-    fontSize: 18,
+    fontFamily: Fonts.LightFont,
+    fontSize: 17,
     color: Colors.white,
     textAlign: "left",
     backgroundColor: Colors.transparent,
-    marginLeft: 10
+    marginLeft: 16
+  },
+  smallsubtitle: {
+    fontFamily: Fonts.LightFont,
+    fontStyle: "italic",
+    fontSize: 12,
+    color: Colors.white,
+    textAlign: "left",
+    backgroundColor: Colors.transparent,
+    marginLeft: 16
   },
   subTitleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 10,
     color: Colors.primaryColor,
     textAlign: "center",
@@ -333,7 +352,7 @@ export default StyleSheet.create({
     fontSize: moderateScale(18),
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
@@ -347,5 +366,7 @@ export default StyleSheet.create({
   waves: {
     position: "absolute",
     bottom: 0
-  }
+  },
+  scrollView: { height: "15%" },
+  carousel: { marginTop: "5%" }
 });

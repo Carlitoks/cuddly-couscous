@@ -9,7 +9,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.lightPurple
   },
   selectedText: {
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     fontWeight: "bold",
     color: Colors.gradientColor.bottom
   },
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     fontSize: 24,
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
@@ -43,7 +43,7 @@ export default StyleSheet.create({
   scrollContainer: {
     flex: 1,
     height: "100%",
-    backgroundColor: "white"
+    backgroundColor: Colors.white
   },
   icon: {
     display: "none",
@@ -64,22 +64,18 @@ export default StyleSheet.create({
   },
   regText: {
     padding: 3,
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     fontSize: 16
   },
-  headerButtonCancel: {
-    fontSize: moderateScale(20),
-    color: Colors.primaryColor
-  },
   titleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(24),
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: Colors.transparent
   },
   subTitleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(16),
     color: Colors.primaryColor,
     textAlign: "center",
@@ -89,7 +85,7 @@ export default StyleSheet.create({
     fontSize: moderateScale(24),
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
@@ -113,8 +109,9 @@ export default StyleSheet.create({
   },
   boxText: {
     fontSize: 14,
-    fontWeight: "bold",
-    color: Colors.gradientColor.bottom
+    fontWeight: "500",
+    fontFamily: Fonts.BaseFont,
+    color: Colors.gradientColor.top
   },
   iconSize: {
     fontSize: 28

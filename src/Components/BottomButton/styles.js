@@ -9,11 +9,12 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 22,
+    paddingBottom: 40,
     backgroundColor: Colors.transparent
   },
   buttonContainer: {
-    width: width * 0.5,
+    height: 60,
+    width: width * 0.7,
     borderColor: Colors.gradientColorButton.top,
     borderRadius: 50,
     justifyContent: "center",
@@ -37,26 +38,28 @@ export default StyleSheet.create({
     borderColor: Colors.white
   },
   enabledBtn: {
-    backgroundColor: Colors.gradientColorButton.top,
+    backgroundColor: Colors.gradientColorButton.bottom,
     borderColor: Colors.white
   },
   text: {
-    fontSize: 16,
-    fontFamily: Fonts.primaryBaseFont,
+    fontSize: 20,
+    fontFamily: Fonts.BoldFont,
     color: Colors.gradientColorButton.top
   },
   textBold: {
-    fontSize: 16,
-    fontFamily: Fonts.primaryBoldFont,
+    fontSize: 20,
+    fontFamily: Fonts.BoldFont,
     color: Colors.gradientColorButton.top
   },
   textDisabled: {
-    fontSize: 16,
-    color: Colors.disabledColor
+    fontSize: 20,
+    color: Colors.disabledColor,
+    opacity: 0.5
   },
   textWhiteDisabled: {
-    fontSize: 16,
-    color: Colors.white
+    fontSize: 20,
+    color: Colors.white,
+    opacity: 0.5
   },
   white: {
     color: Colors.primaryColor
@@ -110,6 +113,7 @@ export default StyleSheet.create({
   },
   linearGradientBackground: {
     position: "absolute",
+    bottom: 0,
     width: "100%",
     height: "100%"
   }

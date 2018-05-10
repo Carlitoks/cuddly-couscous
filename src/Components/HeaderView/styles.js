@@ -31,11 +31,11 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     backgroundColor: Colors.transparent
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 26,
     color: Colors.primaryColor,
     marginTop: moderateScale(10),
@@ -43,7 +43,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent
   },
   subtitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 20,
     textAlign: "center",
     marginBottom: moderateScale(20),
@@ -105,7 +105,7 @@ export default StyleSheet.create({
   badgeText: {
     fontSize: 12,
     color: "black",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     backgroundColor: Colors.transparent
   },
   starsContainer: {
@@ -122,7 +122,7 @@ export default StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   userName: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     color: Colors.primaryColor,
     fontSize: scale(45),
     alignSelf: "flex-start",
@@ -165,7 +165,7 @@ export default StyleSheet.create({
   },
   statusText: {
     fontSize: 20,
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     color: Colors.primaryColor,
     marginLeft: moderateScale(15),
     backgroundColor: "rgba(255, 255, 255, 0)"
@@ -175,7 +175,7 @@ export default StyleSheet.create({
     right: 5
   },
   tabTextStyle: {
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     color: Colors.primaryLightFillColor,
     fontSize: 12
   },

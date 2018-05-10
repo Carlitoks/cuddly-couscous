@@ -23,7 +23,7 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: width,
     backgroundColor: Colors.transparent
@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     textAlign: "center",
     alignSelf: "center"
   },
@@ -43,7 +43,7 @@ export default StyleSheet.create({
     color: Colors.primaryAltFontColor,
     padding: 10,
     alignSelf: "center",
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     backgroundColor: Colors.transparent
   },
   linearGradient: {
@@ -71,10 +71,10 @@ export default StyleSheet.create({
     color: Colors.black,
     padding: 10,
     alignSelf: "center",
-    fontFamily: Fonts.primaryBaseFont
+    fontFamily: Fonts.BaseFont
   },
   titleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",

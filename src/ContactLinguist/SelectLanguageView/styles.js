@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     width: width
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 24,
     textAlign: "center",
     marginBottom: moderateScale(15),
@@ -21,25 +21,25 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   primaryLanguage: {
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     fontSize: 19,
     color: Colors.primaryColor,
     marginLeft: 50,
-    backgroundColor:Colors.transparent
+    backgroundColor: Colors.transparent
   },
   secondaryLanguage: {
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     fontSize: 19,
     color: Colors.primaryColor,
     marginRight: 50,
-    backgroundColor:Colors.transparent
+    backgroundColor: Colors.transparent
   },
   spanish: {
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     fontSize: 19,
     color: Colors.primaryColor,
     marginRight: 50,
-    backgroundColor: "rgba(255, 255, 255, 0)" 
+    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   containerSearch: {
     backgroundColor: Colors.transparent,
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.BoldFont
   },
   linearGradient: {
     position: "absolute",
@@ -78,8 +78,7 @@ export const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderBottomWidth: 0
   },
-  iconChange:
-  {  backgroundColor: "rgba(255, 255, 255, 0)" },
+  iconChange: { backgroundColor: "rgba(255, 255, 255, 0)" },
   languages: {
     flex: 1,
     marginTop: 20,

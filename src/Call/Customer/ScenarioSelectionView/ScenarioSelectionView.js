@@ -78,6 +78,16 @@ class CustomScenario extends Component {
     return selectedScenarioIndex === -1;
   };
 
+  handleScroll = event => {
+    const scrolledY = event.nativeEvent.contentOffset.y;
+
+    if (scrolledY > 20) {
+      this.setState({ showNavbarTitle: true });
+    } else {
+      this.setState({ showNavbarTitle: false });
+    }
+  };
+
   render() {
     const {
       navigation,
@@ -105,12 +115,17 @@ class CustomScenario extends Component {
           <LinearGradient
             colors={[
               Colors.gradientColor.semiTransparent,
-              Colors.gradientColor.bottom,
+              Colors.gradientColor.top,
               Colors.gradientColor.bottom
             ]}
             style={styles.linearGradient}
           />
-          <ScrollView style={styles.mainContainer}>
+          <ScrollView
+            style={styles.mainContainer}
+            onScroll={this.handleScroll}
+            bounces={false}
+            alwaysBounceVertical={false}
+          >
             <Text style={styles.title}>{CATEGORIES[categorySelected]}</Text>
 
             {scenariosList && (

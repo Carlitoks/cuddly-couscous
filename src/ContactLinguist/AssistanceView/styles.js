@@ -9,7 +9,7 @@ export default StyleSheet.create({
     width: width
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 24,
     textAlign: "center",
     marginBottom: moderateScale(15),
@@ -63,7 +63,7 @@ export default StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.BoldFont
   },
   containerContent: {
     flex: 1,
@@ -72,7 +72,7 @@ export default StyleSheet.create({
   },
   textChooseBelow: {
     color: "gray",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "flex-start",
     marginTop: moderateScale(25),
     marginLeft: moderateScale(15),

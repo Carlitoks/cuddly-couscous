@@ -119,7 +119,7 @@ class CustomerSettingsView extends Component {
               <View>
                 <FormLabel
                   labelStyle={styles.listSelectionTitle}
-                  fontFamily={Fonts.primaryBaseFont}
+                  fontFamily={Fonts.BaseFont}
                 >
                   {I18n.t("videoAssistance")}
                 </FormLabel>
@@ -191,7 +191,7 @@ class CustomerSettingsView extends Component {
               <View>
                 <FormLabel
                   labelStyle={styles.listSelectionTitle}
-                  fontFamily={Fonts.primaryBaseFont}
+                  fontFamily={Fonts.BaseFont}
                 >
                   {I18n.t("genderPreferenceLinguist")}
                 </FormLabel>

@@ -6,7 +6,8 @@ const width = Dimensions.get("window").width;
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    paddingTop: 15,
+    height: 60,
     backgroundColor: Colors.transparent
   },
   listContainer: {
@@ -34,17 +35,17 @@ export default StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     padding: 3,
-    fontFamily: Fonts.primaryBaseFont,
-    fontSize: 16
+    fontFamily: Fonts.BaseFont,
+    fontSize: 18
   },
   leftText: {
     textAlign: "left",
     justifyContent: "center"
   },
   selectedText: {
-    fontFamily: Fonts.primaryBoldFont,
-    fontWeight: "bold",
-    color: Colors.gradientColor.bottom
+    fontFamily: Fonts.BoldFont,
+    fontWeight: "500",
+    color: Colors.gradientColor.top
   },
   triangle: {
     marginTop: -15,
@@ -75,11 +76,11 @@ export default StyleSheet.create({
     zIndex: 0
   },
   iconSelected: {
+    alignSelf: "center",
     position: "absolute",
-    right: 0,
+    right: 5,
     zIndex: 0,
-    backgroundColor: Colors.transparent,
-    color: Colors.gradientColor.bottom
+    backgroundColor: Colors.transparent
   },
   disabledItemText: {
     color: Colors.lightGrey

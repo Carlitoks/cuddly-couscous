@@ -14,20 +14,20 @@ const CarouselEntry = ({ data, mapper, onPress }) => {
   const title = mapper ? mapper(data) : data;
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={styles.sliderInnerContainer}
-      onPress={onPress}
-    >
+    <View style={styles.carouselItemWrapper}>
       <Text style={styles.slideItemTextContainer}>{title}</Text>
-
-      <Image
-        style={[styles.image, styles.roundedCorners]}
-        source={Images[data]}
-        resizeMode="contain"
-        borderRadius={10}
-      />
-    </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.sliderInnerContainer}
+        onPress={onPress}
+      >
+        <Image
+          style={[styles.image, styles.roundedCorners]}
+          source={Images[data]}
+          borderRadius={3}
+        />
+      </TouchableOpacity>
+    </View>
   );
 };
 

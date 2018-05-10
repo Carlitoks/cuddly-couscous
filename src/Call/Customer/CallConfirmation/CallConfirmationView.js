@@ -33,16 +33,20 @@ import { styles } from "./styles";
 import { Images, Colors } from "../../../Themes";
 import LinearGradient from "react-native-linear-gradient";
 import GoBackButton from "../../../Components/GoBackButton/GoBackButton";
+import Close from "../../../Components/Close/Close";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
+import LanguageSelection from "../../../Components/LanguageSelection/LanguageSelection";
 import { CATEGORIES } from "../../../Util/Constants";
 import { Iphone5 } from "../../../Util/Devices";
 import languages from "../../../Config/Languages";
+import { TranslationArrows, Checkmark } from "../../../SVG";
 
 import {
   setPermission,
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
+import { moderateScale } from "../../../Util/Scaling";
 
 class CallConfirmationView extends Component {
   carouselTitleMapper = title => {
@@ -98,15 +102,12 @@ class CallConfirmationView extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerRightComponent={
-            <Text
-              style={styles.headerButtonCancel}
-              onPress={() => {
+            <Close
+              action={() => {
                 navigation.dispatch({ type: "Home" });
                 this.props.updateSettings({ customScenarioNote: "" });
               }}
-            >
-              <Icon style={styles.iconSize} name={"clear"} />
-            </Text>
+            />
           }
           headerCenterComponent={
             <Text style={styles.titleCall}>{I18n.t("confirmAndConnect")}</Text>
@@ -163,22 +164,10 @@ class CallConfirmationView extends Component {
               }}
               style={styles.time}
             >
-              <View style={styles.flexColumn}>
-                <View style={styles.languagesContainer}>
-                  <Text
-                    style={[
-                      styles.regularText,
-                      styles.largeText
-                    ]}
-                  >
-                    {this.props.fromLanguage.name}
-                  </Text>
-                  <Icon style={styles.centerIcon} name={"compare-arrows"} />
-                  <Text style={[styles.regularText, styles.largeText, styles.orangeTitle]}>
-                    {this.props.selectedLanguageTo}
-                  </Text>
-                </View>
-              </View>
+              <LanguageSelection
+                firstLanguage={this.props.fromLanguage.name}
+                secondLanguage={this.props.selectedLanguageTo}
+              />
               <View style={styles.iconAlign}>
                 {allowSecondaryLangSelection && (
                   <Icon
@@ -245,10 +234,10 @@ class CallConfirmationView extends Component {
                   <View style={[styles.justifyCenter, styles.roundBox]}>
                     <View style={styles.iconContainer}>
                       {this.props.video && (
-                        <Icon
-                          name="check"
+                        <Checkmark
+                          width={moderateScale(21)}
+                          height={moderateScale(21)}
                           color={Colors.white}
-                          style={styles.iconSize}
                         />
                       )}
                     </View>
@@ -284,10 +273,10 @@ class CallConfirmationView extends Component {
                   <View style={[styles.justifyCenter, styles.roundBox]}>
                     <View style={styles.iconContainer}>
                       {!this.props.video && (
-                        <Icon
-                          name="check"
+                        <Checkmark
+                          width={moderateScale(20)}
+                          height={moderateScale(20)}
                           color={Colors.white}
-                          style={styles.iconSize}
                         />
                       )}
                     </View>
@@ -317,15 +306,14 @@ class CallConfirmationView extends Component {
                         : "11111111-1111-1111-1111-111111111126"
                   });
                   this.props.cleanSelected();
-                  this.props.clearEvents();
+                  // this.props.clearEvents();
                   this.props.clearPromoCode();
                   navigation.dispatch({ type: "CustomerView" });
                 }}
-                title={I18n.t("connectNow").toUpperCase()}
-                long
+                title={I18n.t("connectNow")}
                 fill
-                bottom={true}
                 relative
+                absolute
               />
             </View>
           </View>

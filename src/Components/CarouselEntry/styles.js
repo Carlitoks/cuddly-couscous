@@ -16,19 +16,22 @@ const slideWidth = wp(70);
 const itemHorizontalMargin = wp(2);
 
 export const sliderWidth = viewportWidth;
-export const itemWidth = slideWidth + itemHorizontalMargin * 2;
+export const itemWidth = 266;
+export const itemMargin = 16;
+export const itemHeight = 220;
 
 const entryBorderRadius = 8;
 
 export default StyleSheet.create({
   sliderInnerContainer: {
     width: itemWidth,
-    height: itemWidth,
+    height: itemHeight,
     marginBottom: 10
   },
   slideItemTextContainer: {
-    marginLeft: 12,
-    fontSize: 20,
+    fontFamily: Fonts.LightFont,
+    marginBottom: 10,
+    fontSize: 22,
     color: Colors.white
   },
   slideItemText: {
@@ -38,18 +41,24 @@ export default StyleSheet.create({
     zIndex: 0,
     alignSelf: "center",
     color: Colors.white,
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     backgroundColor: Colors.transparent
+  },
+  carouselItemWrapper: {
+    margin: itemMargin,
+    height: itemHeight,
+    width: itemWidth
   },
   image: {
     flex: 1,
     height: undefined,
-    width: undefined
+    width: undefined,
+    resizeMode: "cover"
   },
   roundedCorners: {
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5
+    borderTopLeftRadius: 3,
+    borderTopRightRadius: 3,
+    borderBottomLeftRadius: 3,
+    borderBottomRightRadius: 3
   }
 });

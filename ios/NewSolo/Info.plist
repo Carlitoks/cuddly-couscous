@@ -89,9 +89,9 @@
 		<string>OpenSans-Bold.ttf</string>
 		<string>OpenSans-Light.ttf</string>
 		<string>OpenSans-Regular.ttf</string>
-		<string>SF-Pro-Display-Bold.otf</string>
-		<string>SF-Pro-Display-Light.otf</string>
-		<string>SF-Pro-Display-Regular.otf</string>
+		<string>SFProDisplay-Bold.otf</string>
+		<string>SFProDisplay-Light.otf</string>
+		<string>SFProDisplay-Regular.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   badgeText: {
     fontSize: 12,
     color: "black",
-    fontFamily: Fonts.primaryLightFont
+    fontFamily: Fonts.LightFont
   },
   starsContainer: {
     marginTop: 10,

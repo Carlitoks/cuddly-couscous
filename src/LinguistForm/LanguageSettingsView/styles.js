@@ -13,7 +13,7 @@ export default StyleSheet.create({
     height: 60
   },
   windowTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 24,
     textAlign: "center",
     marginBottom: 40,

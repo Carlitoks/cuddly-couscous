@@ -33,7 +33,7 @@ export default StyleSheet.create({
   },
   title: {
     color: Colors.primaryColor,
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 20
   },
   containerTitles: {

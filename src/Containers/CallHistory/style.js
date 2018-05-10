@@ -10,7 +10,7 @@ export default StyleSheet.create({
     width: width
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 24,
     textAlign: "center",
     marginBottom: moderateScale(20),
@@ -18,7 +18,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor
   },
   tabTextStyle: {
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     color: Colors.primaryLightFillColor,
     fontSize: 12
   },
@@ -51,11 +51,11 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     backgroundColor: Colors.transparent
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 26,
     color: Colors.primaryColor,
     marginTop: moderateScale(10),
@@ -63,7 +63,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent
   },
   titleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",

@@ -5,6 +5,8 @@ export const EMAIL_REGEX =
 
 export const USER_NAME = "([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*";
 
+export const SUPPORTED_LANGS = ["eng", "cmn"];
+
 export const LANG_CODES = new Map([
   ["eng", "English"],
   ["spa", "Spanish"],

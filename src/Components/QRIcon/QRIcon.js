@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Images } from "../../Themes";
+import {QR} from "../../SVG";
 
 import styles from "./styles";
 
@@ -11,7 +12,7 @@ const QRIcon = ({ navigation }) => {
       onPress={() => navigation.dispatch({ type: "ScanScreenView" })}
     >
       <View style={styles.buttonGrid}>
-        <Image style={styles.scanQRImage} source={Images.scan_qr_code} />
+        <QR width={20} height={20} />
       </View>
     </TouchableOpacity>
   );

@@ -10,7 +10,7 @@ export default StyleSheet.create({
     textAlign: "center",
     fontSize: 22,
     color: Colors.primaryColor,
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.BoldFont
   },
   linearGradient: {
     position: "absolute",

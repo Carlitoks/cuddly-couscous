@@ -6,11 +6,7 @@ const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   buttonGrid: {
-    alignItems: "center"
-  },
-  scanQRImage: {
-    width: 25,
-    height: 25,
+    alignItems: "center",
     marginRight: scale(15)
   }
 });

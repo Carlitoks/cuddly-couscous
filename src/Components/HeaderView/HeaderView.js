@@ -103,7 +103,7 @@ const HeaderView = ({
               !!avatarSource || !!switchOnChange || history
                 ? null
                 : !!title || !!titleComponent
-                  ? 145
+                  ? 125
                   : 85
           }}
         >

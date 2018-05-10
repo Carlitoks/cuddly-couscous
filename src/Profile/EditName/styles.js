@@ -16,7 +16,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.white
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 24,
     textAlign: "center",
     marginBottom: moderateScale(50),
@@ -38,7 +38,7 @@ export default StyleSheet.create({
     marginTop: 10
   },
   mainSubtitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 18,
     textAlign: "center",
     marginBottom: moderateScale(30),
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     color: Colors.linguistFormText
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
     textAlign: "center",
     marginBottom: moderateScale(50),

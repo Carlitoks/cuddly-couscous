@@ -8,6 +8,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
+import Close from "../../Components/Close/Close";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
@@ -77,14 +78,9 @@ class CallTimeView extends Component {
             <Text style={[styles.titleCall]}>{I18n.t("callTimeMinutes")}</Text>
           }
           headerRightComponent={
-            <Text
-              style={styles.headerButtonCancel}
-              onPress={() => {
-                navigation.dispatch({ type: "Home" });
-              }}
-            >
-              <Icon style={styles.iconSize} name={"clear"} />
-            </Text>
+            <Close action={() => {
+              navigation.dispatch({ type: "Home" });
+            }}/>
           }
           titleComponent={
             <Text style={[styles.bottom, styles.bottomText]}>
@@ -94,17 +90,20 @@ class CallTimeView extends Component {
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}
+            bounces={false}
             alwaysBounceVertical={false}
             style={styles.scrollContainer}
           >
             <View style={styles.box}>
-              <Text
-                style={[styles.mainTitle, styles.buttonText, styles.boxText]}
-              >
+              <Text style={[styles.mainTitle, styles.boxText]}>
+                {I18n.t("celebrateWithUs")}
+              </Text>
+              <Text style={[styles.mainTitle, styles.boxText]}>
                 {I18n.t("callTimeBoxText")}
               </Text>
             </View>
             <ListComponent
+              customContainerStyle={{ marginBottom: 150 }}
               data={TIME_OPTIONS}
               selected={this.state.timeIndex}
               titleProperty={"duration"}
@@ -128,6 +127,8 @@ class CallTimeView extends Component {
             onPress={() => this.submit(navigation)}
             fill
             bold={true}
+            absolute
+            gradient
           />
         </HeaderView>
       </ViewWrapper>

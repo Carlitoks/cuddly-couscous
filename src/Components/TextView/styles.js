@@ -12,6 +12,6 @@ export default StyleSheet.create({
     marginBottom: 10,
     textAlign: "center",
     fontSize: 16,
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.BoldFont
   }
 });

@@ -5,7 +5,7 @@ const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   nextText: {
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     color: Colors.primaryColor,
     fontSize: 16
   },

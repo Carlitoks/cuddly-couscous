@@ -3,9 +3,9 @@ const fonts = {
   Real object
   */
   titleBoldFont: "Fontin-Regular",
-  BaseFont: "SF-Pro-Display-Regular",
-  LightFont: "SF-Pro-Display-Light",
-  BoldFont: "SF-Pro-Display-Bold"
+  BaseFont: "SFProDisplay-Regular",
+  LightFont: "SFProDisplay-Light",
+  BoldFont: "SFProDisplay-Bold"
 };
 
 export default fonts;

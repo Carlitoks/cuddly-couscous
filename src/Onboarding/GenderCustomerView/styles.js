@@ -16,7 +16,7 @@ export default StyleSheet.create({
     backgroundColor: "white"
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
     textAlign: "center",
     marginBottom: moderateScale(50),
@@ -52,7 +52,10 @@ export default StyleSheet.create({
     alignItems: "center",
     flexWrap: "wrap",
     marginLeft: 18,
-    marginRight: 18
+    marginRight: 18,
+  },
+  spaceBetween: {
+    paddingTop: 14
   },
   textCenter: {
     textAlign: "center",

@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     marginRight: 15,
     backgroundColor: Colors.searchBackground,
     color: Colors.black,
-    fontFamily: Fonts.primaryBaseFont
+    fontFamily: Fonts.BaseFont
   },
   searchIcon: {
     fontSize: 17,
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     zIndex: 10
   },
   titleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(22),
     color: Colors.primaryColor,
     textAlign: "center",
@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
     alignSelf: "center"
   },
   subTitleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(18),
     color: Colors.primaryColor,
     textAlign: "center",
@@ -73,17 +73,13 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   smallFont: {
     fontSize: 16
-  },
-  headerButtonCancel: {
-    fontSize: moderateScale(20),
-    color: Colors.primaryColor
   },
   bottom: {
     marginTop: 15
@@ -92,7 +88,7 @@ export const styles = StyleSheet.create({
     fontSize: moderateScale(18),
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"
@@ -113,7 +109,7 @@ export const styles = StyleSheet.create({
     top: 0,
     width: 250
   },
-  titleContainer5: {
+  titleContainer: {
     justifyContent: "center",
     display: "flex",
     flexDirection: "row",
@@ -139,7 +135,7 @@ export const styles = StyleSheet.create({
   boxText: {
     fontSize: 14,
     fontWeight: "bold",
-    color: Colors.gradientColor.bottom
+    color: Colors.gradientColor.top
   },
   iconSize: {
     fontSize: 28

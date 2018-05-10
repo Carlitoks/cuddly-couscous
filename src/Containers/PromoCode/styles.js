@@ -21,7 +21,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.white
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 24,
     textAlign: "center",
     marginBottom: moderateScale(50),
@@ -53,21 +53,21 @@ export default StyleSheet.create({
     marginTop: 30
   },
   titleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: Colors.transparent
   },
   titleCallSub: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(20),
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: Colors.transparent
   },
   subTitleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(20),
     color: Colors.primaryColor,
     textAlign: "center",
@@ -80,7 +80,7 @@ export default StyleSheet.create({
     fontSize: moderateScale(18),
     color: Colors.primaryColor,
     textAlign: "center",
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: width,
     backgroundColor: "rgba(255, 255, 255, 0)"

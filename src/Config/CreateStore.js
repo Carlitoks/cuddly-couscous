@@ -42,7 +42,8 @@ const getStore = () =>
           [settings]: store.getState()[settings],
           profileLinguist: store.getState().profileLinguist,
           pushNotification: store.getState().pushNotification,
-          onboardingRecord: store.getState().onboardingRecord
+          onboardingRecord: store.getState().onboardingRecord,
+          homeFlow: store.getState().homeFlow
         }).then(() => {
           // console.log("STATE PERSISTED")
         });

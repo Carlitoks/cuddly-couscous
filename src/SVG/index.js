@@ -10,6 +10,12 @@ import Noise from "./noise";
 import Professionalism from "./professionalism";
 import VoiceClarity from "./voiceClarity";
 import WaitTime from "./waitTime";
+import TranslationArrows from "./translationArrows";
+import CloseIcon from "./closeIcon";
+import Checkmark from "./checkmark";
+import QR from "./qr";
+import NavMenu from "./navMenu";
+import Chevron from "./chevron";
 
 export {
   Audio,
@@ -23,5 +29,11 @@ export {
   Noise,
   Professionalism,
   VoiceClarity,
-  WaitTime
+  WaitTime,
+  TranslationArrows,
+  CloseIcon,
+  Checkmark,
+  QR,
+  NavMenu,
+  Chevron
 };

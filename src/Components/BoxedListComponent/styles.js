@@ -6,6 +6,8 @@ const width = Dimensions.get("window").width;
 
 export default StyleSheet.create({
   container: {
+    marginLeft: 6,
+    marginRight: 6,
     backgroundColor: Colors.transparent,
     flex: 1
   },
@@ -13,7 +15,6 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent,
 
     marginTop: 0,
-    marginBottom: "3%",
     paddingBottom: 0,
     borderTopWidth: 0,
     borderBottomWidth: 0
@@ -26,21 +27,26 @@ export default StyleSheet.create({
     justifyContent: "center",
     width: "94%",
     backgroundColor: Colors.lightPurple,
-    height: 48,
+    minHeight: 60,
     marginBottom: 10,
 
-    borderRadius: 5
+    borderRadius: 2
   },
   textBetweenView: {
     borderTopWidth: 0
   },
-  regText: {
+  mainLine: {
     paddingLeft: 12,
     width: "100%",
-    fontFamily: Fonts.primaryBaseFont,
-    fontSize: 16
+    fontFamily: Fonts.BaseFont
+  },
+  regText: {
+    fontSize: 18
   },
   subtitle: {
+    width: "100%",
+    textAlign: "left",
+    paddingLeft: 12,
     fontSize: 12,
     fontWeight: "bold"
   },
@@ -60,10 +66,10 @@ export default StyleSheet.create({
     backgroundColor: Colors.white
   },
   selectedText: {
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     fontWeight: "bold",
     color: Colors.gradientColor.bottom,
-    borderRadius: 5
+    borderRadius: 2
   },
   triangle: {
     marginTop: -15,
@@ -101,6 +107,13 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent,
     color: Colors.gradientColor.bottom,
     fontSize: 28
+  },
+  iconSelectedRow: {
+    alignSelf: "center",
+    position: "absolute",
+    right: 15,
+    zIndex: 0,
+    backgroundColor: Colors.transparent
   },
   disabledItemView: {
     // backgroundColor: Colors.lightGrey

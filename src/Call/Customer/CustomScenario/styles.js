@@ -26,7 +26,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor
   },
   title: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: 24,
     textAlign: "center",
     marginBottom: moderateScale(10),
@@ -55,7 +55,7 @@ export default StyleSheet.create({
     paddingBottom: moderateScale(35)
   },
   titleCall: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
     color: Colors.primaryColor,
     textAlign: "center",

@@ -28,7 +28,7 @@ export default StyleSheet.create({
     marginRight: 15,
     backgroundColor: Colors.searchBackground,
     color: Colors.black,
-    fontFamily: Fonts.primaryBaseFont
+    fontFamily: Fonts.BaseFont
   },
   searchIcon: {
     fontSize: 17,
@@ -52,7 +52,7 @@ export default StyleSheet.create({
     zIndex: 10
   },
   mainTitle: {
-    fontFamily: Fonts.primaryLightFont,
+    fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
     textAlign: "center",
     marginBottom: moderateScale(50),

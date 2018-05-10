@@ -1,4 +1,3 @@
-
 import { StyleSheet, Dimensions } from "react-native";
 import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
 import { Colors, Fonts } from "../../Themes";
@@ -17,14 +16,14 @@ export default StyleSheet.create({
   },
   myProfileText: {
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     textAlign: "center",
     alignSelf: "center"
   },
   title: {
     fontSize: 16,
     color: Colors.primaryColor,
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.BoldFont
   },
   linearGradient: {
     position: "absolute",
@@ -35,7 +34,7 @@ export default StyleSheet.create({
   buttonText: {
     textAlign: "center",
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     fontSize: 16,
     fontWeight: "bold"
   },

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import { FormInput } from "react-native-elements";
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import { NavMenu } from "../../SVG";
 
 import styles from "./styles";
 import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
@@ -35,15 +35,16 @@ class ShowMenuButton extends Component {
 
   render() {
     return (
-      <Col style={styles.container}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.container}
+        onPress={() => this.props.navigation.dispatch({ type: "DrawerOpen" })}>
         {/* Show Menu Button */}
-        <Icon
-          style={styles.Icon}
-          name="menu"
-          size={moderateScale(40)}
-          onPress={() => this.props.navigation.dispatch({ type: "DrawerOpen" })}
+        <NavMenu
+          width={30}
+          height={20}
         />
-      </Col>
+      </TouchableOpacity>
     );
   }
 }

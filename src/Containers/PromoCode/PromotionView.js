@@ -36,6 +36,15 @@ import { REASON, CATEGORIES } from "../../Util/Constants";
 import { sliderWidth, itemWidth } from "../../Components/CarouselEntry/styles";
 
 class PromotionView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      itemSelected: -1,
+      showNavbarTitle: false
+    };
+  }
+
   componentWillMount() {
     let categories = [];
     const { scenarios } = this.props;
@@ -104,12 +113,14 @@ class PromotionView extends Component {
             selectedScenarios: [scenariosFiltered[index]]
           });
 
-          navigation.dispatch({ type: "CallConfirmationView" });
+          this.setState({
+            itemSelected: index
+          });
         }}
         leftText
         multiple={false}
-        selected={listItemSelected}
-        other={{ other: true, title: "Other" }}
+        selected={this.state.itemSelected}
+        other={{ other: true, title: "Something else" }}
         otherOnPress={() => {
           navigation.dispatch({ type: "CustomScenarioView" });
         }}
@@ -156,12 +167,28 @@ class PromotionView extends Component {
 
   navigate = this.props.navigation.navigate;
 
+  handleScroll = event => {
+    const scrolledY = event.nativeEvent.contentOffset.y;
+
+    if (scrolledY > 20) {
+      this.setState({ showNavbarTitle: true });
+    } else {
+      this.setState({ showNavbarTitle: false });
+    }
+  };
+
   render() {
-    const { navigation, categories, scenarios, categoryIndex } = this.props;
+    const {
+      navigation,
+      categories,
+      scenarios,
+      categoryIndex,
+      organization,
+      eventName
+    } = this.props;
     const { width, height } = Dimensions.get("window");
 
     const categoryName = categories[categoryIndex];
-
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <HeaderView
@@ -169,7 +196,16 @@ class PromotionView extends Component {
             <ShowMenuButton navigation={this.props.navigation} />
           }
           headerCenterComponent={
-            <Text style={[styles.titleCallSub]}>{this.props.eventName}</Text>
+            this.state.showNavbarTitle ? (
+              <View>
+                <Text style={[styles.titleCall, styles.titleCallOrganization]}>
+                  {organization.Name}
+                </Text>
+                <Text style={[styles.titleCall, styles.titleCallEvent]}>
+                  {eventName}
+                </Text>
+              </View>
+            ) : null
           }
           NoWaves
         >
@@ -180,18 +216,33 @@ class PromotionView extends Component {
             />
             <Waves
               width={width}
-              height={width * 80 / 750}
-              viewBox={"0 0 750 80"}
+              height={width * 129 / 1175.7}
+              viewBox={"0 0 1175.7 129"}
               style={styles.waves}
             />
-            {this.renderCarousel()}
             <ScrollView
               automaticallyAdjustContentInsets={true}
               style={styles.scrollContainer}
               alwaysBounceVertical={false}
+              onScroll={this.handleScroll}
             >
+              <View style={styles.subtitleCallContainer}>
+                <Text style={[styles.subtitleCall]}>{organization.Name}</Text>
+                <Text style={[styles.subtitleCall]}>{eventName}</Text>
+              </View>
               {this.renderList()}
             </ScrollView>
+            {/* Next Button */}
+            <BottomButton
+              title={I18n.t("continue")}
+              disabled={this.state.itemSelected === -1}
+              fill={!(this.state.itemSelected === -1)}
+              onPress={() => {
+                navigation.dispatch({ type: "CallConfirmationView" });
+              }}
+              absolute
+              whiteDisabled
+            />
           </View>
         </HeaderView>
       </ViewWrapper>

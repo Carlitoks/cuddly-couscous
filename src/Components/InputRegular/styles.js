@@ -22,7 +22,7 @@ export default StyleSheet.create({
   },
   formInput: {
     color: Colors.black,
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     paddingTop: 5,
     margin: 0,
     fontSize: 16,
@@ -30,7 +30,7 @@ export default StyleSheet.create({
   },
   formInputMultiline: {
     color: Colors.black,
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     paddingTop: 12,
     margin: 0,
     fontSize: 16,

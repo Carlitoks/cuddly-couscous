@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FlatList, View, Text, Dimensions, Keyboard } from "react-native";
 import { List, ListItem } from "react-native-elements";
 import { Colors } from "../../Themes";
+import { Checkmark, Chevron } from "../../SVG";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -183,7 +184,7 @@ class ListComponent extends Component {
     return !!item.other;
   };
 
-  getItemLayout = (data, index) => ({ length: 38, offset: 38 * index, index });
+  getItemLayout = (data, index) => ({ length: 60, offset: 60 * index, index });
 
   render() {
     return (
@@ -210,9 +211,10 @@ class ListComponent extends Component {
                 styles.textView,
                 index > 0 ? styles.textBetweenView : null
               ]}
-              containerStyle={
+              containerStyle={[
+                styles.container,
                 this.isSelected(index) ? styles.selectedBackground : null
-              }
+              ]}
               title={
                 <Text
                   style={[
@@ -239,18 +241,9 @@ class ListComponent extends Component {
                 this.props.rightTitle ? styles.paddingContainer : null
               }
               rightIcon={
-                item.other || this.isSelected(index) ? (
-                  <Icon
-                    pointerEvents={"none"}
-                    style={
-                      item.other || this.isSelected(index)
-                        ? styles.iconSelected
-                        : styles.icon
-                    }
-                    name={item.other ? "chevron-right" : "check"}
-                    size={moderateScale(30)}
-                    color={Colors.defaultChevron}
-                  />
+                this.isSelected(index) ? (<View style={styles.iconSelected}>
+                <Checkmark width={moderateScale(21)} height={moderateScale(21)} color={Colors.gradientColor.top} />
+                  </View>
                 ) : (
                   <Icon />
                 )

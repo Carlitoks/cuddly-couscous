@@ -190,7 +190,10 @@ class CustomerView extends Component {
       AsyncCreateSession({
         type: "immediate_virtual",
         matchMethod: "first_available",
-        primaryLangCode: primaryLangCode[3],
+        primaryLangCode:
+          primaryLangCode[3] !== "eng" && primaryLangCode[3] !== "cmn"
+            ? "eng"
+            : primaryLangCode[3],
         secundaryLangCode: secundaryLangCode,
         estimatedMinutes: selectedCallTime,
         scenarioID: selectedScenarioId,

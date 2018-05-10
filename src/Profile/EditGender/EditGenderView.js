@@ -138,7 +138,7 @@ class EditGenderView extends Component {
               noFlex
             />
             <View style={styles.mainContainterText}>
-              <Text style={styles.textCenter}>{I18n.t("genderNotice")}</Text>
+              <Text style={[styles.textCenter, styles.spaceBetween]}>{I18n.t("genderNotice")}</Text>
             </View>
           </ScrollView>
         </HeaderView>

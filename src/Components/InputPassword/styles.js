@@ -30,7 +30,7 @@ export default StyleSheet.create({
   },
   formInput: {
     color: Colors.black,
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     paddingTop: 5,
     paddingLeft: 0,
     margin: 0,

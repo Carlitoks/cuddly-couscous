@@ -27,6 +27,6 @@ export default (styles = StyleSheet.create({
   title: {
     textAlign: "center",
     alignSelf: "center",
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.BoldFont
   }
 }));

@@ -12,6 +12,7 @@ import { Colors } from "../../Themes";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
+import { Checkmark } from "../../SVG";
 import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
 
 import styles from "./styles";
@@ -55,7 +56,6 @@ class BoxedListComponent extends Component {
   }
 
   componentWillMount() {
-    !!this.props.other ? this.props.data.push(this.props.other) : null;
     this.keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       this._keyboardDidShow.bind(this)
@@ -78,12 +78,7 @@ class BoxedListComponent extends Component {
   }
 
   componentDidUpdate() {
-    const { other, data } = this.props;
-    const dataContainsOther = data.filter(item => item.other).length == 0;
-
-    if (other && dataContainsOther) {
-      data.push(other);
-    }
+    const { data } = this.props;
 
     this.scrollToIndex(true);
   }
@@ -184,11 +179,26 @@ class BoxedListComponent extends Component {
     }
   };
 
-  isOther = item => {
-    return !!item.other;
-  };
-
   getItemLayout = (data, index) => ({ length: 38, offset: 38 * index, index });
+
+  setIcon = (chevron, index) =>
+    chevron ? (
+      <Icon
+        pointerEvents={"none"}
+        style={this.isSelected(index) ? styles.iconSelected : styles.icon}
+        name={"chevron-right"}
+        size={moderateScale(40)}
+        color={Colors.defaultChevron}
+      />
+    ) : (
+      <View style={styles.iconSelectedRow}>
+        <Checkmark
+          width={moderateScale(21)}
+          height={moderateScale(21)}
+          color={Colors.gradientColor.bottom}
+        />
+      </View>
+    );
 
   render() {
     return (
@@ -205,6 +215,8 @@ class BoxedListComponent extends Component {
           <FlatList
             keyboardShouldPersistTaps={"always"}
             scrollEventThrottle={1}
+            bounces={false}
+            alwaysBounceVertical={false}
             data={this.props.data}
             extraData={this.state}
             initialScrollIndex={this.props.initial}
@@ -226,15 +238,8 @@ class BoxedListComponent extends Component {
                         ? this.props.changeSelected(index)
                         : null;
                     this.selectItem(index);
-                    !!this.props.other
-                      ? !!this.props.otherOnPress && this.isOther(item)
-                        ? this.props.otherOnPress()
-                        : !!this.props.onPress
-                          ? this.props.onPress(index)
-                          : null
-                      : !!this.props.onPress
-                        ? this.props.onPress(index)
-                        : null;
+
+                    this.props.onPress(index);
                   }
                   this.state.keyboard ? Keyboard.dismiss() : null;
                 }}
@@ -242,7 +247,6 @@ class BoxedListComponent extends Component {
                 {this.props.doubleLine && (
                   <Text
                     style={[
-                      styles.regText,
                       styles.subtitle,
                       item.disabled ? styles.disabledItemText : null,
                       this.isSelected(index) ? styles.selectedText : null,
@@ -254,8 +258,8 @@ class BoxedListComponent extends Component {
                 )}
                 <Text
                   style={[
-                    styles.regText,
-                    this.props.doubleLine ? styles.regText : styles.doubleTitle,
+                    styles.mainLine,
+                    this.props.doubleLine ? styles.doubleTitle : styles.regText,
                     item.disabled ? styles.disabledItemText : null,
                     this.isSelected(index) ? styles.selectedText : null,
                     this.props.leftText ? styles.leftText : null
@@ -263,26 +267,42 @@ class BoxedListComponent extends Component {
                 >
                   {this.getTitle(item)}
                 </Text>
-                {item.other || this.props.chevron || this.isSelected(index) ? (
-                  <Icon
-                    pointerEvents={"none"}
-                    style={
-                      this.isSelected(index) ? styles.iconSelected : styles.icon
-                    }
-                    name={
-                      item.other || this.props.chevron
-                        ? "chevron-right"
-                        : "check"
-                    }
-                    size={moderateScale(40)}
-                    color={Colors.defaultChevron}
-                  />
-                ) : null}
+                {this.props.chevron || this.isSelected(index)
+                  ? this.setIcon(this.props.chevron, index)
+                  : null}
               </TouchableOpacity>
             )}
             keyExtractor={this.keyExtractor}
           />
         </List>
+
+        {this.props.other && (
+          <TouchableOpacity
+            activeOpacity={1}
+            style={[styles.textView]}
+            onPress={() => {
+              this.props.otherOnPress();
+            }}
+          >
+            <Text
+              style={[
+                styles.mainLine,
+                this.props.leftText ? styles.leftText : null,
+                styles.regText
+              ]}
+            >
+              {this.props.other.title}
+            </Text>
+            <Icon
+              pointerEvents={"none"}
+              style={styles.icon}
+              name={"chevron-right"}
+              size={moderateScale(40)}
+              color={Colors.defaultChevron}
+            />
+          </TouchableOpacity>
+        )}
+
         {this.props.gradient ? (
           <LinearGradient
             pointerEvents={"none"}

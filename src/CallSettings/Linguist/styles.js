@@ -21,7 +21,7 @@ export default StyleSheet.create({
   },
   myProfileText: {
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     textAlign: "center",
     alignSelf: "center"
   },
@@ -29,7 +29,7 @@ export default StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     color: Colors.primaryColor,
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.BoldFont
   },
   linearGradient: {
     position: "absolute",
@@ -45,7 +45,7 @@ export default StyleSheet.create({
   buttonText: {
     textAlign: "center",
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     fontSize: 16,
     fontWeight: "bold"
   },
@@ -54,7 +54,7 @@ export default StyleSheet.create({
   },
   pickerText: {
     color: "gray",
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     fontSize: 16,
     width: "50%",
     marginTop: moderateScale(16)
@@ -62,6 +62,6 @@ export default StyleSheet.create({
   listSelectionTitle: {
     marginTop: moderateScale(50),
     fontSize: 17,
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.BoldFont
   }
 });

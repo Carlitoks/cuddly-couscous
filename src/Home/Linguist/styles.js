@@ -80,7 +80,7 @@ export default StyleSheet.create({
   },
   StatusText: {
     fontSize: 20,
-    fontFamily: Fonts.primaryBaseFont,
+    fontFamily: Fonts.BaseFont,
     color: Colors.primaryColor,
     marginLeft: moderateScale(15),
     backgroundColor: "rgba(255, 255, 255, 0)"
@@ -110,17 +110,17 @@ export default StyleSheet.create({
   badgeText: {
     fontSize: 12,
     color: "black",
-    fontFamily: Fonts.primaryLightFont
+    fontFamily: Fonts.LightFont
   },
   title: {
     fontSize: 16,
     color: Colors.primaryColor,
-    fontFamily: Fonts.primaryBoldFont
+    fontFamily: Fonts.BoldFont
   },
   buttonText: {
     fontSize: 16,
     color: Colors.primaryAltFontColor,
-    fontFamily: Fonts.primaryBoldFont,
+    fontFamily: Fonts.BoldFont,
     alignItems: "center",
     fontWeight: "bold"
   },

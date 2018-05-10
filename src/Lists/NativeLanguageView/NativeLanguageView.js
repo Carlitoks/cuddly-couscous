@@ -189,6 +189,7 @@ class NativeLanguageView extends Component {
               gradient
               scrollable
               leftText
+              noFlex
               initial={this.state.selectedIndex}
             />
           </View>

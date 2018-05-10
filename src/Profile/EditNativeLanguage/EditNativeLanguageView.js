@@ -106,7 +106,10 @@ class EditNativeLanguageView extends Component {
       nativeLangCode: formNativeLanguage["3"]
     };
     updateProfileAsync(uuid, data, token).then(response => {
-      const { payload, payload: { nativeLangCode } } = response;
+      const {
+        payload,
+        payload: { nativeLangCode }
+      } = response;
 
       if (response.type !== "networkErrors/error") {
         updateView({
@@ -165,6 +168,7 @@ class EditNativeLanguageView extends Component {
               changeSelected={index => this.changeSelected(index)}
               gradient
               leftText
+              noFlex
               scrollable
             />
           </View>

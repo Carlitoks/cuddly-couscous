@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _upperFirst from "lodash/upperFirst";
-import { findIndex, take, shuffle } from "lodash";
+import { findIndex, take } from "lodash";
 
 import moment from "moment";
 
@@ -76,7 +76,11 @@ import I18n from "../../I18n/I18n";
 import { IMAGE_STORAGE_URL } from "../../Config/env";
 import { moderateScale } from "../../Util/Scaling";
 import { REASON, CATEGORIES } from "../../Util/Constants";
-import { sliderWidth, itemWidth } from "../../Components/CarouselEntry/styles";
+import {
+  sliderWidth,
+  itemWidth,
+  itemMargin
+} from "../../Components/CarouselEntry/styles";
 
 import languages from "../../Config/Languages";
 
@@ -104,7 +108,7 @@ class Home extends Component {
       .then(response => {
         const { allCustomerCalls } = this.props;
 
-        const scenariosList = take(allCustomerCalls, 10)
+        const scenariosList = take(allCustomerCalls, 5)
           .filter(call => {
             return call.session.scenario !== undefined;
           })
@@ -127,7 +131,7 @@ class Home extends Component {
 
             return {
               id,
-              createdAt: moment(createdAt).format("l"),
+              createdAt: moment(createdAt).format("MM/DD/YYYY [at] hh:mm A"),
               title: titleMapped,
               estimatedMinutes,
               scenario,
@@ -159,8 +163,7 @@ class Home extends Component {
     }
 
     this.props.updateSettings({
-      selectedScenarioIndex: -1,
-      categoryIndex: this.props.carouselFirstItem
+      selectedScenarioIndex: -1
     });
 
     this.props.updateCustomerSettings({
@@ -179,25 +182,19 @@ class Home extends Component {
     updateHomeFlow({ selectedScenarioIndex: -1 });
 
     if (index > currentIndex) {
-      this._slider1Ref.snapToNext();
+      // this._slider1Ref.snapToNext();
     }
     if (index <= currentIndex) {
       this.props.updateSettings({ categorySelected: item });
+
+      updateHomeFlow({
+        lastSelectedTile: currentIndex
+      });
 
       item === "qr"
         ? this.props.navigation.dispatch({ type: "ScanScreenView" })
         : navigation.dispatch({ type: "ScenarioSelectionView" });
     }
-  };
-
-  checkCallsLength = (component, loader) => {
-    const { scenariosList } = this.props;
-
-    return scenariosList ? (
-      component
-    ) : loader ? (
-      <ActivityIndicator size="large" color="#fb6a28" />
-    ) : null;
   };
 
   submit() {
@@ -210,12 +207,18 @@ class Home extends Component {
       : navigation.dispatch({ type: "CallTimeView" });
   }
   renderCarousel = () => {
-    const { categories, navigation, carouselFirstItem } = this.props;
+    const {
+      categories,
+      navigation,
+      carouselFirstItem,
+      lastSelectedTile
+    } = this.props;
 
-    const carousel = (
+    const carousel = categories ? (
       <Carousel
+        slideStyle={styles.carousel}
         ref={c => (this._slider1Ref = c)}
-        data={shuffle(categories)}
+        data={categories}
         renderItem={({ item, index }) => {
           return (
             <CarouselEntry
@@ -228,9 +231,8 @@ class Home extends Component {
           );
         }}
         sliderWidth={sliderWidth}
-        sliderHeight={40}
-        itemWidth={itemWidth}
-        firstItem={carouselFirstItem}
+        itemWidth={itemWidth + itemMargin * 2}
+        firstItem={lastSelectedTile}
         inactiveSlideScale={1}
         inactiveSlideOpacity={1}
         containerCustomStyle={styles.slider}
@@ -238,10 +240,11 @@ class Home extends Component {
         loopClonesPerSide={7}
         activeSlideAlignment="start"
         enableMomentum={true}
+        enableSnap={false}
       />
-    );
+    ) : null;
 
-    return this.checkCallsLength(carousel, true);
+    return carousel;
   };
 
   renderList = () => {
@@ -259,46 +262,56 @@ class Home extends Component {
 
     const categoryName = categories[categoryIndex];
 
-    const list = (
+    const emptyActivity = scenariosList && scenariosList.length === 0;
+
+    const data = emptyActivity
+      ? [{ id: "emptyActivity", title: I18n.t("noRecentActivityMessage") }]
+      : scenariosList;
+
+    const list = scenariosList ? (
       <BoxedListComponent
         customContainerStyle={styles.listContainer}
-        data={scenariosList}
+        data={data}
         itemKey={"id"}
         subtitleProperty={"createdAt"}
         titleProperty={"title"}
         onPress={index => {
-          const scenario = scenariosList[index];
+          if (!emptyActivity) {
+            const scenario = scenariosList[index];
 
-          updateLinguistForm({
-            selectedScenarios: [scenario.scenario]
-          });
+            updateLinguistForm({
+              selectedScenarios: [scenario.scenario]
+            });
 
-          const languageIndex = findIndex(
-            languages,
-            language => language[3] === scenario.secondaryLangCode
-          );
+            const languageIndex = findIndex(
+              languages,
+              language => language[3] === scenario.secondaryLangCode
+            );
 
-          updateContactLinguist({
-            selectedLanguage: languages[languageIndex]["name"],
-            primaryLangCode: scenario.primaryLangCode,
-            secondaryLangCode: scenario.secondaryLangCode
-          });
+            updateContactLinguist({
+              selectedLanguage: languages[languageIndex]["name"],
+              primaryLangCode: scenario.primaryLangCode,
+              secondaryLangCode: scenario.secondaryLangCode
+            });
 
-          updateCallCustomerSettings({
-            selectedTime: scenario.estimatedMinutes
-          });
+            updateCallCustomerSettings({
+              selectedTime: scenario.estimatedMinutes
+            });
 
-          navigation.dispatch({ type: "CallConfirmationView" });
+            navigation.dispatch({ type: "CallConfirmationView" });
+          }
         }}
         multiple={false}
         selected={this.state.indexSelected}
-        chevron
-        doubleLine
+        chevron={!emptyActivity}
+        doubleLine={!emptyActivity}
         leftText
       />
+    ) : (
+      <ActivityIndicator size="large" color="#fb6a28" />
     );
 
-    return this.checkCallsLength(list, false);
+    return list;
   };
 
   render() {
@@ -333,32 +346,28 @@ class Home extends Component {
           NoWaves
         >
           <View style={styles.mainContainer}>
-            {this.checkCallsLength(
-              <LinearGradient
-                colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-                style={styles.linearGradient}
-              />,
-              false
-            )}
+            <LinearGradient
+              colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
+              style={styles.linearGradient}
+            />
             <Waves
               width={width}
               height={width * 129 / 1175.7}
               viewBox={"0 0 1175.7 129"}
               style={styles.waves}
             />
-            <Text style={[styles.subtitle, styles.largeSubtitle]}>
-              {I18n.t("homeSubtitle")}
+            <Text style={[styles.title, styles.subtitle, styles.largeSubtitle]}>
+              {I18n.t("whereAreYouNow")}
             </Text>
             {this.renderCarousel()}
-            <Text style={[styles.subtitle, styles.marginBottom10]}>
-              {(!scenariosList || scenariosList.length === 0) &&
-                `${I18n.t("no")} `}
-              {I18n.t("recentInteractions")}
+            <Text style={[styles.subtitle]}>{I18n.t("recentActivity")}</Text>
+            <Text style={[styles.smallsubtitle, styles.marginBottom10]}>
+              {I18n.t("tapRepeat")}
             </Text>
             <ScrollView
               automaticallyAdjustContentInsets={true}
               alwaysBounceVertical={false}
-              style={{ height: "30%" }}
+              style={styles.scrollView}
             >
               {this.renderList()}
             </ScrollView>
@@ -390,7 +399,8 @@ const mS = state => ({
   listItemSelected: state.homeFlow.listItemSelected,
   categorySelected: state.homeFlow.categorySelected,
   customScenario: state.homeFlow.customScenario,
-  allCustomerCalls: state.callHistory.allCustomerCalls
+  allCustomerCalls: state.callHistory.allCustomerCalls,
+  lastSelectedTile: state.homeFlow.lastSelectedTile
 });
 
 const mD = {
