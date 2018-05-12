@@ -75,6 +75,7 @@ class SelectRoleView extends Component {
                   fill={true}
                   long={true}
                   relative
+                  whiteDisabled
                 />
                 <View style={styles.mainBottomContainer}>
                   {/* Become a Linguist */}

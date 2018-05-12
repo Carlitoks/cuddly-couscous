@@ -17,7 +17,8 @@ export default StyleSheet.create({
   },
   mainTitle: {
     fontFamily: Fonts.LightFont,
-    fontSize: moderateScale(26),
+    fontSize: 18,
+    fontWeight: "500",
     textAlign: "center",
     marginBottom: moderateScale(50),
     marginTop: 38,
@@ -52,7 +53,7 @@ export default StyleSheet.create({
     alignItems: "center",
     flexWrap: "wrap",
     marginLeft: 18,
-    marginRight: 18,
+    marginRight: 18
   },
   spaceBetween: {
     paddingTop: 14

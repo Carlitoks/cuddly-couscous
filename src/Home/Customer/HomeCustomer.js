@@ -215,33 +215,35 @@ class Home extends Component {
     } = this.props;
 
     const carousel = categories ? (
-      <Carousel
-        slideStyle={styles.carousel}
-        ref={c => (this._slider1Ref = c)}
-        data={categories}
-        renderItem={({ item, index }) => {
-          return (
-            <CarouselEntry
-              onPress={() => this.onCarouselItemPress(index, item)}
-              data={item}
-              mapper={title => {
-                return CATEGORIES[title];
-              }}
-            />
-          );
-        }}
-        sliderWidth={sliderWidth}
-        itemWidth={itemWidth + itemMargin * 2}
-        firstItem={lastSelectedTile}
-        inactiveSlideScale={1}
-        inactiveSlideOpacity={1}
-        containerCustomStyle={styles.slider}
-        contentContainerCustomStyle={styles.sliderContentContainer}
-        loopClonesPerSide={7}
-        activeSlideAlignment="start"
-        enableMomentum={true}
-        enableSnap={false}
-      />
+      <View style={styles.carouselContainer}>
+        <Carousel
+          slideStyle={styles.carousel}
+          ref={c => (this._slider1Ref = c)}
+          data={categories}
+          renderItem={({ item, index }) => {
+            return (
+              <CarouselEntry
+                onPress={() => this.onCarouselItemPress(index, item)}
+                data={item}
+                mapper={title => {
+                  return CATEGORIES[title];
+                }}
+              />
+            );
+          }}
+          sliderWidth={sliderWidth}
+          itemWidth={itemWidth + itemMargin * 2}
+          firstItem={lastSelectedTile}
+          inactiveSlideScale={1}
+          inactiveSlideOpacity={1}
+          containerCustomStyle={styles.slider}
+          contentContainerCustomStyle={styles.sliderContentContainer}
+          loopClonesPerSide={7}
+          activeSlideAlignment="start"
+          enableMomentum={true}
+          enableSnap={false}
+        />
+      </View>
     ) : null;
 
     return carousel;
@@ -364,13 +366,15 @@ class Home extends Component {
             <Text style={[styles.smallsubtitle, styles.marginBottom10]}>
               {I18n.t("tapRepeat")}
             </Text>
-            <ScrollView
-              automaticallyAdjustContentInsets={true}
-              alwaysBounceVertical={false}
-              style={styles.scrollView}
-            >
-              {this.renderList()}
-            </ScrollView>
+            <View style={styles.scrollView}>
+              <ScrollView
+                automaticallyAdjustContentInsets={true}
+                alwaysBounceVertical={false}
+                style={styles.scrollView}
+              >
+                {this.renderList()}
+              </ScrollView>
+            </View>
           </View>
         </HeaderView>
       </ViewWrapper>

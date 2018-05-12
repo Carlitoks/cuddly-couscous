@@ -5,6 +5,12 @@ import { Iphone5 } from "../../Util/Devices";
 const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
+  outerView: {
+    zIndex: 2
+  },
+  outerViewBackground: {
+    backgroundColor: Colors.gradientColor.top
+  },
   container: {
     flex: 1
   },

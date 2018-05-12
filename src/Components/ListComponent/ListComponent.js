@@ -207,6 +207,7 @@ class ListComponent extends Component {
           keyExtractor={this.keyExtractor}
           renderItem={({ item, index }) => (
             <ListItem
+              disabled={item.disabled}
               style={[
                 styles.textView,
                 index > 0 ? styles.textBetweenView : null
@@ -241,8 +242,13 @@ class ListComponent extends Component {
                 this.props.rightTitle ? styles.paddingContainer : null
               }
               rightIcon={
-                this.isSelected(index) ? (<View style={styles.iconSelected}>
-                <Checkmark width={moderateScale(21)} height={moderateScale(21)} color={Colors.gradientColor.top} />
+                this.isSelected(index) ? (
+                  <View style={styles.iconSelected}>
+                    <Checkmark
+                      width={moderateScale(21)}
+                      height={moderateScale(21)}
+                      color={Colors.gradientColor.top}
+                    />
                   </View>
                 ) : (
                   <Icon />

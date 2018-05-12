@@ -106,6 +106,13 @@ class CustomScenario extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerRightComponent={<QRIcon navigation={this.props.navigation} />}
+          headerCenterComponent={
+            this.state.showNavbarTitle ? (
+              <View>
+                <Text style={styles.title}>{CATEGORIES[categorySelected]}</Text>
+              </View>
+            ) : null
+          }
           NoWaves
           NoBackground
         >
@@ -126,7 +133,9 @@ class CustomScenario extends Component {
             bounces={false}
             alwaysBounceVertical={false}
           >
-            <Text style={styles.title}>{CATEGORIES[categorySelected]}</Text>
+            <Text style={[styles.title, styles.marginBottom20]}>
+              {CATEGORIES[categorySelected]}
+            </Text>
 
             {scenariosList && (
               <BoxedListComponent
@@ -158,6 +167,7 @@ class CustomScenario extends Component {
               navigation.dispatch({ type: "CallTimeView" });
             }}
             whiteDisabled
+            absolute
           />
         </HeaderView>
       </ViewWrapper>

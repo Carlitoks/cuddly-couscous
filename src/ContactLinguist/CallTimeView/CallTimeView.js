@@ -78,9 +78,11 @@ class CallTimeView extends Component {
             <Text style={[styles.titleCall]}>{I18n.t("callTimeMinutes")}</Text>
           }
           headerRightComponent={
-            <Close action={() => {
-              navigation.dispatch({ type: "Home" });
-            }}/>
+            <Close
+              action={() => {
+                navigation.dispatch({ type: "Home" });
+              }}
+            />
           }
           titleComponent={
             <Text style={[styles.bottom, styles.bottomText]}>
@@ -88,20 +90,20 @@ class CallTimeView extends Component {
             </Text>
           }
         >
+          <View style={styles.box}>
+            <Text style={[styles.mainTitle, styles.boxText]}>
+              {I18n.t("celebrateWithUs")}
+            </Text>
+            <Text style={[styles.mainTitle, styles.boxText]}>
+              {I18n.t("callTimeBoxText")}
+            </Text>
+          </View>
           <ScrollView
             automaticallyAdjustContentInsets={true}
             bounces={false}
             alwaysBounceVertical={false}
             style={styles.scrollContainer}
           >
-            <View style={styles.box}>
-              <Text style={[styles.mainTitle, styles.boxText]}>
-                {I18n.t("celebrateWithUs")}
-              </Text>
-              <Text style={[styles.mainTitle, styles.boxText]}>
-                {I18n.t("callTimeBoxText")}
-              </Text>
-            </View>
             <ListComponent
               customContainerStyle={{ marginBottom: 150 }}
               data={TIME_OPTIONS}

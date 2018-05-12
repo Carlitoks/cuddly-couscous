@@ -59,17 +59,17 @@ export default StyleSheet.create({
     fontSize: 15
   },
   textBecome: {
-    fontFamily: Fonts.BoldFont,
+    fontFamily: Fonts.LightFont,
     color: Colors.fontColor,
-    fontSize: moderateScale(21),
+    fontSize: moderateScale(23),
     marginTop: moderateScale(15),
     textDecorationLine: "underline",
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   textBecomeX: {
-    fontFamily: Fonts.BoldFont,
+    fontFamily: Fonts.LightFont,
     color: Colors.fontColor,
-    fontSize: 15,
+    fontSize: 17,
     marginBottom: 15,
     textDecorationLine: "underline",
     backgroundColor: "rgba(255, 255, 255, 0)"
@@ -92,16 +92,17 @@ export default StyleSheet.create({
     marginTop: moderateScale(10)
   },
   textLogin: {
-    fontFamily: Fonts.primaryFont,
-    fontSize: moderateScale(21),
+    fontFamily: Fonts.LightFont,
+    fontSize: moderateScale(23),
     color: Colors.fontColor,
     marginTop: moderateScale(15),
     textDecorationLine: "underline",
     backgroundColor: "rgba(255, 255, 255, 0)"
   },
   textLoginX: {
-    fontFamily: Fonts.primaryFont,
+    fontFamily: Fonts.LightFont,
     color: Colors.fontColor,
+    fontSize: 17,
     marginBottom: 15,
     textDecorationLine: "underline",
     backgroundColor: Colors.transparent

@@ -165,7 +165,7 @@ class CallConfirmationView extends Component {
               style={styles.time}
             >
               <LanguageSelection
-                firstLanguage={this.props.fromLanguage.name}
+                firstLanguage={this.props.selectedLanguageFrom}
                 secondLanguage={this.props.selectedLanguageTo}
               />
               <View style={styles.iconAlign}>

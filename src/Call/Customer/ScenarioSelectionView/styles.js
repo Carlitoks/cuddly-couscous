@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../../Themes";
 import { moderateScale, scale } from "../../../Util/Scaling";
+import { Iphone5 } from "../../../Util/Devices";
 
 const { width, height } = Dimensions.get("window");
 
@@ -27,7 +28,7 @@ export default StyleSheet.create({
   imageContainer: {
     width,
     position: "absolute",
-    top: scale(-150) // 95 without scale
+    top: Iphone5 ? scale(-235) : scale(-150) // 95 without scale
   },
   image: {
     position: "absolute",
@@ -38,10 +39,15 @@ export default StyleSheet.create({
   },
   title: {
     marginLeft: 16,
-    marginBottom: 10,
-    fontSize: 20,
+    fontSize: 26,
     color: Colors.white,
     backgroundColor: Colors.transparent
+  },
+  marginBottom10: {
+    marginBottom: 10
+  },
+  marginBottom20: {
+    marginBottom: 20
   },
   waves: {
     position: "absolute",

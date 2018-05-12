@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Fonts, Colors, Metrics } from "../../Themes";
+import { Iphone5, Iphone10 } from "../../Util/Devices";
 
 const { width, height } = Dimensions.get("window");
 
@@ -9,11 +10,10 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: 40,
     backgroundColor: Colors.transparent
   },
   buttonContainer: {
-    height: 60,
+    height: 70,
     width: width * 0.7,
     borderColor: Colors.gradientColorButton.top,
     borderRadius: 50,
@@ -53,13 +53,11 @@ export default StyleSheet.create({
   },
   textDisabled: {
     fontSize: 20,
-    color: Colors.disabledColor,
-    opacity: 0.5
+    color: Colors.disabledColor
   },
   textWhiteDisabled: {
     fontSize: 20,
-    color: Colors.white,
-    opacity: 0.5
+    color: Colors.white
   },
   white: {
     color: Colors.primaryColor
@@ -106,7 +104,7 @@ export default StyleSheet.create({
   spinner: {
     flex: 1,
     position: "absolute",
-    bottom: 24
+    bottom: Iphone10 || Iphone5 ? 14 : 14
   },
   transparent: {
     backgroundColor: Colors.transparent
@@ -116,5 +114,8 @@ export default StyleSheet.create({
     bottom: 0,
     width: "100%",
     height: "100%"
+  },
+  bottomSeparation: {
+    paddingBottom: 40
   }
 });

@@ -47,42 +47,45 @@ class SessionLanguageView extends Component {
     const { params } = navigation.state;
     const { languagesMapper } = this.state;
 
-    const langString =
-      params && params.noautoselect
-        ? params.secundaryLangCode
-        : languagesMapper[userProfileNativeLangCode]
-          ? languagesMapper[userProfileNativeLangCode]
-          : secundaryLangCode;
-
-    const index = findIndex(languages, language => language[3] === langString);
-
     const userNativeLangIsSupported =
       SUPPORTED_LANGS.indexOf(userProfileNativeLangCode) >= 0;
 
-    const primaryLangCode = userNativeLangIsSupported
+    const primaryLanguageCode = userNativeLangIsSupported
       ? userProfileNativeLangCode
       : "eng";
 
-    const selectedLanguageFromIndex = findIndex(
+    const primaryLanguage = languages.find(
+      lang => lang[3] === primaryLanguageCode
+    );
+    const secondaryLanguageName =
+      params && params.noautoselect
+        ? params.secundaryLangCode
+        : languagesMapper[primaryLanguageCode]
+          ? languagesMapper[primaryLanguageCode]
+          : secundaryLangCode;
+
+    const indexSecondaryLanguage = findIndex(
       languages,
-      language => language[3] === primaryLangCode
+      language => language[3] === secondaryLanguageName
     );
 
+    const secondaryLanguage = languages[indexSecondaryLanguage];
+
     updateSettings({
-      primaryLangCode,
-      secundaryLangCode: languages[index][3],
-      selectedLanguage: languages[index]["name"],
-      selectedLanguageFrom: languages[selectedLanguageFromIndex]["name"]
+      primaryLangCode: primaryLanguageCode,
+      secundaryLangCode: secondaryLanguage[3],
+      selectedLanguageFrom: primaryLanguage["name"],
+      selectedLanguage: secondaryLanguage["name"]
     });
 
     this.setState({
-      selectedIndex: index,
-      selectedLanguage: languages[index]
+      selectedIndex: indexSecondaryLanguage,
+      selectedLanguage: secondaryLanguage
     });
   }
 
   filterList() {
-    const { userProfileNativeLangCode } = this.props;
+    const { primaryLangCode } = this.props;
     return languages
       .filter(language => {
         return language.name
@@ -93,7 +96,7 @@ class SessionLanguageView extends Component {
         let languageClone = cloneDeep(language);
 
         languageClone.disabled =
-          userProfileNativeLangCode === "cmn"
+          primaryLangCode === "cmn"
             ? !(language[3] === "eng")
             : !(language[3] === "cmn");
 
@@ -102,9 +105,11 @@ class SessionLanguageView extends Component {
   }
 
   changeSelected(index) {
-    this.setState({
-      selectedIndex: findIndex(languages, this.filterList()[index])
-    });
+    if (index !== this.state.selectedIndex) {
+      this.setState({
+        selectedIndex: findIndex(languages, this.filterList()[index])
+      });
+    }
   }
 
   getSelectedLanguagesString(index) {
@@ -117,19 +122,21 @@ class SessionLanguageView extends Component {
   }
 
   changeLanguage(index) {
-    const newLanguage = this.filterList()[index];
+    if (index !== this.state.selectedIndex) {
+      const newLanguage = this.filterList()[index];
 
-    this.setState({ searchQuery: "" });
+      this.setState({ searchQuery: "" });
 
-    this.props.updateSettings({
-      secundaryLangCode: this.filterList()[index][3],
-      selectedLanguage: this.getSelectedLanguagesString(index)
-    });
+      this.props.updateSettings({
+        secundaryLangCode: this.filterList()[index][3],
+        selectedLanguage: this.getSelectedLanguagesString(index)
+      });
 
-    this.setState({
-      selectedLanguage: newLanguage,
-      selectedIndex: findIndex(languages, newLanguage)
-    });
+      this.setState({
+        selectedLanguage: newLanguage,
+        selectedIndex: findIndex(languages, newLanguage)
+      });
+    }
   }
 
   submit(navigation) {
@@ -161,8 +168,8 @@ class SessionLanguageView extends Component {
           }
           titleComponent={
             <LanguageSelection
-              firstLanguage={this.props.nativeLanguage.name}
-              secondLanguage={this.state.selectedLanguage.name}
+              firstLanguage={this.props.selectedLanguageFrom}
+              secondLanguage={this.props.selectedLanguage}
               header
             />
           }
@@ -225,7 +232,8 @@ const mS = state => ({
   secundaryLangCode: state.contactLinguist.secundaryLangCode,
   routes: state.nav.routes[0].routes[0].routes,
   nativeLanguage: state.userProfile.selectedNativeLanguage,
-  selectedLanguageFrom: state.contactLinguist.selectedLanguageFrom
+  selectedLanguageFrom: state.contactLinguist.selectedLanguageFrom,
+  selectedLanguage: state.contactLinguist.selectedLanguage
 });
 
 // MAP DISPATCH TO PROPS HERE

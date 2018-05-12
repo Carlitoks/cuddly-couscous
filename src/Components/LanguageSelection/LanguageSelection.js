@@ -8,18 +8,6 @@ import { moderateScale } from "../../Util/Scaling";
 import { styles } from "./styles";
 
 const LanguageSelection = ({ firstLanguage, secondLanguage, header }) => {
-  let nativeLanguage = "English";
-
-  if(firstLanguage !== "English" && firstLanguage !== "Chinese (Mandarin)") {
-    if(secondLanguage === "English") {
-      nativeLanguage = "Chinese (Mandarin)"
-    } else if (secondLanguage ===  "Chinese (Mandarin)") {
-      nativeLanguage = "English"
-    }
-  } else {
-    nativeLanguage = firstLanguage
-  }
-
   return (
     <View style={styles.flexColumn}>
       <View
@@ -34,7 +22,7 @@ const LanguageSelection = ({ firstLanguage, secondLanguage, header }) => {
             styles.largeText
           ]}
         >
-          {nativeLanguage}
+          {firstLanguage}
         </Text>
         <View style={styles.centerIcon}>
           <TranslationArrows

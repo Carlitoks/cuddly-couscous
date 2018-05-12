@@ -16,11 +16,9 @@ export const LANG_CODES = new Map([
 
 export const TIME_OPTIONS = [
   { duration: 8, cost: 10 },
-  { duration: 10, cost: 11 },
-  { duration: 15, cost: 13 },
-  { duration: 20, cost: 16 },
-  { duration: 25, cost: 19 },
-  { duration: 30, cost: 22 }
+  { duration: 15, cost: 15 },
+  { duration: 30, cost: 27 },
+  { duration: 60, cost: 50 }
 ];
 
 export const REASON = {

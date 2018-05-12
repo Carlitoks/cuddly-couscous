@@ -69,7 +69,8 @@ export default StyleSheet.create({
   },
   titleCall: {
     fontFamily: Fonts.LightFont,
-    fontSize: moderateScale(24),
+    fontSize: 18,
+    fontWeight: "500",
     color: Colors.primaryColor,
     textAlign: "center",
     backgroundColor: Colors.transparent
@@ -82,9 +83,10 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent
   },
   bottomText: {
-    fontSize: moderateScale(24),
     color: Colors.primaryColor,
     textAlign: "center",
+    fontSize: 18,
+    fontWeight: "500",
     fontFamily: Fonts.LightFont,
     alignSelf: "center",
     width: width,

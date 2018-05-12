@@ -95,7 +95,12 @@ const HeaderView = ({
   const history = tabValues ? (tabValues.length > 0 ? true : false) : false;
   function getHeader() {
     return (
-      <View style={{ zIndex: 2 }}>
+      <View
+        style={[
+          styles.outerView,
+          NoBackground ? null : styles.outerViewBackground
+        ]}
+      >
         {/* Header */}
         <View
           style={{
@@ -107,20 +112,6 @@ const HeaderView = ({
                   : 85
           }}
         >
-          {/* Linear Gradient */}
-          {NoBackground ? null : (
-            <LinearGradient
-              colors={[
-                Colors.gradientColor.top,
-                Colors.gradientColor.top,
-                !NoWaves
-                  ? Colors.gradientColor.bottom
-                  : Colors.gradientColor.top
-              ]}
-              style={styles.linearGradient}
-            />
-          )}
-
           {/* SVG White Waves */}
           <View
             style={{ position: "absolute", bottom: 0, alignSelf: "flex-end" }}

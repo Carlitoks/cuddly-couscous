@@ -367,6 +367,10 @@ export default StyleSheet.create({
     position: "absolute",
     bottom: 0
   },
-  scrollView: { height: "15%" },
-  carousel: { marginTop: "5%" }
+  scrollView: { flex: 1 },
+  carousel: { marginTop: "5%" },
+  slider: { height: 300 },
+  carouselContainer: {
+    marginBottom: height * 0.0525
+  }
 });

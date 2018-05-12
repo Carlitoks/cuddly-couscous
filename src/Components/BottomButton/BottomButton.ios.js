@@ -66,8 +66,9 @@ const BottomButton = ({
       >
         {gradient && (
           <LinearGradient
-            colors={[Colors.white, Colors.transparent]}
+            colors={[Colors.transparent, Colors.white]}
             style={styles.linearGradientBackground}
+            locations={[0, 0.3]}
           />
         )}
         <Button
@@ -78,7 +79,9 @@ const BottomButton = ({
             disabled
               ? loading
                 ? styles.transparent
-                : whiteDisabled ? styles.textWhiteDisabled : styles.textDisabled
+                : whiteDisabled
+                  ? styles.textWhiteDisabled
+                  : styles.textDisabled
               : null,
             fill || whiteText ? styles.white : null
           ]}
@@ -99,7 +102,9 @@ const BottomButton = ({
                   size: 25,
                   color: fill
                     ? Colors.primaryColor
-                    : color ? color : Colors.gradientColorButton.top
+                    : color
+                      ? color
+                      : Colors.gradientColorButton.top
                 }
               : null
           }
@@ -111,7 +116,9 @@ const BottomButton = ({
             long ? styles.long : null,
             fill ? styles.fillBtn : null,
             disabled
-              ? whiteDisabled ? styles.disabledWhiteBtn : styles.disabledBtn
+              ? whiteDisabled
+                ? styles.disabledWhiteBtn
+                : styles.disabledBtn
               : styles.enabledBtn,
             negative ? styles.negative : null,
             color ? { borderColor: color } : null
@@ -126,6 +133,12 @@ const BottomButton = ({
           ) : null}
         </View>
       </View>
+      <View
+        style={[
+          styles.bottomSeparation,
+          gradient ? { backgroundColor: Colors.white } : null
+        ]}
+      />
     </KeyboardAvoidingView>
   );
 };
