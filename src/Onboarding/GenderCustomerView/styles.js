@@ -17,13 +17,13 @@ export default StyleSheet.create({
   },
   mainTitle: {
     fontFamily: Fonts.LightFont,
-    fontSize: 18,
-    fontWeight: "500",
+    fontSize: moderateScale(26),
     textAlign: "center",
     marginBottom: moderateScale(50),
     marginTop: 38,
     color: "white",
-    backgroundColor: Colors.transparent
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   },
   containerBottom: {
     backgroundColor: "black",

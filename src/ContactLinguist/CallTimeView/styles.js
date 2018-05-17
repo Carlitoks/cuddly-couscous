@@ -69,11 +69,13 @@ export default StyleSheet.create({
   },
   titleCall: {
     fontFamily: Fonts.LightFont,
-    fontSize: 18,
-    fontWeight: "500",
-    color: Colors.primaryColor,
+    fontSize: moderateScale(26),
     textAlign: "center",
-    backgroundColor: Colors.transparent
+    marginBottom: moderateScale(50),
+    marginTop: 38,
+    color: "white",
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   },
   subTitleCall: {
     fontFamily: Fonts.LightFont,
@@ -99,21 +101,29 @@ export default StyleSheet.create({
     marginTop: 15
   },
   box: {
-    height: 100,
     backgroundColor: Colors.white,
     justifyContent: "center",
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
     flexWrap: "wrap",
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.lightGrey
+    marginBottom: 150
   },
   boxText: {
+    fontWeight: "bold",
     fontSize: 14,
-    fontWeight: "500",
+    color: Colors.gradientColor.top,
+    textAlign: "center",
     fontFamily: Fonts.BaseFont,
-    color: Colors.gradientColor.top
+    alignSelf: "center",
+    width: width,
+    backgroundColor: "rgba(255, 255, 255, 0)"
+  },
+  marginTop19: { marginTop: 19 },
+  marginTop14: { marginTop: 14 },
+  boxPricing: {
+    marginTop: 14,
+    fontSize: 18
   },
   iconSize: {
     fontSize: 28

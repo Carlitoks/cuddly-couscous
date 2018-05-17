@@ -144,9 +144,12 @@ class CustomScenario extends Component {
                 data={scenariosList}
                 titleProperty={"title"}
                 onPress={index => {
-                  updateSettings({ selectedScenarioIndex: index });
+                  updateSettings({
+                    selectedScenarioIndex: index
+                  });
                 }}
                 multiple={false}
+                chevronIndex={scenariosList.length - 1}
               />
             )}
           </ScrollView>

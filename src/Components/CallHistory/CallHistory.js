@@ -9,21 +9,17 @@ import moment from "moment";
 import I18n from "../../I18n/I18n";
 import { Colors } from "../../Themes";
 
-
-
 export default class CallHistoryComponent extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       data: null
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ data: nextProps.data })
+    this.setState({ data: nextProps.data });
   }
-
 
   renderSeparator = () => {
     return <View style={styles.renderSeparator} />;
@@ -32,9 +28,9 @@ export default class CallHistoryComponent extends Component {
   render() {
     const navigation = this.props.navigation;
     return (
-      <List containerStyle={styles.containerList}>
-        {this.state.data ?
-          this.props.data.length > 0 ?
+      <View containerStyle={styles.containerList}>
+        {this.state.data ? (
+          this.props.data.length > 0 ? (
             <FlatList
               data={this.props.data}
               renderItem={({ item }) => (
@@ -49,25 +45,29 @@ export default class CallHistoryComponent extends Component {
                   hideChevron={item.chevron}
                   subtitle={
                     item.duration >= 60
-                      ? `${moment.utc(item.duration * 1000).format("mm:ss")} mins`
+                      ? `${moment
+                          .utc(item.duration * 1000)
+                          .format("mm:ss")} mins`
                       : `${moment
-                        .utc(item.duration * 1000)
-                        .format("mm:ss")} seconds`
+                          .utc(item.duration * 1000)
+                          .format("mm:ss")} seconds`
                   }
                   avatar={
                     item.avatarURL
                       ? {
-                        uri: item.avatarURL
-                      }
+                          uri: item.avatarURL
+                        }
                       : Images.avatar
                   }
                   subtitle={
                     !item.missedTab
                       ? item.duration >= 60
-                        ? `${moment.utc(item.duration * 1000).format("mm:ss")} mins`
+                        ? `${moment
+                            .utc(item.duration * 1000)
+                            .format("mm:ss")} mins`
                         : `${moment
-                          .utc(item.duration * 1000)
-                          .format("mm:ss")} seconds`
+                            .utc(item.duration * 1000)
+                            .format("mm:ss")} seconds`
                       : item.missedCall
                   }
                   subtitleStyle={styles.colorStyle}
@@ -87,17 +87,21 @@ export default class CallHistoryComponent extends Component {
                       });
                   }}
                 />
-              )
-              }
+              )}
               keyExtractor={item => item.key}
               ItemSeparatorComponent={this.renderSeparator}
             />
-            :
+          ) : (
             <Text style={styles.notFound}>{I18n.t("historyNotFound")}</Text>
-          :
-          <ActivityIndicator size="large" color={Colors.gradientColor.top} />
-        }
-      </List>
+          )
+        ) : (
+          <ActivityIndicator
+            style={{ marginTop: 6 }}
+            size="large"
+            color={Colors.gradientColor.top}
+          />
+        )}
+      </View>
     );
   }
 }

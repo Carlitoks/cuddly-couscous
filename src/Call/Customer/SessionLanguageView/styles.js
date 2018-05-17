@@ -53,12 +53,13 @@ export const styles = StyleSheet.create({
   },
   titleCall: {
     fontFamily: Fonts.LightFont,
-    fontSize: 18,
-    fontWeight: "500",
-    color: Colors.primaryColor,
+    fontSize: moderateScale(26),
     textAlign: "center",
+    marginBottom: moderateScale(50),
+    marginTop: 38,
+    color: "white",
     backgroundColor: Colors.transparent,
-    alignSelf: "center"
+    fontWeight: "500"
   },
   subTitleCall: {
     fontFamily: Fonts.LightFont,

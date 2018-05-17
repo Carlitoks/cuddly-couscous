@@ -22,7 +22,12 @@ const images = {
   qr: require("../Images/qr.jpeg"),
   other: require("../Images/other.jpeg"),
   landing: require("../Images/role_image.png"),
-  jeenieLogo: require("../Images/jeenie_logo_white.png")
+  jeenieLogo: require("../Images/jeenie_logo_white.png"),
+  lauchScreenSwipe1: require("../Images/Swipe-Image-1.png"),
+  lauchScreenSwipe2: require("../Images/Swipe-Image-2.png"),
+  lauchScreenSwipe3: require("../Images/Swipe-Image-3.png"),
+  lauchScreenSwipe4: require("../Images/Swipe-Image-4.png"),
+  lauchScreenSwipe5: require("../Images/Swipe-Image-5.png")
 };
 
 export default images;

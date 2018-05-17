@@ -76,8 +76,11 @@ export default StyleSheet.create({
   titleCall: {
     fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
-    color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: Colors.transparent
+    marginBottom: moderateScale(50),
+    marginTop: 38,
+    color: "white",
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   }
 });

@@ -51,7 +51,8 @@ const BottomButton = ({
   customStyle,
   transparent,
   color,
-  whiteDisabled
+  whiteDisabled,
+  smaller
 }) => {
   return (
     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
@@ -75,6 +76,7 @@ const BottomButton = ({
           borderRadius={50}
           textStyle={[
             styles.text,
+            smaller ? styles.smallerText : null,
             bold || long ? styles.textBold : null,
             disabled
               ? loading
@@ -111,6 +113,7 @@ const BottomButton = ({
           backgroundColor={fill ? Colors.transparent : Colors.primaryColor}
           buttonStyle={[
             styles.buttonContainer,
+            smaller ? styles.smaller : null,
             whiteDisabled ? styles.whiteBorder : styles.normalBorder,
             transparent ? styles.transparent : null,
             long ? styles.long : null,

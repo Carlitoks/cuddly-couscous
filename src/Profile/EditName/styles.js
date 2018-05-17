@@ -15,14 +15,6 @@ export default StyleSheet.create({
     height: "100%",
     backgroundColor: Colors.white
   },
-  mainTitle: {
-    fontFamily: Fonts.LightFont,
-    fontSize: 24,
-    textAlign: "center",
-    marginBottom: moderateScale(50),
-    marginTop: moderateScale(20),
-    color: Colors.white
-  },
   inputText: {
     fontSize: 20,
     color: Colors.black,
@@ -64,6 +56,7 @@ export default StyleSheet.create({
     marginBottom: moderateScale(50),
     marginTop: 38,
     color: "white",
-    backgroundColor: Colors.transparent
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   }
 });

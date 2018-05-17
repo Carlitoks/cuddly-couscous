@@ -7,7 +7,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import styles from "./styles";
 import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
 
-const GoBackButton = ({ navigation }) => {
+const GoBackButton = ({ navigation, exec }) => {
   return (
     <Col style={styles.container}>
       {/* Back Arrow - Go back button */}
@@ -16,6 +16,9 @@ const GoBackButton = ({ navigation }) => {
         name="chevron-left"
         size={moderateScale(40)}
         onPress={() => {
+          if (exec) {
+            exec();
+          }
           if (navigation.state.routeName == "CustomScenarioView") {
             navigation.dispatch({ type: "Home" });
           } else {

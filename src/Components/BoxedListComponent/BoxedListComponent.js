@@ -179,10 +179,18 @@ class BoxedListComponent extends Component {
     }
   };
 
+  hasChevron = index => {
+    if (!!this.props.chevronIndex && this.props.chevronIndex == index) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   getItemLayout = (data, index) => ({ length: 38, offset: 38 * index, index });
 
   setIcon = (chevron, index) =>
-    chevron ? (
+    chevron || this.props.chevronIndex == index ? (
       <Icon
         pointerEvents={"none"}
         style={this.isSelected(index) ? styles.iconSelected : styles.icon}
@@ -199,6 +207,13 @@ class BoxedListComponent extends Component {
         />
       </View>
     );
+
+  getThirdLineText(text) {
+    const lineWidthInChars = 65;
+    return text.length > lineWidthInChars - 3
+      ? text.substring(0, lineWidthInChars) + "..."
+      : text;
+  }
 
   render() {
     return (
@@ -222,56 +237,81 @@ class BoxedListComponent extends Component {
             initialScrollIndex={this.props.initial}
             ref="list"
             getItemLayout={this.getItemLayout}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity
-                activeOpacity={1}
-                style={[
-                  item.disabled ? styles.disabledItemView : null,
-                  styles.textView,
-                  this.isSelected(index) ? styles.selectedItem : null
-                ]}
-                onPress={() => {
-                  if (!item.disabled) {
-                    !!item.onPress
-                      ? item.onPress()
-                      : !!this.props.changeSelected
-                        ? this.props.changeSelected(index)
-                        : null;
-                    this.selectItem(index);
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity
+                  activeOpacity={1}
+                  style={[
+                    item.disabled ? styles.disabledItemView : null,
+                    styles.textView,
+                    this.props.tripleLine && item[this.props.thirdLineProperty]
+                      ? styles.minHeight80
+                      : null,
+                    this.isSelected(index) ? styles.selectedItem : null
+                  ]}
+                  onPress={() => {
+                    if (!item.disabled) {
+                      !!item.onPress
+                        ? item.onPress()
+                        : !!this.props.changeSelected
+                          ? this.props.changeSelected(index)
+                          : null;
+                      this.selectItem(index);
 
-                    this.props.onPress(index);
-                  }
-                  this.state.keyboard ? Keyboard.dismiss() : null;
-                }}
-              >
-                {this.props.doubleLine && (
+                      this.props.onPress(index);
+                    }
+                    this.state.keyboard ? Keyboard.dismiss() : null;
+                  }}
+                >
+                  {this.props.doubleLine && (
+                    <Text
+                      style={[
+                        styles.subtitle,
+                        item.disabled ? styles.disabledItemText : null,
+                        this.isSelected(index) ? styles.selectedText : null,
+                        this.props.leftText ? styles.leftText : null
+                      ]}
+                    >
+                      {this.getSubtitle(item)}
+                    </Text>
+                  )}
                   <Text
                     style={[
-                      styles.subtitle,
+                      styles.mainLine,
+                      this.props.doubleLine
+                        ? styles.doubleTitle
+                        : styles.regText,
                       item.disabled ? styles.disabledItemText : null,
                       this.isSelected(index) ? styles.selectedText : null,
                       this.props.leftText ? styles.leftText : null
                     ]}
                   >
-                    {this.getSubtitle(item)}
+                    {this.getTitle(item)}
                   </Text>
-                )}
-                <Text
-                  style={[
-                    styles.mainLine,
-                    this.props.doubleLine ? styles.doubleTitle : styles.regText,
-                    item.disabled ? styles.disabledItemText : null,
-                    this.isSelected(index) ? styles.selectedText : null,
-                    this.props.leftText ? styles.leftText : null
-                  ]}
-                >
-                  {this.getTitle(item)}
-                </Text>
-                {this.props.chevron || this.isSelected(index)
-                  ? this.setIcon(this.props.chevron, index)
-                  : null}
-              </TouchableOpacity>
-            )}
+
+                  {this.props.tripleLine &&
+                    item[this.props.thirdLineProperty] && (
+                      <Text
+                        style={[
+                          styles.thirdLine,
+                          item.disabled ? styles.disabledItemText : null,
+                          this.isSelected(index) ? styles.selectedText : null,
+                          this.props.leftText ? styles.leftText : null
+                        ]}
+                      >
+                        {this.getThirdLineText(
+                          item[this.props.thirdLineProperty]
+                        )}
+                      </Text>
+                    )}
+                  {this.props.chevron ||
+                  this.isSelected(index) ||
+                  this.hasChevron(index)
+                    ? this.setIcon(this.props.chevron, index)
+                    : null}
+                </TouchableOpacity>
+              );
+            }}
             keyExtractor={this.keyExtractor}
           />
         </List>

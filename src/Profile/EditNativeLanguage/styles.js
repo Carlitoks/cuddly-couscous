@@ -57,7 +57,8 @@ export default StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(50),
     marginTop: 38,
-    color: Colors.primaryColor,
-    backgroundColor: Colors.transparent
+    color: "white",
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   }
 });

@@ -28,10 +28,14 @@ export default (ESP = {
   callLinguist: "Call a Linguist",
   calls: "Calls",
   callSettings: "Call Settings",
-  callTimeBoxText: "Enjoy Jeenie for now for FREE",
+  callTimeBoxTextLine1:
+    "Enjoy Jeenie right now for FREE in \n celebration of our launch",
+  callTimeBoxTextLine2:
+    "Future pricing will be $1/min \n with package discounts available",
+  callTimeBoxText: "Enjoy Jeenie right now for FREE",
   callTimeButtonText: "minutes for FREE",
   callTimeButtonSubtitle: "Compliments of Jeenie",
-  callTimeMinutes: "Estimated Call Time",
+  callTimeMinutes: "Call Duration",
   callTimeMinutesSub: "Recommended for this situation",
   callTimeTitle: "Currently available in Mandarin and English.",
   callTimeSubtitle: "More languages coming soon.",
@@ -129,8 +133,10 @@ export default (ESP = {
   whereAreYouNow: "Where are you now?",
   hotel: "Hotel",
   howLongNeedHelp: "How Long Will You Need Assistance?",
+  howMuchTimeDoYouNeed: "How much time do you need?",
   iAgreeTerms: "I agree to the ",
   iAm18: "I am 18 years of age or older",
+  iAmNotSure: "I'm not sure",
   igniteGenerated: "Ignite Generate Screens",
   incomingCall: "Incoming video call...",
   intermediate: "Intermediate",
@@ -147,6 +153,16 @@ export default (ESP = {
     "Future versions of Jeenie will support all languages, and you will be able to select them here.",
   languageFrom: "From:",
   languageTo: "To:",
+  lauchScreenSwipe1:
+    "With Jeenie, language is no longer a barrier to communication. \n Travel with confidence!",
+  lauchScreenSwipe2:
+    "Wherever you are in the world, live, human language speakers are available at your convenience through the Jeenie app.",
+  lauchScreenSwipe3:
+    "Currently, Jeenie provides language support in Mandarin and English. 10 additional languages coming soon.",
+  lauchScreenSwipe4:
+    "The average call lasts 8 minutes, but speak as long as you like.",
+  lauchScreenSwipe5:
+    "In celebration of our launch, your first calls are FREE... compliments of Jeenie!",
   lastname: "Last Name",
   legal: "Legal",
   letsGoToKwon: "Let’s Get to Know You",

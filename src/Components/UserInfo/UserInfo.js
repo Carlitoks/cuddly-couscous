@@ -11,9 +11,10 @@ const UserInfo = ({ text, rating }) => {
     <View style={styles.containerText}>
       {/* Component used for call history  */}
 
-      <Text style={styles.userName}>{text}.</Text>
       <View style={styles.containerStyle}>
+        <Text style={styles.userName}>{text}.</Text>
         {rating ? (
+          <View style={styles.stars}>
           <StarRating
             emptyStar={"ios-star-outline"}
             fullStar={"ios-star"}
@@ -27,6 +28,7 @@ const UserInfo = ({ text, rating }) => {
             starColor={Colors.gradientColorButton.top}
             fullStarColor={Colors.gradientColorButton.top}
           />
+          </View>
         ) : null}
       </View>
     </View>

@@ -16,8 +16,7 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: width,
-    marginTop: -20
+    width: width
   },
   logo: {
     marginTop: moderateScale(23),

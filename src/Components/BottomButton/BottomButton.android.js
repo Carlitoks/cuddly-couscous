@@ -49,7 +49,8 @@ const BottomButton = ({
   customStyle,
   transparent,
   color,
-  whiteDisabled
+  whiteDisabled,
+  smaller
 }) => {
   return (
     <View
@@ -65,12 +66,14 @@ const BottomButton = ({
         <LinearGradient
           colors={[Colors.transparent, Colors.white]}
           style={styles.linearGradientBackground}
+          locations={[0, 0.3]}
         />
       )}
       <Button
         borderRadius={50}
         textStyle={[
           styles.text,
+          smaller ? styles.smallerText : null,
           bold || long ? styles.textBold : null,
           disabled
             ? loading
@@ -105,6 +108,7 @@ const BottomButton = ({
         backgroundColor={fill ? Colors.transparent : Colors.primaryColor}
         buttonStyle={[
           styles.buttonContainer,
+          smaller ? styles.smaller : null,
           whiteDisabled ? styles.whiteBorder : styles.normalBorder,
           transparent ? styles.transparent : null,
           long ? styles.long : null,
@@ -126,6 +130,12 @@ const BottomButton = ({
           />
         ) : null}
       </View>
+      <View
+        style={[
+          styles.bottomSeparation,
+          gradient ? { backgroundColor: Colors.white } : null
+        ]}
+      />
     </View>
   );
 };

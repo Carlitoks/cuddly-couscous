@@ -45,10 +45,13 @@ export default StyleSheet.create({
   },
   textName: {
     fontFamily: Fonts.LightFont,
-    fontSize: 18,
-    fontWeight: "500",
+    fontSize: moderateScale(26),
     textAlign: "center",
-    color: Colors.primaryColor
+    marginBottom: moderateScale(50),
+    marginTop: 38,
+    color: "white",
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   },
   titleComponent: {
     fontFamily: Fonts.LightFont,

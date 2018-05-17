@@ -53,10 +53,12 @@ export default StyleSheet.create({
   },
   titleCall: {
     fontFamily: Fonts.LightFont,
-    fontSize: 18,
-    fontWeight: "500",
-    color: Colors.primaryColor,
+    fontSize: moderateScale(26),
     textAlign: "center",
-    backgroundColor: Colors.transparent
+    marginBottom: moderateScale(50),
+    marginTop: 38,
+    color: "white",
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   }
 });

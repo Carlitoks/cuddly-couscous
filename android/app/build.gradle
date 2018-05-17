@@ -102,7 +102,7 @@ android {
         minSdkVersion 22
         targetSdkVersion 22
         versionCode 1
-        versionName "1.1.23"
+        versionName "1.1.24"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -167,7 +167,7 @@ dependencies {
     compile project(':react-native-opentok')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.facebook.react:react-native:+'
+    compile ("com.facebook.react:react-native:0.50.4") { force = true } 
     compile "com.android.support:support-v4:23.0.1"
     // From node_modules
 }

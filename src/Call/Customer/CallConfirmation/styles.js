@@ -19,9 +19,12 @@ export const styles = StyleSheet.create({
   titleCall: {
     fontFamily: Fonts.LightFont,
     fontSize: moderateScale(26),
-    color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: Colors.transparent
+    marginBottom: moderateScale(50),
+    marginTop: 38,
+    color: "white",
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   },
   titleStyle: {
     fontSize: moderateScale(20),
@@ -57,7 +60,7 @@ export const styles = StyleSheet.create({
     fontWeight: "normal",
     fontFamily: Fonts.LightFont,
     fontSize: moderateScale(20),
-    opacity: 0.4
+    opacity: 0.8
   },
   firstLanguage: {
     flexDirection: "row",

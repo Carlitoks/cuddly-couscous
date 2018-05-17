@@ -14,6 +14,29 @@ export const LANG_CODES = new Map([
   ["yue", "Chinese (Cantonese)"]
 ]);
 
+export const LAUNCHSCREENENTRIES = [
+  {
+    title: I18n.t("lauchScreenSwipe1"),
+    illustration: "lauchScreenSwipe1"
+  },
+  {
+    title: I18n.t("lauchScreenSwipe2"),
+    illustration: "lauchScreenSwipe2"
+  },
+  {
+    title: I18n.t("lauchScreenSwipe3"),
+    illustration: "lauchScreenSwipe3"
+  },
+  {
+    title: I18n.t("lauchScreenSwipe4"),
+    illustration: "lauchScreenSwipe4"
+  },
+  {
+    title: I18n.t("lauchScreenSwipe5"),
+    illustration: "lauchScreenSwipe5"
+  }
+];
+
 export const TIME_OPTIONS = [
   { duration: 8, cost: 10 },
   { duration: 15, cost: 15 },

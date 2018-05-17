@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     fontWeight: "normal"
   },
   largeText: {
-    fontSize: 18
+    fontSize: moderateScale(20)
   },
   orangeTitle: {
     color: Colors.listLabelColor,

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { updateSettings } from "../../Ducks/CallCustomerSettings";
+import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { Text, View, ScrollView } from "react-native";
 import { List, ListItem } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -27,14 +28,9 @@ class CallTimeView extends Component {
     super(props);
 
     this.state = {
-      timeIndex: -1
+      timeIndex: -1,
+      notSureSelected: false
     };
-  }
-
-  componentWillMount() {
-    this.setState({
-      timeIndex: findIndex(TIME_OPTIONS, { duration: this.props.selectedTime })
-    });
   }
 
   isSelected = index => {
@@ -45,10 +41,11 @@ class CallTimeView extends Component {
     this.setState({ timeIndex: index });
   }
 
-  updateTime(duration) {
-    this.props.updateSettings({
-      selectedTime: duration
-    });
+  updateTime({ duration, cost }) {
+    const { updateSettings, updateContactLinguist } = this.props;
+
+    updateSettings({ selectedTime: duration });
+    updateContactLinguist({ cost });
   }
 
   submit(navigation) {
@@ -62,6 +59,9 @@ class CallTimeView extends Component {
 
   render() {
     const { navigation, routes } = this.props;
+    const { notSureSelected, timeIndex } = this.state;
+    const bottomButtonDisabled = timeIndex === -1 && !notSureSelected;
+
     setIndex = index => {
       this.setState({
         timeIndex: index
@@ -86,18 +86,10 @@ class CallTimeView extends Component {
           }
           titleComponent={
             <Text style={[styles.bottom, styles.bottomText]}>
-              {`${this.props.selectedTime} ${I18n.t("minutes")}`}
+              {I18n.t("howMuchTimeDoYouNeed")}
             </Text>
           }
         >
-          <View style={styles.box}>
-            <Text style={[styles.mainTitle, styles.boxText]}>
-              {I18n.t("celebrateWithUs")}
-            </Text>
-            <Text style={[styles.mainTitle, styles.boxText]}>
-              {I18n.t("callTimeBoxText")}
-            </Text>
-          </View>
           <ScrollView
             automaticallyAdjustContentInsets={true}
             bounces={false}
@@ -105,29 +97,56 @@ class CallTimeView extends Component {
             style={styles.scrollContainer}
           >
             <ListComponent
-              customContainerStyle={{ marginBottom: 150 }}
-              data={TIME_OPTIONS}
-              selected={this.state.timeIndex}
+              data={[{ duration: null, cost: null }]}
+              selected={notSureSelected ? 0 : -1}
               titleProperty={"duration"}
-              subtitleProperty={"cost"}
-              complementTitle={I18n.t("minutes")}
-              complementSubtitle={"US $"}
+              complementTitle={I18n.t("iAmNotSure")}
               onPress={index => {
-                this.updateTime(TIME_OPTIONS[index].duration);
+                this.updateTime({ duration: null, cost: null });
               }}
               changeSelected={index => {
+                this.changeSelected(-1);
+                this.setState({ notSureSelected: true });
+              }}
+              rightTitle
+              leftText
+              noFlex
+            />
+            <ListComponent
+              data={TIME_OPTIONS}
+              selected={timeIndex}
+              titleProperty={"duration"}
+              complementTitle={I18n.t("minutes")}
+              onPress={index => {
+                this.updateTime(TIME_OPTIONS[index]);
+              }}
+              changeSelected={index => {
+                this.setState({ notSureSelected: false });
                 this.changeSelected(index);
               }}
               rightTitle
               leftText
               noFlex
             />
+
+            <View style={styles.box}>
+              <Text style={[styles.boxText, styles.marginTop19]}>
+                {I18n.t("callTimeBoxTextLine1")}
+              </Text>
+              <Text style={[styles.boxText, styles.marginTop14]}>
+                {I18n.t("callTimeBoxTextLine2")}
+              </Text>
+              <Text style={[styles.boxText, styles.boxPricing]}>
+                {`Price = $${this.props.selectedTime ? this.props.cost : 0}`}
+              </Text>
+            </View>
           </ScrollView>
           {/* Next Button */}
           <BottomButton
             title={I18n.t("continue")}
             onPress={() => this.submit(navigation)}
-            fill
+            disabled={bottomButtonDisabled}
+            fill={!bottomButtonDisabled}
             bold={true}
             absolute
             gradient
@@ -146,7 +165,8 @@ const mS = state => ({
 });
 
 const mD = {
-  updateSettings
+  updateSettings,
+  updateContactLinguist
 };
 
 export default connect(mS, mD)(CallTimeView);

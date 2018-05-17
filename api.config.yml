@@ -3,6 +3,7 @@
 APP_ENV: dev # dev|prod
 APP_ROOT: /app
 APP_URL: http://localhost:3000
+APP_LINGUIST_LANGS: ["eng","cmn","yue"]
 
 POSTGRES_USER: solo-platform
 POSTGRES_PASS: solo-platform-db-password

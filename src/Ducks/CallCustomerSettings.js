@@ -174,7 +174,7 @@ export const closeOpenConnections = () => dispatch => {
 const initialState = {
   // Call Settings
   mic: true,
-  video: false,
+  video: true,
   speaker: true,
   rotate: true,
   timer: null,

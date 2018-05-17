@@ -116,9 +116,6 @@ class ScanScreenView extends Component {
                 type: "LoginView"
               });
             }
-          })
-          .then(() => {
-            this.scanner.reactivate();
           });
 
         this.setState({

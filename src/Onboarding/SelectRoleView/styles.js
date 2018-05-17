@@ -20,8 +20,8 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent
   },
   logoImage: {
-    width: 250,
-    height: 80,
+    width: 150,
+    height: 33,
     resizeMode: "contain"
   },
   call: {
@@ -58,28 +58,23 @@ export default StyleSheet.create({
     color: Colors.fontColor,
     fontSize: 15
   },
-  textBecome: {
-    fontFamily: Fonts.LightFont,
-    color: Colors.fontColor,
-    fontSize: moderateScale(23),
-    marginTop: moderateScale(15),
-    textDecorationLine: "underline",
-    backgroundColor: "rgba(255, 255, 255, 0)"
-  },
-  textBecomeX: {
-    fontFamily: Fonts.LightFont,
-    color: Colors.fontColor,
-    fontSize: 17,
-    marginBottom: 15,
-    textDecorationLine: "underline",
-    backgroundColor: "rgba(255, 255, 255, 0)"
-  },
   textLanguageCommand: {
     fontFamily: Fonts.LightFont,
     color: Colors.fontColor,
     fontSize: moderateScale(30),
     alignSelf: "center",
     backgroundColor: "rgba(255, 255, 255, 0)"
+  },
+  textBottom: {
+    fontFamily: Fonts.LightFont,
+    fontWeight: "600",
+    color: Colors.fontColor,
+    fontSize: 14,
+    backgroundColor: "rgba(255, 255, 255, 0)",
+    bottom: 10
+  },
+  textBottomX: {
+    marginBottom: 15
   },
   textCenter: {
     fontFamily: Fonts.BaseFont,
@@ -90,22 +85,6 @@ export default StyleSheet.create({
     textAlign: "center",
     marginBottom: moderateScale(15),
     marginTop: moderateScale(10)
-  },
-  textLogin: {
-    fontFamily: Fonts.LightFont,
-    fontSize: moderateScale(23),
-    color: Colors.fontColor,
-    marginTop: moderateScale(15),
-    textDecorationLine: "underline",
-    backgroundColor: "rgba(255, 255, 255, 0)"
-  },
-  textLoginX: {
-    fontFamily: Fonts.LightFont,
-    color: Colors.fontColor,
-    fontSize: 17,
-    marginBottom: 15,
-    textDecorationLine: "underline",
-    backgroundColor: Colors.transparent
   },
   buttonText: {
     fontFamily: Fonts.BoldFont,
@@ -130,13 +109,11 @@ export default StyleSheet.create({
   contentScrollContainer: {
     flexGrow: 1
   },
-  mainBottomContainer: {
-    width: width,
+  linksContainer: {
+    alignSelf: "center",
+    width: width / 2,
     flexDirection: "row",
-    justifyContent: "space-between",
-    paddingBottom: moderateScale(25),
-    paddingRight: moderateScale(25),
-    paddingLeft: moderateScale(25)
+    justifyContent: "space-around"
   },
   mainContainer: {
     position: "absolute",
@@ -145,5 +122,28 @@ export default StyleSheet.create({
   },
   firstLetter: {
     fontSize: moderateScale(85)
+  },
+
+  absolute: {
+    position: "absolute"
+  },
+  bottom: {
+    bottom: 0
+  },
+  zIndex1: {
+    zIndex: 1
+  },
+  backgroundRed: {
+    backgroundColor: "red"
+  },
+  slogan: {
+    backgroundColor: Colors.transparent,
+    marginTop: 15,
+    color: Colors.primaryColor,
+    fontFamily: Fonts.BaseFont,
+    fontSize: 16.5
+  },
+  fullWidth: {
+    width: "100%"
   }
 });

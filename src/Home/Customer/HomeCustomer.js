@@ -108,37 +108,42 @@ class Home extends Component {
       .then(response => {
         const { allCustomerCalls } = this.props;
 
-        const scenariosList = take(allCustomerCalls, 5)
-          .filter(call => {
-            return call.session.scenario !== undefined;
-          })
-          .map(call => {
-            const {
-              session: {
-                id,
-                estimatedMinutes,
-                primaryLangCode,
-                secondaryLangCode,
-                scenario,
-                createdAt,
-                scenario: { category, title }
-              }
-            } = call;
+        const filteredCalls = allCustomerCalls.filter(call => {
+          const {
+            session,
+            session: { scenario }
+          } = call;
 
-            const titleMapped = `${_upperFirst(
-              CATEGORIES[category]
-            )}: ${title}`;
+          return scenario !== undefined && !scenario.eventID;
+        });
 
-            return {
+        const scenariosList = take(filteredCalls, 5).map(call => {
+          const {
+            session: {
               id,
-              createdAt: moment(createdAt).format("MM/DD/YYYY [at] hh:mm A"),
-              title: titleMapped,
               estimatedMinutes,
-              scenario,
               primaryLangCode,
-              secondaryLangCode
-            };
-          });
+              secondaryLangCode,
+              scenario,
+              createdAt,
+              scenario: { category, title },
+              customScenarioNote
+            }
+          } = call;
+
+          const titleMapped = `${_upperFirst(CATEGORIES[category])}: ${title}`;
+
+          return {
+            id,
+            createdAt: moment(createdAt).format("MM/DD/YYYY [at] hh:mm A"),
+            title: titleMapped,
+            estimatedMinutes,
+            scenario,
+            primaryLangCode,
+            secondaryLangCode,
+            customScenarioNote
+          };
+        });
 
         this.props.updateHomeFlow({ scenariosList });
       });
@@ -221,15 +226,17 @@ class Home extends Component {
           ref={c => (this._slider1Ref = c)}
           data={categories}
           renderItem={({ item, index }) => {
-            return (
-              <CarouselEntry
-                onPress={() => this.onCarouselItemPress(index, item)}
-                data={item}
-                mapper={title => {
-                  return CATEGORIES[title];
-                }}
-              />
-            );
+            if (item !== "general") {
+              return (
+                <CarouselEntry
+                  onPress={() => this.onCarouselItemPress(index, item)}
+                  data={item}
+                  mapper={title => {
+                    return CATEGORIES[title];
+                  }}
+                />
+              );
+            }
           }}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth + itemMargin * 2}
@@ -277,6 +284,7 @@ class Home extends Component {
         itemKey={"id"}
         subtitleProperty={"createdAt"}
         titleProperty={"title"}
+        thirdLineProperty={"customScenarioNote"}
         onPress={index => {
           if (!emptyActivity) {
             const scenario = scenariosList[index];
@@ -293,7 +301,8 @@ class Home extends Component {
             updateContactLinguist({
               selectedLanguage: languages[languageIndex]["name"],
               primaryLangCode: scenario.primaryLangCode,
-              secondaryLangCode: scenario.secondaryLangCode
+              secondaryLangCode: scenario.secondaryLangCode,
+              customScenarioNote: scenario.customScenarioNote
             });
 
             updateCallCustomerSettings({
@@ -307,6 +316,7 @@ class Home extends Component {
         selected={this.state.indexSelected}
         chevron={!emptyActivity}
         doubleLine={!emptyActivity}
+        tripleLine={true}
         leftText
       />
     ) : (

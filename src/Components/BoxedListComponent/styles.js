@@ -26,11 +26,14 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "94%",
+    height: 60,
     backgroundColor: Colors.lightPurple,
-    minHeight: 60,
     marginBottom: 10,
 
     borderRadius: 2
+  },
+  minHeight80: {
+    height: 80
   },
   textBetweenView: {
     borderTopWidth: 0
@@ -49,6 +52,13 @@ export default StyleSheet.create({
     paddingLeft: 12,
     fontSize: 12,
     fontWeight: "bold"
+  },
+  thirdLine: {
+    width: "100%",
+    textAlign: "left",
+    paddingLeft: 12,
+    fontSize: 11,
+    marginTop: 4
   },
   singleTitle: {
     height: "100%",

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { NetInfo } from "react-native";
+import { NetInfo, Text } from "react-native";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 
@@ -25,6 +25,9 @@ class App extends Component {
       loadingStore: true,
       store: null
     };
+
+    //Font doesn't scale
+    Text.defaultProps.allowFontScaling = false;
   }
 
   componentWillMount() {

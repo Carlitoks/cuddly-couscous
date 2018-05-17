@@ -213,7 +213,10 @@ class CustomerView extends Component {
     const { customerTokboxSessionID, sessionID, token } = this.props;
 
     clearInterval(this.props.counterId);
-    this.props.updateContactLinguistSettings({ modalReconnect: false });
+    this.props.updateContactLinguistSettings({
+      modalReconnect: false,
+      customScenarioNote: ""
+    });
     this.props.resetCounter();
 
     if (reason === REASON.RETRY) {

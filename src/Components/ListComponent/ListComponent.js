@@ -137,7 +137,7 @@ class ListComponent extends Component {
     const titleParam = titleProperty ? titleProperty : "id";
 
     return complementTitle
-      ? `${item[titleParam]} ${complementTitle}`
+      ? `${item[titleParam] ? item[titleParam] : ""} ${complementTitle}`
       : item[titleParam];
   };
 

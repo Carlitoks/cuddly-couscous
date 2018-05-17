@@ -40,7 +40,7 @@ export const remoteNotificationReceived = invitationId => (
             avatarURL: data.createdBy ? data.createdBy.avatarURL : "",
             estimatedMinutes: data.session.estimatedMinutes
               ? `~ ${data.session.estimatedMinutes} mins`
-              : data.session.estimatedMinutes,
+              : `~ Unspecified`,
             languages:
               data.session &&
               `${LANG_CODES.get(

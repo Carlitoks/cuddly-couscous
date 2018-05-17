@@ -32,9 +32,14 @@ export default StyleSheet.create({
     flex: 1
   },
   title: {
-    color: Colors.primaryColor,
     fontFamily: Fonts.LightFont,
-    fontSize: 20
+    fontSize: moderateScale(26),
+    textAlign: "center",
+    marginBottom: moderateScale(50),
+    marginTop: 38,
+    color: "white",
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   },
   containerTitles: {
     paddingLeft: 20,

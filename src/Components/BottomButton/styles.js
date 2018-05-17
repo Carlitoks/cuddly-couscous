@@ -22,6 +22,9 @@ export default StyleSheet.create({
     paddingBottom: 8,
     backgroundColor: "blue"
   },
+  smaller: {
+    height: 53
+  },
   whiteBorder: {
     borderWidth: 0.8
   },
@@ -45,6 +48,9 @@ export default StyleSheet.create({
     fontSize: 20,
     fontFamily: Fonts.BoldFont,
     color: Colors.gradientColorButton.top
+  },
+  smallerText: {
+    fontSize: 17
   },
   textBold: {
     fontSize: 20,

@@ -87,7 +87,8 @@ class CallConfirmationView extends Component {
       categoryIndex,
       promotion,
       event,
-      secundaryLangCode
+      secundaryLangCode,
+      scenarioNotes
     } = this.props;
 
     const scannedEvent = promotion ? promotion : event;
@@ -99,7 +100,12 @@ class CallConfirmationView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
           headerLeftComponent={
-            <GoBackButton navigation={this.props.navigation} />
+            <GoBackButton
+              navigation={this.props.navigation}
+              exec={() => {
+                this.props.updateSettings({ customScenarioNote: "" });
+              }}
+            />
           }
           headerRightComponent={
             <Close
@@ -137,9 +143,14 @@ class CallConfirmationView extends Component {
                 <TextInput
                   style={styles.textInput}
                   underlineColorAndroid={Colors.transparent}
-                  value={this.props.scenarioNotes}
+                  value={
+                    scenarioNotes ? scenarioNotes : this.props.scenarioNotes
+                  }
                   fontStyle={
-                    this.props.scenarioNotes.length == 0 ? "italic" : "normal"
+                    !!this.props.scenarioNotes &&
+                    this.props.scenarioNotes.length == 0
+                      ? "italic"
+                      : "normal"
                   }
                   multiline
                   blurOnSubmit
@@ -192,7 +203,11 @@ class CallConfirmationView extends Component {
             >
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
-                  {`${this.props.approxTime} ${I18n.t("minutes")}: `}
+                  {`${
+                    this.props.approxTime
+                      ? this.props.approxTime
+                      : I18n.t("unspecified")
+                  } ${I18n.t("minutes")}: `}
                   <Text style={[styles.regularText]}>
                     {I18n.t("timeCompliments")}
                   </Text>

@@ -12,7 +12,7 @@ export default (styles = StyleSheet.create({
     marginLeft: 20
   },
   userName: {
-    marginLeft: 10,
+    marginRight: 5,
     marginTop: 2,
     color: Colors.black
   },
@@ -21,6 +21,12 @@ export default (styles = StyleSheet.create({
     color: Colors.black
   },
   containerStyle: {
-    marginLeft: 10
+    marginLeft: 10,
+    flexDirection: "row",
+    width: "200%"
+  },
+  stars: {
+    position: "absolute",
+    right: 11
   }
 }));

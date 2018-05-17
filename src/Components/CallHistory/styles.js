@@ -19,7 +19,7 @@ export default (styles = StyleSheet.create({
     color: Colors.black
   },
   textColor: {
-    marginTop: 6,
+    marginTop: "13%",
     color: Colors.black
   },
   notFound: {

@@ -93,7 +93,7 @@ class CallHistory extends Component {
   filterMissedCalls = missedCalls => {
     if (!_isEmpty(missedCalls)) {
       return missedCalls
-          .sort((prev, next) =>
+        .sort((prev, next) =>
           moment(next.session.createdAt).diff(moment(prev.session.createdAt))
         )
         .map((item, i) => {
@@ -188,13 +188,16 @@ class CallHistory extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
+            bounces={false}
             alwaysBounceVertical={false}
           >
             <Grid>
               <Col>
                 <View style={styles.container}>
                   <CallHistoryComponent
-                    data={this.props.selectedIndex === 0 ? allCalls : missedCalls}
+                    data={
+                      this.props.selectedIndex === 0 ? allCalls : missedCalls
+                    }
                     navigation={this.props.navigation}
                   />
                 </View>
