@@ -134,8 +134,11 @@ class Home extends Component {
                 ? item.session.duration
                 : 0,
               rating: !_isUndefined(item.rating) ? item.rating.stars : "",
-              scenario: !_isUndefined(item.session.scenario)
+              category: !_isUndefined(item.session.scenario)
                 ? item.session.scenario.category
+                : "",
+              title: !_isUndefined(item.session.scenario)
+                ? item.session.scenario.title
                 : "",
               createdAt: moment(item.session.createdAt).format(
                 "MMM DD, h:mm A"

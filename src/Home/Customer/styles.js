@@ -44,12 +44,12 @@ export default StyleSheet.create({
     borderRadius: 60
   },
   textName: {
-    fontFamily: Fonts.LightFont,
-    fontSize: moderateScale(26),
+    fontFamily: Fonts.BaseFont,
+    fontSize: 18,
     textAlign: "center",
     marginBottom: moderateScale(50),
     marginTop: 38,
-    color: "white",
+    color: Colors.primaryColor,
     backgroundColor: Colors.transparent,
     fontWeight: "500"
   },

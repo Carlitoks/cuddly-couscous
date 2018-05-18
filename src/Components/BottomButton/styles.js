@@ -3,6 +3,7 @@ import { Fonts, Colors, Metrics } from "../../Themes";
 import { Iphone5, Iphone10 } from "../../Util/Devices";
 
 const { width, height } = Dimensions.get("window");
+const buttonHeight = 53;
 
 export default StyleSheet.create({
   containerBottom: {
@@ -13,7 +14,13 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent
   },
   buttonContainer: {
-    height: 70,
+    height: buttonHeight,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  button: {
+    height: buttonHeight,
     width: width * 0.7,
     borderColor: Colors.gradientColorButton.top,
     borderRadius: 50,
@@ -21,9 +28,6 @@ export default StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     backgroundColor: "blue"
-  },
-  smaller: {
-    height: 53
   },
   whiteBorder: {
     borderWidth: 0.8
@@ -45,24 +49,15 @@ export default StyleSheet.create({
     borderColor: Colors.white
   },
   text: {
-    fontSize: 20,
-    fontFamily: Fonts.BoldFont,
-    color: Colors.gradientColorButton.top
-  },
-  smallerText: {
-    fontSize: 17
-  },
-  textBold: {
-    fontSize: 20,
-    fontFamily: Fonts.BoldFont,
+    fontSize: 17,
+    fontWeight: "600",
+    fontFamily: Fonts.BaseFont,
     color: Colors.gradientColorButton.top
   },
   textDisabled: {
-    fontSize: 20,
     color: Colors.disabledColor
   },
   textWhiteDisabled: {
-    fontSize: 20,
     color: Colors.white
   },
   white: {
@@ -108,9 +103,7 @@ export default StyleSheet.create({
     bottom: 0
   },
   spinner: {
-    flex: 1,
-    position: "absolute",
-    bottom: Iphone10 || Iphone5 ? 14 : 14
+    position: "absolute"
   },
   transparent: {
     backgroundColor: Colors.transparent

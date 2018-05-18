@@ -55,10 +55,11 @@ export default StyleSheet.create({
     paddingBottom: moderateScale(35)
   },
   titleCall: {
-    fontFamily: Fonts.LightFont,
-    fontSize: moderateScale(26),
+    fontFamily: Fonts.BaseFont,
+    fontSize: 18,
     color: Colors.primaryColor,
     textAlign: "center",
-    backgroundColor: Colors.transparent
+    backgroundColor: Colors.transparent,
+    fontWeight: "500"
   }
 });

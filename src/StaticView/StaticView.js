@@ -24,36 +24,20 @@ export default class StaticView extends Component {
           alwaysBounceVertical={false}
           contentContainerStyle={styles.contentScrollContainer}
         >
-          <View>
-            <Col style={{ height: 110 }}>
-              {/* Linear Gradient */}
-              <LinearGradient
-                colors={[
-                  Colors.gradientColor.top,
-                  Colors.gradientColor.middle,
-                  Colors.gradientColor.bottom
-                ]}
-                style={styles.linearGradient}
-              />
-              {/* Header - Navigation */}
-              <TopViewIOS />
-              <Header
-                outerContainerStyles={{
-                  borderBottomWidth: 0,
-                  height: 70,
-                  paddingBottom: 20,
-                  paddingTop: 20
-                }}
-                backgroundColor={Colors.transparent}
-                leftComponent={
-                  <GoBackButton navigation={this.props.navigation} />
-                }
-                centerComponent={{
-                  text: title,
-                  style: styles.title
-                }}
-              />
-            </Col>
+          <View style={styles.headerContainer}>
+            {/* Header - Navigation */}
+            <TopViewIOS />
+            <Header
+              outerContainerStyles={styles.outerContainerStyles}
+              backgroundColor={Colors.transparent}
+              leftComponent={
+                <GoBackButton navigation={this.props.navigation} />
+              }
+              centerComponent={{
+                text: title,
+                style: styles.title
+              }}
+            />
           </View>
 
           <View style={{ height: "100%", backgroundColor: "#ff98ad" }}>

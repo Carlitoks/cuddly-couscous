@@ -14,7 +14,6 @@ import DeviceInfo from "react-native-device-info";
  * Props:
     onPress: function to execute when button is pressed,
     title: Button text,
-    bold: Boolean to specify if text is bold,
     loading: Boolean to specify if button is loading,
     disabled: Boolean to specify if button is disabled,
     long: Boolean to make the button larger,
@@ -36,7 +35,6 @@ import DeviceInfo from "react-native-device-info";
 const BottomButton = ({
   onPress,
   title,
-  bold,
   loading,
   disabled,
   long,
@@ -51,8 +49,7 @@ const BottomButton = ({
   customStyle,
   transparent,
   color,
-  whiteDisabled,
-  smaller
+  whiteDisabled
 }) => {
   return (
     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
@@ -72,68 +69,67 @@ const BottomButton = ({
             locations={[0, 0.3]}
           />
         )}
-        <Button
-          borderRadius={50}
-          textStyle={[
-            styles.text,
-            smaller ? styles.smallerText : null,
-            bold || long ? styles.textBold : null,
-            disabled
-              ? loading
-                ? styles.transparent
-                : whiteDisabled
-                  ? styles.textWhiteDisabled
-                  : styles.textDisabled
-              : null,
-            fill || whiteText ? styles.white : null
-          ]}
-          title={title}
-          onPress={() => {
-            onPress();
-          }}
-          disabled={disabled}
-          disabledStyle={
-            whiteDisabled
-              ? styles.transparentBackground
-              : styles.whiteBackground
-          }
-          iconRight={
-            !!icon
-              ? {
-                  name: icon,
-                  size: 25,
-                  color: fill
-                    ? Colors.primaryColor
-                    : color
-                      ? color
-                      : Colors.gradientColorButton.top
-                }
-              : null
-          }
-          backgroundColor={fill ? Colors.transparent : Colors.primaryColor}
-          buttonStyle={[
-            styles.buttonContainer,
-            smaller ? styles.smaller : null,
-            whiteDisabled ? styles.whiteBorder : styles.normalBorder,
-            transparent ? styles.transparent : null,
-            long ? styles.long : null,
-            fill ? styles.fillBtn : null,
-            disabled
-              ? whiteDisabled
-                ? styles.disabledWhiteBtn
-                : styles.disabledBtn
-              : styles.enabledBtn,
-            negative ? styles.negative : null,
-            color ? { borderColor: color } : null
-          ]}
-        />
-        <View style={styles.spinner}>
-          {!!loading ? (
-            <ActivityIndicator
-              size="large"
-              color={Colors.gradientColorButton.top}
-            />
-          ) : null}
+        <View style={styles.buttonContainer}>
+          <Button
+            borderRadius={50}
+            textStyle={[
+              styles.text,
+              disabled
+                ? loading
+                  ? styles.transparent
+                  : whiteDisabled
+                    ? styles.textWhiteDisabled
+                    : styles.textDisabled
+                : null,
+              fill || whiteText ? styles.white : null
+            ]}
+            title={title}
+            onPress={() => {
+              onPress();
+            }}
+            disabled={disabled}
+            disabledStyle={
+              whiteDisabled
+                ? styles.transparentBackground
+                : styles.whiteBackground
+            }
+            iconRight={
+              !!icon
+                ? {
+                    name: icon,
+                    size: 25,
+                    color: fill
+                      ? Colors.primaryColor
+                      : color
+                        ? color
+                        : Colors.gradientColorButton.top
+                  }
+                : null
+            }
+            backgroundColor={fill ? Colors.transparent : Colors.primaryColor}
+            buttonStyle={[
+              styles.button,
+              whiteDisabled ? styles.whiteBorder : styles.normalBorder,
+              transparent ? styles.transparent : null,
+              long ? styles.long : null,
+              fill ? styles.fillBtn : null,
+              disabled
+                ? whiteDisabled
+                  ? styles.disabledWhiteBtn
+                  : styles.disabledBtn
+                : styles.enabledBtn,
+              negative ? styles.negative : null,
+              color ? { borderColor: color } : null
+            ]}
+          />
+          <View style={styles.spinner}>
+            {!!loading ? (
+              <ActivityIndicator
+                size="large"
+                color={Colors.gradientColorButton.top}
+              />
+            ) : null}
+          </View>
         </View>
       </View>
       <View

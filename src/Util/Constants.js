@@ -36,12 +36,12 @@ export const LAUNCHSCREENENTRIES = [
     illustration: "lauchScreenSwipe5"
   }
 ];
-
+//Set cost to 0 until free is up
 export const TIME_OPTIONS = [
-  { duration: 8, cost: 10 },
-  { duration: 15, cost: 15 },
-  { duration: 30, cost: 27 },
-  { duration: 60, cost: 50 }
+  { duration: 8, cost: 0 },
+  { duration: 15, cost: 0 },
+  { duration: 30, cost: 0 },
+  { duration: 60, cost: 0 }
 ];
 
 export const REASON = {

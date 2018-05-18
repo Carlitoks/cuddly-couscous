@@ -15,7 +15,7 @@ pipeline {
     
     stage ('configure docker compose environment for development') {
       when {
-        branch "develop"
+        branch "master"
         expression {env.ENVIRONMENT_DEV}
       }
       steps {
@@ -31,7 +31,7 @@ pipeline {
     
     stage ('set api configuration') {
       when {
-        branch "develop"
+        branch "master"
         expression {env.CONFIG_DEV}
       }
       steps {

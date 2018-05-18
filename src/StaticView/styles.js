@@ -17,5 +17,12 @@ export default StyleSheet.create({
     width: "100%",
     height: "100%"
   },
-  contentScrollContainer: { flexGrow: 1 }
+  contentScrollContainer: { flexGrow: 1 },
+  outerContainerStyles: {
+    borderBottomWidth: 0,
+    height: 70,
+    paddingBottom: 30,
+    paddingTop: 20
+  },
+  headerContainer: { height: 85, backgroundColor: Colors.gradientColor.top }
 });

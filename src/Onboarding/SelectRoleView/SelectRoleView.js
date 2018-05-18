@@ -166,7 +166,6 @@ class SelectRoleView extends Component {
             onPress={() => navigation.dispatch({ type: "EmailCustomerView" })}
             fill={true}
             long={false}
-            smaller
             relative
             whiteDisabled
           />

@@ -209,7 +209,13 @@ class UserProfileView extends Component {
 
   render() {
     const navigation = this.props.navigation;
-    const { selectedNativeLanguage, firstName, lastName, gender } = this.props;
+    const {
+      selectedNativeLanguage,
+      firstName,
+      lastName,
+      gender,
+      linguistProfile
+    } = this.props;
 
     return (
       <ViewWrapper style={styles.mainContainer}>
@@ -248,18 +254,20 @@ class UserProfileView extends Component {
                   }}
                 />
                 {/* Native Language */}
-                <ListItem
-                  containerStyle={styles.listItemContainer}
-                  title={I18n.t("nativeLanguageTitle").toUpperCase()}
-                  titleStyle={styles.titleStyle}
-                  subtitle={selectedNativeLanguage}
-                  subtitleStyle={styles.listSubtitle}
-                  onPress={() => {
-                    navigation.dispatch({
-                      type: "EditNativeLanguageView"
-                    });
-                  }}
-                />
+                {!linguistProfile && (
+                  <ListItem
+                    containerStyle={styles.listItemContainer}
+                    title={I18n.t("nativeLanguageTitle").toUpperCase()}
+                    titleStyle={styles.titleStyle}
+                    subtitle={selectedNativeLanguage}
+                    subtitleStyle={styles.listSubtitle}
+                    onPress={() => {
+                      navigation.dispatch({
+                        type: "EditNativeLanguageView"
+                      });
+                    }}
+                  />
+                )}
                 {/* Gender */}
                 <ListItem
                   containerStyle={styles.listItemContainer}
