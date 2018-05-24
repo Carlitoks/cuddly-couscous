@@ -156,7 +156,7 @@ class SessionLanguageView extends Component {
             <View
               style={Iphone5 ? styles.titleContainer5 : styles.titleContainer}
             >
-              <Text style={styles.titleCall}>{I18n.t("languages")}</Text>
+              <Text style={styles.titleCall}>{I18n.t("language")}</Text>
             </View>
           }
           headerRightComponent={

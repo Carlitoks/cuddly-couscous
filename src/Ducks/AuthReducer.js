@@ -2,7 +2,7 @@ import { NavigationActions } from "react-navigation";
 
 import { Auth, User, Sessions } from "../Api";
 
-import { loginError } from "./LoginReducer";
+import { loginError, updateForm } from "./LoginReducer";
 import { networkError } from "./NetworkErrorsReducer";
 
 import { clearView as clearUserProfile } from "./UserProfileReducer";
@@ -57,6 +57,7 @@ export const logOutAsync = () => (dispatch, getState) => {
       dispatch(clearHome());
       dispatch(clearHistory());
       dispatch(clearLinguistProfile());
+      PushNotification.cleanListeners();
       dispatch({ type: "SelectRoleView/Reset" });
     });
 };
@@ -123,6 +124,7 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
 
   return Auth.login(email, password, auth.deviceToken)
     .then(response => {
+      dispatch(updateForm({performingRequest: false}))
       return dispatch(
         logIn({
           email,
@@ -132,6 +134,7 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
       );
     })
     .catch(error => {
+      dispatch(updateForm({performingRequest: false}))
       throw error.response;
       dispatch(networkError(error));
       dispatch(loginError(error.response));

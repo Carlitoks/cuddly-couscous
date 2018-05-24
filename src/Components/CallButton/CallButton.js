@@ -50,7 +50,15 @@ export default class CallButton extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          bottom: -12.25,
+          marginLeft: 5,
+          marginRight: 5
+        }}
+      >
         <Button
           borderRadius={100}
           containerViewStyle={{
@@ -69,14 +77,14 @@ export default class CallButton extends Component {
             }
           }}
           buttonStyle={{
-            height: !Iphone5 ? 65 : 55,
-            width: !Iphone5 ? 65 : 55,
+            height: 71.5,
+            width: 71.5,
             justifyContent: "center",
             borderRadius: 100
           }}
           icon={{
             name: this.state.iconName,
-            size: !Iphone5 ? 30 : 23,
+            size: 31.3,
             color: "white",
             buttonStyle: { textAlign: "center", right: 10 }
           }}

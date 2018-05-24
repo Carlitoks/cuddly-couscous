@@ -34,17 +34,17 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#333333",
     marginBottom: 5,
-    backgroundColor:Colors.transparent
+    backgroundColor: Colors.transparent
   },
   icon: {
     color: "white",
     paddingTop: 7,
     paddingRight: 9,
-    backgroundColor:Colors.transparent
+    backgroundColor: Colors.transparent
   },
   text: {
     color: "#ff0000",
-    backgroundColor:Colors.transparent
+    backgroundColor: Colors.transparent
   },
   smallAvatar: {
     width: 70,
@@ -64,14 +64,14 @@ export default StyleSheet.create({
     color: fontColor,
     textAlign: "center",
     width: "100%",
-    backgroundColor:Colors.transparent
+    backgroundColor: Colors.transparent
   },
   locationText: {
     fontSize: 15,
     paddingTop: 5,
     fontFamily: fontFamily,
     color: fontColor,
-    backgroundColor:Colors.transparent
+    backgroundColor: Colors.transparent
   },
   incomingCallText: {
     fontSize: 20,
@@ -81,7 +81,7 @@ export default StyleSheet.create({
     color: fontColor,
     textAlign: "center",
     width: "100%",
-    backgroundColor:Colors.transparent
+    backgroundColor: Colors.transparent
   },
   background: {
     width: "100%",
@@ -103,11 +103,11 @@ export default StyleSheet.create({
     width: "100%"
   },
   publisherBox: {
-    height: 200,
-    width: 150,
+    height: 154,
+    width: 86,
     backgroundColor: "black",
-    bottom: 120,
-    right: 10,
+    top: "5.5%",
+    right: 20,
     position: "absolute",
     transform: [{ translate: [0, 0, 1] }]
   },
@@ -120,5 +120,10 @@ export default StyleSheet.create({
   },
   button: {
     zIndex: 1
+  },
+  CallAvatarNameContainer: {
+    width: "100%",
+    height: 200,
+    backgroundColor: Colors.transparent
   }
 });

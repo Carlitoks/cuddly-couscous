@@ -203,13 +203,12 @@ class CallConfirmationView extends Component {
             >
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
-                  {`${
-                    this.props.approxTime
-                      ? this.props.approxTime
-                      : I18n.t("unspecified")
-                  } ${I18n.t("minutes")}: `}
+                  {this.props.approxTime
+                    ? `${this.props.approxTime} ${I18n.t("minutes")}: `
+                    : `${I18n.t("upTo60")}: `}
                   <Text style={[styles.regularText]}>
-                    {I18n.t("timeCompliments")}
+                    {/* {I18n.t("timeCompliments")} */}
+                    {"$0"}
                   </Text>
                 </Text>
                 <Text style={[styles.regularText]}>

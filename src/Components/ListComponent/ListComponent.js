@@ -214,14 +214,18 @@ class ListComponent extends Component {
               ]}
               containerStyle={[
                 styles.container,
-                this.isSelected(index) ? styles.selectedBackground : null
+                this.isSelected(index)
+                  ? styles.selectedBackground
+                  : styles.disabledBackground
               ]}
               title={
                 <Text
                   style={[
                     styles.regText,
                     item.disabled ? styles.disabledItemText : null,
-                    this.isSelected(index) ? styles.selectedText : null,
+                    this.isSelected(index)
+                      ? styles.selectedText
+                      : styles.disabledText,
                     this.props.leftText ? styles.leftText : null
                   ]}
                 >

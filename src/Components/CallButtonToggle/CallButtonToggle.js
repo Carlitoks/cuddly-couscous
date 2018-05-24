@@ -20,7 +20,7 @@ import { bool, func, number, object, string } from "prop-types";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
 import { View, AppState, Text } from "react-native";
 import { Button } from "react-native-elements";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/Ionicons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { Iphone5 } from "../../Util/Devices";
 import Colors from "../../Themes/Colors";
@@ -128,11 +128,11 @@ class CallButtonToggle extends Component {
           borderRadius={100}
           containerViewStyle={{
             borderRadius: 100,
-            opacity: 0.7,
+            opacity: active ? 0.7 : 0.27,
             textAlign: "center"
           }}
           backgroundColor={
-            active ? Colors.callButtonColor : Colors.enabledColor
+            active ? Colors.primaryColor : "rgba(255,255,255,0.27)"
           }
           onPress={() => {
             {
@@ -141,16 +141,16 @@ class CallButtonToggle extends Component {
             this.toggleIcon();
           }}
           style={{
-            height: !Iphone5 ? 65 : 55,
-            width: !Iphone5 ? 65 : 55,
+            height: 47,
+            width: 47,
             justifyContent: "center",
             borderRadius: 100
           }}
           iconStyle={{
             marginRight: 0
           }}
-          size={!Iphone5 ? 30 : 23}
-          color={"white"}
+          size={32}
+          color={active ? Colors.gradientColor.top : Colors.primaryColor}
           textStyle={{ marginLeft: -9.8 }}
         />
       </View>

@@ -75,7 +75,8 @@ const colors = {
   redError: "#ff0000",
   defaultChevron: "#bdc6cf",
   textDefault: "#5F5F5F",
-  transparent: "rgba(255,255,255,0)"
+  transparent: "rgba(255,255,255,0)",
+  gray2: "#9B9B9B"
 };
 
 export default colors;

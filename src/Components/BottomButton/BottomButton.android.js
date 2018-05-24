@@ -47,7 +47,8 @@ const BottomButton = ({
   customStyle,
   transparent,
   color,
-  whiteDisabled
+  whiteDisabled,
+  smaller
 }) => {
   return (
     <View

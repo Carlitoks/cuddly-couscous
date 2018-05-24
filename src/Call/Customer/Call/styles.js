@@ -34,15 +34,6 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center"
   },
-  topContainer: {
-    flex: 0.5,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: Colors.transparent,
-    paddingTop: 10,
-    transform: [{ translate: [0, 0, 1] }]
-  },
   instructions: {
     textAlign: "center",
     color: "#333333",
@@ -55,25 +46,6 @@ export default StyleSheet.create({
   },
   text: {
     color: "#ff0000"
-  },
-  smallAvatar: {
-    width: 70,
-    height: 70,
-    borderRadius: 35
-  },
-  inlineContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  callerNameText: {
-    fontSize: 30,
-    marginLeft: 10,
-    paddingTop: 10,
-    fontFamily: fontFamily,
-    color: fontColor,
-    textAlign: "center",
-    width: "100%"
   },
   locationText: {
     fontSize: 15,
@@ -110,11 +82,11 @@ export default StyleSheet.create({
     width: "100%"
   },
   publisherBox: {
-    height: 200,
-    width: 150,
+    height: 154,
+    width: 86,
     backgroundColor: "black",
-    bottom: 120,
-    right: 10,
+    top: "5.5%",
+    right: 20,
     position: "absolute",
     transform: [{ translate: [0, 0, 1] }]
   },

@@ -3,11 +3,15 @@ import { clearCallHistory as clearHistory } from "./CallHistoryReducer";
 import { clearSettings as clearCustomerSettings } from "./CallCustomerSettings";
 import { clearSettings as clearLinguistSettings } from "./CallLinguistSettings";
 import { clear as clearTokbox } from "./tokboxReducer";
+import { displayNetworkAlert } from "./NetworkInfoReducer";
 import { logOut } from "./AuthReducer";
+import I18n from "../I18n/I18n";
+import { Alert } from "react-native";
 
 const ACTIONS = {
   CLEAR: "networkErrors/clear",
-  ERROR: "networkErrors/error"
+  ERROR: "networkErrors/error",
+  UPDATE: "networkErrors/update"
 };
 
 export const clearError = () => ({
@@ -19,7 +23,13 @@ export const setError = error => ({
   payload: error
 });
 
-export const networkError = error => dispatch => {
+export const update = payload => ({
+  type: ACTIONS.UPDATE,
+  payload
+});
+
+export const networkError = error => (dispatch, getState) => {
+  dispatch(displayNetworkAlert());
   dispatch(setError(error));
   if (error && error.response && error.response.status) {
     dispatch(handleError(error.response.status));
@@ -81,7 +91,8 @@ const clearSettings = () => (dispatch, getState) => {
 };
 
 const initialState = {
-  errors: null
+  errors: null,
+  networkModal: false
 };
 
 const networkErrors = (state = initialState, action = {}) => {
@@ -91,6 +102,12 @@ const networkErrors = (state = initialState, action = {}) => {
     case ACTIONS.CLEAR: {
       return { ...initialState };
     }
+
+    case ACTIONS.UPDATE:
+      return {
+        ...state,
+        ...payload
+      };
 
     case ACTIONS.ERROR: {
       if (payload.request._hasError) {

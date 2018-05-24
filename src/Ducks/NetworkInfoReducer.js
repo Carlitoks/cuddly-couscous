@@ -1,4 +1,6 @@
 import { NetInfo } from "react-native";
+import I18n from "../I18n/I18n";
+import { Alert } from "react-native";
 
 const ACTIONS = {
   UPDATE: "networkInfo/update"
@@ -21,9 +23,41 @@ export const delayUpdateInfo = connectionInfo => (dispatch, getState) => {
   }
 };
 
+export const displayNetworkAlert = () => (dispatch, getState) => {
+  const { networkInfo, networkErrors } = getState();
+  if (networkInfo.type == "none" && !networkInfo.networkModal) {
+    dispatch(
+      updateNetworkInfo({
+        networkModal: true
+      })
+    );
+    Alert.alert(
+      // This is Alert Dialog Title
+      I18n.t("thereNoInternetConnection"),
+
+      // This is Alert Dialog Message.
+      I18n.t("checkYourConnection"),
+      [
+        // First Text Button in Alert Dialog.
+        {
+          text: I18n.t("ok"),
+          onPress: () => {
+            dispatch(
+              updateNetworkInfo({
+                networkModal: false
+              })
+            );
+          }
+        }
+      ]
+    );
+  }
+};
+
 const initialState = {
   type: null,
-  effectiveType: null
+  effectiveType: null,
+  networkModal: false
 };
 
 const networkInfo = (state = initialState, action = {}) => {

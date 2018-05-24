@@ -21,6 +21,8 @@ export default StyleSheet.create({
     backgroundColor: "#000"
   },
   topContainer: {
+    position: "absolute",
+    top: "33%",
     width: "100%",
     flexDirection: "column",
     justifyContent: "center",
@@ -46,27 +48,43 @@ export default StyleSheet.create({
     flex: 1
   },
   bottomContainer: {
-    flex: 0.5,
+    flex: 1,
     marginTop: 30,
     width: "100%",
     justifyContent: "space-around",
     alignItems: "center",
     alignSelf: "auto"
   },
+  controlsContainer: {
+    backgroundColor: Colors.transparent,
+    flex: 1
+  },
   inlineContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center"
   },
-  callerNameText: {
-    fontSize: 30,
-    marginLeft: 10,
-    paddingTop: 10,
+  spinner: {
+    alignSelf: "center",
+    position: "absolute",
+    top: "33%"
+  },
+  connectingMessageContainer: {
+    alignSelf: "center",
+    position: "absolute",
+    justifyContent: "center",
+    top: "35%",
+    height: 156,
+    width: 280,
+    backgroundColor: Colors.transparent
+  },
+  connectingMessage: {
     fontFamily: Fonts.primaryFont,
+    fontSize: 22,
+    lineHeight: 32,
     color: Colors.fontColor,
     textAlign: "center",
-    backgroundColor: Colors.transparent,
-    width: width
+    backgroundColor: Colors.transparent
   },
   notificationText: {
     fontSize: 20,
@@ -105,6 +123,7 @@ export default StyleSheet.create({
     borderRadius: 35
   },
   contentContainerStyle: {
+    backgroundColor: Colors.gradientColor.top,
     height: "100%"
   },
   containerButtons: {

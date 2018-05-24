@@ -15,7 +15,7 @@ class ModalReconnect extends Component {
   showCustomerOptions() {
     return (
       <View style={styles.modalWrapper}>
-        <View style={styles.topContainer}>
+        <View style={styles.mainMessageContainer}>
           <Text style={styles.mainMessage}>
             {this.props.reconnectMessage || I18n.t("allLinguistsAreBusy")}
           </Text>

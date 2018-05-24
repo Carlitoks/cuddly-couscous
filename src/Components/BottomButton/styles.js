@@ -21,13 +21,16 @@ export default StyleSheet.create({
   },
   button: {
     height: buttonHeight,
-    width: width * 0.7,
+    width: 255,
     borderColor: Colors.gradientColorButton.top,
     borderRadius: 50,
     justifyContent: "center",
     paddingTop: 8,
     paddingBottom: 8,
     backgroundColor: "blue"
+  },
+  smaller: {
+    height: 53
   },
   whiteBorder: {
     borderWidth: 0.8

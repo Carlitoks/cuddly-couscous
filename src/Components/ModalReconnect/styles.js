@@ -1,5 +1,7 @@
-import { StyleSheet } from "react-native";
-import Colors from "../../Themes/Colors";
+import { StyleSheet, Dimensions } from "react-native";
+import { Colors, Fonts } from "../../Themes";
+
+const { width, height } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
   modalContainer: {
@@ -7,22 +9,30 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.7)"
+    backgroundColor: Colors.gradientColor.top
   },
-  topContainer: {
-    marginTop: 30,
-    marginBottom: 50,
-    width: "100%",
+  mainMessageContainer: {
+    height: 156,
+    width: 269,
+    position: "absolute",
+    top: "33%",
+
+    alignSelf: "center",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center"
   },
   mainMessage: {
-    fontWeight: "bold",
-    color: Colors.white
+    flex: 1,
+    textAlign: "center",
+    fontFamily: Fonts.BaseFont,
+    fontSize: 22,
+    lineHeight: 22,
+    color: Colors.white,
+    alignSelf: "center"
   },
   modalWrapper: {
-    width: 300,
-    height: 200
+    height,
+    width
   }
 });

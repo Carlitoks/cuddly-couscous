@@ -51,20 +51,6 @@ const ViewWrapper = ({
         backgroundColor={Colors.transparent}
         translucent={true}
       />
-
-      <Modal
-        visible={status === "none"}
-        animationType={"slide"}
-        onRequestClose={() => false}
-        transparent={true}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.innerContainer}>
-            <Text style={styles.text}>There is no internet connection</Text>
-          </View>
-        </View>
-      </Modal>
-
       {/* Render Child Components */}
       {children}
     </View>

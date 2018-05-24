@@ -11,6 +11,8 @@ export default StyleSheet.create({
   container: {
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "flex-start",
+    height: 50,
+    width: 50
   }
 });

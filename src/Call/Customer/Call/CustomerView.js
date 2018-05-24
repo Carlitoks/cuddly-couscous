@@ -2,7 +2,7 @@ import React, { Component, Ref } from "react";
 import { connect } from "react-redux";
 import OpenTok, { Publisher, Subscriber } from "react-native-opentok";
 import KeepAwake from "react-native-keep-awake";
-import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
+import CallAvatarName from "../../../Components/CallAvatarName/CallAvatarName";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import {
   updateSettings,
@@ -40,7 +40,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
-import Fade from "../../../Effects/Fade/Fade";
+import Slide from "../../../Effects/Slide/Slide";
 import { Colors, Images } from "../../../Themes";
 import { fmtMSS } from "../../../Util/Helpers";
 import styles from "./styles";
@@ -320,51 +320,21 @@ class CustomerView extends Component {
                 />
               )}
             </View>
-            <View style={styles.topContainer}>
-              <TopViewIOS />
-              <View style={styles.inlineContainer}>
-                <Image style={styles.smallAvatar} source={this.selectImage()} />
-              </View>
-              <Text style={styles.callerNameText}>
-                {this.handleSessionInfoName()}
-              </Text>
+            <CallAvatarName
+              imageSource={this.selectImage()}
+              sessionInfoName={this.handleSessionInfoName()}
+            />
 
-              {/*<View style={styles.inlineContainer}>
-              <Icon style={styles.icon} size={25} name="room" />
-              <Text style={styles.locationText}>San Diego, CA</Text>
-            </View>*/}
-
-              <View style={styles.inlineContainer}>
-                <Text style={styles.incomingCallText}>
-                  {fmtMSS(this.props.elapsedTime)}
-                </Text>
-              </View>
-            </View>
-            <View style={styles.containerSwitch}>
-              <Switch
-                onValueChange={customerExtraTime => {
-                  this.props.updateSettings({
-                    customerExtraTime: customerExtraTime
-                  });
-                  console.log(visible);
-                  this.setState({ visible: !visible });
-                }}
-                value={this.props.customerExtraTime}
-                onTintColor={Colors.onTintColor}
-                thumbTintColor={Colors.thumbTintColor}
-                tintColor={Colors.tintColor}
-              />
-              <Text style={styles.extraTime}>{I18n.t("allowExtraTime")}</Text>
-            </View>
-
-            <Fade
+            <Slide
               visible={visible}
+              min={0}
+              max={112}
               style={{
                 flex: 1,
                 flexDirection: "column",
                 alignItems: "flex-end",
                 justifyContent: "flex-end",
-                paddingBottom: 20
+                width: "100%"
               }}
             >
               <SessionControls
@@ -372,8 +342,10 @@ class CustomerView extends Component {
                 closeCall={this.closeCall}
                 reason={REASON.DONE}
                 switch={this.switchCamera.bind(this)}
+                elapsedTime={this.props.elapsedTime}
+                changeVisible={() => this.setState({ visible: !visible })}
               />
-            </Fade>
+            </Slide>
           </View>
           <KeepAwake />
 

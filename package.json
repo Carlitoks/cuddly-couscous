@@ -41,7 +41,7 @@
     "react-native-interactive-avatar": "^2.0.0",
     "react-native-keep-awake": "^2.0.6",
     "react-native-linear-gradient": "^2.4.0",
-    "react-native-opentok": "^2.0.1",
+    "react-native-opentok": "2.0.1",
     "react-native-permissions": "^1.1.1",
     "react-native-photo-upload": "^1.2.0",
     "react-native-push-notification": "^3.0.2",

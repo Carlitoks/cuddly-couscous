@@ -49,7 +49,8 @@ const BottomButton = ({
   customStyle,
   transparent,
   color,
-  whiteDisabled
+  whiteDisabled,
+  smaller
 }) => {
   return (
     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>

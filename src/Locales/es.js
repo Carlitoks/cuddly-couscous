@@ -6,7 +6,8 @@ export default (ESP = {
   alignQRCode: "Align QR Code/barcode within the frame to scan",
   all: "All",
   allCalls: "All Calls",
-  allLinguistsAreBusy: "All linguists are currently busy.",
+  allLinguistsAreBusy:
+    "All of our Language Jeenies \nare currently busy.\n\n\nWould you like to try again? ",
   allowExtraTime: "Allow extra time",
   alreadyAccount: "Already have an account?",
   amount: "Amount",
@@ -44,6 +45,7 @@ export default (ESP = {
   cancelCallCustomer: "Ended call by customer",
   celebrateWithUs: "Celebrate our launch with us!",
   changeSettings: "To change your settings, go to Settings > Jeenie",
+  checkYourConnection: "Please check your  connection",
   checkYourEmail:
     "We have sent you a link to reset your password. Please check your email",
   checkYourEmailOnBoarding: "Check your email to complete registration.",
@@ -60,7 +62,8 @@ export default (ESP = {
   conversations: "Other",
   confirmEighteen1: "and you confirm that you are",
   confirmEighteen2: " 18 years of age or older.",
-  contactingLinguist: "Contacting available linguist",
+  contactingLinguist:
+    "Connecting you to a \nLanguage Jeenie in less \nthan 1 minute",
   continue: "Continue",
   costOfCall: "Approx. cost - ",
   couldBetter: "What could be better?",
@@ -145,6 +148,7 @@ export default (ESP = {
   languageHelp: "Language Help Wherever You Are",
   languageInterpretation: "Have you done any interpretation in <lang> before?",
   LanguagePairs: "Language Pairs", // not use
+  language: "Language",
   languages: "Languages",
   languageSettings: "Language Settings",
   languagesStatic1:
@@ -216,6 +220,7 @@ export default (ESP = {
   passwordAnd: "and",
   passwordLinguistText: "By tapping Next you agree with our",
   passwordLength: "Your password must be at least 5 characters long.",
+  payAsYouGo: "Pay as you go",
   permissionDenied: "App Permission Denied",
   preferedNameTitle: "Prefered Name",
   preferredLinguistText: "I preferred to be called ...",
@@ -265,9 +270,10 @@ export default (ESP = {
   sport: "Sport",
   status: "You are",
   tapRepeat: "Tap to repeat",
+  thereNoInternetConnection: "There is no internet connection",
   time: "Time",
   timeCompliments: "Compliments of Jeenie",
-  timeAddMore: "You can add more time during the call.",
+  timeAddMore: "Each call has a maximum time of 60 mins.",
   technology: "Technology",
   tempIndicator: "F",
   termsConditions: "Term & Conditions",
@@ -285,6 +291,7 @@ export default (ESP = {
   thankYou: " Thank You",
   undefined: "Undefined",
   unspecified: "Unspecified",
+  upTo60: "Up to 60 minutes",
   usageExamples: "Usage Examples",
   username: "Username",
   userProfile: "My Profile",

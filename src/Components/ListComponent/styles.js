@@ -47,6 +47,10 @@ export default StyleSheet.create({
     fontWeight: "500",
     color: Colors.gradientColor.top
   },
+  disabledText: {
+    fontFamily: Fonts.BaseFont,
+    color: Colors.gray2
+  },
   triangle: {
     marginTop: -15,
     marginBottom: 15,
@@ -87,6 +91,9 @@ export default StyleSheet.create({
   },
   selectedBackground: {
     backgroundColor: Colors.lightPurple
+  },
+  disabledBackground: {
+    backgroundColor: Colors.white
   },
   crossLineText: {
     textDecorationLine: "line-through",

@@ -175,13 +175,6 @@ class SelectRoleView extends Component {
               text: I18n.t("signIn"),
               onPress: () => navigation.dispatch({ type: "LoginView" })
             })}
-            {this.renderLink({
-              text: "|"
-            })}
-            {this.renderLink({
-              text: I18n.t("becomeLinguist"),
-              onPress: () => Linking.openURL("https://signup.gps.network")
-            })}
           </View>
 
           <Waves

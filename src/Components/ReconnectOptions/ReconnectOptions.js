@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { Text, View, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { Button } from "react-native-elements";
 
 import { connect } from "react-redux";
 import BottomButton from "../BottomButton/BottomButton";
@@ -15,35 +16,29 @@ import { Colors } from "../../Themes";
 class ReconnectOptions extends Component {
   render() {
     return (
-      <View>
-        <View style={styles.optionButton}>
-          <BottomButton
-            title={I18n.t("tryAgain")}
-            icon="search"
-            transparent
-            whiteText
-            color={Colors.white}
-            onPress={async () => {
-              await this.props.closeCall(REASON.RETRY);
-              await this.props.reconnectCall();
-              this.props.callTimeOut();
-            }}
-            relative
-          />
-        </View>
-        <View style={styles.optionButton}>
-          <BottomButton
-            title={I18n.t("cancelCall")}
-            icon="call-end"
-            transparent
-            whiteText
-            color={Colors.white}
-            onPress={() => {
-              this.props.closeCall(REASON.CANCEL);
-            }}
-            relative
-          />
-        </View>
+      <View style={styles.mainContainer}>
+        <Button
+          title={I18n.t("tryAgain")}
+          buttonStyle={styles.button}
+          textStyle={styles.buttonText}
+          backgroundColor={Colors.gradientColorButton.bottom}
+          borderRadius={50}
+          onPress={async () => {
+            await this.props.closeCall(REASON.RETRY);
+            await this.props.reconnectCall();
+            this.props.callTimeOut();
+          }}
+        />
+        <Button
+          title={I18n.t("cancelCall")}
+          buttonStyle={[styles.button, styles.noBorder, styles.cancelButton]}
+          textStyle={styles.buttonText}
+          backgroundColor={Colors.transparent}
+          borderRadius={50}
+          onPress={() => {
+            this.props.closeCall(REASON.CANCEL);
+          }}
+        />
       </View>
     );
   }

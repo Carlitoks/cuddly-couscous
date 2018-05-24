@@ -12,12 +12,12 @@ import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OpenTok, { Subscriber, Publisher } from "react-native-opentok"; // eslint-disable-line
 import KeepAwake from "react-native-keep-awake";
-import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
+import CallAvatarName from "../../../Components/CallAvatarName/CallAvatarName";
 import styles from "./styles";
 import { Images } from "../../../Themes";
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
-import Fade from "../../../Effects/Fade/Fade";
+import Slide from "../../../Effects/Slide/Slide";
 
 import I18n from "../../../I18n/I18n";
 import InCallManager from "react-native-incall-manager";
@@ -242,27 +242,22 @@ class LinguistView extends Component {
               />
             )}
           </View>
-          <View style={styles.topContainer}>
-            <TopViewIOS />
-            <View style={styles.inlineContainer}>
-              <Image style={styles.smallAvatar} source={this.selectImage()} />
-            </View>
-            <Text style={styles.callerNameText}>{this.props.customerName}</Text>
-
-            <View style={styles.inlineContainer}>
-              <Text style={styles.incomingCallText}>
-                {fmtMSS(this.props.elapsedTime)}
-              </Text>
-            </View>
+          <View style={styles.CallAvatarNameContainer}>
+            <CallAvatarName
+              imageSource={this.selectImage()}
+              sessionInfoName={this.props.customerName}
+            />
           </View>
-          <Fade
+          <Slide
             visible={visible}
+            min={0}
+            max={112}
             style={{
               flex: 1,
               flexDirection: "column",
               alignItems: "flex-end",
               justifyContent: "flex-end",
-              paddingBottom: 20
+              width: "100%"
             }}
           >
             <SessionControls
@@ -271,8 +266,10 @@ class LinguistView extends Component {
               reason={REASON.DONE}
               switch={this.switchCamera.bind(this)}
               linguist
+              elapsedTime={this.props.elapsedTime}
+              changeVisible={() => this.setState({ visible: !visible })}
             />
-          </Fade>
+          </Slide>
           <KeepAwake />
         </View>
       </TouchableWithoutFeedback>

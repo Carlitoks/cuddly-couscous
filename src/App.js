@@ -12,9 +12,7 @@ import {
 
 import { dumpAsyncStorage, clearState } from "./Config/LocalStorage";
 
-import PushNotifications, {
-  emitLocalNotification
-} from "./Util/PushNotification";
+import PushNotifications from "./Util/PushNotification";
 
 class App extends Component {
   constructor(props) {

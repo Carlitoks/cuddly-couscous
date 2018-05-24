@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import { Text, View, ScrollView, ActivityIndicator } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import LinearGradient from "react-native-linear-gradient";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 
 // STYLE AND THEMES
@@ -57,39 +56,30 @@ class ContactingLinguist extends Component {
         contentContainerStyle={styles.contentContainerStyle}
         alwaysBounceVertical={false}
       >
-        {/* Linear Gradient */}
-        <LinearGradient
-          colors={[
-            Colors.gradientColor.top,
-            //Colors.gradientColor.middle,
-            Colors.gradientColor.bottom
-          ]}
-          style={styles.linearGradient}
-        />
-        <Grid>
-          <Col style={{ justifyContent: "space-between" }}>
-            {/* Top Container */}
-            <Row style={styles.topContainer}>
-              {!this.props.modalReconnect && (
-                <ActivityIndicator size="large" color="white" />
-              )}
+        {!this.props.modalReconnect && (
+          <ActivityIndicator
+            size="large"
+            color="white"
+            style={styles.spinner}
+          />
+        )}
 
-              <Text style={styles.callerNameText}>
-                {I18n.t("contactingLinguist")}
-              </Text>
-            </Row>
+        <View style={styles.connectingMessageContainer}>
+          <Text style={styles.connectingMessage}>
+            {I18n.t("contactingLinguist")}
+          </Text>
+        </View>
 
-            {/* Call Buttons */}
-            <Row style={styles.bottomContainer}>
-              <SessionControls
-                ref={this.ref}
-                closeCall={this.props.closeCall}
-                reason={REASON.CANCEL}
-                switch={this.props.switch}
-              />
-            </Row>
-          </Col>
-        </Grid>
+        {/* Call Buttons */}
+        <View style={styles.controlsContainer}>
+          <SessionControls
+            ref={this.ref}
+            closeCall={this.props.closeCall}
+            reason={REASON.CANCEL}
+            switch={this.props.switch}
+            contacting
+          />
+        </View>
       </ScrollView>
     );
   }

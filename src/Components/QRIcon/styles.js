@@ -6,7 +6,10 @@ const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   buttonGrid: {
-    alignItems: "center",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    width: 50,
+    height: 50,
     marginRight: scale(15)
   }
 });

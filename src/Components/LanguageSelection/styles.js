@@ -19,9 +19,7 @@ export const styles = StyleSheet.create({
   },
   regularText: {
     color: Colors.textDefault,
-    fontWeight: "normal"
-  },
-  largeText: {
+    fontWeight: "normal",
     fontSize: moderateScale(20)
   },
   orangeTitle: {
