@@ -10,7 +10,7 @@ import { clearSettings as clearHome } from "./HomeFlowReducer";
 import { clearCallHistory as clearHistory } from "./CallHistoryReducer";
 import PushNotification from "../Util/PushNotification";
 import { updateDeviceToken } from "./RegistrationCustomerReducer";
-import { registerFCM } from "./PushNotificationReducer";
+import { registerFCM, addListeners } from "./PushNotificationReducer";
 import {
   changeStatus,
   clearSettings as clearLinguistProfile
@@ -124,7 +124,8 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
 
   return Auth.login(email, password, auth.deviceToken)
     .then(response => {
-      dispatch(updateForm({performingRequest: false}))
+      dispatch(updateForm({ performingRequest: false }));
+      dispatch(addListeners());
       return dispatch(
         logIn({
           email,
@@ -134,7 +135,7 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
       );
     })
     .catch(error => {
-      dispatch(updateForm({performingRequest: false}))
+      dispatch(updateForm({ performingRequest: false }));
       throw error.response;
       dispatch(networkError(error));
       dispatch(loginError(error.response));

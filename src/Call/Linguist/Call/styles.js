@@ -30,6 +30,13 @@ export default StyleSheet.create({
     paddingTop: 10,
     transform: [{ translate: [0, 0, 1] }]
   },
+  containerControls: {
+    flex: 1,
+    flexDirection: "column",
+    position: "absolute",
+    bottom: 0,
+    width: "100%"
+  },
   instructions: {
     textAlign: "center",
     color: "#333333",
@@ -111,6 +118,9 @@ export default StyleSheet.create({
     position: "absolute",
     transform: [{ translate: [0, 0, 1] }]
   },
+  hidePublisherBox: {
+    display: "none"
+  },
   containerButtons: {
     flex: 1,
     flexDirection: "row",
@@ -125,5 +135,50 @@ export default StyleSheet.create({
     width: "100%",
     height: 200,
     backgroundColor: Colors.transparent
+  },
+  noVideoContainer: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    left: 0,
+    top: 0,
+    zIndex: 9999,
+    flex: 1,
+    backgroundColor: Colors.gradientColor.top
+  },
+  noVideoName: {
+    fontFamily: Fonts.BaseFont,
+    fontSize: 30,
+    position: "absolute",
+    top: "21%",
+    color: Colors.white,
+    textAlign: "center",
+
+    backgroundColor: Colors.transparent,
+    width: "100%"
+  },
+  noVideoAvatarContainer: {
+    position: "absolute",
+    top: "31%",
+    alignSelf: "center",
+
+    width: 200,
+    height: 200,
+
+    borderRadius: 100,
+    borderWidth: 0.5,
+    borderColor: Colors.white,
+
+    backgroundColor: Colors.transparent,
+
+    paddingHorizontal: 25,
+    paddingVertical: 25
+  },
+  noVideoAvatar: {
+    height: 150,
+    width: 150,
+    borderRadius: 75,
+    borderWidth: 8,
+    borderColor: "gray"
   }
 });

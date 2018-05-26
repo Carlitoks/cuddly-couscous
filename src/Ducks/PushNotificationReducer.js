@@ -3,6 +3,7 @@ import { updateSettings as updateCallLinguistSettings } from "./CallLinguistSett
 import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReducer";
 import { update as updateTokbox } from "./tokboxReducer";
 
+import PushNotification from "../Util/PushNotification";
 import { LANG_CODES } from "../Util/Constants";
 
 // Actions
@@ -60,6 +61,19 @@ export const remoteNotificationReceived = invitationId => (
       })
       .catch(error => dispatch(networkError(error)));
   }
+};
+
+export const addListeners = () => dispatch => {
+  // Listener to notificaciones received by the app in active state
+  PushNotification.addListener(notif => {
+    dispatch(remoteNotificationReceived(notif.invitationID));
+  });
+  // set callback for the remote notifications received by the app in background state
+  PushNotification.setCallbackRemoteNotifications(notif => {
+    if (notif) {
+      dispatch(remoteNotificationReceived(notif.invitationID));
+    }
+  });
 };
 
 export const registerFCM = payload => ({

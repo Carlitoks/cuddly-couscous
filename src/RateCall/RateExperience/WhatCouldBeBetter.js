@@ -15,7 +15,8 @@ class WhatCouldBeBetter extends Component {
       icon.IconState,
       this.props[icon.IconState],
       flag,
-      icon.OffState
+      icon.OffState,
+      icon.Key
     );
   };
   genericToggleFunction = (
@@ -23,7 +24,8 @@ class WhatCouldBeBetter extends Component {
     StateName,
     IconState,
     flagsStore,
-    OffState
+    OffState,
+    Key
   ) => {
     const ObjectState = {};
     ObjectState[StateName] = !IconState;
@@ -34,11 +36,13 @@ class WhatCouldBeBetter extends Component {
       ObjectState,
       flagsStore,
       !IconState,
-      ObjectOffState
+      ObjectOffState,
+      Key
     );
   };
 
   render() {
+    const { linguistProfile } = this.props;
     return (
       <View style={styles.iconList}>
         <View style={{ alignSelf: "center" }}>
@@ -46,16 +50,39 @@ class WhatCouldBeBetter extends Component {
         </View>
         <View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {BadIcons.map((item, i) => (
-              <View key={i} style={styles.questionIcons}>
-                <TextButton
-                  IconName={item.IconName}
-                  StateIcon={this.props[item.IconState]}
-                  onPress={() => this.buttonsHandle(item, "negativeFlags")}
-                  title={item.label}
-                />
-              </View>
-            ))}
+            {BadIcons.map((item, i) => {
+              if (linguistProfile) {
+                if (
+                  item.IconName !== "waitTime" &&
+                  item.IconName !== "professionalism" &&
+                  item.IconName !== "language"
+                ) {
+                  return (
+                    <View key={i} style={styles.questionIcons}>
+                      <TextButton
+                        IconName={item.IconName}
+                        StateIcon={this.props[item.IconState]}
+                        onPress={() =>
+                          this.buttonsHandle(item, "negativeFlags")
+                        }
+                        title={item.label}
+                      />
+                    </View>
+                  );
+                }
+              } else {
+                return (
+                  <View key={i} style={styles.questionIcons}>
+                    <TextButton
+                      IconName={item.IconName}
+                      StateIcon={this.props[item.IconState]}
+                      onPress={() => this.buttonsHandle(item, "negativeFlags")}
+                      title={item.label}
+                    />
+                  </View>
+                );
+              }
+            })}
           </ScrollView>
         </View>
       </View>
@@ -72,7 +99,8 @@ const mS = state => ({
   iconConnectionSecondList: state.rateCall.iconConnectionSecondList,
   iconBackgroundNoiseSecondList: state.rateCall.iconBackgroundNoiseSecondList,
   iconVoiceClaritySecondList: state.rateCall.iconVoiceClaritySecondList,
-  iconDistractionsSecondList: state.rateCall.iconDistractionsSecondList
+  iconDistractionsSecondList: state.rateCall.iconDistractionsSecondList,
+  linguistProfile: state.userProfile.linguistProfile
 });
 
 const mD = { UpdateFlags };

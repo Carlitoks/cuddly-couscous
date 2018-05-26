@@ -73,12 +73,21 @@ export default StyleSheet.create({
     marginBottom: 30,
     marginTop: 30
   },
+  containerAvatarRate: {
+    justifyContent: "center"
+  },
   avatar: {
     paddingVertical: 30,
     width: 150,
     height: 150,
     alignSelf: "center",
     borderRadius: 75
+  },
+  avatarRate: {
+    marginLeft: "14%",
+    width: 96,
+    height: 96,
+    borderRadius: 48
   },
   bigAvatar: {
     paddingVertical: 30,
@@ -93,11 +102,13 @@ export default StyleSheet.create({
     alignSelf: "center",
     backgroundColor: Colors.transparent
   },
+  avatarTitleRate: {
+    marginLeft: 0
+  },
   avatarTitleBold: {
-    fontSize: 25,
-    fontWeight: "bold",
-    color: Colors.primaryColor,
-    marginTop: scale(-60)
+    fontSize: 26,
+    fontFamily: Fonts.BaseFont,
+    color: Colors.primaryColor
   },
   badgeContainer: {
     backgroundColor: "white",
@@ -163,6 +174,10 @@ export default StyleSheet.create({
     alignItems: "center",
     marginLeft: 30,
     flex: 1
+  },
+  avatarRateTitleContainer: {
+    flex: 1,
+    paddingLeft: 26
   },
   statusContainer: {
     flexDirection: "row",

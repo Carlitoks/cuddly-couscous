@@ -58,6 +58,11 @@ export const STATUS_TOKBOX = {
   STREAM: 3
 };
 
+export const TOKBOX_EVENTS = {
+  TOGGLE_VIDEO_CUSTOMER: "TOGGLE_VIDEO_CUSTOMER",
+  TOGGLE_VIDEO_LINGUIST: "TOGGLE_VIDEO_LINGUIST"
+};
+
 export const SETTINGS = {
   CUSTOMER: "callCustomerSettings",
   LINGUIST: "callLinguistSettings"

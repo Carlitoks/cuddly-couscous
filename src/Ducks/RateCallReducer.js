@@ -23,7 +23,8 @@ export const UpdateFlags = (
   IconState,
   action,
   selected,
-  OffState
+  OffState,
+  Key
 ) => dispatch => {
   switch (action) {
     case "positiveFlags": {
@@ -31,15 +32,15 @@ export const UpdateFlags = (
         /* if the icon is selected we are going to push the name of the icon into the array WhatWasgood
         and we need to remove in what could be better question that element and update the state
         */
-        WhatWasGood.push(IconName);
-        const index = WhatCouldBetter.indexOf(IconName);
+        WhatWasGood.push(Key);
+        const index = WhatCouldBetter.indexOf(Key);
         if (index !== -1) {
           WhatCouldBetter.splice(index, 1);
         }
         dispatch(updateOptions(OffState));
         dispatch(updateOptions(IconState));
       } else {
-        const index = WhatWasGood.indexOf(IconName);
+        const index = WhatWasGood.indexOf(Key);
         if (index !== -1) {
           WhatWasGood.splice(index, 1);
         }
@@ -54,15 +55,15 @@ export const UpdateFlags = (
        also we need to remove in what whas good question that element and update the state, if we want to cancel the selection
        we remove that element of WhatCouldBetter and we update the state of the icon.
        */
-        WhatCouldBetter.push(IconName);
+        WhatCouldBetter.push(Key);
         dispatch(updateOptions(IconState));
         dispatch(updateOptions(OffState));
-        const index = WhatWasGood.indexOf(IconName);
+        const index = WhatWasGood.indexOf(Key);
         if (index !== -1) {
           WhatWasGood.splice(index, 1);
         }
       } else {
-        const index = WhatCouldBetter.indexOf(IconName);
+        const index = WhatCouldBetter.indexOf(Key);
         if (index !== -1) {
           WhatCouldBetter.splice(index, 1);
         }
@@ -83,11 +84,10 @@ export const clearOptions = () => ({
   type: ACTIONS.CLEAR
 });
 
-export const submitRateCall = (
-  RateInformation,
-  sessionID,
-  token
-) => (dispatch, getState) => {
+export const submitRateCall = (RateInformation, sessionID, token) => (
+  dispatch,
+  getState
+) => {
   const { userProfile } = getState();
 
   RateInformation = {

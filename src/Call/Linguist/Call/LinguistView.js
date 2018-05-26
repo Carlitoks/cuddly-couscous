@@ -18,6 +18,7 @@ import { Images } from "../../../Themes";
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import Slide from "../../../Effects/Slide/Slide";
+import CallTimer from "../../../Components/CallTimer/CallTimer";
 
 import I18n from "../../../I18n/I18n";
 import InCallManager from "react-native-incall-manager";
@@ -45,7 +46,7 @@ import {
   BackgroundStart
 } from "../../../Util/Background";
 import { fmtMSS } from "../../../Util/Helpers";
-import { REASON, TIME, PLATFORM } from "../../../Util/Constants";
+import { REASON, TIME, PLATFORM, TOKBOX_EVENTS } from "../../../Util/Constants";
 
 import { tokDisConnect, tokConnect, clear } from "../../../Ducks/tokboxReducer";
 
@@ -183,8 +184,58 @@ class LinguistView extends Component {
     }
   }
 
+  renderSubscriber() {
+    const {
+      linguistTokboxSessionID,
+      updateContactLinguistSettings,
+      counterId,
+      timer
+    } = this.props;
+
+    return (
+      <Subscriber
+        sessionId={this.props.linguistTokboxSessionID}
+        style={styles.background}
+        onSubscribeStart={() => {
+          console.log("Sub Started");
+          this.props.updateContactLinguistSettings({
+            modalReconnect: false
+          });
+          clearInterval(this.props.counterId);
+          InCallManager.start({ media: "audio" });
+          InCallManager.setForceSpeakerphoneOn(true);
+        }}
+        onSubscribeError={() => {
+          console.log("Sub Error");
+        }}
+        onSubscribeStop={() => {
+          console.log("SubscriberStop");
+          BackgroundCleanInterval(this.props.timer);
+          this.props.updateContactLinguistSettings({
+            modalReconnect: true
+          });
+          this.callTimeOut();
+        }}
+      />
+    );
+  }
+
+  renderNoVideoScreen() {
+    return (
+      <View style={styles.noVideoContainer}>
+        <Text style={styles.noVideoName}>{this.props.customerName}</Text>
+
+        <View style={styles.noVideoAvatarContainer}>
+          <Image style={styles.noVideoAvatar} source={this.selectImage()} />
+        </View>
+      </View>
+    );
+  }
+
   render() {
     const { visible } = this.state;
+    const { disabledSubscriber } = this.props;
+
     return (
       <TouchableWithoutFeedback
         onPress={() => {
@@ -195,32 +246,14 @@ class LinguistView extends Component {
         <View style={styles.containerT}>
           <ModalReconnect closeCall={this.closeCall} />
           <View style={styles.backgroundContainer}>
-            <Subscriber
-              sessionId={this.props.linguistTokboxSessionID}
-              style={styles.background}
-              onSubscribeStart={() => {
-                console.log("Sub Started");
-                this.props.updateContactLinguistSettings({
-                  modalReconnect: false
-                });
-                clearInterval(this.props.counterId);
-                InCallManager.start({ media: "audio" });
-                InCallManager.setForceSpeakerphoneOn(true);
-              }}
-              onSubscribeError={() => {
-                console.log("Sub Error");
-              }}
-              onSubscribeStop={() => {
-                console.log("SubscriberStop");
-                BackgroundCleanInterval(this.props.timer);
-                this.props.updateContactLinguistSettings({
-                  modalReconnect: true
-                });
-                this.callTimeOut();
-              }}
-            />
+            {this.renderSubscriber()}
+            {disabledSubscriber && this.renderNoVideoScreen()}
           </View>
-          <View style={styles.publisherBox}>
+          <View
+            style={
+              this.props.video ? styles.publisherBox : styles.hidePublisherBox
+            }
+          >
             {this.props.linguistTokboxSessionID && (
               <Publisher
                 sessionId={this.props.linguistTokboxSessionID}
@@ -235,6 +268,14 @@ class LinguistView extends Component {
                 onPublishStart={() => {
                   this.startTimer();
                   console.log("publish started");
+
+                  if (!this.props.video) {
+                    OpenTok.sendSignal(
+                      this.props.linguistTokboxSessionID,
+                      TOKBOX_EVENTS.TOGGLE_VIDEO_LINGUIST,
+                      (!this.props.video).toString()
+                    );
+                  }
                 }}
                 onPublishError={() => {
                   console.log("publish error");
@@ -242,12 +283,15 @@ class LinguistView extends Component {
               />
             )}
           </View>
-          <View style={styles.CallAvatarNameContainer}>
-            <CallAvatarName
-              imageSource={this.selectImage()}
-              sessionInfoName={this.props.customerName}
-            />
-          </View>
+          {!disabledSubscriber && (
+            <View style={styles.CallAvatarNameContainer}>
+              <CallAvatarName
+                imageSource={this.selectImage()}
+                sessionInfoName={this.props.customerName}
+              />
+            </View>
+          )}
+
           <Slide
             visible={visible}
             min={0}
@@ -260,15 +304,30 @@ class LinguistView extends Component {
               width: "100%"
             }}
           >
-            <SessionControls
-              ref={this.ref}
-              closeCall={this.closeLinguist}
-              reason={REASON.DONE}
-              switch={this.switchCamera.bind(this)}
-              linguist
-              elapsedTime={this.props.elapsedTime}
-              changeVisible={() => this.setState({ visible: !visible })}
-            />
+            <View style={styles.containerControls}>
+              <CallTimer
+                time={this.props.elapsedTime}
+                changeVisible={() => this.setState({ visible: !visible })}
+                red={this.state.red}
+                showButton={this.state.timeBtn}
+                buttonPress={() =>
+                  this.setState({
+                    red: false,
+                    timeBtn: false,
+                    showAlert: false,
+                    extraTime: this.state.extraTime + 1
+                  })
+                }
+              />
+
+              <SessionControls
+                ref={this.ref}
+                closeCall={this.closeLinguist}
+                reason={REASON.DONE}
+                switch={this.switchCamera.bind(this)}
+                linguist
+              />
+            </View>
           </Slide>
           <KeepAwake />
         </View>
@@ -287,6 +346,7 @@ const mS = state => ({
   linguistTokboxSessionToken: state.tokbox.tokboxToken,
   linguistTokboxSessionID: state.tokbox.tokboxID,
   sessionID: state.tokbox.sessionID,
+  disabledSubscriber: state.tokbox.disabledSubscriber,
   token: state.auth.token,
   networkInfoType: state.networkInfo.type,
   customerName: state.callLinguistSettings.customerName,

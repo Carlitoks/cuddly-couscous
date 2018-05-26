@@ -7,12 +7,11 @@ import ReduxNavigation from "./Navigation/ReduxNavigation";
 import { delayUpdateInfo } from "./Ducks/NetworkInfoReducer";
 import {
   remoteNotificationReceived,
-  registerFCM
+  registerFCM,
+  addListeners
 } from "./Ducks/PushNotificationReducer";
 
 import { dumpAsyncStorage, clearState } from "./Config/LocalStorage";
-
-import PushNotifications from "./Util/PushNotification";
 
 class App extends Component {
   constructor(props) {
@@ -31,22 +30,17 @@ class App extends Component {
   componentWillMount() {
     createStore()
       .then(store => {
+        const { auth } = store.getState();
+
         this.setState({
-          isLoggedIn: store.getState().auth.isLoggedIn,
+          isLoggedIn: auth.isLoggedIn,
           loadingStore: false,
           store
         });
 
-        // Listener to notificaciones received by the app in active state
-        PushNotifications.addListener(notif => {
-          store.dispatch(remoteNotificationReceived(notif.invitationID));
-        });
-        // set callback for the remote notifications received by the app in background state
-        PushNotifications.setCallbackRemoteNotifications(notif => {
-          if (notif) {
-            store.dispatch(remoteNotificationReceived(notif.invitationID));
-          }
-        });
+        if (auth.isLoggedIn) {
+          store.dispatch(addListeners());
+        }
       })
       .then(() => {
         // Even Listener to Detect Network Change
@@ -81,8 +75,6 @@ class App extends Component {
       "connectionChange",
       this.handleFirstConnectivityChange
     );
-
-    PushNotifications.cleanListeners();
   }
 
   handleFirstConnectivityChange = connectionInfo => {

@@ -15,7 +15,8 @@ class WhatWasGood extends Component {
       icon.IconState,
       this.props[icon.IconState],
       flag,
-      icon.OffState
+      icon.OffState,
+      icon.Key
     );
   };
 
@@ -24,7 +25,8 @@ class WhatWasGood extends Component {
     StateName,
     IconState,
     flagsStore,
-    OffState
+    OffState,
+    Key
   ) => {
     const ObjectState = {};
     ObjectState[StateName] = !IconState;
@@ -35,11 +37,13 @@ class WhatWasGood extends Component {
       ObjectState,
       flagsStore,
       !IconState,
-      ObjectOffState
+      ObjectOffState,
+      Key
     );
   };
 
   render() {
+    const { linguistProfile } = this.props;
     return (
       <View style={styles.iconList}>
         <View style={{ alignSelf: "center" }}>
@@ -47,16 +51,39 @@ class WhatWasGood extends Component {
         </View>
         <View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {GoodIcons.map((item, i) => (
-              <View key={i} style={styles.questionIcons}>
-                <TextButton
-                  IconName={item.IconName}
-                  StateIcon={this.props[item.IconState]}
-                  onPress={() => this.buttonsHandle(item, "negativeFlags")}
-                  title={item.label}
-                />
-              </View>
-            ))}
+            {GoodIcons.map((item, i) => {
+              if (linguistProfile) {
+                if (
+                  item.IconName !== "waitTime" &&
+                  item.IconName !== "professionalism" &&
+                  item.IconName !== "language"
+                ) {
+                  return (
+                    <View key={i} style={styles.questionIcons}>
+                      <TextButton
+                        IconName={item.IconName}
+                        StateIcon={this.props[item.IconState]}
+                        onPress={() =>
+                          this.buttonsHandle(item, "positiveFlags")
+                        }
+                        title={item.label}
+                      />
+                    </View>
+                  );
+                }
+              } else {
+                return (
+                  <View key={i} style={styles.questionIcons}>
+                    <TextButton
+                      IconName={item.IconName}
+                      StateIcon={this.props[item.IconState]}
+                      onPress={() => this.buttonsHandle(item, "positiveFlags")}
+                      title={item.label}
+                    />
+                  </View>
+                );
+              }
+            })}
           </ScrollView>
         </View>
       </View>
@@ -70,7 +97,8 @@ const mS = state => ({
   iconFriendlinessFirstList: state.rateCall.iconFriendlinessFirstList,
   iconLanguageAbilityFirstList: state.rateCall.iconLanguageAbilityFirstList,
   iconUnderstandFirstList: state.rateCall.iconUnderstandFirstList,
-  iconAudioQualityFirstList: state.rateCall.iconAudioQualityFirstList
+  iconAudioQualityFirstList: state.rateCall.iconAudioQualityFirstList,
+  linguistProfile: state.userProfile.linguistProfile
 });
 
 const mD = {

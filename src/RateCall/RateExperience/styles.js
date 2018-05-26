@@ -42,6 +42,7 @@ export const styles = StyleSheet.create({
     marginBottom: 5
   },
   textQuestions: {
+    marginBottom: 15,
     fontSize: 15,
     fontWeight: "bold",
     alignSelf: "center",
@@ -55,16 +56,16 @@ export const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
-    marginBottom: 5
+    marginTop: 10,
+    marginBottom: 0
   },
   viewContainerThumbs: {
     flexDirection: "column",
     justifyContent: "center",
     alignContent: "center",
     alignSelf: "center",
-    marginTop: 20,
-    marginBottom: 5
+    marginTop: 30,
+    marginBottom: 0
   },
   viewContainerQuestion: {
     justifyContent: "space-between",
@@ -87,14 +88,15 @@ export const styles = StyleSheet.create({
     paddingRight: 10
   },
   instabugText: {
-    color: Colors.gray,
+    color: Colors.gradientColor.top,
+    fontSize: 12,
     fontStyle: "italic",
     padding: 10,
     marginTop: 15,
     alignSelf: "center"
   },
   iconList: {
-    marginTop: 20,
-    marginBottom: 5
+    marginTop: 30,
+    marginBottom: 0
   }
 });

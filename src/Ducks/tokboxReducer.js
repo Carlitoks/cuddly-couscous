@@ -2,9 +2,10 @@ import OpenTok from "react-native-opentok";
 import { EndCall } from "./CallCustomerSettings";
 import { updateSettings } from "./ContactLinguistReducer";
 import { clearSettings } from "./CallLinguistSettings";
-import { REASON, STATUS_TOKBOX } from "../Util/Constants";
+import { REASON, STATUS_TOKBOX, TOKBOX_EVENTS } from "../Util/Constants";
 import { Sessions } from "../Api";
 import InCallManager from "react-native-incall-manager";
+import _isUndefined from "lodash/isUndefined";
 
 const ACTIONS = {
   CLEAR: "tokbox/clear",
@@ -44,11 +45,13 @@ const initialState = {
   tokboxToken: null,
   status: STATUS_TOKBOX.DISCONECTED,
   error: null,
-  tokevent: null
+  tokevent: null,
+  disabledSubscriber: false
 };
 export const tokConnect = (id, token) => (dispatch, getState) => {
   const state = getState();
   const isLinguist = !!state.userProfile.linguistProfile;
+  const isCustomer = !isLinguist;
 
   OpenTok.connect(id, token)
     .then(response => {
@@ -72,25 +75,48 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
       );
     });
 
-  OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, e => {
-    console.log("ON_SIGNAL_RECEIVED", e);
-    dispatch(opentok_event({ status: "ON_SIGNAL_RECEIVED", payload: e }));
+  OpenTok.on(OpenTok.events.ON_SIGNAL_RECEIVED, event => {
+    console.log("ON_SIGNAL_RECEIVED", event);
 
-    if (isLinguist) {
-      //
+    const { TOGGLE_VIDEO_LINGUIST, TOGGLE_VIDEO_CUSTOMER } = TOKBOX_EVENTS;
+
+    const eventToggleLinguist = event.type === TOGGLE_VIDEO_LINGUIST;
+    const eventToggleCustomer = event.type === TOGGLE_VIDEO_CUSTOMER;
+
+    const eventToggleVideo = eventToggleLinguist || eventToggleCustomer;
+
+    const linguistToggle = eventToggleLinguist && isCustomer;
+    const customerToggle = eventToggleCustomer && isLinguist;
+
+    if (eventToggleVideo) {
+      if (linguistToggle || customerToggle) {
+        console.log("toggle video");
+
+        dispatch(
+          update({
+            disabledSubscriber: event.data.toLowerCase() === "true"
+          })
+        );
+      }
     } else {
-      // Customer receives signal from Linguist
+      dispatch(opentok_event({ status: "ON_SIGNAL_RECEIVED", payload: event }));
 
-      // switch(signal) {}
-      console.log("sessionID", state.tokbox.sessionID);
-      console.log("token", state.auth.token);
-      dispatch(EndCall(state.tokbox.sessionID, REASON.DONE, state.auth.token));
-      dispatch(tokDisConnect(state.tokbox.tokboxID));
+      if (
+        !isLinguist &&
+        event.type !== TOGGLE_VIDEO_LINGUIST &&
+        event.type !== TOGGLE_VIDEO_CUSTOMER
+      ) {
+        dispatch(
+          EndCall(state.tokbox.sessionID, REASON.DONE, state.auth.token)
+        );
+        dispatch(tokDisConnect(state.tokbox.tokboxID));
+      }
     }
   });
 
   OpenTok.on(OpenTok.events.ON_SESSION_CONNECTION_CREATED, e => {
     console.log("ON_SESSION_CONNECTION_CREATED", e);
+
     dispatch(
       opentok_event({
         status: "ON_SESSION_CONNECTION_CREATED",
@@ -123,6 +149,7 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
 
   OpenTok.on(OpenTok.events.ON_SESSION_STREAM_CREATED, e => {
     console.log("ON_SESSION_STREAM_CREATED", e);
+
     if (isLinguist) {
       //
     } else {

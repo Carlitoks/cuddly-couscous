@@ -4,6 +4,7 @@ import OpenTok, { Publisher, Subscriber } from "react-native-opentok";
 import KeepAwake from "react-native-keep-awake";
 import CallAvatarName from "../../../Components/CallAvatarName/CallAvatarName";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
+import CallTimer from "../../../Components/CallTimer/CallTimer";
 import {
   updateSettings,
   AsyncCreateSession,
@@ -35,7 +36,8 @@ import {
   Image,
   Switch,
   Platform,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Alert
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -61,14 +63,24 @@ import {
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
 import { IMAGE_STORAGE_URL } from "../../../Config/env";
-import { REASON, STATUS_TOKBOX, TIME, PLATFORM } from "../../../Util/Constants";
+import {
+  REASON,
+  STATUS_TOKBOX,
+  TIME,
+  PLATFORM,
+  TOKBOX_EVENTS
+} from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
 class CustomerView extends Component {
   constructor() {
     super();
     this.ref;
     this.state = {
-      visible: true
+      visible: true,
+      red: false,
+      timeBtn: false,
+      showAlert: false,
+      extraTime: 0
     };
   }
 
@@ -90,17 +102,10 @@ class CustomerView extends Component {
   }
 
   handleSessionInfoName() {
-    if (this.props.linguist) {
-      return `${this.props.linguist.firstName} ${
-        this.props.linguist.lastInitial
-      }`;
-    } else if (this.props.customer) {
-      return `${this.props.customer.firstName} ${
-        this.props.customer.lastInitial
-      }`;
-    } else {
-      return `User`;
-    }
+    const { linguist, customer } = this.props;
+    const user = linguist ? linguist : customer ? customer : null;
+
+    return user ? `${user.firstName} ${user.lastInitial}` : "User";
   }
 
   selectImage = () => {
@@ -112,6 +117,7 @@ class CustomerView extends Component {
         }
       : Images.avatar;
   };
+
   componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer); // remove interval of timer
     Platform.OS === PLATFORM.ANDROID && cleanNotifications();
@@ -135,9 +141,25 @@ class CustomerView extends Component {
     this.props.GetSessionInfoLinguist(sessionID, token);
     this.props.updateSettings({
       timer: BackgroundInterval(() => {
+        if (!!callTime && callTime + this.state.extraTime < 60 * 60) {
+          if (
+            this.props.elapsedTime >=
+            callTime + this.state.extraTime - 2 * 60
+          ) {
+            this.setState({
+              red: true
+            });
+            if (!this.state.showAlert) {
+              this.setState({
+                showAlert: true
+              });
+              this.displayTimeAlert();
+            }
+          }
+        }
+
         if (
-          this.props.elapsedTime > callTime &&
-          !this.props.customerExtraTime
+          this.props.elapsedTime > callTime + this.state.extraTime
         ) {
           this.closeCall(REASON.DONE);
         } else {
@@ -154,6 +176,38 @@ class CustomerView extends Component {
         }
       }, 1000)
     });
+  };
+
+  displayTimeAlert = () => {
+    Alert.alert(
+      I18n.t("extraTime1"),
+      I18n.t("extraTime2"),
+      [
+        {
+          text: I18n.t("extraTimeA1"),
+          onPress: () => {
+            let extraTime = this.state.extraTime + 5 * 60;
+            console.log("Add Pressed");
+            this.setState({
+              red: false,
+              showAlert: false,
+              extraTime: extraTime
+            });
+          }
+          //style: "cancel"
+        },
+        {
+          text: I18n.t("extraTimeA2"),
+          onPress: () => {
+            this.setState({
+              timeBtn: true
+            });
+            console.log("No Pressed");
+          }
+        }
+      ],
+      { cancelable: false }
+    );
   };
 
   verifyCallCustomer = () => {
@@ -250,8 +304,57 @@ class CustomerView extends Component {
     }
   }
 
+  renderSubscriber() {
+    const {
+      customerTokboxSessionID,
+      updateContactLinguistSettings,
+      counterId,
+      timer
+    } = this.props;
+
+    return (
+      <Subscriber
+        sessionId={customerTokboxSessionID}
+        style={styles.background}
+        onSubscribeStart={() => {
+          console.log("SubscriberStart");
+          this.startTimer();
+          updateContactLinguistSettings({
+            modalReconnect: false
+          });
+          clearInterval(counterId);
+        }}
+        onSubscribeError={() => {
+          console.log("SubscriberError");
+        }}
+        onSubscribeStop={() => {
+          console.log("SubscriberStop");
+          BackgroundCleanInterval(timer);
+          updateContactLinguistSettings({
+            modalReconnect: true
+          });
+          this.callTimeOut();
+        }}
+      />
+    );
+  }
+
+  renderNoVideoScreen() {
+    return (
+      <View style={styles.noVideoContainer}>
+        <Text style={styles.noVideoName}>{this.handleSessionInfoName()}</Text>
+
+        <View style={styles.noVideoAvatarContainer}>
+          <Image style={styles.noVideoAvatar} source={this.selectImage()} />
+        </View>
+      </View>
+    );
+  }
+
   render() {
     const { visible } = this.state;
+    const { disabledSubscriber, customerTokboxSessionID } = this.props;
+
     return (
       <TouchableWithoutFeedback
         onPress={() => {
@@ -273,33 +376,14 @@ class CustomerView extends Component {
             }
           >
             <View style={styles.backgroundContainer}>
-              {this.props.customerTokboxSessionID && (
-                <Subscriber
-                  sessionId={this.props.customerTokboxSessionID}
-                  style={styles.background}
-                  onSubscribeStart={() => {
-                    console.log("SubscriberStart");
-                    this.startTimer();
-                    this.props.updateContactLinguistSettings({
-                      modalReconnect: false
-                    });
-                    clearInterval(this.props.counterId);
-                  }}
-                  onSubscribeError={() => {
-                    console.log("SubscriberError");
-                  }}
-                  onSubscribeStop={() => {
-                    console.log("SubscriberStop");
-                    BackgroundCleanInterval(this.props.timer);
-                    this.props.updateContactLinguistSettings({
-                      modalReconnect: true
-                    });
-                    this.callTimeOut();
-                  }}
-                />
-              )}
+              {customerTokboxSessionID && this.renderSubscriber()}
+              {disabledSubscriber && this.renderNoVideoScreen()}
             </View>
-            <View style={styles.publisherBox}>
+            <View
+              style={
+                this.props.video ? styles.publisherBox : styles.hidePublisherBox
+              }
+            >
               {this.props.customerTokboxSessionID && (
                 <Publisher
                   sessionId={this.props.customerTokboxSessionID}
@@ -313,6 +397,14 @@ class CustomerView extends Component {
                   }}
                   onPublishStart={() => {
                     console.log("Publisher started");
+
+                    if (!this.props.video) {
+                      OpenTok.sendSignal(
+                        this.props.customerTokboxSessionID,
+                        TOKBOX_EVENTS.TOGGLE_VIDEO_CUSTOMER,
+                        (!this.props.video).toString()
+                      );
+                    }
                   }}
                   onPublishError={() => {
                     console.log("Publisher started error");
@@ -320,10 +412,12 @@ class CustomerView extends Component {
                 />
               )}
             </View>
-            <CallAvatarName
-              imageSource={this.selectImage()}
-              sessionInfoName={this.handleSessionInfoName()}
-            />
+            {!disabledSubscriber && (
+              <CallAvatarName
+                imageSource={this.selectImage()}
+                sessionInfoName={this.handleSessionInfoName()}
+              />
+            )}
 
             <Slide
               visible={visible}
@@ -337,14 +431,30 @@ class CustomerView extends Component {
                 width: "100%"
               }}
             >
-              <SessionControls
-                ref={this.ref}
-                closeCall={this.closeCall}
-                reason={REASON.DONE}
-                switch={this.switchCamera.bind(this)}
-                elapsedTime={this.props.elapsedTime}
-                changeVisible={() => this.setState({ visible: !visible })}
-              />
+              <View style={styles.containerControls}>
+                <CallTimer
+                  time={this.props.elapsedTime}
+                  changeVisible={() => this.setState({ visible: !visible })}
+                  red={this.state.red}
+                  showButton={this.state.timeBtn}
+                  buttonPress={() => {
+                    let extraTime = this.state.extraTime + 5 * 60;
+                    this.setState({
+                      red: false,
+                      timeBtn: false,
+                      showAlert: false,
+                      extraTime: extraTime
+                    });
+                  }}
+                />
+
+                <SessionControls
+                  ref={this.ref}
+                  closeCall={this.closeCall}
+                  reason={REASON.DONE}
+                  switch={this.switchCamera.bind(this)}
+                />
+              </View>
             </Slide>
           </View>
           <KeepAwake />
@@ -376,6 +486,7 @@ const mS = state => ({
   customerTokboxSessionToken: state.tokbox.tokboxToken,
   token: state.auth.token,
   tokboxStatus: state.tokbox.status,
+  disabledSubscriber: state.tokbox.disabledSubscriber,
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
   primaryLangCode: state.userProfile.selectedNativeLanguage,
   secundaryLangCode: state.contactLinguist.secundaryLangCode,

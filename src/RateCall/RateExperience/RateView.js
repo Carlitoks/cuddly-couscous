@@ -96,8 +96,10 @@ class RateView extends Component {
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
           avatarSource={this.selectImage()}
-          avatarHeight={150}
+          avatarHeight={96}
           avatarTitle={this.handleSessionInfoName()}
+          height={200}
+          rate
         >
           <ScrollView
             automaticallyAdjustContentInsets={true}

@@ -41,17 +41,23 @@ class RateExperienceThumbs extends Component {
   };
 
   render() {
+    const { linguistProfile } = this.props;
     return (
       <View style={styles.viewContainerThumbs}>
         <View style={{ alignItems: "center" }}>
-          <Text style={styles.textQuestions}>{I18n.t("needsAddress")}</Text>
+          <Text style={styles.textQuestions}>
+            {linguistProfile
+              ? I18n.t("customerSatisfied")
+              : I18n.t("needsAddress")}
+          </Text>
         </View>
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center"
-          }}>
+          }}
+        >
           <View style={styles.thumbsUp}>
             <ThumbsButton
               IconName="ios-thumbs-up"
@@ -76,7 +82,8 @@ class RateExperienceThumbs extends Component {
 
 const mS = state => ({
   thumbsUp: state.rateCall.thumbsUp,
-  thumbsDown: state.rateCall.thumbsDown
+  thumbsDown: state.rateCall.thumbsDown,
+  linguistProfile: state.userProfile.linguistProfile
 });
 
 const mD = { updateOptions };

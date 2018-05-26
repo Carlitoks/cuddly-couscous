@@ -6,7 +6,7 @@ import { Colors } from "../../Themes";
 import { fmtMSS } from "../../Util/Helpers";
 import styles from "./styles";
 
-const CallTimer = ({ time, red, showButton, changeVisible }) => {
+const CallTimer = ({ time, red, showButton, changeVisible, buttonPress }) => {
   return (
     <View
       style={[
@@ -25,9 +25,7 @@ const CallTimer = ({ time, red, showButton, changeVisible }) => {
           borderRadius={50}
           textStyle={styles.text}
           title={"Add 5 minutes"}
-          onPress={() => {
-            onPress();
-          }}
+          onPress={buttonPress}
           backgroundColor={Colors.transparent}
           buttonStyle={styles.button}
         />

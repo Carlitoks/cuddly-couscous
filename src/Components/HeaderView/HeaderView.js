@@ -55,6 +55,7 @@ import styles from "./styles";
     navigation: In case ConnectMe is true send the navigation component,
     NoWaves: Boolean to hide waves
     NoBackground: Boolean to hide backgroud
+    rate: boolean to add specific styles for rate view
  *
  * The gradient appears when the header have waves
 */
@@ -89,7 +90,8 @@ const HeaderView = ({
   children,
   loading,
   NoWaves,
-  NoBackground
+  NoBackground,
+  rate
 }) => {
   const { width, height } = Dimensions.get("window");
   const history = tabValues ? (tabValues.length > 0 ? true : false) : false;
@@ -127,14 +129,16 @@ const HeaderView = ({
 
           {/* Header - Navigation */}
           <TopViewIOS />
-          <Header
-            outerContainerStyles={styles.headerOuter}
-            backgroundColor={Colors.transparent}
-            leftComponent={headerLeftComponent}
-            centerComponent={headerCenterComponent}
-            rightComponent={headerRightComponent}
-            innerContainerStyles={styles.headerInner}
-          />
+          {!!!rate && (
+            <Header
+              outerContainerStyles={styles.headerOuter}
+              backgroundColor={Colors.transparent}
+              leftComponent={headerLeftComponent}
+              centerComponent={headerCenterComponent}
+              rightComponent={headerRightComponent}
+              innerContainerStyles={styles.headerInner}
+            />
+          )}
 
           {/* Title */}
           {!!!tabValues ? (
@@ -174,6 +178,7 @@ const HeaderView = ({
             <View
               style={[
                 styles.containerAvatar,
+                !!rate ? styles.containerAvatarRate : null,
                 {
                   height: !!bigAvatar ? moderateScale(150) : avatarHeight
                 },
@@ -197,7 +202,8 @@ const HeaderView = ({
                   style={[
                     styles.avatar,
                     !!bigAvatar ? styles.bigAvatar : null,
-                    !!avatarTitle ? { borderRadius: 75 } : null
+                    !!avatarTitle ? { borderRadius: 75 } : null,
+                    !!rate ? styles.avatarRate : null
                   ]}
                   resizeMode="cover"
                   source={avatarSource}
@@ -209,7 +215,9 @@ const HeaderView = ({
                   style={
                     !!photoSelect
                       ? styles.avatarTitleContainer
-                      : styles.avatarBoldTitleContainer
+                      : rate
+                        ? styles.avatarRateTitleContainer
+                        : styles.avatarBoldTitleContainer
                   }
                 >
                   <Text
