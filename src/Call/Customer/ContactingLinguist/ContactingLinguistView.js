@@ -66,7 +66,7 @@ class ContactingLinguist extends Component {
 
         <View style={styles.connectingMessageContainer}>
           <Text style={styles.connectingMessage}>
-            {I18n.t("contactingLinguist")}
+            {this.props.connectingMessage}
           </Text>
         </View>
 
@@ -88,7 +88,8 @@ class ContactingLinguist extends Component {
 const mS = state => ({
   counterId: state.contactLinguist.counterId,
   tokboxStatus: state.tokbox.status,
-  modalReconnect: state.contactLinguist.modalReconnect
+  modalReconnect: state.contactLinguist.modalReconnect,
+  connectingMessage: state.contactLinguist.connectingMessage
 });
 
 const mD = {};

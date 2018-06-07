@@ -152,13 +152,8 @@ class SessionLanguageView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            <View
-              style={Iphone5 ? styles.titleContainer5 : styles.titleContainer}
-            >
-              <Text style={styles.titleCall}>{I18n.t("language")}</Text>
-            </View>
-          }
+          navbarTitle={I18n.t("language")}
+          navbarType={"Complete"}
           headerRightComponent={
             <Close
               action={() => {

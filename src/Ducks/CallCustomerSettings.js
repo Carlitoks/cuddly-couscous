@@ -142,7 +142,8 @@ export const verifyCall = (sessionID, token, verifyCallId) => (
       if (
         (contactLinguist.counter > 10 * data.queue.total + 30 &&
           contactLinguist.counterId) ||
-        data.queue.declined === data.queue.total
+        data.queue.declined === data.queue.total ||
+        contactLinguist.counter >= 60
       ) {
         clearInterval(contactLinguist.counterId);
         dispatch(resetCounter());

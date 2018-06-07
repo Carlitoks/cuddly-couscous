@@ -178,9 +178,8 @@ class GenderCustomerView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            <Text style={styles.mainTitle}>{I18n.t("genderName")}</Text>
-          }
+          navbarTitle={I18n.t("genderName")}
+          navbarType={"Basic"}
           NoWaves
         >
           <View style={styles.scrollContainer}>
@@ -198,7 +197,9 @@ class GenderCustomerView extends Component {
               noFlex
             />
             <View style={styles.mainContainterText}>
-              <Text style={[styles.textCenter, styles.spaceBetween]}>{I18n.t("genderNotice")}</Text>
+              <Text style={[styles.textCenter, styles.spaceBetween]}>
+                {I18n.t("genderNotice")}
+              </Text>
             </View>
           </View>
         </HeaderView>

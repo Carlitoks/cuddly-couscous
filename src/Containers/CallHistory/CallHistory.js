@@ -31,7 +31,6 @@ import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
 class CallHistory extends Component {
-
   componentWillMount() {
     if (this.props.linguistProfile) {
       this.getAllLinguistCalls(this.props.userId, this.props.token);
@@ -173,41 +172,39 @@ class CallHistory extends Component {
       : [];
 
     return (
-        <ViewWrapper style={styles.scrollContainer}>
-          <HeaderView
-            headerLeftComponent={
-              <ShowMenuButton navigation={this.props.navigation} />
-            }
-            headerCenterComponent={
-              <Text style={styles.titleCall}> {I18n.t("callHistory")} </Text>
-            }
-            tabValues={tabValues}
-            tabSelectedIndex={this.props.selectedIndex}
-            onTabPress={this.handleIndexChange}
-            NoWaves
+      <ViewWrapper style={styles.scrollContainer}>
+        <HeaderView
+          headerLeftComponent={
+            <ShowMenuButton navigation={this.props.navigation} />
+          }
+          navbarTitle={I18n.t("callHistory")}
+          navbarType={"Basic"}
+          tabValues={tabValues}
+          tabSelectedIndex={this.props.selectedIndex}
+          onTabPress={this.handleIndexChange}
+          NoWaves
+        >
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            bounces={false}
+            alwaysBounceVertical={false}
           >
-            <ScrollView
-              automaticallyAdjustContentInsets={true}
-              style={styles.scrollContainer}
-              bounces={false}
-              alwaysBounceVertical={false}
-            >
-              <Grid>
-                <Col>
-                  <View style={styles.container}>
-                    <CallHistoryComponent
-                      data={
-                        this.props.selectedIndex === 0 ? allCalls : missedCalls
-                      }
-                      navigation={this.props.navigation}
-                    />
-                  </View>
-                </Col>
-              </Grid>
-            </ScrollView>
-          </HeaderView>
-        </ViewWrapper>
-      
+            <Grid>
+              <Col>
+                <View style={styles.container}>
+                  <CallHistoryComponent
+                    data={
+                      this.props.selectedIndex === 0 ? allCalls : missedCalls
+                    }
+                    navigation={this.props.navigation}
+                  />
+                </View>
+              </Col>
+            </Grid>
+          </ScrollView>
+        </HeaderView>
+      </ViewWrapper>
     );
   }
 }

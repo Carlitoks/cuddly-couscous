@@ -61,6 +61,7 @@ export const styles = StyleSheet.create({
   },
   listSubtitle: {
     fontSize: moderateScale(20),
+    color: Colors.gray,
     fontWeight: "normal"
   },
   languagesContainer: {
@@ -68,7 +69,8 @@ export const styles = StyleSheet.create({
   },
   languagesText: {
     fontSize: moderateScale(20),
-    color: Colors.gray
+    color: Colors.gray,
+    fontWeight: "normal"
   },
   listRightTitleContainer: {
     flex: 0.3

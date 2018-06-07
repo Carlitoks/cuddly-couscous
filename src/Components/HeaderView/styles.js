@@ -205,6 +205,11 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.primaryColor
   },
+  tabStyleNoBorder: {
+    backgroundColor: Colors.backgroundBlue,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0)"
+  },
   tabsContainerStyle: {
     marginLeft: moderateScale(33),
     marginRight: moderateScale(33),

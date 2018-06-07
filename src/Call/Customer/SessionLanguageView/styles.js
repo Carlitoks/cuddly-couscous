@@ -109,7 +109,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     top: 0,
-    width: 250
+    width: 200
   },
   titleContainer: {
     justifyContent: "center",
@@ -117,7 +117,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     top: 0,
-    width: 200
+    width: 100
   },
   title: {
     top: 20,

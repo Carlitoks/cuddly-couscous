@@ -152,15 +152,14 @@ class NameCustomerView extends Component {
           // headerLeftComponent={
           //   <GoBackButton navigation={this.props.navigation} />
           // }
-          headerCenterComponent={
-            <Text style={styles.mainTitle}>
-              {preferredName
-                ? `${preferredName}`
-                : mainTitle || lastname
-                  ? `${mainTitle} ${lastname}`
-                  : I18n.t("letsGoToKwon")}
-            </Text>
+          navbarTitle={
+            preferredName
+              ? `${preferredName}`
+              : mainTitle || lastname
+                ? `${mainTitle} ${lastname}`
+                : I18n.t("letsGoToKwon")
           }
+          navbarType={"Basic"}
           NoWaves
         >
           <ScrollView

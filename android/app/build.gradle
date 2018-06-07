@@ -146,6 +146,10 @@ android {
 }
 
 dependencies {
+    compile project(':appcenter-crashes')
+    compile project(':appcenter-analytics')
+    compile project(':appcenter')
+    compile project(':react-native-sound')
     compile project(':instabug-reactnative') 
     compile project(':react-native-svg')
     compile project(':react-native-fcm')
@@ -167,7 +171,7 @@ dependencies {
     compile project(':react-native-opentok')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
-    compile ("com.facebook.react:react-native:0.50.4") { force = true } 
+    compile ("com.facebook.react:react-native:0.55.4") { force = true } 
     compile "com.android.support:support-v4:23.0.1"
     // From node_modules
 }

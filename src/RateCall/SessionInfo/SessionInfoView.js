@@ -76,10 +76,7 @@ class SessionInfoView extends Component {
                       <ListItem
                         containerStyle={styles.listItemContainer}
                         hideChevron
-                        title={
-                          sessionInfo.category.charAt(0).toUpperCase() +
-                          sessionInfo.category.slice(1)
-                        }
+                        title={sessionInfo.category.toUpperCase()}
                         titleStyle={styles.titleStyle}
                         subtitle={
                           sessionInfo.title.charAt(0).toUpperCase() +

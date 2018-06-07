@@ -28,6 +28,15 @@ target 'NewSolo' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
+# Pods for AppCenter
+  pod 'AppCenterReactNativeShared', '~> 1.5.1'
+  
+
+pod 'AppCenter/Analytics', '~> 1.6.1'
+pod 'AppCenter/Crashes', '~> 1.6.1'
+
 end
 
 post_install do |installer|

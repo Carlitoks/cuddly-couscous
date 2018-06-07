@@ -25,23 +25,37 @@ const ViewWrapper = ({
   lastName,
   preferredName,
   linguistProfile,
-  email
+  email,
+  deviceId,
+  sessionId,
+  eventId
 }) => {
   const name = preferredName ? preferredName : firstName;
   const role = !!linguistProfile ? "Linguist" : "Customer";
-  Instabug.startWithToken(
-    "83f07c5f8dcb8496e3287f280ce6f61d",
-    Instabug.invocationEvent.shake
-  );
-  Instabug.setPromptOptionsEnabled(false, true, true);
-  Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
-  Instabug.setPrimaryColor(processColor("#52389d"));
-  if (email) {
-    Instabug.setUserData(`${name} ${lastName} (${role})`);
-    Instabug.setUserEmail(email);
-  } else {
-    Instabug.setUserData(`User  anonymous`);
+  const device = !!deviceId ? ` DeviceID: ${deviceId} ` : "";
+  const session = !!sessionId ? ` SessionID: ${sessionId} ` : "";
+  const event = !!eventId ? ` EventID: ${eventId} ` : "";
+  try {
+    Instabug.startWithToken(
+      "83f07c5f8dcb8496e3287f280ce6f61d",
+      Instabug.invocationEvent.shake
+    );
+    Instabug.setViewHierarchyEnabled(false);
+    Instabug.setPromptOptionsEnabled(false, true, true);
+    Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
+    Instabug.setPrimaryColor(processColor("#52389d"));
+    if (email) {
+      Instabug.setUserData(
+        `${name} ${lastName} (${role})${device}${session}${event}`
+      );
+      Instabug.setUserEmail(email);
+    } else {
+      Instabug.setUserData(`User  anonymous`);
+    }
+  } catch (e) {
+    console.log("Error on Instabug");
   }
+
   return (
     <View style={style}>
       {/* No Connection Modal*/}
@@ -63,7 +77,10 @@ const mS = state => ({
   lastName: state.userProfile.lastName,
   preferredName: state.userProfile.preferredName,
   linguistProfile: state.userProfile.linguistProfile,
-  email: state.userProfile.email
+  email: state.userProfile.email,
+  deviceId: state.auth.deviceId,
+  sessionId: state.tokbox.sessionID,
+  eventId: state.events.id
 });
 
 export default connect(mS)(ViewWrapper);

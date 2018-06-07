@@ -43,8 +43,7 @@ export const styles = StyleSheet.create({
   },
   textQuestions: {
     marginBottom: 15,
-    fontSize: 15,
-    fontWeight: "bold",
+    fontSize: 16,
     alignSelf: "center",
     flexDirection: "row",
     justifyContent: "center"

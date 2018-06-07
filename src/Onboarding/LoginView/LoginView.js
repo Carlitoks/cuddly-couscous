@@ -42,7 +42,6 @@ import styles from "./styles";
 import { displayFormErrors } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 
-// For the moment
 import I18n from "../../I18n/I18n";
 
 class LoginView extends Component {
@@ -180,9 +179,8 @@ class LoginView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            <Text style={styles.titleCall}>{I18n.t("signIn")}</Text>
-          }
+          navbarTitle={I18n.t("signIn")}
+          navbarType={"Basic"}
           NoWaves
         >
           <ScrollView

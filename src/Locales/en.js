@@ -156,6 +156,7 @@ export default (ENG = {
   iNeedSomethingElse: "(Optional) I need assistance with...",
   intermediate: "Intermediate",
   invalidPromoCode: "Invalid promo code",
+  isConnecting: "is connecting...",
   languageCommand: "Language at Your Command",
   languageHelp: "Language Help Wherever You Are",
   languageInterpretation: "Have you done interpreting in <lang> before?",

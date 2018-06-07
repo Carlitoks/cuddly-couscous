@@ -12,7 +12,7 @@ class RateExperienceStars extends Component {
     return (
       <View style={styles.stars}>
         <Text style={styles.textQuestions}>
-          {I18n.t("rateYour")}{" "}
+          {I18n.t("rateYour")}
           {this.props.linguistProfile ? I18n.t("customer") : I18n.t("linguist")}
         </Text>
         <StarRating

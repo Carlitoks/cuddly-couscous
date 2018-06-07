@@ -5,6 +5,9 @@ import KeepAwake from "react-native-keep-awake";
 import CallAvatarName from "../../../Components/CallAvatarName/CallAvatarName";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import CallTimer from "../../../Components/CallTimer/CallTimer";
+import Sound from "react-native-sound";
+import SoundManager from "../../../Util/SoundManager";
+import Instabug from "instabug-reactnative";
 import {
   updateSettings,
   AsyncCreateSession,
@@ -99,6 +102,19 @@ class CustomerView extends Component {
     }
 
     this.reconnectCall();
+    const name = this.props.preferredName
+      ? this.props.preferredName
+      : this.props.firstName;
+    const role = !!this.props.linguistProfile ? "Linguist" : "Customer";
+    const device = !!this.props.deviceId
+      ? ` DeviceID: ${this.props.deviceId} `
+      : "";
+    const session = !!this.props.customerTokboxSessionID
+      ? ` SessionID: ${this.props.customerTokboxSessionID} `
+      : "";
+    Instabug.setUserData(
+      `${name} ${this.props.lastName} (${role})${device}${session}`
+    );
   }
 
   handleSessionInfoName() {
@@ -126,6 +142,7 @@ class CustomerView extends Component {
     clearInterval(this.props.timer);
     this.props.resetCounter();
     OpenTok.disconnectAll();
+    //SoundManager["EndCall"].play();
     InCallManager.stop();
   }
 
@@ -137,8 +154,9 @@ class CustomerView extends Component {
 
   startTimer = () => {
     const { sessionID, token, selectedCallTime } = this.props;
-    const callTime = selectedCallTime * 60;
+    const callTime = !!selectedCallTime ? selectedCallTime * 60 : 60 * 60;
     this.props.GetSessionInfoLinguist(sessionID, token);
+
     this.props.updateSettings({
       timer: BackgroundInterval(() => {
         if (!!callTime && callTime + this.state.extraTime < 60 * 60) {
@@ -153,14 +171,15 @@ class CustomerView extends Component {
               this.setState({
                 showAlert: true
               });
+              //Play Sound
+              //this.extraTimeSound.play();
+              SoundManager["ExtraTime"].play();
               this.displayTimeAlert();
             }
           }
         }
 
-        if (
-          this.props.elapsedTime > callTime + this.state.extraTime
-        ) {
+        if (this.props.elapsedTime > callTime + this.state.extraTime) {
           this.closeCall(REASON.DONE);
         } else {
           this.props.incrementTimer();
@@ -256,6 +275,7 @@ class CustomerView extends Component {
       }).then(async response => {
         const { tokboxSessionID, tokboxSessionToken } = response;
         this.verifyCallCustomer();
+
         await tokConnect(tokboxSessionID, tokboxSessionToken);
       });
     } catch (e) {
@@ -287,7 +307,8 @@ class CustomerView extends Component {
     ) {
       await this.props.tokDisConnect(customerTokboxSessionID);
     }
-
+    //this.endCallSound.play();
+    //SoundManager["EndCall"].play();
     sessionID && (await this.props.EndCall(sessionID, reason, token));
   };
 
@@ -296,6 +317,7 @@ class CustomerView extends Component {
     this.props.updateContactLinguistSettings({
       counterId: setInterval(() => incrementCounter(), 1000)
     });
+    //this.endCallSound.play();
   };
 
   switchCamera() {
@@ -331,7 +353,7 @@ class CustomerView extends Component {
           console.log("SubscriberStop");
           BackgroundCleanInterval(timer);
           updateContactLinguistSettings({
-            modalReconnect: true
+            modalReconnect: false
           });
           this.callTimeOut();
         }}
@@ -497,7 +519,13 @@ const mS = state => ({
   counter: state.contactLinguist.counter,
   networkInfoType: state.networkInfo.type,
   counterId: state.contactLinguist.counterId,
-  verifyCallId: state.callCustomerSettings.verifyCallId
+  verifyCallId: state.callCustomerSettings.verifyCallId,
+  firstName: state.userProfile.firstName, // For Instabug
+  lastName: state.userProfile.lastName,
+  preferredName: state.userProfile.preferredName,
+  linguistProfile: state.userProfile.linguistProfile,
+  deviceId: state.auth.deviceId,
+  eventId: state.events.id
 });
 
 const mD = {

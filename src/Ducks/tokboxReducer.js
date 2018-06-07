@@ -6,6 +6,7 @@ import { REASON, STATUS_TOKBOX, TOKBOX_EVENTS } from "../Util/Constants";
 import { Sessions } from "../Api";
 import InCallManager from "react-native-incall-manager";
 import _isUndefined from "lodash/isUndefined";
+import SoundManager from "../Util/SoundManager";
 
 const ACTIONS = {
   CLEAR: "tokbox/clear",
@@ -165,6 +166,7 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
   });
 
   OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
+    SoundManager["EndCall"].play();
     console.log("ON_SESSION_STREAM_DESTROYED", e);
 
     if (isLinguist) {

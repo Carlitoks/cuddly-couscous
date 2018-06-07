@@ -114,9 +114,8 @@ class EditGenderView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            <Text style={styles.mainTitle}>{I18n.t("genderName")}</Text>
-          }
+          navbarTitle={I18n.t("genderName")}
+          navbarType={"Basic"}
           NoWaves
         >
           <ScrollView
@@ -138,7 +137,9 @@ class EditGenderView extends Component {
               noFlex
             />
             <View style={styles.mainContainterText}>
-              <Text style={[styles.textCenter, styles.spaceBetween]}>{I18n.t("genderNotice")}</Text>
+              <Text style={[styles.textCenter, styles.spaceBetween]}>
+                {I18n.t("genderNotice")}
+              </Text>
             </View>
           </ScrollView>
         </HeaderView>

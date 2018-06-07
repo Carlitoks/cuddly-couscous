@@ -7,16 +7,17 @@
     "adb:r": "adb kill-server && adb start-server && adb devices",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "android:link": "react-native link",
-    "android:run":
-      "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
+    "android:run": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android",
     "android:shake": "adb shell input keyevent 82",
-    "android:install":
-      "adb install android/app/build/outputs/apk/app-debug.apk",
+    "android:install": "adb install android/app/build/outputs/apk/app-debug.apk",
     "test": "jest",
     "api:run": "make setup && docker-compose up",
     "api:load-mock-data": "make run-cmd CMD=\"load-fixtures\""
   },
   "dependencies": {
+    "appcenter": "^1.5.1",
+    "appcenter-analytics": "^1.5.1",
+    "appcenter-crashes": "^1.5.1",
     "axios": "^0.17.1",
     "bluebird": "^3.5.1",
     "instabug-reactnative": "2.8.1",
@@ -24,8 +25,8 @@
     "moment": "^2.20.1",
     "prop-types": "^15.5.10",
     "react": "16.0.0",
-    "react-native": "0.50.4",
-    "react-native-background-timer": "^2.0.0",
+    "react-native": "^0.55.4",
+    "react-native-background-timer": "2.0.0",
     "react-native-camera": "^0.12.0",
     "react-native-device-info": "^0.13.0",
     "react-native-easy-grid": "^0.1.15",
@@ -48,6 +49,7 @@
     "react-native-qrcode-scanner": "^0.0.29",
     "react-native-segmented-control-tab": "^3.2.1",
     "react-native-snap-carousel": "^3.6.0",
+    "react-native-sound": "^0.10.9",
     "react-native-star-rating": "^1.0.8",
     "react-native-svg": "^6.2.2",
     "react-native-vector-icons": "^4.4.2",
@@ -67,6 +69,8 @@
     "preset": "react-native"
   },
   "rnpm": {
-    "assets": ["./src/Assets/Fonts"]
+    "assets": [
+      "./src/Assets/Fonts"
+    ]
   }
 }

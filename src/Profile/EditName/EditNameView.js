@@ -147,7 +147,7 @@ class EditNameView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
+          navbarTitle={
             <Text style={styles.mainTitle}>
               {formPreferredName
                 ? `${formPreferredName}`
@@ -156,6 +156,7 @@ class EditNameView extends Component {
                   : I18n.t("mainTitle")}
             </Text>
           }
+          navbarType={"Basic"}
           NoWaves
         >
           <ScrollView

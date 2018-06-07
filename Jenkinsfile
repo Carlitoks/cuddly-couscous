@@ -14,31 +14,11 @@ pipeline {
     }
     
     stage ('configure docker compose environment for development') {
-      when {
-        branch "master"
-        expression {env.ENVIRONMENT_DEV}
-      }
       steps {
         configFileProvider([
           configFile(
             fileId: 'docker-env-template', 
             targetLocation: '.env',
-            replaceTokens: true
-          )
-        ]) {}
-      }
-    }
-    
-    stage ('set api configuration') {
-      when {
-        branch "master"
-        expression {env.CONFIG_DEV}
-      }
-      steps {
-        configFileProvider([
-          configFile(
-            fileId: 'solo-config-template', 
-            targetLocation: 'api.config.yml',
             replaceTokens: true
           )
         ]) {}
@@ -61,7 +41,7 @@ pipeline {
   post {
     failure {
       emailext (
-          to: "jsfrncscg@gmail.com; soporte@teravisiontech.com",
+          to: "soporte@teravisiontech.com",
           subject: "FAILURE on build",
           body: "A build on solo-mobile-app has failed!",
           attachLog: true

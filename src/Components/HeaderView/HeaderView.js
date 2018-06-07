@@ -17,9 +17,9 @@ import LinearGradient from "react-native-linear-gradient";
 import { Colors, Images } from "../../Themes";
 import StarRating from "react-native-star-rating";
 import SegmentedControlTab from "react-native-segmented-control-tab";
-
+import NavbarTitle from "../../Components/NavbarTitle/NavbarTitle";
 import Waves from "../../SVG/waves";
-
+import { Iphone6, Iphone5 } from "../../Util/Devices";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 
@@ -75,6 +75,10 @@ const HeaderView = ({
   avatarHeight,
   avatarTitle,
   bigAvatar,
+  navbarTitle,
+  navbarSubTitle,
+  scale,
+  navbarType,
   badge,
   stars,
   status,
@@ -134,7 +138,18 @@ const HeaderView = ({
               outerContainerStyles={styles.headerOuter}
               backgroundColor={Colors.transparent}
               leftComponent={headerLeftComponent}
-              centerComponent={headerCenterComponent}
+              centerComponent={
+                !!NavbarTitle && (
+                  <NavbarTitle
+                    title={navbarTitle}
+                    subtitle={navbarSubTitle}
+                    type={navbarType}
+                    leftIcon={headerLeftComponent}
+                    rightIcon={headerRightComponent}
+                    scale={scale}
+                  />
+                )
+              }
               rightComponent={headerRightComponent}
               innerContainerStyles={styles.headerInner}
             />
@@ -307,7 +322,9 @@ const HeaderView = ({
             <SegmentedControlTab
               tabsContainerStyle={styles.tabsContainerStyle}
               values={tabValues}
-              tabStyle={styles.tabStyle}
+              tabStyle={
+                Iphone6 || Iphone5 ? styles.tabStyleNoBorder : styles.tabStyle
+              }
               tabTextStyle={styles.tabTextStyle}
               selectedIndex={tabSelectedIndex}
               onTabPress={onTabPress}

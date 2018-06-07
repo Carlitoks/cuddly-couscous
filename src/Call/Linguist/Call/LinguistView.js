@@ -19,9 +19,11 @@ import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import Slide from "../../../Effects/Slide/Slide";
 import CallTimer from "../../../Components/CallTimer/CallTimer";
-
+import Sound from "react-native-sound";
+import SoundManager from "../../../Util/SoundManager";
 import I18n from "../../../I18n/I18n";
 import InCallManager from "react-native-incall-manager";
+import Instabug from "instabug-reactnative";
 
 import {
   updateSettings as updateContactLinguistSettings,
@@ -57,6 +59,17 @@ class LinguistView extends Component {
     this.state = {
       visible: true
     };
+
+    this.endCallSound = new Sound(
+      "elastic_done3.wav",
+      Sound.MAIN_BUNDLE,
+      error => {
+        if (error) {
+          console.log("failed to load the END CALL sound", error);
+          return;
+        }
+      }
+    );
   }
 
   componentWillMount() {
@@ -79,8 +92,23 @@ class LinguistView extends Component {
       linguistTokboxSessionToken,
       linguistTokboxSessionID,
       tokConnect,
-      sessionID
+      sessionID,
+      firstName,
+      lastName,
+      preferredName,
+      linguistProfile,
+      deviceId,
+      eventId
     } = this.props;
+    const name = preferredName ? preferredName : firstName;
+    const role = !!linguistProfile ? "Linguist" : "Customer";
+    const device = !!deviceId ? ` DeviceID: ${deviceId} ` : "";
+    const session = !!linguistTokboxSessionID
+      ? ` SessionID: ${linguistTokboxSessionID} `
+      : "";
+    Instabug.setUserData(
+      `${name} ${this.props.lastName} (${role})${device}${session}`
+    );
     await tokConnect(linguistTokboxSessionID, linguistTokboxSessionToken);
   }
 
@@ -91,6 +119,7 @@ class LinguistView extends Component {
     clearInterval(this.props.counterId);
     this.props.resetCounter();
     OpenTok.disconnectAll();
+    //SoundManager["EndCall"].play();
     InCallManager.stop();
   }
 
@@ -144,12 +173,19 @@ class LinguistView extends Component {
         },
         {
           text: I18n.t("endCall"),
-          onPress: async () => {
-            await OpenTok.sendSignal(
-              this.props.linguistTokboxSessionID,
-              "EndCall",
-              reason
-            );
+          onPress: () => {
+            try {
+              OpenTok.sendSignal(
+                this.props.linguistTokboxSessionID,
+                "EndCall",
+                reason
+              );
+            } catch (e) {
+              console.log(e);
+            }
+            //this.endCallSound.stop();
+            //this.endCallSound.play();
+            // SoundManager["EndCall"].play();
             this.props.navigation.dispatch({ type: "RateView" });
           }
         }
@@ -169,6 +205,8 @@ class LinguistView extends Component {
     this.props.clear();
     this.props.clearSettings();
     this.props.clearCallSettings();
+    //this.endCallSound.play();
+    //SoundManager["EndCall"].play();
   };
 
   callTimeOut = () => {
@@ -176,6 +214,7 @@ class LinguistView extends Component {
     this.props.updateContactLinguistSettings({
       counterId: setInterval(() => incrementCounter(), 1000)
     });
+    //this.endCallSound.play();
   };
 
   switchCamera() {
@@ -212,7 +251,7 @@ class LinguistView extends Component {
           console.log("SubscriberStop");
           BackgroundCleanInterval(this.props.timer);
           this.props.updateContactLinguistSettings({
-            modalReconnect: true
+            modalReconnect: false
           });
           this.callTimeOut();
         }}
@@ -235,7 +274,7 @@ class LinguistView extends Component {
   render() {
     const { visible } = this.state;
     const { disabledSubscriber } = this.props;
-
+    console.log("Video", this.props.video);
     return (
       <TouchableWithoutFeedback
         onPress={() => {
@@ -352,7 +391,13 @@ const mS = state => ({
   customerName: state.callLinguistSettings.customerName,
   avatarURL: state.callLinguistSettings.avatarURL,
   counter: state.contactLinguist.counter,
-  counterId: state.contactLinguist.counterId
+  counterId: state.contactLinguist.counterId,
+  firstName: state.userProfile.firstName, // For Instabug
+  lastName: state.userProfile.lastName,
+  preferredName: state.userProfile.preferredName,
+  linguistProfile: state.userProfile.linguistProfile,
+  deviceId: state.auth.deviceId,
+  eventId: state.events.id
 });
 
 const mD = {

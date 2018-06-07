@@ -1,6 +1,7 @@
 import { Sessions, Scenarios } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
 import { REASON } from "../Util/Constants";
+import I18n from "../I18n/I18n";
 
 export const getAssistanceList = token => dispatch => {
   return Scenarios.get(token)
@@ -64,7 +65,32 @@ const initialState = {
   counter: 0,
   counterId: null,
   modalReconnect: false,
-  messageReconnect: ""
+  messageReconnect: "",
+
+  connectingMessage: I18n.t("contactingLinguist")
+};
+
+export const updateConnectingMessage = ({ firstName, lastInitial }) => (
+  dispatch,
+  getState
+) => {
+  const connectingMessage = `${firstName} ${lastInitial}. ${I18n.t(
+    "isConnecting"
+  )}`;
+
+  dispatch(
+    updateSettings({
+      connectingMessage
+    })
+  );
+};
+
+export const resetConnectingMessage = () => (dispatch, getState) => {
+  dispatch(
+    updateSettings({
+      connectingMessage: I18n.t("contactingLinguist")
+    })
+  );
 };
 
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });

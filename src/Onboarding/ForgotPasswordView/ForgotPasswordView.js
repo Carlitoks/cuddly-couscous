@@ -80,9 +80,8 @@ class ForgotPasswordView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            <Text style={styles.titleCall}>{I18n.t("resetpassword")}</Text>
-          }
+          navbarTitle={I18n.t("resetpassword")}
+          navbarType={"Basic"}
           NoWaves
         >
           <ScrollView

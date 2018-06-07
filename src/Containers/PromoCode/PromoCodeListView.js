@@ -119,13 +119,12 @@ class PromoCodeListView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            <Text style={[styles.titleCallSub]}>
-              {this.props.organization && this.props.organization.Name
-                ? this.props.eventName
-                : I18n.t("describeAssistance")}
-            </Text>
+          navbarTitle={
+            this.props.organization && this.props.organization.Name
+              ? this.props.eventName
+              : I18n.t("describeAssistance")
           }
+          navbarType={"Basic"}
           NoWaves
         >
           <View style={styles.mainContainer}>

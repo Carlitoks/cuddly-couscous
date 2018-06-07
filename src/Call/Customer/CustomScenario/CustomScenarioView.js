@@ -54,9 +54,8 @@ class CustomScenario extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            <Text style={styles.titleCall}>{categorySelected}</Text>
-          }
+          navbarTitle={categorySelected}
+          navbarType={"Basic"}
           NoWaves
         >
           <ScrollView

@@ -1,8 +1,9 @@
 import { Sessions } from "../Api";
 import { updateSettings as updateCallLinguistSettings } from "./CallLinguistSettings";
+import { updateConnectingMessage } from "./ContactLinguistReducer";
 import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReducer";
 import { update as updateTokbox } from "./tokboxReducer";
-
+import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
 import { LANG_CODES } from "../Util/Constants";
 
@@ -11,10 +12,30 @@ export const ACTIONS = {
   REGISTER: "pushnotification/register"
 };
 
-export const remoteNotificationReceived = invitationId => (
-  dispatch,
-  getState
-) => {
+export const remoteNotificationReceived = notification => dispatch => {
+  switch (notification.type) {
+    case "session:incoming-call":
+      dispatch(incomingCallNotification(notification.invitationID));
+      break;
+
+    case "session:linguist-accepted":
+      dispatch(linguistAcceptedNotification(JSON.parse(notification.linguist)));
+      break;
+
+    case "session:connection-event":
+      dispatch(connectionEventNotification());
+      break;
+
+    case "session:end":
+      dispatch(sessionEndNotification());
+      break;
+
+    default:
+      break;
+  }
+};
+
+const incomingCallNotification = invitationId => (dispatch, getState) => {
   const state = getState();
   const isLinguist = !!state.userProfile.linguistProfile;
 
@@ -63,15 +84,29 @@ export const remoteNotificationReceived = invitationId => (
   }
 };
 
+const linguistAcceptedNotification = linguist => (dispatch, getState) => {
+  // Logic when a linguist accept a call
+  dispatch(updateConnectingMessage(linguist));
+};
+
+const connectionEventNotification = () => () => {
+  //TODO: Logic when receive a connection notification
+};
+
+const sessionEndNotification = () => () => {
+  //TODO: Logic when a session is over
+  //SoundManager["EndCall"].play();
+};
+
 export const addListeners = () => dispatch => {
   // Listener to notificaciones received by the app in active state
   PushNotification.addListener(notif => {
-    dispatch(remoteNotificationReceived(notif.invitationID));
+    dispatch(remoteNotificationReceived(notif));
   });
   // set callback for the remote notifications received by the app in background state
   PushNotification.setCallbackRemoteNotifications(notif => {
     if (notif) {
-      dispatch(remoteNotificationReceived(notif.invitationID));
+      dispatch(remoteNotificationReceived(notif));
     }
   });
 };

@@ -1,4 +1,11 @@
 PODS:
+  - AppCenter/Analytics (1.6.1):
+    - AppCenter/Core
+  - AppCenter/Core (1.6.1)
+  - AppCenter/Crashes (1.6.1):
+    - AppCenter/Core
+  - AppCenterReactNativeShared (1.5.1):
+    - AppCenter/Core (= 1.6.1)
   - BVLinearGradient (2.4.0):
     - React
   - Crashlytics (3.9.3):
@@ -13,10 +20,10 @@ PODS:
   - FirebaseAnalytics (4.0.5):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - nanopb (~> 0.3)
   - FirebaseCore (4.0.12):
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
   - FirebaseInstanceID (2.0.7)
   - FirebaseMessaging (2.0.7):
     - FirebaseAnalytics (~> 4.0)
@@ -27,7 +34,7 @@ PODS:
   - GoogleToolboxForMac/Defines (2.1.3)
   - GoogleToolboxForMac/Logger (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+  - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -36,8 +43,8 @@ PODS:
   - nanopb/encode (0.3.8)
   - OpenTok (2.12.1)
   - Protobuf (3.5.0)
-  - React (0.50.4):
-    - React/Core (= 0.50.4)
+  - React (0.55.4):
+    - React/Core (= 0.55.4)
   - react-native-background-timer (2.0.0):
     - React
   - react-native-camera (0.12.0):
@@ -48,29 +55,37 @@ PODS:
     - React
   - react-native-keep-awake (2.0.6):
     - React
-  - React/Core (0.50.4):
-    - yoga (= 0.50.4.React)
-  - React/RCTImage (0.50.4):
+  - React/Core (0.55.4):
+    - yoga (= 0.55.4.React)
+  - React/RCTImage (0.55.4):
     - React/Core
     - React/RCTNetwork
-  - React/RCTNetwork (0.50.4):
+  - React/RCTNetwork (0.55.4):
     - React/Core
   - ReactNativePermissions (1.1.1):
     - React
   - RNDeviceInfo (0.9.3):
     - React
-  - RNFS (2.9.7):
+  - RNFS (2.9.12):
     - React
-  - RNI18n (2.0.11):
+  - RNI18n (2.0.12):
     - React
   - RNOpenTok (2.0.1):
     - OpenTok
     - React
-  - RNSVG (6.2.2):
+  - RNSound (0.10.9):
+    - React/Core
+    - RNSound/Core (= 0.10.9)
+  - RNSound/Core (0.10.9):
+    - React/Core
+  - RNSVG (6.3.1):
     - React
-  - yoga (0.50.4.React)
+  - yoga (0.55.4.React)
 
 DEPENDENCIES:
+  - AppCenter/Analytics (~> 1.6.1)
+  - AppCenter/Crashes (~> 1.6.1)
+  - AppCenterReactNativeShared (~> 1.5.1)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - Crashlytics
   - Fabric
@@ -87,41 +102,62 @@ DEPENDENCIES:
   - RNFS (from `../node_modules/react-native-fs`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNOpenTok (from `../node_modules/react-native-opentok/ios`)
+  - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AppCenter
+    - AppCenterReactNativeShared
+    - Crashlytics
+    - Fabric
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseInstanceID
+    - FirebaseMessaging
+    - GoogleToolboxForMac
+    - nanopb
+    - OpenTok
+    - Protobuf
+
 EXTERNAL SOURCES:
   BVLinearGradient:
-    :path: ../node_modules/react-native-linear-gradient
+    :path: "../node_modules/react-native-linear-gradient"
   React:
-    :path: ../node_modules/react-native
+    :path: "../node_modules/react-native"
   react-native-background-timer:
-    :path: ../node_modules/react-native-background-timer
+    :path: "../node_modules/react-native-background-timer"
   react-native-camera:
-    :path: ../node_modules/react-native-camera
+    :path: "../node_modules/react-native-camera"
   react-native-fetch-blob:
-    :path: ../node_modules/react-native-fetch-blob
+    :path: "../node_modules/react-native-fetch-blob"
   react-native-image-resizer:
-    :path: ../node_modules/react-native-image-resizer
+    :path: "../node_modules/react-native-image-resizer"
   react-native-keep-awake:
-    :path: ../node_modules/react-native-keep-awake
+    :path: "../node_modules/react-native-keep-awake"
   ReactNativePermissions:
-    :path: ../node_modules/react-native-permissions
+    :path: "../node_modules/react-native-permissions"
   RNDeviceInfo:
-    :path: ../node_modules/react-native-device-info
+    :path: "../node_modules/react-native-device-info"
   RNFS:
-    :path: ../node_modules/react-native-fs
+    :path: "../node_modules/react-native-fs"
   RNI18n:
-    :path: ../node_modules/react-native-i18n
+    :path: "../node_modules/react-native-i18n"
   RNOpenTok:
-    :path: ../node_modules/react-native-opentok/ios
+    :path: "../node_modules/react-native-opentok/ios"
+  RNSound:
+    :path: "../node_modules/react-native-sound"
   RNSVG:
-    :path: ../node_modules/react-native-svg
+    :path: "../node_modules/react-native-svg"
   yoga:
-    :path: ../node_modules/react-native/ReactCommon/yoga/yoga.podspec
+    :path: "../node_modules/react-native/ReactCommon/yoga/yoga.podspec"
 
 SPEC CHECKSUMS:
-  BVLinearGradient: 8913bd8fdc47b85abc801ae8bae007bbfb6b4ce5
+  AppCenter: f9eb653a45cece34549232f295aec05260dfc24f
+  AppCenterReactNativeShared: 5b40dc5bbaf891697d1982e0ae0e9b1120dd4274
+  BVLinearGradient: 4b3f3bdf1ac1a52a5ef5e65c9585d793a7c3f825
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
   Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
@@ -133,20 +169,21 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   OpenTok: 869a96d84104b9de2b525c2e8a2a809561b47cec
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
-  React: 6d7efef18e0241eb832cf4c085405169a15080ed
-  react-native-background-timer: d95668546a9cb0cb80efcf54f4d48475434a3015
-  react-native-camera: 804909544eaaf6959089f517b86c1b159a234dea
-  react-native-fetch-blob: 2bef9be702de8726f4d7bf58d2345579aaaee60d
-  react-native-image-resizer: 4516052af6ae0248caf4ccf356caecefe60072d7
-  react-native-keep-awake: 7fc7d0a6886b38102fad5129c92fe7490eac1539
-  ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
-  RNDeviceInfo: dc3cbee96cd2392cf03d6ff6191dc15f1606a166
-  RNFS: c44a045cb06c6a496a27f37bd1b50f2c36422cf3
-  RNI18n: 155baa432934b0ca208f34de13834f4720e0cc12
-  RNOpenTok: cab5e455f81cd13ec6ac52b8f126ab00800c803a
-  RNSVG: aeeb222dd9cf2268385306108c20cf364872f5d2
-  yoga: b9aebf996711e50fc31f5608c10aa108a5a0c29e
+  React: aa2040dbb6f317b95314968021bd2888816e03d5
+  react-native-background-timer: 63dcbf37dbcf294b5c6c071afcdc661fa06a7594
+  react-native-camera: 46c2596d7b5f0d46eaf8022eeee4b7689f826a67
+  react-native-fetch-blob: 63394b1d7b0781547b3e4463b3195790177b1222
+  react-native-image-resizer: 04a3409e7d4ad646c4468671c69dec490def139c
+  react-native-keep-awake: 0de4bd66de0c23178107dce0c2fcc3354b2a8e94
+  ReactNativePermissions: 9f2d9c45c98800795e6c2ed330e25d11a66a8169
+  RNDeviceInfo: b375b3374cda3203d6d48cea8c07e46ba1169e26
+  RNFS: bbb1a64eb245763daf34aea86f97c97c4e85f74c
+  RNI18n: db9be06a40336f04d136f24dd5de3f5eb9f3207c
+  RNOpenTok: d1c4a4b8ebfa587c038a71c149b2b3821b11ccdf
+  RNSound: b360b3862d3118ed1c74bb9825696b5957686ac4
+  RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
+  yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: a89f3442c7c9720014a49547e670b73576b87225
+PODFILE CHECKSUM: 1abd3101a6db73e4e8214318b77762169531b588
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.3

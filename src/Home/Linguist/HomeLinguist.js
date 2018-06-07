@@ -178,10 +178,8 @@ class Home extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={{
-            text: firstName + " " + lastName,
-            style: styles.title
-          }}
+          navbarTitle={firstName + " " + lastName}
+          navbarType={"Basic"}
           photoSelect={avatar => this.uploadAvatar(avatar)}
           avatarSource={this.selectImage()}
           avatarHeight={150}

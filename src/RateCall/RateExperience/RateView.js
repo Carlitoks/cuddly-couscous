@@ -11,14 +11,19 @@ import { submitRateCall, clearOptions } from "../../Ducks/RateCallReducer";
 import { clearSettings as clearCallCustomerSettings } from "../../Ducks/CallCustomerSettings";
 import { clearSettings as clearCallLinguistSettings } from "../../Ducks/CallLinguistSettings";
 import { clearSettings as clearContactLinguist } from "../../Ducks/ContactLinguistReducer";
+import { clear as clearTokbox } from "../../Ducks/tokboxReducer";
 import { styles } from "./styles";
 import RateExperienceStars from "./RateExperienceStars";
 import RateExperienceThumbs from "./RateExperienceThumbs";
 import WhatWasGood from "./WhatWasGood";
 import WhatCouldBeBetter from "./WhatCouldBeBetter";
 import { Images } from "../../Themes";
+import SoundManager from "../../Util/SoundManager";
 
 class RateView extends Component {
+  componentWillMount() {
+    SoundManager["EndCall"].play();
+  }
   submit = () => {
     const { rating, thumbsUp, thumbsDown, sessionID } = this.props;
 
@@ -50,6 +55,7 @@ class RateView extends Component {
           this.props.clearCallCustomerSettings();
           this.props.clearCallLinguistSettings();
           this.props.clearContactLinguist();
+          this.props.clearTokbox();
           this.props.navigation.dispatch({ type: "Home" });
         })
         .catch(err => {
@@ -57,6 +63,7 @@ class RateView extends Component {
           this.props.clearCallCustomerSettings();
           this.props.clearCallLinguistSettings();
           this.props.clearContactLinguist();
+          this.props.clearTokbox();
           this.props.navigation.dispatch({ type: "Home" });
         });
     } else {
@@ -64,6 +71,7 @@ class RateView extends Component {
       this.props.clearCallCustomerSettings();
       this.props.clearCallLinguistSettings();
       this.props.clearContactLinguist();
+      this.props.clearTokbox();
       this.props.navigation.dispatch({ type: "Home" });
     }
   };
@@ -148,6 +156,7 @@ const mD = {
   clearOptions,
   clearCallCustomerSettings,
   clearCallLinguistSettings,
-  clearContactLinguist
+  clearContactLinguist,
+  clearTokbox
 };
 export default connect(mS, mD)(RateView);

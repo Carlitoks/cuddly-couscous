@@ -4,8 +4,7 @@ import { IMAGE_STORAGE_URL } from "../Config/env";
 import PushNotification from "../Util/PushNotification";
 import Languages from "../Config/Languages";
 import {
-  registerFCM,
-  remoteNotificationReceived
+  registerFCM
 } from "./PushNotificationReducer";
 
 // Actions

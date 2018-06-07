@@ -195,18 +195,9 @@ class PromotionView extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            this.state.showNavbarTitle ? (
-              <View>
-                <Text style={[styles.titleCall, styles.titleCallOrganization]}>
-                  {organization.Name}
-                </Text>
-                <Text style={[styles.titleCall, styles.titleCallEvent]}>
-                  {eventName}
-                </Text>
-              </View>
-            ) : null
-          }
+          navbarTitle={this.state.showNavbarTitle ? organization.Name : null}
+          navbarSubTitle={this.state.showNavbarTitle ? eventName : null}
+          navbarType={eventName}
           NoWaves
         >
           <View style={styles.mainContainer}>

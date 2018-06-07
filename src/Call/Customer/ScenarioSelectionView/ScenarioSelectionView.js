@@ -106,13 +106,10 @@ class CustomScenario extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerRightComponent={<QRIcon navigation={this.props.navigation} />}
-          headerCenterComponent={
-            this.state.showNavbarTitle ? (
-              <View>
-                <Text style={styles.title}>{CATEGORIES[categorySelected]}</Text>
-              </View>
-            ) : null
+          navbarTitle={
+            this.state.showNavbarTitle ? CATEGORIES[categorySelected] : null
           }
+          navbarType={"Complete"}
           NoWaves
           NoBackground
         >

@@ -21,7 +21,10 @@ import {
   clearSettings,
   updateSettings as customerUpdateSettings
 } from "../../../Ducks/CallCustomerSettings.js";
-import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
+import {
+  updateSettings,
+  resetConnectingMessage
+} from "../../../Ducks/ContactLinguistReducer";
 import { cleanSelected } from "../../../Ducks/HomeFlowReducer";
 import { clear as clearEvents } from "../../../Ducks/EventsReducer";
 import { clearPromoCode } from "../../../Ducks/PromoCodeReducer";
@@ -54,7 +57,9 @@ class CallConfirmationView extends Component {
   };
 
   componentWillMount() {
-    const { promotion, event } = this.props;
+    const { promotion, event, resetConnectingMessage } = this.props;
+
+    resetConnectingMessage();
 
     if (promotion || event.id) {
       const scannedEvent = promotion ? promotion : event;
@@ -115,9 +120,8 @@ class CallConfirmationView extends Component {
               }}
             />
           }
-          headerCenterComponent={
-            <Text style={styles.titleCall}>{I18n.t("confirmAndConnect")}</Text>
-          }
+          navbarTitle={I18n.t("confirmAndConnect")}
+          navbarType={"Complete"}
           NoWaves
         >
           <View style={styles.flex}>
@@ -368,7 +372,8 @@ const mD = {
   cleanSelected,
   clearLinguistReducer,
   clearEvents,
-  clearPromoCode
+  clearPromoCode,
+  resetConnectingMessage
 };
 
 export default connect(mS, mD)(CallConfirmationView);

@@ -351,6 +351,8 @@ class Home extends Component {
       <ViewWrapper style={styles.wrapperContainer}>
         <HeaderView
           headerCenterComponent={<Text style={styles.textName}>{salute}</Text>}
+          navbarTitle={salute}
+          navbarType={"Complete"}
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }

@@ -149,6 +149,7 @@ export default (ESP = {
   incomingCall: "Incoming video call...",
   intermediate: "Intermediate",
   invalidPromoCode: "Invalid promo code",
+  isConnecting: "is connecting...",
   languageCommand: "Language at Your Command",
   languageHelp: "Language Help Wherever You Are",
   languageInterpretation: "Have you done any interpretation in <lang> before?",

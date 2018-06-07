@@ -101,9 +101,8 @@ class PromoCodeView extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            <Text style={styles.titleCall}>{I18n.t("promoCodeTitle")}</Text>
-          }
+          navbarTitle={I18n.t("promoCodeTitle")}
+          navbarType={"Basic"}
           NoWaves
         >
           <ScrollView

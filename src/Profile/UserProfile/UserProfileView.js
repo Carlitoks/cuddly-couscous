@@ -223,10 +223,8 @@ class UserProfileView extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={{
-            text: I18n.t("userProfile"),
-            style: styles.title
-          }}
+          navbarTitle={I18n.t("userProfile")}
+          navbarType={"Basic"}
           photoSelect={avatar => this.uploadAvatar(avatar)}
           avatarSource={this.selectImage()}
           avatarHeight={150}
