@@ -107,7 +107,10 @@ export const styles = StyleSheet.create({
     borderTopWidth: 0
   },
   textInput: {
-    height: 40,
+    height: 0,
+    paddingBottom: 0,
+    paddingTop: 0,
+    paddingLeft: 0,
     marginLeft: 0,
     borderColor: Colors.white,
     borderWidth: 0,

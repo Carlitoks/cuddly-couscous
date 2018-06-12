@@ -6,7 +6,7 @@ import { clear as clearTokbox } from "./tokboxReducer";
 import { displayNetworkAlert } from "./NetworkInfoReducer";
 import { logOut } from "./AuthReducer";
 import I18n from "../I18n/I18n";
-import { Alert } from "react-native";
+import { displayAlert } from "../Util/Helpers";
 
 const ACTIONS = {
   CLEAR: "networkErrors/clear",
@@ -46,9 +46,12 @@ const handleError = status => dispatch => {
       // dispatch(notFoundError());
       break;
 
-    // case 500:
-    //   dispatch(serverError());
-    //   break;
+    case 500:
+    case 502:
+    case 504:
+      displayAlert(I18n.t("temporaryError"));
+
+      break;
 
     // default:
     //   dispatch(serverError());
@@ -116,7 +119,6 @@ const networkErrors = (state = initialState, action = {}) => {
           errors: payload.request._response
         };
       } else if (payload) {
-        console.log(payload);
         return {
           ...state,
           errors: payload

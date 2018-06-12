@@ -106,7 +106,6 @@ export default StyleSheet.create({
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
-    flexWrap: "wrap",
     marginBottom: 150
   },
   boxText: {

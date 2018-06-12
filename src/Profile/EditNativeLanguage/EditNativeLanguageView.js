@@ -26,6 +26,7 @@ import I18n from "../../I18n/I18n";
 import languages from "../../Config/Languages";
 import styles from "./styles";
 import { Colors } from "../../Themes";
+import { SUPPORTED_LANGS } from "../../Util/Constants";
 
 class EditNativeLanguageView extends Component {
   constructor(props) {
@@ -92,6 +93,18 @@ class EditNativeLanguageView extends Component {
     });
   }
 
+  getSupportedLanguagesNames() {
+    const supportedLanguages = new Set(SUPPORTED_LANGS);
+    return (supportedLanguagesArray = languages
+      .filter(language => {
+        return supportedLanguages.has(language["3"]);
+      })
+      .map(language => {
+        return language.name;
+      })
+      .join(", "));
+  }
+
   submit() {
     const {
       token,
@@ -105,24 +118,64 @@ class EditNativeLanguageView extends Component {
     const data = {
       nativeLangCode: formNativeLanguage["3"]
     };
-    updateProfileAsync(uuid, data, token).then(response => {
-      const {
-        payload,
-        payload: { nativeLangCode }
-      } = response;
-
-      if (response.type !== "networkErrors/error") {
-        updateView({
-          selectedNativeLanguage: getNativeLang(nativeLangCode)
-        });
-        navigation.dispatch({
-          type: "back"
-        });
-      } else {
-        const errorMessage = response.payload.response.data.errors[0];
-        Alert.alert("error", errorMessage);
-      }
+    const isSupportedLang = SUPPORTED_LANGS.find(item => {
+      return formNativeLanguage["3"] === item;
     });
+    if (!!isSupportedLang === false) {
+      Alert.alert(
+        "",
+        `${I18n.t(
+          "languageNotice1"
+        )} \n\n\t${this.getSupportedLanguagesNames()} \n\n${I18n.t(
+          "languageNotice2"
+        )}`,
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              updateProfileAsync(uuid, data, token).then(response => {
+                const {
+                  payload,
+                  payload: { nativeLangCode }
+                } = response;
+
+                if (response.type !== "networkErrors/error") {
+                  updateView({
+                    selectedNativeLanguage: getNativeLang(nativeLangCode)
+                  });
+                  navigation.dispatch({
+                    type: "back"
+                  });
+                } else {
+                  const errorMessage = response.payload.response.data.errors[0];
+                  Alert.alert("error", errorMessage);
+                }
+              });
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      updateProfileAsync(uuid, data, token).then(response => {
+        const {
+          payload,
+          payload: { nativeLangCode }
+        } = response;
+
+        if (response.type !== "networkErrors/error") {
+          updateView({
+            selectedNativeLanguage: getNativeLang(nativeLangCode)
+          });
+          navigation.dispatch({
+            type: "back"
+          });
+        } else {
+          const errorMessage = response.payload.response.data.errors[0];
+          Alert.alert("error", errorMessage);
+        }
+      });
+    }
   }
 
   render() {
@@ -209,4 +262,7 @@ const mD = {
 };
 
 // EXPORT DEFAULT HERE AT THE BOTTOM
-export default connect(mS, mD)(EditNativeLanguageView);
+export default connect(
+  mS,
+  mD
+)(EditNativeLanguageView);

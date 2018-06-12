@@ -74,9 +74,8 @@ class CallTimeView extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerCenterComponent={
-            <Text style={[styles.titleCall]}>{I18n.t("callTimeMinutes")}</Text>
-          }
+          navbarTitle={I18n.t("callTimeMinutes")}
+          navbarType={"Complete"}
           headerRightComponent={
             <Close
               action={() => {

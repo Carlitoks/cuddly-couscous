@@ -21,7 +21,11 @@ import styles from "./styles";
 import { displayFormErrors } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
-import { onlyLetters } from "../../Util/Helpers";
+import {
+  onlyLetters,
+  is500Response,
+  displayTemporaryErrorAlert
+} from "../../Util/Helpers";
 
 class NameCustomerView extends Component {
   navigate = this.props.navigation.navigate;
@@ -114,12 +118,11 @@ class NameCustomerView extends Component {
           Keyboard.dismiss();
         })
         .catch(error => {
-          console.log(error);
-          console.log(error.response.data);
-
           error.response
-            ? displayFormErrors(error.response.data)
-            : displayFormErrors(error);
+            ? is500Response(error)
+              ? displayTemporaryErrorAlert()
+              : null
+            : displayFormErrors(error.response.data);
         });
     }
   }
@@ -255,4 +258,7 @@ const mD = {
   checkRecord
 };
 
-export default connect(mS, mD)(NameCustomerView);
+export default connect(
+  mS,
+  mD
+)(NameCustomerView);

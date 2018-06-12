@@ -8,7 +8,7 @@ import { update, checkRecord } from "../../Ducks/OnboardingRecordReducer";
 
 import { filter, findIndex } from "lodash";
 
-import { View, ActivityIndicator, Keyboard, Text } from "react-native";
+import { View, ActivityIndicator, Keyboard, Text, Alert } from "react-native";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
@@ -17,12 +17,17 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import ListComponent from "../../Components/ListComponent/ListComponent";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 
-import { displayFormErrors } from "../../Util/Helpers";
+import {
+  displayFormErrors,
+  is500Response,
+  displayTemporaryErrorAlert
+} from "../../Util/Helpers";
 
 import I18n from "../../I18n/I18n";
 import { Colors } from "../../Themes";
 import languages from "../../Config/Languages";
 import styles from "./styles";
+import { SUPPORTED_LANGS } from "../../Util/Constants";
 
 class NativeLanguageView extends Component {
   constructor(props) {
@@ -103,6 +108,18 @@ class NativeLanguageView extends Component {
     });
   }
 
+  getSupportedLanguagesNames() {
+    const supportedLanguages = new Set(SUPPORTED_LANGS);
+    return (supportedLanguagesArray = languages
+      .filter(language => {
+        return supportedLanguages.has(language["3"]);
+      })
+      .map(language => {
+        return language.name;
+      })
+      .join(", "));
+  }
+
   submit() {
     const {
       id,
@@ -127,24 +144,63 @@ class NativeLanguageView extends Component {
 
     const payload = { id: storedId, ...selectedLanguage };
 
-    asyncUpdateUser(payload, storedToken)
-      .then(response => {
-        if (response.type === "networkErrors/error") {
-          throw new Error(response.payload.data.errors);
-        }
-        this.props.updateForm({
-          selectedNativeLanguage: this.state.selectedLanguage
+    const formNativeLanguage = this.state.selectedLanguage;
+    const isSupportedLang = SUPPORTED_LANGS.find(item => {
+      return formNativeLanguage["3"] === item;
+    });
+    if (!!isSupportedLang === false) {
+      Alert.alert(
+        "",
+        `${I18n.t(
+          "languageNotice1"
+        )} \n\n\t${this.getSupportedLanguagesNames()} \n\n${I18n.t(
+          "languageNotice2"
+        )}`,
+        [
+          {
+            text: "OK",
+            onPress: () => {
+              asyncUpdateUser(payload, storedToken)
+                .then(response => {
+                  if (response.type === "networkErrors/error") {
+                    throw new Error(response.payload.data.errors);
+                  }
+                  this.props.updateForm({
+                    selectedNativeLanguage: this.state.selectedLanguage
+                  });
+                  navigation.dispatch({ type: "GenderCustomerView" });
+                })
+                .catch(error => {
+                  error.response
+                    ? is500Response(error)
+                      ? displayTemporaryErrorAlert()
+                      : null
+                    : displayFormErrors(error.response.data);
+                });
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      asyncUpdateUser(payload, storedToken)
+        .then(response => {
+          if (response.type === "networkErrors/error") {
+            throw new Error(response.payload.data.errors);
+          }
+          this.props.updateForm({
+            selectedNativeLanguage: this.state.selectedLanguage
+          });
+          navigation.dispatch({ type: "GenderCustomerView" });
+        })
+        .catch(error => {
+          error.response
+            ? is500Response(error)
+              ? displayTemporaryErrorAlert()
+              : null
+            : displayFormErrors(error.response.data);
         });
-        navigation.dispatch({ type: "GenderCustomerView" });
-      })
-      .catch(error => {
-        console.log(error);
-        console.log(error.response);
-
-        error.response
-          ? displayFormErrors(error.response.data)
-          : displayFormErrors(error);
-      });
+    }
   }
 
   render() {
@@ -227,4 +283,7 @@ const mD = {
 };
 
 // EXPORT DEFAULT HERE AT THE BOTTOM
-export default connect(mS, mD)(NativeLanguageView);
+export default connect(
+  mS,
+  mD
+)(NativeLanguageView);

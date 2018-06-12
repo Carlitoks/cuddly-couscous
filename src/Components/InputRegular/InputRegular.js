@@ -48,6 +48,7 @@ const InputRegular = ({
             styles.multilineContainer,
             styles.formInputMultiline
           ]}
+          allowFontScaling={false}
           placeholder={placeholder}
           autoCorrect={autoCorrect}
           onChangeText={onChangeText}
@@ -60,6 +61,7 @@ const InputRegular = ({
           placeholderTextColor={Colors.placeholderColor}
           multiline={true}
           numberOfLines={3}
+          returnKeyType={"done"}
         />
       ) : (
         <FormInput
@@ -69,12 +71,14 @@ const InputRegular = ({
           autoCorrect={autoCorrect}
           onChangeText={onChangeText}
           value={value}
+          allowFontScaling={false}
           keyboardType={keyboardType}
           maxLength={maxLength}
           secureTextEntry={secureTextEntry}
           autoFocus={autoFocus}
           inputStyle={styles.formInput}
           placeholderTextColor={Colors.placeholderColor}
+          returnKeyType={"done"}
         />
       )}
     </View>

@@ -16,6 +16,8 @@ import {
   clearSettings as clearLinguistProfile
 } from "./ProfileLinguistReducer";
 
+import { is500Response } from "../Util/Helpers";
+
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 
@@ -136,9 +138,11 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
     })
     .catch(error => {
       dispatch(updateForm({ performingRequest: false }));
-      throw error.response;
       dispatch(networkError(error));
-      dispatch(loginError(error.response));
+      if (!is500Response(error)) {
+        dispatch(loginError(error.response));
+      }
+      throw error.response;
     });
 };
 

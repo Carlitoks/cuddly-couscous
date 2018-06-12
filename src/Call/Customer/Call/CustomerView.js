@@ -85,6 +85,28 @@ class CustomerView extends Component {
       showAlert: false,
       extraTime: 0
     };
+
+    this.endCallSound = new Sound(
+      "elastic_done3.wav",
+      Sound.MAIN_BUNDLE,
+      error => {
+        if (error) {
+          console.log("failed to load the END CALL sound", error);
+          return;
+        }
+      }
+    );
+
+    this.extraTimeSound = new Sound(
+      "elastic_done5.wav",
+      Sound.MAIN_BUNDLE,
+      error => {
+        if (error) {
+          console.log("failed to load the EXTRA TIME sound", error);
+          return;
+        }
+      }
+    );
   }
 
   componentWillMount() {
@@ -93,6 +115,7 @@ class CustomerView extends Component {
 
   async componentDidMount() {
     const { customerTokboxSessionToken, customerTokboxSessionID } = this.props;
+    Sound.setCategory("Playback");
 
     if (Platform.OS === PLATFORM.ANDROID) {
       emitLocalNotification({
@@ -138,10 +161,14 @@ class CustomerView extends Component {
     BackgroundCleanInterval(this.props.timer); // remove interval of timer
     Platform.OS === PLATFORM.ANDROID && cleanNotifications();
     this.props.resetTimerAsync(); // reset call timer
-    clearInterval(this.props.counterId);
-    clearInterval(this.props.timer);
-    this.props.resetCounter();
+    clearInterval(this.props.counterId); //Contacting timer
+    clearInterval(this.props.timer); // Call timer
+    this.props.resetCounter(); // reset Contacting timer
     OpenTok.disconnectAll();
+    this.setState({
+      red: false,
+      showAlert: false
+    });
     //SoundManager["EndCall"].play();
     InCallManager.stop();
   }
@@ -159,7 +186,7 @@ class CustomerView extends Component {
 
     this.props.updateSettings({
       timer: BackgroundInterval(() => {
-        if (!!callTime && callTime + this.state.extraTime < 60 * 60) {
+        if (this.props.elapsedTime + this.state.extraTime < 60 * 60) {
           if (
             this.props.elapsedTime >=
             callTime + this.state.extraTime - 2 * 60
@@ -177,21 +204,22 @@ class CustomerView extends Component {
               this.displayTimeAlert();
             }
           }
-        }
+          if (this.props.elapsedTime > callTime + this.state.extraTime) {
+            this.closeCall(REASON.DONE);
+          } else {
+            this.props.incrementTimer();
 
-        if (this.props.elapsedTime > callTime + this.state.extraTime) {
-          this.closeCall(REASON.DONE);
-        } else {
-          this.props.incrementTimer();
-
-          if (Platform.OS === PLATFORM.ANDROID) {
-            emitLocalNotification({
-              title: I18n.t("call"),
-              message: `${I18n.t("callInProgress")} ${fmtMSS(
-                this.props.elapsedTime
-              )}`
-            });
+            if (Platform.OS === PLATFORM.ANDROID) {
+              emitLocalNotification({
+                title: I18n.t("call"),
+                message: `${I18n.t("callInProgress")} ${fmtMSS(
+                  this.props.elapsedTime
+                )}`
+              });
+            }
           }
+        } else {
+          this.closeCall(REASON.DONE);
         }
       }, 1000)
     });
@@ -547,4 +575,7 @@ const mD = {
   verifyCall
 };
 
-export default connect(mS, mD)(CustomerView);
+export default connect(
+  mS,
+  mD
+)(CustomerView);

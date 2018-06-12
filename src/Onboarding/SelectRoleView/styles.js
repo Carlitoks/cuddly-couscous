@@ -141,7 +141,8 @@ export default StyleSheet.create({
     marginTop: 15,
     color: Colors.primaryColor,
     fontFamily: Fonts.BaseFont,
-    fontSize: 16.5
+    fontSize: 16.5,
+    textAlign: "center"
   },
   fullWidth: {
     width: "100%"

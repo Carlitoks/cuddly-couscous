@@ -16,6 +16,7 @@ import Checkmark from "./checkmark";
 import QR from "./qr";
 import NavMenu from "./navMenu";
 import Chevron from "./chevron";
+import Logo from "./smallLogoJeenie";
 
 export {
   Audio,
@@ -35,5 +36,6 @@ export {
   Checkmark,
   QR,
   NavMenu,
-  Chevron
+  Chevron,
+  Logo
 };

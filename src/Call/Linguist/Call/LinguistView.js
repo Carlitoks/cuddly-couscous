@@ -241,6 +241,7 @@ class LinguistView extends Component {
             modalReconnect: false
           });
           clearInterval(this.props.counterId);
+          this.startTimer();
           InCallManager.start({ media: "audio" });
           InCallManager.setForceSpeakerphoneOn(true);
         }}
@@ -305,7 +306,7 @@ class LinguistView extends Component {
                   }
                 }}
                 onPublishStart={() => {
-                  this.startTimer();
+                  //this.startTimer();
                   console.log("publish started");
 
                   if (!this.props.video) {

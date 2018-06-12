@@ -20,34 +20,33 @@ import styles from "./styles";
  * @extends {Component}
  */
 
-  class SearchBar extends Component {
+class SearchBar extends Component {
+  constructor(props) {
+    super(props);
 
-    constructor(props) {
-      super(props);
-  
-      this.state = {
-        textValue: ""
-      };
-    }
+    this.state = {
+      textValue: ""
+    };
+  }
 
-    componentDidMount(){
-      this.setState({
-        textValue: !!this.props.value ? this.props.value : ""
-      })
-    }
+  componentDidMount() {
+    this.setState({
+      textValue: !!this.props.value ? this.props.value : ""
+    });
+  }
 
-    componentWillReceiveProps(){
-      this.setState({
-        textValue: !!this.props.value ? this.props.value : ""
-      })
-    }
+  componentWillReceiveProps() {
+    this.setState({
+      textValue: !!this.props.value ? this.props.value : ""
+    });
+  }
 
-    clearText() {
-      this.input.clear();
-    }
+  clearText() {
+    this.input.clear();
+  }
 
-    render() {
-      return (
+  render() {
+    return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <Icon
@@ -57,26 +56,31 @@ import styles from "./styles";
             color={Colors.placeholderColor}
           />
           <TextInput
-            ref={(input) => this.input = input}
+            allowFontScaling={false}
+            ref={input => (this.input = input)}
             underlineColorAndroid={Colors.transparent}
-            placeholder={!!this.props.placeholder ? this.props.placeholder : I18n.t("search")}
+            placeholder={
+              !!this.props.placeholder
+                ? this.props.placeholder
+                : I18n.t("search")
+            }
             onChangeText={this.props.onChangeText}
             value={this.props.value}
             style={styles.input}
             placeholderTextColor={Colors.placeholderColor}
+            returnKeyType={"done"}
           />
           <Icon
             name={"close"}
             containerStyle={styles.iconCloseContainer}
             size={18}
             color={Colors.placeholderColor}
-            onPress={()=>{
+            onPress={() => {
               this.props.onClearText();
               this.input.clear();
             }}
             underlayColor={Colors.searchBarGrey}
           />
-          
         </View>
       </View>
     );

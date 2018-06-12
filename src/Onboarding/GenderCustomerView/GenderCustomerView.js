@@ -19,7 +19,13 @@ import {
   getNativeLang
 } from "../../Ducks/UserProfileReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  TouchableWithoutFeedback
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, Header, List, ListItem } from "react-native-elements";
@@ -31,7 +37,11 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import ListComponent from "../../Components/ListComponent/ListComponent";
 
 import styles from "./styles";
-import { displayFormErrors } from "../../Util/Helpers";
+import {
+  displayFormErrors,
+  is500Response,
+  displayTemporaryErrorAlert
+} from "../../Util/Helpers";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
@@ -138,11 +148,14 @@ class GenderCustomerView extends Component {
         navigation.dispatch({ type: "WelcomeCustomerView" });
       })
       .catch(error => {
-        console.log(error.response);
-
+        this.props.updateForm({
+          performingRequest: false
+        });
         error.response
-          ? displayFormErrors(error.response.data)
-          : displayFormErrors(error);
+          ? is500Response(error)
+            ? displayTemporaryErrorAlert()
+            : null
+          : displayFormErrors(error.response.data);
       });
   }
 
@@ -196,11 +209,17 @@ class GenderCustomerView extends Component {
               leftText
               noFlex
             />
-            <View style={styles.mainContainterText}>
-              <Text style={[styles.textCenter, styles.spaceBetween]}>
-                {I18n.t("genderNotice")}
-              </Text>
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                Alert.alert("", I18n.t("genderAlert"));
+              }}
+            >
+              <View style={styles.mainContainterText}>
+                <Text style={[styles.textCenter, styles.spaceBetween]}>
+                  {I18n.t("genderNotice")}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </HeaderView>
         {/* Next Button */}
@@ -250,4 +269,7 @@ const mD = {
   getNativeLang
 };
 
-export default connect(mS, mD)(GenderCustomerView);
+export default connect(
+  mS,
+  mD
+)(GenderCustomerView);

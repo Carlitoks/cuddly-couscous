@@ -8,7 +8,13 @@ import {
 } from "../../Ducks/RegistrationCustomerReducer";
 import { updateProfileAsync } from "../../Ducks/UserProfileReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  TouchableWithoutFeedback
+} from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
 import { Button, Header, List, ListItem } from "react-native-elements";
@@ -136,11 +142,17 @@ class EditGenderView extends Component {
               leftText
               noFlex
             />
-            <View style={styles.mainContainterText}>
-              <Text style={[styles.textCenter, styles.spaceBetween]}>
-                {I18n.t("genderNotice")}
-              </Text>
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                Alert.alert("", I18n.t("genderAlert"));
+              }}
+            >
+              <View style={styles.mainContainterText}>
+                <Text style={[styles.textCenter, styles.spaceBetween]}>
+                  {I18n.t("genderNotice")}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </ScrollView>
         </HeaderView>
         {/* Save Button */}
@@ -169,4 +181,7 @@ const mD = {
   updateProfileAsync
 };
 
-export default connect(mS, mD)(EditGenderView);
+export default connect(
+  mS,
+  mD
+)(EditGenderView);

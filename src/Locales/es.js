@@ -121,8 +121,9 @@ export default (ESP = {
   frequently: "Frequently",
   freeTrial: "Free Trial",
   gender: "Gender",
-  genderNotice:
-    "Customers and linguists have the option to select a preferred gender for calls.",
+  genderAlert:
+    "Linguists have the option to be matched with a customer of a specific gender. If you prefer not to disclose your gender, you will not be matched with linguists with a preference.",
+  genderNotice: "Why do we ask this?",
   genderName: "Select your Gender",
   genderPreferenceCustomer: "Gender preference for my customer",
   genderPreferenceLinguist: "Gender preference for my linguist",
@@ -156,6 +157,9 @@ export default (ESP = {
   LanguagePairs: "Language Pairs", // not use
   language: "Language",
   languages: "Languages",
+  languageNotice1:
+    "Thank you! Jeenie is currently not available in your native language but you can still make calls in our supported languages:",
+  languageNotice2: "More languages will be coming soon.",
   languageSettings: "Language Settings",
   languagesStatic1:
     "During the free trial period, Jeenie supports only Chinese (Mandarin) and English.",
@@ -164,15 +168,15 @@ export default (ESP = {
   languageFrom: "From:",
   languageTo: "To:",
   lauchScreenSwipe1:
-    "With Jeenie, language is no longer a barrier to communication. \n Travel with confidence!",
+    "Travel with confidence! \n With the Jeenie app, language is no longer a barrier to communication.",
   lauchScreenSwipe2:
-    "Wherever you are in the world, live, human language speakers are available at your convenience through the Jeenie app.",
+    "Wherever you are in the world, access live, human language speakers in real-time.",
   lauchScreenSwipe3:
-    "Currently, Jeenie provides language support in Mandarin and English. 10 additional languages coming soon.",
+    "Currently, Jeenie provides language support in \n Mandarin <> English \n and Japanese <> English. Additional languages are coming soon.",
   lauchScreenSwipe4:
-    "The average call lasts 8 minutes, but speak as long as you like.",
+    "The average call lasts 5 to 10 minutes, but speak as long as you like.",
   lauchScreenSwipe5:
-    "In celebration of our launch, your first calls are FREE... compliments of Jeenie!",
+    "In celebration of our launch, your first 60 minutes are FREE …compliment of Jeenie!",
   lastname: "Last Name",
   legal: "Legal",
   letsGoToKwon: "Let’s Get to Know You",
@@ -237,7 +241,7 @@ export default (ESP = {
   promoCodeTitle: "Enter a promo code",
   promoCodeInput: "Promo code",
   progressiveImageComponent: "Progressive Image Component",
-  qr: "QR code",
+  qr: "QR Code",
   quicklyContact:
     "Quickly contact a linguist to help with your languages needs",
   rateYour: "Rate your",
@@ -256,7 +260,7 @@ export default (ESP = {
   save: "Save",
   scanQR: "Scan QR Code",
   scanQRCode: "Scan a QR Code",
-  scenarioNotes: "Type in additional information for your linguist here.",
+  scenarioNotes: "Add additional information here",
   schedule: "Schedule",
   scheduleLinguist: "Schedule a Linguist",
   search: "Search",
@@ -285,6 +289,7 @@ export default (ESP = {
   termsConditions: "Term & Conditions",
   termsOfUse: "Terms of Use",
   themeSettings: "Theme Settings",
+  temporaryError: "A temporary error as occurred, please try again later.",
   toOthersOnPlatform: "to others on the platform.",
   toggleExtraTimeDisable: "This call will end automatically after time above",
   toggleExtraTimeEnable:

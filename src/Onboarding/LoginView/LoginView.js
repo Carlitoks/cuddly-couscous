@@ -157,11 +157,16 @@ class LoginView extends Component {
             }
           })
           .catch(error => {
-            console.log(error);
-            console.log(error.data);
-            error.data
-              ? displayFormErrors(error.data.errors)
-              : displayFormErrors(error);
+            const errorMessage = !error
+              ? !this.props.networkModal
+                ? I18n.t("temporaryError")
+                : null
+              : !error.data
+                ? I18n.t("temporaryError")
+                : error.data.errors;
+
+            errorMessage && displayFormErrors(errorMessage);
+
             updateForm({ performingRequest: false });
           });
       });
@@ -268,6 +273,7 @@ const mS = state => ({
   formHasErrors: state.login.formHasErrors,
   performingRequest: state.login.performingRequest,
   networkError: state.networkErrors.errors,
+  networkModal: state.networkInfo.networkModal,
   uuid: state.auth.uuid,
   token: state.auth.token
 });
@@ -285,4 +291,7 @@ const mD = {
   getNativeLang
 };
 
-export default connect(mS, mD)(LoginView);
+export default connect(
+  mS,
+  mD
+)(LoginView);

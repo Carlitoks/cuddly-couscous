@@ -110,7 +110,7 @@ class EmailCustomerView extends Component {
 
       registerDevice()
         .then(response => {
-          if (response.type === "networkErrors/error") {
+          if (!response || response.type === "networkErrors/error") {
             throw response;
           }
 
@@ -129,25 +129,32 @@ class EmailCustomerView extends Component {
           navigation.dispatch({ type: "NameCustomerView" });
         })
         .catch(err => {
-          if (this.getResponseError(err) === "user already exists") {
-            const record = checkRecord(email);
-
-            if (record) {
-              updateCustomer({ userInfo: { id } });
-              updateView({ email: email.toLowerCase() });
-              navigation.dispatch({ type: record.lastStage });
-            } else {
-              navigation.dispatch({
-                type: "LoginView"
-              });
-              const errors = err.payload
-                ? err.payload.response.data.errors
-                : err.response
-                  ? err.response.data.errors
-                  : err;
-
-              displayFormErrors(errors);
+          if (!err) {
+            if (!this.props.networkModal) {
+              displayFormErrors(I18n.t("temporaryError"));
             }
+          } else {
+            if (this.getResponseError(err) === "user already exists") {
+              const record = checkRecord(email);
+
+              if (record) {
+                updateCustomer({ userInfo: { id } });
+                updateView({ email: email.toLowerCase() });
+                navigation.dispatch({ type: record.lastStage });
+              } else {
+                navigation.dispatch({
+                  type: "LoginView"
+                });
+              }
+            }
+
+            const errors = err.payload
+              ? err.payload.response.data.errors
+              : err.response
+                ? err.response.data.errors
+                : err;
+
+            displayFormErrors(errors);
           }
         });
     }
@@ -321,7 +328,8 @@ const mS = state => ({
   formHasErrors: state.registrationCustomer.formHasErrors,
   deviceToken: state.registrationCustomer.deviceToken,
   id: state.userProfile.id,
-  records: state.onboardingRecord.records
+  records: state.onboardingRecord.records,
+  networkModal: state.networkInfo.networkModal
 });
 
 const mD = {
@@ -335,4 +343,7 @@ const mD = {
   updateView
 };
 
-export default connect(mS, mD)(EmailCustomerView);
+export default connect(
+  mS,
+  mD
+)(EmailCustomerView);

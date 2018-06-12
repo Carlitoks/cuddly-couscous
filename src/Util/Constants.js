@@ -16,6 +16,10 @@ export const LANG_CODES = new Map([
 
 export const LAUNCHSCREENENTRIES = [
   {
+    title: "",
+    illustration: "lauchScreenSwipe0"
+  },
+  {
     title: I18n.t("lauchScreenSwipe1"),
     illustration: "lauchScreenSwipe1"
   },

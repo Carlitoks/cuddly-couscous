@@ -34,9 +34,12 @@ class InputPassword extends Component {
 
   render() {
     return (
-      <View style={[styles.viewBorder, !!this.props.sec ? styles.secondary : null]}>
+      <View
+        style={[styles.viewBorder, !!this.props.sec ? styles.secondary : null]}
+      >
         <FormInput
           {...this.props}
+          allowFontScaling={false}
           underlineColorAndroid={Colors.transparent}
           autoCorrect={false}
           secureTextEntry={this.state.password}

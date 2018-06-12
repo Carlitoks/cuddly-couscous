@@ -37,7 +37,7 @@ export default StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 22,
-    fontWeight: "500",
+    fontWeight: "400",
     color: "white",
     paddingHorizontal: 45,
     fontFamily: Fonts.BaseFont,

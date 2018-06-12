@@ -366,7 +366,7 @@ class Home extends Component {
             />
             <Waves
               width={width}
-              height={width * 129 / 1175.7}
+              height={(width * 129) / 1175.7}
               viewBox={"0 0 1175.7 129"}
               style={styles.waves}
             />
@@ -376,7 +376,9 @@ class Home extends Component {
             {this.renderCarousel()}
             <Text style={[styles.subtitle]}>{I18n.t("recentActivity")}</Text>
             <Text style={[styles.smallsubtitle, styles.marginBottom10]}>
-              {I18n.t("tapRepeat")}
+              {scenariosList && scenariosList.length === 0
+                ? ""
+                : I18n.t("tapRepeat")}
             </Text>
             <View style={styles.scrollView}>
               <ScrollView
@@ -438,4 +440,7 @@ const mD = {
   customerCalls
 };
 
-export default connect(mS, mD)(Home);
+export default connect(
+  mS,
+  mD
+)(Home);

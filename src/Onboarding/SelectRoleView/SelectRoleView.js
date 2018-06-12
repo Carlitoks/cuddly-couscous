@@ -35,6 +35,7 @@ import {
 import FullScreenSwipeEntry from "../../Components/FullScreenSwipeEntry/FullScreenSwipeEntry";
 import { LAUNCHSCREENENTRIES } from "../../Util/Constants";
 import Waves from "../../SVG/waves";
+import { Logo } from "../../SVG";
 
 const IphoneX = DeviceInfo.getModel() == "iPhone X";
 
@@ -141,9 +142,14 @@ class SelectRoleView extends Component {
         {/* Logo and slogan container */}
         <View style={[styles.center, styles.absolute, styles.zIndex1]}>
           <View style={[this.IphoneX ? styles.logoX : styles.logo]}>
-            <Image
+            {/* <Image
               source={Images.jeenieLogo}
               style={[styles.logoImage, styles.center]}
+            /> */}
+            <Logo
+              width={width / 0.2}
+              height={(width * 63) / 750}
+              style={styles.logoImage}
             />
           </View>
           <Text style={styles.slogan}>{I18n.t("languageCommand")}</Text>
@@ -179,7 +185,7 @@ class SelectRoleView extends Component {
 
           <Waves
             width={width}
-            height={width * 129 / 1175.7}
+            height={(width * 129) / 1175.7}
             viewBox={"0 0 1175.7 129"}
             style={styles.waves}
           />
@@ -203,4 +209,7 @@ mD = {
   updateCustomer
 };
 
-export default connect(ms, mD)(SelectRoleView);
+export default connect(
+  ms,
+  mD
+)(SelectRoleView);

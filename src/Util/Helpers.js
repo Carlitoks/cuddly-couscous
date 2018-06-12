@@ -1,4 +1,6 @@
 import { Alert } from "react-native";
+import I18n from "../I18n/I18n";
+
 /**
  * @description Seconds to minutes and seconds String
  *
@@ -181,9 +183,22 @@ export const displayFormErrors = (...errors) => {
     return last.concat(curr);
   }, "");
 
-  Alert.alert("Error", errorStr, [
+  displayAlert(errorStr);
+};
+
+export const displayAlert = message => {
+  Alert.alert("Error", message, [
     { text: "OK", onPress: () => console.log("OK Pressed") }
   ]);
+};
+
+export const displayTemporaryErrorAlert = () =>
+  displayAlert(I18n.t("temporaryError"));
+
+export const is500Response = error => {
+  const status = Number(error.response.status);
+
+  return status >= 500 && status < 599;
 };
 
 /**

@@ -60,6 +60,8 @@ export default StyleSheet.create({
   },
   textCenter: {
     textAlign: "center",
-    fontSize: 14
+    fontSize: 14,
+    color: Colors.gradientColorButton.bottom,
+    textDecorationLine: "underline"
   }
 });

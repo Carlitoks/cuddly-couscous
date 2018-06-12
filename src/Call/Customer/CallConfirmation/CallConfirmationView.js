@@ -60,7 +60,7 @@ class CallConfirmationView extends Component {
     const { promotion, event, resetConnectingMessage } = this.props;
 
     resetConnectingMessage();
-
+    let inputHeight = 0;
     if (promotion || event.id) {
       const scannedEvent = promotion ? promotion : event;
 
@@ -145,7 +145,10 @@ class CallConfirmationView extends Component {
                   </Text>
                 </Text>
                 <TextInput
-                  style={styles.textInput}
+                  style={[
+                    styles.textInput,
+                    { height: Math.max(10, this.inputHeight) }
+                  ]}
                   underlineColorAndroid={Colors.transparent}
                   value={
                     scenarioNotes ? scenarioNotes : this.props.scenarioNotes
@@ -158,11 +161,16 @@ class CallConfirmationView extends Component {
                   }
                   multiline
                   blurOnSubmit
+                  allowFontScaling={false}
                   returnKeyType={"done"}
                   placeholder={I18n.t("scenarioNotes")}
                   onChangeText={text =>
                     this.props.updateSettings({ customScenarioNote: text })
                   }
+                  onContentSizeChange={event => {
+                    this.inputHeight = event.nativeEvent.contentSize.height;
+                  }}
+                  maxLength={350}
                 />
               </View>
             </View>
@@ -376,4 +384,7 @@ const mD = {
   resetConnectingMessage
 };
 
-export default connect(mS, mD)(CallConfirmationView);
+export default connect(
+  mS,
+  mD
+)(CallConfirmationView);

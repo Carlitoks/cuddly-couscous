@@ -166,7 +166,6 @@ export const tokConnect = (id, token) => (dispatch, getState) => {
   });
 
   OpenTok.on(OpenTok.events.ON_SESSION_STREAM_DESTROYED, e => {
-    SoundManager["EndCall"].play();
     console.log("ON_SESSION_STREAM_DESTROYED", e);
 
     if (isLinguist) {
