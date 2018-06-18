@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -13,9 +14,11 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* NewSoloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NewSoloTests.m */; };
 		013EE11074894DD2A2EE6ED7 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36EEF3BECC9747DEA2854429 /* Foundation.ttf */; };
+		070C141720D1A93000DC71D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 070C141620D1A93000DC71D8 /* GoogleService-Info.plist */; };
 		0715C215203E7D8800F76F07 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0715C1FD203E7D0800F76F07 /* libRNFIRMessaging.a */; };
-		0715C3B9203F247E00F76F07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0715C3B8203F247D00F76F07 /* GoogleService-Info.plist */; };
 		0722FE9220BF864B0039BF78 /* elastic_done5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0722FE6820BF864B0039BF78 /* elastic_done5.wav */; };
+		0725509920D44C1E008DA9FB /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0725509720D447B5008DA9FB /* libRNSound.a */; };
+		0725519520D7EFBB008DA9FB /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0725519420D7EFBB008DA9FB /* libBVLinearGradient.a */; };
 		07317530201FA6E2008FC1C1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0731752F201FA6E2008FC1C1 /* StoreKit.framework */; };
 		0758DE86206BDD9A002518AF /* Fontin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 806C6008FAE54368AC65C28A /* Fontin-Regular.ttf */; };
 		0783BEC2D56942E9857915B2 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AFD24B217EF450CA33DDB3F /* MaterialCommunityIcons.ttf */; };
@@ -25,7 +28,6 @@
 		079A46DBEB214E899A948026 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA03D84021B546C48F0FF00A /* OpenSans-Light.ttf */; };
 		079EBED7208854AE0024BBDA /* libRNInCallManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 079EBED8208854AE0024BBDA /* libRNInCallManager.a */; };
 		07ACDDC41FE6D74A00EDA234 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
-		07EE05DF20BF699B00BA592D /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EE05DD20BF696900BA592D /* libRNSound.a */; };
 		07EE05E120BF6A7E00BA592D /* elastic_done3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 07EE05E020BF6A7D00BA592D /* elastic_done3.wav */; };
 		07EE05E320BF6A9900BA592D /* incoming-call-notification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 07EE05E220BF6A9800BA592D /* incoming-call-notification.mp3 */; };
 		0C727EBB73954DBBAF6503B9 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73CFB4E6098944B384CC73B0 /* OpenSans-Bold.ttf */; };
@@ -128,6 +130,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFIRMessaging;
+		};
+		0725509620D447B5008DA9FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0725506420D447B5008DA9FB /* RNSound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
+			remoteInfo = RNSound;
+		};
+		0725513320D7E93C008DA9FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0725512E20D7E93C008DA9FB /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = BVLinearGradient;
+		};
+		0725513520D7E93C008DA9FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0725512E20D7E93C008DA9FB /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 64AA15081EF7F30100718508;
+			remoteInfo = "BVLinearGradient-tvOS";
 		};
 		0758DEE5206C25B0002518AF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -254,13 +277,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 5419C2701D824AA700DDF3A1;
 			remoteInfo = AppCenterReactNativeCrashes;
-		};
-		07EE05DC20BF696900BA592D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 07EE05B120BF696800BA592D /* RNSound.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
-			remoteInfo = RNSound;
 		};
 		139105C01AF99BAD00B5F7CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -443,15 +459,17 @@
 		00E356EE1AD99517003FC87E /* NewSoloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewSoloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* NewSoloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewSoloTests.m; sourceTree = "<group>"; };
+		070C141620D1A93000DC71D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0715C1D3203E7D0800F76F07 /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
-		0715C3B8203F247D00F76F07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0722FE6820BF864B0039BF78 /* elastic_done5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done5.wav; path = ../android/app/src/main/res/raw/elastic_done5.wav; sourceTree = "<group>"; };
+		0725506420D447B5008DA9FB /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
+		0725512E20D7E93C008DA9FB /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
+		0725519420D7EFBB008DA9FB /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0731752F201FA6E2008FC1C1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		078957D320C1D5BE002F5702 /* elastic_done3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done3.wav; path = ../src/Sounds/elastic_done3.wav; sourceTree = "<group>"; };
 		0789580420C1D5CB002F5702 /* elastic_done5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done5.wav; path = ../src/Sounds/elastic_done5.wav; sourceTree = "<group>"; };
 		079EBED8208854AE0024BBDA /* libRNInCallManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNInCallManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		07B9C2DE2019549A00BEA4A0 /* NewSolo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = NewSolo.entitlements; path = NewSolo/NewSolo.entitlements; sourceTree = "<group>"; };
-		07EE05B120BF696800BA592D /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		07EE05E020BF6A7D00BA592D /* elastic_done3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done3.wav; path = ../android/app/src/main/res/raw/elastic_done3.wav; sourceTree = "<group>"; };
 		07EE05E220BF6A9800BA592D /* incoming-call-notification.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "incoming-call-notification.mp3"; path = "../src/Sounds/incoming-call-notification.mp3"; sourceTree = "<group>"; };
 		0B41FAA880FC2CEAD7E3F4CD /* InstabugCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstabugCore.framework; path = "../node_modules/instabug-reactnative/ios/InstabugCore.framework"; sourceTree = "<group>"; };
@@ -523,11 +541,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0725519520D7EFBB008DA9FB /* libBVLinearGradient.a in Frameworks */,
 				0789580620C1D5D4002F5702 /* incoming-call-notification.mp3 in Frameworks */,
 				0789580520C1D5CB002F5702 /* elastic_done5.wav in Frameworks */,
 				0789580320C1D5BE002F5702 /* elastic_done3.wav in Frameworks */,
-				07EE05DF20BF699B00BA592D /* libRNSound.a in Frameworks */,
 				079EBED7208854AE0024BBDA /* libRNInCallManager.a in Frameworks */,
+				0725509920D44C1E008DA9FB /* libRNSound.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				07ACDDC41FE6D74A00EDA234 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -646,6 +665,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		0725506520D447B5008DA9FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0725509720D447B5008DA9FB /* libRNSound.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0725512F20D7E93C008DA9FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0725513420D7E93C008DA9FB /* libBVLinearGradient.a */,
+				0725513620D7E93C008DA9FB /* libBVLinearGradient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		0758DEE2206C25AF002518AF /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -695,6 +731,7 @@
 		07ACDDB31FE6D39500EDA234 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0725519420D7EFBB008DA9FB /* libBVLinearGradient.a */,
 				0789580420C1D5CB002F5702 /* elastic_done5.wav */,
 				078957D320C1D5BE002F5702 /* elastic_done3.wav */,
 				079EBED8208854AE0024BBDA /* libRNInCallManager.a */,
@@ -730,14 +767,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		07EE05B220BF696800BA592D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				07EE05DD20BF696900BA592D /* libRNSound.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		139105B71AF99BAD00B5F7CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -761,7 +790,7 @@
 		13B07FAE1A68108700A75B9A /* NewSolo */ = {
 			isa = PBXGroup;
 			children = (
-				0715C3B8203F247D00F76F07 /* GoogleService-Info.plist */,
+				070C141620D1A93000DC71D8 /* GoogleService-Info.plist */,
 				07B9C2DE2019549A00BEA4A0 /* NewSolo.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -843,7 +872,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				07EE05B120BF696800BA592D /* RNSound.xcodeproj */,
+				0725512E20D7E93C008DA9FB /* BVLinearGradient.xcodeproj */,
+				0725506420D447B5008DA9FB /* RNSound.xcodeproj */,
 				0715C1D3203E7D0800F76F07 /* RNFIRMessaging.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -1081,6 +1111,10 @@
 					ProjectRef = 6111992DD1AC481BBAF4B777 /* AppCenterReactNativeCrashes.xcodeproj */;
 				},
 				{
+					ProductGroup = 0725512F20D7E93C008DA9FB /* Products */;
+					ProjectRef = 0725512E20D7E93C008DA9FB /* BVLinearGradient.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -1145,8 +1179,8 @@
 					ProjectRef = 7C47EB3A497C478AAA08A7A3 /* RNInstabug.xcodeproj */;
 				},
 				{
-					ProductGroup = 07EE05B220BF696800BA592D /* Products */;
-					ProjectRef = 07EE05B120BF696800BA592D /* RNSound.xcodeproj */;
+					ProductGroup = 0725506520D447B5008DA9FB /* Products */;
+					ProjectRef = 0725506420D447B5008DA9FB /* RNSound.xcodeproj */;
 				},
 				{
 					ProductGroup = 07ACDDAB1FE6BF1200EDA234 /* Products */;
@@ -1204,6 +1238,27 @@
 			fileType = archive.ar;
 			path = libRNFIRMessaging.a;
 			remoteRef = 0715C1FC203E7D0800F76F07 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0725509720D447B5008DA9FB /* libRNSound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSound.a;
+			remoteRef = 0725509620D447B5008DA9FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0725513420D7E93C008DA9FB /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 0725513320D7E93C008DA9FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0725513620D7E93C008DA9FB /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 0725513520D7E93C008DA9FB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		0758DEE6206C25B0002518AF /* libRNInstabug.a */ = {
@@ -1330,13 +1385,6 @@
 			fileType = archive.ar;
 			path = libAppCenterReactNativeCrashes.a;
 			remoteRef = 07AE73B720C5785B00CBE4EE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		07EE05DD20BF696900BA592D /* libRNSound.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNSound.a;
-			remoteRef = 07EE05DC20BF696900BA592D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		139105C11AF99BAD00B5F7CC /* libRCTSettings.a */ = {
@@ -1502,6 +1550,7 @@
 			files = (
 				0722FE9220BF864B0039BF78 /* elastic_done5.wav in Resources */,
 				07EE05E320BF6A9900BA592D /* incoming-call-notification.mp3 in Resources */,
+				070C141720D1A93000DC71D8 /* GoogleService-Info.plist in Resources */,
 				07EE05E120BF6A7E00BA592D /* elastic_done3.wav in Resources */,
 				0758DE86206BDD9A002518AF /* Fontin-Regular.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
@@ -1516,7 +1565,6 @@
 				5783FBB90FB24D4393043816 /* MaterialIcons.ttf in Resources */,
 				0D96E2411D0F4BFB9B74392D /* Octicons.ttf in Resources */,
 				6179BF11DDFA4BE79AC7B14D /* SimpleLineIcons.ttf in Resources */,
-				0715C3B9203F247E00F76F07 /* GoogleService-Info.plist in Resources */,
 				ABB74B0E064F4CAAA6C67FE7 /* Zocial.ttf in Resources */,
 				0C727EBB73954DBBAF6503B9 /* OpenSans-Bold.ttf in Resources */,
 				079A46DBEB214E899A948026 /* OpenSans-Light.ttf in Resources */,
@@ -1709,16 +1757,7 @@
 				INFOPLIST_FILE = NewSoloTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1752,16 +1791,7 @@
 				INFOPLIST_FILE = NewSoloTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1780,6 +1810,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NewSolo/NewSolo.entitlements;
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1795,6 +1826,8 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager/**",
+					"$(SRCROOT)/../node_modules/react-native-sound/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/**",
 				);
 				"HEADER_SEARCH_PATHS[arch=*]" = (
 					"$(inherited)",
@@ -1836,6 +1869,8 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-incall-manager/ios/RNInCallManager/**",
+					"$(SRCROOT)/../node_modules/react-native-linear-gradient/**",
+					"$(SRCROOT)/../node_modules/react-native-sound/**",
 				);
 				INFOPLIST_FILE = NewSolo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1874,16 +1909,7 @@
 				);
 				INFOPLIST_FILE = "NewSolo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1921,16 +1947,7 @@
 				);
 				INFOPLIST_FILE = "NewSolo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1956,16 +1973,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "NewSolo-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.NewSolo-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -1987,16 +1995,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "NewSolo-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.NewSolo-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
