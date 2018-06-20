@@ -17,8 +17,8 @@
 		070C141720D1A93000DC71D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 070C141620D1A93000DC71D8 /* GoogleService-Info.plist */; };
 		0715C215203E7D8800F76F07 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0715C1FD203E7D0800F76F07 /* libRNFIRMessaging.a */; };
 		0722FE9220BF864B0039BF78 /* elastic_done5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0722FE6820BF864B0039BF78 /* elastic_done5.wav */; };
-		0725509920D44C1E008DA9FB /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0725509720D447B5008DA9FB /* libRNSound.a */; };
 		0725519520D7EFBB008DA9FB /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0725519420D7EFBB008DA9FB /* libBVLinearGradient.a */; };
+		0725534F20D9CB13008DA9FB /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0725534E20D9CB13008DA9FB /* libRNSound.a */; };
 		07317530201FA6E2008FC1C1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0731752F201FA6E2008FC1C1 /* StoreKit.framework */; };
 		0758DE86206BDD9A002518AF /* Fontin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 806C6008FAE54368AC65C28A /* Fontin-Regular.ttf */; };
 		0783BEC2D56942E9857915B2 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AFD24B217EF450CA33DDB3F /* MaterialCommunityIcons.ttf */; };
@@ -465,6 +465,7 @@
 		0725506420D447B5008DA9FB /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		0725512E20D7E93C008DA9FB /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		0725519420D7EFBB008DA9FB /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0725534E20D9CB13008DA9FB /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNSound.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0731752F201FA6E2008FC1C1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		078957D320C1D5BE002F5702 /* elastic_done3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done3.wav; path = ../src/Sounds/elastic_done3.wav; sourceTree = "<group>"; };
 		0789580420C1D5CB002F5702 /* elastic_done5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done5.wav; path = ../src/Sounds/elastic_done5.wav; sourceTree = "<group>"; };
@@ -541,12 +542,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0725534F20D9CB13008DA9FB /* libRNSound.a in Frameworks */,
 				0725519520D7EFBB008DA9FB /* libBVLinearGradient.a in Frameworks */,
 				0789580620C1D5D4002F5702 /* incoming-call-notification.mp3 in Frameworks */,
 				0789580520C1D5CB002F5702 /* elastic_done5.wav in Frameworks */,
 				0789580320C1D5BE002F5702 /* elastic_done3.wav in Frameworks */,
 				079EBED7208854AE0024BBDA /* libRNInCallManager.a in Frameworks */,
-				0725509920D44C1E008DA9FB /* libRNSound.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				07ACDDC41FE6D74A00EDA234 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -731,6 +732,7 @@
 		07ACDDB31FE6D39500EDA234 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0725534E20D9CB13008DA9FB /* libRNSound.a */,
 				0725519420D7EFBB008DA9FB /* libBVLinearGradient.a */,
 				0789580420C1D5CB002F5702 /* elastic_done5.wav */,
 				078957D320C1D5BE002F5702 /* elastic_done3.wav */,
