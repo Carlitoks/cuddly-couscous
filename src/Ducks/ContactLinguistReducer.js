@@ -85,9 +85,7 @@ export const updateConnectingMessage = ({ firstName, lastInitial }) => (
   dispatch,
   getState
 ) => {
-  const connectingMessage = `${firstName} ${lastInitial}. ${I18n.t(
-    "isConnecting"
-  )}`;
+  const connectingMessage = I18n.t("isConnecting", {firstName, lastInitial});
 
   dispatch(
     updateSettings({
