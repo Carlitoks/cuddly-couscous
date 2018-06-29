@@ -27,7 +27,7 @@ import NextButton from "../../Components/NextButton/NextButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./styles";
-import { displayFormErrors } from "../../Util/Helpers";
+import { displayFormErrors } from "../../Util/Alerts";
 import I18n from "../../I18n/I18n";
 import { Images, Colors } from "../../Themes";
 import { USER_NAME } from "../../Util/Constants";
@@ -156,7 +156,7 @@ class CustomerProfileView extends Component {
       <ViewWrapper style={{ flex: 1 }}>
         <ScrollView
           automaticallyAdjustContentInsets={true}
-          alwaysBounceVertical={false} 
+          alwaysBounceVertical={false}
           style={styles.scrollContainer}
           contentContainerStyle={styles.contentScrollContainer}
         >
@@ -175,7 +175,7 @@ class CustomerProfileView extends Component {
                   />
 
                   {/* Header - Navigation */}
-                  <TopViewIOS/>   
+                  <TopViewIOS />
                   <Header
                     outerContainerStyles={{ borderBottomWidth: 0, height: 50 }}
                     backgroundColor={Colors.transparent}
@@ -199,11 +199,11 @@ class CustomerProfileView extends Component {
               </View>
               <View style={styles.avatarContainer}>
                 {/* Avatar */}
-                  <Image
-                    style={styles.avatar}
-                    resizeMode="cover"
-                    source={require("../../Images/perfil.jpg")}
-                  />
+                <Image
+                  style={styles.avatar}
+                  resizeMode="cover"
+                  source={Image.avatar}
+                />
               </View>
               <View>
                 <FormLabel>{I18n.t("name")}</FormLabel>

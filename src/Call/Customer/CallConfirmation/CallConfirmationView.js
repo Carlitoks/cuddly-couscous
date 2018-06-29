@@ -43,7 +43,8 @@ import LanguageSelection from "../../../Components/LanguageSelection/LanguageSel
 import { CATEGORIES } from "../../../Util/Constants";
 import { Iphone5 } from "../../../Util/Devices";
 import languages from "../../../Config/Languages";
-import { TranslationArrows, Checkmark } from "../../../SVG";
+import { TranslationArrows, Checkmark } from "../../../Assets/SVG";
+import { checkOperatingHours } from "../../../Util/Helpers";
 
 import {
   setPermission,
@@ -324,6 +325,8 @@ class CallConfirmationView extends Component {
               {/* Connect Now */}
               <BottomButton
                 onPress={() => {
+                  checkOperatingHours(true);
+
                   this.props.updateSettings({
                     selectedScenarioId:
                       this.props.selectedScenario &&
@@ -353,7 +356,6 @@ const mS = state => ({
   customScenario: state.homeFlow.customScenario,
   sessionId: state.tokbox.sessionID,
   token: state.auth.token,
-  customerExtraTime: state.callCustomerSettings.customerExtraTime,
   video: state.callCustomerSettings.video,
   approxTime: state.callCustomerSettings.selectedTime,
   scenario: state.linguistForm.selectedLanguage,

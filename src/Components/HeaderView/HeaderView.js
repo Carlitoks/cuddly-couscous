@@ -18,8 +18,8 @@ import { Colors, Images } from "../../Themes";
 import StarRating from "react-native-star-rating";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import NavbarTitle from "../../Components/NavbarTitle/NavbarTitle";
-import Waves from "../../SVG/waves";
 import { Iphone6, Iphone5 } from "../../Util/Devices";
+import Waves from "../../Assets/SVG/waves";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 

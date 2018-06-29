@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.31</string>
+	<string>2.0.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -67,8 +67,6 @@
 	<string>This allows Jeenie to let you choose a profile image that suits you</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>purpose for using</string>
-	<key>OPENTOK_API_KEY</key>
-	<string>46003062</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

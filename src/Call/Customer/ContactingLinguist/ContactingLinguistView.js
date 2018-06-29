@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 //COMPONENTS
 import { Text, View, ScrollView, ActivityIndicator } from "react-native";
@@ -11,7 +12,7 @@ import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
 
 // REDUCERS
-import { connect } from "react-redux";
+import { closeCall } from "../../../Ducks/CallCustomerSettings";
 import I18n from "../../../I18n/I18n";
 import {
   setPermission,
@@ -48,7 +49,8 @@ class ContactingLinguist extends Component {
   }
 
   render() {
-    const navigate = this.props.navigation.navigate;
+    const { closeCall } = this.props;
+
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
@@ -73,10 +75,9 @@ class ContactingLinguist extends Component {
         {/* Call Buttons */}
         <View style={styles.controlsContainer}>
           <SessionControls
-            ref={this.ref}
-            closeCall={this.props.closeCall}
+            closeCall={closeCall}
             reason={REASON.CANCEL}
-            switch={this.props.switch}
+            switch={() => {}}
             contacting
           />
         </View>
@@ -92,6 +93,8 @@ const mS = state => ({
   connectingMessage: state.contactLinguist.connectingMessage
 });
 
-const mD = {};
+const mD = {
+  closeCall
+};
 
 export default connect(mS, mD)(ContactingLinguist);

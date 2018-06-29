@@ -153,7 +153,7 @@ class NativeLanguageView extends Component {
         "",
         `${I18n.t(
           "languageNotice1"
-        )} \n\n\t${this.getSupportedLanguagesNames()} \n\n${I18n.t(
+        )} ${this.getSupportedLanguagesNames()} \n\n${I18n.t(
           "languageNotice2"
         )}`,
         [

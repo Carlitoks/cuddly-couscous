@@ -3,9 +3,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import _upperFirst from "lodash/upperFirst";
 import { findIndex, take } from "lodash";
-
+import { asyncGetAccountInformation } from "../../Ducks/ProfileLinguistReducer";
 import moment from "moment";
-
+import InCallManager from "react-native-incall-manager";
 import {
   asyncUploadAvatar,
   getProfileAsync,
@@ -15,10 +15,12 @@ import {
 import {
   EndCall,
   closeOpenConnections,
-  updateSettings as updateCustomerSettings
+  clearSettings,
+  updateSettings as updateCallCustomerSettings
 } from "../../Ducks/CallCustomerSettings";
+
+import { clearSettings as clearCallLinguistSettings } from "../../Ducks/CallLinguistSettings";
 import { updateSettings as updateLinguistForm } from "../../Ducks/LinguistFormReducer";
-import { updateSettings as updateCallCustomerSettings } from "../../Ducks/CallCustomerSettings";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { getCategories, updateSettings } from "../../Ducks/HomeFlowReducer";
 
@@ -27,30 +29,13 @@ import {
   customerCalls
 } from "../../Ducks/CallHistoryReducer";
 
-import PhotoUpload from "react-native-photo-upload";
 import {
   View,
   Text,
-  Image,
   ScrollView,
-  TouchableOpacity,
   Dimensions,
   ActivityIndicator
 } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import {
-  Button,
-  FormLabel,
-  Header,
-  Badge,
-  Rating,
-  Avatar,
-  Tile,
-  List,
-  ListItem
-} from "react-native-elements";
-import StarRating from "react-native-star-rating";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import LinearGradient from "react-native-linear-gradient";
 import Carousel from "react-native-snap-carousel";
 
@@ -59,22 +44,18 @@ import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import TileButton from "../../Components/TileButton/TileButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
-import BottomButton from "../../Components/BottomButton/BottomButton";
 import {
   getScenarios,
   updateSettings as updateHomeFlow
 } from "../../Ducks/HomeFlowReducer";
 import BoxedListComponent from "../../Components/BoxedListComponent/BoxedListComponent";
 import CarouselEntry from "../../Components/CarouselEntry/CarouselEntry";
-import InputRegular from "../../Components/InputRegular/InputRegular";
 import QRIcon from "../../Components/QRIcon/QRIcon";
-import Waves from "../../SVG/waves";
+import { Waves } from "../../Assets/SVG";
 
 import styles from "./styles";
-import { Colors, Images, Fonts } from "../../Themes";
+import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
-import { IMAGE_STORAGE_URL } from "../../Config/env";
-import { moderateScale } from "../../Util/Scaling";
 import { REASON, CATEGORIES } from "../../Util/Constants";
 import {
   sliderWidth,
@@ -170,11 +151,13 @@ class Home extends Component {
     this.props.updateSettings({
       selectedScenarioIndex: -1
     });
-
-    this.props.updateCustomerSettings({
-      allowTimeSelection: true
-    });
-
+    //Clean call
+    clearInterval(this.props.timer);
+    clearInterval(this.props.counterId);
+    this.props.clearSettings();
+    this.props.clearCallLinguistSettings();
+    this.props.asyncGetAccountInformation();
+    InCallManager.stop();
     this.setState({
       indexSelected: listItemSelected
     });
@@ -412,6 +395,8 @@ const mS = state => ({
   networkInfoType: state.networkInfo.type,
   tokbox: state.tokbox.tokboxID,
   invitationID: state.callCustomerSettings.invitationID,
+  timer: state.callCustomerSettings.timer,
+  counterId: state.callCustomerSettings.counterId,
   carouselFirstItem: state.homeFlow.carouselFirstItem,
   categoryIndex: state.homeFlow.categoryIndex,
   listItemSelected: state.homeFlow.listItemSelected,
@@ -432,12 +417,14 @@ const mD = {
   closeOpenConnections,
   getScenarios,
   updateSettings,
-  updateCustomerSettings,
-  updateContactLinguist,
   updateCallCustomerSettings,
+  updateContactLinguist,
   updateHomeFlow,
   getAllCustomerCalls,
-  customerCalls
+  customerCalls,
+  clearSettings,
+  clearCallLinguistSettings,
+  asyncGetAccountInformation
 };
 
 export default connect(

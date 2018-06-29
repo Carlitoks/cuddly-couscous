@@ -77,7 +77,9 @@ class CallButtonToggle extends Component {
         this.props.updateSettings({ speaker: !this.props.speakerCustomer });
         break;
       case "CustomerCamera":
-        this.props.updateSettings({ rotate: !this.props.rotateCustomer });
+        if (this.props.videoCustomer) {
+          this.props.updateSettings({ rotate: !this.props.rotateCustomer });
+        }
         break;
       case "LinguistVideo":
         setPermission("camera").then(response => {
@@ -112,9 +114,11 @@ class CallButtonToggle extends Component {
         });
         break;
       case "LinguistCamera":
-        this.props.updateLinguistSettings({
-          rotate: !this.props.rotateLinguist
-        });
+        if (this.props.videoLinguist) {
+          this.props.updateLinguistSettings({
+            rotate: !this.props.rotateLinguist
+          });
+        }
         break;
     }
   };

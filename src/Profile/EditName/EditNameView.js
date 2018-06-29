@@ -6,9 +6,8 @@ import { updateProfileAsync } from "../../Ducks/UserProfileReducer";
 import { clearForm, updateForm } from "../../Ducks/RegistrationCustomerReducer";
 
 import { View, Text, ScrollView, Alert } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import LinearGradient from "react-native-linear-gradient";
-import { Button, Header } from "react-native-elements";
+import { Col, Grid } from "react-native-easy-grid";
+import { Button } from "react-native-elements";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
@@ -17,8 +16,8 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
-import { displayFormErrors } from "../../Util/Helpers";
-import { Colors } from "../../Themes";
+import { displayFormErrors } from "../../Util/Alerts";
+
 import I18n from "../../I18n/I18n";
 import { onlyLetters } from "../../Util/Helpers";
 

@@ -59,7 +59,8 @@ export const STATUS_TOKBOX = {
   DISCONECTED: 0,
   CONECTED: 1,
   ERROR: 2,
-  STREAM: 3
+  STREAM: 3,
+  DESTROY: 4
 };
 
 export const TOKBOX_EVENTS = {
@@ -93,4 +94,11 @@ export const TIME = {
 export const PLATFORM = {
   ANDROID: "android",
   IOS: "ios"
+};
+
+export const VIBRATE_PATTERN = [1000, 2000, 3000];
+
+export const CAMERA = {
+  FRONT: "front",
+  BACK: "back"
 };

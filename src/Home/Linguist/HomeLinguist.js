@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import InCallManager from "react-native-incall-manager";
 import {
   changeStatus,
   updateSettings,
@@ -11,25 +11,10 @@ import {
   updateView,
   getProfileAsync
 } from "../../Ducks/UserProfileReducer";
-import { View, Text, Image, ScrollView, Switch, Alert } from "react-native";
-import { StyleSheet, Dimensions } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
-import PhotoUpload from "react-native-photo-upload";
-import {
-  Button,
-  FormLabel,
-  Header,
-  Card,
-  List,
-  ListItem,
-  Badge
-} from "react-native-elements";
-import StarRating from "react-native-star-rating";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import LinearGradient from "react-native-linear-gradient";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
-import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
@@ -41,11 +26,12 @@ import {
   clearSettings
 } from "../../Ducks/CallLinguistSettings";
 
+import { clearSettings as clearCallCustomerSettings } from "../../Ducks/CallCustomerSettings";
+
 import moment from "moment";
 
 import styles from "./styles";
-import { Colors, Images } from "../../Themes";
-import { IMAGE_STORAGE_URL } from "../../Config/env";
+import { Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
 class Home extends Component {
@@ -59,19 +45,12 @@ class Home extends Component {
     ) {
       Alert.alert(I18n.t("notification"), I18n.t("cancelCallCustomer"));
     }
-
-    if (
-      this.props.tokbox &&
-      this.props.networkInfoType !== "none" &&
-      this.props.invitationID
-    ) {
-      this.props.asyncGetInvitationDetail(
-        this.props.invitationID,
-        this.props.token,
-        true
-      );
-    }
+    clearInterval(this.props.timer);
+    clearInterval(this.props.counterId);
+    this.props.clearSettings();
+    this.props.clearCallCustomerSettings();
     this.props.asyncGetAccountInformation();
+    InCallManager.stop();
   }
 
   uploadAvatar(avatar) {
@@ -107,7 +86,7 @@ class Home extends Component {
         this.props.asyncGetInvitationDetail(
           this.props.invitationID,
           this.props.token,
-          true
+          false
         );
       }
     }
@@ -231,6 +210,8 @@ const mS = state => ({
   rate: state.userProfile.averageStarRating,
   tokbox: state.tokbox.tokboxID,
   invitationID: state.callLinguistSettings.invitationID,
+  timer: state.callLinguistSettings.timer,
+  counterId: state.callCustomerSettings.counterId,
   networkInfoType: state.networkInfo.type
 });
 
@@ -242,7 +223,11 @@ const mD = {
   changeStatus,
   clearSettings,
   asyncGetInvitationDetail,
-  asyncGetAccountInformation
+  asyncGetAccountInformation,
+  clearCallCustomerSettings
 };
 
-export default connect(mS, mD)(Home);
+export default connect(
+  mS,
+  mD
+)(Home);

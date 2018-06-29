@@ -12,7 +12,7 @@ import {
   Professionalism,
   VoiceClarity,
   WaitTime
-} from "../../SVG";
+} from "../../Assets/SVG";
 
 const RateIcons = ({ icon, active }) => {
   let comp = null;

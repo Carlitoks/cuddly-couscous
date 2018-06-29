@@ -17,7 +17,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
-import { displayFormErrors } from "../../Util/Helpers";
+import { displayFormErrors } from "../../Util/Alerts";
 import { Colors } from "../../Themes";
 import { TroubleshootURI } from "../../Config/StaticViewsURIS";
 

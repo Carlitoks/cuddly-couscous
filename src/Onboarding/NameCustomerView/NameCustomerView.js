@@ -18,7 +18,7 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
-import { displayFormErrors } from "../../Util/Helpers";
+import { displayFormErrors } from "../../Util/Alerts";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 import {

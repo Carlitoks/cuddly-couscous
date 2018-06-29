@@ -4,8 +4,8 @@ import styles from "./styles";
 
 import TopViewIOS from "../TopViewIOS/TopViewIOS";
 
-const CallAvatarName = ({ imageSource, sessionInfoName }) => {
-  return (
+const CallAvatarName = ({ disabledSubscriber, imageSource, sessionInfoName }) =>
+  !disabledSubscriber && (
     <View style={styles.avatarNameContainer}>
       <TopViewIOS />
       <View style={styles.avatarContainer}>
@@ -14,6 +14,5 @@ const CallAvatarName = ({ imageSource, sessionInfoName }) => {
       <Text style={styles.callerNameText}>{sessionInfoName}</Text>
     </View>
   );
-};
 
 export default CallAvatarName;

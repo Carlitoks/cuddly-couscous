@@ -53,7 +53,7 @@ const BottomButton = ({
   smaller
 }) => {
   return (
-    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={topIOS()}>
+    <View>
       <View
         style={[
           styles.containerBottom,
@@ -139,7 +139,7 @@ const BottomButton = ({
           gradient ? { backgroundColor: Colors.white } : null
         ]}
       />
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

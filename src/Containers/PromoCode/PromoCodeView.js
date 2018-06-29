@@ -11,23 +11,19 @@ import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 
-import { View, Text, ScrollView, Alert, Keyboard } from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import LinearGradient from "react-native-linear-gradient";
-import { Button } from "react-native-elements";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { View, Text, ScrollView, Keyboard } from "react-native";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
+import Close from "../../Components/Close/Close";
 
 // import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
-import { Images, Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
-import { displayFormErrors } from "../../Util/Helpers";
+import { displayFormErrors } from "../../Util/Alerts";
 
 class PromoCodeView extends Component {
   submit() {
@@ -101,6 +97,13 @@ class PromoCodeView extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
+          headerRightComponent={
+            <Close
+              action={() => {
+                this.props.navigation.dispatch({ type: "Home" });
+              }}
+            />
+          }
           navbarTitle={I18n.t("promoCodeTitle")}
           navbarType={"Basic"}
           NoWaves
@@ -154,4 +157,7 @@ const mD = {
   updateContactLinguist
 };
 
-export default connect(mS, mD)(PromoCodeView);
+export default connect(
+  mS,
+  mD
+)(PromoCodeView);

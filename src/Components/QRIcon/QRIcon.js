@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Images } from "../../Themes";
-import {QR} from "../../SVG";
+import {QR} from "../../Assets/SVG";
 
 import styles from "./styles";
 

@@ -1,48 +1,29 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  camelCase,
-  some,
-  filter,
-  isEqual,
-  isUndefined,
-  uniqBy,
-  findIndex
-} from "lodash";
+import { uniqBy } from "lodash";
 import { updateSettings as updateSelectionList } from "../../Ducks/LinguistFormReducer";
 
 import {
   updateSettings,
   getItems,
-  updateForm,
   clearForm
 } from "../../Ducks/LinguistFormReducer";
 
-import Icon from "react-native-vector-icons/MaterialIcons";
 import {
   Text,
   View,
   ScrollView,
-  Image,
-  Alert,
   ActivityIndicator,
   Dimensions
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import {
-  SearchBar,
-  List,
-  ListItem,
-  Button,
-  Header
-} from "react-native-elements";
-import { Col, Row, Grid } from "react-native-easy-grid";
+import { List } from "react-native-elements";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
-import Waves from "../../SVG/waves";
+import { Waves } from "../../Assets/SVG";
 
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
@@ -171,7 +152,6 @@ const mS = state => ({
 const mD = {
   updateSettings,
   getItems,
-  updateForm,
   updateSelectionList,
   clearForm
 };

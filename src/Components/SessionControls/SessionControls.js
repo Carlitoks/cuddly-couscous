@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, Alert, Text } from "react-native";
 import { bool, func, string } from "prop-types";
-import OpenTok from "react-native-opentok";
 import _isUndefined from "lodash/isUndefined";
 
 import styles from "./styles";
@@ -42,7 +41,9 @@ class SessionControls extends Component {
       >
         <CallButtonToggle
           onPress={() => {
-            this.props.switch();
+            if (video) {
+              this.props.switch();
+            }
           }}
           toggle={true}
           active={!rotate}
@@ -86,15 +87,15 @@ class SessionControls extends Component {
               ? TOKBOX_EVENTS.TOGGLE_VIDEO_LINGUIST
               : TOKBOX_EVENTS.TOGGLE_VIDEO_CUSTOMER;
 
-            try {
-              await OpenTok.sendSignal(
-                tokboxSessionID,
-                eventType,
-                video.toString()
-              );
-            } catch (err) {
-              console.log(err);
-            }
+            // try {
+            //   await OpenTok.sendSignal(
+            //     tokboxSessionID,
+            //     eventType,
+            //     video.toString()
+            //   );
+            // } catch (err) {
+            //   console.log(err);
+            // }
           }}
         />
       </View>

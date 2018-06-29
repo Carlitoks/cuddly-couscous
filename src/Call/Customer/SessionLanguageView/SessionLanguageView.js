@@ -16,7 +16,8 @@ import LanguageSelection from "../../../Components/LanguageSelection/LanguageSel
 
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
 import { Iphone5 } from "../../../Util/Devices";
-import { displayFormErrors, previousView } from "../../../Util/Helpers";
+import { previousView } from "../../../Util/Helpers";
+import { displayFormErrors } from "../../../Util/Alerts";
 import { moderateScale } from "../../../Util/Scaling";
 import I18n from "../../../I18n/I18n";
 import { Colors } from "../../../Themes";

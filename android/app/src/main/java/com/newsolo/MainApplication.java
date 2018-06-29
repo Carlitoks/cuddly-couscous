@@ -3,10 +3,11 @@ package com.newsolo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.opentokreactnative.OTPackage;
+import com.zmxv.RNSound.RNSoundPackage;
 import com.microsoft.appcenter.reactnative.crashes.AppCenterReactNativeCrashesPackage;
 import com.microsoft.appcenter.reactnative.analytics.AppCenterReactNativeAnalyticsPackage;
 import com.microsoft.appcenter.reactnative.appcenter.AppCenterReactNativePackage;
-import com.zmxv.RNSound.RNSoundPackage;
 import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.horcrux.svg.SvgPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
@@ -20,14 +21,13 @@ import com.RNFetchBlob.RNFetchBlobPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.rnfs.RNFSPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.rnopentok.RNOpenTokPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.BV.LinearGradient.LinearGradientPackage; 
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,10 +44,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new OTPackage(),
+            new RNSoundPackage(),
             new AppCenterReactNativeCrashesPackage(MainApplication.this, getResources().getString(R.string.appCenterCrashes_whenToSendCrashes)),
             new AppCenterReactNativeAnalyticsPackage(MainApplication.this, getResources().getString(R.string.appCenterAnalytics_whenToEnableAnalytics)),
             new AppCenterReactNativePackage(MainApplication.this),
-            new RNSoundPackage(),
             		new RNInstabugReactnativePackage.Builder("YOUR_ANDROID_APPLICATION_TOKEN",MainApplication.this)
 							.setInvocationEvent("shake")
 							.setPrimaryColor("#1D82DC")
@@ -65,11 +66,10 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new RNDeviceInfo(),
             new ImageResizerPackage(),
+            new LinearGradientPackage(), 
             new RNFSPackage(),
-            new LinearGradientPackage(),
             new ImagePickerPackage(),
-            new VectorIconsPackage(),
-            new RNOpenTokPackage()
+            new VectorIconsPackage()
       );
     }
 

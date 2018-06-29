@@ -33,7 +33,7 @@ import { Colors, Images } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
 import { moderateScale } from "../../../Util/Scaling";
 import { CATEGORIES } from "../../../Util/Constants";
-import Waves from "../../../SVG/waves";
+import { Waves } from "../../../Assets/SVG";
 
 class CustomScenario extends Component {
   navigate = this.props.navigation.navigate;

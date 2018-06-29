@@ -34,8 +34,8 @@ import {
 } from "../../Components/FullScreenSwipeEntry/style";
 import FullScreenSwipeEntry from "../../Components/FullScreenSwipeEntry/FullScreenSwipeEntry";
 import { LAUNCHSCREENENTRIES } from "../../Util/Constants";
-import Waves from "../../SVG/waves";
-import { Logo } from "../../SVG";
+import { Waves, Logo } from "../../Assets/SVG";
+import { checkOperatingHours } from "../../Util/Helpers";
 
 const IphoneX = DeviceInfo.getModel() == "iPhone X";
 
@@ -60,7 +60,7 @@ class SelectRoleView extends Component {
     } = this.props;
 
     const record = checkRecord(email);
-
+    checkOperatingHours();
     if (isLoggedIn && token && !record) {
       navigation.dispatch({ type: "Home" });
     }

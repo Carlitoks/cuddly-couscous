@@ -13,7 +13,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 
 import styles from "./styles";
-import { displayFormErrorss } from "../../Util/Helpers";
+import { displayFormErrorss } from "../../Util/Alerts";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 

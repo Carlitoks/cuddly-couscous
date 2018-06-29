@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import QRCodeScanner from "react-native-qrcode-scanner";
-import { findIndex } from "lodash";
 
-import { Text, Dimensions, View, Alert } from "react-native";
+import { Text, View, Alert } from "react-native";
+import { findIndex } from "lodash";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
-import { Button, Header } from "react-native-elements";
+import { Header } from "react-native-elements";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-import { Colors, Fonts } from "../../Themes";
-import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
 import I18n from "../../I18n/I18n";
 import { asyncScanQR } from "../../Ducks/EventsReducer";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
@@ -17,10 +15,7 @@ import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLing
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import { updateSettings as updateCustomerSettings } from "../../Ducks/CallCustomerSettings";
 import styles from "./styles";
-import { CATEGORIES } from "../../Util/Constants";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
-
-const { width, height } = Dimensions.get("window");
 
 class ScanScreenView extends Component {
   state = {
@@ -54,69 +49,67 @@ class ScanScreenView extends Component {
         navigation.state.routeName === "ScanScreenView" &&
         !!this.checkValidID(eventId)
       ) {
-        this.props
-          .asyncScanQR(eventId, this.props.token)
-          .then(response => {
-            const {
-              requireScenarioSelection,
-              restrictEventScenarios,
-              scenarios,
-              defaultMinutes,
-              allowMinuteSelection
-            } = response.payload;
-            if (this.props.token) {
-              if (requireScenarioSelection && restrictEventScenarios) {
-                /* Dispatch to SelectListView with the scenarios involveds*/
+        this.props.asyncScanQR(eventId, this.props.token).then(response => {
+          const {
+            requireScenarioSelection,
+            restrictEventScenarios,
+            scenarios,
+            defaultMinutes,
+            allowMinuteSelection
+          } = response.payload;
+          if (this.props.token) {
+            if (requireScenarioSelection && restrictEventScenarios) {
+              /* Dispatch to SelectListView with the scenarios involveds*/
 
-                if (scenarios) {
-                  let actualCats = this.props.categories;
-                  actualCats.includes(scenarios[0].category)
-                    ? null
-                    : actualCats.push(scenarios[0].category);
-                  const catIndex = findIndex(actualCats, scenario => {
-                    return scenario === scenarios[0].category;
-                  });
-                  this.props.updateHomeFlow({
-                    categoryIndex: catIndex,
-                    categories: actualCats
-                  });
-                  this.props.updateSettings({
-                    selectionItemType: "scenarios",
-                    selectionItemName: "scenarios",
-                    scenarios
-                  });
-
-                  this.props.navigation.dispatch({ type: "PromotionView" });
-                } else {
-                  this.props.navigation.dispatch({
-                    type: "CustomScenarioView"
-                  });
-                }
-                this.props.updateCustomerSettings({
-                  selectedTime: defaultMinutes,
-                  allowTimeSelection: allowMinuteSelection
+              if (scenarios) {
+                let actualCats = this.props.categories;
+                actualCats.includes(scenarios[0].category)
+                  ? null
+                  : actualCats.push(scenarios[0].category);
+                const catIndex = findIndex(actualCats, scenario => {
+                  return scenario === scenarios[0].category;
                 });
-              } else if (requireScenarioSelection && !restrictEventScenarios) {
-                /* Dispatch to Category Selection View (Home) */
-
+                this.props.updateHomeFlow({
+                  categoryIndex: catIndex,
+                  categories: actualCats
+                });
                 this.props.updateSettings({
                   selectionItemType: "scenarios",
                   selectionItemName: "scenarios",
-                  scenarios: scenarios || []
+                  scenarios
                 });
-                this.props.navigation.dispatch({ type: "PromoCodeListView" });
-              } else if (!requireScenarioSelection) {
-                /* Dispatch to Call Confirmation view */
+
+                this.props.navigation.dispatch({ type: "PromotionView" });
+              } else {
                 this.props.navigation.dispatch({
-                  type: "CallConfirmationView"
+                  type: "CustomScenarioView"
                 });
               }
-            } else {
+              this.props.updateCustomerSettings({
+                selectedTime: defaultMinutes,
+                allowTimeSelection: allowMinuteSelection
+              });
+            } else if (requireScenarioSelection && !restrictEventScenarios) {
+              /* Dispatch to Category Selection View (Home) */
+
+              this.props.updateSettings({
+                selectionItemType: "scenarios",
+                selectionItemName: "scenarios",
+                scenarios: scenarios || []
+              });
+              this.props.navigation.dispatch({ type: "PromoCodeListView" });
+            } else if (!requireScenarioSelection) {
+              /* Dispatch to Call Confirmation view */
               this.props.navigation.dispatch({
-                type: "LoginView"
+                type: "CallConfirmationView"
               });
             }
-          });
+          } else {
+            this.props.navigation.dispatch({
+              type: "LoginView"
+            });
+          }
+        });
 
         this.setState({
           reactivate: false
@@ -197,4 +190,7 @@ const mD = {
   updateContactLinguist
 };
 
-export default connect(mS, mD)(ScanScreenView);
+export default connect(
+  mS,
+  mD
+)(ScanScreenView);

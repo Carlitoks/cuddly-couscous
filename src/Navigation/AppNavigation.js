@@ -4,7 +4,7 @@ import { Animated, Easing } from "react-native";
 import { getS } from "../Config/CreateStore";
 
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
-import CallHistory from "../Containers/CallHistory/CallHistory";
+import CallHistory from "../Containers/CallHistory/CallHistoryView";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
 import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
 import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
@@ -365,8 +365,7 @@ const Navigation = StackNavigator(
     PromoCodeView: {
       screen: PromoCodeView,
       navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
+        gesturesEnabled: false
       }
     },
     PromotionView: {

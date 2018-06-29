@@ -12,13 +12,15 @@ export default StyleSheet.create({
   CallTime: {
     fontFamily: Fonts.LightFont,
     textAlign: "center",
-    color: Colors.primaryColor,
+    color: Colors.primaryColor
   },
   button: {
     borderWidth: 1,
     borderColor: Colors.primaryColor,
     width: 125,
     height: 32,
+    paddingTop: 5,
+    paddingBottom: 5
   },
   text: {
     fontFamily: Fonts.LightFont,
@@ -26,4 +28,3 @@ export default StyleSheet.create({
     fontSize: 14
   }
 });
-

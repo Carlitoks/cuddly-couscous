@@ -10,22 +10,32 @@ export default (SoundManager = {
       console.log("error loading sound", error);
       return;
     }
-    console.log("Encall");
     //EndCall.play(() => {});
   }),
   IncomingCall: new Sound(
-    "incoming-call-notification.mp3",
+    "incoming_call_notification.mp3",
     Sound.MAIN_BUNDLE,
     error => {
       if (error) {
         console.log("error loading sound", error);
         return;
       }
-      console.log("Incomingcall");
       //IncomingCall.play();
     }
   ),
   ExtraTime: new Sound("elastic_done5.wav", Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log("error loading sound", error);
+      return;
+    }
+  }),
+  Disconnected: new Sound("Elastic_Error1.wav", Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log("error loading sound", error);
+      return;
+    }
+  }),
+  Reconnected: new Sound("Elastic_Done11.wav", Sound.MAIN_BUNDLE, error => {
     if (error) {
       console.log("error loading sound", error);
       return;

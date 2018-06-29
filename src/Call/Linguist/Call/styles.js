@@ -3,6 +3,7 @@ import { Fonts, Colors, Metrics } from "../../../Themes";
 const fontFamily = "Arial";
 const fontColor = "white";
 export default StyleSheet.create({
+  fullPage: { height: "100%", width: "100%" },
   mainContainer: {
     flex: 1,
     flexDirection: "column",
@@ -180,5 +181,13 @@ export default StyleSheet.create({
     borderRadius: 75,
     borderWidth: 8,
     borderColor: "gray"
+  },
+  containerIncomingCall: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    left: 0,
+    top: 0,
+    zIndex: 9999
   }
 });

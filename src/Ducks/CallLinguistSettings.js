@@ -5,12 +5,18 @@ import {
   changeStatus,
   updateSettings as updateProfileLinguist
 } from "./ProfileLinguistReducer";
-import { setSession, clear, update } from "./tokboxReducer";
+import { setSession, clear, update, sendSignal } from "./tokboxReducer";
 
 import moment from "moment";
 import _sortBy from "lodash/sortBy";
+import I18n from "../I18n/I18n";
 import { Vibration } from "react-native";
+import { fmtMSS } from "../Util/Helpers";
+import { BackgroundInterval } from "../Util/Background";
 import { LANG_CODES, REASON } from "../Util/Constants";
+import { displayEndCall } from "../Util/Alerts";
+import { emitLocalNotification } from "../Util/PushNotification";
+import SoundManager from "../Util/SoundManager";
 
 // Actions
 export const ACTIONS = {
@@ -78,23 +84,10 @@ export const asyncGetInvitationDetail = (
 ) => dispatch => {
   return Sessions.linguistFetchesInvite(invitationID, token)
     .then(response => {
-      const res = response.data;
-      if (!res.session.endReason) {
-        dispatch(
-          updateSettings({
-            customerName: res.createdBy
-              ? `${res.createdBy.firstName} ${res.createdBy.lastInitial}.`
-              : "",
-            estimatedMinutes: res.session.estimatedMinutes
-              ? `~ ${res.session.estimatedMinutes} mins`
-              : res.session.estimatedMinutes,
-            languages: `${LANG_CODES.get(
-              res.session.primaryLangCode
-            )} - ${LANG_CODES.get(res.session.secondaryLangCode)}`
-          })
-        );
+      const { data } = response;
+      if (!data.session.endReason) {
         if (redirect) {
-          dispatch({ type: "LinguistView" });
+          dispatch(connectCall());
         }
       } else {
         dispatch(clearSettings());
@@ -126,6 +119,11 @@ export const verifyCall = (sessionID, token, verifyCallId) => dispatch => {
       Vibration.cancel();
     });
 };
+
+const connectCall = () => dispatch => {
+  dispatch({ type: "LinguistView" });
+};
+
 export const asyncAcceptsInvite = (
   invitationID,
   reason,
@@ -139,8 +137,7 @@ export const asyncAcceptsInvite = (
           Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
             .then(response => {
               dispatch(setSession(response.data));
-              dispatch({ type: "LinguistView" });
-              dispatch(changeStatus(false));
+              dispatch(connectCall());
               dispatch(update({ sessionID: linguistSessionId }));
             })
             .catch(error => {
@@ -179,6 +176,29 @@ export const asyncAcceptsInvite = (
   }
 };
 
+export const startTimer = () => (dispatch, getState) => {
+  dispatch(
+    updateSettings({
+      timer: setInterval(() => {
+        dispatch(incrementTimer());
+        const { elapsedTime } = getState().callLinguistSettings;
+        emitLocalNotification({
+          title: I18n.t("call"),
+          message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
+        });
+      }, 1000)
+    })
+  );
+};
+
+export const closeCall = reason => dispatch => {
+  displayEndCall(() => {
+    SoundManager["EndCall"].play();
+    dispatch(sendSignal(REASON.DONE, "Ended by Linguist"));
+    dispatch({ type: "RateView" });
+  });
+};
+
 // Initial State
 const initialState = {
   // Call Settings
@@ -192,6 +212,7 @@ const initialState = {
   elapsedTime: 0,
   accept: false,
   customerPreferredSex: "any",
+  customerName: null,
 
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
@@ -203,7 +224,8 @@ const initialState = {
   avatarURL: "",
   estimatedMinutes: "",
   languages: "",
-  customerScenario: ""
+  customerScenario: "",
+  reconnecting: false
 };
 
 // Reducer

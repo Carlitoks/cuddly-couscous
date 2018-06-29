@@ -1,15 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  AppRegistry,
-  Button,
-  View,
-  Text,
-  StyleSheet,
-  Modal,
-  StatusBar,
-  processColor
-} from "react-native";
+import { View, Text, Modal, StatusBar, processColor } from "react-native";
 import Instabug from "instabug-reactnative";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 

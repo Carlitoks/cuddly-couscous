@@ -50,7 +50,8 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
         const data = res.data;
         dispatch(
           updateCallLinguistSettings({
-            invitationID: invitationId
+            invitationID: invitationId,
+            reconnecting: false
           })
         );
         dispatch(updateTokbox({ sessionID: data.session.id }));
@@ -78,7 +79,7 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
                 )}`} - ${data.session.scenario.title}`
           })
         );
-        dispatch({ type: "IncomingCallView" });
+        dispatch({ type: "LinguistView" });
       })
       .catch(error => dispatch(networkError(error)));
   }

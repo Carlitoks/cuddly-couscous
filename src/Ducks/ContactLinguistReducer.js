@@ -17,7 +17,9 @@ export const ACTIONS = {
   UPDATE: "contactLinguist/update",
   ENDSESSION: "contactLinguist/endSession",
   INCREMENT_COUNTER: "contactLinguist/incrementCounter",
-  RESET_COUNTER: "contactLinguist/resetCounter"
+  RESET_COUNTER: "contactLinguist/resetCounter",
+  INCREMENT_RECONNECT_COUNTER: "contactLinguist/incrementReconnectCounter",
+  RESET_RECONNECT_COUNTER: "contactLinguist/resetReconnectCounter"
 };
 
 // Action Creator
@@ -34,8 +36,15 @@ export const incrementCounter = () => ({
   type: ACTIONS.INCREMENT_COUNTER
 });
 
+export const incrementReconnectCounter = () => ({
+  type: ACTIONS.INCREMENT_RECONNECT_COUNTER
+});
+
 export const resetCounter = () => ({
   type: ACTIONS.RESET_COUNTER
+});
+export const resetReconnectCounter = () => ({
+  type: ACTIONS.RESET_RECONNECT_COUNTER
 });
 
 // Initial State
@@ -65,6 +74,8 @@ const initialState = {
   counter: 0,
   counterId: null,
   modalReconnect: false,
+  modalReconnectCounter: 0,
+  modalReconnectCounterId: null,
   messageReconnect: "",
 
   connectingMessage: I18n.t("contactingLinguist")
@@ -139,6 +150,21 @@ const contactLinguistReducer = (state = initialState, action) => {
         ...state,
         counter: 0,
         counterId: null
+      };
+    }
+
+    case ACTIONS.INCREMENT_RECONNECT_COUNTER: {
+      return {
+        ...state,
+        modalReconnectCounter: state.modalReconnectCounter + 1
+      };
+    }
+
+    case ACTIONS.RESET_RECONNECT_COUNTER: {
+      return {
+        ...state,
+        modalReconnectCounter: 0,
+        modalReconnectCounterId: null
       };
     }
 

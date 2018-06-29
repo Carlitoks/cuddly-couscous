@@ -12,7 +12,7 @@ import { Colors } from "../../Themes";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-import { Checkmark } from "../../SVG";
+import { Checkmark } from "../../Assets/SVG";
 import { moderateScale, verticalScale, scale } from "../../Util/Scaling";
 
 import styles from "./styles";

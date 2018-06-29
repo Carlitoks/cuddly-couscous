@@ -24,7 +24,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { Images, Colors } from "../../Themes";
-import { displayFormErrors } from "../../Util/Helpers";
+import { displayFormErrors } from "../../Util/Alerts";
 import I18n from "../../I18n/I18n";
 
 class EmailLinguist extends Component {

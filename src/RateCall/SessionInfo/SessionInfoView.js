@@ -3,11 +3,10 @@ import { connect } from "react-redux";
 
 import { GetInfo, updateSessionInfo } from "../../Ducks/SessionInfoReducer";
 
-import Icon from "react-native-vector-icons/Ionicons";
 import { Text, View, ScrollView } from "react-native";
 
-import { Button, Avatar, Header, List, ListItem } from "react-native-elements";
-import { Col, Row, Grid } from "react-native-easy-grid";
+import { Avatar, List, ListItem } from "react-native-elements";
+import { Col, Grid } from "react-native-easy-grid";
 import StarRating from "react-native-star-rating";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
@@ -16,10 +15,8 @@ import moment from "moment";
 
 import I18n from "../../I18n/I18n";
 import { styles } from "./styles";
-import { Images, Colors } from "../../Themes";
-import { IMAGE_STORAGE_URL } from "../../Config/env";
+import { Images } from "../../Themes";
 import Languages from "../../Config/Languages";
-import LinearGradient from "react-native-linear-gradient";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 

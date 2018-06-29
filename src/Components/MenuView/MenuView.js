@@ -46,8 +46,6 @@ class MenuView extends Component {
     if (!firstName && !lastName) {
       this.props.getProfileAsync(this.props.uuid, this.props.token);
     }
-    // Instabug.setLocale(locale);
-    //Instabug.setWillSkipScreenshotAnnotation(false);
   }
   componentWillReceiveProps(nextProps) {
     this.forceUpdate();
@@ -161,33 +159,6 @@ class MenuView extends Component {
             </Icon.Button>
           )}
 
-          {/* Help */}
-          {/* <Icon.Button
-          name="help"
-          size={25}
-          backgroundColor={
-            isCurrentView(navigation, "Help")
-              ? Colors.selectedBackground
-              : Colors.background
-          }
-          iconStyle={
-            isCurrentView(navigation, "Help")
-              ? styles.selectedOptionMenu
-              : styles.optionMenu
-          }
-          onPress={() => {
-            navigation.dispatch({
-              type: "StaticView",
-              params: {
-                uri: HelpURI,
-                title: I18n.t("help")
-              }
-            });
-          }}
-        >
-          <Text style={styles.colorText}>{I18n.t("help")}</Text>
-        </Icon.Button> */}
-
           {/* Report a problem  */}
           <Icon.Button
             name="report-problem"
@@ -195,7 +166,6 @@ class MenuView extends Component {
             backgroundColor={Colors.background}
             iconStyle={styles.optionMenu}
             onPress={() => {
-              //Instabug.setWillSkipScreenshotAnnotation(true);
               Instabug.setAttachmentTypesEnabled(false, true, true, true, true);
               Instabug.invoke();
             }}

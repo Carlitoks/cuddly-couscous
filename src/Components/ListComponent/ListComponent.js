@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FlatList, View, Text, Dimensions, Keyboard } from "react-native";
 import { List, ListItem } from "react-native-elements";
 import { Colors } from "../../Themes";
-import { Checkmark, Chevron } from "../../SVG";
+import { Checkmark, Chevron } from "../../Assets/SVG";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from "react-native-vector-icons/MaterialIcons";
 

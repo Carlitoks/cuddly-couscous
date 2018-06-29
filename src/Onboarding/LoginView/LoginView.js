@@ -39,7 +39,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
-import { displayFormErrors } from "../../Util/Helpers";
+import { displayFormErrors } from "../../Util/Alerts";
 import { Colors } from "../../Themes";
 
 import I18n from "../../I18n/I18n";
@@ -167,7 +167,10 @@ class LoginView extends Component {
 
             errorMessage && displayFormErrors(errorMessage);
 
-            updateForm({ performingRequest: false });
+            updateForm({
+              performingRequest: false,
+              formHasErrors: false
+            });
           });
       });
     } else {

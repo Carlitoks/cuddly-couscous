@@ -16,6 +16,7 @@ import Checkmark from "./checkmark";
 import QR from "./qr";
 import NavMenu from "./navMenu";
 import Chevron from "./chevron";
+import Waves from "./waves";
 import Logo from "./smallLogoJeenie";
 
 export {
@@ -37,5 +38,6 @@ export {
   QR,
   NavMenu,
   Chevron,
+  Waves,
   Logo
 };

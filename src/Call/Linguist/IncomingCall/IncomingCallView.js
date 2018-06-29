@@ -17,7 +17,8 @@ import TopViewIOS from "../../../Components/TopViewIOS/TopViewIOS";
 import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
-import InCallManager from "react-native-incall-manager";
+import SoundManager from "../../../Util/SoundManager";
+import { VIBRATE_PATTERN } from "../../../Util/Constants";
 
 class IncomingCall extends Component {
   state = {
@@ -26,22 +27,17 @@ class IncomingCall extends Component {
   };
 
   componentWillMount() {
-    const PATTERN = [1000, 2000, 3000];
-    const { invitationID, token } = this.props;
-    Vibration.vibrate(PATTERN, true);
+    Vibration.vibrate(VIBRATE_PATTERN, true);
   }
 
   componentDidMount() {
     this.verifyCallLinguist();
-    InCallManager.start({ media: "video", ringback: "_BUNDLE_" });
-    /*InCallManager.startRingtone({
-      ringtone: "_DTMF_"
-    });*/
+    SoundManager["IncomingCall"].play();
   }
 
   componentWillUnmount() {
     clearInterval(this.props.verifyCallId);
-    InCallManager.stop();
+    SoundManager["IncomingCall"].stop();
   }
   takeCall = isAccept => {
     const { invitationID, token, sessionID } = this.props;
@@ -52,6 +48,8 @@ class IncomingCall extends Component {
       token,
       sessionID
     );
+
+    SoundManager["IncomingCall"].stop();
     Vibration.cancel();
   };
 
@@ -76,15 +74,7 @@ class IncomingCall extends Component {
       : Images.avatar;
   };
 
-  rejectCall = () => {
-    console.log("rejecting call");
-    Vibration.cancel();
-    InCallManager.stop();
-  };
-
   render() {
-    const navigate = this.props.navigation.navigate;
-
     return (
       <ScrollView
         automaticallyAdjustContentInsets={true}
@@ -190,4 +180,7 @@ const mD = {
   updateSettings
 };
 
-export default connect(mS, mD)(IncomingCall);
+export default connect(
+  mS,
+  mD
+)(IncomingCall);

@@ -1,5 +1,6 @@
 import { Alert } from "react-native";
 import I18n from "../I18n/I18n";
+import moment from "moment";
 
 /**
  * @description Seconds to minutes and seconds String
@@ -211,4 +212,31 @@ export const is500Response = error => {
 export const onlyLetters = str => {
   const letterRegex = /^[a-zA-Z]+$/;
   return letterRegex.test(str);
+};
+
+/**
+ * @description Display an alert if not into operating hours EDT
+ */
+export const checkOperatingHours = (withinAnOur = false) => {
+  const OperatingHoursInit = 9;
+  const OperatingHoursEnd = 17 - (withinAnOur ? 1 : 0);
+  const EDT_hour = moment()
+    .utcOffset(-240)
+    .hours();
+
+  if (EDT_hour <= OperatingHoursInit || EDT_hour >= OperatingHoursEnd) {
+    Alert.alert(
+      // This is Alert Dialog Title
+      I18n.t("operatingHoursAlertTitle"),
+
+      // This is Alert Dialog Message.
+      I18n.t("operatingHoursAlertMessage"),
+      [
+        // First Text Button in Alert Dialog.
+        {
+          text: I18n.t("ok")
+        }
+      ]
+    );
+  }
 };

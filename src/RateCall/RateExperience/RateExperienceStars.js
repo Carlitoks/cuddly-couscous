@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import StarRating from "react-native-star-rating";
-import { Grid, Row, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import I18n from "../../I18n/I18n";
 import { updateOptions } from "../../Ducks/RateCallReducer";
-import Colors from "../../Themes/Colors";
+import { Colors } from "../../Themes";
 import { styles } from "./styles";
 
 class RateExperienceStars extends Component {
@@ -12,8 +12,9 @@ class RateExperienceStars extends Component {
     return (
       <View style={styles.stars}>
         <Text style={styles.textQuestions}>
-          {I18n.t("rateYour")}
-          {this.props.linguistProfile ? I18n.t("customer") : I18n.t("linguist")}
+          {`${I18n.t("rateYour")} ${
+            this.props.linguistProfile ? I18n.t("customer") : I18n.t("linguist")
+          }`}
         </Text>
         <StarRating
           emptyStar={"ios-star"}
@@ -42,4 +43,7 @@ const mS = state => ({
 const mD = {
   updateOptions
 };
-export default connect(mS, mD)(RateExperienceStars);
+export default connect(
+  mS,
+  mD
+)(RateExperienceStars);

@@ -16,8 +16,8 @@ import { Iphone5 } from "../../Util/Devices";
     icon: Base icon name,
     toggle: "True" if icon can be toggled,
     iconToggled: Name of the toggled icon,
-    opacity: "True" to set opacity on button
- *
+    opacity: "True" to set opacity on button 
+    *
  * @export
  * @class CallButton
  * @extends {Component}

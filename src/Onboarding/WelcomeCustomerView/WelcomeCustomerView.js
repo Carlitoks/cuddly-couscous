@@ -1,22 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  View,
-  Text,
-  ScrollView,
-  Dimensions,
-  Image,
-  ActivityIndicator
-} from "react-native";
+import { View, Text, Dimensions, Image } from "react-native";
 import { clearForm } from "../../Ducks/RegistrationCustomerReducer";
 import Icon from "react-native-vector-icons/Ionicons";
 import LinearGradient from "react-native-linear-gradient";
 
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import BottomButton from "../../Components/BottomButton/BottomButton";
 
-import Waves from "../../SVG/waves";
-import WavesOrange from "../../SVG/wavesOrange";
 import { SkypeIndicator } from "react-native-indicators";
 
 import styles from "./styles";
@@ -50,7 +40,6 @@ class WelcomeCustomerView extends Component {
     const { firstname } = this.props;
     return (
       <ViewWrapper style={styles.scrollContainer}>
-        {/* SVG White Waves */}
         <View style={styles.mainContainer}>
           <LinearGradient
             colors={[

@@ -23,7 +23,8 @@ import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
-import { validatePhoneNumber, displayFormErrors } from "../../Util/Helpers.js";
+import { validatePhoneNumber } from "../../Util/Helpers";
+import { displayFormErrors } from "../../Util/Alerts";
 
 import styles from "./styles";
 import I18n from "../../I18n/I18n";

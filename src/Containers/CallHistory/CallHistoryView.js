@@ -11,26 +11,22 @@ import {
   indexOnChange
 } from "../../Ducks/CallHistoryReducer";
 
-import { StyleSheet, View, FlatList, Text, ScrollView } from "react-native";
-import { Header } from "react-native-elements";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import SegmentedControlTab from "react-native-segmented-control-tab";
-import LinearGradient from "react-native-linear-gradient";
+import { View, Text, ScrollView } from "react-native";
+import { Col, Grid } from "react-native-easy-grid";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
+import Close from "../../Components/Close/Close";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 
 import moment from "moment";
 
 import styles from "./style";
-import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
 
-class CallHistory extends Component {
+class CallHistoryView extends Component {
   componentWillMount() {
     if (this.props.linguistProfile) {
       this.getAllLinguistCalls(this.props.userId, this.props.token);
@@ -79,8 +75,6 @@ class CallHistory extends Component {
       return [];
     }
   };
-
-  //Jan 1, 5:23 PM
 
   compareCall = (accepted, responded) => {
     if (!responded) {
@@ -177,6 +171,13 @@ class CallHistory extends Component {
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
+          headerRightComponent={
+            <Close
+              action={() => {
+                this.props.navigation.dispatch({ type: "Home" });
+              }}
+            />
+          }
           navbarTitle={I18n.t("callHistory")}
           navbarType={"Basic"}
           tabValues={tabValues}
@@ -229,4 +230,7 @@ const mD = {
   indexOnChange
 };
 
-export default connect(mS, mD)(CallHistory);
+export default connect(
+  mS,
+  mD
+)(CallHistoryView);

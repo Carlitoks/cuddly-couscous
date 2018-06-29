@@ -95,14 +95,14 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.newsolo"
         minSdkVersion 22
         targetSdkVersion 22
         versionCode 1
-        versionName "1.1.29"
+        versionName "2.0.0"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -146,10 +146,11 @@ android {
 }
 
 dependencies {
+    compile project(':opentok-react-native')
+    compile project(':react-native-sound')
     compile project(':appcenter-crashes')
     compile project(':appcenter-analytics')
     compile project(':appcenter')
-    compile project(':react-native-sound')
     compile project(':instabug-reactnative') 
     compile project(':react-native-svg')
     compile project(':react-native-fcm')
@@ -157,7 +158,6 @@ dependencies {
     compile project(':react-native-background-timer')
     compile project(':react-native-push-notification')
     compile project(':react-native-keep-awake')
-    compile project(':react-native-linear-gradient')
     compile project(':react-native-camera')
     compile project(':react-native-i18n')
     compile project(':react-native-incall-manager')
@@ -168,7 +168,6 @@ dependencies {
     compile project(':react-native-linear-gradient')
     compile project(':react-native-image-picker')
     compile project(':react-native-vector-icons')
-    compile project(':react-native-opentok')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile ("com.facebook.react:react-native:0.55.4") { force = true } 

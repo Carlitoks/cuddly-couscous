@@ -2,7 +2,7 @@ import React from "react";
 import { func } from "prop-types";
 
 import { TouchableOpacity} from "react-native";
-import { CloseIcon } from "../../SVG";
+import { CloseIcon } from "../../Assets/SVG";
 import { moderateScale } from "../../Util/Scaling";
 
 import { styles} from "./styles"

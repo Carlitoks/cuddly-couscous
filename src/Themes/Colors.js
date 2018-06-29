@@ -76,7 +76,9 @@ const colors = {
   defaultChevron: "#bdc6cf",
   textDefault: "#5F5F5F",
   transparent: "rgba(255,255,255,0)",
-  gray2: "#9B9B9B"
+  gray2: "#9B9B9B",
+  lightBlue: "rgba(0,122,255,1)",
+  translucentGray: "rgba(51,51,51,.64)"
 };
 
 export default colors;

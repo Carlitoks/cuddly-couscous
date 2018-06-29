@@ -1,4 +1,3 @@
-import { changeStatus } from "./ProfileLinguistReducer";
 import { Sessions } from "../Api";
 
 import { networkError } from "./NetworkErrorsReducer";
@@ -96,7 +95,6 @@ export const submitRateCall = (RateInformation, sessionID, token) => (
     positiveFlags: WhatWasGood,
     comment: ""
   };
-  userProfile.linguistProfile && dispatch(changeStatus(true));
   return Sessions.RatingSession(RateInformation, sessionID, token)
     .then(response => {
       return response;

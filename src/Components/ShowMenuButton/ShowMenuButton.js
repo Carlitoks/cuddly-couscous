@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FormInput } from "react-native-elements";
 import { View, TouchableOpacity } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import { NavMenu } from "../../SVG";
+import { NavMenu } from "../../Assets/SVG";
 
 import styles from "./styles";
 import { moderateScale, verticalScale, scale } from "../../Util/Scaling";

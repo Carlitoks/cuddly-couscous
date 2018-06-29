@@ -1,4 +1,3 @@
-import OpenTok from "react-native-opentok";
 import { networkError } from "./NetworkErrorsReducer";
 import { Sessions } from "../Api";
 import { REASON, TIME } from "../Util/Constants";
@@ -6,8 +5,20 @@ import {
   updateSettings as updateContactLinguist,
   resetCounter
 } from "./ContactLinguistReducer";
+import { GetSessionInfoLinguist } from "./SessionInfoReducer";
 import { setSession, clear } from "./tokboxReducer";
 import I18n from "../I18n/I18n";
+
+import { fmtMSS } from "../Util/Helpers";
+import {
+  BackgroundInterval,
+  BackgroundCleanInterval
+} from "../Util/Background";
+import {
+  emitLocalNotification,
+  cleanNotifications
+} from "../Util/PushNotification";
+import { displayTimeAlert } from "../Util/Alerts";
 
 // Actions
 export const ACTIONS = {
@@ -15,6 +26,7 @@ export const ACTIONS = {
   UPDATE: "callCustomerSettings/update",
   CREATEINVITATION: "callCustomerSettings/invitation",
   INCREMENT_TIMER: "callCustomerSettings/incrementTimer",
+  INCREMENT_RECONNECT: "callCustomerSettings/incrementReconnect",
   RESET_TIMER: "callCustomerSettings/resetTimer",
   ENDSESSION: "callCustomerSettings/endSession"
 };
@@ -38,6 +50,10 @@ export const incrementTimer = () => ({
   type: ACTIONS.INCREMENT_TIMER
 });
 
+export const incrementReconnect = () => ({
+  type: ACTIONS.INCREMENT_RECONNECT
+});
+
 export const resetTimerAsync = () => (dispatch, getState) => {
   const { callCustomerSettings } = getState();
 
@@ -45,6 +61,17 @@ export const resetTimerAsync = () => (dispatch, getState) => {
     updateSettings({
       timer: null,
       elapsedTime: 0
+    })
+  );
+};
+
+export const resetReconnectAsync = () => (dispatch, getState) => {
+  const { callCustomerSettings } = getState();
+  clearInterval(callCustomerSettings.counterId);
+  dispatch(
+    updateSettings({
+      counterId: null,
+      modalReconnectCounter: 0
     })
   );
 };
@@ -94,39 +121,44 @@ export const resetTimer = () => ({
 // secundaryLangCode: "cmn",
 //  estimatedMinutes: 20
 
-export const AsyncCreateSession = ({
-  type,
-  matchMethod,
+export const createSession = ({
   primaryLangCode,
-  secundaryLangCode,
+  secondaryLangCode,
   estimatedMinutes,
   scenarioID,
-  token,
-  customScenarioNote
+  customScenarioNote,
+  token
 }) => dispatch => {
   return Sessions.createSession(
-    type,
-    matchMethod,
+    "immediate_virtual",
+    "first_available",
     primaryLangCode,
-    secundaryLangCode,
+    secondaryLangCode,
     estimatedMinutes,
     scenarioID,
     token,
     customScenarioNote
   )
     .then(response => {
+      const { data } = response;
+      // Set session data
+      dispatch(setSession(data));
       // verify if there is linguist available
-      dispatch(setSession(response.data));
+      dispatch(
+        updateSettings({
+          verifyCallId: setInterval(
+            () => dispatch(verifyCall(data.sessionID, token)),
+            5000
+          )
+        })
+      );
       return response.data;
     })
     .catch(error => dispatch(networkError(error)));
 };
 
-export const verifyCall = (sessionID, token, verifyCallId) => (
-  dispatch,
-  getState
-) => {
-  const { contactLinguist } = getState();
+export const verifyCall = (sessionID, token) => (dispatch, getState) => {
+  const { contactLinguist, callCustomerSettings } = getState();
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
       const { data } = response;
@@ -137,7 +169,7 @@ export const verifyCall = (sessionID, token, verifyCallId) => (
         data.status == "assigned" ||
         data.queue.declined === data.queue.total
       ) {
-        clearInterval(verifyCallId);
+        clearInterval(callCustomerSettings.verifyCallId);
       }
       if (
         (contactLinguist.counter > 10 * data.queue.total + 30 &&
@@ -161,14 +193,97 @@ export const verifyCall = (sessionID, token, verifyCallId) => (
     })
     .catch(error => {
       dispatch(networkError(error));
-      clearInterval(verifyCallId);
+      clearInterval(callCustomerSettings.verifyCallId);
     });
 };
 
 export const closeOpenConnections = () => dispatch => {
-  OpenTok.disconnectAll();
   dispatch(clearSettings());
   dispatch(clear());
+};
+
+export const startReconnect = () => (dispatch, getState) => {
+  dispatch(
+    updateSettings({
+      counterId: setInterval(() => {
+        dispatch(incrementReconnect());
+      }, 1000)
+    })
+  );
+};
+
+export const startTimer = () => (dispatch, getState) => {
+  const { callCustomerSettings } = getState();
+  const callTime = !!callCustomerSettings.selectedTime
+    ? callCustomerSettings.selectedTime * 60
+    : 60 * 60;
+
+  dispatch(
+    updateSettings({
+      timer: setInterval(() => {
+        const {
+          elapsedTime,
+          extraTime,
+          showAlert
+        } = getState().callCustomerSettings;
+        if (elapsedTime + extraTime < 60 * 60) {
+          if (elapsedTime >= callTime + extraTime - 2 * 60) {
+            dispatch(
+              updateSettings({
+                red: true
+              })
+            );
+            if (!showAlert) {
+              dispatch(
+                updateSettings({
+                  showAlert: true
+                })
+              );
+              //Play Sound
+              SoundManager["ExtraTime"].play();
+              displayTimeAlert(extraTime, event => {
+                dispatch(updateSettings(event));
+              });
+            }
+          }
+          if (elapsedTime > callTime + extraTime) {
+            dispatch(closeCall(REASON.DONE));
+          } else {
+            dispatch(incrementTimer());
+
+            emitLocalNotification({
+              title: I18n.t("call"),
+              message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
+            });
+          }
+        } else {
+          dispatch(closeCall(REASON.DONE));
+        }
+      }, 1000)
+    })
+  );
+};
+
+export const closeCall = reason => (dispatch, getState) => {
+  const { contactLinguist, callCustomerSettings, tokbox, auth } = getState();
+
+  clearInterval(contactLinguist.counterId);
+  dispatch(
+    updateContactLinguist({
+      modalReconnect: false,
+      customScenarioNote: ""
+    })
+  );
+  dispatch(resetCounter());
+
+  if (reason === REASON.RETRY) {
+    BackgroundCleanInterval(callCustomerSettings.timer);
+    dispatch(resetTimerAsync());
+    cleanNotifications();
+  }
+
+  SoundManager["EndCall"].play();
+  tokbox.sessionID && dispatch(EndCall(tokbox.sessionID, reason, auth.token));
 };
 
 // Initial State
@@ -182,13 +297,27 @@ const initialState = {
   elapsedTime: 0,
   invitationID: null,
   customerPreferredSex: "any",
-  customerExtraTime: true,
   verifyCallId: null,
 
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 8, // Initial time selected: 10 min
-  allowTimeSelection: true
+  allowTimeSelection: true,
+
+  //Extra time
+  visible: true,
+  red: false,
+  timeBtn: false,
+  showAlert: false,
+  extraTime: 0,
+
+  //Reconnect
+  counter: 0,
+  counterId: null,
+  modalReconnect: false,
+  modalReconnectCounter: 0,
+  modalReconnectCounterId: null,
+  messageReconnect: ""
 };
 
 // Reducer
@@ -204,6 +333,13 @@ const callCustomerSettings = (state = initialState, action) => {
       return {
         ...state,
         elapsedTime: state.elapsedTime + 1
+      };
+    }
+
+    case ACTIONS.INCREMENT_RECONNECT: {
+      return {
+        ...state,
+        modalReconnectCounter: state.modalReconnectCounter + 1
       };
     }
 

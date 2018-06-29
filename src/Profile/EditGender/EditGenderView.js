@@ -27,8 +27,7 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
-import { displayFormErrors } from "../../Util/Helpers";
-import { Colors } from "../../Themes";
+import { displayFormErrors } from "../../Util/Alerts";
 import I18n from "../../I18n/I18n";
 
 class EditGenderView extends Component {

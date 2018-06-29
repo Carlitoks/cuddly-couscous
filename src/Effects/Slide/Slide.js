@@ -21,7 +21,14 @@ class Slide extends Component {
 
     return (
       <Animated.View
-        style={{ ...this.props.style, transform: [{ translateY: slide }] }}
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          alignItems: "flex-end",
+          justifyContent: "flex-end",
+          width: "100%",
+          transform: [{ translateY: slide }]
+        }}
       >
         {this.props.children}
       </Animated.View>

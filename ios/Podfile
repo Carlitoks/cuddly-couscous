@@ -2,6 +2,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '9.0'
 
+
+
 target 'NewSolo' do
   node_modules_path = '../node_modules'
 
@@ -9,24 +11,25 @@ target 'NewSolo' do
   pod 'React', path: "#{node_modules_path}/react-native"
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'RNOpenTok', path: "#{node_modules_path}/react-native-opentok/ios"
   pod 'BVLinearGradient', :path => "#{node_modules_path}/react-native-linear-gradient"
-  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
-  pod 'react-native-camera', path: '../node_modules/react-native-camera'
-  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob' 
-  pod 'React', :path => '../node_modules/react-native', :subspecs => [ 
+  pod 'RNDeviceInfo', :path => "#{node_modules_path}/react-native-device-info"
+  pod 'react-native-camera', path: "#{node_modules_path}/react-native-camera"
+  pod 'react-native-fetch-blob', :path => "#{node_modules_path}/react-native-fetch-blob" 
+  pod 'React', :path => "#{node_modules_path}/react-native", :subspecs => [ 
      
     'RCTImage' 
 ] 
-  pod 'react-native-image-resizer', :path => '../node_modules/react-native-image-resizer' 
-  pod 'RNFS', :path => '../node_modules/react-native-fs' 
-  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
-  pod 'react-native-keep-awake', :path => '../node_modules/react-native-keep-awake'
-  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
-  pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+  pod 'react-native-image-resizer', :path => "#{node_modules_path}/react-native-image-resizer" 
+  pod 'RNFS', :path => "#{node_modules_path}/react-native-fs" 
+  pod 'RNI18n', :path => "#{node_modules_path}/react-native-i18n"
+  pod 'react-native-keep-awake', :path => "#{node_modules_path}/react-native-keep-awake"
+  pod 'react-native-background-timer', :path => "#{node_modules_path}/react-native-background-timer"
+  pod 'ReactNativePermissions', :path => "#{node_modules_path}/react-native-permissions"
   pod 'Firebase/Messaging'
 
-  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+  pod 'RNSVG', :path => "#{node_modules_path}/react-native-svg"
+
+  pod 'OpenTok'
 
   pod 'RNSound', :path => '../node_modules/react-native-sound'
 

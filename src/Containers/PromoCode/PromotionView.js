@@ -6,9 +6,7 @@ import { updatePromoCode as updateSettings } from "../../Ducks/PromoCodeReducer"
 import {
   View,
   Text,
-  Image,
   ScrollView,
-  TouchableOpacity,
   Dimensions,
   ActivityIndicator
 } from "react-native";
@@ -17,22 +15,19 @@ import LinearGradient from "react-native-linear-gradient";
 import Carousel from "react-native-snap-carousel";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
-import SettingsButton from "../../Components/SettingsButton/SettingsButton";
-import TileButton from "../../Components/TileButton/TileButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import HeaderView from "../../Components/HeaderView/HeaderView";
-import BottomButton from "../../Components/BottomButton/BottomButton";
 import { updateSettings as updateSelectionList } from "../../Ducks/LinguistFormReducer";
 import BoxedListComponent from "../../Components/BoxedListComponent/BoxedListComponent";
 import CarouselEntry from "../../Components/CarouselEntry/CarouselEntry";
+import BottomButton from "../../Components/BottomButton/BottomButton";
 
-import Waves from "../../SVG/waves";
+import { Waves } from "../../Assets/SVG";
 import { Colors } from "../../Themes";
 
 import styles from "../../Home/Customer/styles";
 import I18n from "../../I18n/I18n";
-import { moderateScale } from "../../Util/Scaling";
-import { REASON, CATEGORIES } from "../../Util/Constants";
+import { CATEGORIES } from "../../Util/Constants";
 import { sliderWidth, itemWidth } from "../../Components/CarouselEntry/styles";
 
 class PromotionView extends Component {

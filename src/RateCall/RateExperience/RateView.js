@@ -59,6 +59,7 @@ class RateView extends Component {
           this.props.navigation.dispatch({ type: "Home" });
         })
         .catch(err => {
+          console.log(err);
           this.props.clearOptions();
           this.props.clearCallCustomerSettings();
           this.props.clearCallLinguistSettings();

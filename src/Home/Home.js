@@ -8,8 +8,6 @@ import HomeLinguist from "./Linguist/HomeLinguist";
 import LoginView from "../Onboarding/LoginView/LoginView";
 import PushNotifications from "../Util/PushNotification";
 
-import { getGeolocationCoords } from "../Util/Helpers";
-
 class Home extends Component {
   componentWillMount() {
     const { isLoggedIn, navigation, uuid, token, nativeLangCode } = this.props;

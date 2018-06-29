@@ -27,11 +27,12 @@ export default StyleSheet.create({
   },
   titleContainer: {
     backgroundColor: Colors.transparent,
+    width: "100%",
     position: "absolute",
     zIndex: 1,
-    top: "39%",
+    top: "38%",
     paddingHorizontal: 15,
-    height: 200,
+    minHeight: 200,
     justifyContent: "flex-end"
   },
   title: {

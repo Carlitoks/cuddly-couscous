@@ -2,7 +2,7 @@ import React from "react";
 import { string, bool } from "prop-types";
 
 import { View, Text, TouchableOpacity } from "react-native";
-import { TranslationArrows } from "../../SVG";
+import { TranslationArrows } from "../../Assets/SVG";
 import { moderateScale } from "../../Util/Scaling";
 
 import { styles } from "./styles";

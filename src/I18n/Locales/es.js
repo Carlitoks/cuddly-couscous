@@ -84,6 +84,7 @@ export default (ESP = {
   emailCustomerText: "By continuing, you agree to our ",
   emptyEmail: "Empty Email",
   emptyPassword: "Empty Password",
+  endCall: "End call",
   english: "English",
   enterCustomScenario: "Please enter a custom assistance",
   enterEmailField: "Please enter your email",
@@ -131,6 +132,7 @@ export default (ESP = {
   general: "General",
   getStarted: "Get Started",
   getLanguageHelp: "Get Language Help",
+  hasDisconnected: "has been disconnected",
   help: "Help",
   helpPeople:
     "Which cities do you know well enough to help people get around in?",
@@ -151,7 +153,9 @@ export default (ESP = {
   intermediate: "Intermediate",
   invalidPromoCode: "Invalid promo code",
   isConnecting: "is connecting...",
+  isReconnecting: "is reconnecting...",
   languageCommand: "Language at Your Command",
+  keepWaiting: "Keep waiting",
   languageHelp: "Language Help Wherever You Are",
   languageInterpretation: "Have you done any interpretation in <lang> before?",
   LanguagePairs: "Language Pairs", // not use
@@ -172,7 +176,7 @@ export default (ESP = {
   lauchScreenSwipe2:
     "Wherever you are in the world, access live, human language speakers in real-time.",
   lauchScreenSwipe3:
-    "Currently, Jeenie provides language support in \n Mandarin <> English \n and Japanese <> English. Additional languages are coming soon.",
+    "Currently, Jeenie provides language support in \n Mandarin <> English \n and Japanese <> English.\n\nAdditional languages are coming soon.",
   lauchScreenSwipe4:
     "The average call lasts 5 to 10 minutes, but speak as long as you like.",
   lauchScreenSwipe5:
@@ -224,6 +228,9 @@ export default (ESP = {
   offline: "Offline",
   ok: "Ok",
   online: "Online",
+  operatingHoursAlertTitle: "Please note our limited operating hours",
+  operatingHoursAlertMessage:
+    "From July 1st to July 14th, Language Jeenies are online 9am EDT to 5pm Eastern Time (EDT).",
   orChooseOneBelow: "Or Choose one below",
   other: "Other",
   password: "Password",
@@ -298,6 +305,8 @@ export default (ESP = {
   travel: "Travel",
   transit: "In Transit",
   tryAgain: "Try again",
+  tryAnother: "Try Another Jeenie",
+  tryToReconnect: "Try to Reconnect",
   troubleshoot: "Troubleshoot",
   thankYou: " Thank You",
   undefined: "Undefined",
@@ -311,10 +320,13 @@ export default (ESP = {
   video: "Video",
   videoMode: "Video Mode",
   videoAssistance: "Video Assistance",
+  waitingYourConnection: "Waiting for your connection",
   wasGood: "What was Good?",
+  weAreWorking: "We’re working to re-establish your connection.",
   welcome: "Welcome",
   welcomeTo: "Welcome To",
   weSendEmail: "We'll send you an email to reset your password.",
+  whatWouldYouLike: "What would you like to do?",
   yes: "Si",
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during the call",

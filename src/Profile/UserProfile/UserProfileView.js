@@ -1,14 +1,6 @@
 import React, { Component } from "react";
-import {
-  Text,
-  View,
-  ScrollView,
-  Alert,
-  Image,
-  KeyboardAvoidingView
-} from "react-native";
+import { Text, View, ScrollView, Image } from "react-native";
 import { connect } from "react-redux";
-import PhotoUpload from "react-native-photo-upload";
 import {
   updateSettings,
   PROFICIENCY_LIST,
@@ -25,10 +17,8 @@ import {
   asyncUploadAvatar,
   getNativeLang
 } from "../../Ducks/UserProfileReducer";
-import { Button, Header, List, ListItem, Avatar } from "react-native-elements";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import LinearGradient from "react-native-linear-gradient";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { List, ListItem, Avatar } from "react-native-elements";
+import { Row, Grid } from "react-native-easy-grid";
 import Languages from "../../Config/Languages";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
@@ -38,12 +28,11 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
 import _capitalize from "lodash/capitalize";
-import { compareArrays } from "../../Util/Helpers";
 import I18n from "../../I18n/I18n";
-import { Images, Colors, Fonts } from "../../Themes";
-import images from "../../Themes/Images";
-import { IMAGE_STORAGE_URL } from "../../Config/env";
+import { Images } from "../../Themes";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import Close from "../../Components/Close/Close";
+
 class UserProfileView extends Component {
   componentWillMount() {
     let secondaryLanguages = [];
@@ -168,7 +157,7 @@ class UserProfileView extends Component {
   selectImage = () => {
     let image = this.props.avatarBase64
       ? { uri: `data:image/jpg;base64,${this.props.avatarBase64}` }
-      : images.avatar;
+      : Images.avatar;
     return this.props.avatarURL
       ? {
           uri: `${this.props.avatarURL}?time=${new Date().getUTCMilliseconds()}`
@@ -222,6 +211,13 @@ class UserProfileView extends Component {
         <HeaderView
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
+          }
+          headerRightComponent={
+            <Close
+              action={() => {
+                this.props.navigation.dispatch({ type: "Home" });
+              }}
+            />
           }
           navbarTitle={I18n.t("userProfile")}
           navbarType={"Basic"}
@@ -322,4 +318,7 @@ const mD = {
   getNativeLang
 };
 
-export default connect(mS, mD)(UserProfileView);
+export default connect(
+  mS,
+  mD
+)(UserProfileView);
