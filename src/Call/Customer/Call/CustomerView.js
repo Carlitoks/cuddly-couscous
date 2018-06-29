@@ -140,7 +140,8 @@ class CustomerView extends Component {
       selectedCallTime,
       selectedScenarioId,
       customScenarioNote,
-      token
+      token,
+      eventID
     } = this.props;
 
     await createSession({
@@ -152,7 +153,8 @@ class CustomerView extends Component {
       estimatedMinutes: selectedCallTime,
       scenarioID: selectedScenarioId,
       customScenarioNote: customScenarioNote,
-      token: token
+      token: token,
+      eventID: eventID
     });
   };
 
@@ -249,7 +251,8 @@ const mS = state => ({
   verifyCallId: state.callCustomerSettings.verifyCallId,
   extraTime: state.callCustomerSettings.extraTime,
   red: state.callCustomerSettings.red,
-  timeBtn: state.callCustomerSettings.timeBtn
+  timeBtn: state.callCustomerSettings.timeBtn,
+  eventID: state.events.id
 });
 
 const mD = {

@@ -5,6 +5,7 @@ import {
   updateSettings as updateContactLinguist,
   resetCounter
 } from "./ContactLinguistReducer";
+import { clear as clearEvents } from "../Ducks/EventsReducer";
 import { GetSessionInfoLinguist } from "./SessionInfoReducer";
 import { setSession, clear } from "./tokboxReducer";
 import I18n from "../I18n/I18n";
@@ -86,6 +87,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
         dispatch({ type: "Home" });
         dispatch(clearSettings());
         dispatch(clear());
+        dispatch(clearEvents());
       } else if (reason === REASON.RETRY) {
         dispatch(updateSettings({ verifyCallId: null }));
         dispatch(clear());
@@ -105,6 +107,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
       dispatch(networkError(error));
       dispatch(clearSettings());
       dispatch(clear());
+      dispatch(clearEvents());
       dispatch({ type: "Home" });
     });
 };
@@ -127,7 +130,8 @@ export const createSession = ({
   estimatedMinutes,
   scenarioID,
   customScenarioNote,
-  token
+  token,
+  eventID
 }) => dispatch => {
   return Sessions.createSession(
     "immediate_virtual",
@@ -137,7 +141,8 @@ export const createSession = ({
     estimatedMinutes,
     scenarioID,
     token,
-    customScenarioNote
+    customScenarioNote,
+    eventID
   )
     .then(response => {
       const { data } = response;

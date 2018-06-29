@@ -20,6 +20,7 @@ import {
 } from "../../Ducks/CallCustomerSettings";
 
 import { clearSettings as clearCallLinguistSettings } from "../../Ducks/CallLinguistSettings";
+import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { updateSettings as updateLinguistForm } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { getCategories, updateSettings } from "../../Ducks/HomeFlowReducer";
@@ -157,6 +158,7 @@ class Home extends Component {
     this.props.clearSettings();
     this.props.clearCallLinguistSettings();
     this.props.asyncGetAccountInformation();
+    this.props.clearEvents();
     InCallManager.stop();
     this.setState({
       indexSelected: listItemSelected
@@ -424,7 +426,8 @@ const mD = {
   customerCalls,
   clearSettings,
   clearCallLinguistSettings,
-  asyncGetAccountInformation
+  asyncGetAccountInformation,
+  clearEvents
 };
 
 export default connect(
