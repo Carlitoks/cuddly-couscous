@@ -79,11 +79,11 @@ export const resetReconnectAsync = () => (dispatch, getState) => {
 
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 
-export const EndCall = (sessionID, reason, token) => dispatch => {
+export const EndCall = (sessionID, reason, token, timeOut) => dispatch => {
   return Sessions.EndSession(sessionID, reason, token)
     .then(response => {
       dispatch(endSession());
-      if (reason === REASON.CANCEL) {
+      if (reason === REASON.CANCEL && !timeOut) {
         dispatch({ type: "Home" });
         dispatch(clearSettings());
         dispatch(clear());
@@ -92,7 +92,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
         dispatch(updateSettings({ verifyCallId: null }));
         dispatch(clear());
         dispatch({ type: "CustomerView" });
-      } else if (reason === REASON.TIMEOUT) {
+      } else if (reason === REASON.CANCEL && timeOut) {
         dispatch(
           updateContactLinguist({
             modalContact: true,
@@ -193,7 +193,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
           })
         );
 
-        sessionID && dispatch(EndCall(sessionID, REASON.TIMEOUT, token));
+        sessionID && dispatch(EndCall(sessionID, REASON.CANCEL, token, true));
       }
     })
     .catch(error => {
@@ -271,7 +271,6 @@ export const startTimer = () => (dispatch, getState) => {
 
 export const closeCall = reason => (dispatch, getState) => {
   const { contactLinguist, callCustomerSettings, tokbox, auth } = getState();
-
   clearInterval(contactLinguist.counterId);
   dispatch(
     updateContactLinguist({
