@@ -32,7 +32,6 @@
 		07ACDDC41FE6D74A00EDA234 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		07BCFE7120CAB24800A1F515 /* OTInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BCFE7020CAB24800A1F515 /* OTInstall.swift */; };
 		07EE05E120BF6A7E00BA592D /* elastic_done3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 07EE05E020BF6A7D00BA592D /* elastic_done3.wav */; };
-		07F59C4220E708BB0019D8E8 /* Elastic_Notification15.wav in Resources */ = {isa = PBXBuildFile; fileRef = 07F59C1120E708BA0019D8E8 /* Elastic_Notification15.wav */; };
 		07F59C4320E708D40019D8E8 /* Elastic_Notification15.wav in Resources */ = {isa = PBXBuildFile; fileRef = 07F59B5420E703AC0019D8E8 /* Elastic_Notification15.wav */; };
 		0C0CA2623D79467CA55056E8 /* libOpenTokReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F3D9D6FC08440BB2801098 /* libOpenTokReactNative.a */; };
 		0C727EBB73954DBBAF6503B9 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73CFB4E6098944B384CC73B0 /* OpenSans-Bold.ttf */; };
@@ -1699,7 +1698,6 @@
 				6179BF11DDFA4BE79AC7B14D /* SimpleLineIcons.ttf in Resources */,
 				ABB74B0E064F4CAAA6C67FE7 /* Zocial.ttf in Resources */,
 				0C727EBB73954DBBAF6503B9 /* OpenSans-Bold.ttf in Resources */,
-				07F59C4220E708BB0019D8E8 /* Elastic_Notification15.wav in Resources */,
 				079A46DBEB214E899A948026 /* OpenSans-Light.ttf in Resources */,
 				784610254B1F4F1C9970F2F1 /* OpenSans-Regular.ttf in Resources */,
 				6472893D4C6D4A97A45FFAA5 /* SFProDisplay-Bold.otf in Resources */,
