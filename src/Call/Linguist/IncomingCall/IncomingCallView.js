@@ -32,6 +32,7 @@ class IncomingCall extends Component {
 
   componentDidMount() {
     this.verifyCallLinguist();
+    SoundManager["IncomingCall"].setNumberOfLoops(-1);
     SoundManager["IncomingCall"].play();
   }
 

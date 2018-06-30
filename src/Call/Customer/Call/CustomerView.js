@@ -220,6 +220,7 @@ class CustomerView extends Component {
                   navigation={this.props.navigation}
                   callTimeOut={this.callTimeOut}
                   closeCall={closeCall}
+                  connect={this.connectCall}
                   switch={() => {}}
                 />
               </View>

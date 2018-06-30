@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //COMPONENTS
-import { Text, View, ScrollView, ActivityIndicator } from "react-native";
+import { Text, View, ScrollView, ActivityIndicator, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
@@ -10,7 +10,6 @@ import SessionControls from "../../../Components/SessionControls/SessionControls
 // STYLE AND THEMES
 import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
-
 // REDUCERS
 import { closeCall } from "../../../Ducks/CallCustomerSettings";
 import I18n from "../../../I18n/I18n";
@@ -18,7 +17,6 @@ import {
   setPermission,
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
-
 import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
 
@@ -26,6 +24,7 @@ class ContactingLinguist extends Component {
   constructor(props) {
     super(props);
   }
+
   componentWillMount() {
     this.props.callTimeOut();
     if (InCallManager.recordPermission !== "granted") {
@@ -49,7 +48,7 @@ class ContactingLinguist extends Component {
   }
 
   render() {
-    const { closeCall } = this.props;
+    const { closeCall, connect, callTimeOut } = this.props;
 
     return (
       <ScrollView
@@ -58,6 +57,23 @@ class ContactingLinguist extends Component {
         contentContainerStyle={styles.contentContainerStyle}
         alwaysBounceVertical={false}
       >
+        {this.props.modalReconnect &&
+          Alert.alert(I18n.t("notLinguistAvailable"), "", [
+            {
+              text: I18n.t("tryAgain"),
+              onPress: () => {
+                closeCall(REASON.RETRY);
+                connect();
+                callTimeOut();
+              }
+            },
+            {
+              text: I18n.t("endCall"),
+              onPress: () => {
+                closeCall("Abort");
+              }
+            }
+          ])}
         {!this.props.modalReconnect && (
           <ActivityIndicator
             size="large"
@@ -97,4 +113,7 @@ const mD = {
   closeCall
 };
 
-export default connect(mS, mD)(ContactingLinguist);
+export default connect(
+  mS,
+  mD
+)(ContactingLinguist);

@@ -288,7 +288,12 @@ export const closeCall = reason => (dispatch, getState) => {
   }
 
   SoundManager["EndCall"].play();
-  tokbox.sessionID && dispatch(EndCall(tokbox.sessionID, reason, auth.token));
+  if (reason !== "Abort") {
+    tokbox.sessionID && dispatch(EndCall(tokbox.sessionID, reason, auth.token));
+  }
+  if (reason === "Abort") {
+    dispatch({ type: "Home" });
+  }
 };
 
 // Initial State

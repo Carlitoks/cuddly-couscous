@@ -13,14 +13,13 @@ export default (SoundManager = {
     //EndCall.play(() => {});
   }),
   IncomingCall: new Sound(
-    "incoming_call_notification.mp3",
+    "Elastic_Notification15.wav",
     Sound.MAIN_BUNDLE,
     error => {
       if (error) {
         console.log("error loading sound", error);
         return;
       }
-      //IncomingCall.play();
     }
   ),
   ExtraTime: new Sound("elastic_done5.wav", Sound.MAIN_BUNDLE, error => {
