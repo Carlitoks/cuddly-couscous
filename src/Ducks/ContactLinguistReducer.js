@@ -69,7 +69,7 @@ const initialState = {
   selectedLanguageCode: "spa",
   primaryLangCode: "eng",
   secundaryLangCode: "cmn",
-
+  modalContact: false,
   // reconnect modal
   counter: 0,
   counterId: null,

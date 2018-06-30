@@ -95,7 +95,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
       } else if (reason === REASON.TIMEOUT) {
         dispatch(
           updateContactLinguist({
-            modalReconnect: true,
+            modalContact: true,
             counter: TIME.RECONNECT
           })
         );
@@ -187,7 +187,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
 
         dispatch(
           updateContactLinguist({
-            modalReconnect: true,
+            modalContact: true,
             counter: TIME.RECONNECT,
             messageReconnect: I18n.t("notLinguistAvailable")
           })
@@ -275,7 +275,7 @@ export const closeCall = reason => (dispatch, getState) => {
   clearInterval(contactLinguist.counterId);
   dispatch(
     updateContactLinguist({
-      modalReconnect: false,
+      modalContact: false,
       customScenarioNote: ""
     })
   );
@@ -291,7 +291,7 @@ export const closeCall = reason => (dispatch, getState) => {
   if (reason !== "Abort") {
     tokbox.sessionID && dispatch(EndCall(tokbox.sessionID, reason, auth.token));
   }
-  if (reason === "Abort") {
+  if (reason == "Abort") {
     dispatch({ type: "Home" });
   }
 };

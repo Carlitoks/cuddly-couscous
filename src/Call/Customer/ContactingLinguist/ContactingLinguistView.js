@@ -57,7 +57,7 @@ class ContactingLinguist extends Component {
         contentContainerStyle={styles.contentContainerStyle}
         alwaysBounceVertical={false}
       >
-        {this.props.modalReconnect &&
+        {this.props.modalContact &&
           Alert.alert(I18n.t("notLinguistAvailable"), "", [
             {
               text: I18n.t("tryAgain"),
@@ -106,6 +106,7 @@ const mS = state => ({
   counterId: state.contactLinguist.counterId,
   tokboxStatus: state.tokbox.status,
   modalReconnect: state.contactLinguist.modalReconnect,
+  modalContact: state.contactLinguist.modalContact,
   connectingMessage: state.contactLinguist.connectingMessage
 });
 
