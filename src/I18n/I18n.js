@@ -9,8 +9,8 @@ I18n.fallbacks = true;
 I18n.translations = {
   en,
   ja,
-  'zh-hans': zh_hans,
-  'zh-hant': zh_hant
+  'zh-Hans': zh_hans,
+  'zh-Hant': zh_hant
 };
 
 export const strings = (name, params = {}) => I18n.t(name, params);
