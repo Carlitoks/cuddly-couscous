@@ -20,3 +20,11 @@ export const switchLanguage = (lang, component) => {
 };
 
 export default I18n;
+
+// generate list of primary languages, returns [{code: "string", i18nKey: "string"}], based on the languages defined in the
+// English translated code map
+let primaryLanguages = [];
+for (const [key, value] of Object.entries(en.languages)) {
+  primaryLanguages.push({code: key, i18nKey: `languages.${key}`});
+}
+export {primaryLanguages}
