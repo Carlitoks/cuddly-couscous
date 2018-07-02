@@ -35,6 +35,7 @@ class SessionBox extends Component {
       },
       connectionCreated: event => {
         console.log("CONNECTION CREATED EVENT", event);
+        clearInterval(this.props.counterId);
         this.props.subscriberStart();
       },
       connectionDestroyed: event => {
@@ -131,7 +132,8 @@ const mS = state => {
     tokboxSessionToken: state.tokbox.tokboxToken,
     signal: state.tokbox.signal,
     disabledSubscriber: state.tokbox.disabledSubscriber,
-    visibility: state.contactLinguist.modalReconnect
+    visibility: state.contactLinguist.modalReconnect,
+    counterId: state.contactLinguist.counterId
   };
 };
 
