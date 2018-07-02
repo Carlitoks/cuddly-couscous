@@ -354,5 +354,69 @@ export default (ENG = {
   yes: "Yes",
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during call",
-  youCanChangeThis: "You can turn video on/off during call"
+  youCanChangeThis: "You can turn video on/off during call",
+
+  // for use during primary language selection
+  languages: {
+    eng: "English",
+    cmn: "Chinese (Mandarin)",
+    yue: "Chinese (Cantonese)",
+    jpn: "Japanese",
+    spa: "Spanish",
+    due: "German",
+    fra: "French",
+    arb: "Arabic",
+    por: "Portuguese",
+    rus: "Russian",
+    ita: "Italian",
+    kor: "Korean",
+    nld: "Dutch",
+    swe: "Swedish",
+    nor: "Norwegian",
+    tur: "Turkish",
+    pol: "Polish",
+    dan: "Danish",
+    fin: "Finnish",
+    tha: "Thai",
+    heb: "Hebrew",
+    ind: "Indonesian",
+    pes: "Persian",
+    hin: "Hindi",
+    ces: "Czech",
+    zsm: "Malaysian", // can of worms here
+    ell: "Greek",
+    hun: "Hungarian",
+    ron: "Romanian", // OR rup, ruq?
+    vie: "Vietnamese",
+    ben: "Bengali",
+    cat: "Catalan",
+    fil: "Filipino",
+    tam: "Tamil",
+    slk: "Slovak",
+    kaz: "Kazakh",
+    ltz: "Luxembourgish",
+    kur: "Kurdish", // OR north/south: kmr, sdh?
+    azj: "Azeri (North)", // OR north/south: azb, azj?
+    azb: "Azeri (South)",
+    ukr: "Ukrainian",
+    afr: "Afrikaans",
+    hrv: "Croatian",
+    glg: "Galician",
+    slv: "Slovenian",
+    lit: "Lithuanian",
+    ckb: "Sorani", // Central Kurdish
+    jav: "Javanese",
+    urd: "Urdu",
+    sqi: "Albanian",
+    tel: "Telugu",
+    srp: "Serbian",
+    yor: "Yoruba",
+    hau: "Hausa",
+    bul: "Bulgarian",
+    uzb: "Uzbek", // OR north/south: uzn, uzs
+    swa: "Swahili", // OR ccl, swc, swh
+    eus: "Basque",
+    bel: "Belarusian",
+    tat: "Tatar" // OR Crimean/Siberian: crh, sty
+  }
 });
