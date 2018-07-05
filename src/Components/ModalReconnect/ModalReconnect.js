@@ -66,7 +66,7 @@ class ModalReconnect extends Component {
             title: I18n.t("endCall"),
             onPress: () => {
               this.props.resetReconnectAsync();
-              this.props.closeCall(REASON.CANCEL);
+              this.props.closeCall(REASON.DONE);
             }
           }
         ]

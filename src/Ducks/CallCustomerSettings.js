@@ -79,11 +79,11 @@ export const resetReconnectAsync = () => (dispatch, getState) => {
 
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 
-export const EndCall = (sessionID, reason, token, timeOut) => dispatch => {
+export const EndCall = (sessionID, reason, token) => dispatch => {
   return Sessions.EndSession(sessionID, reason, token)
     .then(response => {
       dispatch(endSession());
-      if (reason === REASON.CANCEL && !timeOut) {
+      if (reason === REASON.CANCEL) {
         dispatch({ type: "Home" });
         dispatch(clearSettings());
         dispatch(clear());
@@ -92,13 +92,13 @@ export const EndCall = (sessionID, reason, token, timeOut) => dispatch => {
         dispatch(updateSettings({ verifyCallId: null }));
         dispatch(clear());
         dispatch({ type: "CustomerView" });
-      } else if (reason === REASON.CANCEL && timeOut) {
-        dispatch(
+      } else if (reason === REASON.TIMEOUT) {
+        /*dispatch(
           updateContactLinguist({
             modalContact: true,
             counter: TIME.RECONNECT
           })
-        );
+        );*/
       } else {
         dispatch({ type: "RateView" });
       }
@@ -193,7 +193,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
           })
         );
 
-        sessionID && dispatch(EndCall(sessionID, REASON.CANCEL, token, true));
+        sessionID && dispatch(EndCall(sessionID, REASON.TIMEOUT, token));
       }
     })
     .catch(error => {

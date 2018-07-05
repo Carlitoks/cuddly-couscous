@@ -58,7 +58,7 @@ class ContactingLinguist extends Component {
         alwaysBounceVertical={false}
       >
         {this.props.modalContact &&
-          Alert.alert(I18n.t("notLinguistAvailable"), "", [
+          Alert.alert(I18n.t("allLinguistsAreBusy"), "", [
             {
               text: I18n.t("tryAgain"),
               onPress: () => {

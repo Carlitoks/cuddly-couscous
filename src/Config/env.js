@@ -6,4 +6,7 @@ export const JWT_SECRET = "this-is-not-secret";
 export const JWT_ISSUER = "solo.api.com";
 export const IMAGE_STORAGE_URL =
   "https://storage.googleapis.com/solo-platform-api-test-storage";
+// API KEY Teravision
+//export const TOKBOX_APIKEY = "46126532";
+// client API KEY
 export const TOKBOX_APIKEY = "46003062";
