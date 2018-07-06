@@ -224,6 +224,7 @@ const initialState = {
   avatarURL: "",
   estimatedMinutes: "",
   languages: "",
+  customScenarioNote: "",
   customerScenario: "",
   reconnecting: false
 };

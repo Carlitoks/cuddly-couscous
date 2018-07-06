@@ -70,8 +70,8 @@ class IncomingCall extends Component {
   selectImage = () => {
     return this.props.avatarURL
       ? {
-          uri: this.props.avatarURL
-        }
+        uri: this.props.avatarURL
+      }
       : Images.avatar;
   };
 
@@ -124,7 +124,7 @@ class IncomingCall extends Component {
               </View>
               {this.props.customScenarioNote && (
                 <View style={styles.inlineContainer}>
-                  <Icon style={styles.icon} size={25} name="help" />
+                  <Icon style={styles.icon} size={25} name="textsms" />
                   <Text style={styles.notificationText}>
                     {this.props.customScenarioNote}
                   </Text>
