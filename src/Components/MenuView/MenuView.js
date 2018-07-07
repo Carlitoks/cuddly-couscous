@@ -3,7 +3,6 @@ import { AppState, Linking } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Instabug from "instabug-reactnative";
-import { IMAGE_STORAGE_URL } from "../../Config/env";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import {
   getProfileAsync,

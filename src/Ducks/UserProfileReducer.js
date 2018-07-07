@@ -1,6 +1,5 @@
 import { User } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
-import { IMAGE_STORAGE_URL } from "../Config/env";
 import PushNotification from "../Util/PushNotification";
 import { Languages } from "../Config/Languages";
 import { registerFCM } from "./PushNotificationReducer";
