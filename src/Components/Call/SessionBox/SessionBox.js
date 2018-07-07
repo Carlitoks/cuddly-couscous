@@ -16,7 +16,10 @@ import {
   errorEvent,
   subscriberStart
 } from "../../../Ducks/tokboxReducer";
-
+import {
+  updateSettings as updateContactLinguistSettings,
+  resetCounter
+} from "../../../Ducks/ContactLinguistReducer";
 import { updateSettings } from "../../../Ducks/CallCustomerSettings";
 
 import { TOKBOX_APIKEY } from "../../../Config/env";
@@ -37,6 +40,10 @@ class SessionBox extends Component {
         console.log("CONNECTION CREATED EVENT", event);
         clearInterval(this.props.counterId);
         this.props.subscriberStart();
+        this.props.updateContactLinguistSettings({
+          modalContact: false
+        });
+        this.props.resetCounter();
       },
       connectionDestroyed: event => {
         console.log("CONNECTION DESTROYED EVENT", event);
@@ -146,7 +153,9 @@ const mD = {
   streamCreatedEvent,
   streamDestroyedEvent,
   subscriberStart,
-  updateSettings
+  updateSettings,
+  updateContactLinguistSettings,
+  resetCounter
 };
 
 const SessionHandler = connect(

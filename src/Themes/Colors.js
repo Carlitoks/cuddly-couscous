@@ -78,6 +78,7 @@ const colors = {
   transparent: "rgba(255,255,255,0)",
   gray2: "#9B9B9B",
   lightBlue: "rgba(0,122,255,1)",
+  lightBlue2: "rgba(216,208,227,1)",
   translucentGray: "rgba(51,51,51,.64)"
 };
 

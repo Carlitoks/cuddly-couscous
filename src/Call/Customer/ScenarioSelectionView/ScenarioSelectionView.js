@@ -152,7 +152,7 @@ class CustomScenario extends Component {
           </ScrollView>
           <Waves
             width={width}
-            height={width * 129 / 1175.7}
+            height={(width * 129) / 1175.7}
             viewBox={"0 0 1175.7 129"}
             style={styles.waves}
           />
@@ -164,7 +164,7 @@ class CustomScenario extends Component {
               updateSelectionList({
                 selectedScenarios: [scenariosList[selectedScenarioIndex]]
               });
-              navigation.dispatch({ type: "CallTimeView" });
+              navigation.dispatch({ type: "CallPricingView" });
             }}
             whiteDisabled
             absolute
@@ -183,4 +183,7 @@ const mS = state => ({
 
 const mD = { updateSettings, updateSelectionList };
 
-export default connect(mS, mD)(CustomScenario);
+export default connect(
+  mS,
+  mD
+)(CustomScenario);

@@ -198,6 +198,7 @@ class ListComponent extends Component {
 
         <FlatList
           keyboardShouldPersistTaps={"always"}
+          scrollEnabled={!this.props.disableScroll}
           scrollEventThrottle={1}
           data={this.props.data}
           extraData={this.state}
@@ -207,7 +208,7 @@ class ListComponent extends Component {
           keyExtractor={this.keyExtractor}
           renderItem={({ item, index }) => (
             <ListItem
-              disabled={item.disabled}
+              disabled={this.props.disableAll || item.disabled}
               style={[
                 styles.textView,
                 index > 0 ? styles.textBetweenView : null

@@ -6,7 +6,7 @@ import { Text, View, ScrollView, ActivityIndicator, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
-
+import ModalRetry from "../../../Components/ModalRerty/ModalRetry";
 // STYLE AND THEMES
 import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
@@ -57,23 +57,11 @@ class ContactingLinguist extends Component {
         contentContainerStyle={styles.contentContainerStyle}
         alwaysBounceVertical={false}
       >
-        {this.props.modalContact &&
-          Alert.alert(I18n.t("allLinguistsAreBusy"), "", [
-            {
-              text: I18n.t("tryAgain"),
-              onPress: () => {
-                closeCall(REASON.RETRY);
-                connect();
-                callTimeOut();
-              }
-            },
-            {
-              text: I18n.t("endCall"),
-              onPress: () => {
-                closeCall("Abort");
-              }
-            }
-          ])}
+        <ModalRetry
+          closeCall={closeCall}
+          callTimeOut={callTimeOut}
+          reconnectCall={connect}
+        />
         {!this.props.modalReconnect && (
           <ActivityIndicator
             size="large"
@@ -81,13 +69,11 @@ class ContactingLinguist extends Component {
             style={styles.spinner}
           />
         )}
-
         <View style={styles.connectingMessageContainer}>
           <Text style={styles.connectingMessage}>
             {this.props.connectingMessage}
           </Text>
         </View>
-
         {/* Call Buttons */}
         <View style={styles.controlsContainer}>
           <SessionControls

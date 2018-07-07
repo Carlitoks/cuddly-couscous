@@ -141,5 +141,20 @@ export const styles = StyleSheet.create({
   },
   iconSize: {
     fontSize: 28
+  },
+  comingSoonContainer: {
+    backgroundColor: "rgba(185,185,185,0.14)",
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    height: 70,
+    flexDirection: "row",
+    alignItems: "flex-end",
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.lightGrey
+  },
+  comingSoonText: {
+    fontFamily: Fonts.BaseFont,
+    fontSize: 14,
+    color: "rgba(117,117,117,1)"
   }
 });

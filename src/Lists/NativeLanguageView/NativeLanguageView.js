@@ -25,9 +25,10 @@ import {
 
 import I18n from "../../I18n/I18n";
 import { Colors } from "../../Themes";
-import languages from "../../Config/Languages";
+import { Languages } from "../../Config/Languages";
 import styles from "./styles";
 import { SUPPORTED_LANGS } from "../../Util/Constants";
+import NativeLanguageSelection from "../../Components/NativeLanguageSelection/NativeLanguageSelection";
 
 class NativeLanguageView extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class NativeLanguageView extends Component {
     } = this.props;
 
     this.setState({
-      selectedIndex: findIndex(languages, selectedNativeLanguage),
+      selectedIndex: findIndex(Languages, selectedNativeLanguage),
       selectedLanguage: selectedNativeLanguage
     });
 
@@ -77,43 +78,15 @@ class NativeLanguageView extends Component {
     });
   }
 
-  filterList() {
-    return languages.filter(language => {
-      return language.name
-        .toLowerCase()
-        .startsWith(this.props.searchQuery.toLowerCase());
-    });
-  }
-
   changeSearch(queryString) {
     this.props.updateSettings({ searchQuery: queryString });
   }
 
-  changeSelected(index) {
-    this.setState({
-      selectedIndex: findIndex(languages, this.filterList()[index])
-    });
-  }
-
-  changeLanguage(index) {
-    const newLanguage = this.filterList()[index];
-
-    this.search.clearText();
-    this.props.updateSettings({ searchQuery: "" });
-    // new index
-
-    this.setState({
-      selectedLanguage: newLanguage,
-      selectedIndex: findIndex(languages, newLanguage)
-    });
-  }
-
   getSupportedLanguagesNames() {
     const supportedLanguages = new Set(SUPPORTED_LANGS);
-    return (supportedLanguagesArray = languages
-      .filter(language => {
-        return supportedLanguages.has(language["3"]);
-      })
+    return (supportedLanguagesArray = Languages.filter(language => {
+      return supportedLanguages.has(language["3"]);
+    })
       .map(language => {
         return language.name;
       })
@@ -223,7 +196,6 @@ class NativeLanguageView extends Component {
               onChangeText={text => this.changeSearch(text)}
               onClearText={text => this.changeSearch("")}
             />
-
             {this.state.loading ? (
               <View style={styles.loading}>
                 <ActivityIndicator
@@ -234,18 +206,29 @@ class NativeLanguageView extends Component {
             ) : (
               <View />
             )}
-
-            <ListComponent
-              data={this.filterList()}
-              titleProperty={"name"}
-              selected={this.state.selectedIndex}
-              onPress={index => this.changeLanguage(index)}
-              changeSelected={index => this.changeSelected(index)}
-              gradient
-              scrollable
-              leftText
-              noFlex
-              initial={this.state.selectedIndex}
+            <NativeLanguageSelection
+              searchQuery={this.props.searchQuery}
+              render={({ filterList, indexSelected, changeLanguage }) => {
+                return (
+                  <ListComponent
+                    data={filterList()}
+                    titleProperty={"name"}
+                    selected={indexSelected}
+                    onPress={index => {
+                      changeLanguage(index);
+                      this.setState({
+                        selectedLanguage: filterList()[index]
+                      });
+                      // this.search.clearText();
+                    }}
+                    gradient
+                    scrollable
+                    leftText
+                    noFlex
+                    initial={indexSelected}
+                  />
+                );
+              }}
             />
           </View>
           {/* Next Button */}
@@ -265,7 +248,7 @@ class NativeLanguageView extends Component {
 
 // MAP STATE TO PROPS HERE
 const mS = state => ({
-  id: state.customerProfile.userInfo.id,
+  // id: state.customerProfile.userInfo.id,
   email: state.registrationCustomer.email,
   emailUserProfile: state.userProfile.email,
   selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,

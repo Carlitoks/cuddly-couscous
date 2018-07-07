@@ -57,14 +57,14 @@ import { Waves } from "../../Assets/SVG";
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
-import { REASON, CATEGORIES } from "../../Util/Constants";
+import { REASON, CATEGORIES, SUPPORTED_LANGS } from "../../Util/Constants";
 import {
   sliderWidth,
   itemWidth,
   itemMargin
 } from "../../Components/CarouselEntry/styles";
 
-import languages from "../../Config/Languages";
+import { Languages } from "../../Config/Languages";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -76,7 +76,8 @@ class Home extends Component {
       indexSelected: -1,
       otherSelected: false,
       qr: false,
-      other: false
+      other: false,
+      languagesMapper: { eng: "cmn", cmn: "eng", yue: "eng" }
     };
   }
 
@@ -143,6 +144,8 @@ class Home extends Component {
     if (this.props.tokbox && this.props.networkInfoType !== "none") {
       this.props.closeOpenConnections();
     }
+
+    this.setLanguages();
 
     if (this.props.scenarios.length < 1) {
       getScenarios(this.props.token);
@@ -241,6 +244,35 @@ class Home extends Component {
     return carousel;
   };
 
+  setLanguages = () => {
+    const { nativeLangCode, updateContactLinguist } = this.props;
+
+    const { languagesMapper } = this.state;
+    const userNativeLangIsSupported =
+      SUPPORTED_LANGS.indexOf(nativeLangCode) >= 0;
+
+    const primaryLanguageCode = userNativeLangIsSupported
+      ? nativeLangCode
+      : "eng";
+
+    const primaryLanguage = Languages.find(
+      lang => lang[3] === primaryLanguageCode
+    );
+
+    const secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+
+    const secondaryLanguage = Languages.find(
+      lang => lang[3] === secondaryLanguageCode
+    );
+
+    updateContactLinguist({
+      primaryLangCode: primaryLanguage[3],
+      selectedLanguageFrom: primaryLanguage["name"],
+      secundaryLangCode: secondaryLanguage[3],
+      selectedLanguage: secondaryLanguage["name"]
+    });
+  };
+
   renderList = () => {
     const {
       categories,
@@ -278,15 +310,21 @@ class Home extends Component {
               selectedScenarios: [scenario.scenario]
             });
 
-            const languageIndex = findIndex(
-              languages,
+            const primaryLanguageIndex = findIndex(
+              Languages,
+              language => language[3] === scenario.primaryLangCode
+            );
+
+            const secondaryLanguageIndex = findIndex(
+              Languages,
               language => language[3] === scenario.secondaryLangCode
             );
 
             updateContactLinguist({
-              selectedLanguage: languages[languageIndex]["name"],
               primaryLangCode: scenario.primaryLangCode,
-              secondaryLangCode: scenario.secondaryLangCode,
+              selectedLanguageFrom: Languages[primaryLanguageIndex]["name"],
+              selectedLanguage: Languages[secondaryLanguageIndex]["name"],
+              secundaryLangCode: scenario.secondaryLangCode,
               customScenarioNote: scenario.customScenarioNote
             });
 
@@ -386,6 +424,8 @@ const mS = state => ({
   lastName: state.userProfile.lastName,
   preferredName: state.userProfile.preferredName,
   avatarURL: state.userProfile.avatarURL,
+  selectedNativeLanguage: state.userProfile.selectedNativeLanguage,
+  nativeLangCode: state.userProfile.nativeLangCode,
   uuid: state.auth.uuid,
   token: state.auth.token,
   userId: state.userProfile.id,

@@ -23,10 +23,11 @@ import ListComponent from "../../Components/ListComponent/ListComponent";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 
 import I18n from "../../I18n/I18n";
-import languages from "../../Config/Languages";
+import { Languages } from "../../Config/Languages";
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import { SUPPORTED_LANGS } from "../../Util/Constants";
+import NativeLanguageSelection from "../../Components/NativeLanguageSelection/NativeLanguageSelection";
 
 class EditNativeLanguageView extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class EditNativeLanguageView extends Component {
 
     this.props.updateSettings({ selectedNativeLanguage });
     this.setState({
-      selectedIndex: findIndex(languages, { 3: selectedNativeLanguage["3"] }),
+      selectedIndex: findIndex(Languages, { 3: selectedNativeLanguage["3"] }),
       formNativeLanguage: selectedNativeLanguage
     });
     setTimeout(() => {
@@ -64,41 +65,15 @@ class EditNativeLanguageView extends Component {
     });
   }
 
-  filterList() {
-    return languages.filter(language => {
-      return language.name
-        .toLowerCase()
-        .startsWith(this.props.searchQuery.toLowerCase());
-    });
-  }
-
   changeSearch(queryString) {
     this.props.updateSettings({ searchQuery: queryString });
   }
 
-  changeSelected(index) {
-    this.setState({ selectedIndex: index });
-  }
-
-  changeLanguage(index) {
-    const newLanguage = this.filterList()[index];
-
-    this.search.clearText();
-    this.props.updateSettings({ searchQuery: "" });
-    // new index
-
-    this.setState({
-      formNativeLanguage: newLanguage,
-      selectedIndex: findIndex(languages, newLanguage)
-    });
-  }
-
   getSupportedLanguagesNames() {
     const supportedLanguages = new Set(SUPPORTED_LANGS);
-    return (supportedLanguagesArray = languages
-      .filter(language => {
-        return supportedLanguages.has(language["3"]);
-      })
+    return (supportedLanguagesArray = Languages.filter(language => {
+      return supportedLanguages.has(language["3"]);
+    })
       .map(language => {
         return language.name;
       })
@@ -133,48 +108,57 @@ class EditNativeLanguageView extends Component {
           {
             text: "OK",
             onPress: () => {
-              updateProfileAsync(uuid, data, token).then(response => {
-                const {
-                  payload,
-                  payload: { nativeLangCode }
-                } = response;
+              updateProfileAsync(uuid, data, token)
+                .then(response => {
+                  const {
+                    payload,
+                    payload: { nativeLangCode }
+                  } = response;
 
-                if (response.type !== "networkErrors/error") {
-                  updateView({
-                    selectedNativeLanguage: getNativeLang(nativeLangCode)
-                  });
-                  navigation.dispatch({
-                    type: "back"
-                  });
-                } else {
-                  const errorMessage = response.payload.response.data.errors[0];
-                  Alert.alert("error", errorMessage);
-                }
-              });
+                  if (response.type !== "networkErrors/error") {
+                    updateView({
+                      selectedNativeLanguage: getNativeLang(nativeLangCode)
+                    });
+                    navigation.dispatch({
+                      type: "back"
+                    });
+                  } else {
+                    const errorMessage =
+                      response.payload.response.data.errors[0];
+                    Alert.alert("error", errorMessage);
+                  }
+                })
+                .then(() => {
+                  this.props.updateSettings({ searchQuery: "" });
+                });
             }
           }
         ],
         { cancelable: false }
       );
     } else {
-      updateProfileAsync(uuid, data, token).then(response => {
-        const {
-          payload,
-          payload: { nativeLangCode }
-        } = response;
+      updateProfileAsync(uuid, data, token)
+        .then(response => {
+          const {
+            payload,
+            payload: { nativeLangCode }
+          } = response;
 
-        if (response.type !== "networkErrors/error") {
-          updateView({
-            selectedNativeLanguage: getNativeLang(nativeLangCode)
-          });
-          navigation.dispatch({
-            type: "back"
-          });
-        } else {
-          const errorMessage = response.payload.response.data.errors[0];
-          Alert.alert("error", errorMessage);
-        }
-      });
+          if (response.type !== "networkErrors/error") {
+            updateView({
+              selectedNativeLanguage: getNativeLang(nativeLangCode)
+            });
+            navigation.dispatch({
+              type: "back"
+            });
+          } else {
+            const errorMessage = response.payload.response.data.errors[0];
+            Alert.alert("error", errorMessage);
+          }
+        })
+        .then(() => {
+          this.props.updateSettings({ searchQuery: "" });
+        });
     }
   }
 
@@ -210,25 +194,35 @@ class EditNativeLanguageView extends Component {
               <View />
             )}
 
-            <ListComponent
-              data={this.filterList()}
-              titleProperty={"name"}
-              selected={this.state.selectedIndex}
-              onPress={index => {
-                this.changeLanguage(index);
+            <NativeLanguageSelection
+              searchQuery={this.props.searchQuery}
+              render={({ filterList, indexSelected, changeLanguage }) => {
+                return (
+                  <ListComponent
+                    data={filterList()}
+                    titleProperty={"name"}
+                    selected={indexSelected}
+                    onPress={index => {
+                      changeLanguage(index);
+                      this.setState({
+                        formNativeLanguage: filterList()[index]
+                      });
+                      // this.search.clearText();
+                    }}
+                    gradient
+                    scrollable
+                    leftText
+                    noFlex
+                    initial={indexSelected}
+                  />
+                );
               }}
-              changeSelected={index => this.changeSelected(index)}
-              gradient
-              leftText
-              noFlex
-              scrollable
             />
           </View>
           {/* Save Button */}
           <BottomButton
             title={I18n.t("save")}
             onPress={() => {
-              this.props.updateSettings({ searchQuery: "" });
               this.submit();
             }}
             fill

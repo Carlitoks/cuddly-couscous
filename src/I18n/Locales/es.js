@@ -43,6 +43,8 @@ export default (ESP = {
   cancel: "Cancel",
   cancelCall: "Cancel call",
   cancelCallCustomer: "Ended call by customer",
+  celebrateAndEnjoy:
+    "Celebrate our launch \n and enjoy Jennie for a \nlimited time for FREE!",
   celebrateWithUs: "Celebrate our launch with us!",
   changeSettings: "To change your settings, go to Settings > Jeenie",
   checkYourConnection: "Please check your  connection",
@@ -65,6 +67,7 @@ export default (ESP = {
   contactingLinguist:
     "Connecting you to a \nLanguage Jeenie in less \nthan 1 minute",
   continue: "Continue",
+  continueForFree: "Continue for FREE",
   costOfCall: "Approx. cost - ",
   couldBetter: "What could be better?",
   countryFamiliarity: "Country Familiarity",
@@ -78,6 +81,8 @@ export default (ESP = {
   declined: "Declined",
   disableExtraTime: "Disable extra time",
   dining: "Restaurant",
+  discountsOffered:
+    "Discounts will be offered for \npurchasing a higher volume \nof minutes.",
   duration: "Duration",
   editProfile: "Edit Profile",
   email: "Email",
@@ -121,6 +126,7 @@ export default (ESP = {
   forSignup: "for Signing Up!",
   frequently: "Frequently",
   freeTrial: "Free Trial",
+  futurePricing: "Future Pricing",
   gender: "Gender",
   genderAlert:
     "Linguists have the option to be matched with a customer of a specific gender. If you prefer not to disclose your gender, you will not be matched with linguists with a preference.",
@@ -161,6 +167,7 @@ export default (ESP = {
   LanguagePairs: "Language Pairs", // not use
   language: "Language",
   languages: "Languages",
+  languagesComingSoon: "Languages Coming Soon",
   languageNotice1:
     "Thank you! Jeenie is currently not available in your native language but you can still make calls in our supported languages:",
   languageNotice2: "More languages will be coming soon.",
@@ -238,11 +245,13 @@ export default (ESP = {
   passwordLinguistText: "By tapping Next you agree with our",
   passwordLength: "Your password must be at least 5 characters long.",
   payAsYouGo: "Pay as you go",
+  payAsYouGoPricing: "Pay-as-you-go = \n $1 per minute",
   permissionDenied: "App Permission Denied",
   preferedNameTitle: "Prefered Name",
   preferredLinguistText: "I preferred to be called ...",
   preferredName: "Preferred Name (optional)",
   preferNotToDisclose: "Prefer Not to Disclose",
+  pricing: "Pricing",
   privacyPolicy: "Privacy Policy",
   proficiencyLevelOf: "Proficiency level of ",
   promoCodeTitle: "Enter a promo code",
@@ -311,6 +320,7 @@ export default (ESP = {
   thankYou: " Thank You",
   undefined: "Undefined",
   unspecified: "Unspecified",
+  unusedMinutes: "Unused minutes will rollover",
   upTo60: "Up to 60 minutes",
   usageExamples: "Usage Examples",
   username: "Username",

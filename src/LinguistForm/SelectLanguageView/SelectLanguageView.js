@@ -16,7 +16,7 @@ import { Text, View, ScrollView, Image, Alert } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { SearchBar, List, ListItem, Button } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-import Languages from "../../Config/Languages";
+import { Languages } from "../../Config/Languages";
 import SettingsButton from "../../Components/SettingsButton/SettingsButton";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
@@ -314,4 +314,7 @@ const mD = {
 };
 
 // EXPORT DEFAULT HERE AT THE BOTTOM
-export default connect(mS, mD)(SelectLanguageView);
+export default connect(
+  mS,
+  mD
+)(SelectLanguageView);

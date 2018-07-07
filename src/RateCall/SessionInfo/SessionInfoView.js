@@ -16,7 +16,7 @@ import moment from "moment";
 import I18n from "../../I18n/I18n";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
-import Languages from "../../Config/Languages";
+import { Languages } from "../../Config/Languages";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 
@@ -147,4 +147,7 @@ const mD = {
   updateSessionInfo
 };
 
-export default connect(mS, mD)(SessionInfoView);
+export default connect(
+  mS,
+  mD
+)(SessionInfoView);

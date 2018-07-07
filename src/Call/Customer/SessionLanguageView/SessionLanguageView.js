@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, ActivityIndicator, Keyboard, Text } from "react-native";
-import { filter, findIndex, cloneDeep } from "lodash";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { ScrollView } from "react-native";
 
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
 
@@ -15,137 +13,17 @@ import SearchBar from "../../../Components/SearchBar/SearchBar";
 import LanguageSelection from "../../../Components/LanguageSelection/LanguageSelection";
 
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
-import { Iphone5 } from "../../../Util/Devices";
-import { previousView } from "../../../Util/Helpers";
-import { displayFormErrors } from "../../../Util/Alerts";
-import { moderateScale } from "../../../Util/Scaling";
 import I18n from "../../../I18n/I18n";
-import { Colors } from "../../../Themes";
-import languages from "../../../Config/Languages";
 import { styles } from "./styles";
-import { SUPPORTED_LANGS } from "../../../Util/Constants";
-
+import SupportedLanguagesList from "./SupportedLanguagesList";
+import ComingSoonLanguagesList from "./ComingSoonLanguagesList";
 class SessionLanguageView extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      searchQuery: "",
-      selectedIndex: -1,
-      selectedLanguage: {},
-      loading: true,
-      languagesMapper: { eng: "cmn", cmn: "eng" }
-    };
-  }
-
-  componentWillMount() {
-    const {
-      userProfileNativeLangCode,
-      secundaryLangCode,
-      updateSettings,
-      navigation
-    } = this.props;
-    const { params } = navigation.state;
-    const { languagesMapper } = this.state;
-
-    const userNativeLangIsSupported =
-      SUPPORTED_LANGS.indexOf(userProfileNativeLangCode) >= 0;
-
-    const primaryLanguageCode = userNativeLangIsSupported
-      ? userProfileNativeLangCode
-      : "eng";
-
-    const primaryLanguage = languages.find(
-      lang => lang[3] === primaryLanguageCode
-    );
-    const secondaryLanguageName =
-      params && params.noautoselect
-        ? params.secundaryLangCode
-        : languagesMapper[primaryLanguageCode]
-          ? languagesMapper[primaryLanguageCode]
-          : secundaryLangCode;
-
-    const indexSecondaryLanguage = findIndex(
-      languages,
-      language => language[3] === secondaryLanguageName
-    );
-
-    const secondaryLanguage = languages[indexSecondaryLanguage];
-
-    updateSettings({
-      primaryLangCode: primaryLanguageCode,
-      secundaryLangCode: secondaryLanguage[3],
-      selectedLanguageFrom: primaryLanguage["name"],
-      selectedLanguage: secondaryLanguage["name"]
-    });
-
-    this.setState({
-      selectedIndex: indexSecondaryLanguage,
-      selectedLanguage: secondaryLanguage
-    });
-  }
-
-  filterList() {
-    const { primaryLangCode } = this.props;
-    return languages
-      .filter(language => {
-        return language.name
-          .toLowerCase()
-          .startsWith(this.state.searchQuery.toLowerCase());
-      })
-      .map(language => {
-        let languageClone = cloneDeep(language);
-
-        languageClone.disabled =
-          primaryLangCode === "cmn"
-            ? !(language[3] === "eng")
-            : !(language[3] === "cmn");
-
-        return languageClone;
-      });
-  }
-
-  changeSelected(index) {
-    if (index !== this.state.selectedIndex) {
-      this.setState({
-        selectedIndex: findIndex(languages, this.filterList()[index])
-      });
-    }
-  }
-
-  getSelectedLanguagesString(index) {
-    const primaryLanguage = languages.find(
-      language => language[3] === this.props.primaryLangCode
-    );
-    const secondaryLanguage = languages[index];
-
-    return secondaryLanguage.name;
-  }
-
-  changeLanguage(index) {
-    if (index !== this.state.selectedIndex) {
-      const newLanguage = this.filterList()[index];
-
-      this.setState({ searchQuery: "" });
-
-      this.props.updateSettings({
-        secundaryLangCode: this.filterList()[index][3],
-        selectedLanguage: this.getSelectedLanguagesString(index)
-      });
-
-      this.setState({
-        selectedLanguage: newLanguage,
-        selectedIndex: findIndex(languages, newLanguage)
-      });
-    }
-  }
-
   submit(navigation) {
     navigation.dispatch({ type: "CallConfirmationView" });
   }
 
   render() {
-    const { navigation, selectedNativeLanguage } = this.props;
+    const { navigation } = this.props;
 
     return (
       <ViewWrapper style={styles.mainContainer}>
@@ -170,42 +48,33 @@ class SessionLanguageView extends Component {
             />
           }
         >
-          <View style={styles.scrollContainer}>
+          <ScrollView style={styles.scrollContainer}>
             {/* <SearchBar
               ref={search => (this.search = search)}
               onChangeText={text => this.setState({ searchQuery: text })}
               onClearText={text => this.setState({ searchQuery: "" })}
             /> */}
 
-            {this.state.loading ? (
-              <View />
-            ) : (
-              <View style={styles.loading}>
-                <ActivityIndicator
-                  size="large"
-                  color={Colors.gradientColorButton.top}
-                />
-              </View>
-            )}
-
-            <View style={styles.box}>
-              <Text style={styles.boxText}>{I18n.t("callTimeTitle")}</Text>
-              <Text style={styles.boxText}>{I18n.t("callTimeSubtitle")}</Text>
-            </View>
-
-            <ListComponent
-              data={this.filterList()}
-              titleProperty={"name"}
-              selected={this.state.selectedIndex}
-              onPress={index => this.changeLanguage(index)}
-              changeSelected={index => this.changeSelected(index)}
-              gradient
-              scrollable
-              leftText
-              noFlex
-              initial={this.state.selectedIndex}
+            <SupportedLanguagesList
+              render={({ languages, indexSelected, changeLanguage }) => {
+                return (
+                  <ListComponent
+                    data={languages}
+                    titleProperty={"name"}
+                    selected={indexSelected}
+                    onPress={changeLanguage}
+                    gradient
+                    leftText
+                    noFlex
+                    disableScroll
+                  />
+                );
+              }}
             />
-          </View>
+
+            <ComingSoonLanguagesList />
+          </ScrollView>
+
           {/* Next Button */}
           <BottomButton
             title={I18n.t("continue")}
@@ -236,4 +105,7 @@ const mS = state => ({
 const mD = { updateSettings };
 
 // EXPORT DEFAULT HERE AT THE BOTTOM
-export default connect(mS, mD)(SessionLanguageView);
+export default connect(
+  mS,
+  mD
+)(SessionLanguageView);

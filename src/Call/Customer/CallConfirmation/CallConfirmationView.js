@@ -42,7 +42,7 @@ import BottomButton from "../../../Components/BottomButton/BottomButton";
 import LanguageSelection from "../../../Components/LanguageSelection/LanguageSelection";
 import { CATEGORIES } from "../../../Util/Constants";
 import { Iphone5 } from "../../../Util/Devices";
-import languages from "../../../Config/Languages";
+import { Languages } from "../../../Config/Languages";
 import { TranslationArrows, Checkmark } from "../../../Assets/SVG";
 import { checkOperatingHours } from "../../../Util/Helpers";
 
@@ -208,7 +208,7 @@ class CallConfirmationView extends Component {
               onPress={() => {
                 if (this.props.allowTimeSelection) {
                   navigation.dispatch({
-                    type: "CallTimeView"
+                    type: "CallPricingView"
                   });
                 }
               }}

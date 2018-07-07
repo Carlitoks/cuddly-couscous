@@ -6,6 +6,7 @@ import { getS } from "../Config/CreateStore";
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallHistory from "../Containers/CallHistory/CallHistoryView";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
+import CallPricingView from "../ContactLinguist/CallPricingView/CallPricingView";
 import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
 import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
 import NameCustomerView from "../Onboarding/NameCustomerView/NameCustomerView";
@@ -76,6 +77,12 @@ const Navigation = StackNavigator(
     },
     CallTimeView: {
       screen: CallTimeView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    CallPricingView: {
+      screen: CallPricingView,
       navigationOptions: {
         gesturesEnabled: false
       }

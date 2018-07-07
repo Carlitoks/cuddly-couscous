@@ -36,7 +36,7 @@ class ReconnectOptions extends Component {
           backgroundColor={Colors.transparent}
           borderRadius={50}
           onPress={() => {
-            this.props.closeCall(REASON.CANCEL);
+            this.props.closeCall("Abort");
           }}
         />
       </View>
@@ -54,4 +54,7 @@ const mS = state => ({
 
 const mD = {};
 
-export default connect(mS, mD)(ReconnectOptions);
+export default connect(
+  mS,
+  mD
+)(ReconnectOptions);

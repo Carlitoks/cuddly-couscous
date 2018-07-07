@@ -1,5 +1,5 @@
 import AXIOS from "../Config/AxiosConfig";
-import Languages from "../Config/Languages";
+import { Languages } from "../Config/Languages";
 import Countries from "../Config/countries";
 
 const BASE_URI = "/sessions";

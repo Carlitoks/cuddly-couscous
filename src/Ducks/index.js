@@ -29,31 +29,31 @@ import onboardingRecord from "./OnboardingRecordReducer";
 
 // Combine all the reducers
 const rootReducer = combineReducers({
-  dataReducer, // Borrar
-  userProfile,
   auth,
   callCustomerSettings,
-  callLinguistSettings,
   callHistory,
+  callLinguistSettings,
   contactLinguist,
-  forgotPassword,
-  resetPassword,
-  login,
-  networkInfo,
-  networkErrors,
-  nav,
-  registrationCustomer,
   customerProfile,
-  rateCall,
-  tokbox,
-  profileLinguist,
-  linguistForm,
-  sessionInfo,
+  dataReducer, // Borrar
   events,
-  pushNotification,
+  forgotPassword,
   homeFlow,
+  linguistForm,
+  login,
+  nav,
+  networkErrors,
+  networkInfo,
+  onboardingRecord,
+  profileLinguist,
   promoCode,
-  onboardingRecord
+  pushNotification,
+  rateCall,
+  registrationCustomer,
+  resetPassword,
+  sessionInfo,
+  tokbox,
+  userProfile
 });
 
 export default rootReducer;

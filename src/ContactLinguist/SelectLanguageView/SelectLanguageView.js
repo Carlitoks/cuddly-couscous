@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Languages from "../../Config/Languages";
+import { Languages } from "../../Config/Languages";
 import {
   updateSettings,
   clearSettings
 } from "../../Ducks/ContactLinguistReducer";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Text, View, ScrollView, Alert, Image, KeyboardAvoidingView } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  Alert,
+  Image,
+  KeyboardAvoidingView
+} from "react-native";
 import {
   SearchBar,
   List,
@@ -55,8 +62,8 @@ class SelectLanguague extends Component {
           this.props.selectedLanguage === lang.name ? (
             <Icon name="check" />
           ) : (
-              undefined
-            )
+            undefined
+          )
         }
         onPress={() => {
           this.props.updateSettings({
@@ -76,7 +83,7 @@ class SelectLanguague extends Component {
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
-          alwaysBounceVertical={false} 
+          alwaysBounceVertical={false}
           contentContainerStyle={styles.contentScrollContainer}
         >
           <View style={styles.header}>
@@ -107,7 +114,12 @@ class SelectLanguague extends Component {
             <Text style={styles.mainTitle}>{I18n.t("selectLanguage")}</Text>
             <View style={styles.languages}>
               <Text style={styles.primaryLanguage}>{I18n.t("english")}</Text>
-              <Icon size={30} name="swap-horiz" color="white" style={styles.iconChange} />
+              <Icon
+                size={30}
+                name="swap-horiz"
+                color="white"
+                style={styles.iconChange}
+              />
               <Text style={styles.secondaryLanguage}>
                 {this.props.selectedLanguage}
               </Text>
@@ -121,7 +133,8 @@ class SelectLanguague extends Component {
               inputStyle={styles.inputSearch}
               icon={{ name: "search" }}
               onChangeText={text =>
-                this.props.updateSettings({ searchLanguage: text })}
+                this.props.updateSettings({ searchLanguage: text })
+              }
             />
           </View>
           <List containerStyle={styles.listContainer}>
@@ -150,4 +163,7 @@ const mD = {
   clearSettings
 };
 
-export default connect(mS, mD)(SelectLanguague);
+export default connect(
+  mS,
+  mD
+)(SelectLanguague);

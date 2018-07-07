@@ -19,7 +19,7 @@ import {
 } from "../../Ducks/UserProfileReducer";
 import { List, ListItem, Avatar } from "react-native-elements";
 import { Row, Grid } from "react-native-easy-grid";
-import Languages from "../../Config/Languages";
+import { Languages } from "../../Config/Languages";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import BottomButton from "../../Components/BottomButton/BottomButton";

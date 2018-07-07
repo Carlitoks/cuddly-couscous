@@ -222,7 +222,7 @@ const initialState = {
   firstName: "",
   lastInitial: "",
   avatarURL: "",
-  estimatedMinutes: "",
+  estimatedMinutes: null,
   languages: "",
   customScenarioNote: "",
   customerScenario: "",

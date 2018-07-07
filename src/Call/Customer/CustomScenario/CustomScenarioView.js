@@ -81,7 +81,7 @@ class CustomScenario extends Component {
             title={I18n.t("continue")}
             onPress={() => {
               Keyboard.dismiss();
-              navigation.dispatch({ type: "CallTimeView" });
+              navigation.dispatch({ type: "CallPricingView" });
             }}
             fill
           />
@@ -101,4 +101,7 @@ const mD = {
   updateSettings
 };
 
-export default connect(mS, mD)(CustomScenario);
+export default connect(
+  mS,
+  mD
+)(CustomScenario);
