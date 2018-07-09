@@ -44,7 +44,7 @@ export default (ENG = {
   cancel: "Cancel",
   cancelCall: "Cancel call",
   celebrateAndEnjoy:
-    "Celebrate our launch \n and enjoy Jennie for a \nlimited time for FREE!",
+    "Celebrate our launch \n and enjoy Jeenie for a \nlimited time for FREE!",
   celebrateWithUs: "Celebrate our launch with us!",
   changeSettings: "To change your settings, go to Settings > Jeenie",
   cancelCallCustomer: "The call isn't available",
