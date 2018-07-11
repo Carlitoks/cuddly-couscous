@@ -307,7 +307,7 @@ const initialState = {
   invitationID: null,
   customerPreferredSex: "any",
   verifyCallId: null,
-
+  location: [null, null],
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 60, // Initial time selected: 10 min
