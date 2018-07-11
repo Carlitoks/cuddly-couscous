@@ -397,7 +397,11 @@ class Home extends Component {
           headerRightComponent={<QRIcon navigation={this.props.navigation} />}
           NoWaves
         >
-          <View style={styles.mainContainer}>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+            style={styles.mainContainer}
+          >
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
               style={styles.linearGradient}
@@ -418,16 +422,8 @@ class Home extends Component {
                 ? ""
                 : I18n.t("tapRepeat")}
             </Text>
-            <View style={styles.scrollView}>
-              <ScrollView
-                automaticallyAdjustContentInsets={true}
-                alwaysBounceVertical={false}
-                style={styles.scrollView}
-              >
-                {this.renderList()}
-              </ScrollView>
-            </View>
-          </View>
+            <View style={styles.scrollView}>{this.renderList()}</View>
+          </ScrollView>
         </HeaderView>
       </ViewWrapper>
     );

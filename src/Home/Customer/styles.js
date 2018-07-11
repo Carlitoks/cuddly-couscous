@@ -296,7 +296,6 @@ export default StyleSheet.create({
   mainContainer: {
     backgroundColor: Colors.gradientColor.top,
     height: height - headerHeight
-    // flex: 1
   },
   titleCall: {
     fontFamily: Fonts.LightFont,
@@ -370,7 +369,10 @@ export default StyleSheet.create({
     position: "absolute",
     bottom: 0
   },
-  scrollView: { flex: 1 },
+  scrollView: {
+    flex: 1,
+    paddingBottom: 30
+  },
   carousel: { marginTop: "5%" },
   slider: { height: 300 },
   carouselContainer: {
