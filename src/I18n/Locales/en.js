@@ -213,7 +213,7 @@ export default (ENG = {
   login: "Login",
   loginLogoutExampleTitle: "Login/Logout Redux + Sagas Example",
   loginWithFacebook: "Log in with Facebook",
-  logOut: "Sign Out",
+  logOut: "Log Out",
   logOutConfirmation: "Please confirm.",
   mainTitle: "Enter Your Name",
   male: "Male",

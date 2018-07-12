@@ -1703,3 +1703,18 @@ export const InterfaceSupportedLanguages = [
     name: "日本語"
   }
 ];
+
+export const InterfaceSupportedLanguages = [
+  {
+    1: "en",
+    name: "English"
+  },
+  {
+    1: "zh-hans",
+    name: "Chinese (Simplified)"
+  },
+  {
+    1: "zh-hant",
+    name: "Chinese (Traditional)"
+  }
+];
