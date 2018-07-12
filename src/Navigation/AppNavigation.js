@@ -55,6 +55,8 @@ import EditNativeLanguageView from "../Profile/EditNativeLanguage/EditNativeLang
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
 import CallSettings from "../CallSettings/CallSettings";
+import SettingsView from "../Settings/SettingsView";
+import InterfaceLanguageView from "../Settings/InterfaceLanguageView";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
 import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
 import SessionLanguageView from "../Call/Customer/SessionLanguageView/SessionLanguageView";
@@ -340,6 +342,18 @@ const Navigation = StackNavigator(
 
     CallSettings: {
       screen: CallSettings,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    SettingsView: {
+      screen: SettingsView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    InterfaceLanguageView: {
+      screen: InterfaceLanguageView,
       navigationOptions: {
         gesturesEnabled: false
       }

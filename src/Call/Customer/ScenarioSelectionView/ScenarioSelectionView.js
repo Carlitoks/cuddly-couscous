@@ -31,12 +31,12 @@ import QRIcon from "../../../Components/QRIcon/QRIcon";
 import styles from "./styles";
 import { Colors, Images } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
-import { moderateScale } from "../../../Util/Scaling";
-import { CATEGORIES } from "../../../Util/Constants";
 import { Waves } from "../../../Assets/SVG";
+import { getLocalizedCategories } from "../../../Util/Constants";
 
 class CustomScenario extends Component {
   navigate = this.props.navigation.navigate;
+  CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   constructor(props) {
     super(props);
@@ -99,6 +99,7 @@ class CustomScenario extends Component {
     const { scenariosList } = this.state;
     const { width, height } = Dimensions.get("window");
 
+    const categoryTitle = this.CATEGORIES[categorySelected];
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <HeaderView
@@ -106,9 +107,7 @@ class CustomScenario extends Component {
             <GoBackButton navigation={this.props.navigation} />
           }
           headerRightComponent={<QRIcon navigation={this.props.navigation} />}
-          navbarTitle={
-            this.state.showNavbarTitle ? CATEGORIES[categorySelected] : null
-          }
+          navbarTitle={this.state.showNavbarTitle ? categoryTitle : null}
           navbarType={"Complete"}
           NoWaves
           NoBackground
@@ -131,7 +130,7 @@ class CustomScenario extends Component {
             alwaysBounceVertical={false}
           >
             <Text style={[styles.title, styles.marginBottom20]}>
-              {CATEGORIES[categorySelected]}
+              {categoryTitle}
             </Text>
 
             {scenariosList && (

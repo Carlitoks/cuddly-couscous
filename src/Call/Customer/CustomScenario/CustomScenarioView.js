@@ -20,32 +20,27 @@ import InputRegular from "../../../Components/InputRegular/InputRegular";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import styles from "./styles";
-import { Colors } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
-import { moderateScale } from "../../../Util/Scaling";
-import { CATEGORIES } from "../../../Util/Constants";
+import { getLocalizedCategories } from "../../../Util/Constants";
 
 class CustomScenario extends Component {
   navigate = this.props.navigation.navigate;
+  CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   componentWillUnmount() {
     this.props.updateSettings({
       customScenario: ""
     });
-    console.log("cdsc");
   }
-
-  carouselTitleMapper = title => {
-    return CATEGORIES[title];
-  };
 
   render() {
     const navigation = this.props.navigation;
+    const categoryTitle = this.CATEGORIES[
+      this.props.categories[this.props.categoryIndex]
+    ];
     const categorySelected =
       this.props.categoryIndex > -1 && !!this.props.categories
-        ? this.carouselTitleMapper(
-            this.props.categories[this.props.categoryIndex]
-          )
+        ? categoryTitle
         : null;
 
     return (

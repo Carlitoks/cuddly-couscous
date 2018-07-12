@@ -40,7 +40,6 @@ import Close from "../../../Components/Close/Close";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import LanguageSelection from "../../../Components/LanguageSelection/LanguageSelection";
-import { CATEGORIES } from "../../../Util/Constants";
 import { Iphone5 } from "../../../Util/Devices";
 import { Languages } from "../../../Config/Languages";
 import { TranslationArrows, Checkmark } from "../../../Assets/SVG";
@@ -51,11 +50,10 @@ import {
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
 import { moderateScale } from "../../../Util/Scaling";
+import { getLocalizedCategories } from "../../../Util/Constants";
 
 class CallConfirmationView extends Component {
-  carouselTitleMapper = title => {
-    return CATEGORIES[title];
-  };
+  CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   componentWillMount() {
     const { promotion, event, resetConnectingMessage } = this.props;
@@ -102,6 +100,8 @@ class CallConfirmationView extends Component {
     const allowSecondaryLangSelection =
       !scannedEvent.id || scannedEvent.allowSecondaryLangSelection;
 
+    const categoryTitle = this.CATEGORIES[selectedScenario[0].category];
+
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
@@ -130,11 +130,7 @@ class CallConfirmationView extends Component {
             <View style={styles.category}>
               <View>
                 <Text style={styles.titleStyle}>
-                  {selectedScenario[0]
-                    ? `${this.carouselTitleMapper(
-                        selectedScenario[0].category
-                      )}: `
-                    : null}
+                  {selectedScenario[0] ? `${categoryTitle}: ` : null}
 
                   <Text style={styles.regularText}>
                     {customScenario

@@ -1,4 +1,3 @@
-//TODO: Create switch when we retrieve the categories array to add icon names
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _upperFirst from "lodash/upperFirst";
@@ -57,7 +56,7 @@ import { Waves } from "../../Assets/SVG";
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
-import { REASON, CATEGORIES, SUPPORTED_LANGS } from "../../Util/Constants";
+import { SUPPORTED_LANGS, getLocalizedCategories } from "../../Util/Constants";
 import {
   sliderWidth,
   itemWidth,
@@ -80,6 +79,8 @@ class Home extends Component {
       languagesMapper: { eng: "cmn", cmn: "eng", yue: "eng" }
     };
   }
+
+  CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   componentDidMount() {
     const { getAllCustomerCalls, uuid, token } = this.props;
@@ -114,7 +115,9 @@ class Home extends Component {
             }
           } = call;
 
-          const titleMapped = `${_upperFirst(CATEGORIES[category])}: ${title}`;
+          const titleMapped = `${_upperFirst(
+            this.CATEGORIES[category]
+          )}: ${title}`;
 
           return {
             id,
@@ -220,7 +223,7 @@ class Home extends Component {
                   onPress={() => this.onCarouselItemPress(index, item)}
                   data={item}
                   mapper={title => {
-                    return CATEGORIES[title];
+                    return this.CATEGORIES[title];
                   }}
                 />
               );
