@@ -15,33 +15,37 @@ I18n.translations = {
 };
 
 export const strings = (name, params = {}) => I18n.t(name, params);
+
+let locales = getLanguages()
 export const switchLanguage = (lang, component) => {
   I18n.locale = lang;
   component.forceUpdate();
+  locales = getLanguages();
 };
 
 export default I18n;
 
-let locales = getLanguages()
-
-function setLocale(str) {
-  I18n.locale = str;
-  locales = getLanguages();
-}
-export {setLocale}
-
-function translateField(obj, fieldName) {
+export const translateProperty = (obj, fieldName) => {
   const fieldOrder = [fieldName+'I18N', fieldName+'Translations'];
-  // TODO: loop through locales & fieldOrder
+  for (let locale of locales) {
+    const code = locale.toLowerCase()
+    for (let field of fieldOrder) {
+      if (obj[field] && obj[field][code]) {
+        return obj[field][code];
+      }
+    }
+  }
 
   // default case - just return the default field name
-  return obj[fieldName];
+  if (obj[fieldName]) {
+    return obj[fieldName];
+  }
+  
+  return `missing: '${fieldName}'`;
 }
-export {translateField}
 
-function translateLanguage(code, defaultLabel) {
-  // TODO: implement
-  return defaultLabel;
+export const translateLanguageCode = (code) => {
+  return I18n.t('languages.'+code)
 }
 
 // generate list of primary languages, returns [{code: "string", i18nKey: "string"}], based on the languages defined in the
