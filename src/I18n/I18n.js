@@ -28,7 +28,7 @@ export default I18n;
 export const translateProperty = (obj, fieldName) => {
   const fieldOrder = [fieldName+'I18N', fieldName+'Translations'];
   for (let locale of locales) {
-    const code = locale.toLowerCase()
+    const code = locale.toLowerCase();
     for (let field of fieldOrder) {
       if (obj[field] && obj[field][code]) {
         return obj[field][code];
@@ -45,7 +45,7 @@ export const translateProperty = (obj, fieldName) => {
 }
 
 export const translateLanguageCode = (code) => {
-  return I18n.t('languages.'+code)
+  return I18n.t('languages.'+code);
 }
 
 // generate list of primary languages, returns [{code: "string", i18nKey: "string"}], based on the languages defined in the
