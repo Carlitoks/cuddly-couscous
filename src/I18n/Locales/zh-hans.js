@@ -31,8 +31,7 @@
   callLinguist: "致电一位语言专家",
   calls: "通话",
   callSettings: "通话设置",
-  callTimeBoxTextLine1:
-    "为庆祝翻译精灵的发布，\n现开放免费使用",
+  callTimeBoxTextLine1: "为庆祝翻译精灵的发布，\n现开放免费使用",
   callTimeBoxTextLine2:
     "未来价格将调整为 1 美元/分钟，\n届时我们将推出折扣套餐",
   callTimeButtonText: "免费分钟数",
@@ -48,8 +47,7 @@
   cancelCallCustomer: "无法呼叫",
   chargeAdvice: "超过 8 分钟的通话按分钟计费。",
   checkYourConnection: "请检查您的连接",
-  checkYourEmail:
-    "我们已向您发送了重置密码的链接。请查收电子邮件",
+  checkYourEmail: "我们已向您发送了重置密码的链接。请查收电子邮件",
   checkYourEmailOnBoarding: "查收电子邮件以完成注册。",
   citizenShip: "公民身份",
   cityFamiliarity: "城市熟悉度",
@@ -64,8 +62,7 @@
   confirmAndConnect: "确认并连接",
   connectMeNow: "立即和我连接",
   connectNow: "立即连接",
-  contactingLinguist:
-    "1 分钟内\n可为您接通\n语言翻译精灵",
+  contactingLinguist: "1 分钟内\n可为您接通\n语言翻译精灵",
   continue: "继续",
   conversations: "其他",
   costOfCall: "预计费用： ",
@@ -100,16 +97,11 @@
   errorPromo: "找不到促销代码",
   estimatedCost: "预计费用",
   estimatedDuration: "预计时长",
-  estimatedCostStatic1:
-    "试用期间，预设通话时间为 8 分钟",
-  estimatedCostStatic2:
-    "如需更多时间，您可在通话中增加。",
-  expertise_A1:
-    "有许多不同的发型适合不同的人和不同的",
-  expertise_B1:
-    "创造的循环是什么？如何做到从无到有？在 Spite",
-  expertise_C1:
-    "我们之所以为人类，是否是因为我们的特征和特质不同于",
+  estimatedCostStatic1: "试用期间，预设通话时间为 8 分钟",
+  estimatedCostStatic2: "如需更多时间，您可在通话中增加。",
+  expertise_A1: "有许多不同的发型适合不同的人和不同的",
+  expertise_B1: "创造的循环是什么？如何做到从无到有？在 Spite",
+  expertise_C1: "我们之所以为人类，是否是因为我们的特征和特质不同于",
   extraTime1: "时间快到了！",
   extraTime2: "您需要加时吗？",
   extraTimeA1: "需要，增加 5 分钟",
@@ -117,8 +109,7 @@
   female: "女性",
   finish: "完成",
   finishOnboarding: "完成注册",
-  finishOnboardingMessage:
-    "请完成注册以使用这款 App",
+  finishOnboardingMessage: "请完成注册以使用这款 App",
   firstname: "名字",
   fluent: "流利",
   forgotPassword: "重置您的密码",
@@ -138,8 +129,7 @@
   getLanguageHelp: "获取语言帮助",
   hasDisconnected: "has been disconnected",
   help: "帮助",
-  helpPeople:
-    "您对哪些城市非常熟悉，可帮助游客游览城市？",
+  helpPeople: "您对哪些城市非常熟悉，可帮助游客游览城市？",
   helpUsGet: "让我们更了解您",
   hi: "您好",
   historyNotFound: "找不到历史记录",
@@ -163,27 +153,23 @@
   languageCommand: "您要求的语言",
   languageHelp: "随时随地提供语言帮助",
   languageInterpretation: "您以前在 <lang> 做过翻译吗？",
-  LanguagePairs: "语言对",// 不使用
+  LanguagePairs: "语言对", // 不使用
   language: "语言",
   languages: "语种",
   languageNotice1:
     "谢谢！翻译精灵目前不支持您的母语，但您仍然可以使用我们支持的语言拨打电话：",
   languageNotice2: "即将推出更多的语言。",
   languageSettings: "语言设置",
-  languagesStatic1:
-    "免费试用期间，翻译精灵只支持中文（普通话）和英语。",
+  languagesStatic1: "免费试用期间，翻译精灵只支持中文（普通话）和英语。",
   languagesStatic2:
     "今后推出的翻译精灵版本将支持所有语言，您可以在此处选择切换。",
   languageFrom: "源语言：",
   languageTo: "目标语言：",
-  lauchScreenSwipe1:
-    "无忧旅行！ \n 翻译精灵 App 让语言不再是沟通的障碍。",
-  lauchScreenSwipe2:
-    "无论您身处何方，都可以得到实时帮助的真人翻译。",
+  lauchScreenSwipe1: "无忧旅行！ \n 翻译精灵 App 让语言不再是沟通的障碍。",
+  lauchScreenSwipe2: "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
     "目前，翻译精灵支持\n中文（普通话）<>英语\n和日语<>英语。即将推出其他语言。",
-  lauchScreenSwipe4:
-    "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
+  lauchScreenSwipe4: "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
   lauchScreenSwipe5:
     "为了庆祝翻译精灵的发布，前 60 分钟免费使用……翻译精灵的真情回馈！",
   lastname: "姓氏",
@@ -302,8 +288,7 @@
   termsOfUse: "使用条款",
   themeSettings: "主题设置",
   temporaryError: "暂时发生错误，请稍后重试。",
-  toggleExtraTimeDisable:
-    "此通话将在以上指定时间后自动结束。",
+  toggleExtraTimeDisable: "此通话将在以上指定时间后自动结束。",
   toggleExtraTimeEnable:
     "此通话将持续到您主动结束为止。超出以上指定时间将按分钟计费。",
   toOthersOnPlatform: "平台上的其他人",
@@ -340,7 +325,7 @@
   youCanChangeThis: "您可以在通话过程中打开/关闭视频",
 
   // for use during primary language selection
-  languages: {
+  languagesList: {
     eng: "English",
     cmn: "Chinese (Mandarin)",
     yue: "Chinese (Cantonese)",

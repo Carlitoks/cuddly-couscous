@@ -6,8 +6,7 @@
   alignQRCode: "將鏡頭對準 QR 碼",
   all: "全部",
   allCalls: "所有通話",
-  allLinguistsAreBusy:
-    "目前所有語言翻譯精靈\n都在忙線中。\n\n\n您要重試嗎？ ",
+  allLinguistsAreBusy: "目前所有語言翻譯精靈\n都在忙線中。\n\n\n您要重試嗎？ ",
   allowExtraTime: "願意延長時間",
   alreadyAccount: "已經有帳戶了？",
   amount: "金額",
@@ -31,10 +30,8 @@
   callLinguist: "打電話給語言專員",
   calls: "通話",
   callSettings: "通話設定",
-  callTimeBoxTextLine1:
-    "慶祝翻譯精靈上市，現在體驗翻譯精靈\n完全免費",
-  callTimeBoxTextLine2:
-    "未來價格將調整為每分鐘 1 美元\n，屆時將推出包套折扣",
+  callTimeBoxTextLine1: "慶祝翻譯精靈上市，現在體驗翻譯精靈\n完全免費",
+  callTimeBoxTextLine2: "未來價格將調整為每分鐘 1 美元\n，屆時將推出包套折扣",
   callTimeButtonText: "免費分鐘數",
   callTimeButtonSubtitle: "翻譯精靈請客",
   callTimeMinutes: "通話時長",
@@ -48,8 +45,7 @@
   cancelCallCustomer: "無法通話",
   chargeAdvice: "通話超過 8 分鐘後，須按分鐘數付費。",
   checkYourConnection: "請檢查連線",
-  checkYourEmail:
-    "我們已經傳送重設密碼連結給您。請查收電子郵件",
+  checkYourEmail: "我們已經傳送重設密碼連結給您。請查收電子郵件",
   checkYourEmailOnBoarding: "請查收電子郵件並完成註冊。",
   citizenShip: "公民資格",
   cityFamiliarity: "城市熟悉程度",
@@ -64,8 +60,7 @@
   confirmAndConnect: "確認並連線",
   connectMeNow: "立即和我連線",
   connectNow: "立即連線",
-  contactingLinguist:
-    "將在 1 分鐘內為您接通\n語言翻譯精靈\n",
+  contactingLinguist: "將在 1 分鐘內為您接通\n語言翻譯精靈\n",
   continue: "繼續",
   conversations: "其他",
   costOfCall: "預估費用： ",
@@ -100,16 +95,11 @@
   errorPromo: "找不到促銷代碼",
   estimatedCost: "預估費用",
   estimatedDuration: "預估時長",
-  estimatedCostStatic1:
-    "試用期間通話預設為 8 分鐘。",
-  estimatedCostStatic2:
-    "若您需要更多時間，可以在通話中增加。",
-  expertise_A1:
-    "有許多不同的髮型適合不同的人和不同的",
-  expertise_B1:
-    "創造的迴圈是什麼？如何從無到有？在 Spite",
-  expertise_C1:
-    "我們之所以為人類，是不是因為我們的特徵和特質不同於",
+  estimatedCostStatic1: "試用期間通話預設為 8 分鐘。",
+  estimatedCostStatic2: "若您需要更多時間，可以在通話中增加。",
+  expertise_A1: "有許多不同的髮型適合不同的人和不同的",
+  expertise_B1: "創造的迴圈是什麼？如何從無到有？在 Spite",
+  expertise_C1: "我們之所以為人類，是不是因為我們的特徵和特質不同於",
   extraTime1: "時間快到了！",
   extraTime2: "您需要更多時間嗎？",
   extraTimeA1: "需要，增加 5 分鐘",
@@ -117,8 +107,7 @@
   female: "女性",
   finish: "結束",
   finishOnboarding: "完成註冊",
-  finishOnboardingMessage:
-    "請完成註冊以利使用本應用程式",
+  finishOnboardingMessage: "請完成註冊以利使用本應用程式",
   firstname: "名字",
   fluent: "流利",
   forgotPassword: "重設密碼",
@@ -138,8 +127,7 @@
   getLanguageHelp: "獲取語言協助",
   hasDisconnected: "has been disconnected",
   help: "協助",
-  helpPeople:
-    "您對哪些城市的熟悉程度足以協助人們遊覽城市？",
+  helpPeople: "您對哪些城市的熟悉程度足以協助人們遊覽城市？",
   helpUsGet: "協助我們更瞭解您",
   hi: "您好",
   historyNotFound: "找不到記錄",
@@ -163,29 +151,25 @@
   languageCommand: "您要求的語言",
   languageHelp: "隨時隨地提供語言協助",
   languageInterpretation: "您曾經做過<lang>翻譯嗎？",
-  LanguagePairs: "語言對",// 不使用
+  LanguagePairs: "語言對", // 不使用
   language: "語言",
   languages: "語言",
   languageNotice1:
     "謝謝！翻譯精靈目前不提供您的母語，但您仍然可以使用我們支援的語言通話：",
   languageNotice2: "即將推出更多語言。",
   languageSettings: "語言設定",
-  languagesStatic1:
-    "翻譯精靈免費試用期間只支援中文 (普通話) 及英文。",
+  languagesStatic1: "翻譯精靈免費試用期間只支援中文 (普通話) 及英文。",
   languagesStatic2:
     "未來推出的翻譯精靈版本將支援所有語言，您也能夠在這裡選擇語言。",
   languageFrom: "源語言：",
   languageTo: "目標語言：",
   lauchScreenSwipe1:
     "放心旅行！ \n 有了翻譯精靈應用程式，再也不用擔心語言成為溝通障礙。",
-  lauchScreenSwipe2:
-    "無論置身世上何處，都能即時與精通外語的真人通話。",
+  lauchScreenSwipe2: "無論置身世上何處，都能即時與精通外語的真人通話。",
   lauchScreenSwipe3:
     "翻譯精靈目前支援\n中文 (普通話) <> 英文\n以及日文 <> 英文。即將推出其他語言。",
-  lauchScreenSwipe4:
-    "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
-  lauchScreenSwipe5:
-    "為慶祝上市，前 60 分鐘免費…翻譯精靈請客！",
+  lauchScreenSwipe4: "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
+  lauchScreenSwipe5: "為慶祝上市，前 60 分鐘免費…翻譯精靈請客！",
   lastname: "姓氏",
   legal: "法律資訊",
   letsGoToKwon: "讓我們更瞭解您",
@@ -302,8 +286,7 @@
   termsOfUse: "使用條款",
   themeSettings: "主題設定",
   temporaryError: "發生暫時性的錯誤，請稍後再試。",
-  toggleExtraTimeDisable:
-    "這次通話將在上方指定的時間過後自動中斷。",
+  toggleExtraTimeDisable: "這次通話將在上方指定的時間過後自動中斷。",
   toggleExtraTimeEnable:
     "這次通話將持續到您中斷為止。通話超過上方指定的時間後，須按分鐘數付費。",
   toOthersOnPlatform: "平台上的其他人",
@@ -338,9 +321,9 @@
   youWillBeKnown: "您的名稱將會是",
   youCanAddTime: "您可以在通話中增加時間",
   youCanChangeThis: "您可以在通話中開啟/關閉視訊",
-  
+
   // for use during primary language selection
-  languages: {
+  languagesList: {
     eng: "English",
     cmn: "Chinese (Mandarin)",
     yue: "Chinese (Cantonese)",

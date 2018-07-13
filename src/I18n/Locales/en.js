@@ -357,7 +357,7 @@ export default (ENG = {
   youCanChangeThis: "You can turn video on/off during call",
 
   // for use during primary language selection
-  languages: {
+  languagesList: {
     eng: "English",
     cmn: "Chinese (Mandarin)",
     yue: "Chinese (Cantonese)",
