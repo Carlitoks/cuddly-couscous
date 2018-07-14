@@ -1909,5 +1909,9 @@ export const InterfaceSupportedLanguages = [
   {
     1: "zh-hant",
     name: "Chinese (Traditional)"
+  },
+  {
+    1: "ja",
+    name: "Japanese"
   }
 ];
