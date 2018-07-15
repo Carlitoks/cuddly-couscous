@@ -151,7 +151,7 @@ export default (ENG = {
   historyNotFound: "No History found",
   holdToScan: "Hold the device's camera up to the QR code",
   home: "Home",
-  whereAreYouNow: "Where are you now?",
+  whereAreYouNow: "Tell us where you are...",
   hotel: "Hotel",
   howLongNeedAssist: "How long will you need assistance?",
   howMuchTimeDoYouNeed: "How much time do you need?",
