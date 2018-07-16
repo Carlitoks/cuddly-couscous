@@ -86,13 +86,14 @@ class CallConfirmationView extends Component {
     const {
       navigation,
       customScenario,
-      selectedCategory,
+      categories,
       selectedScenario,
       categoryIndex,
       promotion,
       event,
       secundaryLangCode,
-      scenarioNotes
+      scenarioNotes,
+      updateSettings
     } = this.props;
 
     const scannedEvent = promotion ? promotion : event;
@@ -100,7 +101,12 @@ class CallConfirmationView extends Component {
     const allowSecondaryLangSelection =
       !scannedEvent.id || scannedEvent.allowSecondaryLangSelection;
 
-    const categoryTitle = this.CATEGORIES[selectedScenario[0].category];
+    const category =
+      !!selectedScenario && !!selectedScenario[0]
+        ? selectedScenario[0].category
+        : categories[categoryIndex];
+
+    const categoryTitle = this.CATEGORIES[category];
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -109,7 +115,7 @@ class CallConfirmationView extends Component {
             <GoBackButton
               navigation={this.props.navigation}
               exec={() => {
-                this.props.updateSettings({ customScenarioNote: "" });
+                updateSettings({ customScenarioNote: "" });
               }}
             />
           }
@@ -130,7 +136,7 @@ class CallConfirmationView extends Component {
             <View style={styles.category}>
               <View>
                 <Text style={styles.titleStyle}>
-                  {selectedScenario[0] ? `${categoryTitle}: ` : null}
+                  {`${categoryTitle}: `}
 
                   <Text style={styles.regularText}>
                     {customScenario
@@ -358,7 +364,7 @@ const mS = state => ({
   scenarioNotes: state.contactLinguist.customScenarioNote,
   selectedScenario: state.linguistForm.selectedScenarios,
   categoryIndex: state.homeFlow.categoryIndex,
-  selectedCategory: state.homeFlow.categories,
+  categories: state.homeFlow.categories,
   estimatedPrice:
     state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
   selectedLanguageTo: state.contactLinguist.selectedLanguage,
