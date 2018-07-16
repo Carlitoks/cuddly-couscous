@@ -141,7 +141,8 @@ class Home extends Component {
       lastName,
       getCategories,
       getScenarios,
-      listItemSelected
+      listItemSelected,
+      updateHomeFlow
     } = this.props;
 
     if (this.props.tokbox && this.props.networkInfoType !== "none") {
@@ -165,6 +166,12 @@ class Home extends Component {
     this.props.clearCallLinguistSettings();
     this.props.asyncGetAccountInformation();
     this.props.clearEvents();
+
+    updateHomeFlow({
+      customScenario: "",
+      categoryIndex: -1
+    });
+
     InCallManager.stop();
     this.setState({
       indexSelected: listItemSelected
@@ -184,7 +191,8 @@ class Home extends Component {
       this.props.updateSettings({ categorySelected: item });
 
       updateHomeFlow({
-        lastSelectedTile: currentIndex
+        lastSelectedTile: currentIndex,
+        categoryIndex: currentIndex
       });
 
       item === "qr"
