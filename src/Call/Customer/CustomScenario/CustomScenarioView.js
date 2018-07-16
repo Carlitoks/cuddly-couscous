@@ -34,21 +34,23 @@ class CustomScenario extends Component {
   }
 
   render() {
-    const navigation = this.props.navigation;
-    const categoryTitle = this.CATEGORIES[
-      this.props.categories[this.props.categoryIndex]
-    ];
+    const {
+      categoryIndex,
+      navigation,
+      categories,
+      customScenario,
+      updateSettings
+    } = this.props;
+
+    const categoryTitle = this.CATEGORIES[categories[categoryIndex]];
+
     const categorySelected =
-      this.props.categoryIndex > -1 && !!this.props.categories
-        ? categoryTitle
-        : null;
+      categoryIndex > -1 && !!categories ? categoryTitle : null;
 
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <HeaderView
-          headerLeftComponent={
-            <GoBackButton navigation={this.props.navigation} />
-          }
+          headerLeftComponent={<GoBackButton navigation={navigation} />}
           navbarTitle={categorySelected}
           navbarType={"Basic"}
           NoWaves
@@ -61,11 +63,9 @@ class CustomScenario extends Component {
             {/* Custom Scenario */}
             <InputRegular
               placeholder={I18n.t("iNeedAssistanceWith")}
-              value={this.props.customScenario}
+              value={customScenario}
               onChangeText={text => {
-                this.props.updateSettings({
-                  customScenario: text
-                });
+                updateSettings({ customScenario: text });
               }}
               maxLength={350}
               autoFocus={true}
