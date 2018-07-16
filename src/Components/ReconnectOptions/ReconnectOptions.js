@@ -9,7 +9,7 @@ import BottomButton from "../BottomButton/BottomButton";
 
 import I18n from "../../I18n/I18n";
 import { styles } from "./styles";
-
+import { clear } from "../../Ducks/tokboxReducer";
 import { REASON } from "../../Util/Constants";
 import { Colors } from "../../Themes";
 
@@ -25,8 +25,8 @@ class ReconnectOptions extends Component {
           borderRadius={50}
           onPress={async () => {
             await this.props.closeCall(REASON.RETRY);
+            await this.props.clear();
             await this.props.reconnectCall();
-            this.props.callTimeOut();
           }}
         />
         <Button
@@ -52,7 +52,7 @@ const mS = state => ({
   counterId: state.contactLinguist.counterId
 });
 
-const mD = {};
+const mD = { clear };
 
 export default connect(
   mS,

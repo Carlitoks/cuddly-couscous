@@ -26,7 +26,7 @@ class ContactingLinguist extends Component {
   }
 
   componentWillMount() {
-    this.props.callTimeOut();
+    //this.props.callTimeOut();
     if (InCallManager.recordPermission !== "granted") {
       InCallManager.requestRecordPermission()
         .then(requestedRecordPermissionResult => {

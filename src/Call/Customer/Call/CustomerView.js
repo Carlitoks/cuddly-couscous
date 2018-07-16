@@ -158,6 +158,7 @@ class CustomerView extends Component {
       eventID: eventID,
       location: location
     });
+    this.callTimeOut();
   };
 
   callTimeOut = () => {
