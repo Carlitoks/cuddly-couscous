@@ -24,7 +24,7 @@ class SettingsView extends Component {
         <HeaderView
           headerLeftComponent={<ShowMenuButton navigation={navigation} />}
           navbarTitle={I18n.t("settings")}
-          navbarType={"Complete"}
+          navbarType={"Basic"}
           NoWaves
         >
           <ScrollView

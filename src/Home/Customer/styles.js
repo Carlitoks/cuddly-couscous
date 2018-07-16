@@ -293,9 +293,12 @@ export default StyleSheet.create({
     borderLeftColor: Colors.transparent,
     alignSelf: "center"
   },
-  mainContainer: {
+  scrollView: {
     backgroundColor: Colors.gradientColor.top,
     height: height - headerHeight
+  },
+  scrollViewContainer: {
+    flexGrow: 1
   },
   titleCall: {
     fontFamily: Fonts.LightFont,
@@ -369,9 +372,9 @@ export default StyleSheet.create({
     position: "absolute",
     bottom: 0
   },
-  scrollView: {
+  recentActivityList: {
     flex: 1,
-    paddingBottom: 30
+    marginBottom: 30
   },
   carousel: { marginTop: "5%" },
   slider: { height: 300 },

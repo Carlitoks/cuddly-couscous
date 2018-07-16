@@ -400,7 +400,8 @@ class Home extends Component {
           <ScrollView
             automaticallyAdjustContentInsets={true}
             alwaysBounceVertical={false}
-            style={styles.mainContainer}
+            style={styles.scrollView}
+            contentContainerStyle={styles.scrollViewContainer}
           >
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
@@ -422,7 +423,7 @@ class Home extends Component {
                 ? ""
                 : I18n.t("tapRepeat")}
             </Text>
-            <View style={styles.scrollView}>{this.renderList()}</View>
+            <View style={styles.recentActivityList}>{this.renderList()}</View>
           </ScrollView>
         </HeaderView>
       </ViewWrapper>
