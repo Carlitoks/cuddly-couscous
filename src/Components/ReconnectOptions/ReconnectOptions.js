@@ -25,7 +25,6 @@ class ReconnectOptions extends Component {
           borderRadius={50}
           onPress={async () => {
             await this.props.closeCall(REASON.RETRY);
-            await this.props.clear();
             await this.props.reconnectCall();
           }}
         />

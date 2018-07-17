@@ -93,12 +93,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
         dispatch(clear());
         dispatch({ type: "CustomerView" });
       } else if (reason === REASON.TIMEOUT) {
-        /*dispatch(
-          updateContactLinguist({
-            modalContact: true,
-            counter: TIME.RECONNECT
-          })
-        );*/
+        dispatch(clear());
       } else {
         dispatch({ type: "RateView" });
       }
