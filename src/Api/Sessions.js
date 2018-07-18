@@ -22,7 +22,8 @@ const Session = {
     scenarioID,
     token,
     customScenario,
-    eventID
+    eventID,
+    location
   ) => {
     return AXIOS.post(
       `${BASE_URI}`,
@@ -34,7 +35,8 @@ const Session = {
         scenarioID,
         estimatedMinutes,
         customScenario,
-        eventID
+        eventID,
+        location
       },
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {

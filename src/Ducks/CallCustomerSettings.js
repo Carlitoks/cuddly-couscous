@@ -126,7 +126,8 @@ export const createSession = ({
   scenarioID,
   customScenarioNote,
   token,
-  eventID
+  eventID,
+  location
 }) => dispatch => {
   return Sessions.createSession(
     "immediate_virtual",
@@ -137,7 +138,8 @@ export const createSession = ({
     scenarioID,
     token,
     customScenarioNote,
-    eventID
+    eventID,
+    location
   )
     .then(response => {
       const { data } = response;
