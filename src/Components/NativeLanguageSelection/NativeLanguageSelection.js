@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { findIndex } from "lodash";
 
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
-import { Languages } from "../../Config/Languages";
+import { PrimaryLanguages } from "../../Config/Languages";
 
 class NativeLanguageSelection extends Component {
   state = { indexSelected: -1, selectedLanguage: null };
@@ -14,7 +14,7 @@ class NativeLanguageSelection extends Component {
     if (nextProps.searchQuery !== this.props.searchQuery) {
       const indexSelected =
         nextProps.searchQuery === ""
-          ? findIndex(Languages, this.state.selectedLanguage)
+          ? findIndex(PrimaryLanguages, this.state.selectedLanguage)
           : findIndex(
               this.filterList(nextProps.searchQuery),
               selectedNativeLanguage
@@ -39,7 +39,7 @@ class NativeLanguageSelection extends Component {
   filterList = (searchQuery = "") => {
     const search = searchQuery ? searchQuery : this.props.searchQuery;
 
-    return Languages.filter(language => {
+    return PrimaryLanguages.filter(language => {
       return language.name.toLowerCase().startsWith(search.toLowerCase());
     });
   };
