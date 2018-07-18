@@ -6,6 +6,7 @@ import { findIndex } from "lodash";
 import { SupportedLanguages } from "../../../Config/Languages";
 
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
+import { translateLanguage } from "../../../I18n/I18n";
 
 class SupportedLanguagesList extends Component {
   state = { filteredLanguages: [], indexSelected: -1 };
@@ -33,7 +34,7 @@ class SupportedLanguagesList extends Component {
     if (index !== indexSelected) {
       updateSettings({
         secundaryLangCode: selectedLanguage[3],
-        selectedLanguage: selectedLanguage["name"]
+        selectedLanguage: translateLanguage(selectedLanguage[3], selectedLanguage["name"])
       });
 
       this.setState({ indexSelected: index });

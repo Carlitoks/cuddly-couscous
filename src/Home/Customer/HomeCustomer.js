@@ -56,6 +56,7 @@ import { Waves } from "../../Assets/SVG";
 import styles from "./styles";
 import { Colors } from "../../Themes";
 import I18n from "../../I18n/I18n";
+import {translateLanguage} from "../../I18n/I18n";
 import { SUPPORTED_LANGS, getLocalizedCategories } from "../../Util/Constants";
 import {
   sliderWidth,
@@ -278,9 +279,9 @@ class Home extends Component {
 
     updateContactLinguist({
       primaryLangCode: primaryLanguage[3],
-      selectedLanguageFrom: primaryLanguage["name"],
+      selectedLanguageFrom: translateLanguage(primaryLanguage[3], primaryLanguage["name"]),
       secundaryLangCode: secondaryLanguage[3],
-      selectedLanguage: secondaryLanguage["name"]
+      selectedLanguage: translateLanguage(secondaryLanguage[3], secondaryLanguage["name"])
     });
   };
 

@@ -22,6 +22,7 @@ const height = Dimensions.get("window").height;
     multiple: Boolean to allow multiple selection on list,
     selected: Index(es) of selected item(s). If there is no selected item(s) value will be -1 or [] in case multiple is true
     titleProperty: if defined, will be the propery used to display each item title,
+    titleFunc: if defined, will use the function that receives the item to return the string title,
     other: Object to add to the list with different behaviour (the object must have a boolean property named "other" and be set to true,
     otherOnPress: Function to execute when the other item is selected,
     changeSelected: Function to change on parent the selected value,
@@ -133,8 +134,12 @@ class ListComponent extends Component {
   }
 
   getTitle = item => {
-    const { titleProperty, complementTitle } = this.props;
+    const { titleProperty, complementTitle, titleFunc } = this.props;
     const titleParam = titleProperty ? titleProperty : "id";
+
+    if (titleFunc) {
+      return titleFunc(item);
+    }
 
     return complementTitle
       ? `${item[titleParam] ? item[titleParam] : ""} ${complementTitle}`
