@@ -1669,7 +1669,7 @@ export const Languages = [
 ];
 
 // languages available for native lang selection
-const primaryCodes = [];
+const primaryCodes = ["eng", "cmn", "yue", "jpn", "spa", "deu", "fra", "arb", "por", "rus", "ita", "kor", "nld", "swe", "nor", "tur", "pol", "dan", "fin", "tha", "heb", "ind", "pes", "hin", "ces", "zsm", "ell", "hun", "ron", "vie", "ben", "cat", "fil", "tam", "slk", "kaz", "ltz", "kur", "azj", "azb", "ukr", "afr", "hrv", "glg", "slv", "lit", "ckb", "jav", "urd", "sqi", "tel", "srp", "yor", "hau", "bul", "uzb", "swa", "eus", "bel", "tat"];
 
 // languages in "Coming Soon" list
 const comingSoonCodes = ["arb","ben","dan","nld","fin","fra","deu","hin","ita","kor","zsm","nor","pol","por","rus","spa","swe","tha","tur","urd"];
