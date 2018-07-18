@@ -44,14 +44,19 @@ export const translateProperty = (obj, fieldName) => {
   return `missing: '${fieldName}'`;
 }
 
-export const translateLanguageCode = (code) => {
-  return I18n.t('languages.'+code);
+export const translateLanguage = (code, defaultStr) => {
+  // make sure there actually is at least an english translation of the target lang code
+  if (en.languagesList[code]) {
+    return I18n.t('languagesList.'+code);
+  }
+  
+  return defaultStr;
 }
 
 // generate list of primary languages, returns [{code: "string", i18nKey: "string"}], based on the languages defined in the
 // English translated code map
 let primaryLanguages = []; // TODO: change to map for lookup
-for (const [key, value] of Object.entries(en.languages)) {
-  primaryLanguages.push({code: key, i18nKey: `languages.${key}`});
+for (const [key, value] of Object.entries(en.languagesList)) {
+  primaryLanguages.push({code: key, i18nKey: `languagesList.${key}`});
 }
 export {primaryLanguages}

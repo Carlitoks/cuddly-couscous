@@ -363,7 +363,7 @@ export default (ENG = {
     yue: "Chinese (Cantonese)",
     jpn: "Japanese",
     spa: "Spanish",
-    due: "German",
+    deu: "German",
     fra: "French",
     arb: "Arabic",
     por: "Portuguese",
@@ -383,7 +383,7 @@ export default (ENG = {
     pes: "Persian",
     hin: "Hindi",
     ces: "Czech",
-    zsm: "Malaysian", // can of worms here
+    zsm: "Malay", // can of worms here
     ell: "Greek",
     hun: "Hungarian",
     ron: "Romanian", // OR rup, ruq?
