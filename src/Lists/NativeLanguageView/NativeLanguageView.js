@@ -23,7 +23,7 @@ import {
   displayTemporaryErrorAlert
 } from "../../Util/Helpers";
 
-import I18n from "../../I18n/I18n";
+import I18n, { translateLanguage } from "../../I18n/I18n";
 import { Colors } from "../../Themes";
 import { Languages } from "../../Config/Languages";
 import styles from "./styles";
@@ -88,7 +88,7 @@ class NativeLanguageView extends Component {
       return supportedLanguages.has(language["3"]);
     })
       .map(language => {
-        return language.name;
+        return translateLanguage(language[3], language.name);
       })
       .join(", "));
   }
@@ -212,6 +212,7 @@ class NativeLanguageView extends Component {
                 return (
                   <ListComponent
                     data={filterList()}
+                    titleFunc={item => translateLanguage(item[3], item["name"])}
                     titleProperty={"name"}
                     selected={indexSelected}
                     onPress={index => {
