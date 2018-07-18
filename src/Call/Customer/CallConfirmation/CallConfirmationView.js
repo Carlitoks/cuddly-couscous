@@ -30,7 +30,7 @@ import { clear as clearEvents } from "../../../Ducks/EventsReducer";
 import { clearPromoCode } from "../../../Ducks/PromoCodeReducer";
 import { clearSettings as clearLinguistReducer } from "../../../Ducks/LinguistFormReducer";
 
-import I18n from "../../../I18n/I18n";
+import I18n, {translateProperty, translateLanguage} from "../../../I18n/I18n";
 import _isEmpty from "lodash/isEmpty";
 import { styles } from "./styles";
 import { Images, Colors } from "../../../Themes";
@@ -75,8 +75,8 @@ class CallConfirmationView extends Component {
 
         this.props.updateSettings({
           secondaryLangCode: defaultSecondaryLangCode,
-          selectedLanguageTo: selectedLangTo[0].name,
-          selectedLanguage: selectedLangTo[0].name
+          selectedLanguageTo: translateLanguage(selectedLangTo[0][3], selectedLangTo[0].name),
+          selectedLanguage: translateLanguage(selectedLangTo[0][3], selectedLangTo[0].name)
         });
       }
     }
@@ -143,7 +143,7 @@ class CallConfirmationView extends Component {
                       ? customScenario
                       : this.props.selectedScenario &&
                         this.props.selectedScenario[0]
-                        ? this.props.selectedScenario[0].title
+                        ? translateProperty(this.props.selectedScenario[0], "title")
                         : I18n.t("generalAssistance")}
                   </Text>
                 </Text>

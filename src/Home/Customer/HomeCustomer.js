@@ -55,7 +55,7 @@ import { Waves } from "../../Assets/SVG";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
-import I18n from "../../I18n/I18n";
+import I18n, { translateProperty } from "../../I18n/I18n";
 import {translateLanguage} from "../../I18n/I18n";
 import { SUPPORTED_LANGS, getLocalizedCategories } from "../../Util/Constants";
 import {
@@ -312,7 +312,7 @@ class Home extends Component {
         data={data}
         itemKey={"id"}
         subtitleProperty={"createdAt"}
-        titleProperty={"title"}
+        titleFunc={item => translateProperty(item, "title")}
         thirdLineProperty={"customScenarioNote"}
         onPress={index => {
           if (!emptyActivity) {

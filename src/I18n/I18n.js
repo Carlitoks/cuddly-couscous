@@ -16,17 +16,33 @@ I18n.translations = {
 
 export const strings = (name, params = {}) => I18n.t(name, params);
 
-let locales = getLanguages();
+
+let locales = [];
+let targetLocale = I18n.locale;
+
+const redetectLocales = () => {
+  getLanguages().then((locs) => {
+    locales = locs;
+    locales.unshift(targetLocale);
+    console.log(locales);
+  });
+}
+
+redetectLocales();
+
 export const switchLanguage = (lang, component) => {
   I18n.locale = lang;
+  targetLocale = lang;
   component.forceUpdate();
-  locales = getLanguages();
+  redetectLocales();
 };
 
 export default I18n;
 
 export const translateProperty = (obj, fieldName) => {
-  const fieldOrder = [fieldName+'I18N', fieldName+'Translations'];
+  // this is a temporary hack until the server should standardizes on fields named `<field>I18N`
+  const fieldOrder = [fieldName+'I18N', fieldName+'Translations', 'translations'];
+
   for (let locale of locales) {
     const code = locale.toLowerCase();
     for (let field of fieldOrder) {

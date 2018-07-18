@@ -30,7 +30,7 @@ import QRIcon from "../../../Components/QRIcon/QRIcon";
 
 import styles from "./styles";
 import { Colors, Images } from "../../../Themes";
-import I18n from "../../../I18n/I18n";
+import I18n, { translateProperty } from "../../../I18n/I18n";
 import { Waves } from "../../../Assets/SVG";
 import { getLocalizedCategories } from "../../../Util/Constants";
 
@@ -57,7 +57,7 @@ class CustomScenario extends Component {
       ...scenariosFiltered,
       {
         other: true,
-        title: "Something else",
+        title: I18n.t("somethingElse"),
         onPress: () => navigation.dispatch({ type: "CustomScenarioView" })
       }
     ];
@@ -138,7 +138,7 @@ class CustomScenario extends Component {
                 customContainerStyle={styles.listContainer}
                 selected={selectedScenarioIndex}
                 data={scenariosList}
-                titleProperty={"title"}
+                titleFunc={ item => translateProperty(item, "title") }
                 onPress={index => {
                   updateSettings({
                     selectedScenarioIndex: index
