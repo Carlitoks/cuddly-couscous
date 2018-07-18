@@ -56,7 +56,7 @@ export const Languages = [
   {
     1: "ar",
     2: "ara",
-    3: "ara",
+    3: "arb",
     name: "Arabic",
     local: "العربية",
     "2T": "ara",
@@ -911,7 +911,7 @@ export const Languages = [
   {
     1: "ms",
     2: "msa",
-    3: "msa",
+    3: "zsm",
     name: "Malay",
     local: "Bahasa Melayu",
     "2T": "msa",
@@ -1698,18 +1698,9 @@ export const SupportedLanguages = [
 
 export const ComingSoonLanguages = [
   {
-    1: "am",
-    2: "amh",
-    3: "amh",
-    name: "Amharic",
-    local: "አማርኛ",
-    "2T": "amh",
-    "2B": "amh"
-  },
-  {
     1: "ar",
     2: "ara",
-    3: "ara",
+    3: "arb",
     name: "Arabic",
     local: "العربية",
     "2T": "ara",
@@ -1799,7 +1790,7 @@ export const ComingSoonLanguages = [
   {
     1: "ms",
     2: "msa",
-    3: "msa",
+    3: "zsm",
     name: "Malay",
     local: "Bahasa Melayu",
     "2T": "msa",
@@ -1858,15 +1849,6 @@ export const ComingSoonLanguages = [
     local: "Svenska",
     "2T": "swe",
     "2B": "swe"
-  },
-  {
-    1: "tl",
-    2: "tgl",
-    3: "tgl",
-    name: "Tagalog",
-    local: "Tagalog",
-    "2T": "tgl",
-    "2B": "tgl"
   },
   {
     1: "th",
