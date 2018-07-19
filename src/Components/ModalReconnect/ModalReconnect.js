@@ -81,7 +81,6 @@ class ModalReconnect extends Component {
               this.props.resetReconnectAsync();
               await this.props.closeCall(REASON.RETRY);
               await this.props.reconnectCall();
-              this.props.callTimeOut();
             }
           },
           {

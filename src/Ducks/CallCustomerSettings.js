@@ -292,6 +292,20 @@ export const closeCall = reason => (dispatch, getState) => {
   }
 };
 
+export const cleanCall = reason => (dispatch, getState) => {
+  const { contactLinguist, callCustomerSettings, tokbox, auth } = getState();
+  clearInterval(contactLinguist.counterId);
+  dispatch(
+    updateContactLinguist({
+      modalContact: false,
+      customScenarioNote: ""
+    })
+  );
+  dispatch(resetCounter());
+  dispatch(resetTimerAsync());
+  cleanNotifications();
+};
+
 // Initial State
 const initialState = {
   // Call Settings
