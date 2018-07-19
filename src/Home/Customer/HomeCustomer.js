@@ -55,8 +55,7 @@ import { Waves } from "../../Assets/SVG";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
-import I18n, { translateProperty } from "../../I18n/I18n";
-import {translateLanguage} from "../../I18n/I18n";
+import I18n, { translateLanguage, translateProperty } from "../../I18n/I18n";
 import { SUPPORTED_LANGS, getLocalizedCategories } from "../../Util/Constants";
 import {
   sliderWidth,
@@ -312,7 +311,11 @@ class Home extends Component {
         data={data}
         itemKey={"id"}
         subtitleProperty={"createdAt"}
-        titleFunc={item => translateProperty(item, "title")}
+        titleFunc={item => {
+          if (item.scenario) {
+            return translateProperty(item.scenario, "title")
+          }
+        }}
         thirdLineProperty={"customScenarioNote"}
         onPress={index => {
           if (!emptyActivity) {
@@ -334,8 +337,8 @@ class Home extends Component {
 
             updateContactLinguist({
               primaryLangCode: scenario.primaryLangCode,
-              selectedLanguageFrom: Languages[primaryLanguageIndex]["name"],
-              selectedLanguage: Languages[secondaryLanguageIndex]["name"],
+              selectedLanguageFrom: translateLanguage(Languages[primaryLanguageIndex][3], Languages[primaryLanguageIndex]["name"]),
+              selectedLanguage: translateLanguage(Languages[secondaryLanguageIndex][3], Languages[secondaryLanguageIndex]["name"]),
               secundaryLangCode: scenario.secondaryLangCode,
               customScenarioNote: scenario.customScenarioNote
             });
