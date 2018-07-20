@@ -1692,14 +1692,14 @@ export const InterfaceSupportedLanguages = [
   },
   {
     1: "zh-hans",
-    name: "Chinese (Simplified)"
+    name: "语言"
   },
   {
     1: "zh-hant",
-    name: "Chinese (Traditional)"
+    name: "語言"
   },
   {
     1: "ja",
-    name: "Japanese"
+    name: "言語"
   }
 ];
