@@ -1700,6 +1700,6 @@ export const InterfaceSupportedLanguages = [
   },
   {
     1: "ja",
-    name: "言語"
+    name: "日本語"
   }
 ];
