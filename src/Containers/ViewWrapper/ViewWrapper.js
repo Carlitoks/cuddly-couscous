@@ -3,10 +3,43 @@ import { connect } from "react-redux";
 import { View, Text, Modal, StatusBar, processColor } from "react-native";
 import Instabug from "instabug-reactnative";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
+import I18n from "react-native-i18n";
 
 import { Colors } from "../../Themes";
 
 import styles from "./styles";
+
+const locale = I18n.currentLocale();
+
+const processLocale = locale => {
+  const localeSize = locale.lenght;
+  let splitIndex = 0;
+  let shortLocale = "";
+
+  if (localeSize == 2) {
+    return locale;
+  } else {
+    splitIndex = locale.indexOf("-", 3);
+    shortLocale = locale.substring(0, splitIndex);
+    return shortLocale;
+  }
+};
+
+const getInstaBugLanguage = locale => {
+  const shortLocale = processLocale(locale);
+  switch (shortLocale) {
+    case "zh-Hant":
+      return "localeChineseTraditional";
+    case "zh-Hans":
+      return "localeChineseSimplified";
+    case "ja-US":
+    case "ja-JP":
+    case "ja":
+      return "localeJapanese";
+    default:
+      return "localeEnglish";
+  }
+};
 
 const ViewWrapper = ({
   children,
@@ -31,6 +64,7 @@ const ViewWrapper = ({
       "83f07c5f8dcb8496e3287f280ce6f61d",
       Instabug.invocationEvent.shake
     );
+    Instabug.setLocale(getInstaBugLanguage(locale));
     Instabug.setViewHierarchyEnabled(false);
     Instabug.setPromptOptionsEnabled(false, true, true);
     Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
