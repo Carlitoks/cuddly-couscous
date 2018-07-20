@@ -24,7 +24,6 @@ const redetectLocales = () => {
   getLanguages().then((locs) => {
     locales = locs;
     locales.unshift(targetLocale);
-    console.log(locales);
   });
 }
 
