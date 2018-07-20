@@ -75,6 +75,9 @@ export default class CallButton extends Component {
                 this.setState({ ...this.state, isActive: true });
               }
             }
+            if (this.props.unLock) {
+              this.setState({ ...this.state, isActive: false });
+            }
           }}
           buttonStyle={{
             height: 71.5,
@@ -114,7 +117,8 @@ CallButton.propTypes = {
   opacity: number,
   toggle: bool,
   iconToggled: string,
-  active: bool
+  active: bool,
+  unLock: bool
 };
 
 CallButton.defaultProps = {
