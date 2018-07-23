@@ -14,11 +14,12 @@ I18n.translations = {
   "zh-hant": zh_hant
 };
 
+export default I18n;
+
 export const strings = (name, params = {}) => I18n.t(name, params);
 
-
 let locales = [];
-let targetLocale = I18n.locale;
+let targetLocale = I18n.currentLocale();
 
 const redetectLocales = () => {
   getLanguages().then((locs) => {
@@ -35,8 +36,6 @@ export const switchLanguage = (lang, component) => {
   component.forceUpdate();
   redetectLocales();
 };
-
-export default I18n;
 
 export const translateProperty = (obj, fieldName) => {
   // this is a temporary hack until the server should standardizes on fields named `<field>I18N`
