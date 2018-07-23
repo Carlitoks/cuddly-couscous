@@ -12,14 +12,13 @@ import styles from "./styles";
 const locale = I18n.currentLocale();
 
 const processLocale = locale => {
-  const localeSize = locale.lenght;
-  let splitIndex = 0;
-  let shortLocale = "";
+  const localeSize = locale.toString().length;
+  let splitIndex = locale.indexOf("-", 3);
+  let shortLocale;
 
-  if (localeSize == 2) {
+  if (localeSize === 2 || splitIndex === -1) {
     return locale;
   } else {
-    splitIndex = locale.indexOf("-", 3);
     shortLocale = locale.substring(0, splitIndex);
     return shortLocale;
   }
@@ -40,6 +39,8 @@ const getInstaBugLanguage = locale => {
       return "localeEnglish";
   }
 };
+
+const instaBugLanguage = getInstaBugLanguage(locale);
 
 const ViewWrapper = ({
   children,
@@ -64,7 +65,7 @@ const ViewWrapper = ({
       "83f07c5f8dcb8496e3287f280ce6f61d",
       Instabug.invocationEvent.shake
     );
-    Instabug.setLocale(getInstaBugLanguage(locale));
+    Instabug.setLocale(instaBugLanguage);
     Instabug.setViewHierarchyEnabled(false);
     Instabug.setPromptOptionsEnabled(false, true, true);
     Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
