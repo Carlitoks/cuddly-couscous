@@ -40,7 +40,7 @@ class App extends Component {
           const shortDeviceLocale = deviceLocale.substring(0, 2);
 
           const interfaceLocale =
-            shortDeviceLocale === "zh"
+            shortDeviceLocale === "zh" || shortDeviceLocale === "ja"
               ? deviceLocale.substring(0, 7).toLowerCase()
               : "en";
 
