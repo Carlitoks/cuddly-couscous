@@ -61,7 +61,7 @@ export const logOutAsync = () => (dispatch, getState) => {
       dispatch(clearHome());
       dispatch(clearHistory());
       dispatch(clearLinguistProfile());
-      dispatch(clearSettingsInterface());
+      // dispatch(clearSettingsInterface());
       PushNotification.cleanListeners();
       dispatch({ type: "SelectRoleView/Reset" });
     });
