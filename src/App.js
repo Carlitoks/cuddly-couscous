@@ -38,22 +38,23 @@ class App extends Component {
         if (!userLocaleSet) {
           const deviceLocale = deviceinfo.getDeviceLocale();
           const shortDeviceLocale = deviceLocale.substring(0, 2);
-          const interfaceLocale = "";
+          const interfaceLocaleCode = "";
 
           if (shortDeviceLocale === "zh") {
-            interfaceLocale = deviceLocale.substring(0, 7).toLowerCase();
+            interfaceLocaleCode = deviceLocale.substring(0, 7).toLowerCase();
           } else {
-            interfaceLocale = shortDeviceLocale ? shortDeviceLocale : "en";
+            interfaceLocaleCode = shortDeviceLocale ? shortDeviceLocale : "en";
           }
 
-          store.dispatch(
-            updateSettings({
-              interfaceLocale: InterfaceSupportedLanguages.find(
-                language => language[1] === interfaceLocale
-              )
-            })
+          const interfaceLocale = InterfaceSupportedLanguages.find(
+            language => language[1] === interfaceLocaleCode
           );
-          switchLanguage(interfaceLocale, this);
+
+          if (interfaceLocale) {
+            store.dispatch(updateSettings({ interfaceLocale }));
+
+            switchLanguage(interfaceLocaleCode, this);
+          }
         } else {
           switchLanguage(storeInterfaceLocale[1], this);
         }
