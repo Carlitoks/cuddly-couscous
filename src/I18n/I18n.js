@@ -24,11 +24,22 @@ let targetLocale = I18n.currentLocale();
 const redetectLocales = () => {
   getLanguages().then((locs) => {
     locales = locs;
-    locales.unshift(targetLocale);
+    for (let loc of fallbackLocales(targetLocale)) {
+      locales.unshift(loc);
+    }
   });
 }
 
 redetectLocales();
+
+export const fallbackLocales = (locale) => {
+  let parts = locale.split('-');
+  let fallbacks = [];
+  for (let i = 0; i < parts.length; i++) {
+    fallbacks.push(parts.slice(0, i + 1).join('-').toLowerCase());
+  }
+  return fallbacks;
+}
 
 export const switchLanguage = (lang, component) => {
   I18n.locale = lang;
