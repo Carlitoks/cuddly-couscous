@@ -38,11 +38,13 @@ class App extends Component {
         if (!userLocaleSet) {
           const deviceLocale = deviceinfo.getDeviceLocale();
           const shortDeviceLocale = deviceLocale.substring(0, 2);
+          const interfaceLocale = "";
 
-          const interfaceLocale =
-            shortDeviceLocale === "zh" || shortDeviceLocale === "ja"
-              ? deviceLocale.substring(0, 7).toLowerCase()
-              : "en";
+          if (shortDeviceLocale === "zh") {
+            interfaceLocale = deviceLocale.substring(0, 7).toLowerCase();
+          } else {
+            interfaceLocale = shortDeviceLocale ? shortDeviceLocale : "en";
+          }
 
           store.dispatch(
             updateSettings({

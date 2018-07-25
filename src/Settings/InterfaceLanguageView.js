@@ -17,8 +17,16 @@ import { InterfaceSupportedLanguages } from "../Config/Languages";
 
 class InterfaceLanguageView extends Component {
   state = {
-    indexSelected: -1
+    indexSelected: this.props.interfaceLocale ? this.updateIndex() : 0
   };
+
+  updateIndex() {
+    const { interfaceLocale } = this.props;
+    const updateSelectedIndex = InterfaceSupportedLanguages.findIndex(item => {
+      return item[1] === interfaceLocale[1];
+    });
+    return updateSelectedIndex;
+  }
 
   submit(navigation) {
     const { updateSettings } = this.props;
@@ -81,7 +89,9 @@ class InterfaceLanguageView extends Component {
   }
 }
 
-const mS = state => ({});
+const mS = state => ({
+  interfaceLocale: state.settings.interfaceLocale
+});
 
 const mD = { updateSettings };
 

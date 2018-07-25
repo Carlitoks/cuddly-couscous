@@ -9,30 +9,27 @@ import { Colors } from "../../Themes";
 
 import styles from "./styles";
 
-const locale = I18n.currentLocale();
+const locale = I18n.currentLocale().toLocaleLowerCase();
 
 const processLocale = locale => {
-  const localeSize = locale.toString().length;
-  let splitIndex = locale.indexOf("-", 3);
-  let shortLocale;
+  let shortLocale = locale.substring(0, 2);
+  let instaBugLocale = "";
 
-  if (localeSize === 2 || splitIndex === -1) {
-    return locale;
+  if (shortLocale === "zh") {
+    instaBugLocale = locale.substring(0, 7);
   } else {
-    shortLocale = locale.substring(0, splitIndex);
-    return shortLocale;
+    instaBugLocale = shortLocale ? shortLocale : "en";
   }
+  return instaBugLocale;
 };
 
 const getInstaBugLanguage = locale => {
   const shortLocale = processLocale(locale);
   switch (shortLocale) {
-    case "zh-Hant":
+    case "zh-hant":
       return "localeChineseTraditional";
-    case "zh-Hans":
+    case "zh-hans":
       return "localeChineseSimplified";
-    case "ja-US":
-    case "ja-JP":
     case "ja":
       return "localeJapanese";
     default:
