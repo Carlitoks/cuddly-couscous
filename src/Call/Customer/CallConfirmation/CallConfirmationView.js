@@ -30,7 +30,7 @@ import { clear as clearEvents } from "../../../Ducks/EventsReducer";
 import { clearPromoCode } from "../../../Ducks/PromoCodeReducer";
 import { clearSettings as clearLinguistReducer } from "../../../Ducks/LinguistFormReducer";
 
-import I18n from "../../../I18n/I18n";
+import I18n, {translateProperty, translateLanguage} from "../../../I18n/I18n";
 import _isEmpty from "lodash/isEmpty";
 import { styles } from "./styles";
 import { Images, Colors } from "../../../Themes";
@@ -40,7 +40,6 @@ import Close from "../../../Components/Close/Close";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import LanguageSelection from "../../../Components/LanguageSelection/LanguageSelection";
-import { CATEGORIES } from "../../../Util/Constants";
 import { Iphone5 } from "../../../Util/Devices";
 import { Languages } from "../../../Config/Languages";
 import { TranslationArrows, Checkmark } from "../../../Assets/SVG";
@@ -51,11 +50,10 @@ import {
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
 import { moderateScale } from "../../../Util/Scaling";
+import { getLocalizedCategories } from "../../../Util/Constants";
 
 class CallConfirmationView extends Component {
-  carouselTitleMapper = title => {
-    return CATEGORIES[title];
-  };
+  CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   componentWillMount() {
     const { promotion, event, resetConnectingMessage } = this.props;
@@ -77,8 +75,8 @@ class CallConfirmationView extends Component {
 
         this.props.updateSettings({
           secondaryLangCode: defaultSecondaryLangCode,
-          selectedLanguageTo: selectedLangTo[0].name,
-          selectedLanguage: selectedLangTo[0].name
+          selectedLanguageTo: translateLanguage(selectedLangTo[0][3], selectedLangTo[0].name),
+          selectedLanguage: translateLanguage(selectedLangTo[0][3], selectedLangTo[0].name)
         });
       }
     }
@@ -88,19 +86,27 @@ class CallConfirmationView extends Component {
     const {
       navigation,
       customScenario,
-      selectedCategory,
+      categories,
       selectedScenario,
       categoryIndex,
       promotion,
       event,
       secundaryLangCode,
-      scenarioNotes
+      scenarioNotes,
+      updateSettings
     } = this.props;
 
     const scannedEvent = promotion ? promotion : event;
 
     const allowSecondaryLangSelection =
       !scannedEvent.id || scannedEvent.allowSecondaryLangSelection;
+
+    const category =
+      !!selectedScenario && !!selectedScenario[0]
+        ? selectedScenario[0].category
+        : categories[categoryIndex];
+
+    const categoryTitle = this.CATEGORIES[category];
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -109,7 +115,7 @@ class CallConfirmationView extends Component {
             <GoBackButton
               navigation={this.props.navigation}
               exec={() => {
-                this.props.updateSettings({ customScenarioNote: "" });
+                updateSettings({ customScenarioNote: "" });
               }}
             />
           }
@@ -130,18 +136,14 @@ class CallConfirmationView extends Component {
             <View style={styles.category}>
               <View>
                 <Text style={styles.titleStyle}>
-                  {selectedScenario[0]
-                    ? `${this.carouselTitleMapper(
-                        selectedScenario[0].category
-                      )}: `
-                    : null}
+                  {`${categoryTitle}: `}
 
                   <Text style={styles.regularText}>
                     {customScenario
                       ? customScenario
                       : this.props.selectedScenario &&
                         this.props.selectedScenario[0]
-                        ? this.props.selectedScenario[0].title
+                        ? translateProperty(this.props.selectedScenario[0], "title")
                         : I18n.t("generalAssistance")}
                   </Text>
                 </Text>
@@ -362,7 +364,7 @@ const mS = state => ({
   scenarioNotes: state.contactLinguist.customScenarioNote,
   selectedScenario: state.linguistForm.selectedScenarios,
   categoryIndex: state.homeFlow.categoryIndex,
-  selectedCategory: state.homeFlow.categories,
+  categories: state.homeFlow.categories,
   estimatedPrice:
     state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
   selectedLanguageTo: state.contactLinguist.selectedLanguage,

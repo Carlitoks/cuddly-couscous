@@ -22,7 +22,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import ListComponent from "../../Components/ListComponent/ListComponent";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 
-import I18n from "../../I18n/I18n";
+import I18n, { translateLanguage } from "../../I18n/I18n";
 import { Languages } from "../../Config/Languages";
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -75,7 +75,7 @@ class EditNativeLanguageView extends Component {
       return supportedLanguages.has(language["3"]);
     })
       .map(language => {
-        return language.name;
+        return translateLanguage(language[3], language.name);
       })
       .join(", "));
   }
@@ -97,6 +97,7 @@ class EditNativeLanguageView extends Component {
       return formNativeLanguage["3"] === item;
     });
     if (!!isSupportedLang === false) {
+      // TOOD: no string concat here, move interpolation into the translated string
       Alert.alert(
         "",
         `${I18n.t(
@@ -200,7 +201,7 @@ class EditNativeLanguageView extends Component {
                 return (
                   <ListComponent
                     data={filterList()}
-                    titleProperty={"name"}
+                    titleFunc={ item => translateLanguage(item[3], item["name"]) }
                     selected={indexSelected}
                     onPress={index => {
                       changeLanguage(index);

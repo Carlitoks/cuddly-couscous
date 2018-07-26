@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 import { styles } from "./styles";
-import I18n from "../../../I18n/I18n";
+import I18n, { translateLanguage } from "../../../I18n/I18n";
 
 import ListComponent from "../../../Components/ListComponent/ListComponent";
 import { ComingSoonLanguages } from "../../../Config/Languages";
@@ -15,7 +15,7 @@ const ComingSoonLanguagesList = () => (
 
     <ListComponent
       data={ComingSoonLanguages}
-      titleProperty={"name"}
+      titleFunc={item => translateLanguage(item[3], item["name"])}
       leftText
       noFlex
       disableAll

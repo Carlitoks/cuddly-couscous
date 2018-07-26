@@ -27,10 +27,11 @@ import { Colors } from "../../Themes";
 
 import styles from "../../Home/Customer/styles";
 import I18n from "../../I18n/I18n";
-import { CATEGORIES } from "../../Util/Constants";
 import { sliderWidth, itemWidth } from "../../Components/CarouselEntry/styles";
+import { getLocalizedCategories } from "../../Util/Constants";
 
 class PromotionView extends Component {
+  CATEGORIES = getLocalizedCategories(I18n.currentLocale());
   constructor(props) {
     super(props);
 
@@ -137,7 +138,7 @@ class PromotionView extends Component {
             <CarouselEntry
               data={item}
               mapper={title => {
-                return CATEGORIES[title];
+                return this.CATEGORIES[title];
               }}
             />
           );
@@ -184,13 +185,15 @@ class PromotionView extends Component {
     const { width, height } = Dimensions.get("window");
 
     const categoryName = categories[categoryIndex];
+    const organizationName = organization ? organization.name : null;
+
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <HeaderView
           headerLeftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          navbarTitle={this.state.showNavbarTitle ? organization.Name : null}
+          navbarTitle={this.state.showNavbarTitle ? organizationName : null}
           navbarSubTitle={this.state.showNavbarTitle ? eventName : null}
           navbarType={eventName}
           NoWaves
@@ -202,7 +205,7 @@ class PromotionView extends Component {
             />
             <Waves
               width={width}
-              height={width * 129 / 1175.7}
+              height={(width * 129) / 1175.7}
               viewBox={"0 0 1175.7 129"}
               style={styles.waves}
             />
@@ -213,7 +216,7 @@ class PromotionView extends Component {
               onScroll={this.handleScroll}
             >
               <View style={styles.subtitleCallContainer}>
-                <Text style={[styles.subtitleCall]}>{organization.Name}</Text>
+                <Text style={[styles.subtitleCall]}>{organizationName}</Text>
                 <Text style={[styles.subtitleCall]}>{eventName}</Text>
               </View>
               {this.renderList()}
@@ -257,4 +260,7 @@ const mD = {
   updateSettings
 };
 
-export default connect(mS, mD)(PromotionView);
+export default connect(
+  mS,
+  mD
+)(PromotionView);

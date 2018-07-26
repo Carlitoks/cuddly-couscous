@@ -28,7 +28,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
 import _capitalize from "lodash/capitalize";
-import I18n from "../../I18n/I18n";
+import I18n, {translateLanguage} from "../../I18n/I18n";
 import { Images } from "../../Themes";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import Close from "../../Components/Close/Close";
@@ -295,7 +295,7 @@ const mS = state => ({
   preferredName: state.userProfile.preferredName,
   linguistProfile: state.userProfile.linguistProfile,
   gender: state.userProfile.gender,
-  selectedNativeLanguage: state.userProfile.selectedNativeLanguage.name,
+  selectedNativeLanguage: translateLanguage(state.userProfile.selectedNativeLanguage[3], state.userProfile.selectedNativeLanguage.name),
   selectedSecondaryLanguages: state.linguistForm.selectedSecondaryLanguages,
   selectedAreasOfExpertise: state.linguistForm.selectedAreasOfExpertise,
   avatarURL: state.userProfile.avatarURL,

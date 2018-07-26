@@ -172,29 +172,6 @@ class MenuView extends Component {
             <Text style={styles.colorText}>{I18n.t("reportProblemMenu")}</Text>
           </Icon.Button>
 
-          {/* Logout */}
-          <Icon.Button
-            name="exit-to-app"
-            size={25}
-            backgroundColor={Colors.background}
-            iconStyle={styles.optionMenu}
-            onPress={() => {
-              Alert.alert(I18n.t("logOut"), I18n.t("logOutConfirmation"), [
-                {
-                  text: I18n.t("no")
-                },
-                {
-                  text: I18n.t("yes"),
-                  onPress: () => {
-                    this.props.logOutAsync();
-                  }
-                }
-              ]);
-            }}
-          >
-            <Text style={styles.colorText}>{I18n.t("logOut")}</Text>
-          </Icon.Button>
-
           {/* Become a linguist */}
           {this.isACustomer() && (
             <Icon.Button
@@ -217,6 +194,20 @@ class MenuView extends Component {
               </Text>
             </Icon.Button>
           )}
+
+          {/* Settings */}
+          <Icon.Button
+            name="settings"
+            size={25}
+            backgroundColor={Colors.background}
+            iconStyle={styles.optionMenu}
+            onPress={() => {
+              navigation.dispatch({ type: "SettingsView" });
+              // this.checkCurrentPage(navigation, "Settings");
+            }}
+          >
+            <Text style={styles.colorText}>{I18n.t("settings")}</Text>
+          </Icon.Button>
         </ScrollView>
         <View style={styles.containerVersion}>
           <View style={styles.version}>
@@ -248,4 +239,7 @@ const mD = {
   clearHomeFlow
 };
 
-export default connect(mS, mD)(MenuView);
+export default connect(
+  mS,
+  mD
+)(MenuView);

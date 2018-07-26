@@ -5,14 +5,14 @@ import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 
 import { delayUpdateInfo } from "./Ducks/NetworkInfoReducer";
-import {
-  remoteNotificationReceived,
-  registerFCM,
-  addListeners
-} from "./Ducks/PushNotificationReducer";
+import { updateSettings } from "./Ducks/SettingsReducer";
+import { addListeners } from "./Ducks/PushNotificationReducer";
 
-import { dumpAsyncStorage, clearState } from "./Config/LocalStorage";
+import { switchLanguage } from "./I18n/I18n";
+import deviceinfo from "react-native-device-info";
+import { InterfaceSupportedLanguages } from "./Config/Languages";
 
+import I18n from "./I18n/I18n";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +29,38 @@ class App extends Component {
 
   componentWillMount() {
     createStore()
+      .then(store => {
+        const {
+          settings: { userLocaleSet, interfaceLocale: storeInterfaceLocale }
+        } = store.getState();
+
+        // ================================
+        if (!userLocaleSet) {
+          const deviceLocale = deviceinfo.getDeviceLocale();
+          const shortDeviceLocale = deviceLocale.substring(0, 2);
+          const interfaceLocaleCode = "";
+
+          if (shortDeviceLocale === "zh") {
+            interfaceLocaleCode = deviceLocale.substring(0, 7).toLowerCase();
+          } else {
+            interfaceLocaleCode = shortDeviceLocale ? shortDeviceLocale : "en";
+          }
+
+          const interfaceLocale = InterfaceSupportedLanguages.find(
+            language => language[1] === interfaceLocaleCode
+          );
+
+          if (interfaceLocale) {
+            store.dispatch(updateSettings({ interfaceLocale }));
+
+            switchLanguage(interfaceLocaleCode, this);
+          }
+        } else {
+          switchLanguage(storeInterfaceLocale[1], this);
+        }
+        // ================================
+        return store;
+      })
       .then(store => {
         const { auth } = store.getState();
 

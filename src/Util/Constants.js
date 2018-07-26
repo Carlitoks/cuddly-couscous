@@ -14,32 +14,6 @@ export const LANG_CODES = new Map([
   ["yue", "Chinese (Cantonese)"]
 ]);
 
-export const LAUNCHSCREENENTRIES = [
-  {
-    title: "",
-    illustration: "lauchScreenSwipe0"
-  },
-  {
-    title: I18n.t("lauchScreenSwipe1"),
-    illustration: "lauchScreenSwipe1"
-  },
-  {
-    title: I18n.t("lauchScreenSwipe2"),
-    illustration: "lauchScreenSwipe2"
-  },
-  {
-    title: I18n.t("lauchScreenSwipe3"),
-    illustration: "lauchScreenSwipe3"
-  },
-  {
-    title: I18n.t("lauchScreenSwipe4"),
-    illustration: "lauchScreenSwipe4"
-  },
-  {
-    title: I18n.t("lauchScreenSwipe5"),
-    illustration: "lauchScreenSwipe5"
-  }
-];
 //Set cost to 0 until free is up
 export const TIME_OPTIONS = [
   { duration: 8, cost: 0 },
@@ -73,17 +47,17 @@ export const SETTINGS = {
   LINGUIST: "callLinguistSettings"
 };
 
-export const CATEGORIES = {
-  airport: I18n.t("airport"),
-  transit: I18n.t("transit"),
-  hotel: I18n.t("hotel"),
-  dining: I18n.t("dining"),
-  retail: I18n.t("retail"),
-  conversations: I18n.t("conversations"),
-  qr: I18n.t("qr"),
-  other: I18n.t("other"),
-  general: I18n.t("general")
-};
+export const getLocalizedCategories = locale => ({
+  airport: I18n.t("airport", { locale: locale }),
+  transit: I18n.t("transit", { locale: locale }),
+  hotel: I18n.t("hotel", { locale: locale }),
+  dining: I18n.t("dining", { locale: locale }),
+  retail: I18n.t("retail", { locale: locale }),
+  conversations: I18n.t("conversations", { locale: locale }),
+  qr: I18n.t("qr", { locale: locale }),
+  other: I18n.t("other", { locale: locale }),
+  general: I18n.t("general", { locale: locale })
+});
 
 export const TIME = {
   TIMEOUT: 60,

@@ -22,6 +22,7 @@ import BottomButton from "../../Components/BottomButton/BottomButton";
 
 import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
 import { updateForm as updateCustomer } from "../../Ducks/CustomerProfileReducer";
+import { updateSettings } from "../../Ducks/SettingsReducer";
 
 // For the moment
 import I18n from "../../I18n/I18n";
@@ -33,13 +34,39 @@ import {
   itemWidth
 } from "../../Components/FullScreenSwipeEntry/style";
 import FullScreenSwipeEntry from "../../Components/FullScreenSwipeEntry/FullScreenSwipeEntry";
-import { LAUNCHSCREENENTRIES } from "../../Util/Constants";
 import { Waves, Logo } from "../../Assets/SVG";
 import { checkOperatingHours } from "../../Util/Helpers";
+import { InterfaceSupportedLanguages } from "../../Config/Languages";
 
 const IphoneX = DeviceInfo.getModel() == "iPhone X";
 
 class SelectRoleView extends Component {
+  LAUNCHSCREENENTRIES = [
+    {
+      title: "",
+      illustration: "lauchScreenSwipe0"
+    },
+    {
+      title: I18n.t("lauchScreenSwipe1"),
+      illustration: "lauchScreenSwipe1"
+    },
+    {
+      title: I18n.t("lauchScreenSwipe2"),
+      illustration: "lauchScreenSwipe2"
+    },
+    {
+      title: I18n.t("lauchScreenSwipe3"),
+      illustration: "lauchScreenSwipe3"
+    },
+    {
+      title: I18n.t("lauchScreenSwipe4"),
+      illustration: "lauchScreenSwipe4"
+    },
+    {
+      title: I18n.t("lauchScreenSwipe5"),
+      illustration: "lauchScreenSwipe5"
+    }
+  ];
   constructor(props) {
     super(props);
 
@@ -84,7 +111,7 @@ class SelectRoleView extends Component {
       <View style={styles.exampleContainer}>
         <Carousel
           ref={c => (this._slider1Ref = c)}
-          data={LAUNCHSCREENENTRIES}
+          data={this.LAUNCHSCREENENTRIES}
           renderItem={this.renderSwipeItem}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
@@ -104,7 +131,7 @@ class SelectRoleView extends Component {
     const { slider1ActiveSlide } = this.state;
     return (
       <Pagination
-        dotsLength={LAUNCHSCREENENTRIES.length}
+        dotsLength={this.LAUNCHSCREENENTRIES.length}
         activeDotIndex={slider1ActiveSlide}
         containerStyle={[
           styles.paginationContainer,
@@ -201,12 +228,14 @@ ms = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   token: state.auth.token,
   email: state.auth.email,
-  id: state.userProfile.id
+  id: state.userProfile.id,
+  userLocaleSet: state.settings.userLocaleSet
 });
 
 mD = {
   checkRecord,
-  updateCustomer
+  updateCustomer,
+  updateSettings
 };
 
 export default connect(

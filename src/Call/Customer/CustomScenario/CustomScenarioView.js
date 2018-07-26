@@ -20,40 +20,37 @@ import InputRegular from "../../../Components/InputRegular/InputRegular";
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import styles from "./styles";
-import { Colors } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
-import { moderateScale } from "../../../Util/Scaling";
-import { CATEGORIES } from "../../../Util/Constants";
+import { getLocalizedCategories } from "../../../Util/Constants";
 
 class CustomScenario extends Component {
   navigate = this.props.navigation.navigate;
+  CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   componentWillUnmount() {
     this.props.updateSettings({
       customScenario: ""
     });
-    console.log("cdsc");
   }
 
-  carouselTitleMapper = title => {
-    return CATEGORIES[title];
-  };
-
   render() {
-    const navigation = this.props.navigation;
+    const {
+      categoryIndex,
+      navigation,
+      categories,
+      customScenario,
+      updateSettings
+    } = this.props;
+
+    const categoryTitle = this.CATEGORIES[categories[categoryIndex]];
+
     const categorySelected =
-      this.props.categoryIndex > -1 && !!this.props.categories
-        ? this.carouselTitleMapper(
-            this.props.categories[this.props.categoryIndex]
-          )
-        : null;
+      categoryIndex > -1 && !!categories ? categoryTitle : null;
 
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <HeaderView
-          headerLeftComponent={
-            <GoBackButton navigation={this.props.navigation} />
-          }
+          headerLeftComponent={<GoBackButton navigation={navigation} />}
           navbarTitle={categorySelected}
           navbarType={"Basic"}
           NoWaves
@@ -66,11 +63,9 @@ class CustomScenario extends Component {
             {/* Custom Scenario */}
             <InputRegular
               placeholder={I18n.t("iNeedAssistanceWith")}
-              value={this.props.customScenario}
+              value={customScenario}
               onChangeText={text => {
-                this.props.updateSettings({
-                  customScenario: text
-                });
+                updateSettings({ customScenario: text });
               }}
               maxLength={350}
               autoFocus={true}

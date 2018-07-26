@@ -40,6 +40,7 @@ const getStore = () =>
           userProfile: store.getState().userProfile,
           tokbox: store.getState().tokbox,
           [settings]: store.getState()[settings],
+          settings: store.getState().settings,
           profileLinguist: store.getState().profileLinguist,
           pushNotification: store.getState().pushNotification,
           onboardingRecord: store.getState().onboardingRecord,

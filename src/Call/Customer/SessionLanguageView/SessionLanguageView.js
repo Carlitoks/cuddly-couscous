@@ -13,7 +13,7 @@ import SearchBar from "../../../Components/SearchBar/SearchBar";
 import LanguageSelection from "../../../Components/LanguageSelection/LanguageSelection";
 
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
-import I18n from "../../../I18n/I18n";
+import I18n, { translateLanguage } from "../../../I18n/I18n";
 import { styles } from "./styles";
 import SupportedLanguagesList from "./SupportedLanguagesList";
 import ComingSoonLanguagesList from "./ComingSoonLanguagesList";
@@ -60,7 +60,7 @@ class SessionLanguageView extends Component {
                 return (
                   <ListComponent
                     data={languages}
-                    titleProperty={"name"}
+                    titleFunc={ (item) => {return translateLanguage(item[3], item["name"]); } }
                     selected={indexSelected}
                     onPress={changeLanguage}
                     gradient

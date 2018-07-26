@@ -1,3 +1,5 @@
+import { Language } from "../Assets/SVG";
+
 export const Languages = [
   {
     1: "ab",
@@ -56,7 +58,7 @@ export const Languages = [
   {
     1: "ar",
     2: "ara",
-    3: "ara",
+    3: "arb",
     name: "Arabic",
     local: "العربية",
     "2T": "ara",
@@ -911,7 +913,7 @@ export const Languages = [
   {
     1: "ms",
     2: "msa",
-    3: "msa",
+    3: "zsm",
     name: "Malay",
     local: "Bahasa Melayu",
     "2T": "msa",
@@ -1666,233 +1668,38 @@ export const Languages = [
   }
 ];
 
-export const SupportedLanguages = [
+// languages available for native lang selection
+const primaryCodes = ["eng", "cmn", "yue", "jpn", "spa", "deu", "fra", "arb", "por", "rus", "ita", "kor", "nld", "swe", "nor", "tur", "pol", "dan", "fin", "tha", "heb", "ind", "pes", "hin", "ces", "zsm", "ell", "hun", "ron", "vie", "ben", "cat", "fil", "tam", "slk", "kaz", "ltz", "kur", "azj", "azb", "ukr", "afr", "hrv", "glg", "slv", "lit", "ckb", "jav", "urd", "sqi", "tel", "srp", "yor", "hau", "bul", "uzb", "swa", "eus", "bel", "tat"];
+
+// languages in "Coming Soon" list
+const comingSoonCodes = ["arb","ben","dan","nld","fin","fra","deu","hin","ita","kor","zsm","nor","pol","por","rus","spa","swe","tha","tur","urd"];
+
+// languages available for session selection
+const supportedLangCodes = ["eng", "cmn", "yue"];
+
+const filterLangsByCodes = (codes) => {
+  return Languages.filter(item => codes.indexOf(item[3]) != -1 );
+};
+
+export const PrimaryLanguages =  filterLangsByCodes(primaryCodes);
+export const ComingSoonLanguages = filterLangsByCodes(comingSoonCodes);
+export const SupportedLanguages = filterLangsByCodes(supportedLangCodes);
+
+export const InterfaceSupportedLanguages = [
   {
     1: "en",
-    2: "eng",
-    3: "eng",
-    name: "English",
-    local: "English",
-    "2T": "eng",
-    "2B": "eng"
+    name: "English"
   },
   {
-    1: "zh",
-    2: "zho",
-    3: "cmn",
-    name: "Chinese (Mandarin)",
-    local: "中文",
-    "2T": "zho",
-    "2B": "chi"
+    1: "zh-hans",
+    name: "语言"
   },
   {
-    1: "zh",
-    2: "zho",
-    3: "yue",
-    name: "Chinese (Cantonese)",
-    local: "廣東話",
-    "2T": "zho",
-    "2B": "chi"
-  }
-];
-
-export const ComingSoonLanguages = [
-  {
-    1: "am",
-    2: "amh",
-    3: "amh",
-    name: "Amharic",
-    local: "አማርኛ",
-    "2T": "amh",
-    "2B": "amh"
+    1: "zh-hant",
+    name: "語言"
   },
   {
-    1: "ar",
-    2: "ara",
-    3: "ara",
-    name: "Arabic",
-    local: "العربية",
-    "2T": "ara",
-    "2B": "ara"
-  },
-  {
-    1: "bn",
-    2: "ben",
-    3: "ben",
-    name: "Bengali",
-    local: "বাংলা",
-    "2T": "ben",
-    "2B": "ben"
-  },
-  {
-    1: "da",
-    2: "dan",
-    3: "dan",
-    name: "Danish",
-    local: "Dansk",
-    "2T": "dan",
-    "2B": "dan"
-  },
-  {
-    1: "nl",
-    2: "nld",
-    3: "nld",
-    name: "Dutch",
-    local: "Nederlands",
-    "2T": "nld",
-    "2B": "dut"
-  },
-  {
-    1: "fi",
-    2: "fin",
-    3: "fin",
-    name: "Finnish",
-    local: "Suomi",
-    "2T": "fin",
-    "2B": "fin"
-  },
-  {
-    1: "fr",
-    2: "fra",
-    3: "fra",
-    name: "French",
-    local: "Français",
-    "2T": "fra",
-    "2B": "fre"
-  },
-  {
-    1: "de",
-    2: "deu",
-    3: "deu",
-    name: "German",
-    local: "Deutsch",
-    "2T": "deu",
-    "2B": "ger"
-  },
-  {
-    1: "hi",
-    2: "hin",
-    3: "hin",
-    name: "Hindi",
-    local: "हिन्दी",
-    "2T": "hin",
-    "2B": "hin"
-  },
-  {
-    1: "it",
-    2: "ita",
-    3: "ita",
-    name: "Italian",
-    local: "Italiano",
-    "2T": "ita",
-    "2B": "ita"
-  },
-  {
-    1: "ko",
-    2: "kor",
-    3: "kor",
-    name: "Korean",
-    local: "한국어",
-    "2T": "kor",
-    "2B": "kor"
-  },
-  {
-    1: "ms",
-    2: "msa",
-    3: "msa",
-    name: "Malay",
-    local: "Bahasa Melayu",
-    "2T": "msa",
-    "2B": "may"
-  },
-  {
-    1: "no",
-    2: "nor",
-    3: "nor",
-    name: "Norwegian",
-    local: "Norsk",
-    "2T": "nor",
-    "2B": "nor"
-  },
-  {
-    1: "pl",
-    2: "pol",
-    3: "pol",
-    name: "Polish",
-    local: "Polski",
-    "2T": "pol",
-    "2B": "pol"
-  },
-  {
-    1: "pt",
-    2: "por",
-    3: "por",
-    name: "Portuguese",
-    local: "Português",
-    "2T": "por",
-    "2B": "por"
-  },
-  {
-    1: "ru",
-    2: "rus",
-    3: "rus",
-    name: "Russian",
-    local: "Русский",
-    "2T": "rus",
-    "2B": "rus"
-  },
-  {
-    1: "es",
-    2: "spa",
-    3: "spa",
-    name: "Spanish",
-    local: "Español",
-    "2T": "spa",
-    "2B": "spa"
-  },
-  {
-    1: "sv",
-    2: "swe",
-    3: "swe",
-    name: "Swedish",
-    local: "Svenska",
-    "2T": "swe",
-    "2B": "swe"
-  },
-  {
-    1: "tl",
-    2: "tgl",
-    3: "tgl",
-    name: "Tagalog",
-    local: "Tagalog",
-    "2T": "tgl",
-    "2B": "tgl"
-  },
-  {
-    1: "th",
-    2: "tha",
-    3: "tha",
-    name: "Thai",
-    local: "ภาษาไทย",
-    "2T": "tha",
-    "2B": "tha"
-  },
-  {
-    1: "tr",
-    2: "tur",
-    3: "tur",
-    name: "Turkish",
-    local: "Türkçe",
-    "2T": "tur",
-    "2B": "tur"
-  },
-  {
-    1: "ur",
-    2: "urd",
-    3: "urd",
-    name: "Urdu",
-    local: "اردو",
-    "2T": "urd",
-    "2B": "urd"
+    1: "ja",
+    name: "日本語"
   }
 ];

@@ -14,6 +14,7 @@ import userProfile from "./UserProfileReducer";
 import registrationCustomer from "./RegistrationCustomerReducer";
 import callCustomerSettings from "./CallCustomerSettings";
 import callLinguistSettings from "./CallLinguistSettings";
+import settings from "./SettingsReducer";
 import customerProfile from "./CustomerProfileReducer";
 import rateCall from "./RateCallReducer";
 import tokbox from "./tokboxReducer";
@@ -52,6 +53,7 @@ const rootReducer = combineReducers({
   registrationCustomer,
   resetPassword,
   sessionInfo,
+  settings,
   tokbox,
   userProfile
 });

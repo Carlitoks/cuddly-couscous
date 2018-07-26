@@ -17,3 +17,16 @@ The api server will automatically start on port 5000, but the image also has a r
 
 * `make run-cmd` - print available commands from the solo-api image
 * `make run-cmd CMD=db-schema-reset` - run a specific command from the solo-api image
+
+## Android Studio ##
+
+Install Android Studio, as well as `react-native-debugger`.
+
+Once installed, do a few things:
+
+* in Android Studio, open `android/app/`
+* Open AVD Manager and run a device emulator
+* After a "cold boot", use `yarn android:run` to get the app loaded onto the phone
+* run `yarn start` to start the dev server
+* hit "R+R" to reload any changes
+* run `yarn android:shake` to connect to the `react-native-debugger`

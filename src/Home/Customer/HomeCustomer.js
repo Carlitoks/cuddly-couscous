@@ -1,4 +1,3 @@
-//TODO: Create switch when we retrieve the categories array to add icon names
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _upperFirst from "lodash/upperFirst";
@@ -56,8 +55,8 @@ import { Waves } from "../../Assets/SVG";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
-import I18n from "../../I18n/I18n";
-import { REASON, CATEGORIES, SUPPORTED_LANGS } from "../../Util/Constants";
+import I18n, { translateLanguage, translateProperty } from "../../I18n/I18n";
+import { SUPPORTED_LANGS, getLocalizedCategories } from "../../Util/Constants";
 import {
   sliderWidth,
   itemWidth,
@@ -80,6 +79,8 @@ class Home extends Component {
       languagesMapper: { eng: "cmn", cmn: "eng", yue: "eng" }
     };
   }
+
+  CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   componentDidMount() {
     const { getAllCustomerCalls, uuid, token } = this.props;
@@ -114,7 +115,9 @@ class Home extends Component {
             }
           } = call;
 
-          const titleMapped = `${_upperFirst(CATEGORIES[category])}: ${title}`;
+          const titleMapped = `${_upperFirst(
+            this.CATEGORIES[category]
+          )}: ${title}`;
 
           return {
             id,
@@ -138,7 +141,8 @@ class Home extends Component {
       lastName,
       getCategories,
       getScenarios,
-      listItemSelected
+      listItemSelected,
+      updateHomeFlow
     } = this.props;
 
     if (this.props.tokbox && this.props.networkInfoType !== "none") {
@@ -162,6 +166,12 @@ class Home extends Component {
     this.props.clearCallLinguistSettings();
     this.props.asyncGetAccountInformation();
     this.props.clearEvents();
+
+    updateHomeFlow({
+      customScenario: "",
+      categoryIndex: -1
+    });
+
     InCallManager.stop();
     this.setState({
       indexSelected: listItemSelected
@@ -181,7 +191,8 @@ class Home extends Component {
       this.props.updateSettings({ categorySelected: item });
 
       updateHomeFlow({
-        lastSelectedTile: currentIndex
+        lastSelectedTile: currentIndex,
+        categoryIndex: currentIndex
       });
 
       item === "qr"
@@ -220,7 +231,7 @@ class Home extends Component {
                   onPress={() => this.onCarouselItemPress(index, item)}
                   data={item}
                   mapper={title => {
-                    return CATEGORIES[title];
+                    return this.CATEGORIES[title];
                   }}
                 />
               );
@@ -267,9 +278,9 @@ class Home extends Component {
 
     updateContactLinguist({
       primaryLangCode: primaryLanguage[3],
-      selectedLanguageFrom: primaryLanguage["name"],
+      selectedLanguageFrom: translateLanguage(primaryLanguage[3], primaryLanguage["name"]),
       secundaryLangCode: secondaryLanguage[3],
-      selectedLanguage: secondaryLanguage["name"]
+      selectedLanguage: translateLanguage(secondaryLanguage[3], secondaryLanguage["name"])
     });
   };
 
@@ -300,7 +311,11 @@ class Home extends Component {
         data={data}
         itemKey={"id"}
         subtitleProperty={"createdAt"}
-        titleProperty={"title"}
+        titleFunc={item => {
+          if (item.scenario) {
+            return translateProperty(item.scenario, "title")
+          }
+        }}
         thirdLineProperty={"customScenarioNote"}
         onPress={index => {
           if (!emptyActivity) {
@@ -322,8 +337,8 @@ class Home extends Component {
 
             updateContactLinguist({
               primaryLangCode: scenario.primaryLangCode,
-              selectedLanguageFrom: Languages[primaryLanguageIndex]["name"],
-              selectedLanguage: Languages[secondaryLanguageIndex]["name"],
+              selectedLanguageFrom: translateLanguage(Languages[primaryLanguageIndex][3], Languages[primaryLanguageIndex]["name"]),
+              selectedLanguage: translateLanguage(Languages[secondaryLanguageIndex][3], Languages[secondaryLanguageIndex]["name"]),
               secundaryLangCode: scenario.secondaryLangCode,
               customScenarioNote: scenario.customScenarioNote
             });
