@@ -179,7 +179,7 @@ class CallHistoryView extends Component {
             />
           }
           navbarTitle={I18n.t("callHistory")}
-          navbarType={"Basic"}
+          navbarType={"Complete"}
           tabValues={tabValues}
           tabSelectedIndex={this.props.selectedIndex}
           onTabPress={this.handleIndexChange}
