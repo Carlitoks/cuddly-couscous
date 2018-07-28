@@ -20,6 +20,7 @@ import {
 
 import { clearSettings as clearCallLinguistSettings } from "../../Ducks/CallLinguistSettings";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
+import { clear as clearTokbox } from "../../Ducks/tokboxReducer";
 import { updateSettings as updateLinguistForm } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { getCategories, updateSettings } from "../../Ducks/HomeFlowReducer";
@@ -166,7 +167,7 @@ class Home extends Component {
     this.props.clearCallLinguistSettings();
     this.props.asyncGetAccountInformation();
     this.props.clearEvents();
-
+    this.props.clearTokbox();
     updateHomeFlow({
       customScenario: "",
       categoryIndex: -1
@@ -479,7 +480,8 @@ const mD = {
   clearSettings,
   clearCallLinguistSettings,
   asyncGetAccountInformation,
-  clearEvents
+  clearEvents,
+  clearTokbox
 };
 
 export default connect(

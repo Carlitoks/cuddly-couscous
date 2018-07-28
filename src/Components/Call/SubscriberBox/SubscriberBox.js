@@ -11,6 +11,7 @@ import {
   clearSettings,
   resetReconnectCounter
 } from "../../../Ducks/ContactLinguistReducer";
+import { updateSettings as updateCustomerSettings } from "../../../Ducks/CallCustomerSettings";
 
 import styles from "./styles";
 
@@ -30,17 +31,26 @@ class SubscriberBox extends Component {
       disconnected: () => {
         console.log("DISCONNECTED EVENT");
         SoundManager["Disconnected"].play();
-        Alert.alert(I18n.t("waitingYourConnection"));
+        this.props.updateCustomerSettings({
+          modalReconnect: true
+        });
       },
       error: event => {
         console.log("ERROR EVENT", event);
       },
       videoDataReceived: () => {
-        console.log("VIDEO RECEIVED EVENT");
+        if (this.props.visibility) {
+          this.props.updateCustomerSettings({
+            modalReconnect: false
+          });
+        }
       },
       videoDisabled: event => {
         console.log(`VIDEO DISABLED EVENT ${event}`);
         this.props.videoState(true);
+        this.props.updateCustomerSettings({
+          modalReconnect: false
+        });
       },
       videoDisableWarning: () => {
         console.log("VIDEO DISABLED WARNING EVENT");
@@ -53,6 +63,9 @@ class SubscriberBox extends Component {
       videoEnabled: event => {
         console.log(`VIDEO ENABLED EVENT ${event}`);
         this.props.videoState(false);
+        this.props.updateCustomerSettings({
+          modalReconnect: false
+        });
       },
       videoNetworkStats: event => {
         //console.log("VIDEO STATS EVENT", event);
@@ -79,13 +92,15 @@ const mS = state => {
     ? SETTINGS.LINGUIST
     : SETTINGS.CUSTOMER;
   return {
-    speaker: state[settings].speaker
+    speaker: state[settings].speaker,
+    visibility: state.callCustomerSettings.modalReconnect
   };
 };
 
 const mD = {
   videoState,
-  updateSettings
+  updateSettings,
+  updateCustomerSettings
 };
 
 const Subscriber = connect(

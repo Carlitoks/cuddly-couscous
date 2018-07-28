@@ -18,7 +18,7 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
-
+import { clear as clearTokbox } from "../../Ducks/tokboxReducer";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 import {
@@ -48,6 +48,7 @@ class Home extends Component {
     clearInterval(this.props.timer);
     clearInterval(this.props.counterId);
     this.props.clearSettings();
+    this.props.clearTokbox();
     this.props.clearCallCustomerSettings();
     this.props.asyncGetAccountInformation();
     InCallManager.stop();
@@ -224,7 +225,8 @@ const mD = {
   clearSettings,
   asyncGetInvitationDetail,
   asyncGetAccountInformation,
-  clearCallCustomerSettings
+  clearCallCustomerSettings,
+  clearTokbox
 };
 
 export default connect(

@@ -10,6 +10,7 @@ import {
   startTimer as startLinguistTimer,
   updateSettings as updateLinguistSettings
 } from "./CallLinguistSettings";
+import { Alert } from "react-native";
 import { REASON, STATUS_TOKBOX } from "../Util/Constants";
 import { Sessions } from "../Api";
 
@@ -113,7 +114,12 @@ export const streamCreatedEvent = event => async (dispatch, getState) => {
 };
 
 export const streamDestroyedEvent = event => (dispatch, getState) => {
-  const { userProfile, callLinguistSettings, auth } = getState();
+  const {
+    userProfile,
+    callLinguistSettings,
+    auth,
+    callCustomerSettings
+  } = getState();
   dispatch(
     update({
       status: STATUS_TOKBOX.DESTROY
@@ -134,6 +140,8 @@ export const streamDestroyedEvent = event => (dispatch, getState) => {
         dispatch(clear());
         dispatch({ type: "Home" });
       });
+  } else {
+    dispatch({ type: "RateView" });
   }
 };
 
@@ -161,7 +169,6 @@ export const publisherStart = () => async (dispatch, getState) => {
 
 export const subscriberStart = () => async (dispatch, getState) => {
   const { userProfile, contactLinguist } = getState();
-
   if (userProfile.linguistProfile) {
     dispatch(startLinguistTimer());
   } else {
@@ -182,6 +189,14 @@ export const sendSignal = (reason, data) => dispatch => {
         type: reason,
         data: data
       }
+    })
+  );
+};
+
+export const clearTokboxStatus = event => dispatch => {
+  dispatch(
+    update({
+      status: STATUS_TOKBOX.DISCONECTED
     })
   );
 };

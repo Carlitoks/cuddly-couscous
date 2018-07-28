@@ -199,6 +199,12 @@ export const closeCall = reason => dispatch => {
   });
 };
 
+export const closeCallReconnect = reason => dispatch => {
+  SoundManager["EndCall"].play();
+  dispatch(sendSignal(REASON.DONE, "Ended by Linguist"));
+  dispatch({ type: "RateView" });
+};
+
 // Initial State
 const initialState = {
   // Call Settings

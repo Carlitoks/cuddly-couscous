@@ -15,7 +15,12 @@ import {
   verifyCall,
   closeCall
 } from "../../../Ducks/CallCustomerSettings";
-import { update, clear, sendSignal } from "../../../Ducks/tokboxReducer";
+import {
+  update,
+  clear,
+  sendSignal,
+  clearTokboxStatus
+} from "../../../Ducks/tokboxReducer";
 
 import {
   clearSettings as clearCallSettings,
@@ -116,14 +121,18 @@ class CustomerView extends Component {
       : Images.avatar;
   };
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer); // remove interval of timer
     cleanNotifications();
+    await clearInterval(this.props.counterId);
+    await clearInterval(this.props.timer);
     this.props.resetTimerAsync(); // reset call timer
-    clearInterval(this.props.counterId);
-    clearInterval(this.props.timer);
     this.props.resetCounter();
     InCallManager.stop();
+    this.props.updateSettings({
+      modalReconnect: false
+    });
+    this.props.clearTokboxStatus();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -273,7 +282,8 @@ const mD = {
   clear,
   verifyCall,
   closeCall,
-  sendSignal
+  sendSignal,
+  clearTokboxStatus
 };
 
 export default connect(

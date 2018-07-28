@@ -77,6 +77,15 @@ export const resetReconnectAsync = () => (dispatch, getState) => {
   );
 };
 
+export const resetReconnectCounterAsync = () => (dispatch, getState) => {
+  const { callCustomerSettings } = getState();
+  dispatch(
+    updateSettings({
+      modalReconnectCounter: 0
+    })
+  );
+};
+
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 
 export const EndCall = (sessionID, reason, token) => dispatch => {
@@ -100,10 +109,7 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
     })
     .catch(error => {
       dispatch(networkError(error));
-      dispatch(clearSettings());
-      dispatch(clear());
-      dispatch(clearEvents());
-      dispatch({ type: "Home" });
+      dispatch({ type: "RateView" });
     });
 };
 
@@ -269,6 +275,7 @@ export const startTimer = () => (dispatch, getState) => {
 export const closeCall = reason => (dispatch, getState) => {
   const { contactLinguist, callCustomerSettings, tokbox, auth } = getState();
   clearInterval(contactLinguist.counterId);
+  clearInterval(callCustomerSettings.timer);
   dispatch(
     updateContactLinguist({
       modalContact: false,
@@ -295,6 +302,7 @@ export const closeCall = reason => (dispatch, getState) => {
 export const cleanCall = reason => (dispatch, getState) => {
   const { contactLinguist, callCustomerSettings, tokbox, auth } = getState();
   clearInterval(contactLinguist.counterId);
+  clearInterval(callCustomerSettings.timer);
   dispatch(
     updateContactLinguist({
       modalContact: false,
