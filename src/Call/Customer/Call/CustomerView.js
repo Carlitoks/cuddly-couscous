@@ -15,7 +15,12 @@ import {
   verifyCall,
   closeCall
 } from "../../../Ducks/CallCustomerSettings";
-import { update, clear, sendSignal } from "../../../Ducks/tokboxReducer";
+import {
+  update,
+  clear,
+  sendSignal,
+  clearTokboxStatus
+} from "../../../Ducks/tokboxReducer";
 
 import {
   clearSettings as clearCallSettings,
@@ -116,14 +121,18 @@ class CustomerView extends Component {
       : Images.avatar;
   };
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer); // remove interval of timer
     cleanNotifications();
+    await clearInterval(this.props.counterId);
+    await clearInterval(this.props.timer);
     this.props.resetTimerAsync(); // reset call timer
-    clearInterval(this.props.counterId);
-    clearInterval(this.props.timer);
     this.props.resetCounter();
     InCallManager.stop();
+    this.props.updateSettings({
+      modalReconnect: false
+    });
+    this.props.clearTokboxStatus();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -141,7 +150,8 @@ class CustomerView extends Component {
       selectedScenarioId,
       customScenarioNote,
       token,
-      eventID
+      eventID,
+      location
     } = this.props;
 
     await createSession({
@@ -154,8 +164,10 @@ class CustomerView extends Component {
       scenarioID: selectedScenarioId,
       customScenarioNote: customScenarioNote,
       token: token,
-      eventID: eventID
+      eventID: eventID,
+      location: location
     });
+    this.callTimeOut();
   };
 
   callTimeOut = () => {
@@ -253,6 +265,7 @@ const mS = state => ({
   extraTime: state.callCustomerSettings.extraTime,
   red: state.callCustomerSettings.red,
   timeBtn: state.callCustomerSettings.timeBtn,
+  location: state.callCustomerSettings.location,
   eventID: state.events.id
 });
 
@@ -269,7 +282,8 @@ const mD = {
   clear,
   verifyCall,
   closeCall,
-  sendSignal
+  sendSignal,
+  clearTokboxStatus
 };
 
 export default connect(

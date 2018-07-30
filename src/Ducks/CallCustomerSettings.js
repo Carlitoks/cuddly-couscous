@@ -77,6 +77,15 @@ export const resetReconnectAsync = () => (dispatch, getState) => {
   );
 };
 
+export const resetReconnectCounterAsync = () => (dispatch, getState) => {
+  const { callCustomerSettings } = getState();
+  dispatch(
+    updateSettings({
+      modalReconnectCounter: 0
+    })
+  );
+};
+
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 
 export const EndCall = (sessionID, reason, token) => dispatch => {
@@ -93,22 +102,14 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
         dispatch(clear());
         dispatch({ type: "CustomerView" });
       } else if (reason === REASON.TIMEOUT) {
-        /*dispatch(
-          updateContactLinguist({
-            modalContact: true,
-            counter: TIME.RECONNECT
-          })
-        );*/
+        dispatch(clear());
       } else {
         dispatch({ type: "RateView" });
       }
     })
     .catch(error => {
       dispatch(networkError(error));
-      dispatch(clearSettings());
-      dispatch(clear());
-      dispatch(clearEvents());
-      dispatch({ type: "Home" });
+      dispatch({ type: "RateView" });
     });
 };
 
@@ -131,7 +132,8 @@ export const createSession = ({
   scenarioID,
   customScenarioNote,
   token,
-  eventID
+  eventID,
+  location
 }) => dispatch => {
   return Sessions.createSession(
     "immediate_virtual",
@@ -142,7 +144,8 @@ export const createSession = ({
     scenarioID,
     token,
     customScenarioNote,
-    eventID
+    eventID,
+    location
   )
     .then(response => {
       const { data } = response;
@@ -272,6 +275,7 @@ export const startTimer = () => (dispatch, getState) => {
 export const closeCall = reason => (dispatch, getState) => {
   const { contactLinguist, callCustomerSettings, tokbox, auth } = getState();
   clearInterval(contactLinguist.counterId);
+  clearInterval(callCustomerSettings.timer);
   dispatch(
     updateContactLinguist({
       modalContact: false,
@@ -295,6 +299,21 @@ export const closeCall = reason => (dispatch, getState) => {
   }
 };
 
+export const cleanCall = reason => (dispatch, getState) => {
+  const { contactLinguist, callCustomerSettings, tokbox, auth } = getState();
+  clearInterval(contactLinguist.counterId);
+  clearInterval(callCustomerSettings.timer);
+  dispatch(
+    updateContactLinguist({
+      modalContact: false,
+      customScenarioNote: ""
+    })
+  );
+  dispatch(resetCounter());
+  dispatch(resetTimerAsync());
+  cleanNotifications();
+};
+
 // Initial State
 const initialState = {
   // Call Settings
@@ -307,7 +326,7 @@ const initialState = {
   invitationID: null,
   customerPreferredSex: "any",
   verifyCallId: null,
-
+  location: [null, null],
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 60, // Initial time selected: 10 min

@@ -62,7 +62,7 @@ class SessionBox extends Component {
       },
       sessionReconnected: () => {
         console.log("SESSION RECONNECTED EVENT");
-        this.props.videoState(true);
+        //this.props.videoState(true);
         SoundManager["Reconnected"].play();
         this.props.updateSettings({
           modalReconnect: false
@@ -70,9 +70,6 @@ class SessionBox extends Component {
       },
       sessionReconnecting: () => {
         console.log("SESSION RECONNECTING EVENT");
-        this.props.updateSettings({
-          modalReconnect: true
-        });
       },
       signal: event => {
         console.log("SIGNAL EVENT", event);

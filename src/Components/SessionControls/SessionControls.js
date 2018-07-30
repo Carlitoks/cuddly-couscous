@@ -57,10 +57,13 @@ class SessionControls extends Component {
           icon="ios-volume-up"
         />
         <CallButton
-          onPress={() => closeCall(reason)}
+          onPress={() => {
+            closeCall(reason);
+          }}
           buttonColor="red"
           toggle={false}
           icon="call-end"
+          unLock={true}
         />
         <CallButtonToggle
           toggle={true}
@@ -125,4 +128,7 @@ const mS = state => {
 
 const mD = {};
 
-export default connect(mS, mD)(SessionControls);
+export default connect(
+  mS,
+  mD
+)(SessionControls);

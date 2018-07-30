@@ -91,12 +91,13 @@ const linguistAcceptedNotification = linguist => (dispatch, getState) => {
 };
 
 const connectionEventNotification = () => () => {
+  console.log("connectionEventNotification");
   //TODO: Logic when receive a connection notification
 };
 
 const sessionEndNotification = () => () => {
-  //TODO: Logic when a session is over
-  //SoundManager["EndCall"].play();
+  console.log("sessionEndNotification");
+  //dispatch({ type: "RateView" });
 };
 
 export const addListeners = () => dispatch => {

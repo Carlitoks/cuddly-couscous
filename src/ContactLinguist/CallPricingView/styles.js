@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
 import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
+import { Iphone5 } from "../../Util/Devices";
 
 const { width, height } = Dimensions.get("window");
 
@@ -11,13 +12,13 @@ export default StyleSheet.create({
     backgroundColor: Colors.white
   },
   title: {
-    marginTop: 31,
-    marginBottom: 52,
-    marginHorizontal: 33,
+    marginTop: Iphone5 ? moderateScale(31) : 31,
+    marginBottom: Iphone5 ? moderateScale(67) : 52,
+    marginHorizontal: Iphone5 ? moderateScale(33) : 33,
     color: Colors.gradientColorButton.top,
     fontFamily: Fonts.primaryFont,
     fontWeight: "600",
-    fontSize: 29,
+    fontSize: Iphone5 ? moderateScale(28) : 29,
     textAlign: "center"
   },
   futurePricingContainer: {},
@@ -32,50 +33,50 @@ export default StyleSheet.create({
     alignItems: "center",
     zIndex: 2,
     position: "absolute",
-    top: -35
+    top: Iphone5 ? -29 : -35
   },
   futurePricingTitle: {
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "500",
-    fontSize: 20
+    fontSize: Iphone5 ? moderateScale(20) : 20
   },
   futurePricingBox: {
     marginHorizontal: 16,
     backgroundColor: Colors.lightBlue2,
     borderRadius: 4,
-    minHeight: 276
+    minHeight: Iphone5 ? moderateScale(276) : 276
   },
   futurePricingBoxTitle: {
     fontFamily: Fonts.primaryFont,
     color: "#333",
-    marginTop: 41,
+    marginTop: Iphone5 ? moderateScale(41) : 41,
     textAlign: "center",
-    fontSize: 24,
+    fontSize: Iphone5 ? moderateScale(24) : 24,
     fontWeight: "600"
   },
   futurePricingBoxAnd: {
-    marginTop: 16,
+    marginTop: Iphone5 ? moderateScale(16) : 16,
     color: Colors.gradientColor.top,
     fontFamily: Fonts.primaryFont,
     fontStyle: "italic",
-    fontSize: 12,
+    fontSize: Iphone5 ? moderateScale(12) : 12,
     textAlign: "center"
   },
   futurePricingBoxBody: {
     fontFamily: Fonts.primaryFont,
     color: "#333",
-    marginTop: 15,
+    marginTop: Iphone5 ? moderateScale(15) : 15,
     textAlign: "center",
-    fontSize: 18,
+    fontSize: Iphone5 ? moderateScale(18) : 18,
     fontWeight: "600"
   },
   futurePricingBoxEnd: {
     fontFamily: Fonts.primaryFont,
     color: "#333",
-    marginTop: 15,
+    marginTop: Iphone5 ? moderateScale(15) : 15,
     textAlign: "center",
-    fontSize: 15,
+    fontSize: Iphone5 ? moderateScale(15) : 15,
     fontStyle: "italic"
   },
   buttons: {

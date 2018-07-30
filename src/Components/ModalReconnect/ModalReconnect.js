@@ -12,7 +12,8 @@ import ReconnectOptions from "../ReconnectOptions/ReconnectOptions";
 import {
   updateSettings,
   startReconnect,
-  resetReconnectAsync
+  resetReconnectAsync,
+  resetReconnectCounterAsync
 } from "../../Ducks/CallCustomerSettings";
 
 import DisconnectedMessage from "./DisconnectedMessage/DisconnectedMessage";
@@ -60,7 +61,7 @@ class ModalReconnect extends Component {
       ? [
           {
             title: I18n.t("keepWaiting"),
-            onPress: () => this.props.resetReconnectAsync()
+            onPress: () => this.props.resetReconnectCounterAsync()
           },
           {
             title: I18n.t("endCall"),
@@ -73,15 +74,17 @@ class ModalReconnect extends Component {
       : [
           {
             title: I18n.t("tryToReconnect"),
-            onPress: () => this.props.resetReconnectAsync()
+            onPress: () => this.props.resetReconnectCounterAsync()
           },
           {
             title: I18n.t("tryAnother"),
             onPress: async () => {
               this.props.resetReconnectAsync();
+              this.props.updateSettings({
+                modalReconnect: false
+              });
               await this.props.closeCall(REASON.RETRY);
               await this.props.reconnectCall();
-              this.props.callTimeOut();
             }
           },
           {
@@ -134,7 +137,8 @@ const mS = state => ({
 const mD = {
   updateSettings,
   startReconnect,
-  resetReconnectAsync
+  resetReconnectAsync,
+  resetReconnectCounterAsync
 };
 
 export default connect(

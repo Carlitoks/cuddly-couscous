@@ -213,7 +213,7 @@ export default (ENG = {
   login: "Login",
   loginLogoutExampleTitle: "Login/Logout Redux + Sagas Example",
   loginWithFacebook: "Log in with Facebook",
-  logOut: "Sign Out",
+  logOut: "Log Out",
   logOutConfirmation: "Please confirm.",
   mainTitle: "Enter Your Name",
   male: "Male",
@@ -245,7 +245,7 @@ export default (ENG = {
   online: "Online",
   operatingHoursAlertTitle: "Please note our limited operating hours",
   operatingHoursAlertMessage:
-    "During our launch, Language Jeenies are online from 9am to 5pm Eastern Time (EDT).",
+    "During our launch, Language Jeenies are online from 9am to 9pm Eastern Time (EDT).",
   orChooseOneBelow: "Or choose one below",
   other: "Other",
   password: "Password",

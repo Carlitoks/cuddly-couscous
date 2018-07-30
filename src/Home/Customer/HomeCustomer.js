@@ -20,6 +20,7 @@ import {
 
 import { clearSettings as clearCallLinguistSettings } from "../../Ducks/CallLinguistSettings";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
+import { clear as clearTokbox } from "../../Ducks/tokboxReducer";
 import { updateSettings as updateLinguistForm } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { getCategories, updateSettings } from "../../Ducks/HomeFlowReducer";
@@ -166,7 +167,7 @@ class Home extends Component {
     this.props.clearCallLinguistSettings();
     this.props.asyncGetAccountInformation();
     this.props.clearEvents();
-
+    this.props.clearTokbox();
     updateHomeFlow({
       customScenario: "",
       categoryIndex: -1
@@ -397,7 +398,12 @@ class Home extends Component {
           headerRightComponent={<QRIcon navigation={this.props.navigation} />}
           NoWaves
         >
-          <View style={styles.mainContainer}>
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            alwaysBounceVertical={false}
+            style={styles.scrollView}
+            contentContainerStyle={styles.scrollViewContainer}
+          >
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
               style={styles.linearGradient}
@@ -418,16 +424,8 @@ class Home extends Component {
                 ? ""
                 : I18n.t("tapRepeat")}
             </Text>
-            <View style={styles.scrollView}>
-              <ScrollView
-                automaticallyAdjustContentInsets={true}
-                alwaysBounceVertical={false}
-                style={styles.scrollView}
-              >
-                {this.renderList()}
-              </ScrollView>
-            </View>
-          </View>
+            <View style={styles.recentActivityList}>{this.renderList()}</View>
+          </ScrollView>
         </HeaderView>
       </ViewWrapper>
     );
@@ -482,7 +480,8 @@ const mD = {
   clearSettings,
   clearCallLinguistSettings,
   asyncGetAccountInformation,
-  clearEvents
+  clearEvents,
+  clearTokbox
 };
 
 export default connect(

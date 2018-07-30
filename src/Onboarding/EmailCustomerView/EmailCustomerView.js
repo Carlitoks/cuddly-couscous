@@ -42,6 +42,13 @@ import {
   PrivacyPolicyURI
 } from "../../Config/StaticViewsURIS";
 class EmailCustomerView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      submitIsDisabled: false
+    };
+  }
+
   validateForm() {
     const patt = new RegExp(EMAIL_REGEX);
     let updates = {};
@@ -90,12 +97,18 @@ class EmailCustomerView extends Component {
     return valid;
   }
 
+  changeButtonState(value) {
+    this.setState({
+      submitIsDisabled: value
+    });
+  }
+
   getResponseError = err => err.response.data.errors[0];
 
   submit() {
     const { registerDevice, navigation } = this.props;
 
-    if (this.validateForm()) {
+    if (this.validateForm() && !this.state.submitIsDisabled) {
       const {
         email,
         password,
@@ -127,8 +140,10 @@ class EmailCustomerView extends Component {
         })
         .then(response => {
           navigation.dispatch({ type: "NameCustomerView" });
+          this.changeButtonState(false);
         })
         .catch(err => {
+          this.changeButtonState(false);
           if (!err) {
             if (!this.props.networkModal) {
               displayFormErrors(I18n.t("temporaryError"));
@@ -186,7 +201,8 @@ class EmailCustomerView extends Component {
       !patt.test(this.props.email) ||
       this.props.password.length < 8 ||
       !this.props.termsCheck ||
-      !this.props.eighteenCheck
+      !this.props.eighteenCheck ||
+      this.state.submitIsDisabled
     );
   }
 
@@ -310,7 +326,10 @@ class EmailCustomerView extends Component {
           {/* Next Button */}
           <BottomButton
             title={I18n.t("next")}
-            onPress={() => this.submit()}
+            onPress={() => {
+              this.changeButtonState(true);
+              this.submit();
+            }}
             disabled={this.isDisabled()}
             fill={!this.isDisabled()}
           />

@@ -24,6 +24,8 @@ import SoundManager from "../../../Util/SoundManager";
 import I18n from "../../../I18n/I18n";
 import Instabug from "instabug-reactnative";
 
+import { updateSettings as updateCustomerSettings } from "../../../Ducks/CallCustomerSettings";
+
 import {
   updateSettings as updateContactLinguistSettings,
   clearSettings as clearCallSettings,
@@ -36,7 +38,8 @@ import {
   resetTimerAsync,
   EndCall,
   clearSettings,
-  closeCall
+  closeCall,
+  closeCallReconnect
 } from "../../../Ducks/CallLinguistSettings";
 import { cleanNotifications } from "../../../Util/PushNotification";
 import {
@@ -44,7 +47,7 @@ import {
   BackgroundStart
 } from "../../../Util/Background";
 import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
-
+import { clearTokboxStatus } from "../../../Ducks/tokboxReducer";
 class LinguistView extends Component {
   constructor() {
     super();
@@ -95,14 +98,18 @@ class LinguistView extends Component {
     );
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer);
+    await clearInterval(this.props.counterId);
+    await clearInterval(this.props.timer);
     this.props.resetTimerAsync();
     cleanNotifications();
-    clearInterval(this.props.counterId);
-    clearInterval(this.props.timer);
     this.props.resetCounter();
     InCallManager.stop();
+    this.props.updateCustomerSettings({
+      modalReconnect: false
+    });
+    this.props.clearTokboxStatus();
   }
 
   handleSessionInfoName() {
@@ -125,12 +132,6 @@ class LinguistView extends Component {
     if (nextProps.networkInfoType === "none") {
       //this.props.navigation.dispatch({ type: "Home" });
     }
-
-    if (nextProps.counter > TIME.HIDEMODAL && this.props.counterId) {
-      clearInterval(this.props.counterId);
-      this.props.resetCounter();
-      closeCall();
-    }
   }
 
   callTimeOut = () => {
@@ -142,7 +143,7 @@ class LinguistView extends Component {
 
   render() {
     const { visible } = this.state;
-    const { closeCall, elapsedTime } = this.props;
+    const { closeCall, elapsedTime, closeCallReconnect } = this.props;
 
     return (
       <TouchableWithoutFeedback
@@ -153,7 +154,7 @@ class LinguistView extends Component {
             image={this.selectImage()}
             sessionInfoName={this.handleSessionInfoName()}
           >
-            <ModalReconnect closeCall={closeCall} />
+            <ModalReconnect closeCall={closeCallReconnect} />
 
             <Slide visible={visible} min={0} max={112}>
               <View style={styles.containerControls}>
@@ -190,6 +191,7 @@ const mS = state => ({
   reconnecting: state.callLinguistSettings.reconnecting,
   linguistTokboxSessionToken: state.tokbox.tokboxToken,
   linguistTokboxSessionID: state.tokbox.tokboxID,
+  tokboxStatus: state.tokbox.status,
   sessionID: state.tokbox.sessionID,
   token: state.auth.token,
   networkInfoType: state.networkInfo.type,
@@ -215,7 +217,10 @@ const mD = {
   resetCounter,
   incrementCounter,
   clearCallSettings,
-  closeCall
+  closeCall,
+  updateCustomerSettings,
+  clearTokboxStatus,
+  closeCallReconnect
 };
 
 export default connect(

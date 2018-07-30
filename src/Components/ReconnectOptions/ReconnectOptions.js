@@ -6,10 +6,11 @@ import { Button } from "react-native-elements";
 
 import { connect } from "react-redux";
 import BottomButton from "../BottomButton/BottomButton";
-
+import { cleanCall } from "../../Ducks/CallCustomerSettings";
 import I18n from "../../I18n/I18n";
 import { styles } from "./styles";
-
+import { clear } from "../../Ducks/tokboxReducer";
+import { resetConnectingMessage } from "../../Ducks/ContactLinguistReducer";
 import { REASON } from "../../Util/Constants";
 import { Colors } from "../../Themes";
 
@@ -24,9 +25,9 @@ class ReconnectOptions extends Component {
           backgroundColor={Colors.gradientColorButton.bottom}
           borderRadius={50}
           onPress={async () => {
-            await this.props.closeCall(REASON.RETRY);
+            this.props.resetConnectingMessage();
+            await this.props.cleanCall();
             await this.props.reconnectCall();
-            this.props.callTimeOut();
           }}
         />
         <Button
@@ -52,7 +53,7 @@ const mS = state => ({
   counterId: state.contactLinguist.counterId
 });
 
-const mD = {};
+const mD = { clear, cleanCall, resetConnectingMessage };
 
 export default connect(
   mS,

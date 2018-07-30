@@ -14,7 +14,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
 import SettingsButton from "../../../Components/SettingsButton/SettingsButton";
-
+import { getGeolocationCoords } from "../../../Util/Helpers";
 import { connect } from "react-redux";
 import { GetInfo } from "../../../Ducks/SessionInfoReducer";
 import {
@@ -57,7 +57,15 @@ class CallConfirmationView extends Component {
 
   componentWillMount() {
     const { promotion, event, resetConnectingMessage } = this.props;
-
+    getGeolocationCoords()
+      .then(response => {
+        this.props.customerUpdateSettings({
+          location: [response.coords.longitude, response.coords.latitude]
+        });
+      })
+      .catch(err => {
+        console.log("GeoLocation error  ", err);
+      });
     resetConnectingMessage();
     let inputHeight = 0;
     if (promotion || event.id) {
