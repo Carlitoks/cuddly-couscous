@@ -1,6 +1,5 @@
 import { Sessions, CallHistory } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
-
 import {
   changeStatus,
   updateSettings as updateProfileLinguist
@@ -184,15 +183,15 @@ export const startTimer = () => (dispatch, getState) => {
 };
 
 export const closeCall = reason => (dispatch, getState) => {
-  const { tokbox, auth } = getState();
   displayEndCall(() => {
     SoundManager["EndCall"].play();
-    dispatch(EndCall((tokbox.sessionID, reason, auth.token)));
+    dispatch(EndCall());
   });
 };
 
-export const EndCall = (sessionID, reason, token) => dispatch => {
-  return Sessions.EndSession(sessionID, reason, token)
+export const EndCall = () => (dispatch, getState) => {
+  const { tokbox, auth } = getState();
+  return Sessions.EndSession(tokbox.sessionID, REASON.DONE, auth.token)
     .then(response => {
       dispatch({ type: "RateView" });
     })
