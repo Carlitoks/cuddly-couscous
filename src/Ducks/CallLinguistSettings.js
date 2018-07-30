@@ -183,7 +183,7 @@ export const startTimer = () => (dispatch, getState) => {
   );
 };
 
-export const closeCall = reason => dispatch => {
+export const closeCall = reason => (dispatch, getState) => {
   const { tokbox, auth } = getState();
   displayEndCall(() => {
     SoundManager["EndCall"].play();
