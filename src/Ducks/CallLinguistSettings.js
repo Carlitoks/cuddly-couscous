@@ -192,11 +192,22 @@ export const startTimer = () => (dispatch, getState) => {
 };
 
 export const closeCall = reason => dispatch => {
+  const { tokbox, auth } = getState();
   displayEndCall(() => {
     SoundManager["EndCall"].play();
-    dispatch(sendSignal(REASON.DONE, "Ended by Linguist"));
-    dispatch({ type: "RateView" });
+    dispatch(EndCall((tokbox.sessionID,reason,auth.token)));
   });
+};
+
+export const EndCall = (sessionID, reason, token) => dispatch => {
+  return Sessions.EndSession(sessionID, reason, token)
+    .then(response => {
+      dispatch({ type: "RateView" });
+    })
+    .catch(error => {
+      dispatch(networkError(error));
+      dispatch({ type: "RateView" });
+    });
 };
 
 export const closeCallReconnect = reason => dispatch => {
