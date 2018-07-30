@@ -65,14 +65,6 @@ export const resetTimerAsync = () => (dispatch, getState) => {
 
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 
-export const EndCall = (sessionID, reason, token) => dispatch => {
-  Sessions.EndSession(sessionID, { reason: REASON.DONE }, token)
-    .then(response => {
-      dispatch(endSession(REASON.DONE));
-    })
-    .catch(error => dispatch(networkError(error)));
-};
-
 export const resetTimer = () => ({
   type: ACTIONS.RESET_TIMER
 });
@@ -195,7 +187,7 @@ export const closeCall = reason => dispatch => {
   const { tokbox, auth } = getState();
   displayEndCall(() => {
     SoundManager["EndCall"].play();
-    dispatch(EndCall((tokbox.sessionID,reason,auth.token)));
+    dispatch(EndCall((tokbox.sessionID, reason, auth.token)));
   });
 };
 
