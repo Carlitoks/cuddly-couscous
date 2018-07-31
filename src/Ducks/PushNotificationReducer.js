@@ -6,6 +6,7 @@ import { update as updateTokbox } from "./tokboxReducer";
 import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
 import { LANG_CODES } from "../Util/Constants";
+import { isCurrentView } from "../Util/Helpers";
 
 // Actions
 export const ACTIONS = {
@@ -95,9 +96,12 @@ const connectionEventNotification = () => () => {
   //TODO: Logic when receive a connection notification
 };
 
-const sessionEndNotification = () => () => {
-  console.log("sessionEndNotification");
-  //dispatch({ type: "RateView" });
+const sessionEndNotification = () => (dispatch, getState) => {
+  const { nav } = getState();
+  const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
+  if (CurrentView == "LinguistView" || CurrentView == "CustomerView") {
+    dispatch({ type: "RateView" });
+  }
 };
 
 export const addListeners = () => dispatch => {
