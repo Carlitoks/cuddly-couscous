@@ -5,7 +5,8 @@ export const GoodIcons = [
     IconName: "waitTime",
     Key: "waitTime",
     OffState: "iconWaitTimeSecondList",
-    label: "Time to connect"
+    label: "Time to connect",
+    i18nKey: "session.rating.flags.time"
   },
   {
     Name: "ios-happy",
@@ -13,7 +14,8 @@ export const GoodIcons = [
     IconName: "friendliness",
     Key: "friendliness",
     OffState: "iconFriendlinessSecondList",
-    label: "Friendliness"
+    label: "Friendliness",
+    i18nKey: "session.rating.flags.friendliness"
   },
   {
     Name: "ios-microphone",
@@ -21,7 +23,8 @@ export const GoodIcons = [
     IconName: "easyUnderstand",
     Key: "easyUnderstand",
     OffState: "iconUnderstandSecondList",
-    label: "Easy to Understand"
+    label: "Easy to Understand",
+    i18nKey: "session.rating.flags.understandEasy"
   },
   {
     Name: "ios-person",
@@ -29,7 +32,8 @@ export const GoodIcons = [
     IconName: "language",
     Key: "language",
     OffState: "iconLanguageAbilitySecondList",
-    label: "Language Ability"
+    label: "Language Ability",
+    i18nKey: "session.rating.flags.langAbility"
   },
   {
     Name: "ios-volume-up",
@@ -37,7 +41,8 @@ export const GoodIcons = [
     IconName: "audio",
     Key: "audio",
     OffState: "iconAudioQualityFirstList",
-    label: "Audio Quality"
+    label: "Audio Quality",
+    i18nKey: "session.rating.flags.audio"
   },
   {
     Name: "ios-body",
@@ -45,7 +50,8 @@ export const GoodIcons = [
     IconName: "professionalism",
     Key: "professionalism",
     OffState: "iconProfessionalismSecondList",
-    label: "Professionalism"
+    label: "Professionalism",
+    i18nKey: "session.rating.flags.professionalism"
   }
 ];
 
@@ -56,7 +62,8 @@ export const BadIcons = [
     IconName: "language",
     Key: "language",
     OffState: "iconLanguageAbilityFirstList",
-    label: "Language Ability"
+    label: "Language Ability",
+    i18nKey: "session.rating.flags.langAbility"
   },
   {
     Name: "ios-wifi",
@@ -64,7 +71,8 @@ export const BadIcons = [
     IconName: "connection",
     Key: "connection",
     OffState: "iconConnectionFirstList",
-    label: "Connection"
+    label: "Connection",
+    i18nKey: "session.rating.flags.connection"
   },
   {
     Name: "ios-time",
@@ -72,7 +80,8 @@ export const BadIcons = [
     IconName: "waitTime",
     Key: "waitTime",
     OffState: "iconWaitTimeFirstList",
-    label: "Time to connect"
+    label: "Time to connect",
+    i18nKey: "session.rating.flags.time"
   },
   {
     Name: "ios-recording",
@@ -80,7 +89,8 @@ export const BadIcons = [
     IconName: "voiceClarity",
     Key: "voiceClarity",
     OffState: "iconVoiceClarityFirstList",
-    label: "Voice Clarity"
+    label: "Voice Clarity",
+    i18nKey: "session.rating.flags.voice"
   },
   {
     Name: "ios-outlet",
@@ -88,7 +98,8 @@ export const BadIcons = [
     IconName: "distractions",
     Key: "surroundings",
     OffState: "iconDistractionsFirstList",
-    label: "Surroundings"
+    label: "Surroundings",
+    i18nKey: "session.rating.flags.surroundings"
   },
   {
     Name: "ios-body",
@@ -96,7 +107,8 @@ export const BadIcons = [
     IconName: "professionalism",
     Key: "appearance",
     OffState: "iconProfessionalismFirstList",
-    label: "Appearance"
+    label: "Appearance",
+    i18nKey: "session.rating.flags.appearance"
   },
   {
     Name: "ios-happy",
@@ -104,7 +116,8 @@ export const BadIcons = [
     IconName: "friendliness",
     Key: "friendliness",
     OffState: "iconFriendlinessFirstList",
-    label: "Friendliness"
+    label: "Friendliness",
+    i18nKey: "session.rating.flags.friendliness"
   },
   {
     Name: "ios-microphone",
@@ -112,7 +125,8 @@ export const BadIcons = [
     IconName: "easyUnderstand",
     Key: "easyUnderstand",
     OffState: "iconUnderstandFirstList",
-    label: "Hard to Understand"
+    label: "Hard to Understand",
+    i18nKey: "session.rating.flags.understandHard"
   },
   {
     Name: "ios-musical-note",
@@ -120,6 +134,7 @@ export const BadIcons = [
     IconName: "noise",
     Key: "noise",
     OffState: "iconBackgroundNoiseFirstList",
-    label: "Background Noise"
+    label: "Background Noise",
+    i18nKey: "session.rating.flags.noise"
   }
 ];

@@ -356,17 +356,55 @@ export default (ENG = {
   youCanAddTime: "You can add time during call",
   youCanChangeThis: "You can turn video on/off during call",
 
+  // for use in session-related screens
+  session: {
+    callTime: "Call Time: {{time}}",
+
+    // used when rating a session
+    rating: {
+      flags: {
+        langAbility: "Language Ability",
+        time: "Time to Connect",
+        friendliness: "Friendliness",
+        understandEasy: "Easy to Understand",
+        understandHard: "Hard to Understand",
+        audio: "Audio Quality",
+        professionalism: "Professionalism",
+        connection: "Connection",
+        voice: "Voice Clarity",
+        surroundings: "Surroundings",
+        appearance: "Appearance",
+        noise: "Background Noise"
+      }
+    }
+  },
+
   // for use during primary language selection
   languagesList: {
     eng: "English",
     cmn: "Chinese (Mandarin)",
     yue: "Chinese (Cantonese)",
+    'zho-cn-shang': "Chinese (Shanghainese)",
+    'zho-tw': "Chinese (Taiwanese)",
     jpn: "Japanese",
     spa: "Spanish",
+    'spa-r-la': "Spanish (Latin America)",
+    'spa-es': "Spanish (Spain)",
     deu: "German",
     fra: "French",
-    arb: "Arabic",
+    'fra-ca': "French (Canada)",
+    'fra-fr': "French (France)",
+    arb: "Arabic (Modern Standard)",
+    aao: "Arabic (Algerian, Moroccan & Tunisian)",
+    'ara-arz_apd': "Arabic (Egyptian or Sudanese)",
+    afb: "Arabic (Gulf)",
+    acm: "Arabic (Iraqi)",
+    'ara-apc_ajp': "Arabic (Levantine)",
+    azj: "Azeri (North)",
+    azb: "Azeri (South)",
     por: "Portuguese",
+    'por-br': "Portuguese (Brazil)",
+    'por-pt': "Portuguese (Portugal)",
     rus: "Russian",
     ita: "Italian",
     kor: "Korean",
@@ -383,10 +421,10 @@ export default (ENG = {
     pes: "Persian",
     hin: "Hindi",
     ces: "Czech",
-    zsm: "Malay", // can of worms here
+    zsm: "Malay",
     ell: "Greek",
     hun: "Hungarian",
-    ron: "Romanian", // OR rup, ruq?
+    ron: "Romanian",
     vie: "Vietnamese",
     ben: "Bengali",
     cat: "Catalan",
@@ -395,8 +433,8 @@ export default (ENG = {
     slk: "Slovak",
     kaz: "Kazakh",
     ltz: "Luxembourgish",
-    kur: "Kurdish", // OR north/south: kmr, sdh?
-    azj: "Azeri (North)", // OR north/south: azb, azj?
+    kur: "Kurdish",
+    azj: "Azeri (North)",
     azb: "Azeri (South)",
     ukr: "Ukrainian",
     afr: "Afrikaans",
@@ -404,7 +442,7 @@ export default (ENG = {
     glg: "Galician",
     slv: "Slovenian",
     lit: "Lithuanian",
-    ckb: "Sorani", // Central Kurdish
+    ckb: "Sorani",
     jav: "Javanese",
     urd: "Urdu",
     sqi: "Albanian",
@@ -413,10 +451,10 @@ export default (ENG = {
     yor: "Yoruba",
     hau: "Hausa",
     bul: "Bulgarian",
-    uzb: "Uzbek", // OR north/south: uzn, uzs
-    swa: "Swahili", // OR ccl, swc, swh
+    uzb: "Uzbek",
+    swa: "Swahili",
     eus: "Basque",
     bel: "Belarusian",
-    tat: "Tatar" // OR Crimean/Siberian: crh, sty
+    tat: "Tatar"
   }
 });

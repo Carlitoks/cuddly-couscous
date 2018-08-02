@@ -18,7 +18,7 @@ const CallTimer = ({ time, red, showButton, changeVisible, buttonPress }) => {
         style={[styles.CallTime, { fontSize: showButton ? 24 : 30 }]}
         onPress={changeVisible}
       >
-        {"Call Time: " + fmtMSS(time)}
+        {I18n.t("session.callTime", {time: fmtMSS(time)})}
       </Text>
       {showButton ? (
         <Button

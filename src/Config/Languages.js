@@ -59,7 +59,52 @@ export const Languages = [
     1: "ar",
     2: "ara",
     3: "arb",
-    name: "Arabic",
+    name: "Arabic (Modern Standard)",
+    local: "العربية",
+    "2T": "ara",
+    "2B": "ara"
+  },
+  {
+    1: "ar",
+    2: "ara",
+    3: "aao",
+    name: "Arabic (Algerian, Moroccan & Tunisian)",
+    local: "العربية",
+    "2T": "ara",
+    "2B": "ara"
+  },
+  {
+    1: "ar",
+    2: "ara",
+    3: "ara-arz_apd",
+    name: "Arabic (Egyptian or Sudanese)",
+    local: "العربية",
+    "2T": "ara",
+    "2B": "ara"
+  },
+  {
+    1: "ar",
+    2: "ara",
+    3: "afb",
+    name: "Arabic (Gulf)",
+    local: "العربية",
+    "2T": "ara",
+    "2B": "ara"
+  },
+  {
+    1: "ar",
+    2: "ara",
+    3: "acm",
+    name: "Arabic (Iraqi)",
+    local: "العربية",
+    "2T": "ara",
+    "2B": "ara"
+  },
+  {
+    1: "ar",
+    2: "ara",
+    3: "ara-apc_ajp",
+    name: "Arabic (Levantine)",
     local: "العربية",
     "2T": "ara",
     "2B": "ara"
@@ -281,6 +326,25 @@ export const Languages = [
     "2B": "chi"
   },
   {
+    1: "zh",
+    2: "zho",
+    3: "zho-cn-shang",
+    name: "Chinese (Shanghainese)",
+    local: "廣東話",
+    "2T": "zho",
+    "2B": "chi"
+  },
+  {
+    1: "zh",
+    2: "zho",
+    3: "zho-tw",
+    name: "Chinese (Taiwanese)",
+    local: "廣東話",
+    "2T": "zho",
+    "2B": "chi"
+  },
+
+  {
     1: "cv",
     2: "chv",
     3: "chv",
@@ -438,6 +502,24 @@ export const Languages = [
     2: "fra",
     3: "fra",
     name: "French",
+    local: "Français",
+    "2T": "fra",
+    "2B": "fre"
+  },
+  {
+    1: "fr",
+    2: "fra",
+    3: "fra-ca",
+    name: "French (Canada)",
+    local: "Français",
+    "2T": "fra",
+    "2B": "fre"
+  },
+  {
+    1: "fr",
+    2: "fra",
+    3: "fra-fr",
+    name: "French (France)",
     local: "Français",
     "2T": "fra",
     "2B": "fre"
@@ -1172,6 +1254,24 @@ export const Languages = [
     "2B": "por"
   },
   {
+    1: "pt",
+    2: "por",
+    3: "por-br",
+    name: "Portuguese (Brazil)",
+    local: "Português",
+    "2T": "por",
+    "2B": "por"
+  },
+  {
+    1: "pt",
+    2: "por",
+    3: "por-pt",
+    name: "Portuguese (Portugal)",
+    local: "Português",
+    "2T": "por",
+    "2B": "por"
+  },
+  {
     1: "qu",
     2: "que",
     3: "que",
@@ -1347,6 +1447,24 @@ export const Languages = [
     2: "spa",
     3: "spa",
     name: "Spanish",
+    local: "Español",
+    "2T": "spa",
+    "2B": "spa"
+  },
+  {
+    1: "es",
+    2: "spa",
+    3: "spa-es",
+    name: "Spanish (Spain)",
+    local: "Español",
+    "2T": "spa",
+    "2B": "spa"
+  },
+  {
+    1: "es",
+    2: "spa",
+    3: "spa-r-la",
+    name: "Spanish (Latin America",
     local: "Español",
     "2T": "spa",
     "2B": "spa"
@@ -1669,7 +1787,7 @@ export const Languages = [
 ];
 
 // languages available for native lang selection
-const primaryCodes = ["eng", "cmn", "yue", "jpn", "spa", "deu", "fra", "arb", "por", "rus", "ita", "kor", "nld", "swe", "nor", "tur", "pol", "dan", "fin", "tha", "heb", "ind", "pes", "hin", "ces", "zsm", "ell", "hun", "ron", "vie", "ben", "cat", "fil", "tam", "slk", "kaz", "ltz", "kur", "azj", "azb", "ukr", "afr", "hrv", "glg", "slv", "lit", "ckb", "jav", "urd", "sqi", "tel", "srp", "yor", "hau", "bul", "uzb", "swa", "eus", "bel", "tat"];
+const primaryCodes = ["eng", "cmn", "yue", "zho-cn-shang", "zho-tw", "jpn", "spa", "spa-r-la", "spa-es", "deu", "fra", "fra-ca", "fra-fr", "arb", "aao", "ara-arz_apd", "afb", "acm", "ara-apc_ajp", "por", "por-br", "por-pt", "rus", "ita", "kor", "nld", "swe", "nor", "tur", "pol", "dan", "fin", "tha", "heb", "ind", "pes", "hin", "ces", "zsm", "ell", "hun", "ron", "vie", "ben", "cat", "fil", "tam", "slk", "kaz", "ltz", "kur", "azj", "azb", "ukr", "afr", "hrv", "glg", "slv", "lit", "ckb", "jav", "urd", "sqi", "tel", "srp", "yor", "hau", "bul", "uzb", "swa", "eus", "bel", "tat"];
 
 // languages in "Coming Soon" list
 const comingSoonCodes = ["arb","ben","dan","nld","fin","fra","deu","hin","ita","kor","zsm","nor","pol","por","rus","spa","swe","tha","tur","urd"];

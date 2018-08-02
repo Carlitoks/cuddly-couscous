@@ -66,7 +66,7 @@ class WhatWasGood extends Component {
                         onPress={() =>
                           this.buttonsHandle(item, "positiveFlags")
                         }
-                        title={item.label}
+                        title={I8n.t(item.i18nKey)}
                       />
                     </View>
                   );
@@ -78,7 +78,7 @@ class WhatWasGood extends Component {
                       IconName={item.IconName}
                       StateIcon={this.props[item.IconState]}
                       onPress={() => this.buttonsHandle(item, "positiveFlags")}
-                      title={item.label}
+                      title={I8n.t(item.i18nKey)}
                     />
                   </View>
                 );
