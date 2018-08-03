@@ -359,9 +359,15 @@ export default (ENG = {
   // for use in session-related screens
   session: {
     callTime: "Call Time: {{time}}",
+    alertGeneralCannotSee: "To optimize connectivity, video has been temporarily disabled. Video will resume when connectivity improves.",
+    alertLinguistCannotSeeYou: "Your Language Jeenie cannot currently see you. To optimize connectivity, your video has been temporarily disabled. Video will resume when connectivity improves.",
+    alertCustomerCannotSeeYou: "Your Customer cannot currently see you. To optimize connectivity, your video has been temporarily disabled. Video will resume when connectivity improves.",
+    alertYouCannotSeeCustomer: "To optimize connectivity, your customer's video has been temporarily disabled. Video will resume when connectivity improves.",
+    alertYouCannotSeeLinguist: "To optimize connectivity, your Language Jeenie's video has been temporarily disabled. Video will resume when connectivity improves.",
 
     // used when rating a session
     rating: {
+      submit: "Submit",
       flags: {
         langAbility: "Language Ability",
         time: "Time to Connect",
