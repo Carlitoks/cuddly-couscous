@@ -83,7 +83,7 @@ class RateView extends Component {
       return `${this.props.linguist.firstName} ${
         this.props.linguist.lastInitial
       }`;
-    } else return `Zhang W.`;
+    } else return `Zhang W.`; // TODO: we must fix this, if this happens there's a bigger problem
   }
   selectImage = () => {
     const { avatarURL, linguist } = this.props;
@@ -122,7 +122,7 @@ class RateView extends Component {
           <Text style={styles.instabugText}>{I18n.t("reportProblem")}</Text>
         </HeaderView>
         <BottomButton
-          title="Submit"
+          title={I18n.t("session.rating.submit")}
           onPress={() => {
             this.submit();
           }}
