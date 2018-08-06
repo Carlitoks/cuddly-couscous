@@ -92,6 +92,7 @@ export default class CallButton extends Component {
             buttonStyle: { textAlign: "center", right: 10 }
           }}
           textStyle={{ marginLeft: -9.8 }}
+          disabled={this.props.disabled}
         />
         {this.props.label && (
           <Text

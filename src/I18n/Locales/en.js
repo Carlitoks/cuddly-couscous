@@ -66,6 +66,7 @@ export default (ENG = {
   confirmAndConnect: "Confirm & Connect",
   connectMeNow: "Connect me now",
   connectNow: "Connect Now",
+  connecting: "Connecting",
   contactingLinguist:
     "Connecting you to a \nLanguage Jeenie in less \nthan 1 minute",
   continue: "Continue",

@@ -122,13 +122,13 @@ export const asyncAcceptsInvite = (
   linguistSessionId
 ) => dispatch => {
   if (reason && reason.accept) {
+    dispatch(connectCall());
     Sessions.linguistFetchesInvite(invitationID, token)
       .then(res => {
         if (!res.data.session.endReason) {
           Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
             .then(response => {
               dispatch(setSession(response.data));
-              dispatch(connectCall());
               dispatch(update({ sessionID: linguistSessionId }));
             })
             .catch(error => {

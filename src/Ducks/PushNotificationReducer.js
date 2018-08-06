@@ -80,7 +80,7 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
                 )}`} - ${data.session.scenario.title}`
           })
         );
-        dispatch({ type: "LinguistView" });
+        dispatch({ type: "IncomingCallView" });
       })
       .catch(error => dispatch(networkError(error)));
   }

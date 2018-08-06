@@ -48,6 +48,7 @@ import {
 } from "../../../Util/Background";
 import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
 import { clearTokboxStatus } from "../../../Ducks/tokboxReducer";
+import ConnectingView from "../Connecting/ConnectingView";
 class LinguistView extends Component {
   constructor() {
     super();
@@ -176,7 +177,7 @@ class LinguistView extends Component {
           {this.props.tokboxStatus !== STATUS_TOKBOX.STREAM &&
             this.props.elapsedTime < 1 && (
               <View style={styles.containerIncomingCall}>
-                <IncomingCallView navigation={this.props.navigation} />
+                <ConnectingView navigation={this.props.navigation} />
               </View>
             )}
         </View>
