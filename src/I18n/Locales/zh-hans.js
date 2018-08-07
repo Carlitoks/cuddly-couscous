@@ -44,9 +44,9 @@
   cancel: "取消",
   cancelCall: "取消通话",
   celebrateAndEnjoy:
-    "庆祝翻译精灵\n发布，\n限时免费试用！",
+    "庆祝翻译精灵发布，\n\n限时免费试用！",
   celebrateWithUs: "与我们一同庆祝翻译精灵的发布",
-  changeSettings: "如需更改您的设置，请转至“设置“ > “翻译精灵“",
+  changeSettings: "如需更改您的设置，请转至\"设置\" > \"翻译精灵\"",
   cancelCallCustomer: "无法呼叫",
   chargeAdvice: "超过 8 分钟的通话按分钟计费。",
   checkYourConnection: "请检查您的连接",
@@ -151,7 +151,7 @@
   historyNotFound: "找不到历史记录",
   holdToScan: "将设备的照相机对准二维码",
   home: "主页",
-  whereAreYouNow: "告知我们您的位置...",
+  whereAreYouNow: "选择您的位置：",
   hotel: "酒店",
   howLongNeedAssist: "您需要多长时间的帮助？",
   howMuchTimeDoYouNeed: "您需要多长时间？",
@@ -172,7 +172,7 @@
   languageCommand: "您要求的语言",
   languageHelp: "随时随地提供语言帮助",
   languageInterpretation: "您以前在 <lang> 做过翻译吗？",
-  LanguagePairs: "语言对",// 不使用
+  LanguagePairs: "语言对", // not use
   language: "语言",
   languages: "语种",
   languagesComingSoon: "即将推出更多语种",
@@ -187,7 +187,7 @@
   languageFrom: "源语言：",
   languageTo: "目标语言：",
   lauchScreenSwipe1:
-    "无忧旅行！\n 翻译精灵 App 让语言不再是沟通的障碍。",
+    "无忧旅行！\n翻译精灵 App 让语言不再是沟通的障碍。",
   lauchScreenSwipe2:
     "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
@@ -251,7 +251,7 @@
   password: "密码",
   passwordAnd: "和",
   passwordLength: "您的密码须至少包含 5 个字符。",
-  passwordLinguistText: "点击“下一步“即表示您同意我们的",
+  passwordLinguistText: "点击\"下一步\"即表示您同意我们的",
   permissionDenied: "App 权限被拒绝",
   passwordMatch: "密码不匹配。",
   passwordLengthValidation: "密码必须是 8 个或 8 个以上字符。",
@@ -383,7 +383,7 @@
     pes: "波斯语",
     hin: "印地语",
     ces: "捷克语",
-    zsm: "马来西亚语", // can of worms here
+    zsm: "马来语", // can of worms here
     ell: "希腊语",
     hun: "匈牙利语",
     ron: "罗马尼亚语", // OR rup, ruq?

@@ -151,7 +151,7 @@
   historyNotFound: "找不到記錄",
   holdToScan: "將裝置相機對準 QR 碼",
   home: "首頁",
-  whereAreYouNow: "告訴我們您所在位置...",
+  whereAreYouNow: "選擇您的地點：",
   hotel: "飯店",
   howLongNeedAssist: "您需要協助的時間會有多久？",
   howMuchTimeDoYouNeed: "您需要多少時間？",
@@ -167,12 +167,12 @@
   invalidPromoCode: "促銷代碼無效",
   isReconnecting: "正在重新連線...",
   keepWaiting: "繼續等候",
-  isConnecting: "{{firstName}} {{lastInitial}}. 正在連線...",
-  isReconnecting: "{{firstName}} {{lastInitial}}. 正在重新連線...",
+  isConnecting: "正在接通 {{firstName}} {{lastInitial}}...",
+  isReconnecting: "正在重新接通 {{firstName}} {{lastInitial}}...",
   languageCommand: "您要求的語言",
   languageHelp: "隨時隨地提供語言協助",
   languageInterpretation: "您曾經做過<lang>翻譯嗎？",
-  LanguagePairs: "語言對",// 不使用
+  LanguagePairs: "語言對", // not use
   language: "語言",
   languages: "語言",
   languagesComingSoon: "即將推出各種語言",
@@ -187,11 +187,11 @@
   languageFrom: "源語言：",
   languageTo: "目標語言：",
   lauchScreenSwipe1:
-    "放心旅行！\n 有了翻譯精靈應用程式，再也不用擔心語言成為溝通障礙。",
+    "放心旅行！\n有了翻譯精靈應用程式，再也不用擔心語言成為溝通障礙。",
   lauchScreenSwipe2:
     "無論置身世上何處，都能即時與精通外語的真人通話。",
   lauchScreenSwipe3:
-    "翻譯精靈目前支援\n中文 (普通話)<> 英文\n以及日文 <> 英文。\n\n即將推出其他語言。",
+    "翻譯精靈目前支援\n中文（普通話）<> 英文 \n 以及日本 <> 英文。\n\n即將推出其他語言。",
   lauchScreenSwipe4:
     "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
   lauchScreenSwipe5:

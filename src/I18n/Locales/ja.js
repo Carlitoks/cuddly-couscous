@@ -34,7 +34,7 @@
   callTimeBoxTextLine1:
     "サービス開始を記念して今すぐ\n無料でJeenieをご活用ください",
   callTimeBoxTextLine2:
-    "通常料金は1分あたり1ドルとなります。\nパッケージ割引をご用意しています。",
+    "パッケージ割引のご利用で\n通常料金は1分あたり1ドルとなります。",
   callTimeButtonText: "分無料",
   callTimeButtonSubtitle: "Jeenieからのプレゼント",
   callTimeMinutes: "通話時間",
@@ -151,7 +151,7 @@
   historyNotFound: "履歴が見つかりません",
   holdToScan: "デバイスのカメラはQRコードの上にかざしてください",
   home: "ホーム",
-  whereAreYouNow: "現在地をお知らせください…",
+  whereAreYouNow: "場所を選択：",
   hotel: "ホテル",
   howLongNeedAssist: "どのくらいの時間サポートが必要ですか？",
   howMuchTimeDoYouNeed: "どのくらい時間が必要ですか？",
@@ -167,12 +167,12 @@
   invalidPromoCode: "無効なプロモーションコード",
   isReconnecting: "が再接続中です…",
   keepWaiting: "お待ちください",
-  isConnecting: "{{firstName}} {{lastInitial}}.が接続中です…",
-  isReconnecting: "{{firstName}} {{lastInitial}}.が再接続中です…",
+  isConnecting: "{{firstName}} {{lastInitial}}が接続中…",
+  isReconnecting: "{{firstName}} {{lastInitial}}が再接続中…",
   languageCommand: "必要な時に使える言語サービス",
   languageHelp: "場所を問わず使える言語サポート",
   languageInterpretation: "これまでに<lang>で通訳をされた経験はありますか？",
-  LanguagePairs: "言語ペア",// 使用しない
+  LanguagePairs: "言語ペア", // not use
   language: "言語",
   languages: "言語",
   languagesComingSoon: "今後さらに言語が追加されます",
@@ -187,7 +187,7 @@
   languageFrom: "ソース言語：",
   languageTo: "ターゲット言語：",
   lauchScreenSwipe1:
-    "安心して旅行を楽しみましょう！\n Jeenieアプリがあれば、言語がコミュニケーションの障害になることがなくなります。",
+    "安心して旅行を楽しみましょう！\nJeenieアプリがあれば、言語がコミュニケーションの障害になることがなくなります。",
   lauchScreenSwipe2:
     "世界のどこにいても、リアルタイムで、サポートが必要な言語を母国語とする通訳スタッフに連絡を取ることができます。",
   lauchScreenSwipe3:
@@ -383,7 +383,7 @@
     pes: "ペルシャ語",
     hin: "ヒンディー語",
     ces: "チェコ語",
-    zsm: "マレーシア語", // can of worms here
+    zsm: "マレー語", // can of worms here
     ell: "ギリシャ語",
     hun: "ハンガリー語",
     ron: "ルーマニア語", // OR rup, ruq?
