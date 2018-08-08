@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { View, Alert } from "react-native";
 import { OTPublisher as PublisherTokbox } from "opentok-react-native";
 
-import { errorEvent, publisherStart } from "../../../Ducks/tokboxReducer";
+import {
+  errorEvent,
+  publisherStart
+} from "../../../Ducks/ActiveSessionReducer";
 
 import { SETTINGS, CAMERA } from "../../../Util/Constants";
 
@@ -48,18 +51,13 @@ class PublisherBox extends Component {
   }
 }
 
-const mS = state => {
-  const settings = state.userProfile.linguistProfile
-    ? SETTINGS.LINGUIST
-    : SETTINGS.CUSTOMER;
-  return {
-    mic: state[settings].mic,
-    video: state[settings].video,
-    rotate: state[settings].rotate,
-    tokboxSessionID: state.tokbox.tokboxID,
-    tokboxStatus: state.tokbox.status
-  };
-};
+const mS = state => ({
+  mic: state.activeSessionReducer.mic,
+  video: state.activeSessionReducer.video,
+  rotate: state.activeSessionReducer.rotate,
+  tokboxSessionID: state.activeSessionReducer.tokboxID,
+  tokboxStatus: state.activeSessionReducer.status
+});
 
 const mD = {
   publisherStart

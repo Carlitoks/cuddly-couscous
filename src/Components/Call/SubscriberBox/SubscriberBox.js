@@ -3,15 +3,14 @@ import { connect } from "react-redux";
 import { View, Alert } from "react-native";
 import { OTSubscriber as SubscriberTokbox } from "opentok-react-native";
 import SoundManager from "../../../Util/SoundManager";
-import { videoState } from "../../../Ducks/tokboxReducer";
 import I18n from "../../../I18n/I18n";
 import { SETTINGS } from "../../../Util/Constants";
 import {
-  updateSettings,
-  clearSettings,
+  updateSettings as updateCustomerSettings,
   resetReconnectCounter
 } from "../../../Ducks/ContactLinguistReducer";
-import { updateSettings as updateCustomerSettings } from "../../../Ducks/CallCustomerSettings";
+
+import { videoState, update } from "../../../Ducks/ActiveSessionReducer";
 
 import styles from "./styles";
 
@@ -31,7 +30,7 @@ class SubscriberBox extends Component {
       disconnected: () => {
         console.log("DISCONNECTED EVENT");
         SoundManager["Disconnected"].play();
-        this.props.updateCustomerSettings({
+        this.props.update({
           modalReconnect: true
         });
       },
@@ -40,7 +39,7 @@ class SubscriberBox extends Component {
       },
       videoDataReceived: () => {
         if (this.props.visibility) {
-          this.props.updateCustomerSettings({
+          this.props.update({
             modalReconnect: false
           });
         }
@@ -48,7 +47,7 @@ class SubscriberBox extends Component {
       videoDisabled: event => {
         console.log(`VIDEO DISABLED EVENT ${event}`);
         this.props.videoState(true);
-        this.props.updateCustomerSettings({
+        this.props.update({
           modalReconnect: false
         });
       },
@@ -63,7 +62,7 @@ class SubscriberBox extends Component {
       videoEnabled: event => {
         console.log(`VIDEO ENABLED EVENT ${event}`);
         this.props.videoState(false);
-        this.props.updateCustomerSettings({
+        this.props.update({
           modalReconnect: false
         });
       },
@@ -87,20 +86,14 @@ class SubscriberBox extends Component {
   }
 }
 
-const mS = state => {
-  const settings = state.userProfile.linguistProfile
-    ? SETTINGS.LINGUIST
-    : SETTINGS.CUSTOMER;
-  return {
-    speaker: state[settings].speaker,
-    visibility: state.callCustomerSettings.modalReconnect
-  };
-};
+const mS = state => ({
+  speaker: state.activeSessionReducer.speaker,
+  visibility: state.activeSessionReducer.modalReconnect
+});
 
 const mD = {
   videoState,
-  updateSettings,
-  updateCustomerSettings
+  update
 };
 
 const Subscriber = connect(

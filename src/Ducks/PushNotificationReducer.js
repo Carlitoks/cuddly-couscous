@@ -2,11 +2,14 @@ import { Sessions } from "../Api";
 import { updateSettings as updateCallLinguistSettings } from "./CallLinguistSettings";
 import { updateConnectingMessage } from "./ContactLinguistReducer";
 import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReducer";
-import { update as updateTokbox } from "./tokboxReducer";
+import { update as updateTokbox } from "./ActiveSessionReducer";
+import { updateSettings } from "./CallLinguistSettings";
+import { updateOptions as updateRate } from "./RateCallReducer";
 import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
 import { LANG_CODES } from "../Util/Constants";
 import { isCurrentView } from "../Util/Helpers";
+import { networkError } from "./NetworkErrorsReducer";
 
 // Actions
 export const ACTIONS = {
@@ -39,25 +42,47 @@ export const remoteNotificationReceived = notification => dispatch => {
 const incomingCallNotification = invitationId => (dispatch, getState) => {
   const state = getState();
   const isLinguist = !!state.userProfile.linguistProfile;
-
+  const { nav } = getState();
+  const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
   if (
     state.auth.isLoggedIn &&
     invitationId &&
     isLinguist &&
-    state.profileLinguist.available
+    state.profileLinguist.available &&
+    CurrentView != "IncomingCall"
   ) {
     Sessions.linguistFetchesInvite(invitationId, state.auth.token)
       .then(res => {
         const data = res.data;
         dispatch(
-          updateCallLinguistSettings({
+          updateTokbox({
             invitationID: invitationId,
             reconnecting: false
           })
         );
         dispatch(updateTokbox({ sessionID: data.session.id }));
+        dispatch(updateRate({ sessionID: data.session.id }));
         dispatch(
-          updateCallLinguistSettings({
+          updateRate({
+            customerName: data.createdBy
+              ? `${data.createdBy.firstName} ${data.createdBy.lastInitial}.`
+              : ""
+          })
+        );
+        dispatch(
+          updateTokbox({
+            customerName: data.createdBy
+              ? `${data.createdBy.firstName} ${data.createdBy.lastInitial}.`
+              : ""
+          })
+        );
+        dispatch(
+          updateRate({
+            avatarURL: data.createdBy ? data.createdBy.avatarURL : ""
+          })
+        );
+        dispatch(
+          updateSettings({
             customerName: data.createdBy
               ? `${data.createdBy.firstName} ${data.createdBy.lastInitial}.`
               : "",

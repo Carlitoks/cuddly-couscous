@@ -6,19 +6,28 @@ import { Colors } from "../../Themes";
 import { fmtMSS } from "../../Util/Helpers";
 import styles from "./styles";
 
-const CallTimer = ({ time, red, showButton, changeVisible, buttonPress }) => {
+const CallTimer = ({
+  time,
+  red,
+  showButton,
+  changeVisible,
+  buttonPress,
+  withOut
+}) => {
   return (
     <View
       style={[
         styles.container,
-        { backgroundColor: red ? "rgba(245,51,51,.51)" : "rgba(0,0,0,.26)" }
+        { backgroundColor: withOut ? "rgba(245,51,51,.0)" : "rgba(0,0,0,.26)" }
       ]}
     >
       <Text
         style={[styles.CallTime, { fontSize: showButton ? 24 : 30 }]}
         onPress={changeVisible}
       >
-        {I18n.t("session.callTime", {time: fmtMSS(time)})}
+        {withOut
+          ? fmtMSS(time)
+          : I18n.t("session.callTime", { time: fmtMSS(time) })}
       </Text>
       {showButton ? (
         <Button

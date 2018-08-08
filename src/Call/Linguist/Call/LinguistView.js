@@ -24,8 +24,6 @@ import SoundManager from "../../../Util/SoundManager";
 import I18n from "../../../I18n/I18n";
 import Instabug from "instabug-reactnative";
 
-import { updateSettings as updateCustomerSettings } from "../../../Ducks/CallCustomerSettings";
-
 import {
   updateSettings as updateContactLinguistSettings,
   clearSettings as clearCallSettings,
@@ -33,21 +31,21 @@ import {
   incrementCounter
 } from "../../../Ducks/ContactLinguistReducer";
 import {
-  updateSettings,
+  update as updateSettings,
   incrementTimer,
   resetTimerAsync,
   EndCall,
-  clearSettings,
+  clear,
   closeCall,
-  closeCallReconnect
-} from "../../../Ducks/CallLinguistSettings";
+  closeCallReconnect,
+  clearTokboxStatus
+} from "../../../Ducks/ActiveSessionReducer";
 import { cleanNotifications } from "../../../Util/PushNotification";
 import {
   BackgroundCleanInterval,
   BackgroundStart
 } from "../../../Util/Background";
 import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
-import { clearTokboxStatus } from "../../../Ducks/tokboxReducer";
 import ConnectingView from "../Connecting/ConnectingView";
 class LinguistView extends Component {
   constructor() {
@@ -107,10 +105,12 @@ class LinguistView extends Component {
     cleanNotifications();
     this.props.resetCounter();
     InCallManager.stop();
-    this.props.updateCustomerSettings({
+    this.props.updateSettings({
       modalReconnect: false
     });
     this.props.clearTokboxStatus();
+    this.props.clearCallSettings();
+    this.props.clear();
   }
 
   handleSessionInfoName() {
@@ -187,17 +187,17 @@ class LinguistView extends Component {
 }
 
 const mS = state => ({
-  timer: state.callLinguistSettings.timer,
-  elapsedTime: state.callLinguistSettings.elapsedTime,
-  reconnecting: state.callLinguistSettings.reconnecting,
-  linguistTokboxSessionToken: state.tokbox.tokboxToken,
-  linguistTokboxSessionID: state.tokbox.tokboxID,
-  tokboxStatus: state.tokbox.status,
-  sessionID: state.tokbox.sessionID,
+  timer: state.activeSessionReducer.timer,
+  elapsedTime: state.activeSessionReducer.elapsedTime,
+  reconnecting: state.activeSessionReducer.reconnecting,
+  linguistTokboxSessionToken: state.activeSessionReducer.tokboxToken,
+  linguistTokboxSessionID: state.activeSessionReducer.tokboxID,
+  tokboxStatus: state.activeSessionReducer.status,
+  sessionID: state.activeSessionReducer.sessionID,
   token: state.auth.token,
   networkInfoType: state.networkInfo.type,
-  customerName: state.callLinguistSettings.customerName,
-  avatarURL: state.callLinguistSettings.avatarURL,
+  customerName: state.activeSessionReducer.customerName,
+  avatarURL: state.activeSessionReducer.avatarURL,
   counter: state.contactLinguist.counter,
   counterId: state.contactLinguist.counterId,
   firstName: state.userProfile.firstName, // For Instabug
@@ -213,13 +213,12 @@ const mD = {
   updateSettings,
   resetTimerAsync,
   EndCall,
-  clearSettings,
+  clear,
   updateContactLinguistSettings,
   resetCounter,
   incrementCounter,
   clearCallSettings,
   closeCall,
-  updateCustomerSettings,
   clearTokboxStatus,
   closeCallReconnect
 };

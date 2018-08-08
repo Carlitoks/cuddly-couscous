@@ -18,9 +18,9 @@ import { getGeolocationCoords } from "../../../Util/Helpers";
 import { connect } from "react-redux";
 import { GetInfo } from "../../../Ducks/SessionInfoReducer";
 import {
-  clearSettings,
-  updateSettings as customerUpdateSettings
-} from "../../../Ducks/CallCustomerSettings.js";
+  clear as clearSettings,
+  update as customerUpdateSettings
+} from "../../../Ducks/ActiveSessionReducer";
 import {
   updateSettings,
   resetConnectingMessage
@@ -30,7 +30,7 @@ import { clear as clearEvents } from "../../../Ducks/EventsReducer";
 import { clearPromoCode } from "../../../Ducks/PromoCodeReducer";
 import { clearSettings as clearLinguistReducer } from "../../../Ducks/LinguistFormReducer";
 
-import I18n, {translateProperty, translateLanguage} from "../../../I18n/I18n";
+import I18n, { translateProperty, translateLanguage } from "../../../I18n/I18n";
 import _isEmpty from "lodash/isEmpty";
 import { styles } from "./styles";
 import { Images, Colors } from "../../../Themes";
@@ -83,8 +83,14 @@ class CallConfirmationView extends Component {
 
         this.props.updateSettings({
           secondaryLangCode: defaultSecondaryLangCode,
-          selectedLanguageTo: translateLanguage(selectedLangTo[0][3], selectedLangTo[0].name),
-          selectedLanguage: translateLanguage(selectedLangTo[0][3], selectedLangTo[0].name)
+          selectedLanguageTo: translateLanguage(
+            selectedLangTo[0][3],
+            selectedLangTo[0].name
+          ),
+          selectedLanguage: translateLanguage(
+            selectedLangTo[0][3],
+            selectedLangTo[0].name
+          )
         });
       }
     }
@@ -147,12 +153,14 @@ class CallConfirmationView extends Component {
                   {`${categoryTitle}: `}
 
                   <Text style={styles.regularText}>
-                    {customScenario
-                      ? customScenario
-                      : this.props.selectedScenario &&
-                        this.props.selectedScenario[0]
-                        ? translateProperty(this.props.selectedScenario[0], "title")
-                        : I18n.t("generalAssistance")}
+                    {customScenario ? (
+                      customScenario
+                    ) : this.props.selectedScenario &&
+                    this.props.selectedScenario[0] ? (
+                      translateProperty(this.props.selectedScenario[0], "title")
+                    ) : (
+                      I18n.t("generalAssistance")
+                    )}
                   </Text>
                 </Text>
                 <TextInput
@@ -166,9 +174,11 @@ class CallConfirmationView extends Component {
                   }
                   fontStyle={
                     !!this.props.scenarioNotes &&
-                    this.props.scenarioNotes.length == 0
-                      ? "italic"
-                      : "normal"
+                    this.props.scenarioNotes.length == 0 ? (
+                      "italic"
+                    ) : (
+                      "normal"
+                    )
                   }
                   multiline
                   blurOnSubmit
@@ -176,8 +186,7 @@ class CallConfirmationView extends Component {
                   returnKeyType={"done"}
                   placeholder={I18n.t("scenarioNotes")}
                   onChangeText={text =>
-                    this.props.updateSettings({ customScenarioNote: text })
-                  }
+                    this.props.updateSettings({ customScenarioNote: text })}
                   onContentSizeChange={event => {
                     this.inputHeight = event.nativeEvent.contentSize.height;
                   }}
@@ -226,9 +235,11 @@ class CallConfirmationView extends Component {
             >
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
-                  {this.props.approxTime
-                    ? `${this.props.approxTime} ${I18n.t("minutes")}: `
-                    : `${I18n.t("upTo60")}: `}
+                  {this.props.approxTime ? (
+                    `${this.props.approxTime} ${I18n.t("minutes")}: `
+                  ) : (
+                    `${I18n.t("upTo60")}: `
+                  )}
                   <Text style={[styles.regularText]}>
                     {/* {I18n.t("timeCompliments")} */}
                     {"$0"}
@@ -280,9 +291,11 @@ class CallConfirmationView extends Component {
                     </View>
                     <Text
                       style={
-                        this.props.video
-                          ? styles.textAudioActive
-                          : styles.textAudioInactive
+                        this.props.video ? (
+                          styles.textAudioActive
+                        ) : (
+                          styles.textAudioInactive
+                        )
                       }
                     >
                       {I18n.t("audioVideo")}
@@ -319,9 +332,11 @@ class CallConfirmationView extends Component {
                     </View>
                     <Text
                       style={
-                        !this.props.video
-                          ? styles.textAudioActive
-                          : styles.textAudioInactive
+                        !this.props.video ? (
+                          styles.textAudioActive
+                        ) : (
+                          styles.textAudioInactive
+                        )
                       }
                     >
                       {I18n.t("audioOnly")}
@@ -364,22 +379,22 @@ class CallConfirmationView extends Component {
 
 const mS = state => ({
   customScenario: state.homeFlow.customScenario,
-  sessionId: state.tokbox.sessionID,
+  sessionId: state.activeSessionReducer.sessionID,
   token: state.auth.token,
-  video: state.callCustomerSettings.video,
-  approxTime: state.callCustomerSettings.selectedTime,
+  video: state.activeSessionReducer.video,
+  approxTime: state.activeSessionReducer.selectedTime,
   scenario: state.linguistForm.selectedLanguage,
   scenarioNotes: state.contactLinguist.customScenarioNote,
   selectedScenario: state.linguistForm.selectedScenarios,
   categoryIndex: state.homeFlow.categoryIndex,
   categories: state.homeFlow.categories,
   estimatedPrice:
-    state.callCustomerSettings.selectedTime * state.contactLinguist.cost,
+    state.activeSessionReducer.selectedTime * state.contactLinguist.cost,
   selectedLanguageTo: state.contactLinguist.selectedLanguage,
   secundaryLangCode: state.contactLinguist.secundaryLangCode,
   selectedLanguageFrom: state.contactLinguist.selectedLanguageFrom,
   fromLanguage: state.userProfile.selectedNativeLanguage,
-  allowTimeSelection: state.callCustomerSettings.allowTimeSelection,
+  allowTimeSelection: state.activeSessionReducer.allowTimeSelection,
   promotion: state.promoCode.scanned,
   event: state.events
 });
@@ -396,7 +411,4 @@ const mD = {
   resetConnectingMessage
 };
 
-export default connect(
-  mS,
-  mD
-)(CallConfirmationView);
+export default connect(mS, mD)(CallConfirmationView);

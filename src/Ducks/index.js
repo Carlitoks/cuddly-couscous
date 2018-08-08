@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 
 import dataReducer from "./DataReducer";
 
+import activeSessionReducer from "./ActiveSessionReducer";
 import auth from "./AuthReducer";
 import contactLinguist from "./ContactLinguistReducer";
 import forgotPassword from "./ForgotPasswordReducer";
@@ -31,6 +32,7 @@ import onboardingRecord from "./OnboardingRecordReducer";
 // Combine all the reducers
 const rootReducer = combineReducers({
   auth,
+  activeSessionReducer,
   callCustomerSettings,
   callHistory,
   callLinguistSettings,

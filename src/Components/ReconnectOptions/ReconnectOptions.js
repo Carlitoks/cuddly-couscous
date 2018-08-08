@@ -6,10 +6,10 @@ import { Button } from "react-native-elements";
 
 import { connect } from "react-redux";
 import BottomButton from "../BottomButton/BottomButton";
-import { cleanCall } from "../../Ducks/CallCustomerSettings";
+import { cleanCall } from "../../Ducks/ActiveSessionReducer";
 import I18n from "../../I18n/I18n";
 import { styles } from "./styles";
-import { clear } from "../../Ducks/tokboxReducer";
+import { clear } from "../../Ducks/ActiveSessionReducer";
 import { resetConnectingMessage } from "../../Ducks/ContactLinguistReducer";
 import { REASON } from "../../Util/Constants";
 import { Colors } from "../../Themes";
@@ -46,8 +46,8 @@ class ReconnectOptions extends Component {
 }
 
 const mS = state => ({
-  visibility: state.callCustomerSettings.modalReconnect,
-  sessionID: state.tokbox.sessionID,
+  visibility: state.activeSessionReducer.modalReconnect,
+  sessionID: state.activeSessionReducer.sessionID,
   token: state.auth.token,
   counter: state.contactLinguist.counter,
   counterId: state.contactLinguist.counterId
@@ -55,7 +55,4 @@ const mS = state => ({
 
 const mD = { clear, cleanCall, resetConnectingMessage };
 
-export default connect(
-  mS,
-  mD
-)(ReconnectOptions);
+export default connect(mS, mD)(ReconnectOptions);

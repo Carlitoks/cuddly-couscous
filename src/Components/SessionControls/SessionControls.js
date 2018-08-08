@@ -47,13 +47,13 @@ class SessionControls extends Component {
           }}
           toggle={true}
           active={!rotate}
-          name={linguist ? "LinguistCamera" : "CustomerCamera"}
+          name={"Camera"}
           icon="ios-reverse-camera-outline"
         />
         <CallButtonToggle
           toggle={true}
           active={speaker}
-          name={linguist ? "LinguistSpeaker" : "CustomerSpeaker"}
+          name={"Speaker"}
           icon="ios-volume-up"
         />
         <CallButton
@@ -68,13 +68,13 @@ class SessionControls extends Component {
         <CallButtonToggle
           toggle={true}
           active={!mic}
-          name={linguist ? "LinguistMute" : "CustomerMute"}
+          name={"Mute"}
           icon="ios-mic-off"
         />
         <CallButtonToggle
           toggle={true}
           active={video}
-          name={linguist ? "LinguistVideo" : "CustomerVideo"}
+          name={"Video"}
           icon="ios-videocam-outline"
           onPress={async () => {
             const {
@@ -112,19 +112,13 @@ SessionControls.propTypes = {
   linguist: bool
 };
 
-const mS = state => {
-  const settings = state.userProfile.linguistProfile
-    ? SETTINGS.LINGUIST
-    : SETTINGS.CUSTOMER;
-
-  return {
-    mic: state[settings].mic,
-    video: state[settings].video,
-    rotate: state[settings].rotate,
-    speaker: state[settings].speaker,
-    tokboxSessionID: state.tokbox.tokboxID
-  };
-};
+const mS = state => ({
+  mic: state.activeSessionReducer.mic,
+  video: state.activeSessionReducer.video,
+  speaker: state.activeSessionReducer.speaker,
+  rotate: state.activeSessionReducer.rotate,
+  tokboxSessionID: state.activeSessionReducer.tokboxID
+});
 
 const mD = {};
 

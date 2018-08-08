@@ -18,15 +18,13 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
-import { clear as clearTokbox } from "../../Ducks/tokboxReducer";
+import { clear } from "../../Ducks/ActiveSessionReducer";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 import {
   asyncGetInvitationDetail,
   clearSettings
 } from "../../Ducks/CallLinguistSettings";
-
-import { clearSettings as clearCallCustomerSettings } from "../../Ducks/CallCustomerSettings";
 
 import moment from "moment";
 
@@ -47,9 +45,7 @@ class Home extends Component {
     }
     clearInterval(this.props.timer);
     clearInterval(this.props.counterId);
-    this.props.clearSettings();
-    this.props.clearTokbox();
-    this.props.clearCallCustomerSettings();
+    this.props.clear();
     this.props.asyncGetAccountInformation();
     InCallManager.stop();
   }
@@ -81,17 +77,7 @@ class Home extends Component {
       : image;
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.networkInfoType !== "none") {
-      if (this.props.tokbox && this.props.invitationID) {
-        this.props.asyncGetInvitationDetail(
-          this.props.invitationID,
-          this.props.token,
-          false
-        );
-      }
-    }
-  }
+  componentWillReceiveProps(nextProps) {}
 
   filterAllCalls = (allCalls, userType) => {
     if (!_isEmpty(allCalls)) {
@@ -211,8 +197,8 @@ const mS = state => ({
   rate: state.userProfile.averageStarRating,
   tokbox: state.tokbox.tokboxID,
   invitationID: state.callLinguistSettings.invitationID,
-  timer: state.callLinguistSettings.timer,
-  counterId: state.callCustomerSettings.counterId,
+  timer: state.activeSessionReducer.timer,
+  counterId: state.activeSessionReducer.counterId,
   networkInfoType: state.networkInfo.type
 });
 
@@ -222,11 +208,9 @@ const mD = {
   updateView,
   getProfileAsync,
   changeStatus,
-  clearSettings,
   asyncGetInvitationDetail,
   asyncGetAccountInformation,
-  clearCallCustomerSettings,
-  clearTokbox
+  clear
 };
 
 export default connect(

@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  asyncAcceptsInvite,
   verifyCall,
-  updateSettings
+  updateSettings,
+  clearSettings
 } from "../../../Ducks/CallLinguistSettings";
+
+import { asyncAcceptsInvite } from "../../../Ducks/ActiveSessionReducer";
 
 import { Text, View, ScrollView, Image, Vibration } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -40,6 +42,7 @@ class IncomingCall extends Component {
 
   componentWillUnmount() {
     clearInterval(this.props.verifyCallId);
+    this.props.clearSettings();
     SoundManager["IncomingCall"].stop();
   }
 
@@ -185,7 +188,7 @@ class IncomingCall extends Component {
 }
 
 const mS = state => ({
-  invitationID: state.callLinguistSettings.invitationID,
+  invitationID: state.activeSessionReducer.invitationID,
   customerName: state.callLinguistSettings.customerName,
   avatarURL: state.callLinguistSettings.avatarURL,
   estimatedMinutes: state.callLinguistSettings.estimatedMinutes,
@@ -194,13 +197,14 @@ const mS = state => ({
   languages: state.callLinguistSettings.languages,
   verifyCallId: state.callLinguistSettings.verifyCallId,
   token: state.auth.token,
-  sessionID: state.tokbox.sessionID
+  sessionID: state.activeSessionReducer.sessionID
 });
 
 const mD = {
   asyncAcceptsInvite,
   verifyCall,
-  updateSettings
+  updateSettings,
+  clearSettings
 };
 
 export default connect(

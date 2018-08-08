@@ -67,7 +67,8 @@ export default StyleSheet.create({
   spinner: {
     alignSelf: "center",
     position: "absolute",
-    top: "33%"
+    top: "33%",
+    marginBottom: 15
   },
   connectingMessageContainer: {
     alignSelf: "center",

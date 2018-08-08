@@ -109,7 +109,9 @@ let WhatCouldBetter = [];
 const initialState = {
   // Start Number
   rating: 0,
-
+  sessionID: "",
+  customerName: "",
+  avatarURL: "",
   // color Tab thumbs
   thumbsUp: false,
   thumbsDown: false,
