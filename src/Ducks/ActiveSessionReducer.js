@@ -143,7 +143,11 @@ const initialState = {
   modalReconnectCounter: 0,
   modalReconnectCounterId: null,
   messageReconnect: "",
-  reconnecting: false
+  reconnecting: false,
+
+  //Tokbox Video Warnings
+  localVideoWarning: "DISABLED",
+  signalVideoWarning: "DISABLED"
 };
 
 //TOKBOX'S EVENTS
@@ -312,6 +316,15 @@ export const EndCall = (sessionID, reason, token) => dispatch => {
       dispatch(networkError(error));
       dispatch(clear());
     });
+};
+
+export const updateVideoWarningEvent = (reason, data) => dispatch => {
+  dispatch(
+    update({
+      localVideoWarning: data
+    })
+  );
+  dispatch(sendSignal(reason, data));
 };
 
 export const HandleEndCall = (sessionID, reason, token) => dispatch => {

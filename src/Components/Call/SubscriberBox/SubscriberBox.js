@@ -4,13 +4,17 @@ import { View, Alert } from "react-native";
 import { OTSubscriber as SubscriberTokbox } from "opentok-react-native";
 import SoundManager from "../../../Util/SoundManager";
 import I18n from "../../../I18n/I18n";
-import { SETTINGS } from "../../../Util/Constants";
+import { SETTINGS, VIDEO_WARNING } from "../../../Util/Constants";
 import {
   updateSettings as updateCustomerSettings,
   resetReconnectCounter
 } from "../../../Ducks/ContactLinguistReducer";
 
-import { videoState, update } from "../../../Ducks/ActiveSessionReducer";
+import {
+  videoState,
+  update,
+  updateVideoWarningEvent
+} from "../../../Ducks/ActiveSessionReducer";
 
 import styles from "./styles";
 
@@ -53,10 +57,18 @@ class SubscriberBox extends Component {
       },
       videoDisableWarning: () => {
         console.log("VIDEO DISABLED WARNING EVENT");
+        this.props.updateVideoWarningEvent(
+          VIDEO_WARNING.TYPE,
+          VIDEO_WARNING.ENABLED
+        );
         this.props.videoState(true);
       },
       videoDisableWarningLifted: () => {
         console.log("VIDEO DISABLED WARNING LIFTED EVENT");
+        this.props.updateVideoWarningEvent(
+          VIDEO_WARNING.TYPE,
+          VIDEO_WARNING.DISABLED
+        );
         this.props.videoState(false);
       },
       videoEnabled: event => {
@@ -93,7 +105,8 @@ const mS = state => ({
 
 const mD = {
   videoState,
-  update
+  update,
+  updateVideoWarningEvent
 };
 
 const Subscriber = connect(

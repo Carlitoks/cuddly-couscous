@@ -35,6 +35,7 @@ import {
 
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 import Slide from "../../../Effects/Slide/Slide";
+import { Fade } from "../../../Effects";
 import { Images } from "../../../Themes";
 import styles from "./styles";
 
@@ -50,6 +51,7 @@ import {
 } from "../../../Util/Background";
 import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
+import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
 
 class CustomerView extends Component {
   constructor() {
@@ -206,6 +208,10 @@ class CustomerView extends Component {
 
             <Slide visible={visible} min={0} max={112}>
               <View style={styles.containerControls}>
+                {(this.props.localVideoWarning == "ENABLED" ||
+                  this.props.signalVideoWarning == "ENABLED") && (
+                  <PoorConnectionAlert />
+                )}
                 <CallTimer
                   time={elapsedTime}
                   changeVisible={() => this.setState({ visible: !visible })}
@@ -260,12 +266,14 @@ const mS = state => ({
   counter: state.contactLinguist.counter,
   networkInfoType: state.networkInfo.type,
   counterId: state.contactLinguist.counterId,
-  verifyCallId: state.activeSessionReducer.verifyCallId,
-  extraTime: state.activeSessionReducer.extraTime,
-  red: state.activeSessionReducer.red,
-  timeBtn: state.activeSessionReducer.timeBtn,
-  location: state.activeSessionReducer.location,
-  eventID: state.events.id
+  verifyCallId: state.callCustomerSettings.verifyCallId,
+  extraTime: state.callCustomerSettings.extraTime,
+  red: state.callCustomerSettings.red,
+  timeBtn: state.callCustomerSettings.timeBtn,
+  location: state.callCustomerSettings.location,
+  eventID: state.events.id,
+  localVideoWarning: state.activeSessionReducer.localVideoWarning,
+  signalVideoWarning: state.activeSessionReducer.signalVideoWarning
 });
 
 const mD = {

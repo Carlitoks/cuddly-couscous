@@ -47,6 +47,9 @@ import {
 } from "../../../Util/Background";
 import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
 import ConnectingView from "../Connecting/ConnectingView";
+import { Fade } from "../../../Effects";
+import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
+
 class LinguistView extends Component {
   constructor() {
     super();
@@ -159,6 +162,10 @@ class LinguistView extends Component {
 
             <Slide visible={visible} min={0} max={112}>
               <View style={styles.containerControls}>
+                {(this.props.localVideoWarning == "ENABLED" ||
+                  this.props.signalVideoWarning == "ENABLED") && (
+                  <PoorConnectionAlert isLinguist />
+                )}
                 <CallTimer
                   time={elapsedTime}
                   changeVisible={() => this.setState({ visible: !visible })}
@@ -205,7 +212,9 @@ const mS = state => ({
   preferredName: state.userProfile.preferredName,
   linguistProfile: state.userProfile.linguistProfile,
   deviceId: state.auth.deviceId,
-  eventId: state.events.id
+  eventId: state.events.id,
+  localVideoWarning: state.activeSessionReducer.localVideoWarning,
+  signalVideoWarning: state.activeSessionReducer.signalVideoWarning
 });
 
 const mD = {

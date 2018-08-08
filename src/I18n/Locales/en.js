@@ -343,6 +343,8 @@ export default (ENG = {
   verifyNumber: "Verify Phone",
   verifyNumberText: "Enter the verfication code you received via text.",
   video: "Video",
+  videoHasBeenTurnedOff:
+    "Video has been turned off to optimize this call. It will resume when both participants have stronger connectivity.",
   videoMode: "Video Mode",
   videoAssistance: "Video Assistance",
   waitingYourConnection: "Waiting for your connection",

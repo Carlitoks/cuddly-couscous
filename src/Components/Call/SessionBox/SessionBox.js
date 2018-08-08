@@ -74,6 +74,11 @@ class SessionBox extends Component {
       signal: event => {
         console.log("SIGNAL EVENT", event);
         this.props.signalEvent(event);
+        if (event.type == "WARNING") {
+          this.props.updateSettings({
+            signalVideoWarning: event.data
+          });
+        }
       },
       streamCreated: event => {
         console.log("STREAM CREATED EVENT", event);
