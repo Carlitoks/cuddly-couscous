@@ -95,11 +95,13 @@ export const asyncGetInvitationDetail = (
 export const verifyCall = (sessionID, token, verifyCallId) => dispatch => {
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
-      if (
-        response.data.status == "cancelled" ||
-        response.data.status == "assigned"
-      ) {
-        dispatch({ type: "Home", params: { alert: true } });
+      if (response.data.status == "cancelled") {
+        dispatch({ type: "Home", params: { alertCancelled: true } });
+        clearInterval(verifyCallId);
+        Vibration.cancel();
+      }
+      if (response.data.status == "assigned") {
+        dispatch({ type: "Home", params: { alertAssigned: true } });
         clearInterval(verifyCallId);
         Vibration.cancel();
       }
@@ -220,8 +222,11 @@ const initialState = {
   elapsedTime: 0,
   accept: false,
   customerPreferredSex: "any",
-  customerName: null,
 
+  customerName: null,
+  invitationID: "",
+  reconnecting: false,
+  sessionID: "",
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 10, // Initial time selected: 10 min

@@ -40,6 +40,7 @@ const ACTIONS = {
   INCREMENT_TIMER: "activeSession/incrementTimer",
   INCREMENT_RECONNECT: "activeSession/incrementReconnect",
   RESET_TIMER: "activeSession/resetTimer",
+  RESET_COUNTER: "activeSession/resetCounter",
   ENDSESSION: "activeSession/endSession",
   INVITATIONDETAIL: "activeSession/invitationDetail",
   INVITATIONACCEPT: "activeSession/invitationAccept"
@@ -91,6 +92,10 @@ export const incrementTimer = () => ({
 
 export const incrementReconnect = () => ({
   type: ACTIONS.INCREMENT_RECONNECT
+});
+
+export const resetCounterVerify = () => ({
+  type: ACTIONS.RESET_COUNTER
 });
 
 const initialState = {
@@ -183,7 +188,7 @@ export const sessionDestroyedEvent = event => dispatch => {
 };
 
 export const streamCreatedEvent = event => async (dispatch, getState) => {
-  const { activeSessionReducer, auth, userProfile } = getState();
+  const { activeSessionReducer, auth, userProfile, sessionInfo } = getState();
   dispatch(
     update({
       status: STATUS_TOKBOX.STREAM
@@ -200,6 +205,7 @@ export const streamCreatedEvent = event => async (dispatch, getState) => {
 
 export const streamDestroyedEvent = event => (dispatch, getState) => {
   const { userProfile, activeSessionReducer, auth } = getState();
+  //Ensure session
   dispatch(
     update({
       status: STATUS_TOKBOX.DESTROY
@@ -364,7 +370,7 @@ export const createSession = ({
   token,
   eventID,
   location
-}) => dispatch => {
+}) => (dispatch, getState) => {
   return Sessions.createSession(
     "immediate_virtual",
     "first_available",
@@ -393,7 +399,17 @@ export const createSession = ({
       );
       return response.data;
     })
-    .catch(error => dispatch(networkError(error)));
+    .catch(error => {
+      dispatch(networkError(error));
+      const { contactLinguist, activeSessionReducer } = getState();
+      clearInterval(contactLinguist.counterId);
+      clearInterval(activeSessionReducer.verifyCallId);
+      clearInterval(activeSessionReducer.timer);
+      dispatch(resetCounter());
+      dispatch(resetCounterVerify());
+      dispatch(clear());
+      dispatch({ type: "Home" });
+    });
 };
 
 export const verifyCall = (sessionID, token) => (dispatch, getState) => {
@@ -401,37 +417,48 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
       const { data } = response;
-
-      if (
-        ((!data.queue || !data.queue.pending) && !data.queue.sending) ||
-        data.status == "cancelled" ||
-        data.status == "assigned" ||
-        data.queue.declined === data.queue.total
-      ) {
-        clearInterval(activeSessionReducer.verifyCallId);
-      }
-      if (
-        (contactLinguist.counter > 10 * data.queue.total + 30 &&
-          contactLinguist.counterId) ||
-        data.queue.declined === data.queue.total ||
-        contactLinguist.counter >= 60
-      ) {
-        clearInterval(contactLinguist.counterId);
-        dispatch(resetCounter());
-
-        dispatch(
-          updateContactLinguist({
-            modalContact: true,
-            counter: TIME.RECONNECT,
-            messageReconnect: I18n.t("notLinguistAvailable")
-          })
-        );
-
-        sessionID && dispatch(HandleEndCall(sessionID, REASON.TIMEOUT, token));
+      if (data.status !== "assigned") {
+        if (contactLinguist.counter >= 55) {
+          clearInterval(contactLinguist.counterId);
+          clearInterval(activeSessionReducer.verifyCallId);
+          dispatch(resetCounter());
+          dispatch(resetCounterVerify());
+          dispatch(
+            updateContactLinguist({
+              modalContact: true,
+              counter: TIME.RECONNECT,
+              messageReconnect: I18n.t("notLinguistAvailable")
+            })
+          );
+          sessionID &&
+            dispatch(HandleEndCall(sessionID, REASON.TIMEOUT, token));
+        } else {
+          if (
+            ((!data.queue || !data.queue.pending) && !data.queue.sending) ||
+            data.queue.declined === data.queue.total ||
+            contactLinguist.counter > 10 * data.queue.total + 30 ||
+            data.queue.declined === data.queue.total
+          ) {
+            clearInterval(contactLinguist.counterId);
+            clearInterval(activeSessionReducer.verifyCallId);
+            dispatch(resetCounter());
+            dispatch(resetCounterVerify());
+            dispatch(
+              updateContactLinguist({
+                modalContact: true,
+                counter: TIME.RECONNECT,
+                messageReconnect: I18n.t("notLinguistAvailable")
+              })
+            );
+            sessionID &&
+              dispatch(HandleEndCall(sessionID, REASON.TIMEOUT, token));
+          }
+        }
       }
     })
     .catch(error => {
       dispatch(networkError(error));
+      clearInterval(contactLinguist.counterId);
       clearInterval(activeSessionReducer.verifyCallId);
     });
 };
@@ -506,6 +533,7 @@ export const closeCall = reason => (dispatch, getState) => {
   const { contactLinguist, activeSessionReducer, auth } = getState();
   clearInterval(contactLinguist.counterId);
   clearInterval(activeSessionReducer.timer);
+  clearInterval(activeSessionReducer.verifyCallId);
   dispatch(
     updateContactLinguist({
       modalContact: false,
@@ -522,10 +550,20 @@ export const closeCall = reason => (dispatch, getState) => {
 
   SoundManager["EndCall"].play();
   if (reason !== "Abort") {
-    activeSessionReducer.sessionID &&
-      dispatch(
-        HandleEndCall(activeSessionReducer.sessionID, reason, auth.token)
-      );
+    if (activeSessionReducer.sessionID) {
+      activeSessionReducer.sessionID &&
+        dispatch(
+          HandleEndCall(activeSessionReducer.sessionID, reason, auth.token)
+        );
+    } else {
+      if (reason === REASON.CANCEL) {
+        dispatch({ type: "Home" });
+      } else if (reason === REASON.RETRY) {
+        dispatch({ type: "CustomerView" });
+      } else if (reason === REASON.DONE) {
+        dispatch({ type: "RateView" });
+      }
+    }
   }
   if (reason == "Abort") {
     dispatch({ type: "Home" });
@@ -603,7 +641,8 @@ export const asyncAcceptsInvite = (
   reason,
   token,
   linguistSessionId
-) => dispatch => {
+) => (dispatch, getState) => {
+  const { activeSessionReducer, callLinguistSettings } = getState();
   if (reason && reason.accept) {
     Sessions.linguistFetchesInvite(invitationID, token)
       .then(res => {
@@ -613,6 +652,19 @@ export const asyncAcceptsInvite = (
               dispatch(setSession(response.data));
               dispatch(update({ sessionID: linguistSessionId }));
               dispatch(update({ isLinguist: true }));
+              dispatch(
+                updateRate({
+                  customerName: callLinguistSettings.customerName,
+                  sessionID: callLinguistSettings.sessionID,
+                  avatarURL: callLinguistSettings.avatarURL
+                })
+              );
+              dispatch(
+                update({
+                  customerName: callLinguistSettings.customerName,
+                  avatarURL: callLinguistSettings.avatarURL
+                })
+              );
               dispatch(connectCall());
             })
             .catch(error => {
@@ -729,6 +781,13 @@ const activeSessionReducer = (state = initialState, action = {}) => {
 
     case ACTIONS.INVITATIONDETAIL: {
       return { ...state, ...payload };
+    }
+
+    case ACTIONS.RESET_COUNTER: {
+      return {
+        ...state,
+        verifyCallId: null
+      };
     }
 
     default:

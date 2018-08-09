@@ -362,11 +362,18 @@ export default (ENG = {
   // for use in session-related screens
   session: {
     callTime: "Call Time: {{time}}",
-    alertGeneralCannotSee: "To optimize connectivity, video has been temporarily disabled. Video will resume when connectivity improves.",
-    alertLinguistCannotSeeYou: "Your Language Jeenie cannot currently see you. To optimize connectivity, your video has been temporarily disabled. Video will resume when connectivity improves.",
-    alertCustomerCannotSeeYou: "Your Customer cannot currently see you. To optimize connectivity, your video has been temporarily disabled. Video will resume when connectivity improves.",
-    alertYouCannotSeeCustomer: "To optimize connectivity, your customer's video has been temporarily disabled. Video will resume when connectivity improves.",
-    alertYouCannotSeeLinguist: "To optimize connectivity, your Language Jeenie's video has been temporarily disabled. Video will resume when connectivity improves.",
+    callCancel: "This call was canceled by the customer",
+    callAnswered: "This call has been taken by another linguist.",
+    alertGeneralCannotSee:
+      "To optimize connectivity, video has been temporarily disabled. Video will resume when connectivity improves.",
+    alertLinguistCannotSeeYou:
+      "Your Language Jeenie cannot currently see you. To optimize connectivity, your video has been temporarily disabled. Video will resume when connectivity improves.",
+    alertCustomerCannotSeeYou:
+      "Your Customer cannot currently see you. To optimize connectivity, your video has been temporarily disabled. Video will resume when connectivity improves.",
+    alertYouCannotSeeCustomer:
+      "To optimize connectivity, your customer's video has been temporarily disabled. Video will resume when connectivity improves.",
+    alertYouCannotSeeLinguist:
+      "To optimize connectivity, your Language Jeenie's video has been temporarily disabled. Video will resume when connectivity improves.",
 
     // used when rating a session
     rating: {
@@ -393,27 +400,27 @@ export default (ENG = {
     eng: "English",
     cmn: "Chinese (Mandarin)",
     yue: "Chinese (Cantonese)",
-    'zho-cn-shang': "Chinese (Shanghainese)",
-    'zho-tw': "Chinese (Taiwanese)",
+    "zho-cn-shang": "Chinese (Shanghainese)",
+    "zho-tw": "Chinese (Taiwanese)",
     jpn: "Japanese",
     spa: "Spanish",
-    'spa-r-la': "Spanish (Latin America)",
-    'spa-es': "Spanish (Spain)",
+    "spa-r-la": "Spanish (Latin America)",
+    "spa-es": "Spanish (Spain)",
     deu: "German",
     fra: "French",
-    'fra-ca': "French (Canada)",
-    'fra-fr': "French (France)",
+    "fra-ca": "French (Canada)",
+    "fra-fr": "French (France)",
     arb: "Arabic (Modern Standard)",
     aao: "Arabic (Algerian, Moroccan & Tunisian)",
-    'ara-arz_apd': "Arabic (Egyptian or Sudanese)",
+    "ara-arz_apd": "Arabic (Egyptian or Sudanese)",
     afb: "Arabic (Gulf)",
     acm: "Arabic (Iraqi)",
-    'ara-apc_ajp': "Arabic (Levantine)",
+    "ara-apc_ajp": "Arabic (Levantine)",
     azj: "Azeri (North)",
     azb: "Azeri (South)",
     por: "Portuguese",
-    'por-br': "Portuguese (Brazil)",
-    'por-pt': "Portuguese (Portugal)",
+    "por-br": "Portuguese (Brazil)",
+    "por-pt": "Portuguese (Portugal)",
     rus: "Russian",
     ita: "Italian",
     kor: "Korean",

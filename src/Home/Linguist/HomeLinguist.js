@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import InCallManager from "react-native-incall-manager";
 import {
   changeStatus,
+  reloadStatus,
   updateSettings,
   asyncGetAccountInformation
 } from "../../Ducks/ProfileLinguistReducer";
@@ -39,15 +40,22 @@ class Home extends Component {
     this.props.updateSettings({ loading: false });
     if (
       this.props.navigation.state.params &&
-      this.props.navigation.state.params.alert
+      this.props.navigation.state.params.alertCancelled
     ) {
-      Alert.alert(I18n.t("notification"), I18n.t("cancelCallCustomer"));
+      Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
+    }
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alertAssigned
+    ) {
+      Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
     }
     clearInterval(this.props.timer);
     clearInterval(this.props.counterId);
     this.props.clear();
     this.props.asyncGetAccountInformation();
     InCallManager.stop();
+    this.props.reloadStatus(this.props.status);
   }
 
   uploadAvatar(avatar) {
@@ -208,6 +216,7 @@ const mD = {
   updateView,
   getProfileAsync,
   changeStatus,
+  reloadStatus,
   asyncGetInvitationDetail,
   asyncGetAccountInformation,
   clear

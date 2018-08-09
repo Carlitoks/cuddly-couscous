@@ -188,7 +188,7 @@ class IncomingCall extends Component {
 }
 
 const mS = state => ({
-  invitationID: state.activeSessionReducer.invitationID,
+  invitationID: state.callLinguistSettings.invitationID,
   customerName: state.callLinguistSettings.customerName,
   avatarURL: state.callLinguistSettings.avatarURL,
   estimatedMinutes: state.callLinguistSettings.estimatedMinutes,

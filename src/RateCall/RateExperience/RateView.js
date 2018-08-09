@@ -131,7 +131,7 @@ const mS = state => ({
   thumbsDown: state.rateCall.thumbsDown,
   sessionID: state.rateCall.sessionID,
   token: state.auth.token,
-  customerName: state.activeSessionReducer.customerName,
+  customerName: state.rateCall.customerName,
   avatarURL: state.activeSessionReducer.avatarURL,
   linguistProfile: state.userProfile.linguistProfile,
   linguist: state.sessionInfo.linguist

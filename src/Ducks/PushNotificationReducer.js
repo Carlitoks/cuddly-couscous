@@ -5,9 +5,10 @@ import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReduce
 import { update as updateTokbox } from "./ActiveSessionReducer";
 import { updateSettings } from "./CallLinguistSettings";
 import { updateOptions as updateRate } from "./RateCallReducer";
+import { closeCall } from "./ActiveSessionReducer";
 import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
-import { LANG_CODES } from "../Util/Constants";
+import { LANG_CODES, STATUS_TOKBOX } from "../Util/Constants";
 import { isCurrentView } from "../Util/Helpers";
 import { networkError } from "./NetworkErrorsReducer";
 
@@ -31,7 +32,7 @@ export const remoteNotificationReceived = notification => dispatch => {
       break;
 
     case "session:end":
-      dispatch(sessionEndNotification());
+      dispatch(sessionEndNotification(notification.sessionID));
       break;
 
     default:
@@ -55,30 +56,10 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
       .then(res => {
         const data = res.data;
         dispatch(
-          updateTokbox({
+          updateSettings({
             invitationID: invitationId,
-            reconnecting: false
-          })
-        );
-        dispatch(updateTokbox({ sessionID: data.session.id }));
-        dispatch(updateRate({ sessionID: data.session.id }));
-        dispatch(
-          updateRate({
-            customerName: data.createdBy
-              ? `${data.createdBy.firstName} ${data.createdBy.lastInitial}.`
-              : ""
-          })
-        );
-        dispatch(
-          updateTokbox({
-            customerName: data.createdBy
-              ? `${data.createdBy.firstName} ${data.createdBy.lastInitial}.`
-              : ""
-          })
-        );
-        dispatch(
-          updateRate({
-            avatarURL: data.createdBy ? data.createdBy.avatarURL : ""
+            reconnecting: false,
+            sessionID: data.session.id
           })
         );
         dispatch(
@@ -121,11 +102,19 @@ const connectionEventNotification = () => () => {
   //TODO: Logic when receive a connection notification
 };
 
-const sessionEndNotification = () => (dispatch, getState) => {
-  const { nav } = getState();
+const sessionEndNotification = sessionID => (dispatch, getState) => {
+  const { nav, activeSessionReducer } = getState();
   const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
-  if (CurrentView == "LinguistView" || CurrentView == "CustomerView") {
-    dispatch({ type: "RateView" });
+  if (
+    (CurrentView == "LinguistView" || CurrentView == "CustomerView") &&
+    sessionID == activeSessionReducer.sessionID
+  ) {
+    if (
+      activeSessionReducer.status === STATUS_TOKBOX.STREAM ||
+      activeSessionReducer.status === STATUS_TOKBOX.CONECTED
+    ) {
+      dispatch(closeCall(REASON.DONE));
+    }
   }
 };
 
