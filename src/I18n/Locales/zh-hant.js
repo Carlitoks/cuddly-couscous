@@ -213,7 +213,7 @@
   login: "登入",
   loginLogoutExampleTitle: "登入/登出 Redux + Sagas 範例",
   loginWithFacebook: "使用 Facebook 登入",
-  logOut: "登出",
+  logOut: "退出",
   logOutConfirmation: "請確認。",
   mainTitle: "輸入姓名",
   male: "男性",
@@ -245,7 +245,7 @@
   online: "上線",
   operatingHoursAlertTitle: "請注意我們的開放時間限制",
   operatingHoursAlertMessage:
-    "上市期間，翻譯精靈上線時間為東部時間 (EDT) 上午 9 點至下午 5 點。",
+    "上市期間，翻譯精靈上線時間是東部時間 (EDT) 上午 9 點至晚上 9 點。",
   orChooseOneBelow: "或在下方選擇一項",
   other: "其他",
   password: "密碼",
@@ -356,17 +356,61 @@
   youCanAddTime: "您可以在通話中增加時間",
   youCanChangeThis: "您可以在通話中開啟/關閉視訊",
 
+  // for use in session-related screens
+  session: {
+    callTime: "通話時間：{{time}}",
+    alertGeneralCannotSee: "為保持最佳連線品質，目前已暫時停用視訊功能。連線品質改善後即可繼續使用視訊。",
+    alertLinguistCannotSeeYou: "您的語言翻譯精靈目前看不到您的畫面。為保持最佳連線品質，目前已暫時停用視訊。連線品質改善後即可繼續使用視訊。",
+    alertCustomerCannotSeeYou: "您的客戶目前看不到您的畫面。為保持最佳連線品質，目前已暫時停用視訊。連線品質改善後即可繼續使用視訊。",
+    alertYouCannotSeeCustomer: "為保持最佳連線品質，目前已暫時停用客戶的視訊。連線品質改善後即可繼續使用視訊。",
+    alertYouCannotSeeLinguist: "為保持最佳連線品質，目前已暫時停用翻譯精靈的視訊功能。連線品質改善後即可繼續使用視訊。",
+
+    // used when rating a session
+    rating: {
+      submit: "送出",
+      flags: {
+        langAbility: "語言能力",
+        time: "連線時間",
+        friendliness: "友善程度",
+        understandEasy: "容易理解",
+        understandHard: "難以理解",
+        audio: "音訊品質",
+        professionalism: "專業程度",
+        connection: "連線",
+        voice: "語音清晰度",
+        surroundings: "週遭環境",
+        appearance: "外觀",
+        noise: "背景噪音"
+      }
+    }
+  },
+
   // for use during primary language selection
   languagesList: {
     eng: "英文",
     cmn: "中文 (普通話)",
     yue: "中文 (廣東話)",
+    'zho-cn-shang': "中文 (上海話)",
+    'zho-tw': "中文 (台語)",
     jpn: "日文",
     spa: "西班牙文",
+    'spa-r-la': "西班牙文 (拉丁美洲)",
+    'spa-es': "西班牙文 (西班牙)",
     deu: "德文",
     fra: "法文",
-    arb: "阿拉伯文",
+    'fra-ca': "法文 (加拿大)",
+    'fra-fr': "法文 (法國)",
+    arb: "阿拉伯文 (現代標準)",
+    aao: "阿拉伯文 (阿爾及利亞、摩洛哥和突尼西亞)",
+    'ara-arz_apd': "阿拉伯文 (埃及或蘇丹)",
+    afb: "阿拉伯文 (阿拉伯灣)",
+    acm: "阿拉伯文 (伊拉克)",
+    'ara-apc_ajp': "阿拉伯文 (黎凡特)",
+    azj: "北亞塞拜然文",
+    azb: "南亞塞拜然文",
     por: "葡萄牙文",
+    'por-br': "葡萄牙文 (巴西)",
+    'por-pt': "葡萄牙文 (葡萄牙)",
     rus: "俄文",
     ita: "義大利文",
     kor: "韓文",
@@ -383,10 +427,10 @@
     pes: "波斯文",
     hin: "印度文",
     ces: "捷克文",
-    zsm: "馬來文", // can of worms here
+    zsm: "馬來文",
     ell: "希臘文",
     hun: "匈牙利文",
-    ron: "羅馬尼亞文", // OR rup, ruq?
+    ron: "羅馬尼亞文",
     vie: "越文",
     ben: "孟加拉文",
     cat: "加泰隆文",
@@ -395,8 +439,8 @@
     slk: "斯洛伐克文",
     kaz: "哈薩克文",
     ltz: "盧森堡文",
-    kur: "庫德文", // OR north/south: kmr, sdh?
-    azj: "北亞塞拜然文", // OR north/south: azb, azj?
+    kur: "庫德文",
+    azj: "北亞塞拜然文",
     azb: "南亞塞拜然文",
     ukr: "烏克蘭文",
     afr: "南非荷蘭文",
@@ -404,7 +448,7 @@
     glg: "加里斯亞文",
     slv: "斯洛維尼亞文",
     lit: "立陶宛文",
-    ckb: "索拉尼文", // Central Kurdish
+    ckb: "索拉尼文",
     jav: "爪哇文",
     urd: "烏都文",
     sqi: "阿爾巴尼亞文",
@@ -413,10 +457,10 @@
     yor: "優魯巴文",
     hau: "豪沙文",
     bul: "保加利亞文",
-    uzb: "烏茲別克文", // OR north/south: uzn, uzs
-    swa: "史瓦西里文", // OR ccl, swc, swh
+    uzb: "烏茲別克文",
+    swa: "史瓦西里文",
     eus: "巴斯克文",
     bel: "白俄羅斯文",
-    tat: "韃靼文" // OR Crimean/Siberian: crh, sty
+    tat: "韃靼文"
   }
 });

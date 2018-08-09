@@ -44,8 +44,8 @@
   cancel: "取消",
   cancelCall: "取消通话",
   celebrateAndEnjoy:
-    "庆祝翻译精灵发布，\n\n限时免费试用！",
-  celebrateWithUs: "与我们一同庆祝翻译精灵的发布",
+    "庆祝\n翻译精灵发布，\n限时免费试用！",
+  celebrateWithUs: "与我们一同庆祝翻译精灵的发布！",
   changeSettings: "如需更改您的设置，请转至\"设置\" > \"翻译精灵\"",
   cancelCallCustomer: "无法呼叫",
   chargeAdvice: "超过 8 分钟的通话按分钟计费。",
@@ -61,7 +61,7 @@
   confirm: "确认",
   confirmCall: "确认详情",
   confirmEighteen1: "并确认您",
-  confirmEighteen2: " 已年满 18 岁",
+  confirmEighteen2: " 已年满 18 岁。",
   confirmPassword: " 确认密码",
   confirmAndConnect: "确认并连接",
   connectMeNow: "立即和我连接",
@@ -106,7 +106,7 @@
   estimatedCost: "预计费用",
   estimatedDuration: "预计时长",
   estimatedCostStatic1:
-    "试用期间，预设通话时间为 8 分钟",
+    "试用期间，预设通话时间为 8 分钟。",
   estimatedCostStatic2:
     "如需更多时间，您可在通话中增加。",
   expertise_A1:
@@ -213,7 +213,7 @@
   login: "登录",
   loginLogoutExampleTitle: "登录/注销 Redux + Sagas 示例",
   loginWithFacebook: "使用 Facebook 登录",
-  logOut: "退出",
+  logOut: "注销",
   logOutConfirmation: "请确认。",
   mainTitle: "输入您的姓名",
   male: "男性",
@@ -245,7 +245,7 @@
   online: "上线",
   operatingHoursAlertTitle: "请注意我们的开放时间限制",
   operatingHoursAlertMessage:
-    "发布期间，翻译精灵的上线时间为美国东部时间 (EDT) 上午 9 点至下午 5 点。",
+    "发布期间，翻译精灵的上线时间为美国东部时间 (EDT) 上午 9 点至晚上 9 点。",
   orChooseOneBelow: "或选择下列一项",
   other: "其他",
   password: "密码",
@@ -308,7 +308,7 @@
   tapRepeat: "点击重复",
   thereNoInternetConnection: "无网络连接",
   time: "时间",
-  timeStatic1: "试用期间，预设通话时间为 8 分钟",
+  timeStatic1: "试用期间，预设通话时间为 8 分钟。",
   timeCompliments: "翻译精灵真情回馈",
   timeAddMore: "每次通话时间最长为 60 分钟。",
   timeStatic2: "如需更多时间，您可在通话中增加。",
@@ -356,17 +356,61 @@
   youCanAddTime: "您可以在通话过程中增加时间",
   youCanChangeThis: "您可以在通话过程中打开/关闭视频",
 
+  // for use in session-related screens
+  session: {
+    callTime: "通话时间：{{time}}",
+    alertGeneralCannotSee: "为优化连接，已暂时禁用视频功能。连接改善后即可恢复视频使用。",
+    alertLinguistCannotSeeYou: "您的语言翻译精灵当前看不到您的画面。为优化连接，已暂时禁用您的视频功能。连接改善后即可恢复视频使用。",
+    alertCustomerCannotSeeYou: "您的客户当前看不到您的画面。为优化连接，已暂时禁用您的视频功能。连接改善后即可恢复视频使用。",
+    alertYouCannotSeeCustomer: "为优化连接，已暂时禁用您客户的视频功能。连接改善后即可恢复视频使用。",
+    alertYouCannotSeeLinguist: "为优化连接，已暂时禁用语言翻译精灵的视频功能。连接改善后即可恢复视频使用。",
+
+    // used when rating a session
+    rating: {
+      submit: "提交",
+      flags: {
+        langAbility: "语言能力",
+        time: "连线时间",
+        friendliness: "友好程度",
+        understandEasy: "通俗易懂",
+        understandHard: "晦涩难懂",
+        audio: "音频质量",
+        professionalism: "专业水平",
+        connection: "连接",
+        voice: "语音清晰度",
+        surroundings: "环境",
+        appearance: "外观",
+        noise: "背景噪声"
+      }
+    }
+  },
+
   // for use during primary language selection
   languagesList: {
     eng: "英语",
     cmn: "中文（普通话）",
     yue: "中文（粤语）",
+    'zho-cn-shang': "中文（上海话）",
+    'zho-tw': "中文（台湾话）",
     jpn: "日语",
     spa: "西班牙语",
+    'spa-r-la': "西班牙语（拉丁美洲）",
+    'spa-es': "西班牙语（西班牙）",
     deu: "德语",
     fra: "法语",
-    arb: "阿拉伯语",
+    'fra-ca': "法语（加拿大）",
+    'fra-fr': "法语（法国）",
+    arb: "阿拉伯语（现代标准）",
+    aao: "阿拉伯语（阿尔及利亚、摩洛哥和突尼斯）",
+    'ara-arz_apd': "阿拉伯语（埃及或苏丹）",
+    afb: "阿拉伯语（海湾地区）",
+    acm: "阿拉伯语（伊拉克）",
+    'ara-apc_ajp': "阿拉伯语（黎凡特）",
+    azj: "北阿塞拜疆语",
+    azb: "南阿塞拜疆语",
     por: "葡萄牙语",
+    'por-br': "葡萄牙语（巴西）",
+    'por-pt': "葡萄牙语（葡萄牙）",
     rus: "俄语",
     ita: "意大利语",
     kor: "韩语",
@@ -383,10 +427,10 @@
     pes: "波斯语",
     hin: "印地语",
     ces: "捷克语",
-    zsm: "马来语", // can of worms here
+    zsm: "马来语",
     ell: "希腊语",
     hun: "匈牙利语",
-    ron: "罗马尼亚语", // OR rup, ruq?
+    ron: "罗马尼亚语",
     vie: "越南语",
     ben: "孟加拉语",
     cat: "加泰罗尼亚语",
@@ -395,8 +439,8 @@
     slk: "斯洛伐克语",
     kaz: "哈萨克语",
     ltz: "卢森堡语",
-    kur: "库尔德语", // OR north/south: kmr, sdh?
-    azj: "北阿塞拜疆语", // OR north/south: azb, azj?
+    kur: "库尔德语",
+    azj: "北阿塞拜疆语",
     azb: "南阿塞拜疆语",
     ukr: "乌克兰语",
     afr: "南非语",
@@ -404,7 +448,7 @@
     glg: "加利西亚语",
     slv: "斯罗维尼亚语",
     lit: "立陶宛语",
-    ckb: "中库尔德语", // Central Kurdish
+    ckb: "中库尔德语",
     jav: "爪哇语",
     urd: "乌尔都语",
     sqi: "阿尔巴尼亚语",
@@ -413,10 +457,10 @@
     yor: "约鲁巴语",
     hau: "豪萨语",
     bul: "保加利亚语",
-    uzb: "乌兹别克语", // OR north/south: uzn, uzs
-    swa: "斯瓦西里语", // OR ccl, swc, swh
+    uzb: "乌兹别克语",
+    swa: "斯瓦西里语",
     eus: "巴斯克语",
     bel: "白俄罗斯语",
-    tat: "鞑靼语" // OR Crimean/Siberian: crh, sty
+    tat: "鞑靼语"
   }
 });
