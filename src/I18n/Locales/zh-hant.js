@@ -243,9 +243,8 @@
   offline: "離線",
   ok: "確定",
   online: "上線",
-  operatingHoursAlertTitle: "請注意我們的開放時間限制",
-  operatingHoursAlertMessage:
-    "上市期間，翻譯精靈上線時間是東部時間 (EDT) 上午 9 點至晚上 9 點。",
+  operatingHoursAlertTitle: "請注意我們目前的營業時間為",
+  operatingHoursAlertMessage: "星期一至星期天，美國東部時間早上十點到晚上七點 （東部夏令時間 ）",
   orChooseOneBelow: "或在下方選擇一項",
   other: "其他",
   password: "密碼",

@@ -243,9 +243,8 @@
   offline: "离线",
   ok: "确定",
   online: "上线",
-  operatingHoursAlertTitle: "请注意我们的开放时间限制",
-  operatingHoursAlertMessage:
-    "发布期间，翻译精灵的上线时间为美国东部时间 (EDT) 上午 9 点至晚上 9 点。",
+  operatingHoursAlertTitle: "请注意我们目前的营业时间为",
+  operatingHoursAlertMessage: "星期一至星期天，美国东部时间早上十点到晚上七点 （东部夏令时间 ）",
   orChooseOneBelow: "或选择下列一项",
   other: "其他",
   password: "密码",
