@@ -244,9 +244,8 @@ export default (ENG = {
   offline: "Offline",
   ok: "Ok",
   online: "Online",
-  operatingHoursAlertTitle: "Please note our limited operating hours",
-  operatingHoursAlertMessage:
-    "During our launch, Language Jeenies are online from 9am to 9pm Eastern Time (EDT).",
+  operatingHoursAlertTitle: "Please note our current operating hours",
+  operatingHoursAlertMessage: "Monday - Sunday: 10am - 7pm Eastern Time (EDT)",
   orChooseOneBelow: "Or choose one below",
   other: "Other",
   password: "Password",

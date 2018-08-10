@@ -243,9 +243,8 @@
   offline: "オフライン",
   ok: "OK",
   online: "オンライン",
-  operatingHoursAlertTitle: "サービス提供時間は限られていますのでご了承ください",
-  operatingHoursAlertMessage:
-    "サービス開始期間中は、東部標準時（EDT）午前9時から午後9時までLanguage Jeeniesがオンラインで対応いたします。",
+  operatingHoursAlertTitle: "営業時間は次の時間帯ですので、ご了承ください。",
+  operatingHoursAlertMessage: "月～日：午前 10 時～午後 7 時 米国東海岸時間",
   orChooseOneBelow: "もしくは以下からひとつ選択してください",
   other: "その他",
   password: "パスワード",
