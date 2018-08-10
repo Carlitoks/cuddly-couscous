@@ -2,7 +2,7 @@ import { Sessions } from "../Api";
 import { updateSettings as updateCallLinguistSettings } from "./CallLinguistSettings";
 import { updateConnectingMessage } from "./ContactLinguistReducer";
 import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReducer";
-import { update as updateTokbox } from "./ActiveSessionReducer";
+import { update as updateTokbox, clear } from "./ActiveSessionReducer";
 import { updateSettings } from "./CallLinguistSettings";
 import { updateOptions as updateRate } from "./RateCallReducer";
 import { closeCall } from "./ActiveSessionReducer";
@@ -43,15 +43,20 @@ export const remoteNotificationReceived = notification => dispatch => {
 const incomingCallNotification = invitationId => (dispatch, getState) => {
   const state = getState();
   const isLinguist = !!state.userProfile.linguistProfile;
-  const { nav } = getState();
+  const { nav, contactLinguist, activeSessionReducer } = getState();
   const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
   if (
     state.auth.isLoggedIn &&
     invitationId &&
     isLinguist &&
     state.profileLinguist.available &&
-    CurrentView != "IncomingCall"
+    CurrentView != "IncomingCall" &&
+    CurrentView != "LinguistView"
   ) {
+    clearInterval(contactLinguist.counterId);
+    clearInterval(activeSessionReducer.timer);
+    clearInterval(activeSessionReducer.verifyCallId);
+    dispatch(clear());
     Sessions.linguistFetchesInvite(invitationId, state.auth.token)
       .then(res => {
         const data = res.data;

@@ -57,6 +57,9 @@ class CallConfirmationView extends Component {
 
   componentWillMount() {
     const { promotion, event, resetConnectingMessage } = this.props;
+    clearInterval(this.props.timer);
+    clearInterval(this.props.counterId);
+    this.props.clearSettings();
     getGeolocationCoords()
       .then(response => {
         this.props.customerUpdateSettings({
@@ -153,14 +156,15 @@ class CallConfirmationView extends Component {
                   {`${categoryTitle}: `}
 
                   <Text style={styles.regularText}>
-                    {customScenario ? (
-                      customScenario
-                    ) : this.props.selectedScenario &&
-                    this.props.selectedScenario[0] ? (
-                      translateProperty(this.props.selectedScenario[0], "title")
-                    ) : (
-                      I18n.t("generalAssistance")
-                    )}
+                    {customScenario
+                      ? customScenario
+                      : this.props.selectedScenario &&
+                        this.props.selectedScenario[0]
+                        ? translateProperty(
+                            this.props.selectedScenario[0],
+                            "title"
+                          )
+                        : I18n.t("generalAssistance")}
                   </Text>
                 </Text>
                 <TextInput
@@ -174,11 +178,9 @@ class CallConfirmationView extends Component {
                   }
                   fontStyle={
                     !!this.props.scenarioNotes &&
-                    this.props.scenarioNotes.length == 0 ? (
-                      "italic"
-                    ) : (
-                      "normal"
-                    )
+                    this.props.scenarioNotes.length == 0
+                      ? "italic"
+                      : "normal"
                   }
                   multiline
                   blurOnSubmit
@@ -186,7 +188,8 @@ class CallConfirmationView extends Component {
                   returnKeyType={"done"}
                   placeholder={I18n.t("scenarioNotes")}
                   onChangeText={text =>
-                    this.props.updateSettings({ customScenarioNote: text })}
+                    this.props.updateSettings({ customScenarioNote: text })
+                  }
                   onContentSizeChange={event => {
                     this.inputHeight = event.nativeEvent.contentSize.height;
                   }}
@@ -235,11 +238,9 @@ class CallConfirmationView extends Component {
             >
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
-                  {this.props.approxTime ? (
-                    `${this.props.approxTime} ${I18n.t("minutes")}: `
-                  ) : (
-                    `${I18n.t("upTo60")}: `
-                  )}
+                  {this.props.approxTime
+                    ? `${this.props.approxTime} ${I18n.t("minutes")}: `
+                    : `${I18n.t("upTo60")}: `}
                   <Text style={[styles.regularText]}>
                     {/* {I18n.t("timeCompliments")} */}
                     {"$0"}
@@ -291,11 +292,9 @@ class CallConfirmationView extends Component {
                     </View>
                     <Text
                       style={
-                        this.props.video ? (
-                          styles.textAudioActive
-                        ) : (
-                          styles.textAudioInactive
-                        )
+                        this.props.video
+                          ? styles.textAudioActive
+                          : styles.textAudioInactive
                       }
                     >
                       {I18n.t("audioVideo")}
@@ -332,11 +331,9 @@ class CallConfirmationView extends Component {
                     </View>
                     <Text
                       style={
-                        !this.props.video ? (
-                          styles.textAudioActive
-                        ) : (
-                          styles.textAudioInactive
-                        )
+                        !this.props.video
+                          ? styles.textAudioActive
+                          : styles.textAudioInactive
                       }
                     >
                       {I18n.t("audioOnly")}
@@ -383,6 +380,8 @@ const mS = state => ({
   token: state.auth.token,
   video: state.activeSessionReducer.video,
   approxTime: state.activeSessionReducer.selectedTime,
+  timer: state.activeSessionReducer.timer,
+  counterId: state.activeSessionReducer.counterId,
   scenario: state.linguistForm.selectedLanguage,
   scenarioNotes: state.contactLinguist.customScenarioNote,
   selectedScenario: state.linguistForm.selectedScenarios,
@@ -411,4 +410,7 @@ const mD = {
   resetConnectingMessage
 };
 
-export default connect(mS, mD)(CallConfirmationView);
+export default connect(
+  mS,
+  mD
+)(CallConfirmationView);
