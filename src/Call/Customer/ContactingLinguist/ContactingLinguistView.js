@@ -42,6 +42,10 @@ class ContactingLinguist extends Component {
     }
   }
 
+  sixtySecondsCounter(counter) {
+    return 60 - counter;
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.tokboxStatus === STATUS_TOKBOX.STREAM) {
       clearInterval(this.props.counterId);
@@ -71,16 +75,17 @@ class ContactingLinguist extends Component {
           />
         )}
         <View style={styles.connectingMessageContainer}>
-          {!this.props.modalReconnect && (
-            <CallTimer
-              time={this.props.counter}
-              withOut
-              changeVisible={() => console.log("change")}
-              red={false}
-              showButton={false}
-              buttonPress={() => console.log("click")}
-            />
-          )}
+          {!this.props.modalReconnect &&
+            this.props.counter !== 0 && (
+              <CallTimer
+                time={this.sixtySecondsCounter(this.props.counter)}
+                withOut
+                changeVisible={() => console.log("change")}
+                red={false}
+                showButton={false}
+                buttonPress={() => console.log("click")}
+              />
+            )}
           <Text style={styles.connectingMessage}>
             {this.props.connectingMessage}
           </Text>

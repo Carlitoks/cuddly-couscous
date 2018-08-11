@@ -74,7 +74,7 @@ export default StyleSheet.create({
     alignSelf: "center",
     position: "absolute",
     justifyContent: "center",
-    top: "35%",
+    top: "40%",
     height: 156,
     width: 280,
     backgroundColor: Colors.transparent
