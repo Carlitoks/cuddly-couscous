@@ -485,6 +485,19 @@ export const closeOpenConnections = () => dispatch => {
   dispatch(clear());
 };
 
+export const verifyLinguistConnection = () => (dispatch, getState) => {
+  const { contactLinguist, activeSessionReducer } = getState();
+  if (
+    contactLinguist.counter > 20 &&
+    activeSessionReducer.sessionID &&
+    activeSessionReducer.status !== STATUS_TOKBOX.STREAM
+  ) {
+    clearInterval(contactLinguist.counterId);
+    dispatch(resetCounter());
+    dispatch(closeCall(REASON.DONE));
+  }
+};
+
 export const startReconnect = () => (dispatch, getState) => {
   dispatch(
     update({

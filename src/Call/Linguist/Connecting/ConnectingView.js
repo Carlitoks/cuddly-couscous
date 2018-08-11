@@ -8,7 +8,16 @@ import ModalRetry from "../../../Components/ModalRerty/ModalRetry";
 // STYLE AND THEMES
 import styles from "./styles";
 // REDUCERS
-import { closeCall } from "../../../Ducks/ActiveSessionReducer";
+import {
+  closeCall,
+  update,
+  verifyLinguistConnection
+} from "../../../Ducks/ActiveSessionReducer";
+import {
+  incrementCounter,
+  resetCounter,
+  updateSettings
+} from "../../../Ducks/ContactLinguistReducer";
 import I18n from "../../../I18n/I18n";
 import { displayEndCall } from "../../../Util/Alerts";
 import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
@@ -24,18 +33,19 @@ class ConnectingView extends Component {
     SoundManager["IncomingCall"].stop();
     this.conectingTimer();
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.tokboxStatus === STATUS_TOKBOX.STREAM) {
-      clearInterval(this.props.counterId);
-    }
+  componentWillUnmount() {
+    clearInterval(this.props.counterId);
+    this.props.resetCounter();
   }
 
   conectingTimer = () => {
     const { incrementCounter } = this.props;
-    setTimeout(() => {
-      console.log("Clear");
-    }, 2000);
+    this.props.updateSettings({
+      counterId: setInterval(() => {
+        incrementCounter();
+        this.props.verifyLinguistConnection();
+      }, 1000)
+    });
   };
 
   closeCallLinguist = reason => {
@@ -92,13 +102,18 @@ class ConnectingView extends Component {
 
 const mS = state => ({
   counterId: state.contactLinguist.counterId,
-  tokboxStatus: state.tokbox.status,
+  tokboxStatus: state.activeSessionReducer.status,
   modalReconnect: state.contactLinguist.modalReconnect,
   modalContact: state.contactLinguist.modalContact
 });
 
 const mD = {
-  closeCall
+  closeCall,
+  update,
+  verifyLinguistConnection,
+  incrementCounter,
+  resetCounter,
+  updateSettings
 };
 
 export default connect(
