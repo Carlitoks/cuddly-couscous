@@ -20,6 +20,7 @@ import {
   emitLocalNotification,
   cleanNotifications
 } from "../Util/PushNotification";
+import { updateSettings as updateLinguistSettings } from "./CallLinguistSettings";
 import { updateOptions as updateRate } from "./RateCallReducer";
 import { displayTimeAlert, displayEndCall } from "../Util/Alerts";
 import { Sessions, CallHistory } from "../Api";
@@ -718,6 +719,7 @@ export const asyncAcceptsInvite = (
 };
 
 export const startTimerLinguist = () => (dispatch, getState) => {
+  const { activeSessionReducer } = getState();
   dispatch(
     update({
       timer: setInterval(() => {
@@ -730,6 +732,7 @@ export const startTimerLinguist = () => (dispatch, getState) => {
       }, 1000)
     })
   );
+  dispatch(updateLinguistSettings({ timer: activeSessionReducer.timer }));
 };
 
 export const closeCallReconnect = reason => dispatch => {

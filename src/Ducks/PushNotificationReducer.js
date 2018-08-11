@@ -42,23 +42,31 @@ export const remoteNotificationReceived = notification => dispatch => {
 };
 
 const incomingCallNotification = invitationId => (dispatch, getState) => {
-  const state = getState();
-  const isLinguist = !!state.userProfile.linguistProfile;
-  const { nav, contactLinguist, activeSessionReducer } = getState();
+  const {
+    nav,
+    contactLinguist,
+    activeSessionReducer,
+    auth,
+    profileLinguist,
+    callLinguistSettings,
+    userProfile
+  } = getState();
+  const isLinguist = !!userProfile.linguistProfile;
   const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
   if (
-    state.auth.isLoggedIn &&
+    auth.isLoggedIn &&
     invitationId &&
     isLinguist &&
-    state.profileLinguist.available &&
+    profileLinguist.available &&
     CurrentView != "IncomingCallView" &&
     CurrentView != "LinguistView"
   ) {
     clearInterval(contactLinguist.counterId);
     clearInterval(activeSessionReducer.timer);
+    clearInterval(callLinguistSettings.timer);
     clearInterval(activeSessionReducer.verifyCallId);
     dispatch(clear());
-    Sessions.linguistFetchesInvite(invitationId, state.auth.token)
+    Sessions.linguistFetchesInvite(invitationId, auth.token)
       .then(res => {
         const data = res.data;
         dispatch(
