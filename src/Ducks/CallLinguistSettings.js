@@ -93,6 +93,7 @@ export const asyncGetInvitationDetail = (
 };
 
 export const verifyCall = (sessionID, token, verifyCallId) => dispatch => {
+  const { callLinguistSettings } = getState();
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
       if (response.data.status == "cancelled") {
@@ -101,13 +102,16 @@ export const verifyCall = (sessionID, token, verifyCallId) => dispatch => {
         Vibration.cancel();
       }
       if (response.data.status == "assigned") {
-        dispatch({ type: "Home", params: { alertAssigned: true } });
-        clearInterval(verifyCallId);
-        Vibration.cancel();
+        if (callLinguistSettings.sessionID) {
+          dispatch({ type: "Home", params: { alertAssigned: true } });
+          clearInterval(verifyCallId);
+          Vibration.cancel();
+        }
       }
     })
     .catch(error => {
       dispatch(networkError(error));
+      console.log("Error");
       clearInterval(verifyCallId);
       Vibration.cancel();
     });

@@ -5,6 +5,7 @@ import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReduce
 import { update as updateTokbox, clear } from "./ActiveSessionReducer";
 import { updateSettings } from "./CallLinguistSettings";
 import { updateOptions as updateRate } from "./RateCallReducer";
+import { REASON } from "../Util/Constants";
 import { closeCall } from "./ActiveSessionReducer";
 import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
@@ -50,7 +51,7 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
     invitationId &&
     isLinguist &&
     state.profileLinguist.available &&
-    CurrentView != "IncomingCall" &&
+    CurrentView != "IncomingCallView" &&
     CurrentView != "LinguistView"
   ) {
     clearInterval(contactLinguist.counterId);
@@ -110,16 +111,8 @@ const connectionEventNotification = () => () => {
 const sessionEndNotification = sessionID => (dispatch, getState) => {
   const { nav, activeSessionReducer } = getState();
   const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
-  if (
-    (CurrentView == "LinguistView" || CurrentView == "CustomerView") &&
-    sessionID == activeSessionReducer.sessionID
-  ) {
-    if (
-      activeSessionReducer.status === STATUS_TOKBOX.STREAM ||
-      activeSessionReducer.status === STATUS_TOKBOX.CONECTED
-    ) {
-      dispatch(closeCall(REASON.DONE));
-    }
+  if (sessionID == activeSessionReducer.sessionID) {
+    dispatch(closeCall(REASON.DONE));
   }
 };
 

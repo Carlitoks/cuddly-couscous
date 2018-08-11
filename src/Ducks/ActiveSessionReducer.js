@@ -205,13 +205,32 @@ export const streamCreatedEvent = event => async (dispatch, getState) => {
 
 export const streamDestroyedEvent = event => (dispatch, getState) => {
   const { userProfile, activeSessionReducer, auth } = getState();
-  //Ensure session
   dispatch(
     update({
       status: STATUS_TOKBOX.DESTROY
     })
   );
-  dispatch({ type: "RateView" });
+  //Add validations
+  Sessions.StatusSession(activeSessionReducer.sessionID, auth.token)
+    .then(response => {
+      console.log("Destroyed ", response); // REVIEW
+      if (response.data.session.ended) {
+        clearInterval(activeSessionReducer.counterId);
+        clearInterval(activeSessionReducer.timer);
+        clearInterval(activeSessionReducer.verifyCallId);
+        dispatch(clear());
+        dispatch({ type: "RateView" });
+      }
+    })
+    .catch(error => {
+      /*if (activeSessionReducer.modalReconnect) {
+          dispatch(
+            update({
+              modalReconnectCounter: 0
+            })
+          );
+        }*/
+    });
 };
 
 export const errorEvent = event => dispatch => {
@@ -434,9 +453,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
             dispatch(HandleEndCall(sessionID, REASON.TIMEOUT, token));
         } else {
           if (
-            ((!data.queue || !data.queue.pending) && !data.queue.sending) ||
-            data.queue.declined === data.queue.total ||
-            contactLinguist.counter > 10 * data.queue.total + 30 ||
+            contactLinguist.counter >= 55 ||
             data.queue.declined === data.queue.total
           ) {
             clearInterval(contactLinguist.counterId);
@@ -642,7 +659,11 @@ export const asyncAcceptsInvite = (
   token,
   linguistSessionId
 ) => (dispatch, getState) => {
-  const { activeSessionReducer, callLinguistSettings } = getState();
+  const {
+    activeSessionReducer,
+    callLinguistSettings,
+    contactLinguist
+  } = getState();
   if (reason && reason.accept) {
     Sessions.linguistFetchesInvite(invitationID, token)
       .then(res => {
@@ -650,7 +671,7 @@ export const asyncAcceptsInvite = (
           Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
             .then(response => {
               dispatch(setSession(response.data));
-              dispatch(update({ sessionID: linguistSessionId }));
+              dispatch(update({ sessionID: callLinguistSettings.sessionID }));
               dispatch(update({ isLinguist: true }));
               dispatch(
                 updateRate({
