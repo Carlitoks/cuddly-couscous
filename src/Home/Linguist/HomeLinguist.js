@@ -55,7 +55,7 @@ class Home extends Component {
     this.props.clear();
     this.props.asyncGetAccountInformation();
     InCallManager.stop();
-    this.props.reloadStatus(this.props.status);
+    this.props.reloadStatus(this.props.available);
   }
 
   uploadAvatar(avatar) {
