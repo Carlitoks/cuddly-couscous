@@ -92,7 +92,10 @@ export const asyncGetInvitationDetail = (
     });
 };
 
-export const verifyCall = (sessionID, token, verifyCallId) => dispatch => {
+export const verifyCall = (sessionID, token, verifyCallId) => (
+  dispatch,
+  getState
+) => {
   const { callLinguistSettings } = getState();
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {

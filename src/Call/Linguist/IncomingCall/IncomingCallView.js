@@ -197,7 +197,7 @@ const mS = state => ({
   languages: state.callLinguistSettings.languages,
   verifyCallId: state.callLinguistSettings.verifyCallId,
   token: state.auth.token,
-  sessionID: state.activeSessionReducer.sessionID
+  sessionID: state.callLinguistSettings.sessionID
 });
 
 const mD = {
