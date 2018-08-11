@@ -8,9 +8,9 @@ import ModalRetry from "../../../Components/ModalRerty/ModalRetry";
 // STYLE AND THEMES
 import styles from "./styles";
 // REDUCERS
-import { closeCall } from "../../../Ducks/CallCustomerSettings";
+import { closeCall } from "../../../Ducks/ActiveSessionReducer";
 import I18n from "../../../I18n/I18n";
-
+import { displayEndCall } from "../../../Util/Alerts";
 import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
 import SoundManager from "../../../Util/SoundManager";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -22,6 +22,7 @@ class ConnectingView extends Component {
 
   componentWillMount() {
     SoundManager["IncomingCall"].stop();
+    this.conectingTimer();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,6 +30,20 @@ class ConnectingView extends Component {
       clearInterval(this.props.counterId);
     }
   }
+
+  conectingTimer = () => {
+    const { incrementCounter } = this.props;
+    setTimeout(() => {
+      console.log("Clear");
+    }, 2000);
+  };
+
+  closeCallLinguist = reason => {
+    displayEndCall(() => {
+      SoundManager["EndCall"].play();
+      this.props.closeCall(REASON.DONE);
+    });
+  };
 
   render() {
     const { closeCall, connect, callTimeOut } = this.props;
@@ -62,8 +77,8 @@ class ConnectingView extends Component {
             {/* Call Buttons */}
 
             <SessionControls
-              closeCall={closeCall}
-              reason={REASON.CANCEL}
+              closeCall={this.closeCallLinguist}
+              reason={REASON.DONE}
               switch={() => {}}
               contacting
               linguist
