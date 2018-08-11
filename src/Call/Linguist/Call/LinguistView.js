@@ -10,7 +10,7 @@ import {
 import KeepAwake from "react-native-keep-awake";
 import InCallManager from "react-native-incall-manager";
 import IncomingCallView from "../IncomingCall/IncomingCallView";
-
+import { displayEndCall } from "../../../Util/Alerts";
 import CallAvatarName from "../../../Components/CallAvatarName/CallAvatarName";
 import NoVideoScreen from "../../../Components/NoVideoScreen/NoVideoScreen";
 import { SessionHandler } from "../../../Components";
@@ -145,6 +145,13 @@ class LinguistView extends Component {
     });
   };
 
+  closeCallLinguist = reason => {
+    displayEndCall(() => {
+      SoundManager["EndCall"].play();
+      this.props.closeCall(REASON.DONE);
+    });
+  };
+
   render() {
     const { visible } = this.state;
     const { closeCall, elapsedTime, closeCallReconnect } = this.props;
@@ -172,7 +179,7 @@ class LinguistView extends Component {
                 />
 
                 <SessionControls
-                  closeCall={closeCall}
+                  closeCall={this.closeCallLinguist}
                   reason={REASON.DONE}
                   switch={() => {}}
                   linguist
