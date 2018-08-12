@@ -19,7 +19,8 @@ import { connect } from "react-redux";
 import { GetInfo } from "../../../Ducks/SessionInfoReducer";
 import {
   clear as clearSettings,
-  update as customerUpdateSettings
+  update as customerUpdateSettings,
+  clearTokboxStatus
 } from "../../../Ducks/ActiveSessionReducer";
 import {
   updateSettings,
@@ -59,7 +60,9 @@ class CallConfirmationView extends Component {
     const { promotion, event, resetConnectingMessage } = this.props;
     clearInterval(this.props.timer);
     clearInterval(this.props.counterId);
+    clearInterval(this.props.timerCustomer);
     this.props.clearSettings();
+    this.props.clearTokboxStatus();
     getGeolocationCoords()
       .then(response => {
         this.props.customerUpdateSettings({
@@ -395,7 +398,8 @@ const mS = state => ({
   fromLanguage: state.userProfile.selectedNativeLanguage,
   allowTimeSelection: state.activeSessionReducer.allowTimeSelection,
   promotion: state.promoCode.scanned,
-  event: state.events
+  event: state.events,
+  timerCustomer: state.callCustomerSettings.timer
 });
 
 const mD = {
@@ -407,7 +411,8 @@ const mD = {
   clearLinguistReducer,
   clearEvents,
   clearPromoCode,
-  resetConnectingMessage
+  resetConnectingMessage,
+  clearTokboxStatus
 };
 
 export default connect(

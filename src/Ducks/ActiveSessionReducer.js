@@ -21,6 +21,7 @@ import {
   cleanNotifications
 } from "../Util/PushNotification";
 import { updateSettings as updateLinguistSettings } from "./CallLinguistSettings";
+import { updateSettings as updateCustomerSettings } from "./CallCustomerSettings";
 import { updateOptions as updateRate } from "./RateCallReducer";
 import { displayTimeAlert, displayEndCall } from "../Util/Alerts";
 import { Sessions, CallHistory } from "../Api";
@@ -256,12 +257,13 @@ export const publisherStart = () => async (dispatch, getState) => {
 //Subscriber events
 
 export const subscriberStart = () => async (dispatch, getState) => {
-  const { userProfile, contactLinguist } = getState();
+  const { userProfile, contactLinguist, activeSessionReducer } = getState();
   if (userProfile.linguistProfile) {
     dispatch(startTimerLinguist());
   } else {
     clearInterval(contactLinguist.counterId);
     dispatch(startTimer());
+    dispatch(updateCustomerSettings({ timer: activeSessionReducer.timer }));
   }
 };
 
