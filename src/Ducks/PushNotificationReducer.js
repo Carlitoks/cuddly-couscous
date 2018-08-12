@@ -2,10 +2,16 @@ import { Sessions } from "../Api";
 import { updateSettings as updateCallLinguistSettings } from "./CallLinguistSettings";
 import { updateConnectingMessage } from "./ContactLinguistReducer";
 import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReducer";
-import { update as updateTokbox } from "./tokboxReducer";
+import { update as updateTokbox, clear } from "./ActiveSessionReducer";
+import { updateSettings } from "./CallLinguistSettings";
+import { updateOptions as updateRate } from "./RateCallReducer";
+import { REASON } from "../Util/Constants";
+import { closeCall } from "./ActiveSessionReducer";
 import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
-import { LANG_CODES } from "../Util/Constants";
+import { LANG_CODES, STATUS_TOKBOX } from "../Util/Constants";
+import { isCurrentView } from "../Util/Helpers";
+import { networkError } from "./NetworkErrorsReducer";
 
 // Actions
 export const ACTIONS = {
@@ -27,7 +33,7 @@ export const remoteNotificationReceived = notification => dispatch => {
       break;
 
     case "session:end":
-      dispatch(sessionEndNotification());
+      dispatch(sessionEndNotification(notification.sessionID));
       break;
 
     default:
@@ -36,27 +42,42 @@ export const remoteNotificationReceived = notification => dispatch => {
 };
 
 const incomingCallNotification = invitationId => (dispatch, getState) => {
-  const state = getState();
-  const isLinguist = !!state.userProfile.linguistProfile;
-
+  const {
+    nav,
+    contactLinguist,
+    activeSessionReducer,
+    auth,
+    profileLinguist,
+    callLinguistSettings,
+    userProfile
+  } = getState();
+  const isLinguist = !!userProfile.linguistProfile;
+  const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
   if (
-    state.auth.isLoggedIn &&
+    auth.isLoggedIn &&
     invitationId &&
     isLinguist &&
-    state.profileLinguist.available
+    profileLinguist.available &&
+    CurrentView != "IncomingCallView" &&
+    CurrentView != "LinguistView"
   ) {
-    Sessions.linguistFetchesInvite(invitationId, state.auth.token)
+    clearInterval(contactLinguist.counterId);
+    clearInterval(activeSessionReducer.timer);
+    clearInterval(callLinguistSettings.timer);
+    clearInterval(activeSessionReducer.verifyCallId);
+    dispatch(clear());
+    Sessions.linguistFetchesInvite(invitationId, auth.token)
       .then(res => {
         const data = res.data;
         dispatch(
-          updateCallLinguistSettings({
+          updateSettings({
             invitationID: invitationId,
-            reconnecting: false
+            reconnecting: false,
+            sessionID: data.session.id
           })
         );
-        dispatch(updateTokbox({ sessionID: data.session.id }));
         dispatch(
-          updateCallLinguistSettings({
+          updateSettings({
             customerName: data.createdBy
               ? `${data.createdBy.firstName} ${data.createdBy.lastInitial}.`
               : "",
@@ -79,7 +100,7 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
                 )}`} - ${data.session.scenario.title}`
           })
         );
-        dispatch({ type: "LinguistView" });
+        dispatch({ type: "IncomingCallView" });
       })
       .catch(error => dispatch(networkError(error)));
   }
@@ -95,9 +116,12 @@ const connectionEventNotification = () => () => {
   //TODO: Logic when receive a connection notification
 };
 
-const sessionEndNotification = () => () => {
-  console.log("sessionEndNotification");
-  //dispatch({ type: "RateView" });
+const sessionEndNotification = sessionID => (dispatch, getState) => {
+  const { nav, activeSessionReducer } = getState();
+  const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
+  if (sessionID == activeSessionReducer.sessionID) {
+    dispatch(closeCall(REASON.DONE));
+  }
 };
 
 export const addListeners = () => dispatch => {

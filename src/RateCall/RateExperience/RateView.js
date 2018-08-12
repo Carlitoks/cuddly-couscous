@@ -8,10 +8,6 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import { submitRateCall, clearOptions } from "../../Ducks/RateCallReducer";
-import { clearSettings as clearCallCustomerSettings } from "../../Ducks/CallCustomerSettings";
-import { clearSettings as clearCallLinguistSettings } from "../../Ducks/CallLinguistSettings";
-import { clearSettings as clearContactLinguist } from "../../Ducks/ContactLinguistReducer";
-import { clear as clearTokbox } from "../../Ducks/tokboxReducer";
 import { styles } from "./styles";
 import RateExperienceStars from "./RateExperienceStars";
 import RateExperienceThumbs from "./RateExperienceThumbs";
@@ -52,27 +48,15 @@ class RateView extends Component {
         .submitRateCall(rateInformation, sessionID, this.props.token)
         .then(response => {
           this.props.clearOptions();
-          this.props.clearCallCustomerSettings();
-          this.props.clearCallLinguistSettings();
-          this.props.clearContactLinguist();
-          this.props.clearTokbox();
           this.props.navigation.dispatch({ type: "Home" });
         })
         .catch(err => {
           console.log(err);
           this.props.clearOptions();
-          this.props.clearCallCustomerSettings();
-          this.props.clearCallLinguistSettings();
-          this.props.clearContactLinguist();
-          this.props.clearTokbox();
           this.props.navigation.dispatch({ type: "Home" });
         });
     } else {
       this.props.clearOptions();
-      this.props.clearCallCustomerSettings();
-      this.props.clearCallLinguistSettings();
-      this.props.clearContactLinguist();
-      this.props.clearTokbox();
       this.props.navigation.dispatch({ type: "Home" });
     }
   };
@@ -83,7 +67,7 @@ class RateView extends Component {
       return `${this.props.linguist.firstName} ${
         this.props.linguist.lastInitial
       }`;
-    } else return `Zhang W.`;
+    } else return `Zhang W.`; // TODO: we must fix this, if this happens there's a bigger problem
   }
   selectImage = () => {
     const { avatarURL, linguist } = this.props;
@@ -122,7 +106,7 @@ class RateView extends Component {
           <Text style={styles.instabugText}>{I18n.t("reportProblem")}</Text>
         </HeaderView>
         <BottomButton
-          title="Submit"
+          title={I18n.t("session.rating.submit")}
           onPress={() => {
             this.submit();
           }}
@@ -145,19 +129,18 @@ const mS = state => ({
   rating: state.rateCall.rating,
   thumbsUp: state.rateCall.thumbsUp,
   thumbsDown: state.rateCall.thumbsDown,
-  sessionID: state.tokbox.sessionID,
+  sessionID: state.rateCall.sessionID,
   token: state.auth.token,
-  customerName: state.callLinguistSettings.customerName,
-  avatarURL: state.callLinguistSettings.avatarURL,
+  customerName: state.rateCall.customerName,
+  avatarURL: state.activeSessionReducer.avatarURL,
   linguistProfile: state.userProfile.linguistProfile,
   linguist: state.sessionInfo.linguist
 });
 const mD = {
   submitRateCall,
-  clearOptions,
-  clearCallCustomerSettings,
-  clearCallLinguistSettings,
-  clearContactLinguist,
-  clearTokbox
+  clearOptions
 };
-export default connect(mS, mD)(RateView);
+export default connect(
+  mS,
+  mD
+)(RateView);

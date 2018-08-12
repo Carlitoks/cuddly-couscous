@@ -67,14 +67,13 @@ export default StyleSheet.create({
   spinner: {
     alignSelf: "center",
     position: "absolute",
-    top: "33%",
-    marginBottom: 15
+    top: "33%"
   },
   connectingMessageContainer: {
     alignSelf: "center",
     position: "absolute",
     justifyContent: "center",
-    top: "40%",
+    top: "35%",
     height: 156,
     width: 280,
     backgroundColor: Colors.transparent

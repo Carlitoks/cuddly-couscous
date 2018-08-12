@@ -18,10 +18,8 @@ const Auth = {
   },
 
   //endpoint not Implemented
-  resetPassword: (email, token) => {
-    return AXIOS.get(`${BASE_URI}/password-reset?email=${email}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+  resetPassword: email => {
+    return AXIOS.get(`${BASE_URI}/password-reset/${email}`, {});
   },
 
   refreshToken: token => {

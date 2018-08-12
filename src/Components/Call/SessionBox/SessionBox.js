@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, Alert } from "react-native";
 import { OTSession } from "opentok-react-native";
-import { videoState } from "../../../Ducks/tokboxReducer";
 import NoVideoScreen from "../../NoVideoScreen/NoVideoScreen";
 import CallAvatarName from "../../CallAvatarName/CallAvatarName";
 import { Publisher, Subscriber } from "../../";
@@ -14,13 +13,14 @@ import {
   streamCreatedEvent,
   streamDestroyedEvent,
   errorEvent,
-  subscriberStart
-} from "../../../Ducks/tokboxReducer";
+  subscriberStart,
+  update as updateSettings,
+  videoState
+} from "../../../Ducks/ActiveSessionReducer";
 import {
   updateSettings as updateContactLinguistSettings,
   resetCounter
 } from "../../../Ducks/ContactLinguistReducer";
-import { updateSettings } from "../../../Ducks/CallCustomerSettings";
 
 import { TOKBOX_APIKEY } from "../../../Config/env";
 
@@ -74,6 +74,11 @@ class SessionBox extends Component {
       signal: event => {
         console.log("SIGNAL EVENT", event);
         this.props.signalEvent(event);
+        if (event.type == "WARNING") {
+          this.props.updateSettings({
+            signalVideoWarning: event.data
+          });
+        }
       },
       streamCreated: event => {
         console.log("STREAM CREATED EVENT", event);
@@ -132,10 +137,10 @@ class SessionBox extends Component {
 
 const mS = state => {
   return {
-    tokboxSessionID: state.tokbox.tokboxID,
-    tokboxSessionToken: state.tokbox.tokboxToken,
-    signal: state.tokbox.signal,
-    disabledSubscriber: state.tokbox.disabledSubscriber,
+    tokboxSessionID: state.activeSessionReducer.tokboxID,
+    tokboxSessionToken: state.activeSessionReducer.tokboxToken,
+    signal: state.activeSessionReducer.signal,
+    disabledSubscriber: state.activeSessionReducer.disabledSubscriber,
     visibility: state.contactLinguist.modalReconnect,
     counterId: state.contactLinguist.counterId
   };

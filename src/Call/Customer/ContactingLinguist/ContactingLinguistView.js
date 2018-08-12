@@ -7,11 +7,12 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import ModalRetry from "../../../Components/ModalRerty/ModalRetry";
+import CallTimer from "../../../Components/CallTimer/CallTimer";
 // STYLE AND THEMES
 import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
 // REDUCERS
-import { closeCall } from "../../../Ducks/CallCustomerSettings";
+import { closeCall } from "../../../Ducks/ActiveSessionReducer";
 import I18n from "../../../I18n/I18n";
 import {
   setPermission,
@@ -39,6 +40,10 @@ class ContactingLinguist extends Component {
           console.log("InCallManager.requestRecordPermission() catch: ", err);
         });
     }
+  }
+
+  sixtySecondsCounter(counter) {
+    return 60 - counter;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -70,6 +75,18 @@ class ContactingLinguist extends Component {
           />
         )}
         <View style={styles.connectingMessageContainer}>
+          {!this.props.modalReconnect &&
+            this.props.counter > 0 &&
+            this.props.counter < 60 && (
+              <CallTimer
+                time={this.sixtySecondsCounter(this.props.counter)}
+                withOut
+                changeVisible={() => console.log("change")}
+                red={false}
+                showButton={false}
+                buttonPress={() => console.log("click")}
+              />
+            )}
           <Text style={styles.connectingMessage}>
             {this.props.connectingMessage}
           </Text>
@@ -90,10 +107,11 @@ class ContactingLinguist extends Component {
 
 const mS = state => ({
   counterId: state.contactLinguist.counterId,
-  tokboxStatus: state.tokbox.status,
+  tokboxStatus: state.activeSessionReducer.status,
   modalReconnect: state.contactLinguist.modalReconnect,
   modalContact: state.contactLinguist.modalContact,
-  connectingMessage: state.contactLinguist.connectingMessage
+  connectingMessage: state.contactLinguist.connectingMessage,
+  counter: state.contactLinguist.counter
 });
 
 const mD = {

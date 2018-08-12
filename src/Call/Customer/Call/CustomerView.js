@@ -8,19 +8,16 @@ import { SessionHandler } from "../../../Components";
 
 import Instabug from "instabug-reactnative";
 import {
-  updateSettings,
+  update as updateSettings,
+  clear,
   createSession,
   resetTimerAsync,
   EndCall,
   verifyCall,
-  closeCall
-} from "../../../Ducks/CallCustomerSettings";
-import {
-  update,
-  clear,
+  closeCall,
   sendSignal,
   clearTokboxStatus
-} from "../../../Ducks/tokboxReducer";
+} from "../../../Ducks/ActiveSessionReducer";
 
 import {
   clearSettings as clearCallSettings,
@@ -38,6 +35,7 @@ import {
 
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 import Slide from "../../../Effects/Slide/Slide";
+import { Fade } from "../../../Effects";
 import { Images } from "../../../Themes";
 import styles from "./styles";
 
@@ -53,6 +51,7 @@ import {
 } from "../../../Util/Background";
 import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
+import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
 
 class CustomerView extends Component {
   constructor() {
@@ -133,6 +132,8 @@ class CustomerView extends Component {
       modalReconnect: false
     });
     this.props.clearTokboxStatus();
+    this.props.clearCallSettings();
+    this.props.clear();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -207,6 +208,10 @@ class CustomerView extends Component {
 
             <Slide visible={visible} min={0} max={112}>
               <View style={styles.containerControls}>
+                {(this.props.localVideoWarning == "ENABLED" ||
+                  this.props.signalVideoWarning == "ENABLED") && (
+                  <PoorConnectionAlert />
+                )}
                 <CallTimer
                   time={elapsedTime}
                   changeVisible={() => this.setState({ visible: !visible })}
@@ -244,19 +249,19 @@ class CustomerView extends Component {
 }
 
 const mS = state => ({
-  timer: state.callCustomerSettings.timer,
-  elapsedTime: state.callCustomerSettings.elapsedTime,
-  speaker: state.callCustomerSettings.speaker,
-  sessionID: state.tokbox.sessionID,
-  customerTokboxSessionID: state.tokbox.tokboxID,
-  customerTokboxSessionToken: state.tokbox.tokboxToken,
+  timer: state.activeSessionReducer.timer,
+  elapsedTime: state.activeSessionReducer.elapsedTime,
+  speaker: state.activeSessionReducer.speaker,
+  sessionID: state.activeSessionReducer.sessionID,
+  customerTokboxSessionID: state.activeSessionReducer.tokboxID,
+  customerTokboxSessionToken: state.activeSessionReducer.tokboxToken,
   token: state.auth.token,
-  tokboxStatus: state.tokbox.status,
+  tokboxStatus: state.activeSessionReducer.status,
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
   primaryLangCode: state.userProfile.selectedNativeLanguage,
   secundaryLangCode: state.contactLinguist.secundaryLangCode,
   customScenarioNote: state.contactLinguist.customScenarioNote,
-  selectedCallTime: state.callCustomerSettings.selectedTime,
+  selectedCallTime: state.activeSessionReducer.selectedTime,
   linguist: state.sessionInfo.linguist,
   counter: state.contactLinguist.counter,
   networkInfoType: state.networkInfo.type,
@@ -266,7 +271,9 @@ const mS = state => ({
   red: state.callCustomerSettings.red,
   timeBtn: state.callCustomerSettings.timeBtn,
   location: state.callCustomerSettings.location,
-  eventID: state.events.id
+  eventID: state.events.id,
+  localVideoWarning: state.activeSessionReducer.localVideoWarning,
+  signalVideoWarning: state.activeSessionReducer.signalVideoWarning
 });
 
 const mD = {
@@ -275,7 +282,6 @@ const mD = {
   resetTimerAsync,
   EndCall,
   clearCallSettings,
-  update,
   resetCounter,
   updateContactLinguistSettings,
   incrementCounter,

@@ -332,6 +332,8 @@ export default (ESP = {
   verifyNumber: "Verify Phone-ES",
   verifyNumberText: "Enter verfication code they receive via SMS-ES",
   video: "Video-ES",
+  videoHasBeenTurnedOff:
+    "Video has been turned off to optimize this call. It will resume when both participants have stronger connectivity.",
   videoMode: "Video Mode-ES",
   videoAssistance: "Video Assistance-ES",
   waitingYourConnection: "Waiting for your connection-ES",

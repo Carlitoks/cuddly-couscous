@@ -14,7 +14,7 @@ import InputRegular from "../../Components/InputRegular/InputRegular";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
-
+import { Auth } from "../../Api";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { displayFormErrors } from "../../Util/Alerts";
@@ -61,6 +61,14 @@ class ForgotPasswordView extends Component {
 
   submit() {
     if (this.validateForm()) {
+      Auth.resetPassword(this.props.email)
+        .then(response => {
+          //console.log("Response ", response); // TODO HANDLE ERRORS
+        })
+        .catch(error => {
+          //console.log("Error ", error); // TODO HANDLE ERRORS
+        });
+
       this.props.navigation.dispatch({ type: "CheckYourEmailView" });
       this.props.clearForm();
     }
@@ -147,4 +155,7 @@ const mD = {
   resetPasswordAsync
 };
 
-export default connect(mS, mD)(ForgotPasswordView);
+export default connect(
+  mS,
+  mD
+)(ForgotPasswordView);

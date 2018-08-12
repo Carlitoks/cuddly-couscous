@@ -10,11 +10,11 @@ import { TIME, REASON } from "../../Util/Constants";
 import ReconnectOptions from "../ReconnectOptions/ReconnectOptions";
 
 import {
-  updateSettings,
+  update as updateSettings,
   startReconnect,
   resetReconnectAsync,
   resetReconnectCounterAsync
-} from "../../Ducks/CallCustomerSettings";
+} from "../../Ducks/ActiveSessionReducer";
 
 import DisconnectedMessage from "./DisconnectedMessage/DisconnectedMessage";
 import ReconnectingMessage from "./ReconnectingMessage/ReconnectingMessage";
@@ -125,13 +125,13 @@ class ModalReconnect extends Component {
 }
 
 const mS = state => ({
-  visibility: state.callCustomerSettings.modalReconnect,
-  counter: state.callCustomerSettings.counter,
-  modalReconnectCounter: state.callCustomerSettings.modalReconnectCounter,
+  visibility: state.activeSessionReducer.modalReconnect,
+  counter: state.activeSessionReducer.counter,
+  modalReconnectCounter: state.activeSessionReducer.modalReconnectCounter,
   isLinguist: !!state.userProfile.linguistProfile,
-  reconnectMessage: state.callCustomerSettings.reconnectMessage,
+  reconnectMessage: state.activeSessionReducer.reconnectMessage,
   linguist: state.sessionInfo.linguist,
-  customerName: state.callLinguistSettings.customerName
+  customerName: state.activeSessionReducer.customerName
 });
 
 const mD = {

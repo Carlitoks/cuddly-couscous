@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  asyncAcceptsInvite,
   verifyCall,
-  updateSettings
+  updateSettings,
+  clearSettings
 } from "../../../Ducks/CallLinguistSettings";
+
+import { asyncAcceptsInvite } from "../../../Ducks/ActiveSessionReducer";
 
 import { Text, View, ScrollView, Image, Vibration } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -23,7 +25,9 @@ import { VIBRATE_PATTERN } from "../../../Util/Constants";
 class IncomingCall extends Component {
   state = {
     customerName: this.props.customerName,
-    customerLocation: this.props.customerLocation
+    customerLocation: this.props.customerLocation,
+    acceptIsDisabled: false,
+    endIsDisabled: false
   };
 
   componentWillMount() {
@@ -38,8 +42,22 @@ class IncomingCall extends Component {
 
   componentWillUnmount() {
     clearInterval(this.props.verifyCallId);
+    this.props.clearSettings();
     SoundManager["IncomingCall"].stop();
   }
+
+  changeButtonState(value, type) {
+    if (type === "accept") {
+      this.setState({
+        acceptIsDisabled: value
+      });
+    } else {
+      this.setState({
+        rejectIsDisabled: value
+      });
+    }
+  }
+
   takeCall = isAccept => {
     const { invitationID, token, sessionID } = this.props;
     clearInterval(this.props.verifyCallId);
@@ -70,8 +88,8 @@ class IncomingCall extends Component {
   selectImage = () => {
     return this.props.avatarURL
       ? {
-        uri: this.props.avatarURL
-      }
+          uri: this.props.avatarURL
+        }
       : Images.avatar;
   };
 
@@ -145,14 +163,21 @@ class IncomingCall extends Component {
                 buttonColor="red"
                 toggle={false}
                 icon="call-end"
-                onPress={() => this.takeCall(false)}
+                onPress={() => {
+                  this.changeButtonState(true, "end");
+                  this.takeCall(false);
+                }}
               />
               {/* Accept Call */}
               <CallButton
                 buttonColor="green"
                 toggle={false}
                 icon="call"
-                onPress={() => this.takeCall(true)}
+                disabled={this.state.acceptIsDisabled}
+                onPress={() => {
+                  this.changeButtonState(true, "accept");
+                  this.takeCall(true);
+                }}
               />
             </Row>
           </Col>
@@ -172,13 +197,14 @@ const mS = state => ({
   languages: state.callLinguistSettings.languages,
   verifyCallId: state.callLinguistSettings.verifyCallId,
   token: state.auth.token,
-  sessionID: state.tokbox.sessionID
+  sessionID: state.callLinguistSettings.sessionID
 });
 
 const mD = {
   asyncAcceptsInvite,
   verifyCall,
-  updateSettings
+  updateSettings,
+  clearSettings
 };
 
 export default connect(

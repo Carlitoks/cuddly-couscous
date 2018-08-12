@@ -1,20 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  updateSettings,
-  AsyncCreateSession,
-  incrementTimer,
-  resetTimerAsync,
-  clearSettings,
-  EndCall
-} from "../../Ducks/CallCustomerSettings";
-
-import {
-  clearSettings as clearCallSettings,
-  updateSettings as updateLinguistSettings,
-  resetCounter,
-  incrementCounter
-} from "../../Ducks/CallLinguistSettings.js";
+import { update as updateSettings } from "../../Ducks/ActiveSessionReducer";
 import InCallManager from "react-native-incall-manager";
 import { bool, func, number, object, string } from "prop-types";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
@@ -50,74 +36,35 @@ class CallButtonToggle extends Component {
 
   toggleIcon = () => {
     switch (this.props.name) {
-      case "CustomerMute":
+      case "Mute":
         setPermission("microphone").then(response => {
           if (response == "denied" || response == "restricted") {
             displayOpenSettingsAlert();
           } else {
-            this.props.updateSettings({ mic: !this.props.muteCustomer });
+            this.props.updateSettings({ mic: !this.props.mic });
           }
         });
         break;
-      case "CustomerVideo":
+      case "Video":
         setPermission("camera").then(response => {
           if (response == "denied" || response == "restricted") {
             displayOpenSettingsAlert();
           } else {
-            this.props.updateSettings({ video: !this.props.videoCustomer });
+            this.props.updateSettings({ video: !this.props.video });
           }
         });
         break;
-      case "CustomerSpeaker":
-        if (this.props.speakerCustomer) {
+      case "Speaker":
+        if (this.props.speaker) {
           InCallManager.setForceSpeakerphoneOn(false);
         } else {
           InCallManager.setForceSpeakerphoneOn(true);
         }
-        this.props.updateSettings({ speaker: !this.props.speakerCustomer });
+        this.props.updateSettings({ speaker: !this.props.speaker });
         break;
-      case "CustomerCamera":
-        if (this.props.videoCustomer) {
-          this.props.updateSettings({ rotate: !this.props.rotateCustomer });
-        }
-        break;
-      case "LinguistVideo":
-        setPermission("camera").then(response => {
-          if (response == "denied" || response == "restricted") {
-            displayOpenSettingsAlert();
-          } else {
-            this.props.updateLinguistSettings({
-              video: !this.props.videoLinguist
-            });
-          }
-        });
-        break;
-      case "LinguistSpeaker":
-        if (this.props.speakerLinguist) {
-          InCallManager.setForceSpeakerphoneOn(false);
-        } else {
-          InCallManager.setForceSpeakerphoneOn(true);
-        }
-        this.props.updateLinguistSettings({
-          speaker: !this.props.speakerLinguist
-        });
-        break;
-      case "LinguistMute":
-        setPermission("microphone").then(response => {
-          if (response == "denied" || response == "restricted") {
-            displayOpenSettingsAlert();
-          } else {
-            this.props.updateLinguistSettings({
-              mic: !this.props.muteLinguist
-            });
-          }
-        });
-        break;
-      case "LinguistCamera":
-        if (this.props.videoLinguist) {
-          this.props.updateLinguistSettings({
-            rotate: !this.props.rotateLinguist
-          });
+      case "Camera":
+        if (this.props.video) {
+          this.props.updateSettings({ rotate: !this.props.rotate });
         }
         break;
     }
@@ -173,19 +120,17 @@ CallButtonToggle.propTypes = {
 };
 
 const mS = state => ({
-  muteCustomer: state.callCustomerSettings.mic,
-  videoCustomer: state.callCustomerSettings.video,
-  speakerCustomer: state.callCustomerSettings.speaker,
-  rotateCustomer: state.callCustomerSettings.rotate,
-  muteLinguist: state.callLinguistSettings.mic,
-  videoLinguist: state.callLinguistSettings.video,
-  speakerLinguist: state.callLinguistSettings.speaker,
-  rotateLinguist: state.callLinguistSettings.rotate
+  mic: state.activeSessionReducer.mic,
+  video: state.activeSessionReducer.video,
+  speaker: state.activeSessionReducer.speaker,
+  rotate: state.activeSessionReducer.rotate
 });
 
 const mD = {
-  updateSettings,
-  updateLinguistSettings
+  updateSettings
 };
 
-export default connect(mS, mD)(CallButtonToggle);
+export default connect(
+  mS,
+  mD
+)(CallButtonToggle);

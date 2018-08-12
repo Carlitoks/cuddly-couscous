@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import InCallManager from "react-native-incall-manager";
 import {
   changeStatus,
+  reloadStatus,
   updateSettings,
   asyncGetAccountInformation
 } from "../../Ducks/ProfileLinguistReducer";
@@ -18,15 +19,13 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
-import { clear as clearTokbox } from "../../Ducks/tokboxReducer";
+import { clear } from "../../Ducks/ActiveSessionReducer";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 import {
   asyncGetInvitationDetail,
   clearSettings
 } from "../../Ducks/CallLinguistSettings";
-
-import { clearSettings as clearCallCustomerSettings } from "../../Ducks/CallCustomerSettings";
 
 import moment from "moment";
 
@@ -41,17 +40,22 @@ class Home extends Component {
     this.props.updateSettings({ loading: false });
     if (
       this.props.navigation.state.params &&
-      this.props.navigation.state.params.alert
+      this.props.navigation.state.params.alertCancelled
     ) {
-      Alert.alert(I18n.t("notification"), I18n.t("cancelCallCustomer"));
+      Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
+    }
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alertAssigned
+    ) {
+      Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
     }
     clearInterval(this.props.timer);
     clearInterval(this.props.counterId);
-    this.props.clearSettings();
-    this.props.clearTokbox();
-    this.props.clearCallCustomerSettings();
+    this.props.clear();
     this.props.asyncGetAccountInformation();
     InCallManager.stop();
+    this.props.reloadStatus(this.props.available);
   }
 
   uploadAvatar(avatar) {
@@ -81,17 +85,7 @@ class Home extends Component {
       : image;
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.networkInfoType !== "none") {
-      if (this.props.tokbox && this.props.invitationID) {
-        this.props.asyncGetInvitationDetail(
-          this.props.invitationID,
-          this.props.token,
-          false
-        );
-      }
-    }
-  }
+  componentWillReceiveProps(nextProps) {}
 
   filterAllCalls = (allCalls, userType) => {
     if (!_isEmpty(allCalls)) {
@@ -211,8 +205,8 @@ const mS = state => ({
   rate: state.userProfile.averageStarRating,
   tokbox: state.tokbox.tokboxID,
   invitationID: state.callLinguistSettings.invitationID,
-  timer: state.callLinguistSettings.timer,
-  counterId: state.callCustomerSettings.counterId,
+  timer: state.activeSessionReducer.timer,
+  counterId: state.activeSessionReducer.counterId,
   networkInfoType: state.networkInfo.type
 });
 
@@ -222,11 +216,10 @@ const mD = {
   updateView,
   getProfileAsync,
   changeStatus,
-  clearSettings,
+  reloadStatus,
   asyncGetInvitationDetail,
   asyncGetAccountInformation,
-  clearCallCustomerSettings,
-  clearTokbox
+  clear
 };
 
 export default connect(

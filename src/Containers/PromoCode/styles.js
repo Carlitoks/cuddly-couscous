@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
   mainContainer: {
     backgroundColor: Colors.gradientColor.top,
-    flex: 1
+    height: "100%"
   },
   linearGradient: {
     position: "absolute",
@@ -15,11 +15,7 @@ export default StyleSheet.create({
     height: "50%",
     bottom: 0
   },
-  scrollContainer: {
-    flex: 1,
-    height: "100%",
-    backgroundColor: Colors.white
-  },
+  scrollContainer: {},
   mainTitle: {
     fontFamily: Fonts.LightFont,
     fontSize: 24,
@@ -69,11 +65,11 @@ export default StyleSheet.create({
     textAlign: "center",
     backgroundColor: Colors.transparent
   },
-  subTitleCall: {
+  subtitleCall: {
+    marginBottom: 5,
+    fontSize: 26,
     fontFamily: Fonts.LightFont,
-    fontSize: moderateScale(20),
     color: Colors.primaryColor,
-    textAlign: "center",
     backgroundColor: Colors.transparent
   },
   bottom: {
@@ -91,5 +87,12 @@ export default StyleSheet.create({
   waves: {
     position: "absolute",
     bottom: 0
+  },
+  wrapperContainer: {
+    backgroundColor: Colors.gradientColor.top,
+    height: "100%"
+  },
+  subtitleCallContainer: {
+    margin: 16
   }
 });

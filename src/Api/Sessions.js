@@ -82,6 +82,13 @@ const Session = {
       headers: { Authorization: `Bearer ${token}` }
     });
   },
+
+  StatusSession: (sessionID, token) => {
+    return AXIOS.get(`${BASE_URI}/${sessionID}/status`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  },
+
   GetSessionInfo: (sessionID, token) => {
     return AXIOS.get(`${BASE_URI}/${sessionID}`, {
       headers: { Authorization: `Bearer ${token}` }

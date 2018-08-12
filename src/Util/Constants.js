@@ -29,6 +29,12 @@ export const REASON = {
   DONE: "done"
 };
 
+export const VIDEO_WARNING = {
+  DISABLED: "DISABLED",
+  ENABLED: "ENABLED",
+  TYPE: "WARNING"
+};
+
 export const STATUS_TOKBOX = {
   DISCONECTED: 0,
   CONECTED: 1,

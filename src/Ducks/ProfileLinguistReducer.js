@@ -18,6 +18,15 @@ export const updateSettings = payload => ({
   payload
 });
 
+export const reloadStatus = status => (dispatch, getState) => {
+  const { auth, profileLinguist, userProfile } = getState();
+  Linguist.update(userProfile.id, auth.token, {
+    available: status
+  }).catch(err => {
+    dispatch(networkError(err));
+  });
+};
+
 export const changeStatus = status => (dispatch, getState) => {
   const { auth, profileLinguist, userProfile } = getState();
   if (userProfile.linguistProfile) {

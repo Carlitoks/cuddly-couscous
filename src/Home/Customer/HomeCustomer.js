@@ -14,13 +14,10 @@ import {
 import {
   EndCall,
   closeOpenConnections,
-  clearSettings,
-  updateSettings as updateCallCustomerSettings
-} from "../../Ducks/CallCustomerSettings";
-
-import { clearSettings as clearCallLinguistSettings } from "../../Ducks/CallLinguistSettings";
+  clear,
+  update as updateCallCustomerSettings
+} from "../../Ducks/ActiveSessionReducer";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
-import { clear as clearTokbox } from "../../Ducks/tokboxReducer";
 import { updateSettings as updateLinguistForm } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { getCategories, updateSettings } from "../../Ducks/HomeFlowReducer";
@@ -145,11 +142,6 @@ class Home extends Component {
       listItemSelected,
       updateHomeFlow
     } = this.props;
-
-    if (this.props.tokbox && this.props.networkInfoType !== "none") {
-      this.props.closeOpenConnections();
-    }
-
     this.setLanguages();
 
     if (this.props.scenarios.length < 1) {
@@ -163,11 +155,9 @@ class Home extends Component {
     //Clean call
     clearInterval(this.props.timer);
     clearInterval(this.props.counterId);
-    this.props.clearSettings();
-    this.props.clearCallLinguistSettings();
     this.props.asyncGetAccountInformation();
     this.props.clearEvents();
-    this.props.clearTokbox();
+    this.props.clear();
     updateHomeFlow({
       customScenario: "",
       categoryIndex: -1
@@ -279,9 +269,15 @@ class Home extends Component {
 
     updateContactLinguist({
       primaryLangCode: primaryLanguage[3],
-      selectedLanguageFrom: translateLanguage(primaryLanguage[3], primaryLanguage["name"]),
+      selectedLanguageFrom: translateLanguage(
+        primaryLanguage[3],
+        primaryLanguage["name"]
+      ),
       secundaryLangCode: secondaryLanguage[3],
-      selectedLanguage: translateLanguage(secondaryLanguage[3], secondaryLanguage["name"])
+      selectedLanguage: translateLanguage(
+        secondaryLanguage[3],
+        secondaryLanguage["name"]
+      )
     });
   };
 
@@ -303,9 +299,16 @@ class Home extends Component {
     const emptyActivity = scenariosList && scenariosList.length === 0;
 
     const data = emptyActivity
-      ? [{ id: "emptyActivity", title: I18n.t("noRecentActivityMessage") }]
+      ? [
+          {
+            id: "emptyActivity",
+            title: I18n.t("noRecentActivityMessage"),
+            scenario: {
+              title: I18n.t("noRecentActivityMessage")
+            }
+          }
+        ]
       : scenariosList;
-
     const list = scenariosList ? (
       <BoxedListComponent
         customContainerStyle={styles.listContainer}
@@ -314,7 +317,7 @@ class Home extends Component {
         subtitleProperty={"createdAt"}
         titleFunc={item => {
           if (item.scenario) {
-            return translateProperty(item.scenario, "title")
+            return translateProperty(item.scenario, "title");
           }
         }}
         thirdLineProperty={"customScenarioNote"}
@@ -338,8 +341,14 @@ class Home extends Component {
 
             updateContactLinguist({
               primaryLangCode: scenario.primaryLangCode,
-              selectedLanguageFrom: translateLanguage(Languages[primaryLanguageIndex][3], Languages[primaryLanguageIndex]["name"]),
-              selectedLanguage: translateLanguage(Languages[secondaryLanguageIndex][3], Languages[secondaryLanguageIndex]["name"]),
+              selectedLanguageFrom: translateLanguage(
+                Languages[primaryLanguageIndex][3],
+                Languages[primaryLanguageIndex]["name"]
+              ),
+              selectedLanguage: translateLanguage(
+                Languages[secondaryLanguageIndex][3],
+                Languages[secondaryLanguageIndex]["name"]
+              ),
               secundaryLangCode: scenario.secondaryLangCode,
               customScenarioNote: scenario.customScenarioNote
             });
@@ -398,12 +407,7 @@ class Home extends Component {
           headerRightComponent={<QRIcon navigation={this.props.navigation} />}
           NoWaves
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            alwaysBounceVertical={false}
-            style={styles.scrollView}
-            contentContainerStyle={styles.scrollViewContainer}
-          >
+          <View style={styles.viewContainer}>
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
               style={styles.linearGradient}
@@ -414,18 +418,27 @@ class Home extends Component {
               viewBox={"0 0 1175.7 129"}
               style={styles.waves}
             />
-            <Text style={[styles.title, styles.subtitle, styles.largeSubtitle]}>
-              {I18n.t("whereAreYouNow")}
-            </Text>
-            {this.renderCarousel()}
-            <Text style={[styles.subtitle]}>{I18n.t("recentActivity")}</Text>
-            <Text style={[styles.smallsubtitle, styles.marginBottom10]}>
-              {scenariosList && scenariosList.length === 0
-                ? ""
-                : I18n.t("tapRepeat")}
-            </Text>
-            <View style={styles.recentActivityList}>{this.renderList()}</View>
-          </ScrollView>
+            <ScrollView
+              automaticallyAdjustContentInsets={true}
+              alwaysBounceVertical={false}
+              style={styles.scrollView}
+              contentContainerStyle={styles.scrollViewContainer}
+            >
+              <Text
+                style={[styles.title, styles.subtitle, styles.largeSubtitle]}
+              >
+                {I18n.t("whereAreYouNow")}
+              </Text>
+              {this.renderCarousel()}
+              <Text style={[styles.subtitle]}>{I18n.t("recentActivity")}</Text>
+              <Text style={[styles.smallsubtitle, styles.marginBottom10]}>
+                {scenariosList && scenariosList.length === 0
+                  ? ""
+                  : I18n.t("tapRepeat")}
+              </Text>
+              <View style={styles.recentActivityList}>{this.renderList()}</View>
+            </ScrollView>
+          </View>
         </HeaderView>
       </ViewWrapper>
     );
@@ -446,12 +459,11 @@ const mS = state => ({
   categories: state.homeFlow.categories,
   scenarios: state.homeFlow.scenarios,
   scenariosList: state.homeFlow.scenariosList,
-  sessionID: state.tokbox.sessionID,
   networkInfoType: state.networkInfo.type,
   tokbox: state.tokbox.tokboxID,
-  invitationID: state.callCustomerSettings.invitationID,
-  timer: state.callCustomerSettings.timer,
-  counterId: state.callCustomerSettings.counterId,
+  invitationID: state.activeSessionReducer.invitationID,
+  timer: state.activeSessionReducer.timer,
+  counterId: state.activeSessionReducer.counterId,
   carouselFirstItem: state.homeFlow.carouselFirstItem,
   categoryIndex: state.homeFlow.categoryIndex,
   listItemSelected: state.homeFlow.listItemSelected,
@@ -469,6 +481,7 @@ const mD = {
   updateLinguistForm,
   getCategories,
   EndCall,
+  clear,
   closeOpenConnections,
   getScenarios,
   updateSettings,
@@ -477,11 +490,8 @@ const mD = {
   updateHomeFlow,
   getAllCustomerCalls,
   customerCalls,
-  clearSettings,
-  clearCallLinguistSettings,
   asyncGetAccountInformation,
-  clearEvents,
-  clearTokbox
+  clearEvents
 };
 
 export default connect(

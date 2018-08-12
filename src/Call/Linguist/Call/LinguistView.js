@@ -10,7 +10,7 @@ import {
 import KeepAwake from "react-native-keep-awake";
 import InCallManager from "react-native-incall-manager";
 import IncomingCallView from "../IncomingCall/IncomingCallView";
-
+import { displayEndCall } from "../../../Util/Alerts";
 import CallAvatarName from "../../../Components/CallAvatarName/CallAvatarName";
 import NoVideoScreen from "../../../Components/NoVideoScreen/NoVideoScreen";
 import { SessionHandler } from "../../../Components";
@@ -24,8 +24,6 @@ import SoundManager from "../../../Util/SoundManager";
 import I18n from "../../../I18n/I18n";
 import Instabug from "instabug-reactnative";
 
-import { updateSettings as updateCustomerSettings } from "../../../Ducks/CallCustomerSettings";
-
 import {
   updateSettings as updateContactLinguistSettings,
   clearSettings as clearCallSettings,
@@ -33,21 +31,25 @@ import {
   incrementCounter
 } from "../../../Ducks/ContactLinguistReducer";
 import {
-  updateSettings,
+  update as updateSettings,
   incrementTimer,
   resetTimerAsync,
   EndCall,
-  clearSettings,
+  clear,
   closeCall,
-  closeCallReconnect
-} from "../../../Ducks/CallLinguistSettings";
+  closeCallReconnect,
+  clearTokboxStatus
+} from "../../../Ducks/ActiveSessionReducer";
 import { cleanNotifications } from "../../../Util/PushNotification";
 import {
   BackgroundCleanInterval,
   BackgroundStart
 } from "../../../Util/Background";
 import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
-import { clearTokboxStatus } from "../../../Ducks/tokboxReducer";
+import ConnectingView from "../Connecting/ConnectingView";
+import { Fade } from "../../../Effects";
+import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
+
 class LinguistView extends Component {
   constructor() {
     super();
@@ -106,10 +108,12 @@ class LinguistView extends Component {
     cleanNotifications();
     this.props.resetCounter();
     InCallManager.stop();
-    this.props.updateCustomerSettings({
+    this.props.updateSettings({
       modalReconnect: false
     });
     this.props.clearTokboxStatus();
+    this.props.clearCallSettings();
+    this.props.clear();
   }
 
   handleSessionInfoName() {
@@ -141,6 +145,13 @@ class LinguistView extends Component {
     });
   };
 
+  closeCallLinguist = reason => {
+    displayEndCall(() => {
+      SoundManager["EndCall"].play();
+      this.props.closeCall(REASON.DONE);
+    });
+  };
+
   render() {
     const { visible } = this.state;
     const { closeCall, elapsedTime, closeCallReconnect } = this.props;
@@ -158,13 +169,17 @@ class LinguistView extends Component {
 
             <Slide visible={visible} min={0} max={112}>
               <View style={styles.containerControls}>
+                {(this.props.localVideoWarning == "ENABLED" ||
+                  this.props.signalVideoWarning == "ENABLED") && (
+                  <PoorConnectionAlert isLinguist />
+                )}
                 <CallTimer
                   time={elapsedTime}
                   changeVisible={() => this.setState({ visible: !visible })}
                 />
 
                 <SessionControls
-                  closeCall={closeCall}
+                  closeCall={this.closeCallLinguist}
                   reason={REASON.DONE}
                   switch={() => {}}
                   linguist
@@ -176,7 +191,7 @@ class LinguistView extends Component {
           {this.props.tokboxStatus !== STATUS_TOKBOX.STREAM &&
             this.props.elapsedTime < 1 && (
               <View style={styles.containerIncomingCall}>
-                <IncomingCallView navigation={this.props.navigation} />
+                <ConnectingView navigation={this.props.navigation} />
               </View>
             )}
         </View>
@@ -186,17 +201,17 @@ class LinguistView extends Component {
 }
 
 const mS = state => ({
-  timer: state.callLinguistSettings.timer,
-  elapsedTime: state.callLinguistSettings.elapsedTime,
-  reconnecting: state.callLinguistSettings.reconnecting,
-  linguistTokboxSessionToken: state.tokbox.tokboxToken,
-  linguistTokboxSessionID: state.tokbox.tokboxID,
-  tokboxStatus: state.tokbox.status,
-  sessionID: state.tokbox.sessionID,
+  timer: state.activeSessionReducer.timer,
+  elapsedTime: state.activeSessionReducer.elapsedTime,
+  reconnecting: state.activeSessionReducer.reconnecting,
+  linguistTokboxSessionToken: state.activeSessionReducer.tokboxToken,
+  linguistTokboxSessionID: state.activeSessionReducer.tokboxID,
+  tokboxStatus: state.activeSessionReducer.status,
+  sessionID: state.activeSessionReducer.sessionID,
   token: state.auth.token,
   networkInfoType: state.networkInfo.type,
-  customerName: state.callLinguistSettings.customerName,
-  avatarURL: state.callLinguistSettings.avatarURL,
+  customerName: state.activeSessionReducer.customerName,
+  avatarURL: state.activeSessionReducer.avatarURL,
   counter: state.contactLinguist.counter,
   counterId: state.contactLinguist.counterId,
   firstName: state.userProfile.firstName, // For Instabug
@@ -204,7 +219,9 @@ const mS = state => ({
   preferredName: state.userProfile.preferredName,
   linguistProfile: state.userProfile.linguistProfile,
   deviceId: state.auth.deviceId,
-  eventId: state.events.id
+  eventId: state.events.id,
+  localVideoWarning: state.activeSessionReducer.localVideoWarning,
+  signalVideoWarning: state.activeSessionReducer.signalVideoWarning
 });
 
 const mD = {
@@ -212,13 +229,12 @@ const mD = {
   updateSettings,
   resetTimerAsync,
   EndCall,
-  clearSettings,
+  clear,
   updateContactLinguistSettings,
   resetCounter,
   incrementCounter,
   clearCallSettings,
   closeCall,
-  updateCustomerSettings,
   clearTokboxStatus,
   closeCallReconnect
 };

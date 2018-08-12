@@ -25,7 +25,7 @@ import BottomButton from "../../Components/BottomButton/BottomButton";
 import { Waves } from "../../Assets/SVG";
 import { Colors } from "../../Themes";
 
-import styles from "../../Home/Customer/styles";
+import styles from "./styles";
 import I18n from "../../I18n/I18n";
 import { sliderWidth, itemWidth } from "../../Components/CarouselEntry/styles";
 import { getLocalizedCategories } from "../../Util/Constants";
@@ -198,41 +198,39 @@ class PromotionView extends Component {
           navbarType={eventName}
           NoWaves
         >
-          <View style={styles.mainContainer}>
-            <LinearGradient
-              colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-              style={styles.linearGradient}
-            />
-            <Waves
-              width={width}
-              height={(width * 129) / 1175.7}
-              viewBox={"0 0 1175.7 129"}
-              style={styles.waves}
-            />
-            <ScrollView
-              automaticallyAdjustContentInsets={true}
-              style={styles.scrollContainer}
-              alwaysBounceVertical={false}
-              onScroll={this.handleScroll}
-            >
-              <View style={styles.subtitleCallContainer}>
-                <Text style={[styles.subtitleCall]}>{organizationName}</Text>
-                <Text style={[styles.subtitleCall]}>{eventName}</Text>
-              </View>
-              {this.renderList()}
-            </ScrollView>
-            {/* Next Button */}
-            <BottomButton
-              title={I18n.t("continue")}
-              disabled={this.state.itemSelected === -1}
-              fill={!(this.state.itemSelected === -1)}
-              onPress={() => {
-                navigation.dispatch({ type: "CallConfirmationView" });
-              }}
-              absolute
-              whiteDisabled
-            />
-          </View>
+          <LinearGradient
+            colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
+            style={styles.linearGradient}
+          />
+          <Waves
+            width={width}
+            height={(width * 129) / 1175.7}
+            viewBox={"0 0 1175.7 129"}
+            style={styles.waves}
+          />
+          <ScrollView
+            automaticallyAdjustContentInsets={true}
+            style={styles.scrollContainer}
+            alwaysBounceVertical={false}
+            onScroll={this.handleScroll}
+          >
+            <View style={styles.subtitleCallContainer}>
+              <Text style={[styles.subtitleCall]}>{organizationName}</Text>
+              <Text style={[styles.subtitleCall]}>{eventName}</Text>
+            </View>
+            {this.renderList()}
+          </ScrollView>
+          {/* Next Button */}
+          <BottomButton
+            title={I18n.t("continue")}
+            disabled={this.state.itemSelected === -1}
+            fill={!(this.state.itemSelected === -1)}
+            onPress={() => {
+              navigation.dispatch({ type: "CallConfirmationView" });
+            }}
+            absolute
+            whiteDisabled
+          />
         </HeaderView>
       </ViewWrapper>
     );
@@ -243,10 +241,10 @@ const mS = state => ({
   uuid: state.auth.uuid,
   token: state.auth.token,
   categories: state.promoCode.categories,
-  sessionID: state.tokbox.sessionID,
+  sessionID: state.activeSessionReducer.sessionID,
   networkInfoType: state.networkInfo.type,
-  tokbox: state.tokbox.tokboxID,
-  invitationID: state.callCustomerSettings.invitationID,
+  tokbox: state.activeSessionReducer.tokboxID,
+  invitationID: state.activeSessionReducer.invitationID,
   carouselFirstItem: state.homeFlow.carouselFirstItem,
   categoryIndex: state.promoCode.categoryIndex,
   listItemSelected: state.homeFlow.listItemSelected,

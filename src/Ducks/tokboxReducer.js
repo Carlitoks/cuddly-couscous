@@ -56,7 +56,10 @@ const initialState = {
   signal: { data: "", type: "" },
   disabledSubscriber: false,
   customerIsConnected: false,
-  linguistIsConnected: false
+  linguistIsConnected: false,
+  localVideoWarning: "DISABLED",
+  signalVideoWarning: "DISABLED",
+  videoEnabled: true
 };
 
 export const connectionConnectedEvent = () => (dispatch, getState) => {
@@ -143,6 +146,15 @@ export const streamDestroyedEvent = event => (dispatch, getState) => {
   } else {
     dispatch({ type: "RateView" });
   }
+};
+
+export const updateVideoWarningEvent = (reason, data) => dispatch => {
+  dispatch(
+    update({
+      localVideoWarning: data
+    })
+  );
+  dispatch(sendSignal(reason, data));
 };
 
 export const errorEvent = event => dispatch => {

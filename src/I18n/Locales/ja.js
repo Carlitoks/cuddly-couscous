@@ -34,7 +34,7 @@
   callTimeBoxTextLine1:
     "サービス開始を記念して今すぐ\n無料でJeenieをご活用ください",
   callTimeBoxTextLine2:
-    "通常料金は1分あたり1ドルとなります。\nパッケージ割引をご用意しています。",
+    "パッケージ割引のご利用で\n通常料金は1分あたり1ドルとなります。",
   callTimeButtonText: "分無料",
   callTimeButtonSubtitle: "Jeenieからのプレゼント",
   callTimeMinutes: "通話時間",
@@ -151,7 +151,7 @@
   historyNotFound: "履歴が見つかりません",
   holdToScan: "デバイスのカメラはQRコードの上にかざしてください",
   home: "ホーム",
-  whereAreYouNow: "現在地をお知らせください…",
+  whereAreYouNow: "場所を選択：",
   hotel: "ホテル",
   howLongNeedAssist: "どのくらいの時間サポートが必要ですか？",
   howMuchTimeDoYouNeed: "どのくらい時間が必要ですか？",
@@ -167,12 +167,12 @@
   invalidPromoCode: "無効なプロモーションコード",
   isReconnecting: "が再接続中です…",
   keepWaiting: "お待ちください",
-  isConnecting: "{{firstName}} {{lastInitial}}.が接続中です…",
-  isReconnecting: "{{firstName}} {{lastInitial}}.が再接続中です…",
+  isConnecting: "{{firstName}} {{lastInitial}}が接続中…",
+  isReconnecting: "{{firstName}} {{lastInitial}}が再接続中…",
   languageCommand: "必要な時に使える言語サービス",
   languageHelp: "場所を問わず使える言語サポート",
   languageInterpretation: "これまでに<lang>で通訳をされた経験はありますか？",
-  LanguagePairs: "言語ペア",// 使用しない
+  LanguagePairs: "言語ペア", // not use
   language: "言語",
   languages: "言語",
   languagesComingSoon: "今後さらに言語が追加されます",
@@ -187,7 +187,7 @@
   languageFrom: "ソース言語：",
   languageTo: "ターゲット言語：",
   lauchScreenSwipe1:
-    "安心して旅行を楽しみましょう！\n Jeenieアプリがあれば、言語がコミュニケーションの障害になることがなくなります。",
+    "安心して旅行を楽しみましょう！\nJeenieアプリがあれば、言語がコミュニケーションの障害になることがなくなります。",
   lauchScreenSwipe2:
     "世界のどこにいても、リアルタイムで、サポートが必要な言語を母国語とする通訳スタッフに連絡を取ることができます。",
   lauchScreenSwipe3:
@@ -213,7 +213,7 @@
   login: "ログイン",
   loginLogoutExampleTitle: "ログイン/ログアウト - Redux + Sagasの例",
   loginWithFacebook: "Facebookでログイン",
-  logOut: "サインアウト",
+  logOut: "ログアウト",
   logOutConfirmation: "確認してください。",
   mainTitle: "名前を入力",
   male: "男性",
@@ -243,9 +243,8 @@
   offline: "オフライン",
   ok: "OK",
   online: "オンライン",
-  operatingHoursAlertTitle: "サービス提供時間は限られていますのでご了承ください",
-  operatingHoursAlertMessage:
-    "サービス開始期間中は、東部標準時（EDT）午前9時から午後5時までLanguage Jeeniesがオンラインで対応いたします。",
+  operatingHoursAlertTitle: "営業時間は次の時間帯ですので、ご了承ください。",
+  operatingHoursAlertMessage: "月～日：午前 10 時～午後 7 時 米国東海岸時間",
   orChooseOneBelow: "もしくは以下からひとつ選択してください",
   other: "その他",
   password: "パスワード",
@@ -356,17 +355,61 @@
   youCanAddTime: "通話中に時間を延長できます",
   youCanChangeThis: "通話中にビデオのオン/オフを切り替えられます",
 
+  // for use in session-related screens
+  session: {
+    callTime: "通話時間： {{time}}",
+    alertGeneralCannotSee: "接続を最適化するため、ビデオが一時的にオフに設定されました。接続が改善されると、ビデオが再びオンになります。",
+    alertLinguistCannotSeeYou: "現在Language Jeenieに対してあなたの姿は表示されていません。接続を最適化するため、ビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
+    alertCustomerCannotSeeYou: "現在お客様に対してあなたの姿は表示されていません。接続を最適化するため、ビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
+    alertYouCannotSeeCustomer: "接続を最適化するため、お客様のビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
+    alertYouCannotSeeLinguist: "接続を最適化するため、Language Jeenieのビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
+
+    // used when rating a session
+    rating: {
+      submit: "送信",
+      flags: {
+        langAbility: "語学力",
+        time: "接続までの時間",
+        friendliness: "親しみやすさ",
+        understandEasy: "わかりやすい",
+        understandHard: "わかりにくい",
+        audio: "音声品質",
+        professionalism: "プロ意識",
+        connection: "接続",
+        voice: "音声の鮮明さ",
+        surroundings: "周囲の様子",
+        appearance: "容姿",
+        noise: "背景の雑音"
+      }
+    }
+  },
+
   // for use during primary language selection
   languagesList: {
     eng: "英語",
     cmn: "中国語（標準中国語）",
     yue: "中国語（広東語）",
+    'zho-cn-shang': "中国語（上海語）",
+    'zho-tw': "中国語（台湾語）",
     jpn: "日本語",
     spa: "スペイン語",
+    'spa-r-la': "スペイン語（ラテンアメリカ）",
+    'spa-es': "スペイン語（スペイン）",
     deu: "ドイツ語",
     fra: "フランス語",
-    arb: "アラビア語",
+    'fra-ca': "フランス語（カナダ）",
+    'fra-fr': "フランス語（フランス）",
+    arb: "アラビア語（現代標準）",
+    aao: "アラビア語（アルジェリア、モロッコ、チュニジア）",
+    'ara-arz_apd': "アラビア語（エジプト、スーダン）",
+    afb: "アラビア語（湾岸方言）",
+    acm: "アラビア語（イラク）",
+    'ara-apc_ajp': "アラビア語（レバノン）",
+    azj: "アゼルバイジャン語（北部方言）",
+    azb: "アゼルバイジャン語（南部方言）",
     por: "ポルトガル語",
+    'por-br': "ポルトガル語（ブラジル）",
+    'por-pt': "ポルトガル語（ポルトガル）",
     rus: "ロシア語",
     ita: "イタリア語",
     kor: "韓国語",
@@ -383,10 +426,10 @@
     pes: "ペルシャ語",
     hin: "ヒンディー語",
     ces: "チェコ語",
-    zsm: "マレーシア語", // can of worms here
+    zsm: "マレー語",
     ell: "ギリシャ語",
     hun: "ハンガリー語",
-    ron: "ルーマニア語", // OR rup, ruq?
+    ron: "ルーマニア語",
     vie: "ベトナム語",
     ben: "ベンガル語",
     cat: "カタロニア語",
@@ -395,8 +438,8 @@
     slk: "スロバキア語",
     kaz: "カザフ語",
     ltz: "ルクセンブルク語",
-    kur: "クルド語", // OR north/south: kmr, sdh?
-    azj: "アゼルバイジャン語（北部方言）", // OR north/south: azb, azj?
+    kur: "クルド語",
+    azj: "アゼルバイジャン語（北部方言）",
     azb: "アゼルバイジャン語（南部方言）",
     ukr: "ウクライナ語",
     afr: "アフリカーンス語",
@@ -404,7 +447,7 @@
     glg: "ガリシア語",
     slv: "スロベニア語",
     lit: "リトアニア語",
-    ckb: "ソラニー語", // Central Kurdish
+    ckb: "ソラニー語",
     jav: "ジャワ語",
     urd: "ウルドゥー語",
     sqi: "アルバニア語",
@@ -413,10 +456,10 @@
     yor: "ヨルバ語",
     hau: "ハウサ語",
     bul: "ブルガリア語",
-    uzb: "ウズベク語", // OR north/south: uzn, uzs
-    swa: "スワヒリ語", // OR ccl, swc, swh
+    uzb: "ウズベク語",
+    swa: "スワヒリ語",
     eus: "バスク語",
     bel: "ベラルーシ語",
-    tat: "タタール語" // OR Crimean/Siberian: crh, sty
+    tat: "タタール語"
   }
 });

@@ -65,7 +65,7 @@ class WhatCouldBeBetter extends Component {
                         onPress={() =>
                           this.buttonsHandle(item, "negativeFlags")
                         }
-                        title={item.label}
+                        title={I18n.t(item.i18nKey)}
                       />
                     </View>
                   );
@@ -77,7 +77,7 @@ class WhatCouldBeBetter extends Component {
                       IconName={item.IconName}
                       StateIcon={this.props[item.IconState]}
                       onPress={() => this.buttonsHandle(item, "negativeFlags")}
-                      title={item.label}
+                      title={I18n.t(item.i18nKey)}
                     />
                   </View>
                 );
@@ -105,4 +105,7 @@ const mS = state => ({
 
 const mD = { UpdateFlags };
 
-export default connect(mS, mD)(WhatCouldBeBetter);
+export default connect(
+  mS,
+  mD
+)(WhatCouldBeBetter);

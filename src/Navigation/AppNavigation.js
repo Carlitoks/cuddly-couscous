@@ -67,6 +67,7 @@ import ScenarioSelectionView from "../Call/Customer/ScenarioSelectionView/Scenar
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
+import ConnectingView from "../Call/Linguist/Connecting/ConnectingView";
 
 const Navigation = StackNavigator(
   {
@@ -91,6 +92,13 @@ const Navigation = StackNavigator(
     },
     ContactingLinguist: {
       screen: ContactingLinguist,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    ConnectingView: {
+      screen: ConnectingView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"

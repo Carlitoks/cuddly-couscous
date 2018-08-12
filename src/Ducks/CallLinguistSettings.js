@@ -1,6 +1,5 @@
 import { Sessions, CallHistory } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
-
 import {
   changeStatus,
   updateSettings as updateProfileLinguist
@@ -65,14 +64,6 @@ export const resetTimerAsync = () => (dispatch, getState) => {
 
 export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 
-export const EndCall = (sessionID, reason, token) => dispatch => {
-  Sessions.EndSession(sessionID, { reason: REASON.DONE }, token)
-    .then(response => {
-      dispatch(endSession(REASON.DONE));
-    })
-    .catch(error => dispatch(networkError(error)));
-};
-
 export const resetTimer = () => ({
   type: ACTIONS.RESET_TIMER
 });
@@ -101,20 +92,29 @@ export const asyncGetInvitationDetail = (
     });
 };
 
-export const verifyCall = (sessionID, token, verifyCallId) => dispatch => {
+export const verifyCall = (sessionID, token, verifyCallId) => (
+  dispatch,
+  getState
+) => {
+  const { callLinguistSettings } = getState();
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
-      if (
-        response.data.status == "cancelled" ||
-        response.data.status == "assigned"
-      ) {
-        dispatch({ type: "Home", params: { alert: true } });
+      if (response.data.status == "cancelled") {
+        dispatch({ type: "Home", params: { alertCancelled: true } });
         clearInterval(verifyCallId);
         Vibration.cancel();
+      }
+      if (response.data.status == "assigned") {
+        if (callLinguistSettings.sessionID) {
+          dispatch({ type: "Home", params: { alertAssigned: true } });
+          clearInterval(verifyCallId);
+          Vibration.cancel();
+        }
       }
     })
     .catch(error => {
       dispatch(networkError(error));
+      console.log("Error");
       clearInterval(verifyCallId);
       Vibration.cancel();
     });
@@ -131,13 +131,13 @@ export const asyncAcceptsInvite = (
   linguistSessionId
 ) => dispatch => {
   if (reason && reason.accept) {
+    dispatch(connectCall());
     Sessions.linguistFetchesInvite(invitationID, token)
       .then(res => {
         if (!res.data.session.endReason) {
           Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
             .then(response => {
               dispatch(setSession(response.data));
-              dispatch(connectCall());
               dispatch(update({ sessionID: linguistSessionId }));
             })
             .catch(error => {
@@ -191,12 +191,23 @@ export const startTimer = () => (dispatch, getState) => {
   );
 };
 
-export const closeCall = reason => dispatch => {
+export const closeCall = reason => (dispatch, getState) => {
   displayEndCall(() => {
     SoundManager["EndCall"].play();
-    dispatch(sendSignal(REASON.DONE, "Ended by Linguist"));
-    dispatch({ type: "RateView" });
+    dispatch(EndCall());
   });
+};
+
+export const EndCall = () => (dispatch, getState) => {
+  const { tokbox, auth } = getState();
+  return Sessions.EndSession(tokbox.sessionID, REASON.DONE, auth.token)
+    .then(response => {
+      dispatch({ type: "RateView" });
+    })
+    .catch(error => {
+      dispatch(networkError(error));
+      dispatch({ type: "RateView" });
+    });
 };
 
 export const closeCallReconnect = reason => dispatch => {
@@ -218,8 +229,11 @@ const initialState = {
   elapsedTime: 0,
   accept: false,
   customerPreferredSex: "any",
-  customerName: null,
 
+  customerName: null,
+  invitationID: "",
+  reconnecting: false,
+  sessionID: "",
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 10, // Initial time selected: 10 min
