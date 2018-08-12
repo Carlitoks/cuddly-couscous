@@ -299,9 +299,16 @@ class Home extends Component {
     const emptyActivity = scenariosList && scenariosList.length === 0;
 
     const data = emptyActivity
-      ? [{ id: "emptyActivity", title: I18n.t("noRecentActivityMessage") }]
+      ? [
+          {
+            id: "emptyActivity",
+            title: I18n.t("noRecentActivityMessage"),
+            scenario: {
+              title: I18n.t("noRecentActivityMessage")
+            }
+          }
+        ]
       : scenariosList;
-
     const list = scenariosList ? (
       <BoxedListComponent
         customContainerStyle={styles.listContainer}
