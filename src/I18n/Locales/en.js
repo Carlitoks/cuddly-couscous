@@ -143,7 +143,7 @@ export default (ENG = {
   general: "General",
   getStarted: "Get Started",
   getLanguageHelp: "Get Language Help",
-  hasDisconnected: "has been disconnected",
+  hasDisconnected: "You have been disconnected",
   help: "Help",
   helpPeople:
     "Which cities do you know well enough to help people get around in?",

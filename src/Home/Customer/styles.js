@@ -294,10 +294,14 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   scrollView: {
-    backgroundColor: Colors.gradientColor.top,
     height: height - headerHeight
   },
   scrollViewContainer: {
+    flexGrow: 1
+  },
+  viewContainer: {
+    backgroundColor: Colors.gradientColor.top,
+    height: height - headerHeight,
     flexGrow: 1
   },
   titleCall: {
