@@ -76,7 +76,8 @@ class ContactingLinguist extends Component {
         )}
         <View style={styles.connectingMessageContainer}>
           {!this.props.modalReconnect &&
-            this.props.counter !== 0 && (
+            this.props.counter > 0 &&
+            this.props.counter < 60 && (
               <CallTimer
                 time={this.sixtySecondsCounter(this.props.counter)}
                 withOut
