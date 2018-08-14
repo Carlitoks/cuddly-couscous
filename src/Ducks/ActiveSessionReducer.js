@@ -2,6 +2,7 @@ import InCallManager from "react-native-incall-manager";
 import moment from "moment";
 import _sortBy from "lodash/sortBy";
 import { Vibration } from "react-native";
+import timer from "react-native-timer";
 import { GetSessionInfoLinguist } from "./SessionInfoReducer";
 import { REASON, STATUS_TOKBOX, TIME, LANG_CODES } from "../Util/Constants";
 import { networkError } from "./NetworkErrorsReducer";
@@ -261,7 +262,7 @@ export const subscriberStart = () => async (dispatch, getState) => {
   if (userProfile.linguistProfile) {
     dispatch(startTimerLinguist());
   } else {
-    clearInterval(contactLinguist.counterId);
+    timer.clearInterval("counterId");
     dispatch(startTimer());
     dispatch(updateCustomerSettings({ timer: activeSessionReducer.timer }));
   }
@@ -424,7 +425,7 @@ export const createSession = ({
     .catch(error => {
       dispatch(networkError(error));
       const { contactLinguist, activeSessionReducer } = getState();
-      clearInterval(contactLinguist.counterId);
+      timer.clearInterval("counterId");
       clearInterval(activeSessionReducer.verifyCallId);
       clearInterval(activeSessionReducer.timer);
       dispatch(resetCounter());
@@ -441,7 +442,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
       const { data } = response;
       if (data.status !== "assigned") {
         if (contactLinguist.counter >= 55) {
-          clearInterval(contactLinguist.counterId);
+          timer.clearInterval("counterId");
           clearInterval(activeSessionReducer.verifyCallId);
           dispatch(resetCounter());
           dispatch(resetCounterVerify());
@@ -459,7 +460,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
             contactLinguist.counter >= 55 ||
             data.queue.declined === data.queue.total
           ) {
-            clearInterval(contactLinguist.counterId);
+            timer.clearInterval("counterId");
             clearInterval(activeSessionReducer.verifyCallId);
             dispatch(resetCounter());
             dispatch(resetCounterVerify());
@@ -478,7 +479,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
     })
     .catch(error => {
       dispatch(networkError(error));
-      clearInterval(contactLinguist.counterId);
+      timer.clearInterval("counterId");
       clearInterval(activeSessionReducer.verifyCallId);
     });
 };
@@ -564,7 +565,7 @@ export const startTimer = () => (dispatch, getState) => {
 
 export const closeCall = reason => (dispatch, getState) => {
   const { contactLinguist, activeSessionReducer, auth } = getState();
-  clearInterval(contactLinguist.counterId);
+  timer.clearInterval("counterId");
   clearInterval(activeSessionReducer.timer);
   clearInterval(activeSessionReducer.verifyCallId);
   dispatch(
@@ -605,7 +606,7 @@ export const closeCall = reason => (dispatch, getState) => {
 
 export const cleanCall = reason => (dispatch, getState) => {
   const { contactLinguist, activeSessionReducer, auth } = getState();
-  clearInterval(contactLinguist.counterId);
+  timer.clearInterval("counterId");
   clearInterval(activeSessionReducer.timer);
   dispatch(
     updateContactLinguist({

@@ -59,7 +59,7 @@ class CallConfirmationView extends Component {
   componentWillMount() {
     const { promotion, event, resetConnectingMessage } = this.props;
     clearInterval(this.props.timer);
-    clearInterval(this.props.counterId);
+    timer.clearInterval("counterId");
     clearInterval(this.props.timerCustomer);
     this.props.clearSettings();
     this.props.clearTokboxStatus();
