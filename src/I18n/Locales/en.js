@@ -363,6 +363,7 @@ export default (ENG = {
     callTime: "Call Time: {{time}}",
     callCancel: "This call was canceled by the customer",
     callAnswered: "This call has been taken by another linguist.",
+    callFail: "The customer was unable to connect.",
     alertGeneralCannotSee:
       "To optimize connectivity, video has been temporarily disabled. Video will resume when connectivity improves.",
     alertLinguistCannotSeeYou:

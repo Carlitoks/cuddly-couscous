@@ -50,6 +50,12 @@ class Home extends Component {
     ) {
       Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
     }
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alertFail
+    ) {
+      Alert.alert(I18n.t("notification"), I18n.t("session.callFail"));
+    }
     timer.clearInterval("timer");
     timer.clearInterval("counterId");
     this.props.clear();

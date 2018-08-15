@@ -132,6 +132,7 @@ const initialState = {
   firstName: "",
   lastInitial: "",
   avatarURL: "",
+  endingSession: false,
   // Max Call Time
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 60, // Initial time selected: 10 min
@@ -330,7 +331,6 @@ export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 export const EndCall = (sessionID, reason, token) => dispatch => {
   return Sessions.EndSession(sessionID, reason, token)
     .then(response => {
-      dispatch(endSession());
       if (reason === REASON.CANCEL) {
         dispatch(clear());
         dispatch(clearEvents());
@@ -356,11 +356,20 @@ export const updateVideoWarningEvent = (reason, data) => dispatch => {
   dispatch(sendSignal(reason, data));
 };
 
-export const HandleEndCall = (sessionID, reason, token) => dispatch => {
+export const HandleEndCall = (sessionID, reason, token, alert) => (
+  dispatch,
+  getState
+) => {
+  const { activeSessionReducer } = getState();
+  dispatch(endSession());
   dispatch(EndCall(sessionID, reason, token))
     .then(response => {
       if (reason === REASON.CANCEL) {
-        dispatch({ type: "Home" });
+        if (alert) {
+          dispatch({ type: "Home", params: { alertFail: true } });
+        } else {
+          dispatch({ type: "Home" });
+        }
       } else if (reason === REASON.RETRY) {
         dispatch({ type: "CustomerView" });
       } else if (reason === REASON.DONE) {
@@ -498,7 +507,7 @@ export const verifyLinguistConnection = () => (dispatch, getState) => {
   ) {
     timer.clearInterval("counterId");
     dispatch(resetCounter());
-    dispatch(closeCall(REASON.DONE));
+    dispatch(closeCall(REASON.CANCEL, true));
   }
 };
 
@@ -572,7 +581,7 @@ export const startTimer = () => (dispatch, getState) => {
   );
 };
 
-export const closeCall = reason => (dispatch, getState) => {
+export const closeCall = (reason, alert) => (dispatch, getState) => {
   const { contactLinguist, activeSessionReducer, auth } = getState();
   timer.clearInterval("counterId");
   timer.clearInterval("timer");
@@ -596,7 +605,12 @@ export const closeCall = reason => (dispatch, getState) => {
     if (activeSessionReducer.sessionID) {
       activeSessionReducer.sessionID &&
         dispatch(
-          HandleEndCall(activeSessionReducer.sessionID, reason, auth.token)
+          HandleEndCall(
+            activeSessionReducer.sessionID,
+            reason,
+            auth.token,
+            alert
+          )
         );
     } else {
       if (reason === REASON.CANCEL) {
@@ -828,7 +842,8 @@ const activeSessionReducer = (state = initialState, action = {}) => {
 
     case ACTIONS.ENDSESSION: {
       return {
-        ...state
+        ...state,
+        endingSession: true
       };
     }
 

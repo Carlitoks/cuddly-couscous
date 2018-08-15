@@ -44,7 +44,7 @@ class ConnectingView extends Component {
     this.props.updateSettings({
       counterId: timer.setInterval(
         "counterId",
-        () => () => {
+        () => {
           incrementCounter();
           this.props.verifyLinguistConnection();
         },
@@ -56,7 +56,7 @@ class ConnectingView extends Component {
   closeCallLinguist = reason => {
     displayEndCall(() => {
       SoundManager["EndCall"].play();
-      this.props.closeCall(REASON.DONE);
+      this.props.closeCall(REASON.CANCEL);
     });
   };
 
@@ -93,7 +93,7 @@ class ConnectingView extends Component {
 
             <SessionControls
               closeCall={this.closeCallLinguist}
-              reason={REASON.DONE}
+              reason={REASON.CANCEL}
               switch={() => {}}
               contacting
               linguist

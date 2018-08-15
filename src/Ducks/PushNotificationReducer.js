@@ -118,7 +118,10 @@ const connectionEventNotification = () => () => {
 const sessionEndNotification = sessionID => (dispatch, getState) => {
   const { nav, activeSessionReducer } = getState();
   const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
-  if (sessionID == activeSessionReducer.sessionID) {
+  if (
+    sessionID == activeSessionReducer.sessionID &&
+    !activeSessionReducer.endingSession
+  ) {
     dispatch(closeCall(REASON.DONE));
   }
 };
