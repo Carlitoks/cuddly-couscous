@@ -122,7 +122,14 @@ const sessionEndNotification = sessionID => (dispatch, getState) => {
     sessionID == activeSessionReducer.sessionID &&
     !activeSessionReducer.endingSession
   ) {
-    dispatch(closeCall(REASON.DONE));
+    if (
+      !activeSessionReducer.isLinguist &&
+      activeSessionReducer.elapsedTime === 0
+    ) {
+      dispatch(closeCall(REASON.CANCEL), true);
+    } else {
+      dispatch(closeCall(REASON.DONE));
+    }
   }
 };
 

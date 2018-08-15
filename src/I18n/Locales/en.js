@@ -364,6 +364,7 @@ export default (ENG = {
     callCancel: "This call was canceled by the customer",
     callAnswered: "This call has been taken by another linguist.",
     callFail: "The customer was unable to connect.",
+    callFailCustomer: "There was a problem connecting to your Language Jeenie.",
     alertGeneralCannotSee:
       "To optimize connectivity, video has been temporarily disabled. Video will resume when connectivity improves.",
     alertLinguistCannotSeeYou:
