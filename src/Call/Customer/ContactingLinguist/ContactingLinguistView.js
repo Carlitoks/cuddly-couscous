@@ -41,6 +41,9 @@ class ContactingLinguist extends Component {
         });
     }
   }
+  componentWillUnmount() {
+    timer.clearInterval("verifyCallId");
+  }
 
   sixtySecondsCounter(counter) {
     return 60 - counter;
