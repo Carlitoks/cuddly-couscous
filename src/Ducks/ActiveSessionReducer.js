@@ -218,9 +218,9 @@ export const streamDestroyedEvent = event => (dispatch, getState) => {
     .then(response => {
       console.log("Destroyed ", response); // REVIEW
       if (response.data.session.ended) {
-        clearInterval(activeSessionReducer.counterId);
-        clearInterval(activeSessionReducer.timer);
-        clearInterval(activeSessionReducer.verifyCallId);
+        timer.clearInterval("verifyCallId");
+        timer.clearInterval("timer");
+        timer.clearInterval("counterId");
         dispatch(clear());
         dispatch({ type: "RateView" });
       }
@@ -307,7 +307,7 @@ export const resetTimerAsync = () => (dispatch, getState) => {
 
 export const resetReconnectAsync = () => (dispatch, getState) => {
   const { activeSessionReducer } = getState();
-  clearInterval(activeSessionReducer.counterId);
+  timer.clearInterval("counterId");
   dispatch(
     update({
       counterId: null,
@@ -414,7 +414,8 @@ export const createSession = ({
       // verify if there is linguist available
       dispatch(
         update({
-          verifyCallId: setInterval(
+          verifyCallId: timer.setInterval(
+            "verifyCallId",
             () => dispatch(verifyCall(data.sessionID, token)),
             5000
           )
@@ -426,8 +427,8 @@ export const createSession = ({
       dispatch(networkError(error));
       const { contactLinguist, activeSessionReducer } = getState();
       timer.clearInterval("counterId");
-      clearInterval(activeSessionReducer.verifyCallId);
-      clearInterval(activeSessionReducer.timer);
+      timer.clearInterval("verifyCallId");
+      timer.clearInterval("timer");
       dispatch(resetCounter());
       dispatch(resetCounterVerify());
       dispatch(clear());
@@ -443,7 +444,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
       if (data.status !== "assigned") {
         if (contactLinguist.counter >= 55) {
           timer.clearInterval("counterId");
-          clearInterval(activeSessionReducer.verifyCallId);
+          timer.clearInterval("verifyCallId");
           dispatch(resetCounter());
           dispatch(resetCounterVerify());
           dispatch(
@@ -461,7 +462,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
             data.queue.declined === data.queue.total
           ) {
             timer.clearInterval("counterId");
-            clearInterval(activeSessionReducer.verifyCallId);
+            timer.clearInterval("verifyCallId");
             dispatch(resetCounter());
             dispatch(resetCounterVerify());
             dispatch(
@@ -480,7 +481,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
     .catch(error => {
       dispatch(networkError(error));
       timer.clearInterval("counterId");
-      clearInterval(activeSessionReducer.verifyCallId);
+      timer.clearInterval("verifyCallId");
     });
 };
 
@@ -495,7 +496,7 @@ export const verifyLinguistConnection = () => (dispatch, getState) => {
     activeSessionReducer.sessionID &&
     activeSessionReducer.status !== STATUS_TOKBOX.STREAM
   ) {
-    clearInterval(contactLinguist.counterId);
+    timer.clearInterval("counterId");
     dispatch(resetCounter());
     dispatch(closeCall(REASON.DONE));
   }
@@ -504,9 +505,13 @@ export const verifyLinguistConnection = () => (dispatch, getState) => {
 export const startReconnect = () => (dispatch, getState) => {
   dispatch(
     update({
-      counterId: setInterval(() => {
-        dispatch(incrementReconnect());
-      }, 1000)
+      counterId: timer.setInterval(
+        "counterId",
+        () => {
+          dispatch(incrementReconnect());
+        },
+        1000
+      )
     })
   );
 };
@@ -519,46 +524,50 @@ export const startTimer = () => (dispatch, getState) => {
 
   dispatch(
     update({
-      timer: setInterval(() => {
-        const {
-          elapsedTime,
-          extraTime,
-          showAlert
-        } = getState().activeSessionReducer;
-        if (elapsedTime + extraTime < 60 * 60) {
-          if (elapsedTime >= callTime + extraTime - 2 * 60) {
-            dispatch(
-              update({
-                red: true
-              })
-            );
-            if (!showAlert) {
+      timer: timer.setInterval(
+        "timer",
+        () => {
+          const {
+            elapsedTime,
+            extraTime,
+            showAlert
+          } = getState().activeSessionReducer;
+          if (elapsedTime + extraTime < 60 * 60) {
+            if (elapsedTime >= callTime + extraTime - 2 * 60) {
               dispatch(
                 update({
-                  showAlert: true
+                  red: true
                 })
               );
-              //Play Sound
-              // SoundManager["ExtraTime"].play();
-              // displayTimeAlert(extraTime, event => {
-              //   dispatch(updateSettings(event));
-              // });
+              if (!showAlert) {
+                dispatch(
+                  update({
+                    showAlert: true
+                  })
+                );
+                //Play Sound
+                // SoundManager["ExtraTime"].play();
+                // displayTimeAlert(extraTime, event => {
+                //   dispatch(updateSettings(event));
+                // });
+              }
             }
-          }
-          if (elapsedTime > callTime + extraTime) {
-            dispatch(closeCall(REASON.DONE));
-          } else {
-            dispatch(incrementTimer());
+            if (elapsedTime > callTime + extraTime) {
+              dispatch(closeCall(REASON.DONE));
+            } else {
+              dispatch(incrementTimer());
 
-            emitLocalNotification({
-              title: I18n.t("call"),
-              message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
-            });
+              emitLocalNotification({
+                title: I18n.t("call"),
+                message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
+              });
+            }
+          } else {
+            dispatch(closeCall(REASON.DONE));
           }
-        } else {
-          dispatch(closeCall(REASON.DONE));
-        }
-      }, 1000)
+        },
+        1000
+      )
     })
   );
 };
@@ -566,8 +575,8 @@ export const startTimer = () => (dispatch, getState) => {
 export const closeCall = reason => (dispatch, getState) => {
   const { contactLinguist, activeSessionReducer, auth } = getState();
   timer.clearInterval("counterId");
-  clearInterval(activeSessionReducer.timer);
-  clearInterval(activeSessionReducer.verifyCallId);
+  timer.clearInterval("timer");
+  timer.clearInterval("verifyCallId");
   dispatch(
     updateContactLinguist({
       modalContact: false,
@@ -607,7 +616,7 @@ export const closeCall = reason => (dispatch, getState) => {
 export const cleanCall = reason => (dispatch, getState) => {
   const { contactLinguist, activeSessionReducer, auth } = getState();
   timer.clearInterval("counterId");
-  clearInterval(activeSessionReducer.timer);
+  timer.clearInterval("timer");
   dispatch(
     updateContactLinguist({
       modalContact: false,
@@ -655,13 +664,13 @@ export const verifyCallActive = (
         response.data.status == "assigned"
       ) {
         dispatch({ type: "Home", params: { alert: true } });
-        clearInterval(verifyCallId);
+        timer.clearInterval("verifyCallId");
         Vibration.cancel();
       }
     })
     .catch(error => {
       dispatch(networkError(error));
-      clearInterval(verifyCallId);
+      timer.clearInterval("verifyCallId");
       Vibration.cancel();
     });
 };
@@ -738,14 +747,18 @@ export const startTimerLinguist = () => (dispatch, getState) => {
   const { activeSessionReducer } = getState();
   dispatch(
     update({
-      timer: setInterval(() => {
-        dispatch(incrementTimer());
-        const { elapsedTime } = getState().activeSessionReducer;
-        emitLocalNotification({
-          title: I18n.t("call"),
-          message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
-        });
-      }, 1000)
+      timer: timer.setInterval(
+        "timer",
+        () => {
+          dispatch(incrementTimer());
+          const { elapsedTime } = getState().activeSessionReducer;
+          emitLocalNotification({
+            title: I18n.t("call"),
+            message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
+          });
+        },
+        1000
+      )
     })
   );
   dispatch(updateLinguistSettings({ timer: activeSessionReducer.timer }));
@@ -760,9 +773,9 @@ export const closeCallReconnect = reason => dispatch => {
 
 export const cleanAllIntervals = () => getState => {
   const { activeSessionReducer } = getState();
-  clearInterval(activeSessionReducer.counterId);
-  clearInterval(activeSessionReducer.timer);
-  clearInterval(activeSessionReducer.verifyCallId);
+  timer.clearInterval("counterId");
+  timer.clearInterval("timer");
+  timer.clearInterval("verifyCallId");
 };
 
 const activeSessionReducer = (state = initialState, action = {}) => {

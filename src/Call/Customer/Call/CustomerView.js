@@ -123,8 +123,6 @@ class CustomerView extends Component {
   async componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer); // remove interval of timer
     cleanNotifications();
-    await clearInterval(this.props.counterId);
-    await clearInterval(this.props.timer);
     this.props.resetTimerAsync(); // reset call timer
     this.props.resetCounter();
     InCallManager.stop();
@@ -135,6 +133,7 @@ class CustomerView extends Component {
     this.props.clearCallSettings();
     this.props.clear();
     timer.clearInterval("counterId");
+    timer.clearInterval("timer");
   }
 
   componentWillReceiveProps(nextProps) {

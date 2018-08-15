@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 //COMPONENTS
 import { Text, View, ScrollView, ActivityIndicator, Alert } from "react-native";
+import timer from "react-native-timer";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import ModalRetry from "../../../Components/ModalRerty/ModalRetry";
 // STYLE AND THEMES
@@ -34,17 +35,21 @@ class ConnectingView extends Component {
     this.conectingTimer();
   }
   componentWillUnmount() {
-    clearInterval(this.props.counterId);
+    timer.clearInterval("counterId");
     this.props.resetCounter();
   }
 
   conectingTimer = () => {
     const { incrementCounter } = this.props;
     this.props.updateSettings({
-      counterId: setInterval(() => {
-        incrementCounter();
-        this.props.verifyLinguistConnection();
-      }, 1000)
+      counterId: timer.setInterval(
+        "counterId",
+        () => () => {
+          incrementCounter();
+          this.props.verifyLinguistConnection();
+        },
+        1000
+      )
     });
   };
 

@@ -11,7 +11,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button, Header, List, ListItem } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import timer from "react-native-timer";
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
 import SettingsButton from "../../../Components/SettingsButton/SettingsButton";
 import { getGeolocationCoords } from "../../../Util/Helpers";
@@ -58,9 +58,8 @@ class CallConfirmationView extends Component {
 
   componentWillMount() {
     const { promotion, event, resetConnectingMessage } = this.props;
-    clearInterval(this.props.timer);
+    timer.clearInterval("timer");
     timer.clearInterval("counterId");
-    clearInterval(this.props.timerCustomer);
     this.props.clearSettings();
     this.props.clearTokboxStatus();
     getGeolocationCoords()

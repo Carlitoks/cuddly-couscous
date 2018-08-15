@@ -12,7 +12,7 @@ import PushNotification from "../Util/PushNotification";
 import { LANG_CODES, STATUS_TOKBOX } from "../Util/Constants";
 import { isCurrentView } from "../Util/Helpers";
 import { networkError } from "./NetworkErrorsReducer";
-
+import timer from "react-native-timer";
 // Actions
 export const ACTIONS = {
   REGISTER: "pushnotification/register"
@@ -61,10 +61,9 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
     CurrentView != "IncomingCallView" &&
     CurrentView != "LinguistView"
   ) {
-    clearInterval(contactLinguist.counterId);
-    clearInterval(activeSessionReducer.timer);
-    clearInterval(callLinguistSettings.timer);
-    clearInterval(activeSessionReducer.verifyCallId);
+    timer.clearInterval("counterId");
+    timer.clearInterval("timer");
+    timer.clearInterval("verifyCallId");
     dispatch(clear());
     Sessions.linguistFetchesInvite(invitationId, auth.token)
       .then(res => {

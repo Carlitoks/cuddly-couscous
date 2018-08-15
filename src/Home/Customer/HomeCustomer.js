@@ -5,6 +5,7 @@ import { findIndex, take } from "lodash";
 import { asyncGetAccountInformation } from "../../Ducks/ProfileLinguistReducer";
 import moment from "moment";
 import InCallManager from "react-native-incall-manager";
+import timer from "react-native-timer";
 import {
   asyncUploadAvatar,
   getProfileAsync,
@@ -153,8 +154,8 @@ class Home extends Component {
       selectedScenarioIndex: -1
     });
     //Clean call
-    clearInterval(this.props.timer);
-    clearInterval(this.props.counterId);
+    timer.clearInterval("timer");
+    timer.clearInterval("counterId");
     this.props.asyncGetAccountInformation();
     this.props.clearEvents();
     this.props.clear();

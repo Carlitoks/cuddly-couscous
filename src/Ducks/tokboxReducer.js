@@ -13,7 +13,7 @@ import {
 import { Alert } from "react-native";
 import { REASON, STATUS_TOKBOX } from "../Util/Constants";
 import { Sessions } from "../Api";
-
+import timer from "react-native-timer";
 const ACTIONS = {
   CLEAR: "tokbox/clear",
   UPDATE: "tokbox/update",
@@ -184,7 +184,7 @@ export const subscriberStart = () => async (dispatch, getState) => {
   if (userProfile.linguistProfile) {
     dispatch(startLinguistTimer());
   } else {
-    clearInterval(contactLinguist.counterId);
+    timer.clearInterval("counterId");
     dispatch(startCustomerTimer());
   }
 };

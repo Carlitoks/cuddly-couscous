@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, Alert } from "react-native";
 import { OTSession } from "opentok-react-native";
+import timer from "react-native-timer";
+
 import NoVideoScreen from "../../NoVideoScreen/NoVideoScreen";
 import CallAvatarName from "../../CallAvatarName/CallAvatarName";
 import { Publisher, Subscriber } from "../../";
@@ -38,7 +40,7 @@ class SessionBox extends Component {
       },
       connectionCreated: event => {
         console.log("CONNECTION CREATED EVENT", event);
-        clearInterval(this.props.counterId);
+        timer.clearInterval("counterId");
         this.props.subscriberStart();
         this.props.updateContactLinguistSettings({
           modalContact: false

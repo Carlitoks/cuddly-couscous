@@ -5,7 +5,7 @@ import {
   updateSettings as updateProfileLinguist
 } from "./ProfileLinguistReducer";
 import { setSession, clear, update, sendSignal } from "./tokboxReducer";
-
+import timer from "react-native-timer";
 import moment from "moment";
 import _sortBy from "lodash/sortBy";
 import I18n from "../I18n/I18n";
@@ -101,21 +101,20 @@ export const verifyCall = (sessionID, token, verifyCallId) => (
     .then(response => {
       if (response.data.status == "cancelled") {
         dispatch({ type: "Home", params: { alertCancelled: true } });
-        clearInterval(verifyCallId);
+        timer.clearInterval("verifyCallId");
         Vibration.cancel();
       }
       if (response.data.status == "assigned") {
         if (callLinguistSettings.sessionID) {
           dispatch({ type: "Home", params: { alertAssigned: true } });
-          clearInterval(verifyCallId);
+          timer.clearInterval("verifyCallId");
           Vibration.cancel();
         }
       }
     })
     .catch(error => {
       dispatch(networkError(error));
-      console.log("Error");
-      clearInterval(verifyCallId);
+      timer.clearInterval("verifyCallId");
       Vibration.cancel();
     });
 };
@@ -179,14 +178,18 @@ export const asyncAcceptsInvite = (
 export const startTimer = () => (dispatch, getState) => {
   dispatch(
     updateSettings({
-      timer: setInterval(() => {
-        dispatch(incrementTimer());
-        const { elapsedTime } = getState().callLinguistSettings;
-        emitLocalNotification({
-          title: I18n.t("call"),
-          message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
-        });
-      }, 1000)
+      timer: timer.setInterval(
+        "timer",
+        () => {
+          dispatch(incrementTimer());
+          const { elapsedTime } = getState().callLinguistSettings;
+          emitLocalNotification({
+            title: I18n.t("call"),
+            message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
+          });
+        },
+        1000
+      )
     })
   );
 };
