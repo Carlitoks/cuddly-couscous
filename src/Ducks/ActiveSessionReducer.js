@@ -217,11 +217,11 @@ export const streamDestroyedEvent = event => (dispatch, getState) => {
   //Add validations
   Sessions.StatusSession(activeSessionReducer.sessionID, auth.token)
     .then(response => {
-      console.log("Destroyed ", response); // REVIEW
       if (response.data.session.ended) {
         timer.clearInterval("verifyCallId");
         timer.clearInterval("timer");
         timer.clearInterval("counterId");
+        dispatch(endSession());
         dispatch(clear());
         dispatch({ type: "RateView" });
       }
