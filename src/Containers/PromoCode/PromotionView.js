@@ -210,7 +210,7 @@ class PromotionView extends Component {
           />
           <ScrollView
             automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
+            style={styles.promotionScrollContainer}
             alwaysBounceVertical={false}
             onScroll={this.handleScroll}
           >

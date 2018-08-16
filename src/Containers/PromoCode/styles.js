@@ -7,6 +7,10 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
   mainContainer: {
     backgroundColor: Colors.gradientColor.top,
+    flex: 1
+  },
+  promotionContainer: {
+    backgroundColor: Colors.gradientColor.top,
     height: "100%"
   },
   linearGradient: {
@@ -15,7 +19,12 @@ export default StyleSheet.create({
     height: "50%",
     bottom: 0
   },
-  scrollContainer: {},
+  scrollContainer: {
+    flex: 1,
+    height: "100%",
+    backgroundColor: Colors.white
+  },
+  promotionScrollContainer: {},
   mainTitle: {
     fontFamily: Fonts.LightFont,
     fontSize: 24,

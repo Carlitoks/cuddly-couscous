@@ -38,7 +38,9 @@ class ScanScreenView extends Component {
     return tokens[tokens.indexOf("events") + 1];
   };
   checkValidID = id => {
-    return /\d{8}-+\d{4}-+\d{4}-+\d{4}-+\d{12}/.test(id);
+    return /[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}/.test(
+      id
+    );
   };
 
   onSuccess = e => {
