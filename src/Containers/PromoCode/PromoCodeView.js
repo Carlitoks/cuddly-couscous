@@ -78,10 +78,18 @@ class PromoCodeView extends Component {
           this.props.navigation.dispatch({ type: "PromoCodeListView" });
         } else if (!requireScenarioSelection) {
           /* Dispatch to Call Confirmation view */
-          this.props.navigation.dispatch({ type: "CallConfirmationView" });
+          const setLanguage =
+            !this.props.event.allowSecondaryLangSelection &&
+            this.props.event.defaultSecondaryLangCode;
+          if (setLanguage) {
+            this.props.navigation.dispatch({ type: "CallConfirmationView" });
+          } else {
+            this.props.navigation.dispatch({ type: "CallPricingView" });
+          }
         }
       })
       .catch(err => {
+        console.log("Error ", err);
         displayFormErrors(I18n.t("errorPromo"));
       });
   }
@@ -145,7 +153,8 @@ class PromoCodeView extends Component {
 const mS = state => ({
   promoCode: state.promoCode.code,
   token: state.auth.token,
-  categories: state.homeFlow.categories
+  categories: state.homeFlow.categories,
+  event: state.events
 });
 
 const mD = {

@@ -24,7 +24,8 @@ import {
 } from "../../../Ducks/ActiveSessionReducer";
 import {
   updateSettings,
-  resetConnectingMessage
+  resetConnectingMessage,
+  updateSettings as updateContactLinguist
 } from "../../../Ducks/ContactLinguistReducer";
 import { cleanSelected } from "../../../Ducks/HomeFlowReducer";
 import { clear as clearEvents } from "../../../Ducks/EventsReducer";
@@ -50,8 +51,12 @@ import {
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
 import { moderateScale } from "../../../Util/Scaling";
-import { getLocalizedCategories } from "../../../Util/Constants";
-
+import {
+  getLocalizedCategories,
+  SUPPORTED_LANGS
+} from "../../../Util/Constants";
+import SupportedLanguagesList from "./../SessionLanguageView/SupportedLanguagesList";
+import ComingSoonLanguagesList from "./../SessionLanguageView/ComingSoonLanguagesList";
 class CallConfirmationView extends Component {
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
@@ -70,6 +75,7 @@ class CallConfirmationView extends Component {
       .catch(err => {
         console.log("GeoLocation error  ", err);
       });
+    const verifyLang = !!this.props.primaryLangCode;
     resetConnectingMessage();
     let inputHeight = 0;
     if (promotion || event.id) {
@@ -80,6 +86,27 @@ class CallConfirmationView extends Component {
         defaultSecondaryLangCode
       } = scannedEvent;
 
+      const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng" };
+      const userNativeLangIsSupported =
+        SUPPORTED_LANGS.indexOf(this.props.nativeLangCode) >= 0;
+
+      const primaryLanguageCode = userNativeLangIsSupported
+        ? this.props.nativeLangCode
+        : "eng";
+
+      const primaryLanguage = Languages.find(
+        lang => lang[3] === primaryLanguageCode
+      );
+
+      if (!verifyLang) {
+        this.props.updateSettings({
+          primaryLangCode: primaryLanguage[3],
+          selectedLanguageFrom: translateLanguage(
+            primaryLanguage[3],
+            primaryLanguage["name"]
+          )
+        });
+      }
       if (!allowSecondaryLangSelection && defaultSecondaryLangCode) {
         const selectedLangTo = Languages.filter(
           language => language[3] === defaultSecondaryLangCode
@@ -97,8 +124,46 @@ class CallConfirmationView extends Component {
           )
         });
       }
+    } else {
+      if (!verifyLang) {
+        this.setLanguages();
+      }
     }
   }
+
+  setLanguages = () => {
+    const { nativeLangCode } = this.props;
+    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng" };
+    const userNativeLangIsSupported =
+      SUPPORTED_LANGS.indexOf(nativeLangCode) >= 0;
+
+    const primaryLanguageCode = userNativeLangIsSupported
+      ? nativeLangCode
+      : "eng";
+
+    const primaryLanguage = Languages.find(
+      lang => lang[3] === primaryLanguageCode
+    );
+
+    const secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+
+    const secondaryLanguage = Languages.find(
+      lang => lang[3] === secondaryLanguageCode
+    );
+
+    this.props.updateSettings({
+      primaryLangCode: primaryLanguage[3],
+      selectedLanguageFrom: translateLanguage(
+        primaryLanguage[3],
+        primaryLanguage["name"]
+      ),
+      secundaryLangCode: secondaryLanguage[3],
+      selectedLanguage: translateLanguage(
+        secondaryLanguage[3],
+        secondaryLanguage["name"]
+      )
+    });
+  };
 
   render() {
     const {
@@ -397,7 +462,9 @@ const mS = state => ({
   allowTimeSelection: state.activeSessionReducer.allowTimeSelection,
   promotion: state.promoCode.scanned,
   event: state.events,
-  timerCustomer: state.callCustomerSettings.timer
+  timerCustomer: state.callCustomerSettings.timer,
+  nativeLangCode: state.userProfile.nativeLangCode,
+  primaryLangCode: state.contactLinguist.primaryLangCode
 });
 
 const mD = {
@@ -410,7 +477,8 @@ const mD = {
   clearEvents,
   clearPromoCode,
   resetConnectingMessage,
-  clearTokboxStatus
+  clearTokboxStatus,
+  updateContactLinguist
 };
 
 export default connect(
