@@ -42,10 +42,9 @@ import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import LanguageSelection from "../../../Components/LanguageSelection/LanguageSelection";
 import { Iphone5 } from "../../../Util/Devices";
-import { Languages } from "../../../Config/Languages";
 import { TranslationArrows, Checkmark } from "../../../Assets/SVG";
 import { checkOperatingHours } from "../../../Util/Helpers";
-
+import { Languages } from "../../../Config/Languages";
 import {
   setPermission,
   displayOpenSettingsAlert
@@ -82,7 +81,7 @@ class CallConfirmationView extends Component {
       } = scannedEvent;
 
       if (!allowSecondaryLangSelection && defaultSecondaryLangCode) {
-        const selectedLangTo = languages.filter(
+        const selectedLangTo = Languages.filter(
           language => language[3] === defaultSecondaryLangCode
         );
 

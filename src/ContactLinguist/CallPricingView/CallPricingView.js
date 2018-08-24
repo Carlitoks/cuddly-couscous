@@ -62,12 +62,28 @@ class CallPricingView extends Component {
               title={I18n.t("continueForFree")}
               onPress={() => {
                 const { routes, navigation } = this.props;
-                const continueScreen =
-                  previousView(routes) === "CallConfirmationView"
-                    ? "back"
-                    : "SessionLanguageView";
+                if (this.props.event.id) {
+                  const setLanguage =
+                    !this.props.event.allowSecondaryLangSelection &&
+                    this.props.event.defaultSecondaryLangCode;
+                  if (setLanguage) {
+                    navigation.dispatch({ type: "CallConfirmationView" });
+                  } else {
+                    const continueScreen =
+                      previousView(routes) === "CallConfirmationView"
+                        ? "back"
+                        : "SessionLanguageView";
 
-                navigation.dispatch({ type: continueScreen });
+                    navigation.dispatch({ type: continueScreen });
+                  }
+                } else {
+                  const continueScreen =
+                    previousView(routes) === "CallConfirmationView"
+                      ? "back"
+                      : "SessionLanguageView";
+
+                  navigation.dispatch({ type: continueScreen });
+                }
               }}
               fill
               bold
@@ -81,7 +97,9 @@ class CallPricingView extends Component {
 }
 
 const mS = state => ({
-  routes: state.nav.routes[0].routes[0].routes
+  routes: state.nav.routes[0].routes[0].routes,
+  promotion: state.promoCode.scanned,
+  event: state.events
 });
 
 const mD = {};
