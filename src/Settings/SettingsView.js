@@ -12,7 +12,7 @@ import HeaderView from "../Components/HeaderView/HeaderView";
 import styles from "./styles";
 import I18n from "../I18n/I18n";
 import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
-
+import Close from "../Components/Close/Close";
 import { logOutAsync } from "../Ducks/AuthReducer";
 
 class SettingsView extends Component {
@@ -24,7 +24,14 @@ class SettingsView extends Component {
         <HeaderView
           headerLeftComponent={<ShowMenuButton navigation={navigation} />}
           navbarTitle={I18n.t("settings")}
-          navbarType={"Basic"}
+          navbarType={"Complete"}
+          headerRightComponent={
+            <Close
+              action={() => {
+                this.props.navigation.dispatch({ type: "Home" });
+              }}
+            />
+          }
           NoWaves
         >
           <ScrollView
