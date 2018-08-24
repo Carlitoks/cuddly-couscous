@@ -67,7 +67,10 @@ class RateView extends Component {
       return `${this.props.linguist.firstName} ${
         this.props.linguist.lastInitial
       }`;
-    } else return `Zhang W.`; // TODO: we must fix this, if this happens there's a bigger problem
+    } else {
+      this.props.clearOptions();
+      this.props.navigation.dispatch({ type: "Home" });
+    }
   }
   selectImage = () => {
     const { avatarURL, linguist } = this.props;
