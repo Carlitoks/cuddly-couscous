@@ -72,6 +72,7 @@ export default (ENG = {
   contactingLinguist:
     "Connecting you to a \nLanguage Jeenie in less \nthan 1 minute",
   continue: "Continue",
+  continueUsingJeenie: "Continue Using Jeenie",
   continueForFree: "Continue for FREE",
   conversations: "Other",
   complimentsOf: "Compliments of {{organizer}}",

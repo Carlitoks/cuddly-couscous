@@ -17,17 +17,17 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     width: width * 0.91,
     borderRadius: 4,
-    height: height * 0.33
+    height: height * 0.5
   },
   modalTopButton: {
     position: "absolute",
     zIndex: 30,
-    top: height * 0.265
+    top: height * 0.19
   },
   modalButton: {
     width: width * 0.65,
     height: height * 0.08,
-    marginTop: Iphone5 ? moderateScale(35) : 35,
+    marginTop: Iphone5 ? moderateScale(25) : 25,
     alignSelf: "center"
   },
   modalTitle: {

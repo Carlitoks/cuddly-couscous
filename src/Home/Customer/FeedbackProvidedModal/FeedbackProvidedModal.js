@@ -5,8 +5,15 @@ import styles from "./styles";
 import I18n from "../../../I18n/I18n";
 
 import PillButton from "../../../Components/PillButton/PillButton";
+import { Button } from "react-native-elements";
+import { Colors } from "../../../Themes";
 
-const FeedbackProvidedModal = ({ visible, closeModal, availableMinutes }) => {
+const FeedbackProvidedModal = ({
+  visible,
+  closeModal,
+  availableMinutes,
+  continueUsing
+}) => {
   return (
     <Modal
       visible={visible}
@@ -30,6 +37,14 @@ const FeedbackProvidedModal = ({ visible, closeModal, availableMinutes }) => {
             <Text style={styles.modalText}>
               {I18n.t("thankYouFeedbackModalText")}
             </Text>
+            <Button
+              borderRadius={27}
+              textStyle={styles.text}
+              title={I18n.t("continueUsingJeenie")}
+              onPress={continueUsing}
+              backgroundColor={Colors.gradientColor.bottom}
+              buttonStyle={styles.modalButton}
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>

@@ -350,6 +350,9 @@ class Home extends Component {
                 closeModal={() => {
                   this.changeModal();
                 }}
+                continueUsing={() => {
+                  this.changeModal();
+                }}
                 availableMinutes={availableMinutes}
               />
             ) : null}
