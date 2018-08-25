@@ -245,7 +245,13 @@ export default StyleSheet.create({
     marginTop: 15,
     fontSize: moderateScale(30),
     color: "gray",
-    fontFamily: Fonts.BaseFont
+    fontFamily: Fonts.BaseFont,
+    fontSize: 22,
+    marginBottom: 15,
+    color: Colors.white,
+    textAlign: "left",
+    backgroundColor: Colors.transparent,
+    marginLeft: 16
   },
   wrapperContainer: {
     backgroundColor: "white",
@@ -294,7 +300,7 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   scrollView: {
-    height: height - headerHeight
+    flex: 1
   },
   scrollViewContainer: {
     flexGrow: 1
@@ -325,10 +331,6 @@ export default StyleSheet.create({
     fontFamily: Fonts.LightFont,
     color: Colors.primaryColor,
     backgroundColor: Colors.transparent
-  },
-  largeSubtitle: {
-    fontSize: 22,
-    marginBottom: 15
   },
   subtitle: {
     fontFamily: Fonts.LightFont,

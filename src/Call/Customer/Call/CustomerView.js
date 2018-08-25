@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import KeepAwake from "react-native-keep-awake";
-
+import timer from "react-native-timer";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import CallTimer from "../../../Components/CallTimer/CallTimer";
 import { SessionHandler } from "../../../Components";
@@ -123,8 +123,6 @@ class CustomerView extends Component {
   async componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer); // remove interval of timer
     cleanNotifications();
-    await clearInterval(this.props.counterId);
-    await clearInterval(this.props.timer);
     this.props.resetTimerAsync(); // reset call timer
     this.props.resetCounter();
     InCallManager.stop();
@@ -134,6 +132,8 @@ class CustomerView extends Component {
     this.props.clearTokboxStatus();
     this.props.clearCallSettings();
     this.props.clear();
+    timer.clearInterval("counterId");
+    timer.clearInterval("timer");
   }
 
   componentWillReceiveProps(nextProps) {
@@ -174,7 +174,7 @@ class CustomerView extends Component {
   callTimeOut = () => {
     const { incrementCounter } = this.props;
     this.props.updateContactLinguistSettings({
-      counterId: setInterval(() => incrementCounter(), 1000)
+      counterId: timer.setInterval("counterId", () => incrementCounter(), 1000)
     });
   };
 

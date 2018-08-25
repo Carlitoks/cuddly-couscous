@@ -9,7 +9,7 @@ import { clear as clearEvents } from "../Ducks/EventsReducer";
 import { GetSessionInfoLinguist } from "./SessionInfoReducer";
 import { setSession, clear } from "./tokboxReducer";
 import I18n from "../I18n/I18n";
-
+import timer from "react-native-timer";
 import { fmtMSS } from "../Util/Helpers";
 import {
   BackgroundInterval,
@@ -68,7 +68,7 @@ export const resetTimerAsync = () => (dispatch, getState) => {
 
 export const resetReconnectAsync = () => (dispatch, getState) => {
   const { callCustomerSettings } = getState();
-  clearInterval(callCustomerSettings.counterId);
+  timer.clearInterval("counterId");
   dispatch(
     updateSettings({
       counterId: null,
@@ -154,7 +154,8 @@ export const createSession = ({
       // verify if there is linguist available
       dispatch(
         updateSettings({
-          verifyCallId: setInterval(
+          verifyCallId: timer.setInterval(
+            "verifyCallId",
             () => dispatch(verifyCall(data.sessionID, token)),
             5000
           )
@@ -177,7 +178,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
         data.status == "assigned" ||
         data.queue.declined === data.queue.total
       ) {
-        clearInterval(callCustomerSettings.verifyCallId);
+        timer.clearInterval("verifyCallId");
       }
       if (
         (contactLinguist.counter > 10 * data.queue.total + 30 &&
@@ -185,7 +186,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
         data.queue.declined === data.queue.total ||
         contactLinguist.counter >= 60
       ) {
-        clearInterval(contactLinguist.counterId);
+        timer.clearInterval("counterId");
         dispatch(resetCounter());
 
         dispatch(
@@ -201,7 +202,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
     })
     .catch(error => {
       dispatch(networkError(error));
-      clearInterval(callCustomerSettings.verifyCallId);
+      timer.clearInterval("verifyCallId");
     });
 };
 
@@ -213,9 +214,13 @@ export const closeOpenConnections = () => dispatch => {
 export const startReconnect = () => (dispatch, getState) => {
   dispatch(
     updateSettings({
-      counterId: setInterval(() => {
-        dispatch(incrementReconnect());
-      }, 1000)
+      counterId: timer.setInterval(
+        "timer",
+        () => {
+          dispatch(incrementReconnect());
+        },
+        1000
+      )
     })
   );
 };
@@ -228,54 +233,58 @@ export const startTimer = () => (dispatch, getState) => {
 
   dispatch(
     updateSettings({
-      timer: setInterval(() => {
-        const {
-          elapsedTime,
-          extraTime,
-          showAlert
-        } = getState().callCustomerSettings;
-        if (elapsedTime + extraTime < 60 * 60) {
-          if (elapsedTime >= callTime + extraTime - 2 * 60) {
-            dispatch(
-              updateSettings({
-                red: true
-              })
-            );
-            if (!showAlert) {
+      timer: timer.setInterval(
+        "timer",
+        () => {
+          const {
+            elapsedTime,
+            extraTime,
+            showAlert
+          } = getState().callCustomerSettings;
+          if (elapsedTime + extraTime < 60 * 60) {
+            if (elapsedTime >= callTime + extraTime - 2 * 60) {
               dispatch(
                 updateSettings({
-                  showAlert: true
+                  red: true
                 })
               );
-              //Play Sound
-              // SoundManager["ExtraTime"].play();
-              // displayTimeAlert(extraTime, event => {
-              //   dispatch(updateSettings(event));
-              // });
+              if (!showAlert) {
+                dispatch(
+                  updateSettings({
+                    showAlert: true
+                  })
+                );
+                //Play Sound
+                // SoundManager["ExtraTime"].play();
+                // displayTimeAlert(extraTime, event => {
+                //   dispatch(updateSettings(event));
+                // });
+              }
             }
-          }
-          if (elapsedTime > callTime + extraTime) {
-            dispatch(closeCall(REASON.DONE));
-          } else {
-            dispatch(incrementTimer());
+            if (elapsedTime > callTime + extraTime) {
+              dispatch(closeCall(REASON.DONE));
+            } else {
+              dispatch(incrementTimer());
 
-            emitLocalNotification({
-              title: I18n.t("call"),
-              message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
-            });
+              emitLocalNotification({
+                title: I18n.t("call"),
+                message: `${I18n.t("callInProgress")} ${fmtMSS(elapsedTime)}`
+              });
+            }
+          } else {
+            dispatch(closeCall(REASON.DONE));
           }
-        } else {
-          dispatch(closeCall(REASON.DONE));
-        }
-      }, 1000)
+        },
+        1000
+      )
     })
   );
 };
 
 export const closeCall = reason => (dispatch, getState) => {
   const { contactLinguist, callCustomerSettings, tokbox, auth } = getState();
-  clearInterval(contactLinguist.counterId);
-  clearInterval(callCustomerSettings.timer);
+  timer.clearInterval("counterId");
+  timer.clearInterval("timer");
   dispatch(
     updateContactLinguist({
       modalContact: false,
@@ -301,8 +310,8 @@ export const closeCall = reason => (dispatch, getState) => {
 
 export const cleanCall = reason => (dispatch, getState) => {
   const { contactLinguist, callCustomerSettings, tokbox, auth } = getState();
-  clearInterval(contactLinguist.counterId);
-  clearInterval(callCustomerSettings.timer);
+  timer.clearInterval("counterId");
+  timer.clearInterval("timer");
   dispatch(
     updateContactLinguist({
       modalContact: false,

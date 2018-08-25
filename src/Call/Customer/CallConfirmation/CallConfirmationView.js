@@ -11,7 +11,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button, Header, List, ListItem } from "react-native-elements";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import timer from "react-native-timer";
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
 import SettingsButton from "../../../Components/SettingsButton/SettingsButton";
 import { getGeolocationCoords } from "../../../Util/Helpers";
@@ -24,7 +24,8 @@ import {
 } from "../../../Ducks/ActiveSessionReducer";
 import {
   updateSettings,
-  resetConnectingMessage
+  resetConnectingMessage,
+  updateSettings as updateContactLinguist
 } from "../../../Ducks/ContactLinguistReducer";
 import { cleanSelected } from "../../../Ducks/HomeFlowReducer";
 import { clear as clearEvents } from "../../../Ducks/EventsReducer";
@@ -42,25 +43,28 @@ import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
 import LanguageSelection from "../../../Components/LanguageSelection/LanguageSelection";
 import { Iphone5 } from "../../../Util/Devices";
-import { Languages } from "../../../Config/Languages";
 import { TranslationArrows, Checkmark } from "../../../Assets/SVG";
 import { checkOperatingHours } from "../../../Util/Helpers";
-
+import { Languages } from "../../../Config/Languages";
 import {
   setPermission,
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
 import { moderateScale } from "../../../Util/Scaling";
-import { getLocalizedCategories } from "../../../Util/Constants";
-
+import {
+  getLocalizedCategories,
+  SUPPORTED_LANGS
+} from "../../../Util/Constants";
+import SupportedLanguagesList from "./../SessionLanguageView/SupportedLanguagesList";
+import ComingSoonLanguagesList from "./../SessionLanguageView/ComingSoonLanguagesList";
+import { updateSettings as updateHomeFlow } from "../../../Ducks/HomeFlowReducer";
 class CallConfirmationView extends Component {
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   componentWillMount() {
     const { promotion, event, resetConnectingMessage } = this.props;
-    clearInterval(this.props.timer);
-    clearInterval(this.props.counterId);
-    clearInterval(this.props.timerCustomer);
+    timer.clearInterval("timer");
+    timer.clearInterval("counterId");
     this.props.clearSettings();
     this.props.clearTokboxStatus();
     getGeolocationCoords()
@@ -72,6 +76,7 @@ class CallConfirmationView extends Component {
       .catch(err => {
         console.log("GeoLocation error  ", err);
       });
+    const verifyLang = !!this.props.primaryLangCode;
     resetConnectingMessage();
     let inputHeight = 0;
     if (promotion || event.id) {
@@ -82,8 +87,29 @@ class CallConfirmationView extends Component {
         defaultSecondaryLangCode
       } = scannedEvent;
 
+      const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng" };
+      const userNativeLangIsSupported =
+        SUPPORTED_LANGS.indexOf(this.props.nativeLangCode) >= 0;
+
+      const primaryLanguageCode = userNativeLangIsSupported
+        ? this.props.nativeLangCode
+        : "eng";
+
+      const primaryLanguage = Languages.find(
+        lang => lang[3] === primaryLanguageCode
+      );
+
+      if (!verifyLang) {
+        this.props.updateSettings({
+          primaryLangCode: primaryLanguage[3],
+          selectedLanguageFrom: translateLanguage(
+            primaryLanguage[3],
+            primaryLanguage["name"]
+          )
+        });
+      }
       if (!allowSecondaryLangSelection && defaultSecondaryLangCode) {
-        const selectedLangTo = languages.filter(
+        const selectedLangTo = Languages.filter(
           language => language[3] === defaultSecondaryLangCode
         );
 
@@ -99,8 +125,123 @@ class CallConfirmationView extends Component {
           )
         });
       }
+    } else {
+      if (!verifyLang) {
+        this.setLanguages();
+      }
     }
   }
+
+  getLabels(type) {
+    const { event, availableMinutes, approxTime } = this.props;
+    switch (type) {
+      case "minutes":
+        if (event.id && event.id !== "") {
+          if (event.eventUserState && event.eventUserState.timeRemaining > 0) {
+            return `${event.eventUserState.timeRemaining} ${I18n.t(
+              "minutes"
+            )}: `;
+          } else {
+            return `${approxTime} ${I18n.t("minutes")}: `;
+          }
+        }
+        if (!event.id) {
+          return `${availableMinutes} ${I18n.t("minutes")}: `;
+        }
+        break;
+      case "description":
+        if (event.id && event.id !== "") {
+          return `${I18n.t("complimentsOf", {
+            organizer: event.organization.name
+          })}`;
+        }
+        if (!event.id) {
+          return availableMinutes < 5
+            ? I18n.t("submitFeedbackForMoreTime")
+            : `${I18n.t("theCallWillEnd", {
+                minutes: availableMinutes
+              })}`;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  checkAvailableMinutes() {
+    const { navigation, event } = this.props;
+    if (!event.id) {
+      if (this.props.availableMinutes === 0) {
+        this.props.cleanSelected();
+        // this.props.clearEvents();
+        this.props.clearPromoCode();
+        this.props.updateHomeFlow({
+          displayFeedbackModal: true
+        });
+        navigation.dispatch({ type: "Home" });
+      } else {
+        checkOperatingHours(true);
+
+        this.props.updateSettings({
+          selectedScenarioId:
+            this.props.selectedScenario && this.props.selectedScenario[0]
+              ? this.props.selectedScenario[0].id
+              : "11111111-1111-1111-1111-111111111126"
+        });
+        this.props.cleanSelected();
+        // this.props.clearEvents();
+        this.props.clearPromoCode();
+        navigation.dispatch({ type: "CustomerView" });
+      }
+    } else {
+      checkOperatingHours(true);
+
+      this.props.updateSettings({
+        selectedScenarioId:
+          this.props.selectedScenario && this.props.selectedScenario[0]
+            ? this.props.selectedScenario[0].id
+            : "11111111-1111-1111-1111-111111111126"
+      });
+      this.props.cleanSelected();
+      // this.props.clearEvents();
+      this.props.clearPromoCode();
+      navigation.dispatch({ type: "CustomerView" });
+    }
+  }
+
+  setLanguages = () => {
+    const { nativeLangCode } = this.props;
+    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng" };
+    const userNativeLangIsSupported =
+      SUPPORTED_LANGS.indexOf(nativeLangCode) >= 0;
+
+    const primaryLanguageCode = userNativeLangIsSupported
+      ? nativeLangCode
+      : "eng";
+
+    const primaryLanguage = Languages.find(
+      lang => lang[3] === primaryLanguageCode
+    );
+
+    const secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+
+    const secondaryLanguage = Languages.find(
+      lang => lang[3] === secondaryLanguageCode
+    );
+
+    this.props.updateSettings({
+      primaryLangCode: primaryLanguage[3],
+      selectedLanguageFrom: translateLanguage(
+        primaryLanguage[3],
+        primaryLanguage["name"]
+      ),
+      secundaryLangCode: secondaryLanguage[3],
+      selectedLanguage: translateLanguage(
+        secondaryLanguage[3],
+        secondaryLanguage["name"]
+      )
+    });
+  };
 
   render() {
     const {
@@ -242,7 +383,7 @@ class CallConfirmationView extends Component {
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
                   {this.props.approxTime
-                    ? `${this.props.approxTime} ${I18n.t("minutes")}: `
+                    ? this.getLabels("minutes")
                     : `${I18n.t("upTo60")}: `}
                   <Text style={[styles.regularText]}>
                     {/* {I18n.t("timeCompliments")} */}
@@ -250,7 +391,8 @@ class CallConfirmationView extends Component {
                   </Text>
                 </Text>
                 <Text style={[styles.regularText]}>
-                  {I18n.t("timeAddMore")}
+                  {/* I18n.t("timeAddMore") */
+                  this.getLabels("description")}
                 </Text>
               </View>
               <View style={styles.iconAlign}>
@@ -350,19 +492,7 @@ class CallConfirmationView extends Component {
               {/* Connect Now */}
               <BottomButton
                 onPress={() => {
-                  checkOperatingHours(true);
-
-                  this.props.updateSettings({
-                    selectedScenarioId:
-                      this.props.selectedScenario &&
-                      this.props.selectedScenario[0]
-                        ? this.props.selectedScenario[0].id
-                        : "11111111-1111-1111-1111-111111111126"
-                  });
-                  this.props.cleanSelected();
-                  // this.props.clearEvents();
-                  this.props.clearPromoCode();
-                  navigation.dispatch({ type: "CustomerView" });
+                  this.checkAvailableMinutes();
                 }}
                 title={I18n.t("connectNow")}
                 fill
@@ -399,7 +529,10 @@ const mS = state => ({
   allowTimeSelection: state.activeSessionReducer.allowTimeSelection,
   promotion: state.promoCode.scanned,
   event: state.events,
-  timerCustomer: state.callCustomerSettings.timer
+  timerCustomer: state.callCustomerSettings.timer,
+  availableMinutes: state.userProfile.availableMinutes,
+  nativeLangCode: state.userProfile.nativeLangCode,
+  primaryLangCode: state.contactLinguist.primaryLangCode
 });
 
 const mD = {
@@ -412,7 +545,9 @@ const mD = {
   clearEvents,
   clearPromoCode,
   resetConnectingMessage,
-  clearTokboxStatus
+  clearTokboxStatus,
+  updateHomeFlow,
+  updateContactLinguist
 };
 
 export default connect(

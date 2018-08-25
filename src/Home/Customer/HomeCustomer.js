@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _upperFirst from "lodash/upperFirst";
-import { findIndex, take } from "lodash";
-import { asyncGetAccountInformation } from "../../Ducks/ProfileLinguistReducer";
+import { take } from "lodash";
 import moment from "moment";
 import InCallManager from "react-native-incall-manager";
+import { View, Text, ScrollView, Dimensions } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+
+import { asyncGetAccountInformation } from "../../Ducks/ProfileLinguistReducer";
+import timer from "react-native-timer";
 import {
   asyncUploadAvatar,
   getProfileAsync,
@@ -20,36 +24,15 @@ import {
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { updateSettings as updateLinguistForm } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
-import { getCategories, updateSettings } from "../../Ducks/HomeFlowReducer";
-
 import {
   getAllCustomerCalls,
   customerCalls
 } from "../../Ducks/CallHistoryReducer";
-
-import {
-  View,
-  Text,
-  ScrollView,
-  Dimensions,
-  ActivityIndicator
-} from "react-native";
-import LinearGradient from "react-native-linear-gradient";
-import Carousel from "react-native-snap-carousel";
-
-import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
-import SettingsButton from "../../Components/SettingsButton/SettingsButton";
-import TileButton from "../../Components/TileButton/TileButton";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import HeaderView from "../../Components/HeaderView/HeaderView";
 import {
   getScenarios,
+  getCategories,
   updateSettings as updateHomeFlow
 } from "../../Ducks/HomeFlowReducer";
-import BoxedListComponent from "../../Components/BoxedListComponent/BoxedListComponent";
-import CarouselEntry from "../../Components/CarouselEntry/CarouselEntry";
-import QRIcon from "../../Components/QRIcon/QRIcon";
-import { Waves } from "../../Assets/SVG";
 
 import styles from "./styles";
 import { Colors } from "../../Themes";
@@ -60,8 +43,19 @@ import {
   itemWidth,
   itemMargin
 } from "../../Components/CarouselEntry/styles";
-
+import PillButton from "../../Components/PillButton/PillButton";
+import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import HeaderView from "../../Components/HeaderView/HeaderView";
+import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
+import QRIcon from "../../Components/QRIcon/QRIcon";
+import { Waves } from "../../Assets/SVG";
 import { Languages } from "../../Config/Languages";
+import SixtyMinutesModal from "./SixtyMinutesModal/SixtyMinutesModal";
+import HomeCarousel from "./HomeCarousel";
+import RecentActivity from "./RecentActivity";
+import FeedbackModal from "./FeedbackModal/FeedbackModal";
+import FeedbackProvidedModal from "./FeedbackProvidedModal/FeedbackProvidedModal";
+import FeedbackView from "./FeedbackView/FeedbackView";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -74,20 +68,27 @@ class Home extends Component {
       otherSelected: false,
       qr: false,
       other: false,
-      languagesMapper: { eng: "cmn", cmn: "eng", yue: "eng" }
+      languagesMapper: { eng: "cmn", cmn: "eng", yue: "eng" },
+      modal: false
     };
   }
 
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   componentDidMount() {
-    const { getAllCustomerCalls, uuid, token } = this.props;
+    const {
+      getAllCustomerCalls,
+      uuid,
+      token,
+      customerCalls,
+      updateHomeFlow
+    } = this.props;
 
     getAllCustomerCalls(uuid, token)
       .then(response => {
-        this.props.customerCalls(response);
+        customerCalls(response);
       })
-      .then(response => {
+      .then(() => {
         const { allCustomerCalls } = this.props;
 
         const filteredCalls = allCustomerCalls.filter(call => {
@@ -129,32 +130,33 @@ class Home extends Component {
           };
         });
 
-        this.props.updateHomeFlow({ scenariosList });
+        updateHomeFlow({ scenariosList });
       });
   }
 
   componentWillMount() {
     const {
-      firstName,
-      lastName,
       getCategories,
       getScenarios,
       listItemSelected,
-      updateHomeFlow
+      updateHomeFlow,
+      scenarios,
+      uuid,
+      token
     } = this.props;
     this.setLanguages();
 
-    if (this.props.scenarios.length < 1) {
-      getScenarios(this.props.token);
-      getCategories(this.props.token);
+    if (scenarios.length < 1) {
+      getScenarios(token);
+      getCategories(token);
     }
+    this.changeModal();
 
-    this.props.updateSettings({
-      selectedScenarioIndex: -1
-    });
+    updateHomeFlow({ selectedScenarioIndex: -1 });
+
     //Clean call
-    clearInterval(this.props.timer);
-    clearInterval(this.props.counterId);
+    timer.clearInterval("timer");
+    timer.clearInterval("counterId");
     this.props.asyncGetAccountInformation();
     this.props.clearEvents();
     this.props.clear();
@@ -167,84 +169,41 @@ class Home extends Component {
     this.setState({
       indexSelected: listItemSelected
     });
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alertFail
+    ) {
+      Alert.alert(I18n.t("notification"), I18n.t("session.callFailCustomer"));
+    }
   }
 
-  onCarouselItemPress = (index, item) => {
-    const { categories, navigation, updateHomeFlow } = this.props;
-    const { currentIndex } = this._slider1Ref;
-
-    updateHomeFlow({ selectedScenarioIndex: -1 });
-
-    if (index > currentIndex) {
-      // this._slider1Ref.snapToNext();
+  changeModal() {
+    if (this.props.displayFeedbackProvided) {
+      this.setState({ modal: true });
+      this.props.updateHomeFlow({ displayFeedbackProvided: false });
+    } else {
+      this.setState({ modal: false });
     }
-    if (index <= currentIndex) {
-      this.props.updateSettings({ categorySelected: item });
-
-      updateHomeFlow({
-        lastSelectedTile: currentIndex,
-        categoryIndex: currentIndex
-      });
-
-      item === "qr"
-        ? this.props.navigation.dispatch({ type: "ScanScreenView" })
-        : navigation.dispatch({ type: "ScenarioSelectionView" });
-    }
-  };
+  }
 
   submit() {
     const { navigation, updateContactLinguist } = this.props;
 
     updateContactLinguist({ customScenarioNote: "" });
 
-    this.state.otherSelected
-      ? navigation.dispatch({ type: "CustomScenarioView" })
-      : navigation.dispatch({ type: "CallTimeView" });
+    navigation.dispatch({
+      type: this.state.otherSelected ? "CustomScenarioView" : "CallTimeView"
+    });
   }
-  renderCarousel = () => {
-    const {
-      categories,
-      navigation,
-      carouselFirstItem,
-      lastSelectedTile
-    } = this.props;
 
-    const carousel = categories ? (
-      <View style={styles.carouselContainer}>
-        <Carousel
-          slideStyle={styles.carousel}
-          ref={c => (this._slider1Ref = c)}
-          data={categories}
-          renderItem={({ item, index }) => {
-            if (item !== "general") {
-              return (
-                <CarouselEntry
-                  onPress={() => this.onCarouselItemPress(index, item)}
-                  data={item}
-                  mapper={title => {
-                    return this.CATEGORIES[title];
-                  }}
-                />
-              );
-            }
-          }}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth + itemMargin * 2}
-          firstItem={lastSelectedTile}
-          inactiveSlideScale={1}
-          inactiveSlideOpacity={1}
-          containerCustomStyle={styles.slider}
-          contentContainerCustomStyle={styles.sliderContentContainer}
-          loopClonesPerSide={7}
-          activeSlideAlignment="start"
-          enableMomentum={true}
-          enableSnap={false}
-        />
-      </View>
-    ) : null;
-
-    return carousel;
-  };
+  modalSelection(availableMinutes) {
+    const { updateHomeFlow } = this.props;
+    if (availableMinutes < 5) {
+      updateHomeFlow({ displayFeedbackModal: true });
+    } else {
+      updateHomeFlow({ display60MinModal: true });
+    }
+  }
 
   setLanguages = () => {
     const { nativeLangCode, updateContactLinguist } = this.props;
@@ -281,99 +240,6 @@ class Home extends Component {
     });
   };
 
-  renderList = () => {
-    const {
-      categories,
-      scenarios,
-      navigation,
-      categoryIndex,
-      listItemSelected,
-      scenariosList,
-      updateLinguistForm,
-      updateContactLinguist,
-      updateCallCustomerSettings
-    } = this.props;
-
-    const categoryName = categories[categoryIndex];
-
-    const emptyActivity = scenariosList && scenariosList.length === 0;
-
-    const data = emptyActivity
-      ? [
-          {
-            id: "emptyActivity",
-            title: I18n.t("noRecentActivityMessage"),
-            scenario: {
-              title: I18n.t("noRecentActivityMessage")
-            }
-          }
-        ]
-      : scenariosList;
-    const list = scenariosList ? (
-      <BoxedListComponent
-        customContainerStyle={styles.listContainer}
-        data={data}
-        itemKey={"id"}
-        subtitleProperty={"createdAt"}
-        titleFunc={item => {
-          if (item.scenario) {
-            return translateProperty(item.scenario, "title");
-          }
-        }}
-        thirdLineProperty={"customScenarioNote"}
-        onPress={index => {
-          if (!emptyActivity) {
-            const scenario = scenariosList[index];
-
-            updateLinguistForm({
-              selectedScenarios: [scenario.scenario]
-            });
-
-            const primaryLanguageIndex = findIndex(
-              Languages,
-              language => language[3] === scenario.primaryLangCode
-            );
-
-            const secondaryLanguageIndex = findIndex(
-              Languages,
-              language => language[3] === scenario.secondaryLangCode
-            );
-
-            updateContactLinguist({
-              primaryLangCode: scenario.primaryLangCode,
-              selectedLanguageFrom: translateLanguage(
-                Languages[primaryLanguageIndex][3],
-                Languages[primaryLanguageIndex]["name"]
-              ),
-              selectedLanguage: translateLanguage(
-                Languages[secondaryLanguageIndex][3],
-                Languages[secondaryLanguageIndex]["name"]
-              ),
-              secundaryLangCode: scenario.secondaryLangCode,
-              customScenarioNote: scenario.customScenarioNote
-            });
-
-            updateCallCustomerSettings({
-              selectedTime: scenario.estimatedMinutes
-            });
-
-            navigation.dispatch({ type: "CallConfirmationView" });
-          }
-        }}
-        multiple={false}
-        selected={this.state.indexSelected}
-        chevron={!emptyActivity}
-        doubleLine={!emptyActivity}
-        tripleLine={true}
-        leftText
-      />
-    ) : (
-      <ActivityIndicator size="large" color="#fb6a28" />
-    );
-
-    return list;
-  };
-
   render() {
     const {
       firstName,
@@ -384,9 +250,20 @@ class Home extends Component {
       categories,
       scenarios,
       scenariosList,
-      categoryIndex
+      categoryIndex,
+      lastSelectedTile,
+      availableMinutes,
+      display60MinModal,
+      displayFeedbackModal,
+      displayFeedbackProvided,
+      updateHomeFlow,
+      getProfileAsync,
+      uuid,
+      token
     } = this.props;
     const { width, height } = Dimensions.get("window");
+
+    getProfileAsync(uuid, token);
 
     const categoryName = categories[categoryIndex];
 
@@ -401,10 +278,8 @@ class Home extends Component {
           headerCenterComponent={<Text style={styles.textName}>{salute}</Text>}
           navbarTitle={salute}
           navbarType={"Complete"}
-          headerLeftComponent={
-            <ShowMenuButton navigation={this.props.navigation} />
-          }
-          headerRightComponent={<QRIcon navigation={this.props.navigation} />}
+          headerLeftComponent={<ShowMenuButton navigation={navigation} />}
+          headerRightComponent={<QRIcon navigation={navigation} />}
           NoWaves
         >
           <View style={styles.viewContainer}>
@@ -424,20 +299,75 @@ class Home extends Component {
               style={styles.scrollView}
               contentContainerStyle={styles.scrollViewContainer}
             >
-              <Text
-                style={[styles.title, styles.subtitle, styles.largeSubtitle]}
-              >
-                {I18n.t("whereAreYouNow")}
-              </Text>
-              {this.renderCarousel()}
-              <Text style={[styles.subtitle]}>{I18n.t("recentActivity")}</Text>
-              <Text style={[styles.smallsubtitle, styles.marginBottom10]}>
-                {scenariosList && scenariosList.length === 0
-                  ? ""
-                  : I18n.t("tapRepeat")}
-              </Text>
-              <View style={styles.recentActivityList}>{this.renderList()}</View>
+              <Text style={[styles.title]}>{I18n.t("whereAreYouNow")}</Text>
+
+              <HomeCarousel
+                categories={categories}
+                lastSelectedTile={lastSelectedTile}
+                navigation={navigation}
+                updateHomeFlow={updateHomeFlow}
+              />
+
+              <RecentActivity
+                navigation={navigation}
+                scenariosList={scenariosList}
+                updateLinguistForm={updateLinguistForm}
+                updateContactLinguist={updateContactLinguist}
+                updateCallCustomerSettings={updateCallCustomerSettings}
+                indexSelected={this.state.indexSelected}
+              />
             </ScrollView>
+
+            {display60MinModal && (
+              <SixtyMinutesModal
+                visible={display60MinModal}
+                closeModal={() => {
+                  this.props.updateHomeFlow({
+                    display60MinModal: false
+                  });
+                }}
+                availableMinutes={availableMinutes}
+              />
+            )}
+
+            {displayFeedbackModal && (
+              <FeedbackModal
+                visible={displayFeedbackModal}
+                closeModal={() => {
+                  this.props.updateHomeFlow({ displayFeedbackModal: false });
+                }}
+                goToFeedback={() => {
+                  this.props.updateHomeFlow({ displayFeedbackModal: false });
+                  navigation.dispatch({ type: "FeedbackView" });
+                }}
+                availableMinutes={availableMinutes}
+              />
+            )}
+
+            {this.state.modal ? (
+              <FeedbackProvidedModal
+                visible={this.state.modal}
+                closeModal={() => {
+                  this.changeModal();
+                }}
+                continueUsing={() => {
+                  this.changeModal();
+                }}
+                availableMinutes={availableMinutes}
+              />
+            ) : null}
+
+            <PillButton
+              onPress={() => {
+                this.modalSelection(availableMinutes);
+              }}
+              title={`${I18n.t("minutesAbbreviation", {
+                minutes: availableMinutes
+              })}`}
+              icon={"ios-time"}
+              absolute
+              alignButton={"Right"}
+            />
           </View>
         </HeaderView>
       </ViewWrapper>
@@ -456,6 +386,7 @@ const mS = state => ({
   token: state.auth.token,
   userId: state.userProfile.id,
   rate: state.userProfile.averageStarRating,
+  availableMinutes: state.userProfile.availableMinutes,
   categories: state.homeFlow.categories,
   scenarios: state.homeFlow.scenarios,
   scenariosList: state.homeFlow.scenariosList,
@@ -470,7 +401,10 @@ const mS = state => ({
   categorySelected: state.homeFlow.categorySelected,
   customScenario: state.homeFlow.customScenario,
   allCustomerCalls: state.callHistory.allCustomerCalls,
-  lastSelectedTile: state.homeFlow.lastSelectedTile
+  lastSelectedTile: state.homeFlow.lastSelectedTile,
+  display60MinModal: state.homeFlow.display60MinModal,
+  displayFeedbackModal: state.homeFlow.displayFeedbackModal,
+  displayFeedbackProvided: state.homeFlow.displayFeedbackProvided
 });
 
 const mD = {
@@ -484,7 +418,6 @@ const mD = {
   clear,
   closeOpenConnections,
   getScenarios,
-  updateSettings,
   updateCallCustomerSettings,
   updateContactLinguist,
   updateHomeFlow,

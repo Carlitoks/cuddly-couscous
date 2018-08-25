@@ -226,7 +226,16 @@ class PromotionView extends Component {
             disabled={this.state.itemSelected === -1}
             fill={!(this.state.itemSelected === -1)}
             onPress={() => {
-              navigation.dispatch({ type: "CallConfirmationView" });
+              const setLanguage =
+                !this.props.event.allowSecondaryLangSelection &&
+                this.props.event.defaultSecondaryLangCode;
+              if (setLanguage) {
+                this.props.navigation.dispatch({
+                  type: "CallConfirmationView"
+                });
+              } else {
+                this.props.navigation.dispatch({ type: "CallPricingView" });
+              }
             }}
             absolute
             whiteDisabled
@@ -250,7 +259,8 @@ const mS = state => ({
   listItemSelected: state.homeFlow.listItemSelected,
   organization: state.events.organization,
   scenarios: state.events.scenarios,
-  eventName: state.events.name
+  eventName: state.events.name,
+  event: state.events
 });
 
 const mD = {

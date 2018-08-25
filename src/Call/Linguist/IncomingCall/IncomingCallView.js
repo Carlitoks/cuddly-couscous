@@ -8,7 +8,7 @@ import {
 } from "../../../Ducks/CallLinguistSettings";
 
 import { asyncAcceptsInvite } from "../../../Ducks/ActiveSessionReducer";
-
+import timer from "react-native-timer";
 import { Text, View, ScrollView, Image, Vibration } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -41,7 +41,7 @@ class IncomingCall extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.props.verifyCallId);
+    timer.clearInterval("verifyCallId");
     this.props.clearSettings();
     SoundManager["IncomingCall"].stop();
   }
@@ -60,7 +60,7 @@ class IncomingCall extends Component {
 
   takeCall = isAccept => {
     const { invitationID, token, sessionID } = this.props;
-    clearInterval(this.props.verifyCallId);
+    timer.clearInterval("verifyCallId");
     this.props.asyncAcceptsInvite(
       invitationID,
       { accept: isAccept },
@@ -74,8 +74,9 @@ class IncomingCall extends Component {
 
   verifyCallLinguist = () => {
     this.props.updateSettings({
-      verifyCallId: setInterval(
-        () =>
+      verifyCallId: timer.setInterval(
+        "verifyCallId",
+        () => () =>
           this.props.verifyCall(
             this.props.sessionID,
             this.props.token,

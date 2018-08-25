@@ -26,13 +26,13 @@ import BoxedListComponent from "../../../Components/BoxedListComponent/BoxedList
 
 import HeaderView from "../../../Components/HeaderView/HeaderView";
 import BottomButton from "../../../Components/BottomButton/BottomButton";
-import QRIcon from "../../../Components/QRIcon/QRIcon";
 
 import styles from "./styles";
 import { Colors, Images } from "../../../Themes";
 import I18n, { translateProperty } from "../../../I18n/I18n";
 import { Waves } from "../../../Assets/SVG";
 import { getLocalizedCategories } from "../../../Util/Constants";
+import Close from "../../../Components/Close/Close";
 
 class CustomScenario extends Component {
   navigate = this.props.navigation.navigate;
@@ -106,7 +106,13 @@ class CustomScenario extends Component {
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
           }
-          headerRightComponent={<QRIcon navigation={this.props.navigation} />}
+          headerRightComponent={
+            <Close
+              action={() => {
+                this.props.navigation.dispatch({ type: "Home" });
+              }}
+            />
+          }
           navbarTitle={this.state.showNavbarTitle ? categoryTitle : null}
           navbarType={"Complete"}
           NoWaves
@@ -138,7 +144,7 @@ class CustomScenario extends Component {
                 customContainerStyle={styles.listContainer}
                 selected={selectedScenarioIndex}
                 data={scenariosList}
-                titleFunc={ item => translateProperty(item, "title") }
+                titleFunc={item => translateProperty(item, "title")}
                 onPress={index => {
                   updateSettings({
                     selectedScenarioIndex: index

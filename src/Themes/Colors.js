@@ -73,6 +73,7 @@ const colors = {
   lightPurple: "#E4E3F4",
   lighterPurple: "#F7F7F7",
   redError: "#ff0000",
+  redButton: "#D03802",
   defaultChevron: "#bdc6cf",
   textDefault: "#5F5F5F",
   transparent: "rgba(255,255,255,0)",

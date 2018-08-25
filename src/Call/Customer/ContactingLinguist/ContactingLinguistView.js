@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import timer from "react-native-timer";
 //COMPONENTS
 import { Text, View, ScrollView, ActivityIndicator, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -41,6 +41,9 @@ class ContactingLinguist extends Component {
         });
     }
   }
+  componentWillUnmount() {
+    timer.clearInterval("verifyCallId");
+  }
 
   sixtySecondsCounter(counter) {
     return 60 - counter;
@@ -48,7 +51,7 @@ class ContactingLinguist extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.tokboxStatus === STATUS_TOKBOX.STREAM) {
-      clearInterval(this.props.counterId);
+      timer.clearInterval("counterId");
     }
   }
 

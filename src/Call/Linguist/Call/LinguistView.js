@@ -10,6 +10,7 @@ import {
 import KeepAwake from "react-native-keep-awake";
 import InCallManager from "react-native-incall-manager";
 import IncomingCallView from "../IncomingCall/IncomingCallView";
+import timer from "react-native-timer";
 import { displayEndCall } from "../../../Util/Alerts";
 import CallAvatarName from "../../../Components/CallAvatarName/CallAvatarName";
 import NoVideoScreen from "../../../Components/NoVideoScreen/NoVideoScreen";
@@ -102,8 +103,8 @@ class LinguistView extends Component {
 
   async componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer);
-    await clearInterval(this.props.counterId);
-    await clearInterval(this.props.timer);
+    await timer.clearInterval("counterId");
+    await timer.clearInterval("timer");
     this.props.resetTimerAsync();
     cleanNotifications();
     this.props.resetCounter();
@@ -141,7 +142,7 @@ class LinguistView extends Component {
   callTimeOut = () => {
     const { incrementCounter } = this.props;
     this.props.updateContactLinguistSettings({
-      counterId: setInterval(() => incrementCounter(), 1000)
+      counterId: timer.setInterval("counterId", () => incrementCounter(), 1000)
     });
   };
 

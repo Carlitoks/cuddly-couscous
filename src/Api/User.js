@@ -69,6 +69,11 @@ const User = {
     return AXIOS.delete(`${BASE_URI}/${userId}/devices/${deviceId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+  },
+  submitFeedback: (userId, token, payload) => {
+    return AXIOS.post(`${BASE_URI}/${userId}/customer-feedback`, payload, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   }
 };
 

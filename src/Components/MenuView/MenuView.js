@@ -70,7 +70,7 @@ class MenuView extends Component {
           <TopViewIOS />
           <TouchableOpacity
             onPress={() => {
-              navigation.dispatch({ type: "UserProfileView" });
+              this.checkCurrentPage(navigation, "UserProfileView");
             }}
           >
             <View>
@@ -202,8 +202,7 @@ class MenuView extends Component {
             backgroundColor={Colors.background}
             iconStyle={styles.optionMenu}
             onPress={() => {
-              navigation.dispatch({ type: "SettingsView" });
-              // this.checkCurrentPage(navigation, "Settings");
+              this.checkCurrentPage(navigation, "SettingsView");
             }}
           >
             <Text style={styles.colorText}>{I18n.t("settings")}</Text>

@@ -1,5 +1,5 @@
 import { networkError } from "./NetworkErrorsReducer";
-import { Sessions, Scenarios } from "../Api";
+import { Sessions, Scenarios, User } from "../Api";
 
 // Actions
 export const ACTIONS = {
@@ -38,6 +38,22 @@ export const getCategories = token => dispatch => {
     .catch(error => dispatch(networkError(error)));
 };
 
+export const submitFeedback = (userId, token, payload) => dispatch => {
+  User.submitFeedback(userId, token, payload)
+    .then(response => {
+      console.log("response", response);
+      dispatch(
+        updateSettings({
+          display60MinModal: false,
+          displayFeedbackModal: false,
+          displayFeedbackProvided: true
+        })
+      );
+      dispatch({ type: "Home" });
+    })
+    .catch(error => dispatch(networkError(error)));
+};
+
 export const getScenarios = token => dispatch => {
   Scenarios.get(token)
     .then(response => {
@@ -58,7 +74,10 @@ const initialState = {
   categorySelected: "",
   selectedScenarioIndex: -1,
   scenariosList: null,
-  lastSelectedTile: -1
+  lastSelectedTile: -1,
+  display60MinModal: false,
+  displayFeedbackModal: false,
+  displayFeedbackProvided: false
 };
 
 // Reducer

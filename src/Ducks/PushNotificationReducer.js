@@ -12,7 +12,7 @@ import PushNotification from "../Util/PushNotification";
 import { LANG_CODES, STATUS_TOKBOX } from "../Util/Constants";
 import { isCurrentView } from "../Util/Helpers";
 import { networkError } from "./NetworkErrorsReducer";
-
+import timer from "react-native-timer";
 // Actions
 export const ACTIONS = {
   REGISTER: "pushnotification/register"
@@ -61,10 +61,9 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
     CurrentView != "IncomingCallView" &&
     CurrentView != "LinguistView"
   ) {
-    clearInterval(contactLinguist.counterId);
-    clearInterval(activeSessionReducer.timer);
-    clearInterval(callLinguistSettings.timer);
-    clearInterval(activeSessionReducer.verifyCallId);
+    timer.clearInterval("counterId");
+    timer.clearInterval("timer");
+    timer.clearInterval("verifyCallId");
     dispatch(clear());
     Sessions.linguistFetchesInvite(invitationId, auth.token)
       .then(res => {
@@ -119,8 +118,18 @@ const connectionEventNotification = () => () => {
 const sessionEndNotification = sessionID => (dispatch, getState) => {
   const { nav, activeSessionReducer } = getState();
   const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
-  if (sessionID == activeSessionReducer.sessionID) {
-    dispatch(closeCall(REASON.DONE));
+  if (
+    sessionID == activeSessionReducer.sessionID &&
+    !activeSessionReducer.endingSession
+  ) {
+    if (
+      !activeSessionReducer.isLinguist &&
+      activeSessionReducer.elapsedTime === 0
+    ) {
+      dispatch(closeCall(REASON.CANCEL), true);
+    } else {
+      dispatch(closeCall(REASON.DONE));
+    }
   }
 };
 

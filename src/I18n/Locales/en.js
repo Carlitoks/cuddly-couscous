@@ -45,6 +45,8 @@ export default (ENG = {
   cancelCall: "Cancel call",
   celebrateAndEnjoy:
     "Celebrate our launch \n and enjoy Jeenie for a \nlimited time for FREE!",
+  celebrateAndEnjoyAlternative:
+    "Celebrate our launch and \nenjoy 15 minutes for FREE \nto use Jeenie.",
   celebrateWithUs: "Celebrate our launch with us!",
   changeSettings: "To change your settings, go to Settings > Jeenie",
   cancelCallCustomer: "The call isn't available",
@@ -70,8 +72,10 @@ export default (ENG = {
   contactingLinguist:
     "Connecting you to a \nLanguage Jeenie in less \nthan 1 minute",
   continue: "Continue",
+  continueUsingJeenie: "Continue Using Jeenie",
   continueForFree: "Continue for FREE",
   conversations: "Other",
+  complimentsOf: "Compliments of {{organizer}}",
   costOfCall: "Estimated cost: ",
   couldBetter: "What could be better?",
   countryFamiliarity: "Country Familiarity",
@@ -87,6 +91,8 @@ export default (ENG = {
   dining: "Restaurant",
   discountsOffered:
     "Discounts will be offered for \npurchasing a higher volume \nof minutes.",
+  discountsOfferedAlternative:
+    "Discounts will be offered \nfor pre-paid minutes ",
   duration: "Duration",
   editProfile: "Edit Profile",
   email: "Email",
@@ -143,6 +149,7 @@ export default (ENG = {
   general: "General",
   getStarted: "Get Started",
   getLanguageHelp: "Get Language Help",
+  gotIt: "Got it!",
   hasDisconnected: "You have been disconnected",
   help: "Help",
   helpPeople:
@@ -196,7 +203,7 @@ export default (ENG = {
   lauchScreenSwipe4:
     "The average call lasts 5 to 10 minutes, but speak as long as you like.",
   lauchScreenSwipe5:
-    "In celebration of our launch, your first 60 minutes are FREE …compliment of Jeenie!",
+    "In celebration of our launch, your first 15 minutes are FREE …compliment of Jeenie!",
   lastname: "Last name",
   legal: "Legal",
   letsGoToKwon: "Let’s Get to Know You",
@@ -219,7 +226,7 @@ export default (ENG = {
   mainTitle: "Enter Your Name",
   male: "Male",
   maxTimeLimit: "Max. Time Limit",
-  minutesAbbreviation: "min",
+  minutesAbbreviation: "min {{minutes}}",
   minutes: "minutes",
   missed: "Missed",
   mute: "Mute",
@@ -268,6 +275,12 @@ export default (ENG = {
   promoCodeTitle: "Enter a Promo Code",
   promoCodeInput: "Promo code",
   progressiveImageComponent: "Progressive Image Component",
+  provideFeedback: "Provide Feedback",
+  provideFeedbackModalTitle: "Need more time with Jeenie?",
+  provideFeedbackModalText:
+    "Provide feedback about your \nexperience using Jeenie, and \nwe’ll give you an additional \n15 minutes for FREE!",
+  provideFeedbackViewPlaceholder: "Add your feedback here",
+  provideFeedbackViewTitle: "Tell us how we can improve the Jeenie experience:",
   qr: "QR Code",
   quicklyContact: "Quickly contact a Linguist",
   rateYour: "Rate your",
@@ -305,6 +318,8 @@ export default (ENG = {
   specifyGender: "Decline to specify",
   sport: "Sports",
   status: "You are",
+  submitFeedbackForMoreTime: "Submit feedback for more time",
+  submitFeedback: "Submit Feedback",
   tapRepeat: "Tap to repeat",
   thereNoInternetConnection: "There is no internet connection",
   time: "Time",
@@ -331,6 +346,10 @@ export default (ENG = {
   tryToReconnect: "Try to Reconnect",
   troubleshoot: "Troubleshoot",
   thankYou: " Thank You",
+  thankYouFeedback: " Thank You for your feedback",
+  thankYouFeedbackModalText:
+    "We've added an additional \n15 minutes for you to \ncontinue using Jeenie.",
+  theCallWillEnd: "The call will end after {{minutes}} minutes",
   undefined: "Undefined",
   unspecified: "Unspecified",
   unspecifiedGender: "Prefer not to disclose",
@@ -363,6 +382,8 @@ export default (ENG = {
     callTime: "Call Time: {{time}}",
     callCancel: "This call was canceled by the customer",
     callAnswered: "This call has been taken by another linguist.",
+    callFail: "The customer was unable to connect.",
+    callFailCustomer: "There was a problem connecting to your Language Jeenie.",
     alertGeneralCannotSee:
       "To optimize connectivity, video has been temporarily disabled. Video will resume when connectivity improves.",
     alertLinguistCannotSeeYou:
