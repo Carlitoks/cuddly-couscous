@@ -45,6 +45,8 @@
   cancelCall: "取消通話",
   celebrateAndEnjoy:
     "歡慶上市\n，限時免費使用翻譯精靈\n！",
+  celebrateAndEnjoyAlternative:
+    "歡慶上市，\n免費加贈 15 分鐘\n翻譯精靈使用時間。",
   celebrateWithUs: "和我們一起慶祝上市！",
   changeSettings: "若要變更設定，請至「設定」>「翻譯精靈」",
   cancelCallCustomer: "無法通話",
@@ -66,6 +68,7 @@
   confirmAndConnect: "確認並連線",
   connectMeNow: "立即和我連線",
   connectNow: "立即連線",
+  connecting: "連線中",
   contactingLinguist:
     "將在 1 分鐘內為您接通\n語言翻譯精靈\n",
   continue: "繼續",
@@ -86,6 +89,8 @@
   dining: "餐廳",
   discountsOffered:
     "購買高通話量分鐘數可享折扣\n\n。",
+  discountsOfferedAlternative:
+    "預購分鐘數可享折扣\n ",
   duration: "時長",
   editProfile: "編輯個人資料",
   email: "電子郵件",
@@ -142,7 +147,8 @@
   general: "一般",
   getStarted: "開始使用",
   getLanguageHelp: "獲取語言協助",
-  hasDisconnected: "已斷線",
+  gotIt: "沒問題！",
+  hasDisconnected: "您已斷線",
   help: "協助",
   helpPeople:
     "您對哪些城市的熟悉程度足以協助人們遊覽城市？",
@@ -195,7 +201,7 @@
   lauchScreenSwipe4:
     "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
   lauchScreenSwipe5:
-    "為慶祝上市，前 60 分鐘免費…翻譯精靈請客！",
+    "為慶祝上市，前 15 分鐘免費…翻譯精靈請客！",
   lastname: "姓氏",
   legal: "法律資訊",
   letsGoToKwon: "讓我們更瞭解您",
@@ -218,7 +224,7 @@
   mainTitle: "輸入姓名",
   male: "男性",
   maxTimeLimit: "時間上限",
-  minutesAbbreviation: "分鐘",
+  minutesAbbreviation: "{{minutes}} 分鐘",
   minutes: "分鐘",
   missed: "未接",
   mute: "靜音",
@@ -243,8 +249,8 @@
   offline: "離線",
   ok: "確定",
   online: "上線",
-  operatingHoursAlertTitle: "請注意我們目前的營業時間為",
-  operatingHoursAlertMessage: "星期一至星期天，美國東部時間早上十點到晚上七點 （東部夏令時間 ）",
+  operatingHoursAlertTitle: "請注意我們目前的服務時間",
+  operatingHoursAlertMessage: "週一 - 週日：東部時間 (EDT) 上午 10 點至晚上 7 點",
   orChooseOneBelow: "或在下方選擇一項",
   other: "其他",
   password: "密碼",
@@ -267,6 +273,12 @@
   promoCodeTitle: "輸入促銷代碼",
   promoCodeInput: "促銷代碼",
   progressiveImageComponent: "漸進影像元件",
+  provideFeedback: "反映意見",
+  provideFeedbackModalTitle: "需要更多翻譯精靈使用時間嗎？",
+  provideFeedbackModalText:
+    "只要告訴我們您使用\n翻譯精靈的經驗，\n我們就多送您 \n15 分鐘的使用時間！",
+  provideFeedbackViewPlaceholder: "請在這裡註明您要反映的意見",
+  provideFeedbackViewTitle: "告訴我們翻譯精靈需要改善的空間：",
   qr: "QR 碼",
   quicklyContact: "快速聯絡語言專員",
   rateYour: "打分",
@@ -304,6 +316,7 @@
   specifyGender: "拒絕指定",
   sport: "運動",
   status: "您是",
+  submitFeedback: "反映意見",
   tapRepeat: "點選重複",
   thereNoInternetConnection: "沒有網際網路連線",
   time: "時間",
@@ -330,6 +343,9 @@
   tryToReconnect: "嘗試重新連線",
   troubleshoot: "疑難排解",
   thankYou: " 謝謝",
+  thankYouFeedback: " 感謝您反映的意見",
+  thankYouFeedbackModalText:
+    "我們已經為您額外增加了 \n15 分鐘，您可以\n繼續使用翻譯精靈。",
   undefined: "未定義",
   unspecified: "未指定",
   unspecifiedGender: "不願意透露",
@@ -341,6 +357,8 @@
   verifyNumber: "驗證電話",
   verifyNumberText: "輸入您收到的簡訊驗證碼。",
   video: "視訊",
+  videoHasBeenTurnedOff:
+    "為提升通話品質，已關閉視訊。通話雙方連線品質改善後，即可恢復視訊。",
   videoMode: "視訊模式",
   videoAssistance: "視訊協助",
   waitingYourConnection: "正在等候您連線",
@@ -358,11 +376,20 @@
   // for use in session-related screens
   session: {
     callTime: "通話時間：{{time}}",
-    alertGeneralCannotSee: "為保持最佳連線品質，目前已暫時停用視訊功能。連線品質改善後即可繼續使用視訊。",
-    alertLinguistCannotSeeYou: "您的語言翻譯精靈目前看不到您的畫面。為保持最佳連線品質，目前已暫時停用視訊。連線品質改善後即可繼續使用視訊。",
-    alertCustomerCannotSeeYou: "您的客戶目前看不到您的畫面。為保持最佳連線品質，目前已暫時停用視訊。連線品質改善後即可繼續使用視訊。",
-    alertYouCannotSeeCustomer: "為保持最佳連線品質，目前已暫時停用客戶的視訊。連線品質改善後即可繼續使用視訊。",
-    alertYouCannotSeeLinguist: "為保持最佳連線品質，目前已暫時停用翻譯精靈的視訊功能。連線品質改善後即可繼續使用視訊。",
+    callCancel: "客戶已取消這次通話",
+    callAnswered: "已有另一位語言專員接聽這通電話。",
+    callFail: "客戶無法連線。",
+    callFailCustomer: "與您的語言翻譯精靈連線時發生問題。",
+    alertGeneralCannotSee:
+      "為保持最佳連線品質，目前已暫時停用視訊功能。連線品質改善後即可繼續使用視訊。",
+    alertLinguistCannotSeeYou:
+      "您的語言翻譯精靈目前看不到您的畫面。為保持最佳連線品質，目前已暫時停用視訊。連線品質改善後即可繼續使用視訊。",
+    alertCustomerCannotSeeYou:
+      "您的客戶目前看不到您的畫面。為保持最佳連線品質，目前已暫時停用視訊。連線品質改善後即可繼續使用視訊。",
+    alertYouCannotSeeCustomer:
+      "為保持最佳連線品質，目前已暫時停用客戶的視訊。連線品質改善後即可繼續使用視訊。",
+    alertYouCannotSeeLinguist:
+      "為保持最佳連線品質，目前已暫時停用翻譯精靈的視訊功能。連線品質改善後即可繼續使用視訊。",
 
     // used when rating a session
     rating: {
@@ -389,27 +416,27 @@
     eng: "英文",
     cmn: "中文 (普通話)",
     yue: "中文 (廣東話)",
-    'zho-cn-shang': "中文 (上海話)",
-    'zho-tw': "中文 (台語)",
+    "zho-cn-shang": "中文 (上海話)",
+    "zho-tw": "中文 (台語)",
     jpn: "日文",
     spa: "西班牙文",
-    'spa-r-la': "西班牙文 (拉丁美洲)",
-    'spa-es': "西班牙文 (西班牙)",
+    "spa-r-la": "西班牙文 (拉丁美洲)",
+    "spa-es": "西班牙文 (西班牙)",
     deu: "德文",
     fra: "法文",
-    'fra-ca': "法文 (加拿大)",
-    'fra-fr': "法文 (法國)",
+    "fra-ca": "法文 (加拿大)",
+    "fra-fr": "法文 (法國)",
     arb: "阿拉伯文 (現代標準)",
     aao: "阿拉伯文 (阿爾及利亞、摩洛哥和突尼西亞)",
-    'ara-arz_apd': "阿拉伯文 (埃及或蘇丹)",
+    "ara-arz_apd": "阿拉伯文 (埃及或蘇丹)",
     afb: "阿拉伯文 (阿拉伯灣)",
     acm: "阿拉伯文 (伊拉克)",
-    'ara-apc_ajp': "阿拉伯文 (黎凡特)",
+    "ara-apc_ajp": "阿拉伯文 (黎凡特)",
     azj: "北亞塞拜然文",
     azb: "南亞塞拜然文",
     por: "葡萄牙文",
-    'por-br': "葡萄牙文 (巴西)",
-    'por-pt': "葡萄牙文 (葡萄牙)",
+    "por-br": "葡萄牙文 (巴西)",
+    "por-pt": "葡萄牙文 (葡萄牙)",
     rus: "俄文",
     ita: "義大利文",
     kor: "韓文",

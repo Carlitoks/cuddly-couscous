@@ -45,6 +45,8 @@
   cancelCall: "通話をキャンセル",
   celebrateAndEnjoy:
     "サービス開始を記念して\nJeenieを\n無料でご利用いただけます。このお得なオファーは期間限定です！",
+  celebrateAndEnjoyAlternative:
+    "サービス開始を記念してJeenieを\n15分無料でご利用いただけます\n。",
   celebrateWithUs: "サービス開始をお祝いしましょう！",
   changeSettings: "設定を変更するには、[設定] > [Jeenie]の順にアクセスしてください",
   cancelCallCustomer: "通話はご利用いただけません",
@@ -66,6 +68,7 @@
   confirmAndConnect: "確認＆接続",
   connectMeNow: "今すぐ接続",
   connectNow: "今すぐ接続",
+  connecting: "接続中",
   contactingLinguist:
     "1分以内に\nLanguage Jeenieに\nお繋ぎします",
   continue: "続ける",
@@ -86,6 +89,8 @@
   dining: "レストラン",
   discountsOffered:
     "\nより長時間購入\nいただくと割引が提供されます。",
+  discountsOfferedAlternative:
+    "前払いした時間（分）に対して\n割引が提供されます。 ",
   duration: "時間",
   editProfile: "プロフィールを編集",
   email: "メールアドレス",
@@ -142,7 +147,8 @@
   general: "一般",
   getStarted: "利用開始",
   getLanguageHelp: "言語サポートの利用開始",
-  hasDisconnected: "の接続が切断されました",
+  gotIt: "了解です！",
+  hasDisconnected: "接続が切断されました",
   help: "ヘルプ",
   helpPeople:
     "人をサポートできる十分な知識を持っている都市をお答えください。",
@@ -195,7 +201,7 @@
   lauchScreenSwipe4:
     "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
   lauchScreenSwipe5:
-    "サービス開始を記念して、最初の60分を無料でご提供いたします。Jeenieからのプレゼントです！",
+    "サービス開始を記念して、最初の15分を無料でご提供いたします。Jeenieからのプレゼントです！",
   lastname: "名前（姓）",
   legal: "法律",
   letsGoToKwon: "ご自身の情報をご提供ください",
@@ -218,7 +224,7 @@
   mainTitle: "名前を入力",
   male: "男性",
   maxTimeLimit: "最長時間制限",
-  minutesAbbreviation: "分",
+  minutesAbbreviation: "{{minutes}}分",
   minutes: "分",
   missed: "不在着信",
   mute: "ミュート",
@@ -243,8 +249,8 @@
   offline: "オフライン",
   ok: "OK",
   online: "オンライン",
-  operatingHoursAlertTitle: "営業時間は次の時間帯ですので、ご了承ください。",
-  operatingHoursAlertMessage: "月～日：午前 10 時～午後 7 時 米国東海岸時間",
+  operatingHoursAlertTitle: "当社の現行の営業時間をご確認ください。",
+  operatingHoursAlertMessage: "月曜日～日曜日：午前10時～午後7時（東部標準時）",
   orChooseOneBelow: "もしくは以下からひとつ選択してください",
   other: "その他",
   password: "パスワード",
@@ -267,6 +273,12 @@
   promoCodeTitle: "プロモーションコードを入力",
   promoCodeInput: "プロモーションコード",
   progressiveImageComponent: "プログレッシブ画像コンポーネント",
+  provideFeedback: "ご意見の送信",
+  provideFeedbackModalTitle: "Jeenieをもっと利用したいですか？",
+  provideFeedbackModalText:
+    "Jeenieの利用体験について\nご意見をお聞かせください。\nお礼に無料で15分利用時間を\n追加させていただきます！",
+  provideFeedbackViewPlaceholder: "ここにご意見を入力してください",
+  provideFeedbackViewTitle: "Jeenieの利用体験で改善してほしい点をお聞かせください：",
   qr: "QRコード",
   quicklyContact: "通訳スタッフにすぐに連絡する",
   rateYour: "評価してください - 評価対象：",
@@ -304,6 +316,7 @@
   specifyGender: "指定を拒否",
   sport: "スポーツ",
   status: "あなたは…",
+  submitFeedback: "ご意見の送信",
   tapRepeat: "タップしてリピート",
   thereNoInternetConnection: "インターネットに接続されていません",
   time: "時間",
@@ -330,6 +343,9 @@
   tryToReconnect: "再接続してください",
   troubleshoot: "トラブルシューティング",
   thankYou: " ありがとうございます",
+  thankYouFeedback: " ご意見をお聞かせいただきありがとうございました",
+  thankYouFeedbackModalText:
+    "お礼にJeenieの\n利用時間を15分\n追加させていただきました。",
   undefined: "未定義",
   unspecified: "未指定",
   unspecifiedGender: "公開を希望しない",
@@ -341,6 +357,8 @@
   verifyNumber: "電話を確認",
   verifyNumberText: "テキストメッセージで受信した確認コードを入力してください。",
   video: "ビデオ",
+  videoHasBeenTurnedOff:
+    "通話を最適化するためビデオがオフにされました。ご自身と通話相手の接続が安定するとビデオが再開されます。",
   videoMode: "ビデオモード",
   videoAssistance: "ビデオサポート",
   waitingYourConnection: "接続待ちです",
@@ -358,11 +376,20 @@
   // for use in session-related screens
   session: {
     callTime: "通話時間： {{time}}",
-    alertGeneralCannotSee: "接続を最適化するため、ビデオが一時的にオフに設定されました。接続が改善されると、ビデオが再びオンになります。",
-    alertLinguistCannotSeeYou: "現在Language Jeenieに対してあなたの姿は表示されていません。接続を最適化するため、ビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
-    alertCustomerCannotSeeYou: "現在お客様に対してあなたの姿は表示されていません。接続を最適化するため、ビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
-    alertYouCannotSeeCustomer: "接続を最適化するため、お客様のビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
-    alertYouCannotSeeLinguist: "接続を最適化するため、Language Jeenieのビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
+    callCancel: "この通話はお客様によってキャンセルされました",
+    callAnswered: "この通話は他の通話スタッフが対応しています。",
+    callFail: "このお客様は接続できませんでした。",
+    callFailCustomer: "Language Jeenieへの接続中に問題が発生しました。",
+    alertGeneralCannotSee:
+      "接続を最適化するため、ビデオが一時的にオフに設定されました。接続が改善されると、ビデオが再びオンになります。",
+    alertLinguistCannotSeeYou:
+      "現在Language Jeenieに対してあなたの姿は表示されていません。接続を最適化するため、ビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
+    alertCustomerCannotSeeYou:
+      "現在お客様に対してあなたの姿は表示されていません。接続を最適化するため、ビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
+    alertYouCannotSeeCustomer:
+      "接続を最適化するため、お客様のビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
+    alertYouCannotSeeLinguist:
+      "接続を最適化するため、Language Jeenieのビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
 
     // used when rating a session
     rating: {
@@ -389,27 +416,27 @@
     eng: "英語",
     cmn: "中国語（標準中国語）",
     yue: "中国語（広東語）",
-    'zho-cn-shang': "中国語（上海語）",
-    'zho-tw': "中国語（台湾語）",
+    "zho-cn-shang": "中国語（上海語）",
+    "zho-tw": "中国語（台湾語）",
     jpn: "日本語",
     spa: "スペイン語",
-    'spa-r-la': "スペイン語（ラテンアメリカ）",
-    'spa-es': "スペイン語（スペイン）",
+    "spa-r-la": "スペイン語（ラテンアメリカ）",
+    "spa-es": "スペイン語（スペイン）",
     deu: "ドイツ語",
     fra: "フランス語",
-    'fra-ca': "フランス語（カナダ）",
-    'fra-fr': "フランス語（フランス）",
+    "fra-ca": "フランス語（カナダ）",
+    "fra-fr": "フランス語（フランス）",
     arb: "アラビア語（現代標準）",
     aao: "アラビア語（アルジェリア、モロッコ、チュニジア）",
-    'ara-arz_apd': "アラビア語（エジプト、スーダン）",
+    "ara-arz_apd": "アラビア語（エジプト、スーダン）",
     afb: "アラビア語（湾岸方言）",
     acm: "アラビア語（イラク）",
-    'ara-apc_ajp': "アラビア語（レバノン）",
+    "ara-apc_ajp": "アラビア語（レバノン）",
     azj: "アゼルバイジャン語（北部方言）",
     azb: "アゼルバイジャン語（南部方言）",
     por: "ポルトガル語",
-    'por-br': "ポルトガル語（ブラジル）",
-    'por-pt': "ポルトガル語（ポルトガル）",
+    "por-br": "ポルトガル語（ブラジル）",
+    "por-pt": "ポルトガル語（ポルトガル）",
     rus: "ロシア語",
     ita: "イタリア語",
     kor: "韓国語",

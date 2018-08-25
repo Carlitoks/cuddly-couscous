@@ -12,6 +12,7 @@ import { previousView } from "../../Util/Helpers";
 
 import styles from "./styles";
 import I18n from "../../I18n/I18n";
+import CelebrateOurLaunch from "../../Components/CelebrateOurLaunch/CelebrateOurLaunch";
 
 class CallPricingView extends Component {
   render() {
@@ -33,29 +34,7 @@ class CallPricingView extends Component {
           NoWaves
         >
           <View>
-            <Text style={styles.title}>{I18n.t("celebrateAndEnjoy")}</Text>
-
-            <View style={styles.futurePricingContainer}>
-              <View style={styles.futurePricingTitleContainer}>
-                <Text style={styles.futurePricingTitle}>
-                  {I18n.t("futurePricing")}
-                </Text>
-              </View>
-              <View style={styles.futurePricingBox}>
-                <Text style={styles.futurePricingBoxTitle}>
-                  {I18n.t("payAsYouGoPricing")}
-                </Text>
-                <Text style={styles.futurePricingBoxAnd}>
-                  {`- ${I18n.t("and").toUpperCase()} -`}
-                </Text>
-                <Text style={styles.futurePricingBoxBody}>
-                  {I18n.t("discountsOffered")}
-                </Text>
-                <Text style={styles.futurePricingBoxEnd}>
-                  {I18n.t("unusedMinutes")}
-                </Text>
-              </View>
-            </View>
+            <CelebrateOurLaunch styles={styles} />
           </View>
           <View style={styles.buttons}>
             <BottomButton
@@ -88,6 +67,7 @@ class CallPricingView extends Component {
               fill
               bold
               whiteDisabled
+              absolute
             />
           </View>
         </HeaderView>

@@ -45,6 +45,8 @@
   cancelCall: "取消通话",
   celebrateAndEnjoy:
     "庆祝\n翻译精灵发布，\n限时免费试用！",
+  celebrateAndEnjoyAlternative:
+    "庆祝\n翻译精灵发布，现可免费\n使用 15 分钟。",
   celebrateWithUs: "与我们一同庆祝翻译精灵的发布！",
   changeSettings: "如需更改您的设置，请转至\"设置\" > \"翻译精灵\"",
   cancelCallCustomer: "无法呼叫",
@@ -66,6 +68,7 @@
   confirmAndConnect: "确认并连接",
   connectMeNow: "立即和我连接",
   connectNow: "立即连接",
+  connecting: "正在连接",
   contactingLinguist:
     "1 分钟内\n可为您接通\n语言翻译精灵",
   continue: "继续",
@@ -86,6 +89,8 @@
   dining: "餐厅",
   discountsOffered:
     "批量购买\n分钟数\n可享超值折扣。",
+  discountsOfferedAlternative:
+    "预购分钟数\n可享折扣优惠 ",
   duration: "时长",
   editProfile: "编辑个人资料",
   email: "电子邮件",
@@ -142,7 +147,8 @@
   general: "一般",
   getStarted: "开始使用",
   getLanguageHelp: "获取语言帮助",
-  hasDisconnected: "已断开连接",
+  gotIt: "了解！",
+  hasDisconnected: "您已断开连接",
   help: "帮助",
   helpPeople:
     "您对哪些城市非常熟悉，可帮助游客游览城市？",
@@ -195,7 +201,7 @@
   lauchScreenSwipe4:
     "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
   lauchScreenSwipe5:
-    "为了庆祝翻译精灵的发布，前 60 分钟免费使用……翻译精灵的真情回馈！",
+    "为了庆祝翻译精灵的发布，前 15 分钟免费使用……翻译精灵的真情回馈！",
   lastname: "姓氏",
   legal: "法律资讯",
   letsGoToKwon: "让我们更了解您",
@@ -218,7 +224,7 @@
   mainTitle: "输入您的姓名",
   male: "男性",
   maxTimeLimit: "最大时限",
-  minutesAbbreviation: "分钟",
+  minutesAbbreviation: "{{minutes}} 分钟",
   minutes: "分钟",
   missed: "未接来电",
   mute: "静音",
@@ -243,8 +249,8 @@
   offline: "离线",
   ok: "确定",
   online: "上线",
-  operatingHoursAlertTitle: "请注意我们目前的营业时间为",
-  operatingHoursAlertMessage: "星期一至星期天，美国东部时间早上十点到晚上七点 （东部夏令时间 ）",
+  operatingHoursAlertTitle: "请注意我们当前的服务时间",
+  operatingHoursAlertMessage: "星期一 - 星期日东部时间 (EDT) 上午 10 点 - 晚上 7 点",
   orChooseOneBelow: "或选择下列一项",
   other: "其他",
   password: "密码",
@@ -267,6 +273,12 @@
   promoCodeTitle: "输入促销代码",
   promoCodeInput: "促销代码",
   progressiveImageComponent: "渐进图像组件",
+  provideFeedback: "反馈意见",
+  provideFeedbackModalTitle: "需要更多翻译精灵使用时间?",
+  provideFeedbackModalText:
+    "只要告知我们您的翻译精灵\n使用体验，\n我们将额外赠送您\n 15 分钟的免费时间。",
+  provideFeedbackViewPlaceholder: "在此处填写反馈",
+  provideFeedbackViewTitle: "我们尚可改善翻译精灵使用体验的地方：",
   qr: "二维码",
   quicklyContact: "快速联系语言专家",
   rateYour: "评分",
@@ -304,6 +316,7 @@
   specifyGender: "拒绝指定",
   sport: "运动",
   status: "您是",
+  submitFeedback: "提交反馈",
   tapRepeat: "点击重复",
   thereNoInternetConnection: "无网络连接",
   time: "时间",
@@ -330,6 +343,9 @@
   tryToReconnect: "尝试重新连接",
   troubleshoot: "疑难解答",
   thankYou: " 谢谢",
+  thankYouFeedback: " 感谢您的反馈",
+  thankYouFeedbackModalText:
+    "我们已额外为您添加\n 15 分钟时间，您可以\n继续使用翻译精灵。",
   undefined: "未定义",
   unspecified: "尚指定",
   unspecifiedGender: "不想公开",
@@ -341,6 +357,8 @@
   verifyNumber: "验证电话",
   verifyNumberText: "输入您收到的短信验证码。",
   video: "视频",
+  videoHasBeenTurnedOff:
+    "为优化通话质量，视频已暂时关闭。通话双方连接稳定后便可恢复。",
   videoMode: "视频模式",
   videoAssistance: "视频帮助",
   waitingYourConnection: "正在等待您的连接",
@@ -358,11 +376,20 @@
   // for use in session-related screens
   session: {
     callTime: "通话时间：{{time}}",
-    alertGeneralCannotSee: "为优化连接，已暂时禁用视频功能。连接改善后即可恢复视频使用。",
-    alertLinguistCannotSeeYou: "您的语言翻译精灵当前看不到您的画面。为优化连接，已暂时禁用您的视频功能。连接改善后即可恢复视频使用。",
-    alertCustomerCannotSeeYou: "您的客户当前看不到您的画面。为优化连接，已暂时禁用您的视频功能。连接改善后即可恢复视频使用。",
-    alertYouCannotSeeCustomer: "为优化连接，已暂时禁用您客户的视频功能。连接改善后即可恢复视频使用。",
-    alertYouCannotSeeLinguist: "为优化连接，已暂时禁用语言翻译精灵的视频功能。连接改善后即可恢复视频使用。",
+    callCancel: "客户已取消来电",
+    callAnswered: "另外一位语言专家已接听此来电",
+    callFail: "无法建立与客户的连接。",
+    callFailCustomer: "与您的语言翻译精灵连接时出错。",
+    alertGeneralCannotSee:
+      "为优化连接，已暂时禁用视频功能。连接改善后即可恢复视频使用。",
+    alertLinguistCannotSeeYou:
+      "您的语言翻译精灵当前看不到您的画面。为优化连接，已暂时禁用您的视频功能。连接改善后即可恢复视频使用。",
+    alertCustomerCannotSeeYou:
+      "您的客户当前看不到您的画面。为优化连接，已暂时禁用您的视频功能。连接改善后即可恢复视频使用。",
+    alertYouCannotSeeCustomer:
+      "为优化连接，已暂时禁用您客户的视频功能。连接改善后即可恢复视频使用。",
+    alertYouCannotSeeLinguist:
+      "为优化连接，已暂时禁用语言翻译精灵的视频功能。连接改善后即可恢复视频使用。",
 
     // used when rating a session
     rating: {
@@ -389,27 +416,27 @@
     eng: "英语",
     cmn: "中文（普通话）",
     yue: "中文（粤语）",
-    'zho-cn-shang': "中文（上海话）",
-    'zho-tw': "中文（台湾话）",
+    "zho-cn-shang": "中文（上海话）",
+    "zho-tw": "中文（台湾话）",
     jpn: "日语",
     spa: "西班牙语",
-    'spa-r-la': "西班牙语（拉丁美洲）",
-    'spa-es': "西班牙语（西班牙）",
+    "spa-r-la": "西班牙语（拉丁美洲）",
+    "spa-es": "西班牙语（西班牙）",
     deu: "德语",
     fra: "法语",
-    'fra-ca': "法语（加拿大）",
-    'fra-fr': "法语（法国）",
+    "fra-ca": "法语（加拿大）",
+    "fra-fr": "法语（法国）",
     arb: "阿拉伯语（现代标准）",
     aao: "阿拉伯语（阿尔及利亚、摩洛哥和突尼斯）",
-    'ara-arz_apd': "阿拉伯语（埃及或苏丹）",
+    "ara-arz_apd": "阿拉伯语（埃及或苏丹）",
     afb: "阿拉伯语（海湾地区）",
     acm: "阿拉伯语（伊拉克）",
-    'ara-apc_ajp': "阿拉伯语（黎凡特）",
+    "ara-apc_ajp": "阿拉伯语（黎凡特）",
     azj: "北阿塞拜疆语",
     azb: "南阿塞拜疆语",
     por: "葡萄牙语",
-    'por-br': "葡萄牙语（巴西）",
-    'por-pt': "葡萄牙语（葡萄牙）",
+    "por-br": "葡萄牙语（巴西）",
+    "por-pt": "葡萄牙语（葡萄牙）",
     rus: "俄语",
     ita: "意大利语",
     kor: "韩语",

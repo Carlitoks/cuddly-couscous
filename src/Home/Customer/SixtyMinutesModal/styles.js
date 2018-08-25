@@ -1,55 +1,70 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors, Fonts } from "../../Themes";
-import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
-import { Iphone5 } from "../../Util/Devices";
+import { Colors, Fonts } from "../../../Themes";
+import { moderateScale, scale } from "../../../Util/Scaling";
+import { Iphone5 } from "../../../Util/Devices";
 
 const { width, height } = Dimensions.get("window");
+const headerHeight = 85;
 
 export default StyleSheet.create({
-  scrollContainer: {
+  modalContainer: {
     flex: 1,
-    height: "100%",
-    backgroundColor: Colors.white
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: Colors.translucentGray
   },
+  modalWrapper: {
+    backgroundColor: Colors.white,
+    width: width * 0.91,
+    borderRadius: 4,
+    height: height * 0.74
+  },
+  modalTopButton: {
+    position: "absolute",
+    zIndex: 30,
+    top: height * 0.065
+  },
+  modalButton: {
+    width: width * 0.65,
+    height: height * 0.08,
+    marginTop: Iphone5 ? moderateScale(30) : 30,
+    alignSelf: "center"
+  },
+  // Celebrate our launch component styles
   COL_title: {
-    marginTop: Iphone5 ? moderateScale(31) : 31,
-    marginBottom: Iphone5 ? moderateScale(67) : 52,
-    marginHorizontal: Iphone5 ? moderateScale(33) : 33,
-    color: Colors.gradientColorButton.top,
-    fontFamily: Fonts.primaryFont,
-    fontWeight: "600",
-    fontSize: Iphone5 ? moderateScale(28) : 29,
+    marginTop: Iphone5 ? moderateScale(48) : 48,
+    marginHorizontal: Iphone5 ? moderateScale(30) : 30,
+    paddingBottom: Iphone5 ? moderateScale(20) : 20,
+    marginBottom: Iphone5 ? moderateScale(5) : 5,
+    borderBottomWidth: 0.8,
+    borderColor: Colors.gray2,
+    color: Colors.gradientColor.top,
+    fontFamily: Fonts.LightFont,
+    fontWeight: "500",
+    fontSize: Iphone5 ? moderateScale(22) : 22,
     textAlign: "center"
   },
   COL_futurePricingTitleContainer: {
     alignSelf: "center",
     width: width * 0.61,
     height: height * 0.08,
-    backgroundColor: Colors.gradientColor.top,
+    // backgroundColor: Colors.gradientColor.top,
     borderRadius: 4,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
-    zIndex: 2,
-    position: "absolute",
-    top: Iphone5 ? -29 : -35
+    alignItems: "center"
   },
   COL_futurePricingTitle: {
-    color: Colors.white,
+    color: Colors.gradientColorButton.top,
     fontFamily: Fonts.primaryFont,
     fontWeight: "500",
     fontSize: Iphone5 ? moderateScale(20) : 20
   },
-  COL_futurePricingBox: {
-    marginHorizontal: 16,
-    backgroundColor: Colors.lightBlue2,
-    borderRadius: 4,
-    minHeight: Iphone5 ? moderateScale(276) : 276
-  },
+  COL_futurePricingBox: {},
   COL_futurePricingBoxTitle: {
     fontFamily: Fonts.primaryFont,
     color: "#333",
-    marginTop: Iphone5 ? moderateScale(41) : 41,
     textAlign: "center",
     fontSize: Iphone5 ? moderateScale(24) : 24,
     fontWeight: "600"
@@ -77,12 +92,5 @@ export default StyleSheet.create({
     textAlign: "center",
     fontSize: Iphone5 ? moderateScale(15) : 15,
     fontStyle: "italic"
-  },
-  buttons: {
-    flex: 1,
-    position: "absolute",
-    bottom: 0,
-    alignSelf: "center",
-    width: "100%"
   }
 });

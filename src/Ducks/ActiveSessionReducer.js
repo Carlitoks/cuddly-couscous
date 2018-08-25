@@ -526,7 +526,7 @@ export const startReconnect = () => (dispatch, getState) => {
 };
 
 export const startTimer = () => (dispatch, getState) => {
-  const { activeSessionReducer } = getState();
+  const { activeSessionReducer, events } = getState();
   const callTime = !!activeSessionReducer.selectedTime
     ? activeSessionReducer.selectedTime * 60
     : 60 * 60;
@@ -541,8 +541,14 @@ export const startTimer = () => (dispatch, getState) => {
             extraTime,
             showAlert
           } = getState().activeSessionReducer;
+          let availableMinutes;
+          if (events.id && events.id !== "") {
+            availableMinutes = 60;
+          } else {
+            availableMinutes = getState().userProfile;
+          }
           if (elapsedTime + extraTime < 60 * 60) {
-            if (elapsedTime >= callTime + extraTime - 2 * 60) {
+            if (elapsedTime >= availableMinutes * 60 + extraTime - 2 * 60) {
               dispatch(
                 update({
                   red: true
@@ -555,13 +561,13 @@ export const startTimer = () => (dispatch, getState) => {
                   })
                 );
                 //Play Sound
-                // SoundManager["ExtraTime"].play();
-                // displayTimeAlert(extraTime, event => {
-                //   dispatch(updateSettings(event));
-                // });
+                SoundManager["ExtraTime"].play();
+                displayTimeAlert(extraTime, event => {
+                  dispatch(update(event));
+                });
               }
             }
-            if (elapsedTime > callTime + extraTime) {
+            if (elapsedTime > availableMinutes * 60 + extraTime) {
               dispatch(closeCall(REASON.DONE));
             } else {
               dispatch(incrementTimer());

@@ -59,6 +59,7 @@ import SettingsView from "../Settings/SettingsView";
 import InterfaceLanguageView from "../Settings/InterfaceLanguageView";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
 import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
+import FeedbackView from "../Home/Customer/FeedbackView/FeedbackView";
 import SessionLanguageView from "../Call/Customer/SessionLanguageView/SessionLanguageView";
 import StaticView from "../StaticView/StaticView";
 import TextView from "../Components/TextView/TextView";
@@ -195,6 +196,9 @@ const Navigation = StackNavigator(
     },
     Home: {
       screen: Home
+    },
+    FeedbackView: {
+      screen: FeedbackView
     },
     CustomScenarioView: {
       screen: CustomScenarioView,

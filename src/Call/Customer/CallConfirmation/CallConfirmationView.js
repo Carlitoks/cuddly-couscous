@@ -57,6 +57,7 @@ import {
 } from "../../../Util/Constants";
 import SupportedLanguagesList from "./../SessionLanguageView/SupportedLanguagesList";
 import ComingSoonLanguagesList from "./../SessionLanguageView/ComingSoonLanguagesList";
+import { updateSettings as updateHomeFlow } from "../../../Ducks/HomeFlowReducer";
 class CallConfirmationView extends Component {
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
@@ -128,6 +129,83 @@ class CallConfirmationView extends Component {
       if (!verifyLang) {
         this.setLanguages();
       }
+    }
+  }
+
+  getLabels(type) {
+    const { event, availableMinutes, approxTime } = this.props;
+    switch (type) {
+      case "minutes":
+        if (event.id && event.id !== "") {
+          if (event.eventUserState && event.eventUserState.timeRemaining > 0) {
+            return `${event.eventUserState.timeRemaining} ${I18n.t(
+              "minutes"
+            )}: `;
+          } else {
+            return `${approxTime} ${I18n.t("minutes")}: `;
+          }
+        }
+        if (!event.id) {
+          return `${availableMinutes} ${I18n.t("minutes")}: `;
+        }
+        break;
+      case "description":
+        if (event.id && event.id !== "") {
+          return `${I18n.t("complimentsOf", {
+            organizer: event.organization.name
+          })}`;
+        }
+        if (!event.id) {
+          return availableMinutes < 5
+            ? I18n.t("submitFeedbackForMoreTime")
+            : `${I18n.t("theCallWillEnd", {
+                minutes: availableMinutes
+              })}`;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  checkAvailableMinutes() {
+    const { navigation, event } = this.props;
+    if (!event.id) {
+      if (this.props.availableMinutes === 0) {
+        this.props.cleanSelected();
+        // this.props.clearEvents();
+        this.props.clearPromoCode();
+        this.props.updateHomeFlow({
+          displayFeedbackModal: true
+        });
+        navigation.dispatch({ type: "Home" });
+      } else {
+        checkOperatingHours(true);
+
+        this.props.updateSettings({
+          selectedScenarioId:
+            this.props.selectedScenario && this.props.selectedScenario[0]
+              ? this.props.selectedScenario[0].id
+              : "11111111-1111-1111-1111-111111111126"
+        });
+        this.props.cleanSelected();
+        // this.props.clearEvents();
+        this.props.clearPromoCode();
+        navigation.dispatch({ type: "CustomerView" });
+      }
+    } else {
+      checkOperatingHours(true);
+
+      this.props.updateSettings({
+        selectedScenarioId:
+          this.props.selectedScenario && this.props.selectedScenario[0]
+            ? this.props.selectedScenario[0].id
+            : "11111111-1111-1111-1111-111111111126"
+      });
+      this.props.cleanSelected();
+      // this.props.clearEvents();
+      this.props.clearPromoCode();
+      navigation.dispatch({ type: "CustomerView" });
     }
   }
 
@@ -305,7 +383,7 @@ class CallConfirmationView extends Component {
               <View style={styles.flexColumn}>
                 <Text style={styles.titleStyle}>
                   {this.props.approxTime
-                    ? `${this.props.approxTime} ${I18n.t("minutes")}: `
+                    ? this.getLabels("minutes")
                     : `${I18n.t("upTo60")}: `}
                   <Text style={[styles.regularText]}>
                     {/* {I18n.t("timeCompliments")} */}
@@ -313,7 +391,8 @@ class CallConfirmationView extends Component {
                   </Text>
                 </Text>
                 <Text style={[styles.regularText]}>
-                  {I18n.t("timeAddMore")}
+                  {/* I18n.t("timeAddMore") */
+                  this.getLabels("description")}
                 </Text>
               </View>
               <View style={styles.iconAlign}>
@@ -413,19 +492,7 @@ class CallConfirmationView extends Component {
               {/* Connect Now */}
               <BottomButton
                 onPress={() => {
-                  checkOperatingHours(true);
-
-                  this.props.updateSettings({
-                    selectedScenarioId:
-                      this.props.selectedScenario &&
-                      this.props.selectedScenario[0]
-                        ? this.props.selectedScenario[0].id
-                        : "11111111-1111-1111-1111-111111111126"
-                  });
-                  this.props.cleanSelected();
-                  // this.props.clearEvents();
-                  this.props.clearPromoCode();
-                  navigation.dispatch({ type: "CustomerView" });
+                  this.checkAvailableMinutes();
                 }}
                 title={I18n.t("connectNow")}
                 fill
@@ -463,6 +530,7 @@ const mS = state => ({
   promotion: state.promoCode.scanned,
   event: state.events,
   timerCustomer: state.callCustomerSettings.timer,
+  availableMinutes: state.userProfile.availableMinutes,
   nativeLangCode: state.userProfile.nativeLangCode,
   primaryLangCode: state.contactLinguist.primaryLangCode
 });
@@ -478,6 +546,7 @@ const mD = {
   clearPromoCode,
   resetConnectingMessage,
   clearTokboxStatus,
+  updateHomeFlow,
   updateContactLinguist
 };
 
