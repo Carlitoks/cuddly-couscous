@@ -5,13 +5,15 @@ export const EMAIL_REGEX =
 
 export const USER_NAME = "([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*";
 
-export const SUPPORTED_LANGS = ["eng", "cmn", "yue"];
 
+// TODO: refactor and remove these constants, any language options should be based off the lists in `src/Config/Languages.js`
+export const SUPPORTED_LANGS = ["eng", "cmn", "yue", "jpn"];
 export const LANG_CODES = new Map([
   ["eng", "English"],
   ["spa", "Spanish"],
   ["cmn", "Chinese (Mandarin)"],
-  ["yue", "Chinese (Cantonese)"]
+  ["yue", "Chinese (Cantonese)"],
+  ["jpn", "Japanese"]
 ]);
 
 //Set cost to 0 until free is up
