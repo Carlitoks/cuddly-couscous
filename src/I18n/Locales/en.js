@@ -226,7 +226,7 @@ export default (ENG = {
   mainTitle: "Enter Your Name",
   male: "Male",
   maxTimeLimit: "Max. Time Limit",
-  minutesAbbreviation: "min {{minutes}}",
+  minutesAbbreviation: "{{minutes}} min",
   minutes: "minutes",
   missed: "Missed",
   mute: "Mute",
