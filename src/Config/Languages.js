@@ -1793,7 +1793,7 @@ const primaryCodes = ["eng", "cmn", "yue", "zho-cn-shang", "zho-tw", "jpn", "spa
 const comingSoonCodes = ["arb","ben","dan","nld","fin","fra","deu","hin","ita","kor","zsm","nor","pol","por","rus","spa","swe","tha","tur","urd"];
 
 // languages available for session selection
-const supportedLangCodes = ["eng", "cmn", "yue"];
+const supportedLangCodes = ["eng", "cmn", "yue", "jpn"];
 
 const filterLangsByCodes = (codes) => {
   return Languages.filter(item => codes.indexOf(item[3]) != -1 );
