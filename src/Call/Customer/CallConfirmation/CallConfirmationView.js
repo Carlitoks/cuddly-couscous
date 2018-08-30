@@ -87,7 +87,12 @@ class CallConfirmationView extends Component {
         defaultSecondaryLangCode
       } = scannedEvent;
 
-      const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng" };
+      const languagesMapper = {
+        eng: "cmn",
+        cmn: "eng",
+        yue: "eng",
+        jpn: "eng"
+      };
       const userNativeLangIsSupported =
         SUPPORTED_LANGS.indexOf(this.props.nativeLangCode) >= 0;
 
@@ -211,7 +216,7 @@ class CallConfirmationView extends Component {
 
   setLanguages = () => {
     const { nativeLangCode } = this.props;
-    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng" };
+    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng", jpn: "eng" };
     const userNativeLangIsSupported =
       SUPPORTED_LANGS.indexOf(nativeLangCode) >= 0;
 
@@ -223,7 +228,10 @@ class CallConfirmationView extends Component {
       lang => lang[3] === primaryLanguageCode
     );
 
-    const secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+    let secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+    if (!secondaryLanguageCode) {
+      secondaryLanguageCode = primaryLanguageCode == "eng" ? "cmn" : "eng";
+    }
 
     const secondaryLanguage = Languages.find(
       lang => lang[3] === secondaryLanguageCode
