@@ -68,7 +68,7 @@ class Home extends Component {
       otherSelected: false,
       qr: false,
       other: false,
-      languagesMapper: { eng: "cmn", cmn: "eng", yue: "eng" },
+      languagesMapper: { eng: "cmn", cmn: "eng", yue: "eng", jpn: "eng" },
       modal: false
     };
   }
@@ -220,7 +220,10 @@ class Home extends Component {
       lang => lang[3] === primaryLanguageCode
     );
 
-    const secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+    let secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+    if (!secondaryLanguageCode) {
+      secondaryLanguageCode = primaryLanguageCode == "eng" ? "cmn" : "eng";
+    }
 
     const secondaryLanguage = Languages.find(
       lang => lang[3] === secondaryLanguageCode
