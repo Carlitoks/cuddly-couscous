@@ -137,6 +137,14 @@ class CallConfirmationView extends Component {
     }
   }
 
+  componentDidMount() {
+    checkOperatingHours(
+      true,
+      this.props.nativeLangCode,
+      this.props.secundaryLangCode
+    );
+  }
+
   getLabels(type) {
     const { event, availableMinutes, approxTime } = this.props;
     switch (type) {
@@ -185,8 +193,6 @@ class CallConfirmationView extends Component {
         });
         navigation.dispatch({ type: "Home" });
       } else {
-        checkOperatingHours(true);
-
         this.props.updateSettings({
           selectedScenarioId:
             this.props.selectedScenario && this.props.selectedScenario[0]
@@ -199,8 +205,6 @@ class CallConfirmationView extends Component {
         navigation.dispatch({ type: "CustomerView" });
       }
     } else {
-      checkOperatingHours(true);
-
       this.props.updateSettings({
         selectedScenarioId:
           this.props.selectedScenario && this.props.selectedScenario[0]

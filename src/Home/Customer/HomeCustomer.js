@@ -6,7 +6,7 @@ import moment from "moment";
 import InCallManager from "react-native-incall-manager";
 import { View, Text, ScrollView, Dimensions } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-
+import { checkOperatingHours } from "../../Util/Helpers";
 import { asyncGetAccountInformation } from "../../Ducks/ProfileLinguistReducer";
 import timer from "react-native-timer";
 import {
@@ -83,7 +83,7 @@ class Home extends Component {
       customerCalls,
       updateHomeFlow
     } = this.props;
-
+    checkOperatingHours(true);
     getAllCustomerCalls(uuid, token)
       .then(response => {
         customerCalls(response);
@@ -145,7 +145,6 @@ class Home extends Component {
       token
     } = this.props;
     this.setLanguages();
-
     if (scenarios.length < 1) {
       getScenarios(token);
       getCategories(token);

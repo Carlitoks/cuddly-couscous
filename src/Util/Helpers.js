@@ -217,14 +217,63 @@ export const onlyLetters = str => {
 /**
  * @description Display an alert if not into operating hours EDT
  */
-export const checkOperatingHours = (withinAnOur = false) => {
-  const OperatingHoursInit = 9;
-  const OperatingHoursEnd = 17 - (withinAnOur ? 1 : 0);
+export const checkOperatingHours = (
+  withinAnOur = false,
+  languagePrimary,
+  languageSecondary
+) => {
+  const OperatingHoursInit = 10;
+  const OperatingHoursEnd = 19 - (withinAnOur ? 1 : 0);
+  const OperatingHoursInitJPN = 7;
+  const OperatingHoursEndJPN = 19 - (withinAnOur ? 1 : 0);
   const EDT_hour = moment()
-    .utcOffset(-240)
+    .utcOffset(-240) // TimeZone
     .hours();
+  if (languagePrimary || languageSecondary) {
+    if (
+      languagePrimary === "cmn" ||
+      languageSecondary === "cmn" ||
+      languagePrimary === "yue" ||
+      languageSecondary === "yue"
+    ) {
+      if (EDT_hour <= OperatingHoursInit || EDT_hour >= OperatingHoursEnd) {
+        Alert.alert(
+          // This is Alert Dialog Title
+          I18n.t("operatingHoursAlertTitle"),
 
-  if (EDT_hour <= OperatingHoursInit || EDT_hour >= OperatingHoursEnd) {
+          // This is Alert Dialog Message.
+          I18n.t("operatingHoursAlertMessage"),
+          [
+            // First Text Button in Alert Dialog.
+            {
+              text: I18n.t("ok")
+            }
+          ]
+        );
+      }
+    } else {
+      if (languagePrimary === "jpn" || languageSecondary === "jpn") {
+        if (
+          EDT_hour <= OperatingHoursInitJPN ||
+          EDT_hour >= OperatingHoursEndJPN
+        ) {
+          Alert.alert(
+            // This is Alert Dialog Title
+            I18n.t("operatingHoursAlertTitle"),
+
+            // This is Alert Dialog Message.
+            I18n.t("operatingHoursAlertMessage"),
+            [
+              // First Text Button in Alert Dialog.
+              {
+                text: I18n.t("ok")
+              }
+            ]
+          );
+        }
+      }
+    }
+  } else {
     Alert.alert(
       // This is Alert Dialog Title
       I18n.t("operatingHoursAlertTitle"),
