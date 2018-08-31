@@ -28,7 +28,7 @@ import {
   updateView,
   getNativeLang
 } from "../../Ducks/UserProfileReducer";
-
+import { checkOperatingHours } from "../../Util/Helpers";
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
@@ -146,6 +146,7 @@ class LoginView extends Component {
                 );
                 navigation.dispatch({ type: record.lastStage });
               } else {
+                checkOperatingHours(true);
                 navigation.dispatch({ type: "Home" });
               }
               updateForm({ performingRequest: false });

@@ -83,7 +83,7 @@ class Home extends Component {
       customerCalls,
       updateHomeFlow
     } = this.props;
-    checkOperatingHours(true);
+    //checkOperatingHours(true);
     getAllCustomerCalls(uuid, token)
       .then(response => {
         customerCalls(response);
