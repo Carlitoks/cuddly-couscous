@@ -110,6 +110,7 @@ export default (ENG = {
   enterEmailField: "Enter your email",
   enterLastNameField: "Enter your last name",
   enterNameField: "Enter you first name",
+  enterPayment: "Enter payment details",
   enterPaymentDetails: "Enter or modify your payment details",
   enterPaymentDetails2:
     "Your call will end once your account balance is 0 minutes. Enter your payment details to talk as long as you need",

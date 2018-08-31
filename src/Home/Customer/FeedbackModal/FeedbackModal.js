@@ -13,7 +13,8 @@ const FeedbackModal = ({
   visible,
   closeModal,
   availableMinutes,
-  goToFeedback
+  goToPayments,
+  title
 }) => {
   return (
     <Modal
@@ -43,8 +44,8 @@ const FeedbackModal = ({
             <Button
               borderRadius={27}
               textStyle={styles.text}
-              title={I18n.t("provideFeedback")}
-              onPress={goToFeedback}
+              title={title}
+              onPress={goToPayments}
               backgroundColor={Colors.gradientColor.bottom}
               buttonStyle={styles.modalButton}
             />

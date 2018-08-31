@@ -338,10 +338,33 @@ class Home extends Component {
                 closeModal={() => {
                   this.props.updateHomeFlow({ displayFeedbackModal: false });
                 }}
-                goToFeedback={() => {
-                  this.props.updateHomeFlow({ displayFeedbackModal: false });
-                  navigation.dispatch({ type: "FeedbackView" });
+                goToPayments={() => {
+                  if (
+                    this.props.availableMinutes < 5 &&
+                    !this.props.stripePaymentToken
+                  ) {
+                    navigation.dispatch({
+                      type: "PaymentsView",
+                      params: {
+                        title: I18n.t("paymentDetails"),
+                        messageText: I18n.t("enterPaymentDetails"),
+                        buttonText: I18n.t("save"),
+                        buttonTextIfEmpty: I18n.t("save"),
+                        optional: true,
+                        onSubmit: () => navigation.dispatch({ type: "Home" })
+                      }
+                    });
+                    this.props.updateHomeFlow({ displayFeedbackModal: false });
+                  } else {
+                    this.props.updateHomeFlow({ displayFeedbackModal: false });
+                  }
                 }}
+                title={
+                  this.props.availableMinutes < 5 &&
+                  !this.props.stripePaymentToken
+                    ? I18n.t("enterPayment")
+                    : I18n.t("gotIt")
+                }
                 availableMinutes={availableMinutes}
               />
             )}
@@ -406,7 +429,9 @@ const mS = state => ({
   lastSelectedTile: state.homeFlow.lastSelectedTile,
   display60MinModal: state.homeFlow.display60MinModal,
   displayFeedbackModal: state.homeFlow.displayFeedbackModal,
-  displayFeedbackProvided: state.homeFlow.displayFeedbackProvided
+  displayFeedbackProvided: state.homeFlow.displayFeedbackProvided,
+  stripeCustomerID: state.userProfile.stripeCustomerID,
+  stripePaymentToken: state.userProfile.stripePaymentToken
 });
 
 const mD = {
