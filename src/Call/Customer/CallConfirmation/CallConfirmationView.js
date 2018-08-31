@@ -209,18 +209,16 @@ class CallConfirmationView extends Component {
 
         if (!event.id) {
           if (!!stripeCustomerID && !!stripePaymentToken) {
-            console.log("Tengo pagos");
             if (availableMinutes == 0) {
               return `${I18n.t("upTo60WithAbrev")}: `;
             }
             if (availableMinutes > 0) {
               return `${I18n.t("upTo60WithMinutes", {
                 minutes: availableMinutes
-              })}`;
+              })}: `;
             }
           }
           if (!stripeCustomerID || !stripePaymentToken) {
-            console.log("no tengo pagos");
             if (availableMinutes == 0) {
               //TODO: Hit a reducer to update a value, this value will be use to make this zone clickable
               return `${I18n.t("noAvailableMinutes")}: `;
