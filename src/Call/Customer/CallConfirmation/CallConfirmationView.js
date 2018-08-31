@@ -146,34 +146,75 @@ class CallConfirmationView extends Component {
   }
 
   getLabels(type) {
-    const { event, availableMinutes, approxTime } = this.props;
+    const {
+      event,
+      availableMinutes,
+      approxTime,
+      stripeCustomerID,
+      stripePaymentToken
+    } = this.props;
     switch (type) {
       case "minutes":
         if (event.id && event.id !== "") {
-          if (event.eventUserState && event.eventUserState.timeRemaining > 0) {
-            return `${event.eventUserState.timeRemaining} ${I18n.t(
-              "minutes"
-            )}: `;
+          if (event.userStatus) {
+            return `${I18n.t("upTo60WithMinutes", {
+              minutes: event.userStatus.availableCallTime
+            })}: `;
           } else {
             return `${approxTime} ${I18n.t("minutes")}: `;
           }
         }
+
         if (!event.id) {
-          return `${availableMinutes} ${I18n.t("minutes")}: `;
+          if (!!stripeCustomerID && !!stripePaymentToken) {
+            console.log("Tengo pagos");
+            if (availableMinutes == 0) {
+              return `${I18n.t("upTo60WithAbrev")}: `;
+            }
+            if (availableMinutes > 0) {
+              return `${I18n.t("upTo60WithMinutes", {
+                minutes: availableMinutes
+              })}`;
+            }
+          }
+          if (!stripeCustomerID || !stripePaymentToken) {
+            console.log("no tengo pagos");
+            if (availableMinutes == 0) {
+              //TODO: Hit a reducer to update a value, this value will be use to make this zone clickable
+              return `${I18n.t("noAvailableMinutes")}: `;
+            }
+            if (availableMinutes > 0) {
+              return `${I18n.t("upTo60WithMinutes", {
+                minutes: availableMinutes
+              })}: `;
+            }
+          }
         }
         break;
       case "description":
         if (event.id && event.id !== "") {
-          return `${I18n.t("complimentsOf", {
+          return `${I18n.t("compliments", {
+            minutes: event.userStatus.remainingMinutes,
             organizer: event.organization.name
           })}`;
         }
         if (!event.id) {
-          return availableMinutes < 5
-            ? I18n.t("submitFeedbackForMoreTime")
-            : `${I18n.t("theCallWillEnd", {
-                minutes: availableMinutes
-              })}`;
+          if (!!stripeCustomerID && !!stripePaymentToken) {
+            if (availableMinutes == 0) {
+              return ``;
+            }
+            if (availableMinutes > 0) {
+              return `${I18n.t("timeWithCost")}`;
+            }
+          }
+          if (!stripeCustomerID || !stripePaymentToken) {
+            if (availableMinutes == 0) {
+              return `${I18n.t("enterPaymentDetails")}`;
+            }
+            if (availableMinutes > 0) {
+              return `${I18n.t("callWillEnd")}`;
+            }
+          }
         }
         break;
       default:
@@ -399,7 +440,12 @@ class CallConfirmationView extends Component {
                     : `${I18n.t("upTo60")}: `}
                   <Text style={[styles.regularText]}>
                     {/* {I18n.t("timeCompliments")} */}
-                    {"$0"}
+                    {this.props.stripeCustomerID &&
+                    this.props.stripePaymentToken &&
+                    this.props.availableMinutes == 0 &&
+                    !this.props.event.id
+                      ? I18n.t("costPerMinute")
+                      : "$0"}
                   </Text>
                 </Text>
                 <Text style={[styles.regularText]}>
@@ -544,7 +590,9 @@ const mS = state => ({
   timerCustomer: state.callCustomerSettings.timer,
   availableMinutes: state.userProfile.availableMinutes,
   nativeLangCode: state.userProfile.nativeLangCode,
-  primaryLangCode: state.contactLinguist.primaryLangCode
+  primaryLangCode: state.contactLinguist.primaryLangCode,
+  stripeCustomerID: state.userProfile.stripeCustomerID,
+  stripePaymentToken: state.userProfile.stripePaymentToken
 });
 
 const mD = {
