@@ -88,8 +88,8 @@ class SelectRoleView extends Component {
 
     const record = checkRecord(email);
     if (isLoggedIn && token && !record) {
-      checkOperatingHours(true);
       navigation.dispatch({ type: "Home" });
+      checkOperatingHours(true);
     }
   }
 

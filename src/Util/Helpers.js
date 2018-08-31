@@ -224,11 +224,12 @@ export const checkOperatingHours = (
 ) => {
   const OperatingHoursInit = 10;
   const OperatingHoursEnd = 19 - (withinAnOur ? 1 : 0);
-  const OperatingHoursInitJPN = 7;
-  const OperatingHoursEndJPN = 19 - (withinAnOur ? 1 : 0);
+  const OperatingHoursEndJPN = 7;
+  const OperatingHoursInitJPN = 19 - (withinAnOur ? 1 : 0);
   const EDT_hour = moment()
     .utcOffset(-240) // TimeZone
     .hours();
+  let showModal = false;
   if (languagePrimary || languageSecondary) {
     if (
       languagePrimary === "cmn" ||
@@ -236,44 +237,22 @@ export const checkOperatingHours = (
       languagePrimary === "yue" ||
       languageSecondary === "yue"
     ) {
-      if (EDT_hour <= OperatingHoursInit || EDT_hour >= OperatingHoursEnd) {
-        Alert.alert(
-          // This is Alert Dialog Title
-          I18n.t("operatingHoursAlertTitle"),
-
-          // This is Alert Dialog Message.
-          I18n.t("operatingHoursAlertMessage"),
-          [
-            // First Text Button in Alert Dialog.
-            {
-              text: I18n.t("ok")
-            }
-          ]
-        );
+      if (EDT_hour <= OperatingHoursInit && EDT_hour >= OperatingHoursEnd) {
+        showModal = true;
       }
-    } else {
-      if (languagePrimary === "jpn" || languageSecondary === "jpn") {
-        if (
-          EDT_hour <= OperatingHoursInitJPN ||
-          EDT_hour >= OperatingHoursEndJPN
-        ) {
-          Alert.alert(
-            // This is Alert Dialog Title
-            I18n.t("operatingHoursAlertTitle"),
-
-            // This is Alert Dialog Message.
-            I18n.t("operatingHoursAlertMessage"),
-            [
-              // First Text Button in Alert Dialog.
-              {
-                text: I18n.t("ok")
-              }
-            ]
-          );
-        }
+    }
+    if (languagePrimary === "jpn" || languageSecondary === "jpn") {
+      if (
+        EDT_hour <= OperatingHoursInitJPN &&
+        EDT_hour >= OperatingHoursEndJPN
+      ) {
+        showModal = true;
       }
     }
   } else {
+    showModal = true;
+  }
+  if (showModal) {
     Alert.alert(
       // This is Alert Dialog Title
       I18n.t("operatingHoursAlertTitle"),
