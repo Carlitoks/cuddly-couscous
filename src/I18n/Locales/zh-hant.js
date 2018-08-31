@@ -1,6 +1,7 @@
 ﻿export default (ZHTW = {
   accept: "接受",
   add: "新增",
+  addANewCard: "新增卡片...",
   addLanguage: "新增語言",
   airport: "機場",
   alignQRCode: "將鏡頭對準 QR 碼",
@@ -34,7 +35,7 @@
   callTimeBoxTextLine1:
     "慶祝翻譯精靈上市，現在體驗翻譯精靈\n完全免費",
   callTimeBoxTextLine2:
-    "未來價格將調整為每分鐘 1 美元\n，屆時將推出包套折扣",
+    "定價每分鐘 1 美元，\n未來將推出包套折扣",
   callTimeButtonText: "免費分鐘數",
   callTimeButtonSubtitle: "翻譯精靈請客",
   callTimeMinutes: "通話時長",
@@ -46,7 +47,7 @@
   celebrateAndEnjoy:
     "歡慶上市\n，限時免費使用翻譯精靈\n！",
   celebrateAndEnjoyAlternative:
-    "歡慶上市，\n免費加贈 15 分鐘\n翻譯精靈使用時間。",
+    "歡慶上市，\n免費使用翻譯精靈 15 分鐘\n！",
   celebrateWithUs: "和我們一起慶祝上市！",
   changeSettings: "若要變更設定，請至「設定」>「翻譯精靈」",
   cancelCallCustomer: "無法通話",
@@ -59,6 +60,7 @@
   cityFamiliarity: "城市熟悉程度",
   cantReachCustomer: "使用者似乎已經失去連線了",
   cantReachLinguist: "目前無法接通語言專員",
+  card: "卡片",
   componentExamples: "元件範例",
   confirm: "確認",
   confirmCall: "確認詳細資料",
@@ -72,8 +74,10 @@
   contactingLinguist:
     "將在 1 分鐘內為您接通\n語言翻譯精靈\n",
   continue: "繼續",
-  continueForFree: "繼續免費使用",
+  continueUsingJeenie: "繼續使用翻譯精靈",
+  continueForFree: "繼續",
   conversations: "其他",
+  complimentsOf: "{{organizer}}請客",
   costOfCall: "預估費用： ",
   couldBetter: "還能更好嗎？",
   countryFamiliarity: "國家/地區熟悉程度",
@@ -103,6 +107,15 @@
   enterEmailField: "輸入電子郵件",
   enterLastNameField: "輸入姓氏",
   enterNameField: "輸入名字",
+  enterPaymentDetails: "輸入或修改付款詳細資料",
+  enterPaymentDetails2:
+    "Your call will end once your account balance is 0 minutes. Enter your payment details to talk as long as you need",
+  enterPaymentDetails3:
+    "You must enter your payment details to continue, you will be charged for the length of your call",
+  enterPaymentDetails4:
+    "Enter your payment details to talk as long as you need. Otherwise, your call will end once your account balance reaches 0 minutes.",
+  enterPaymentOnboarding:
+    "輸入付款詳細資料後，就可以開始暢所欲言。帳戶餘額剩下 0 分鐘後，須按照繼續使用的時間付費。",
   enterPhoneField: "輸入電話號碼",
   enterYourPassword: "建立新密碼",
   error: "錯誤",
@@ -135,7 +148,7 @@
   forSignup: "申請專用！",
   frequently: "經常",
   freeTrial: "免費試用",
-  futurePricing: "未來的價格",
+  futurePricing: "目前價格",
   gender: "性別",
   genderAlert:
     "語言專員可以選擇與特定性別的客戶配對。若您不想透露性別，就不會與符合偏好設定的語言專員配對。",
@@ -227,6 +240,7 @@
   minutesAbbreviation: "{{minutes}} 分鐘",
   minutes: "分鐘",
   missed: "未接",
+  modifyPayment: "Modify your registered payment method",
   mute: "靜音",
   myProfile: "個人資料",
   name: "姓名",
@@ -249,8 +263,8 @@
   offline: "離線",
   ok: "確定",
   online: "上線",
-  operatingHoursAlertTitle: "請注意我們目前的服務時間",
-  operatingHoursAlertMessage: "週一 - 週日：東部時間 (EDT) 上午 10 點至晚上 7 點",
+  operatingHoursAlertTitle: "請注意我們的開放時間",
+  operatingHoursAlertMessage: "中文：\n- 東部時間 (EDT) 上午 10 點 - 晚上 7 點\n\n日文：\n- 東部時間 (EDT) 晚上 7 點 - 上午 7 點\n- 日本標準時間上午 8 點 - 晚上 8 點",
   orChooseOneBelow: "或在下方選擇一項",
   other: "其他",
   password: "密碼",
@@ -287,6 +301,7 @@
   recentActivity: "最近的活動",
   retail: "購物",
   reconnect: "重新連線",
+  removePayment: "Remove your registered payment method",
   reportProblem: "輕輕晃動裝置就能通報問題。",
   reportProblemMenu: "通報問題",
   resetpassword: "重設密碼",
@@ -295,6 +310,7 @@
   rnVectorIcons: "RN 向量圖示",
   rotate: "旋轉",
   save: "儲存",
+  saveContinue: "Save & Continue",
   scanQR: "掃描 QR",
   scanQRCode: "掃描 QR 碼",
   scenarioNotes: "在這裡新增其他資訊",
@@ -310,12 +326,14 @@
   sessionInQueue: "等待通話",
   settings: "設定",
   signIn: "登入",
+  skipAddLater: "先略過，之後再新增",
   somethingElse: "其他",
   spanish: "西班牙文",
   speaker: "母語人士",
   specifyGender: "拒絕指定",
   sport: "運動",
   status: "您是",
+  submitFeedbackForMoreTime: "反映意見，換取更多時間",
   submitFeedback: "反映意見",
   tapRepeat: "點選重複",
   thereNoInternetConnection: "沒有網際網路連線",
@@ -346,6 +364,7 @@
   thankYouFeedback: " 感謝您反映的意見",
   thankYouFeedbackModalText:
     "我們已經為您額外增加了 \n15 分鐘，您可以\n繼續使用翻譯精靈。",
+  theCallWillEnd: "{{minutes}} 分鐘後將結束通話",
   undefined: "未定義",
   unspecified: "未指定",
   unspecifiedGender: "不願意透露",
@@ -372,6 +391,23 @@
   youWillBeKnown: "您的名稱將會是",
   youCanAddTime: "您可以在通話中增加時間",
   youCanChangeThis: "您可以在通話中開啟/關閉視訊",
+
+  // messages from api server, errors primarily
+  api: {
+    errLogin: "登入時發生問題",
+    errDefaultAuth: "認證過期或無效。",
+    errNoUser: "找不到符合該電子郵件地址的用戶",
+    errNoEmail: "找不到電子郵件",
+    errPasswordIncorrect: "密碼不正確",
+    errAuthRequired: "您必須重新登入",
+    errEventInvalid: "無法驗證這個代碼。",
+    errEventUnavailable: "目前無法使用這個代碼。",
+    errEventInactive: "這個代碼尚未生效。",
+    errEventScenarioMissing: "必須指定情境。",
+    errPaymentDetailsRequired: "必須填寫付款詳細資料才能繼續。",
+    errEventTimeExpired: "這個代碼的時間已經用完了。",
+    errEventAlreadyUsed: "這是使用過的代碼。"
+  },
 
   // for use in session-related screens
   session: {

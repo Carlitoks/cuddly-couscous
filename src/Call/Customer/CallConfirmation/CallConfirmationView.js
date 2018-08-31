@@ -62,11 +62,20 @@ class CallConfirmationView extends Component {
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
   componentWillMount() {
-    const { promotion, event, resetConnectingMessage } = this.props;
+    const {
+      promotion,
+      event,
+      event: { chargeOverageToOwner },
+      resetConnectingMessage,
+      navigation,
+      availableMinutes,
+      stripePaymentToken
+    } = this.props;
     timer.clearInterval("timer");
     timer.clearInterval("counterId");
     this.props.clearSettings();
     this.props.clearTokboxStatus();
+
     getGeolocationCoords()
       .then(response => {
         this.props.customerUpdateSettings({
@@ -79,6 +88,39 @@ class CallConfirmationView extends Component {
     const verifyLang = !!this.props.primaryLangCode;
     resetConnectingMessage();
     let inputHeight = 0;
+
+    if (!stripePaymentToken) {
+      const params = {
+        title: I18n.t("paymentDetails"),
+        messageText: I18n.t("enterPaymentDetails2"),
+        buttonText: I18n.t("saveContinue"),
+        buttonTextIfEmpty: I18n.t("skipAddLater"),
+        optional: true,
+        onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
+      };
+
+      if (availableMinutes < 20) {
+        if (!chargeOverageToOwner) {
+          params = {
+            ...params,
+            messageText: I18n.t("enterPaymentDetails4"),
+            optional: false
+          };
+        } else if (availableMinutes === 0) {
+          params = {
+            ...params,
+            messageText: I18n.t("enterPaymentDetails3"),
+            buttonText: I18n.t("Continue"),
+            optional: false
+          };
+        }
+        navigation.dispatch({
+          type: "PaymentsView",
+          params
+        });
+      }
+    }
+
     if (promotion || event.id) {
       const scannedEvent = promotion ? promotion : event;
 

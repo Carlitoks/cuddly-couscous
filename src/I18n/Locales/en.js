@@ -1,6 +1,7 @@
 export default (ENG = {
   accept: "Accept",
   add: "Add",
+  addANewCard: "Add a new card...",
   addLanguage: "Add Language",
   airport: "Airport",
   alignQRCode: "Align QR code within frame",
@@ -34,7 +35,7 @@ export default (ENG = {
   callTimeBoxTextLine1:
     "Enjoy Jeenie right now for FREE in \n celebration of our launch",
   callTimeBoxTextLine2:
-    "Future pricing will be $1/min \n with package discounts available",
+    "Pricing is $1/min \n and package discounts will be offered in the future",
   callTimeButtonText: "minutes for FREE",
   callTimeButtonSubtitle: "Compliments of Jeenie",
   callTimeMinutes: "Call Duration",
@@ -47,7 +48,7 @@ export default (ENG = {
   celebrateAndEnjoy:
     "Celebrate our launch \n and enjoy Jeenie for a \nlimited time for FREE!",
   celebrateAndEnjoyAlternative:
-    "Celebrate our launch and \nenjoy 15 minutes for FREE \nto use Jeenie.",
+    "Celebrate our launch and \nenjoy 15 minutes with Jeenie \nfor FREE!",
   celebrateWithUs: "Celebrate our launch with us!",
   changeSettings: "To change your settings, go to Settings > Jeenie",
   cancelCallCustomer: "The call isn't available",
@@ -60,6 +61,7 @@ export default (ENG = {
   cityFamiliarity: "City Familiarity",
   cantReachCustomer: "It seems like the user lost connection",
   cantReachLinguist: "Can't reach your linguist right now",
+  card: "Card",
   componentExamples: "Component Examples",
   confirm: "Confirm",
   confirmCall: "Confirm Details",
@@ -74,7 +76,7 @@ export default (ENG = {
     "Connecting you to a \nLanguage Jeenie in less \nthan 1 minute",
   continue: "Continue",
   continueUsingJeenie: "Continue Using Jeenie",
-  continueForFree: "Continue for FREE",
+  continueForFree: "Continue",
   conversations: "Other",
   compliments: "{{minutes}} compliments of {{organizer}}",
   complimentsOf: "Compliments of {{organizer}}",
@@ -108,7 +110,15 @@ export default (ENG = {
   enterEmailField: "Enter your email",
   enterLastNameField: "Enter your last name",
   enterNameField: "Enter you first name",
-  enterPaymentDetails: "Enter payment details to continue",
+  enterPaymentDetails: "Enter or modify your payment details",
+  enterPaymentDetails2:
+    "Your call will end once your account balance is 0 minutes. Enter your payment details to talk as long as you need",
+  enterPaymentDetails3:
+    "You must enter your payment details to continue, you will be charged for the length of your call",
+  enterPaymentDetails4:
+    "Enter your payment details to talk as long as you need. Otherwise, your call will end once your account balance reaches 0 minutes.",
+  enterPaymentOnboarding:
+    "Enter your payment details in order to talk as long as you would like. Once your account balance reaches 0 minutes, you will be charged for additional time used.",
   enterPhoneField: "Enter your telephone number",
   enterYourPassword: "Create a new password",
   error: "Error",
@@ -141,7 +151,7 @@ export default (ENG = {
   forSignup: "For Signing Up!",
   frequently: "Frequently",
   freeTrial: "Free Trial",
-  futurePricing: "Future Pricing",
+  futurePricing: "Current Pricing",
   gender: "Gender",
   genderAlert:
     "Linguists have the option to be matched with a customer of a specific gender. If you prefer not to disclose your gender, you will not be matched with linguists with a preference.",
@@ -233,6 +243,7 @@ export default (ENG = {
   minutesAbbreviation: "{{minutes}} min",
   minutes: "minutes",
   missed: "Missed",
+  modifyPayment: "Modify your registered payment method",
   mute: "Mute",
   myProfile: "My Profile",
   name: "Name",
@@ -291,18 +302,20 @@ export default (ENG = {
   quicklyContact: "Quickly contact a Linguist",
   rateYour: "Rate your",
   recent: "Recent",
-  recentCalls: "Recent Calls",
   recentActivity: "Recent Activity",
-  retail: "Shopping",
+  recentCalls: "Recent Calls",
   reconnect: "Reconnecting",
+  removePayment: "Remove your registered payment method",
   reportProblem: "Report a problem by gently shaking your device.",
   reportProblemMenu: "Report a problem",
   resetpassword: "Reset Password",
+  retail: "Shopping",
   retail: "Shopping",
   rni18n: "RN i18n",
   rnVectorIcons: "RN Vector Icons",
   rotate: "Rotate",
   save: "Save",
+  saveContinue: "Save & Continue",
   scanQR: "Scan QR",
   scanQRCode: "Scan QR Code",
   scenarioNotes: "Add additional information here",
@@ -318,6 +331,7 @@ export default (ENG = {
   sessionInQueue: "Session in Queue",
   settings: "Settings",
   signIn: "Sign In",
+  skipAddLater: "Skip & Add Later",
   somethingElse: "Something else",
   spanish: "Spanish",
   speaker: "Speaker",
@@ -385,6 +399,23 @@ export default (ENG = {
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during call",
   youCanChangeThis: "You can turn video on/off during call",
+
+  // messages from api server, errors primarily
+  api: {
+    errLogin: "There was a problem logging in",
+    errDefaultAuth: "Your credentials have expired or are invalid.",
+    errNoUser: "No user found for that email address",
+    errNoEmail: "Email not found",
+    errPasswordIncorrect: "The password was incorrect",
+    errAuthRequired: "You must log in again",
+    errEventInvalid: "This code failed to validate.",
+    errEventUnavailable: "This code is currently unavailable.",
+    errEventInactive: "This code is not active.",
+    errEventScenarioMissing: "A scenario must be specified.",
+    errPaymentDetailsRequired: "Payment details are required to proceed.",
+    errEventTimeExpired: "No time remaining for this code.",
+    errEventAlreadyUsed: "This code has already been used."
+  },
 
   // for use in session-related screens
   session: {

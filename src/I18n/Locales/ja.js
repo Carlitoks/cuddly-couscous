@@ -1,6 +1,7 @@
 ﻿export default (JAJP = {
   accept: "応答",
   add: "追加",
+  addANewCard: "新しいカードを追加…",
   addLanguage: "言語の追加",
   airport: "空港",
   alignQRCode: "QRコードを枠内に合わせる",
@@ -34,7 +35,7 @@
   callTimeBoxTextLine1:
     "サービス開始を記念して今すぐ\n無料でJeenieをご活用ください",
   callTimeBoxTextLine2:
-    "パッケージ割引のご利用で\n通常料金は1分あたり1ドルとなります。",
+    "料金は1分あたり$1です。\n今後パッケージ割引の提供を予定しています",
   callTimeButtonText: "分無料",
   callTimeButtonSubtitle: "Jeenieからのプレゼント",
   callTimeMinutes: "通話時間",
@@ -46,7 +47,7 @@
   celebrateAndEnjoy:
     "サービス開始を記念して\nJeenieを\n無料でご利用いただけます。このお得なオファーは期間限定です！",
   celebrateAndEnjoyAlternative:
-    "サービス開始を記念してJeenieを\n15分無料でご利用いただけます\n。",
+    "サービス開始を記念して\nJeenieを15分無料でご利用いただけます\n！",
   celebrateWithUs: "サービス開始をお祝いしましょう！",
   changeSettings: "設定を変更するには、[設定] > [Jeenie]の順にアクセスしてください",
   cancelCallCustomer: "通話はご利用いただけません",
@@ -59,6 +60,7 @@
   cityFamiliarity: "都市に関する知識（精通度）",
   cantReachCustomer: "ユーザーの接続が切断されたようです",
   cantReachLinguist: "現在言語スタッフと連絡が取れません",
+  card: "カード",
   componentExamples: "コンポーネントの例",
   confirm: "確認",
   confirmCall: "詳細と",
@@ -72,8 +74,10 @@
   contactingLinguist:
     "1分以内に\nLanguage Jeenieに\nお繋ぎします",
   continue: "続ける",
-  continueForFree: "無料で利用を続ける",
+  continueUsingJeenie: "Jeenieで続ける",
+  continueForFree: "続ける",
   conversations: "その他",
+  complimentsOf: "{{organizer}}に関する前向きなご意見",
   costOfCall: "推定料金： ",
   couldBetter: "改善点をお聞かせください。",
   countryFamiliarity: "国に関する知識（精通度）",
@@ -103,6 +107,17 @@
   enterEmailField: "メールアドレスを入力",
   enterLastNameField: "名前（姓）を入力",
   enterNameField: "名前（名）を入力",
+  enterPaymentDetails: "お支払い情報の入力または変更",
+  enterPaymentOnboarding:
+    "お支払い情報を入力いただくと、好きなだけお話いただけます。アカウントの残り時間が0分になると、使用した分の時間に対して料金が請求されます。",
+  enterenterPaymentDetails2:
+    "Your call will end once your account balance is 0 minutes. Enter your payment details to talk as long as you need",
+  enterPaymentDetails3:
+    "You must enter your payment details to continue, you will be charged for the length of your call",
+  enterPaymentDetails4:
+    "Enter your payment details to talk as long as you need. Otherwise, your call will end once your account balance reaches 0 minutes.",
+  PaymentOnboarding:
+    "Enter your payment details in order to talk as long as you would like. Once your account balance reaches 0 minutes, you will be charged for additional time used.",
   enterPhoneField: "電話番号を入力",
   enterYourPassword: "新しいパスワードを作成",
   error: "エラー",
@@ -135,7 +150,7 @@
   forSignup: "ご登録完了です！",
   frequently: "頻繁",
   freeTrial: "無料トライアル",
-  futurePricing: "今後の料金",
+  futurePricing: "現在の料金",
   gender: "性別",
   genderAlert:
     "通訳スタッフには、お客様の性別を指定できるオプションがあります。性別の公開を希望しない場合、性別を指定していない通訳スタッフが割り当てられます。",
@@ -227,6 +242,7 @@
   minutesAbbreviation: "{{minutes}}分",
   minutes: "分",
   missed: "不在着信",
+  modifyPayment: "Modify your registered payment method",
   mute: "ミュート",
   myProfile: "マイプロフィール",
   name: "名前",
@@ -249,8 +265,8 @@
   offline: "オフライン",
   ok: "OK",
   online: "オンライン",
-  operatingHoursAlertTitle: "当社の現行の営業時間をご確認ください。",
-  operatingHoursAlertMessage: "月曜日～日曜日：午前10時～午後7時（東部標準時）",
+  operatingHoursAlertTitle: "当社の営業時間をご確認ください。",
+  operatingHoursAlertMessage: "中国語：\n- 午前10時～午後7時（東部標準時）\n\n日本語：\n- 午後7時～午前7時（東部標準時）\n- 午前8時～午後8時（日本時間）",
   orChooseOneBelow: "もしくは以下からひとつ選択してください",
   other: "その他",
   password: "パスワード",
@@ -287,6 +303,7 @@
   recentActivity: "最近のアクティビティ",
   retail: "ショッピング",
   reconnect: "再接続",
+  removePayment: "Remove your registered payment method",
   reportProblem: "お使いのデバイスを軽く振って問題を報告してください。",
   reportProblemMenu: "問題を報告",
   resetpassword: "パスワードをリセット",
@@ -295,6 +312,7 @@
   rnVectorIcons: "RNベクターアイコン",
   rotate: "回転",
   save: "保存",
+  saveContinue: "Save & Continue",
   scanQR: "QRをスキャン",
   scanQRCode: "QRコードをスキャン",
   scenarioNotes: "ここに情報を追加",
@@ -310,12 +328,14 @@
   sessionInQueue: "キューのセッション",
   settings: "設定",
   signIn: "サインイン",
+  skipAddLater: "スキップ＆あとで追加",
   somethingElse: "その他",
   spanish: "スペイン語",
   speaker: "スピーカー",
   specifyGender: "指定を拒否",
   sport: "スポーツ",
   status: "あなたは…",
+  submitFeedbackForMoreTime: "さらにご意見を送信",
   submitFeedback: "ご意見の送信",
   tapRepeat: "タップしてリピート",
   thereNoInternetConnection: "インターネットに接続されていません",
@@ -346,6 +366,7 @@
   thankYouFeedback: " ご意見をお聞かせいただきありがとうございました",
   thankYouFeedbackModalText:
     "お礼にJeenieの\n利用時間を15分\n追加させていただきました。",
+  theCallWillEnd: "{{minutes}}分後に通話が終了します",
   undefined: "未定義",
   unspecified: "未指定",
   unspecifiedGender: "公開を希望しない",
@@ -372,6 +393,23 @@
   youWillBeKnown: "ユーザー名：",
   youCanAddTime: "通話中に時間を延長できます",
   youCanChangeThis: "通話中にビデオのオン/オフを切り替えられます",
+
+  // messages from api server, errors primarily
+  api: {
+    errLogin: "ログイン中に問題が発生しました",
+    errDefaultAuth: "認証情報が期限切れか無効です。",
+    errNoUser: "このメールアドレスのユーザーが見つかりませんでした",
+    errNoEmail: "メールアドレスが見つかりません",
+    errPasswordIncorrect: "パスワードが誤っています",
+    errAuthRequired: "もう一度ログインする必要があります",
+    errEventInvalid: "このコードの認証に失敗しました。",
+    errEventUnavailable: "このコードは現在利用できません。",
+    errEventInactive: "このコードは使用されていません。",
+    errEventScenarioMissing: "シナリオを指定する必要があります。",
+    errPaymentDetailsRequired: "続けるにはお支払い情報のの入力が必要です。",
+    errEventTimeExpired: "このコードには残り時間がありません。",
+    errEventAlreadyUsed: "このコードはすでに使用されています。"
+  },
 
   // for use in session-related screens
   session: {

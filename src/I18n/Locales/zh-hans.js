@@ -1,6 +1,7 @@
 ﻿export default (ZHCN = {
   accept: "接受",
   add: "添加",
+  addANewCard: "添加新卡",
   addLanguage: "添加语言",
   airport: "机场",
   alignQRCode: "将镜头对准二维码",
@@ -34,7 +35,7 @@
   callTimeBoxTextLine1:
     "为庆祝翻译精灵的发布，\n现开放免费使用",
   callTimeBoxTextLine2:
-    "未来价格将调整为 1 美元/分钟，\n届时我们将推出折扣套餐",
+    "定价为每分钟 1 美元，\n今后将推出套餐折扣。",
   callTimeButtonText: "免费分钟数",
   callTimeButtonSubtitle: "翻译精灵真情回馈",
   callTimeMinutes: "通话时长",
@@ -46,7 +47,7 @@
   celebrateAndEnjoy:
     "庆祝\n翻译精灵发布，\n限时免费试用！",
   celebrateAndEnjoyAlternative:
-    "庆祝\n翻译精灵发布，现可免费\n使用 15 分钟。",
+    "庆祝翻译精灵发布，\n现可免费\n使用 15 分钟。",
   celebrateWithUs: "与我们一同庆祝翻译精灵的发布！",
   changeSettings: "如需更改您的设置，请转至\"设置\" > \"翻译精灵\"",
   cancelCallCustomer: "无法呼叫",
@@ -59,6 +60,7 @@
   cityFamiliarity: "城市熟悉度",
   cantReachCustomer: "用户似乎掉线了",
   cantReachLinguist: "当前无法连接您的语言专家",
+  card: "卡片",
   componentExamples: "组件示例",
   confirm: "确认",
   confirmCall: "确认详情",
@@ -72,8 +74,10 @@
   contactingLinguist:
     "1 分钟内\n可为您接通\n语言翻译精灵",
   continue: "继续",
-  continueForFree: "继续免费使用",
+  continueUsingJeenie: "继续使用翻译精灵",
+  continueForFree: "继续",
   conversations: "其他",
+  complimentsOf: "{{organizer}}请客",
   costOfCall: "预计费用： ",
   couldBetter: "哪些方面还有改善空间？",
   countryFamiliarity: "国家/地区熟悉度",
@@ -103,6 +107,15 @@
   enterEmailField: "输入您的电子邮件",
   enterLastNameField: "输入您的姓氏",
   enterNameField: "输入您的名字",
+  enterPaymentDetails: "输入或修改付款详情",
+  enterPaymentDetails2:
+    "Your call will end once your account balance is 0 minutes. Enter your payment details to talk as long as you need",
+  enterPaymentDetails3:
+    "You must enter your payment details to continue, you will be charged for the length of your call",
+  enterPaymentDetails4:
+    "Enter your payment details to talk as long as you need. Otherwise, your call will end once your account balance reaches 0 minutes.",
+  enterPaymentOnboarding:
+    "输入付款详情后便可畅所欲聊。帐户余额为 0 分钟时，您需要支付额外使用的时间。",
   enterPhoneField: "输入您的电话号码",
   enterYourPassword: "创建新密码",
   error: "错误",
@@ -135,7 +148,7 @@
   forSignup: "申请专用！",
   frequently: "频繁",
   freeTrial: "免费试用",
-  futurePricing: "今后价格",
+  futurePricing: "当前价格",
   gender: "性别",
   genderAlert:
     "语言专家可以选择匹配特定性别的客户。如果您不想公开自己的性别，则不会匹配到有性别偏好的语言专家。",
@@ -227,6 +240,7 @@
   minutesAbbreviation: "{{minutes}} 分钟",
   minutes: "分钟",
   missed: "未接来电",
+  modifyPayment: "Modify your registered payment method",
   mute: "静音",
   myProfile: "个人资料",
   name: "姓名",
@@ -249,8 +263,8 @@
   offline: "离线",
   ok: "确定",
   online: "上线",
-  operatingHoursAlertTitle: "请注意我们当前的服务时间",
-  operatingHoursAlertMessage: "星期一 - 星期日东部时间 (EDT) 上午 10 点 - 晚上 7 点",
+  operatingHoursAlertTitle: "请注意我们的服务时间",
+  operatingHoursAlertMessage: "中文：\n- 东部时间 (EDT) 上午 10 点 - 晚上 7点\n\n日语：\n- 东部时间 (EDT) 晚上 7 点 - 上午 7点\n-日本标准时间上午 8 点 - 晚上 8 点",
   orChooseOneBelow: "或选择下列一项",
   other: "其他",
   password: "密码",
@@ -287,6 +301,7 @@
   recentActivity: "近期活动",
   retail: "购物",
   reconnect: "重新连接",
+  removePayment: "Remove your registered payment method",
   reportProblem: "轻轻摇一摇设备即可报告问题。",
   reportProblemMenu: "报告问题",
   resetpassword: "重置密码",
@@ -295,6 +310,7 @@
   rnVectorIcons: "RN 矢量图标",
   rotate: "旋转",
   save: "保存",
+  saveContinue: "Save & Continue",
   scanQR: "扫描二维码",
   scanQRCode: "扫描二维码",
   scenarioNotes: "在此添加更多信息",
@@ -310,12 +326,14 @@
   sessionInQueue: "队列中的会话",
   settings: "设置",
   signIn: "登录",
+  skipAddLater: "忽略，以后再说",
   somethingElse: "其他",
   spanish: "西班牙语",
   speaker: "母语人士",
   specifyGender: "拒绝指定",
   sport: "运动",
   status: "您是",
+  submitFeedbackForMoreTime: "提交反馈，获取更多时间",
   submitFeedback: "提交反馈",
   tapRepeat: "点击重复",
   thereNoInternetConnection: "无网络连接",
@@ -346,6 +364,7 @@
   thankYouFeedback: " 感谢您的反馈",
   thankYouFeedbackModalText:
     "我们已额外为您添加\n 15 分钟时间，您可以\n继续使用翻译精灵。",
+  theCallWillEnd: "通话将于 {{minutes}} 分钟后结束",
   undefined: "未定义",
   unspecified: "尚指定",
   unspecifiedGender: "不想公开",
@@ -372,6 +391,23 @@
   youWillBeKnown: "您会被称为",
   youCanAddTime: "您可以在通话过程中增加时间",
   youCanChangeThis: "您可以在通话过程中打开/关闭视频",
+
+  // messages from api server, errors primarily
+  api: {
+    errLogin: "登录出错",
+    errDefaultAuth: "认证无效或已过期",
+    errNoUser: "找不到此电子邮件地址的用户",
+    errNoEmail: "找不到电子邮件",
+    errPasswordIncorrect: "密码错误",
+    errAuthRequired: "您必须重新登录",
+    errEventInvalid: "无法验证此代码。",
+    errEventUnavailable: "此代码尚不可使用。",
+    errEventInactive: "此代码未激活。",
+    errEventScenarioMissing: "必须指定情境。",
+    errPaymentDetailsRequired: "请填写付款详情以继续下一步。",
+    errEventTimeExpired: "此代码已无剩余时间。",
+    errEventAlreadyUsed: "此代码已被使用。"
+  },
 
   // for use in session-related screens
   session: {

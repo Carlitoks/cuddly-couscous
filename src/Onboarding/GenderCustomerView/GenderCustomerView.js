@@ -145,7 +145,19 @@ class GenderCustomerView extends Component {
         });
       })
       .then(() => {
-        navigation.dispatch({ type: "WelcomeCustomerView" });
+        navigation.dispatch({
+          type: "PaymentsView",
+          params: {
+            title: I18n.t("paymentDetails"),
+            messageText: I18n.t("enterPaymentOnboarding"),
+            buttonText: I18n.t("continue"),
+            buttonTextIfEmpty: I18n.t("skipAddLater"),
+            optional: true,
+            onSubmit: () => {
+              navigation.dispatch({ type: "WelcomeCustomerView" });
+            }
+          }
+        });
       })
       .catch(error => {
         this.props.updateForm({

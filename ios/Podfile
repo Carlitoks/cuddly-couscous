@@ -40,6 +40,8 @@ target 'NewSolo' do
 pod 'AppCenter/Analytics', '~> 1.6.1'
 pod 'AppCenter/Crashes', '~> 1.6.1'
 
+  pod 'tipsi-stripe', :path => '../node_modules/tipsi-stripe'
+
 end
 
 post_install do |installer|

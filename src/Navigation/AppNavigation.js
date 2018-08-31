@@ -69,12 +69,19 @@ import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
 import ConnectingView from "../Call/Linguist/Connecting/ConnectingView";
+import PaymentsView from "../Payments/PaymentsView";
 
 const Navigation = StackNavigator(
   {
     AssistanceView: { screen: AssistanceView },
     CallHistory: {
       screen: CallHistory,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    PaymentsView: {
+      screen: PaymentsView,
       navigationOptions: {
         gesturesEnabled: false
       }

@@ -39,10 +39,12 @@ export const getNativeLang = code => (dispatch, getState) => {
 export const getProfileAsync = (uid, token) => (dispatch, getState) => {
   const { pushNotification, auth } = getState();
   return User.get(uid, token)
-    .then(response => {
+    .then(({ data }) => {
+      const { stripePaymentToken } = data;
+
       if (!pushNotification.tokenFCM) {
         PushNotification.registerDeviceInFCM(
-          response.data.id,
+          data.id,
           auth.deviceId,
           token,
           payload => {
@@ -51,7 +53,7 @@ export const getProfileAsync = (uid, token) => (dispatch, getState) => {
         );
       }
 
-      return dispatch(updateView(response.data));
+      return dispatch(updateView({ ...data, stripePaymentToken }));
     })
     .catch(error => dispatch(networkError(error)));
 };
