@@ -53,9 +53,8 @@ import { Languages } from "../../Config/Languages";
 import SixtyMinutesModal from "./SixtyMinutesModal/SixtyMinutesModal";
 import HomeCarousel from "./HomeCarousel";
 import RecentActivity from "./RecentActivity";
-import FeedbackModal from "./FeedbackModal/FeedbackModal";
+import PaymentModal from "../Customer/PaymentModal/PaymentModal";
 import FeedbackProvidedModal from "./FeedbackProvidedModal/FeedbackProvidedModal";
-import FeedbackView from "./FeedbackView/FeedbackView";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -151,7 +150,11 @@ class Home extends Component {
     }
     this.changeModal();
 
-    updateHomeFlow({ selectedScenarioIndex: -1 });
+    updateHomeFlow({
+      selectedScenarioIndex: -1,
+      displayPaymentModal: false,
+      display60MinModal: false
+    });
 
     //Clean call
     timer.clearInterval("timer");
@@ -195,11 +198,27 @@ class Home extends Component {
     });
   }
 
-  modalSelection(availableMinutes) {
-    const { updateHomeFlow } = this.props;
-    if (availableMinutes < 5) {
-      updateHomeFlow({ displayFeedbackModal: true });
-    } else {
+  getPillLabel() {
+    const { availableMinutes, stripePaymentToken } = this.props;
+    if (availableMinutes == 0 && !stripePaymentToken) {
+      return I18n.t("noAvailableMinutes");
+    }
+    if (availableMinutes > 0) {
+      return `${I18n.t("minutesAbbreviation", {
+        minutes: availableMinutes
+      })}`;
+    }
+    if (availableMinutes == 0 && !!stripePaymentToken) {
+      return I18n.t("costPerMinute");
+    }
+  }
+
+  modalSelection() {
+    const { updateHomeFlow, availableMinutes, stripePaymentToken } = this.props;
+    if (availableMinutes < 5 || !stripePaymentToken) {
+      updateHomeFlow({ displayPaymentModal: true });
+    }
+    if (availableMinutes > 5 && !!stripePaymentToken) {
       updateHomeFlow({ display60MinModal: true });
     }
   }
@@ -256,7 +275,7 @@ class Home extends Component {
       lastSelectedTile,
       availableMinutes,
       display60MinModal,
-      displayFeedbackModal,
+      displayPaymentModal,
       displayFeedbackProvided,
       updateHomeFlow,
       getProfileAsync,
@@ -332,40 +351,13 @@ class Home extends Component {
               />
             )}
 
-            {displayFeedbackModal && (
-              <FeedbackModal
-                visible={displayFeedbackModal}
+            {displayPaymentModal && (
+              <PaymentModal
+                visible={displayPaymentModal}
                 closeModal={() => {
-                  this.props.updateHomeFlow({ displayFeedbackModal: false });
+                  this.props.updateHomeFlow({ displayPaymentModal: false });
                 }}
-                goToPayments={() => {
-                  if (
-                    this.props.availableMinutes < 5 &&
-                    !this.props.stripePaymentToken
-                  ) {
-                    navigation.dispatch({
-                      type: "PaymentsView",
-                      params: {
-                        title: I18n.t("paymentDetails"),
-                        messageText: I18n.t("enterPaymentDetails"),
-                        buttonText: I18n.t("save"),
-                        buttonTextIfEmpty: I18n.t("save"),
-                        optional: true,
-                        onSubmit: () => navigation.dispatch({ type: "Home" })
-                      }
-                    });
-                    this.props.updateHomeFlow({ displayFeedbackModal: false });
-                  } else {
-                    this.props.updateHomeFlow({ displayFeedbackModal: false });
-                  }
-                }}
-                title={
-                  this.props.availableMinutes < 5 &&
-                  !this.props.stripePaymentToken
-                    ? I18n.t("enterPayment")
-                    : I18n.t("gotIt")
-                }
-                availableMinutes={availableMinutes}
+                navigation={navigation}
               />
             )}
 
@@ -384,11 +376,9 @@ class Home extends Component {
 
             <PillButton
               onPress={() => {
-                this.modalSelection(availableMinutes);
+                this.modalSelection();
               }}
-              title={`${I18n.t("minutesAbbreviation", {
-                minutes: availableMinutes
-              })}`}
+              title={this.getPillLabel()}
               icon={"ios-time"}
               absolute
               alignButton={"Right"}
@@ -428,7 +418,7 @@ const mS = state => ({
   allCustomerCalls: state.callHistory.allCustomerCalls,
   lastSelectedTile: state.homeFlow.lastSelectedTile,
   display60MinModal: state.homeFlow.display60MinModal,
-  displayFeedbackModal: state.homeFlow.displayFeedbackModal,
+  displayPaymentModal: state.homeFlow.displayPaymentModal,
   displayFeedbackProvided: state.homeFlow.displayFeedbackProvided,
   stripeCustomerID: state.userProfile.stripeCustomerID,
   stripePaymentToken: state.userProfile.stripePaymentToken

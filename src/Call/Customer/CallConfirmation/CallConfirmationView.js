@@ -220,7 +220,6 @@ class CallConfirmationView extends Component {
           }
           if (!stripeCustomerID || !stripePaymentToken) {
             if (availableMinutes == 0) {
-              //TODO: Hit a reducer to update a value, this value will be use to make this zone clickable
               return `${I18n.t("noAvailableMinutes")}: `;
             }
             if (availableMinutes > 0) {
@@ -249,7 +248,7 @@ class CallConfirmationView extends Component {
           }
           if (!stripeCustomerID || !stripePaymentToken) {
             if (availableMinutes == 0) {
-              return `${I18n.t("enterPaymentDetails")}`;
+              return `${I18n.t("enterPaymentDetailsToContinue")}`;
             }
             if (availableMinutes > 0) {
               return `${I18n.t("callWillEnd")}`;
@@ -259,6 +258,28 @@ class CallConfirmationView extends Component {
         break;
       default:
         break;
+    }
+  }
+
+  redirectToPaymentView() {
+    const { navigation, stripeCustomerID, stripePaymentToken } = this.props;
+    if (!stripeCustomerID || !stripePaymentToken) {
+      navigation.dispatch({
+        type: "PaymentsView",
+        params: {
+          title: I18n.t("paymentDetails"),
+          messageText: I18n.t("enterPaymentDetails"),
+          buttonText: I18n.t("save"),
+          buttonTextIfEmpty: I18n.t("save"),
+          optional: true,
+          onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
+        }
+      });
+    }
+    if (this.props.allowTimeSelection && !!stripePaymentToken) {
+      navigation.dispatch({
+        type: "CallPricingView"
+      });
     }
   }
 
@@ -465,11 +486,7 @@ class CallConfirmationView extends Component {
             {/* Time selection */}
             <TouchableOpacity
               onPress={() => {
-                if (this.props.allowTimeSelection) {
-                  navigation.dispatch({
-                    type: "CallPricingView"
-                  });
-                }
+                this.redirectToPaymentView();
               }}
               style={styles.time}
             >

@@ -111,6 +111,7 @@ export default (ENG = {
   enterLastNameField: "Enter your last name",
   enterNameField: "Enter you first name",
   enterPayment: "Enter payment details",
+  enterPaymentDetailsToContinue: "Enter payment details to continue",
   enterPaymentDetails: "Enter or modify your payment details",
   enterPaymentDetails2:
     "Your call will end once your account balance is 0 minutes. Enter your payment details to talk as long as you need",
@@ -401,8 +402,19 @@ export default (ENG = {
   youCanAddTime: "You can add time during call",
   youCanChangeThis: "You can turn video on/off during call",
 
+  // text for customer related to payments and rates
+  payments: {
+    currentRate: "$1/min",
+    currentBalance: "{{minutes}} min",
+    enterPaymentToTalk: "Enter payment details to keep talking. Talk as long as you like for $1/min.",
+    currentRateDescription: "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future."
+  },
+
   // messages from api server, errors primarily
   api: {
+    errUnexpected: "An unexpected error occured.",
+    errTemporary: "A temporary error has occurred.",
+    errTemporaryTryAgain: "A temporary error has occurred.  Try again in a few minutes.",
     errLogin: "There was a problem logging in",
     errDefaultAuth: "Your credentials have expired or are invalid.",
     errNoUser: "No user found for that email address",

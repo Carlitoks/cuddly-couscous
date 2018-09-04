@@ -76,7 +76,7 @@ const initialState = {
   scenariosList: null,
   lastSelectedTile: -1,
   display60MinModal: false,
-  displayFeedbackModal: false,
+  displayPaymentModal: false,
   displayFeedbackProvided: false
 };
 

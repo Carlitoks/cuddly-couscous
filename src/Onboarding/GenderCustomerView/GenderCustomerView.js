@@ -158,6 +158,9 @@ class GenderCustomerView extends Component {
             }
           }
         });
+        this.props.updateForm({
+          performingRequest: false
+        });
       })
       .catch(error => {
         this.props.updateForm({
