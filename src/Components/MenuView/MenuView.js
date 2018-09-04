@@ -194,39 +194,6 @@ class MenuView extends Component {
               </Text>
             </Icon.Button>
           )}
-
-          <Icon.Button
-            name="payment"
-            size={25}
-            backgroundColor={
-              isCurrentView(navigation, "PaymentsView")
-                ? Colors.selectedBackground
-                : Colors.background
-            }
-            iconStyle={
-              isCurrentView(navigation, "PaymentsView")
-                ? styles.selectedOptionMenu
-                : styles.optionMenu
-            }
-            onPress={() =>
-              navigation.dispatch({
-                type: "PaymentsView",
-                params: {
-                  title: I18n.t("paymentDetails"),
-                  messageText: I18n.t("enterPaymentDetails"),
-                  buttonText: I18n.t("save"),
-                  buttonTextIfEmpty: I18n.t("save"),
-                  optional: true,
-                  onSubmit: () => navigation.dispatch({ type: "Home" })
-                }
-              })
-            }
-          >
-            <Text style={styles.colorText} icon>
-              {I18n.t("paymentDetails")}
-            </Text>
-          </Icon.Button>
-
           {/* Settings */}
           <Icon.Button
             name="settings"
