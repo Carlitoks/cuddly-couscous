@@ -2,7 +2,6 @@
 const images = {
   airport: require("../Assets/Images/airport.jpeg"),
   avatar: require("../Assets/Images/perfil.jpg"),
-  avatar: require("../Assets/Images/smallAvatar.png"),
   avatarCall: require("../Assets/Images/smallAvatar.png"),
   backgroundCall: require("../Assets/Images/backgroundImage.png"),
   backgroundCustomer: require("../Assets/Images/backgroundCustomer.png"),
