@@ -56,9 +56,10 @@ class RecentActivity extends Component {
   render() {
     const { scenariosList } = this.props;
 
-    const data = this.emptyActivity
-      ? [{ id: "emptyActivity", title: I18n.t("noRecentActivityMessage") }]
-      : scenariosList;
+    const data =
+      this.emptyActivity || this.emptyActivity === null
+        ? [{ id: "emptyActivity", title: I18n.t("noRecentActivityMessage") }]
+        : scenariosList;
 
     const list = scenariosList ? (
       <BoxedListComponent
@@ -71,8 +72,8 @@ class RecentActivity extends Component {
         onPress={index => this.itemPress(index)}
         multiple={false}
         selected={this.props.indexSelected}
-        chevron={!this.emptyActivity}
-        doubleLine={!this.emptyActivity}
+        chevron={!this.emptyActivity && this.emptyActivity !== null}
+        doubleLine={!this.emptyActivity && this.emptyActivity !== null}
         tripleLine={true}
         leftText
       />
