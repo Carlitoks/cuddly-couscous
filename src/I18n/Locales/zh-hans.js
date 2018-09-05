@@ -32,10 +32,8 @@
   callLinguist: "致电一位语言专家",
   calls: "通话",
   callSettings: "通话设置",
-  callTimeBoxTextLine1:
-    "为庆祝翻译精灵的发布，\n现开放免费使用",
-  callTimeBoxTextLine2:
-    "定价为每分钟 1 美元，\n今后将推出套餐折扣。",
+  callTimeBoxTextLine1: "为庆祝翻译精灵的发布，\n现开放免费使用",
+  callTimeBoxTextLine2: "定价为每分钟 1 美元，\n今后将推出套餐折扣。",
   callTimeButtonText: "免费分钟数",
   callTimeButtonSubtitle: "翻译精灵真情回馈",
   callTimeMinutes: "通话时长",
@@ -44,17 +42,14 @@
   callTimeSubtitle: "即将推出更多语种。",
   cancel: "取消",
   cancelCall: "取消通话",
-  celebrateAndEnjoy:
-    "庆祝\n翻译精灵发布，\n限时免费试用！",
-  celebrateAndEnjoyAlternative:
-    "庆祝翻译精灵发布，\n现可免费\n使用 15 分钟。",
+  celebrateAndEnjoy: "庆祝\n翻译精灵发布，\n限时免费试用！",
+  celebrateAndEnjoyAlternative: "庆祝翻译精灵发布，\n现可免费\n使用 15 分钟。",
   celebrateWithUs: "与我们一同庆祝翻译精灵的发布！",
-  changeSettings: "如需更改您的设置，请转至\"设置\" > \"翻译精灵\"",
+  changeSettings: '如需更改您的设置，请转至"设置" > "翻译精灵"',
   cancelCallCustomer: "无法呼叫",
   chargeAdvice: "超过 8 分钟的通话按分钟计费。",
   checkYourConnection: "请检查您的连接",
-  checkYourEmail:
-    "我们已向您发送了重置密码的链接。请查收电子邮件",
+  checkYourEmail: "我们已向您发送了重置密码的链接。请查收电子邮件",
   checkYourEmailOnBoarding: "查收电子邮件以完成注册。",
   citizenShip: "公民身份",
   cityFamiliarity: "城市熟悉度",
@@ -71,8 +66,7 @@
   connectMeNow: "立即和我连接",
   connectNow: "立即连接",
   connecting: "正在连接",
-  contactingLinguist:
-    "1 分钟内\n可为您接通\n语言翻译精灵",
+  contactingLinguist: "1 分钟内\n可为您接通\n语言翻译精灵",
   continue: "继续",
   continueUsingJeenie: "继续使用翻译精灵",
   continueForFree: "继续",
@@ -91,10 +85,8 @@
   declined: "已拒绝",
   disableExtraTime: "不加时",
   dining: "餐厅",
-  discountsOffered:
-    "批量购买\n分钟数\n可享超值折扣。",
-  discountsOfferedAlternative:
-    "预购分钟数\n可享折扣优惠 ",
+  discountsOffered: "批量购买\n分钟数\n可享超值折扣。",
+  discountsOfferedAlternative: "预购分钟数\n可享折扣优惠 ",
   duration: "时长",
   editProfile: "编辑个人资料",
   email: "电子邮件",
@@ -123,16 +115,11 @@
   errorPromo: "找不到促销代码",
   estimatedCost: "预计费用",
   estimatedDuration: "预计时长",
-  estimatedCostStatic1:
-    "试用期间，预设通话时间为 8 分钟。",
-  estimatedCostStatic2:
-    "如需更多时间，您可在通话中增加。",
-  expertise_A1:
-    "有许多不同的发型适合不同的人和不同的",
-  expertise_B1:
-    "创造的循环是什么？如何做到从无到有？在 Spite",
-  expertise_C1:
-    "我们之所以为人类，是否是因为我们的特征和特质不同于",
+  estimatedCostStatic1: "试用期间，预设通话时间为 8 分钟。",
+  estimatedCostStatic2: "如需更多时间，您可在通话中增加。",
+  expertise_A1: "有许多不同的发型适合不同的人和不同的",
+  expertise_B1: "创造的循环是什么？如何做到从无到有？在 Spite",
+  expertise_C1: "我们之所以为人类，是否是因为我们的特征和特质不同于",
   extraTime1: "时间快到了！",
   extraTime2: "您需要加时吗？",
   extraTimeA1: "需要，增加 5 分钟",
@@ -140,8 +127,7 @@
   female: "女性",
   finish: "完成",
   finishOnboarding: "完成注册",
-  finishOnboardingMessage:
-    "请完成注册以使用这款 App",
+  finishOnboardingMessage: "请完成注册以使用这款 App",
   firstname: "名字",
   fluent: "流利",
   forgotPassword: "重置您的密码",
@@ -163,8 +149,7 @@
   gotIt: "了解！",
   hasDisconnected: "您已断开连接",
   help: "帮助",
-  helpPeople:
-    "您对哪些城市非常熟悉，可帮助游客游览城市？",
+  helpPeople: "您对哪些城市非常熟悉，可帮助游客游览城市？",
   helpUsGet: "让我们更了解您",
   hi: "您好",
   historyNotFound: "找不到历史记录",
@@ -184,6 +169,8 @@
   interfaceLocalization: "语言",
   intermediate: "中等",
   invalidPromoCode: "无效的代码促销",
+  invalidPaymentDetails:
+    "The payment details information you provided is not correct",
   isReconnecting: "正在重新连接...",
   keepWaiting: "继续等待",
   isConnecting: "正在连接 {{firstName}} {{lastInitial}}...",
@@ -199,20 +186,16 @@
     "谢谢！翻译精灵目前不支持您的母语，但您仍然可以使用我们支持的语言拨打电话：",
   languageNotice2: "即将推出更多的语言。",
   languageSettings: "语言设置",
-  languagesStatic1:
-    "免费试用期间，翻译精灵只支持中文（普通话）和英语。",
+  languagesStatic1: "免费试用期间，翻译精灵只支持中文（普通话）和英语。",
   languagesStatic2:
     "今后推出的翻译精灵版本将支持所有语言，您可以在此处选择切换。",
   languageFrom: "源语言：",
   languageTo: "目标语言：",
-  lauchScreenSwipe1:
-    "无忧旅行！\n翻译精灵 App 让语言不再是沟通的障碍。",
-  lauchScreenSwipe2:
-    "无论您身处何方，都可以得到实时帮助的真人翻译。",
+  lauchScreenSwipe1: "无忧旅行！\n翻译精灵 App 让语言不再是沟通的障碍。",
+  lauchScreenSwipe2: "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
     "目前，翻译精灵支持\n中文（普通话）<>英语\n和日语<>英语。\n\n即将推出其他语言。",
-  lauchScreenSwipe4:
-    "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
+  lauchScreenSwipe4: "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
   lauchScreenSwipe5:
     "为了庆祝翻译精灵的发布，前 15 分钟免费使用……翻译精灵的真情回馈！",
   lastname: "姓氏",
@@ -264,19 +247,21 @@
   ok: "确定",
   online: "上线",
   operatingHoursAlertTitle: "请注意我们的服务时间",
-  operatingHoursAlertMessage: "中文：\n- 东部时间 (EDT) 上午 10 点 - 晚上 7点\n\n日语：\n- 东部时间 (EDT) 晚上 7 点 - 上午 7点\n-日本标准时间上午 8 点 - 晚上 8 点",
+  operatingHoursAlertMessage:
+    "中文：\n- 东部时间 (EDT) 上午 10 点 - 晚上 7点\n\n日语：\n- 东部时间 (EDT) 晚上 7 点 - 上午 7点\n-日本标准时间上午 8 点 - 晚上 8 点",
   orChooseOneBelow: "或选择下列一项",
   other: "其他",
   password: "密码",
   passwordAnd: "和",
   passwordLength: "您的密码须至少包含 5 个字符。",
-  passwordLinguistText: "点击\"下一步\"即表示您同意我们的",
+  passwordLinguistText: '点击"下一步"即表示您同意我们的',
   permissionDenied: "App 权限被拒绝",
   passwordMatch: "密码不匹配。",
   passwordLengthValidation: "密码必须是 8 个或 8 个以上字符。",
   payAsYouGo: "随用随付",
   payAsYouGoPricing: "按需付费 = \n 每分钟 1 美元",
   paymentDetails: "付款详情",
+  paymentDetailsCreated: "Your Payment Details were successfully created",
   preferedNameTitle: "首选昵称",
   preferNotToDisclose: "不想公开",
   preferredLinguistText: "我想使用的昵称是...",
@@ -328,6 +313,7 @@
   signIn: "登录",
   skipAddLater: "忽略，以后再说",
   somethingElse: "其他",
+  somethingWrong: "Something went wrong",
   spanish: "西班牙语",
   speaker: "母语人士",
   specifyGender: "拒绝指定",
@@ -348,8 +334,7 @@
   termsOfUse: "使用条款",
   themeSettings: "主题设置",
   temporaryError: "暂时发生错误，请稍后重试。",
-  toggleExtraTimeDisable:
-    "此通话将在以上指定时间后自动结束。",
+  toggleExtraTimeDisable: "此通话将在以上指定时间后自动结束。",
   toggleExtraTimeEnable:
     "此通话将持续到您主动结束为止。超出以上指定时间将按分钟计费。",
   toOthersOnPlatform: "平台上的其他人",

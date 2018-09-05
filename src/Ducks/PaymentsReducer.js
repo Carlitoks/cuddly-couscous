@@ -48,14 +48,9 @@ export const removePayment = _ => (dispatch, getState) => {
     auth: { token }
   } = getState();
 
-  User.removePayment(id, token)
-    .then(response => {
-      dispatch(updateView({ stripePaymentToken: null }));
-    })
-    .catch(error => {
-      console.log(error);
-      console.log(error.response);
-    });
+  return User.removePayment(id, token).then(response => {
+    dispatch(updateView({ stripePaymentToken: null }));
+  });
 };
 
 // Reducer

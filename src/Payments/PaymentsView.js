@@ -4,7 +4,7 @@ import { Button } from "react-native-vector-icons/MaterialIcons";
 import PropTypes from "prop-types";
 import stripe, { PaymentCardTextField } from "tipsi-stripe";
 
-import { ScrollView, Text, Image, View } from "react-native";
+import { ScrollView, Text, Image, View, Alert } from "react-native";
 import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../Components/HeaderView/HeaderView";
 import Close from "../Components/Close/Close";
@@ -64,7 +64,7 @@ const ManagePaymentMethodArea = props => {
             iconStyle={styles.buttonIcon}
             borderRadius={0}
             style={styles.button}
-            underlayColor={"rgba(194, 194, 194, 0.17)"}
+            underlayColor={Colors.transparent}
             color={Colors.gradientColor.top}
             onPress={onAddCardPress}
           >
@@ -126,7 +126,7 @@ class PaymentsView extends Component {
     updatePayments({ displayCardField: false });
   }
 
-  createTokenWithCard = _ => {
+  createTokenWithCard = callback => {
     const {
       cardInfo: { number, expMonth, expYear, cvc },
       updatePayments,
@@ -143,13 +143,36 @@ class PaymentsView extends Component {
 
     updatePayments({ loading: true });
 
-    return stripe
-      .createTokenWithCard(params)
-      .then(({ tokenId }) => {
-        setPayment(tokenId);
-        return updateView({ stripePaymentToken: tokenId });
-      })
-      .then(_ => updatePayments({ loading: false }));
+    try {
+      return stripe
+        .createTokenWithCard(params)
+        .then(({ tokenId }) => {
+          setPayment(tokenId);
+          return updateView({ stripePaymentToken: tokenId });
+        })
+        .then(_ => updatePayments({ loading: false }))
+        .then(_ => {
+          Alert.alert(
+            I18n.t("paymentDetails"),
+            I18n.t("paymentDetailsCreated"),
+            [{ text: I18n.t("ok") }]
+          );
+
+          callback();
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+        });
+    } catch (error) {
+      updatePayments({ loading: false, displayCardField: false });
+
+      Alert.alert(I18n.t("paymentDetails"), I18n.t("invalidPaymentDetails"), [
+        { text: I18n.t("ok") }
+      ]);
+
+      console.log(error);
+    }
   };
 
   render() {
@@ -161,6 +184,7 @@ class PaymentsView extends Component {
       displayCardField,
       updatePayments,
       loading,
+      cardInfo,
       cardInfo: { valid },
       stripeCustomerID,
       stripePaymentToken,
@@ -224,7 +248,12 @@ class PaymentsView extends Component {
                 updatePayments({ displayCardField: true });
               }}
               onRemoveCardPress={() => {
-                removePayment();
+                removePayment().catch(error => {
+                  const errorMessage = error.response.data.errors[0];
+                  Alert.alert(I18n.t("temporaryError"), errorMessage, [
+                    { text: I18n.t("ok") }
+                  ]);
+                });
               }}
               stripeCustomerID={stripeCustomerID}
               stripePaymentToken={stripePaymentToken}
@@ -233,19 +262,19 @@ class PaymentsView extends Component {
           <BottomButton
             title={valid ? buttonText : buttonTextIfEmpty}
             onPress={() => {
-              if (optional && !valid) {
+              if (optional && !!!displayCardField) {
                 onSubmit();
-              } else {
-                this.createTokenWithCard().then(_ => {
-                  onSubmit();
-                });
+
+                return;
               }
+
+              this.createTokenWithCard(onSubmit);
             }}
             absolute
             bold={false}
             fill={!!optional || valid}
             loading={loading}
-            disabled={!!!optional && (!valid || loading)}
+            disabled={!!!optional && (!!!cardInfo || !valid || loading)}
           />
         </HeaderView>
       </ViewWrapper>

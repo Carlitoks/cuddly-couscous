@@ -170,6 +170,8 @@ export default (ZH = {
   interfaceLocalization: "Interface Localization-ZH",
   intermediate: "Intermediate-ZH",
   invalidPromoCode: "Invalid promo code-ZH",
+  invalidPaymentDetails:
+    "The payment details information you provided is not correct",
   isConnecting: "is connecting...-ZH",
   isReconnecting: "is reconnecting...-ZH",
   languageCommand: "Language at Your Command-ZH",
@@ -261,6 +263,7 @@ export default (ZH = {
   payAsYouGo: "Pay as you go-ZH",
   payAsYouGoPricing: "Pay-as-you-go = \n $1 per minute-ZH",
   paymentDetails: "Payment Details-ZH",
+  paymentDetailsCreated: "Your Payment Details were successfully created",
   permissionDenied: "App Permission Denied-ZH",
   preferedNameTitle: "Prefered Name-ZH",
   preferredLinguistText: "I preferred to be called ...-ZH",

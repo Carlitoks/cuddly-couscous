@@ -61,6 +61,59 @@ import { updateSettings as updateHomeFlow } from "../../../Ducks/HomeFlowReducer
 class CallConfirmationView extends Component {
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
+  checkPaymentsAndRedirect = () => {
+    const {
+      availableMinutes,
+      event,
+      event: { chargeOverageToOwner },
+      navigation,
+      promotion,
+      stripePaymentToken
+    } = this.props;
+
+    if (!stripePaymentToken) {
+      const params = {
+        title: I18n.t("paymentDetails"),
+        messageText: I18n.t("enterPaymentDetails2"),
+        buttonText: I18n.t("saveContinue"),
+        buttonTextIfEmpty: I18n.t("skipAddLater"),
+        optional: true,
+        onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
+      };
+
+      if (availableMinutes < 20) {
+        if (availableMinutes === 0) {
+          params = {
+            ...params,
+            messageText: I18n.t("enterPaymentDetails3"),
+            buttonText: I18n.t("continue"),
+            optional: false
+          };
+        } else {
+          params = {
+            ...params,
+            messageText: I18n.t("enterPaymentDetails2"),
+            buttonText: I18n.t("saveContinue"),
+            optional: false
+          };
+        }
+      }
+
+      if ((promotion || event.id) && !chargeOverageToOwner) {
+        params = {
+          ...params,
+          messageText: I18n.t("enterPaymentDetails4"),
+          optional: false
+        };
+      }
+
+      navigation.dispatch({
+        type: "PaymentsView",
+        params
+      });
+    }
+  };
+
   componentWillMount() {
     const {
       promotion,
@@ -89,37 +142,7 @@ class CallConfirmationView extends Component {
     resetConnectingMessage();
     let inputHeight = 0;
 
-    if (!stripePaymentToken) {
-      const params = {
-        title: I18n.t("paymentDetails"),
-        messageText: I18n.t("enterPaymentDetails2"),
-        buttonText: I18n.t("saveContinue"),
-        buttonTextIfEmpty: I18n.t("skipAddLater"),
-        optional: true,
-        onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
-      };
-
-      if (availableMinutes < 20) {
-        if (!chargeOverageToOwner) {
-          params = {
-            ...params,
-            messageText: I18n.t("enterPaymentDetails4"),
-            optional: false
-          };
-        } else if (availableMinutes === 0) {
-          params = {
-            ...params,
-            messageText: I18n.t("enterPaymentDetails3"),
-            buttonText: I18n.t("Continue"),
-            optional: false
-          };
-        }
-        navigation.dispatch({
-          type: "PaymentsView",
-          params
-        });
-      }
-    }
+    this.checkPaymentsAndRedirect();
 
     if (promotion || event.id) {
       const scannedEvent = promotion ? promotion : event;

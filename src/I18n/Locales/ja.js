@@ -49,7 +49,8 @@
   celebrateAndEnjoyAlternative:
     "サービス開始を記念して\nJeenieを15分無料でご利用いただけます\n！",
   celebrateWithUs: "サービス開始をお祝いしましょう！",
-  changeSettings: "設定を変更するには、[設定] > [Jeenie]の順にアクセスしてください",
+  changeSettings:
+    "設定を変更するには、[設定] > [Jeenie]の順にアクセスしてください",
   cancelCallCustomer: "通話はご利用いただけません",
   chargeAdvice: "8分経過後、1分ごとに料金がかかります。",
   checkYourConnection: "接続をご確認ください",
@@ -71,8 +72,7 @@
   connectMeNow: "今すぐ接続",
   connectNow: "今すぐ接続",
   connecting: "接続中",
-  contactingLinguist:
-    "1分以内に\nLanguage Jeenieに\nお繋ぎします",
+  contactingLinguist: "1分以内に\nLanguage Jeenieに\nお繋ぎします",
   continue: "続ける",
   continueUsingJeenie: "Jeenieで続ける",
   continueForFree: "続ける",
@@ -91,8 +91,7 @@
   declined: "拒否",
   disableExtraTime: "延長時間をオフに設定",
   dining: "レストラン",
-  discountsOffered:
-    "\nより長時間購入\nいただくと割引が提供されます。",
+  discountsOffered: "\nより長時間購入\nいただくと割引が提供されます。",
   discountsOfferedAlternative:
     "前払いした時間（分）に対して\n割引が提供されます。 ",
   duration: "時間",
@@ -125,10 +124,8 @@
   errorPromo: "プロモーションコードが見つかりません",
   estimatedCost: "推定料金",
   estimatedDuration: "推定時間",
-  estimatedCostStatic1:
-    "トライアル期間中、通話は8分に事前設定されています。",
-  estimatedCostStatic2:
-    "時間の延長が必要な場合、通話中に追加できます。",
+  estimatedCostStatic1: "トライアル期間中、通話は8分に事前設定されています。",
+  estimatedCostStatic2: "時間の延長が必要な場合、通話中に追加できます。",
   expertise_A1:
     "髪型には色々な種類があり、人によって似合う髪型はそれぞれです。",
   expertise_B1:
@@ -142,8 +139,7 @@
   female: "女性",
   finish: "終了",
   finishOnboarding: "オンボーディングを終了",
-  finishOnboardingMessage:
-    "アプリを使用するには登録を完了してください",
+  finishOnboardingMessage: "アプリを使用するには登録を完了してください",
   firstname: "名前（名）",
   fluent: "上級",
   forgotPassword: "パスワードをリセット",
@@ -165,8 +161,7 @@
   gotIt: "了解です！",
   hasDisconnected: "接続が切断されました",
   help: "ヘルプ",
-  helpPeople:
-    "人をサポートできる十分な知識を持っている都市をお答えください。",
+  helpPeople: "人をサポートできる十分な知識を持っている都市をお答えください。",
   helpUsGet: "ご自身の情報をご提供ください",
   hi: "こんにちは",
   historyNotFound: "履歴が見つかりません",
@@ -186,6 +181,8 @@
   interfaceLocalization: "言語",
   intermediate: "中級",
   invalidPromoCode: "無効なプロモーションコード",
+  invalidPaymentDetails:
+    "The payment details information you provided is not correct",
   isReconnecting: "が再接続中です…",
   keepWaiting: "お待ちください",
   isConnecting: "{{firstName}} {{lastInitial}}が接続中…",
@@ -213,8 +210,7 @@
     "世界のどこにいても、リアルタイムで、サポートが必要な言語を母国語とする通訳スタッフに連絡を取ることができます。",
   lauchScreenSwipe3:
     "現在Jeenieでは、\n「標準中国語⇔英語」\nと「日本語⇔英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
-  lauchScreenSwipe4:
-    "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
+  lauchScreenSwipe4: "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
   lauchScreenSwipe5:
     "サービス開始を記念して、最初の15分を無料でご提供いたします。Jeenieからのプレゼントです！",
   lastname: "名前（姓）",
@@ -227,7 +223,8 @@
   linguistLastName: "名前（姓）",
   linguistName: "名前（名）",
   linguistNumber: "電話番号を入力",
-  linguistNumberText: "電話を確認するためのコードがテキストメッセージで送信されます",
+  linguistNumberText:
+    "電話を確認するためのコードがテキストメッセージで送信されます",
   linguistPassword: "パスワード",
   linguistPasswordTitle: "パスワードを作成",
   locale: "I18n言語",
@@ -266,19 +263,22 @@
   ok: "OK",
   online: "オンライン",
   operatingHoursAlertTitle: "当社の営業時間をご確認ください。",
-  operatingHoursAlertMessage: "中国語：\n- 午前10時～午後7時（東部標準時）\n\n日本語：\n- 午後7時～午前7時（東部標準時）\n- 午前8時～午後8時（日本時間）",
+  operatingHoursAlertMessage:
+    "中国語：\n- 午前10時～午後7時（東部標準時）\n\n日本語：\n- 午後7時～午前7時（東部標準時）\n- 午前8時～午後8時（日本時間）",
   orChooseOneBelow: "もしくは以下からひとつ選択してください",
   other: "その他",
   password: "パスワード",
   passwordAnd: "＆",
   passwordLength: "必ず5文字以上のパスワードを設定してください。",
-  passwordLinguistText: "[次へ]をタップすると、以下の内容に同意することになります：",
+  passwordLinguistText:
+    "[次へ]をタップすると、以下の内容に同意することになります：",
   permissionDenied: "アプリの許可が拒否されました",
   passwordMatch: "パスワードが一致しません。",
   passwordLengthValidation: "必ず8文字以上のパスワードを設定してください。",
   payAsYouGo: "利用した分だけ支払い",
   payAsYouGoPricing: "利用した分だけ支払いの場合：\n1分1ドル",
   paymentDetails: "お支払いの明細",
+  paymentDetailsCreated: "Your Payment Details were successfully created",
   preferedNameTitle: "希望の名前",
   preferNotToDisclose: "公開を希望しない",
   preferredLinguistText: "利用を希望する名前：",
@@ -294,7 +294,8 @@
   provideFeedbackModalText:
     "Jeenieの利用体験について\nご意見をお聞かせください。\nお礼に無料で15分利用時間を\n追加させていただきます！",
   provideFeedbackViewPlaceholder: "ここにご意見を入力してください",
-  provideFeedbackViewTitle: "Jeenieの利用体験で改善してほしい点をお聞かせください：",
+  provideFeedbackViewTitle:
+    "Jeenieの利用体験で改善してほしい点をお聞かせください：",
   qr: "QRコード",
   quicklyContact: "通訳スタッフにすぐに連絡する",
   rateYour: "評価してください - 評価対象：",
@@ -349,7 +350,8 @@
   termsConditions: "利用規約",
   termsOfUse: "利用規約",
   themeSettings: "テーマの設定",
-  temporaryError: "一時的なエラーが発生しています。後でもう一度お試しください。",
+  temporaryError:
+    "一時的なエラーが発生しています。後でもう一度お試しください。",
   toggleExtraTimeDisable:
     "上記で指定した時間が経過すると、この通話は自動的に終了します。",
   toggleExtraTimeEnable:
@@ -376,7 +378,8 @@
   username: "ユーザー名",
   userProfile: "マイプロフィール",
   verifyNumber: "電話を確認",
-  verifyNumberText: "テキストメッセージで受信した確認コードを入力してください。",
+  verifyNumberText:
+    "テキストメッセージで受信した確認コードを入力してください。",
   video: "ビデオ",
   videoHasBeenTurnedOff:
     "通話を最適化するためビデオがオフにされました。ご自身と通話相手の接続が安定するとビデオが再開されます。",

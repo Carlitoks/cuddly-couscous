@@ -189,6 +189,8 @@ export default (ENG = {
   interfaceLocalization: "Language",
   intermediate: "Intermediate",
   invalidPromoCode: "Invalid promo code",
+  invalidPaymentDetails:
+    "The payment details information you provided is not correct",
   isReconnecting: "is reconnecting...",
   keepWaiting: "Keep waiting",
   isConnecting: "{{firstName}} {{lastInitial}}. is connecting...",
@@ -284,6 +286,7 @@ export default (ENG = {
   payAsYouGo: "Pay as you go",
   payAsYouGoPricing: "Pay-as-you-go = \n $1 per minute",
   paymentDetails: "Payment Details",
+  paymentDetailsCreated: "Your Payment Details were successfully created",
   preferedNameTitle: "Preferred name",
   preferNotToDisclose: "Prefer not to disclose",
   preferredLinguistText: "I prefer to be called ...",
