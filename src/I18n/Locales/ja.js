@@ -42,6 +42,7 @@
   callTimeMinutesSub: "この状況におすすめ",
   callTimeTitle: "現在標準中国語と英語でご利用いただけます。",
   callTimeSubtitle: "今後さらに言語が追加される予定です。",
+  callWillEnd: "時間切れになると通話が終了します",
   cancel: "キャンセル",
   cancelCall: "通話をキャンセル",
   celebrateAndEnjoy:
@@ -77,11 +78,13 @@
   continueUsingJeenie: "Jeenieで続ける",
   continueForFree: "続ける",
   conversations: "その他",
-  complimentsOf: "{{organizer}}に関する前向きなご意見",
+  compliments: "{{minutes}}分：{{organizer}}からのお礼",
+  complimentsOf: "{{organizer}}からのお礼",
   costOfCall: "推定料金： ",
   couldBetter: "改善点をお聞かせください。",
   countryFamiliarity: "国に関する知識（精通度）",
   cost: "料金",
+  costPerMinute: "$1/分",
   create: "作成",
   currency: "米ドル",
   customer: "お客様",
@@ -106,17 +109,17 @@
   enterEmailField: "メールアドレスを入力",
   enterLastNameField: "名前（姓）を入力",
   enterNameField: "名前（名）を入力",
+  enterPayment: "お支払い情報を入力",
+  enterPaymentDetailsToContinue: "操作を続けるにはお支払い情報を入力してください",
   enterPaymentDetails: "お支払い情報の入力または変更",
+  enterPaymentDetails2:
+    "アカウントの残り時間が0分になると、通話が終了します。お支払い情報を入力いただくと、必要な分だけお話いただけます",
+  enterPaymentDetails3:
+    "操作を続けるにはお支払い情報を入力してください。通話時間分が請求されます。",
+  enterPaymentDetails4:
+    "お支払い情報を入力いただくと、必要な分だけお話いただけます。入力しない場合、アカウントの残り時間が0分になると、通話が終了します。",
   enterPaymentOnboarding:
     "お支払い情報を入力いただくと、好きなだけお話いただけます。アカウントの残り時間が0分になると、使用した分の時間に対して料金が請求されます。",
-  enterenterPaymentDetails2:
-    "Your call will end once your account balance is 0 minutes. Enter your payment details to talk as long as you need",
-  enterPaymentDetails3:
-    "You must enter your payment details to continue, you will be charged for the length of your call",
-  enterPaymentDetails4:
-    "Enter your payment details to talk as long as you need. Otherwise, your call will end once your account balance reaches 0 minutes.",
-  PaymentOnboarding:
-    "Enter your payment details in order to talk as long as you would like. Once your account balance reaches 0 minutes, you will be charged for additional time used.",
   enterPhoneField: "電話番号を入力",
   enterYourPassword: "新しいパスワードを作成",
   error: "エラー",
@@ -239,7 +242,7 @@
   minutesAbbreviation: "{{minutes}}分",
   minutes: "分",
   missed: "不在着信",
-  modifyPayment: "Modify your registered payment method",
+  modifyPayment: "登録されているお支払い方法の変更",
   mute: "ミュート",
   myProfile: "マイプロフィール",
   name: "名前",
@@ -251,6 +254,7 @@
   niceToMeetYou: "はじめまして、 ",
   next: "次へ",
   no: "いいえ",
+  noAvailableMinutes: "0分",
   noItems: "項目がありません",
   none: "なし",
   noRecentActivityMessage: "ここに最近のアクティビティが表示されます",
@@ -300,20 +304,20 @@
   quicklyContact: "通訳スタッフにすぐに連絡する",
   rateYour: "評価してください - 評価対象：",
   recent: "最近",
-  recentCalls: "最近の通話",
   recentActivity: "最近のアクティビティ",
-  retail: "ショッピング",
+  recentCalls: "最近の通話",
   reconnect: "再接続",
-  removePayment: "Remove your registered payment method",
+  removePayment: "登録されているお支払い方法の削除",
   reportProblem: "お使いのデバイスを軽く振って問題を報告してください。",
   reportProblemMenu: "問題を報告",
   resetpassword: "パスワードをリセット",
+  retail: "ショッピング",
   retail: "ショッピング",
   rni18n: "RN i18n",
   rnVectorIcons: "RNベクターアイコン",
   rotate: "回転",
   save: "保存",
-  saveContinue: "Save & Continue",
+  saveContinue: "保存＆続ける",
   scanQR: "QRをスキャン",
   scanQRCode: "QRコードをスキャン",
   scenarioNotes: "ここに情報を追加",
@@ -341,6 +345,7 @@
   tapRepeat: "タップしてリピート",
   thereNoInternetConnection: "インターネットに接続されていません",
   time: "時間",
+  timeWithCost: "追加料金：1分あたり$1",
   timeStatic1: "トライアル期間中、通話は8分に事前設定されています。",
   timeCompliments: "Jeenieからのプレゼント",
   timeAddMore: "通話1回あたりの最長通話時間は60分です。",
@@ -374,6 +379,8 @@
   unspecifiedGender: "公開を希望しない",
   unusedMinutes: "未使用の時間は繰り越されます",
   upTo60: "最長60分",
+  upTo60WithMinutes: "最長{{minutes}}分",
+  upTo60WithAbrev: "最長60分",
   usageExamples: "使用例",
   username: "ユーザー名",
   userProfile: "マイプロフィール",
@@ -397,8 +404,19 @@
   youCanAddTime: "通話中に時間を延長できます",
   youCanChangeThis: "通話中にビデオのオン/オフを切り替えられます",
 
+  // text for customer related to payments and rates
+  payments: {
+    currentRate: "$1/分",
+    currentBalance: "{{minutes}}分",
+    enterPaymentToTalk: "通話を続けるにはお支払い情報を入力してください。1分あたり$1で好きなだけお話いただけます。",
+    currentRateDescription: "通話は1分あたり$1で、最長60分ご利用いただけます。長時間の通話に適用される割引は今後提供予定です。"
+  },
+
   // messages from api server, errors primarily
   api: {
+    errUnexpected: "予期せぬエラーが発生しました。",
+    errTemporary: "一時的なエラーが発生しました。",
+    errTemporaryTryAgain: "一時的なエラーが発生しました。  数分後にもう一度お試しください。",
     errLogin: "ログイン中に問題が発生しました",
     errDefaultAuth: "認証情報が期限切れか無効です。",
     errNoUser: "このメールアドレスのユーザーが見つかりませんでした",
