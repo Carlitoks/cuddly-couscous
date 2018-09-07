@@ -119,13 +119,13 @@ class GenderCustomerView extends Component {
     const record = checkRecord(email);
     const storedToken = record ? record.token : token;
     const storedId = record ? record.id : id;
-
     const payload = {
-      id: storedId,
+      id: storedId === undefined ? id : storedId,
       gender: selectedGender,
       countryCode: DeviceInfo.getDeviceCountry()
     };
-    asyncUpdateUser(payload, storedToken)
+
+    asyncUpdateUser(payload, storedToken === undefined ? token : storedToken)
       .then(response => {
         if (response.type === "networkErrors/error") {
           throw new Error(response.payload.data.errors);

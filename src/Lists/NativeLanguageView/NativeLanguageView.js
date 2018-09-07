@@ -103,8 +103,10 @@ class NativeLanguageView extends Component {
     const storedToken = record ? record.token : token;
     const storedId = record ? record.id : id;
 
-    const payload = { id: storedId, ...selectedLanguage };
-
+    const payload = {
+      id: storedId === undefined ? id : storedId,
+      ...selectedLanguage
+    };
     const formNativeLanguage = this.state.selectedLanguage;
     const isSupportedLang = SUPPORTED_LANGS.find(item => {
       return formNativeLanguage["3"] === item;
@@ -121,7 +123,10 @@ class NativeLanguageView extends Component {
           {
             text: "OK",
             onPress: () => {
-              asyncUpdateUser(payload, storedToken)
+              asyncUpdateUser(
+                payload,
+                storedToken === undefined ? token : storedToken
+              )
                 .then(response => {
                   if (response.type === "networkErrors/error") {
                     throw new Error(response.payload.data.errors);
@@ -144,7 +149,7 @@ class NativeLanguageView extends Component {
         { cancelable: false }
       );
     } else {
-      asyncUpdateUser(payload, storedToken)
+      asyncUpdateUser(payload, storedToken === undefined ? token : storedToken)
         .then(response => {
           if (response.type === "networkErrors/error") {
             throw new Error(response.payload.data.errors);
@@ -237,7 +242,7 @@ class NativeLanguageView extends Component {
 
 // MAP STATE TO PROPS HERE
 const mS = state => ({
-  // id: state.customerProfile.userInfo.id,
+  id: state.customerProfile.userInfo.id,
   email: state.registrationCustomer.email,
   emailUserProfile: state.userProfile.email,
   selectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage,
