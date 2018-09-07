@@ -41,14 +41,6 @@ class NativeLanguageView extends Component {
     };
   }
 
-  componentWillUnmount() {
-    try {
-      Keyboard.removeAllListeners("keyboardDidHide");
-    } catch (e) {
-      //console.log(e);
-    }
-  }
-
   componentWillMount() {
     const {
       selectedNativeLanguage,
@@ -65,10 +57,6 @@ class NativeLanguageView extends Component {
     setTimeout(() => {
       this.setState({ loading: false });
     }, 700);
-
-    Keyboard.addListener("keyboardDidHide", () => {
-      Keyboard.dismiss();
-    });
 
     const emailStored = email.length === 0 ? emailUserProfile : email;
 

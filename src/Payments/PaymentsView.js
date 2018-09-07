@@ -4,7 +4,7 @@ import { Button } from "react-native-vector-icons/MaterialIcons";
 import PropTypes from "prop-types";
 import stripe, { PaymentCardTextField } from "tipsi-stripe";
 
-import { ScrollView, Text, Image, View, Alert } from "react-native";
+import { Keyboard, ScrollView, Text, Image, View, Alert } from "react-native";
 import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../Components/HeaderView/HeaderView";
 import Close from "../Components/Close/Close";
@@ -23,6 +23,8 @@ import {
 } from "../Ducks/PaymentsReducer";
 import { stripePublishableKey } from "../Config/env";
 import { updateView } from "../Ducks/UserProfileReducer";
+
+import { LiteCreditCardInput } from "react-native-credit-card-input";
 
 const Title = ({ messageText }) => (
   <View>
@@ -49,11 +51,7 @@ const ManagePaymentMethodArea = props => {
       <Text style={styles.cardsTitle}>{I18n.t("card")}</Text>
       {!!displayCardField ? (
         <View style={styles.cardFieldContainer}>
-          <PaymentCardTextField
-            style={styles.cardField}
-            disabled={false}
-            onParamsChange={handleFieldParamsChange}
-          />
+          <LiteCreditCardInput onChange={handleFieldParamsChange} />
         </View>
       ) : (
         <View>
@@ -98,19 +96,25 @@ const ManagePaymentMethodArea = props => {
 };
 
 class PaymentsView extends Component {
-  handleFieldParamsChange = (valid, params) => {
-    const { updatePayments } = this.props;
-    const { number, expMonth, expYear, cvc } = params;
-
-    const cardInfo = {
-      valid,
-      number,
-      expMonth,
-      expYear,
-      cvc
-    };
+  handleFieldParamsChange = form => {
+    const { valid } = form;
 
     if (valid) {
+      const { updatePayments } = this.props;
+      const {
+        valid,
+        values: { number, expiry, cvc }
+      } = form;
+      const [, expMonth, expYear] = expiry.match(/(\d\d)\/(\d\d)/);
+
+      const cardInfo = {
+        valid,
+        number,
+        expMonth,
+        expYear,
+        cvc
+      };
+
       updatePayments({ cardInfo });
     }
   };
