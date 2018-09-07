@@ -736,12 +736,12 @@ export const asyncAcceptsInvite = (
             })
             .catch(error => {
               dispatch(clear());
-              dispatch({ type: "Home" });
+              dispatch({ type: "Home", params: { alertAssigned : true }});
               dispatch(networkError(error));
             });
         } else {
           dispatch(clear());
-          dispatch({ type: "Home", params: { alert: true } });
+          dispatch({ type: "Home", params: { alertCancelled: true } });
         }
       })
       .catch(error => {
