@@ -36,13 +36,20 @@ class HomeCarousel extends Component {
 
   render() {
     const { categories, lastSelectedTile } = this.props;
+    const itemsOrdered = [];
+    const theOrder = ["airport", "transit", "hotel", "dining", "retail", "conversations", "qr"];
+    for (let i = 0; i < theOrder.length; i++) {
+      if (categories.indexOf(theOrder[i]) > -1) {
+        itemsOrdered.push(theOrder[i]);
+      }
+    }
 
-    const carousel = categories && (
+    const carousel = itemsOrdered && (
       <View style={styles.carouselContainer}>
         <Carousel
           slideStyle={styles.carousel}
           ref={c => (this._slider1Ref = c)}
-          data={categories}
+          data={itemsOrdered}
           renderItem={({ item, index }) => {
             if (item !== "general") {
               return (
