@@ -271,8 +271,15 @@ class PaymentsView extends Component {
 
                 return;
               }
-
-              this.createTokenWithCard(onSubmit);
+              if (valid) {
+                this.createTokenWithCard(onSubmit);
+              } else {
+                Alert.alert(
+                  I18n.t("paymentDetails"),
+                  I18n.t("invalidPaymentDetails"),
+                  [{ text: I18n.t("ok") }]
+                );
+              }
             }}
             absolute
             bold={false}

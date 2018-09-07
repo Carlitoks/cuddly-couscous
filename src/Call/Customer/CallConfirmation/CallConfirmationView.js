@@ -71,7 +71,14 @@ class CallConfirmationView extends Component {
       stripePaymentToken
     } = this.props;
 
-    if (!stripePaymentToken) {
+    const thereAreNoMinutesAvailable = availableMinutes === 0;
+    const dontChargeOwnerForEvent =
+      (promotion || event.id) && !chargeOverageToOwner;
+
+    if (
+      !stripePaymentToken &&
+      (thereAreNoMinutesAvailable || chargeOwnerForEvent)
+    ) {
       const params = {
         title: I18n.t("paymentDetails"),
         messageText: I18n.t("enterPaymentDetails2"),
@@ -81,7 +88,7 @@ class CallConfirmationView extends Component {
         onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
       };
 
-      if (availableMinutes === 0) {
+      if (thereAreNoMinutesAvailable) {
         params = {
           ...params,
           messageText: I18n.t("enterPaymentDetails3"),
@@ -89,7 +96,7 @@ class CallConfirmationView extends Component {
         };
       }
 
-      if ((promotion || event.id) && !chargeOverageToOwner) {
+      if (dontChargeOwnerForEvent) {
         params = {
           ...params,
           messageText: I18n.t("enterPaymentDetails4")
