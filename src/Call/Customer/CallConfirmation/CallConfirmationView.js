@@ -77,33 +77,22 @@ class CallConfirmationView extends Component {
         messageText: I18n.t("enterPaymentDetails2"),
         buttonText: I18n.t("saveContinue"),
         buttonTextIfEmpty: I18n.t("skipAddLater"),
-        optional: true,
+        optional: false,
         onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
       };
 
-      if (availableMinutes < 20) {
-        if (availableMinutes === 0) {
-          params = {
-            ...params,
-            messageText: I18n.t("enterPaymentDetails3"),
-            buttonText: I18n.t("continue"),
-            optional: false
-          };
-        } else {
-          params = {
-            ...params,
-            messageText: I18n.t("enterPaymentDetails2"),
-            buttonText: I18n.t("saveContinue"),
-            optional: false
-          };
-        }
+      if (availableMinutes === 0) {
+        params = {
+          ...params,
+          messageText: I18n.t("enterPaymentDetails3"),
+          buttonText: I18n.t("continue")
+        };
       }
 
       if ((promotion || event.id) && !chargeOverageToOwner) {
         params = {
           ...params,
-          messageText: I18n.t("enterPaymentDetails4"),
-          optional: false
+          messageText: I18n.t("enterPaymentDetails4")
         };
       }
 
