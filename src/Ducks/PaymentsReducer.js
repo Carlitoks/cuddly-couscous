@@ -31,15 +31,10 @@ export const setPayment = stripeSourceToken => (dispatch, getState) => {
     auth: { token }
   } = getState();
 
-  User.setPayment(id, token, stripeSourceToken)
-    .then(response => {
-      const { stripeCustomerID, stripePaymentToken } = response.data;
-      dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
-    })
-    .catch(error => {
-      console.log(error);
-      console.log(error.response);
-    });
+  return User.setPayment(id, token, stripeSourceToken).then(response => {
+    const { stripeCustomerID, stripePaymentToken } = response.data;
+    dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
+  });
 };
 
 export const removePayment = _ => (dispatch, getState) => {

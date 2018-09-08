@@ -55,7 +55,7 @@ const ManagePaymentMethodArea = props => {
             onChange={handleFieldParamsChange}
             additionalInputsProps={{
               number: { maxLength: 19 },
-              expiry: { maxLength: 5 },
+              // expiry: { maxLength: 5 },
               cvc: { maxLength: 3 }
             }}
           />
@@ -115,13 +115,12 @@ class PaymentsView extends Component {
     const cardInfo = {
       valid,
       number,
-      expMonth,
-      expYear,
+      expMonth: parseInt(expMonth),
+      expYear: parseInt(expYear),
       cvc
     };
 
     updatePayments({ cardInfo });
-    // }
   };
 
   componentWillMount() {
@@ -156,9 +155,10 @@ class PaymentsView extends Component {
       return stripe
         .createTokenWithCard(params)
         .then(({ tokenId }) => {
-          setPayment(tokenId);
-          return updateView({ stripePaymentToken: tokenId });
+          updateView({ stripePaymentToken: tokenId });
+          return setPayment(tokenId);
         })
+
         .then(_ => updatePayments({ loading: false }))
         .then(_ => {
           Alert.alert(
@@ -170,8 +170,13 @@ class PaymentsView extends Component {
           callback();
         })
         .catch(error => {
-          console.log(error);
-          console.log(error.response);
+          Alert.alert(
+            I18n.t("paymentDetails"),
+            I18n.t("invalidPaymentDetails"),
+            [{ text: I18n.t("ok") }]
+          );
+
+          updatePayments({ loading: false });
         });
     } catch (error) {
       updatePayments({ loading: false, displayCardField: false });
