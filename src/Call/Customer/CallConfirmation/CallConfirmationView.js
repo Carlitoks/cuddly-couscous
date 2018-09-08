@@ -77,7 +77,7 @@ class CallConfirmationView extends Component {
 
     if (
       !stripePaymentToken &&
-      (thereAreNoMinutesAvailable || chargeOwnerForEvent)
+      (thereAreNoMinutesAvailable || dontChargeOwnerForEvent)
     ) {
       const params = {
         title: I18n.t("paymentDetails"),
