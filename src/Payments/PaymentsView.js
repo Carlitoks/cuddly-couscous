@@ -51,7 +51,14 @@ const ManagePaymentMethodArea = props => {
       <Text style={styles.cardsTitle}>{I18n.t("card")}</Text>
       {!!displayCardField ? (
         <View style={styles.cardFieldContainer}>
-          <LiteCreditCardInput onChange={handleFieldParamsChange} />
+          <LiteCreditCardInput
+            onChange={handleFieldParamsChange}
+            additionalInputsProps={{
+              number: { maxLength: 19 },
+              // expiry: { maxLength: 5 },
+              cvc: { maxLength: 3 }
+            }}
+          />
         </View>
       ) : (
         <View>
@@ -97,26 +104,23 @@ const ManagePaymentMethodArea = props => {
 
 class PaymentsView extends Component {
   handleFieldParamsChange = form => {
-    const { valid } = form;
+    const { updatePayments } = this.props;
+    const {
+      valid,
+      values: { number, expiry, cvc }
+    } = form;
+    const expiryMatch = expiry.match(/(\d\d)\/(\d\d)/);
+    const [, expMonth, expYear] = !!expiryMatch ? expiryMatch : [];
 
-    if (valid) {
-      const { updatePayments } = this.props;
-      const {
-        valid,
-        values: { number, expiry, cvc }
-      } = form;
-      const [, expMonth, expYear] = expiry.match(/(\d\d)\/(\d\d)/);
+    const cardInfo = {
+      valid,
+      number,
+      expMonth: parseInt(expMonth),
+      expYear: parseInt(expYear),
+      cvc
+    };
 
-      const cardInfo = {
-        valid,
-        number,
-        expMonth,
-        expYear,
-        cvc
-      };
-
-      updatePayments({ cardInfo });
-    }
+    updatePayments({ cardInfo });
   };
 
   componentWillMount() {
@@ -151,9 +155,10 @@ class PaymentsView extends Component {
       return stripe
         .createTokenWithCard(params)
         .then(({ tokenId }) => {
-          setPayment(tokenId);
-          return updateView({ stripePaymentToken: tokenId });
+          updateView({ stripePaymentToken: tokenId });
+          return setPayment(tokenId);
         })
+
         .then(_ => updatePayments({ loading: false }))
         .then(_ => {
           Alert.alert(
@@ -165,8 +170,13 @@ class PaymentsView extends Component {
           callback();
         })
         .catch(error => {
-          console.log(error);
-          console.log(error.response);
+          Alert.alert(
+            I18n.t("paymentDetails"),
+            I18n.t("invalidPaymentDetails"),
+            [{ text: I18n.t("ok") }]
+          );
+
+          updatePayments({ loading: false });
         });
     } catch (error) {
       updatePayments({ loading: false, displayCardField: false });
