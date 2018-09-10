@@ -46,7 +46,7 @@ export default (ENG = {
   cancel: "Cancel",
   cancelCall: "Cancel call",
   celebrateAndEnjoy:
-    "Celebrate our launch \n and enjoy Jeenie for a \nlimited time for FREE!",
+    "Celebrate our launch \n and enjoy Jeenie for \n 15 minutes FREE!",
   celebrateAndEnjoyAlternative:
     "Celebrate our launch and \nenjoy 15 minutes with Jeenie \nfor FREE!",
   celebrateWithUs: "Celebrate our launch with us!",
@@ -190,7 +190,7 @@ export default (ENG = {
   intermediate: "Intermediate",
   invalidPromoCode: "Invalid promo code",
   invalidPaymentDetails:
-    "The payment details information you provided is not correct",
+    "The payment details you provided are not valid.  Please check for errors during entry.",
   isReconnecting: "is reconnecting...",
   keepWaiting: "Keep waiting",
   isConnecting: "{{firstName}} {{lastInitial}}. is connecting...",
@@ -286,7 +286,7 @@ export default (ENG = {
   payAsYouGo: "Pay as you go",
   payAsYouGoPricing: "Pay-as-you-go = \n $1 per minute",
   paymentDetails: "Payment Details",
-  paymentDetailsCreated: "Your Payment Details were successfully created",
+  paymentDetailsCreated: "Your payment information was successfully updated.",
   preferedNameTitle: "Preferred name",
   preferNotToDisclose: "Prefer not to disclose",
   preferredLinguistText: "I prefer to be called ...",
