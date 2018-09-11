@@ -152,14 +152,17 @@ class CustomerView extends Component {
       customScenarioNote,
       token,
       eventID,
-      location
+      location,
+      event
     } = this.props;
     await createSession({
-      primaryLangCode:
-        primaryLangCode[3] !== "eng" && primaryLangCode[3] !== "cmn"
-          ? "eng"
-          : primaryLangCode[3],
-      secondaryLangCode: secondaryLangCode,
+      primaryLangCode: primaryLangCode[3],
+      secondaryLangCode:
+        event.id &&
+        event.id !== "" &&
+        event.defaultSecondaryLangCode !== undefined
+          ? event.defaultSecondaryLangCode
+          : secondaryLangCode,
       estimatedMinutes: selectedCallTime,
       scenarioID: selectedScenarioId,
       customScenarioNote: customScenarioNote,
@@ -272,7 +275,8 @@ const mS = state => ({
   location: state.callCustomerSettings.location,
   eventID: state.events.id,
   localVideoWarning: state.activeSessionReducer.localVideoWarning,
-  signalVideoWarning: state.activeSessionReducer.signalVideoWarning
+  signalVideoWarning: state.activeSessionReducer.signalVideoWarning,
+  event: state.events
 });
 
 const mD = {
