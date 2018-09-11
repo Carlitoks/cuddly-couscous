@@ -11,7 +11,7 @@ import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 
-import { View, Text, ScrollView, Keyboard } from "react-native";
+import {View, Text, ScrollView, Keyboard, Alert} from "react-native";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
@@ -35,6 +35,7 @@ class PromoCodeView extends Component {
     this.props
       .asyncScanPromoCode(promoCode, token)
       .then(response => {
+        this.props.clearPromoCode();
         if (response.type === "networkErrors/error") {
           throw new Error(I18n.t("errorPromo"));
         }
@@ -48,7 +49,14 @@ class PromoCodeView extends Component {
           !response.payload.userCanCreateSession ||
           !!response.payload.sessionCreateErr
         ) {
-          this.props.navigation.dispatch({ type: "Home" });
+          Alert.alert("Error", response.payload.sessionCreateErr, [
+            {
+              text: "OK",
+              onPress: () => {
+                this.props.clearPromoCode();
+              }
+            }
+          ]);
         } else {
           if (requireScenarioSelection && restrictEventScenarios) {
             /* Dispatch to SelectListView with the scenarios involveds*/
