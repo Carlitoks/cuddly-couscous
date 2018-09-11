@@ -2,9 +2,9 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Button } from "react-native-vector-icons/MaterialIcons";
 import PropTypes from "prop-types";
-import stripe, { PaymentCardTextField } from "tipsi-stripe";
+import stripe from "tipsi-stripe";
 
-import { Keyboard, ScrollView, Text, Image, View, Alert } from "react-native";
+import { Alert, Image, ScrollView, Text, View } from "react-native";
 import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../Components/HeaderView/HeaderView";
 import Close from "../Components/Close/Close";

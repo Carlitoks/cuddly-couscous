@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 
 import {
-  Text,
-  View,
+  Alert,
   ScrollView,
   Switch,
+  Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button, Header, List, ListItem } from "react-native-elements";
@@ -302,42 +303,50 @@ class CallConfirmationView extends Component {
     }
   }
 
-  checkAvailableMinutes() {
-    const { navigation, event } = this.props;
-    if (!event.id) {
-      if (this.props.availableMinutes === 0) {
-        this.props.cleanSelected();
-        // this.props.clearEvents();
-        this.props.clearPromoCode();
-        this.props.updateHomeFlow({
-          displayFeedbackModal: true
-        });
-        navigation.dispatch({ type: "Home" });
-      } else {
-        this.props.updateSettings({
-          selectedScenarioId:
-            this.props.selectedScenario && this.props.selectedScenario[0]
-              ? this.props.selectedScenario[0].id
-              : "11111111-1111-1111-1111-111111111126"
-        });
-        this.props.cleanSelected();
-        // this.props.clearEvents();
-        this.props.clearPromoCode();
-        navigation.dispatch({ type: "CustomerView" });
-      }
+  checkAvailableMinutes = async () => {
+    const {
+      navigation,
+      event,
+      stripePaymentToken,
+      availableMinutes,
+      cleanSelected,
+      clearPromoCode,
+      updateHomeFlow,
+      updateSettings,
+      selectedScenario
+    } = this.props;
+
+    cleanSelected();
+    clearPromoCode();
+
+    if (!event.id && availableMinutes === 0 && !stripePaymentToken) {
+      Alert.alert(I18n.t("paymentDetails"), I18n.t("enterPaymentDetails3"), [
+        { text: I18n.t("ok") }
+      ]);
+
+      navigation.dispatch(
+        {
+          type: "PaymentsView"
+        },
+        {
+          title: I18n.t("paymentDetails"),
+          messageText: I18n.t("enterPaymentDetails3"),
+          buttonText: I18n.t("saveContinue"),
+          buttonTextIfEmpty: I18n.t("skipAddLater"),
+          optional: false,
+          onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
+        }
+      );
     } else {
-      this.props.updateSettings({
+      updateSettings({
         selectedScenarioId:
-          this.props.selectedScenario && this.props.selectedScenario[0]
-            ? this.props.selectedScenario[0].id
+          selectedScenario && selectedScenario[0]
+            ? selectedScenario[0].id
             : "11111111-1111-1111-1111-111111111126"
       });
-      this.props.cleanSelected();
-      // this.props.clearEvents();
-      this.props.clearPromoCode();
       navigation.dispatch({ type: "CustomerView" });
     }
-  }
+  };
 
   setLanguages = () => {
     const { nativeLangCode } = this.props;
