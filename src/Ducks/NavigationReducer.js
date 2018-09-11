@@ -12,8 +12,8 @@ export default (reducer = (state, action) => {
   let newState;
 
   if (state) {
+    //if(action.type !== 'contactLinguist/incrementCounter')
     const [currentRoute] = state.routes[0].routes[0].routes.slice(-1);
-
     if (action.type === currentRoute.routeName) return state;
   }
 

@@ -237,6 +237,7 @@ class PaymentsView extends Component {
             closeButton && (
               <Close
                 action={() => {
+                  
                   navigation.dispatch({ type: "Home" });
                 }}
               />

@@ -126,6 +126,9 @@ class CallConfirmationView extends Component {
     this.props.clearSettings();
     this.props.clearTokboxStatus();
 
+    //TODO: this will verify the user settings before calling and set the according lang, please verify.
+    this.setLanguages();
+
     getGeolocationCoords()
       .then(response => {
         this.props.customerUpdateSettings({
@@ -197,14 +200,6 @@ class CallConfirmationView extends Component {
         this.setLanguages();
       }
     }
-  }
-
-  componentDidMount() {
-    checkOperatingHours(
-      true,
-      this.props.nativeLangCode,
-      this.props.secundaryLangCode
-    );
   }
 
   getLabels(type) {

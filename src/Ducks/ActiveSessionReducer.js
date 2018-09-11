@@ -38,7 +38,6 @@ const ACTIONS = {
   ERROR: "activeSession/error",
   TOKEVENT: "activeSession/tokboxevent",
   SET_SESSION: "activeSession/setSession",
-  ERROR: "activeSession/error", // CHECK
   CREATEINVITATION: "activeSession/invitation",
   INCREMENT_TIMER: "activeSession/incrementTimer",
   INCREMENT_RECONNECT: "activeSession/incrementReconnect",
@@ -126,7 +125,6 @@ const initialState = {
   verifyCallId: null,
   location: [null, null],
   accept: false,
-  customerPreferredSex: "any",
   customerName: null,
   isLinguist: false,
   firstName: "",
@@ -416,21 +414,25 @@ export const createSession = ({
     location
   )
     .then(response => {
-      const { data } = response;
-      // Set session data
-      dispatch(setSession(data));
-      dispatch(updateRate({ sessionID: data.sessionID }));
-      // verify if there is linguist available
-      dispatch(
-        update({
-          verifyCallId: timer.setInterval(
-            "verifyCallId",
-            () => dispatch(verifyCall(data.sessionID, token)),
-            5000
-          )
-        })
-      );
-      return response.data;
+      if(response){
+        const { data } = response;
+        // Set session data
+        dispatch(setSession(data));
+        dispatch(updateRate({ sessionID: data.sessionID }));
+        // verify if there is linguist available
+        dispatch(
+          update({
+            verifyCallId: timer.setInterval(
+              "verifyCallId",
+              () => dispatch(verifyCall(data.sessionID, token)),
+              5000
+            )
+          })
+        );
+        return response.data;
+      }else{
+        dispatch({ type: "Home" });
+      }
     })
     .catch(error => {
       dispatch(networkError(error));
@@ -438,9 +440,10 @@ export const createSession = ({
       timer.clearInterval("counterId");
       timer.clearInterval("verifyCallId");
       timer.clearInterval("timer");
-      dispatch(resetCounter());
-      dispatch(resetCounterVerify());
-      dispatch(clear());
+      // dispatch(endSession());
+      // dispatch(resetCounter());
+      // dispatch(resetCounterVerify());
+      // dispatch(clear());
       dispatch({ type: "Home" });
     });
 };

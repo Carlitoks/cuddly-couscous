@@ -43,7 +43,7 @@ import { displayFormErrors } from "../../Util/Alerts";
 import { Colors } from "../../Themes";
 
 import I18n from "../../I18n/I18n";
-
+//TODO: change the operating hours alert to this view instead of homecustomer.
 class LoginView extends Component {
   componentWillUnmount() {
     this.props.clearForm();
@@ -146,7 +146,6 @@ class LoginView extends Component {
                 );
                 navigation.dispatch({ type: record.lastStage });
               } else {
-                checkOperatingHours(true);
                 navigation.dispatch({ type: "Home" });
               }
               updateForm({ performingRequest: false });

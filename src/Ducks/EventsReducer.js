@@ -25,7 +25,9 @@ export const asyncScanQR = (id, token) => dispatch => {
     .then(response => {
       return dispatch(scanQR(response.data));
     })
-    .catch(error => dispatch(networkError(error)));
+    .catch(error => {
+      dispatch(networkError(error));
+    });
 };
 
 const eventReducer = (state = initialState, action = {}) => {

@@ -146,7 +146,7 @@ class CustomerView extends Component {
     const {
       createSession,
       primaryLangCode,
-      secundaryLangCode,
+      secondaryLangCode,
       selectedCallTime,
       selectedScenarioId,
       customScenarioNote,
@@ -154,13 +154,12 @@ class CustomerView extends Component {
       eventID,
       location
     } = this.props;
-
     await createSession({
       primaryLangCode:
         primaryLangCode[3] !== "eng" && primaryLangCode[3] !== "cmn"
           ? "eng"
           : primaryLangCode[3],
-      secondaryLangCode: secundaryLangCode,
+      secondaryLangCode: secondaryLangCode,
       estimatedMinutes: selectedCallTime,
       scenarioID: selectedScenarioId,
       customScenarioNote: customScenarioNote,
@@ -259,7 +258,7 @@ const mS = state => ({
   tokboxStatus: state.activeSessionReducer.status,
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
   primaryLangCode: state.userProfile.selectedNativeLanguage,
-  secundaryLangCode: state.contactLinguist.secundaryLangCode,
+  secondaryLangCode: state.contactLinguist.secundaryLangCode,
   customScenarioNote: state.contactLinguist.customScenarioNote,
   selectedCallTime: state.activeSessionReducer.selectedTime,
   linguist: state.sessionInfo.linguist,

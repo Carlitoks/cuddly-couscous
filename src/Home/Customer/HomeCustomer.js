@@ -80,9 +80,13 @@ class Home extends Component {
       uuid,
       token,
       customerCalls,
-      updateHomeFlow
+      updateHomeFlow,
+      linguistProfile,
+      isLoggedIn
     } = this.props;
-    //checkOperatingHours(true);
+    if(!linguistProfile && isLoggedIn){
+      //checkOperatingHours(true);
+    }
     getAllCustomerCalls(uuid, token)
       .then(response => {
         customerCalls(response);
@@ -282,6 +286,7 @@ class Home extends Component {
       uuid,
       token
     } = this.props;
+
     const { width, height } = Dimensions.get("window");
 
     getProfileAsync(uuid, token);
@@ -421,7 +426,9 @@ const mS = state => ({
   displayPaymentModal: state.homeFlow.displayPaymentModal,
   displayFeedbackProvided: state.homeFlow.displayFeedbackProvided,
   stripeCustomerID: state.userProfile.stripeCustomerID,
-  stripePaymentToken: state.userProfile.stripePaymentToken
+  stripePaymentToken: state.userProfile.stripePaymentToken,
+  linguistProfile: state.userProfile.linguistProfile,
+  isLoggedIn: state.auth.isLoggedIn
 });
 
 const mD = {
