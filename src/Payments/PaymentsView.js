@@ -55,7 +55,7 @@ const ManagePaymentMethodArea = props => {
             onChange={handleFieldParamsChange}
             additionalInputsProps={{
               number: { maxLength: 19 },
-              // expiry: { maxLength: 5 },
+              expiry: { maxLength: 5 },
               cvc: { maxLength: 3 }
             }}
           />
