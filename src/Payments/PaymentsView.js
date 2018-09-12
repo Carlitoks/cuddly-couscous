@@ -127,6 +127,11 @@ class PaymentsView extends Component {
 
           updatePayments({ errors: [] });
           callback();
+        })
+        .catch(error => {
+          updatePayments({ loading: false, displayCardField: false });
+
+          this.displayErrorAlert();
         });
     } catch (error) {
       updatePayments({ loading: false, displayCardField: false });
@@ -144,7 +149,6 @@ class PaymentsView extends Component {
 
   submit = ({ optional, onSubmit }) => {
     const {
-      navigation: {},
       displayCardField,
       cardInfo,
       cardInfo: { valid }
