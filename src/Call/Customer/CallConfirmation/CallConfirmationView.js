@@ -65,20 +65,17 @@ class CallConfirmationView extends Component {
   checkPaymentsAndRedirect = () => {
     const {
       availableMinutes,
-      event,
-      event: { chargeOverageToOwner },
+      event: { chargeFullToOwner },
       navigation,
-      promotion,
       stripePaymentToken
     } = this.props;
 
     const thereAreNoMinutesAvailable = availableMinutes === 0;
-    const dontChargeOwnerForEvent =
-      (promotion || event.id) && !chargeOverageToOwner;
 
     if (
       !stripePaymentToken &&
-      (thereAreNoMinutesAvailable || dontChargeOwnerForEvent)
+      thereAreNoMinutesAvailable &&
+      !chargeFullToOwner
     ) {
       const params = {
         title: I18n.t("paymentDetails"),
@@ -97,7 +94,7 @@ class CallConfirmationView extends Component {
         };
       }
 
-      if (dontChargeOwnerForEvent) {
+      if (!chargeFullToOwner) {
         params = {
           ...params,
           messageText: I18n.t("enterPaymentDetails4")
