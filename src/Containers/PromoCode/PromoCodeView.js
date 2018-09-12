@@ -11,7 +11,7 @@ import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 
-import {View, Text, ScrollView, Keyboard, Alert} from "react-native";
+import { View, Text, ScrollView, Keyboard, Alert } from "react-native";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
@@ -27,6 +27,13 @@ import { displayFormErrors } from "../../Util/Alerts";
 
 class PromoCodeView extends Component {
   submit() {
+    this.props.updateHomeFlow({
+      categorySelected: ""
+    });
+    this.props.updateSettings({
+      selectedScenarios: []
+    });
+
     const { token, promoCode } = this.props;
 
     this.props.updateContactLinguist({ customScenarioNote: "" });

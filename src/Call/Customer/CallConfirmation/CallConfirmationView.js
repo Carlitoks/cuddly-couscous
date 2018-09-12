@@ -398,7 +398,10 @@ class CallConfirmationView extends Component {
         ? selectedScenario[0].category
         : categories[categoryIndex];
 
-    const categoryTitle = this.CATEGORIES[category];
+    const categoryTitle =
+      this.CATEGORIES[category] === undefined
+        ? I18n.t("general")
+        : this.CATEGORIES[category];
 
     return (
       <ViewWrapper style={styles.scrollContainer}>

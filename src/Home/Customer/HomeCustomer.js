@@ -84,7 +84,7 @@ class Home extends Component {
       linguistProfile,
       isLoggedIn
     } = this.props;
-    if(!linguistProfile && isLoggedIn){
+    if (!linguistProfile && isLoggedIn) {
       //checkOperatingHours(true);
     }
     getAllCustomerCalls(uuid, token)
@@ -337,9 +337,6 @@ class Home extends Component {
               <RecentActivity
                 navigation={navigation}
                 scenariosList={scenariosList}
-                updateLinguistForm={updateLinguistForm}
-                updateContactLinguist={updateContactLinguist}
-                updateCallCustomerSettings={updateCallCustomerSettings}
                 indexSelected={this.state.indexSelected}
               />
             </ScrollView>

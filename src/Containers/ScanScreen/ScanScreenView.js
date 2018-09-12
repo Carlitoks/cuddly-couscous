@@ -44,6 +44,12 @@ class ScanScreenView extends Component {
   };
 
   onSuccess = e => {
+    this.props.updateHomeFlow({
+      categorySelected: ""
+    });
+    this.props.updateSettings({
+      selectedScenarios: []
+    });
     const { navigation } = this.props;
     try {
       const eventId = this.getEventID(e.data);
@@ -51,89 +57,94 @@ class ScanScreenView extends Component {
         navigation.state.routeName === "ScanScreenView" &&
         !!this.checkValidID(eventId)
       ) {
-        this.props.asyncScanQR(eventId, this.props.token).then(response => {
-          const {
-            requireScenarioSelection,
-            restrictEventScenarios,
-            scenarios,
-            defaultMinutes,
-            allowMinuteSelection,
-            sessionCreateErr,
-            userCanCreateSession
-          } = response.payload;
-          if(!sessionCreateErr && userCanCreateSession){
-            if (this.props.token) {
-              if (requireScenarioSelection && restrictEventScenarios) {
-                /* Dispatch to SelectListView with the scenarios involveds*/
+        this.props
+          .asyncScanQR(eventId, this.props.token)
+          .then(response => {
+            const {
+              requireScenarioSelection,
+              restrictEventScenarios,
+              scenarios,
+              defaultMinutes,
+              allowMinuteSelection,
+              sessionCreateErr,
+              userCanCreateSession
+            } = response.payload;
+            if (!sessionCreateErr && userCanCreateSession) {
+              if (this.props.token) {
+                if (requireScenarioSelection && restrictEventScenarios) {
+                  /* Dispatch to SelectListView with the scenarios involveds*/
 
-                if (scenarios) {
-                  let actualCats = this.props.categories;
-                  actualCats.includes(scenarios[0].category)
-                    ? null
-                    : actualCats.push(scenarios[0].category);
-                  const catIndex = findIndex(actualCats, scenario => {
-                    return scenario === scenarios[0].category;
+                  if (scenarios) {
+                    let actualCats = this.props.categories;
+                    actualCats.includes(scenarios[0].category)
+                      ? null
+                      : actualCats.push(scenarios[0].category);
+                    const catIndex = findIndex(actualCats, scenario => {
+                      return scenario === scenarios[0].category;
+                    });
+                    this.props.updateHomeFlow({
+                      categoryIndex: catIndex,
+                      categories: actualCats
+                    });
+                    this.props.updateSettings({
+                      selectionItemType: "scenarios",
+                      selectionItemName: "scenarios",
+                      scenarios
+                    });
+
+                    this.props.navigation.dispatch({ type: "PromotionView" });
+                  } else {
+                    this.props.navigation.dispatch({
+                      type: "CustomScenarioView"
+                    });
+                  }
+                  this.props.updateCustomerSettings({
+                    selectedTime: defaultMinutes,
+                    allowTimeSelection: allowMinuteSelection
                   });
-                  this.props.updateHomeFlow({
-                    categoryIndex: catIndex,
-                    categories: actualCats
-                  });
+                } else if (
+                  requireScenarioSelection &&
+                  !restrictEventScenarios
+                ) {
+                  /* Dispatch to Category Selection View (Home) */
+
                   this.props.updateSettings({
                     selectionItemType: "scenarios",
                     selectionItemName: "scenarios",
-                    scenarios
+                    scenarios: scenarios || []
                   });
-
-                  this.props.navigation.dispatch({ type: "PromotionView" });
-                } else {
+                  this.props.navigation.dispatch({ type: "PromoCodeListView" });
+                } else if (!requireScenarioSelection) {
+                  /* Dispatch to Call Confirmation view */
                   this.props.navigation.dispatch({
-                    type: "CustomScenarioView"
+                    type: "CallConfirmationView"
                   });
                 }
-                this.props.updateCustomerSettings({
-                  selectedTime: defaultMinutes,
-                  allowTimeSelection: allowMinuteSelection
-                });
-              } else if (requireScenarioSelection && !restrictEventScenarios) {
-                /* Dispatch to Category Selection View (Home) */
-
-                this.props.updateSettings({
-                  selectionItemType: "scenarios",
-                  selectionItemName: "scenarios",
-                  scenarios: scenarios || []
-                });
-                this.props.navigation.dispatch({ type: "PromoCodeListView" });
-              } else if (!requireScenarioSelection) {
-                /* Dispatch to Call Confirmation view */
+              } else {
                 this.props.navigation.dispatch({
-                  type: "CallConfirmationView"
+                  type: "LoginView"
                 });
               }
             } else {
-              this.props.navigation.dispatch({
-                type: "LoginView"
-              });
-            }
-          } else {
-            if (navigation.state.routeName === "ScanScreenView") {
-              this.setState({
-                reactivate: false
-              });
-              Alert.alert("Error", "QR invalid, try again", [
-                {
-                  text: "OK",
-                  onPress: () => {
-                    this.scanner.reactivate();
-                    this.setState({
-                      reactivate: true
-                    });
+              if (navigation.state.routeName === "ScanScreenView") {
+                this.setState({
+                  reactivate: false
+                });
+                Alert.alert("Error", "QR invalid, try again", [
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      this.scanner.reactivate();
+                      this.setState({
+                        reactivate: true
+                      });
+                    }
                   }
-                }
-              ]);
+                ]);
+              }
             }
-          }
-
-        }).catch(error => console.log(error));
+          })
+          .catch(error => console.log(error));
 
         this.setState({
           reactivate: false

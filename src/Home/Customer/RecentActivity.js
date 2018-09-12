@@ -6,6 +6,10 @@ import { findIndex } from "lodash";
 import { Languages } from "../../Config/Languages";
 import I18n from "../../I18n/I18n";
 import styles from "./styles";
+import { updateSettings as updateLinguistForm } from "../../Ducks/LinguistFormReducer";
+import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
+import { updateSettings as updateCallCustomerSettings } from "../../Ducks/CallCustomerSettings";
+import { connect } from "react-redux";
 
 class RecentActivity extends Component {
   itemPress = index => {
@@ -19,7 +23,6 @@ class RecentActivity extends Component {
 
     if (!this.emptyActivity) {
       const scenario = scenariosList[index];
-
       updateLinguistForm({
         selectedScenarios: [scenario.scenario]
       });
@@ -69,7 +72,9 @@ class RecentActivity extends Component {
         subtitleProperty={"createdAt"}
         titleProperty={"title"}
         thirdLineProperty={"customScenarioNote"}
-        onPress={index => this.itemPress(index)}
+        onPress={index => {
+          this.itemPress(index);
+        }}
         multiple={false}
         selected={this.props.indexSelected}
         chevron={!this.emptyActivity && this.emptyActivity !== null}
@@ -96,4 +101,15 @@ class RecentActivity extends Component {
   }
 }
 
-export default RecentActivity;
+const mS = state => ({});
+
+const mD = {
+  updateLinguistForm,
+  updateContactLinguist,
+  updateCallCustomerSettings
+};
+
+export default connect(
+  mS,
+  mD
+)(RecentActivity);
