@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button } from "react-native-vector-icons/MaterialIcons";
 import PropTypes from "prop-types";
 import stripe from "tipsi-stripe";
 
-import { Alert, Image, ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView } from "react-native";
 import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../Components/HeaderView/HeaderView";
 import Close from "../Components/Close/Close";
@@ -12,8 +11,6 @@ import ViewWrapper from "../Containers/ViewWrapper/ViewWrapper";
 
 import styles from "./style";
 import I18n from "../I18n/I18n";
-import { Images } from "../Themes";
-import { Colors } from "../Themes/index";
 import BottomButton from "../Components/BottomButton/BottomButton.android";
 import GoBackButton from "../Components/GoBackButton/GoBackButton";
 import {
@@ -24,85 +21,58 @@ import {
 import { stripePublishableKey } from "../Config/env";
 import { updateView } from "../Ducks/UserProfileReducer";
 
-import { LiteCreditCardInput } from "react-native-credit-card-input";
-
-const Title = ({ messageText }) => (
-  <View>
-    <Text style={styles.messageText}>{messageText}</Text>
-
-    <View style={styles.imageContainer}>
-      <Image style={styles.image} source={Images.cardFormFront} />
-    </View>
-  </View>
-);
-
-const ManagePaymentMethodArea = props => {
-  const {
-    displayCardField,
-    onAddCardPress,
-    onRemoveCardPress,
-    handleFieldParamsChange,
-    stripeCustomerID,
-    stripePaymentToken
-  } = props;
-
-  return (
-    <View>
-      <Text style={styles.cardsTitle}>{I18n.t("card")}</Text>
-      {!!displayCardField ? (
-        <View style={styles.cardFieldContainer}>
-          <LiteCreditCardInput
-            onChange={handleFieldParamsChange}
-            additionalInputsProps={{
-              number: { maxLength: 19 },
-              expiry: { maxLength: 5 },
-              cvc: { maxLength: 3 }
-            }}
-          />
-        </View>
-      ) : (
-        <View>
-          <Button
-            name={stripePaymentToken ? "edit" : "add"}
-            size={25}
-            backgroundColor={"rgba(194, 194, 194, 0.17)"}
-            iconStyle={styles.buttonIcon}
-            borderRadius={0}
-            style={styles.button}
-            underlayColor={Colors.transparent}
-            color={Colors.gradientColor.top}
-            onPress={onAddCardPress}
-          >
-            <Text style={styles.buttonText} icon>
-              {stripePaymentToken
-                ? I18n.t("modifyPayment")
-                : I18n.t("addANewCard")}
-            </Text>
-          </Button>
-          {stripePaymentToken && (
-            <Button
-              name={"remove"}
-              size={25}
-              backgroundColor={"rgba(194, 194, 194, 0.17)"}
-              iconStyle={styles.buttonIcon}
-              borderRadius={0}
-              style={styles.button}
-              underlayColor={"rgba(194, 194, 194, 0.17)"}
-              color={Colors.gradientColor.top}
-              onPress={onRemoveCardPress}
-            >
-              <Text style={styles.buttonText} icon>
-                {I18n.t("removePayment")}
-              </Text>
-            </Button>
-          )}
-        </View>
-      )}
-    </View>
-  );
-};
+import Title from "./PaymentsTitle";
+import ManagePaymentMethodArea from "./ManagePaymentMethodArea";
+import { CREDIT_CARD_FORMAT } from "../Util/Constants";
 
 class PaymentsView extends Component {
+  componentWillMount() {
+    const { updatePayments } = this.props;
+
+    stripe.setOptions({
+      publishableKey: stripePublishableKey,
+      androidPayMode: "test" // Android only
+    });
+
+    updatePayments({ displayCardField: false });
+  }
+
+  checkFieldValidity = ({ valid, number, expMonth, expYear, cvc }) => {
+    const { updatePayments } = this.props;
+
+    const creditCardPattern = new RegExp(CREDIT_CARD_FORMAT);
+    const numberProperFormat = creditCardPattern.test(number);
+
+    const dateItemPattern = new RegExp("\\d{1,2}");
+    const monthProperFormat = dateItemPattern.test(expMonth);
+    const yearProperFormat = dateItemPattern.test(expYear);
+
+    const CVCPattern = new RegExp("\\d{3}");
+    const CVCProperFormat = CVCPattern.test(cvc);
+
+    const errors = [];
+
+    if (number.length === 0) {
+      errors.push("The credit card number is required");
+    } else if (!!!numberProperFormat) {
+      errors.push("The credit card number has wrong format");
+    }
+
+    if (cvc.length === 0) {
+      errors.push("CVC is required");
+    } else if (!!!CVCProperFormat) {
+      errors.push("CVC has wrong format");
+    }
+
+    if (expMonth.length === 0 || expYear.length === 0) {
+      errors.push("Expiry date is missing or incomplete");
+    } else if (!!!monthProperFormat || !!!yearProperFormat) {
+      errors.push("Expiry date has wrong format");
+    }
+
+    updatePayments({ errors });
+  };
+
   handleFieldParamsChange = form => {
     const { updatePayments } = this.props;
     const {
@@ -122,17 +92,6 @@ class PaymentsView extends Component {
 
     updatePayments({ cardInfo });
   };
-
-  componentWillMount() {
-    const { updatePayments } = this.props;
-
-    stripe.setOptions({
-      publishableKey: stripePublishableKey,
-      androidPayMode: "test" // Android only
-    });
-
-    updatePayments({ displayCardField: false });
-  }
 
   createTokenWithCard = callback => {
     const {
@@ -158,7 +117,6 @@ class PaymentsView extends Component {
           updateView({ stripePaymentToken: tokenId });
           return setPayment(tokenId);
         })
-
         .then(_ => updatePayments({ loading: false }))
         .then(_ => {
           Alert.alert(
@@ -167,26 +125,39 @@ class PaymentsView extends Component {
             [{ text: I18n.t("ok") }]
           );
 
+          updatePayments({ errors: [] });
           callback();
-        })
-        .catch(error => {
-          Alert.alert(
-            I18n.t("paymentDetails"),
-            I18n.t("invalidPaymentDetails"),
-            [{ text: I18n.t("ok") }]
-          );
-
-          updatePayments({ loading: false });
         });
     } catch (error) {
       updatePayments({ loading: false, displayCardField: false });
 
-      Alert.alert(I18n.t("paymentDetails"), I18n.t("invalidPaymentDetails"), [
-        { text: I18n.t("ok") }
-      ]);
+      this.displayErrorAlert();
 
       console.log(error);
     }
+  };
+
+  displayErrorAlert = _ =>
+    Alert.alert(I18n.t("paymentDetails"), I18n.t("invalidPaymentDetails"), [
+      { text: I18n.t("ok") }
+    ]);
+
+  submit = ({ optional, onSubmit }) => {
+    const {
+      navigation: {},
+      displayCardField,
+      cardInfo,
+      cardInfo: { valid }
+    } = this.props;
+
+    this.checkFieldValidity(cardInfo);
+
+    if (optional && !!!displayCardField) {
+      onSubmit();
+
+      return;
+    }
+    valid ? this.createTokenWithCard(onSubmit) : this.displayErrorAlert();
   };
 
   render() {
@@ -205,23 +176,18 @@ class PaymentsView extends Component {
       removePayment
     } = this.props;
 
-    const title =
-      !!params && params.title ? params.title : I18n.t("paymentDetails");
-    const messageText =
-      !!params && params.messageText
-        ? params.messageText
-        : I18n.t("enterPaymentDetails");
-    const buttonText =
-      !!params && params.buttonText ? params.buttonText : I18n.t("save");
-    const buttonTextIfEmpty =
-      !!params && params.buttonTextIfEmpty
-        ? params.buttonTextIfEmpty
-        : I18n.t("continue");
-    const backButton = !!params && params.backButton ? params.backButton : true;
-    const closeButton =
-      !!params && params.closeButton ? params.closeButton : true;
-    const optional = !!params && params.optional ? params.optional : false;
-    const onSubmit = !!params && params.onSubmit ? params.onSubmit : null;
+    const title = params.title ? params.title : I18n.t("paymentDetails");
+    const messageText = params.messageText
+      ? params.messageText
+      : I18n.t("enterPaymentDetails");
+    const buttonText = params.buttonText ? params.buttonText : I18n.t("save");
+    const buttonTextIfEmpty = params.buttonTextIfEmpty
+      ? params.buttonTextIfEmpty
+      : I18n.t("continue");
+    const backButton = params.backButton ? params.backButton : true;
+    const closeButton = params.closeButton ? params.closeButton : true;
+    const optional = params.optional ? params.optional : false;
+    const onSubmit = params.onSubmit ? params.onSubmit : null;
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -237,7 +203,6 @@ class PaymentsView extends Component {
             closeButton && (
               <Close
                 action={() => {
-                  
                   navigation.dispatch({ type: "Home" });
                 }}
               />
@@ -257,6 +222,7 @@ class PaymentsView extends Component {
             <Title messageText={messageText} />
 
             <ManagePaymentMethodArea
+              cardInfo={cardInfo}
               displayCardField={displayCardField}
               handleFieldParamsChange={this.handleFieldParamsChange}
               onAddCardPress={() => {
@@ -276,22 +242,7 @@ class PaymentsView extends Component {
           </ScrollView>
           <BottomButton
             title={valid ? buttonText : buttonTextIfEmpty}
-            onPress={() => {
-              if (optional && !!!displayCardField) {
-                onSubmit();
-
-                return;
-              }
-              if (valid) {
-                this.createTokenWithCard(onSubmit);
-              } else {
-                Alert.alert(
-                  I18n.t("paymentDetails"),
-                  I18n.t("invalidPaymentDetails"),
-                  [{ text: I18n.t("ok") }]
-                );
-              }
-            }}
+            onPress={_ => this.submit({ optional, onSubmit })}
             absolute
             bold={false}
             fill={!!optional || valid}

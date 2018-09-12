@@ -5,6 +5,7 @@ export const EMAIL_REGEX =
 
 export const USER_NAME = "([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*";
 
+export const CREDIT_CARD_FORMAT = "\\d{4}\\s\\d{4}\\s\\d{4}\\s\\d{4}";
 
 // TODO: refactor and remove these constants, any language options should be based off the lists in `src/Config/Languages.js`
 export const SUPPORTED_LANGS = ["eng", "cmn", "yue", "jpn"];

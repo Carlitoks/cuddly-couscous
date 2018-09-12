@@ -39,7 +39,7 @@ export default StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
-    flex:1,
+    flex: 1,
     width: "100%",
     height: "100%"
   },
@@ -68,5 +68,6 @@ export default StyleSheet.create({
     borderColor: "#000",
     borderWidth: 1,
     borderRadius: 5
-  }
+  },
+  errorMessages: { color: Colors.redError, margin: 10 }
 });

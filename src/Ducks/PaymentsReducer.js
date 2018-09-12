@@ -22,7 +22,8 @@ export const clearPayments = () => ({
 const initialState = {
   displayCardField: false,
   cardInfo: {},
-  loading: false
+  loading: false,
+  errors: []
 };
 
 export const setPayment = stripeSourceToken => (dispatch, getState) => {
