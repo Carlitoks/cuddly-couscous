@@ -129,23 +129,24 @@ class PaymentsView extends Component {
           callback();
         })
         .catch(error => {
-          updatePayments({ loading: false, displayCardField: false });
-
           this.displayErrorAlert();
         });
     } catch (error) {
-      updatePayments({ loading: false, displayCardField: false });
-
       this.displayErrorAlert();
 
       console.log(error);
     }
   };
 
-  displayErrorAlert = _ =>
+  displayErrorAlert = _ => {
+    const { updatePayments } = this.props;
+
+    updatePayments({ loading: false, displayCardField: false, errors: [] });
+
     Alert.alert(I18n.t("paymentDetails"), I18n.t("invalidPaymentDetails"), [
       { text: I18n.t("ok") }
     ]);
+  };
 
   submit = ({ optional, onSubmit }) => {
     const {
