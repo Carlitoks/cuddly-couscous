@@ -21,7 +21,7 @@ export const clearPayments = () => ({
 // Initial State
 const initialState = {
   displayCardField: false,
-  cardInfo: {},
+  cardInfo: { number: "", expMonth: "", expYear: "", cvc: "" },
   loading: false,
   errors: []
 };
