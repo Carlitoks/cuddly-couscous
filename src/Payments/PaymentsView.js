@@ -14,9 +14,10 @@ import I18n from "../I18n/I18n";
 import BottomButton from "../Components/BottomButton/BottomButton.android";
 import GoBackButton from "../Components/GoBackButton/GoBackButton";
 import {
-  updatePayments,
+  removePayment,
+  clearPayments,
   setPayment,
-  removePayment
+  updatePayments
 } from "../Ducks/PaymentsReducer";
 import { stripePublishableKey } from "../Config/env";
 import { updateView } from "../Ducks/UserProfileReducer";
@@ -98,7 +99,8 @@ class PaymentsView extends Component {
       cardInfo: { number, expMonth, expYear, cvc },
       updatePayments,
       updateView,
-      setPayment
+      setPayment,
+      clearPayments
     } = this.props;
 
     const params = {
@@ -125,7 +127,7 @@ class PaymentsView extends Component {
             [{ text: I18n.t("ok") }]
           );
 
-          updatePayments({ errors: [] });
+          clearPayments();
           callback();
         })
         .catch(error => {
@@ -157,7 +159,7 @@ class PaymentsView extends Component {
 
     this.checkFieldValidity(cardInfo);
 
-    if (optional && !!!displayCardField) {
+    if ((optional && !!!displayCardField) || !!!displayCardField) {
       onSubmit();
 
       return;
@@ -295,6 +297,7 @@ const mS = ({
 
 const mD = {
   updatePayments,
+  clearPayments,
   setPayment,
   removePayment,
   updateView
