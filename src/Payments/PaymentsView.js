@@ -181,18 +181,23 @@ class PaymentsView extends Component {
       removePayment
     } = this.props;
 
-    const title = params.title ? params.title : I18n.t("paymentDetails");
-    const messageText = params.messageText
-      ? params.messageText
-      : I18n.t("enterPaymentDetails");
-    const buttonText = params.buttonText ? params.buttonText : I18n.t("save");
-    const buttonTextIfEmpty = params.buttonTextIfEmpty
-      ? params.buttonTextIfEmpty
-      : I18n.t("continue");
-    const backButton = params.backButton ? params.backButton : true;
-    const closeButton = params.closeButton ? params.closeButton : true;
-    const optional = params.optional ? params.optional : false;
-    const onSubmit = params.onSubmit ? params.onSubmit : null;
+    const title =
+      params && params.title ? params.title : I18n.t("paymentDetails");
+    const messageText =
+      params && params.messageText
+        ? params.messageText
+        : I18n.t("enterPaymentDetails");
+    const buttonText =
+      params && params.buttonText ? params.buttonText : I18n.t("save");
+    const buttonTextIfEmpty =
+      params && params.buttonTextIfEmpty
+        ? params.buttonTextIfEmpty
+        : I18n.t("continue");
+    const backButton = params && params.backButton ? params.backButton : true;
+    const closeButton =
+      params && params.closeButton ? params.closeButton : true;
+    const optional = params && params.optional ? params.optional : false;
+    const onSubmit = params && params.onSubmit ? params.onSubmit : null;
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
