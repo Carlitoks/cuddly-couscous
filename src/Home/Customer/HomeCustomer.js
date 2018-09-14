@@ -4,7 +4,7 @@ import _upperFirst from "lodash/upperFirst";
 import { take } from "lodash";
 import moment from "moment";
 import InCallManager from "react-native-incall-manager";
-import { View, Text, ScrollView, Dimensions } from "react-native";
+import {View, Text, ScrollView, Dimensions, Alert} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { checkOperatingHours } from "../../Util/Helpers";
 import { asyncGetAccountInformation } from "../../Ducks/ProfileLinguistReducer";
@@ -87,6 +87,23 @@ class Home extends Component {
     if (!linguistProfile && isLoggedIn) {
       //checkOperatingHours(true);
     }
+
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.usageError
+    ) {
+      Alert.alert(I18n.t("invalidCode"), I18n.t("invalidCodeMsg", {message: this.props.navigation.state.params.usageError}));
+    }
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.minutesGranted
+    ) {
+      Alert.alert(I18n.t("minutesAdded"), I18n.t("complimentMinutes",{
+        maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
+        organizer: this.props.navigation.state.params.organization
+      }));
+    }
+
     getAllCustomerCalls(uuid, token)
       .then(response => {
         customerCalls(response);

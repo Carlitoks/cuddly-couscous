@@ -49,9 +49,15 @@ class PromoCodeView extends Component {
         const {
           requireScenarioSelection,
           restrictEventScenarios,
-          scenarios
+          scenarios,
+          initiateCall,
+          usageError,
+          addMinutesToUser,
+          maxMinutesPerUser,
+          organization
         } = response.payload;
         this.props.clearPromoCode();
+        if(initiateCall){
         if (
           !response.payload.userCanCreateSession ||
           !!response.payload.sessionCreateErr
@@ -109,6 +115,16 @@ class PromoCodeView extends Component {
             }
           }
         }
+        }
+        else{
+      if(usageError){
+        this.props.navigation.dispatch({ type: "Home", params: { usageError } });
+      }
+      if(addMinutesToUser){
+        this.props.navigation.dispatch({ type: "Home", params: { minutesGranted: true, maxMinutesPerUser, organization:  organization.name } });
+      }
+      this.props.navigation.dispatch({ type: "Home" });
+    }
       })
       .catch(err => {
         console.log("Error ", err);
