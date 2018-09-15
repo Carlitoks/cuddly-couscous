@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 
 import {
-  Text,
-  View,
+  Alert,
   ScrollView,
   Switch,
+  Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Button, Header, List, ListItem } from "react-native-elements";
@@ -61,12 +62,67 @@ import { updateSettings as updateHomeFlow } from "../../../Ducks/HomeFlowReducer
 class CallConfirmationView extends Component {
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
+  checkPaymentsAndRedirect = () => {
+    const {
+      availableMinutes,
+      event: { chargeFullToOwner },
+      navigation,
+      stripePaymentToken
+    } = this.props;
+
+    const thereAreNoMinutesAvailable = availableMinutes === 0;
+
+    if (
+      !stripePaymentToken &&
+      thereAreNoMinutesAvailable &&
+      !chargeFullToOwner
+    ) {
+      const params = {
+        title: I18n.t("paymentDetails"),
+        messageText: I18n.t("enterPaymentDetails2"),
+        buttonText: I18n.t("saveContinue"),
+        buttonTextIfEmpty: I18n.t("skipAddLater"),
+        optional: false,
+        onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
+      };
+
+      if (thereAreNoMinutesAvailable) {
+        params = {
+          ...params,
+          messageText: I18n.t("enterPaymentDetails3"),
+          buttonText: I18n.t("continue")
+        };
+      }
+
+      if (!chargeFullToOwner) {
+        params = {
+          ...params,
+          messageText: I18n.t("enterPaymentDetails4")
+        };
+      }
+
+      navigation.dispatch({
+        type: "PaymentsView",
+        params
+      });
+    }
+  };
+
   componentWillMount() {
-    const { promotion, event, resetConnectingMessage } = this.props;
+    const {
+      promotion,
+      event,
+      event: { chargeOverageToOwner },
+      resetConnectingMessage,
+      navigation,
+      availableMinutes,
+      stripePaymentToken
+    } = this.props;
     timer.clearInterval("timer");
     timer.clearInterval("counterId");
     this.props.clearSettings();
     this.props.clearTokboxStatus();
+
     getGeolocationCoords()
       .then(response => {
         this.props.customerUpdateSettings({
@@ -79,6 +135,9 @@ class CallConfirmationView extends Component {
     const verifyLang = !!this.props.primaryLangCode;
     resetConnectingMessage();
     let inputHeight = 0;
+
+    this.checkPaymentsAndRedirect();
+
     if (promotion || event.id) {
       const scannedEvent = promotion ? promotion : event;
 
@@ -87,7 +146,12 @@ class CallConfirmationView extends Component {
         defaultSecondaryLangCode
       } = scannedEvent;
 
-      const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng" };
+      const languagesMapper = {
+        eng: "cmn",
+        cmn: "eng",
+        yue: "eng",
+        jpn: "eng"
+      };
       const userNativeLangIsSupported =
         SUPPORTED_LANGS.indexOf(this.props.nativeLangCode) >= 0;
 
@@ -133,34 +197,72 @@ class CallConfirmationView extends Component {
   }
 
   getLabels(type) {
-    const { event, availableMinutes, approxTime } = this.props;
+    const {
+      event,
+      availableMinutes,
+      approxTime,
+      stripeCustomerID,
+      stripePaymentToken
+    } = this.props;
     switch (type) {
       case "minutes":
         if (event.id && event.id !== "") {
-          if (event.eventUserState && event.eventUserState.timeRemaining > 0) {
-            return `${event.eventUserState.timeRemaining} ${I18n.t(
-              "minutes"
-            )}: `;
+          if (event.userStatus) {
+            return `${I18n.t("upTo60WithMinutes", {
+              minutes: event.userStatus.availableCallTime
+            })}: `;
           } else {
             return `${approxTime} ${I18n.t("minutes")}: `;
           }
         }
+
         if (!event.id) {
-          return `${availableMinutes} ${I18n.t("minutes")}: `;
+          if (!!stripeCustomerID && !!stripePaymentToken) {
+            if (availableMinutes == 0) {
+              return `${I18n.t("upTo60WithAbrev")}: `;
+            }
+            if (availableMinutes > 0) {
+              return `${I18n.t("upTo60WithMinutes", {
+                minutes: availableMinutes
+              })}: `;
+            }
+          }
+          if (!stripeCustomerID || !stripePaymentToken) {
+            if (availableMinutes == 0) {
+              return `${I18n.t("noAvailableMinutes")}: `;
+            }
+            if (availableMinutes > 0) {
+              return `${I18n.t("upTo60WithMinutes", {
+                minutes: availableMinutes
+              })}: `;
+            }
+          }
         }
         break;
       case "description":
         if (event.id && event.id !== "") {
-          return `${I18n.t("complimentsOf", {
+          return `${I18n.t("compliments", {
+            minutes: event.userStatus.remainingMinutes,
             organizer: event.organization.name
           })}`;
         }
         if (!event.id) {
-          return availableMinutes < 5
-            ? I18n.t("submitFeedbackForMoreTime")
-            : `${I18n.t("theCallWillEnd", {
-                minutes: availableMinutes
-              })}`;
+          if (!!stripeCustomerID && !!stripePaymentToken) {
+            if (availableMinutes == 0) {
+              return ``;
+            }
+            if (availableMinutes > 0) {
+              return `${I18n.t("timeWithCost")}`;
+            }
+          }
+          if (!stripeCustomerID || !stripePaymentToken) {
+            if (availableMinutes == 0) {
+              return `${I18n.t("enterPaymentDetailsToContinue")}`;
+            }
+            if (availableMinutes > 0) {
+              return `${I18n.t("callWillEnd")}`;
+            }
+          }
         }
         break;
       default:
@@ -168,50 +270,76 @@ class CallConfirmationView extends Component {
     }
   }
 
-  checkAvailableMinutes() {
-    const { navigation, event } = this.props;
-    if (!event.id) {
-      if (this.props.availableMinutes === 0) {
-        this.props.cleanSelected();
-        // this.props.clearEvents();
-        this.props.clearPromoCode();
-        this.props.updateHomeFlow({
-          displayFeedbackModal: true
-        });
-        navigation.dispatch({ type: "Home" });
-      } else {
-        checkOperatingHours(true);
-
-        this.props.updateSettings({
-          selectedScenarioId:
-            this.props.selectedScenario && this.props.selectedScenario[0]
-              ? this.props.selectedScenario[0].id
-              : "11111111-1111-1111-1111-111111111126"
-        });
-        this.props.cleanSelected();
-        // this.props.clearEvents();
-        this.props.clearPromoCode();
-        navigation.dispatch({ type: "CustomerView" });
-      }
-    } else {
-      checkOperatingHours(true);
-
-      this.props.updateSettings({
-        selectedScenarioId:
-          this.props.selectedScenario && this.props.selectedScenario[0]
-            ? this.props.selectedScenario[0].id
-            : "11111111-1111-1111-1111-111111111126"
+  redirectToPaymentView() {
+    const { navigation, stripeCustomerID, stripePaymentToken } = this.props;
+    if (!stripeCustomerID || !stripePaymentToken) {
+      navigation.dispatch({
+        type: "PaymentsView",
+        params: {
+          title: I18n.t("paymentDetails"),
+          messageText: I18n.t("enterPaymentDetails"),
+          buttonText: I18n.t("save"),
+          buttonTextIfEmpty: I18n.t("save"),
+          optional: true,
+          onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
+        }
       });
-      this.props.cleanSelected();
-      // this.props.clearEvents();
-      this.props.clearPromoCode();
-      navigation.dispatch({ type: "CustomerView" });
+    }
+    if (this.props.allowTimeSelection && !!stripePaymentToken) {
+      navigation.dispatch({
+        type: "CallPricingView"
+      });
     }
   }
 
+  checkAvailableMinutes = async () => {
+    const {
+      navigation,
+      event,
+      stripePaymentToken,
+      availableMinutes,
+      cleanSelected,
+      clearPromoCode,
+      updateHomeFlow,
+      updateSettings,
+      selectedScenario
+    } = this.props;
+
+    cleanSelected();
+    clearPromoCode();
+
+    if (!event.id && availableMinutes === 0 && !stripePaymentToken) {
+      Alert.alert(I18n.t("paymentDetails"), I18n.t("enterPaymentDetails3"), [
+        { text: I18n.t("ok") }
+      ]);
+
+      navigation.dispatch(
+        {
+          type: "PaymentsView"
+        },
+        {
+          title: I18n.t("paymentDetails"),
+          messageText: I18n.t("enterPaymentDetails3"),
+          buttonText: I18n.t("saveContinue"),
+          buttonTextIfEmpty: I18n.t("skipAddLater"),
+          optional: false,
+          onSubmit: () => navigation.dispatch({ type: "CallConfirmationView" })
+        }
+      );
+    } else {
+      updateSettings({
+        selectedScenarioId:
+          selectedScenario && selectedScenario[0]
+            ? selectedScenario[0].id
+            : "11111111-1111-1111-1111-111111111126"
+      });
+      navigation.dispatch({ type: "CustomerView" });
+    }
+  };
+
   setLanguages = () => {
     const { nativeLangCode } = this.props;
-    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng" };
+    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng", jpn: "eng" };
     const userNativeLangIsSupported =
       SUPPORTED_LANGS.indexOf(nativeLangCode) >= 0;
 
@@ -223,7 +351,10 @@ class CallConfirmationView extends Component {
       lang => lang[3] === primaryLanguageCode
     );
 
-    const secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+    let secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+    if (!secondaryLanguageCode) {
+      secondaryLanguageCode = primaryLanguageCode == "eng" ? "cmn" : "eng";
+    }
 
     const secondaryLanguage = Languages.find(
       lang => lang[3] === secondaryLanguageCode
@@ -267,7 +398,10 @@ class CallConfirmationView extends Component {
         ? selectedScenario[0].category
         : categories[categoryIndex];
 
-    const categoryTitle = this.CATEGORIES[category];
+    const categoryTitle =
+      this.CATEGORIES[category] === undefined
+        ? I18n.t("general")
+        : this.CATEGORIES[category];
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -372,11 +506,7 @@ class CallConfirmationView extends Component {
             {/* Time selection */}
             <TouchableOpacity
               onPress={() => {
-                if (this.props.allowTimeSelection) {
-                  navigation.dispatch({
-                    type: "CallPricingView"
-                  });
-                }
+                this.redirectToPaymentView();
               }}
               style={styles.time}
             >
@@ -387,7 +517,12 @@ class CallConfirmationView extends Component {
                     : `${I18n.t("upTo60")}: `}
                   <Text style={[styles.regularText]}>
                     {/* {I18n.t("timeCompliments")} */}
-                    {"$0"}
+                    {this.props.stripeCustomerID &&
+                    this.props.stripePaymentToken &&
+                    this.props.availableMinutes == 0 &&
+                    !this.props.event.id
+                      ? I18n.t("costPerMinute")
+                      : "$0"}
                   </Text>
                 </Text>
                 <Text style={[styles.regularText]}>
@@ -532,7 +667,9 @@ const mS = state => ({
   timerCustomer: state.callCustomerSettings.timer,
   availableMinutes: state.userProfile.availableMinutes,
   nativeLangCode: state.userProfile.nativeLangCode,
-  primaryLangCode: state.contactLinguist.primaryLangCode
+  primaryLangCode: state.contactLinguist.primaryLangCode,
+  stripeCustomerID: state.userProfile.stripeCustomerID,
+  stripePaymentToken: state.userProfile.stripePaymentToken
 });
 
 const mD = {

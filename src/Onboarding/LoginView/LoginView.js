@@ -28,7 +28,7 @@ import {
   updateView,
   getNativeLang
 } from "../../Ducks/UserProfileReducer";
-
+import { checkOperatingHours } from "../../Util/Helpers";
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
@@ -43,7 +43,7 @@ import { displayFormErrors } from "../../Util/Alerts";
 import { Colors } from "../../Themes";
 
 import I18n from "../../I18n/I18n";
-
+//TODO: change the operating hours alert to this view instead of homecustomer.
 class LoginView extends Component {
   componentWillUnmount() {
     this.props.clearForm();

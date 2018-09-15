@@ -18,12 +18,13 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     width: width * 0.91,
     borderRadius: 4,
-    height: height * 0.74
+    height: height * (Iphone5 ? 0.7 : 0.76),
+    marginBottom: Iphone5 ? moderateScale(20) : 20
   },
   modalTopButton: {
     position: "absolute",
     zIndex: 30,
-    top: height * 0.065
+    top: height * (Iphone5 ? 0.065 : 0.055)
   },
   modalButton: {
     width: width * 0.65,

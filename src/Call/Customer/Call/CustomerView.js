@@ -146,21 +146,23 @@ class CustomerView extends Component {
     const {
       createSession,
       primaryLangCode,
-      secundaryLangCode,
+      secondaryLangCode,
       selectedCallTime,
       selectedScenarioId,
       customScenarioNote,
       token,
       eventID,
-      location
+      location,
+      event
     } = this.props;
-
     await createSession({
-      primaryLangCode:
-        primaryLangCode[3] !== "eng" && primaryLangCode[3] !== "cmn"
-          ? "eng"
-          : primaryLangCode[3],
-      secondaryLangCode: secundaryLangCode,
+      primaryLangCode: primaryLangCode[3],
+      secondaryLangCode:
+        event.id &&
+        event.id !== "" &&
+        event.defaultSecondaryLangCode !== undefined
+          ? event.defaultSecondaryLangCode
+          : secondaryLangCode,
       estimatedMinutes: selectedCallTime,
       scenarioID: selectedScenarioId,
       customScenarioNote: customScenarioNote,
@@ -259,7 +261,7 @@ const mS = state => ({
   tokboxStatus: state.activeSessionReducer.status,
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
   primaryLangCode: state.userProfile.selectedNativeLanguage,
-  secundaryLangCode: state.contactLinguist.secundaryLangCode,
+  secondaryLangCode: state.contactLinguist.secundaryLangCode,
   customScenarioNote: state.contactLinguist.customScenarioNote,
   selectedCallTime: state.activeSessionReducer.selectedTime,
   linguist: state.sessionInfo.linguist,
@@ -273,7 +275,8 @@ const mS = state => ({
   location: state.callCustomerSettings.location,
   eventID: state.events.id,
   localVideoWarning: state.activeSessionReducer.localVideoWarning,
-  signalVideoWarning: state.activeSessionReducer.signalVideoWarning
+  signalVideoWarning: state.activeSessionReducer.signalVideoWarning,
+  event: state.events
 });
 
 const mD = {

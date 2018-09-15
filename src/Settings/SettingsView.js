@@ -58,16 +58,29 @@ class SettingsView extends Component {
                   />
                 )}
                 {/* Payment details */}
-                {/* <ListItem
-                  containerStyle={styles.listItemContainer}
-                  title={I18n.t("paymentDetails")}
-                  titleStyle={styles.titleStyle}
-                  onPress={() => {
-                    navigation.dispatch({
-                      type: "EditGenderView"
-                    });
-                  }}
-                /> */}
+                {isLinguist ? null : (
+                  <ListItem
+                    containerStyle={styles.listItemContainer}
+                    title={I18n.t("paymentDetails")}
+                    titleStyle={[styles.titleStyle]}
+                    // subtitle={selectedNativeLanguage}
+                    subtitleStyle={styles.listSubtitle}
+                    onPress={() => {
+                      navigation.dispatch({
+                        type: "PaymentsView",
+                        params: {
+                          title: I18n.t("paymentDetails"),
+                          messageText: I18n.t("enterPaymentDetails"),
+                          buttonText: I18n.t("save"),
+                          buttonTextIfEmpty: I18n.t("save"),
+                          optional: true,
+                          onSubmit: () => navigation.dispatch({ type: "Home" })
+                        }
+                      });
+                    }}
+                  />
+                )}
+
                 {/* Log out */}
                 <ListItem
                   containerStyle={styles.listItemContainer}

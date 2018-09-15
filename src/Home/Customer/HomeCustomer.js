@@ -4,9 +4,9 @@ import _upperFirst from "lodash/upperFirst";
 import { take } from "lodash";
 import moment from "moment";
 import InCallManager from "react-native-incall-manager";
-import { View, Text, ScrollView, Dimensions } from "react-native";
+import {View, Text, ScrollView, Dimensions, Alert} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-
+import { checkOperatingHours } from "../../Util/Helpers";
 import { asyncGetAccountInformation } from "../../Ducks/ProfileLinguistReducer";
 import timer from "react-native-timer";
 import {
@@ -53,9 +53,8 @@ import { Languages } from "../../Config/Languages";
 import SixtyMinutesModal from "./SixtyMinutesModal/SixtyMinutesModal";
 import HomeCarousel from "./HomeCarousel";
 import RecentActivity from "./RecentActivity";
-import FeedbackModal from "./FeedbackModal/FeedbackModal";
+import PaymentModal from "../Customer/PaymentModal/PaymentModal";
 import FeedbackProvidedModal from "./FeedbackProvidedModal/FeedbackProvidedModal";
-import FeedbackView from "./FeedbackView/FeedbackView";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -81,8 +80,29 @@ class Home extends Component {
       uuid,
       token,
       customerCalls,
-      updateHomeFlow
+      updateHomeFlow,
+      linguistProfile,
+      isLoggedIn
     } = this.props;
+    if (!linguistProfile && isLoggedIn) {
+      //checkOperatingHours(true);
+    }
+
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.usageError
+    ) {
+      Alert.alert(I18n.t("invalidCode"), I18n.t("invalidCodeMsg", {message: this.props.navigation.state.params.usageError}));
+    }
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.minutesGranted
+    ) {
+      Alert.alert(I18n.t("minutesAdded"), I18n.t("complimentMinutes",{
+        maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
+        organizer: this.props.navigation.state.params.organization
+      }));
+    }
 
     getAllCustomerCalls(uuid, token)
       .then(response => {
@@ -145,14 +165,17 @@ class Home extends Component {
       token
     } = this.props;
     this.setLanguages();
-
     if (scenarios.length < 1) {
       getScenarios(token);
       getCategories(token);
     }
     this.changeModal();
 
-    updateHomeFlow({ selectedScenarioIndex: -1 });
+    updateHomeFlow({
+      selectedScenarioIndex: -1,
+      displayPaymentModal: false,
+      display60MinModal: false
+    });
 
     //Clean call
     timer.clearInterval("timer");
@@ -196,11 +219,27 @@ class Home extends Component {
     });
   }
 
-  modalSelection(availableMinutes) {
-    const { updateHomeFlow } = this.props;
-    if (availableMinutes < 5) {
-      updateHomeFlow({ displayFeedbackModal: true });
-    } else {
+  getPillLabel() {
+    const { availableMinutes, stripePaymentToken } = this.props;
+    if (availableMinutes == 0 && !stripePaymentToken) {
+      return I18n.t("noAvailableMinutes");
+    }
+    if (availableMinutes > 0) {
+      return `${I18n.t("minutesAbbreviation", {
+        minutes: availableMinutes
+      })}`;
+    }
+    if (availableMinutes == 0 && !!stripePaymentToken) {
+      return I18n.t("costPerMinute");
+    }
+  }
+
+  modalSelection() {
+    const { updateHomeFlow, availableMinutes, stripePaymentToken } = this.props;
+    if (availableMinutes < 5 || !stripePaymentToken) {
+      updateHomeFlow({ displayPaymentModal: true });
+    }
+    if (availableMinutes > 5 && !!stripePaymentToken) {
       updateHomeFlow({ display60MinModal: true });
     }
   }
@@ -257,13 +296,14 @@ class Home extends Component {
       lastSelectedTile,
       availableMinutes,
       display60MinModal,
-      displayFeedbackModal,
+      displayPaymentModal,
       displayFeedbackProvided,
       updateHomeFlow,
       getProfileAsync,
       uuid,
       token
     } = this.props;
+
     const { width, height } = Dimensions.get("window");
 
     getProfileAsync(uuid, token);
@@ -314,9 +354,6 @@ class Home extends Component {
               <RecentActivity
                 navigation={navigation}
                 scenariosList={scenariosList}
-                updateLinguistForm={updateLinguistForm}
-                updateContactLinguist={updateContactLinguist}
-                updateCallCustomerSettings={updateCallCustomerSettings}
                 indexSelected={this.state.indexSelected}
               />
             </ScrollView>
@@ -333,17 +370,13 @@ class Home extends Component {
               />
             )}
 
-            {displayFeedbackModal && (
-              <FeedbackModal
-                visible={displayFeedbackModal}
+            {displayPaymentModal && (
+              <PaymentModal
+                visible={displayPaymentModal}
                 closeModal={() => {
-                  this.props.updateHomeFlow({ displayFeedbackModal: false });
+                  this.props.updateHomeFlow({ displayPaymentModal: false });
                 }}
-                goToFeedback={() => {
-                  this.props.updateHomeFlow({ displayFeedbackModal: false });
-                  navigation.dispatch({ type: "FeedbackView" });
-                }}
-                availableMinutes={availableMinutes}
+                navigation={navigation}
               />
             )}
 
@@ -362,11 +395,9 @@ class Home extends Component {
 
             <PillButton
               onPress={() => {
-                this.modalSelection(availableMinutes);
+                this.modalSelection();
               }}
-              title={`${I18n.t("minutesAbbreviation", {
-                minutes: availableMinutes
-              })}`}
+              title={this.getPillLabel()}
               icon={"ios-time"}
               absolute
               alignButton={"Right"}
@@ -406,8 +437,12 @@ const mS = state => ({
   allCustomerCalls: state.callHistory.allCustomerCalls,
   lastSelectedTile: state.homeFlow.lastSelectedTile,
   display60MinModal: state.homeFlow.display60MinModal,
-  displayFeedbackModal: state.homeFlow.displayFeedbackModal,
-  displayFeedbackProvided: state.homeFlow.displayFeedbackProvided
+  displayPaymentModal: state.homeFlow.displayPaymentModal,
+  displayFeedbackProvided: state.homeFlow.displayFeedbackProvided,
+  stripeCustomerID: state.userProfile.stripeCustomerID,
+  stripePaymentToken: state.userProfile.stripePaymentToken,
+  linguistProfile: state.userProfile.linguistProfile,
+  isLoggedIn: state.auth.isLoggedIn
 });
 
 const mD = {

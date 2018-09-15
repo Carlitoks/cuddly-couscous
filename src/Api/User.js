@@ -22,6 +22,24 @@ const User = {
     });
   },
 
+  setPayment: (id, token, stripeSourceToken) => {
+    return AXIOS.put(
+      `${BASE_URI}/${id}/billing/payment-details`,
+      {
+        stripeSourceToken: stripeSourceToken
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+  },
+
+  removePayment: (id, token) => {
+    return AXIOS.delete(`${BASE_URI}/${id}/billing/payment-details`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  },
+
   setPassword: (id, password, token) => {
     return AXIOS.put(
       `${BASE_URI}/${id}/password`,

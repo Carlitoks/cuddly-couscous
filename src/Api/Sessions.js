@@ -41,7 +41,7 @@ const Session = {
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {
       return res;
-    });
+    }).catch(err => console.log(err));
   },
   // The customer invite a linguist
   // example:

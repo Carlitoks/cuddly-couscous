@@ -1,6 +1,7 @@
 ﻿export default (JAJP = {
   accept: "応答",
   add: "追加",
+  addANewCard: "新しいカードを追加…",
   addLanguage: "言語の追加",
   airport: "空港",
   alignQRCode: "QRコードを枠内に合わせる",
@@ -34,21 +35,23 @@
   callTimeBoxTextLine1:
     "サービス開始を記念して今すぐ\n無料でJeenieをご活用ください",
   callTimeBoxTextLine2:
-    "パッケージ割引のご利用で\n通常料金は1分あたり1ドルとなります。",
+    "料金は1分あたり$1です。\n今後パッケージ割引の提供を予定しています",
   callTimeButtonText: "分無料",
   callTimeButtonSubtitle: "Jeenieからのプレゼント",
   callTimeMinutes: "通話時間",
   callTimeMinutesSub: "この状況におすすめ",
   callTimeTitle: "現在標準中国語と英語でご利用いただけます。",
   callTimeSubtitle: "今後さらに言語が追加される予定です。",
+  callWillEnd: "時間切れになると通話が終了します",
   cancel: "キャンセル",
   cancelCall: "通話をキャンセル",
   celebrateAndEnjoy:
     "サービス開始を記念して\nJeenieを\n無料でご利用いただけます。このお得なオファーは期間限定です！",
   celebrateAndEnjoyAlternative:
-    "サービス開始を記念してJeenieを\n15分無料でご利用いただけます\n。",
+    "サービス開始を記念して\nJeenieを15分無料でご利用いただけます\n！",
   celebrateWithUs: "サービス開始をお祝いしましょう！",
-  changeSettings: "設定を変更するには、[設定] > [Jeenie]の順にアクセスしてください",
+  changeSettings:
+    "設定を変更するには、[設定] > [Jeenie]の順にアクセスしてください",
   cancelCallCustomer: "通話はご利用いただけません",
   chargeAdvice: "8分経過後、1分ごとに料金がかかります。",
   checkYourConnection: "接続をご確認ください",
@@ -59,6 +62,7 @@
   cityFamiliarity: "都市に関する知識（精通度）",
   cantReachCustomer: "ユーザーの接続が切断されたようです",
   cantReachLinguist: "現在言語スタッフと連絡が取れません",
+  card: "カード",
   componentExamples: "コンポーネントの例",
   confirm: "確認",
   confirmCall: "詳細と",
@@ -69,15 +73,18 @@
   connectMeNow: "今すぐ接続",
   connectNow: "今すぐ接続",
   connecting: "接続中",
-  contactingLinguist:
-    "1分以内に\nLanguage Jeenieに\nお繋ぎします",
+  contactingLinguist: "1分以内に\nLanguage Jeenieに\nお繋ぎします",
   continue: "続ける",
-  continueForFree: "無料で利用を続ける",
+  continueUsingJeenie: "Jeenieで続ける",
+  continueForFree: "続ける",
   conversations: "その他",
+  compliments: "{{minutes}}分：{{organizer}}からのお礼",
+  complimentsOf: "{{organizer}}からのお礼",
   costOfCall: "推定料金： ",
   couldBetter: "改善点をお聞かせください。",
   countryFamiliarity: "国に関する知識（精通度）",
   cost: "料金",
+  costPerMinute: "$1/分",
   create: "作成",
   currency: "米ドル",
   customer: "お客様",
@@ -87,8 +94,7 @@
   declined: "拒否",
   disableExtraTime: "延長時間をオフに設定",
   dining: "レストラン",
-  discountsOffered:
-    "\nより長時間購入\nいただくと割引が提供されます。",
+  discountsOffered: "\nより長時間購入\nいただくと割引が提供されます。",
   discountsOfferedAlternative:
     "前払いした時間（分）に対して\n割引が提供されます。 ",
   duration: "時間",
@@ -103,6 +109,17 @@
   enterEmailField: "メールアドレスを入力",
   enterLastNameField: "名前（姓）を入力",
   enterNameField: "名前（名）を入力",
+  enterPayment: "お支払い情報を入力",
+  enterPaymentDetailsToContinue: "操作を続けるにはお支払い情報を入力してください",
+  enterPaymentDetails: "お支払い情報の入力または変更",
+  enterPaymentDetails2:
+    "アカウントの残り時間が0分になると、通話が終了します。お支払い情報を入力いただくと、必要な分だけお話いただけます",
+  enterPaymentDetails3:
+    "操作を続けるにはお支払い情報を入力してください。通話時間分が請求されます。",
+  enterPaymentDetails4:
+    "お支払い情報を入力いただくと、必要な分だけお話いただけます。入力しない場合、アカウントの残り時間が0分になると、通話が終了します。",
+  enterPaymentOnboarding:
+    "お支払い情報を入力いただくと、好きなだけお話いただけます。アカウントの残り時間が0分になると、使用した分の時間に対して料金が請求されます。",
   enterPhoneField: "電話番号を入力",
   enterYourPassword: "新しいパスワードを作成",
   error: "エラー",
@@ -110,10 +127,8 @@
   errorPromo: "プロモーションコードが見つかりません",
   estimatedCost: "推定料金",
   estimatedDuration: "推定時間",
-  estimatedCostStatic1:
-    "トライアル期間中、通話は8分に事前設定されています。",
-  estimatedCostStatic2:
-    "時間の延長が必要な場合、通話中に追加できます。",
+  estimatedCostStatic1: "トライアル期間中、通話は8分に事前設定されています。",
+  estimatedCostStatic2: "時間の延長が必要な場合、通話中に追加できます。",
   expertise_A1:
     "髪型には色々な種類があり、人によって似合う髪型はそれぞれです。",
   expertise_B1:
@@ -127,15 +142,14 @@
   female: "女性",
   finish: "終了",
   finishOnboarding: "オンボーディングを終了",
-  finishOnboardingMessage:
-    "アプリを使用するには登録を完了してください",
+  finishOnboardingMessage: "アプリを使用するには登録を完了してください",
   firstname: "名前（名）",
   fluent: "上級",
   forgotPassword: "パスワードをリセット",
   forSignup: "ご登録完了です！",
   frequently: "頻繁",
   freeTrial: "無料トライアル",
-  futurePricing: "今後の料金",
+  futurePricing: "現在の料金",
   gender: "性別",
   genderAlert:
     "通訳スタッフには、お客様の性別を指定できるオプションがあります。性別の公開を希望しない場合、性別を指定していない通訳スタッフが割り当てられます。",
@@ -150,8 +164,7 @@
   gotIt: "了解です！",
   hasDisconnected: "接続が切断されました",
   help: "ヘルプ",
-  helpPeople:
-    "人をサポートできる十分な知識を持っている都市をお答えください。",
+  helpPeople: "人をサポートできる十分な知識を持っている都市をお答えください。",
   helpUsGet: "ご自身の情報をご提供ください",
   hi: "こんにちは",
   historyNotFound: "履歴が見つかりません",
@@ -171,6 +184,8 @@
   interfaceLocalization: "言語",
   intermediate: "中級",
   invalidPromoCode: "無効なプロモーションコード",
+  invalidPaymentDetails:
+    "The payment details information you provided is not correct",
   isReconnecting: "が再接続中です…",
   keepWaiting: "お待ちください",
   isConnecting: "{{firstName}} {{lastInitial}}が接続中…",
@@ -198,8 +213,7 @@
     "世界のどこにいても、リアルタイムで、サポートが必要な言語を母国語とする通訳スタッフに連絡を取ることができます。",
   lauchScreenSwipe3:
     "現在Jeenieでは、\n「標準中国語⇔英語」\nと「日本語⇔英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
-  lauchScreenSwipe4:
-    "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
+  lauchScreenSwipe4: "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
   lauchScreenSwipe5:
     "サービス開始を記念して、最初の15分を無料でご提供いたします。Jeenieからのプレゼントです！",
   lastname: "名前（姓）",
@@ -212,7 +226,8 @@
   linguistLastName: "名前（姓）",
   linguistName: "名前（名）",
   linguistNumber: "電話番号を入力",
-  linguistNumberText: "電話を確認するためのコードがテキストメッセージで送信されます",
+  linguistNumberText:
+    "電話を確認するためのコードがテキストメッセージで送信されます",
   linguistPassword: "パスワード",
   linguistPasswordTitle: "パスワードを作成",
   locale: "I18n言語",
@@ -227,6 +242,7 @@
   minutesAbbreviation: "{{minutes}}分",
   minutes: "分",
   missed: "不在着信",
+  modifyPayment: "登録されているお支払い方法の変更",
   mute: "ミュート",
   myProfile: "マイプロフィール",
   name: "名前",
@@ -238,6 +254,7 @@
   niceToMeetYou: "はじめまして、 ",
   next: "次へ",
   no: "いいえ",
+  noAvailableMinutes: "0分",
   noItems: "項目がありません",
   none: "なし",
   noRecentActivityMessage: "ここに最近のアクティビティが表示されます",
@@ -249,20 +266,23 @@
   offline: "オフライン",
   ok: "OK",
   online: "オンライン",
-  operatingHoursAlertTitle: "当社の現行の営業時間をご確認ください。",
-  operatingHoursAlertMessage: "月曜日～日曜日：午前10時～午後7時（東部標準時）",
+  operatingHoursAlertTitle: "当社の営業時間をご確認ください。",
+  operatingHoursAlertMessage:
+    "中国語：\n- 午前10時～午後7時（東部標準時）\n\n日本語：\n- 午後7時～午前7時（東部標準時）\n- 午前8時～午後8時（日本時間）",
   orChooseOneBelow: "もしくは以下からひとつ選択してください",
   other: "その他",
   password: "パスワード",
   passwordAnd: "＆",
   passwordLength: "必ず5文字以上のパスワードを設定してください。",
-  passwordLinguistText: "[次へ]をタップすると、以下の内容に同意することになります：",
+  passwordLinguistText:
+    "[次へ]をタップすると、以下の内容に同意することになります：",
   permissionDenied: "アプリの許可が拒否されました",
   passwordMatch: "パスワードが一致しません。",
   passwordLengthValidation: "必ず8文字以上のパスワードを設定してください。",
   payAsYouGo: "利用した分だけ支払い",
   payAsYouGoPricing: "利用した分だけ支払いの場合：\n1分1ドル",
   paymentDetails: "お支払いの明細",
+  paymentDetailsCreated: "Your Payment Details were successfully created",
   preferedNameTitle: "希望の名前",
   preferNotToDisclose: "公開を希望しない",
   preferredLinguistText: "利用を希望する名前：",
@@ -278,23 +298,26 @@
   provideFeedbackModalText:
     "Jeenieの利用体験について\nご意見をお聞かせください。\nお礼に無料で15分利用時間を\n追加させていただきます！",
   provideFeedbackViewPlaceholder: "ここにご意見を入力してください",
-  provideFeedbackViewTitle: "Jeenieの利用体験で改善してほしい点をお聞かせください：",
+  provideFeedbackViewTitle:
+    "Jeenieの利用体験で改善してほしい点をお聞かせください：",
   qr: "QRコード",
   quicklyContact: "通訳スタッフにすぐに連絡する",
   rateYour: "評価してください - 評価対象：",
   recent: "最近",
-  recentCalls: "最近の通話",
   recentActivity: "最近のアクティビティ",
-  retail: "ショッピング",
+  recentCalls: "最近の通話",
   reconnect: "再接続",
+  removePayment: "登録されているお支払い方法の削除",
   reportProblem: "お使いのデバイスを軽く振って問題を報告してください。",
   reportProblemMenu: "問題を報告",
   resetpassword: "パスワードをリセット",
+  retail: "ショッピング",
   retail: "ショッピング",
   rni18n: "RN i18n",
   rnVectorIcons: "RNベクターアイコン",
   rotate: "回転",
   save: "保存",
+  saveContinue: "保存＆続ける",
   scanQR: "QRをスキャン",
   scanQRCode: "QRコードをスキャン",
   scenarioNotes: "ここに情報を追加",
@@ -310,16 +333,19 @@
   sessionInQueue: "キューのセッション",
   settings: "設定",
   signIn: "サインイン",
+  skipAddLater: "スキップ＆あとで追加",
   somethingElse: "その他",
   spanish: "スペイン語",
   speaker: "スピーカー",
   specifyGender: "指定を拒否",
   sport: "スポーツ",
   status: "あなたは…",
+  submitFeedbackForMoreTime: "さらにご意見を送信",
   submitFeedback: "ご意見の送信",
   tapRepeat: "タップしてリピート",
   thereNoInternetConnection: "インターネットに接続されていません",
   time: "時間",
+  timeWithCost: "追加料金：1分あたり$1",
   timeStatic1: "トライアル期間中、通話は8分に事前設定されています。",
   timeCompliments: "Jeenieからのプレゼント",
   timeAddMore: "通話1回あたりの最長通話時間は60分です。",
@@ -329,7 +355,8 @@
   termsConditions: "利用規約",
   termsOfUse: "利用規約",
   themeSettings: "テーマの設定",
-  temporaryError: "一時的なエラーが発生しています。後でもう一度お試しください。",
+  temporaryError:
+    "一時的なエラーが発生しています。後でもう一度お試しください。",
   toggleExtraTimeDisable:
     "上記で指定した時間が経過すると、この通話は自動的に終了します。",
   toggleExtraTimeEnable:
@@ -346,16 +373,20 @@
   thankYouFeedback: " ご意見をお聞かせいただきありがとうございました",
   thankYouFeedbackModalText:
     "お礼にJeenieの\n利用時間を15分\n追加させていただきました。",
+  theCallWillEnd: "{{minutes}}分後に通話が終了します",
   undefined: "未定義",
   unspecified: "未指定",
   unspecifiedGender: "公開を希望しない",
   unusedMinutes: "未使用の時間は繰り越されます",
   upTo60: "最長60分",
+  upTo60WithMinutes: "最長{{minutes}}分",
+  upTo60WithAbrev: "最長60分",
   usageExamples: "使用例",
   username: "ユーザー名",
   userProfile: "マイプロフィール",
   verifyNumber: "電話を確認",
-  verifyNumberText: "テキストメッセージで受信した確認コードを入力してください。",
+  verifyNumberText:
+    "テキストメッセージで受信した確認コードを入力してください。",
   video: "ビデオ",
   videoHasBeenTurnedOff:
     "通話を最適化するためビデオがオフにされました。ご自身と通話相手の接続が安定するとビデオが再開されます。",
@@ -372,6 +403,34 @@
   youWillBeKnown: "ユーザー名：",
   youCanAddTime: "通話中に時間を延長できます",
   youCanChangeThis: "通話中にビデオのオン/オフを切り替えられます",
+
+  // text for customer related to payments and rates
+  payments: {
+    currentRate: "$1/分",
+    currentBalance: "{{minutes}}分",
+    enterPaymentToTalk: "通話を続けるにはお支払い情報を入力してください。1分あたり$1で好きなだけお話いただけます。",
+    currentRateDescription: "通話は1分あたり$1で、最長60分ご利用いただけます。長時間の通話に適用される割引は今後提供予定です。"
+  },
+
+  // messages from api server, errors primarily
+  api: {
+    errUnexpected: "予期せぬエラーが発生しました。",
+    errTemporary: "一時的なエラーが発生しました。",
+    errTemporaryTryAgain: "一時的なエラーが発生しました。  数分後にもう一度お試しください。",
+    errLogin: "ログイン中に問題が発生しました",
+    errDefaultAuth: "認証情報が期限切れか無効です。",
+    errNoUser: "このメールアドレスのユーザーが見つかりませんでした",
+    errNoEmail: "メールアドレスが見つかりません",
+    errPasswordIncorrect: "パスワードが誤っています",
+    errAuthRequired: "もう一度ログインする必要があります",
+    errEventInvalid: "このコードの認証に失敗しました。",
+    errEventUnavailable: "このコードは現在利用できません。",
+    errEventInactive: "このコードは使用されていません。",
+    errEventScenarioMissing: "シナリオを指定する必要があります。",
+    errPaymentDetailsRequired: "続けるにはお支払い情報のの入力が必要です。",
+    errEventTimeExpired: "このコードには残り時間がありません。",
+    errEventAlreadyUsed: "このコードはすでに使用されています。"
+  },
 
   // for use in session-related screens
   session: {

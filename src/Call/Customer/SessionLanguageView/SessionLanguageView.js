@@ -37,7 +37,7 @@ class SessionLanguageView extends Component {
 
   setLanguages = () => {
     const { nativeLangCode, updateContactLinguist } = this.props;
-    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng" };
+    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng", jpn: "eng" };
     const userNativeLangIsSupported =
       SUPPORTED_LANGS.indexOf(nativeLangCode) >= 0;
 
@@ -49,7 +49,10 @@ class SessionLanguageView extends Component {
       lang => lang[3] === primaryLanguageCode
     );
 
-    const secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+    let secondaryLanguageCode = languagesMapper[primaryLanguageCode];
+    if (!secondaryLanguageCode) {
+      secondaryLanguageCode = primaryLanguageCode == "eng" ? "cmn" : "eng";
+    }
 
     const secondaryLanguage = Languages.find(
       lang => lang[3] === secondaryLanguageCode

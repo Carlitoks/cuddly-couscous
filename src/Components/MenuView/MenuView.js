@@ -194,7 +194,6 @@ class MenuView extends Component {
               </Text>
             </Icon.Button>
           )}
-
           {/* Settings */}
           <Icon.Button
             name="settings"

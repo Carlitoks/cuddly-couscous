@@ -217,14 +217,42 @@ export const onlyLetters = str => {
 /**
  * @description Display an alert if not into operating hours EDT
  */
-export const checkOperatingHours = (withinAnOur = false) => {
-  const OperatingHoursInit = 9;
-  const OperatingHoursEnd = 17 - (withinAnOur ? 1 : 0);
+export const checkOperatingHours = (
+  withinAnOur = false,
+  languagePrimary,
+  languageSecondary
+) => {
+  const OperatingHoursInit = 10;
+  const OperatingHoursEnd = 19 - (withinAnOur ? 1 : 0);
+  const OperatingHoursEndJPN = 7;
+  const OperatingHoursInitJPN = 19 - (withinAnOur ? 1 : 0);
   const EDT_hour = moment()
-    .utcOffset(-240)
+    .utcOffset(-240) // TimeZone
     .hours();
-
-  if (EDT_hour <= OperatingHoursInit || EDT_hour >= OperatingHoursEnd) {
+  let showModal = false;
+  if (languagePrimary || languageSecondary) {
+    if (
+      languagePrimary === "cmn" ||
+      languageSecondary === "cmn" ||
+      languagePrimary === "yue" ||
+      languageSecondary === "yue"
+    ) {
+      if (EDT_hour <= OperatingHoursInit && EDT_hour >= OperatingHoursEnd) {
+        showModal = true;
+      }
+    }
+    if (languagePrimary === "jpn" || languageSecondary === "jpn") {
+      if (
+        EDT_hour <= OperatingHoursInitJPN &&
+        EDT_hour >= OperatingHoursEndJPN
+      ) {
+        showModal = true;
+      }
+    }
+  } else {
+    showModal = true;
+  }
+  if (showModal) {
     Alert.alert(
       // This is Alert Dialog Title
       I18n.t("operatingHoursAlertTitle"),

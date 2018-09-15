@@ -11,7 +11,7 @@ import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 
-import { View, Text, ScrollView, Keyboard } from "react-native";
+import { View, Text, ScrollView, Keyboard, Alert } from "react-native";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
@@ -27,6 +27,13 @@ import { displayFormErrors } from "../../Util/Alerts";
 
 class PromoCodeView extends Component {
   submit() {
+    this.props.updateHomeFlow({
+      categorySelected: ""
+    });
+    this.props.updateSettings({
+      selectedScenarios: []
+    });
+
     const { token, promoCode } = this.props;
 
     this.props.updateContactLinguist({ customScenarioNote: "" });
@@ -35,58 +42,89 @@ class PromoCodeView extends Component {
     this.props
       .asyncScanPromoCode(promoCode, token)
       .then(response => {
+        this.props.clearPromoCode();
         if (response.type === "networkErrors/error") {
           throw new Error(I18n.t("errorPromo"));
         }
         const {
           requireScenarioSelection,
           restrictEventScenarios,
-          scenarios
+          scenarios,
+          initiateCall,
+          usageError,
+          addMinutesToUser,
+          maxMinutesPerUser,
+          organization
         } = response.payload;
         this.props.clearPromoCode();
-        if (requireScenarioSelection && restrictEventScenarios) {
-          /* Dispatch to SelectListView with the scenarios involveds*/
-          if (scenarios) {
-            let actualCats = this.props.categories;
-            actualCats.includes(scenarios[0].category)
-              ? null
-              : actualCats.push(scenarios[0].category);
-            const catIndex = findIndex(actualCats, scenario => {
-              return scenario === scenarios[0].category;
-            });
-            this.props.updateHomeFlow({
-              categoryIndex: catIndex,
-              categories: actualCats
-            });
+        if(initiateCall){
+        if (
+          !response.payload.userCanCreateSession ||
+          !!response.payload.sessionCreateErr
+        ) {
+          Alert.alert("Error", response.payload.sessionCreateErr, [
+            {
+              text: "OK",
+              onPress: () => {
+                this.props.clearPromoCode();
+              }
+            }
+          ]);
+        } else {
+          if (requireScenarioSelection && restrictEventScenarios) {
+            /* Dispatch to SelectListView with the scenarios involveds*/
+            if (scenarios) {
+              let actualCats = this.props.categories;
+              actualCats.includes(scenarios[0].category)
+                ? null
+                : actualCats.push(scenarios[0].category);
+              const catIndex = findIndex(actualCats, scenario => {
+                return scenario === scenarios[0].category;
+              });
+              this.props.updateHomeFlow({
+                categoryIndex: catIndex,
+                categories: actualCats
+              });
+              this.props.updateSettings({
+                selectionItemType: "scenarios",
+                selectionItemName: "scenarios",
+                scenarios
+              });
+              this.props.navigation.dispatch({ type: "PromotionView" });
+            } else {
+              this.props.navigation.dispatch({ type: "CustomScenarioView" });
+            }
+          } else if (requireScenarioSelection && !restrictEventScenarios) {
+            /* Dispatch to Category Selection View (Home) */
+
             this.props.updateSettings({
               selectionItemType: "scenarios",
               selectionItemName: "scenarios",
-              scenarios
+              scenarios: scenarios || []
             });
-            this.props.navigation.dispatch({ type: "PromotionView" });
-          } else {
-            this.props.navigation.dispatch({ type: "CustomScenarioView" });
-          }
-        } else if (requireScenarioSelection && !restrictEventScenarios) {
-          /* Dispatch to Category Selection View (Home) */
-
-          this.props.updateSettings({
-            selectionItemType: "scenarios",
-            selectionItemName: "scenarios",
-            scenarios: scenarios || []
-          });
-          this.props.navigation.dispatch({ type: "PromoCodeListView" });
-        } else if (!requireScenarioSelection) {
-          /* Dispatch to Call Confirmation view */
-          const setLanguage =
-            !this.props.event.allowSecondaryLangSelection &&
-            this.props.event.defaultSecondaryLangCode;
-          if (setLanguage) {
-            this.props.navigation.dispatch({ type: "CallConfirmationView" });
-          } else {
-            this.props.navigation.dispatch({ type: "CallPricingView" });
+            this.props.navigation.dispatch({ type: "PromoCodeListView" });
+          } else if (!requireScenarioSelection) {
+            /* Dispatch to Call Confirmation view */
+            const setLanguage =
+              !this.props.event.allowSecondaryLangSelection &&
+              this.props.event.defaultSecondaryLangCode;
+            if (setLanguage) {
+              this.props.navigation.dispatch({ type: "CallConfirmationView" });
+            } else {
+              this.props.navigation.dispatch({ type: "CallPricingView" });
+            }
           }
         }
+        }
+        else{
+      if(usageError){
+        this.props.navigation.dispatch({ type: "Home", params: { usageError } });
+      }
+      if(addMinutesToUser){
+        this.props.navigation.dispatch({ type: "Home", params: { minutesGranted: true, maxMinutesPerUser, organization:  organization.name } });
+      }
+      this.props.navigation.dispatch({ type: "Home" });
+    }
       })
       .catch(err => {
         console.log("Error ", err);

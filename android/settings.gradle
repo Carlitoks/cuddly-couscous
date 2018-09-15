@@ -1,4 +1,6 @@
 rootProject.name = 'Jeenie'
+include ':tipsi-stripe'
+project(':tipsi-stripe').projectDir = new File(rootProject.projectDir, '../node_modules/tipsi-stripe/android')
 include ':opentok-react-native'
 project(':opentok-react-native').projectDir = new File(rootProject.projectDir, '../node_modules/opentok-react-native/android')
 include ':react-native-sound'

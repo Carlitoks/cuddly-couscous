@@ -110,9 +110,13 @@ class NameCustomerView extends Component {
       const storedToken = record ? record.token : token;
       const storedId = record ? record.id : id;
 
-      const payload = { id: storedId, firstname, lastname, preferredName };
-
-      asyncUpdateUser(payload, storedToken)
+      const payload = {
+        id: storedId === undefined ? id : storedId,
+        firstname,
+        lastname,
+        preferredName
+      };
+      asyncUpdateUser(payload, storedToken === undefined ? token : storedToken)
         .then(response => {
           this.props.navigation.dispatch({ type: "NativeLanguageView" });
           Keyboard.dismiss();

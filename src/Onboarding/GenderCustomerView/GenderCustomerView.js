@@ -119,13 +119,13 @@ class GenderCustomerView extends Component {
     const record = checkRecord(email);
     const storedToken = record ? record.token : token;
     const storedId = record ? record.id : id;
-
     const payload = {
-      id: storedId,
+      id: storedId === undefined ? id : storedId,
       gender: selectedGender,
       countryCode: DeviceInfo.getDeviceCountry()
     };
-    asyncUpdateUser(payload, storedToken)
+
+    asyncUpdateUser(payload, storedToken === undefined ? token : storedToken)
       .then(response => {
         if (response.type === "networkErrors/error") {
           throw new Error(response.payload.data.errors);
@@ -145,7 +145,22 @@ class GenderCustomerView extends Component {
         });
       })
       .then(() => {
-        navigation.dispatch({ type: "WelcomeCustomerView" });
+        navigation.dispatch({
+          type: "PaymentsView",
+          params: {
+            title: I18n.t("paymentDetails"),
+            messageText: I18n.t("enterPaymentOnboarding"),
+            buttonText: I18n.t("continue"),
+            buttonTextIfEmpty: I18n.t("skipAddLater"),
+            optional: true,
+            onSubmit: () => {
+              navigation.dispatch({ type: "WelcomeCustomerView" });
+            }
+          }
+        });
+        this.props.updateForm({
+          performingRequest: false
+        });
       })
       .catch(error => {
         this.props.updateForm({
