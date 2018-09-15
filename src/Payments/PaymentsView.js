@@ -53,19 +53,22 @@ class PaymentsView extends Component {
 
     const errors = [];
 
-    if (number.length === 0) {
+    if (number && number.length === 0) {
       errors.push("The credit card number is required");
     } else if (!!!numberProperFormat) {
       errors.push("The credit card number has wrong format");
     }
 
-    if (cvc.length === 0) {
+    if (cvc && cvc.length === 0) {
       errors.push("CVC is required");
     } else if (!!!CVCProperFormat) {
       errors.push("CVC has wrong format");
     }
 
-    if (expMonth.length === 0 || expYear.length === 0) {
+    if (
+      (expMonth && expMonth.length === 0) ||
+      (expYear && expYear.length === 0)
+    ) {
       errors.push("Expiry date is missing or incomplete");
     } else if (!!!monthProperFormat || !!!yearProperFormat) {
       errors.push("Expiry date has wrong format");
@@ -100,7 +103,8 @@ class PaymentsView extends Component {
       updatePayments,
       updateView,
       setPayment,
-      clearPayments
+      clearPayments,
+      navigation
     } = this.props;
 
     const params = {
@@ -128,7 +132,11 @@ class PaymentsView extends Component {
           );
 
           clearPayments();
-          callback();
+          updatePayments({ errors: [] });
+
+          callback === null || !!!callback
+            ? navigation.dispatch({ type: "back" })
+            : callback();
         })
         .catch(error => {
           this.displayErrorAlert();
