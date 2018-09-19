@@ -14,14 +14,11 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* NewSoloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NewSoloTests.m */; };
 		013EE11074894DD2A2EE6ED7 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36EEF3BECC9747DEA2854429 /* Foundation.ttf */; };
-		070C141720D1A93000DC71D8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 070C141620D1A93000DC71D8 /* GoogleService-Info.plist */; };
 		0715C215203E7D8800F76F07 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0715C1FD203E7D0800F76F07 /* libRNFIRMessaging.a */; };
 		07171C1720E18AE300D26656 /* Elastic_Error1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 07171BE620E18AE300D26656 /* Elastic_Error1.wav */; };
 		07171C1920E18B1000D26656 /* Elastic_Done11.wav in Resources */ = {isa = PBXBuildFile; fileRef = 07171C1820E18B0F00D26656 /* Elastic_Done11.wav */; };
 		0717C56C20DAD96800FED6C6 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0717C56B20DAD96800FED6C6 /* libBVLinearGradient.a */; };
 		0722FE9220BF864B0039BF78 /* elastic_done5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0722FE6820BF864B0039BF78 /* elastic_done5.wav */; };
-		0725519520D7EFBB008DA9FB /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0725519420D7EFBB008DA9FB /* libBVLinearGradient.a */; };
-		0725534F20D9CB13008DA9FB /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0725534E20D9CB13008DA9FB /* libRNSound.a */; };
 		07317530201FA6E2008FC1C1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0731752F201FA6E2008FC1C1 /* StoreKit.framework */; };
 		0758DE86206BDD9A002518AF /* Fontin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 806C6008FAE54368AC65C28A /* Fontin-Regular.ttf */; };
 		0783BEC2D56942E9857915B2 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6AFD24B217EF450CA33DDB3F /* MaterialCommunityIcons.ttf */; };
@@ -46,6 +43,7 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1DECD2398B2E4FBCBEED3F3A /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24B14C468BB94593ACB98949 /* libRNImagePicker.a */; };
+		229C93D7C88AD6A05907B46E /* Instabug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3EC27FF3C6EB5DBB32714C /* Instabug.framework */; };
 		25EFEED8A1BD42638B48881E /* libAppCenterReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79437274A1C643129C53A697 /* libAppCenterReactNative.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -60,20 +58,18 @@
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* NewSoloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NewSoloTests.m */; };
 		32FFF9B648104A83AA836A90 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4FAF86067654C93A83E9024 /* Feather.ttf */; };
+		330B6BD37860997EE8E2CFEB /* Instabug.framework in Embed Instabug Framework */ = {isa = PBXBuildFile; fileRef = 2E3EC27FF3C6EB5DBB32714C /* Instabug.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		39D14CE1FF514F22B323F9D0 /* libAppCenterReactNativeAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 459643FB3CCA4D7492CE377A /* libAppCenterReactNativeAnalytics.a */; };
-		3B0EA980E2447EB326099F8C /* InstabugCore.framework in Embed Instabug Framework */ = {isa = PBXBuildFile; fileRef = 0B41FAA880FC2CEAD7E3F4CD /* InstabugCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5783FBB90FB24D4393043816 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 79694DA4E9CF44099324A2BD /* MaterialIcons.ttf */; };
-		60231478E57ED585ED16C1EC /* Instabug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF790EEB534BEEEE4A057BCD /* Instabug.framework */; };
+		5E55A08684824EDD995481A3 /* libRNInstabug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D579FC61BDD34442913333F0 /* libRNInstabug.a */; };
 		6179BF11DDFA4BE79AC7B14D /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C2AF617199042F586363316 /* SimpleLineIcons.ttf */; };
 		6472893D4C6D4A97A45FFAA5 /* SFProDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A97E90997CE84682A4D73047 /* SFProDisplay-Bold.otf */; };
-		6808D1DD7F1641289E754B57 /* libRNInstabug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B39359259F46EBA072BB45 /* libRNInstabug.a */; };
 		6BB7F2EF032C4819B67A322E /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A678DE2936DF4F61B5F22B33 /* libRNVectorIcons.a */; };
 		707EEECD00914A33BE946150 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = A499BC0F9869464997E60350 /* AppCenter-Config.plist */; };
 		784610254B1F4F1C9970F2F1 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 139C8285B0174D19BCF04E50 /* OpenSans-Regular.ttf */; };
 		7D6431490DEB4EF383BDFFFA /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BDE58F472E461891436189 /* EvilIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		84F0420AB56345AE8824A84B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 30EF032C1D104FA8AE075464 /* Entypo.ttf */; };
-		8AA14ED54F3C7CF70AC1ACC8 /* InstabugCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B41FAA880FC2CEAD7E3F4CD /* InstabugCore.framework */; };
 		90BD70F45E5044A984881B22 /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9790D040E7C3467EA2231F81 /* SFProDisplay-Regular.otf */; };
 		A992041920D9D2F100122220 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A992041820D9D2F100122220 /* libRNSound.a */; };
 		A997C09A20CBD4BD00F80149 /* incoming_call_notification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A997C09920CBD4BD00F80149 /* incoming_call_notification.mp3 */; };
@@ -85,7 +81,6 @@
 		B76744B561154C75BE69213F /* libAppCenterReactNativeCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AE10DD4DF194C9EA7A38669 /* libAppCenterReactNativeCrashes.a */; };
 		B81D72A4D93D405A9B78DF49 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6967F930B23413993090200 /* FontAwesome.ttf */; };
 		BD94A7F3ECA24DCEB4742473 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D18DA0EB8B844801AD910DB9 /* Ionicons.ttf */; };
-		BE4AC5E5ED469BEC8BA626F5 /* Instabug.framework in Embed Instabug Framework */ = {isa = PBXBuildFile; fileRef = DF790EEB534BEEEE4A057BCD /* Instabug.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D098F3B4B1A0A8A69B40FABF /* libPods-NewSolo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F987D51A7B2FA400DA43E4C7 /* libPods-NewSolo.a */; };
 		D2C62ECCA20541D08A3166F0 /* SFProDisplay-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F60C3D9B9D684C0A8075DA43 /* SFProDisplay-Light.otf */; };
 /* End PBXBuildFile section */
@@ -139,34 +134,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFIRMessaging;
-		};
-		0725509620D447B5008DA9FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0725506420D447B5008DA9FB /* RNSound.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
-			remoteInfo = RNSound;
-		};
-		0725513320D7E93C008DA9FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0725512E20D7E93C008DA9FB /* BVLinearGradient.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = BVLinearGradient;
-		};
-		0725513520D7E93C008DA9FB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0725512E20D7E93C008DA9FB /* BVLinearGradient.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 64AA15081EF7F30100718508;
-			remoteInfo = "BVLinearGradient-tvOS";
-		};
-		0758DEE5206C25B0002518AF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C47EB3A497C478AAA08A7A3 /* RNInstabug.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 24DF11ED1DA3A2B90056F77C;
-			remoteInfo = RNInstabug;
 		};
 		078957F920C1D5BE002F5702 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -434,6 +401,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		A29B590221501E6F0055B4EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 046021E0149D40BE82B03E96 /* RNInstabug.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 24DF11ED1DA3A2B90056F77C;
+			remoteInfo = RNInstabug;
+		};
 		A959AD3020D406FC00FDC042 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D49F9976701E4891B19C5992 /* OpenTokReactNative.xcodeproj */;
@@ -479,14 +453,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		68AF41BB77B87D15741B6112 /* Embed Instabug Framework */ = {
+		07106C32B2C17988A816425A /* Embed Instabug Framework */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BE4AC5E5ED469BEC8BA626F5 /* Instabug.framework in Embed Instabug Framework */,
-				3B0EA980E2447EB326099F8C /* InstabugCore.framework in Embed Instabug Framework */,
+				330B6BD37860997EE8E2CFEB /* Instabug.framework in Embed Instabug Framework */,
 			);
 			name = "Embed Instabug Framework";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,16 +476,12 @@
 		00E356EE1AD99517003FC87E /* NewSoloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewSoloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* NewSoloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewSoloTests.m; sourceTree = "<group>"; };
-		070C141620D1A93000DC71D8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		046021E0149D40BE82B03E96 /* RNInstabug.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNInstabug.xcodeproj; path = "../node_modules/instabug-reactnative/ios/RNInstabug.xcodeproj"; sourceTree = "<group>"; };
 		0715C1D3203E7D0800F76F07 /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
 		07171BE620E18AE300D26656 /* Elastic_Error1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Elastic_Error1.wav; sourceTree = "<group>"; };
 		07171C1820E18B0F00D26656 /* Elastic_Done11.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Elastic_Done11.wav; sourceTree = "<group>"; };
 		0717C56B20DAD96800FED6C6 /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0722FE6820BF864B0039BF78 /* elastic_done5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done5.wav; path = ../android/app/src/main/res/raw/elastic_done5.wav; sourceTree = "<group>"; };
-		0725506420D447B5008DA9FB /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
-		0725512E20D7E93C008DA9FB /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
-		0725519420D7EFBB008DA9FB /* libBVLinearGradient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libBVLinearGradient.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		0725534E20D9CB13008DA9FB /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNSound.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0731752F201FA6E2008FC1C1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		078957D320C1D5BE002F5702 /* elastic_done3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done3.wav; path = ../src/Sounds/elastic_done3.wav; sourceTree = "<group>"; };
 		0789580420C1D5CB002F5702 /* elastic_done5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done5.wav; path = ../src/Sounds/elastic_done5.wav; sourceTree = "<group>"; };
@@ -522,7 +491,6 @@
 		07EE05E020BF6A7D00BA592D /* elastic_done3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_done3.wav; path = ../android/app/src/main/res/raw/elastic_done3.wav; sourceTree = "<group>"; };
 		07F59B5420E703AC0019D8E8 /* Elastic_Notification15.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Elastic_Notification15.wav; sourceTree = "<group>"; };
 		07F59C1120E708BA0019D8E8 /* Elastic_Notification15.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Elastic_Notification15.wav; path = ../../../Downloads/Elastic_Notification15.wav; sourceTree = "<group>"; };
-		0B41FAA880FC2CEAD7E3F4CD /* InstabugCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstabugCore.framework; path = "../node_modules/instabug-reactnative/ios/InstabugCore.framework"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139C8285B0174D19BCF04E50 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "OpenSans-Regular.ttf"; path = "../src/Assets/Fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -537,10 +505,10 @@
 		24B14C468BB94593ACB98949 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* NewSolo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NewSolo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* NewSolo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NewSolo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E3EC27FF3C6EB5DBB32714C /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		30EF032C1D104FA8AE075464 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		30F2DC61F8AB466D99A508FF /* libRNInCallManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNInCallManager.a; sourceTree = "<group>"; };
 		36EEF3BECC9747DEA2854429 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		38B39359259F46EBA072BB45 /* libRNInstabug.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNInstabug.a; sourceTree = "<group>"; };
 		41D61438469E2B923672A363 /* Pods-NewSolo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewSolo.release.xcconfig"; path = "Pods/Target Support Files/Pods-NewSolo/Pods-NewSolo.release.xcconfig"; sourceTree = "<group>"; };
 		459643FB3CCA4D7492CE377A /* libAppCenterReactNativeAnalytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNativeAnalytics.a; sourceTree = "<group>"; };
 		491575FABCD2415BB592AC8D /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
@@ -556,7 +524,6 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		79437274A1C643129C53A697 /* libAppCenterReactNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNative.a; sourceTree = "<group>"; };
 		79694DA4E9CF44099324A2BD /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		7C47EB3A497C478AAA08A7A3 /* RNInstabug.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNInstabug.xcodeproj; path = "../node_modules/instabug-reactnative/ios/RNInstabug.xcodeproj"; sourceTree = "<group>"; };
 		806C6008FAE54368AC65C28A /* Fontin-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Fontin-Regular.ttf"; path = "../src/Assets/Fonts/Fontin-Regular.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8AE10DD4DF194C9EA7A38669 /* libAppCenterReactNativeCrashes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNativeCrashes.a; sourceTree = "<group>"; };
@@ -578,7 +545,7 @@
 		D04F8B78B9D14E3E87439552 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		D18DA0EB8B844801AD910DB9 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		D49F9976701E4891B19C5992 /* OpenTokReactNative.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = OpenTokReactNative.xcodeproj; path = "../node_modules/opentok-react-native/ios/OpenTokReactNative.xcodeproj"; sourceTree = "<group>"; };
-		DF790EEB534BEEEE4A057BCD /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
+		D579FC61BDD34442913333F0 /* libRNInstabug.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNInstabug.a; sourceTree = "<group>"; };
 		E6967F930B23413993090200 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		F4FAF86067654C93A83E9024 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		F60C3D9B9D684C0A8075DA43 /* SFProDisplay-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProDisplay-Light.otf"; path = "../src/Assets/Fonts/SFProDisplay-Light.otf"; sourceTree = "<group>"; };
@@ -621,14 +588,13 @@
 				07317530201FA6E2008FC1C1 /* StoreKit.framework in Frameworks */,
 				1DECD2398B2E4FBCBEED3F3A /* libRNImagePicker.a in Frameworks */,
 				0715C215203E7D8800F76F07 /* libRNFIRMessaging.a in Frameworks */,
-				6808D1DD7F1641289E754B57 /* libRNInstabug.a in Frameworks */,
-				60231478E57ED585ED16C1EC /* Instabug.framework in Frameworks */,
-				8AA14ED54F3C7CF70AC1ACC8 /* InstabugCore.framework in Frameworks */,
 				25EFEED8A1BD42638B48881E /* libAppCenterReactNative.a in Frameworks */,
 				39D14CE1FF514F22B323F9D0 /* libAppCenterReactNativeAnalytics.a in Frameworks */,
 				B76744B561154C75BE69213F /* libAppCenterReactNativeCrashes.a in Frameworks */,
 				D098F3B4B1A0A8A69B40FABF /* libPods-NewSolo.a in Frameworks */,
 				0C0CA2623D79467CA55056E8 /* libOpenTokReactNative.a in Frameworks */,
+				5E55A08684824EDD995481A3 /* libRNInstabug.a in Frameworks */,
+				229C93D7C88AD6A05907B46E /* Instabug.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,31 +690,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0725506520D447B5008DA9FB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0725509720D447B5008DA9FB /* libRNSound.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		0725512F20D7E93C008DA9FB /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0725513420D7E93C008DA9FB /* libBVLinearGradient.a */,
-				0725513620D7E93C008DA9FB /* libBVLinearGradient.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		0758DEE2206C25AF002518AF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0758DEE6206C25B0002518AF /* libRNInstabug.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		079EC055208FA4E10024BBDA /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -763,11 +704,11 @@
 				A678DE2936DF4F61B5F22B33 /* libRNVectorIcons.a */,
 				24B14C468BB94593ACB98949 /* libRNImagePicker.a */,
 				30F2DC61F8AB466D99A508FF /* libRNInCallManager.a */,
-				38B39359259F46EBA072BB45 /* libRNInstabug.a */,
 				79437274A1C643129C53A697 /* libAppCenterReactNative.a */,
 				459643FB3CCA4D7492CE377A /* libAppCenterReactNativeAnalytics.a */,
 				8AE10DD4DF194C9EA7A38669 /* libAppCenterReactNativeCrashes.a */,
 				A8F3D9D6FC08440BB2801098 /* libOpenTokReactNative.a */,
+				D579FC61BDD34442913333F0 /* libRNInstabug.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -797,9 +738,8 @@
 				078957D320C1D5BE002F5702 /* elastic_done3.wav */,
 				079EBED8208854AE0024BBDA /* libRNInCallManager.a */,
 				0731752F201FA6E2008FC1C1 /* StoreKit.framework */,
-				DF790EEB534BEEEE4A057BCD /* Instabug.framework */,
-				0B41FAA880FC2CEAD7E3F4CD /* InstabugCore.framework */,
 				F987D51A7B2FA400DA43E4C7 /* libPods-NewSolo.a */,
+				2E3EC27FF3C6EB5DBB32714C /* Instabug.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -950,12 +890,12 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				491575FABCD2415BB592AC8D /* RNVectorIcons.xcodeproj */,
 				49E74BA361A34786B9E0CA11 /* RNImagePicker.xcodeproj */,
-				7C47EB3A497C478AAA08A7A3 /* RNInstabug.xcodeproj */,
 				8B755116ACA3441F8628A51F /* RNInCallManager.xcodeproj */,
 				71186ABDEEE64A4F903AF52E /* AppCenterReactNative.xcodeproj */,
 				914EB443250A4B78825A1C4F /* AppCenterReactNativeAnalytics.xcodeproj */,
 				6111992DD1AC481BBAF4B777 /* AppCenterReactNativeCrashes.xcodeproj */,
 				D49F9976701E4891B19C5992 /* OpenTokReactNative.xcodeproj */,
+				046021E0149D40BE82B03E96 /* RNInstabug.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1002,6 +942,14 @@
 				00E356EE1AD99517003FC87E /* NewSoloTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* NewSolo-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* NewSolo-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A29B58D221501E6F0055B4EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A29B590321501E6F0055B4EC /* libRNInstabug.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1079,10 +1027,9 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				07ED6D9B1FF6DCCD007DC48E /* ShellScript */,
-				68AF41BB77B87D15741B6112 /* Embed Instabug Framework */,
-				D792A0803A1A5A562E79F81E /* Strip Frameworks */,
 				C64BF1D6C16A9817BBCCF13C /* [CP] Copy Pods Resources */,
+				07106C32B2C17988A816425A /* Embed Instabug Framework */,
+				C994E72C546EA145A5F07CB2 /* Strip Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1276,8 +1223,8 @@
 					ProjectRef = 8B755116ACA3441F8628A51F /* RNInCallManager.xcodeproj */;
 				},
 				{
-					ProductGroup = 0758DEE2206C25AF002518AF /* Products */;
-					ProjectRef = 7C47EB3A497C478AAA08A7A3 /* RNInstabug.xcodeproj */;
+					ProductGroup = A29B58D221501E6F0055B4EC /* Products */;
+					ProjectRef = 046021E0149D40BE82B03E96 /* RNInstabug.xcodeproj */;
 				},
 				{
 					ProductGroup = A959AD3320D4083500FDC042 /* Products */;
@@ -1339,34 +1286,6 @@
 			fileType = archive.ar;
 			path = libRNFIRMessaging.a;
 			remoteRef = 0715C1FC203E7D0800F76F07 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0725509720D447B5008DA9FB /* libRNSound.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNSound.a;
-			remoteRef = 0725509620D447B5008DA9FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0725513420D7E93C008DA9FB /* libBVLinearGradient.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libBVLinearGradient.a;
-			remoteRef = 0725513320D7E93C008DA9FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0725513620D7E93C008DA9FB /* libBVLinearGradient.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libBVLinearGradient.a;
-			remoteRef = 0725513520D7E93C008DA9FB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0758DEE6206C25B0002518AF /* libRNInstabug.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNInstabug.a;
-			remoteRef = 0758DEE5206C25B0002518AF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		078957FA20C1D5BE002F5702 /* libjsinspector.a */ = {
@@ -1628,6 +1547,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		A29B590321501E6F0055B4EC /* libRNInstabug.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNInstabug.a;
+			remoteRef = A29B590221501E6F0055B4EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		A959AD3720D4083500FDC042 /* libRNSound.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1740,19 +1666,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		07ED6D9B1FF6DCCD007DC48E /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "";
-		};
 		197E92C2AFE47F1BFB054570 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1803,7 +1716,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NewSolo/Pods-NewSolo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D792A0803A1A5A562E79F81E /* Strip Frameworks */ = {
+		C994E72C546EA145A5F07CB2 /* Strip Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1815,7 +1728,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/InstabugCore.framework/strip-frameworks.sh\"\n";
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Instabug.framework/strip-frameworks.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1901,18 +1814,24 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZBN2633FB9;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/instabug-reactnative/ios/RNInstabug/**",
+				);
 				INFOPLIST_FILE = NewSoloTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1929,15 +1848,21 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = ZBN2633FB9;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/instabug-reactnative/ios/RNInstabug/**",
+				);
 				INFOPLIST_FILE = NewSoloTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1955,10 +1880,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = NewSolo/NewSolo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1984,12 +1906,12 @@
 					"$(SRCROOT)/../node_modules/react-native-fcm/ios/**",
 				);
 				INFOPLIST_FILE = NewSolo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited) ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gps.solo;
 				PRODUCT_NAME = NewSolo;
-				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "NewSolo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2005,9 +1927,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = NewSolo/NewSolo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZBN2633FB9;
@@ -2026,14 +1946,11 @@
 					"$(SRCROOT)/../node_modules/react-native-sound/**",
 				);
 				INFOPLIST_FILE = NewSolo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gps.solo;
 				PRODUCT_NAME = NewSolo;
-				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "NewSolo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -2054,10 +1971,16 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/instabug-reactnative/ios/RNInstabug/**",
+				);
 				INFOPLIST_FILE = "NewSolo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2082,10 +2005,16 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/instabug-reactnative/ios/RNInstabug/**",
+				);
 				INFOPLIST_FILE = "NewSolo-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2111,7 +2040,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "NewSolo-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.NewSolo-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -2133,7 +2065,10 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "NewSolo-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.NewSolo-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -2167,6 +2102,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2186,7 +2122,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2218,6 +2154,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2230,7 +2167,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;

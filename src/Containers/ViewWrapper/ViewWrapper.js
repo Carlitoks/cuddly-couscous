@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { View, Text, Modal, StatusBar, processColor } from "react-native";
-import Instabug from "instabug-reactnative";
+import Instabug, { BugReporting, Surveys, FeatureRequests } from 'instabug-reactnative';
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import I18n from "react-native-i18n";
 
@@ -58,10 +58,13 @@ const ViewWrapper = ({
   const session = !!sessionId ? ` SessionID: ${sessionId} ` : "";
   const event = !!eventId ? ` EventID: ${eventId} ` : "";
   try {
-    Instabug.startWithToken(
-      "83f07c5f8dcb8496e3287f280ce6f61d",
-      Instabug.invocationEvent.shake
-    );
+    Instabug.isRunningLive(function (isLive) {
+      if (isLive) {
+        Instabug.startWithToken('1ef778fa18d0379f12f7ebaed42eba02', [Instabug.invocationEvent.shake]);
+      } else {
+        Instabug.startWithToken('83f07c5f8dcb8496e3287f280ce6f61d', [Instabug.invocationEvent.shake]);
+      }
+    });
     Instabug.setLocale(instaBugLanguage);
     Instabug.setViewHierarchyEnabled(false);
     Instabug.setPromptOptionsEnabled(false, true, true);

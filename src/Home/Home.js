@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { View } from "react-native";
-
 import HomeCustomer from "./Customer/HomeCustomer";
 import HomeLinguist from "./Linguist/HomeLinguist";
 import LoginView from "../Onboarding/LoginView/LoginView";

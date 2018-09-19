@@ -11,6 +11,7 @@ import { addListeners } from "./Ducks/PushNotificationReducer";
 import { switchLanguage } from "./I18n/I18n";
 import deviceinfo from "react-native-device-info";
 import { InterfaceSupportedLanguages } from "./Config/Languages";
+import Crashes from 'appcenter-crashes';
 
 import I18n from "./I18n/I18n";
 class App extends Component {
@@ -27,7 +28,12 @@ class App extends Component {
     Text.defaultProps.allowFontScaling = false;
   }
 
+  disableAppCenterCrashes = async () => {
+    await Crashes.setEnabled(false);
+  };
+
   componentWillMount() {
+    this.disableAppCenterCrashes();
     createStore()
       .then(store => {
         const {

@@ -15,12 +15,12 @@
     "api:load-mock-data": "make run-cmd CMD=\"load-fixtures\""
   },
   "dependencies": {
-    "appcenter": "^1.5.1",
-    "appcenter-analytics": "^1.5.1",
-    "appcenter-crashes": "^1.5.1",
+    "appcenter": "1.5.1",
+    "appcenter-analytics": "1.5.1",
+    "appcenter-crashes": "1.5.1",
     "axios": "^0.17.1",
     "bluebird": "^3.5.1",
-    "instabug-reactnative": "2.8.1",
+    "instabug-reactnative": "8.0.12",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "opentok-react-native": "^0.8.0",

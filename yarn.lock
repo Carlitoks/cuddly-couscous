@@ -549,13 +549,13 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-appcenter-analytics@^1.5.1:
+appcenter-analytics@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/appcenter-analytics/-/appcenter-analytics-1.5.1.tgz#56b5c457c90cf7b9aa63ce1f1ff8dbc6004107cd"
   dependencies:
     appcenter "1.5.1"
 
-appcenter-crashes@^1.5.1:
+appcenter-crashes@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/appcenter-crashes/-/appcenter-crashes-1.5.1.tgz#8240a6286565ffc27c4ed48b1eb0fa59144255e9"
   dependencies:
@@ -573,7 +573,7 @@ appcenter-link-scripts@1.5.1:
     which "^1.2.11"
     xcode "^1.0.0"
 
-appcenter@1.5.1, appcenter@^1.5.1:
+appcenter@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/appcenter/-/appcenter-1.5.1.tgz#2b8ac2f56f1babf4f04f9d096aea9e8ca1a67431"
   dependencies:
@@ -2668,9 +2668,9 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-instabug-reactnative@2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-2.8.1.tgz#5181aaaec4d298676a19569d625be80487d519af"
+instabug-reactnative@8.0.12:
+  version "8.0.12"
+  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-8.0.12.tgz#881bc5c3403b050f65d7286fa03e43033cc4fa22"
 
 invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.2:
   version "2.2.4"
