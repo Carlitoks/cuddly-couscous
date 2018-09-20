@@ -49,7 +49,12 @@ import {
   BackgroundCleanInterval,
   BackgroundStart
 } from "../../../Util/Background";
-import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
+import {
+  REASON,
+  TIME,
+  STATUS_TOKBOX,
+  SUPPORTED_LANGS
+} from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
 import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
 
@@ -143,6 +148,8 @@ class CustomerView extends Component {
   }
 
   connectCall = async () => {
+    const userNativeLangIsSupported =
+      SUPPORTED_LANGS.indexOf(this.props.primaryLangCode[3]) >= 0;
     const {
       createSession,
       primaryLangCode,
@@ -156,7 +163,9 @@ class CustomerView extends Component {
       event
     } = this.props;
     await createSession({
-      primaryLangCode: primaryLangCode[3],
+      primaryLangCode: userNativeLangIsSupported
+        ? primaryLangCode[3]
+        : SUPPORTED_LANGS[0],
       secondaryLangCode:
         event.id &&
         event.id !== "" &&
