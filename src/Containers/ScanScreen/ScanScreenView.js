@@ -8,7 +8,7 @@ import { findIndex } from "lodash";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { Header } from "react-native-elements";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import { asyncScanQR } from "../../Ducks/EventsReducer";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
@@ -151,7 +151,7 @@ class ScanScreenView extends Component {
             }
             }else{
           if(usageError){
-            this.props.navigation.dispatch({ type: "Home", params: { usageError } });
+            this.props.navigation.dispatch({ type: "Home", params: { usageError: translateApiErrorString(usageError, "api.errEventUnavailable") } });
           }
           if(addMinutesToUser){
             this.props.navigation.dispatch({ type: "Home", params: { minutesGranted: true, maxMinutesPerUser, organization:  organization.name } });

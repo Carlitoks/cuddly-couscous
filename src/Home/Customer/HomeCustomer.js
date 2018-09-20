@@ -92,7 +92,7 @@ class Home extends Component {
       this.props.navigation.state.params &&
       this.props.navigation.state.params.usageError
     ) {
-      Alert.alert(I18n.t("invalidCode"), I18n.t("invalidCodeMsg", {message: this.props.navigation.state.params.usageError}));
+      Alert.alert(I18n.t("invalidCode"), this.props.navigation.state.params.usageError);
     }
     if (
       this.props.navigation.state.params &&

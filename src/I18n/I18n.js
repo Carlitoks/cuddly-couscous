@@ -85,3 +85,58 @@ for (const [key, value] of Object.entries(en.languagesList)) {
   primaryLanguages.push({code: key, i18nKey: `languagesList.${key}`});
 }
 export {primaryLanguages}
+
+// these are raw error strings that come from the api backend.  They are mapped
+// to translation keys
+const apiErrorsI18N = {
+  "both email and password required": "api.errDefaultAuth",
+  "user not found": "api.errNoUser",
+  "Email not found": "api.errNoEmail",
+  "Password incorrect": "api.errPasswordIncorrect",
+  "authentication required": "api.errAuthRequired",
+  "failed to validate event": "api.errEventInvalid",
+  "event is not currently available": "api.errEventUnavailable",
+  "event is not active": "api.errEventInactive",
+  "event requires a scenario to be specified": "api.errEventScenarioMissing",
+  "payment details required": "api.errPaymentDetailsRequired",
+  "no time remaining": "api.errEventTimeExpired",
+  "event already used": "api.errEventAlreadyUsed"
+};
+
+export const translateApiErrorString = (str, defaultKey) => {
+  if (!!apiErrorsI18N[str]) {
+    return I18n.t(apiErrorsI18N[str]);
+  }
+  if (!!defaultKey) {
+    return I18n.t(defaultKey);
+  }
+  return str;
+};
+
+// handle error responses and try to extract
+// an error message from the body if present,
+// otherwise fall back to a default error message
+export const translateApiError = (e, i18nDefaultKey) => {
+  // some api error responses might be changed through a series of
+  // promises - so it's possible that the return has already
+  // been turned into a string
+  if ("string" == typeof e) {
+    return e;
+  }
+
+  // otherwise check for a response error data strcture
+  if (e.response && e.response.data && e.response.data.errors) {
+    let key = e.response.data.errors[0];
+    if (!!apiErrorsI18N[key]) {
+      return I18n.t(apiErrorsI18N[key]);
+    } else {
+      return e.response.data.errors[0];
+    }
+  }
+
+  if (!!i18nDefaultKey) {
+    return I18n.t(i18nDefaultKey);
+  }
+
+  return I18n.t('api.errUnexpected');
+}
