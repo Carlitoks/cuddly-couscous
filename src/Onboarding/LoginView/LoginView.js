@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import {
   Alert,
   Platform,
@@ -35,7 +34,7 @@ import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
-
+import Instabug from 'instabug-reactnative';
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";

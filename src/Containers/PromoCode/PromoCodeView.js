@@ -118,7 +118,7 @@ class PromoCodeView extends Component {
         }
         else{
       if(usageError){
-        this.props.navigation.dispatch({ type: "Home", params: { usageError } });
+        this.props.navigation.dispatch({ type: "Home", params: { usageError: translateApiErrorString(usageError, "api.errEventUnavailable") } });
       }
       if(addMinutesToUser){
         this.props.navigation.dispatch({ type: "Home", params: { minutesGranted: true, maxMinutesPerUser, organization:  organization.name } });

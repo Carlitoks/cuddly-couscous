@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { View, Text, Modal, StatusBar, processColor } from "react-native";
-import Instabug from "instabug-reactnative";
+import Instabug, { BugReporting, Surveys, FeatureRequests } from 'instabug-reactnative';
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import I18n from "react-native-i18n";
+import { instabugToken } from "../../Config/env";
 
 import { Colors } from "../../Themes";
 
@@ -58,10 +59,7 @@ const ViewWrapper = ({
   const session = !!sessionId ? ` SessionID: ${sessionId} ` : "";
   const event = !!eventId ? ` EventID: ${eventId} ` : "";
   try {
-    Instabug.startWithToken(
-      "83f07c5f8dcb8496e3287f280ce6f61d",
-      Instabug.invocationEvent.shake
-    );
+    Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.shake]);
     Instabug.setLocale(instaBugLanguage);
     Instabug.setViewHierarchyEnabled(false);
     Instabug.setPromptOptionsEnabled(false, true, true);
