@@ -23,6 +23,7 @@ import {
   updateSettings as updateContactLinguistSettings,
   resetCounter
 } from "../../../Ducks/ContactLinguistReducer";
+import { Platform } from "react-native";
 
 import { TOKBOX_APIKEY } from "../../../Config/env";
 
@@ -58,10 +59,6 @@ class SessionBox extends Component {
         console.log("SESSION CONNECTED EVENT");
         this.props.connectionConnectedEvent();
       },
-      sessionDisconnected: () => {
-        console.log("SESSION DISCONNECTED EVENT");
-        this.props.connectionDisconnectEvent();
-      },
       sessionReconnected: () => {
         console.log("SESSION RECONNECTED EVENT");
         //this.props.videoState(true);
@@ -91,6 +88,12 @@ class SessionBox extends Component {
         this.props.streamDestroyedEvent(event);
       }
     };
+    if(Platform.OS !== 'android'){
+      this.sessionEvents.sessionDisconnected = sessionDisconnected = () => {
+        console.log("SESSION DISCONNECTED EVENT");
+        this.props.connectionDisconnectEvent();
+      };
+    }
   }
 
   render() {
