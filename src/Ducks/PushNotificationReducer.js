@@ -99,7 +99,12 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
                 )}`} - ${data.session.scenario.title}`
           })
         );
-        dispatch({ type: "IncomingCallView" });
+
+        if((data.session.endReason && data.session.endedAt) || (data.responded || data.accepted)){
+          dispatch({ type: "Home" });
+        }else{
+          dispatch({ type: "IncomingCallView" });
+        }
       })
       .catch(error => dispatch(networkError(error)));
   }
