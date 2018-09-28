@@ -4003,7 +4003,7 @@ opencollective@^1.0.3:
     node-fetch "1.6.3"
     opn "4.0.2"
 
-opentok-react-native@^0.8.0:
+opentok-react-native@0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/opentok-react-native/-/opentok-react-native-0.8.0.tgz#dccd5681b7457d07c5558b9d0c72fcd43f0923c1"
   dependencies:

@@ -67,6 +67,10 @@ class SessionBox extends Component {
           modalReconnect: false
         });
       },
+      sessionDisconnected: () => {
+        console.log("SESSION DISCONNECTED EVENT");
+        this.props.connectionDisconnectEvent();
+      },
       sessionReconnecting: () => {
         console.log("SESSION RECONNECTING EVENT");
       },
