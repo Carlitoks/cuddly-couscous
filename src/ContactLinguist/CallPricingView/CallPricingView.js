@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Text, View } from "react-native";
+import { Text, View, ScrollView } from "react-native";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import Close from "../../Components/Close/Close";
@@ -33,10 +33,11 @@ class CallPricingView extends Component {
           }
           NoWaves
         >
+          <ScrollView contentContainerstyle={styles.CPV_scrollContainer}>
           <View>
             <CelebrateOurLaunch styles={styles} />
           </View>
-          <View style={styles.buttons}>
+          <View style={styles.CPV_bottomButtonView}>
             <BottomButton
               title={I18n.t("continueForFree")}
               onPress={() => {
@@ -67,9 +68,9 @@ class CallPricingView extends Component {
               fill
               bold
               whiteDisabled
-              absolute
             />
           </View>
+          </ScrollView>
         </HeaderView>
       </ViewWrapper>
     );
