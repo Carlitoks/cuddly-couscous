@@ -1,5 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { moderateScale, scale } from "../../Util/Scaling";
+import {Colors} from "../../Themes";
 
 export const styles = StyleSheet.create({
   headerButtonCancel: {
@@ -7,6 +8,9 @@ export const styles = StyleSheet.create({
     alignItems: "flex-end",
     height: 50,
     width: 50,
-    paddingRight: scale(15)
-  }
+    paddingRight: Platform.OS !== 'android' ? scale(15) : 0,
+  },
+  Icon: {
+    color: Colors.primaryColor,
+  },
 });
