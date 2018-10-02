@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Alert } from "react-native";
+import { View, Alert, Platform } from "react-native";
 import { OTPublisher as PublisherTokbox } from "opentok-react-native";
 
 import {
@@ -38,7 +38,7 @@ class PublisherBox extends Component {
     return (
       <View style={video ? styles.publisherBox : styles.hidePublisherBox}>
         <PublisherTokbox
-          style={styles.publisher}
+          style={(Platform.OS === 'android' && Platform.Version > 25 ) ? {} : styles.publisher}
           properties={{
             publishAudio: mic,
             publishVideo: video,
