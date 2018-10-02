@@ -7,9 +7,12 @@ import {
   clearSettings
 } from "../../../Ducks/CallLinguistSettings";
 
-import { asyncAcceptsInvite } from "../../../Ducks/ActiveSessionReducer";
+import {
+  asyncAcceptsInvite,
+  update as updateActiveSession
+} from "../../../Ducks/ActiveSessionReducer";
 import timer from "react-native-timer";
-import { Text, View, ScrollView, Image, Vibration } from "react-native";
+import { Text, View, ScrollView, Image, Vibration, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
@@ -21,6 +24,8 @@ import { Images, Colors } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
 import SoundManager from "../../../Util/SoundManager";
 import { VIBRATE_PATTERN } from "../../../Util/Constants";
+import Permissions from "react-native-permissions";
+import { checkForAllPermissions } from "../../../Util/Permission";
 
 class IncomingCall extends Component {
   state = {
@@ -61,12 +66,46 @@ class IncomingCall extends Component {
   takeCall = isAccept => {
     const { invitationID, token, sessionID } = this.props;
     timer.clearInterval("verifyCallId");
-    this.props.asyncAcceptsInvite(
-      invitationID,
-      { accept: isAccept },
-      token,
-      sessionID
-    );
+    Permissions.checkMultiple(["camera", "microphone"]).then(response => {
+      if (
+        (response.camera !== "authorized" ||
+          response.microphone !== "authorized") &&
+        isAccept
+      ) {
+        checkForAllPermissions(valueToUpdate => {
+          this.props.updateActiveSession(valueToUpdate);
+        });
+        this.setState({
+          acceptIsDisabled: false
+        });
+      }
+      if (
+        (response.camera == "restricted" ||
+          response.microphone == "restricted") &&
+        isAccept
+      ) {
+        Alert.alert(
+          I18n.t("appPermissions"),
+          I18n.t("acceptAllPermissionsLinguist"),
+          [{ text: I18n.t("ok") }]
+        );
+        this.setState({
+          acceptIsDisabled: false
+        });
+      }
+      if (
+        (response.camera == "authorized" &&
+          response.microphone == "authorized") ||
+        isAccept == false
+      ) {
+        this.props.asyncAcceptsInvite(
+          invitationID,
+          { accept: isAccept },
+          token,
+          sessionID
+        );
+      }
+    });
 
     SoundManager["IncomingCall"].stop();
     Vibration.cancel();
@@ -205,7 +244,8 @@ const mD = {
   asyncAcceptsInvite,
   verifyCall,
   updateSettings,
-  clearSettings
+  clearSettings,
+  updateActiveSession
 };
 
 export default connect(
