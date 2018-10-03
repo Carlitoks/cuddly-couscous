@@ -203,7 +203,9 @@ public class OTSessionManager extends ReactContextBaseJavaModule
     public void disconnectSession(Callback callback) {
 
         Session mSession = sharedState.getSession();
-        mSession.disconnect();
+        if (mSession != null) {
+            mSession.disconnect();
+        }
         sharedState.setSession(null);
         disconnectCallback = callback;
         wasDisconnectCallbackCalled = false;
@@ -355,8 +357,8 @@ public class OTSessionManager extends ReactContextBaseJavaModule
         streamInfo.putString("creationTime", stream.getCreationTime().toString());
         streamInfo.putString("connectionId", stream.getConnection().getConnectionId());
         streamInfo.putString("name", stream.getName());
-        streamInfo.putBoolean("audio", stream.hasAudio());
-        streamInfo.putBoolean("video", stream.hasVideo());
+        streamInfo.putBoolean("hasAudio", stream.hasAudio());
+        streamInfo.putBoolean("hasVideo", stream.hasVideo());
         return streamInfo;
     }
 
@@ -783,8 +785,10 @@ public class OTSessionManager extends ReactContextBaseJavaModule
             ConcurrentHashMap<String, Stream> mSubscriberStreams = sharedState.getSubscriberStreams();
             Stream mStream = mSubscriberStreams.get(stream.getStreamId());
             WritableMap oldVideoDimensions = Arguments.createMap();
-            oldVideoDimensions.putInt("height", mStream.getVideoHeight());
-            oldVideoDimensions.putInt("width", mStream.getVideoWidth());
+            if ( mStream != null ){
+                oldVideoDimensions.putInt("height", mStream.getVideoHeight());
+                oldVideoDimensions.putInt("width", mStream.getVideoWidth());
+            }
             WritableMap newVideoDimensions = Arguments.createMap();
             newVideoDimensions.putInt("height", height);
             newVideoDimensions.putInt("width", width);

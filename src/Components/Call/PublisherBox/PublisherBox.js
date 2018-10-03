@@ -38,7 +38,7 @@ class PublisherBox extends Component {
     return (
       <View style={video ? styles.publisherBox : styles.hidePublisherBox}>
         <PublisherTokbox
-          style={(Platform.OS === 'android' && Platform.Version > 25 ) ? {} : styles.publisher}
+          style={styles.publisher}
           properties={{
             publishAudio: mic,
             publishVideo: video,
