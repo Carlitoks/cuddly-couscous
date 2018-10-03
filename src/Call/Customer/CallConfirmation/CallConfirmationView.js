@@ -336,8 +336,6 @@ class CallConfirmationView extends Component {
             : "11111111-1111-1111-1111-111111111126"
       });
       Permissions.checkMultiple(["camera", "microphone"]).then(response => {
-        console.log("checking for permission");
-        console.log("permission response", response);
         if (
           response.camera !== "authorized" ||
           response.microphone !== "authorized"
