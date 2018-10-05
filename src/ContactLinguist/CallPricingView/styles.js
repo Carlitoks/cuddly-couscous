@@ -18,7 +18,7 @@ export default StyleSheet.create({
     color: Colors.gradientColorButton.top,
     fontFamily: Fonts.primaryFont,
     fontWeight: "600",
-    fontSize: Iphone5 ? moderateScale(28) : 29,
+    fontSize: Iphone5 ? moderateScale(28) : 25,
     textAlign: "center"
   },
   COL_futurePricingTitleContainer: {

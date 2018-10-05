@@ -153,7 +153,7 @@ export default (ENG = {
   extraTimeA1: "Yes, add 5 minutes",
   extraTimeA2: "No, end call when time is up",
   fallPromotion: " Fall Promotion: Receive  \n5 FREE minutes in your account when you \n make a call with Jeenie.",
-  fallPromotionModal: " Fall Promotion: Receive 5 FREE \nminutes in your account when \nyou  make a call with Jeenie.",  
+  fallPromotionModal: " Fall Promotion: Receive 5 FREE \nminutes in your account when \nyou make a call with Jeenie.",  
   female: "Female",
   finish: "Finish",
   finishOnboarding: "Finish onboarding",
