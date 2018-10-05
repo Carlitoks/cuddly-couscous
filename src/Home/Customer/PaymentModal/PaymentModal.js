@@ -24,7 +24,7 @@ class PaymentModal extends Component {
       return I18n.t("payments.currentRateDescription");
     }
     if (this.props.availableMinutes > 0) {
-      return I18n.t("celebrateAndEnjoyAlternative");
+      return I18n.t("fallPromotionModal");
     }
   }
 

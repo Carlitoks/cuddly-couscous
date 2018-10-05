@@ -10,9 +10,7 @@ const CelebrateOurLaunch = ({
   return (
     <View>
       <Text style={styles.COL_title}>
-        {alternativeTitle
-          ? I18n.t("celebrateAndEnjoyAlternative")
-          : I18n.t("celebrateAndEnjoy")}
+        {I18n.t("fallPromotion")}
       </Text>
 
       <View style={styles.COL_futurePricingContainer}>
