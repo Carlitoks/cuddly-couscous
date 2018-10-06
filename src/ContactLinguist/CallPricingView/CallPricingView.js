@@ -33,11 +33,10 @@ class CallPricingView extends Component {
           }
           NoWaves
         >
-          <ScrollView contentContainerstyle={styles.CPV_scrollContainer}>
           <View>
             <CelebrateOurLaunch styles={styles} />
           </View>
-          <View style={styles.CPV_bottomButtonView}>
+          <View style={styles.buttons}>
             <BottomButton
               title={I18n.t("continueForFree")}
               onPress={() => {
@@ -68,9 +67,9 @@ class CallPricingView extends Component {
               fill
               bold
               whiteDisabled
+              absolute
             />
           </View>
-          </ScrollView>
         </HeaderView>
       </ViewWrapper>
     );
