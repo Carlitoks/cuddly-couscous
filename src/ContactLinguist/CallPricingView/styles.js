@@ -18,7 +18,7 @@ export default StyleSheet.create({
     color: Colors.gradientColorButton.top,
     fontFamily: Fonts.primaryFont,
     fontWeight: "600",
-    fontSize: Iphone5 ? moderateScale(28) : 29,
+    fontSize: Iphone5 ? moderateScale(28) : 25,
     textAlign: "center"
   },
   COL_futurePricingTitleContainer: {
@@ -78,11 +78,19 @@ export default StyleSheet.create({
     fontSize: Iphone5 ? moderateScale(15) : 15,
     fontStyle: "italic"
   },
+  CPV_bottomButtonView: {
+    paddingTop: 10,
+  },
   buttons: {
     flex: 1,
     position: "absolute",
     bottom: 0,
     alignSelf: "center",
     width: "100%"
+  },
+  CPV_scrollContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
   }
 });

@@ -1,9 +1,11 @@
 import React from "react";
 import { string, bool } from "prop-types";
 
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Platform } from "react-native";
+import { Icon } from 'react-native-elements';
 import { TranslationArrows } from "../../Assets/SVG";
 import { moderateScale } from "../../Util/Scaling";
+import { Colors } from '../../Themes';
 
 import { styles } from "./styles";
 
@@ -25,11 +27,18 @@ const LanguageSelection = ({ firstLanguage, secondLanguage, header }) => {
           {firstLanguage}
         </Text>
         <View style={styles.centerIcon}>
-          <TranslationArrows
+          { Platform.OS === 'android' ?
+            <Icon
+              style={styles.Icon}
+              name="swap"
+              type="entypo"
+              size={moderateScale(20)}
+              color={ header ? Colors.primaryColor : Colors.black }/> :
+            <TranslationArrows
             width={moderateScale(18)}
             height={moderateScale(18)}
             white={header}
-          />
+          /> }
         </View>
         <Text
           style={[

@@ -1,5 +1,9 @@
 export default (ENG = {
   accept: "Accept",
+  acceptAllPermissionsCustomer:
+    "You must accept microphone and camera permissions on the phone settings before you can make a call",
+  acceptAllPermissionsLinguist:
+    "You must accept microphone and camera permissions on the phone settings before you can accept an incoming call",
   add: "Add",
   addANewCard: "Add a new card...",
   addLanguage: "Add Language",
@@ -16,6 +20,7 @@ export default (ENG = {
   any: "Any",
   api: "API",
   apiTesting: "API Testing",
+  appPermissions: "App Permissions",
   appName: "Jeenie",
   areasExpertise: "Areas of Expertise",
   audio: "Audio",
@@ -80,7 +85,8 @@ export default (ENG = {
   conversations: "Other",
   compliments: "{{minutes}} compliments of {{organizer}}",
   complimentsOf: "Compliments of {{organizer}}",
-  complimentMinutes: "{{maxMinutesPerUser}} minutes added courtesy of {{organizer}}",
+  complimentMinutes:
+    "{{maxMinutesPerUser}} minutes added courtesy of {{organizer}}",
   minutesAdded: "Minutes added",
   invalidCode: "Invalid Code",
   invalidCodeMsg: "{{message}}",
@@ -146,6 +152,8 @@ export default (ENG = {
   extraTime2: "Do you need more time?",
   extraTimeA1: "Yes, add 5 minutes",
   extraTimeA2: "No, end call when time is up",
+  fallPromotion: " Fall Promotion: Receive  \n5 FREE minutes in your account when you \n make a call with Jeenie.",
+  fallPromotionModal: " Fall Promotion: Receive 5 FREE \nminutes in your account when \nyou make a call with Jeenie.",  
   female: "Female",
   finish: "Finish",
   finishOnboarding: "Finish onboarding",
@@ -413,15 +421,18 @@ export default (ENG = {
   payments: {
     currentRate: "$1/min",
     currentBalance: "{{minutes}} min",
-    enterPaymentToTalk: "Enter payment details to keep talking. Talk as long as you like for $1/min.",
-    currentRateDescription: "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future."
+    enterPaymentToTalk:
+      "Enter payment details to keep talking. Talk as long as you like for $1/min.",
+    currentRateDescription:
+      "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future."
   },
 
   // messages from api server, errors primarily
   api: {
     errUnexpected: "An unexpected error occured.",
     errTemporary: "A temporary error has occurred.",
-    errTemporaryTryAgain: "A temporary error has occurred.  Try again in a few minutes.",
+    errTemporaryTryAgain:
+      "A temporary error has occurred.  Try again in a few minutes.",
     errLogin: "There was a problem logging in",
     errDefaultAuth: "Your credentials have expired or are invalid.",
     errNoUser: "No user found for that email address",

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Text, View } from "react-native";
+import { Text, View, ScrollView } from "react-native";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import Close from "../../Components/Close/Close";

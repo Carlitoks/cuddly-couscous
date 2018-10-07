@@ -4,7 +4,7 @@ import _upperFirst from "lodash/upperFirst";
 import { take } from "lodash";
 import moment from "moment";
 import InCallManager from "react-native-incall-manager";
-import {View, Text, ScrollView, Dimensions, Alert} from "react-native";
+import { View, Text, ScrollView, Dimensions, Alert } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { checkOperatingHours } from "../../Util/Helpers";
 import { asyncGetAccountInformation } from "../../Ducks/ProfileLinguistReducer";
@@ -55,6 +55,8 @@ import HomeCarousel from "./HomeCarousel";
 import RecentActivity from "./RecentActivity";
 import PaymentModal from "../Customer/PaymentModal/PaymentModal";
 import FeedbackProvidedModal from "./FeedbackProvidedModal/FeedbackProvidedModal";
+import { checkForAllPermissions } from "../../Util/Permission";
+import { update as updateSettings } from "../../Ducks/ActiveSessionReducer";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -74,7 +76,7 @@ class Home extends Component {
 
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
-  componentDidMount() {
+  async componentDidMount() {
     const {
       getAllCustomerCalls,
       uuid,
@@ -92,16 +94,23 @@ class Home extends Component {
       this.props.navigation.state.params &&
       this.props.navigation.state.params.usageError
     ) {
-      Alert.alert(I18n.t("invalidCode"), this.props.navigation.state.params.usageError);
+      Alert.alert(
+        I18n.t("invalidCode"),
+        this.props.navigation.state.params.usageError
+      );
     }
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.minutesGranted
     ) {
-      Alert.alert(I18n.t("minutesAdded"), I18n.t("complimentMinutes",{
-        maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
-        organizer: this.props.navigation.state.params.organization
-      }));
+      Alert.alert(
+        I18n.t("minutesAdded"),
+        I18n.t("complimentMinutes", {
+          maxMinutesPerUser: this.props.navigation.state.params
+            .maxMinutesPerUser,
+          organizer: this.props.navigation.state.params.organization
+        })
+      );
     }
 
     getAllCustomerCalls(uuid, token)
@@ -152,6 +161,10 @@ class Home extends Component {
 
         updateHomeFlow({ scenariosList });
       });
+
+    checkForAllPermissions(valueToUpdate => {
+      this.props.updateSettings(valueToUpdate);
+    });
   }
 
   componentWillMount() {
@@ -197,6 +210,13 @@ class Home extends Component {
       this.props.navigation.state.params.alertFail
     ) {
       Alert.alert(I18n.t("notification"), I18n.t("session.callFailCustomer"));
+    }
+
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alertCancelCall
+    ) {
+      Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
     }
   }
 
@@ -442,7 +462,9 @@ const mS = state => ({
   stripeCustomerID: state.userProfile.stripeCustomerID,
   stripePaymentToken: state.userProfile.stripePaymentToken,
   linguistProfile: state.userProfile.linguistProfile,
-  isLoggedIn: state.auth.isLoggedIn
+  isLoggedIn: state.auth.isLoggedIn,
+  mic: state.activeSessionReducer.mic,
+  video: state.activeSessionReducer.video
 });
 
 const mD = {
@@ -462,7 +484,8 @@ const mD = {
   getAllCustomerCalls,
   customerCalls,
   asyncGetAccountInformation,
-  clearEvents
+  clearEvents,
+  updateSettings
 };
 
 export default connect(

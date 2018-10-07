@@ -69,14 +69,9 @@ export default class CallButton extends Component {
           onPress={() => {
             if (this.props.toggle) {
               this.toggleIcon();
+              this.props.onPress();
             } else {
-              if (!this.state.isActive) {
-                this.props.onPress();
-                this.setState({ ...this.state, isActive: true });
-              }
-            }
-            if (this.props.unLock) {
-              this.setState({ ...this.state, isActive: false });
+              this.props.onPress();
             }
           }}
           buttonStyle={{

@@ -4003,9 +4003,9 @@ opencollective@^1.0.3:
     node-fetch "1.6.3"
     opn "4.0.2"
 
-opentok-react-native@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/opentok-react-native/-/opentok-react-native-0.8.0.tgz#dccd5681b7457d07c5558b9d0c72fcd43f0923c1"
+opentok-react-native@0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/opentok-react-native/-/opentok-react-native-0.8.4.tgz#9ce7dbaeacb430cd13f565e614999e508381a8ed"
   dependencies:
     axios "^0.18.0"
     prop-types "^15.6.0"

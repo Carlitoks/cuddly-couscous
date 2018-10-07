@@ -366,8 +366,8 @@ export const HandleEndCall = (sessionID, reason, token, alert) => (
         if (alert) {
           dispatch({ type: "Home", params: { alertFail: true } });
         } else {
-          dispatch({ type: "Home" });
-        }
+          dispatch({ type: "Home", params: { alertCancelCall: true } });
+      }
       } else if (reason === REASON.RETRY) {
         dispatch({ type: "CustomerView" });
       } else if (reason === REASON.DONE) {

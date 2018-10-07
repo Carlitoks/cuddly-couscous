@@ -19,7 +19,10 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
-import { clear } from "../../Ducks/ActiveSessionReducer";
+import {
+  clear,
+  update as updateActiveSession
+} from "../../Ducks/ActiveSessionReducer";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 import {
@@ -32,6 +35,7 @@ import moment from "moment";
 import styles from "./styles";
 import { Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
+import { checkForAllPermissions } from "../../Util/Permission";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -62,6 +66,12 @@ class Home extends Component {
     this.props.asyncGetAccountInformation();
     InCallManager.stop();
     this.props.reloadStatus(this.props.available);
+  }
+
+  componentDidMount() {
+    checkForAllPermissions(valueToUpdate => {
+      this.props.updateActiveSession(valueToUpdate);
+    });
   }
 
   uploadAvatar(avatar) {
@@ -225,7 +235,8 @@ const mD = {
   reloadStatus,
   asyncGetInvitationDetail,
   asyncGetAccountInformation,
-  clear
+  clear,
+  updateActiveSession
 };
 
 export default connect(

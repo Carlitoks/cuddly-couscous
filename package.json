@@ -12,7 +12,8 @@
     "android:install": "adb install android/app/build/outputs/apk/app-debug.apk",
     "test": "jest",
     "api:run": "make setup && docker-compose up",
-    "api:load-mock-data": "make run-cmd CMD=\"load-fixtures\""
+    "api:load-mock-data": "make run-cmd CMD=\"load-fixtures\"",
+    "postinstall": "cp patches/OTScreenCapturer.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTScreenCapturer.java && cp patches/OTSessionManager.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTSessionManager.java"
   },
   "dependencies": {
     "appcenter": "1.5.1",
@@ -23,7 +24,7 @@
     "instabug-reactnative": "8.0.12",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
-    "opentok-react-native": "^0.8.0",
+    "opentok-react-native": "0.8.4",
     "prop-types": "^15.5.10",
     "react": "16.0.0",
     "react-native": "^0.55.4",

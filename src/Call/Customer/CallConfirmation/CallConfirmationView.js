@@ -49,7 +49,8 @@ import { checkOperatingHours } from "../../../Util/Helpers";
 import { Languages } from "../../../Config/Languages";
 import {
   setPermission,
-  displayOpenSettingsAlert
+  displayOpenSettingsAlert,
+  checkForAllPermissions
 } from "../../../Util/Permission";
 import { moderateScale } from "../../../Util/Scaling";
 import {
@@ -59,6 +60,7 @@ import {
 import SupportedLanguagesList from "./../SessionLanguageView/SupportedLanguagesList";
 import ComingSoonLanguagesList from "./../SessionLanguageView/ComingSoonLanguagesList";
 import { updateSettings as updateHomeFlow } from "../../../Ducks/HomeFlowReducer";
+import Permissions from "react-native-permissions";
 class CallConfirmationView extends Component {
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
 
@@ -333,7 +335,32 @@ class CallConfirmationView extends Component {
             ? selectedScenario[0].id
             : "11111111-1111-1111-1111-111111111126"
       });
-      navigation.dispatch({ type: "CustomerView" });
+      Permissions.checkMultiple(["camera", "microphone"]).then(response => {
+        if (
+          response.camera !== "authorized" ||
+          response.microphone !== "authorized"
+        ) {
+          checkForAllPermissions(valueToUpdate => {
+            this.props.customerUpdateSettings(valueToUpdate);
+          });
+        }
+        if (
+          response.camera == "restricted" ||
+          response.microphone == "restricted"
+        ) {
+          Alert.alert(
+            I18n.t("appPermissions"),
+            I18n.t("acceptAllPermissionsCustomer"),
+            [{ text: I18n.t("ok") }]
+          );
+        }
+        if (
+          response.camera == "authorized" &&
+          response.microphone == "authorized"
+        ) {
+          navigation.dispatch({ type: "CustomerView" });
+        }
+      });
     }
   };
 

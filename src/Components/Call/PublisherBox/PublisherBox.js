@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Alert } from "react-native";
+import { View, Alert, Platform } from "react-native";
 import { OTPublisher as PublisherTokbox } from "opentok-react-native";
 
 import {
