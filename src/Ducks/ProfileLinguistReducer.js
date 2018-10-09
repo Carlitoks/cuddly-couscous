@@ -1,6 +1,7 @@
 import { Linguist, CallHistory } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
 import { linguistCalls } from "./CallHistoryReducer";
+import { User } from "../Api";
 
 import moment from "moment";
 
@@ -27,6 +28,29 @@ export const reloadStatus = status => (dispatch, getState) => {
   });
 };
 
+export const getCurrentAvailability = () => (dispatch, getState) => {
+  const { auth } = getState();
+  dispatch(updateSettings({ loading: true }));
+  return User.get(auth.uuid, auth.token)
+    .then(({ data }) => {
+      let availability = data.linguistProfile.available ? data.linguistProfile.available : false;
+      dispatch(
+        updateSettings({
+          available: availability,
+          loading: false
+        })
+      );
+    })
+    .catch(error => {
+      dispatch(networkError(error));
+      dispatch(
+        updateSettings({
+          loading: false
+        })
+      );
+    });
+};
+
 export const changeStatus = status => (dispatch, getState) => {
   const { auth, profileLinguist, userProfile } = getState();
   if (userProfile.linguistProfile) {
@@ -36,9 +60,10 @@ export const changeStatus = status => (dispatch, getState) => {
       available: status
     })
       .then(res => {
+        let available = res.data.linguistProfile.available ? res.data.linguistProfile.available : status;
         dispatch(
           updateSettings({
-            available: status,
+            available,
             loading: false
           })
         );

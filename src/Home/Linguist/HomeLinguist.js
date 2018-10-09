@@ -5,7 +5,8 @@ import {
   changeStatus,
   reloadStatus,
   updateSettings,
-  asyncGetAccountInformation
+  asyncGetAccountInformation,
+  getCurrentAvailability
 } from "../../Ducks/ProfileLinguistReducer";
 import {
   asyncUploadAvatar,
@@ -65,7 +66,7 @@ class Home extends Component {
     this.props.clear();
     this.props.asyncGetAccountInformation();
     InCallManager.stop();
-    this.props.reloadStatus(this.props.available);
+    this.props.getCurrentAvailability();
   }
 
   componentDidMount() {
@@ -236,7 +237,8 @@ const mD = {
   asyncGetInvitationDetail,
   asyncGetAccountInformation,
   clear,
-  updateActiveSession
+  updateActiveSession,
+  getCurrentAvailability
 };
 
 export default connect(
