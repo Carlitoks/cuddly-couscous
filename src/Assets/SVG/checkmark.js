@@ -24,7 +24,7 @@ const Checkmark = ({ width, height, viewBox, active, color }) => {
         <G id="Temporary-Confirm-+-Connect-Copy-3" transform="translate(-92.000000, -387.000000)" fill={color}>
             <G id="Group-5" transform="translate(20.000000, 369.000000)">
                 <G id="Audio-Video">
-                    <G id="Checkmark" transform="translate(72.000000, 18.000000)">
+                    <G id="Checkmark" transform="translate(72.000000, 18.000000)" fill={color}>
                         <Polygon id="White-Checkmark" points="1.84615385 5.53846154 0 7.38461538 4.92307692 12.3076923 16 1.84615385 14.1538462 0 4.92307692 8.61538462"></Polygon>
                     </G>
                 </G>

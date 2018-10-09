@@ -244,7 +244,7 @@ class ListComponent extends Component {
                   ? [
                       styles.regText,
                       styles.crossLineText,
-                      this.isSelected(index) ? styles.selectedText : null
+                      this.isSelected(index) ? styles.selectedText : styles.disabledText
                     ]
                   : null
               }

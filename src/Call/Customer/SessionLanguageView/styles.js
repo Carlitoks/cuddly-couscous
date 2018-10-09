@@ -143,7 +143,8 @@ export const styles = StyleSheet.create({
     fontSize: 28
   },
   comingSoonContainer: {
-    backgroundColor: "rgba(185,185,185,0.14)",
+    backgroundColor: "#FFFFFF",
+    marginTop:30,
     paddingHorizontal: 10,
     paddingVertical: 20,
     height: 70,
@@ -154,7 +155,8 @@ export const styles = StyleSheet.create({
   },
   comingSoonText: {
     fontFamily: Fonts.BaseFont,
-    fontSize: 14,
-    color: "rgba(117,117,117,1)"
+    fontSize: 17,
+    color: "#401674",
+    fontWeight:"bold"
   }
 });
