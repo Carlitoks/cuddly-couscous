@@ -17,17 +17,17 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     width: width * 0.91,
     borderRadius: 4,
-    height: height * 0.53
+    height: height * 0.4925
   },
   modalTopButton: {
     position: "absolute",
     zIndex: 30,
-    top: height * 0.165
+    top: height * 0.176
   },
   modalButton: {
     width: width * 0.65,
     height: height * 0.08,
-    marginTop: Iphone5 ? moderateScale(35) : 35,
+    marginTop: Iphone5 ? moderateScale(35) : height * 0.0475,
     alignSelf: "center"
   },
   modalTitle: {
@@ -38,16 +38,16 @@ export default StyleSheet.create({
     color: Colors.gradientColor.top,
     fontFamily: Fonts.LightFont,
     fontWeight: "500",
-    fontSize: Iphone5 ? moderateScale(22) : 22,
+    fontSize: Iphone5 ? moderateScale(22) : width * 0.0525,
     textAlign: "center"
   },
   modalText: {
     fontFamily: Fonts.primaryFont,
     color: "#333",
     marginHorizontal: Iphone5 ? moderateScale(30) : 30,
-    paddingBottom: Iphone5 ? moderateScale(30) : 30,
+    paddingBottom: Iphone5 ? moderateScale(30) : 20,
     textAlign: "center",
-    fontSize: Iphone5 ? moderateScale(20) : 18,
+    fontSize: Iphone5 ? moderateScale(20) :  width * 0.0475,
     fontWeight: "500",
     borderBottomWidth: 0.8,
     borderColor: Colors.gray2

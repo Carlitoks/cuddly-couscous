@@ -18,7 +18,7 @@ export default StyleSheet.create({
     color: Colors.gradientColorButton.top,
     fontFamily: Fonts.primaryFont,
     fontWeight: "600",
-    fontSize: Iphone5 ? moderateScale(28) : 25,
+    fontSize: Iphone5 ? moderateScale(28) : height * 0.03,
     textAlign: "center"
   },
   COL_futurePricingTitleContainer: {
@@ -38,28 +38,31 @@ export default StyleSheet.create({
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "500",
-    fontSize: Iphone5 ? moderateScale(20) : 20
+    fontSize: Iphone5 ? moderateScale(20) : height * 0.03
   },
   COL_futurePricingBox: {
     marginHorizontal: 16,
     backgroundColor: Colors.lightBlue2,
     borderRadius: 4,
-    minHeight: Iphone5 ? moderateScale(276) : 276
+    minHeight: Iphone5 ? moderateScale(276) : height * 0.4
+  },
+  COL_futurePricingContainer: {
+    width: width * 0.99,
   },
   COL_futurePricingBoxTitle: {
     fontFamily: Fonts.primaryFont,
     color: "#333",
-    marginTop: Iphone5 ? moderateScale(41) : 41,
+    marginTop: Iphone5 ? moderateScale(41) : height * 0.058,
     textAlign: "center",
-    fontSize: Iphone5 ? moderateScale(24) : 24,
+    fontSize: Iphone5 ? moderateScale(24) : height * 0.0275,
     fontWeight: "600"
   },
   COL_futurePricingBoxAnd: {
-    marginTop: Iphone5 ? moderateScale(16) : 16,
+    marginTop: Iphone5 ? moderateScale(16) : height * 0.0225,
     color: Colors.gradientColor.top,
     fontFamily: Fonts.primaryFont,
     fontStyle: "italic",
-    fontSize: Iphone5 ? moderateScale(12) : 12,
+    fontSize: Iphone5 ? moderateScale(12) : height * 0.019,
     textAlign: "center"
   },
   COL_futurePricingBoxBody: {
@@ -67,7 +70,7 @@ export default StyleSheet.create({
     color: "#333",
     marginTop: Iphone5 ? moderateScale(15) : 15,
     textAlign: "center",
-    fontSize: Iphone5 ? moderateScale(18) : 18,
+    fontSize: Iphone5 ? moderateScale(18) : height * 0.03,
     fontWeight: "600"
   },
   COL_futurePricingBoxEnd: {
@@ -75,7 +78,7 @@ export default StyleSheet.create({
     color: "#333",
     marginTop: Iphone5 ? moderateScale(15) : 15,
     textAlign: "center",
-    fontSize: Iphone5 ? moderateScale(15) : 15,
+    fontSize: Iphone5 ? moderateScale(15) : height * 0.03,
     fontStyle: "italic"
   },
   CPV_bottomButtonView: {
