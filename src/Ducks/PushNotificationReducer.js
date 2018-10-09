@@ -138,9 +138,14 @@ const sessionEndNotification = sessionID => (dispatch, getState) => {
   }
 };
 
+sleep = (time) => {
+  return new Promise((resolve) => setTimeout(resolve, time));
+};
+
 export const addListeners = () => dispatch => {
   // Listener to notificaciones received by the app in active state
-  PushNotification.addListener(notif => {
+  PushNotification.addListener(async notif => {
+    await this.sleep(500);
     dispatch(remoteNotificationReceived(notif));
   });
   // set callback for the remote notifications received by the app in background state
