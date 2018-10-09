@@ -333,7 +333,7 @@ class CallConfirmationView extends Component {
         selectedScenarioId:
           selectedScenario && selectedScenario[0]
             ? selectedScenario[0].id
-            : "11111111-1111-1111-1111-111111111126"
+            : null
       });
       Permissions.checkMultiple(["camera", "microphone"]).then(response => {
         if (
