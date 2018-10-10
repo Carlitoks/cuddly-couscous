@@ -1790,18 +1790,36 @@ export const Languages = [
 const primaryCodes = ["eng", "cmn", "yue", "zho-cn-shang", "zho-tw", "jpn", "spa", "spa-r-la", "spa-es", "deu", "fra", "fra-ca", "fra-fr", "arb", "aao", "ara-arz_apd", "afb", "acm", "ara-apc_ajp", "por", "por-br", "por-pt", "rus", "ita", "kor", "nld", "swe", "nor", "tur", "pol", "dan", "fin", "tha", "heb", "ind", "pes", "hin", "ces", "zsm", "ell", "hun", "ron", "vie", "ben", "cat", "fil", "tam", "slk", "kaz", "ltz", "kur", "azj", "azb", "ukr", "afr", "hrv", "glg", "slv", "lit", "ckb", "jav", "urd", "sqi", "tel", "srp", "yor", "hau", "bul", "uzb", "swa", "eus", "bel", "tat"];
 
 // languages in "Coming Soon" list
-const comingSoonCodes = ["arb","ben","dan","nld","fin","fra","deu","hin","ita","kor","zsm","nor","pol","por","rus","spa","swe","tha","tur","urd"];
+const comingSoonCodes = ["arb","ben","dan","nld","fin","fra","deu","hin","kor","zsm","nor","pol","por","rus","spa","swe","tha","tur","urd"];
 
 // languages available for session selection
-const supportedLangCodes = ["eng", "cmn", "yue", "jpn"];
+const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "ita"];
 
-const filterLangsByCodes = (codes) => {
+// default secondary language for a given primary language
+export const DefaultLanguagePairMap = {
+  eng: "cmn",
+  cmn: "eng",
+  yue: "eng",
+  jpn: "eng",
+  ita: "eng"
+};
+
+// allowed secondary language choices for each primary language
+export const AllowedLanguagePairs = {
+  eng: ["cmn", "yue", "jpn", "ita"],
+  cmn: ["eng"],
+  yue: ["eng"],
+  jpn: ["eng"],
+  ita: ["eng"]
+}
+
+export const FilterLangsByCodes = (codes) => {
   return Languages.filter(item => codes.indexOf(item[3]) != -1 );
 };
 
-export const PrimaryLanguages =  filterLangsByCodes(primaryCodes);
-export const ComingSoonLanguages = filterLangsByCodes(comingSoonCodes);
-export const SupportedLanguages = filterLangsByCodes(supportedLangCodes);
+export const PrimaryLanguages =  FilterLangsByCodes(primaryCodes);
+export const ComingSoonLanguages = FilterLangsByCodes(comingSoonCodes);
+export const SupportedLanguages = FilterLangsByCodes(supportedLangCodes);
 
 export const InterfaceSupportedLanguages = [
   {

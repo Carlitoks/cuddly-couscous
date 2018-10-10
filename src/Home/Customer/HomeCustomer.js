@@ -49,7 +49,7 @@ import HeaderView from "../../Components/HeaderView/HeaderView";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import QRIcon from "../../Components/QRIcon/QRIcon";
 import { Waves } from "../../Assets/SVG";
-import { Languages } from "../../Config/Languages";
+import { Languages, DefaultLanguagePairMap } from "../../Config/Languages";
 import SixtyMinutesModal from "./SixtyMinutesModal/SixtyMinutesModal";
 import HomeCarousel from "./HomeCarousel";
 import RecentActivity from "./RecentActivity";
@@ -69,7 +69,7 @@ class Home extends Component {
       otherSelected: false,
       qr: false,
       other: false,
-      languagesMapper: { eng: "cmn", cmn: "eng", yue: "eng", jpn: "eng" },
+      languagesMapper: DefaultLanguagePairMap,
       modal: false
     };
   }

@@ -22,7 +22,7 @@ import {
   getLocalizedCategories
 } from "../../../Util/Constants";
 
-import { Languages } from "../../../Config/Languages";
+import { Languages, DefaultLanguagePairMap } from "../../../Config/Languages";
 class SessionLanguageView extends Component {
   submit(navigation) {
     navigation.dispatch({ type: "CallConfirmationView" });
@@ -37,7 +37,7 @@ class SessionLanguageView extends Component {
 
   setLanguages = () => {
     const { nativeLangCode, updateContactLinguist } = this.props;
-    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng", jpn: "eng" };
+    const languagesMapper = DefaultLanguagePairMap;
     const userNativeLangIsSupported =
       SUPPORTED_LANGS.indexOf(nativeLangCode) >= 0;
 
