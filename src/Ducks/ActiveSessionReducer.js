@@ -4,7 +4,7 @@ import _sortBy from "lodash/sortBy";
 import { Vibration } from "react-native";
 import timer from "react-native-timer";
 import { GetSessionInfoLinguist } from "./SessionInfoReducer";
-import { REASON, STATUS_TOKBOX, TIME, LANG_CODES } from "../Util/Constants";
+import { REASON, STATUS_TOKBOX, TIME } from "../Util/Constants";
 import { networkError } from "./NetworkErrorsReducer";
 import {
   updateSettings as updateContactLinguist,

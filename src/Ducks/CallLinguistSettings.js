@@ -12,7 +12,7 @@ import I18n from "../I18n/I18n";
 import { Vibration } from "react-native";
 import { fmtMSS } from "../Util/Helpers";
 import { BackgroundInterval } from "../Util/Background";
-import { LANG_CODES, REASON } from "../Util/Constants";
+import { REASON } from "../Util/Constants";
 import { displayEndCall } from "../Util/Alerts";
 import { emitLocalNotification } from "../Util/PushNotification";
 import SoundManager from "../Util/SoundManager";
