@@ -65,7 +65,7 @@ const colors = {
   listLabelColor: "#F96F2B",
   disabledIcons: "#cdcdcd",
   searchBackground: "#dedee0",
-  greyBackground: "#f7f7f7",
+  greyBackground: "#f5f5f5",
   gray: "gray",
   shadowColor: "#585858",
   lightGrey: "#D9D9E6",

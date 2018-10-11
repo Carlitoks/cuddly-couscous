@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
     fontSize: 28
   },
   comingSoonContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.greyBackground,
     marginTop:30,
     paddingHorizontal: 10,
     paddingVertical: 20,
