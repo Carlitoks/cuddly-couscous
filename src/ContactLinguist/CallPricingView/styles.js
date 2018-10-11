@@ -38,7 +38,7 @@ export default StyleSheet.create({
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "500",
-    fontSize: Iphone5 ? moderateScale(20) : height * 0.03
+    fontSize: Iphone5 ? moderateScale(20) : 20
   },
   COL_futurePricingBox: {
     marginHorizontal: 16,
@@ -46,23 +46,20 @@ export default StyleSheet.create({
     borderRadius: 4,
     minHeight: Iphone5 ? moderateScale(276) : height * 0.4
   },
-  COL_futurePricingContainer: {
-    width: width * 0.99,
-  },
   COL_futurePricingBoxTitle: {
     fontFamily: Fonts.primaryFont,
     color: "#333",
-    marginTop: Iphone5 ? moderateScale(41) : height * 0.058,
+    marginTop: Iphone5 ? moderateScale(41) : height * 0.045,
     textAlign: "center",
-    fontSize: Iphone5 ? moderateScale(24) : height * 0.0275,
+    fontSize: Iphone5 ? moderateScale(24) : 24,
     fontWeight: "600"
   },
   COL_futurePricingBoxAnd: {
-    marginTop: Iphone5 ? moderateScale(16) : height * 0.0225,
+    marginTop: Iphone5 ? moderateScale(16) : 16,
     color: Colors.gradientColor.top,
     fontFamily: Fonts.primaryFont,
     fontStyle: "italic",
-    fontSize: Iphone5 ? moderateScale(12) : height * 0.019,
+    fontSize: Iphone5 ? moderateScale(12) : 12,
     textAlign: "center"
   },
   COL_futurePricingBoxBody: {
@@ -70,7 +67,7 @@ export default StyleSheet.create({
     color: "#333",
     marginTop: Iphone5 ? moderateScale(15) : 15,
     textAlign: "center",
-    fontSize: Iphone5 ? moderateScale(18) : height * 0.03,
+    fontSize: Iphone5 ? moderateScale(18) : 18,
     fontWeight: "600"
   },
   COL_futurePricingBoxEnd: {
@@ -78,7 +75,7 @@ export default StyleSheet.create({
     color: "#333",
     marginTop: Iphone5 ? moderateScale(15) : 15,
     textAlign: "center",
-    fontSize: Iphone5 ? moderateScale(15) : height * 0.03,
+    fontSize: Iphone5 ? moderateScale(15) : 15,
     fontStyle: "italic"
   },
   CPV_bottomButtonView: {
