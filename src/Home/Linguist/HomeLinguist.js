@@ -13,7 +13,7 @@ import {
   updateView,
   getProfileAsync
 } from "../../Ducks/UserProfileReducer";
-import { View, Text, ScrollView, Alert } from "react-native";
+import {View, Text, ScrollView, Alert, AppState} from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
 import timer from "react-native-timer";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
@@ -69,10 +69,15 @@ class Home extends Component {
     this.props.getCurrentAvailability();
   }
 
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
   componentDidMount() {
     checkForAllPermissions(valueToUpdate => {
       this.props.updateActiveSession(valueToUpdate);
     });
+    AppState.addEventListener('change', this._handleAppStateChange);
   }
 
   uploadAvatar(avatar) {
@@ -88,6 +93,10 @@ class Home extends Component {
       });
     }
   }
+
+  _handleAppStateChange = (nextAppState) => {
+      this.props.getCurrentAvailability();
+  };
 
   selectImage = () => {
     let image = this.props.avatarURL
