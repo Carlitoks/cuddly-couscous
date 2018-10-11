@@ -152,8 +152,10 @@ export default (ENG = {
   extraTime2: "Do you need more time?",
   extraTimeA1: "Yes, add 5 minutes",
   extraTimeA2: "No, end call when time is up",
-  fallPromotion: " Fall Promotion: Receive  5 FREE minutes in your account when you  make a call with Jeenie.",
-  fallPromotionModal: " Fall Promotion: Receive 5 FREE \nminutes in your account when \nyou make a call with Jeenie.",  
+  fallPromotion:
+    " Fall Promotion: Receive  5 FREE minutes in your account when you  make a call with Jeenie.",
+  fallPromotionModal:
+    " Fall Promotion: Receive 5 FREE \nminutes in your account when \nyou make a call with Jeenie.",
   female: "Female",
   finish: "Finish",
   finishOnboarding: "Finish onboarding",
@@ -296,7 +298,8 @@ export default (ENG = {
   passwordMatch: "The passwords do not match.",
   passwordLengthValidation: "Password must be 8 or more characters.",
   payAsYouGo: "Pay as you go",
-  payAsYouGoPricing: "Pay-as-you-go = \n $1 per minute",
+  payAsYouGoPricing: "Pay-as-you-go =",
+  payAsYouGoPricingUnder: " $1 per minute",
   paymentDetails: "Payment Details",
   paymentDetailsCreated: "Your payment information was successfully updated.",
   preferedNameTitle: "Preferred name",

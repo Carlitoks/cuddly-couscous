@@ -9,9 +9,7 @@ const CelebrateOurLaunch = ({
 }) => {
   return (
     <View>
-      <Text style={styles.COL_title}>
-        {I18n.t("fallPromotion")}
-      </Text>
+      <Text style={styles.COL_title}>{I18n.t("fallPromotion")}</Text>
 
       <View style={styles.COL_futurePricingContainer}>
         <View style={styles.COL_futurePricingTitleContainer}>
@@ -22,6 +20,9 @@ const CelebrateOurLaunch = ({
         <View style={styles.COL_futurePricingBox}>
           <Text style={styles.COL_futurePricingBoxTitle}>
             {I18n.t("payAsYouGoPricing")}
+          </Text>
+          <Text style={styles.COL_futurePricingBoxTitleUnder}>
+            {I18n.t("payAsYouGoPricingUnder")}
           </Text>
           <Text style={styles.COL_futurePricingBoxAnd}>
             {`- ${I18n.t("and").toUpperCase()} -`}

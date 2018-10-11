@@ -54,6 +54,14 @@ export default StyleSheet.create({
     fontSize: Iphone5 ? moderateScale(24) : 24,
     fontWeight: "600"
   },
+  COL_futurePricingBoxTitleUnder: {
+    fontFamily: Fonts.primaryFont,
+    color: "#333",
+    marginTop: Iphone5 ? moderateScale(3) : 3,
+    textAlign: "center",
+    fontSize: Iphone5 ? moderateScale(24) : 24,
+    fontWeight: "600"
+  },
   COL_futurePricingBoxAnd: {
     marginTop: Iphone5 ? moderateScale(16) : 16,
     color: Colors.gradientColor.top,
@@ -79,7 +87,7 @@ export default StyleSheet.create({
     fontStyle: "italic"
   },
   CPV_bottomButtonView: {
-    paddingTop: 10,
+    paddingTop: 10
   },
   buttons: {
     flex: 1,
@@ -90,7 +98,7 @@ export default StyleSheet.create({
   },
   CPV_scrollContainer: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around'
+    flexDirection: "column",
+    justifyContent: "space-around"
   }
 });
