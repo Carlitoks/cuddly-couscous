@@ -49,7 +49,7 @@ export default StyleSheet.create({
   },
   disabledText: {
     fontFamily: Fonts.BaseFont,
-    color: Colors.gray2
+    color: Colors.black
   },
   triangle: {
     marginTop: -15,

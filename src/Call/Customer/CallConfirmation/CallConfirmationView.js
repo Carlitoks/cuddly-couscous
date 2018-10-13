@@ -46,7 +46,7 @@ import LanguageSelection from "../../../Components/LanguageSelection/LanguageSel
 import { Iphone5 } from "../../../Util/Devices";
 import { TranslationArrows, Checkmark } from "../../../Assets/SVG";
 import { checkOperatingHours } from "../../../Util/Helpers";
-import { Languages } from "../../../Config/Languages";
+import { Languages, DefaultLanguagePairMap } from "../../../Config/Languages";
 import {
   setPermission,
   displayOpenSettingsAlert,
@@ -148,12 +148,6 @@ class CallConfirmationView extends Component {
         defaultSecondaryLangCode
       } = scannedEvent;
 
-      const languagesMapper = {
-        eng: "cmn",
-        cmn: "eng",
-        yue: "eng",
-        jpn: "eng"
-      };
       const userNativeLangIsSupported =
         SUPPORTED_LANGS.indexOf(this.props.nativeLangCode) >= 0;
 
@@ -333,7 +327,7 @@ class CallConfirmationView extends Component {
         selectedScenarioId:
           selectedScenario && selectedScenario[0]
             ? selectedScenario[0].id
-            : "11111111-1111-1111-1111-111111111126"
+            : null
       });
       Permissions.checkMultiple(["camera", "microphone"]).then(response => {
         if (
@@ -366,7 +360,7 @@ class CallConfirmationView extends Component {
 
   setLanguages = () => {
     const { nativeLangCode } = this.props;
-    const languagesMapper = { eng: "cmn", cmn: "eng", yue: "eng", jpn: "eng" };
+    const languagesMapper = DefaultLanguagePairMap;
     const userNativeLangIsSupported =
       SUPPORTED_LANGS.indexOf(nativeLangCode) >= 0;
 

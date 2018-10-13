@@ -13,6 +13,7 @@ import {
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { updateSettings } from "../../../Ducks/HomeFlowReducer";
+import { updateSettings as updateSettingsContactLinguist} from "../../../Ducks/ContactLinguistReducer";
 import ViewWrapper from "../../../Containers/ViewWrapper/ViewWrapper";
 import GoBackButton from "../../../Components/GoBackButton/GoBackButton";
 import InputRegular from "../../../Components/InputRegular/InputRegular";
@@ -39,14 +40,15 @@ class CustomScenario extends Component {
       navigation,
       categories,
       customScenario,
-      updateSettings
+      updateSettings,
+      scenarioNotes,
+      updateSettingsContactLinguist
     } = this.props;
 
     const categoryTitle = this.CATEGORIES[categories[categoryIndex]];
 
     const categorySelected =
       categoryIndex > -1 && !!categories ? categoryTitle : null;
-
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <HeaderView
@@ -63,9 +65,11 @@ class CustomScenario extends Component {
             {/* Custom Scenario */}
             <InputRegular
               placeholder={I18n.t("iNeedAssistanceWith")}
-              value={customScenario}
+              value={
+                scenarioNotes 
+              }
               onChangeText={text => {
-                updateSettings({ customScenario: text });
+                updateSettingsContactLinguist({ customScenarioNote: text });
               }}
               maxLength={350}
               autoFocus={true}
@@ -89,11 +93,13 @@ class CustomScenario extends Component {
 const mS = state => ({
   customScenario: state.homeFlow.customScenario,
   categoryIndex: state.homeFlow.categoryIndex,
-  categories: state.homeFlow.categories
+  categories: state.homeFlow.categories,
+  scenarioNotes: state.contactLinguist.customScenarioNote,
 });
 
 const mD = {
-  updateSettings
+  updateSettings,
+  updateSettingsContactLinguist
 };
 
 export default connect(

@@ -9,10 +9,9 @@ import { REASON } from "../Util/Constants";
 import { closeCall } from "./ActiveSessionReducer";
 import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
-import { LANG_CODES, STATUS_TOKBOX } from "../Util/Constants";
-import { isCurrentView } from "../Util/Helpers";
 import { networkError } from "./NetworkErrorsReducer";
 import timer from "react-native-timer";
+import { translateLanguage } from "../I18n/I18n";
 // Actions
 export const ACTIONS = {
   REGISTER: "pushnotification/register"
@@ -86,9 +85,7 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
               : `~ Unspecified`,
             languages:
               data.session &&
-              `${LANG_CODES.get(
-                data.session.primaryLangCode
-              )} - ${LANG_CODES.get(data.session.secondaryLangCode)}`,
+              `${translateLanguage(data.session.primaryLangCode)} - ${translateLanguage(data.session.secondaryLangCode)}`,
             customScenarioNote: data.session && data.session.customScenarioNote,
             customerScenario:
               data.session &&
@@ -138,9 +135,14 @@ const sessionEndNotification = sessionID => (dispatch, getState) => {
   }
 };
 
+sleep = (time) => {
+  return new Promise((resolve) => setTimeout(resolve, time));
+};
+
 export const addListeners = () => dispatch => {
   // Listener to notificaciones received by the app in active state
-  PushNotification.addListener(notif => {
+  PushNotification.addListener(async notif => {
+    await this.sleep(500);
     dispatch(remoteNotificationReceived(notif));
   });
   // set callback for the remote notifications received by the app in background state

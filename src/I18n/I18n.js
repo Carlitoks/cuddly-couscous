@@ -100,7 +100,9 @@ const apiErrorsI18N = {
   "event requires a scenario to be specified": "api.errEventScenarioMissing",
   "payment details required": "api.errPaymentDetailsRequired",
   "no time remaining": "api.errEventTimeExpired",
-  "event already used": "api.errEventAlreadyUsed"
+  "event already used": "api.errEventAlreadyUsed",
+  "code already used": "api.errEventAlreadyUsed"
+
 };
 
 export const translateApiErrorString = (str, defaultKey) => {

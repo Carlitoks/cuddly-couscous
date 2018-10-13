@@ -26,13 +26,24 @@ import SoundManager from "../../../Util/SoundManager";
 import { VIBRATE_PATTERN } from "../../../Util/Constants";
 import Permissions from "react-native-permissions";
 import { checkForAllPermissions } from "../../../Util/Permission";
+import Sound from "react-native-sound";
 
 class IncomingCall extends Component {
   state = {
     customerName: this.props.customerName,
     customerLocation: this.props.customerLocation,
     acceptIsDisabled: false,
-    endIsDisabled: false
+    endIsDisabled: false,
+    incomingCallRingTone: new Sound(
+      "Elastic_Notification15.wav",
+      Sound.MAIN_BUNDLE,
+      error => {
+        if (error) {
+          console.log("error loading sound", error);
+          return;
+        }
+      }
+    ),
   };
 
   componentWillMount() {
@@ -41,14 +52,24 @@ class IncomingCall extends Component {
 
   componentDidMount() {
     this.verifyCallLinguist();
-    SoundManager["IncomingCall"].setNumberOfLoops(-1);
-    SoundManager["IncomingCall"].play();
+    this.startSound();
   }
+
+  sleep = (time) => {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  };
+
+  startSound = async () => {
+    await this.sleep(500);
+    this.state.incomingCallRingTone.setNumberOfLoops(-1);
+    this.state.incomingCallRingTone.play();
+  };
 
   componentWillUnmount() {
     timer.clearInterval("verifyCallId");
     this.props.clearSettings();
-    SoundManager["IncomingCall"].stop();
+    this.state.incomingCallRingTone.stop();
+    this.state.incomingCallRingTone.release();
   }
 
   changeButtonState(value, type) {
@@ -107,7 +128,7 @@ class IncomingCall extends Component {
       }
     });
 
-    SoundManager["IncomingCall"].stop();
+    this.state.incomingCallRingTone.stop();
     Vibration.cancel();
   };
 

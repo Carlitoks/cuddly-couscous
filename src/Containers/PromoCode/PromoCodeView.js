@@ -22,7 +22,7 @@ import Close from "../../Components/Close/Close";
 
 // import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import { displayFormErrors } from "../../Util/Alerts";
 
 class PromoCodeView extends Component {
