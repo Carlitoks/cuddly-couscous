@@ -1,5 +1,4 @@
 import { Language } from "../Assets/SVG";
-import { asyncGetInvitationDetail } from "../Ducks/CallLinguistSettings";
 
 export const Languages = [
   {
@@ -1788,13 +1787,14 @@ export const Languages = [
 ];
 
 // languages available for native lang selection
-export const PrimaryCodes = ["eng", "cmn", "yue", "zho-cn-shang", "zho-tw", "jpn", "spa", "spa-r-la", "spa-es", "deu", "fra", "fra-ca", "fra-fr", "arb", "aao", "ara-arz_apd", "afb", "acm", "ara-apc_ajp", "por", "por-br", "por-pt", "rus", "ita", "kor", "nld", "swe", "nor", "tur", "pol", "dan", "fin", "tha", "heb", "ind", "pes", "hin", "ces", "zsm", "ell", "hun", "ron", "vie", "ben", "cat", "fil", "tam", "slk", "kaz", "ltz", "kur", "azj", "azb", "ukr", "afr", "hrv", "glg", "slv", "lit", "ckb", "jav", "urd", "sqi", "tel", "srp", "yor", "hau", "bul", "uzb", "swa", "eus", "bel", "tat"];
+const primaryCodes = ["eng", "cmn", "yue", "zho-cn-shang", "zho-tw", "jpn", "spa", "spa-r-la", "spa-es", "deu", "fra", "fra-ca", "fra-fr", "arb", "aao", "ara-arz_apd", "afb", "acm", "ara-apc_ajp", "por", "por-br", "por-pt", "rus", "ita", "kor", "nld", "swe", "nor", "tur", "pol", "dan", "fin", "tha", "heb", "ind", "pes", "hin", "ces", "zsm", "ell", "hun", "ron", "vie", "ben", "cat", "fil", "tam", "slk", "kaz", "ltz", "kur", "azj", "azb", "ukr", "afr", "hrv", "glg", "slv", "lit", "ckb", "jav", "urd", "sqi", "tel", "srp", "yor", "hau", "bul", "uzb", "swa", "eus", "bel", "tat"];
 
 // languages in "Coming Soon" list
-export const ComingSoonCodes = ["arb","ben","dan","nld","fin","fra","deu","hin","kor","zsm","nor","pol", "spa","por","rus","swe","tha","tur","urd"];
+const comingSoonCodes = ["arb","ben","dan","nld","fin","fra","deu","spa","hin","kor","zsm","nor","pol","por","rus","swe","tha","tur","urd"];
 
 // languages available for session selection
-export const SupportedLangCodes = ["eng", "cmn", "yue", "jpn", "ita"];
+// TODO: export this config to replace SUPPORTED_LANGS
+const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "ita"];
 
 // default secondary language for a given primary language
 export const DefaultLanguagePairMap = {
@@ -1816,67 +1816,13 @@ export const AllowedLanguagePairs = {
   // spa: ["eng"],
 };
 
-// UTC time schedule for language availability, numbers are [(0-23), (0-59)] for hours, minutes.
-// First set is the begin time, second set is the end time. If the end time is lower than
-// the begin time, it's because it spans a UTC day.
-export const JeenieLangServiceSchedule = {
-  cmn: [[14, 0], [23, 0]],
-  yue: [[14, 0], [23, 0]],
-  jpn: [[23, 0], [11, 0]],
-};
-
-// given a lang code check `JeenieLangServiceSchedule` to see if the
-// lang is available, based on the local time
-export const IsLangAvailableNow = (code) => {
-  const schedule = JeenieLangServiceSchedule[code];
-  if (!schedule) {
-    return true;
-  }
-  const now = new Date();
-  const utcDate = new Date(now.toUTCString().slice(0, -4));
-  const nowUTCHours = utcDate.getHours();
-  const nowUTCMin = utcDate.getMinutes();
-  const begin = schedule[0];
-  const end = schedule[1];
-
-  // check if current time is within or out of scheduled time
-  if (begin[0] < end[0]) {
-
-  } else {
-    // if end time lower than begin time, it spans a day
-
-  }
-
-};
-
-// given a lang code, check for a schedule, and return a converted version
-// for the local time zone.  If there is no schedule for the given code, it's
-// assumed to be available 24/7, so will return `[[0,0], [0,0]]`.
-export const GetLocalScheduleForLang = (code) => {
-  const d = [[0,0], [0,0]]; // available 24 hours, unless there's a more specific
-  schedule = JeenieLangServiceSchedule[code];
-  if (!schedule) {
-    return d;
-  }
-
-  return GetLocalSchedule(schedule);
-}
-
-// convert UTC schedule to locale hours/minutes.  The format is the same as defined
-// in `JeenieLangServiceSchedule`: [(0-23), (0-59)]
-export const GetLocalSchedule = (schedule) => {
-  let begin = schedule[0];
-  let end = schedule[1];
-  const offset = new Date().getTimezoneOffset()
-};
-
 export const FilterLangsByCodes = (codes) => {
   return Languages.filter(item => codes.indexOf(item[3]) != -1 );
 };
 
-export const PrimaryLanguages =  FilterLangsByCodes(PrimaryCodes);
-export const ComingSoonLanguages = FilterLangsByCodes(ComingSoonCodes);
-export const SupportedLanguages = FilterLangsByCodes(SupportedLangCodes);
+export const PrimaryLanguages =  FilterLangsByCodes(primaryCodes);
+export const ComingSoonLanguages = FilterLangsByCodes(comingSoonCodes);
+export const SupportedLanguages = FilterLangsByCodes(supportedLangCodes);
 
 export const InterfaceSupportedLanguages = [
   {
