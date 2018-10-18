@@ -432,7 +432,8 @@ export default (ENG = {
 
   operatingHours: {
     title: "Availability: {{lang}}",
-    description: "Language Jeenies are available between {{beginHour}} and {{endHour}}.",
+    description:
+      "Language Jeenies are available between {{beginHour}} and {{endHour}}.",
     ok: "OK"
   },
 
@@ -457,23 +458,30 @@ export default (ENG = {
       rate: "$1 USD / Minute"
     },
     balance: {
-      title: "Account Balance",
+      title: "Account Balance:",
       min: "Minutes"
     },
     paymentInfo: {
-      titleWithCard: "Payment Information",
+      titleWithCard: "Payment Information:",
       titleNoCard: "Add Payment Information",
       linkNoCard: "Add Card",
       linkWithCard: "Change Card",
-      descriptionHasMinutes: "To avoid being disconnected in the middle of a call, add payment information now.",
-      descriptionLowMinutes: "Your account balance is low. To avoid being disconnected during your next call, please add payment information now.",
-      descriptionNoMinutes: "You must add payment information in order to continue."
+      descriptionHasMinutes:
+        "To avoid being disconnected in the middle of a call, add payment information now.",
+      descriptionLowMinutes:
+        "Your account balance is low. To avoid being disconnected during your next call, please add payment information now.",
+      descriptionNoMinutes:
+        "You must add payment information in order to continue."
     },
     descriptions: {
-      hasMinutesAndCard: "If you run out of minutes, we will automatically charge your card $1 USD per minute to avoid disconnecting your call.",
-      hasMinutesNoCard: "To keep talking beyond your remaining minutes, enter payment information now.",
-      noMinutesHasCard: "We will automatically charge your card $1 USD per minute.",
-      noMinutesNoCard: "To connect to a linguist, you must add payment information now."
+      hasMinutesAndCard:
+        "If you run out of minutes, we will automatically charge your card $1 USD per minute to avoid disconnecting your call.",
+      hasMinutesNoCard:
+        "To keep talking beyond your remaining minutes, enter payment information now.",
+      noMinutesHasCard:
+        "We will automatically charge your card $1 USD per minute.",
+      noMinutesNoCard:
+        "To connect to a linguist, you must add payment information now."
     },
     buttons: {
       continue: "Continue",
