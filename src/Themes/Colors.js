@@ -84,7 +84,8 @@ const colors = {
   pricingViewPurple: "#8074ba",
   pricingViewGreen: "#117b30",
   pricingViewRed: "#DB2707",
-  pricingViewBlack: "#333333"
+  pricingViewBlack: "#333333",
+  semiTransparent: "rgba(0,0,0,.26)"
 };
 
 export default colors;

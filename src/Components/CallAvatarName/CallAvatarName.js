@@ -11,7 +11,9 @@ const CallAvatarName = ({ disabledSubscriber, imageSource, sessionInfoName }) =>
       <View style={styles.avatarContainer}>
         <Image style={styles.smallAvatar} source={imageSource} />
       </View>
-      <Text style={styles.callerNameText}>{sessionInfoName}</Text>
+      <Text numberOfLines={3} style={styles.callerNameText}>
+        {sessionInfoName}
+      </Text>
     </View>
   );
 
