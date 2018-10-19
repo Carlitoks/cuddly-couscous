@@ -40,7 +40,7 @@ export const remoteNotificationReceived = notification => dispatch => {
   }
 };
 
-const incomingCallNotification = invitationId => (dispatch, getState) => {
+export const incomingCallNotification = invitationId => (dispatch, getState) => {
   const {
     nav,
     contactLinguist,
@@ -57,8 +57,7 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
     invitationId &&
     isLinguist &&
     profileLinguist.available &&
-    CurrentView != "IncomingCallView" &&
-    CurrentView != "LinguistView"
+    CurrentView != "IncomingCallView"
   ) {
     timer.clearInterval("counterId");
     timer.clearInterval("timer");
@@ -96,12 +95,17 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
                 )}`} - ${data.session.scenario.title}`
           })
         );
-
-        if((data.session.endReason && data.session.endedAt) || (data.responded || data.accepted)){
-          dispatch({ type: "Home" });
-        }else{
-          dispatch({ type: "IncomingCallView" });
-        }
+        Sessions.GetSessionInfoLinguist(data.session.id, auth.token).then((session) => {
+          if(session.data.status === 'unassigned'){
+            dispatch({ type: "IncomingCallView" });
+          }
+          if (session.data.status === "cancelled") {
+            dispatch({ type: "Home", params: { alertCancelled: true } });
+          }
+          if (session.data.status === "assigned") {
+              dispatch({ type: "Home", params: { alertAssigned: true } });
+          }
+        }).catch(error => console.log(error));
       })
       .catch(error => dispatch(networkError(error)));
   }

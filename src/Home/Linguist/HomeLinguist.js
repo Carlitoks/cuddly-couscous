@@ -13,6 +13,11 @@ import {
   updateView,
   getProfileAsync
 } from "../../Ducks/UserProfileReducer";
+
+import {
+  incomingCallNotification
+} from '../../Ducks/PushNotificationReducer';
+
 import {View, Text, ScrollView, Alert, AppState} from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
 import timer from "react-native-timer";
@@ -37,6 +42,7 @@ import styles from "./styles";
 import { Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
 import { checkForAllPermissions } from "../../Util/Permission";
+import {Sessions} from "../../Api";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -67,7 +73,26 @@ class Home extends Component {
     this.props.asyncGetAccountInformation();
     InCallManager.stop();
     this.props.getCurrentAvailability();
+    this.getCurrentUnansweredCalls();
+
   }
+
+  getCurrentUnansweredCalls = async () => {
+    const invitations = await Sessions.GetInvitations(this.props.uuid, this.props.token);
+    if(invitations.data.length > 0){
+      const filteredCalls = await invitations.data.filter((call) => (!call.responded || !call.accepted));
+      try{
+        if(filteredCalls.length > 0){
+          const session = await Sessions.GetSessionInfoLinguist(filteredCalls[0].session.id, this.props.token);
+          if(session.data.status === 'unassigned'){
+            this.props.incomingCallNotification(filteredCalls[0].id);
+          }
+        }
+      }catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
@@ -96,6 +121,9 @@ class Home extends Component {
 
   _handleAppStateChange = (nextAppState) => {
       this.props.getCurrentAvailability();
+      if (nextAppState === 'active') {
+        this.getCurrentUnansweredCalls();
+      }
   };
 
   selectImage = () => {
@@ -247,7 +275,8 @@ const mD = {
   asyncGetAccountInformation,
   clear,
   updateActiveSession,
-  getCurrentAvailability
+  getCurrentAvailability,
+  incomingCallNotification
 };
 
 export default connect(
