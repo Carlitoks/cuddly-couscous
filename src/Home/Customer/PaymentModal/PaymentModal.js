@@ -16,15 +16,39 @@ class PaymentModal extends Component {
     super(props);
   }
 
+  setPillCollor() {
+    if (this.props.availableMinutes == 0) {
+      return ("red");
+    }
+    else{
+      return (Colors.gradientColorButton.bottom);
+    }
+  }
+  
+  setTitle() {
+    if (this.props.availableMinutes == 0 && !this.props.stripePaymentToken) {
+      return I18n.t("pricingModal.titleNoMinutesNoCard");
+    }
+    else{
+      return I18n.t("pricingModal.title");
+    }
+  }
+
   setContent() {
     if (this.props.availableMinutes == 0 && !this.props.stripePaymentToken) {
-      return I18n.t("payments.enterPaymentToTalk");
+      return I18n.t("pricingScreen.descriptions.noMinutesNoCard");
     }
-    if (!!this.props.stripePaymentToken) {
+    if (this.props.availableMinutes == 0 && this.props.stripePaymentToken) {
+      return I18n.t("pricingScreen.descriptions.noMinutesHasCard");
+    }
+    /*if (!!this.props.stripePaymentToken) {
       return I18n.t("payments.currentRateDescription");
+    }*/
+    if (this.props.availableMinutes > 0 && !this.props.stripePaymentToken) {
+      return I18n.t("pricingScreen.descriptions.hasMinutesNoCard");
     }
-    if (this.props.availableMinutes > 0) {
-      return I18n.t("fallPromotionModal");
+    if (this.props.availableMinutes > 0 && this.props.stripePaymentToken) {
+      return I18n.t("pricingScreen.descriptions.hasMinutesAndCard");
     }
   }
 
@@ -45,25 +69,25 @@ class PaymentModal extends Component {
               })}`}
               icon={"ios-time"}
               alignButton={"Center"}
-              color={"red"}
+              color={this.setPillCollor()}
             />
             <View style={styles.modalWrapper}>
               <Text style={styles.modalTitle}>
-                {I18n.t("provideFeedbackModalTitle")}
+                {this.setTitle()}
               </Text>
               <Text style={styles.modalText}>{this.setContent()}</Text>
               <Button
                 borderRadius={27}
                 textStyle={styles.text}
                 title={
-                  this.props.availableMinutes < 5 &&
+                  this.props.availableMinutes < 1 &&
                   !this.props.stripePaymentToken
-                    ? I18n.t("enterPayment")
-                    : I18n.t("gotIt")
+                    ? I18n.t("pricingModal.buttons.addCard")
+                    : I18n.t("pricingModal.buttons.gotIt")
                 }
                 onPress={() => {
                   if (
-                    this.props.availableMinutes < 5 &&
+                    this.props.availableMinutes < 1 &&
                     !this.props.stripePaymentToken
                   ) {
                     this.props.navigation.dispatch({
