@@ -436,7 +436,13 @@ export default (ENG = {
       "Language Jeenies are available between {{beginHour}} and {{endHour}}.",
     ok: "OK"
   },
-
+  lang: {
+    en: "English",
+    spa: "Spanish",
+    jpn: "Japanese",
+    cmn: "Chinese (Mandarin)",
+    yue: "Chinese (Cantonese)"
+  },
   // triggered on customer home screen to show account balance and
   // pricing explanation
   pricingModal: {

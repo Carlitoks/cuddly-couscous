@@ -1787,14 +1787,107 @@ export const Languages = [
 ];
 
 // languages available for native lang selection
-const primaryCodes = ["eng", "cmn", "yue", "zho-cn-shang", "zho-tw", "jpn", "spa", "spa-r-la", "spa-es", "deu", "fra", "fra-ca", "fra-fr", "arb", "aao", "ara-arz_apd", "afb", "acm", "ara-apc_ajp", "por", "por-br", "por-pt", "rus", "ita", "kor", "nld", "swe", "nor", "tur", "pol", "dan", "fin", "tha", "heb", "ind", "pes", "hin", "ces", "zsm", "ell", "hun", "ron", "vie", "ben", "cat", "fil", "tam", "slk", "kaz", "ltz", "kur", "azj", "azb", "ukr", "afr", "hrv", "glg", "slv", "lit", "ckb", "jav", "urd", "sqi", "tel", "srp", "yor", "hau", "bul", "uzb", "swa", "eus", "bel", "tat"];
+export const primaryCodes = [
+  "eng",
+  "cmn",
+  "yue",
+  "zho-cn-shang",
+  "zho-tw",
+  "jpn",
+  "spa",
+  "spa-r-la",
+  "spa-es",
+  "deu",
+  "fra",
+  "fra-ca",
+  "fra-fr",
+  "arb",
+  "aao",
+  "ara-arz_apd",
+  "afb",
+  "acm",
+  "ara-apc_ajp",
+  "por",
+  "por-br",
+  "por-pt",
+  "rus",
+  "ita",
+  "kor",
+  "nld",
+  "swe",
+  "nor",
+  "tur",
+  "pol",
+  "dan",
+  "fin",
+  "tha",
+  "heb",
+  "ind",
+  "pes",
+  "hin",
+  "ces",
+  "zsm",
+  "ell",
+  "hun",
+  "ron",
+  "vie",
+  "ben",
+  "cat",
+  "fil",
+  "tam",
+  "slk",
+  "kaz",
+  "ltz",
+  "kur",
+  "azj",
+  "azb",
+  "ukr",
+  "afr",
+  "hrv",
+  "glg",
+  "slv",
+  "lit",
+  "ckb",
+  "jav",
+  "urd",
+  "sqi",
+  "tel",
+  "srp",
+  "yor",
+  "hau",
+  "bul",
+  "uzb",
+  "swa",
+  "eus",
+  "bel",
+  "tat"
+];
 
 // languages in "Coming Soon" list
-const comingSoonCodes = ["arb","ben","dan","nld","fin","fra","deu","spa","hin","kor","zsm","nor","pol","por","rus","swe","tha","tur","urd"];
+export const comingSoonCodes = [
+  "arb",
+  "ben",
+  "dan",
+  "nld",
+  "fin",
+  "fra",
+  "deu",
+  "spa",
+  "hin",
+  "kor",
+  "zsm",
+  "nor",
+  "pol",
+  "por",
+  "rus",
+  "swe",
+  "tha",
+  "tur",
+  "urd"
+];
 
-// languages available for session selection
-// TODO: export this config to replace SUPPORTED_LANGS
-const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "ita"];
+// languages available for session selection// TODO: export this config to replace SUPPORTED_LANGS
+export const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "ita"];
 
 // default secondary language for a given primary language
 export const DefaultLanguagePairMap = {
@@ -1802,7 +1895,7 @@ export const DefaultLanguagePairMap = {
   cmn: "eng",
   yue: "eng",
   jpn: "eng",
-  ita: "eng",
+  ita: "eng"
   // spa: "eng",
 };
 
@@ -1812,15 +1905,119 @@ export const AllowedLanguagePairs = {
   cmn: ["eng"],
   yue: ["eng"],
   jpn: ["eng"],
-  ita: ["eng"],
+  ita: ["eng"]
   // spa: ["eng"],
 };
 
-export const FilterLangsByCodes = (codes) => {
-  return Languages.filter(item => codes.indexOf(item[3]) != -1 );
+// UTC time schedule for language availability, numbers are [(0-24), (0-60)] for hours, minutes.
+// First set is the begin time, second set is the end time. If the end time is lower than
+// the begin time, it's because it spans a UTC day.
+export const JeenieLangServiceSchedule = {
+  cmn: [[14, 0], [23, 0]],
+  yue: [[14, 0], [23, 0]],
+  jpn: [[23, 0], [11, 0]]
 };
 
-export const PrimaryLanguages =  FilterLangsByCodes(primaryCodes);
+export const IsLangAvailableNow = code => {
+  const schedule = JeenieLangServiceSchedule[code];
+  if (!schedule) {
+    return true;
+  }
+  const now = new Date();
+  const utcDate = new Date(now.toUTCString().slice(0, -4));
+  const nowUTCHours = utcDate.getHours();
+  const nowUTCMin = utcDate.getMinutes();
+  const begin = schedule[0];
+  const end = schedule[1];
+
+  // check if current time is within or out of scheduled time
+  if (begin[0] < end[0]) {
+    if (
+      (begin[0] < nowUTCHours ||
+        (begin[0] <= nowUTCHours && begin[1] < nowUTCMin)) &&
+      (end[0] > nowUTCHours || (end[0] >= nowUTCHours && end[1] > nowUTCMin))
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    // if end time lower than begin time, it spans a day
+    if (
+      !(
+        (end[0] < nowUTCHours ||
+          (end[0] <= nowUTCHours && end[1] < nowUTCMin)) &&
+        (begin[0] > nowUTCHours ||
+          (begin[0] >= nowUTCHours && begin[1] > nowUTCMin))
+      )
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+};
+
+// convert UTC schedule to locale hours/minutes
+export const GetLocalSchedule = code => {
+  const temp = JeenieLangServiceSchedule[code];
+  let begin = [...temp[0]];
+  let end = [...temp[1]];
+  const offset = new Date().getTimezoneOffset();
+  let resto = offset % 60;
+  let cosciente = parseInt(offset / 60);
+
+  begin[0] = begin[0] - cosciente;
+  end[0] = end[0] - cosciente;
+  begin[1] = begin[1] - resto;
+  end[1] = end[1] - resto;
+  if (begin[1] < 0) {
+    begin[1] = begin[1] + 60;
+    begin[0] = begin[0] - 1;
+  }
+  if (end[1] < 0) {
+    end[1] = end[1] + 60;
+    end[0] = end[0] - 1;
+  }
+  if (begin[0] < 0) {
+    begin[0] = begin[0] + 24;
+  }
+  if (end[0] < 0) {
+    end[0] = end[0] + 24;
+  }
+  if (begin[0] > 24) {
+    begin[0] = begin[0] - 24;
+  }
+  if (end[0] > 24) {
+    end[0] = end[0] - 24;
+  }
+  const resp = {
+    begin:
+      begin[0] > 9
+        ? begin[1] > 9
+          ? begin[0] + ":" + begin[1]
+          : begin[0] + ":0" + begin[1]
+        : begin[1] > 9
+          ? "0" + begin[0] + ":" + begin[1]
+          : "0" + begin[0] + ":0" + begin[1],
+    end:
+      end[0] > 9
+        ? end[1] > 9
+          ? end[0] + ":" + end[1]
+          : end[0] + ":0" + end[1]
+        : end[1] > 9
+          ? "0" + end[0] + ":" + end[1]
+          : "0" + end[0] + ":0" + end[1],
+    lang: code
+  };
+  return resp;
+};
+
+export const FilterLangsByCodes = codes => {
+  return Languages.filter(item => codes.indexOf(item[3]) != -1);
+};
+
+export const PrimaryLanguages = FilterLangsByCodes(primaryCodes);
 export const ComingSoonLanguages = FilterLangsByCodes(comingSoonCodes);
 export const SupportedLanguages = FilterLangsByCodes(supportedLangCodes);
 
