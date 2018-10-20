@@ -23,7 +23,7 @@ const PricingTime = ({ width, height, viewBox, color }) => {
         >
           <G id="Account-Balance" transform="translate(34.000000, 176.000000)">
             <G id="Green-Time-Icon" transform="translate(0.000000, 22.000000)">
-              <G fill="rgba(255,255,255,0)" strokeWidth={1} stroke="black">
+              <G fill="rgba(255,255,255,0)" strokeWidth={1} stroke={color}>
                 <Path
                   d="M10.5,-1 C16.8525251,-1 22,4.14747487 22,10.5 C22,16.8525251 16.8525251,22 10.5,22 C4.14747487,22 -1,16.8525251 -1,10.5 C-1,4.14747487 4.14747487,-1 10.5,-1 Z"
                   id="Shape"
