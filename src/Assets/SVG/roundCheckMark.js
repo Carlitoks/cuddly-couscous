@@ -25,7 +25,7 @@ const RoundCheckMark = ({ width, height, viewBox, color }) => {
               id="Payment-Method-Icon"
               transform="translate(0.000000, 16.000000)"
             >
-              <G>
+              <G fill={"none"}>
                 <Path
                   stroke={color}
                   stroke-width="2"
