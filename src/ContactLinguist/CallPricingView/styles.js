@@ -112,7 +112,7 @@ export default StyleSheet.create({
   pricing_title_box: {
     alignSelf: "center",
     width: width * 0.9,
-    height: height * 0.1,
+    height: height * 0.12,
     backgroundColor: Colors.pricingViewPurple,
     borderRadius: 4,
     flexDirection: "row",
@@ -123,7 +123,14 @@ export default StyleSheet.create({
     top: moderateScale(20),
     marginBottom: moderateScale(20)
   },
-  pricing_inner_box: { flexDirection: "row", alignItems: "center" },
+  pricing_inner_box: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  pricing_icon_box: {
+    width: moderateScale(40),
+    height: moderateScale(70)
+  },
   account_balance_box: {
     alignSelf: "center",
     width: width * 0.9,
@@ -266,7 +273,10 @@ export default StyleSheet.create({
     padding: moderateScale(15),
     width: width * 0.5
   },
-  add_credit_card_icon_align: { alignSelf: "flex-start" },
+  add_credit_card_icon_align: {
+    alignSelf: "flex-start",
+    marginLeft: -7
+  },
   add_credit_card_content_column_box: { flexDirection: "column" },
   add_credit_card_link: {
     flexDirection: "column",

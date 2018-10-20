@@ -18,6 +18,10 @@ import NavMenu from "./navMenu";
 import Chevron from "./chevron";
 import Waves from "./waves";
 import Logo from "./smallLogoJeenie";
+import DollarSign from "./dollarsign";
+import PricingTime from "./pricingTime";
+import ExclamationMark from "./exclamationMark";
+import RoundCheckMark from "./roundCheckMark";
 
 export {
   Audio,
@@ -39,5 +43,9 @@ export {
   NavMenu,
   Chevron,
   Waves,
-  Logo
+  Logo,
+  DollarSign,
+  PricingTime,
+  ExclamationMark,
+  RoundCheckMark
 };

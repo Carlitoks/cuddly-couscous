@@ -16,6 +16,7 @@ import CelebrateOurLaunch from "../../Components/CelebrateOurLaunch/CelebrateOur
 import { Icon } from "react-native-elements";
 import Colors from "../../Themes/Colors";
 import { moderateScale } from "../../Util/Scaling";
+import { DollarSign, PricingTime, RoundCheckMark } from "../../Assets/SVG";
 
 class CallPricingView extends Component {
   showAccountBalance() {
@@ -135,13 +136,12 @@ class CallPricingView extends Component {
           {/* Pricing Container */}
           <View style={styles.pricing_title_box}>
             <View style={styles.pricing_inner_box}>
-              <Icon
-                icon={styles.dollar_icon}
-                name={"coin"}
-                type="material-community"
-                size={moderateScale(50)}
-                color="white"
-              />
+              <View style={styles.pricing_icon_box}>
+                <DollarSign
+                  width={moderateScale(150)}
+                  height={moderateScale(150)}
+                />
+              </View>
               <Text style={styles.pricing_title}>
                 {I18n.t("pricingScreen.pricing.title")}
               </Text>
@@ -154,16 +154,17 @@ class CallPricingView extends Component {
           {this.showAccountBalance() ? (
             <View style={styles.account_balance_box}>
               <View style={styles.account_balance_inner_box}>
-                <Icon
-                  icon={styles.dollar_icon}
-                  name={"access-time"}
-                  size={moderateScale(50)}
-                  color={
-                    enoughAvailableTime
-                      ? Colors.pricingViewGreen
-                      : Colors.pricingViewRed
-                  }
-                />
+                <View style={styles.pricing_icon_box}>
+                  <PricingTime
+                    width={moderateScale(150)}
+                    height={moderateScale(150)}
+                    color={
+                      enoughAvailableTime
+                        ? Colors.pricingViewGreen
+                        : Colors.pricingViewRed
+                    }
+                  />
+                </View>
                 <Text style={[styles.account_balance_title, pricingColor]}>
                   {I18n.t("pricingScreen.balance.title")}
                 </Text>
@@ -192,9 +193,9 @@ class CallPricingView extends Component {
                 <View style={styles.add_credit_card_icon_align}>
                   <Icon
                     icon={styles.dollar_icon}
-                    name={"alert-circle-outline"}
-                    type="material-community"
-                    size={moderateScale(50)}
+                    name={"exclamation"}
+                    type="evilicon"
+                    size={moderateScale(53)}
                     color={addPaymentContent.iconColor}
                   />
                 </View>
@@ -252,13 +253,13 @@ class CallPricingView extends Component {
           {this.showChangePayment() ? (
             <View style={styles.available_credit_card_box}>
               <View style={styles.available_credit_card_inner_box}>
-                <Icon
-                  icon={styles.dollar_icon}
-                  name={"check-circle-outline"}
-                  type="material-community"
-                  size={moderateScale(50)}
-                  color={Colors.pricingViewBlack}
-                />
+                <View style={styles.pricing_icon_box}>
+                  <RoundCheckMark
+                    width={moderateScale(150)}
+                    height={moderateScale(150)}
+                    color={Colors.pricingViewBlack}
+                  />
+                </View>
                 <Text style={styles.available_credit_card_title}>
                   {I18n.t("pricingScreen.paymentInfo.titleWithCard")}
                 </Text>
@@ -341,7 +342,7 @@ class CallPricingView extends Component {
               }}
               fill
               bold
-              whiteDisabled
+              greyText
               absolute
             />
           </View>

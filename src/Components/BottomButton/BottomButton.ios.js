@@ -50,6 +50,7 @@ const BottomButton = ({
   transparent,
   color,
   whiteDisabled,
+  greyText,
   smaller
 }) => {
   return (
@@ -82,7 +83,8 @@ const BottomButton = ({
                     ? styles.textWhiteDisabled
                     : styles.textDisabled
                 : null,
-              fill || whiteText ? styles.white : null
+              fill || whiteText ? styles.white : null,
+              greyText ? styles.textDisabled : null
             ]}
             title={title}
             onPress={() => {
