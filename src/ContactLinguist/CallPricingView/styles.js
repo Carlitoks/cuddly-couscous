@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
 import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
-import { Iphone5 } from "../../Util/Devices";
+import { Iphone5, Android } from "../../Util/Devices";
 
 const { width, height } = Dimensions.get("window");
 
@@ -38,14 +38,14 @@ export default StyleSheet.create({
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(20) : 20,
+    fontSize: Iphone5 ? moderateScale(20) : moderateScale(20),
     paddingLeft: moderateScale(15)
   },
   pricing_rate: {
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(20) : 20
+    fontSize: Iphone5 ? moderateScale(20) : moderateScale(20)
   },
   COL_futurePricingBox: {
     marginHorizontal: 16,
@@ -146,24 +146,27 @@ export default StyleSheet.create({
     padding: moderateScale(20),
     top: moderateScale(20)
   },
-  account_balance_inner_box: { flexDirection: "row", alignItems: "center" },
+  account_balance_inner_box: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
   account_balance_minutes: {
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(35) : 35
+    fontSize: Iphone5 ? moderateScale(35) : moderateScale(35)
   },
   account_balance_minutes_label: {
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(15) : 15
+    fontSize: Iphone5 ? moderateScale(15) : moderateScale(15)
   },
   account_balance_title: {
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(16) : 16,
+    fontSize: Iphone5 ? moderateScale(16) : moderateScale(16),
     paddingLeft: moderateScale(15)
   },
   available_credit_card_box: {
@@ -189,21 +192,21 @@ export default StyleSheet.create({
     color: Colors.pricingViewBlack,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(16) : 16,
+    fontSize: Iphone5 ? moderateScale(16) : moderateScale(16),
     paddingLeft: moderateScale(15)
   },
   available_credit_card_change: {
     color: Colors.pricingViewPurple,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(15) : 15,
+    fontSize: Iphone5 ? moderateScale(15) : moderateScale(15),
     padding: 7
   },
   available_credit_card_numbers: {
     color: Colors.pricingViewBlack,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(13) : 13,
+    fontSize: Iphone5 ? moderateScale(13) : moderateScale(13),
     padding: 5
   },
   available_credit_card_icon_row: {
@@ -230,13 +233,13 @@ export default StyleSheet.create({
     position: "relative",
     padding: moderateScale(15),
     margin: moderateScale(15),
-    bottom: 0
+    marginBottom: Android ? moderateScale(135) : 0
   },
   pricing_screen_description: {
     color: Colors.pricingViewBlack,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(15) : 15,
+    fontSize: Iphone5 ? moderateScale(15) : moderateScale(15),
     padding: 7,
     textAlign: "center"
   },
@@ -262,14 +265,14 @@ export default StyleSheet.create({
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(16) : 16,
+    fontSize: Iphone5 ? moderateScale(16) : moderateScale(16),
     paddingLeft: moderateScale(15)
   },
   add_credit_card_description: {
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
     fontWeight: "bold",
-    fontSize: Iphone5 ? moderateScale(13) : 13,
+    fontSize: Iphone5 ? moderateScale(13) : moderateScale(13),
     padding: moderateScale(15),
     width: width * 0.5
   },
