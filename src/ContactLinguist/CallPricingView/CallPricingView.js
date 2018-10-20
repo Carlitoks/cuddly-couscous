@@ -88,7 +88,7 @@ class CallPricingView extends Component {
             textContent: I18n.t(
               "pricingScreen.paymentInfo.descriptionLowMinutes"
             ),
-            iconColor: Colors.pricingViewBlack
+            iconColor: Colors.pricingViewRed
           };
         }
         if (availableMinutes >= 5 && stripePaymentToken !== "") {
@@ -108,7 +108,12 @@ class CallPricingView extends Component {
   }
 
   render() {
-    const { availableMinutes, stripePaymentToken, navigation } = this.props;
+    const {
+      availableMinutes,
+      stripePaymentToken,
+      navigation,
+      stripePaymentSourceMeta
+    } = this.props;
     const enoughAvailableTime = availableMinutes <= 5 ? false : true;
     const pricingColor = {
       color: enoughAvailableTime
@@ -291,7 +296,11 @@ class CallPricingView extends Component {
                         color={Colors.pricingViewBlack}
                       />
                       <Text style={styles.available_credit_card_numbers}>
-                        ...5003
+                        ...
+                        {stripePaymentSourceMeta !== null &&
+                        !!stripePaymentSourceMeta.last4
+                          ? stripePaymentSourceMeta.last4
+                          : null}
                       </Text>
                     </View>
                     <Text style={styles.available_credit_card_change}>
@@ -340,6 +349,9 @@ class CallPricingView extends Component {
                   navigation.dispatch({ type: continueScreen });
                 }
               }}
+              disabled={
+                !!!stripePaymentToken && availableMinutes == 0 ? true : false
+              }
               fill
               bold
               greyText
@@ -357,7 +369,8 @@ const mS = state => ({
   promotion: state.promoCode.scanned,
   event: state.events,
   availableMinutes: state.userProfile.availableMinutes,
-  stripePaymentToken: state.userProfile.stripePaymentToken
+  stripePaymentToken: state.userProfile.stripePaymentToken,
+  stripePaymentSourceMeta: state.userProfile.StripePaymentSourceMeta
 });
 
 const mD = {};
