@@ -95,17 +95,21 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
                 )}`} - ${data.session.scenario.title}`
           })
         );
-        Sessions.GetSessionInfoLinguist(data.session.id, auth.token).then((session) => {
-          if(session.data.status === 'unassigned'){
-            dispatch({ type: "IncomingCallView" });
-          }
-          if (session.data.status === "cancelled") {
-            dispatch({ type: "Home", params: { alertCancelled: true } });
-          }
-          if (session.data.status === "assigned") {
+        if((data.session.endReason && data.session.endedAt) || (data.responded || data.accepted)){
+          dispatch({ type: "Home" });
+        }else{
+          Sessions.GetSessionInfoLinguist(data.session.id, auth.token).then((session) => {
+            if(session.data.status === 'unassigned'){
+              dispatch({ type: "IncomingCallView" });
+            }
+            if (session.data.status === "cancelled") {
+              dispatch({ type: "Home", params: { alertCancelled: true } });
+            }
+            if (session.data.status === "assigned") {
               dispatch({ type: "Home", params: { alertAssigned: true } });
-          }
-        }).catch(error => console.log(error));
+            }
+          }).catch(error => console.log(error));
+        }
       })
       .catch(error => dispatch(networkError(error)));
   }
