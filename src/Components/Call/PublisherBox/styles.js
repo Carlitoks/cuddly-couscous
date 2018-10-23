@@ -6,7 +6,7 @@ export default StyleSheet.create({
     height: 154,
     width: 86,
     backgroundColor: Colors.black,
-    top: "5.5%",
+    top: "18.5%",
     right: 20,
     position: "absolute",
     zIndex: 99999999999,
