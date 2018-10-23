@@ -254,16 +254,6 @@ class Home extends Component {
     }
   }
 
-  /*modalSelection() {
-    const { updateHomeFlow, availableMinutes, stripePaymentToken } = this.props;
-    if (availableMinutes < 5 || !stripePaymentToken) {
-      updateHomeFlow({ displayPaymentModal: true });
-    }
-    if (availableMinutes > 5 && !!stripePaymentToken) {
-      updateHomeFlow({ display60MinModal: true });
-    }
-  }*/
-
   setLanguages = () => {
     const { nativeLangCode, updateContactLinguist } = this.props;
 
