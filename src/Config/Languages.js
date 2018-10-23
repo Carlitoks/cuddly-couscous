@@ -1868,44 +1868,43 @@ export const comingSoonCodes = [
   "arb",
   "ben",
   "dan",
-  "nld",
+  "deu",
   "fin",
   "fra",
-  "deu",
-  "spa",
   "hin",
+  "ita",
   "kor",
-  "zsm",
   "nor",
+  "nld",
   "pol",
   "por",
   "rus",
+  "spa",
   "swe",
   "tha",
   "tur",
-  "urd"
+  "urd",
+  "zsm"
 ];
 
 // languages available for session selection// TODO: export this config to replace SUPPORTED_LANGS
-export const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "ita"];
+export const supportedLangCodes = ["eng", "cmn", "yue", "jpn"];
 
 // default secondary language for a given primary language
 export const DefaultLanguagePairMap = {
   eng: "cmn",
   cmn: "eng",
   yue: "eng",
-  jpn: "eng",
-  ita: "eng"
+  jpn: "eng"
   // spa: "eng",
 };
 
 // allowed secondary language choices for each primary language
 export const AllowedLanguagePairs = {
-  eng: ["cmn", "yue", "jpn", "ita"],
+  eng: ["cmn", "yue", "jpn"],
   cmn: ["eng"],
   yue: ["eng"],
-  jpn: ["eng"],
-  ita: ["eng"]
+  jpn: ["eng"]
   // spa: ["eng"],
 };
 
