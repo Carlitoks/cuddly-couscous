@@ -96,7 +96,7 @@ export const verifyCall = (sessionID, token, verifyCallId) => (
   dispatch,
   getState
 ) => {
-  const { callLinguistSettings } = getState();
+  const { callLinguistSettings, auth } = getState();
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
       if (response.data.status == "cancelled") {
@@ -105,7 +105,7 @@ export const verifyCall = (sessionID, token, verifyCallId) => (
         Vibration.cancel();
       }
       if (response.data.status == "assigned") {
-        if (callLinguistSettings.sessionID) {
+        if (callLinguistSettings.sessionID && auth.uuid !== response.data.linguist.id) {
           dispatch({ type: "Home", params: { alertAssigned: true } });
           timer.clearInterval("verifyCallId");
           Vibration.cancel();
