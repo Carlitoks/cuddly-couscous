@@ -18,18 +18,16 @@ class PaymentModal extends Component {
 
   setPillCollor() {
     if (this.props.availableMinutes == 0) {
-      return ("red");
-    }
-    else{
-      return (Colors.gradientColorButton.bottom);
+      return "red";
+    } else {
+      return Colors.gradientColorButton.bottom;
     }
   }
-  
+
   setTitle() {
     if (this.props.availableMinutes == 0 && !this.props.stripePaymentToken) {
       return I18n.t("pricingModal.titleNoMinutesNoCard");
-    }
-    else{
+    } else {
       return I18n.t("pricingModal.title");
     }
   }
@@ -72,24 +70,18 @@ class PaymentModal extends Component {
               color={this.setPillCollor()}
             />
             <View style={styles.modalWrapper}>
-              <Text style={styles.modalTitle}>
-                {this.setTitle()}
-              </Text>
+              <Text style={styles.modalTitle}>{this.setTitle()}</Text>
               <Text style={styles.modalText}>{this.setContent()}</Text>
               <Button
                 borderRadius={27}
                 textStyle={styles.text}
                 title={
-                  this.props.availableMinutes < 1 &&
                   !this.props.stripePaymentToken
                     ? I18n.t("pricingModal.buttons.addCard")
                     : I18n.t("pricingModal.buttons.gotIt")
                 }
                 onPress={() => {
-                  if (
-                    this.props.availableMinutes < 1 &&
-                    !this.props.stripePaymentToken
-                  ) {
+                  if (!this.props.stripePaymentToken) {
                     this.props.navigation.dispatch({
                       type: "PaymentsView",
                       params: {
