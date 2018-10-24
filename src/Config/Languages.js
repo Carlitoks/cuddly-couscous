@@ -2027,11 +2027,11 @@ export const InterfaceSupportedLanguages = [
   },
   {
     1: "zh-hans",
-    name: "语言"
+    name: "简体中文"
   },
   {
     1: "zh-hant",
-    name: "語言"
+    name: "繁体中文"
   },
   {
     1: "ja",
