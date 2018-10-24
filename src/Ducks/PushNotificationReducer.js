@@ -97,15 +97,13 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
                 )}`} - ${data.session.scenario.title}`
           })
         );
-        if((data.session.endReason && data.session.endedAt) || (data.responded || data.accepted)){
-          if(data.session.endReason === 'cancel'){
-            Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
-          }
-          dispatch({ type: "Home"});
-        }else{
           Sessions.GetSessionInfoLinguist(data.session.id, auth.token).then((session) => {
             if(session.data.status === 'unassigned'){
-              dispatch({ type: "IncomingCallView" });
+              if(data.responded || data.accepted){
+                dispatch({ type: "Home" });
+              } else {
+                dispatch({ type: "IncomingCallView" });
+              }
             }
             if (session.data.status === "cancelled") {
               dispatch({ type: "Home", params: { alertCancelled: true } });
@@ -115,7 +113,6 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
               dispatch({ type: "Home"});
             }
           }).catch(error => console.log(error));
-        }
       })
       .catch(error => dispatch(networkError(error)));
   }

@@ -49,32 +49,11 @@ class Home extends Component {
 
   componentWillMount() {
     this.props.updateSettings({ loading: false });
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.alertCancelled
-    ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
-    }
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.alertAssigned
-    ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
-    }
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.alertFail
-    ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callFail"));
-    }
     timer.clearInterval("timer");
     timer.clearInterval("counterId");
     this.props.clear();
     this.props.asyncGetAccountInformation();
     InCallManager.stop();
-    this.props.getCurrentAvailability();
-    this.getCurrentUnansweredCalls();
-
   }
 
   getCurrentUnansweredCalls = async () => {
@@ -99,6 +78,28 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alertCancelled
+    ) {
+      Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
+    }
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alertAssigned
+    ) {
+      Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
+    }
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alertFail
+    ) {
+      Alert.alert(I18n.t("notification"), I18n.t("session.callFail"));
+    }
+
+    this.props.getCurrentAvailability();
+    this.getCurrentUnansweredCalls();
+
     checkForAllPermissions(valueToUpdate => {
       this.props.updateActiveSession(valueToUpdate);
     });
