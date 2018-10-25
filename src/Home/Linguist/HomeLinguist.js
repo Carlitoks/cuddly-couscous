@@ -122,7 +122,7 @@ class Home extends Component {
 
   _handleAppStateChange = (nextAppState) => {
       this.props.getCurrentAvailability();
-      if (nextAppState === 'active') {
+      if (AppState.currentState.match(/inactive|background/) && nextAppState === 'active') {
         this.getCurrentUnansweredCalls();
       }
   };
@@ -262,7 +262,8 @@ const mS = state => ({
   invitationID: state.callLinguistSettings.invitationID,
   timer: state.activeSessionReducer.timer,
   counterId: state.activeSessionReducer.counterId,
-  networkInfoType: state.networkInfo.type
+  networkInfoType: state.networkInfo.type,
+  nav: state.nav,
 });
 
 const mD = {
