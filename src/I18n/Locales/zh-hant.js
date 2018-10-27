@@ -1,5 +1,9 @@
 ﻿export default (ZHTW = {
   accept: "接受",
+  acceptAllPermissionsCustomer:
+    "您必須先在手機設定中接受麥克風和相機權限，才能撥打電話",
+  acceptAllPermissionsLinguist:
+    "您必須先在手機設定中接受麥克風和相機權限，才能接聽電話",
   add: "新增",
   addANewCard: "新增卡片...",
   addLanguage: "新增語言",
@@ -7,7 +11,8 @@
   alignQRCode: "將鏡頭對準 QR 碼",
   all: "全部",
   allCalls: "所有通話",
-  allLinguistsAreBusy: "目前所有語言翻譯精靈\n都在忙線中。\n\n\n您要重試嗎？ ",
+  allLinguistsAreBusy:
+    "目前所有語言翻譯精靈\n都在忙線中。\n\n\n您要重試嗎？ ",
   allowExtraTime: "願意延長時間",
   alreadyAccount: "已經有帳戶了？",
   amount: "金額",
@@ -15,6 +20,7 @@
   any: "任何",
   api: "API",
   apiTesting: "API 測試",
+  appPermissions: "應用程式權限",
   appName: "翻譯精靈",
   areasExpertise: "專業領域",
   audio: "音訊",
@@ -31,8 +37,10 @@
   callLinguist: "打電話給語言專員",
   calls: "通話",
   callSettings: "通話設定",
-  callTimeBoxTextLine1: "慶祝翻譯精靈上市，現在體驗翻譯精靈\n完全免費",
-  callTimeBoxTextLine2: "定價每分鐘 1 美元，\n未來將推出包套折扣",
+  callTimeBoxTextLine1:
+    "慶祝翻譯精靈上市，現在體驗翻譯精靈\n完全免費",
+  callTimeBoxTextLine2:
+    "定價每分鐘 1 美元，\n未來將推出包套折扣",
   callTimeButtonText: "免費分鐘數",
   callTimeButtonSubtitle: "翻譯精靈請客",
   callTimeMinutes: "通話時長",
@@ -42,14 +50,17 @@
   callWillEnd: "時間一到會立即結束通話",
   cancel: "取消",
   cancelCall: "取消通話",
-  celebrateAndEnjoy: "歡慶上市\n，限時免費使用翻譯精靈\n！",
-  celebrateAndEnjoyAlternative: "歡慶上市，\n免費使用翻譯精靈 15 分鐘\n！",
+  celebrateAndEnjoy:
+    "歡慶上市\n，免費使用翻譯精靈 \n 15 分鐘！",
+  celebrateAndEnjoyAlternative:
+    "歡慶上市，\n免費使用翻譯精靈 15 分鐘\n！",
   celebrateWithUs: "和我們一起慶祝上市！",
   changeSettings: "若要變更設定，請至「設定」>「翻譯精靈」",
   cancelCallCustomer: "無法通話",
   chargeAdvice: "通話超過 8 分鐘後，須按分鐘數付費。",
   checkYourConnection: "請檢查連線",
-  checkYourEmail: "我們已經傳送重設密碼連結給您。請查收電子郵件",
+  checkYourEmail:
+    "我們已經傳送重設密碼連結給您。請查收電子郵件",
   checkYourEmailOnBoarding: "請查收電子郵件並完成註冊。",
   citizenShip: "公民資格",
   cityFamiliarity: "城市熟悉程度",
@@ -66,13 +77,19 @@
   connectMeNow: "立即和我連線",
   connectNow: "立即連線",
   connecting: "連線中",
-  contactingLinguist: "將在 1 分鐘內為您接通\n語言翻譯精靈\n",
+  contactingLinguist:
+    "將在 1 分鐘內為您接通\n語言翻譯精靈\n",
   continue: "繼續",
   continueUsingJeenie: "繼續使用翻譯精靈",
   continueForFree: "繼續",
   conversations: "其他",
   compliments: "{{organizer}} 贈送 {{minutes}} 分鐘",
   complimentsOf: "{{organizer}}請客",
+  complimentMinutes:
+    "{{organizer}} 慷慨餽贈，增加了 {{maxMinutesPerUser}} 分鐘",
+  minutesAdded: "已增加分鐘數",
+  invalidCode: "代碼無效",
+  invalidCodeMsg: "{{message}}",
   costOfCall: "預估費用： ",
   couldBetter: "還能更好嗎？",
   countryFamiliarity: "國家/地區熟悉程度",
@@ -87,8 +104,10 @@
   declined: "已拒絕",
   disableExtraTime: "不願意延長時間",
   dining: "餐廳",
-  discountsOffered: "購買高通話量分鐘數可享折扣\n\n。",
-  discountsOfferedAlternative: "預購分鐘數可享折扣\n ",
+  discountsOffered:
+    "購買高通話量分鐘數可享折扣\n\n。",
+  discountsOfferedAlternative:
+    "預購分鐘數可享折扣\n ",
   duration: "時長",
   editProfile: "編輯個人資料",
   email: "電子郵件",
@@ -119,19 +138,29 @@
   errorPromo: "找不到促銷代碼",
   estimatedCost: "預估費用",
   estimatedDuration: "預估時長",
-  estimatedCostStatic1: "試用期間通話預設為 8 分鐘。",
-  estimatedCostStatic2: "若您需要更多時間，可以在通話中增加。",
-  expertise_A1: "有許多不同的髮型適合不同的人和不同的",
-  expertise_B1: "創造的迴圈是什麼？如何從無到有？在 Spite",
-  expertise_C1: "我們之所以為人類，是不是因為我們的特徵和特質不同於",
+  estimatedCostStatic1:
+    "試用期間通話預設為 8 分鐘。",
+  estimatedCostStatic2:
+    "若您需要更多時間，可以在通話中增加。",
+  expertise_A1:
+    "有許多不同的髮型適合不同的人和不同的",
+  expertise_B1:
+    "創造的迴圈是什麼？如何從無到有？在 Spite",
+  expertise_C1:
+    "我們之所以為人類，是不是因為我們的特徵和特質不同於",
   extraTime1: "時間快到了！",
   extraTime2: "您需要更多時間嗎？",
   extraTimeA1: "需要，增加 5 分鐘",
   extraTimeA2: "不需要，時間到請結束通話",
+  fallPromotion:
+    " 秋季促銷：只要使用翻譯精靈打一通電話，帳戶裡就會多出 5 分鐘的免費分鐘數。",
+  fallPromotionModal:
+    " 秋季促銷：只要使用翻譯精靈\n打一通電話，帳戶裡就會\n多出 5 分鐘的免費分鐘數。",
   female: "女性",
   finish: "結束",
   finishOnboarding: "完成註冊",
-  finishOnboardingMessage: "請完成註冊以利使用本應用程式",
+  finishOnboardingMessage:
+    "請完成註冊以利使用本應用程式",
   firstname: "名字",
   fluent: "流利",
   forgotPassword: "重設密碼",
@@ -153,7 +182,8 @@
   gotIt: "沒問題！",
   hasDisconnected: "您已斷線",
   help: "協助",
-  helpPeople: "您對哪些城市的熟悉程度足以協助人們遊覽城市？",
+  helpPeople:
+    "您對哪些城市的熟悉程度足以協助人們遊覽城市？",
   helpUsGet: "協助我們更瞭解您",
   hi: "您好",
   historyNotFound: "找不到記錄",
@@ -174,7 +204,7 @@
   intermediate: "中等",
   invalidPromoCode: "促銷代碼無效",
   invalidPaymentDetails:
-    "The payment details information you provided is not correct",
+    "您提供的付款詳細資料無效。  請檢查輸入錯誤。",
   isReconnecting: "正在重新連線...",
   keepWaiting: "繼續等候",
   isConnecting: "正在接通 {{firstName}} {{lastInitial}}...",
@@ -190,18 +220,22 @@
     "謝謝！翻譯精靈目前不提供您的母語，但您仍然可以使用我們支援的語言通話：",
   languageNotice2: "即將推出更多語言。",
   languageSettings: "語言設定",
-  languagesStatic1: "翻譯精靈免費試用期間只支援中文 (普通話) 及英文。",
+  languagesStatic1:
+    "翻譯精靈免費試用期間只支援中文 (普通話) 及英文。",
   languagesStatic2:
     "未來推出的翻譯精靈版本將支援所有語言，您也能夠在這裡選擇語言。",
   languageFrom: "源語言：",
   languageTo: "目標語言：",
   lauchScreenSwipe1:
     "放心旅行！\n有了翻譯精靈應用程式，再也不用擔心語言成為溝通障礙。",
-  lauchScreenSwipe2: "無論置身世上何處，都能即時與精通外語的真人通話。",
+  lauchScreenSwipe2:
+    "無論置身世上何處，都能即時與精通外語的真人通話。",
   lauchScreenSwipe3:
     "翻譯精靈目前支援\n中文（普通話）<> 英文 \n 以及日本 <> 英文。\n\n即將推出其他語言。",
-  lauchScreenSwipe4: "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
-  lauchScreenSwipe5: "為慶祝上市，前 15 分鐘免費…翻譯精靈請客！",
+  lauchScreenSwipe4:
+    "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
+  lauchScreenSwipe5:
+    "為慶祝上市，前 15 分鐘免費…翻譯精靈請客！",
   lastname: "姓氏",
   legal: "法律資訊",
   letsGoToKwon: "讓我們更瞭解您",
@@ -227,7 +261,7 @@
   minutesAbbreviation: "{{minutes}} 分鐘",
   minutes: "分鐘",
   missed: "未接",
-  modifyPayment: "修改您註冊的付款方式",
+  modifyPayment: "修改付款資訊",
   mute: "靜音",
   myProfile: "個人資料",
   name: "姓名",
@@ -264,9 +298,10 @@
   passwordMatch: "密碼不符。",
   passwordLengthValidation: "密碼至少須包含 8 個字元。",
   payAsYouGo: "現購現付",
-  payAsYouGoPricing: "現購現付 = \n每分鐘 1 美元",
+  payAsYouGoPricing: "現購現付 =",
+  payAsYouGoPricingUnder: " 每分鐘 1 美元",
   paymentDetails: "付款詳細資料",
-  paymentDetailsCreated: "Your Payment Details were successfully created",
+  paymentDetailsCreated: "付款資訊更新成功。",
   preferedNameTitle: "欲使用的名稱",
   preferNotToDisclose: "不願意透露",
   preferredLinguistText: "我想用的名稱是...",
@@ -290,7 +325,7 @@
   recentActivity: "最近的活動",
   recentCalls: "最近的通話",
   reconnect: "重新連線",
-  removePayment: "移除您註冊的付款方式",
+  removePayment: "移除付款資訊",
   reportProblem: "輕輕晃動裝置就能通報問題。",
   reportProblemMenu: "通報問題",
   resetpassword: "重設密碼",
@@ -339,7 +374,8 @@
   termsOfUse: "使用條款",
   themeSettings: "主題設定",
   temporaryError: "發生暫時性的錯誤，請稍後再試。",
-  toggleExtraTimeDisable: "這次通話將在上方指定的時間過後自動中斷。",
+  toggleExtraTimeDisable:
+    "這次通話將在上方指定的時間過後自動中斷。",
   toggleExtraTimeEnable:
     "這次通話將持續到您中斷為止。通話超過上方指定的時間後，須按分鐘數付費。",
   toOthersOnPlatform: "平台上的其他人",
@@ -388,15 +424,70 @@
   payments: {
     currentRate: "每分鐘 1 美元",
     currentBalance: "{{minutes}} 分鐘",
-    enterPaymentToTalk: "輸入付款詳細資料即可繼續通話。每分鐘 1 美元就能暢所欲言。",
-    currentRateDescription: "通話費用每分鐘 1 美元，時間不可超過 60 分鐘。日後將推出大量儲值分鐘數可享折扣的服務。"
+    enterPaymentToTalk:
+      "輸入付款詳細資料即可繼續通話。每分鐘 1 美元就能暢所欲言。",
+    currentRateDescription:
+      "通話費用每分鐘 1 美元，時間不可超過 60 分鐘。日後將推出大量儲值分鐘數可享折扣的服務。"
+  },
+
+  operatingHours: {
+    title: "可用時段：{{lang}}",
+    description: "語言翻譯精靈可用時段是 {{beginHour}} 到 {{endHour}}。",
+    ok: "確定"
+  },
+
+  // triggered on customer home screen to show account balance and
+  // pricing explanation
+  pricingModal: {
+    title: "價格與帳戶餘額",
+    titleNoMinutesNoCard: "需要更多翻譯精靈使用時間嗎？",
+    currentRate: "每分鐘 1 美元",
+    currentBalance: "{{minutes}} 分鐘",
+    buttons: {
+      gotIt: "沒問題！",
+      addCard: "新增付款資訊"
+    }
+  },
+
+  // content for the pricing screen
+  pricingScreen: {
+    screenTitle: "價格與帳戶餘額",
+    pricing: {
+      title: "價格：",
+      rate: "每分鐘 1 美元"
+    },
+    balance: {
+      title: "帳戶餘額",
+      min: "分鐘"
+    },
+    paymentInfo: {
+      titleWithCard: "付款資訊",
+      titleNoCard: "新增付款資訊",
+      linkNoCard: "新增卡片",
+      linkWithCard: "變更卡片",
+      descriptionHasMinutes: "為避免通話中斷線，請立即新增付款資訊。",
+      descriptionLowMinutes: "您的帳戶餘額不足。為避免下次通話中斷線，請立即新增付款資訊。",
+      descriptionNoMinutes: "您必須新增付款資訊才能繼續使用。"
+    },
+    descriptions: {
+      hasMinutesAndCard: "為免通話中斷，當您將分鐘數用完後，我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
+      hasMinutesNoCard: "若要在剩餘分鐘數用完後繼續通話，請立即輸入付款資訊。",
+      noMinutesHasCard: "我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
+      noMinutesNoCard: "您必須立即新增付款資訊，才能和語言專員通話。"
+    },
+    buttons: {
+      continue: "繼續",
+      accept: "接受價格",
+      gotIt: "沒問題！"
+    }
   },
 
   // messages from api server, errors primarily
   api: {
     errUnexpected: "發生非預期錯誤。",
     errTemporary: "發生暫時性錯誤。",
-    errTemporaryTryAgain: "發生暫時性錯誤。  請稍候幾分鐘再繼續。",
+    errTemporaryTryAgain:
+      "發生暫時性錯誤。  請稍候幾分鐘再繼續。",
     errLogin: "登入時發生問題",
     errDefaultAuth: "認證過期或無效。",
     errNoUser: "找不到符合該電子郵件地址的用戶",

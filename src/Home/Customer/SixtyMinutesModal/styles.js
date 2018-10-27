@@ -93,5 +93,13 @@ export default StyleSheet.create({
     textAlign: "center",
     fontSize: Iphone5 ? moderateScale(15) : 15,
     fontStyle: "italic"
+  },
+  COL_futurePricingBoxTitleUnder:{
+    fontFamily: Fonts.primaryFont,
+    color: "#333",
+    marginTop: Iphone5 ? moderateScale(15) : 15,
+    textAlign: "center",
+    fontSize: Iphone5 ? moderateScale(15) : 15,
+    fontStyle: "italic"
   }
 });

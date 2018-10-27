@@ -1,4 +1,5 @@
 import { Sessions } from "../Api";
+import {Alert} from "react-native";
 import { updateSettings as updateCallLinguistSettings } from "./CallLinguistSettings";
 import { updateConnectingMessage } from "./ContactLinguistReducer";
 import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReducer";
@@ -11,7 +12,7 @@ import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
 import { networkError } from "./NetworkErrorsReducer";
 import timer from "react-native-timer";
-import { translateLanguage } from "../I18n/I18n";
+import I18n, { translateLanguage } from "../I18n/I18n";
 // Actions
 export const ACTIONS = {
   REGISTER: "pushnotification/register"
@@ -40,7 +41,7 @@ export const remoteNotificationReceived = notification => dispatch => {
   }
 };
 
-const incomingCallNotification = invitationId => (dispatch, getState) => {
+export const incomingCallNotification = invitationId => (dispatch, getState) => {
   const {
     nav,
     contactLinguist,
@@ -96,12 +97,22 @@ const incomingCallNotification = invitationId => (dispatch, getState) => {
                 )}`} - ${data.session.scenario.title}`
           })
         );
-
-        if((data.session.endReason && data.session.endedAt) || (data.responded || data.accepted)){
-          dispatch({ type: "Home" });
-        }else{
-          dispatch({ type: "IncomingCallView" });
-        }
+          Sessions.GetSessionInfoLinguist(data.session.id, auth.token).then((session) => {
+            if(session.data.status === 'unassigned'){
+              if(data.responded || data.accepted){
+                dispatch({ type: "Home" });
+              } else {
+                dispatch({ type: "IncomingCallView" });
+              }
+            }
+            if (session.data.status === "cancelled") {
+              dispatch({ type: "Home", params: { alertCancelled: true } });
+            }
+            if (session.data.status === "assigned") {
+              Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
+              dispatch({ type: "Home"});
+            }
+          }).catch(error => console.log(error));
       })
       .catch(error => dispatch(networkError(error)));
   }

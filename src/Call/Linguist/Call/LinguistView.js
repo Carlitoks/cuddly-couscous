@@ -50,6 +50,7 @@ import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
 import ConnectingView from "../Connecting/ConnectingView";
 import { Fade } from "../../../Effects";
 import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
+import FCM from "react-native-fcm";
 
 class LinguistView extends Component {
   constructor() {
@@ -61,6 +62,11 @@ class LinguistView extends Component {
 
   componentWillMount() {
     BackgroundStart();
+
+    if(Platform.OS === 'android'){
+      FCM.removeAllDeliveredNotifications();
+      FCM.cancelAllLocalNotifications();
+    }
 
     //Check for permission before the start method
     if (InCallManager.recordPermission !== "granted") {

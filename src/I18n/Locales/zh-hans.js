@@ -1,5 +1,9 @@
 ﻿export default (ZHCN = {
   accept: "接受",
+  acceptAllPermissionsCustomer:
+    "您必须在电话设置中允许访问麦克风和相机的权限才能拨打电话",
+  acceptAllPermissionsLinguist:
+    "您必须在电话设置中允许访问麦克风和相机的权限才能接听电话",
   add: "添加",
   addANewCard: "添加新卡",
   addLanguage: "添加语言",
@@ -16,6 +20,7 @@
   any: "任何",
   api: "API",
   apiTesting: "API 测试",
+  appPermissions: "App 权限",
   appName: "翻译精灵",
   areasExpertise: "专业领域",
   audio: "音频",
@@ -32,8 +37,10 @@
   callLinguist: "致电一位语言专家",
   calls: "通话",
   callSettings: "通话设置",
-  callTimeBoxTextLine1: "为庆祝翻译精灵的发布，\n现开放免费使用",
-  callTimeBoxTextLine2: "定价为每分钟 1 美元，\n今后将推出套餐折扣。",
+  callTimeBoxTextLine1:
+    "为庆祝翻译精灵的发布，\n现开放免费使用",
+  callTimeBoxTextLine2:
+    "定价为每分钟 1 美元，\n今后将推出套餐折扣。",
   callTimeButtonText: "免费分钟数",
   callTimeButtonSubtitle: "翻译精灵真情回馈",
   callTimeMinutes: "通话时长",
@@ -43,14 +50,17 @@
   callWillEnd: "超时后通过将自动结束",
   cancel: "取消",
   cancelCall: "取消通话",
-  celebrateAndEnjoy: "庆祝\n翻译精灵发布，\n限时免费试用！",
-  celebrateAndEnjoyAlternative: "庆祝翻译精灵发布，\n现可免费\n使用 15 分钟。",
+  celebrateAndEnjoy:
+    "庆祝翻译精灵发布，\n现可免费\n使用 15 分钟！",
+  celebrateAndEnjoyAlternative:
+    "庆祝翻译精灵发布，\n现可免费\n使用 15 分钟。",
   celebrateWithUs: "与我们一同庆祝翻译精灵的发布！",
-  changeSettings: '如需更改您的设置，请转至"设置" > "翻译精灵"',
+  changeSettings: "如需更改您的设置，请转至\"设置\" > \"翻译精灵\"",
   cancelCallCustomer: "无法呼叫",
   chargeAdvice: "超过 8 分钟的通话按分钟计费。",
   checkYourConnection: "请检查您的连接",
-  checkYourEmail: "我们已向您发送了重置密码的链接。请查收电子邮件",
+  checkYourEmail:
+    "我们已向您发送了重置密码的链接。请查收电子邮件",
   checkYourEmailOnBoarding: "查收电子邮件以完成注册。",
   citizenShip: "公民身份",
   cityFamiliarity: "城市熟悉度",
@@ -67,13 +77,19 @@
   connectMeNow: "立即和我连接",
   connectNow: "立即连接",
   connecting: "正在连接",
-  contactingLinguist: "1 分钟内\n可为您接通\n语言翻译精灵",
+  contactingLinguist:
+    "1 分钟内\n可为您接通\n语言翻译精灵",
   continue: "继续",
   continueUsingJeenie: "继续使用翻译精灵",
   continueForFree: "继续",
   conversations: "其他",
   compliments: "{{organizer}} 赠送 {{minutes}} 分钟",
   complimentsOf: "{{organizer}}请客",
+  complimentMinutes:
+    "{{organizer}} 慷慨赠送 {{maxMinutesPerUser}} 分钟",
+  minutesAdded: "分钟数已增加",
+  invalidCode: "代码无效",
+  invalidCodeMsg: "{{message}}",
   costOfCall: "预计费用： ",
   couldBetter: "哪些方面还有改善空间？",
   countryFamiliarity: "国家/地区熟悉度",
@@ -88,8 +104,10 @@
   declined: "已拒绝",
   disableExtraTime: "不加时",
   dining: "餐厅",
-  discountsOffered: "批量购买\n分钟数\n可享超值折扣。",
-  discountsOfferedAlternative: "预购分钟数\n可享折扣优惠 ",
+  discountsOffered:
+    "批量购买\n分钟数\n可享超值折扣。",
+  discountsOfferedAlternative:
+    "预购分钟数\n可享折扣优惠 ",
   duration: "时长",
   editProfile: "编辑个人资料",
   email: "电子邮件",
@@ -120,19 +138,29 @@
   errorPromo: "找不到促销代码",
   estimatedCost: "预计费用",
   estimatedDuration: "预计时长",
-  estimatedCostStatic1: "试用期间，预设通话时间为 8 分钟。",
-  estimatedCostStatic2: "如需更多时间，您可在通话中增加。",
-  expertise_A1: "有许多不同的发型适合不同的人和不同的",
-  expertise_B1: "创造的循环是什么？如何做到从无到有？在 Spite",
-  expertise_C1: "我们之所以为人类，是否是因为我们的特征和特质不同于",
+  estimatedCostStatic1:
+    "试用期间，预设通话时间为 8 分钟。",
+  estimatedCostStatic2:
+    "如需更多时间，您可在通话中增加。",
+  expertise_A1:
+    "有许多不同的发型适合不同的人和不同的",
+  expertise_B1:
+    "创造的循环是什么？如何做到从无到有？在 Spite",
+  expertise_C1:
+    "我们之所以为人类，是否是因为我们的特征和特质不同于",
   extraTime1: "时间快到了！",
   extraTime2: "您需要加时吗？",
   extraTimeA1: "需要，增加 5 分钟",
   extraTimeA2: "不需要，时间到了就结束通话",
+  fallPromotion:
+    " 秋季促销：使用翻译精灵拨打电话，您的帐户即可获得 5 分钟免费通话时间。",
+  fallPromotionModal:
+    " 秋季促销：使用翻译精灵拨打电话\n，您的帐户即可获得\n 5 分钟免费通话时间。",
   female: "女性",
   finish: "完成",
   finishOnboarding: "完成注册",
-  finishOnboardingMessage: "请完成注册以使用这款 App",
+  finishOnboardingMessage:
+    "请完成注册以使用这款 App",
   firstname: "名字",
   fluent: "流利",
   forgotPassword: "重置您的密码",
@@ -154,7 +182,8 @@
   gotIt: "了解！",
   hasDisconnected: "您已断开连接",
   help: "帮助",
-  helpPeople: "您对哪些城市非常熟悉，可帮助游客游览城市？",
+  helpPeople:
+    "您对哪些城市非常熟悉，可帮助游客游览城市？",
   helpUsGet: "让我们更了解您",
   hi: "您好",
   historyNotFound: "找不到历史记录",
@@ -175,7 +204,7 @@
   intermediate: "中等",
   invalidPromoCode: "无效的代码促销",
   invalidPaymentDetails:
-    "The payment details information you provided is not correct",
+    "您提供的付款详情无效。  请在输入时检查错误。",
   isReconnecting: "正在重新连接...",
   keepWaiting: "继续等待",
   isConnecting: "正在连接 {{firstName}} {{lastInitial}}...",
@@ -191,16 +220,20 @@
     "谢谢！翻译精灵目前不支持您的母语，但您仍然可以使用我们支持的语言拨打电话：",
   languageNotice2: "即将推出更多的语言。",
   languageSettings: "语言设置",
-  languagesStatic1: "免费试用期间，翻译精灵只支持中文（普通话）和英语。",
+  languagesStatic1:
+    "免费试用期间，翻译精灵只支持中文（普通话）和英语。",
   languagesStatic2:
     "今后推出的翻译精灵版本将支持所有语言，您可以在此处选择切换。",
   languageFrom: "源语言：",
   languageTo: "目标语言：",
-  lauchScreenSwipe1: "无忧旅行！\n翻译精灵 App 让语言不再是沟通的障碍。",
-  lauchScreenSwipe2: "无论您身处何方，都可以得到实时帮助的真人翻译。",
+  lauchScreenSwipe1:
+    "无忧旅行！\n翻译精灵 App 让语言不再是沟通的障碍。",
+  lauchScreenSwipe2:
+    "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
     "目前，翻译精灵支持\n中文（普通话）<>英语\n和日语<>英语。\n\n即将推出其他语言。",
-  lauchScreenSwipe4: "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
+  lauchScreenSwipe4:
+    "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
   lauchScreenSwipe5:
     "为了庆祝翻译精灵的发布，前 15 分钟免费使用……翻译精灵的真情回馈！",
   lastname: "姓氏",
@@ -228,7 +261,7 @@
   minutesAbbreviation: "{{minutes}} 分钟",
   minutes: "分钟",
   missed: "未接来电",
-  modifyPayment: "修改您登记的付款方式",
+  modifyPayment: "修改付款信息",
   mute: "静音",
   myProfile: "个人资料",
   name: "姓名",
@@ -260,14 +293,15 @@
   password: "密码",
   passwordAnd: "和",
   passwordLength: "您的密码须至少包含 5 个字符。",
-  passwordLinguistText: '点击"下一步"即表示您同意我们的',
+  passwordLinguistText: "点击\"下一步\"即表示您同意我们的",
   permissionDenied: "App 权限被拒绝",
   passwordMatch: "密码不匹配。",
   passwordLengthValidation: "密码必须是 8 个或 8 个以上字符。",
   payAsYouGo: "随用随付",
-  payAsYouGoPricing: "按需付费 = \n 每分钟 1 美元",
+  payAsYouGoPricing: "按需付费 =",
+  payAsYouGoPricingUnder: " 每分钟 1 美元",
   paymentDetails: "付款详情",
-  paymentDetailsCreated: "Your Payment Details were successfully created",
+  paymentDetailsCreated: "您的付款信息已成功更新。",
   preferedNameTitle: "首选昵称",
   preferNotToDisclose: "不想公开",
   preferredLinguistText: "我想使用的昵称是...",
@@ -291,7 +325,7 @@
   recentActivity: "近期活动",
   recentCalls: "近期通话",
   reconnect: "重新连接",
-  removePayment: "删除您登记的付款方式",
+  removePayment: "删除付款信息",
   reportProblem: "轻轻摇一摇设备即可报告问题。",
   reportProblemMenu: "报告问题",
   resetpassword: "重置密码",
@@ -319,7 +353,6 @@
   signIn: "登录",
   skipAddLater: "忽略，以后再说",
   somethingElse: "其他",
-  somethingWrong: "Something went wrong",
   spanish: "西班牙语",
   speaker: "母语人士",
   specifyGender: "拒绝指定",
@@ -341,7 +374,8 @@
   termsOfUse: "使用条款",
   themeSettings: "主题设置",
   temporaryError: "暂时发生错误，请稍后重试。",
-  toggleExtraTimeDisable: "此通话将在以上指定时间后自动结束。",
+  toggleExtraTimeDisable:
+    "此通话将在以上指定时间后自动结束。",
   toggleExtraTimeEnable:
     "此通话将持续到您主动结束为止。超出以上指定时间将按分钟计费。",
   toOthersOnPlatform: "平台上的其他人",
@@ -390,15 +424,70 @@
   payments: {
     currentRate: "1 美元每分钟",
     currentBalance: "{{minutes}} 分钟",
-    enterPaymentToTalk: "输入付款详情后可继续通话。每分钟 1 美元便可畅聊无阻。",
-    currentRateDescription: "通话每分钟 1 美元，最多可通话 60 分钟。今后批量购买分钟数可享折扣。"
+    enterPaymentToTalk:
+      "输入付款详情后可继续通话。每分钟 1 美元便可畅聊无阻。",
+    currentRateDescription:
+      "通话每分钟 1 美元，最多可通话 60 分钟。今后批量购买分钟数可享折扣。"
+  },
+
+  operatingHours: {
+    title: "可用时段：{{lang}}",
+    description: "语言翻译精灵在 {{beginHour}} 到 {{endHour}} 可用。",
+    ok: "确定"
+  },
+
+  // triggered on customer home screen to show account balance and
+  // pricing explanation
+  pricingModal: {
+    title: "价格及帐户余额",
+    titleNoMinutesNoCard: "需要更多翻译精灵使用时间?",
+    currentRate: "1 美元每分钟",
+    currentBalance: "{{minutes}} 分钟",
+    buttons: {
+      gotIt: "了解！",
+      addCard: "添加付款信息"
+    }
+  },
+
+  // content for the pricing screen
+  pricingScreen: {
+    screenTitle: "价格及帐户余额",
+    pricing: {
+      title: "价格：",
+      rate: "每分钟 1 美元"
+    },
+    balance: {
+      title: "帐户余额",
+      min: "分钟"
+    },
+    paymentInfo: {
+      titleWithCard: "付款信息",
+      titleNoCard: "添加付款信息",
+      linkNoCard: "添加新卡",
+      linkWithCard: "更改卡片",
+      descriptionHasMinutes: "为避免通话过程中断开连接，请立即添加付款信息。",
+      descriptionLowMinutes: "您的帐户余额很低。为避免下次通话过程中断开连接，请立即添加付款信息。",
+      descriptionNoMinutes: "您必须添加付款信息才能继续使用。"
+    },
+    descriptions: {
+      hasMinutesAndCard: "您用尽分钟数后，我们将自动向您的卡片扣款，收费为每分钟 1 美元，以免您在通话过程中断开连接。",
+      hasMinutesNoCard: "若要在剩余的分钟数用尽后继续通话，请立即输入付款信息。",
+      noMinutesHasCard: "我们将自动向您的卡片扣款，收费为每分钟 1 美元。",
+      noMinutesNoCard: "您必须立即添加付款信息，才能连接至语言专家。"
+    },
+    buttons: {
+      continue: "继续",
+      accept: "接受价格",
+      gotIt: "了解！"
+    }
   },
 
   // messages from api server, errors primarily
   api: {
     errUnexpected: "发生意外错误。",
     errTemporary: "发生暂时性错误。",
-    errTemporaryTryAgain: "发生暂时性错误。  请过几分钟再试。",
+    errTemporaryTryAgain:
+      "发生暂时性错误。  请过几分钟再试。",
     errLogin: "登录出错",
     errDefaultAuth: "认证无效或已过期",
     errNoUser: "找不到此电子邮件地址的用户",

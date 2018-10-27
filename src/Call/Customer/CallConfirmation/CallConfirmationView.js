@@ -61,14 +61,19 @@ import SupportedLanguagesList from "./../SessionLanguageView/SupportedLanguagesL
 import ComingSoonLanguagesList from "./../SessionLanguageView/ComingSoonLanguagesList";
 import { updateSettings as updateHomeFlow } from "../../../Ducks/HomeFlowReducer";
 import Permissions from "react-native-permissions";
+import {
+  IsLangAvailableNow,
+  GetLocalSchedule
+} from "../../../Config/Languages.js";
+
 class CallConfirmationView extends Component {
   CATEGORIES = getLocalizedCategories(I18n.currentLocale());
-
   checkPaymentsAndRedirect = () => {
     const {
       availableMinutes,
       event: { chargeFullToOwner },
       navigation,
+
       stripePaymentToken
     } = this.props;
 
@@ -116,10 +121,13 @@ class CallConfirmationView extends Component {
       event,
       event: { chargeOverageToOwner },
       resetConnectingMessage,
+      secundaryLangCode,
+      nativeLangCode,
       navigation,
       availableMinutes,
       stripePaymentToken
     } = this.props;
+    this.showSchedule(secundaryLangCode, nativeLangCode);
     timer.clearInterval("timer");
     timer.clearInterval("counterId");
     this.props.clearSettings();
@@ -189,6 +197,35 @@ class CallConfirmationView extends Component {
       if (!verifyLang) {
         this.setLanguages();
       }
+    }
+  }
+
+  showSchedule(code1, code2) {
+    let workcode1 = IsLangAvailableNow(code1);
+    let workcode2 = IsLangAvailableNow(code2);
+    let code;
+    if (!workcode1) {
+      code = code1;
+    } else if (!workcode2) {
+      code = code2;
+    }
+    if (code) {
+      let response = GetLocalSchedule(code);
+
+      Alert.alert(
+        I18n.t("operatingHours.title", {
+          lang: I18n.t("languagesList." + code)
+        }),
+        I18n.t("operatingHours.description", {
+          beginHour: response.begin,
+          endHour: response.end
+        }),
+        [
+          {
+            text: "OK"
+          }
+        ]
+      );
     }
   }
 

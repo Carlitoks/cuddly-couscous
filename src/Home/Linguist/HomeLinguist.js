@@ -13,6 +13,11 @@ import {
   updateView,
   getProfileAsync
 } from "../../Ducks/UserProfileReducer";
+
+import {
+  incomingCallNotification
+} from '../../Ducks/PushNotificationReducer';
+
 import {View, Text, ScrollView, Alert, AppState} from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
 import timer from "react-native-timer";
@@ -37,12 +42,42 @@ import styles from "./styles";
 import { Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
 import { checkForAllPermissions } from "../../Util/Permission";
+import {Sessions} from "../../Api";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
 
   componentWillMount() {
     this.props.updateSettings({ loading: false });
+    timer.clearInterval("timer");
+    timer.clearInterval("counterId");
+    this.props.clear();
+    this.props.asyncGetAccountInformation();
+    InCallManager.stop();
+  }
+
+  getCurrentUnansweredCalls = async () => {
+    const invitations = await Sessions.GetInvitations(this.props.uuid, this.props.token);
+    if(invitations.data.length > 0){
+      const filteredCalls = await invitations.data.filter((call) => (!call.responded || !call.accepted));
+      try{
+        if(filteredCalls.length > 0){
+          const session = await Sessions.GetSessionInfoLinguist(filteredCalls[0].session.id, this.props.token);
+          if(session.data.status === 'unassigned'){
+            this.props.incomingCallNotification(filteredCalls[0].id);
+          }
+        }
+      }catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  componentDidMount() {
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertCancelled
@@ -61,19 +96,10 @@ class Home extends Component {
     ) {
       Alert.alert(I18n.t("notification"), I18n.t("session.callFail"));
     }
-    timer.clearInterval("timer");
-    timer.clearInterval("counterId");
-    this.props.clear();
-    this.props.asyncGetAccountInformation();
-    InCallManager.stop();
+
     this.props.getCurrentAvailability();
-  }
+    this.getCurrentUnansweredCalls();
 
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this._handleAppStateChange);
-  }
-
-  componentDidMount() {
     checkForAllPermissions(valueToUpdate => {
       this.props.updateActiveSession(valueToUpdate);
     });
@@ -96,6 +122,9 @@ class Home extends Component {
 
   _handleAppStateChange = (nextAppState) => {
       this.props.getCurrentAvailability();
+      if (AppState.currentState.match(/inactive|background/) && nextAppState === 'active') {
+        this.getCurrentUnansweredCalls();
+      }
   };
 
   selectImage = () => {
@@ -233,7 +262,8 @@ const mS = state => ({
   invitationID: state.callLinguistSettings.invitationID,
   timer: state.activeSessionReducer.timer,
   counterId: state.activeSessionReducer.counterId,
-  networkInfoType: state.networkInfo.type
+  networkInfoType: state.networkInfo.type,
+  nav: state.nav,
 });
 
 const mD = {
@@ -247,7 +277,8 @@ const mD = {
   asyncGetAccountInformation,
   clear,
   updateActiveSession,
-  getCurrentAvailability
+  getCurrentAvailability,
+  incomingCallNotification
 };
 
 export default connect(

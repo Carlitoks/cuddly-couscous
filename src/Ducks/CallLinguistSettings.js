@@ -92,31 +92,30 @@ export const asyncGetInvitationDetail = (
     });
 };
 
-export const verifyCall = (sessionID, token, verifyCallId) => (
+export const verifyCall = (sessionID, token, verifyCallId) => async (
   dispatch,
   getState
 ) => {
-  const { callLinguistSettings } = getState();
-  Sessions.GetSessionInfoLinguist(sessionID, token)
-    .then(response => {
-      if (response.data.status == "cancelled") {
-        dispatch({ type: "Home", params: { alertCancelled: true } });
+  const { callLinguistSettings, auth } = getState();
+  try{
+    const session = await Sessions.GetSessionInfoLinguist(sessionID, token);
+    if (session.data.status === "cancelled") {
+      dispatch({ type: "Home", params: { alertCancelled: true } });
+      timer.clearInterval("verifyCallId");
+      Vibration.cancel();
+    }
+    if (session.data.status === "assigned") {
+      if (callLinguistSettings.sessionID && auth.uuid !== session.data.linguist.id) {
+        dispatch({ type: "Home", params: { alertAssigned: true } });
         timer.clearInterval("verifyCallId");
         Vibration.cancel();
       }
-      if (response.data.status == "assigned") {
-        if (callLinguistSettings.sessionID) {
-          dispatch({ type: "Home", params: { alertAssigned: true } });
-          timer.clearInterval("verifyCallId");
-          Vibration.cancel();
-        }
-      }
-    })
-    .catch(error => {
-      dispatch(networkError(error));
-      timer.clearInterval("verifyCallId");
-      Vibration.cancel();
-    });
+    }
+  }catch(err){
+    dispatch(networkError(err));
+    timer.clearInterval("verifyCallId");
+    Vibration.cancel();
+  }
 };
 
 const connectCall = () => dispatch => {

@@ -48,10 +48,10 @@ class IncomingCall extends Component {
 
   componentWillMount() {
     Vibration.vibrate(VIBRATE_PATTERN, true);
+    this.verifyCallLinguist();
   }
 
   componentDidMount() {
-    this.verifyCallLinguist();
     this.startSound();
   }
 
@@ -136,8 +136,7 @@ class IncomingCall extends Component {
     this.props.updateSettings({
       verifyCallId: timer.setInterval(
         "verifyCallId",
-        () => () =>
-          this.props.verifyCall(
+        () => this.props.verifyCall(
             this.props.sessionID,
             this.props.token,
             this.props.verifyCallId

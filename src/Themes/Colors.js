@@ -80,7 +80,12 @@ const colors = {
   gray2: "#9B9B9B",
   lightBlue: "rgba(0,122,255,1)",
   lightBlue2: "rgba(216,208,227,1)",
-  translucentGray: "rgba(51,51,51,.64)"
+  translucentGray: "rgba(51,51,51,.64)",
+  pricingViewPurple: "#8074ba",
+  pricingViewGreen: "#117b30",
+  pricingViewRed: "#DB2707",
+  pricingViewBlack: "#333333",
+  semiTransparent: "rgba(0,0,0,.26)"
 };
 
 export default colors;

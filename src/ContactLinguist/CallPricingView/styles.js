@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
 import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
-import { Iphone5 } from "../../Util/Devices";
+import { Iphone5, Android } from "../../Util/Devices";
 
 const { width, height } = Dimensions.get("window");
 
@@ -23,22 +23,29 @@ export default StyleSheet.create({
   },
   COL_futurePricingTitleContainer: {
     alignSelf: "center",
-    width: width * 0.61,
-    height: height * 0.08,
-    backgroundColor: Colors.gradientColor.top,
+    width: width * 0.9,
+    height: height * 0.1,
+    backgroundColor: Colors.pricingViewPurple,
     borderRadius: 4,
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    zIndex: 2,
-    position: "absolute",
-    top: Iphone5 ? -29 : -35
+    justifyContent: "space-between",
+    position: "relative",
+    padding: moderateScale(20),
+    top: moderateScale(20)
   },
-  COL_futurePricingTitle: {
+  pricing_title: {
     color: Colors.white,
     fontFamily: Fonts.primaryFont,
-    fontWeight: "500",
-    fontSize: Iphone5 ? moderateScale(20) : 20
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(20) : moderateScale(20),
+    paddingLeft: moderateScale(15)
+  },
+  pricing_rate: {
+    color: Colors.white,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(20) : moderateScale(20)
   },
   COL_futurePricingBox: {
     marginHorizontal: 16,
@@ -100,5 +107,182 @@ export default StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-around"
+  },
+  dollar_icon: { alignSelf: "flex-start" },
+  pricing_title_box: {
+    alignSelf: "center",
+    width: width * 0.9,
+    height: height * 0.12,
+    backgroundColor: Colors.pricingViewPurple,
+    borderRadius: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "relative",
+    padding: moderateScale(20),
+    top: moderateScale(20),
+    marginBottom: moderateScale(20)
+  },
+  pricing_inner_box: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  pricing_icon_box: {
+    width: moderateScale(40),
+    height: moderateScale(70)
+  },
+  account_balance_box: {
+    alignSelf: "center",
+    width: width * 0.9,
+    height: height * 0.15,
+    backgroundColor: Colors.transparent,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.bordersLightGrey,
+    borderRadius: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "relative",
+    padding: moderateScale(20),
+    top: moderateScale(20)
+  },
+  account_balance_inner_box: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  account_balance_minutes: {
+    color: Colors.white,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(35) : moderateScale(35)
+  },
+  account_balance_minutes_label: {
+    color: Colors.white,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(15) : moderateScale(15)
+  },
+  account_balance_title: {
+    color: Colors.white,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(16) : moderateScale(16),
+    paddingLeft: moderateScale(15)
+  },
+  available_credit_card_box: {
+    alignSelf: "center",
+    width: width * 0.9,
+    height: height * 0.15,
+    backgroundColor: Colors.transparent,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.bordersLightGrey,
+    borderRadius: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "relative",
+    padding: moderateScale(20),
+    top: moderateScale(20)
+  },
+  available_credit_card_inner_box: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  available_credit_card_title: {
+    color: Colors.pricingViewBlack,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(16) : moderateScale(16),
+    paddingLeft: moderateScale(15)
+  },
+  available_credit_card_change: {
+    color: Colors.pricingViewPurple,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(15) : moderateScale(15),
+    padding: 7
+  },
+  available_credit_card_numbers: {
+    color: Colors.pricingViewBlack,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(13) : moderateScale(13),
+    padding: 5
+  },
+  available_credit_card_icon_row: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  available_credit_card_icon_column: {
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  content_align_center: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  pricing_screen_description_box: {
+    alignSelf: "center",
+    width: width * 0.9,
+    height: height * 0.15,
+    backgroundColor: Colors.transparent,
+    borderRadius: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
+    padding: moderateScale(15),
+    margin: moderateScale(15),
+    marginBottom: Android ? moderateScale(135) : 0
+  },
+  pricing_screen_description: {
+    color: Colors.pricingViewBlack,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(15) : moderateScale(15),
+    padding: 7,
+    textAlign: "center"
+  },
+  add_credit_card_box: {
+    alignSelf: "center",
+    width: width * 0.9,
+    backgroundColor: Colors.transparent,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.bordersLightGrey,
+    borderRadius: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "relative",
+    padding: moderateScale(20),
+    top: moderateScale(20)
+  },
+  add_credit_card_inner_box: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  add_credit_card_title: {
+    color: Colors.white,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(16) : moderateScale(16),
+    paddingLeft: moderateScale(15)
+  },
+  add_credit_card_description: {
+    color: Colors.white,
+    fontFamily: Fonts.primaryFont,
+    fontWeight: "bold",
+    fontSize: Iphone5 ? moderateScale(13) : moderateScale(13),
+    padding: moderateScale(15),
+    width: width * 0.5
+  },
+  add_credit_card_icon_align: {
+    alignSelf: "flex-start",
+    marginLeft: -7
+  },
+  add_credit_card_content_column_box: { flexDirection: "column" },
+  add_credit_card_link: {
+    flexDirection: "column",
+    alignSelf: "flex-start"
   }
 });

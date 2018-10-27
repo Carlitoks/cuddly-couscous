@@ -261,7 +261,7 @@ export default (ENG = {
   minutesAbbreviation: "{{minutes}} min",
   minutes: "minutes",
   missed: "Missed",
-  modifyPayment: "Modify your registered payment method",
+  modifyPayment: "Modify payment information",
   mute: "Mute",
   myProfile: "My Profile",
   name: "Name",
@@ -325,7 +325,7 @@ export default (ENG = {
   recentActivity: "Recent Activity",
   recentCalls: "Recent Calls",
   reconnect: "Reconnecting",
-  removePayment: "Remove your registered payment method",
+  removePayment: "Remove payment information",
   reportProblem: "Report a problem by gently shaking your device.",
   reportProblemMenu: "Report a problem",
   resetpassword: "Reset Password",
@@ -428,6 +428,72 @@ export default (ENG = {
       "Enter payment details to keep talking. Talk as long as you like for $1/min.",
     currentRateDescription:
       "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future."
+  },
+
+  operatingHours: {
+    title: "Availability: {{lang}}",
+    description:
+      "Language Jeenies are available between {{beginHour}} and {{endHour}}.",
+    ok: "OK"
+  },
+  lang: {
+    en: "English",
+    spa: "Spanish",
+    jpn: "Japanese",
+    cmn: "Chinese (Mandarin)",
+    yue: "Chinese (Cantonese)"
+  },
+  // triggered on customer home screen to show account balance and
+  // pricing explanation
+  pricingModal: {
+    title: "Pricing and Account Balance",
+    titleNoMinutesNoCard: "Need more time with Jeenie?",
+    currentRate: "$1/min",
+    currentBalance: "{{minutes}} min",
+    buttons: {
+      gotIt: "Got it!",
+      addCard: "Add Payment Information"
+    }
+  },
+
+  // content for the pricing screen
+  pricingScreen: {
+    screenTitle: "Pricing & Account Balance",
+    pricing: {
+      title: "Pricing:",
+      rate: "$1 USD / Minute"
+    },
+    balance: {
+      title: "Account Balance:",
+      min: "Minutes"
+    },
+    paymentInfo: {
+      titleWithCard: "Payment Information:",
+      titleNoCard: "Add Payment Information",
+      linkNoCard: "Add Card",
+      linkWithCard: "Change Card",
+      descriptionHasMinutes:
+        "To avoid being disconnected in the middle of a call, add payment information now.",
+      descriptionLowMinutes:
+        "Your account balance is low. To avoid being disconnected during your next call, please add payment information now.",
+      descriptionNoMinutes:
+        "You must add payment information in order to continue."
+    },
+    descriptions: {
+      hasMinutesAndCard:
+        "If you run out of minutes, we will automatically charge your card $1 USD per minute to avoid disconnecting your call.",
+      hasMinutesNoCard:
+        "To keep talking beyond your remaining minutes, enter payment information now.",
+      noMinutesHasCard:
+        "We will automatically charge your card $1 USD per minute.",
+      noMinutesNoCard:
+        "To connect to a linguist, you must add payment information now."
+    },
+    buttons: {
+      continue: "Continue",
+      accept: "Accept Pricing",
+      gotIt: "Got it!"
+    }
   },
 
   // messages from api server, errors primarily

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Modal } from "react-native";
+import { View, Modal,Text } from "react-native";
 import { Button } from "react-native-elements";
 
 import styles from "./styles";
@@ -9,6 +9,7 @@ import PillButton from "../../../Components/PillButton/PillButton";
 import CelebrateOurLaunch from "../../../Components/CelebrateOurLaunch/CelebrateOurLaunch";
 
 import { Colors } from "../../../Themes";
+
 
 const SixtyMinutesModal = ({ visible, closeModal, availableMinutes }) => {
   return (

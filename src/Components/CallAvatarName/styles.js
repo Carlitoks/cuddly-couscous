@@ -1,35 +1,34 @@
 import { StyleSheet } from "react-native";
 import { Colors, Fonts } from "../../Themes";
+import { moderateScale } from "./../../Util/Scaling";
 
 export default StyleSheet.create({
   avatarNameContainer: {
-    marginTop: "10%",
-    flex: 0.5,
+    flex: 0.15,
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "flex-start",
-    backgroundColor: Colors.transparent,
+    alignItems: "center",
+    backgroundColor: Colors.semiTransparent,
     paddingTop: 0
     // transform: [{ translate: [0, 0, 1] }]
   },
   smallAvatar: {
-    width: 65,
-    height: 65,
-    borderRadius: 32.5
+    width: 55,
+    height: 55,
+    borderRadius: 27.5,
+    marginLeft: "12%"
   },
   avatarContainer: {
-    marginLeft: "5%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center"
+    marginTop: moderateScale(12),
+    backgroundColor: Colors.transparent,
+    width: 75
   },
   callerNameText: {
-    fontSize: 24,
-    marginLeft: 10,
-    paddingTop: 10,
+    alignSelf: "center",
+    fontSize: 23,
     fontFamily: Fonts.BaseFont,
     color: Colors.white,
-    backgroundColor: Colors.transparent,
-    width: "100%"
+    flex: 1,
+    backgroundColor: Colors.transparent
   }
 });
