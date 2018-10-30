@@ -32,8 +32,8 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - OpenTok (2.14.0)
   - Protobuf (3.6.0)
-  - React (0.55.4):
-    - React/Core (= 0.55.4)
+  - React (0.57.4):
+    - React/Core (= 0.57.4)
   - react-native-background-timer (2.0.0):
     - React
   - react-native-camera (0.12.0):
@@ -44,12 +44,12 @@ PODS:
     - React
   - react-native-keep-awake (2.0.6):
     - React
-  - React/Core (0.55.4):
-    - yoga (= 0.55.4.React)
-  - React/RCTImage (0.55.4):
+  - React/Core (0.57.4):
+    - yoga (= 0.57.4.React)
+  - React/RCTImage (0.57.4):
     - React/Core
     - React/RCTNetwork
-  - React/RCTNetwork (0.55.4):
+  - React/RCTNetwork (0.57.4):
     - React/Core
   - ReactNativePermissions (1.1.1):
     - React
@@ -70,7 +70,7 @@ PODS:
   - tipsi-stripe (5.6.0):
     - React
     - Stripe (~> 11.2.0)
-  - yoga (0.55.4.React)
+  - yoga (0.57.4.React)
 
 DEPENDENCIES:
   - AppCenter/Analytics (~> 1.6.1)
@@ -157,7 +157,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   OpenTok: f4c0f42fd2e4e4d2682b12dcb94313aa88558e14
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
-  React: aa2040dbb6f317b95314968021bd2888816e03d5
+  React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
   react-native-background-timer: 63dcbf37dbcf294b5c6c071afcdc661fa06a7594
   react-native-camera: 46c2596d7b5f0d46eaf8022eeee4b7689f826a67
   react-native-fetch-blob: 63394b1d7b0781547b3e4463b3195790177b1222
@@ -171,7 +171,7 @@ SPEC CHECKSUMS:
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
   Stripe: 898f83a95d72180c6eb4acd65b2ae6158fc6a8bd
   tipsi-stripe: 5688e4b999acac90e97db93c83957dae0aa32cde
-  yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
+  yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
 PODFILE CHECKSUM: b5ad6d81cb4093e0f9a3ff6d7a5f3866019c5612
 
