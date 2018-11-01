@@ -402,6 +402,7 @@ export default (ENG = {
   usageExamples: "Usage Examples",
   username: "User name",
   userProfile: "My Profile",
+  unableToConnect: "Unable to connect to call \n\nWould you like to try again?",
   verifyNumber: "Verify Phone",
   verifyNumberText: "Enter the verfication code you received via text.",
   video: "Video",

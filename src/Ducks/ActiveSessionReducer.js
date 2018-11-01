@@ -367,7 +367,7 @@ export const HandleEndCall = (sessionID, reason, token, alert) => (
           dispatch({ type: "Home", params: { alertFail: true } });
         } else {
           dispatch({ type: "Home", params: { alertCancelCall: true } });
-      }
+        }
       } else if (reason === REASON.RETRY) {
         dispatch({ type: "CustomerView" });
       } else if (reason === REASON.DONE) {
@@ -414,7 +414,7 @@ export const createSession = ({
     location
   )
     .then(response => {
-      if(response){
+      if (response) {
         const { data } = response;
         // Set session data
         dispatch(setSession(data));
@@ -430,7 +430,7 @@ export const createSession = ({
           })
         );
         return response.data;
-      }else{
+      } else {
         dispatch({ type: "Home" });
       }
     })
@@ -453,6 +453,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
       const { data } = response;
+
       if (data.status !== "assigned") {
         if (contactLinguist.counter >= 55) {
           timer.clearInterval("counterId");
@@ -463,7 +464,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
             updateContactLinguist({
               modalContact: true,
               counter: TIME.RECONNECT,
-              messageReconnect: I18n.t("notLinguistAvailable")
+              messageReconnect: I18n.t("allLinguistsAreBusy")
             })
           );
           sessionID &&
@@ -481,12 +482,28 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
               updateContactLinguist({
                 modalContact: true,
                 counter: TIME.RECONNECT,
-                messageReconnect: I18n.t("notLinguistAvailable")
+                messageReconnect: I18n.t("allLinguistsAreBusy")
               })
             );
             sessionID &&
               dispatch(HandleEndCall(sessionID, REASON.TIMEOUT, token));
           }
+        }
+      } else {
+        if (contactLinguist.counter >= 55) {
+          timer.clearInterval("counterId");
+          timer.clearInterval("verifyCallId");
+          dispatch(resetCounter());
+          dispatch(resetCounterVerify());
+          dispatch(
+            updateContactLinguist({
+              modalContact: true,
+              counter: TIME.RECONNECT,
+              messageReconnect: I18n.t("unableToConnect")
+            })
+          );
+          sessionID &&
+            dispatch(HandleEndCall(sessionID, REASON.TIMEOUT, token));
         }
       }
     })
@@ -739,7 +756,7 @@ export const asyncAcceptsInvite = (
             })
             .catch(error => {
               dispatch(clear());
-              dispatch({ type: "Home", params: { alertAssigned : true }});
+              dispatch({ type: "Home", params: { alertAssigned: true } });
               dispatch(networkError(error));
             });
         } else {
