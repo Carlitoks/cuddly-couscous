@@ -29,10 +29,41 @@ class SessionLanguageView extends Component {
   }
 
   componentWillMount() {
+    this.changePrimaryLanguageEnglish();
     const verifyLang = !!this.props.primaryLangCode;
     if (!verifyLang) {
       this.setLanguages();
     }
+  }
+
+  changePrimaryLanguageEnglish() {
+    const languagesMapper = DefaultLanguagePairMap;
+    const primaryLanguage = Languages.find(
+      lang => lang[3] === "eng" //Force to be english, it should be primarylangCode
+    );
+    const primaryLangCode = "eng";
+
+    let secondaryLanguageCode = languagesMapper[primaryLangCode];
+    if (!secondaryLanguageCode) {
+      secondaryLanguageCode = primaryLangCode == "eng" ? "cmn" : "eng";
+    }
+
+    const secondaryLanguage = Languages.find(
+      lang => lang[3] === secondaryLanguageCode
+    );
+
+    this.props.updateContactLinguist({
+      primaryLangCode: primaryLangCode,
+      selectedLanguageFrom: translateLanguage(
+        primaryLanguage[3],
+        primaryLanguage["name"]
+      ),
+      secundaryLangCode: secondaryLanguage[3],
+      selectedLanguage: translateLanguage(
+        secondaryLanguage[3],
+        secondaryLanguage["name"]
+      )
+    });
   }
 
   setLanguages = () => {
@@ -46,7 +77,7 @@ class SessionLanguageView extends Component {
       : "eng";
 
     const primaryLanguage = Languages.find(
-      lang => lang[3] === primaryLanguageCode
+      lang => lang[3] === "eng" //Force to be english, it should be primarylangCode
     );
 
     let secondaryLanguageCode = languagesMapper[primaryLanguageCode];
