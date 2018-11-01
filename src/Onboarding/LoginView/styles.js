@@ -72,5 +72,12 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     backgroundColor: Colors.transparent,
     fontWeight: "500"
+  },
+  passwordValidationText: {
+    fontSize: 15,
+    color: Colors.redError,
+    paddingTop: moderateScale(10),
+    paddingBottom: moderateScale(15),
+    marginLeft: 18
   }
 });

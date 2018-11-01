@@ -112,6 +112,7 @@ export default (ENG = {
   editProfile: "Edit Profile",
   email: "Email",
   emailCustomerText: "By continuing, you agree to our ",
+  emailFormatValidation: "Email must be a valid email address.",
   emptyEmail: "Empty Email",
   emptyPassword: "Empty Password",
   endCall: "End call",
