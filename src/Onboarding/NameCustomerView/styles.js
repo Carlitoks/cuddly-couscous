@@ -59,5 +59,12 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: Colors.linguistFormText
+  },
+  validationText: {
+    fontSize: 15,
+    color: Colors.redError,
+    paddingTop: moderateScale(10),
+    paddingBottom: moderateScale(15),
+    marginLeft: 18
   }
 });

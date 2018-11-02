@@ -163,6 +163,7 @@ export default (ENG = {
   finishOnboardingMessage:
     "Please finish your registration in order to use the app",
   firstname: "First name",
+  firstnameFormatValidation: "First name must be only letters.",
   fluent: "Fluent",
   forgotPassword: "Reset Your Password",
   forSignup: "For Signing Up!",
@@ -238,6 +239,7 @@ export default (ENG = {
   lauchScreenSwipe5:
     "In celebration of our launch, your first 15 minutes are FREE …compliment of Jeenie!",
   lastname: "Last name",
+  lastnameFormatValidation: "Last name must be only letters.",
   legal: "Legal",
   letsGoToKwon: "Let’s Get to Know You",
   linguist: "Linguist",
