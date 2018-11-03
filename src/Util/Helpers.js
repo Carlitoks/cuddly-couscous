@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import I18n from "../I18n/I18n";
 import moment from "moment";
-
+import { EMAIL_REGEX } from "./Constants";
 /**
  * @description Seconds to minutes and seconds String
  *
@@ -212,6 +212,19 @@ export const is500Response = error => {
 export const onlyLetters = str => {
   const letterRegex = /^[a-zA-Z]+$/;
   return letterRegex.test(str);
+};
+
+/**
+ * @description Generic function to validate only alpha numeric characters
+ *
+ * @param {String} value string to check for only alpha numeric characters
+ *
+ * @returns {Boolean} true when it's match and false if isn't
+ */
+export const onlyAlphaNumeric = str => {
+  const alphaNumberRegex = /^[a-zA-Z0-9_.={}+~^&*/$#!?{}%°¬|@-]+$/;
+  //const patt = new RegExp(EMAIL_REGEX);
+  return alphaNumberRegex.test(str);
 };
 
 /**

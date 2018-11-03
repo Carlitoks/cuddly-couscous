@@ -17,7 +17,7 @@ class ModalRetry extends Component {
       <View style={styles.modalWrapper}>
         <View style={styles.mainMessageContainer}>
           <Text style={styles.mainMessage}>
-            {this.props.reconnectMessage || I18n.t("allLinguistsAreBusy")}
+            {this.props.messageReconnect || I18n.t("allLinguistsAreBusy")}
           </Text>
         </View>
         <ReconnectOptions
@@ -77,7 +77,7 @@ const mS = state => ({
   visibility: state.contactLinguist.modalContact,
   counter: state.contactLinguist.counter,
   isLinguist: !!state.userProfile.linguistProfile,
-  reconnectMessage: state.contactLinguist.reconnectMessage
+  messageReconnect: state.contactLinguist.messageReconnect
 });
 
 const mD = {};

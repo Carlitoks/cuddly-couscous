@@ -13,6 +13,7 @@ import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
 // REDUCERS
 import { closeCall } from "../../../Ducks/ActiveSessionReducer";
+import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
 import I18n from "../../../I18n/I18n";
 import {
   setPermission,
@@ -118,7 +119,8 @@ const mS = state => ({
 });
 
 const mD = {
-  closeCall
+  closeCall,
+  updateSettings
 };
 
 export default connect(

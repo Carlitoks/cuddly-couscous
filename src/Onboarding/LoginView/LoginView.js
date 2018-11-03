@@ -27,16 +27,16 @@ import {
   updateView,
   getNativeLang
 } from "../../Ducks/UserProfileReducer";
-import { checkOperatingHours } from "../../Util/Helpers";
+import { checkOperatingHours, onlyAlphaNumeric } from "../../Util/Helpers";
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
-import Instabug from 'instabug-reactnative';
+import Instabug from "instabug-reactnative";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
-import { EMAIL_REGEX } from "../../Util/Constants";
+import { help, EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import { displayFormErrors } from "../../Util/Alerts";
 import { Colors } from "../../Themes";
@@ -177,6 +177,24 @@ class LoginView extends Component {
     }
   }
 
+  setErrorMessage() {
+    const patt = new RegExp(EMAIL_REGEX);
+    if (this.props.password != "" && this.props.password.length < 8) {
+      return (
+        <Text style={styles.passwordValidationText}>
+          {I18n.t("passwordLengthValidation")}
+        </Text>
+      );
+    }
+    if (!patt.test(this.props.email) && this.props.email != "") {
+      return (
+        <Text style={styles.passwordValidationText}>
+          {I18n.t("emailFormatValidation")}
+        </Text>
+      );
+    }
+  }
+
   render() {
     const navigation = this.props.navigation;
 
@@ -203,12 +221,14 @@ class LoginView extends Component {
                   containerStyle={styles.containerInput}
                   placeholder={I18n.t("email")}
                   autoCorrect={false}
-                  onChangeText={text =>
-                    this.props.updateForm({
-                      email: text,
-                      emailErrorMessage: ""
-                    })
-                  }
+                  onChangeText={text => {
+                    if (onlyAlphaNumeric(text) || text == "") {
+                      this.props.updateForm({
+                        email: text,
+                        emailErrorMessage: ""
+                      });
+                    }
+                  }}
                   value={this.props.email}
                   keyboardType={"email-address"}
                   autoFocus={true}
@@ -229,6 +249,8 @@ class LoginView extends Component {
                   value={this.props.password}
                   sec
                 />
+
+                {this.setErrorMessage()}
 
                 {/* Forgot Password */}
                 <Text

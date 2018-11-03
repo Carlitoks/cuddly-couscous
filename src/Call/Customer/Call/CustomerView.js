@@ -269,7 +269,7 @@ const mS = state => ({
   token: state.auth.token,
   tokboxStatus: state.activeSessionReducer.status,
   selectedScenarioId: state.contactLinguist.selectedScenarioId,
-  primaryLangCode: state.userProfile.selectedNativeLanguage,
+  primaryLangCode: state.contactLinguist.primaryLangCode, //state.userProfile.selectedNativeLanguage
   secondaryLangCode: state.contactLinguist.secundaryLangCode,
   customScenarioNote: state.contactLinguist.customScenarioNote,
   selectedCallTime: state.activeSessionReducer.selectedTime,

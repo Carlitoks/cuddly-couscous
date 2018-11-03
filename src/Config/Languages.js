@@ -1911,10 +1911,14 @@ export const AllowedLanguagePairs = {
 // UTC time schedule for language availability, numbers are [(0-24), (0-60)] for hours, minutes.
 // First set is the begin time, second set is the end time. If the end time is lower than
 // the begin time, it's because it spans a UTC day.
+//
+// We've gone to 24 hour service for "on demand" languages...
+// as we add new languages they will probably have a service
+// schedual initially
 export const JeenieLangServiceSchedule = {
-  cmn: [[14, 0], [23, 0]],
-  yue: [[14, 0], [23, 0]],
-  jpn: [[23, 0], [11, 0]]
+  // cmn: [[14, 0], [23, 0]],
+  // yue: [[14, 0], [23, 0]],
+  // jpn: [[23, 0], [11, 0]]
 };
 
 export const IsLangAvailableNow = code => {

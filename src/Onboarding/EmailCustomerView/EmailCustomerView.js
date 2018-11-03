@@ -41,6 +41,8 @@ import {
   TermsConditionsURI,
   PrivacyPolicyURI
 } from "../../Config/StaticViewsURIS";
+import { onlyAlphaNumeric } from "./../../Util/Helpers";
+
 class EmailCustomerView extends Component {
   constructor(props) {
     super(props);
@@ -206,6 +208,24 @@ class EmailCustomerView extends Component {
     );
   }
 
+  setErrorMessage() {
+    const patt = new RegExp(EMAIL_REGEX);
+    if (this.props.password != "" && this.props.password.length < 8) {
+      return (
+        <Text style={styles.passwordValidationText}>
+          {I18n.t("passwordLengthValidation")}
+        </Text>
+      );
+    }
+    if (!patt.test(this.props.email) && this.props.email != "") {
+      return (
+        <Text style={styles.passwordValidationText}>
+          {I18n.t("emailFormatValidation")}
+        </Text>
+      );
+    }
+  }
+
   render() {
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -230,9 +250,11 @@ class EmailCustomerView extends Component {
                   <InputRegular
                     placeholder={I18n.t("linguistEmail")}
                     autoCorrect={false}
-                    onChangeText={text =>
-                      this.props.updateForm({ email: text })
-                    }
+                    onChangeText={text => {
+                      if (onlyAlphaNumeric(text) || text == "") {
+                        this.props.updateForm({ email: text });
+                      }
+                    }}
                     value={this.props.email}
                     keyboardType={"email-address"}
                     maxLength={64}
@@ -251,12 +273,7 @@ class EmailCustomerView extends Component {
                     value={this.props.password}
                     sec
                   />
-                  {this.props.password != "" &&
-                  this.props.password.length < 8 ? (
-                    <Text style={styles.passwordValidationText}>
-                      {I18n.t("passwordLengthValidation")}
-                    </Text>
-                  ) : null}
+                  {this.setErrorMessage()}
                   <CheckBox
                     title={
                       <View style={styles.marginLeft10}>

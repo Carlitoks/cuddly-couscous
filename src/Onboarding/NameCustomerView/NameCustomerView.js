@@ -27,6 +27,7 @@ import {
   displayTemporaryErrorAlert
 } from "../../Util/Helpers";
 
+import { ONLY_LETTER_REGEX } from "../../Util/Constants";
 class NameCustomerView extends Component {
   navigate = this.props.navigation.navigate;
 
@@ -149,6 +150,26 @@ class NameCustomerView extends Component {
     return !this.props.firstname || !this.props.lastname;
   }
 
+  setErrorMessage() {
+    const patt = new RegExp(ONLY_LETTER_REGEX);
+
+    if (!patt.test(this.props.firstname) && this.props.firstname != "") {
+      return (
+        <Text style={styles.validationText}>
+          {I18n.t("firstnameFormatValidation")}
+        </Text>
+      );
+    }
+
+    if (!patt.test(this.props.lastname) && this.props.lastname != "") {
+      return (
+        <Text style={styles.validationText}>
+          {I18n.t("lastnameFormatValidation")}
+        </Text>
+      );
+    }
+  }
+
   render() {
     const initialLastName = `${this.props.lastname.charAt(0)}.`;
     const { preferredName, mainTitle, lastname } = this.props;
@@ -227,6 +248,7 @@ class NameCustomerView extends Component {
                   maxLength={20}
                   sec
                 />
+                {this.setErrorMessage()}
               </Col>
             </Grid>
           </ScrollView>

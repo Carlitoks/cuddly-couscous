@@ -112,6 +112,7 @@ export default (ENG = {
   editProfile: "Edit Profile",
   email: "Email",
   emailCustomerText: "By continuing, you agree to our ",
+  emailFormatValidation: "Email must be a valid email address.",
   emptyEmail: "Empty Email",
   emptyPassword: "Empty Password",
   endCall: "End call",
@@ -162,6 +163,7 @@ export default (ENG = {
   finishOnboardingMessage:
     "Please finish your registration in order to use the app",
   firstname: "First name",
+  firstnameFormatValidation: "First name must be only letters.",
   fluent: "Fluent",
   forgotPassword: "Reset Your Password",
   forSignup: "For Signing Up!",
@@ -237,6 +239,7 @@ export default (ENG = {
   lauchScreenSwipe5:
     "In celebration of our launch, your first 15 minutes are FREE …compliment of Jeenie!",
   lastname: "Last name",
+  lastnameFormatValidation: "Last name must be only letters.",
   legal: "Legal",
   letsGoToKwon: "Let’s Get to Know You",
   linguist: "Linguist",
@@ -401,6 +404,7 @@ export default (ENG = {
   usageExamples: "Usage Examples",
   username: "User name",
   userProfile: "My Profile",
+  unableToConnect: "Unable to connect to call \n\nWould you like to try again?",
   verifyNumber: "Verify Phone",
   verifyNumberText: "Enter the verfication code you received via text.",
   video: "Video",
