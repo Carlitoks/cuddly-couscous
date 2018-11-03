@@ -33,6 +33,7 @@ class SessionLanguageView extends Component {
     const verifyLang = !!this.props.primaryLangCode;
     if (!verifyLang) {
       this.setLanguages();
+      this.changePrimaryLanguageEnglish();
     }
   }
 

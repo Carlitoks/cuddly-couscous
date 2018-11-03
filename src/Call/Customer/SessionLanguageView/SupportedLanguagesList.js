@@ -23,7 +23,10 @@ class SupportedLanguagesList extends Component {
       language => language[3] === this.props.secundaryLangCode
     );
 
-    this.setState({ filteredLanguages, indexSelected });
+    this.setState({
+      filteredLanguages,
+      indexSelected: indexSelected > 0 ? indexSelected : 0
+    }); //Ternary part of the ticket 1411
   }
 
   changeLanguage = index => {
@@ -34,7 +37,10 @@ class SupportedLanguagesList extends Component {
     if (index !== indexSelected) {
       updateSettings({
         secundaryLangCode: selectedLanguage[3],
-        selectedLanguage: translateLanguage(selectedLanguage[3], selectedLanguage["name"])
+        selectedLanguage: translateLanguage(
+          selectedLanguage[3],
+          selectedLanguage["name"]
+        )
       });
 
       this.setState({ indexSelected: index });
