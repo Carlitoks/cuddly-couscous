@@ -62,6 +62,7 @@ const InputRegular = ({
           multiline={true}
           numberOfLines={3}
           returnKeyType={"done"}
+          autoCapitalize="none"
         />
       ) : (
         <FormInput
@@ -79,6 +80,7 @@ const InputRegular = ({
           inputStyle={styles.formInput}
           placeholderTextColor={Colors.placeholderColor}
           returnKeyType={"done"}
+          autoCapitalize="none"
         />
       )}
     </View>

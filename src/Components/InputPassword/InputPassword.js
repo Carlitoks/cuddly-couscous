@@ -46,6 +46,7 @@ class InputPassword extends Component {
           inputStyle={styles.formInput}
           placeholderTextColor={Colors.placeholderColor}
           containerStyle={[styles.container]}
+          autoCapitalize="none"
         />
         <Icon
           style={[styles.icon, !!this.props.sec ? styles.iconSecondary : null]}
