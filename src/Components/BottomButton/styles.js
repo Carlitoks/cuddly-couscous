@@ -17,7 +17,8 @@ export default StyleSheet.create({
     height: buttonHeight,
     width: "100%",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: Colors.transparent
   },
   button: {
     height: buttonHeight,

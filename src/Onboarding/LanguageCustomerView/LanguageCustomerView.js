@@ -113,4 +113,7 @@ const mD = {
 };
 
 // EXPORT DEFAULT HERE AT THE BOTTOM
-export default connect(mS, mD)(LanguageCustomerView);
+export default connect(
+  mS,
+  mD
+)(LanguageCustomerView);
