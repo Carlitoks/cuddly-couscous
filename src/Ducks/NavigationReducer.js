@@ -105,6 +105,17 @@ export default (reducer = (state, action) => {
       );
       break;
 
+    case "NameCustomerView":
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({ routeName: "NameCustomerView" })
+          ]
+        })
+      );
+      break;
+
     default:
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.navigate({
