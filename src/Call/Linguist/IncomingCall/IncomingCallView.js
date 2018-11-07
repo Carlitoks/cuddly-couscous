@@ -43,7 +43,7 @@ class IncomingCall extends Component {
           return;
         }
       }
-    ),
+    )
   };
 
   componentWillMount() {
@@ -55,8 +55,8 @@ class IncomingCall extends Component {
     this.startSound();
   }
 
-  sleep = (time) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
+  sleep = time => {
+    return new Promise(resolve => setTimeout(resolve, time));
   };
 
   startSound = async () => {
@@ -136,7 +136,8 @@ class IncomingCall extends Component {
     this.props.updateSettings({
       verifyCallId: timer.setInterval(
         "verifyCallId",
-        () => this.props.verifyCall(
+        () =>
+          this.props.verifyCall(
             this.props.sessionID,
             this.props.token,
             this.props.verifyCallId
