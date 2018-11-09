@@ -730,57 +730,85 @@ export const asyncAcceptsInvite = (
     callLinguistSettings,
     contactLinguist
   } = getState();
-  if (reason && reason.accept) {
-    Sessions.linguistFetchesInvite(invitationID, token)
-      .then(res => {
-        if (!res.data.session.endReason) {
-          Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
-            .then(response => {
-              dispatch(setSession(response.data));
-              dispatch(update({ sessionID: callLinguistSettings.sessionID }));
-              dispatch(update({ isLinguist: true }));
-              dispatch(
-                updateRate({
-                  customerName: callLinguistSettings.customerName,
-                  sessionID: callLinguistSettings.sessionID,
-                  avatarURL: callLinguistSettings.avatarURL
-                })
-              );
-              dispatch(
-                update({
-                  customerName: callLinguistSettings.customerName,
-                  avatarURL: callLinguistSettings.avatarURL
-                })
-              );
-              dispatch(connectCall());
-            })
-            .catch(error => {
-              dispatch(clear());
-              dispatch({ type: "Home", params: { alertAssigned: true } });
-              dispatch(networkError(error));
+  const acceptInvitePromise = new Promise((resolve, reject) => {
+    if (reason && reason.accept) {
+      Sessions.linguistFetchesInvite(invitationID, token)
+        .then(res => {
+          if (!res.data.session.endReason) {
+            Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
+              .then(response => {
+                dispatch(setSession(response.data));
+                dispatch(
+                  update({
+                    sessionID: callLinguistSettings.sessionID,
+                    customerName: callLinguistSettings.customerName,
+                    avatarURL: callLinguistSettings.avatarURL,
+                    isLinguist: true
+                  })
+                );
+                dispatch(
+                  updateRate({
+                    customerName: callLinguistSettings.customerName,
+                    sessionID: callLinguistSettings.sessionID,
+                    avatarURL: callLinguistSettings.avatarURL
+                  })
+                );
+                resolve({
+                  ...response,
+                  type: "LinguistView",
+                  params: {},
+                  buttonDisabled: true
+                });
+              })
+              .catch(error => {
+                dispatch(clear());
+                dispatch(networkError(error));
+                reject({
+                  ...error.response,
+                  type: "Home",
+                  params: { alertAssigned: true },
+                  buttonDisabled: false
+                });
+              });
+          } else {
+            dispatch(clear());
+            resolve({
+              ...res,
+              type: "Home",
+              params: { alertCancelled: true },
+              buttonDisabled: false
             });
-        } else {
+          }
+        })
+        .catch(error => {
+          dispatch(networkError(error));
           dispatch(clear());
-          dispatch({ type: "Home", params: { alertCancelled: true } });
-        }
-      })
-      .catch(error => {
-        dispatch(networkError(error));
-        dispatch(clear());
-        dispatch({ type: "Home", params: { alert: true } });
-      });
-  } else {
-    Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
-      .then(response => {
-        dispatch(clear());
-        dispatch({ type: "Home" });
-      })
-      .catch(error => {
-        dispatch(clear());
-        dispatch({ type: "Home" });
-        dispatch(networkError(error));
-      });
-  }
+          reject({
+            ...error,
+            type: "Home",
+            params: { alert: true },
+            buttonDisabled: false
+          });
+        });
+    } else {
+      Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
+        .then(response => {
+          dispatch(clear());
+          resolve({
+            ...reponse,
+            type: "Home",
+            params: {},
+            buttonDisabled: true
+          });
+        })
+        .catch(error => {
+          dispatch(clear());
+          dispatch(networkError(error));
+          reject({ ...error, type: "Home", params: {}, buttonDisabled: false });
+        });
+    }
+  });
+  return acceptInvitePromise;
 };
 
 export const startTimerLinguist = () => (dispatch, getState) => {
