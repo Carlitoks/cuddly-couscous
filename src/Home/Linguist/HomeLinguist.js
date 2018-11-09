@@ -47,12 +47,17 @@ import {Sessions} from "../../Api";
 class Home extends Component {
   navigate = this.props.navigation.navigate;
 
+  state = {
+    appState: AppState.currentState
+  };
+
   componentWillMount() {
     this.props.updateSettings({ loading: false });
     timer.clearInterval("timer");
     timer.clearInterval("counterId");
     this.props.clear();
     this.props.asyncGetAccountInformation();
+    AppState.addEventListener('change', this._handleAppStateChange);
     InCallManager.stop();
   }
 
@@ -103,7 +108,6 @@ class Home extends Component {
     checkForAllPermissions(valueToUpdate => {
       this.props.updateActiveSession(valueToUpdate);
     });
-    AppState.addEventListener('change', this._handleAppStateChange);
   }
 
   uploadAvatar(avatar) {
@@ -122,9 +126,10 @@ class Home extends Component {
 
   _handleAppStateChange = (nextAppState) => {
       this.props.getCurrentAvailability();
-      if (AppState.currentState.match(/inactive|background/) && nextAppState === 'active') {
+      if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
         this.getCurrentUnansweredCalls();
       }
+    this.setState({appState: nextAppState});
   };
 
   selectImage = () => {
