@@ -109,7 +109,9 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
               dispatch({ type: "Home", params: { alertCancelled: true } });
             }
             if (session.data.status === "assigned") {
-              Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
+              if (auth.uuid !== session.data.linguist.id) {
+                Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
+              }
               dispatch({ type: "Home"});
             }
           }).catch(error => console.log(error));
