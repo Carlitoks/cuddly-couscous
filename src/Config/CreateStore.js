@@ -27,7 +27,7 @@ const getStore = () =>
   loadState().then(persistedStore => {
     const initialState = persistedStore || {};
 
-    store = createStore(rootReducer, initialState, getComposeEnhancers());
+    let store = createStore(rootReducer, initialState, getComposeEnhancers());
 
     // Persisting the store on the asyncStorage
     store.subscribe(

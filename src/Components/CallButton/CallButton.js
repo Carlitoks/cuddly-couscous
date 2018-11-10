@@ -65,7 +65,6 @@ export default class CallButton extends Component {
             borderRadius: 100,
             opacity: this.props.opacity
           }}
-          backgroundColor={this.props.buttonColor}
           onPress={() => {
             if (this.props.toggle) {
               this.toggleIcon();
@@ -78,7 +77,8 @@ export default class CallButton extends Component {
             height: 71.5,
             width: 71.5,
             justifyContent: "center",
-            borderRadius: 100
+            borderRadius: 100,
+            backgroundColor: this.props.buttonColor
           }}
           icon={{
             name: this.state.iconName,

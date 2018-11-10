@@ -25,7 +25,7 @@ class App extends Component {
     };
 
     //Font doesn't scale
-    Text.defaultProps.allowFontScaling = false;
+    Text.allowFontScaling = false;
   }
 
   disableAppCenterCrashes = async () => {
@@ -44,7 +44,7 @@ class App extends Component {
         if (!userLocaleSet) {
           const deviceLocale = deviceinfo.getDeviceLocale();
           const shortDeviceLocale = deviceLocale.substring(0, 2);
-          const interfaceLocaleCode = "";
+          let interfaceLocaleCode = "";
 
           if (shortDeviceLocale === "zh") {
             interfaceLocaleCode = deviceLocale.substring(0, 7).toLowerCase();

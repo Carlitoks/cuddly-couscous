@@ -31,6 +31,7 @@ export default StyleSheet.create({
     marginLeft: "15%"
   },
   bottomContainer: {
+    backgroundColor: Colors.transparent,
     flex: 0.5,
     marginTop: 30,
     width: "100%",

@@ -43,20 +43,50 @@ class IncomingCall extends Component {
           return;
         }
       }
-    ),
+    )
   };
 
   componentWillMount() {
     Vibration.vibrate(VIBRATE_PATTERN, true);
     this.verifyCallLinguist();
+    Permissions.checkMultiple(["camera", "microphone"]).then(response => {
+      if (
+        (response.camera !== "authorized" ||
+          response.microphone !== "authorized") &&
+        isAccept
+      ) {
+        checkForAllPermissions(valueToUpdate => {
+          this.props.updateActiveSession(valueToUpdate);
+        });
+        this.setState({
+          acceptIsDisabled: false
+        });
+      }
+      if (
+        (response.camera == "restricted" ||
+          response.camera == "undetermined" ||
+          response.microphone == "restricted" ||
+          response.microphone == "undetermined") &&
+        isAccept
+      ) {
+        Alert.alert(
+          I18n.t("appPermissions"),
+          I18n.t("acceptAllPermissionsLinguist"),
+          [{ text: I18n.t("ok") }]
+        );
+        this.setState({
+          acceptIsDisabled: false
+        });
+      }
+    });
   }
 
   componentDidMount() {
     this.startSound();
   }
 
-  sleep = (time) => {
-    return new Promise((resolve) => setTimeout(resolve, time));
+  sleep = time => {
+    return new Promise(resolve => setTimeout(resolve, time));
   };
 
   startSound = async () => {
@@ -85,58 +115,47 @@ class IncomingCall extends Component {
   }
 
   takeCall = isAccept => {
-    const { invitationID, token, sessionID } = this.props;
+    const { invitationID, token, sessionID, navigation } = this.props;
     timer.clearInterval("verifyCallId");
     Permissions.checkMultiple(["camera", "microphone"]).then(response => {
-      if (
-        (response.camera !== "authorized" ||
-          response.microphone !== "authorized") &&
-        isAccept
-      ) {
-        checkForAllPermissions(valueToUpdate => {
-          this.props.updateActiveSession(valueToUpdate);
-        });
-        this.setState({
-          acceptIsDisabled: false
-        });
-      }
-      if (
-        (response.camera == "restricted" ||
-          response.microphone == "restricted") &&
-        isAccept
-      ) {
-        Alert.alert(
-          I18n.t("appPermissions"),
-          I18n.t("acceptAllPermissionsLinguist"),
-          [{ text: I18n.t("ok") }]
-        );
-        this.setState({
-          acceptIsDisabled: false
-        });
-      }
       if (
         (response.camera == "authorized" &&
           response.microphone == "authorized") ||
         isAccept == false
       ) {
-        this.props.asyncAcceptsInvite(
-          invitationID,
-          { accept: isAccept },
-          token,
-          sessionID
-        );
+        this.props
+          .asyncAcceptsInvite(
+            invitationID,
+            { accept: isAccept },
+            token,
+            sessionID
+          )
+          .then(response => {
+            navigation.dispatch({
+              type: response.type,
+              params: response.params
+            });
+            this.changeButtonState(response.buttonDisabled, "accept");
+          })
+          .catch(error => {
+            navigation.dispatch({
+              type: error.type,
+              params: error.params
+            });
+            this.changeButtonState(error.buttonDisabled, "accept");
+          });
       }
+      this.state.incomingCallRingTone.stop();
+      Vibration.cancel();
     });
-
-    this.state.incomingCallRingTone.stop();
-    Vibration.cancel();
   };
 
   verifyCallLinguist = () => {
     this.props.updateSettings({
       verifyCallId: timer.setInterval(
         "verifyCallId",
-        () => this.props.verifyCall(
+        () =>
+          this.props.verifyCall(
             this.props.sessionID,
             this.props.token,
             this.props.verifyCallId
