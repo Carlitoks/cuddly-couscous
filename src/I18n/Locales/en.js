@@ -237,7 +237,7 @@ export default (ENG = {
   lauchScreenSwipe4:
     "The average call lasts 5 to 10 minutes, but speak as long as you like.",
   lauchScreenSwipe5:
-    "In celebration of our launch, your first 5 minutes are FREE …compliment of Jeenie!",
+    "In celebration of our launch, your first 50 minutes are FREE …compliment of Jeenie!",
   lastname: "Last name",
   lastnameFormatValidation: "Last name must be only letters.",
   legal: "Legal",
