@@ -1,7 +1,18 @@
 version: '2'
 
 services:
-  # run ad hoc commands
+
+  # for running app center commands
+  appcenter:
+    build:
+      context: '.'
+      dockerfile: './docker/Dockerfile-appcenter'
+    env_file:
+      - ./.appcenter/vars.env
+    volumes:
+      - .:/app
+
+  # run ad hoc api server commands
   solo-api: 
     image: gcr.io/solo-infrastructure/solo-platform-api:0.59.1 
     volumes:
@@ -59,5 +70,6 @@ services:
     volumes:
       - gcp-data-volume:/root/.config
       - ./.gcp:/root/gcp
+  
 volumes:
   gcp-data-volume: {}

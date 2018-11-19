@@ -17,4 +17,10 @@ setup:
 run-cmd:
 	docker-compose run --rm solo-api $(CMD)
 
+appcenter-login:
+	docker-compose run --rm appcenter appcenter login
+
+appcenter-cli:
+	docker-compose run --rm appcenter appcenter $(CMD)
+
 .PHONY: setup docker-login gcp-setproject gcp-authorize run-cmd
