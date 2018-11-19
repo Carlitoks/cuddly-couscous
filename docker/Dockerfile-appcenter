@@ -5,3 +5,5 @@ RUN apk update && \
     npm install -g appcenter-cli && \
     npm install -g react-native-cli && \
     mkdir ~/.ssh/
+
+WORKDIR /app

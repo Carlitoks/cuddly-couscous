@@ -17,10 +17,21 @@ setup:
 run-cmd:
 	docker-compose run --rm solo-api $(CMD)
 
+npm-install:
+	docker-compose run --rm appcenter npm install
+
 appcenter-login:
 	docker-compose run --rm appcenter appcenter login
 
 appcenter-cli:
 	docker-compose run --rm appcenter appcenter $(CMD)
+
+codepush-dev:
+	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-Android -d Development
+	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-iOS -d Development
+
+codepush-staging:
+	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-Android -d Staging
+	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-iOS -d Staging
 
 .PHONY: setup docker-login gcp-setproject gcp-authorize run-cmd
