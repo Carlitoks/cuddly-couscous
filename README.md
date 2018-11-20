@@ -30,3 +30,18 @@ Once installed, do a few things:
 * run `yarn start` to start the dev server
 * hit "R+R" to reload any changes
 * run `yarn android:shake` to connect to the `react-native-debugger`
+
+## App Center and Code Push ##
+
+To setup the App Center cli:
+
+* copy `.appcenter/vars.env.dist` to `.appcenter/vars.env`
+* modify `.appcenter/vars.env` for your environment as needed
+* get an app center api token by running `make appcenter-login` and following the instructions, then add it to `.appcenter/vars.env`
+
+To release an update via code push, checkout the branch you want to push and run:
+
+* `make codepush-dev`, to release to the dev environment, or
+* `make codepush-staging`, to release to the staging environment
+
+You should not use code push to send any change directly to production.  It should be sent to staging first, then promoted to production once it has been tested.
