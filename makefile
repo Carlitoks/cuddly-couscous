@@ -26,12 +26,42 @@ appcenter-login:
 appcenter-cli:
 	docker-compose run --rm appcenter appcenter $(CMD)
 
+#TV dev environment
 codepush-dev:
-	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-Android -d Development
+	cp src/Config/env.js src/Config/x.env.js && \
+	cp src/Config/env.dev.js src/Config/env.js && \
+	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-Android -d Development && \
 	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-iOS -d Development
 
+# Jeenie qa/staging environment
 codepush-staging:
-	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-Android -d Staging
-	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-iOS -d Staging
+	cp src/Config/env.js src/Config/x.env.js && \
+	cp src/Config/env.staging.js src/Config/env.js && \
+	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-Android -d Staging && \
+	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-iOS -d Staging && \
+	cp src/Config/x.env.js src/Config/env.js
+
+# ITRex QA environment
+codepush-itrex:
+	cp src/Config/env.js src/Config/x.env.js && \
+	cp src/Config/env.itrex.js src/Config/env.js && \
+	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-Android -d ITRex && \
+	docker-compose run --rm appcenter appcenter codepush release-react -a Global-Professional-Search/Jeenie-iOS -d ITRex && \
+	cp src/Config/x.env.js src/Config/env.js
+
+#convenience command to release to both Jeenie/ITRex QA
+codepush-qa:
+	make codepush-staging && \
+	make codepush-itrex
+
+# LIVE version - note that any push to production is DISABLED by default.  This is to avoid accidental
+# releases in the live environment.  You should log into AppCenter to manually enabled a release
+# once it is ready
+codepush-production:
+	cp src/Config/env.js src/Config/x.env.js && \
+	cp src/Config/env.prod.js src/Config/env.js && \
+	docker-compose run --rm appcenter appcenter codepush release-react --disabled -a Global-Professional-Search/Jeenie-Android -d Production && \
+	docker-compose run --rm appcenter appcenter codepush release-react --disabled -a Global-Professional-Search/Jeenie-iOS -d Production && \
+	cp src/Config/x.env.js src/Config/env.js
 
 .PHONY: setup docker-login gcp-setproject gcp-authorize run-cmd
