@@ -5,7 +5,8 @@ import { OTPublisher as PublisherTokbox } from "opentok-react-native";
 
 import {
   errorEvent,
-  publisherStart
+  publisherStart,
+  remountPublisherAndSubscriber
 } from "../../../Ducks/ActiveSessionReducer";
 
 import { SETTINGS, CAMERA } from "../../../Util/Constants";
@@ -15,13 +16,17 @@ import styles from "./styles";
 class PublisherBox extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      publisherError: false
+    };
     this.publisherEvents = {
       audioLevel: event => {
         //console.log(`AUDIO LEVEL EVENT  publisher ${event}`);
       },
       error: event => {
-        console.log("ERROR EVENT", event);
+        console.log("PUBLISHER ERROR EVENT", event);
         this.props.errorEvent(event);
+        this.props.remountPublisherAndSubscriber();
       },
       streamCreated: event => {
         console.log("STREAM CREATED EVENT", event);
@@ -34,18 +39,26 @@ class PublisherBox extends Component {
   }
 
   render() {
-    const { mic, video, tokboxSessionID, rotate } = this.props;
+    const {
+      mic,
+      video,
+      tokboxSessionID,
+      rotate,
+      publisherSubscriberError
+    } = this.props;
     return (
       <View style={video ? styles.publisherBox : styles.hidePublisherBox}>
-        <PublisherTokbox
-          style={styles.publisher}
-          properties={{
-            publishAudio: mic,
-            publishVideo: video,
-            cameraPosition: rotate ? CAMERA.FRONT : CAMERA.BACK
-          }}
-          eventHandlers={this.publisherEvents}
-        />
+        {!publisherSubscriberError && (
+          <PublisherTokbox
+            style={styles.publisher}
+            properties={{
+              publishAudio: mic,
+              publishVideo: video,
+              cameraPosition: rotate ? CAMERA.FRONT : CAMERA.BACK
+            }}
+            eventHandlers={this.publisherEvents}
+          />
+        )}
       </View>
     );
   }
@@ -56,11 +69,14 @@ const mS = state => ({
   video: state.activeSessionReducer.video,
   rotate: state.activeSessionReducer.rotate,
   tokboxSessionID: state.activeSessionReducer.tokboxID,
-  tokboxStatus: state.activeSessionReducer.status
+  tokboxStatus: state.activeSessionReducer.status,
+  publisherSubscriberError: state.activeSessionReducer.publisherSubscriberError
 });
 
 const mD = {
-  publisherStart
+  publisherStart,
+  errorEvent,
+  remountPublisherAndSubscriber
 };
 
 const Publisher = connect(

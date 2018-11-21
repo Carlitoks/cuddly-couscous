@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, Alert } from "react-native";
+import { View, Alert, NetInfo } from "react-native";
 import { OTSession } from "opentok-react-native";
 import timer from "react-native-timer";
 
@@ -52,12 +52,16 @@ class SessionBox extends Component {
         console.log("CONNECTION DESTROYED EVENT", event);
       },
       error: event => {
-        console.log("ERROR EVENT", event);
+        console.log("SESSION ERROR EVENT", event);
+        this.remountSessionOnError();
         this.props.errorEvent(event);
       },
       sessionConnected: () => {
         console.log("SESSION CONNECTED EVENT");
         this.props.connectionConnectedEvent();
+        this.props.updateSettings({
+          modalReconnect: false
+        });
       },
       sessionReconnected: () => {
         console.log("SESSION RECONNECTED EVENT");
@@ -73,6 +77,9 @@ class SessionBox extends Component {
       },
       sessionReconnecting: () => {
         console.log("SESSION RECONNECTING EVENT");
+        this.props.updateSettings({
+          modalReconnect: true
+        });
       },
       signal: event => {
         console.log("SIGNAL EVENT", event);
@@ -92,13 +99,49 @@ class SessionBox extends Component {
         this.props.streamDestroyedEvent(event);
       }
     };
-    if(Platform.OS !== 'android'){
-      this.sessionEvents.sessionDisconnected = sessionDisconnected = () => {
-        console.log("SESSION DISCONNECTED EVENT");
-        this.props.connectionDisconnectEvent();
-      };
-    }
   }
+
+  componentDidMount() {
+    NetInfo.isConnected.addEventListener(
+      "connectionChange",
+      this.handleConnectivityChange
+    );
+  }
+
+  componentWillUnmount() {
+    NetInfo.isConnected.removeEventListener(
+      "connectionChange",
+      this.handleConnectivityChange
+    );
+  }
+
+  handleConnectivityChange = isConnected => {
+    const { updateSettings } = this.props;
+    console.log("Session is: ", isConnected);
+    if (isConnected) {
+      updateSettings({
+        isConnectedToInternet: isConnected,
+        modalReconnect: false
+      });
+    } else {
+      updateSettings({
+        isConnectedToInternet: isConnected,
+        modalReconnect: true
+      });
+    }
+  };
+
+  remountSessionOnError = () => {
+    const { updateSettings } = this.props;
+    updateSettings({
+      isConnectedToInternet: false
+    });
+    setTimeout(() => {
+      updateSettings({
+        isConnectedToInternet: true
+      });
+    }, 1000);
+  };
 
   render() {
     const {
@@ -108,29 +151,42 @@ class SessionBox extends Component {
       sessionInfoName,
       image,
       children,
-      signal
+      signal,
+      isConnectedToInternet,
+      publisherSubscriberError
     } = this.props;
 
     return (
       <View style={styles.sessionContainer}>
-        {tokboxSessionID &&
-          tokboxSessionToken && (
-            <OTSession
-              apiKey={TOKBOX_APIKEY}
-              sessionId={tokboxSessionID}
-              token={tokboxSessionToken}
-              signal={signal}
-              eventHandlers={this.sessionEvents}
-            >
-              <Publisher />
-              <Subscriber />
-              <NoVideoScreen
-                image={image}
-                sessionInfoName={sessionInfoName}
-                disabledSubscriber={disabledSubscriber}
+        {tokboxSessionID && tokboxSessionToken && isConnectedToInternet && (
+          <OTSession
+            apiKey={TOKBOX_APIKEY}
+            sessionId={tokboxSessionID}
+            token={tokboxSessionToken}
+            signal={signal}
+            eventHandlers={this.sessionEvents}
+          >
+            {publisherSubscriberError ? (
+              <View />
+            ) : (
+              <Publisher
+                remountComponent={this.remountPublisherAndSubscriber}
               />
-            </OTSession>
-          )}
+            )}
+            {publisherSubscriberError ? (
+              <View />
+            ) : (
+              <Subscriber
+                remountComponent={this.remountPublisherAndSubscriber}
+              />
+            )}
+            <NoVideoScreen
+              image={image}
+              sessionInfoName={sessionInfoName}
+              disabledSubscriber={disabledSubscriber}
+            />
+          </OTSession>
+        )}
         <View style={styles.containerCall}>
           <CallAvatarName
             imageSource={image}
@@ -144,16 +200,16 @@ class SessionBox extends Component {
   }
 }
 
-const mS = state => {
-  return {
-    tokboxSessionID: state.activeSessionReducer.tokboxID,
-    tokboxSessionToken: state.activeSessionReducer.tokboxToken,
-    signal: state.activeSessionReducer.signal,
-    disabledSubscriber: state.activeSessionReducer.disabledSubscriber,
-    visibility: state.contactLinguist.modalReconnect,
-    counterId: state.contactLinguist.counterId
-  };
-};
+const mS = state => ({
+  tokboxSessionID: state.activeSessionReducer.tokboxID,
+  tokboxSessionToken: state.activeSessionReducer.tokboxToken,
+  signal: state.activeSessionReducer.signal,
+  disabledSubscriber: state.activeSessionReducer.disabledSubscriber,
+  visibility: state.contactLinguist.modalReconnect,
+  counterId: state.contactLinguist.counterId,
+  isConnectedToInternet: state.activeSessionReducer.isConnectedToInternet,
+  publisherSubscriberError: state.activeSessionReducer.publisherSubscriberError
+});
 
 const mD = {
   errorEvent,

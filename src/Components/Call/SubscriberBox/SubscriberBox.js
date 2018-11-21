@@ -13,7 +13,9 @@ import {
 import {
   videoState,
   update,
-  updateVideoWarningEvent
+  updateVideoWarningEvent,
+  errorEvent,
+  remountPublisherAndSubscriber
 } from "../../../Ducks/ActiveSessionReducer";
 
 import styles from "./styles";
@@ -21,6 +23,9 @@ import styles from "./styles";
 class SubscriberBox extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      subscriberError: false
+    };
     this.subscriberEvents = {
       audioLevel: event => {
         //console.log(`AUDIO LEVEL EVENT ${event}`);
@@ -30,6 +35,10 @@ class SubscriberBox extends Component {
       },
       connected: () => {
         console.log("CONNECTED EVENT");
+        this.props.update({
+          modalReconnect: false
+        });
+        this.setState({ subscriberError: false });
       },
       disconnected: () => {
         console.log("DISCONNECTED EVENT");
@@ -39,7 +48,9 @@ class SubscriberBox extends Component {
         });
       },
       error: event => {
-        console.log("ERROR EVENT", event);
+        console.log("SUBSCRIBER ERROR EVENT", event);
+        this.props.errorEvent(event);
+        this.props.remountPublisherAndSubscriber();
       },
       videoDataReceived: () => {
         if (this.props.visibility) {
@@ -85,14 +96,16 @@ class SubscriberBox extends Component {
   }
 
   render() {
-    const { speaker } = this.props;
+    const { speaker, publisherSubscriberError } = this.props;
     return (
       <View style={styles.backgroundContainer}>
-        <SubscriberTokbox
-          style={styles.background}
-          eventHandlers={this.subscriberEvents}
-          properties={{ subscribeToAudio: false, subscribeToVideo: true }}
-        />
+        {!publisherSubscriberError && (
+          <SubscriberTokbox
+            style={styles.background}
+            eventHandlers={this.subscriberEvents}
+            properties={{ subscribeToAudio: false, subscribeToVideo: true }}
+          />
+        )}
       </View>
     );
   }
@@ -100,13 +113,16 @@ class SubscriberBox extends Component {
 
 const mS = state => ({
   speaker: state.activeSessionReducer.speaker,
-  visibility: state.activeSessionReducer.modalReconnect
+  visibility: state.activeSessionReducer.modalReconnect,
+  publisherSubscriberError: state.activeSessionReducer.publisherSubscriberError
 });
 
 const mD = {
   videoState,
   update,
-  updateVideoWarningEvent
+  updateVideoWarningEvent,
+  remountPublisherAndSubscriber,
+  errorEvent
 };
 
 const Subscriber = connect(

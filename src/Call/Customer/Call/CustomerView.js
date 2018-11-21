@@ -207,16 +207,15 @@ class CustomerView extends Component {
         onPress={() => this.setState({ visible: !visible })}
       >
         <View style={styles.fullPage}>
+          <ModalReconnect
+            closeCall={closeCall}
+            callTimeOut={this.callTimeOut}
+            reconnectCall={this.connectCall}
+          />
           <SessionHandler
             image={this.selectImage()}
             sessionInfoName={this.handleSessionInfoName()}
           >
-            <ModalReconnect
-              closeCall={closeCall}
-              callTimeOut={this.callTimeOut}
-              reconnectCall={this.connectCall}
-            />
-
             <Slide visible={visible} min={0} max={112}>
               <View style={styles.containerControls}>
                 {(this.props.localVideoWarning == "ENABLED" ||
