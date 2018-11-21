@@ -151,6 +151,7 @@ export default (ENG = {
     "Are we human, because of unique traits and attributes not shared with either",
   extraTime1: "Time is almost up!",
   extraTime2: "Do you need more time?",
+  extraTime3: "Your call will end in 2 minutes",
   extraTimeA1: "Yes, add 5 minutes",
   extraTimeA2: "No, end call when time is up",
   fallPromotion:

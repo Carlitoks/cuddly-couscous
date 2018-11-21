@@ -28,10 +28,10 @@ export const displayFormErrors = (...errors) => {
  */
 export const displayTimeAlert = (time, timeEvent) => {
   Alert.alert(
-    I18n.t("extraTime1"),
-    I18n.t("extraTime2"),
+    I18n.t("extraTime3"),
+    "",
     [
-      {
+      /* {
         text: I18n.t("extraTimeA1"),
         onPress: () => {
           timeEvent({
@@ -40,9 +40,9 @@ export const displayTimeAlert = (time, timeEvent) => {
             extraTime: time + 5 * 60
           });
         }
-      },
+      },*/
       {
-        text: I18n.t("extraTimeA2"),
+        text: I18n.t("ok"),
         onPress: () => {
           timeEvent({
             timeBtn: true

@@ -576,10 +576,11 @@ export const startTimer = () => (dispatch, getState) => {
             showAlert
           } = getState().activeSessionReducer;
           let availableMinutes;
+
           if (events.id && events.id !== "") {
             availableMinutes = 60;
           } else {
-            availableMinutes = getState().userProfile;
+            availableMinutes = getState().userProfile.availableMinutes;
           }
           if (elapsedTime + extraTime < 60 * 60) {
             if (elapsedTime >= availableMinutes * 60 + extraTime - 2 * 60) {
@@ -595,7 +596,13 @@ export const startTimer = () => (dispatch, getState) => {
                   })
                 );
                 //Play Sound
-                SoundManager["ExtraTime"].play();
+                SoundManager["ExtraTime"].play(success => {
+                  if (success) {
+                    //console.log("successfully finished playing");
+                  } else {
+                    console.log("playback failed due to audio decoding errors");
+                  }
+                });
                 displayTimeAlert(extraTime, event => {
                   dispatch(update(event));
                 });
