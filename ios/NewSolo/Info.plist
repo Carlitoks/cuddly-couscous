@@ -69,6 +69,9 @@
 	<string>This allows Jeenie to let you choose a profile image that suits you</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>purpose for using</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
