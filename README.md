@@ -23,11 +23,29 @@ The api server will automatically start on port `5110`, but the image also has a
 
 ## Android Studio ##
 
-Install Android Studio, as well as `react-native-debugger`.
+Install Android Studio, as well as `react-native-debugger`.  Or just use the vagrant vm provided by running `vagrant up`... it will take a while to run.
 
-Once installed, do a few things:
+To use the VM:
 
-* in Android Studio, open `android/app/`
+* run `vagrant up`
+* login as user `vagrant`, password `vagrant`
+* run `startx` to start the gui
+* launch Android Studio from Applications > Development > Android Studio
+* launch react-native-debugger from the home directory `/home/vagrant`
+
+Initial setup for Android Studio:
+
+* Don't import settings
+* Do custom install & add latest SDK
+* From the Welcome Screen, go to Configure -> SDK Manager
+    * Install other SDKs (Android 7.0+)
+* From Welcome Screen, import existing project
+    * Import an existing project: open the `android/app/` directory.
+* Let Gradle automatically sync
+  * it will probably fail several times, just keep clicking the blue links to install any missing dependencies
+
+To start actually developing:
+
 * Open AVD Manager and run a device emulator
 * After a "cold boot", use `yarn android:run` to get the app loaded onto the phone
 * run `yarn start` to start the dev server

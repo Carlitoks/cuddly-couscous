@@ -1,0 +1,76 @@
+# This script will download install the necessary dependencies for dev environment
+$provision = <<-SCRIPT
+
+# install gui & general deps
+sudo apt update
+sudo apt install -y wget zip unzip xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11 virtualbox-ext-pack
+sudo VBoxClient-all
+
+# allow anyone to starte the gui
+sudo sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config
+
+# install chrome
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+sudo apt-get update
+sudo apt-get install -y google-chrome-stable
+
+# install android studio - instructions adapted from https://askubuntu.com/a/988441
+sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
+wget https://dl.google.com/dl/android/studio/ide-zips/3.2.1.0/android-studio-ide-181.5056338-linux.zip
+sudo unzip /home/vagrant/android-studio-ide-181.5056338-linux.zip -d /opt/google/
+sudo chmod o+w /opt/google/android-studio/
+sudo mkdir -p /opt/google/android-sdk
+sudo chmod o+w /opt/google/android-sdk
+sudo -i
+cd /etc/profile.d/
+echo export ANDROID_SDK_ROOT=/opt/google/android-sdk/ > android_studio.sh
+echo export ANDROID_HOME=/opt/google/android-sdk/ >> android_studio.sh
+echo export JAVA_HOME=/opt/google/android-studio/jre >> android_studio.sh
+
+# create desktop entry for Android Studio
+sudo cat <<EOF >/usr/share/applications/jetbrains-studio.desktop
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Android Studio
+Icon=/opt/google/android-studio/bin/studio.png
+Exec="/opt/google/android-studio/bin/studio.sh" %f
+Comment=The Drive to Develop
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=jetbrains-studio
+EOF
+
+# install react native debugger
+wget https://github.com/jhen0409/react-native-debugger/releases/download/v0.8.1/rn-debugger-linux-x64.zip
+unzip rn-debugger-linux-x64.zip -d /home/vagrant/
+
+# install node and yarn
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo npm install -g yarn
+
+SCRIPT
+
+# runs every time the machine starts, to set necessary environment
+$startup = <<-SCRIPT
+
+SCRIPT
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-18.04"
+  config.ssh.forward_agent = true
+  
+  # Display the VirtualBox GUI when booting the machine
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--vram", "64"]
+    vb.gui = true
+    vb.memory = 4096
+    vb.cpus = 2
+  end
+
+  config.vm.provision "shell", inline: $provision
+  config.vm.provision "shell", inline: $startup, run: 'always'
+
+end
