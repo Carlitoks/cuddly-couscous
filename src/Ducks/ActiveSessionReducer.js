@@ -576,14 +576,19 @@ export const startTimer = () => (dispatch, getState) => {
             showAlert
           } = getState().activeSessionReducer;
           let availableMinutes;
+          let paymentDetail;
 
           if (events.id && events.id !== "") {
             availableMinutes = 60;
           } else {
             availableMinutes = getState().userProfile.availableMinutes;
+            paymentDetail = getState().userProfile.stripePaymentToken;
           }
           if (elapsedTime + extraTime < 60 * 60) {
-            if (elapsedTime >= availableMinutes * 60 + extraTime - 2 * 60) {
+            if (
+              elapsedTime >= availableMinutes * 60 + extraTime - 2 * 60 &&
+              !!!paymentDetail
+            ) {
               dispatch(
                 update({
                   red: true
@@ -608,7 +613,10 @@ export const startTimer = () => (dispatch, getState) => {
                 });
               }
             }
-            if (elapsedTime > availableMinutes * 60 + extraTime) {
+            if (
+              elapsedTime > availableMinutes * 60 + extraTime &&
+              !!!paymentDetail
+            ) {
               dispatch(closeCall(REASON.DONE));
             } else {
               dispatch(incrementTimer());
