@@ -151,6 +151,8 @@ const initialState = {
   modalReconnectCounterId: null,
   messageReconnect: "",
   reconnecting: false,
+  isConnectedToInternet: true,
+  publisherSubscriberError: false,
 
   //Tokbox Video Warnings
   localVideoWarning: "DISABLED",
@@ -242,6 +244,18 @@ export const errorEvent = event => dispatch => {
       payload: event
     })
   );
+};
+
+export const remountPublisherAndSubscriber = () => (dispatch, getState) => {
+  const { activeSessionReducer } = getState();
+  console.log(
+    "Trying to remount: ",
+    activeSessionReducer.isConnectedToInternet
+  );
+  dispatch(update({ publisherSubscriberError: true }));
+  setTimeout(() => {
+    dispatch(update({ publisherSubscriberError: false }));
+  }, 1000);
 };
 
 //Punlisher events
@@ -562,13 +576,19 @@ export const startTimer = () => (dispatch, getState) => {
             showAlert
           } = getState().activeSessionReducer;
           let availableMinutes;
+          let paymentDetail;
+
           if (events.id && events.id !== "") {
             availableMinutes = 60;
           } else {
-            availableMinutes = getState().userProfile;
+            availableMinutes = getState().userProfile.availableMinutes;
+            paymentDetail = getState().userProfile.stripePaymentToken;
           }
           if (elapsedTime + extraTime < 60 * 60) {
-            if (elapsedTime >= availableMinutes * 60 + extraTime - 2 * 60) {
+            if (
+              elapsedTime >= availableMinutes * 60 + extraTime - 2 * 60 &&
+              !!!paymentDetail
+            ) {
               dispatch(
                 update({
                   red: true
@@ -581,13 +601,22 @@ export const startTimer = () => (dispatch, getState) => {
                   })
                 );
                 //Play Sound
-                SoundManager["ExtraTime"].play();
+                SoundManager["ExtraTime"].play(success => {
+                  if (success) {
+                    //console.log("successfully finished playing");
+                  } else {
+                    console.log("playback failed due to audio decoding errors");
+                  }
+                });
                 displayTimeAlert(extraTime, event => {
                   dispatch(update(event));
                 });
               }
             }
-            if (elapsedTime > availableMinutes * 60 + extraTime) {
+            if (
+              elapsedTime > availableMinutes * 60 + extraTime &&
+              !!!paymentDetail
+            ) {
               dispatch(closeCall(REASON.DONE));
             } else {
               dispatch(incrementTimer());

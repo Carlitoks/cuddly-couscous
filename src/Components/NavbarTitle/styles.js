@@ -14,7 +14,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     backgroundColor: Colors.transparent,
     fontWeight: "500",
-    height: 22,
+    height: 25,
     width: "100%"
   },
   titleWithLeft: {
@@ -27,7 +27,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     backgroundColor: Colors.transparent,
     fontWeight: "500",
-    height: 22
+    height: 25
   },
   titleComplete: {
     fontFamily: Fonts.BaseFont,
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     backgroundColor: Colors.transparent,
     fontWeight: "500",
-    height: 22,
+    height: 25,
     width: "100%"
   }
 });

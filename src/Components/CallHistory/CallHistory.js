@@ -88,7 +88,7 @@ export default class CallHistoryComponent extends Component {
                   }}
                 />
               )}
-              keyExtractor={item => item.key}
+              keyExtractor={item => item.key.toString()}
               ItemSeparatorComponent={this.renderSeparator}
             />
           ) : (

@@ -15,11 +15,16 @@ import WhatWasGood from "./WhatWasGood";
 import WhatCouldBeBetter from "./WhatCouldBeBetter";
 import { Images } from "../../Themes";
 import SoundManager from "../../Util/SoundManager";
+import {
+  changeStatus
+} from "../../Ducks/ProfileLinguistReducer";
 
 class RateView extends Component {
   componentWillMount() {
     SoundManager["EndCall"].play();
+    this.props.changeStatus(true);
   }
+  
   submit = () => {
     const { rating, thumbsUp, thumbsDown, sessionID } = this.props;
 
@@ -141,7 +146,8 @@ const mS = state => ({
 });
 const mD = {
   submitRateCall,
-  clearOptions
+  clearOptions,
+  changeStatus
 };
 export default connect(
   mS,

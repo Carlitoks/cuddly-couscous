@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.gradientColor.top
   },
   mainMessageContainer: {
-    height: 156,
+    height: 210,
     width: 269,
     position: "absolute",
     top: "33%",
@@ -26,8 +26,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     fontFamily: Fonts.BaseFont,
-    fontSize: 22,
-    lineHeight: 22,
+    fontSize: 20,
+    lineHeight: 20,
     color: Colors.white,
     alignSelf: "center"
   },

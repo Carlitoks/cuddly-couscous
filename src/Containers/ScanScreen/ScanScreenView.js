@@ -8,7 +8,10 @@ import { findIndex } from "lodash";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import { Header } from "react-native-elements";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-import I18n, { translateApiErrorString } from "../../I18n/I18n";
+import I18n, {
+  translateLanguage,
+  translateApiErrorString
+} from "../../I18n/I18n";
 import { asyncScanQR } from "../../Ducks/EventsReducer";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
@@ -16,6 +19,7 @@ import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import { updateSettings as updateCustomerSettings } from "../../Ducks/CallCustomerSettings";
 import styles from "./styles";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
+import { Languages, DefaultLanguagePairMap } from "../../Config/Languages";
 
 class ScanScreenView extends Component {
   state = {
@@ -42,6 +46,41 @@ class ScanScreenView extends Component {
       id
     );
   };
+
+  changePrimaryLanguageEnglish(secondaryLangCode) {
+    const languagesMapper = DefaultLanguagePairMap;
+    const primaryLanguage = Languages.find(
+      lang => lang[3] === "eng" //Force to be english, it should be primarylangCode
+    );
+    const primaryLangCode = "eng";
+    let secondaryLanguageCode = secondaryLangCode;
+
+    if (secondaryLangCode) {
+      secondaryLanguageCode = secondaryLangCode;
+    } else {
+      secondaryLanguageCode = languagesMapper[primaryLangCode];
+    }
+    if (!secondaryLanguageCode) {
+      secondaryLanguageCode = primaryLangCode == "eng" ? "cmn" : "eng";
+    }
+
+    const secondaryLanguage = Languages.find(
+      lang => lang[3] === secondaryLanguageCode
+    );
+
+    this.props.updateContactLinguist({
+      primaryLangCode: primaryLangCode,
+      selectedLanguageFrom: translateLanguage(
+        primaryLanguage[3],
+        primaryLanguage["name"]
+      ),
+      secundaryLangCode: secondaryLanguage[3],
+      selectedLanguage: translateLanguage(
+        secondaryLanguage[3],
+        secondaryLanguage["name"]
+      )
+    });
+  }
 
   onSuccess = e => {
     this.props.updateHomeFlow({
@@ -72,14 +111,15 @@ class ScanScreenView extends Component {
               addMinutesToUser,
               usageError,
               maxMinutesPerUser,
-              organization,
+              defaultSecondaryLangCode,
+              organization
             } = response.payload;
-            if(initiateCall){
-            if (!sessionCreateErr && userCanCreateSession) {
-              if (this.props.token) {
+            if (initiateCall) {
+              if (!sessionCreateErr && userCanCreateSession) {
+                if (this.props.token) {
+                  this.changePrimaryLanguageEnglish(defaultSecondaryLangCode);
                   if (requireScenarioSelection && restrictEventScenarios) {
                     /* Dispatch to SelectListView with the scenarios involveds*/
-
                     if (scenarios) {
                       let actualCats = this.props.categories;
                       actualCats.includes(scenarios[0].category)
@@ -119,45 +159,62 @@ class ScanScreenView extends Component {
                       selectionItemName: "scenarios",
                       scenarios: scenarios || []
                     });
-                    this.props.navigation.dispatch({ type: "PromoCodeListView" });
+                    this.props.navigation.dispatch({
+                      type: "PromoCodeListView"
+                    });
                   } else if (!requireScenarioSelection) {
                     /* Dispatch to Call Confirmation view */
                     this.props.navigation.dispatch({
                       type: "CallConfirmationView"
                     });
                   }
+                } else {
+                  this.props.navigation.dispatch({
+                    type: "LoginView"
+                  });
+                }
               } else {
-                this.props.navigation.dispatch({
-                  type: "LoginView"
-                });
+                if (navigation.state.routeName === "ScanScreenView") {
+                  this.setState({
+                    reactivate: false
+                  });
+                  Alert.alert("Error", "QR invalid, try again", [
+                    {
+                      text: "OK",
+                      onPress: () => {
+                        this.scanner.reactivate();
+                        this.setState({
+                          reactivate: true
+                        });
+                      }
+                    }
+                  ]);
+                }
               }
             } else {
-              if (navigation.state.routeName === "ScanScreenView") {
-                this.setState({
-                  reactivate: false
-                });
-                Alert.alert("Error", "QR invalid, try again", [
-                  {
-                    text: "OK",
-                    onPress: () => {
-                      this.scanner.reactivate();
-                      this.setState({
-                        reactivate: true
-                      });
-                    }
+              if (usageError) {
+                this.props.navigation.dispatch({
+                  type: "Home",
+                  params: {
+                    usageError: translateApiErrorString(
+                      usageError,
+                      "api.errEventUnavailable"
+                    )
                   }
-                ]);
+                });
               }
+              if (addMinutesToUser) {
+                this.props.navigation.dispatch({
+                  type: "Home",
+                  params: {
+                    minutesGranted: true,
+                    maxMinutesPerUser,
+                    organization: organization.name
+                  }
+                });
+              }
+              this.props.navigation.dispatch({ type: "Home" });
             }
-            }else{
-          if(usageError){
-            this.props.navigation.dispatch({ type: "Home", params: { usageError: translateApiErrorString(usageError, "api.errEventUnavailable") } });
-          }
-          if(addMinutesToUser){
-            this.props.navigation.dispatch({ type: "Home", params: { minutesGranted: true, maxMinutesPerUser, organization:  organization.name } });
-          }
-          this.props.navigation.dispatch({ type: "Home" });
-        }
           })
           .catch(error => console.log(error));
 

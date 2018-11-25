@@ -3,6 +3,8 @@ api.config.yml
 dev_auth/
 .gcp/
 src/Config/env.js
+src/Config/env.js.bak
+.appcenter/vars.env
 
 # OSX
 #

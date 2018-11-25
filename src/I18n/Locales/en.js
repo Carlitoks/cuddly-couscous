@@ -51,9 +51,9 @@ export default (ENG = {
   cancel: "Cancel",
   cancelCall: "Cancel call",
   celebrateAndEnjoy:
-    "Celebrate our launch \n and enjoy Jeenie for \n 15 minutes FREE!",
+    "Celebrate our launch \n and enjoy Jeenie for \n 10 minutes FREE!",
   celebrateAndEnjoyAlternative:
-    "Celebrate our launch and \nenjoy 15 minutes with Jeenie \nfor FREE!",
+    "Celebrate our launch and \nenjoy 10 minutes with Jeenie \nfor FREE!",
   celebrateWithUs: "Celebrate our launch with us!",
   changeSettings: "To change your settings, go to Settings > Jeenie",
   cancelCallCustomer: "The call isn't available",
@@ -151,6 +151,7 @@ export default (ENG = {
     "Are we human, because of unique traits and attributes not shared with either",
   extraTime1: "Time is almost up!",
   extraTime2: "Do you need more time?",
+  extraTime3: "Your call will end in 2 minutes",
   extraTimeA1: "Yes, add 5 minutes",
   extraTimeA2: "No, end call when time is up",
   fallPromotion:
@@ -237,7 +238,7 @@ export default (ENG = {
   lauchScreenSwipe4:
     "The average call lasts 5 to 10 minutes, but speak as long as you like.",
   lauchScreenSwipe5:
-    "In celebration of our launch, your first 15 minutes are FREE …compliment of Jeenie!",
+    "In celebration of our launch, your first 10 minutes are FREE …compliment of Jeenie!",
   lastname: "Last name",
   lastnameFormatValidation: "Last name must be only letters.",
   legal: "Legal",
@@ -318,7 +319,7 @@ export default (ENG = {
   provideFeedback: "Provide Feedback",
   provideFeedbackModalTitle: "Need more time with Jeenie?",
   provideFeedbackModalText:
-    "Provide feedback about your \nexperience using Jeenie, and \nwe’ll give you an additional \n15 minutes for FREE!",
+    "Provide feedback about your \nexperience using Jeenie, and \nwe’ll give you an additional \n10 minutes for FREE!",
   provideFeedbackViewPlaceholder: "Add your feedback here",
   provideFeedbackViewTitle: "Tell us how we can improve the Jeenie experience:",
   qr: "QR Code",
@@ -392,7 +393,7 @@ export default (ENG = {
   thankYou: " Thank You",
   thankYouFeedback: " Thank You for your feedback",
   thankYouFeedbackModalText:
-    "We've added an additional \n15 minutes for you to \ncontinue using Jeenie.",
+    "We've added an additional \n10 minutes for you to \ncontinue using Jeenie.",
   theCallWillEnd: "The call will end after {{minutes}} minutes",
   undefined: "Undefined",
   unspecified: "Unspecified",

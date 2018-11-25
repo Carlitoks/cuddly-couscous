@@ -1,7 +1,7 @@
 import Sound from "react-native-sound";
 
 //Sound.setActive(true);
-///Sound.enableInSilenceMode(true);
+//Sound.enableInSilenceMode(true);
 //Sound.setCategory("Playback", true);
 
 export default (SoundManager = {

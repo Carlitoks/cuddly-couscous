@@ -63,7 +63,7 @@ class LinguistView extends Component {
   componentWillMount() {
     BackgroundStart();
 
-    if(Platform.OS === 'android'){
+    if (Platform.OS === "android") {
       FCM.removeAllDeliveredNotifications();
       FCM.cancelAllLocalNotifications();
     }
@@ -168,12 +168,11 @@ class LinguistView extends Component {
         onPress={() => this.setState({ visible: !visible })}
       >
         <View style={styles.fullPage}>
+          <ModalReconnect closeCall={closeCallReconnect} />
           <SessionHandler
             image={this.selectImage()}
             sessionInfoName={this.handleSessionInfoName()}
           >
-            <ModalReconnect closeCall={closeCallReconnect} />
-
             <Slide visible={visible} min={0} max={112}>
               <View style={styles.containerControls}>
                 {(this.props.localVideoWarning == "ENABLED" ||

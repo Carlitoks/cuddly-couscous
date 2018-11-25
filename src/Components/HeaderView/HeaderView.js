@@ -114,8 +114,8 @@ const HeaderView = ({
               !!avatarSource || !!switchOnChange || history
                 ? null
                 : !!title || !!titleComponent
-                  ? 125
-                  : 85
+                ? 125
+                : 85
           }}
         >
           {/* SVG White Waves */}
@@ -125,7 +125,7 @@ const HeaderView = ({
             {!NoWaves && (
               <Waves
                 width={width}
-                height={width * 129 / 1175.7}
+                height={(width * 129) / 1175.7}
                 viewBox={"0 0 1175.7 129"}
               />
             )}
@@ -231,8 +231,8 @@ const HeaderView = ({
                     !!photoSelect
                       ? styles.avatarTitleContainer
                       : rate
-                        ? styles.avatarRateTitleContainer
-                        : styles.avatarBoldTitleContainer
+                      ? styles.avatarRateTitleContainer
+                      : styles.avatarBoldTitleContainer
                   }
                 >
                   <Text
@@ -309,9 +309,11 @@ const HeaderView = ({
                   onValueChange={switchOnChange}
                   style={styles.switchContainer}
                   value={switchValue}
-                  onTintColor={Colors.onTintColor}
-                  thumbTintColor={Colors.thumbTintColor}
-                  tintColor={Colors.tintColor}
+                  thumbColor={Colors.thumbTintColor}
+                  trackColor={{
+                    true: Colors.onTintColor,
+                    false: Colors.tintColor
+                  }}
                 />
               )}
             </View>
@@ -435,10 +437,10 @@ const HeaderView = ({
           height: !!switchOnChange
             ? 350
             : !!bigAvatar
-              ? 250
-              : !!avatarSource
-                ? moderateScale(200)
-                : moderateScale(180)
+            ? 250
+            : !!avatarSource
+            ? moderateScale(200)
+            : moderateScale(180)
         }}
       >
         {getHeader()}

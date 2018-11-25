@@ -29,14 +29,29 @@ class SessionLanguageView extends Component {
   }
 
   componentWillMount() {
+    const SecondaryLangCodeEvent = !this.props.defaultSecondaryLangCode;
     this.changePrimaryLanguageEnglish();
     const verifyLang = !!this.props.primaryLangCode;
-    if (!verifyLang) {
+    if (!SecondaryLangCodeEvent) {
+      this.setDefaultLang();
+    } else if (!verifyLang) {
       this.setLanguages();
       this.changePrimaryLanguageEnglish();
     }
   }
+  setDefaultLang() {
+    const secondaryLanguage = Languages.find(
+      lang => lang[3] === this.props.defaultSecondaryLangCode
+    );
 
+    this.props.updateContactLinguist({
+      secundaryLangCode: secondaryLanguage[3],
+      selectedLanguage: translateLanguage(
+        secondaryLanguage[3],
+        secondaryLanguage["name"]
+      )
+    });
+  }
   changePrimaryLanguageEnglish() {
     const languagesMapper = DefaultLanguagePairMap;
     const primaryLanguage = Languages.find(
@@ -182,7 +197,8 @@ const mS = state => ({
   routes: state.nav.routes[0].routes[0].routes,
   nativeLanguage: state.userProfile.selectedNativeLanguage,
   selectedLanguageFrom: state.contactLinguist.selectedLanguageFrom,
-  selectedLanguage: state.contactLinguist.selectedLanguage
+  selectedLanguage: state.contactLinguist.selectedLanguage,
+  defaultSecondaryLangCode: state.events.defaultSecondaryLangCode
 });
 
 // MAP DISPATCH TO PROPS HERE
