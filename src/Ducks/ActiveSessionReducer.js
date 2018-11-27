@@ -449,7 +449,7 @@ export const createSession = ({
       }
     })
     .catch(error => {
-      dispatch(networkError(error));
+      //dispatch(networkError(error));
       const { contactLinguist, activeSessionReducer } = getState();
       timer.clearInterval("counterId");
       timer.clearInterval("verifyCallId");

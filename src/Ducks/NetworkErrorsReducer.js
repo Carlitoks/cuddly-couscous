@@ -29,8 +29,8 @@ export const update = payload => ({
 });
 
 export const networkError = error => (dispatch, getState) => {
-  //dispatch(displayNetworkAlert());
-  ///dispatch(setError(error));
+  dispatch(displayNetworkAlert());
+  dispatch(setError(error));
   if (error && error.response && error.response.status) {
     //dispatch(handleError(error.response.status));
     console.log(error.response.status);
