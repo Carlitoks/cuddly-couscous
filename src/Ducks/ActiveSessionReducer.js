@@ -653,6 +653,7 @@ export const closeCall = (reason, alert) => (dispatch, getState) => {
     BackgroundCleanInterval(activeSessionReducer.timer);
     dispatch(resetTimerAsync());
     cleanNotifications();
+    dispatch(update({ modalReconnect: false }));
   }
 
   SoundManager["EndCall"].play();
@@ -676,8 +677,10 @@ export const closeCall = (reason, alert) => (dispatch, getState) => {
         dispatch({ type: "RateView" });
       }
     }
+    dispatch(update({ modalReconnect: false }));
   }
   if (reason == "Abort") {
+    dispatch(update({ modalReconnect: false }));
     dispatch({ type: "Home" });
   }
 };
@@ -864,6 +867,7 @@ export const startTimerLinguist = () => (dispatch, getState) => {
 export const closeCallReconnect = reason => dispatch => {
   //CHECK
   SoundManager["EndCall"].play();
+  dispatch(update({ modalReconnect: false }));
   dispatch(sendSignal(REASON.DONE, "Ended by Linguist"));
   dispatch({ type: "RateView" });
 };
