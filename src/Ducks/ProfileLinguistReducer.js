@@ -40,6 +40,8 @@ export const getCurrentAvailability = () => (dispatch, getState) => {
           loading: false
         })
       );
+      dispatch(changeStatus(availability));
+
     })
     .catch(error => {
       dispatch(networkError(error));
