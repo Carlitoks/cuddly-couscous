@@ -42,7 +42,7 @@ const ManagePaymentMethodArea = props => {
                   // contextMenuHidden: true adds the ability to disable pasting in the field
                 },
                 expiry: { maxLength: 5, keyboardType: "decimal-pad" },
-                cvc: { maxLength: 3, keyboardType: "number-pad" }
+                cvc: { maxLength: 4, keyboardType: "number-pad" }
               }}
             />
           </View>

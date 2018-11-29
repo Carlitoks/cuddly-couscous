@@ -24,7 +24,17 @@ import { updateView } from "../Ducks/UserProfileReducer";
 
 import Title from "./PaymentsTitle";
 import ManagePaymentMethodArea from "./ManagePaymentMethodArea";
-import { CREDIT_CARD_FORMAT } from "../Util/Constants";
+import { CREDIT_CARD_FORMATS } from "../Util/Constants";
+
+const testCCNumber = (number) => {
+  for (let i in CREDIT_CARD_FORMATS) {
+    const regexp = new RegExp(CREDIT_CARD_FORMATS[i])
+    if (regexp.test(number)) {
+      return true
+    }
+  }
+  return false
+}
 
 class PaymentsView extends Component {
   componentWillMount() {
@@ -41,14 +51,13 @@ class PaymentsView extends Component {
   checkFieldValidity = ({ valid, number, expMonth, expYear, cvc }) => {
     const { updatePayments } = this.props;
 
-    const creditCardPattern = new RegExp(CREDIT_CARD_FORMAT);
-    const numberProperFormat = creditCardPattern.test(number);
+    const numberProperFormat = testCCNumber(number)
 
     const dateItemPattern = new RegExp("\\d{1,2}");
     const monthProperFormat = dateItemPattern.test(expMonth);
     const yearProperFormat = dateItemPattern.test(expYear);
 
-    const CVCPattern = new RegExp("\\d{3}");
+    const CVCPattern = new RegExp("\\d{3,4}");
     const CVCProperFormat = CVCPattern.test(cvc);
 
     const errors = [];
