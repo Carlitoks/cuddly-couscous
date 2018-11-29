@@ -48,7 +48,7 @@ class PaymentsView extends Component {
     const monthProperFormat = dateItemPattern.test(expMonth);
     const yearProperFormat = dateItemPattern.test(expYear);
 
-    const CVCPattern = new RegExp("\\d{3}");
+    const CVCPattern = new RegExp("\\d{3,4}");
     const CVCProperFormat = CVCPattern.test(cvc);
 
     const errors = [];
