@@ -178,14 +178,21 @@ class CustomerView extends Component {
       token: token,
       eventID: eventID,
       location: customerLocation
+    }).then(response => {
+      this.callTimeOut();
     });
-    this.callTimeOut();
   };
 
   callTimeOut = () => {
     const { incrementCounter } = this.props;
     this.props.updateContactLinguistSettings({
-      counterId: timer.setInterval("counterId", () => incrementCounter(), 1000)
+      counterId: timer.setInterval(
+        "counterId",
+        () => {
+          incrementCounter();
+        },
+        1000
+      )
     });
   };
 

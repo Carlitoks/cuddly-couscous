@@ -8,12 +8,19 @@ import { Colors } from "../../Themes";
 import { TIME, REASON } from "../../Util/Constants";
 
 import ReconnectOptions from "../ReconnectOptions/ReconnectOptions";
+import {
+  resetConnectingMessage,
+  updateSettings as updateContactLinguistSettings
+} from "../../Ducks/ContactLinguistReducer";
 
 import {
   update as updateSettings,
   startReconnect,
   resetReconnectAsync,
-  resetReconnectCounterAsync
+  resetReconnectCounterAsync,
+  closeCall,
+  cleanCall,
+  tryAgainCall
 } from "../../Ducks/ActiveSessionReducer";
 
 import DisconnectedMessage from "./DisconnectedMessage/DisconnectedMessage";
@@ -48,8 +55,32 @@ class ModalReconnect extends Component {
     return <ReconnectingMessage message={message} />;
   }
 
+  async tryAnotherCall() {
+    const {
+      token,
+      sessionID,
+      tryAgainCall,
+      reconnectCall,
+      updateSettings,
+      resetConnectingMessage
+    } = this.props;
+
+    resetConnectingMessage();
+    await tryAgainCall(sessionID, REASON.RETRY, token);
+    await updateSettings({
+      verifyCallId: null,
+      sessionID: null,
+      tokboxID: null,
+      tokboxToken: null,
+      status: 0,
+      error: null,
+      tokevent: null
+    });
+    await reconnectCall();
+  }
+
   renderDisconnectedMessage() {
-    const { isLinguist, customerName } = this.props;
+    const { isLinguist, customerName, isConnectedToInternet } = this.props;
 
     /*const username = !!isLinguist
       ? `${linguist.firstName} ${linguist.lastInitial}`
@@ -71,6 +102,20 @@ class ModalReconnect extends Component {
             }
           }
         ]
+      : !isConnectedToInternet
+      ? [
+          {
+            title: I18n.t("tryToReconnect"),
+            onPress: () => this.props.resetReconnectCounterAsync()
+          },
+          {
+            title: I18n.t("endCall"),
+            onPress: () => {
+              this.props.resetReconnectAsync();
+              this.props.closeCall(REASON.CANCEL);
+            }
+          }
+        ]
       : [
           {
             title: I18n.t("tryToReconnect"),
@@ -79,12 +124,35 @@ class ModalReconnect extends Component {
           {
             title: I18n.t("tryAnother"),
             onPress: async () => {
-              this.props.resetReconnectAsync();
-              this.props.updateSettings({
-                modalReconnect: false
-              });
-              await this.props.closeCall(REASON.RETRY);
-              await this.props.reconnectCall();
+              const {
+                sessionID,
+                token,
+                updateSettings,
+                tryAgainCall,
+                resetConnectingMessage,
+                processing
+              } = this.props;
+              resetConnectingMessage();
+              if (!processing) {
+                await updateSettings({
+                  processing: true
+                });
+                await tryAgainCall(sessionID, REASON.RETRY, token);
+                await updateSettings({
+                  verifyCallId: null,
+                  sessionID: null,
+                  tokboxID: null,
+                  tokboxToken: null,
+                  status: 0,
+                  error: null,
+                  tokevent: null,
+                  modalReconnect: false
+                });
+                await this.props.reconnectCall();
+                await updateSettings({
+                  processing: false
+                });
+              }
             }
           },
           {
@@ -131,14 +199,23 @@ const mS = state => ({
   isLinguist: !!state.userProfile.linguistProfile,
   reconnectMessage: state.activeSessionReducer.reconnectMessage,
   linguist: state.sessionInfo.linguist,
-  customerName: state.activeSessionReducer.customerName
+  isConnectedToInternet: state.activeSessionReducer.isConnectedToInternet,
+  customerName: state.activeSessionReducer.customerName,
+  token: state.auth.token,
+  sessionID: state.activeSessionReducer.sessionID,
+  processing: state.activeSessionReducer.processing
 });
 
 const mD = {
   updateSettings,
   startReconnect,
   resetReconnectAsync,
-  resetReconnectCounterAsync
+  resetReconnectCounterAsync,
+  updateContactLinguistSettings,
+  resetConnectingMessage,
+  cleanCall,
+  closeCall,
+  tryAgainCall
 };
 
 export default connect(

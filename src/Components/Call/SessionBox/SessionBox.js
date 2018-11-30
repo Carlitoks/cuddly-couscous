@@ -50,6 +50,9 @@ class SessionBox extends Component {
       },
       connectionDestroyed: event => {
         console.log("CONNECTION DESTROYED EVENT", event);
+        this.props.updateSettings({
+          modalReconnect: true
+        });
       },
       error: event => {
         console.log("SESSION ERROR EVENT", event);
@@ -77,9 +80,6 @@ class SessionBox extends Component {
       },
       sessionReconnecting: () => {
         console.log("SESSION RECONNECTING EVENT");
-        this.props.updateSettings({
-          modalReconnect: true
-        });
       },
       signal: event => {
         console.log("SIGNAL EVENT", event);

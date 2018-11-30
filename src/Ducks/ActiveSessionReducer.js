@@ -153,6 +153,7 @@ const initialState = {
   reconnecting: false,
   isConnectedToInternet: true,
   publisherSubscriberError: false,
+  processing: false,
 
   //Tokbox Video Warnings
   localVideoWarning: "DISABLED",
@@ -320,10 +321,12 @@ export const resetTimerAsync = () => (dispatch, getState) => {
 
 export const resetReconnectAsync = () => (dispatch, getState) => {
   const { activeSessionReducer } = getState();
-  timer.clearInterval("counterId");
+
+  //TODO: if something is wrong with the timer
+  //      set counterId: null in the update
+  //      and timer.clearInterval("counterId");
   dispatch(
     update({
-      counterId: null,
       modalReconnectCounter: 0
     })
   );
@@ -366,6 +369,26 @@ export const updateVideoWarningEvent = (reason, data) => dispatch => {
     })
   );
   dispatch(sendSignal(reason, data));
+};
+
+export const tryAgainCall = (sessionID, reason, token) => async dispatch => {
+  await Sessions.EndSession(sessionID, reason, token)
+    .then(response => {
+      dispatch(endSession());
+      timer.clearInterval("timer");
+      timer.clearInterval("verifyCallId");
+      BackgroundCleanInterval(activeSessionReducer.timer);
+      dispatch(resetTimerAsync());
+      cleanNotifications();
+      if (reason === REASON.RETRY) {
+        dispatch({ type: "CustomerView" });
+      }
+    })
+    .catch(error => {
+      dispatch(networkError(error));
+      dispatch(clear());
+      dispatch({ type: "Home" });
+    });
 };
 
 export const HandleEndCall = (sessionID, reason, token, alert) => (
@@ -641,12 +664,20 @@ export const closeCall = (reason, alert) => (dispatch, getState) => {
   timer.clearInterval("counterId");
   timer.clearInterval("timer");
   timer.clearInterval("verifyCallId");
-  dispatch(
-    updateContactLinguist({
-      modalContact: false,
-      customScenarioNote: ""
-    })
-  );
+  if (reason != REASON.RETRY) {
+    dispatch(
+      updateContactLinguist({
+        modalContact: false,
+        customScenarioNote: ""
+      })
+    );
+  } else {
+    dispatch(
+      updateContactLinguist({
+        modalContact: false
+      })
+    );
+  }
   dispatch(resetCounter());
 
   if (reason === REASON.RETRY) {
