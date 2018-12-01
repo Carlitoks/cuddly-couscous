@@ -48,9 +48,16 @@ class ModalReconnect extends Component {
   }
 
   renderReconnectingMessage() {
-    const { isLinguist } = this.props;
+    const { isLinguist, isConnectedToInternet, linguist } = this.props;
 
-    const message = I18n.t("weAreWorking");
+    let message = I18n.t("weAreWorking");
+
+    if (isConnectedToInternet && !isLinguist) {
+      message = I18n.t("linguistReconnect", {
+        firstName: linguist.firstName,
+        lastInitial: linguist.lastInitial
+      });
+    }
 
     return <ReconnectingMessage message={message} />;
   }

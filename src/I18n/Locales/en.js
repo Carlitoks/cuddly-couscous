@@ -253,6 +253,7 @@ export default (ENG = {
   linguistNumberText: "We will text you a code to verify your phone.",
   linguistPassword: "Password",
   linguistPasswordTitle: "Create Your Password",
+  linguistReconnect: "{{firstName}} {{lastInitial}} is reconnecting...",
   locale: "I18n Locale",
   login: "Login",
   loginLogoutExampleTitle: "Login/Logout Redux + Sagas Example",
