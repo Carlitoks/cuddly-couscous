@@ -24,29 +24,29 @@ class RecentActivity extends Component {
     if (!this.emptyActivity) {
       const scenario = scenariosList[index];
       updateLinguistForm({
-        selectedScenarios: [scenario.scenario]
+        selectedScenarios: [scenario ? scenario.scenario : null]
       });
 
       const primaryLanguageIndex = findIndex(
         Languages,
-        language => language[3] === scenario.primaryLangCode
+        language => language[3] === scenario ? scenario.primaryLangCode : null
       );
 
       const secondaryLanguageIndex = findIndex(
         Languages,
-        language => language[3] === scenario.secondaryLangCode
+        language => language[3] === scenario ? scenario.secondaryLangCode : null
       );
 
       updateContactLinguist({
-        primaryLangCode: scenario.primaryLangCode,
+        primaryLangCode: scenario ? scenario.primaryLangCode : null,
         selectedLanguageFrom: Languages[primaryLanguageIndex]["name"],
         selectedLanguage: Languages[secondaryLanguageIndex]["name"],
-        secundaryLangCode: scenario.secondaryLangCode,
-        customScenarioNote: scenario.customScenarioNote
+        secundaryLangCode: scenario ? scenario.secondaryLangCode : null,
+        customScenarioNote: scenario ? scenario.customScenarioNote : null
       });
 
       updateCallCustomerSettings({
-        selectedTime: scenario.estimatedMinutes
+        selectedTime: scenario ? scenario.estimatedMinutes : null,
       });
 
       navigation.dispatch({ type: "CallConfirmationView" });
