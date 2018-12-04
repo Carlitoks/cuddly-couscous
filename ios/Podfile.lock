@@ -1,4 +1,5 @@
 PODS:
+  - Amplitude-iOS (4.3.1)
   - AppCenter/Analytics (1.6.1):
     - AppCenter/Core
   - AppCenter/Core (1.6.1)
@@ -6,8 +7,14 @@ PODS:
     - AppCenter/Core
   - AppCenterReactNativeShared (1.5.1):
     - AppCenter/Core (= 1.6.1)
-  - BVLinearGradient (2.4.2):
+  - Base64 (1.1.2)
+  - BVLinearGradient (2.4.3):
     - React
+  - CodePush (5.4.2):
+    - Base64 (~> 1.1)
+    - JWT (~> 3.0.0-beta.7)
+    - React
+    - SSZipArchive (~> 2.1)
   - Crashlytics (3.11.0):
     - Fabric (~> 1.8.0)
   - Fabric (1.8.0)
@@ -37,10 +44,15 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (5.3.4):
     - GoogleUtilities/Logger
+  - JWT (3.0.0-beta.11):
+    - Base64 (~> 1.1.2)
   - OpenTok (2.15.0)
   - Protobuf (3.6.1)
   - React (0.57.4):
     - React/Core (= 0.57.4)
+  - react-native-amplitude-analytics (0.2.6):
+    - Amplitude-iOS (~> 4.3.1)
+    - React
   - react-native-background-timer (2.0.0):
     - React
   - react-native-camera (0.12.0):
@@ -62,7 +74,7 @@ PODS:
     - React
   - RNDeviceInfo (0.9.3):
     - React
-  - RNFS (2.11.15):
+  - RNFS (2.12.1):
     - React
   - RNI18n (2.0.15):
     - React
@@ -73,6 +85,7 @@ PODS:
     - React/Core
   - RNSVG (6.5.2):
     - React
+  - SSZipArchive (2.1.4)
   - Stripe (11.2.0)
   - tipsi-stripe (5.6.0):
     - React
@@ -80,15 +93,18 @@ PODS:
   - yoga (0.57.4.React)
 
 DEPENDENCIES:
+  - Amplitude-iOS (~> 4.3.1)
   - AppCenter/Analytics (~> 1.6.1)
   - AppCenter/Crashes (~> 1.6.1)
   - AppCenterReactNativeShared (~> 1.5.1)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
+  - CodePush (from `../node_modules/react-native-code-push`)
   - Crashlytics
   - Fabric
   - Firebase/Messaging
   - OpenTok
   - React (from `../node_modules/react-native`)
+  - react-native-amplitude-analytics (from `../node_modules/react-native-amplitude-analytics`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-fetch-blob (from `../node_modules/react-native-fetch-blob`)
@@ -106,8 +122,10 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Amplitude-iOS
     - AppCenter
     - AppCenterReactNativeShared
+    - Base64
     - Crashlytics
     - Fabric
     - Firebase
@@ -116,15 +134,21 @@ SPEC REPOS:
     - FirebaseInstanceID
     - FirebaseMessaging
     - GoogleUtilities
+    - JWT
     - OpenTok
     - Protobuf
+    - SSZipArchive
     - Stripe
 
 EXTERNAL SOURCES:
   BVLinearGradient:
     :path: "../node_modules/react-native-linear-gradient"
+  CodePush:
+    :path: "../node_modules/react-native-code-push"
   React:
     :path: "../node_modules/react-native"
+  react-native-amplitude-analytics:
+    :path: "../node_modules/react-native-amplitude-analytics"
   react-native-background-timer:
     :path: "../node_modules/react-native-background-timer"
   react-native-camera:
@@ -153,9 +177,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga/yoga.podspec"
 
 SPEC CHECKSUMS:
+  Amplitude-iOS: df355e2be58972041acde9576a2ae97c217bf941
   AppCenter: f9eb653a45cece34549232f295aec05260dfc24f
   AppCenterReactNativeShared: 5b40dc5bbaf891697d1982e0ae0e9b1120dd4274
+  Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   BVLinearGradient: 6d8909e3fc6b089defa4b89d967441fa6827a2ee
+  CodePush: f6b348759cdc42c734d9c3a46ceb2997c270b12e
   Crashlytics: 1448070c1d2731ab71ea7c3faf84ac0f69657287
   Fabric: 4ac1cdfef3004ccd83ce0959b91eda8a6e37df72
   Firebase: b48f9e653da971ecce5b8c749684bc8bb2d26bd3
@@ -164,9 +191,11 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseMessaging: 0f14a264b0d7f867e8eff5d3556bc5d0d4e57888
   GoogleUtilities: abb092d2c12e817fa3e0e7b274987dd72fb86ec3
+  JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
   OpenTok: f2729ddade8dae49f233b22670dc795ecd236660
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
+  react-native-amplitude-analytics: f72b7f6fe8f85ccd66ccb67bbd8595e44609ff41
   react-native-background-timer: 63dcbf37dbcf294b5c6c071afcdc661fa06a7594
   react-native-camera: 46c2596d7b5f0d46eaf8022eeee4b7689f826a67
   react-native-fetch-blob: 63394b1d7b0781547b3e4463b3195790177b1222
@@ -178,10 +207,11 @@ SPEC CHECKSUMS:
   RNI18n: 46b8694063fbd699f2c06a4dc8e835b3176763b1
   RNSound: b360b3862d3118ed1c74bb9825696b5957686ac4
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
+  SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   Stripe: 898f83a95d72180c6eb4acd65b2ae6158fc6a8bd
   tipsi-stripe: 5688e4b999acac90e97db93c83957dae0aa32cde
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: b5ad6d81cb4093e0f9a3ff6d7a5f3866019c5612
+PODFILE CHECKSUM: c07fea0ca3936701ef5eea88cb7f6856b99673a5
 
 COCOAPODS: 1.5.3

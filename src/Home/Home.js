@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import RNAmplitude from "react-native-amplitude-analytics";
+import { amplitudKey } from "../Config/env";
 
 import { View } from "react-native";
 import HomeCustomer from "./Customer/HomeCustomer";
@@ -7,12 +9,16 @@ import HomeLinguist from "./Linguist/HomeLinguist";
 import LoginView from "../Onboarding/LoginView/LoginView";
 import PushNotifications from "../Util/PushNotification";
 import FCM, { FCMEvent } from "react-native-fcm";
-import { registerFCM } from '../Ducks/PushNotificationReducer';
+import { registerFCM } from "../Ducks/PushNotificationReducer";
 import { User } from "../Api";
 
 class Home extends Component {
   componentWillMount() {
     const { isLoggedIn, navigation, uuid, token, nativeLangCode } = this.props;
+
+    const amplitude = new RNAmplitude(amplitudKey);
+    amplitude.setUserId(uuid);
+
     PushNotifications.getNotificationsBackground();
 
     if (!isLoggedIn) {
@@ -26,14 +32,19 @@ class Home extends Component {
         .then(res => {
           this.props.registerFCM({ tokenFCM: FCMtoken });
         })
-        .catch(error =>  console.log(error));
+        .catch(error => console.log(error));
     });
   }
 
   updateFCMToken = () => {
     FCM.getFCMToken().then(token => {
       // save token in sever
-      User.updateDevice(this.props.uuid, this.props.deviceId, this.props.token, { notificationToken: token })
+      User.updateDevice(
+        this.props.uuid,
+        this.props.deviceId,
+        this.props.token,
+        { notificationToken: token }
+      )
         .then(res => {
           this.props.registerFCM({ tokenFCM: token });
         })
@@ -47,7 +58,7 @@ class Home extends Component {
     this.updateFCMToken();
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.updateTokenListener.remove();
   }
 
@@ -74,7 +85,10 @@ const mS = state => ({
 });
 
 const mD = {
-  registerFCM,
+  registerFCM
 };
 
-export default connect(mS, mD)(Home);
+export default connect(
+  mS,
+  mD
+)(Home);

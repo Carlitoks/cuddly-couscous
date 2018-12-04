@@ -401,6 +401,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		887B05E321AFA0D400E97B40 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 887B05B521AFA0D300E97B40 /* RNAmplitudeSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNAmplitudeSDK;
+		};
 		A29B590221501E6F0055B4EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 046021E0149D40BE82B03E96 /* RNInstabug.xcodeproj */;
@@ -526,6 +533,7 @@
 		79694DA4E9CF44099324A2BD /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		806C6008FAE54368AC65C28A /* Fontin-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Fontin-Regular.ttf"; path = "../src/Assets/Fonts/Fontin-Regular.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		887B05B521AFA0D300E97B40 /* RNAmplitudeSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNAmplitudeSDK.xcodeproj; path = "../node_modules/react-native-amplitude-analytics/ios/RNAmplitudeSDK.xcodeproj"; sourceTree = "<group>"; };
 		8AE10DD4DF194C9EA7A38669 /* libAppCenterReactNativeCrashes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNativeCrashes.a; sourceTree = "<group>"; };
 		8B755116ACA3441F8628A51F /* RNInCallManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNInCallManager.xcodeproj; path = "../node_modules/react-native-incall-manager/ios/RNInCallManager.xcodeproj"; sourceTree = "<group>"; };
 		914EB443250A4B78825A1C4F /* AppCenterReactNativeAnalytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AppCenterReactNativeAnalytics.xcodeproj; path = "../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics.xcodeproj"; sourceTree = "<group>"; };
@@ -889,6 +897,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				491575FABCD2415BB592AC8D /* RNVectorIcons.xcodeproj */,
+				887B05B521AFA0D300E97B40 /* RNAmplitudeSDK.xcodeproj */,
 				49E74BA361A34786B9E0CA11 /* RNImagePicker.xcodeproj */,
 				8B755116ACA3441F8628A51F /* RNInCallManager.xcodeproj */,
 				71186ABDEEE64A4F903AF52E /* AppCenterReactNative.xcodeproj */,
@@ -942,6 +951,14 @@
 				00E356EE1AD99517003FC87E /* NewSoloTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* NewSolo-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* NewSolo-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		887B05B621AFA0D300E97B40 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				887B05E421AFA0D400E97B40 /* libRNAmplitudeSDK.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1209,6 +1226,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 887B05B621AFA0D300E97B40 /* Products */;
+					ProjectRef = 887B05B521AFA0D300E97B40 /* RNAmplitudeSDK.xcodeproj */;
 				},
 				{
 					ProductGroup = 0715C1D4203E7D0800F76F07 /* Products */;
@@ -1547,6 +1568,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		887B05E421AFA0D400E97B40 /* libRNAmplitudeSDK.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNAmplitudeSDK.a;
+			remoteRef = 887B05E321AFA0D400E97B40 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		A29B590321501E6F0055B4EC /* libRNInstabug.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1705,10 +1733,18 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-NewSolo/Pods-NewSolo-resources.sh",
+				"${PODS_ROOT}/Amplitude-iOS/Amplitude/api.amplitude.com.der",
+				"${PODS_ROOT}/Amplitude-iOS/Amplitude/ComodoCaLimitedRsaCertificationAuthority.der",
+				"${PODS_ROOT}/Amplitude-iOS/Amplitude/ComodoRsaCA.der",
+				"${PODS_ROOT}/Amplitude-iOS/Amplitude/ComodoRsaDomainValidationCA.der",
 				"${PODS_CONFIGURATION_BUILD_DIR}/Stripe/Stripe.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/api.amplitude.com.der",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ComodoCaLimitedRsaCertificationAuthority.der",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ComodoRsaCA.der",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ComodoRsaDomainValidationCA.der",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Stripe.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

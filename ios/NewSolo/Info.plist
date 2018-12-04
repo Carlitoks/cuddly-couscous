@@ -70,8 +70,7 @@
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>purpose for using</string>
 	<key>LSApplicationQueriesSchemes</key>
-	<array>
-	</array>
+	<array/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
