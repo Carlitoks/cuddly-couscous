@@ -11,7 +11,7 @@ const AXIOS = axios.create({
     accept: "application/json",
     "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
     "Content-Type": "application/json",
-    "X-Mobile-Version": DeviceInfo.getReadableVersion()
+    "X-Solo-Mobile-Version": DeviceInfo.getReadableVersion()
   },
   timeout: 30000
 });
