@@ -1,5 +1,6 @@
 import axios from "axios";
 import { URL } from "./env";
+import DeviceInfo from "react-native-device-info";
 
 // TODO: Configure Timeout
 const AXIOS = axios.create({
@@ -9,7 +10,8 @@ const AXIOS = axios.create({
       "Origin, X-Requested-With, Content-Type, Accept",
     accept: "application/json",
     "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "X-Mobile-Version": DeviceInfo.getReadableVersion()
   },
   timeout: 30000
 });
