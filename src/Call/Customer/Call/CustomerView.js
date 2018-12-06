@@ -30,7 +30,9 @@ import {
   View,
   TouchableWithoutFeedback,
   DeviceEventEmitter,
-  Platform
+  Platform,
+  NativeModules,
+  NativeEventEmitter
 } from "react-native";
 
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
@@ -57,7 +59,7 @@ import {
 } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
 import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
-
+import DeviceInfo from "react-native-device-info";
 class CustomerView extends Component {
   constructor() {
     super();
@@ -66,8 +68,34 @@ class CustomerView extends Component {
     };
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     BackgroundStart();
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      const nativeBridge = NativeModules.InCallManager;
+      const NativeModule = new NativeEventEmitter(nativeBridge);
+      this.wiredHeadsetListener = NativeModule.addListener(
+        "WiredHeadset",
+        this.handleWiredHeadSetState
+      );
+    } else {
+      InCallManager.getIsWiredHeadsetPluggedIn()
+        .then(res => {
+          InCallManager.start({ media: "audio" });
+          let isWiredHeadsetPluggedIn = res.isWiredHeadsetPluggedIn;
+          if (isWiredHeadsetPluggedIn) {
+            InCallManager.setForceSpeakerphoneOn(false);
+          } else {
+            InCallManager.setForceSpeakerphoneOn(true);
+          }
+        })
+        .catch(err => {
+          console.log(
+            "InCallManager.getIsWiredHeadsetPluggedIn() catch: ",
+            err
+          );
+        });
+    }
 
     //Check for permission before the start method
     if (InCallManager.recordPermission !== "granted") {
@@ -86,6 +114,15 @@ class CustomerView extends Component {
     //InCallManager.setForceSpeakerphoneOn(true);
   }
 
+  handleWiredHeadSetState = deviceState => {
+    InCallManager.start({ media: "audio" });
+    if (deviceState.isPlugged) {
+      InCallManager.setForceSpeakerphoneOn(false);
+    } else {
+      //InCallManager.start({ media: "audio" });
+      InCallManager.setForceSpeakerphoneOn(true);
+    }
+  };
   async componentDidMount() {
     emitLocalNotification({
       title: "Call",
@@ -127,6 +164,10 @@ class CustomerView extends Component {
 
   async componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer); // remove interval of timer
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      this.wiredHeadsetListener.remove();
+    }
     cleanNotifications();
     this.props.resetTimerAsync(); // reset call timer
     this.props.resetCounter();

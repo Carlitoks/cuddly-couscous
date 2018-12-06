@@ -4,8 +4,9 @@ import {
   View,
   Image,
   TouchableWithoutFeedback,
-  DeviceEventEmitter,
-  Platform
+  Platform,
+  NativeModules,
+  NativeEventEmitter
 } from "react-native";
 import KeepAwake from "react-native-keep-awake";
 import InCallManager from "react-native-incall-manager";
@@ -51,6 +52,7 @@ import ConnectingView from "../Connecting/ConnectingView";
 import { Fade } from "../../../Effects";
 import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
 import FCM from "react-native-fcm";
+import DeviceInfo from "react-native-device-info";
 
 class LinguistView extends Component {
   constructor() {
@@ -60,14 +62,38 @@ class LinguistView extends Component {
     };
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     BackgroundStart();
-
     if (Platform.OS === "android") {
       FCM.removeAllDeliveredNotifications();
       FCM.cancelAllLocalNotifications();
     }
-
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      const nativeBridge = NativeModules.InCallManager;
+      const NativeModule = new NativeEventEmitter(nativeBridge);
+      this.wiredHeadsetListener = NativeModule.addListener(
+        "WiredHeadset",
+        this.handleWiredHeadSetState
+      );
+    } else {
+      InCallManager.getIsWiredHeadsetPluggedIn()
+        .then(res => {
+          InCallManager.start({ media: "audio" });
+          let isWiredHeadsetPluggedIn = res.isWiredHeadsetPluggedIn;
+          if (isWiredHeadsetPluggedIn) {
+            InCallManager.setForceSpeakerphoneOn(false);
+          } else {
+            InCallManager.setForceSpeakerphoneOn(true);
+          }
+        })
+        .catch(err => {
+          console.log(
+            "InCallManager.getIsWiredHeadsetPluggedIn() catch: ",
+            err
+          );
+        });
+    }
     //Check for permission before the start method
     if (InCallManager.recordPermission !== "granted") {
       InCallManager.requestRecordPermission()
@@ -84,7 +110,15 @@ class LinguistView extends Component {
     //InCallManager.start({ media: "audio" });
     //InCallManager.setForceSpeakerphoneOn(true);
   }
-
+  handleWiredHeadSetState = deviceState => {
+    InCallManager.start({ media: "audio" });
+    if (deviceState.isPlugged) {
+      InCallManager.setForceSpeakerphoneOn(false);
+    } else {
+      //InCallManager.start({ media: "audio" });
+      InCallManager.setForceSpeakerphoneOn(true);
+    }
+  };
   componentDidMount() {
     const {
       linguistTokboxSessionID,
@@ -108,6 +142,11 @@ class LinguistView extends Component {
   }
 
   async componentWillUnmount() {
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      this.wiredHeadsetListener.remove();
+    }
+
     BackgroundCleanInterval(this.props.timer);
     await timer.clearInterval("counterId");
     await timer.clearInterval("timer");

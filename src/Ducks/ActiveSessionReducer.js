@@ -31,6 +31,7 @@ import {
   updateSettings as updateProfileLinguist
 } from "./ProfileLinguistReducer";
 import SoundManager from "../Util/SoundManager";
+import DeviceInfo from "react-native-device-info";
 
 const ACTIONS = {
   CLEAR: "activeSession/clear",
@@ -135,6 +136,7 @@ const initialState = {
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 60, // Initial time selected: 10 min
   allowTimeSelection: true,
+  isHeadsetConnected: false,
 
   //Extra time
   visible: true,
@@ -203,8 +205,9 @@ export const streamCreatedEvent = event => async (dispatch, getState) => {
     dispatch(
       GetSessionInfoLinguist(activeSessionReducer.sessionID, auth.token)
     );
+    
     await InCallManager.start({ media: "audio" });
-    await InCallManager.setForceSpeakerphoneOn(true);
+    //await InCallManager.setForceSpeakerphoneOn(true);
   }
 };
 
@@ -264,8 +267,9 @@ export const remountPublisherAndSubscriber = () => (dispatch, getState) => {
 export const publisherStart = () => async (dispatch, getState) => {
   const { userProfile } = getState();
   if (userProfile.linguistProfile) {
-    await InCallManager.start({ media: "audio" });
-    await InCallManager.setForceSpeakerphoneOn(true);
+    
+    InCallManager.start({ media: "audio" });
+    //InCallManager.setForceSpeakerphoneOn(true);
   }
 };
 
@@ -600,7 +604,6 @@ export const startTimer = () => (dispatch, getState) => {
           } = getState().activeSessionReducer;
           let availableMinutes;
           let paymentDetail;
-
           if (events.id && events.id !== "") {
             availableMinutes = 60;
           } else {
