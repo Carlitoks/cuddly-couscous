@@ -218,6 +218,16 @@ class Home extends Component {
     ) {
       Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
     }
+
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.alertCreateSessionFail
+    ) {
+      Alert.alert(
+        I18n.t("notification"),
+        I18n.t("session.createSessionFailed")
+      );
+    }
   }
 
   changeModal() {

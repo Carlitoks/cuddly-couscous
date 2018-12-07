@@ -458,7 +458,7 @@ export const createSession = ({
       // dispatch(resetCounter());
       // dispatch(resetCounterVerify());
       // dispatch(clear());
-      dispatch({ type: "Home" });
+      dispatch({ type: "Home", params: { alertCreateSessionFail: true } });
     });
 };
 
