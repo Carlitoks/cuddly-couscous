@@ -84,8 +84,10 @@ class CustomerView extends Component {
           InCallManager.start({ media: "audio" });
           let isWiredHeadsetPluggedIn = res.isWiredHeadsetPluggedIn;
           if (isWiredHeadsetPluggedIn) {
+            this.props.updateSettings({ speaker: false });
             InCallManager.setForceSpeakerphoneOn(false);
           } else {
+            this.props.updateSettings({ speaker: true });
             InCallManager.setForceSpeakerphoneOn(true);
           }
         })
@@ -117,9 +119,10 @@ class CustomerView extends Component {
   handleWiredHeadSetState = deviceState => {
     InCallManager.start({ media: "audio" });
     if (deviceState.isPlugged) {
+      this.props.updateSettings({ speaker: false });
       InCallManager.setForceSpeakerphoneOn(false);
     } else {
-      //InCallManager.start({ media: "audio" });
+      this.props.updateSettings({ speaker: true });
       InCallManager.setForceSpeakerphoneOn(true);
     }
   };
