@@ -539,6 +539,7 @@ export default (ENG = {
       "To optimize connectivity, your customer's video has been temporarily disabled. Video will resume when connectivity improves.",
     alertYouCannotSeeLinguist:
       "To optimize connectivity, your Language Jeenie's video has been temporarily disabled. Video will resume when connectivity improves.",
+    createSessionFailed: "Temporarily unable to start call. Please try again.",
 
     // used when rating a session
     rating: {
