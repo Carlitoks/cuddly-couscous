@@ -440,8 +440,15 @@ export const createSession = ({
   customScenarioNote,
   token,
   eventID,
-  location
+  location,
+  video
 }) => (dispatch, getState) => {
+  let avModePreference;
+  if (video) {
+    avModePreference = "video";
+  } else {
+    avModePreference = "audio";
+  }
   return Sessions.createSession(
     "immediate_virtual",
     "first_available",
@@ -452,7 +459,8 @@ export const createSession = ({
     token,
     customScenarioNote,
     eventID,
-    location
+    location,
+    avModePreference
   )
     .then(response => {
       if (response) {
@@ -800,6 +808,10 @@ export const asyncAcceptsInvite = (
     if (reason && reason.accept) {
       Sessions.linguistFetchesInvite(invitationID, token)
         .then(res => {
+          let video = true;
+          if (res.data.session.avModePreference == "audio") {
+            video = false;
+          }
           if (!res.data.session.endReason) {
             Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
               .then(response => {
@@ -809,7 +821,8 @@ export const asyncAcceptsInvite = (
                     sessionID: callLinguistSettings.sessionID,
                     customerName: callLinguistSettings.customerName,
                     avatarURL: callLinguistSettings.avatarURL,
-                    isLinguist: true
+                    isLinguist: true,
+                    video: video
                   })
                 );
                 dispatch(

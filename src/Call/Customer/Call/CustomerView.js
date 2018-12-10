@@ -204,7 +204,8 @@ class CustomerView extends Component {
       token,
       eventID,
       customerLocation,
-      event
+      event,
+      video
     } = this.props;
     await createSession({
       primaryLangCode: userNativeLangIsSupported
@@ -221,7 +222,8 @@ class CustomerView extends Component {
       customScenarioNote: customScenarioNote,
       token: token,
       eventID: eventID,
-      location: customerLocation
+      location: customerLocation,
+      video: video
     }).then(response => {
       this.callTimeOut();
     });
@@ -334,6 +336,7 @@ const mS = state => ({
   location: state.callCustomerSettings.location,
   eventID: state.events.id,
   localVideoWarning: state.activeSessionReducer.localVideoWarning,
+  video: state.activeSessionReducer.video,
   signalVideoWarning: state.activeSessionReducer.signalVideoWarning,
   customerLocation: state.activeSessionReducer.location,
   event: state.events
