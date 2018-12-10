@@ -40,7 +40,6 @@ class ConnectingView extends Component {
   }
 
   componentWillMount() {
-    this.props.update({ speaker: false });
     SoundManager["IncomingCall"].stop();
     InCallManager.start({ media: "audio" });
     this.conectingTimer();
@@ -57,10 +56,10 @@ class ConnectingView extends Component {
         .then(res => {
           let isWiredHeadsetPluggedIn = res.isWiredHeadsetPluggedIn;
           if (isWiredHeadsetPluggedIn) {
-            this.props.updateSettings({ speaker: false });
+            this.props.update({ speaker: false });
             InCallManager.setForceSpeakerphoneOn(false);
           } else {
-            this.props.updateSettings({ speaker: true });
+            this.props.update({ speaker: true });
             InCallManager.setForceSpeakerphoneOn(true);
           }
         })
@@ -74,10 +73,10 @@ class ConnectingView extends Component {
   }
   handleWiredHeadSetState = deviceState => {
     if (deviceState.isPlugged) {
-      this.props.updateSettings({ speaker: false });
+      this.props.update({ speaker: false });
       InCallManager.setForceSpeakerphoneOn(false);
     } else {
-      this.props.updateSettings({ speaker: true });
+      this.props.update({ speaker: true });
       InCallManager.setForceSpeakerphoneOn(true);
     }
   };
