@@ -205,7 +205,7 @@ export const streamCreatedEvent = event => async (dispatch, getState) => {
     dispatch(
       GetSessionInfoLinguist(activeSessionReducer.sessionID, auth.token)
     );
-    
+
     await InCallManager.start({ media: "audio" });
     //await InCallManager.setForceSpeakerphoneOn(true);
   }
@@ -267,7 +267,6 @@ export const remountPublisherAndSubscriber = () => (dispatch, getState) => {
 export const publisherStart = () => async (dispatch, getState) => {
   const { userProfile } = getState();
   if (userProfile.linguistProfile) {
-    
     InCallManager.start({ media: "audio" });
     //InCallManager.setForceSpeakerphoneOn(true);
   }
@@ -874,7 +873,7 @@ export const asyncAcceptsInvite = (
         .then(response => {
           dispatch(clear());
           resolve({
-            ...reponse,
+            ...response,
             type: "Home",
             params: {},
             buttonDisabled: true
