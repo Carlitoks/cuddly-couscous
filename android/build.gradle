@@ -13,9 +13,13 @@ buildscript {
     repositories {
         jcenter()
         google()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'com.google.gms:google-services:3.0.0'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -41,7 +45,24 @@ allprojects {
 }
 
 
+subprojects { project ->
+  if (['react-native-fetch-blob',
+  'react-native-image-picker',
+  'react-native-image-resizer',
+  'react-native-svg',
+  'react-native-vector-icons',
+  'instabug-reactnative'].any {
+    project.name.contains(it)
+  }) {
+    buildscript {
+      repositories {
+        maven { url "https://dl.bintray.com/android/android-tools/" }
+      }
+    }
+  }
+}
+
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.4'
+    gradleVersion = '4.5'
     distributionUrl = distributionUrl.replace("bin", "all")
 }
