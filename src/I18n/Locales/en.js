@@ -200,7 +200,7 @@ export default (ENG = {
   iAm18: "I am 18 years of age or older",
   iAmNotSure: "I'm not sure",
   igniteGenerated: "Ignite Generate Screens",
-  incomingCall: "Incoming video call...",
+  incomingCall: "Incoming call...",
   iNeedAssistanceWith: "(Optional) I need assistance with...",
   iNeedSomethingElse: "(Optional) I need assistance with...",
   interfaceLocalization: "Language",
