@@ -3,8 +3,8 @@ import { View, Text, Image } from "react-native";
 
 import styles from "./styles";
 
-const NoVideoScreen = ({ disabledSubscriber, sessionInfoName, image }) =>
-  disabledSubscriber && (
+const NoVideoScreen = ({ disabledSubscriber, sessionInfoName, image, video }) =>
+  (!video || disabledSubscriber) && (
     <View style={styles.noVideoContainer}>
       <Text style={styles.noVideoName}>{sessionInfoName}</Text>
 
