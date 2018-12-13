@@ -4,3 +4,4 @@ export const stripePublishableKey = "pk_test_VJ3Qq3KbSrkFGIjughMh88Hv";
 export const instabugToken = "83f07c5f8dcb8496e3287f280ce6f61d";
 export const codePushiOSKey = "5GPetYkgqkaZiSXSAzjbQiRTHsu1H1lJEb-Rm";
 export const codePushAndroidKey = "Ltk63ltZ1T_1317CwYx0MpxKJLLJHk_MVZZC7";
+export const amplitudKey = "f389521dca5bb940d2352cfa817168ec";

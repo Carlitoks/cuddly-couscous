@@ -50,6 +50,9 @@ class SessionBox extends Component {
       },
       connectionDestroyed: event => {
         console.log("CONNECTION DESTROYED EVENT", event);
+        this.props.updateSettings({
+          modalReconnect: true
+        });
       },
       error: event => {
         console.log("SESSION ERROR EVENT", event);
@@ -77,9 +80,6 @@ class SessionBox extends Component {
       },
       sessionReconnecting: () => {
         console.log("SESSION RECONNECTING EVENT");
-        this.props.updateSettings({
-          modalReconnect: true
-        });
       },
       signal: event => {
         console.log("SIGNAL EVENT", event);
@@ -153,12 +153,14 @@ class SessionBox extends Component {
       children,
       signal,
       isConnectedToInternet,
-      publisherSubscriberError
+      publisherSubscriberError,
+      video
     } = this.props;
 
     return (
       <View style={styles.sessionContainer}>
         {tokboxSessionID && tokboxSessionToken && isConnectedToInternet && (
+
           <OTSession
             apiKey={TOKBOX_APIKEY}
             sessionId={tokboxSessionID}
@@ -184,6 +186,7 @@ class SessionBox extends Component {
               image={image}
               sessionInfoName={sessionInfoName}
               disabledSubscriber={disabledSubscriber}
+              video={video}
             />
           </OTSession>
         )}
@@ -208,7 +211,8 @@ const mS = state => ({
   visibility: state.contactLinguist.modalReconnect,
   counterId: state.contactLinguist.counterId,
   isConnectedToInternet: state.activeSessionReducer.isConnectedToInternet,
-  publisherSubscriberError: state.activeSessionReducer.publisherSubscriberError
+  publisherSubscriberError: state.activeSessionReducer.publisherSubscriberError,
+  video: state.activeSessionReducer.video
 });
 
 const mD = {

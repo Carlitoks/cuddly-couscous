@@ -30,7 +30,9 @@ import {
   View,
   TouchableWithoutFeedback,
   DeviceEventEmitter,
-  Platform
+  Platform,
+  NativeModules,
+  NativeEventEmitter
 } from "react-native";
 
 import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
@@ -57,7 +59,7 @@ import {
 } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
 import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
-
+import DeviceInfo from "react-native-device-info";
 class CustomerView extends Component {
   constructor() {
     super();
@@ -66,8 +68,36 @@ class CustomerView extends Component {
     };
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     BackgroundStart();
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      const nativeBridge = NativeModules.InCallManager;
+      const NativeModule = new NativeEventEmitter(nativeBridge);
+      this.wiredHeadsetListener = NativeModule.addListener(
+        "WiredHeadset",
+        this.handleWiredHeadSetState
+      );
+    } else {
+      InCallManager.getIsWiredHeadsetPluggedIn()
+        .then(res => {
+          InCallManager.start({ media: "audio" });
+          let isWiredHeadsetPluggedIn = res.isWiredHeadsetPluggedIn;
+          if (isWiredHeadsetPluggedIn) {
+            this.props.updateSettings({ speaker: false });
+            InCallManager.setForceSpeakerphoneOn(false);
+          } else {
+            this.props.updateSettings({ speaker: true });
+            InCallManager.setForceSpeakerphoneOn(true);
+          }
+        })
+        .catch(err => {
+          console.log(
+            "InCallManager.getIsWiredHeadsetPluggedIn() catch: ",
+            err
+          );
+        });
+    }
 
     //Check for permission before the start method
     if (InCallManager.recordPermission !== "granted") {
@@ -86,6 +116,16 @@ class CustomerView extends Component {
     //InCallManager.setForceSpeakerphoneOn(true);
   }
 
+  handleWiredHeadSetState = deviceState => {
+    InCallManager.start({ media: "audio" });
+    if (deviceState.isPlugged) {
+      this.props.updateSettings({ speaker: false });
+      InCallManager.setForceSpeakerphoneOn(false);
+    } else {
+      this.props.updateSettings({ speaker: true });
+      InCallManager.setForceSpeakerphoneOn(true);
+    }
+  };
   async componentDidMount() {
     emitLocalNotification({
       title: "Call",
@@ -127,6 +167,10 @@ class CustomerView extends Component {
 
   async componentWillUnmount() {
     BackgroundCleanInterval(this.props.timer); // remove interval of timer
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      this.wiredHeadsetListener.remove();
+    }
     cleanNotifications();
     this.props.resetTimerAsync(); // reset call timer
     this.props.resetCounter();
@@ -160,7 +204,8 @@ class CustomerView extends Component {
       token,
       eventID,
       customerLocation,
-      event
+      event,
+      video
     } = this.props;
     await createSession({
       primaryLangCode: userNativeLangIsSupported
@@ -177,15 +222,23 @@ class CustomerView extends Component {
       customScenarioNote: customScenarioNote,
       token: token,
       eventID: eventID,
-      location: customerLocation
+      location: customerLocation,
+      video: video
+    }).then(response => {
+      this.callTimeOut();
     });
-    this.callTimeOut();
   };
 
   callTimeOut = () => {
     const { incrementCounter } = this.props;
     this.props.updateContactLinguistSettings({
-      counterId: timer.setInterval("counterId", () => incrementCounter(), 1000)
+      counterId: timer.setInterval(
+        "counterId",
+        () => {
+          incrementCounter();
+        },
+        1000
+      )
     });
   };
 
@@ -283,6 +336,7 @@ const mS = state => ({
   location: state.callCustomerSettings.location,
   eventID: state.events.id,
   localVideoWarning: state.activeSessionReducer.localVideoWarning,
+  video: state.activeSessionReducer.video,
   signalVideoWarning: state.activeSessionReducer.signalVideoWarning,
   customerLocation: state.activeSessionReducer.location,
   event: state.events

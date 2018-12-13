@@ -102,7 +102,6 @@ android {
         applicationId "com.newsolo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName "2.5.0"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -146,6 +145,8 @@ android {
 }
 
 dependencies {
+    compile 'com.amplitude:android-sdk:2.19.1'
+    compile project(':react-native-amplitude-analytics')
     compile project(':react-native-code-push')
     compile project(':instabug-reactnative')
     compile project(':tipsi-stripe')

@@ -1,12 +1,19 @@
 import { NavigationActions } from "react-navigation";
-
 import AppNavigation from "../Navigation/AppNavigation";
 import Instabug from "instabug-reactnative";
+import RNAmplitude from "react-native-amplitude-analytics";
+import { amplitudKey } from "../Config/env";
+import { loadState } from "../Config/LocalStorage";
+
 const initialState = AppNavigation.router.getStateForAction(
   AppNavigation.router.getActionForPathAndParams("SelectRoleView")
 );
 
-// console.log(AppNavigation.router.getActionForPathAndParams("LoginView"));
+const amplitude = new RNAmplitude(amplitudKey);
+
+loadState().then(response => {
+  amplitude.setUserId(response.auth.uuid === "" ? null : response.auth.uuid);
+});
 
 export default (reducer = (state, action) => {
   let newState;
@@ -14,7 +21,10 @@ export default (reducer = (state, action) => {
   if (state) {
     //if(action.type !== 'contactLinguist/incrementCounter')
     const [currentRoute] = state.routes[0].routes[0].routes.slice(-1);
-    if (action.type === currentRoute.routeName) return state;
+    //amplitude.logEvent("Navigation", { view: currentRoute.routeName });
+    if (action.type === currentRoute.routeName) {
+      return state;
+    }
   }
 
   switch (action.type) {
@@ -34,6 +44,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "Home":
+      amplitude.logEvent("Navigation", { "View Name": action.type.toString() });
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -48,6 +59,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "CustomerView":
+      amplitude.logEvent("Navigation", { "View Name": action.type.toString() });
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -57,6 +69,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "LinguistView":
+      amplitude.logEvent("Navigation", { "View Name": action.type.toString() });
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -66,6 +79,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "IncomingCallView":
+      amplitude.logEvent("Navigation", { "View Name": action.type.toString() });
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -77,6 +91,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "CheckYourEmailView":
+      amplitude.logEvent("Navigation", { "View Name": action.type.toString() });
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -88,6 +103,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "RateView":
+      amplitude.logEvent("Navigation", { "View Name": action.type.toString() });
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -97,6 +113,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "SelectRoleView/Reset":
+      amplitude.logEvent("Navigation", { "View Name": action.type.toString() });
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -106,6 +123,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "NameCustomerView":
+      amplitude.logEvent("Navigation", { "View Name": action.type.toString() });
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -117,6 +135,12 @@ export default (reducer = (state, action) => {
       break;
 
     default:
+      if (!action.payload && action.type.indexOf("View") != -1) {
+        amplitude.logEvent("Navigation", {
+          "View Name": action.type.toString()
+        });
+      }
+
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.navigate({
           routeName: action.type,

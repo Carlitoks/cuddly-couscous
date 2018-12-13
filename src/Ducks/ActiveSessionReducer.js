@@ -31,6 +31,7 @@ import {
   updateSettings as updateProfileLinguist
 } from "./ProfileLinguistReducer";
 import SoundManager from "../Util/SoundManager";
+import DeviceInfo from "react-native-device-info";
 
 const ACTIONS = {
   CLEAR: "activeSession/clear",
@@ -135,6 +136,7 @@ const initialState = {
   timeOptions: 6, // Ammount of options on the Picker
   selectedTime: 60, // Initial time selected: 10 min
   allowTimeSelection: true,
+  isHeadsetConnected: false,
 
   //Extra time
   visible: true,
@@ -153,6 +155,7 @@ const initialState = {
   reconnecting: false,
   isConnectedToInternet: true,
   publisherSubscriberError: false,
+  processing: false,
 
   //Tokbox Video Warnings
   localVideoWarning: "DISABLED",
@@ -202,8 +205,9 @@ export const streamCreatedEvent = event => async (dispatch, getState) => {
     dispatch(
       GetSessionInfoLinguist(activeSessionReducer.sessionID, auth.token)
     );
+
     await InCallManager.start({ media: "audio" });
-    await InCallManager.setForceSpeakerphoneOn(true);
+    //await InCallManager.setForceSpeakerphoneOn(true);
   }
 };
 
@@ -263,8 +267,8 @@ export const remountPublisherAndSubscriber = () => (dispatch, getState) => {
 export const publisherStart = () => async (dispatch, getState) => {
   const { userProfile } = getState();
   if (userProfile.linguistProfile) {
-    await InCallManager.start({ media: "audio" });
-    await InCallManager.setForceSpeakerphoneOn(true);
+    InCallManager.start({ media: "audio" });
+    //InCallManager.setForceSpeakerphoneOn(true);
   }
 };
 
@@ -320,10 +324,12 @@ export const resetTimerAsync = () => (dispatch, getState) => {
 
 export const resetReconnectAsync = () => (dispatch, getState) => {
   const { activeSessionReducer } = getState();
-  timer.clearInterval("counterId");
+
+  //TODO: if something is wrong with the timer
+  //      set counterId: null in the update
+  //      and timer.clearInterval("counterId");
   dispatch(
     update({
-      counterId: null,
       modalReconnectCounter: 0
     })
   );
@@ -366,6 +372,26 @@ export const updateVideoWarningEvent = (reason, data) => dispatch => {
     })
   );
   dispatch(sendSignal(reason, data));
+};
+
+export const tryAgainCall = (sessionID, reason, token) => async dispatch => {
+  await Sessions.EndSession(sessionID, reason, token)
+    .then(response => {
+      dispatch(endSession());
+      timer.clearInterval("timer");
+      timer.clearInterval("verifyCallId");
+      BackgroundCleanInterval(activeSessionReducer.timer);
+      dispatch(resetTimerAsync());
+      cleanNotifications();
+      if (reason === REASON.RETRY) {
+        dispatch({ type: "CustomerView" });
+      }
+    })
+    .catch(error => {
+      dispatch(networkError(error));
+      dispatch(clear());
+      dispatch({ type: "Home" });
+    });
 };
 
 export const HandleEndCall = (sessionID, reason, token, alert) => (
@@ -413,8 +439,15 @@ export const createSession = ({
   customScenarioNote,
   token,
   eventID,
-  location
+  location,
+  video
 }) => (dispatch, getState) => {
+  let avModePreference;
+  if (video) {
+    avModePreference = "video";
+  } else {
+    avModePreference = "audio";
+  }
   return Sessions.createSession(
     "immediate_virtual",
     "first_available",
@@ -425,7 +458,8 @@ export const createSession = ({
     token,
     customScenarioNote,
     eventID,
-    location
+    location,
+    avModePreference
   )
     .then(response => {
       if (response) {
@@ -449,7 +483,7 @@ export const createSession = ({
       }
     })
     .catch(error => {
-      dispatch(networkError(error));
+      //dispatch(networkError(error));
       const { contactLinguist, activeSessionReducer } = getState();
       timer.clearInterval("counterId");
       timer.clearInterval("verifyCallId");
@@ -577,7 +611,6 @@ export const startTimer = () => (dispatch, getState) => {
           } = getState().activeSessionReducer;
           let availableMinutes;
           let paymentDetail;
-
           if (events.id && events.id !== "") {
             availableMinutes = 60;
           } else {
@@ -641,18 +674,27 @@ export const closeCall = (reason, alert) => (dispatch, getState) => {
   timer.clearInterval("counterId");
   timer.clearInterval("timer");
   timer.clearInterval("verifyCallId");
-  dispatch(
-    updateContactLinguist({
-      modalContact: false,
-      customScenarioNote: ""
-    })
-  );
+  if (reason != REASON.RETRY) {
+    dispatch(
+      updateContactLinguist({
+        modalContact: false,
+        customScenarioNote: ""
+      })
+    );
+  } else {
+    dispatch(
+      updateContactLinguist({
+        modalContact: false
+      })
+    );
+  }
   dispatch(resetCounter());
 
   if (reason === REASON.RETRY) {
     BackgroundCleanInterval(activeSessionReducer.timer);
     dispatch(resetTimerAsync());
     cleanNotifications();
+    dispatch(update({ modalReconnect: false }));
   }
 
   SoundManager["EndCall"].play();
@@ -676,8 +718,10 @@ export const closeCall = (reason, alert) => (dispatch, getState) => {
         dispatch({ type: "RateView" });
       }
     }
+    dispatch(update({ modalReconnect: false }));
   }
   if (reason == "Abort") {
+    dispatch(update({ modalReconnect: false }));
     dispatch({ type: "Home" });
   }
 };
@@ -763,6 +807,10 @@ export const asyncAcceptsInvite = (
     if (reason && reason.accept) {
       Sessions.linguistFetchesInvite(invitationID, token)
         .then(res => {
+          let video = true;
+          if (res.data.session.avModePreference == "audio") {
+            video = false;
+          }
           if (!res.data.session.endReason) {
             Sessions.LinguistIncomingCallResponse(invitationID, reason, token)
               .then(response => {
@@ -772,7 +820,8 @@ export const asyncAcceptsInvite = (
                     sessionID: callLinguistSettings.sessionID,
                     customerName: callLinguistSettings.customerName,
                     avatarURL: callLinguistSettings.avatarURL,
-                    isLinguist: true
+                    isLinguist: true,
+                    video: video
                   })
                 );
                 dispatch(
@@ -824,7 +873,7 @@ export const asyncAcceptsInvite = (
         .then(response => {
           dispatch(clear());
           resolve({
-            ...reponse,
+            ...response,
             type: "Home",
             params: {},
             buttonDisabled: true
@@ -864,6 +913,7 @@ export const startTimerLinguist = () => (dispatch, getState) => {
 export const closeCallReconnect = reason => dispatch => {
   //CHECK
   SoundManager["EndCall"].play();
+  dispatch(update({ modalReconnect: false }));
   dispatch(sendSignal(REASON.DONE, "Ended by Linguist"));
   dispatch({ type: "RateView" });
 };

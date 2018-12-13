@@ -28,6 +28,7 @@
     "prop-types": "^15.5.10",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
+    "react-native-amplitude-analytics": "^0.2.6",
     "react-native-background-timer": "2.0.0",
     "react-native-camera": "^0.12.0",
     "react-native-code-push": "^5.4.2",

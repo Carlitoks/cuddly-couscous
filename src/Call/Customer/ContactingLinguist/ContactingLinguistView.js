@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import timer from "react-native-timer";
 //COMPONENTS
-import { Text, View, ScrollView, ActivityIndicator, Alert } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  NativeModules,
+  NativeEventEmitter
+} from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
@@ -12,7 +19,7 @@ import CallTimer from "../../../Components/CallTimer/CallTimer";
 import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
 // REDUCERS
-import { closeCall } from "../../../Ducks/ActiveSessionReducer";
+import { closeCall, update } from "../../../Ducks/ActiveSessionReducer";
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
 import I18n from "../../../I18n/I18n";
 import {
@@ -21,6 +28,7 @@ import {
 } from "../../../Util/Permission";
 import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
+import DeviceInfo from "react-native-device-info";
 
 class ContactingLinguist extends Component {
   constructor(props) {
@@ -29,6 +37,7 @@ class ContactingLinguist extends Component {
 
   componentWillMount() {
     //this.props.callTimeOut();
+    InCallManager.start({ media: "audio" });
     if (InCallManager.recordPermission !== "granted") {
       InCallManager.requestRecordPermission()
         .then(requestedRecordPermissionResult => {
@@ -41,9 +50,40 @@ class ContactingLinguist extends Component {
           console.log("InCallManager.requestRecordPermission() catch: ", err);
         });
     }
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      const nativeBridge = NativeModules.InCallManager;
+      const NativeModule = new NativeEventEmitter(nativeBridge);
+      this.wiredHeadsetListener = NativeModule.addListener(
+        "WiredHeadset",
+        this.handleWiredHeadSetState
+      );
+    } else {
+      InCallManager.getIsWiredHeadsetPluggedIn()
+        .then(res => {
+          let isWiredHeadsetPluggedIn = res.isWiredHeadsetPluggedIn;
+          if (isWiredHeadsetPluggedIn) {
+            this.props.update({ speaker: false });
+            InCallManager.setForceSpeakerphoneOn(false);
+          } else {
+            this.props.update({ speaker: true });
+            InCallManager.setForceSpeakerphoneOn(true);
+          }
+        })
+        .catch(err => {
+          console.log(
+            "InCallManager.getIsWiredHeadsetPluggedIn() catch: ",
+            err
+          );
+        });
+    }
   }
   componentWillUnmount() {
     timer.clearInterval("verifyCallId");
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      this.wiredHeadsetListener.remove();
+    }
   }
 
   sixtySecondsCounter(counter) {
@@ -55,7 +95,15 @@ class ContactingLinguist extends Component {
       timer.clearInterval("counterId");
     }
   }
-
+  handleWiredHeadSetState = deviceState => {
+    if (deviceState.isPlugged) {
+      this.props.update({ speaker: false });
+      InCallManager.setForceSpeakerphoneOn(false);
+    } else {
+      this.props.update({ speaker: true });
+      InCallManager.setForceSpeakerphoneOn(true);
+    }
+  };
   render() {
     const { closeCall, connect, callTimeOut } = this.props;
 
@@ -120,7 +168,8 @@ const mS = state => ({
 
 const mD = {
   closeCall,
-  updateSettings
+  updateSettings,
+  update
 };
 
 export default connect(

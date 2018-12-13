@@ -18,7 +18,7 @@ import {
   incomingCallNotification
 } from '../../Ducks/PushNotificationReducer';
 
-import {View, Text, ScrollView, Alert, AppState} from "react-native";
+import {View, Text, ScrollView, Alert, AppState, NetInfo} from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
 import timer from "react-native-timer";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
@@ -58,8 +58,19 @@ class Home extends Component {
     this.props.clear();
     this.props.asyncGetAccountInformation();
     AppState.addEventListener('change', this._handleAppStateChange);
+    NetInfo.addEventListener(
+      'connectionChange',
+      this.monitorConnectivity,
+    );
     InCallManager.stop();
   }
+
+
+  monitorConnectivity = (connectionInfo) => {
+    if(connectionInfo.type !== 'none'){
+      this.props.getCurrentAvailability();
+    }
+  };
 
   getCurrentUnansweredCalls = async () => {
     const invitations = await Sessions.GetInvitations(this.props.uuid, this.props.token);
@@ -80,6 +91,10 @@ class Home extends Component {
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
+    NetInfo.removeEventListener(
+      'connectionChange',
+      this.monitorConnectivity
+    );
   }
 
   componentDidMount() {

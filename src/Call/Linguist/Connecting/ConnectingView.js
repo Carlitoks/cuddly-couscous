@@ -2,7 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 //COMPONENTS
-import { Text, View, ScrollView, ActivityIndicator, Alert } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  Alert,
+  NativeModules,
+  NativeEventEmitter
+} from "react-native";
 import timer from "react-native-timer";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import ModalRetry from "../../../Components/ModalRerty/ModalRetry";
@@ -24,7 +32,8 @@ import { displayEndCall } from "../../../Util/Alerts";
 import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
 import SoundManager from "../../../Util/SoundManager";
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import DeviceInfo from "react-native-device-info";
+import InCallManager from "react-native-incall-manager";
 class ConnectingView extends Component {
   constructor(props) {
     super(props);
@@ -32,11 +41,52 @@ class ConnectingView extends Component {
 
   componentWillMount() {
     SoundManager["IncomingCall"].stop();
+    InCallManager.start({ media: "audio" });
     this.conectingTimer();
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      const nativeBridge = NativeModules.InCallManager;
+      const NativeModule = new NativeEventEmitter(nativeBridge);
+      this.wiredHeadsetListener = NativeModule.addListener(
+        "WiredHeadset",
+        this.handleWiredHeadSetState
+      );
+    } else {
+      InCallManager.getIsWiredHeadsetPluggedIn()
+        .then(res => {
+          let isWiredHeadsetPluggedIn = res.isWiredHeadsetPluggedIn;
+          if (isWiredHeadsetPluggedIn) {
+            this.props.update({ speaker: false });
+            InCallManager.setForceSpeakerphoneOn(false);
+          } else {
+            this.props.update({ speaker: true });
+            InCallManager.setForceSpeakerphoneOn(true);
+          }
+        })
+        .catch(err => {
+          console.log(
+            "InCallManager.getIsWiredHeadsetPluggedIn() catch: ",
+            err
+          );
+        });
+    }
   }
+  handleWiredHeadSetState = deviceState => {
+    if (deviceState.isPlugged) {
+      this.props.update({ speaker: false });
+      InCallManager.setForceSpeakerphoneOn(false);
+    } else {
+      this.props.update({ speaker: true });
+      InCallManager.setForceSpeakerphoneOn(true);
+    }
+  };
   componentWillUnmount() {
     timer.clearInterval("counterId");
     this.props.resetCounter();
+    const systemName = DeviceInfo.getSystemName();
+    if (systemName == "Android") {
+      this.wiredHeadsetListener.remove();
+    }
   }
 
   conectingTimer = () => {
