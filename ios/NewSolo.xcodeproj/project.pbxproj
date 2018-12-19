@@ -70,6 +70,7 @@
 		7D6431490DEB4EF383BDFFFA /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67BDE58F472E461891436189 /* EvilIcons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		84F0420AB56345AE8824A84B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 30EF032C1D104FA8AE075464 /* Entypo.ttf */; };
+		88110E0721C9D18700C69A4F /* elastic_musical5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 88110DD521C9D18700C69A4F /* elastic_musical5.wav */; };
 		90BD70F45E5044A984881B22 /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9790D040E7C3467EA2231F81 /* SFProDisplay-Regular.otf */; };
 		A992041920D9D2F100122220 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A992041820D9D2F100122220 /* libRNSound.a */; };
 		A997C09A20CBD4BD00F80149 /* incoming_call_notification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A997C09920CBD4BD00F80149 /* incoming_call_notification.mp3 */; };
@@ -533,6 +534,7 @@
 		79694DA4E9CF44099324A2BD /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		806C6008FAE54368AC65C28A /* Fontin-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Fontin-Regular.ttf"; path = "../src/Assets/Fonts/Fontin-Regular.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		88110DD521C9D18700C69A4F /* elastic_musical5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_musical5.wav; path = ../src/Sounds/elastic_musical5.wav; sourceTree = "<group>"; };
 		887B05B521AFA0D300E97B40 /* RNAmplitudeSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNAmplitudeSDK.xcodeproj; path = "../node_modules/react-native-amplitude-analytics/ios/RNAmplitudeSDK.xcodeproj"; sourceTree = "<group>"; };
 		8AE10DD4DF194C9EA7A38669 /* libAppCenterReactNativeCrashes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAppCenterReactNativeCrashes.a; sourceTree = "<group>"; };
 		8B755116ACA3441F8628A51F /* RNInCallManager.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNInCallManager.xcodeproj; path = "../node_modules/react-native-incall-manager/ios/RNInCallManager.xcodeproj"; sourceTree = "<group>"; };
@@ -847,6 +849,7 @@
 		736FFB2316BD40519032836C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				88110DD521C9D18700C69A4F /* elastic_musical5.wav */,
 				30EF032C1D104FA8AE075464 /* Entypo.ttf */,
 				67BDE58F472E461891436189 /* EvilIcons.ttf */,
 				F4FAF86067654C93A83E9024 /* Feather.ttf */,
@@ -1641,6 +1644,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				84F0420AB56345AE8824A84B /* Entypo.ttf in Resources */,
+				88110E0721C9D18700C69A4F /* elastic_musical5.wav in Resources */,
 				7D6431490DEB4EF383BDFFFA /* EvilIcons.ttf in Resources */,
 				32FFF9B648104A83AA836A90 /* Feather.ttf in Resources */,
 				B81D72A4D93D405A9B78DF49 /* FontAwesome.ttf in Resources */,

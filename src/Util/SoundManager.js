@@ -12,16 +12,12 @@ export default (SoundManager = {
     }
     //EndCall.play(() => {});
   }),
-  IncomingCall: new Sound(
-    "Elastic_Notification15.wav",
-    Sound.MAIN_BUNDLE,
-    error => {
-      if (error) {
-        console.log("error loading sound", error);
-        return;
-      }
+  IncomingCall: new Sound("elastic_musical5.wav", Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log("error loading sound", error);
+      return;
     }
-  ),
+  }),
   ExtraTime: new Sound("elastic_done5.wav", Sound.MAIN_BUNDLE, error => {
     if (error) {
       console.log("error loading sound", error);

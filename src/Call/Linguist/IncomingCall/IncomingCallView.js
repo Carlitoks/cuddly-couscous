@@ -35,7 +35,7 @@ class IncomingCall extends Component {
     acceptIsDisabled: false,
     endIsDisabled: false,
     incomingCallRingTone: new Sound(
-      "Elastic_Notification15.wav",
+      "elastic_musical5.wav",
       Sound.MAIN_BUNDLE,
       error => {
         if (error) {
