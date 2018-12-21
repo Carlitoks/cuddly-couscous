@@ -20,7 +20,7 @@ import {
   modifyAdditionalDetails,
   update
 } from "../../../../Ducks/NewSessionReducer";
-import I18n from "./../../../../I18n/I18n";
+import I18n, { translateLanguage } from "./../../../../I18n/I18n";
 import {
   AllowedLanguagePairs,
   FilterLangsByCodes
@@ -121,7 +121,7 @@ class SlideUpPanel extends Component {
 
     return (
       <React.Fragment>
-        <Text style={ButtonStyle}>{currentLang.name}</Text>
+        <Text style={ButtonStyle}>{ translateLanguage(currentLang["3"], currentLang.name) }</Text>
         {currentIcon}
       </React.Fragment>
     );
@@ -155,7 +155,7 @@ class SlideUpPanel extends Component {
         <React.Fragment key={index}>
           <View style={styles.LangViewContainer}>
             <TouchableOpacity>
-              <Text style={styles.unAvailableLangText}>{language.name}</Text>
+              <Text style={styles.unAvailableLangText}>{ translateLanguage(language["3"], language.name) }</Text>
             </TouchableOpacity>
           </View>
           <Divider style={styles.dividerStyle} />
