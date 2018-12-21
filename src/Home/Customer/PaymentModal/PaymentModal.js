@@ -70,8 +70,11 @@ class PaymentModal extends Component {
               color={this.setPillCollor()}
             />
             <View style={styles.modalWrapper}>
-              <Text style={styles.modalTitle}>{this.setTitle()}</Text>
-              <Text style={styles.modalText}>{this.setContent()}</Text>
+              <View>
+                <Text style={styles.modalTitle}>{this.setTitle()}</Text>
+                <Text style={styles.modalText}>{this.setContent()}</Text>
+              </View>
+
               <Button
                 borderRadius={27}
                 textStyle={styles.text}

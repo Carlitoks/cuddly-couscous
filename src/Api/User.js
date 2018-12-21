@@ -1,6 +1,9 @@
 import AXIOS from "../Config/AxiosConfig";
 import { URL } from "../Config/env";
 import RNFetchBlob from "react-native-fetch-blob";
+import DeviceInfo from "react-native-device-info";
+import { Platform } from "react-native";
+
 const BASE_URI = "/users";
 
 const User = {
@@ -79,6 +82,11 @@ const User = {
     });
   },
   updateDevice: (userId, deviceId, token, payload) => {
+    // always update the latest parameters that are determined by the device
+    payload.locale = DeviceInfo.getDeviceLocale();
+    payload.deviceOSVersion = Platform.Version.toString();
+    payload.mobileAppVersion = DeviceInfo.getReadableVersion();
+
     return AXIOS.patch(`${BASE_URI}/${userId}/devices/${deviceId}`, payload, {
       headers: { Authorization: `Bearer ${token}` }
     });

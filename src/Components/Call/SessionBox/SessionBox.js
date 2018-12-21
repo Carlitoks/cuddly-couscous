@@ -154,7 +154,8 @@ class SessionBox extends Component {
       signal,
       isConnectedToInternet,
       publisherSubscriberError,
-      video
+      video,
+      avModePreference
     } = this.props;
 
     return (
@@ -187,6 +188,7 @@ class SessionBox extends Component {
               sessionInfoName={sessionInfoName}
               disabledSubscriber={disabledSubscriber}
               video={video}
+              avModePreference={avModePreference}
             />
           </OTSession>
         )}
@@ -212,7 +214,8 @@ const mS = state => ({
   counterId: state.contactLinguist.counterId,
   isConnectedToInternet: state.activeSessionReducer.isConnectedToInternet,
   publisherSubscriberError: state.activeSessionReducer.publisherSubscriberError,
-  video: state.activeSessionReducer.video
+  video: state.activeSessionReducer.video, 
+  avModePreference: state.newSessionReducer.session.avModePreference
 });
 
 const mD = {

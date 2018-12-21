@@ -202,6 +202,11 @@ export const is500Response = error => {
   return status >= 500 && status < 599;
 };
 
+export const is403Response = error => {
+  const status = Number(error.status);
+
+  return status === 403;
+};
 /**
  * @description Generic function to validate only letters
  *

@@ -196,37 +196,25 @@ class CustomerView extends Component {
       SUPPORTED_LANGS.indexOf(this.props.primaryLangCode[3]) >= 0;
     const {
       createSession,
-      primaryLangCode,
-      secondaryLangCode,
       selectedCallTime,
       selectedScenarioId,
-      customScenarioNote,
       token,
-      eventID,
-      customerLocation,
-      event,
-      video
+      session
     } = this.props;
-    await createSession({
-      primaryLangCode: userNativeLangIsSupported
-        ? primaryLangCode[3]
-        : SUPPORTED_LANGS[0],
-      secondaryLangCode:
-        event.id &&
-        event.id !== "" &&
-        event.defaultSecondaryLangCode !== undefined
-          ? event.defaultSecondaryLangCode
-          : secondaryLangCode,
-      estimatedMinutes: selectedCallTime,
-      scenarioID: selectedScenarioId,
-      customScenarioNote: customScenarioNote,
-      token: token,
-      eventID: eventID,
-      location: customerLocation,
-      video: video
-    }).then(response => {
+    if(session.primaryLangCode !== '' && session.secondaryLangCode !== ''){
+      await createSession({
+        primaryLangCode: session.primaryLangCode,
+        secondaryLangCode: session.secondaryLangCode,
+        estimatedMinutes: selectedCallTime,
+        scenarioID: selectedScenarioId,
+        customScenarioNote: session.customScenarioNote,
+        token: token,
+        eventID: null,
+        location: session.location,
+        video: session.avModePreference
+      });
       this.callTimeOut();
-    });
+    }
   };
 
   callTimeOut = () => {
@@ -339,7 +327,8 @@ const mS = state => ({
   video: state.activeSessionReducer.video,
   signalVideoWarning: state.activeSessionReducer.signalVideoWarning,
   customerLocation: state.activeSessionReducer.location,
-  event: state.events
+  event: state.events,
+  session: state.newSessionReducer.session,
 });
 
 const mD = {

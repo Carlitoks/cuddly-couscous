@@ -336,7 +336,7 @@ class CallPricingView extends Component {
                     const continueScreen =
                       previousView(routes) === "CallConfirmationView"
                         ? "back"
-                        : "SessionLanguageView";
+                        : "Home";
 
                     navigation.dispatch({ type: continueScreen });
                   }
@@ -344,7 +344,7 @@ class CallPricingView extends Component {
                   const continueScreen =
                     previousView(routes) === "CallConfirmationView"
                       ? "back"
-                      : "SessionLanguageView";
+                      : "Home";
 
                   navigation.dispatch({ type: continueScreen });
                 }

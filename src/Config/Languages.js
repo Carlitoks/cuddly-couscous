@@ -2040,5 +2040,9 @@ export const InterfaceSupportedLanguages = [
   {
     1: "ja",
     name: "日本語"
+  },
+  {
+    1: "es",
+    name: "Español"
   }
 ];

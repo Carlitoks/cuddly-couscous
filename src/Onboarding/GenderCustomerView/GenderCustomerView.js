@@ -40,10 +40,11 @@ import styles from "./styles";
 import {
   displayFormErrors,
   is500Response,
+  is403Response,
   displayTemporaryErrorAlert
 } from "../../Util/Helpers";
 import { Colors } from "../../Themes";
-import I18n from "../../I18n/I18n";
+import I18n, {translateApiErrorString} from "../../I18n/I18n";
 
 import DeviceInfo from "react-native-device-info";
 
@@ -151,14 +152,21 @@ class GenderCustomerView extends Component {
         });
       })
       .catch(error => {
-        this.props.updateForm({
-          performingRequest: false
-        });
-        error.response
-          ? is500Response(error)
-            ? displayTemporaryErrorAlert()
-            : null
-          : displayFormErrors(error.response.data);
+        if(is403Response(error.response)){
+          Alert.alert("Error", translateApiErrorString("location restricted"), [
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+          ]);
+          navigation.dispatch({ type: "SelectRoleView" });
+        }else{
+          this.props.updateForm({
+            performingRequest: false
+          });
+          error.response
+            ? is500Response(error)
+              ? displayTemporaryErrorAlert()
+              : null
+            : displayFormErrors(error.response.data);
+        }
       });
   }
 

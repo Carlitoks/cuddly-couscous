@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -84,6 +83,7 @@
 		BD94A7F3ECA24DCEB4742473 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D18DA0EB8B844801AD910DB9 /* Ionicons.ttf */; };
 		D098F3B4B1A0A8A69B40FABF /* libPods-NewSolo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F987D51A7B2FA400DA43E4C7 /* libPods-NewSolo.a */; };
 		D2C62ECCA20541D08A3166F0 /* SFProDisplay-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F60C3D9B9D684C0A8075DA43 /* SFProDisplay-Light.otf */; };
+		30810F654474452497A52119 /* SFProDisplay-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 95FE2F137AA24B4C953B3FFB /* SFProDisplay-RegularItalic.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -560,6 +560,7 @@
 		F4FAF86067654C93A83E9024 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		F60C3D9B9D684C0A8075DA43 /* SFProDisplay-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProDisplay-Light.otf"; path = "../src/Assets/Fonts/SFProDisplay-Light.otf"; sourceTree = "<group>"; };
 		F987D51A7B2FA400DA43E4C7 /* libPods-NewSolo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewSolo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		95FE2F137AA24B4C953B3FFB /* SFProDisplay-RegularItalic.otf */ = {isa = PBXFileReference; name = "SFProDisplay-RegularItalic.otf"; path = "../src/Assets/Fonts/SFProDisplay-RegularItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -868,6 +869,7 @@
 				A97E90997CE84682A4D73047 /* SFProDisplay-Bold.otf */,
 				F60C3D9B9D684C0A8075DA43 /* SFProDisplay-Light.otf */,
 				9790D040E7C3467EA2231F81 /* SFProDisplay-Regular.otf */,
+				95FE2F137AA24B4C953B3FFB /* SFProDisplay-RegularItalic.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1663,6 +1665,7 @@
 				D2C62ECCA20541D08A3166F0 /* SFProDisplay-Light.otf in Resources */,
 				90BD70F45E5044A984881B22 /* SFProDisplay-Regular.otf in Resources */,
 				707EEECD00914A33BE946150 /* AppCenter-Config.plist in Resources */,
+				30810F654474452497A52119 /* SFProDisplay-RegularItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

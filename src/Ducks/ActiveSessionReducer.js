@@ -6,6 +6,7 @@ import timer from "react-native-timer";
 import { GetSessionInfoLinguist } from "./SessionInfoReducer";
 import { REASON, STATUS_TOKBOX, TIME } from "../Util/Constants";
 import { networkError } from "./NetworkErrorsReducer";
+import {modifyAVModePreference} from "./NewSessionReducer";
 import {
   updateSettings as updateContactLinguist,
   resetCounter
@@ -24,6 +25,7 @@ import {
 import { updateSettings as updateLinguistSettings } from "./CallLinguistSettings";
 import { updateSettings as updateCustomerSettings } from "./CallCustomerSettings";
 import { updateOptions as updateRate } from "./RateCallReducer";
+import { cleanReducerAndKeepLangConfig } from './NewSessionReducer';
 import { displayTimeAlert, displayEndCall } from "../Util/Alerts";
 import { Sessions, CallHistory } from "../Api";
 import {
@@ -349,19 +351,24 @@ export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 export const EndCall = (sessionID, reason, token) => dispatch => {
   return Sessions.EndSession(sessionID, reason, token)
     .then(response => {
+      console.log(response, sessionID, reason, token);
       if (reason === REASON.CANCEL) {
         dispatch(clear());
         dispatch(clearEvents());
+        dispatch(cleanReducerAndKeepLangConfig());
       } else if (reason === REASON.RETRY) {
         dispatch(update({ verifyCallId: null }));
         dispatch(clear());
+        dispatch(cleanReducerAndKeepLangConfig());
       } else {
         dispatch(clear());
+        dispatch(cleanReducerAndKeepLangConfig());
       }
     })
     .catch(error => {
       dispatch(networkError(error));
       dispatch(clear());
+      dispatch(cleanReducerAndKeepLangConfig());
     });
 };
 
@@ -824,6 +831,11 @@ export const asyncAcceptsInvite = (
                     video: video
                   })
                 );
+                dispatch(
+                  modifyAVModePreference({ 
+                    avModePreference: res.data.session.avModePreference 
+                  })
+                  );
                 dispatch(
                   updateRate({
                     customerName: callLinguistSettings.customerName,

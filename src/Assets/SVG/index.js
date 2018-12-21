@@ -22,6 +22,9 @@ import DollarSign from "./dollarsign";
 import PricingTime from "./pricingTime";
 import ExclamationMark from "./exclamationMark";
 import RoundCheckMark from "./roundCheckMark";
+import FemaleSilhouette from './femaleSilhouette';
+import SGWaves from './SGWaves';
+import TranslationSwap from './translationSwap';
 
 export {
   Audio,
@@ -47,5 +50,8 @@ export {
   DollarSign,
   PricingTime,
   ExclamationMark,
-  RoundCheckMark
+  RoundCheckMark,
+  FemaleSilhouette,
+  SGWaves,
+  TranslationSwap
 };

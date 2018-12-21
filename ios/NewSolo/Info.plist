@@ -90,6 +90,7 @@
 		<string>SFProDisplay-Bold.otf</string>
 		<string>SFProDisplay-Light.otf</string>
 		<string>SFProDisplay-Regular.otf</string>
+		<string>SFProDisplay-RegularItalic.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

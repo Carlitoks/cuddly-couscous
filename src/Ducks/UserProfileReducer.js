@@ -94,7 +94,8 @@ const initialState = {
   selectedNativeLanguage: {},
   selectedSecondaryLanguages: [],
   selectionItemType: "",
-  selectedLanguage: null
+  selectedLanguage: null,
+  isNewUser: false
 };
 
 const UserProfileReducer = (state = initialState, action = {}) => {

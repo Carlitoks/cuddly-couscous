@@ -1,6 +1,7 @@
 import I18n from "react-native-i18n";
 import {getLanguages} from "react-native-i18n";
 import en from "./Locales/en";
+import es from "./Locales/es";
 import ja from "./Locales/ja";
 import zh_hans from "./Locales/zh-hans";
 import zh_hant from "./Locales/zh-hant";
@@ -9,6 +10,7 @@ I18n.fallbacks = true;
 
 I18n.translations = {
   en,
+  es,
   ja,
   "zh-hans": zh_hans,
   "zh-hant": zh_hant
@@ -101,8 +103,8 @@ const apiErrorsI18N = {
   "payment details required": "api.errPaymentDetailsRequired",
   "no time remaining": "api.errEventTimeExpired",
   "event already used": "api.errEventAlreadyUsed",
-  "code already used": "api.errEventAlreadyUsed"
-
+  "code already used": "api.errEventAlreadyUsed",
+  "location restricted":"api.errLocationRestricted"
 };
 
 export const translateApiErrorString = (str, defaultKey) => {

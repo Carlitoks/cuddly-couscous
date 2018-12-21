@@ -12,6 +12,12 @@ export const Iphone6 =
   DeviceInfo.getModel() == "iPhone 6" ||
   DeviceInfo.getModel() == "iPhone 6 Plus";
 
+export const iPhoneXModels =
+  DeviceInfo.getDeviceName() == "iPhone X" ||
+  DeviceInfo.getDeviceName() == "iPhone XR" ||
+  DeviceInfo.getDeviceName() == "iPhone XS" ||
+  DeviceInfo.getDeviceName() == "iPhone XS Max";
+
 let top;
 export const topIOS = () => {
   if (IphoneX) {

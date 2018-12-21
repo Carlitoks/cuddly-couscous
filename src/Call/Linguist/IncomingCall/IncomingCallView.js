@@ -213,12 +213,13 @@ class IncomingCall extends Component {
                   {this.props.languages}
                 </Text>
               </View>
+              {this.props.customerScenario && (
               <View style={styles.inlineContainer}>
                 <Icon style={styles.icon} size={25} name="help" />
                 <Text style={styles.notificationText}>
                   {this.props.customerScenario}
                 </Text>
-              </View>
+              </View> )}
               {this.props.customScenarioNote && (
                 <View style={styles.inlineContainer}>
                   <Icon style={styles.icon} size={25} name="textsms" />
