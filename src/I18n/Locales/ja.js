@@ -51,9 +51,9 @@
   cancel: "キャンセル",
   cancelCall: "通話をキャンセル",
   celebrateAndEnjoy:
-    "サービス開始を記念して\nJeenieを\n15分無料でご利用いただけます！",
+    "サービス開始を記念して\nJeenieを\n10分無料でご利用いただけます！",
   celebrateAndEnjoyAlternative:
-    "サービス開始を記念して\nJeenieを15分無料でご利用いただけます\n！",
+    "サービス開始を記念して\nJeenieを10分無料でご利用いただけます\n！",
   celebrateWithUs: "サービス開始をお祝いしましょう！",
   changeSettings: "設定を変更するには、[設定] > [Jeenie]の順にアクセスしてください",
   cancelCallCustomer: "通話はご利用いただけません",
@@ -112,6 +112,7 @@
   editProfile: "プロフィールを編集",
   email: "メールアドレス",
   emailCustomerText: "続けることで、次の内容に同意することになります： ",
+  emailFormatValidation: "メールアドレスには必ず有効なアドレスを使用してください。",
   emptyEmail: "メールアドレスが空です",
   emptyPassword: "パスワードが空です",
   endCall: "通話終了",
@@ -150,6 +151,7 @@
     "私たちは動物や機械にはない独自の特徴や特性があるから人間なのでしょうか？",
   extraTime1: "もうすぐ時間が終了します！",
   extraTime2: "時間の延長が必要ですか？",
+  extraTime3: "2分後に通話が終了します",
   extraTimeA1: "はい、5分延長します",
   extraTimeA2: "いいえ、時間終了時点で通話を終了します",
   fallPromotion:
@@ -162,6 +164,7 @@
   finishOnboardingMessage:
     "アプリを使用するには登録を完了してください",
   firstname: "名前（名）",
+  firstnameFormatValidation: "名前（名）には文字のみを使用してください。",
   fluent: "上級",
   forgotPassword: "パスワードをリセット",
   forSignup: "ご登録完了です！",
@@ -231,12 +234,13 @@
   lauchScreenSwipe2:
     "世界のどこにいても、リアルタイムで、サポートが必要な言語を母国語とする通訳スタッフに連絡を取ることができます。",
   lauchScreenSwipe3:
-    "現在Jeenieでは、\n「標準中国語⇔英語」\nと「日本語⇔英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
+    "現在Jeenieでは、\n「標準中国語<>英語」\nと「日本語<>英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
   lauchScreenSwipe4:
     "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
   lauchScreenSwipe5:
-    "サービス開始を記念して、最初の15分を無料でご提供いたします。Jeenieからのプレゼントです！",
+    "サービス開始を記念して、最初の10分を無料でご提供いたします。Jeenieからのプレゼントです！",
   lastname: "名前（姓）",
+  lastnameFormatValidation: "名前（姓）には文字のみを使用してください。",
   legal: "法律",
   letsGoToKwon: "ご自身の情報をご提供ください",
   linguist: "通訳スタッフ",
@@ -298,7 +302,7 @@
   passwordMatch: "パスワードが一致しません。",
   passwordLengthValidation: "必ず8文字以上のパスワードを設定してください。",
   payAsYouGo: "利用した分だけ支払い",
-  payAsYouGoPricing: "利用した分だけ支払い＝",
+  payAsYouGoPricing: "Pay-as-you-go =",
   payAsYouGoPricingUnder: " 1分あたり$1",
   paymentDetails: "お支払いの明細",
   paymentDetailsCreated: "お支払い情報が正常に更新されました。",
@@ -315,7 +319,7 @@
   provideFeedback: "ご意見の送信",
   provideFeedbackModalTitle: "Jeenieをもっと利用したいですか？",
   provideFeedbackModalText:
-    "Jeenieの利用体験について\nご意見をお聞かせください。\nお礼に無料で15分利用時間を\n追加させていただきます！",
+    "Jeenieの利用体験について\nご意見をお聞かせください。\nお礼に無料で10分利用時間を\n追加させていただきます！",
   provideFeedbackViewPlaceholder: "ここにご意見を入力してください",
   provideFeedbackViewTitle: "Jeenieの利用体験で改善してほしい点をお聞かせください：",
   qr: "QRコード",
@@ -389,7 +393,7 @@
   thankYou: " ありがとうございます",
   thankYouFeedback: " ご意見をお聞かせいただきありがとうございました",
   thankYouFeedbackModalText:
-    "お礼にJeenieの\n利用時間を15分\n追加させていただきました。",
+    "お礼にJeenieの\n利用時間を10分\n追加させていただきました。",
   theCallWillEnd: "{{minutes}}分後に通話が終了します",
   undefined: "未定義",
   unspecified: "未指定",
@@ -401,6 +405,7 @@
   usageExamples: "使用例",
   username: "ユーザー名",
   userProfile: "マイプロフィール",
+  unableToConnect: "通話できません\n\nもう一度試しますか？",
   verifyNumber: "電話を確認",
   verifyNumberText: "テキストメッセージで受信した確認コードを入力してください。",
   video: "ビデオ",
@@ -420,6 +425,80 @@
   youCanAddTime: "通話中に時間を延長できます",
   youCanChangeThis: "通話中にビデオのオン/オフを切り替えられます",
 
+  // new customer home screen
+  customerHome: {
+    primaryLang: {
+      label: "話せる言語："
+    },
+    secondaryLang: {
+      label: "必要なサポート：",
+      placeholder: "言語を選択"
+    },
+    customNote: {
+      label: "追加の詳細",
+      placeholder: "オプション",
+      description: "通話スタッフへの追加の詳細："
+    },
+    buttons: {
+      video: "今すぐ接続",
+      audio: "音声のみ"
+    },
+    account: {
+      pricing: "料金",
+      rate: "$1/分",
+      unit: "分",
+      add: "通話のために支払いを追加"
+    },
+    help: "必要なサポートをお聞かせください。",
+    scenarios: {
+      s1: "メニューを理解する",
+      s2: "タクシーの運転手に指示する",
+      s3: "電車の乗車券を購入する",
+      s4: "料金の交渉をする",
+      s5: "食品アレルギーを説明する",
+      s6: "レストランで注文する",
+      s7: "ワインリストについて相談する",
+      s8: "標識/看板を理解する",
+      s9: "近くの人に道を聞く",
+      s10: "ホテルのコンシェルジュと話す",
+      s11: "ホテルでチェックイン/チェックアウトする",
+      s12: "言語を話す練習をする",
+      s13: "言語の宿題の質問に答える",
+      s14: "予定している旅行向けに役立つ表現を学習する",
+      s15: "現地の文化について理解を深める",
+      s16: "旅行で文化に関連する間違い/タブーを避ける ",
+      s17: "仕事の会議で通訳をしてほしい",
+      s18: "言語の発音を改善する",
+      s19: "駅までの道案内",
+      s20: "現地の人と会話する",
+      s21: "現地の薬局で店員と話す",
+      s22: "買い物をする",
+      s23: "商品の別のサイズや色を頼む",
+      s24: "カスタマーサービスのサポートを利用する",
+      s25: "予約を取る",
+      s26: "チケットを予約する",
+      s27: "おすすめのレストランを聞く",
+      s28: "緊急事態の通報を行う",
+      s29: "道案内",
+      s30: "医師と話す」"
+    },
+    registrationWelcome: {
+      balance: "{{num}}分",
+      title: "最初の10分は無料です！",
+      description: "最初の10分が経過すると、1分あたり$1の料金がかかります。",
+      buttons: {
+        dismiss: "Jeenieの使用を開始する",
+        payment: "今すぐお支払い情報を追加"
+      }
+    }
+  },
+
+  // for use in session language selection
+  sessionLang: {
+    selections: "必要なサポート：",
+    comingSoon: "今後さらに言語が追加されます"
+  },
+
   // text for customer related to payments and rates
   payments: {
     currentRate: "$1/分",
@@ -432,10 +511,17 @@
 
   operatingHours: {
     title: "利用可能：{{lang}}",
-    description: "Language Jeeniesは{{beginHour}}から{{endHour}}までご利用いただけます。",
+    description:
+      "Language Jeeniesは{{beginHour}}から{{endHour}}までご利用いただけます。",
     ok: "OK"
   },
-
+  lang: {
+    en: "英語",
+    spa: "スペイン語",
+    jpn: "日本語",
+    cmn: "中国語（標準中国語）",
+    yue: "中国語（広東語）"
+  },
   // triggered on customer home screen to show account balance and
   // pricing explanation
   pricingModal: {
@@ -445,7 +531,8 @@
     currentBalance: "{{minutes}}分",
     buttons: {
       gotIt: "了解です！",
-      addCard: "お支払い情報を追加"
+      addCard: "お支払い情報を追加",
+      updateCard: "お支払い情報を更新"
     }
   },
 
@@ -457,23 +544,30 @@
       rate: "$1（米ドル）/分"
     },
     balance: {
-      title: "残高",
+      title: "残高：",
       min: "分"
     },
     paymentInfo: {
-      titleWithCard: "お支払い情報",
+      titleWithCard: "お支払い情報：",
       titleNoCard: "お支払い情報を追加",
       linkNoCard: "カードを追加",
       linkWithCard: "カードを変更",
-      descriptionHasMinutes: "通話中に接続が切断されることを防止するため、今すぐお支払い情報を追加してください。",
-      descriptionLowMinutes: "残高が残り少なくなっています。次回の通話中に接続が切断されることを防止するため、今すぐお支払い情報を追加してください。",
-      descriptionNoMinutes: "利用を続けるには、お支払い情報を追加していただく必要があります。"
+      descriptionHasMinutes:
+        "通話中に接続が切断されることを防止するため、今すぐお支払い情報を追加してください。",
+      descriptionLowMinutes:
+        "残高が残り少なくなっています。次回の通話中に接続が切断されることを防止するため、今すぐお支払い情報を追加してください。",
+      descriptionNoMinutes:
+        "利用を続けるには、お支払い情報を追加していただく必要があります。"
     },
     descriptions: {
-      hasMinutesAndCard: "利用できる時間がなくなった場合、通話中に接続が切断されることを防止するため1分あたり$1（米ドル）をカードに自動請求させていただきます。",
-      hasMinutesNoCard: "残り時間以上通話を続ける場合は、今すぐお支払い情報を追加してください。",
-      noMinutesHasCard: "1分あたり$1（米ドル）をカードに自動請求させていただきます。",
-      noMinutesNoCard: "通訳スタッフを利用する場合は、今すぐお支払い情報を追加してください。"
+      hasMinutesAndCard:
+        "利用できる時間がなくなった場合、通話中に接続が切断されることを防止するため1分あたり$1（米ドル）をカードに自動請求させていただきます。",
+      hasMinutesNoCard:
+        "残り時間以上通話を続ける場合は、今すぐお支払い情報を追加してください。",
+      noMinutesHasCard:
+        "1分あたり$1（米ドル）をカードに自動請求させていただきます。",
+      noMinutesNoCard:
+        "通訳スタッフを利用する場合は、今すぐお支払い情報を追加してください。"
     },
     buttons: {
       continue: "続ける",
@@ -505,7 +599,7 @@
 
   // for use in session-related screens
   session: {
-    callTime: "通話時間：{{time}}",
+    callTime: "通話時間： {{time}}",
     callCancel: "この通話はお客様によってキャンセルされました",
     callAnswered: "この通話は他の通話スタッフが対応しています。",
     callFail: "このお客様は接続できませんでした。",

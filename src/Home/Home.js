@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { View, StatusBar } from "react-native";
 import RNAmplitude from "react-native-amplitude-analytics";
 import { amplitudKey } from "../Config/env";
-
-import { View } from "react-native";
 import HomeCustomer from "./Customer/HomeCustomer";
 import HomeLinguist from "./Linguist/HomeLinguist";
 import LoginView from "../Onboarding/LoginView/LoginView";
@@ -11,6 +10,8 @@ import PushNotifications from "../Util/PushNotification";
 import FCM, { FCMEvent } from "react-native-fcm";
 import { registerFCM } from "../Ducks/PushNotificationReducer";
 import { User } from "../Api";
+import CustomerHomeScreen from '../Containers/CustomerHome/CustomertHomeScreen';
+import { Colors } from "../Themes";
 
 class Home extends Component {
   componentWillMount() {
@@ -64,11 +65,11 @@ class Home extends Component {
 
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         {this.props.linguistProfile ? (
           <HomeLinguist navigation={this.props.navigation} />
         ) : (
-          <HomeCustomer navigation={this.props.navigation} />
+          <CustomerHomeScreen navigation={this.props.navigation} />
         )}
       </View>
     );

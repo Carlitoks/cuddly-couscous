@@ -17,18 +17,19 @@ export default StyleSheet.create({
     backgroundColor: Colors.white,
     width: width * 0.91,
     borderRadius: 4,
-    height: height * 0.4925
+    height: height * 0.4925,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
   },
   modalTopButton: {
-    position: "absolute",
+    position: "relative",
     zIndex: 30,
-    top: height * 0.176
+    top: 38
   },
   modalButton: {
     width: width * 0.65,
     height: height * 0.08,
-    marginTop: Iphone5 ? moderateScale(35) : height * 0.0475,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   modalTitle: {
     marginTop: Iphone5 ? moderateScale(75) : 48,

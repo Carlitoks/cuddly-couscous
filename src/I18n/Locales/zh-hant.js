@@ -51,9 +51,9 @@
   cancel: "取消",
   cancelCall: "取消通話",
   celebrateAndEnjoy:
-    "歡慶上市\n，免費使用翻譯精靈 \n 15 分鐘！",
+    "歡慶上市\n，免費使用翻譯精靈 \n 10 分鐘！",
   celebrateAndEnjoyAlternative:
-    "歡慶上市，\n免費使用翻譯精靈 15 分鐘\n！",
+    "歡慶上市，\n免費使用翻譯精靈 10 分鐘\n！",
   celebrateWithUs: "和我們一起慶祝上市！",
   changeSettings: "若要變更設定，請至「設定」>「翻譯精靈」",
   cancelCallCustomer: "無法通話",
@@ -105,13 +105,14 @@
   disableExtraTime: "不願意延長時間",
   dining: "餐廳",
   discountsOffered:
-    "購買高通話量分鐘數可享折扣\n\n。",
+    "購買高通話量\n分鐘數可享\n折扣。",
   discountsOfferedAlternative:
     "預購分鐘數可享折扣\n ",
   duration: "時長",
   editProfile: "編輯個人資料",
   email: "電子郵件",
   emailCustomerText: "繼續使用即表示您同意我們的 ",
+  emailFormatValidation: "電子郵件地址必須有效。",
   emptyEmail: "清空電子郵件",
   emptyPassword: "清空密碼",
   endCall: "結束通話",
@@ -150,6 +151,7 @@
     "我們之所以為人類，是不是因為我們的特徵和特質不同於",
   extraTime1: "時間快到了！",
   extraTime2: "您需要更多時間嗎？",
+  extraTime3: "您的通話將在 2 分鐘後結束",
   extraTimeA1: "需要，增加 5 分鐘",
   extraTimeA2: "不需要，時間到請結束通話",
   fallPromotion:
@@ -162,6 +164,7 @@
   finishOnboardingMessage:
     "請完成註冊以利使用本應用程式",
   firstname: "名字",
+  firstnameFormatValidation: "名字只能包含字元。",
   fluent: "流利",
   forgotPassword: "重設密碼",
   forSignup: "申請專用！",
@@ -204,7 +207,7 @@
   intermediate: "中等",
   invalidPromoCode: "促銷代碼無效",
   invalidPaymentDetails:
-    "您提供的付款詳細資料無效。  請檢查輸入錯誤。",
+    "您提供的付款詳細資料無效。請檢查輸入錯誤。",
   isReconnecting: "正在重新連線...",
   keepWaiting: "繼續等候",
   isConnecting: "正在接通 {{firstName}} {{lastInitial}}...",
@@ -231,12 +234,13 @@
   lauchScreenSwipe2:
     "無論置身世上何處，都能即時與精通外語的真人通話。",
   lauchScreenSwipe3:
-    "翻譯精靈目前支援\n中文（普通話）<> 英文 \n 以及日本 <> 英文。\n\n即將推出其他語言。",
+    "翻譯精靈目前支援\n中文（普通話） <> 英文\n以及日文 <> 英文。\n\n即將推出其他語言。",
   lauchScreenSwipe4:
     "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
   lauchScreenSwipe5:
-    "為慶祝上市，前 15 分鐘免費…翻譯精靈請客！",
+    "為慶祝上市，前 10 分鐘免費…翻譯精靈請客！",
   lastname: "姓氏",
+  lastnameFormatValidation: "姓氏只能包含字元。",
   legal: "法律資訊",
   letsGoToKwon: "讓我們更瞭解您",
   linguist: "語言專員",
@@ -298,7 +302,7 @@
   passwordMatch: "密碼不符。",
   passwordLengthValidation: "密碼至少須包含 8 個字元。",
   payAsYouGo: "現購現付",
-  payAsYouGoPricing: "現購現付 =",
+  payAsYouGoPricing: "Pay-as-you-go =",
   payAsYouGoPricingUnder: " 每分鐘 1 美元",
   paymentDetails: "付款詳細資料",
   paymentDetailsCreated: "付款資訊更新成功。",
@@ -315,7 +319,7 @@
   provideFeedback: "反映意見",
   provideFeedbackModalTitle: "需要更多翻譯精靈使用時間嗎？",
   provideFeedbackModalText:
-    "只要告訴我們您使用\n翻譯精靈的經驗，\n我們就多送您 \n15 分鐘的使用時間！",
+    "只要告訴我們您使用\n翻譯精靈的經驗，\n我們就多送您 \n10 分鐘的使用時間！",
   provideFeedbackViewPlaceholder: "請在這裡註明您要反映的意見",
   provideFeedbackViewTitle: "告訴我們翻譯精靈需要改善的空間：",
   qr: "QR 碼",
@@ -389,7 +393,7 @@
   thankYou: " 謝謝",
   thankYouFeedback: " 感謝您反映的意見",
   thankYouFeedbackModalText:
-    "我們已經為您額外增加了 \n15 分鐘，您可以\n繼續使用翻譯精靈。",
+    "我們已經為您額外增加了 \n10 分鐘，您可以\n繼續使用翻譯精靈。",
   theCallWillEnd: "{{minutes}} 分鐘後將結束通話",
   undefined: "未定義",
   unspecified: "未指定",
@@ -401,6 +405,7 @@
   usageExamples: "使用範例",
   username: "用戶名稱",
   userProfile: "個人資料",
+  unableToConnect: "無法接通 \n\n您要重試嗎？",
   verifyNumber: "驗證電話",
   verifyNumberText: "輸入您收到的簡訊驗證碼。",
   video: "視訊",
@@ -420,6 +425,80 @@
   youCanAddTime: "您可以在通話中增加時間",
   youCanChangeThis: "您可以在通話中開啟/關閉視訊",
 
+  // new customer home screen
+  customerHome: {
+    primaryLang: {
+      label: "我說"
+    },
+    secondaryLang: {
+      label: "我需要的協助是",
+      placeholder: "選擇語言"
+    },
+    customNote: {
+      label: "其他詳細資料",
+      placeholder: "非必填",
+      description: "給語言專員的其他詳細資料："
+    },
+    buttons: {
+      video: "立即連線",
+      audio: "純音訊"
+    },
+    account: {
+      pricing: "價格",
+      rate: "每分鐘 1 美元",
+      unit: "分鐘",
+      add: "新增付款資訊後即可通話"
+    },
+    help: "需要幫忙嗎？",
+    scenarios: {
+      s1: "理解菜單",
+      s2: "為計程車司機指路",
+      s3: "買火車票",
+      s4: "議價",
+      s5: "解釋食物過敏",
+      s6: "在餐廳訂位",
+      s7: "討論酒單",
+      s8: "看懂標示",
+      s9: "向附近的人問路",
+      s10: "與飯店禮賓人員交談",
+      s11: "在飯店登記入住或退房",
+      s12: "練習說某種語言",
+      s13: "回答語言作業題",
+      s14: "為即將出遊學習重要片語",
+      s15: "進一步理解當地文化",
+      s16: "避免旅程中誤觸文化禁忌 ",
+      s17: "擔任您開業務會議時的翻譯",
+      s18: "加強語言發音",
+      s19: "火車站導覽",
+      s20: "與當地人對話",
+      s21: "與當地藥劑師交談",
+      s22: "購物",
+      s23: "請服務人員拿不同尺寸或顏色的產品",
+      s24: "向客服人員求助",
+      s25: "預約",
+      s26: "訂票",
+      s27: "請別人推薦餐廳",
+      s28: "通報緊急事件",
+      s29: "找路",
+      s30: "與醫護人員交談」"
+    },
+    registrationWelcome: {
+      balance: "{{num}} 分鐘",
+      title: "前 10 分鐘免費！",
+      description: "10 分鐘過後，每分鐘的價格是 1 美元。",
+      buttons: {
+        dismiss: "開始使用翻譯精靈",
+        payment: "立即新增付款資訊"
+      }
+    }
+  },
+
+  // for use in session language selection
+  sessionLang: {
+    selections: "我需要的協助是：",
+    comingSoon: "即將推出各種語言"
+  },
+
   // text for customer related to payments and rates
   payments: {
     currentRate: "每分鐘 1 美元",
@@ -432,10 +511,17 @@
 
   operatingHours: {
     title: "可用時段：{{lang}}",
-    description: "語言翻譯精靈可用時段是 {{beginHour}} 到 {{endHour}}。",
+    description:
+      "語言翻譯精靈可用時段是 {{beginHour}} 到 {{endHour}}。",
     ok: "確定"
   },
-
+  lang: {
+    en: "英文",
+    spa: "西班牙文",
+    jpn: "日文",
+    cmn: "中文 (普通話)",
+    yue: "中文 (廣東話)"
+  },
   // triggered on customer home screen to show account balance and
   // pricing explanation
   pricingModal: {
@@ -445,7 +531,8 @@
     currentBalance: "{{minutes}} 分鐘",
     buttons: {
       gotIt: "沒問題！",
-      addCard: "新增付款資訊"
+      addCard: "新增付款資訊",
+      updateCard: "新增付款資訊"
     }
   },
 
@@ -457,23 +544,30 @@
       rate: "每分鐘 1 美元"
     },
     balance: {
-      title: "帳戶餘額",
+      title: "帳戶餘額：",
       min: "分鐘"
     },
     paymentInfo: {
-      titleWithCard: "付款資訊",
+      titleWithCard: "付款資訊：",
       titleNoCard: "新增付款資訊",
       linkNoCard: "新增卡片",
       linkWithCard: "變更卡片",
-      descriptionHasMinutes: "為避免通話中斷線，請立即新增付款資訊。",
-      descriptionLowMinutes: "您的帳戶餘額不足。為避免下次通話中斷線，請立即新增付款資訊。",
-      descriptionNoMinutes: "您必須新增付款資訊才能繼續使用。"
+      descriptionHasMinutes:
+        "為避免通話中斷線，請立即新增付款資訊。",
+      descriptionLowMinutes:
+        "您的帳戶餘額不足。為避免下次通話中斷線，請立即新增付款資訊。",
+      descriptionNoMinutes:
+        "您必須新增付款資訊才能繼續使用。"
     },
     descriptions: {
-      hasMinutesAndCard: "為免通話中斷，當您將分鐘數用完後，我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
-      hasMinutesNoCard: "若要在剩餘分鐘數用完後繼續通話，請立即輸入付款資訊。",
-      noMinutesHasCard: "我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
-      noMinutesNoCard: "您必須立即新增付款資訊，才能和語言專員通話。"
+      hasMinutesAndCard:
+        "為免通話中斷，當您將分鐘數用完後，我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
+      hasMinutesNoCard:
+        "若要在剩餘分鐘數用完後繼續通話，請立即輸入付款資訊。",
+      noMinutesHasCard:
+        "我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
+      noMinutesNoCard:
+        "您必須立即新增付款資訊，才能和語言專員通話。"
     },
     buttons: {
       continue: "繼續",
@@ -487,7 +581,7 @@
     errUnexpected: "發生非預期錯誤。",
     errTemporary: "發生暫時性錯誤。",
     errTemporaryTryAgain:
-      "發生暫時性錯誤。  請稍候幾分鐘再繼續。",
+      "發生暫時性錯誤。請稍候幾分鐘再繼續。",
     errLogin: "登入時發生問題",
     errDefaultAuth: "認證過期或無效。",
     errNoUser: "找不到符合該電子郵件地址的用戶",

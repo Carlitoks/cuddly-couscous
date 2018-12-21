@@ -9,7 +9,6 @@ import {
   Keyboard
 } from "react-native";
 import { Button, FormLabel, Header } from "react-native-elements";
-
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import LinearGradient from "react-native-linear-gradient";
@@ -27,7 +26,7 @@ import {
   updateView,
   getNativeLang
 } from "../../Ducks/UserProfileReducer";
-import { checkOperatingHours, onlyAlphaNumeric } from "../../Util/Helpers";
+import { checkOperatingHours, onlyAlphaNumeric, is403Response } from "../../Util/Helpers";
 import InputPassword from "../../Components/InputPassword/InputPassword";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
@@ -41,7 +40,7 @@ import styles from "./styles";
 import { displayFormErrors } from "../../Util/Alerts";
 import { Colors } from "../../Themes";
 
-import I18n from "../../I18n/I18n";
+import I18n,{translateApiErrorString} from "../../I18n/I18n";
 //TODO: change the operating hours alert to this view instead of homecustomer.
 class LoginView extends Component {
   componentWillUnmount() {
@@ -156,20 +155,27 @@ class LoginView extends Component {
             }
           })
           .catch(error => {
-            const errorMessage = !error
-              ? !this.props.networkModal
-                ? I18n.t("temporaryError")
-                : null
-              : !error.data
-                ? I18n.t("temporaryError")
-                : error.data.errors;
-
-            errorMessage && displayFormErrors(errorMessage);
-
-            updateForm({
-              performingRequest: false,
-              formHasErrors: false
-            });
+            if(is403Response(error)){
+              Alert.alert("Error", translateApiErrorString("location restricted"), [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+              ]);
+              navigation.dispatch({ type: "SelectRoleView" });
+            }else{
+              const errorMessage = !error
+                ? !this.props.networkModal
+                  ? I18n.t("temporaryError")
+                  : null
+                : !error.data
+                  ? I18n.t("temporaryError")
+                  : error.data.errors;
+  
+              errorMessage && displayFormErrors(errorMessage);
+              
+              updateForm({
+                performingRequest: false,
+                formHasErrors: false
+              });
+            }
           });
       });
     } else {

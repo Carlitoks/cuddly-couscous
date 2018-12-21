@@ -15,6 +15,7 @@ import { REASON, SETTINGS, TOKBOX_EVENTS } from "../../Util/Constants";
 
 import { Colors } from "../../Themes";
 import { changeStatus } from "../../Ducks/ProfileLinguistReducer";
+import { modifyAVModePreference } from "../../Ducks/NewSessionReducer";
 
 class SessionControls extends Component {
   constructor(props) {
@@ -85,6 +86,7 @@ class SessionControls extends Component {
             } = this.props;
 
             const isLinguist = !!linguist;
+            this.props.modifyAVModePreference({ avModePreference: "video" });
 
             const eventType = isLinguist
               ? TOKBOX_EVENTS.TOGGLE_VIDEO_LINGUIST
@@ -120,7 +122,7 @@ const mS = state => ({
   tokboxSessionID: state.activeSessionReducer.tokboxID
 });
 
-const mD = {};
+const mD = {modifyAVModePreference};
 
 export default connect(
   mS,

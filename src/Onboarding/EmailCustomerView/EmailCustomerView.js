@@ -7,7 +7,7 @@ import {
   asyncCreateUser
 } from "../../Ducks/CustomerProfileReducer";
 import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
-import { updateView } from "../../Ducks/UserProfileReducer";
+import { updateView, updateView as updateUserProfile } from "../../Ducks/UserProfileReducer";
 import { registerDevice, logInAsync } from "../../Ducks/AuthReducer";
 
 import {
@@ -141,6 +141,7 @@ class EmailCustomerView extends Component {
           }
         })
         .then(response => {
+          this.props.updateUserProfile({ isNewUser: true });
           navigation.dispatch({ type: "NameCustomerView" });
           this.changeButtonState(false);
         })
@@ -368,7 +369,8 @@ const mD = {
   logInAsync,
   checkRecord,
   updateCustomer,
-  updateView
+  updateView,
+  updateUserProfile
 };
 
 export default connect(

@@ -33,6 +33,8 @@ const getInstaBugLanguage = locale => {
       return "localeChineseSimplified";
     case "ja":
       return "localeJapanese";
+    case "es":
+      return "localeSpanish";
     default:
       return "localeEnglish";
   }

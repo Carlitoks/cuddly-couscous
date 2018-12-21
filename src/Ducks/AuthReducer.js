@@ -18,7 +18,7 @@ import {
 
 import { clearSettingsInterface } from "./SettingsReducer";
 
-import { is500Response } from "../Util/Helpers";
+  import { is500Response, is403Response } from "../Util/Helpers";
 
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -97,6 +97,7 @@ export const registerDevice = () => dispatch => {
     id: uuidv4(),
     mobileAppVersion: DeviceInfo.getReadableVersion(),
     name: DeviceInfo.getDeviceName(),
+    locale: DeviceInfo.getDeviceLocale(),
     notificationToken: null
   };
 
@@ -143,8 +144,11 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
       dispatch(updateForm({ performingRequest: false }));
       dispatch(networkError(error));
       if (!is500Response(error)) {
-        dispatch(loginError(error.response));
+        if(!is403Response(error)){
+          dispatch(loginError(error.response));
+        }
       }
+
       throw error.response;
     });
 };

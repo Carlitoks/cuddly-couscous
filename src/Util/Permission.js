@@ -95,3 +95,45 @@ export const checkForAllPermissions = updateSetting => {
       }
     });
 };
+
+
+/**
+ * @description  Function to check for all phone permissions needed for the call
+ *
+ * @param {function} updateSetting Reducer function to update values on ActiveSessionReducer
+ */
+export const checkCallPermissions = updateSetting => {
+  const appPermissions = ["camera", "microphone"];
+  let appPermissionsStatus = {};
+
+  Permissions.checkMultiple(appPermissions)
+    .then(PermissionsStatus => {
+      appPermissionsStatus = PermissionsStatus;
+    })
+    .then(() => {
+      if (
+        appPermissionsStatus.camera == "undetermined" ||
+        appPermissionsStatus.camera == "denied"
+      ) {
+        return Permissions.request("camera");
+      }
+    })
+    .then(cameraResponse => {
+      if (cameraResponse == "authorized") {
+        updateSetting({ video: true });
+      }
+    })
+    .then(() => {
+      if (
+        appPermissionsStatus.microphone == "undetermined" ||
+        appPermissionsStatus.microphone == "denied"
+      ) {
+        return Permissions.request("microphone");
+      }
+    })
+    .then(microphoneResponse => {
+      if (microphoneResponse == "authorized") {
+        updateSetting({ mic: true });
+      }
+    });
+};

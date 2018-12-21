@@ -7,7 +7,9 @@ import styles from "./styles";
 import { upperFirst } from "lodash";
 
 const colorMapper = {
-  red: Colors.redButton
+  red: Colors.redButton,
+  orange: 'orange',
+  green: 'green'
 };
 
 const PillButton = ({
@@ -47,9 +49,7 @@ const PillButton = ({
             : null
         }
         backgroundColor={
-          !!colorMapper[color]
-            ? Colors.redButton
-            : Colors.gradientColorButton.bottom
+          color
         }
         buttonStyle={[
           styles.button,

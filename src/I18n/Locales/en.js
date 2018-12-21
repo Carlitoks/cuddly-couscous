@@ -1,9 +1,9 @@
 export default (ENG = {
   accept: "Accept",
   acceptAllPermissionsCustomer:
-    "You must accept microphone and camera permissions on the phone settings before you can make a call",
+    "You must enable microphone and camera permissions in your settings in order to make a call with Jeenie.",
   acceptAllPermissionsLinguist:
-    "You must accept microphone and camera permissions on the phone settings before you can accept an incoming call",
+    "You must accept microphone and camera permissions in your device settings before you can accept an incoming call",
   add: "Add",
   addANewCard: "Add a new card...",
   addLanguage: "Add Language",
@@ -425,6 +425,80 @@ export default (ENG = {
   youCanAddTime: "You can add time during call",
   youCanChangeThis: "You can turn video on/off during call",
 
+  // new customer home screen
+  customerHome: {
+    primaryLang: {
+      label: "I Speak"
+    },
+    secondaryLang: {
+      label: "I Need Help with",
+      placeholder: "Choose Language"
+    },
+    customNote: {
+      label: "Additional Details",
+      placeholder: "Optional",
+      description: "Additional Details for Your Linguist:"
+    },
+    buttons: {
+      video: "Connect Now",
+      audio: "Audio Only"
+    },
+    account: {
+      pricing: "pricing",
+      rate: "$1/min",
+      unit: "minutes",
+      add: "Add Payment to Make a Call"
+    },
+    help: "Can I help you?",
+    scenarios: {
+      s1: "Understand your menu",
+      s2: "Direct your taxi driver",
+      s3: "Buy a train ticket",
+      s4: "Negotiate the price",
+      s5: "Explain a food allergy",
+      s6: "Order at a restaurant",
+      s7: "Discuss the wine list",
+      s8: "Read a sign",
+      s9: "Ask someone nearby for directions",
+      s10: "Speak with the hotel concierge",
+      s11: "Check in or out of your hotel",
+      s12: "Practice speaking a language",
+      s13: "Answer language homework questions",
+      s14: "Learn key phrases for your upcoming trip",
+      s15: "Understand the local culture better",
+      s16: "Avoid cultural missteps on your trip ",
+      s17: "Interpret for you in your business meeting",
+      s18: "Improve your language pronunciation",
+      s19: "Navigate the train station",
+      s20: "Hold a conversation with a local person",
+      s21: "Speak to the local pharmacist",
+      s22: "Make a purchase",
+      s23: "Request your product in a different size or color",
+      s24: "Get help from customer service",
+      s25: "Make a reservation",
+      s26: "Book a ticket",
+      s27: "Ask for a restaurant recommendation",
+      s28: "Report an emergency",
+      s29: "Find your way",
+      s30: "Speak to a medical professional"
+    },
+    registrationWelcome: {
+      balance: "{{num}} min",
+      title: "Your First 10 Minutes are Free!",
+      description: "After your first 10 minutes, pricing is $1 per minute.",
+      buttons: {
+        dismiss: "Start Using Jeenie",
+        payment: "Add Payment Information Now"
+      }
+    }
+  },
+
+  // for use in session language selection
+  sessionLang: {
+    selections: "I Need Help With:",
+    comingSoon: "Languages Coming Soon"
+  },
+
   // text for customer related to payments and rates
   payments: {
     currentRate: "$1/min",
@@ -457,7 +531,8 @@ export default (ENG = {
     currentBalance: "{{minutes}} min",
     buttons: {
       gotIt: "Got it!",
-      addCard: "Add Payment Information"
+      addCard: "Add Payment Information",
+      updateCard: "Update Payment Information"
     }
   },
 
@@ -519,7 +594,8 @@ export default (ENG = {
     errEventScenarioMissing: "A scenario must be specified.",
     errPaymentDetailsRequired: "Payment details are required to proceed.",
     errEventTimeExpired: "No time remaining for this code.",
-    errEventAlreadyUsed: "This code has already been used."
+    errEventAlreadyUsed: "This code has already been used.",
+    errLocationRestricted: "Jeenie is not currently available in your area."
   },
 
   // for use in session-related screens

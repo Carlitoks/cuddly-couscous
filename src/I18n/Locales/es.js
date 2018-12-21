@@ -51,9 +51,9 @@ export default (ESP = {
   cancel: "Cancelar",
   cancelCall: "Cancelar llamada",
   celebrateAndEnjoy:
-    "Celebre nuestro lanzamiento \n y disfrute de Jeenie por \n ¡15 minutos SIN CARGO!",
+    "Celebre nuestro lanzamiento \n y disfrute de Jeenie por \n ¡10 minutos SIN CARGO!",
   celebrateAndEnjoyAlternative:
-    "Celebre nuestro lanzamiento y \ndisfrute de 15 minutos con Jeenie \n¡SIN CARGO!",
+    "Celebre nuestro lanzamiento y \ndisfrute de 10 minutos con Jeenie \n¡SIN CARGO!",
   celebrateWithUs: "¡Celebre nuestro lanzamiento con nosotros!",
   changeSettings: "Para cambiar su configuración, diríjase a Configuración > Jeenie",
   cancelCallCustomer: "La llamada no está disponible",
@@ -112,6 +112,7 @@ export default (ESP = {
   editProfile: "Editar perfil",
   email: "Correo electrónico",
   emailCustomerText: "Al continuar, acepta nuestra ",
+  emailFormatValidation: "El correo electrónico debe ser una dirección de correo electrónico válida.",
   emptyEmail: "Correo electrónico vacío",
   emptyPassword: "Contraseña vacía",
   endCall: "Finalizar llamada",
@@ -150,6 +151,7 @@ export default (ESP = {
     "¿Somos humanos debido a los rasgos y atributos únicos que no se comparten con",
   extraTime1: "¡Ya casi se termina el tiempo!",
   extraTime2: "¿Necesita más tiempo?",
+  extraTime3: "Su llamada terminará en 2 minutos",
   extraTimeA1: "Sí, agregar 5 minutos",
   extraTimeA2: "No, terminar llamada cuando se termine el tiempo",
   fallPromotion:
@@ -162,6 +164,7 @@ export default (ESP = {
   finishOnboardingMessage:
     "Finalice su registro para poder utilizar la aplicación",
   firstname: "Nombre",
+  firstnameFormatValidation: "El nombre solo debe contener letras.",
   fluent: "Fluido",
   forgotPassword: "Restablecer su contraseña",
   forSignup: "Para registrarse",
@@ -235,8 +238,9 @@ export default (ESP = {
   lauchScreenSwipe4:
     "Una llamada promedio dura de 5 a 10 minutos, pero hable el tiempo que desee.",
   lauchScreenSwipe5:
-    "A modo de celebración por nuestro lanzamiento, sus primeros 15 minutos son SIN CARGO... ¡Un cumplido de Jeenie!",
+    "A modo de celebración por nuestro lanzamiento, sus primeros 10 minutos son SIN CARGO... ¡Un cumplido de Jeenie!",
   lastname: "Apellido",
+  lastnameFormatValidation: "El apellido solo debe contener letras.",
   legal: "Legal",
   letsGoToKwon: "Queremos conocerlo",
   linguist: "Lingüista",
@@ -298,7 +302,7 @@ export default (ESP = {
   passwordMatch: "Las contraseñas no coinciden.",
   passwordLengthValidation: "La contraseña debe tener 8 o más caracteres.",
   payAsYouGo: "Pague sobre la marcha",
-  payAsYouGoPricing: "Pague sobre la marcha =",
+  payAsYouGoPricing: "Pay-as-you-go =",
   payAsYouGoPricingUnder: " $1 por minuto",
   paymentDetails: "Información del pago",
   paymentDetailsCreated: "Su información de pago se actualizó con éxito.",
@@ -315,7 +319,7 @@ export default (ESP = {
   provideFeedback: "Proporcionar comentarios",
   provideFeedbackModalTitle: "¿Necesita más tiempo con Jeenie?",
   provideFeedbackModalText:
-    "Proporcione comentarios sobre su \nexperiencia usando Jeenie, y \nle daremos \n¡15 minutos adicionales SIN CARGO!",
+    "Proporcione comentarios sobre su \nexperiencia usando Jeenie, y \nle daremos \n¡10 minutos adicionales SIN CARGO!",
   provideFeedbackViewPlaceholder: "Añada sus comentarios aquí",
   provideFeedbackViewTitle: "Díganos cómo podemos mejorar la experiencia de Jeenie:",
   qr: "Código QR",
@@ -389,7 +393,7 @@ export default (ESP = {
   thankYou: " Gracias",
   thankYouFeedback: " Gracias por sus comentarios",
   thankYouFeedbackModalText:
-    "Hemos añadido \n15 minutos adicionales para que usted \ncontinúe usando Jeenie.",
+    "Hemos añadido \n10 minutos adicionales para que usted \ncontinúe usando Jeenie.",
   theCallWillEnd: "La llamada terminará después de {{minutes}} minutos",
   undefined: "Indefinido",
   unspecified: "No especificado",
@@ -401,6 +405,7 @@ export default (ESP = {
   usageExamples: "Ejemplos de uso",
   username: "Nombre de usuario",
   userProfile: "Mi perfil",
+  unableToConnect: "No se pudo conectar a la llamada \n\n¿Le gustaría volver a intentarlo?",
   verifyNumber: "Verificar teléfono",
   verifyNumberText: "Ingrese el código de verificación que recibió por mensaje de texto.",
   video: "Video",
@@ -420,6 +425,80 @@ export default (ESP = {
   youCanAddTime: "Puede agregar tiempo durante la llamada",
   youCanChangeThis: "Puede activar/desactivar el video durante la llamada",
 
+  // new customer home screen
+  customerHome: {
+    primaryLang: {
+      label: "Hablo"
+    },
+    secondaryLang: {
+      label: "Necesito ayuda con",
+      placeholder: "Elegir idioma"
+    },
+    customNote: {
+      label: "Detalles adicionales",
+      placeholder: "Opcional",
+      description: "Detalles adicionales para su lingüista:"
+    },
+    buttons: {
+      video: "Conectarse ahora",
+      audio: "Solo audio"
+    },
+    account: {
+      pricing: "precios",
+      rate: "$1/min",
+      unit: "minutos",
+      add: "Agregar pago para hacer una llamada"
+    },
+    help: "¿Puedo ayudarlo?",
+    scenarios: {
+      s1: "Comprender el menú",
+      s2: "Dirigir al conductor del taxi",
+      s3: "Comprar un boleto de tren",
+      s4: "Negociar el precio",
+      s5: "Explicar una alergia alimentaria",
+      s6: "Ordenar en un restaurante",
+      s7: "Analizar la lista de vinos",
+      s8: "Leer un letrero",
+      s9: "Pedirle indicaciones a una persona cercana",
+      s10: "Hablar con el conserje del hotel",
+      s11: "Registrarse o salir del hotel",
+      s12: "Practicar un idioma",
+      s13: "Responder preguntas de tareas",
+      s14: "Aprender frases clave para su próximo viaje",
+      s15: "Entender mejor la cultura local",
+      s16: "Evitar cometer errores culturales en su viaje ",
+      s17: "Interpretar para usted en la reunión de negocios",
+      s18: "Mejorar su pronunciación",
+      s19: "Manejarse por la estación de trenes",
+      s20: "Mantener una conversación con una persona del lugar",
+      s21: "Hablar con el farmacéutico del lugar",
+      s22: "Realizar una compra",
+      s23: "Solicitar un producto en un tamaño o color diferente",
+      s24: "Obtener ayuda del Servicio al Cliente",
+      s25: "Hacer una reserva",
+      s26: "Reservar un boleto",
+      s27: "Pedir una recomendación de restaurante",
+      s28: "Informar una emergencia",
+      s29: "Encontrar el camino",
+      s30: "Hablar con un profesional médico"
+    },
+    registrationWelcome: {
+      balance: "{{num}} min",
+      title: "¡Los primeros 10 minutos son gratuitos!",
+      description: "Después de los primeros 10 minutos, el precio es de $1 por minuto.",
+      buttons: {
+        dismiss: "Comenzar a usar Jeenie",
+        payment: "Agregar información de pago ahora"
+      }
+    }
+  },
+
+  // for use in session language selection
+  sessionLang: {
+    selections: "Necesito ayuda con:",
+    comingSoon: "Próximos idiomas"
+  },
+
   // text for customer related to payments and rates
   payments: {
     currentRate: "$1/min",
@@ -432,10 +511,17 @@ export default (ESP = {
 
   operatingHours: {
     title: "Disponibilidad: {{lang}}",
-    description: "Language Jeenies están disponibles de {{beginHour}} a {{endHour}}.",
+    description:
+      "Language Jeenies están disponibles de {{beginHour}} a {{endHour}}.",
     ok: "ACEPTAR"
   },
-
+  lang: {
+    en: "Inglés",
+    spa: "Español",
+    jpn: "Japonés",
+    cmn: "Chino (mandarín)",
+    yue: "Chino (cantonés)"
+  },
   // triggered on customer home screen to show account balance and
   // pricing explanation
   pricingModal: {
@@ -445,7 +531,8 @@ export default (ESP = {
     currentBalance: "{{minutes}} min",
     buttons: {
       gotIt: "¡Entendido!",
-      addCard: "Agregar información de pago"
+      addCard: "Agregar información de pago",
+      updateCard: "Actualizar información de pago"
     }
   },
 
@@ -454,26 +541,33 @@ export default (ESP = {
     screenTitle: "Precios y saldo de la cuenta",
     pricing: {
       title: "Precios:",
-      rate: "$1 USD/minuto"
+      rate: "1 USD/minuto"
     },
     balance: {
-      title: "Saldo de la cuenta",
+      title: "Saldo de la cuenta:",
       min: "Minutos"
     },
     paymentInfo: {
-      titleWithCard: "Información del pago",
+      titleWithCard: "Información del pago:",
       titleNoCard: "Agregar información de pago",
       linkNoCard: "Agregar tarjeta",
       linkWithCard: "Cambiar tarjeta",
-      descriptionHasMinutes: "Para evitar ser desconectado en medio de una llamada, agregue la información de pago ahora.",
-      descriptionLowMinutes: "El saldo de su cuenta es bajo. Para evitar ser desconectado durante su próxima llamada, agregue la información de pago ahora.",
-      descriptionNoMinutes: "Debe agregar la información de pago para poder continuar."
+      descriptionHasMinutes:
+        "Para evitar ser desconectado en medio de una llamada, agregue la información de pago ahora.",
+      descriptionLowMinutes:
+        "El saldo de su cuenta es bajo. Para evitar ser desconectado durante su próxima llamada, agregue la información de pago ahora.",
+      descriptionNoMinutes:
+        "Debe agregar la información de pago para poder continuar."
     },
     descriptions: {
-      hasMinutesAndCard: "Si se queda sin minutos, le cobraremos automáticamente $1 USD por minuto a su tarjeta para evitar desconectar la llamada.",
-      hasMinutesNoCard: "Para seguir hablando cuando finalicen sus minutos restantes, ingrese ahora la información de pago.",
-      noMinutesHasCard: "Automáticamente le cobraremos $1 USD por minuto a su tarjeta.",
-      noMinutesNoCard: "Para comunicarse con un lingüista, debe agregar la información de pago ahora."
+      hasMinutesAndCard:
+        "Si se queda sin minutos, le cobraremos automáticamente $1 USD por minuto a su tarjeta para evitar desconectar la llamada.",
+      hasMinutesNoCard:
+        "Para seguir hablando cuando finalicen sus minutos restantes, ingrese ahora la información de pago.",
+      noMinutesHasCard:
+        "Automáticamente le cobraremos $1 USD por minuto a su tarjeta.",
+      noMinutesNoCard:
+        "Para comunicarse con un lingüista, debe agregar la información de pago ahora."
     },
     buttons: {
       continue: "Continuar",

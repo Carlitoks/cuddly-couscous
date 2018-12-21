@@ -197,6 +197,7 @@ export const closeCall = reason => (dispatch, getState) => {
   displayEndCall(() => {
     SoundManager["EndCall"].play();
     dispatch(EndCall());
+    debugger
   });
 };
 
