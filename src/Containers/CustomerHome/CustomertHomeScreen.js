@@ -15,7 +15,10 @@ import {
   ensureSessionDefaults
 } from "../../Ducks/NewSessionReducer";
 
-import { getProfileAsync, updateView as updateUserProfile } from "../../Ducks/UserProfileReducer";
+import {
+  getProfileAsync,
+  updateView as updateUserProfile
+} from "../../Ducks/UserProfileReducer";
 
 import { getGeolocationCoords } from "../../Util/Helpers";
 import AvailableMinutes from "./Components/Partials/AvailableMinutes";
@@ -24,7 +27,7 @@ import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
 import I18n from "./../../I18n/I18n";
 import { supportedLangCodes } from "./../../Config/Languages";
-import WelcomeModal from './Components/Partials/WelcomeModal';
+import WelcomeModal from "./Components/Partials/WelcomeModal";
 
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
@@ -90,7 +93,6 @@ class CustomerHomeScreen extends Component {
     ) {
       Alert.alert(I18n.t("notification"), I18n.t("session.callFailCustomer"));
     }
-    this.props.getProfileAsync(this.props.uuid, this.props.token);
   }
 
   setPrimaryLangCode = () => {
@@ -107,6 +109,10 @@ class CustomerHomeScreen extends Component {
     this.props.openSlideMenu({ type });
   };
   render() {
+    const { uuid, token, getProfileAsync } = this.props;
+    if (uuid !== "" && token !== "") {
+      getProfileAsync(uuid, token);
+    }
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
