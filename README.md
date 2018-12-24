@@ -1,22 +1,24 @@
 # Solo Mobile App #
 
-## Developing ##
+## API Server Setup ##
 
 The mobile app will depend on having access to the API server.  To get that running on your local machine you will need to have `docker` installed, then must do the following:
 
-* get the credential json file needed for authorizing with Google, place it at `./.gcp/key.json`
-* copy the `api.config.yml.dist` to `api.config.yml`, and modify accordingly for your local dev environment (if necessary)
-* run `make setup` - authorizes via gcloud and logs into GCR
-* run `docker-compose up` - starts the api server and supporting services
+* get the credential json file needed for authorizing with Google, place it at `./.gcp/key.json` - file is pinned in Slack `#development` channel
+* get the credential json file needed for authorizing the api with Google, place it at `./.gcp/app-key.json` - file is pinned in Slack `#development` channel
+* copy the `api.config.yml.dist` to `api.config.yml`, and modify accordingly for your local dev environment (if necessary), in most cases the default values should work
+* run `make setup` - authorizes via gcloud and logs into GCR, so you can pull down images of the api server
+* run `docker-compose up` - starts the api server and supporting services (postgres, redis, etc...)
 
-Once it's up, go to [http://localhost:5002/](http://localhost:5002/) to view the API docs.  Connect to the api server in your own code via `http://solo-api-server:5000/`
+Once it's up, go to [http://localhost:5112/](http://localhost:5112/) to view the API docs.  Connect to the api server in your own code via `http://solo-api-server:5110/`.  You should be able to hit that URL in browser to see that the api server is up and running.
 
-When you need to pull a new version of the api server, modify the `docker-compose.yml` accordingly and run `docker-compose pull solo-api`.
+When you need to pull a new version of the api server, modify the `docker-compose.yml` accordingly and run `docker-compose pull solo-api`.  You may need to run `docker-compose down` and `docker-compose up` to restart all the services.
 
-The api server will automatically start on port 5000, but the image also has a range of utility commands that you may need to run during development.  You can run those via `docker-compose` directly, or use the makefile, which provides a convenience command:
+The api server will automatically start on port `5110`, but the image also has a range of utility commands that you may need to run during development.  You can run those via `docker-compose` directly, or use the makefile, which provides a convenience command:
 
 * `make run-cmd` - print available commands from the solo-api image
-* `make run-cmd CMD=db-schema-reset` - run a specific command from the solo-api image
+* `make run-cmd CMD="<COMMAND-NAME>` - run any command listed by the api server, if you need to provide any special flags or arguments, specify them *inside* the quotes: `CMD="commandName arg1 arg2 --flag=foo"`
+* `make run-cmd CMD="dev:load-fixtures` - run the command to reload database fixtures
 
 ## Android Studio ##
 
