@@ -2,6 +2,7 @@
 api.config.yml
 dev_auth/
 .gcp/
+.misc/
 src/Config/env.js
 src/Config/env.js.bak
 .appcenter/vars.env

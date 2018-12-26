@@ -4,6 +4,7 @@
 
 The mobile app will depend on having access to the API server.  To get that running on your local machine you will need to have `docker` installed, then must do the following:
 
+* create the following directories: `.gcp`, and `.misc`
 * get the credential json file needed for authorizing with Google, place it at `./.gcp/key.json` - file is pinned in Slack `#development` channel
 * get the credential json file needed for authorizing the api with Google, place it at `./.gcp/app-key.json` - file is pinned in Slack `#development` channel
 * copy the `api.config.yml.dist` to `api.config.yml`, and modify accordingly for your local dev environment (if necessary), in most cases the default values should work
