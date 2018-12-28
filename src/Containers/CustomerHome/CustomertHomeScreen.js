@@ -109,7 +109,7 @@ class CustomerHomeScreen extends Component {
     this.props.openSlideMenu({ type });
   };
   render() {
-    const { uuid, token, getProfileAsync } = this.props;
+    const { uuid, token, getProfileAsync, firstName } = this.props;
     if (uuid !== "" && token !== "") {
       getProfileAsync(uuid, token);
     }
@@ -128,7 +128,7 @@ class CustomerHomeScreen extends Component {
               style={styles.fullWidth}
               contentContainerStyle={[styles.fullWidth]}
             >
-              <AvatarSection />
+              <AvatarSection firstName={firstName} />
               <CallSection
                 navigation={this.props.navigation}
                 openSlideMenu={this.openSlideMenu}
@@ -158,7 +158,8 @@ const mS = state => ({
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   token: state.auth.token,
   uuid: state.auth.uuid,
-  isNewUser: state.userProfile.isNewUser
+  isNewUser: state.userProfile.isNewUser,
+  firstName: state.userProfile.firstName
 });
 
 const mD = {

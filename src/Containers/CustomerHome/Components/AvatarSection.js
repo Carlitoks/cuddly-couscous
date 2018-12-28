@@ -11,10 +11,12 @@ import styles from "./Styles/AvatarSectionStyles";
 
 export default class AvatarSection extends Component {
   renderSections = () => {
+    const { firstName } = this.props;
+
     return (
       <View style={styles.rowView}>
         <View>
-          <Questions />
+          <Questions firstName={firstName} />
         </View>
         <FemaleSilhouette />
         <SGWaves />

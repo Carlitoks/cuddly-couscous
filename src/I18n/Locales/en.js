@@ -449,7 +449,7 @@ export default (ENG = {
       unit: "minutes",
       add: "Add Payment to Make a Call"
     },
-    help: "Can I help you?",
+    help: "Can I help you, ",
     scenarios: {
       s1: "Understand your menu",
       s2: "Direct your taxi driver",
