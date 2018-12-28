@@ -52,6 +52,7 @@ export default class Questions extends Component {
           vertical={true}
           loop={true}
           autoplay={true}
+          autoplayInterval={4500}
           enableMomentum={false}
           lockScrollWhileSnapping={false}
           sliderHeight={60}
