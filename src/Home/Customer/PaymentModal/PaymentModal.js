@@ -16,11 +16,15 @@ class PaymentModal extends Component {
     super(props);
   }
 
-  setPillCollor() {
-    if (this.props.availableMinutes == 0) {
-      return "red";
+  setPillColor() {
+    if (this.props.availableMinutes >= 10) {
+      return "#63A901";
+    }
+
+    if (this.props.availableMinutes > 5 && this.props.availableMinutes < 10) {
+      return "orange";
     } else {
-      return Colors.gradientColorButton.bottom;
+      return "red";
     }
   }
 
@@ -67,7 +71,7 @@ class PaymentModal extends Component {
               })}`}
               icon={"ios-time"}
               alignButton={"Center"}
-              color={this.setPillCollor()}
+              color={this.setPillColor()}
             />
             <View style={styles.modalWrapper}>
               <View>
