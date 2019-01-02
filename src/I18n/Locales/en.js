@@ -408,6 +408,7 @@ export default (ENG = {
   unableToConnect: "Unable to connect to call \n\nWould you like to try again?",
   verifyNumber: "Verify Phone",
   verifyNumberText: "Enter the verfication code you received via text.",
+  version: "version",
   video: "Video",
   videoHasBeenTurnedOff:
     "Video has been turned off to optimize this call. It will resume when both participants have stronger connectivity.",
@@ -449,7 +450,7 @@ export default (ENG = {
       unit: "minutes",
       add: "Add Payment to Make a Call"
     },
-    help: "Can I help you?",
+    help: "Can I help you, ",
     scenarios: {
       s1: "Understand your menu",
       s2: "Direct your taxi driver",

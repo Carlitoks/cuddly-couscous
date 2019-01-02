@@ -110,7 +110,7 @@ class CustomerHomeScreen extends Component {
     this.props.openSlideMenu({ type });
   };
   render() {
-    const { uuid, token, getProfileAsync } = this.props;
+    const { uuid, token, getProfileAsync, firstName } = this.props;
     if (uuid !== "" && token !== "") {
       getProfileAsync(uuid, token);
     }
@@ -128,7 +128,7 @@ class CustomerHomeScreen extends Component {
               alwaysBounceVertical={false}
               contentContainerStyle={styles.scrollViewFlex}
             >
-              <AvatarSection />
+              <AvatarSection firstName={firstName} />
               <FreeMinutesWell navigation={this.props.navigation} />
               <CallSection
                 navigation={this.props.navigation}
@@ -159,7 +159,8 @@ const mS = state => ({
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   token: state.auth.token,
   uuid: state.auth.uuid,
-  isNewUser: state.userProfile.isNewUser
+  isNewUser: state.userProfile.isNewUser,
+  firstName: state.userProfile.firstName
 });
 
 const mD = {

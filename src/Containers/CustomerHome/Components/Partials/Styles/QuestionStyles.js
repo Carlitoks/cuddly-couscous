@@ -21,7 +21,7 @@ export default StyleSheet.create({
   questionHelpText: {
     color: "#FFFFFF",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? moderateScale(22) : moderateScale(26),
+    fontSize: Iphone5 ? moderateScale(24) : moderateScale(30),
     fontWeight: "300",
     textAlign: "left",
     paddingLeft: moderateScale(23),
