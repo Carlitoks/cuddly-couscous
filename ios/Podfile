@@ -28,7 +28,10 @@ target 'NewSolo' do
   pod 'Firebase/Messaging'
 
   pod 'RNSVG', :path => "#{node_modules_path}/react-native-svg"
-
+  
+  pod "react-native-branch", path: "#{node_modules_path}/react-native-branch"
+  pod "Branch-SDK", path: "#{node_modules_path}/react-native-branch/ios"
+  
   pod 'OpenTok'
 
   pod 'RNSound', :path => '../node_modules/react-native-sound'

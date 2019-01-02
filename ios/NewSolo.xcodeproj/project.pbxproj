@@ -84,6 +84,7 @@
 		D098F3B4B1A0A8A69B40FABF /* libPods-NewSolo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F987D51A7B2FA400DA43E4C7 /* libPods-NewSolo.a */; };
 		D2C62ECCA20541D08A3166F0 /* SFProDisplay-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F60C3D9B9D684C0A8075DA43 /* SFProDisplay-Light.otf */; };
 		30810F654474452497A52119 /* SFProDisplay-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 95FE2F137AA24B4C953B3FFB /* SFProDisplay-RegularItalic.otf */; };
+		1C5969BE89CF48E198AA1644 /* branch.json in Resources */ = {isa = PBXBuildFile; fileRef = 24C9710E143C49078BDFD670 /* branch.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -561,6 +562,7 @@
 		F60C3D9B9D684C0A8075DA43 /* SFProDisplay-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProDisplay-Light.otf"; path = "../src/Assets/Fonts/SFProDisplay-Light.otf"; sourceTree = "<group>"; };
 		F987D51A7B2FA400DA43E4C7 /* libPods-NewSolo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewSolo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		95FE2F137AA24B4C953B3FFB /* SFProDisplay-RegularItalic.otf */ = {isa = PBXFileReference; name = "SFProDisplay-RegularItalic.otf"; path = "../src/Assets/Fonts/SFProDisplay-RegularItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		24C9710E143C49078BDFD670 /* branch.json */ = {isa = PBXFileReference; name = "branch.json"; path = "../branch.json"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -811,6 +813,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				24C9710E143C49078BDFD670 /* branch.json */,
 			);
 			name = NewSolo;
 			sourceTree = "<group>";
@@ -1666,6 +1669,7 @@
 				90BD70F45E5044A984881B22 /* SFProDisplay-Regular.otf in Resources */,
 				707EEECD00914A33BE946150 /* AppCenter-Config.plist in Resources */,
 				30810F654474452497A52119 /* SFProDisplay-RegularItalic.otf in Resources */,
+				1C5969BE89CF48E198AA1644 /* branch.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
