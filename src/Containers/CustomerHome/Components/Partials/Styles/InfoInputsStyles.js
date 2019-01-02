@@ -38,6 +38,11 @@ export default StyleSheet.create({
         borderTopWidth: 1,
         zIndex: 10
       },
+      onboardingPlaceholderContainer: {
+        position: 'relative',
+        alignSelf: 'flex-end',
+        height: 54,
+      },
       swapLanguageIconContainer: {
         position: 'absolute',
         left: Metrics.width * 0.74,

@@ -23,7 +23,7 @@ export default class AvatarSection extends Component {
   };
   render() {
     return (
-      <View style={[styles.mainContainer, styles.avatarSectionContainer]}>
+      <View style={styles.avatarSectionContainer}>
         <LinearGradient
           colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
           locations={[0, 1]}

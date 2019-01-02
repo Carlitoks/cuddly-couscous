@@ -22,6 +22,14 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: 18,
   },
+  createAccountTitleTextStyle: {
+    color: "#fff",
+    fontFamily: Fonts.BaseFont,
+    fontSize: 18,
+    fontWeight: '500',
+    textAlign: 'center',
+    justifyContent: 'center'
+  },
   containerMenu: {
     flexDirection: "column",
     justifyContent: "center",

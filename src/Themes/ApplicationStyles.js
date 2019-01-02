@@ -13,12 +13,20 @@ const ApplicationStyles = {
       backgroundColor: Colors.gradientColor.top
     },
     avatarSectionContainer: {
-      maxHeight: moderateScale(190)
+      backgroundColor: 'blue'
     },
     callSectionContainer: {
       zIndex: 1000000,
+      paddingLeft: 25,
+      paddingRight: 23,
+      backgroundColor: "transparent",
+      marginTop: 20,
+      paddingBottom: 20,
+    },
+    onboardingCallSectionContainer: {
+      zIndex: 1000000,
       flex: 1,
-      paddingTop: Iphone5 ? 30 : 80,
+      paddingTop: Iphone5 ? 50 : 100,
       paddingLeft: 25,
       paddingRight: 23,
       backgroundColor: "transparent"

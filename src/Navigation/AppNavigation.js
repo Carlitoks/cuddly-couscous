@@ -70,6 +70,9 @@ import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
 import ConnectingView from "../Call/Linguist/Connecting/ConnectingView";
 import PaymentsView from "../Payments/PaymentsView";
+import OnboardingScreen from '../Containers/Onboarding/OnboardingScreen';
+import LoginScreen from '../Containers/Login/LoginScreen';
+import RegisterScreen from '../Containers/Register/RegisterScreen';
 
 const Navigation = StackNavigator(
   {
@@ -100,6 +103,20 @@ const Navigation = StackNavigator(
     },
     ContactingLinguist: {
       screen: ContactingLinguist,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    LoginScreen: {
+      screen: LoginScreen,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    RegisterScreen: {
+      screen: RegisterScreen,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
@@ -358,7 +375,13 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-
+    OnboardingView: {
+      screen: OnboardingScreen,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
     CallSettings: {
       screen: CallSettings,
       navigationOptions: {
@@ -433,7 +456,7 @@ const Navigation = StackNavigator(
     }
   },
   {
-    initialRouteName: "SelectRoleView",
+    initialRouteName: "OnboardingView",
     headerMode: "none",
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {

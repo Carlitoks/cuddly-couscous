@@ -4,8 +4,9 @@ import { Icon } from "react-native-elements";
 import { Fonts } from "../../../Themes";
 import PickerSelect from "react-native-picker-select";
 import { moderateScale } from "../../../Util/Scaling";
-import InfoInputs from './Partials/InfoInputs';
-import CallButtons from './Partials/CallButtons';
+import InfoInputs from "./Partials/InfoInputs";
+import CallButtons from "./Partials/CallButtons";
+import OnboardingButtons from "../../Onboarding/Components/OnboardingButtons";
 
 // Styles
 import styles from "./Styles/CallSectionStyles";
@@ -14,11 +15,32 @@ export default class CallSection extends Component {
   constructor(props) {
     super(props);
   }
+
+  renderButtonComponent = () => {
+    if (this.props.type === "onboarding") {
+      return <OnboardingButtons navigation={this.props.navigation} />;
+    } else {
+      return <CallButtons navigation={this.props.navigation} />;
+    }
+  };
   render() {
     return (
-      <View style={[styles.mainContainer, styles.callSectionContainer, styles.columnView]}>
-          <InfoInputs openSlideMenu={this.props.openSlideMenu}/>
-          <CallButtons navigation={this.props.navigation} />
+      <View
+        style={this.props.type === 'onboarding' ? [
+          styles.mainContainer,
+          styles.onboardingCallSectionContainer,
+          styles.columnView
+        ] : [
+          styles.mainContainer,
+          styles.callSectionContainer,
+          styles.columnView
+        ]}
+      >
+        <InfoInputs
+          type={this.props.type}
+          openSlideMenu={this.props.openSlideMenu}
+        />
+        {this.renderButtonComponent()}
       </View>
     );
   }

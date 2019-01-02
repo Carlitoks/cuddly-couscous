@@ -29,6 +29,7 @@ import settings from "./SettingsReducer";
 import tokbox from "./tokboxReducer";
 import userProfile from "./UserProfileReducer";
 import newSessionReducer from './NewSessionReducer';
+import onboardingReducer from './OnboardingReducer';
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -60,7 +61,8 @@ const rootReducer = combineReducers({
   settings,
   tokbox,
   userProfile,
-  newSessionReducer
+  newSessionReducer,
+  onboardingReducer
 });
 
 export default rootReducer;

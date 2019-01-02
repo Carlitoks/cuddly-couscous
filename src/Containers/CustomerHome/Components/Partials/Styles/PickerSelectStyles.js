@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { moderateScale } from "../../../../../Util/Scaling";
-import { Fonts } from "../../../../../Themes";
+import { Fonts, Metrics } from "../../../../../Themes";
 import { Iphone5 } from "../../../../../Util/Devices";
 
 const PlaceHolderText = {
@@ -53,5 +53,14 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center"
+  },
+  homeInputContainer: {
+    flexDirection: "column",
+    width: Metrics.width * 0.75,
+    marginLeft: -20
+  },
+  onboardingInputContainer: {
+    flexDirection: "column",
+    width: Metrics.width * 0.85
   }
 });

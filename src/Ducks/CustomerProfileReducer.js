@@ -1,5 +1,6 @@
 import { User } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
+import { update as updateOnboarding } from '../Ducks/OnboardingReducer';
 const ACTIONS = {
   CLEAR: "customerProfile/clear",
   UPDATE: "customerProfile/update",
@@ -29,7 +30,10 @@ export const asyncUpdateUser = (payload, token) => dispatch => {
 
 export const asyncCreateUser = (payload, token) => dispatch => {
   return User.create(payload, token).then(response => {
+    console.log(response);
     return dispatch(userinfoUpdate(response.data));
+  }).catch(err => {
+    return dispatch(updateOnboarding({errorType : 'AlreadyRegistered'}));
   });
 };
 
