@@ -2,6 +2,7 @@ import Metrics from "./Metrics";
 import Colors from "./Colors";
 import { moderateScale } from "../Util/Scaling";
 import { Iphone5 } from "../Util/Devices";
+import metrics from "./Metrics";
 
 // This file is for a reusable grouping of Theme items.
 // Similar to an XML fragment layout in Android
@@ -20,16 +21,16 @@ const ApplicationStyles = {
       paddingLeft: 25,
       paddingRight: 23,
       backgroundColor: "transparent",
-      marginTop: 20,
       paddingBottom: 20,
     },
     onboardingCallSectionContainer: {
       zIndex: 1000000,
-      flex: 1,
-      paddingTop: Iphone5 ? 50 : 100,
       paddingLeft: 25,
       paddingRight: 23,
-      backgroundColor: "transparent"
+      backgroundColor: "transparent",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
     rowView: {
       flexDirection: "row",
@@ -38,8 +39,8 @@ const ApplicationStyles = {
     },
     columnView: {
       flexDirection: "column",
-      justifyContent: "flex-start",
-      alignItems: "center"
+      justifyContent: "space-between",
+      alignItems: "center",
     },
     backgroundImage: {
       position: "absolute",

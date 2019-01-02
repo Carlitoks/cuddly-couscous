@@ -29,7 +29,6 @@ export default class CallSection extends Component {
         style={this.props.type === 'onboarding' ? [
           styles.mainContainer,
           styles.onboardingCallSectionContainer,
-          styles.columnView
         ] : [
           styles.mainContainer,
           styles.callSectionContainer,
