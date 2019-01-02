@@ -42,7 +42,7 @@ import { help, EMAIL_REGEX } from "../../Util/Constants";
 import metrics from "../../Themes/Metrics";
 import { Icon } from "react-native-elements";
 import FieldError from "../Register/Components/FieldError";
-import { update as updateOnboarding } from '../../Ducks/OnboardingReducer';
+import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -56,7 +56,6 @@ class LoginScreen extends Component {
 
   isValidEmail = text => {
     let reg = new RegExp(EMAIL_REGEX);
-    console.log(reg.test(this.props.email));
     if (!reg.test(this.props.email)) {
       this.props.updateOnboarding({ isValidEmail: false });
     } else {
@@ -82,45 +81,43 @@ class LoginScreen extends Component {
         this.props.email,
         this.props.password
       );
-        const getUserProfile = await getProfileAsync(
-          logInUserResponse.payload.uuid,
-          logInUserResponse.payload.token
+      const getUserProfile = await getProfileAsync(
+        logInUserResponse.payload.uuid,
+        logInUserResponse.payload.token
+      );
+      const updateUserProfileResponse = await updateUserProfile({
+        selectedNativeLanguage: getNativeLang(
+          getUserProfile.payload.nativeLangCode
+        )
+      });
+      const record = await checkRecord(this.props.email);
+      this.props.updateOnboarding({ makingRequest: false });
+      if (record) {
+        updateCustomer({ userInfo: { id: record.id } });
+        Alert.alert(
+          I18n.t("finishOnboarding"),
+          I18n.t("finishOnboardingMessage"),
+          [
+            {
+              text: I18n.t("ok")
+            }
+          ]
         );
-        const updateUserProfileResponse = await updateUserProfile({
-          selectedNativeLanguage: getNativeLang(
-            getUserProfile.payload.nativeLangCode
-          )
-        });
-        const record = await checkRecord(this.props.email);
-        this.props.updateOnboarding({ makingRequest: false });
-        if (record) {
-          updateCustomer({ userInfo: { id: record.id } });
-          Alert.alert(
-            I18n.t("finishOnboarding"),
-            I18n.t("finishOnboardingMessage"),
-            [
-              {
-                text: I18n.t("ok")
-              }
-            ]
-          );
-          navigation.dispatch({ type: record.lastStage });
-        } else {
-          navigation.dispatch({ type: "Home" });
-        }
+        navigation.dispatch({ type: record.lastStage });
+      } else {
+        navigation.dispatch({ type: "Home" });
+      }
     } catch (err) {
-      console.log(err);
-      if(err.data.errors[0] === "Password incorrect"){
-        this.props.updateOnboarding({ errorType: 'signInError', makingRequest: false });
+      if (err.data.errors[0] === "Password incorrect") {
+        this.props.updateOnboarding({
+          errorType: "signInError",
+          makingRequest: false
+        });
       }
     }
   };
   render() {
-    const { 
-      makingRequest,
-      isValidEmail
-    } = this.props;
-    console.log(makingRequest);
+    const { makingRequest, isValidEmail } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -137,7 +134,7 @@ class LoginScreen extends Component {
             >
               <View style={styles.loginContainer}>
                 <View style={styles.inputContainer}>
-                  { this.props.errorType === 'signInError' ? (
+                  {this.props.errorType === "signInError" ? (
                     <FieldError navigation={this.props.navigation} />
                   ) : (
                     <View />
@@ -223,7 +220,9 @@ class LoginScreen extends Component {
                     >
                       <TextInput
                         style={styles.inputText}
-                        onChangeText={text => this.props.updateOnboarding({ password: text })}
+                        onChangeText={text =>
+                          this.props.updateOnboarding({ password: text })
+                        }
                         value={this.props.password}
                         placeholder={"Password"}
                         secureTextEntry={true}
@@ -257,19 +256,23 @@ class LoginScreen extends Component {
                     </View>
 
                     <Text
+                      onPress={() =>
+                        this.props.navigation.dispatch({
+                          type: "ForgotPasswordView"
+                        })
+                      }
                       style={{
                         fontFamily: Fonts.ItalicFont,
                         fontSize: moderateScale(14),
                         fontWeight: "400",
                         color: "#FFFFFF",
                         paddingLeft: 5,
-                        textAlign: 'right',
+                        textAlign: "right",
                         paddingTop: 10
                       }}
                     >
                       Forgot Password?
                     </Text>
-
                   </View>
                 </View>
                 <View style={styles.buttonContainer}>
@@ -277,11 +280,13 @@ class LoginScreen extends Component {
                     <TouchableOpacity
                       onPress={() => this.submit()}
                       disabled={
-                        !isValidEmail || makingRequest ||
+                        !isValidEmail ||
+                        makingRequest ||
                         (!this.props.email || !this.props.password)
                       }
                       style={
-                        !isValidEmail || makingRequest ||
+                        !isValidEmail ||
+                        makingRequest ||
                         (!this.props.email || !this.props.password)
                           ? styles.signInButtonDisable
                           : styles.signInButtonEnabled

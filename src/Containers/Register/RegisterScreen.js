@@ -61,7 +61,6 @@ class RegisterScreen extends Component {
 
   isValidEmail = text => {
     let reg = new RegExp(EMAIL_REGEX);
-    console.log(reg.test(this.props.email));
     if (!reg.test(this.props.email)) {
       this.props.updateOnboarding({
         isValidEmail: false,
@@ -95,9 +94,7 @@ class RegisterScreen extends Component {
     try {
       this.props.updateOnboarding({ errorType: null, makingRequest: true });
       const registerDeviceResponse = await registerDevice();
-      console.log(registerDeviceResponse);
       if (registerDeviceResponse.type !== "networkErrors/error") {
-        console.log({ email: this.props.email, password: this.props.password });
         const registerUserResponse = await asyncCreateUser(
           {
             email: this.props.email,
@@ -105,12 +102,10 @@ class RegisterScreen extends Component {
           },
           registerDeviceResponse.payload.deviceToken
         );
-        console.log(registerUserResponse);
         const logInUserResponse = await logInAsync(
           this.props.email,
           this.props.password
         );
-        console.log(logInUserResponse);
         const updateUserResponse = await asyncUpdateUser(
           {
             id: registerUserResponse.payload.id,
@@ -118,15 +113,12 @@ class RegisterScreen extends Component {
           },
           logInUserResponse.payload.token
         );
-        console.log(updateUserResponse);
         const updateUserProfileResponse = await updateUserProfile({
           isNewUser: true
         });
-        console.log(updateUserProfileResponse);
         navigation.dispatch({ type: "Home" });
       }
     } catch (err) {
-      console.log(err);
       this.props.updateOnboarding({ makingRequest: false });
     }
   };

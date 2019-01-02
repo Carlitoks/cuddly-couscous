@@ -28,10 +28,11 @@ import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
 import I18n from "./../../I18n/I18n";
 import { supportedLangCodes } from "./../../Config/Languages";
 import WelcomeModal from "./Components/Partials/WelcomeModal";
-import FreeMinutesWell from '../Onboarding/Components/FreeMinutesWell';
+import FreeMinutesWell from "../Onboarding/Components/FreeMinutesWell";
 
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
+import CallButtons from "./Components/Partials/CallButtons";
 
 class CustomerHomeScreen extends Component {
   componentDidMount() {
@@ -124,8 +125,9 @@ class CustomerHomeScreen extends Component {
           >
             <LinguistHeader navigation={this.props.navigation} />
             <ScrollView
-            automaticallyAdjustContentInsets={true}
-            alwaysBounceVertical={false}
+              automaticallyAdjustContentInsets={true}
+              alwaysBounceVertical={false}
+              contentContainerStyle={styles.scrollViewFlex}
             >
               <AvatarSection />
               <FreeMinutesWell navigation={this.props.navigation} />
@@ -133,6 +135,7 @@ class CustomerHomeScreen extends Component {
                 navigation={this.props.navigation}
                 openSlideMenu={this.openSlideMenu}
               />
+              <CallButtons navigation={this.props.navigation} />
             </ScrollView>
             <SlideUpPanel />
             <WelcomeModal

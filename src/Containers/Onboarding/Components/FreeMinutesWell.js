@@ -49,7 +49,7 @@ class FreeMinutesWell extends Component {
           borderWidth: 1,
           borderRadius: 4,
           borderColor: "#CDCDF4",
-          top: 220
+          top: moderateScale(265),
         }}
       >
         <View

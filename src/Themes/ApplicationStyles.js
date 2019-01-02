@@ -10,18 +10,25 @@ import metrics from "./Metrics";
 const ApplicationStyles = {
   screen: {
     mainContainer: {
-      flex: 1,
+      flexGrow: 1,
       backgroundColor: Colors.gradientColor.top
     },
     avatarSectionContainer: {
-      backgroundColor: 'blue'
+      backgroundColor: "blue"
     },
     callSectionContainer: {
       zIndex: 1000000,
       paddingLeft: 25,
       paddingRight: 23,
       backgroundColor: "transparent",
-      paddingBottom: 20,
+      paddingBottom: 20
+    },
+    scrollViewFlex: {
+      flexGrow: 1,
+      flexDirection: "column",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingBottom: 20
     },
     onboardingCallSectionContainer: {
       zIndex: 1000000,
@@ -30,7 +37,7 @@ const ApplicationStyles = {
       backgroundColor: "transparent",
       flexDirection: "column",
       justifyContent: "space-between",
-      alignItems: "center",
+      alignItems: "center"
     },
     rowView: {
       flexDirection: "row",
@@ -40,7 +47,7 @@ const ApplicationStyles = {
     columnView: {
       flexDirection: "column",
       justifyContent: "space-between",
-      alignItems: "center",
+      alignItems: "center"
     },
     backgroundImage: {
       position: "absolute",

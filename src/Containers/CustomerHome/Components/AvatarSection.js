@@ -12,11 +12,13 @@ import styles from "./Styles/AvatarSectionStyles";
 export default class AvatarSection extends Component {
   renderSections = () => {
     return (
-      <View style={styles.rowView}>
-        <View>
-          <Questions />
+      <View style={styles.columnView}>
+        <View style={[styles.rowView, {marginLeft: 70}]}>
+          <View>
+            <Questions />
+          </View>
+          <FemaleSilhouette />
         </View>
-        <FemaleSilhouette />
         <SGWaves />
       </View>
     );

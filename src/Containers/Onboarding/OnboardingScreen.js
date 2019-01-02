@@ -19,6 +19,7 @@ import { clear as clearOnboarding } from "../../Ducks/OnboardingReducer";
 
 // Styles
 import styles from "./Styles/OnboardingScreenStyles";
+import OnboardingButtons from "./Components/OnboardingButtons";
 
 class OnboardingScreen extends Component {
   componentWillMount() {
@@ -47,8 +48,6 @@ class OnboardingScreen extends Component {
       primaryLangCode: primaryLangCode ? primaryLangCode : "eng",
       secondaryLangCode: secondaryLangCode ? secondaryLangCode : ""
     });
-
-    console.log(isLoggedIn, token);
     if (isLoggedIn && token) {
       navigation.dispatch({ type: "Home" });
     }
@@ -73,6 +72,7 @@ class OnboardingScreen extends Component {
             <ScrollView
               automaticallyAdjustContentInsets={true}
               alwaysBounceVertical={false}
+              contentContainerStyle={styles.scrollViewFlex}
             >
               <AvatarSection />
               <FreeMinutesWell />
@@ -81,6 +81,7 @@ class OnboardingScreen extends Component {
                 openSlideMenu={this.openSlideMenu}
                 type={"onboarding"}
               />
+              <OnboardingButtons navigation={this.props.navigation} />
             </ScrollView>
             <SlideUpPanel />
           </LinearGradient>

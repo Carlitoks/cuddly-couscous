@@ -17,7 +17,7 @@ const PlaceHolderText = {
   };
 
 export default StyleSheet.create({
-    inputsContainer: { paddingTop: Metrics.height * 0.08 },
+    inputsContainer: { paddingTop: Metrics.width * 0.14 },
     inputTitle: {
         color: "#ffffff",
         fontFamily: Fonts.ItalicFont,

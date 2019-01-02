@@ -8,10 +8,6 @@ import { Colors } from "../../../Themes";
 import styles from "./Styles/HeaderStyles";
 
 export default class LinguistHeader extends Component {
-  componentWillMount() {
-    console.log(this.props.navigation);
-  }
-
   renderTitle = () => {
     if (this.props.navigation.state.routeName === "RegisterScreen") {
       return {
