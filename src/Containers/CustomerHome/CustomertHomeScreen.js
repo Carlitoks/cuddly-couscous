@@ -21,7 +21,6 @@ import {
 } from "../../Ducks/UserProfileReducer";
 
 import { getGeolocationCoords } from "../../Util/Helpers";
-import AvailableMinutes from "./Components/Partials/AvailableMinutes";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";

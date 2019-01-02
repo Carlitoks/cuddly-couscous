@@ -13,9 +13,7 @@ const ApplicationStyles = {
       flexGrow: 1,
       backgroundColor: Colors.gradientColor.top
     },
-    avatarSectionContainer: {
-      backgroundColor: "blue"
-    },
+    avatarSectionContainer: {},
     callSectionContainer: {
       zIndex: 1000000,
       paddingLeft: 25,

@@ -637,6 +637,24 @@ export default (ENG = {
     }
   },
 
+  customerOnboarding: {
+    connectToLinguist: 'Connect to a Linguist Now',
+    login: {
+      provideInformation: 'Provide your name, email and a password so that you can access your account in the future.',
+      createAccountTitle: 'Create Account',
+      termsAndPrivacyNotice: 'By continuing, you agree to our Terms and Privacy Policy',
+    },
+    register: {
+      createAnAccount: 'Create an account',
+      alreadyAccount: '¿Already have an account? Sign in'
+    },
+    errors: {
+      invalidEmail: 'Please enter a valid email address',
+      takenEmail: 'An account already exists with the email address you entered. Please enter a different email or sign in to your account.',
+      emailAndPassword: 'Incorrect email and password combination. Please try again.'
+    }
+  },
+
   // for use during primary language selection
   languagesList: {
     eng: "English",

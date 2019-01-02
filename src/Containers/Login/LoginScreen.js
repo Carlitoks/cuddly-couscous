@@ -140,51 +140,21 @@ class LoginScreen extends Component {
                     <View />
                   )}
 
-                  <View style={{ flexDirection: "column", paddingTop: 10 }}>
-                    <Text
-                      style={{
-                        fontFamily: Fonts.ItalicFont,
-                        fontSize: moderateScale(13),
-                        fontWeight: "400",
-                        color: "#FFFFFF",
-                        paddingLeft: 5
-                      }}
-                    >
-                      Email
-                    </Text>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        marginTop: -10
-                      }}
-                    >
+                  <View style={styles.inputViewContainer}>
+                    <Text style={styles.labelStyle}>{I18n.t("email")}</Text>
+                    <View style={styles.inputInternalContainer}>
                       <TextInput
                         style={styles.inputText}
                         onChangeText={text => this.isValidEmail(text)}
                         onChange={text => this.isValidEmail(text)}
                         onBlur={() => this.isValidEmail(this.props.email)}
                         value={this.props.email}
-                        placeholder={"Email"}
+                        placeholder={I18n.t("email")}
                         placeholderTextColor={"rgba(255,255,255,0.7)"}
                         keyboardType={"email-address"}
                       />
                       {this.props.errorType === "signInError" ? (
-                        <View
-                          style={{
-                            position: "relative",
-                            left: -20,
-                            backgroundColor: "red",
-                            borderWidth: 1,
-                            borderColor: "#fff",
-                            borderRadius: 50,
-                            height: metrics.width * 0.06,
-                            width: metrics.width * 0.06,
-                            justifyContent: "center",
-                            alignItems: "center"
-                          }}
-                        >
+                        <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
                             type={"evilicon"}
@@ -198,51 +168,21 @@ class LoginScreen extends Component {
                     </View>
                   </View>
 
-                  <View style={{ flexDirection: "column", paddingTop: 10 }}>
-                    <Text
-                      style={{
-                        fontFamily: Fonts.ItalicFont,
-                        fontSize: moderateScale(13),
-                        fontWeight: "400",
-                        color: "#FFFFFF",
-                        paddingLeft: 5
-                      }}
-                    >
-                      Password
-                    </Text>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        marginTop: -10
-                      }}
-                    >
+                  <View style={styles.inputViewContainer}>
+                    <Text style={styles.labelStyle}>{I18n.t("password")}</Text>
+                    <View style={styles.inputInternalContainer}>
                       <TextInput
                         style={styles.inputText}
                         onChangeText={text =>
                           this.props.updateOnboarding({ password: text })
                         }
                         value={this.props.password}
-                        placeholder={"Password"}
+                        placeholder={I18n.t("password")}
                         secureTextEntry={true}
                         placeholderTextColor={"rgba(255,255,255,0.7)"}
                       />
                       {this.props.errorType === "signInError" ? (
-                        <View
-                          style={{
-                            position: "relative",
-                            left: -20,
-                            backgroundColor: "red",
-                            borderWidth: 1,
-                            borderColor: "#fff",
-                            borderRadius: 50,
-                            height: metrics.width * 0.06,
-                            width: metrics.width * 0.06,
-                            justifyContent: "center",
-                            alignItems: "center"
-                          }}
-                        >
+                        <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
                             type={"evilicon"}
@@ -261,17 +201,9 @@ class LoginScreen extends Component {
                           type: "ForgotPasswordView"
                         })
                       }
-                      style={{
-                        fontFamily: Fonts.ItalicFont,
-                        fontSize: moderateScale(14),
-                        fontWeight: "400",
-                        color: "#FFFFFF",
-                        paddingLeft: 5,
-                        textAlign: "right",
-                        paddingTop: 10
-                      }}
+                      style={styles.forgotPasswordLabel}
                     >
-                      Forgot Password?
+                      {I18n.t("forgotPassword")}
                     </Text>
                   </View>
                 </View>
@@ -292,7 +224,9 @@ class LoginScreen extends Component {
                           : styles.signInButtonEnabled
                       }
                     >
-                      <Text style={styles.buttonEnabledText}>Sign In</Text>
+                      <Text style={styles.buttonEnabledText}>
+                        {I18n.t("signIn")}
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity

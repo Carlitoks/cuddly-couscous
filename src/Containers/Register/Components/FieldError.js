@@ -48,7 +48,7 @@ class FieldError extends Component {
   render() {
     return (
       <View style={styles.redErrorAlertContainer}>
-        {this.renderErrorText()}
+        <Text style={styles.redErrorAlertText}>{this.props.errorType}</Text>
       </View>
     );
   }

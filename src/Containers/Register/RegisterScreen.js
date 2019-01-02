@@ -150,50 +150,36 @@ class RegisterScreen extends Component {
                   )}
 
                   <View style={styles.inputViewContainer}>
-                    <Text
-                      style={styles.labelText}
-                    >
-                      First Name
-                    </Text>
-                    <View
-                      style={styles.inputsErrosContainer}
-                    >
+                    <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
+                    <View style={styles.inputsErrosContainer}>
                       <TextInput
                         style={styles.inputText}
                         onChangeText={text =>
                           this.props.updateOnboarding({ firstName: text })
                         }
                         value={this.props.firstName}
-                        placeholder={"First Name"}
+                        placeholder={I18n.t("firstname")}
                         placeholderTextColor={"rgba(255,255,255,0.7)"}
                       />
                     </View>
                   </View>
 
                   <View style={styles.inputViewContainer}>
-                    <Text
-                      style={styles.labelText}
-                    >
-                      Email
-                    </Text>
-                    <View
-                      style={styles.inputsErrosContainer}
-                    >
+                    <Text style={styles.labelText}>{I18n.t("email")}</Text>
+                    <View style={styles.inputsErrosContainer}>
                       <TextInput
                         style={styles.inputText}
                         onChangeText={text => this.isValidEmail(text)}
                         onChange={text => this.isValidEmail(text)}
                         onBlur={() => this.isValidEmail(this.props.email)}
                         value={this.props.email}
-                        placeholder={"Email"}
+                        placeholder={I18n.t("email")}
                         placeholderTextColor={"rgba(255,255,255,0.7)"}
                         keyboardType={"email-address"}
                       />
                       {this.props.errorType === "emailFormat" ||
                       this.props.errorType === "AlreadyRegistered" ? (
-                        <View
-                          style={styles.errorIconContainer}
-                        >
+                        <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
                             type={"evilicon"}
@@ -208,21 +194,17 @@ class RegisterScreen extends Component {
                   </View>
 
                   <View style={styles.inputViewContainer}>
-                    <Text
-                      style={styles.labelText}
-                    >
-                      Create Password
+                    <Text style={styles.labelText}>
+                      {I18n.t("enterYourPassword")}
                     </Text>
-                    <View
-                      style={styles.inputsErrosContainer}
-                    >
+                    <View style={styles.inputsErrosContainer}>
                       <TextInput
                         style={styles.inputText}
                         onChangeText={text =>
                           this.props.updateOnboarding({ password: text })
                         }
                         value={this.props.password}
-                        placeholder={"Create Password"}
+                        placeholder={I18n.t("enterYourPassword")}
                         secureTextEntry={true}
                         placeholderTextColor={"rgba(255,255,255,0.7)"}
                       />
@@ -261,7 +243,7 @@ class RegisterScreen extends Component {
                       }
                     >
                       <Text style={styles.buttonEnabledText}>
-                        Already have an account? Sign In »
+                        {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
                       </Text>
                     </TouchableOpacity>
                   </View>

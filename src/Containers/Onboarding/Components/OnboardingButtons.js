@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 // Styles
 import styles from "./Styles/OnboardingButtonsStyles";
+import I18n from './../../../I18n/I18n';
 
 class OnboardingButtons extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class OnboardingButtons extends Component {
             style={styles.audioOnlyButton}
           >
             <Text style={styles.audioOnlyButtonText}>
-              Already have an account? Sign In »
+            {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
             </Text>
           </TouchableOpacity>
         </View>

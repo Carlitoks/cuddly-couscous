@@ -11,7 +11,7 @@ export default StyleSheet.create({
   callButtonContainer: {
     flexDirection: "column",
     justifyContent: "flex-end",
-    alignItems: "flex-end",
+    alignItems: "flex-end"
   },
   callNowButtonContainer: {
     flexDirection: "column",

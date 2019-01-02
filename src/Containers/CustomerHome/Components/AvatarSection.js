@@ -13,7 +13,7 @@ export default class AvatarSection extends Component {
   renderSections = () => {
     return (
       <View style={styles.columnView}>
-        <View style={[styles.rowView, {marginLeft: 70}]}>
+        <View style={[styles.rowView, { marginLeft: 70 }]}>
           <View>
             <Questions />
           </View>

@@ -2,122 +2,158 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Alert } from "react-native";
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
-import I18n, { translateProperty, translateLanguage } from "../../../I18n/I18n";
-import { GetInfo } from "../../../Ducks/SessionInfoReducer";
-import { modifyAVModePreference } from "../../../Ducks/NewSessionReducer";
+import I18n from "../../../I18n/I18n";
 import {
-  clear as clearSettings,
-  update as customerUpdateSettings
-} from "../../../Ducks/ActiveSessionReducer";
-import { cleanSelected } from "../../../Ducks/HomeFlowReducer";
-import { clearPromoCode } from "../../../Ducks/PromoCodeReducer";
-import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
-import Permissions from "react-native-permissions";
-import {
-  setPermission,
-  displayOpenSettingsAlert,
-  checkForAllPermissions,
-  checkCallPermissions
-} from "../../../Util/Permission";
-import { Languages, DefaultLanguagePairMap } from "../../../Config/Languages";
-import {
-  getLocalizedCategories,
-  SUPPORTED_LANGS
-} from "../../../Util/Constants";
+  updateSettings as updateHomeFlow
+} from "../../../Ducks/HomeFlowReducer";
+import PaymentModal from "../../../Home/Customer/PaymentModal/PaymentModal";
 
 // Styles
 import styles from "./Styles/FreeMinutesWellStyles";
-import { moderateScale } from "../../../Util/Scaling";
-import { Metrics, Fonts } from "../../../Themes";
-import metrics from "../../../Themes/Metrics";
 
 class FreeMinutesWell extends Component {
   constructor(props) {
     super(props);
   }
 
+  setPillColor = () => {
+    if (this.props.navigation.state.routeName === "OnboardingView") {
+      return styles.pillButtonContainer;
+    }
+    if (this.props.availableMinutes >= 10) {
+      return styles.pillButtonContainer;
+    }
+
+    if (this.props.availableMinutes > 5 && this.props.availableMinutes < 10) {
+      return { ...styles.pillButtonContainer, backgroundColor: "orange" };
+    }
+
+    if (this.props.availableMinutes > 0 && this.props.availableMinutes <= 5) {
+      return { ...styles.pillButtonContainer, backgroundColor: "red" };
+    }
+
+    if (this.props.stripePaymentToken) {
+      return {
+        ...styles.pillButtonContainer,
+        backgroundColor: "#ffffff"
+      };
+    } else {
+      return { ...styles.pillButtonContainer, backgroundColor: "red" };
+    }
+  };
+
+  setPillContent = () => {
+    if (this.props.navigation.state.routeName === "OnboardingView") {
+      return I18n.t("customerHome.registrationWelcome.title");
+    }
+    if (this.props.availableMinutes > 0) {
+      return I18n.t("customerHome.registrationWelcome.balance", {
+        num: this.props.availableMinutes
+      });
+    }
+
+    if (this.props.stripePaymentToken) {
+      return I18n.t("costPerMinute");
+    } else {
+      return I18n.t("customerHome.account.add");
+    }
+  };
+
+  setPillTextStyle = () => {
+    if (this.props.availableMinutes === 0) {
+      if (this.props.stripePaymentToken) {
+        return styles.pricingPillText;
+      } else {
+        return styles.pillButtonText;
+      }
+    } else {
+      return styles.pillButtonText;
+    }
+  };
+
+  setIconColor = () => {
+    if (this.props.availableMinutes > 0) {
+      return "#fff";
+    }
+    if (this.props.stripePaymentToken) {
+      return "#401674";
+    } else {
+      return "#fff";
+    }
+  };
+
+  renderTitle = () => {
+    if (this.props.navigation.state.routeName === "OnboardingView") {
+      return (
+        <Text style={styles.wellTitle}>
+          {I18n.t("customerHome.registrationWelcome.title")}
+        </Text>
+      );
+    } else {
+      return <React.Fragment />;
+    }
+  };
+
+  renderSubtitle = () => {
+    if (this.props.availableMinutes === 0) {
+      if (this.props.stripePaymentToken) {
+        return I18n.t("pricingScreen.descriptions.noMinutesHasCard");
+      } else {
+        return I18n.t("pricingScreen.descriptions.noMinutesNoCard");
+      }
+    } else {
+      return I18n.t("customerHome.registrationWelcome.description");
+    }
+  };
+
+  onPressAction = () => {
+    if (this.props.navigation.state.routeName === "OnboardingView") {
+      return null;
+    } else {
+      return this.props.updateHomeFlow({ displayPaymentModal: true });
+    }
+  };
   render() {
     return (
-      <View
-        style={{
-          width: Metrics.width * 0.89,
-          backgroundColor: "#CDCDF4",
-          alignSelf: "center",
-          position: "absolute",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          borderWidth: 1,
-          borderRadius: 4,
-          borderColor: "#CDCDF4",
-          top: moderateScale(265),
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: "#63A901",
-            alignSelf: "flex-start",
-            position: "relative",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            borderWidth: 1,
-            borderRadius: 30,
-            borderColor: "rgba(255,255,255,0.55)",
-            top: -13,
-            left: 8,
-            paddingBottom: 5,
-            paddingTop: 5,
-            flexDirection: "row",
-            padding: 10
-          }}
+      <React.Fragment>
+        <TouchableOpacity
+          onPress={() => this.onPressAction()}
+          style={styles.freeMinutesWellContainer}
         >
-          <Icon
-            name={"clock"}
-            type={"entypo"}
-            color={"#fff"}
-            size={15}
-          />
-          <Text
-            style={{
-              paddingLeft: 5,
-              color: "#fff",
-              fontWeight: "600",
-              fontFamily: Fonts.ItalicFont,
-              fontSize: moderateScale(16)
-            }}
-          >
-            10 FREE Minutes
-          </Text>
-        </View>
-        <Text
-          style={{
-            color: "#401674",
-            fontFamily: Fonts.BoldFont,
-            fontSize: moderateScale(21),
-            paddingLeft: 15,
-            marginTop: -10
+          <View style={this.setPillColor()}>
+            <Icon
+              name={"clock"}
+              type={"entypo"}
+              color={this.setIconColor()}
+              size={15}
+            />
+            <Text style={this.setPillTextStyle()}>{this.setPillContent()}</Text>
+          </View>
+          {this.renderTitle()}
+          <Text style={styles.wellSubtitle}>{this.renderSubtitle()}</Text>
+        </TouchableOpacity>
+        <PaymentModal
+          visible={this.props.displayPaymentModal}
+          closeModal={() => {
+            this.props.updateHomeFlow({ displayPaymentModal: false });
           }}
-        >
-          Your First 10 Minutes are Free!
-        </Text>
-        <Text
-          style={{
-            color: "#401674",
-            fontFamily: Fonts.ItalicFont,
-            fontSize: moderateScale(13),
-            paddingLeft: 15,
-            paddingBottom: 15
-          }}
-        >
-          After your first 10 minutes, pricing is $1 per minute.
-        </Text>
-      </View>
+          navigation={this.props.navigation}
+        />
+      </React.Fragment>
     );
   }
 }
 
-const mS = state => ({});
+const mS = state => ({
+  availableMinutes: state.userProfile.availableMinutes,
+  displayPaymentModal: state.homeFlow.displayPaymentModal,
+  stripePaymentToken: state.userProfile.stripePaymentToken,
+  displayPaymentModal: state.homeFlow.displayPaymentModal
+});
 
-const mD = {};
+const mD = {
+  updateHomeFlow
+};
 
 export default connect(
   mS,

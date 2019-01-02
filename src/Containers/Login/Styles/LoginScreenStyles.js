@@ -57,5 +57,40 @@ export default StyleSheet.create({
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
     elevation: 8
+  },
+  inputViewContainer: { flexDirection: "column", paddingTop: 10 },
+  labelStyle: {
+    fontFamily: Fonts.ItalicFont,
+    fontSize: moderateScale(13),
+    fontWeight: "400",
+    color: "#FFFFFF",
+    paddingLeft: 5
+  },
+  inputInternalContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginTop: -10
+  },
+  errorIconContainer: {
+    position: "relative",
+    left: -20,
+    backgroundColor: "red",
+    borderWidth: 1,
+    borderColor: "#fff",
+    borderRadius: 50,
+    height: Metrics.width * 0.06,
+    width: Metrics.width * 0.06,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  forgotPasswordLabel: {
+    fontFamily: Fonts.ItalicFont,
+    fontSize: moderateScale(14),
+    fontWeight: "400",
+    color: "#FFFFFF",
+    paddingLeft: 5,
+    textAlign: "right",
+    paddingTop: 10
   }
 });

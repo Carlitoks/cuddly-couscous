@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, TextInput } from "react-native";
-import { Icon } from "react-native-elements";
-import { Fonts } from "../../../Themes";
-import PickerSelect from "react-native-picker-select";
-import { moderateScale } from "../../../Util/Scaling";
+import { View } from "react-native";
 import InfoInputs from "./Partials/InfoInputs";
-import CallButtons from "./Partials/CallButtons";
-import OnboardingButtons from "../../Onboarding/Components/OnboardingButtons";
 
 // Styles
 import styles from "./Styles/CallSectionStyles";

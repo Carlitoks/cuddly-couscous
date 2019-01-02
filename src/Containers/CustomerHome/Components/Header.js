@@ -6,6 +6,7 @@ import { Colors } from "../../../Themes";
 
 // Styles
 import styles from "./Styles/HeaderStyles";
+import I18n from "./../../../I18n/I18n";
 
 export default class LinguistHeader extends Component {
   renderTitle = () => {
@@ -18,29 +19,34 @@ export default class LinguistHeader extends Component {
 
     if (this.props.navigation.state.routeName === "LoginScreen") {
       return {
-        text: "Sign In",
+        text: I18n.t("signIn"),
         style: styles.createAccountTitleTextStyle
       };
     }
-    return { text: "Jeenie", style: styles.titleTextStyle };
+    return { text: I18n.t("appName"), style: styles.titleTextStyle };
   };
   renderLeftComponent = () => {
     if (this.props.type === "onboarding") {
-      return <TouchableOpacity
-      activeOpacity={1}
-      style={styles.containerMenu}
-      onPress={() => null}
-    >
-    </TouchableOpacity>;
+      return (
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.containerMenu}
+          onPress={() => null}
+        />
+      );
     }
 
-    if (this.props.navigation.state.routeName === "RegisterScreen" || this.props.navigation.state.routeName === "LoginScreen") {
-      return <TouchableOpacity
-        activeOpacity={1}
-        style={styles.containerMenu}
-        onPress={() => null}
-      >
-      </TouchableOpacity>;
+    if (
+      this.props.navigation.state.routeName === "RegisterScreen" ||
+      this.props.navigation.state.routeName === "LoginScreen"
+    ) {
+      return (
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.containerMenu}
+          onPress={() => null}
+        />
+      );
     }
 
     return (
@@ -56,15 +62,19 @@ export default class LinguistHeader extends Component {
 
   renderRightComponent = () => {
     if (this.props.type === "onboarding") {
-      return <TouchableOpacity
-      activeOpacity={1}
-      style={styles.containerMenu}
-      onPress={() => null}
-    >
-    </TouchableOpacity>;
+      return (
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.containerMenu}
+          onPress={() => null}
+        />
+      );
     }
 
-    if (this.props.navigation.state.routeName === "RegisterScreen" || this.props.navigation.state.routeName === "LoginScreen") {
+    if (
+      this.props.navigation.state.routeName === "RegisterScreen" ||
+      this.props.navigation.state.routeName === "LoginScreen"
+    ) {
       return (
         <TouchableOpacity
           activeOpacity={0.8}
