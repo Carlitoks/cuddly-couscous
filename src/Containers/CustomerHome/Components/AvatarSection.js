@@ -14,18 +14,20 @@ export default class AvatarSection extends Component {
     const { firstName } = this.props;
 
     return (
-      <View style={styles.rowView}>
-        <View>
-          <Questions firstName={firstName} />
+      <View style={styles.columnView}>
+        <View style={[styles.rowView, { marginLeft: 70 }]}>
+          <View>
+            <Questions firstName={firstName} />
+          </View>
+          <FemaleSilhouette />
         </View>
-        <FemaleSilhouette />
         <SGWaves />
       </View>
     );
   };
   render() {
     return (
-      <View style={[styles.mainContainer, styles.avatarSectionContainer]}>
+      <View style={styles.avatarSectionContainer}>
         <LinearGradient
           colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
           locations={[0, 1]}

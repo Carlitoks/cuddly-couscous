@@ -7,7 +7,7 @@ import {
   swapCurrentSessionLanguages
 } from "../../../../Ducks/NewSessionReducer";
 import { connect } from "react-redux";
-import I18n from './../../../../I18n/I18n';
+import I18n from "./../../../../I18n/I18n";
 
 // Styles
 import styles from "./Styles/InfoInputsStyles";
@@ -19,72 +19,65 @@ class InfoInputs extends Component {
   }
 
   renderSwapArrow = () => {
-    return (
-      <View>
-          <View style={styles.swapLanguageContainer}/>
+    if (this.props.type === "onboarding") {
+      return <View style={styles.onboardingPlaceholderContainer} />;
+    } else {
+      return (
+        <View>
+          <View style={styles.swapLanguageContainer} />
           <TouchableOpacity
-            onPress=
-            {() => {
+            onPress={() => {
               this.props.swapCurrentSessionLanguages();
             }}
             style={styles.swapLanguageIconContainer}
-            >
-            <TranslationSwap
-              height={100}
-              width={100}
-            />
+          >
+            <TranslationSwap height={100} width={100} />
           </TouchableOpacity>
-      </View>
-      
-    );
+        </View>
+      );
+    }
   };
 
-  renderAdditionalInfo = () => {
-    return (
-      <View style={styles.paddingBottomContainer}>
-        <Text style={styles.inputTitle}>{I18n.t('customerHome.customNote.label')}</Text>
-        <TextInput
-          style={styles.additionalInformationInput}
-          multiline={false}
-          onChangeText={text =>
-            this.props.modifyAdditionalDetails({ customScenarioNote: text })
-          }
-          value={this.props.session.additionalInfo}
-          placeholder={I18n.t('customerHome.customNote.placeholder')}
-          placeholderTextColor={"rgba(255,255,255,0.42)"}
-        />
-      </View>
-    );
+  renderAdditionalDetails = () => {
+    if (this.props.type === "onboarding") {
+      return <React.Fragment />;
+    } else {
+      return (
+        <View style={[styles.paddingBottomContainer]}>
+          <RenderPicker
+            navType={this.props.type}
+            openSlideMenu={this.props.openSlideMenu}
+            title={I18n.t("customerHome.customNote.label")}
+            placeholder={I18n.t("customerHome.customNote.placeholder")}
+            type={"additionalDetails"}
+          />
+        </View>
+      );
+    }
   };
   render() {
     return (
       <View style={styles.inputsContainer}>
         <View style={styles.paddingBottomContainer}>
           <RenderPicker
+            navType={this.props.type}
             openSlideMenu={this.props.openSlideMenu}
-            title={I18n.t('customerHome.secondaryLang.label')}
-            placeholder={I18n.t('customerHome.secondaryLang.placeholder')}
+            title={I18n.t("customerHome.secondaryLang.label")}
+            placeholder={I18n.t("customerHome.secondaryLang.placeholder")}
             type={"secondaryLang"}
           />
           {this.renderSwapArrow()}
         </View>
         <View style={[styles.paddingBottomContainer, styles.marginTop]}>
           <RenderPicker
+            navType={this.props.type}
             openSlideMenu={this.props.openSlideMenu}
-            title={I18n.t('customerHome.primaryLang.label')}
-            placeholder={I18n.t('customerHome.secondaryLang.placeholder')}
+            title={I18n.t("customerHome.primaryLang.label")}
+            placeholder={I18n.t("customerHome.secondaryLang.placeholder")}
             type={"primaryLang"}
           />
         </View>
-
-        <View style={[styles.paddingBottomContainer]}>
-          <RenderPicker
-            openSlideMenu={this.props.openSlideMenu}
-            title={I18n.t('customerHome.customNote.label')}
-            placeholder={I18n.t('customerHome.customNote.placeholder')}
-            type={"additionalDetails"}
-          />
-        </View>
+        {this.renderAdditionalDetails()}
       </View>
     );
   }

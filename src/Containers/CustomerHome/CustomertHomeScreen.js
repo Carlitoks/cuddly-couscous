@@ -21,16 +21,17 @@ import {
 } from "../../Ducks/UserProfileReducer";
 
 import { getGeolocationCoords } from "../../Util/Helpers";
-import AvailableMinutes from "./Components/Partials/AvailableMinutes";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
 import I18n from "./../../I18n/I18n";
 import { supportedLangCodes } from "./../../Config/Languages";
 import WelcomeModal from "./Components/Partials/WelcomeModal";
+import FreeMinutesWell from "../Onboarding/Components/FreeMinutesWell";
 
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
+import CallButtons from "./Components/Partials/CallButtons";
 
 class CustomerHomeScreen extends Component {
   componentDidMount() {
@@ -125,16 +126,16 @@ class CustomerHomeScreen extends Component {
             <ScrollView
               automaticallyAdjustContentInsets={true}
               alwaysBounceVertical={false}
-              style={styles.fullWidth}
-              contentContainerStyle={[styles.fullWidth]}
+              contentContainerStyle={styles.scrollViewFlex}
             >
               <AvatarSection firstName={firstName} />
+              <FreeMinutesWell navigation={this.props.navigation} />
               <CallSection
                 navigation={this.props.navigation}
                 openSlideMenu={this.openSlideMenu}
               />
+              <CallButtons navigation={this.props.navigation} />
             </ScrollView>
-            <AvailableMinutes navigation={this.props.navigation} />
             <SlideUpPanel />
             <WelcomeModal
               visible={this.props.isNewUser}

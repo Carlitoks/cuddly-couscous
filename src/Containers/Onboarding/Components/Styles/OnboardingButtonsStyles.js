@@ -1,9 +1,9 @@
 import { StyleSheet, Platform } from "react-native";
-import { moderateScale } from "../../../../../Util/Scaling";
-import Fonts from "./../../../../../Themes/Fonts";
-import { Metrics } from "../../../../../Themes";
-import colors from "./../../../../../Themes/Colors";
-import { iPhoneXModels } from "../../../../../Util/Devices";
+import { moderateScale } from "../../../../Util/Scaling";
+import Fonts from "../../../../Themes/Fonts";
+import { Metrics } from "../../../../Themes";
+import colors from "../../../../Themes/Colors";
+import { iPhoneXModels } from "../../../../Util/Devices";
 
 const iOS = Platform.OS === "ios";
 
@@ -11,7 +11,7 @@ export default StyleSheet.create({
   callButtonContainer: {
     flexDirection: "column",
     justifyContent: "flex-end",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
   },
   callNowButtonContainer: {
     flexDirection: "column",
