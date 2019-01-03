@@ -8,6 +8,10 @@ export default StyleSheet.create({
     left: moderateScale(-130),
     zIndex: 0,
   },
+  profileImageBackgroundOnboarding: {
+    position: "relative",
+    left: Iphone5 ? -55 : -35
+  },
   avatarImage: {
     backgroundColor: "transparent",
     width: Iphone5 ? moderateScale(220) : moderateScale(261),
