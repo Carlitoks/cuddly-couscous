@@ -128,7 +128,7 @@ class CustomerHomeScreen extends Component {
               alwaysBounceVertical={false}
               contentContainerStyle={styles.scrollViewFlex}
             >
-              <AvatarSection firstName={firstName} />
+              <AvatarSection home={true} firstName={firstName} />
               <FreeMinutesWell navigation={this.props.navigation} />
               <CallSection
                 navigation={this.props.navigation}

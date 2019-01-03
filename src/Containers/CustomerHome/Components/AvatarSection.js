@@ -12,13 +12,13 @@ import { moderateScale } from "../../../Util/Scaling";
 
 export default class AvatarSection extends Component {
   renderSections = () => {
-    const { firstName } = this.props;
+    const { firstName, home } = this.props;
 
     return (
       <View style={[styles.columnView]}>
         <View style={[styles.rowView, { marginLeft: moderateScale(170) }]}>
           <View style={{zIndex: 10}}>
-            <Questions firstName={firstName} />
+            <Questions home={home} firstName={firstName} />
           </View>
           <FemaleSilhouette />
         </View>

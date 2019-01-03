@@ -151,7 +151,7 @@ class RegisterScreen extends Component {
 
                   <View style={styles.inputViewContainer}>
                     <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
-                    <View style={styles.inputsErrosContainer}>
+                    <View style={styles.inputsErrorContainer}>
                       <TextInput
                         style={styles.inputText}
                         onChangeText={text =>
@@ -166,8 +166,9 @@ class RegisterScreen extends Component {
 
                   <View style={styles.inputViewContainer}>
                     <Text style={styles.labelText}>{I18n.t("email")}</Text>
-                    <View style={styles.inputsErrosContainer}>
+                    <View style={styles.inputsErrorContainer}>
                       <TextInput
+                        autoCapitalize={"none"}
                         style={styles.inputText}
                         onChangeText={text => this.isValidEmail(text)}
                         onChange={text => this.isValidEmail(text)}
@@ -197,7 +198,7 @@ class RegisterScreen extends Component {
                     <Text style={styles.labelText}>
                       {I18n.t("enterYourPassword")}
                     </Text>
-                    <View style={styles.inputsErrosContainer}>
+                    <View style={styles.inputsErrorContainer}>
                       <TextInput
                         style={styles.inputText}
                         onChangeText={text =>

@@ -1,7 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale } from "../../../Util/Scaling";
 
+const android = Platform.OS === "android";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
@@ -54,7 +55,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(15),
     textAlign: "center",
-    paddingBottom: 20,
+    paddingBottom: 20
   },
   termsAndConditionsText: {
     textAlign: "center",
@@ -81,7 +82,10 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     elevation: 8
   },
-  inputViewContainer: { flexDirection: "column", paddingTop: 10 },
+  inputViewContainer: {
+    flexDirection: "column",
+    paddingTop: 10
+  },
   labelText: {
     fontFamily: Fonts.ItalicFont,
     fontSize: moderateScale(13),
@@ -89,11 +93,11 @@ export default StyleSheet.create({
     color: "#FFFFFF",
     paddingLeft: 5
   },
-  inputsErrosContainer: {
+  inputsErrorContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: -10
+    marginTop: android ? -10 : 0
   },
   errorIconContainer: {
     position: "relative",

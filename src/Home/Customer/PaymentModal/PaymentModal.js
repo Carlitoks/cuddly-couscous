@@ -20,9 +20,11 @@ class PaymentModal extends Component {
     if (this.props.availableMinutes >= 10) {
       return "#63A901";
     }
-
     if (this.props.availableMinutes > 5 && this.props.availableMinutes < 10) {
       return "orange";
+    }
+    if (this.props.stripePaymentToken) {
+      return "#ffffff";
     } else {
       return "red";
     }

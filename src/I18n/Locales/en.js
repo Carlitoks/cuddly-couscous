@@ -425,7 +425,10 @@ export default (ENG = {
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during call",
   youCanChangeThis: "You can turn video on/off during call",
-
+  //new onboarding
+  onboardingView: {
+    help: "Can I Help You?"
+  },
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -639,17 +642,19 @@ export default (ENG = {
   },
 
   customerOnboarding: {
-    connectToLinguist: 'Connect to a Linguist Now',
+    connectToLinguist: "Connect to a Linguist Now",
     login: {
-      provideInformation: 'Provide your name, email and a password so that you can access your account in the future.',
-      createAccountTitle: 'Create Account',
-      termsAndPrivacyNotice: 'By continuing, you agree to our Terms and Privacy Policy',
-      terms: 'Terms',
-      privacyPolicy: 'Privacy Policy'
+      provideInformation:
+        "Provide your name, email and a password so that you can access your account in the future.",
+      createAccountTitle: "Create Account",
+      termsAndPrivacyNotice:
+        "By continuing, you agree to our Terms and Privacy Policy",
+      terms: "Terms",
+      privacyPolicy: "Privacy Policy"
     },
     register: {
-      createAnAccount: 'Create an account',
-      alreadyAccount: '¿Already have an account? Sign in'
+      createAnAccount: "Create an account",
+      alreadyAccount: "¿Already have an account? Sign in"
     },
     errors: {
       invalidEmail: 'Please enter a valid email address',
