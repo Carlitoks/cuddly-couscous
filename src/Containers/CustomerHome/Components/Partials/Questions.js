@@ -33,13 +33,14 @@ export default class Questions extends Component {
     );
   };
   render() {
-    const { firstName } = this.props;
+    const { firstName, home } = this.props;
 
     return (
       <React.Fragment>
         <Text style={styles.questionHelpText}>
-          {I18n.t(`customerHome.help`)}
-          {firstName}?
+          {home
+            ? I18n.t(`customerHome.help`) + firstName + "?"
+            : I18n.t(`onboardingView.help`)}
         </Text>
         <Carousel
           ref={c => {

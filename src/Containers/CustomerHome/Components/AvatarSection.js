@@ -11,13 +11,13 @@ import styles from "./Styles/AvatarSectionStyles";
 
 export default class AvatarSection extends Component {
   renderSections = () => {
-    const { firstName } = this.props;
+    const { firstName, home } = this.props;
 
     return (
       <View style={styles.columnView}>
         <View style={[styles.rowView, { marginLeft: 70 }]}>
           <View>
-            <Questions firstName={firstName} />
+            <Questions home={home} firstName={firstName} />
           </View>
           <FemaleSilhouette />
         </View>

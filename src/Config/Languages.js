@@ -1910,38 +1910,54 @@ export const AllowedLanguagePairs = {
 
 // raw map of which language is the default selection for which countries
 export const LangCountryMap = {
-  'eng': ['us','vi','gb','au','nz','ie','in','mh','jm','il','is','gl','ca','io','vg'],
-  'cmn': ['cn','tw','sg'],
-  'yue': ['hk','mo'],
-  'jpn': ['jp'],
+  eng: [
+    "us",
+    "vi",
+    "gb",
+    "au",
+    "nz",
+    "ie",
+    "in",
+    "mh",
+    "jm",
+    "il",
+    "is",
+    "gl",
+    "ca",
+    "io",
+    "vg"
+  ],
+  cmn: ["cn", "tw", "sg"],
+  yue: ["hk", "mo"],
+  jpn: ["jp"]
   // 'spa': [], // TODO
 };
 
 // optimized lookup map of country codes to target default language
-export const CountryLangMap = buildCountryLangMap()
+export const CountryLangMap = buildCountryLangMap();
 
 export const LocaleLangMap = {
-  'en': 'eng',
-  'zh': 'cmn',
-  'zh-hans': 'cmn',
-  'zh-hant': 'yue',
-  'es': 'spa',
-  'ja': 'jpn',
+  en: "eng",
+  zh: "cmn",
+  "zh-hans": "cmn",
+  "zh-hant": "yue",
+  es: "spa",
+  ja: "jpn"
 };
 
 function buildCountryLangMap() {
   let m = {};
 
-  Object.keys(LangCountryMap, (langCode) => {
-    LangCountryMap[langCode].forEach((countryCode) => {
+  Object.keys(LangCountryMap, langCode => {
+    LangCountryMap[langCode].forEach(countryCode => {
       m[countryCode] = langCode;
     });
   });
 
   return m;
-};
+}
 
-export const getLangForCountryCode = (code) => {
+export const getLangForCountryCode = code => {
   const c = code.toLowerCase();
   if (!!CountryLangMap[c]) {
     return CountryLangMap[c];
@@ -1949,7 +1965,7 @@ export const getLangForCountryCode = (code) => {
   return false;
 };
 
-export const getLangForDeviceLocale = (locale) => {
+export const getLangForDeviceLocale = locale => {
   const parts = locale.toLowerCase().split("-");
   let countryCode;
   let localeCode;
@@ -1970,7 +1986,7 @@ export const getLangForDeviceLocale = (locale) => {
     let lang = getLangForCountryCode(countryCode);
     if (lang) {
       return lang;
-    }  
+    }
   }
 
   // fallback to checking based on locale without country code
@@ -1978,7 +1994,7 @@ export const getLangForDeviceLocale = (locale) => {
 };
 
 // city is an object returned in several places from the API
-export const getLangForCity = (city) => {
+export const getLangForCity = city => {
   if (!!city.countryCode) {
     return getLangForCountryCode(city.countryCode);
   }
@@ -1986,7 +2002,7 @@ export const getLangForCity = (city) => {
 };
 
 // device is a device record from the API
-export const getLangForDevice = (device) => {
+export const getLangForDevice = device => {
   if (!!device.locale && device.locale != "") {
     return getLangForDeviceLocale(device.locale);
   }
@@ -1994,8 +2010,7 @@ export const getLangForDevice = (device) => {
     return getLangForCity(device.lastIPLocation);
   }
   return false;
-},
-
+};
 
 // UTC time schedule for language availability, numbers are [(0-24), (0-60)] for hours, minutes.
 // First set is the begin time, second set is the end time. If the end time is lower than
@@ -2090,16 +2105,16 @@ export const GetLocalSchedule = code => {
           ? begin[0] + ":" + begin[1]
           : begin[0] + ":0" + begin[1]
         : begin[1] > 9
-          ? "0" + begin[0] + ":" + begin[1]
-          : "0" + begin[0] + ":0" + begin[1],
+        ? "0" + begin[0] + ":" + begin[1]
+        : "0" + begin[0] + ":0" + begin[1],
     end:
       end[0] > 9
         ? end[1] > 9
           ? end[0] + ":" + end[1]
           : end[0] + ":0" + end[1]
         : end[1] > 9
-          ? "0" + end[0] + ":" + end[1]
-          : "0" + end[0] + ":0" + end[1],
+        ? "0" + end[0] + ":" + end[1]
+        : "0" + end[0] + ":0" + end[1],
     lang: code
   };
   return resp;
