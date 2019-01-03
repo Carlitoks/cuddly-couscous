@@ -657,11 +657,9 @@ export default (ENG = {
       alreadyAccount: "¿Already have an account? Sign in"
     },
     errors: {
-      invalidEmail: "Please enter a valid email address",
-      takenEmail:
-        "An account already exists with the email address you entered. Please enter a different email or sign in to your account.",
-      emailAndPassword:
-        "Incorrect email and password combination. Please try again."
+      invalidEmail: 'Please enter a valid email address',
+      takenEmail: 'An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.',
+      emailAndPassword: 'Incorrect email and password combination.\nPlease try again.'
     }
   },
 
