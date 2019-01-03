@@ -1,7 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale } from "../../../Util/Scaling";
 
+const android = Platform.OS === "android";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
@@ -28,8 +29,11 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end"
   },
-  buttonWidthContainer: { paddingBottom: 30, alignItems: 'center',
-  justifyContent: 'center' },
+  buttonWidthContainer: {
+    paddingBottom: 30,
+    alignItems: "center",
+    justifyContent: "center"
+  },
   signInButtonDisable: {
     width: Metrics.width * 0.6,
     height: Metrics.width * 0.15,
@@ -37,11 +41,15 @@ export default StyleSheet.create({
     borderColor: "#fff",
     borderWidth: 1,
     borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
   },
-  buttonEnabledText: {textAlign: 'center', color: '#fff', fontFamily: Fonts.BoldFont},
-  createAccountPadding: {paddingTop: 20, width: Metrics.width},
+  buttonEnabledText: {
+    textAlign: "center",
+    color: "#fff",
+    fontFamily: Fonts.BoldFont
+  },
+  createAccountPadding: { paddingTop: 20, width: Metrics.width },
   signInButtonEnabled: {
     width: Metrics.width * 0.6,
     height: Metrics.width * 0.15,
@@ -70,7 +78,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: -10
+    marginTop: android ? -10 : 0
   },
   errorIconContainer: {
     position: "relative",
