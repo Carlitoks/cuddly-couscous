@@ -6,10 +6,10 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>jeenie.app.link</string>
-		<string>jeenie-alternate.app.link</string>
-		<string>jeenie.test-app.link</string>
-		<string>jeenie-alternate.test-app.link</string>
+		<string>applinks:jeenie.app.link</string>
+		<string>applinks:jeenie-alternate.app.link</string>
+		<string>applinks:jeenie.test-app.link</string>
+		<string>applinks:jeenie-alternate.test-app.link</string>
 	</array>
 	<key>com.apple.developer.networking.multipath</key>
 	<true/>
