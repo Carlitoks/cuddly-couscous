@@ -8,15 +8,16 @@ import Questions from "./Partials/Questions";
 
 // Styles
 import styles from "./Styles/AvatarSectionStyles";
+import { moderateScale } from "../../../Util/Scaling";
 
 export default class AvatarSection extends Component {
   renderSections = () => {
     const { firstName } = this.props;
 
     return (
-      <View style={styles.columnView}>
-        <View style={[styles.rowView, { marginLeft: 70 }]}>
-          <View>
+      <View style={[styles.columnView]}>
+        <View style={[styles.rowView, { marginLeft: moderateScale(170) }]}>
+          <View style={{zIndex: 10}}>
             <Questions firstName={firstName} />
           </View>
           <FemaleSilhouette />

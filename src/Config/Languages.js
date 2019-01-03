@@ -1994,7 +1994,7 @@ export const getLangForDevice = (device) => {
     return getLangForCity(device.lastIPLocation);
   }
   return false;
-},
+};
 
 
 // UTC time schedule for language availability, numbers are [(0-24), (0-60)] for hours, minutes.

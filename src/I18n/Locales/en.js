@@ -653,8 +653,8 @@ export default (ENG = {
     },
     errors: {
       invalidEmail: 'Please enter a valid email address',
-      takenEmail: 'An account already exists with the email address you entered. Please enter a different email or sign in to your account.',
-      emailAndPassword: 'Incorrect email and password combination. Please try again.'
+      takenEmail: 'An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.',
+      emailAndPassword: 'Incorrect email and password combination.\nPlease try again.'
     }
   },
 
