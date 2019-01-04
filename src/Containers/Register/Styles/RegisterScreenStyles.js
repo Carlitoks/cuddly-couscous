@@ -1,7 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
-import { moderateScale } from "../../../Util/Scaling";
+import { moderateScale, scaledFontSize } from "../../../Util/Scaling";
 
+const android = Platform.OS === "android";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
@@ -14,7 +15,7 @@ export default StyleSheet.create({
     borderBottomColor: "#fff",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: moderateScale(20)
+    fontSize: scaledFontSize(18)
   },
   loginContainer: {
     flexDirection: "column",
@@ -34,7 +35,7 @@ export default StyleSheet.create({
     justifyContent: "center"
   },
   signInButtonDisable: {
-    width: Metrics.width * 0.6,
+    width: Metrics.width * 0.78,
     height: Metrics.width * 0.15,
     backgroundColor: Colors.transparent,
     borderColor: "#fff",
@@ -46,27 +47,28 @@ export default StyleSheet.create({
   buttonEnabledText: {
     textAlign: "center",
     color: "#fff",
-    fontFamily: Fonts.BoldFont
+    fontFamily: Fonts.BoldFont,
+    fontSize: scaledFontSize(17)
   },
   registerAdviseText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(15),
+    fontSize: scaledFontSize(15),
     textAlign: "center",
-    paddingBottom: 20,
+    paddingBottom: 20
   },
   termsAndConditionsText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(12),
+    fontSize: scaledFontSize(12),
     textAlign: "center",
     paddingTop: 20
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   registerButton: {
-    width: Metrics.width * 0.6,
+    width: Metrics.width * 0.78,
     height: Metrics.width * 0.15,
     flexDirection: "row",
     justifyContent: "center",
@@ -81,19 +83,22 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     elevation: 8
   },
-  inputViewContainer: { flexDirection: "column", paddingTop: 10 },
+  inputViewContainer: {
+    flexDirection: "column",
+    paddingTop: 10
+  },
   labelText: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(13),
+    fontSize: scaledFontSize(13),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 5
   },
-  inputsErrosContainer: {
+  inputsErrorContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: -10
+    marginTop: android ? -10 : 0
   },
   errorIconContainer: {
     position: "relative",

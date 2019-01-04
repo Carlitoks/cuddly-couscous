@@ -1,7 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
-import { moderateScale } from "../../../Util/Scaling";
+import { scaledFontSize } from "../../../Util/Scaling";
 
+const android = Platform.OS === "android";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
@@ -14,7 +15,7 @@ export default StyleSheet.create({
     borderBottomColor: "#fff",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: moderateScale(20)
+    fontSize: scaledFontSize(18)
   },
   loginContainer: {
     flexDirection: "column",
@@ -28,22 +29,30 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end"
   },
-  buttonWidthContainer: { paddingBottom: 30, alignItems: 'center',
-  justifyContent: 'center' },
+  buttonWidthContainer: {
+    paddingBottom: 30,
+    alignItems: "center",
+    justifyContent: "center"
+  },
   signInButtonDisable: {
-    width: Metrics.width * 0.6,
+    width: Metrics.width * 0.78,
     height: Metrics.width * 0.15,
     backgroundColor: Colors.transparent,
     borderColor: "#fff",
     borderWidth: 1,
     borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
   },
-  buttonEnabledText: {textAlign: 'center', color: '#fff', fontFamily: Fonts.BoldFont},
-  createAccountPadding: {paddingTop: 20, width: Metrics.width},
+  buttonEnabledText: {
+    textAlign: "center",
+    color: "#fff",
+    fontFamily: Fonts.BoldFont,
+    fontSize: scaledFontSize(17)
+  },
+  createAccountPadding: { paddingTop: 20, width: Metrics.width },
   signInButtonEnabled: {
-    width: Metrics.width * 0.6,
+    width: Metrics.width * 0.78,
     height: Metrics.width * 0.15,
     flexDirection: "row",
     justifyContent: "center",
@@ -61,7 +70,7 @@ export default StyleSheet.create({
   inputViewContainer: { flexDirection: "column", paddingTop: 10 },
   labelStyle: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(13),
+    fontSize: scaledFontSize(13),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 5
@@ -70,7 +79,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    marginTop: -10
+    marginTop: android ? -10 : 0
   },
   errorIconContainer: {
     position: "relative",
@@ -86,7 +95,7 @@ export default StyleSheet.create({
   },
   forgotPasswordLabel: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(14),
+    fontSize: scaledFontSize(14),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 5,

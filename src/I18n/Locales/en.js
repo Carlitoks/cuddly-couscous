@@ -408,6 +408,7 @@ export default (ENG = {
   unableToConnect: "Unable to connect to call \n\nWould you like to try again?",
   verifyNumber: "Verify Phone",
   verifyNumberText: "Enter the verfication code you received via text.",
+  version: "version",
   video: "Video",
   videoHasBeenTurnedOff:
     "Video has been turned off to optimize this call. It will resume when both participants have stronger connectivity.",
@@ -424,20 +425,23 @@ export default (ENG = {
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during call",
   youCanChangeThis: "You can turn video on/off during call",
-
+  //new onboarding
+  onboardingView: {
+    help: "Can I Help You?"
+  },
   // new customer home screen
   customerHome: {
     primaryLang: {
-      label: "I Speak"
+      label: "I speak"
     },
     secondaryLang: {
-      label: "I Need Help with",
+      label: "I need help with",
       placeholder: "Choose Language"
     },
     customNote: {
-      label: "Additional Details",
+      label: "Additional details",
       placeholder: "Optional",
-      description: "Additional Details for Your Linguist:"
+      description: "Additional details for your linguist:"
     },
     buttons: {
       video: "Connect Now",
@@ -449,7 +453,7 @@ export default (ENG = {
       unit: "minutes",
       add: "Add Payment to Make a Call"
     },
-    help: "Can I help you?",
+    help: "Can I help you, ",
     scenarios: {
       s1: "Understand your menu",
       s2: "Direct your taxi driver",
@@ -638,22 +642,26 @@ export default (ENG = {
   },
 
   customerOnboarding: {
-    connectToLinguist: 'Connect to a Linguist Now',
+    connectToLinguist: "Connect to a Linguist Now",
     login: {
-      provideInformation: 'Provide your name, email and a password so that you can access your account in the future.',
-      createAccountTitle: 'Create Account',
-      termsAndPrivacyNotice: 'By continuing, you agree to our Terms and Privacy Policy',
-      terms: 'Terms',
-      privacyPolicy: 'Privacy Policy'
+      provideInformation:
+        "Provide your name, email and a password so that you can access your account in the future.",
+      createAccountTitle: "Create Account",
+      termsAndPrivacyNotice:
+        "By continuing, you agree to our Terms and Privacy Policy",
+      terms: "Terms",
+      privacyPolicy: "Privacy Policy"
     },
     register: {
-      createAnAccount: 'Create an account',
-      alreadyAccount: '¿Already have an account? Sign in'
+      createAnAccount: "Create an account",
+      alreadyAccount: "¿Already have an account? Sign in"
     },
     errors: {
-      invalidEmail: 'Please enter a valid email address',
-      takenEmail: 'An account already exists with the email address you entered. Please enter a different email or sign in to your account.',
-      emailAndPassword: 'Incorrect email and password combination. Please try again.'
+      invalidEmail: "Please enter a valid email address",
+      takenEmail:
+        "An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.",
+      emailAndPassword:
+        "Incorrect email and password combination.\nPlease try again."
     }
   },
 

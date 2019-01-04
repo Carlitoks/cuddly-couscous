@@ -3,7 +3,7 @@ import { moderateScale } from "../../../../Util/Scaling";
 import Fonts from "../../../../Themes/Fonts";
 import { Metrics } from "../../../../Themes";
 import colors from "../../../../Themes/Colors";
-import { iPhoneXModels } from "../../../../Util/Devices";
+import { iPhoneXModels, Iphone5 } from "../../../../Util/Devices";
 
 export default StyleSheet.create({
   freeMinutesWellContainer: {
@@ -16,7 +16,9 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: moderateScale(265)
+    top: Iphone5 ? 160 : moderateScale(265),
+    //top: 2,
+    zIndex: 10
   },
   pillButtonContainer: {
     backgroundColor: "#63A901",
@@ -69,5 +71,5 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(25),
     fontWeight: "500"
-  },
+  }
 });

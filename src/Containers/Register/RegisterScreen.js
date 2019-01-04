@@ -38,7 +38,7 @@ import I18n from "./../../I18n/I18n";
 import styles from "./Styles/RegisterScreenStyles";
 import { moderateScale } from "../../Util/Scaling";
 import SGWaves from "./../../Assets/SVG/SGWaves";
-import { help, EMAIL_REGEX } from "../../Util/Constants";
+import { help, EMAIL_REGEX, ONLY_LETTER_REGEX } from "../../Util/Constants";
 import {
   asyncCreateUser,
   asyncUpdateUser
@@ -51,17 +51,11 @@ import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 class RegisterScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      firstName: "",
-      email: "",
-      password: "",
-      valid: false
-    };
   }
 
   isValidEmail = text => {
     let reg = new RegExp(EMAIL_REGEX);
-    if (!reg.test(this.props.email)) {
+    if (!reg.test(text)) {
       this.props.updateOnboarding({
         isValidEmail: false,
         errorType: "emailFormat"
@@ -73,6 +67,44 @@ class RegisterScreen extends Component {
       this.props.updateOnboarding({ isValidEmail: true });
     }
     this.props.updateOnboarding({ email: text });
+  };
+
+  validateFirstName = text => {
+    let reg = new RegExp(ONLY_LETTER_REGEX);
+    if (!reg.test(text)) {
+      this.props.updateOnboarding({
+        isValidFirstName: false,
+        errorType: "firstNameFormat"
+      });
+    } else {
+      if (this.props.errorType === "firstNameFormat") {
+        this.props.updateOnboarding({
+          isValidFirstName: true,
+          errorType: null
+        });
+      }
+      this.props.updateOnboarding({ isValidFirstName: true });
+    }
+    this.props.updateOnboarding({ firstName: text });
+  };
+
+
+  validatePassword = text => {
+    if (text.length < 5) {
+      this.props.updateOnboarding({
+        isValidPassword: false,
+        errorType: "passwordLength"
+      });
+    } else {
+      if (this.props.errorType === "passwordLength") {
+        this.props.updateOnboarding({
+          isValidPassword: true,
+          errorType: null
+        });
+      }
+      this.props.updateOnboarding({ isValidPassword: true });
+    }
+    this.props.updateOnboarding({ password: text });
   };
 
   submit = async () => {
@@ -123,7 +155,7 @@ class RegisterScreen extends Component {
     }
   };
   render() {
-    const { makingRequest, isValidEmail } = this.props;
+    const { makingRequest, isValidEmail, isValidFirstName, isValidPassword } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -151,12 +183,10 @@ class RegisterScreen extends Component {
 
                   <View style={styles.inputViewContainer}>
                     <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
-                    <View style={styles.inputsErrosContainer}>
+                    <View style={styles.inputsErrorContainer}>
                       <TextInput
                         style={styles.inputText}
-                        onChangeText={text =>
-                          this.props.updateOnboarding({ firstName: text })
-                        }
+                        onChangeText={text => this.validateFirstName(text)}
                         value={this.props.firstName}
                         placeholder={I18n.t("firstname")}
                         placeholderTextColor={"rgba(255,255,255,0.7)"}
@@ -166,8 +196,9 @@ class RegisterScreen extends Component {
 
                   <View style={styles.inputViewContainer}>
                     <Text style={styles.labelText}>{I18n.t("email")}</Text>
-                    <View style={styles.inputsErrosContainer}>
+                    <View style={styles.inputsErrorContainer}>
                       <TextInput
+                        autoCapitalize={"none"}
                         style={styles.inputText}
                         onChangeText={text => this.isValidEmail(text)}
                         onChange={text => this.isValidEmail(text)}
@@ -197,12 +228,12 @@ class RegisterScreen extends Component {
                     <Text style={styles.labelText}>
                       {I18n.t("enterYourPassword")}
                     </Text>
-                    <View style={styles.inputsErrosContainer}>
+                    <View style={styles.inputsErrorContainer}>
                       <TextInput
                         style={styles.inputText}
-                        onChangeText={text =>
-                          this.props.updateOnboarding({ password: text })
+                        onChangeText={text => this.validatePassword(text)
                         }
+                        autoCapitalize={"none"}
                         value={this.props.password}
                         placeholder={I18n.t("enterYourPassword")}
                         secureTextEntry={true}
@@ -219,12 +250,12 @@ class RegisterScreen extends Component {
                     <TouchableOpacity
                       onPress={() => this.submit()}
                       disabled={
-                        !isValidEmail ||
+                        !isValidPassword || !isValidFirstName || !isValidEmail ||
                         makingRequest ||
                         (!this.props.email || !this.props.password)
                       }
                       style={
-                        !isValidEmail ||
+                        !isValidPassword || !isValidFirstName || !isValidEmail ||
                         makingRequest ||
                         (!this.props.email || !this.props.password)
                           ? styles.signInButtonDisable
@@ -273,7 +304,9 @@ const mS = state => ({
   isValidEmail: state.onboardingReducer.isValidEmail,
   email: state.onboardingReducer.email,
   password: state.onboardingReducer.password,
-  firstName: state.onboardingReducer.firstName
+  firstName: state.onboardingReducer.firstName,
+  isValidFirstName: state.onboardingReducer.isValidFirstName,
+  isValidPassword: state.onboardingReducer.isValidPassword
 });
 
 const mD = {

@@ -55,17 +55,21 @@ export default (ESP = {
   celebrateAndEnjoyAlternative:
     "Celebre nuestro lanzamiento y \ndisfrute de 10 minutos con Jeenie \n¡SIN CARGO!",
   celebrateWithUs: "¡Celebre nuestro lanzamiento con nosotros!",
-  changeSettings: "Para cambiar su configuración, diríjase a Configuración > Jeenie",
+  changeSettings:
+    "Para cambiar su configuración, diríjase a Configuración > Jeenie",
   cancelCallCustomer: "La llamada no está disponible",
-  chargeAdvice: "Se le cobrará por minuto por el tiempo transcurrido después de 8 minutos.",
+  chargeAdvice:
+    "Se le cobrará por minuto por el tiempo transcurrido después de 8 minutos.",
   checkYourConnection: "Verifique su conexión",
   checkYourEmail:
     "Le hemos enviado un enlace para restablecer su contraseña. Revise su correo electrónico",
-  checkYourEmailOnBoarding: "Revise su correo electrónico para completar el registro.",
+  checkYourEmailOnBoarding:
+    "Revise su correo electrónico para completar el registro.",
   citizenShip: "Ciudadanía",
   cityFamiliarity: "Familiaridad con la ciudad",
   cantReachCustomer: "Parece que el usuario perdió la conexión",
-  cantReachLinguist: "No se puede establecer la comunicación con su lingüista en este momento",
+  cantReachLinguist:
+    "No se puede establecer la comunicación con su lingüista en este momento",
   card: "Tarjeta",
   componentExamples: "Ejemplos de componentes",
   confirm: "Confirmar",
@@ -112,7 +116,8 @@ export default (ESP = {
   editProfile: "Editar perfil",
   email: "Correo electrónico",
   emailCustomerText: "Al continuar, acepta nuestra ",
-  emailFormatValidation: "El correo electrónico debe ser una dirección de correo electrónico válida.",
+  emailFormatValidation:
+    "El correo electrónico debe ser una dirección de correo electrónico válida.",
   emptyEmail: "Correo electrónico vacío",
   emptyPassword: "Contraseña vacía",
   endCall: "Finalizar llamada",
@@ -122,7 +127,8 @@ export default (ESP = {
   enterLastNameField: "Ingrese su apellido",
   enterNameField: "Ingrese su nombre",
   enterPayment: "Ingrese la información de pago",
-  enterPaymentDetailsToContinue: "Ingrese la información de pago para continuar",
+  enterPaymentDetailsToContinue:
+    "Ingrese la información de pago para continuar",
   enterPaymentDetails: "Ingrese o modifique su información de pago",
   enterPaymentDetails2:
     "Su llamada finalizará una vez que el saldo de su cuenta sea de 0 minutos. Ingrese su información de pago para hablar todo el tiempo que necesite",
@@ -250,12 +256,14 @@ export default (ESP = {
   linguistLastName: "Apellido",
   linguistName: "Nombre",
   linguistNumber: "Ingrese un número de teléfono",
-  linguistNumberText: "Le enviaremos un código por mensaje de texto para verificar su teléfono.",
+  linguistNumberText:
+    "Le enviaremos un código por mensaje de texto para verificar su teléfono.",
   linguistPassword: "Contraseña",
   linguistPasswordTitle: "Crear su contraseña",
   locale: "I18n Locale",
   login: "Iniciar sesión",
-  loginLogoutExampleTitle: "Ejemplo de inicio/cierre de sesión con Redux + Sagas",
+  loginLogoutExampleTitle:
+    "Ejemplo de inicio/cierre de sesión con Redux + Sagas",
   loginWithFacebook: "Iniciar sesión con Facebook",
   logOut: "Cerrar sesión",
   logOutConfirmation: "Confirmar.",
@@ -368,7 +376,8 @@ export default (ESP = {
   thereNoInternetConnection: "No hay conexión a internet",
   time: "Hora",
   timeWithCost: "$1/min por tiempo adicional",
-  timeStatic1: "Las llamadas tienen una duración preestablecida de 8 minutos durante el período de prueba.",
+  timeStatic1:
+    "Las llamadas tienen una duración preestablecida de 8 minutos durante el período de prueba.",
   timeCompliments: "Cumplidos de Jeenie",
   timeAddMore: "Cada llamada tiene un tiempo máximo de 60 minutos.",
   timeStatic2: "Si necesita más tiempo, puede agregarlo durante la llamada.",
@@ -377,7 +386,8 @@ export default (ESP = {
   termsConditions: "Términos y condiciones",
   termsOfUse: "Términos de uso",
   themeSettings: "Configuración de temas",
-  temporaryError: "Se ha producido un error temporal; inténtelo de nuevo más tarde.",
+  temporaryError:
+    "Se ha producido un error temporal; inténtelo de nuevo más tarde.",
   toggleExtraTimeDisable:
     "Esta llamada terminará automáticamente después del tiempo especificado anteriormente.",
   toggleExtraTimeEnable:
@@ -405,9 +415,12 @@ export default (ESP = {
   usageExamples: "Ejemplos de uso",
   username: "Nombre de usuario",
   userProfile: "Mi perfil",
-  unableToConnect: "No se pudo conectar a la llamada \n\n¿Le gustaría volver a intentarlo?",
+  unableToConnect:
+    "No se pudo conectar a la llamada \n\n¿Le gustaría volver a intentarlo?",
   verifyNumber: "Verificar teléfono",
-  verifyNumberText: "Ingrese el código de verificación que recibió por mensaje de texto.",
+  verifyNumberText:
+    "Ingrese el código de verificación que recibió por mensaje de texto.",
+  version: "versión",
   video: "Video",
   videoHasBeenTurnedOff:
     "Se ha desactivado el video para optimizar esta llamada. Se reanudará cuando ambos participantes tengan una mejor conexión.",
@@ -418,7 +431,8 @@ export default (ESP = {
   weAreWorking: "Estamos trabajando para restablecer su conexión.",
   welcome: "Bienvenido",
   welcomeTo: "Bienvenido a",
-  weSendEmail: "Controle su casilla de correo electrónico para restablecer su contraseña.",
+  weSendEmail:
+    "Controle su casilla de correo electrónico para restablecer su contraseña.",
   whatWouldYouLike: "¿Qué le gustaría hacer?",
   yes: "Sí",
   youWillBeKnown: "Se lo conocerá como",
@@ -449,7 +463,7 @@ export default (ESP = {
       unit: "minutos",
       add: "Agregar pago para hacer una llamada"
     },
-    help: "¿Puedo ayudarlo?",
+    help: "¿Puedo ayudarlo ",
     scenarios: {
       s1: "Comprender el menú",
       s2: "Dirigir al conductor del taxi",
@@ -485,7 +499,8 @@ export default (ESP = {
     registrationWelcome: {
       balance: "{{num}} min",
       title: "¡Los primeros 10 minutos son gratuitos!",
-      description: "Después de los primeros 10 minutos, el precio es de $1 por minuto.",
+      description:
+        "Después de los primeros 10 minutos, el precio es de $1 por minuto.",
       buttons: {
         dismiss: "Comenzar a usar Jeenie",
         payment: "Agregar información de pago ahora"
@@ -584,7 +599,8 @@ export default (ESP = {
       "Se ha producido un error temporal.  Inténtelo de nuevo en unos minutos.",
     errLogin: "Hubo un problema al iniciar sesión.",
     errDefaultAuth: "Sus credenciales han caducado o no son válidas.",
-    errNoUser: "No se encontró a ningún usuario para esa dirección de correo electrónico.",
+    errNoUser:
+      "No se encontró a ningún usuario para esa dirección de correo electrónico.",
     errNoEmail: "Correo electrónico no encontrado",
     errPasswordIncorrect: "La contraseña era incorrecta.",
     errAuthRequired: "Debe iniciar sesión de nuevo.",
@@ -592,7 +608,8 @@ export default (ESP = {
     errEventUnavailable: "Este código no está disponible actualmente.",
     errEventInactive: "Este código no está activo.",
     errEventScenarioMissing: "Se debe especificar un escenario.",
-    errPaymentDetailsRequired: "Debe ingresar la información de pago para continuar.",
+    errPaymentDetailsRequired:
+      "Debe ingresar la información de pago para continuar.",
     errEventTimeExpired: "No queda tiempo disponible para este código.",
     errEventAlreadyUsed: "Este código ya ha sido usado.",
     errLocationRestricted: "Jeenie no está disponible actualmente en su área."
@@ -604,7 +621,8 @@ export default (ESP = {
     callCancel: "Esta llamada fue cancelada por el cliente",
     callAnswered: "Esta llamada ha sido tomada por otro lingüista.",
     callFail: "El cliente no pudo conectarse.",
-    callFailCustomer: "Hubo un problema en la comunicación con su Language Jeenie.",
+    callFailCustomer:
+      "Hubo un problema en la comunicación con su Language Jeenie.",
     alertGeneralCannotSee:
       "Para optimizar la conexión, se ha deshabilitado temporalmente el video. El video se reanudará cuando la conexión sea mejor.",
     alertLinguistCannotSeeYou:

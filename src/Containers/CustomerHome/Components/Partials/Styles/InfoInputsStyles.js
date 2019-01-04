@@ -17,7 +17,7 @@ const placeholderInput = {
 };
 
 export default StyleSheet.create({
-  inputsContainer: { paddingTop: moderateScale(70) },
+  inputsContainer: { paddingTop: moderateScale(70), flexDirection: 'column' },
   inputTitle: {
     color: "#ffffff",
     fontFamily: Fonts.ItalicFont,
@@ -41,7 +41,7 @@ export default StyleSheet.create({
   onboardingPlaceholderContainer: {
     position: "relative",
     alignSelf: "flex-end",
-    height: 54
+    height: 51
   },
   swapLanguageIconContainer: {
     position: "absolute",
@@ -53,6 +53,6 @@ export default StyleSheet.create({
     ...placeholderInput,
     fontWeight: "500"
   },
-  paddingBottomContainer: { flexDirection: "column", paddingBottom: 23 },
+  paddingBottomContainer: { flexDirection: "column", paddingBottom: 17 },
   marginTop: { marginTop: -55 }
 });

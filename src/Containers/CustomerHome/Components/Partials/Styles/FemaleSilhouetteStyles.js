@@ -5,6 +5,11 @@ import { Iphone5 } from "../../../../../Util/Devices";
 export default StyleSheet.create({
   profileImageBackground: {
     position: "relative",
+    left: moderateScale(-130),
+    zIndex: 0,
+  },
+  profileImageBackgroundOnboarding: {
+    position: "relative",
     left: Iphone5 ? -55 : -35
   },
   avatarImage: {

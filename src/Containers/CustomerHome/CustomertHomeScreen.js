@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import { ScrollView, View, Alert } from "react-native";
+import { ScrollView, View, Alert, TouchableOpacity } from "react-native";
 import timer from "react-native-timer";
 import InCallManager from "react-native-incall-manager";
 import LinguistHeader from "./Components/Header";
 import AvatarSection from "./Components/AvatarSection";
 import CallSection from "./Components/CallSection";
 import LinearGradient from "react-native-linear-gradient";
-import { Colors } from "../../Themes";
+import { Colors, Metrics } from "../../Themes";
 import { connect } from "react-redux";
 import SlideUpPanel from "./Components/Partials/SlideUpPanel";
 import {
   openSlideMenu,
   updateLocation,
-  ensureSessionDefaults
+  ensureSessionDefaults,
+  swapCurrentSessionLanguages
 } from "../../Ducks/NewSessionReducer";
 
 import {
@@ -28,10 +29,12 @@ import I18n from "./../../I18n/I18n";
 import { supportedLangCodes } from "./../../Config/Languages";
 import WelcomeModal from "./Components/Partials/WelcomeModal";
 import FreeMinutesWell from "../Onboarding/Components/FreeMinutesWell";
+import { SwitchLangs } from "../../Assets/SVG";
 
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
+import { moderateScale } from "../../Util/Scaling";
 
 class CustomerHomeScreen extends Component {
   componentDidMount() {
@@ -110,7 +113,7 @@ class CustomerHomeScreen extends Component {
     this.props.openSlideMenu({ type });
   };
   render() {
-    const { uuid, token, getProfileAsync } = this.props;
+    const { uuid, token, getProfileAsync, firstName } = this.props;
     if (uuid !== "" && token !== "") {
       getProfileAsync(uuid, token);
     }
@@ -128,22 +131,23 @@ class CustomerHomeScreen extends Component {
               alwaysBounceVertical={false}
               contentContainerStyle={styles.scrollViewFlex}
             >
-              <AvatarSection />
+              <AvatarSection home={true} firstName={firstName} />
               <FreeMinutesWell navigation={this.props.navigation} />
               <CallSection
                 navigation={this.props.navigation}
                 openSlideMenu={this.openSlideMenu}
               />
               <CallButtons navigation={this.props.navigation} />
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.swapCurrentSessionLanguages();
+                }}
+                style={styles.swapArrows}
+              >
+                <SwitchLangs width={22} height={70} />
+              </TouchableOpacity>
             </ScrollView>
             <SlideUpPanel />
-            <WelcomeModal
-              visible={this.props.isNewUser}
-              closeModal={() => {
-                this.props.updateUserProfile({ isNewUser: false });
-              }}
-              navigation={this.props.navigation}
-            />
           </LinearGradient>
         </View>
       </ViewWrapper>
@@ -159,7 +163,7 @@ const mS = state => ({
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   token: state.auth.token,
   uuid: state.auth.uuid,
-  isNewUser: state.userProfile.isNewUser
+  firstName: state.userProfile.firstName
 });
 
 const mD = {
@@ -169,7 +173,8 @@ const mD = {
   clearEvents,
   clearActiveSession,
   getProfileAsync,
-  updateUserProfile
+  updateUserProfile,
+  swapCurrentSessionLanguages
 };
 
 export default connect(
