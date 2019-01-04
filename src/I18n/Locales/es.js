@@ -464,7 +464,7 @@ export default (ESP = {
       unit: "minutos",
       add: "Agregar pago para hacer una llamada"
     },
-    help: "¿Puedo ayudarlo?",
+    help: "¿Puedo ayudarlo ",
     scenarios: {
       s1: "Comprender el menú",
       s2: "Dirigir al conductor del taxi",
