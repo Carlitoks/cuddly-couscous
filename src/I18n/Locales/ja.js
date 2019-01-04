@@ -1,9 +1,9 @@
 ﻿export default (JAJP = {
   accept: "応答",
   acceptAllPermissionsCustomer:
-    "電話をかける（発信）前に、スマートフォンの設定でマイクとカメラへのアクセスを許可する必要があります",
+    "Jeenieで通話を行うには、設定でマイクとカメラへのアクセスを許可する必要があります。",
   acceptAllPermissionsLinguist:
-    "電話に応答する（着信）前に、スマートフォンの設定でマイクとカメラへのアクセスを許可する必要があります",
+    "電話に応答する（着信）前に、お使いのデバイスの設定でマイクとカメラへのアクセスを許可する必要があります",
   add: "追加",
   addANewCard: "新しいカードを追加…",
   addLanguage: "言語の追加",
@@ -200,7 +200,7 @@
   iAm18: "私は18歳以上です",
   iAmNotSure: "わかりません",
   igniteGenerated: "Ignite生成画面",
-  incomingCall: "ビデオ通話着信中…",
+  incomingCall: "着信中…",
   iNeedAssistanceWith: "（オプション）サポートが必要です - 必要なサポート：…",
   iNeedSomethingElse: "（オプション）サポートが必要です - 必要なサポート：…",
   interfaceLocalization: "言語",
@@ -211,7 +211,7 @@
   isReconnecting: "が再接続中です…",
   keepWaiting: "お待ちください",
   isConnecting: "{{firstName}} {{lastInitial}}が接続中…",
-  isReconnecting: "{{firstName}} {{lastInitial}}が再接続中…",
+  linguistReconnecting: "{{firstName}} {{lastInitial}}が再接続中…",
   languageCommand: "必要な時に使える言語サービス",
   languageHelp: "場所を問わず使える言語サポート",
   languageInterpretation: "これまでに<lang>で通訳をされた経験はありますか？",
@@ -234,7 +234,7 @@
   lauchScreenSwipe2:
     "世界のどこにいても、リアルタイムで、サポートが必要な言語を母国語とする通訳スタッフに連絡を取ることができます。",
   lauchScreenSwipe3:
-    "現在Jeenieでは、\n「標準中国語<>英語」\nと「日本語<>英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
+    "現在Jeenieでは、\n「標準中国語⇔英語」\nと「日本語⇔英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
   lauchScreenSwipe4:
     "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
   lauchScreenSwipe5:
@@ -302,7 +302,7 @@
   passwordMatch: "パスワードが一致しません。",
   passwordLengthValidation: "必ず8文字以上のパスワードを設定してください。",
   payAsYouGo: "利用した分だけ支払い",
-  payAsYouGoPricing: "Pay-as-you-go =",
+  payAsYouGoPricing: "利用した分だけ支払い＝",
   payAsYouGoPricingUnder: " 1分あたり$1",
   paymentDetails: "お支払いの明細",
   paymentDetailsCreated: "お支払い情報が正常に更新されました。",
@@ -480,7 +480,7 @@
       s27: "おすすめのレストランを聞く",
       s28: "緊急事態の通報を行う",
       s29: "道案内",
-      s30: "医師と話す」"
+      s30: "医師と話す"
     },
     registrationWelcome: {
       balance: "{{num}}分",
@@ -594,7 +594,8 @@
     errEventScenarioMissing: "シナリオを指定する必要があります。",
     errPaymentDetailsRequired: "続けるにはお支払い情報のの入力が必要です。",
     errEventTimeExpired: "このコードには残り時間がありません。",
-    errEventAlreadyUsed: "このコードはすでに使用されています。"
+    errEventAlreadyUsed: "このコードはすでに使用されています。",
+    errLocationRestricted: "Jeenieは現在お住まいの地域でご利用いただけません。"
   },
 
   // for use in session-related screens
@@ -614,6 +615,7 @@
       "接続を最適化するため、お客様のビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
     alertYouCannotSeeLinguist:
       "接続を最適化するため、Language Jeenieのビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
+    createSessionFailed: "一時的に通話を開始できません。もう一度お試しください。",
 
     // used when rating a session
     rating: {
@@ -632,6 +634,26 @@
         appearance: "容姿",
         noise: "背景の雑音"
       }
+    }
+  },
+
+  customerOnboarding: {
+    connectToLinguist: '今すぐ通訳スタッフに接続',
+    login: {
+      provideInformation: '今後アカウントにアクセスできるように、お名前、メールアドレス、パスワードを入力してください。',
+      createAccountTitle: 'アカウントを作成',
+      termsAndPrivacyNotice: '続けることで、当社の利用規約とプライバシーポリシーに同意することになります',
+      terms: '利用規約',
+      privacyPolicy: 'プライバシーポリシー'
+    },
+    register: {
+      createAnAccount: 'アカウントを作成',
+      alreadyAccount: 'すでにアカウントをお持ちですか？サインイン'
+    },
+    errors: {
+      invalidEmail: '有効なメールアドレスを入力してください',
+      takenEmail: '入力したメールアドレスのアカウントはすでに存在しています。別のメールアドレスを入力するか、ご自身のアカウントにサインインしてください。',
+      emailAndPassword: 'メールアドレスとパスワードの組み合わせが誤っています。もう一度お試しください。'
     }
   },
 
