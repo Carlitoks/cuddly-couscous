@@ -177,6 +177,7 @@ class LoginScreen extends Component {
                         onChangeText={text =>
                           this.props.updateOnboarding({ password: text })
                         }
+                        autoCapitalize={"none"}
                         value={this.props.password}
                         placeholder={I18n.t("password")}
                         secureTextEntry={true}
