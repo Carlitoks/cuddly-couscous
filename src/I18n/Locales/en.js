@@ -432,16 +432,16 @@ export default (ENG = {
   // new customer home screen
   customerHome: {
     primaryLang: {
-      label: "I Speak"
+      label: "I speak"
     },
     secondaryLang: {
-      label: "I Need Help with",
+      label: "I need help with",
       placeholder: "Choose Language"
     },
     customNote: {
-      label: "Additional Details",
+      label: "Additional details",
       placeholder: "Optional",
-      description: "Additional Details for Your Linguist:"
+      description: "Additional details for your linguist:"
     },
     buttons: {
       video: "Connect Now",
@@ -657,9 +657,11 @@ export default (ENG = {
       alreadyAccount: "¿Already have an account? Sign in"
     },
     errors: {
-      invalidEmail: 'Please enter a valid email address',
-      takenEmail: 'An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.',
-      emailAndPassword: 'Incorrect email and password combination.\nPlease try again.'
+      invalidEmail: "Please enter a valid email address",
+      takenEmail:
+        "An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.",
+      emailAndPassword:
+        "Incorrect email and password combination.\nPlease try again."
     }
   },
 

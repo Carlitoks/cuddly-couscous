@@ -204,6 +204,7 @@ class RegisterScreen extends Component {
                         onChangeText={text =>
                           this.props.updateOnboarding({ password: text })
                         }
+                        autoCapitalize={"none"}
                         value={this.props.password}
                         placeholder={I18n.t("enterYourPassword")}
                         secureTextEntry={true}
