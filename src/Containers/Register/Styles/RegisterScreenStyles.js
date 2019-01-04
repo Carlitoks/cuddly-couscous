@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
-import { moderateScale } from "../../../Util/Scaling";
+import { moderateScale, scaledFontSize } from "../../../Util/Scaling";
 
 const android = Platform.OS === "android";
 export default StyleSheet.create({
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     borderBottomColor: "#fff",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: moderateScale(20)
+    fontSize: scaledFontSize(18)
   },
   loginContainer: {
     flexDirection: "column",
@@ -47,13 +47,14 @@ export default StyleSheet.create({
   buttonEnabledText: {
     textAlign: "center",
     color: "#fff",
-    fontFamily: Fonts.BoldFont
+    fontFamily: Fonts.BoldFont,
+    fontSize: scaledFontSize(17)
   },
   registerAdviseText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(15),
+    fontSize: scaledFontSize(15),
     textAlign: "center",
     paddingBottom: 20
   },
@@ -61,7 +62,7 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(12),
+    fontSize: scaledFontSize(12),
     textAlign: "center",
     paddingTop: 20
   },
@@ -88,7 +89,7 @@ export default StyleSheet.create({
   },
   labelText: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(13),
+    fontSize: scaledFontSize(13),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 5

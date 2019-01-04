@@ -151,7 +151,7 @@ class LoginScreen extends Component {
                         onBlur={() => this.isValidEmail(this.props.email)}
                         value={this.props.email}
                         placeholder={I18n.t("email")}
-                        placeholderTextColor={"rgba(255,255,255,0.7)"}
+                        placeholderTextColor={"rgba(255,255,255,0.5)"}
                         keyboardType={"email-address"}
                       />
                       {this.props.errorType === "signInError" ? (
@@ -180,7 +180,7 @@ class LoginScreen extends Component {
                         value={this.props.password}
                         placeholder={I18n.t("password")}
                         secureTextEntry={true}
-                        placeholderTextColor={"rgba(255,255,255,0.7)"}
+                        placeholderTextColor={"rgba(255,255,255,0.5)"}
                       />
                       {this.props.errorType === "signInError" ? (
                         <View style={styles.errorIconContainer}>

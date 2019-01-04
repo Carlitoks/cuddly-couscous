@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
-import { moderateScale } from "../../../Util/Scaling";
+import { scaledFontSize } from "../../../Util/Scaling";
 
 const android = Platform.OS === "android";
 export default StyleSheet.create({
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     borderBottomColor: "#fff",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: moderateScale(20)
+    fontSize: scaledFontSize(18)
   },
   loginContainer: {
     flexDirection: "column",
@@ -47,7 +47,8 @@ export default StyleSheet.create({
   buttonEnabledText: {
     textAlign: "center",
     color: "#fff",
-    fontFamily: Fonts.BoldFont
+    fontFamily: Fonts.BoldFont,
+    fontSize: scaledFontSize(17)
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   signInButtonEnabled: {
@@ -69,7 +70,7 @@ export default StyleSheet.create({
   inputViewContainer: { flexDirection: "column", paddingTop: 10 },
   labelStyle: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(13),
+    fontSize: scaledFontSize(13),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 5
@@ -94,7 +95,7 @@ export default StyleSheet.create({
   },
   forgotPasswordLabel: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(14),
+    fontSize: scaledFontSize(14),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 5,
