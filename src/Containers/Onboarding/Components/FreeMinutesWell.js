@@ -3,9 +3,7 @@ import { Text, View, TouchableOpacity, Alert } from "react-native";
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
-import {
-  updateSettings as updateHomeFlow
-} from "../../../Ducks/HomeFlowReducer";
+import { updateSettings as updateHomeFlow } from "../../../Ducks/HomeFlowReducer";
 import PaymentModal from "../../../Home/Customer/PaymentModal/PaymentModal";
 
 // Styles
@@ -44,7 +42,7 @@ class FreeMinutesWell extends Component {
 
   setPillContent = () => {
     if (this.props.navigation.state.routeName === "OnboardingView") {
-      return I18n.t("customerHome.registrationWelcome.title");
+      return I18n.t("customerHome.registrationWelcome.onboardingTitle");
     }
     if (this.props.availableMinutes > 0) {
       return I18n.t("customerHome.registrationWelcome.balance", {

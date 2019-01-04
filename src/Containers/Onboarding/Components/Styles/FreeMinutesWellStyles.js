@@ -39,7 +39,7 @@ export default StyleSheet.create({
     paddingLeft: 5,
     color: "#fff",
     fontWeight: "600",
-    fontFamily: Fonts.ItalicFont,
+    fontFamily: Fonts.BoldFont,
     fontSize: moderateScale(16)
   },
   wellTitle: {

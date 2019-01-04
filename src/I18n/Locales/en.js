@@ -488,6 +488,7 @@ export default (ENG = {
     },
     registrationWelcome: {
       balance: "{{num}} min",
+      onboardingTitle: "10 FREE Minutes",
       title: "Your First 10 Minutes are Free!",
       description: "After your first 10 minutes, pricing is $1 per minute.",
       buttons: {
