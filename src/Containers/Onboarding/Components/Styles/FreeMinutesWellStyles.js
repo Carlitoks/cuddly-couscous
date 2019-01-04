@@ -16,7 +16,8 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: moderateScale(265)
+    top: moderateScale(265),
+    zIndex: 10
   },
   pillButtonContainer: {
     backgroundColor: "#63A901",
@@ -69,5 +70,5 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(25),
     fontWeight: "500"
-  },
+  }
 });
