@@ -35,7 +35,7 @@ export default StyleSheet.create({
     justifyContent: "center"
   },
   signInButtonDisable: {
-    width: Metrics.width * 0.6,
+    width: Metrics.width * 0.78,
     height: Metrics.width * 0.15,
     backgroundColor: Colors.transparent,
     borderColor: "#fff",
@@ -68,7 +68,7 @@ export default StyleSheet.create({
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   registerButton: {
-    width: Metrics.width * 0.6,
+    width: Metrics.width * 0.78,
     height: Metrics.width * 0.15,
     flexDirection: "row",
     justifyContent: "center",

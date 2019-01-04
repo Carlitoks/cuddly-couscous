@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
-import { moderateScale } from "../../../../../Util/Scaling";
+import { moderateScale, scaledFontSize } from "../../../../../Util/Scaling";
 import Fonts from "./../../../../../Themes/Fonts";
 import { Metrics } from "../../../../../Themes";
 import colors from "./../../../../../Themes/Colors";
@@ -20,8 +20,8 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   callNowButton: {
-    height: moderateScale(Metrics.width * 0.15),
     width: Metrics.width * 0.78,
+    height: Metrics.width * 0.15,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -36,8 +36,8 @@ export default StyleSheet.create({
     elevation: 8
   },
   callNowButtonDisable: {
-    height: moderateScale(Metrics.width * 0.15),
     width: Metrics.width * 0.78,
+    height: Metrics.width * 0.15,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -48,7 +48,7 @@ export default StyleSheet.create({
   },
   callNowButtonText: {
     color: "white",
-    fontSize: moderateScale(20),
+    fontSize: scaledFontSize(17),
     paddingLeft: moderateScale(19),
     fontWeight: "600",
     lineHeight: moderateScale(20),
@@ -56,7 +56,7 @@ export default StyleSheet.create({
   },
   callNowButtonTextDisabled: {
     color: "#ccc",
-    fontSize: moderateScale(20),
+    fontSize: scaledFontSize(17),
     paddingLeft: moderateScale(19),
     fontWeight: "600",
     lineHeight: moderateScale(20),
@@ -74,14 +74,14 @@ export default StyleSheet.create({
   },
   audioOnlyButtonText: {
     color: "white",
-    fontSize: moderateScale(20),
+    fontSize: scaledFontSize(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
     fontFamily: Fonts.BaseFont
   },
   audioOnlyButtonTextDisabled: {
     color: "#ccc",
-    fontSize: moderateScale(20),
+    fontSize: scaledFontSize(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
     fontFamily: Fonts.BaseFont
