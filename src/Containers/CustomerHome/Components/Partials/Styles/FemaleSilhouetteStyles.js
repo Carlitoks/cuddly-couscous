@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   profileImageBackgroundOnboarding: {
     position: "relative",
-    left: Iphone5 ? -55 : -35,
+    left: Iphone5 ? -55 : -55,
     zIndex: 0
   },
   avatarImage: {

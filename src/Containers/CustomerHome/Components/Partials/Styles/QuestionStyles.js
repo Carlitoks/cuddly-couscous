@@ -34,7 +34,7 @@ export default StyleSheet.create({
   },
   questionsContainer: {
     flexDirection: "column",
-    width: Iphone5 ? scale(460) : scale(428),
+    width: Iphone5 ? scale(460) : scale(430),
     height: 120
   }
 });

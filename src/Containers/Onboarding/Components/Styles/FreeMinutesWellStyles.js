@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
-import { moderateScale } from "../../../../Util/Scaling";
+import { moderateScale, scaledFontSize } from "../../../../Util/Scaling";
 import Fonts from "../../../../Themes/Fonts";
 import { Metrics } from "../../../../Themes";
 import colors from "../../../../Themes/Colors";
@@ -45,20 +45,20 @@ export default StyleSheet.create({
   wellTitle: {
     color: "#401674",
     fontFamily: Fonts.BoldFont,
-    fontSize: moderateScale(21),
+    fontSize: scaledFontSize(22),
     paddingLeft: 15,
     marginTop: -10
   },
   wellSubtitle: {
     color: "#401674",
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(13),
+    fontSize: scaledFontSize(14),
     paddingLeft: 15,
     paddingBottom: 15
   },
   pricingPillText: {
     color: "#401674",
-    fontSize: moderateScale(16),
+    fontSize: scaledFontSize(17),
     textAlign: "center",
     fontWeight: "600",
     fontFamily: Fonts.ItalicFont,
