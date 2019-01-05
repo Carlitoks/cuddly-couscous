@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Platform, StatusBar } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Platform,
+  StatusBar,
+  Keyboard
+} from "react-native";
 import { Header, Icon } from "react-native-elements";
 import { QR, NavMenu, CloseIcon } from "../../../Assets/SVG";
 import { Colors } from "../../../Themes";
@@ -99,7 +105,10 @@ export default class LinguistHeader extends Component {
     );
   };
 
-  navigate = screenName => this.props.navigation.dispatch({ type: screenName });
+  navigate = screenName => {
+    Keyboard.dismiss();
+    this.props.navigation.dispatch({ type: screenName });
+  };
 
   render() {
     return (
