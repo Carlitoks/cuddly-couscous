@@ -245,12 +245,25 @@ class RegisterScreen extends Component {
                     <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
+                      allowFontScaling={false}
                         style={styles.inputText}
                         onChangeText={text => this.validateFirstName(text)}
                         value={this.props.firstName}
                         placeholder={I18n.t("firstname")}
                         placeholderTextColor={"rgba(255,255,255,0.7)"}
                       />
+                      {this.props.errorType === "firstNameFormat" ? (
+                        <View style={styles.errorIconContainer}>
+                          <Icon
+                            name={"close"}
+                            type={"evilicon"}
+                            color={"#fff"}
+                            size={15}
+                          />
+                        </View>
+                      ) : (
+                        <React.Fragment />
+                      )}
                     </View>
                   </View>
 
@@ -258,6 +271,7 @@ class RegisterScreen extends Component {
                     <Text style={styles.labelText}>{I18n.t("email")}</Text>
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
+                      allowFontScaling={false}
                         autoCapitalize={"none"}
                         style={styles.inputText}
                         onChangeText={text => this.isValidEmail(text)}
@@ -286,18 +300,31 @@ class RegisterScreen extends Component {
 
                   <View style={styles.inputViewContainer}>
                     <Text style={styles.labelText}>
-                      {I18n.t("enterYourPassword")}
+                      {I18n.t("customerOnboarding.register.password")}
                     </Text>
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
+                      allowFontScaling={false}
                         style={styles.inputText}
                         onChangeText={text => this.validatePassword(text)}
                         autoCapitalize={"none"}
                         value={this.props.password}
-                        placeholder={I18n.t("enterYourPassword")}
+                        placeholder={I18n.t("customerOnboarding.register.password")}
                         secureTextEntry={true}
                         placeholderTextColor={"rgba(255,255,255,0.7)"}
                       />
+                      {this.props.errorType === "passwordLength" ? (
+                        <View style={styles.errorIconContainer}>
+                          <Icon
+                            name={"close"}
+                            type={"evilicon"}
+                            color={"#fff"}
+                            size={15}
+                          />
+                        </View>
+                      ) : (
+                        <React.Fragment />
+                      )}
                     </View>
                   </View>
                   <Text style={styles.termsAndConditionsText}>

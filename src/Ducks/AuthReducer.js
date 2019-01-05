@@ -18,7 +18,8 @@ import {
 
 import { clearSettingsInterface } from "./SettingsReducer";
 
-  import { is500Response, is403Response } from "../Util/Helpers";
+import { is500Response, is403Response } from "../Util/Helpers";
+import { clear as cleanNewSessionReducer } from './NewSessionReducer';
 
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -63,6 +64,7 @@ export const logOutAsync = () => (dispatch, getState) => {
       dispatch(clearLinguistProfile());
       // dispatch(clearSettingsInterface());
       PushNotification.cleanListeners();
+      dispatch(cleanNewSessionReducer())
       dispatch({ type: "OnboardingView" });
     });
 };

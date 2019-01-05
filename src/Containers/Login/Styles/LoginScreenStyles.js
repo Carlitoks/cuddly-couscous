@@ -79,7 +79,7 @@ export default StyleSheet.create({
     fontSize: scaledFontSize(13),
     fontWeight: "400",
     color: "#FFFFFF",
-    paddingLeft: 5
+    paddingLeft: 3
   },
   inputInternalContainer: {
     flexDirection: "row",

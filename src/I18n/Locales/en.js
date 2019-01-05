@@ -650,18 +650,21 @@ export default (ENG = {
       termsAndPrivacyNotice:
         "By continuing, you agree to our Terms and Privacy Policy",
       terms: "Terms",
-      privacyPolicy: "Privacy Policy"
+      privacyPolicy: "Privacy Policy",
+      forgotPassword: "Forgot Password?"
     },
     register: {
       createAnAccount: "Create an account",
-      alreadyAccount: "¿Already have an account? Sign in"
+      alreadyAccount: "¿Already have an account? Sign in",
+      password: "Create Password"
     },
     errors: {
       invalidEmail: "Please enter a valid email address",
       takenEmail:
         "An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.",
       emailAndPassword:
-        "Incorrect email and password combination.\nPlease try again."
+        "Incorrect email and password combination.\nPlease try again.",
+      signInto: "sign in to your account."
     }
   },
 

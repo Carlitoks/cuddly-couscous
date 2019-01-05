@@ -157,6 +157,7 @@ class LoginScreen extends Component {
                     <Text style={styles.labelStyle}>{I18n.t("email")}</Text>
                     <View style={styles.inputInternalContainer}>
                       <TextInput
+                        allowFontScaling={false}
                         style={styles.inputText}
                         onChangeText={text => this.isValidEmail(text)}
                         onChange={text => this.isValidEmail(text)}
@@ -167,7 +168,8 @@ class LoginScreen extends Component {
                         placeholderTextColor={"rgba(255,255,255,0.5)"}
                         keyboardType={"email-address"}
                       />
-                      {this.props.errorType === "signInError" ? (
+                      {this.props.errorType === "signInError" ||
+                      this.props.errorType === "emailFormat" ? (
                         <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
@@ -186,6 +188,7 @@ class LoginScreen extends Component {
                     <Text style={styles.labelStyle}>{I18n.t("password")}</Text>
                     <View style={styles.inputInternalContainer}>
                       <TextInput
+                        allowFontScaling={false}
                         style={styles.inputText}
                         onChangeText={text =>
                           this.props.updateOnboarding({ password: text })
@@ -218,7 +221,7 @@ class LoginScreen extends Component {
                       }
                       style={styles.forgotPasswordLabel}
                     >
-                      {I18n.t("forgotPassword")}
+                      {I18n.t("customerOnboarding.login.forgotPassword")}
                     </Text>
                   </View>
                 </View>
