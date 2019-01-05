@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
-import { moderateScale } from "../../../../Util/Scaling";
+import { moderateScale, scaledFontSize } from "../../../../Util/Scaling";
 import Fonts from "../../../../Themes/Fonts";
 import { Metrics } from "../../../../Themes";
 import colors from "../../../../Themes/Colors";
@@ -16,7 +16,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: Iphone5 ? 160 : moderateScale(265),
+    top: Iphone5 ? moderateScale(210) : moderateScale(265),
     zIndex: 10
   },
   pillButtonContainer: {
@@ -39,26 +39,26 @@ export default StyleSheet.create({
     paddingLeft: 5,
     color: "#fff",
     fontWeight: "600",
-    fontFamily: Fonts.ItalicFont,
+    fontFamily: Fonts.BoldFont,
     fontSize: moderateScale(16)
   },
   wellTitle: {
     color: "#401674",
     fontFamily: Fonts.BoldFont,
-    fontSize: moderateScale(21),
+    fontSize: Iphone5 ? scaledFontSize(18) : scaledFontSize(22),
     paddingLeft: 15,
     marginTop: -10
   },
   wellSubtitle: {
     color: "#401674",
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(13),
+    fontSize: Iphone5 ? scaledFontSize(10) : scaledFontSize(14),
     paddingLeft: 15,
     paddingBottom: 15
   },
   pricingPillText: {
     color: "#401674",
-    fontSize: moderateScale(16),
+    fontSize: Iphone5 ? scaledFontSize(20) : scaledFontSize(17),
     textAlign: "center",
     fontWeight: "600",
     fontFamily: Fonts.ItalicFont,

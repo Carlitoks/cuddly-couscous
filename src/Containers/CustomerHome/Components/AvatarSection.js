@@ -16,8 +16,15 @@ export default class AvatarSection extends Component {
 
     return (
       <View style={[styles.columnView]}>
-        <View style={[styles.rowView, { marginLeft: home ? moderateScale(170) : 70 }]}>
-          <View style={{zIndex: 10}}>
+        <View
+          style={[
+            styles.rowView,
+            {
+              marginLeft: home ? moderateScale(170) : 90
+            }
+          ]}
+        >
+          <View style={{ zIndex: 10 }}>
             <Questions home={home} firstName={firstName} />
           </View>
           <FemaleSilhouette home={home} />
