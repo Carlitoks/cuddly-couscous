@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { View, Text, Modal, StatusBar, processColor } from "react-native";
+import { View, Text, Modal, StatusBar, processColor, TouchableWithoutFeedback, Keyboard } from "react-native";
 import Instabug, { BugReporting, Surveys, FeatureRequests } from 'instabug-reactnative';
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import I18n from "react-native-i18n";
@@ -88,8 +88,10 @@ const ViewWrapper = ({
         backgroundColor={Colors.transparent}
         translucent={true}
       />
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       {/* Render Child Components */}
       {children}
+      </TouchableWithoutFeedback>
     </View>
   );
 };

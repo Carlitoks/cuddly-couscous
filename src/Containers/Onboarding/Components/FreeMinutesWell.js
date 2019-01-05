@@ -117,6 +117,7 @@ class FreeMinutesWell extends Component {
     return (
       <React.Fragment>
         <TouchableOpacity
+          activeOpacity={this.props.pointerEvents === 'none' ? 1 : 0.2}
           onPress={() => this.onPressAction()}
           style={styles.freeMinutesWellContainer}
         >

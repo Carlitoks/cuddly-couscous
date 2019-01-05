@@ -5,7 +5,10 @@ import {
   Alert,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Linking
 } from "react-native";
 import LinguistHeader from "../CustomerHome/Components/Header";
 import LinearGradient from "react-native-linear-gradient";
@@ -47,7 +50,11 @@ import FieldError from "./Components/FieldError";
 import { Icon } from "react-native-elements";
 import metrics from "../../Themes/Metrics";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
-
+import fonts from "../../Themes/Fonts";
+import {
+  TermsConditionsURI,
+  PrivacyPolicyURI
+} from "../../Config/StaticViewsURIS";
 class RegisterScreen extends Component {
   constructor(props) {
     super(props);
@@ -87,7 +94,6 @@ class RegisterScreen extends Component {
     }
     this.props.updateOnboarding({ firstName: text });
   };
-
 
   validatePassword = text => {
     if (text.length < 5) {
@@ -154,8 +160,60 @@ class RegisterScreen extends Component {
       this.props.updateOnboarding({ makingRequest: false });
     }
   };
+
+  renderPrivacyPolicyText = () => {
+    const privacyPolicyAndTermsText = I18n.t(
+      "customerOnboarding.login.termsAndPrivacyNotice"
+    );
+    const privacyPolicyText = I18n.t("customerOnboarding.login.privacyPolicy");
+    const TermsText = I18n.t("customerOnboarding.login.terms");
+    const continueText = privacyPolicyAndTermsText.split(TermsText)[0];
+    const AndText = privacyPolicyAndTermsText
+      .split(TermsText)[1]
+      .split(privacyPolicyText)[0];
+    return (
+      <Text style={styles.termsAndConditionsText}>
+        {continueText}
+        <Text
+          style={{
+            ...styles.termsAndConditionsText,
+            fontFamily: fonts.BoldFont,
+            textDecorationLine: "underline"
+          }}
+          onPress={() =>
+            Linking.openURL(TermsConditionsURI).catch(err =>
+              console.error("An error occurred", err)
+            )
+          }
+        >
+          {TermsText}
+        </Text>
+
+        <Text style={styles.termsAndConditionsText}>{AndText}</Text>
+        <Text
+          style={{
+            ...styles.termsAndConditionsText,
+            fontFamily: fonts.BoldFont,
+            textDecorationLine: "underline"
+          }}
+          onPress={() =>
+            Linking.openURL(PrivacyPolicyURI).catch(err =>
+              console.error("An error occurred", err)
+            )
+          }
+        >
+          {privacyPolicyText}
+        </Text>
+      </Text>
+    );
+  };
   render() {
-    const { makingRequest, isValidEmail, isValidFirstName, isValidPassword } = this.props;
+    const {
+      makingRequest,
+      isValidEmail,
+      isValidFirstName,
+      isValidPassword
+    } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -170,14 +228,16 @@ class RegisterScreen extends Component {
               locations={[0, 1]}
               style={{ height: "100%" }}
             >
-              <View style={styles.loginContainer}>
+              <View
+                keyboardShouldPersistTaps="handled"
+                style={styles.loginContainer}
+              >
                 <View style={styles.inputContainer}>
                   {this.props.errorType ? (
                     <FieldError navigation={this.props.navigation} />
                   ) : (
                     <Text style={styles.registerAdviseText}>
-                      Provide your name, email and a password so that you can
-                      access your account in the future.
+                      {I18n.t("customerOnboarding.login.provideInformation")}
                     </Text>
                   )}
 
@@ -231,8 +291,7 @@ class RegisterScreen extends Component {
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
                         style={styles.inputText}
-                        onChangeText={text => this.validatePassword(text)
-                        }
+                        onChangeText={text => this.validatePassword(text)}
                         autoCapitalize={"none"}
                         value={this.props.password}
                         placeholder={I18n.t("enterYourPassword")}
@@ -242,7 +301,7 @@ class RegisterScreen extends Component {
                     </View>
                   </View>
                   <Text style={styles.termsAndConditionsText}>
-                    By continuing, you agree to our Terms and Privacy Policy.
+                    {this.renderPrivacyPolicyText()}
                   </Text>
                 </View>
                 <View style={styles.buttonContainer}>
@@ -250,12 +309,16 @@ class RegisterScreen extends Component {
                     <TouchableOpacity
                       onPress={() => this.submit()}
                       disabled={
-                        !isValidPassword || !isValidFirstName || !isValidEmail ||
+                        !isValidPassword ||
+                        !isValidFirstName ||
+                        !isValidEmail ||
                         makingRequest ||
                         (!this.props.email || !this.props.password)
                       }
                       style={
-                        !isValidPassword || !isValidFirstName || !isValidEmail ||
+                        !isValidPassword ||
+                        !isValidFirstName ||
+                        !isValidEmail ||
                         makingRequest ||
                         (!this.props.email || !this.props.password)
                           ? styles.signInButtonDisable
@@ -263,7 +326,7 @@ class RegisterScreen extends Component {
                       }
                     >
                       <Text style={styles.buttonEnabledText}>
-                        Create Account
+                        {I18n.t("customerOnboarding.register.createAnAccount")}
                       </Text>
                     </TouchableOpacity>
 
@@ -273,7 +336,7 @@ class RegisterScreen extends Component {
                         this.props.navigation.dispatch({ type: "LoginScreen" })
                       }
                     >
-                      <Text style={styles.buttonEnabledText}>
+                      <Text style={styles.transitionButtonText}>
                         {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
                       </Text>
                     </TouchableOpacity>

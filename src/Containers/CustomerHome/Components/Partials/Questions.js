@@ -38,9 +38,9 @@ export default class Questions extends Component {
     return (
       <React.Fragment>
         <Text style={styles.questionHelpText}>
-          {home
+          { home
             ? `${I18n.t(`customerHome.help`)} ${firstName}?`
-            : I18n.t(`onboardingView.help`)}
+            : I18n.t(`customerHome.help`) }
         </Text>
         <Carousel
           ref={c => {

@@ -252,8 +252,9 @@ class LoginScreen extends Component {
                       }
                       style={styles.createAccountPadding}
                     >
-                      <Text style={styles.buttonEnabledText}>
-                        Create an Account »
+                      <Text style={styles.transitionButtonText}>
+                        {I18n.t("customerOnboarding.register.createAnAccount")}{" "}
+                        »
                       </Text>
                     </TouchableOpacity>
                   </View>

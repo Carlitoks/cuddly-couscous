@@ -12,7 +12,7 @@ export default class LinguistHeader extends Component {
   renderTitle = () => {
     if (this.props.navigation.state.routeName === "RegisterScreen") {
       return {
-        text: "Create Account",
+        text: I18n.t("customerOnboarding.register.createAnAccount"),
         style: styles.createAccountTitleTextStyle
       };
     }

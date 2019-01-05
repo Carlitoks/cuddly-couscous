@@ -35,8 +35,7 @@ export default StyleSheet.create({
     justifyContent: "center"
   },
   signInButtonDisable: {
-    width: Metrics.width * 0.78,
-    height: Metrics.width * 0.15,
+    minWidth: Metrics.width * 0.78,
     backgroundColor: Colors.transparent,
     borderColor: "#fff",
     borderWidth: 1,
@@ -48,12 +47,19 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17)
+    fontSize: scaledFontSize(17),
+    padding: Metrics.width * 0.05
+  },
+  transitionButtonText: {
+    textAlign: "center",
+    color: "#fff",
+    fontFamily: Fonts.BoldFont,
+    fontSize: scaledFontSize(17),
+    padding: Metrics.width * 0.02
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   signInButtonEnabled: {
-    width: Metrics.width * 0.78,
-    height: Metrics.width * 0.15,
+    minWidth: Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

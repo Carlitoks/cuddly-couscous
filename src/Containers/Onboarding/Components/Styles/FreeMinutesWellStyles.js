@@ -17,7 +17,6 @@ export default StyleSheet.create({
     borderRadius: 4,
     borderColor: "#CDCDF4",
     top: Iphone5 ? 160 : moderateScale(265),
-    //top: 2,
     zIndex: 10
   },
   pillButtonContainer: {
