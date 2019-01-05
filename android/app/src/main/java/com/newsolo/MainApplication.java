@@ -35,6 +35,9 @@ import com.BV.LinearGradient.LinearGradientPackage;
 
 import java.util.Arrays;
 import java.util.List;
+// import Branch and RNBranch
+import io.branch.rnbranch.RNBranchPackage;
+import io.branch.referral.Branch;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -102,5 +105,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    Branch.getAutoInstance(this);
   }
 }
