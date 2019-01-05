@@ -3,7 +3,7 @@ import { moderateScale, scaledFontSize } from "../../../../Util/Scaling";
 import Fonts from "../../../../Themes/Fonts";
 import { Metrics } from "../../../../Themes";
 import colors from "../../../../Themes/Colors";
-import { iPhoneXModels } from "../../../../Util/Devices";
+import { iPhoneXModels, Iphone5 } from "../../../../Util/Devices";
 
 export default StyleSheet.create({
   freeMinutesWellContainer: {
@@ -16,7 +16,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: moderateScale(265),
+    top: Iphone5 ? moderateScale(210) : moderateScale(265),
     zIndex: 10
   },
   pillButtonContainer: {
@@ -45,20 +45,20 @@ export default StyleSheet.create({
   wellTitle: {
     color: "#401674",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(22),
+    fontSize: Iphone5 ? scaledFontSize(18) : scaledFontSize(22),
     paddingLeft: 15,
     marginTop: -10
   },
   wellSubtitle: {
     color: "#401674",
     fontFamily: Fonts.ItalicFont,
-    fontSize: scaledFontSize(14),
+    fontSize: Iphone5 ? scaledFontSize(10) : scaledFontSize(14),
     paddingLeft: 15,
     paddingBottom: 15
   },
   pricingPillText: {
     color: "#401674",
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? scaledFontSize(20) : scaledFontSize(17),
     textAlign: "center",
     fontWeight: "600",
     fontFamily: Fonts.ItalicFont,
