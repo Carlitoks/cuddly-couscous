@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 // Styles
 import styles from "./Styles/OnboardingButtonsStyles";
 import I18n from './../../../I18n/I18n';
+import metrics from './../../../Themes/Metrics';
 
 class OnboardingButtons extends Component {
   constructor(props) {
@@ -27,9 +28,10 @@ class OnboardingButtons extends Component {
               type={"ionicon"}
               color={"#fff"}
               size={23}
+              containerStyle={styles.iconPadding}
             />
             <Text style={styles.callNowButtonText}>
-              Connect to a Linguist Now
+            {I18n.t("customerOnboarding.connectToLinguist")}
             </Text>
           </TouchableOpacity>
         </View>

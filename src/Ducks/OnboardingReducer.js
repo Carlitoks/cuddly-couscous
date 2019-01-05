@@ -21,7 +21,9 @@ const initialState = {
   firstName: null,
   errorType: null,
   makingRequest: false,
-  isValidEmail: true,
+  isValidEmail: false,
+  isValidFirstName: false,
+  isValidPassword: false,
 };
 
 // Reducer

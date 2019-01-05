@@ -17,27 +17,6 @@ class InfoInputs extends Component {
   constructor(props) {
     super(props);
   }
-
-  renderSwapArrow = () => {
-    if (this.props.type === "onboarding") {
-      return <View style={styles.onboardingPlaceholderContainer} />;
-    } else {
-      return (
-        <View>
-          <View style={styles.swapLanguageContainer} />
-          <TouchableOpacity
-            onPress={() => {
-              this.props.swapCurrentSessionLanguages();
-            }}
-            style={styles.swapLanguageIconContainer}
-          >
-            <TranslationSwap height={100} width={100} />
-          </TouchableOpacity>
-        </View>
-      );
-    }
-  };
-
   renderAdditionalDetails = () => {
     if (this.props.type === "onboarding") {
       return <React.Fragment />;
@@ -66,9 +45,8 @@ class InfoInputs extends Component {
             placeholder={I18n.t("customerHome.secondaryLang.placeholder")}
             type={"secondaryLang"}
           />
-          {this.renderSwapArrow()}
         </View>
-        <View style={[styles.paddingBottomContainer, styles.marginTop]}>
+        <View style={[styles.paddingBottomContainer]}>
           <RenderPicker
             navType={this.props.type}
             openSlideMenu={this.props.openSlideMenu}

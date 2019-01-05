@@ -1,9 +1,9 @@
 ﻿export default (ZHCN = {
   accept: "接受",
   acceptAllPermissionsCustomer:
-    "您必须在电话设置中允许访问麦克风和相机的权限才能拨打电话",
+    "您必须在设置中开启麦克风和相机的访问权限才能使用翻译精灵拨打电话。",
   acceptAllPermissionsLinguist:
-    "您必须在电话设置中允许访问麦克风和相机的权限才能接听电话",
+    "您必须在设备设置中开启麦克风和相机的访问权限才能接听来电",
   add: "添加",
   addANewCard: "添加新卡",
   addLanguage: "添加语言",
@@ -200,18 +200,18 @@
   iAm18: "我已年满 18 岁",
   iAmNotSure: "我不确定",
   igniteGenerated: "点击生成画面",
-  incomingCall: "视频通话来电...",
+  incomingCall: "来电...",
   iNeedAssistanceWith: "（可选）我需要的帮助是...",
   iNeedSomethingElse: "（可选）我需要的帮助是...",
   interfaceLocalization: "语言",
   intermediate: "中等",
   invalidPromoCode: "无效的代码促销",
   invalidPaymentDetails:
-    "您提供的付款详情无效。请在输入时检查错误。",
+    "您提供的付款详情无效。  请在输入时检查错误。",
   isReconnecting: "正在重新连接...",
   keepWaiting: "继续等待",
   isConnecting: "正在连接 {{firstName}} {{lastInitial}}...",
-  isReconnecting: "正在重新连接 {{firstName}} {{lastInitial}}...",
+  linguistReconnecting: "正在重新连接 {{firstName}} {{lastInitial}}...",
   languageCommand: "您要求的语言",
   languageHelp: "随时随地提供语言帮助",
   languageInterpretation: "您以前在 <lang> 做过翻译吗？",
@@ -234,7 +234,7 @@
   lauchScreenSwipe2:
     "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
-    "目前，翻译精灵支持\n中文（普通话） <> 英语\n和日语 <> 英语。\n\n即将推出其他语言。",
+    "目前，翻译精灵支持\n中文（普通话）<>英语\n和日语<>英语。\n\n即将推出其他语言。",
   lauchScreenSwipe4:
     "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
   lauchScreenSwipe5:
@@ -302,7 +302,7 @@
   passwordMatch: "密码不匹配。",
   passwordLengthValidation: "密码必须是 8 个或 8 个以上字符。",
   payAsYouGo: "随用随付",
-  payAsYouGoPricing: "Pay-as-you-go =",
+  payAsYouGoPricing: "按需付费 =",
   payAsYouGoPricingUnder: " 每分钟 1 美元",
   paymentDetails: "付款详情",
   paymentDetailsCreated: "您的付款信息已成功更新。",
@@ -581,7 +581,7 @@
     errUnexpected: "发生意外错误。",
     errTemporary: "发生暂时性错误。",
     errTemporaryTryAgain:
-      "发生暂时性错误。请过几分钟再试。",
+      "发生暂时性错误。  请过几分钟再试。",
     errLogin: "登录出错",
     errDefaultAuth: "认证无效或已过期",
     errNoUser: "找不到此电子邮件地址的用户",
@@ -594,7 +594,8 @@
     errEventScenarioMissing: "必须指定情境。",
     errPaymentDetailsRequired: "请填写付款详情以继续下一步。",
     errEventTimeExpired: "此代码已无剩余时间。",
-    errEventAlreadyUsed: "此代码已被使用。"
+    errEventAlreadyUsed: "此代码已被使用。",
+    errLocationRestricted: "您目前所在的地区尚无法使用翻译精灵。"
   },
 
   // for use in session-related screens
@@ -614,6 +615,7 @@
       "为优化连接，已暂时禁用您客户的视频功能。连接改善后即可恢复视频使用。",
     alertYouCannotSeeLinguist:
       "为优化连接，已暂时禁用语言翻译精灵的视频功能。连接改善后即可恢复视频使用。",
+    createSessionFailed: "暂时无法拨打电话。请重试。",
 
     // used when rating a session
     rating: {
@@ -632,6 +634,26 @@
         appearance: "外观",
         noise: "背景噪声"
       }
+    }
+  },
+
+  customerOnboarding: {
+    connectToLinguist: '立即连接至语言专家',
+    login: {
+      provideInformation: '请输入您的昵称、电子邮件和密码，以便日后访问帐户。',
+      createAccountTitle: '创建帐户',
+      termsAndPrivacyNotice: '继续即表示，您同意我们的"条款与隐私政策"',
+      terms: '条款',
+      privacyPolicy: '隐私政策'
+    },
+    register: {
+      createAnAccount: '创建帐户',
+      alreadyAccount: '已有帐户？登录'
+    },
+    errors: {
+      invalidEmail: '请输入有效的电子邮件地址',
+      takenEmail: '您输入的电子邮件地址已被其他帐户占用。请另输入一个电子邮件或登录您的帐户。',
+      emailAndPassword: '电子邮件或密码错误。请重试。'
     }
   },
 

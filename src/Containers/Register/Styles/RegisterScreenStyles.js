@@ -27,7 +27,8 @@ export default StyleSheet.create({
   buttonContainer: {
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    paddingTop: 20
   },
   buttonWidthContainer: {
     paddingBottom: 30,
@@ -35,8 +36,7 @@ export default StyleSheet.create({
     justifyContent: "center"
   },
   signInButtonDisable: {
-    width: Metrics.width * 0.6,
-    height: Metrics.width * 0.15,
+    minWidth: Metrics.width * 0.78,
     backgroundColor: Colors.transparent,
     borderColor: "#fff",
     borderWidth: 1,
@@ -48,7 +48,15 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17)
+    fontSize: scaledFontSize(17),
+    padding: Metrics.width * 0.05
+  },
+  transitionButtonText: {
+    textAlign: "center",
+    color: "#fff",
+    fontFamily: Fonts.BoldFont,
+    fontSize: scaledFontSize(17),
+    padding: Metrics.width * 0.02
   },
   registerAdviseText: {
     textAlign: "center",
@@ -68,7 +76,7 @@ export default StyleSheet.create({
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   registerButton: {
-    width: Metrics.width * 0.6,
+    width: Metrics.width * 0.78,
     height: Metrics.width * 0.15,
     flexDirection: "row",
     justifyContent: "center",
@@ -92,7 +100,7 @@ export default StyleSheet.create({
     fontSize: scaledFontSize(13),
     fontWeight: "400",
     color: "#FFFFFF",
-    paddingLeft: 5
+    paddingLeft: 3
   },
   inputsErrorContainer: {
     flexDirection: "row",

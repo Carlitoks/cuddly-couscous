@@ -47,18 +47,19 @@ import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: "",
-      password: "",
-      valid: false
-    };
   }
 
   isValidEmail = text => {
     let reg = new RegExp(EMAIL_REGEX);
-    if (!reg.test(this.props.email)) {
-      this.props.updateOnboarding({ isValidEmail: false });
+    if (!reg.test(text)) {
+      this.props.updateOnboarding({
+        isValidEmail: false,
+        errorType: "emailFormat"
+      });
     } else {
+      if (this.props.errorType === "emailFormat") {
+        this.props.updateOnboarding({ isValidEmail: true, errorType: null });
+      }
       this.props.updateOnboarding({ isValidEmail: true });
     }
     this.props.updateOnboarding({ email: text });
@@ -91,7 +92,6 @@ class LoginScreen extends Component {
         )
       });
       const record = await checkRecord(this.props.email);
-      this.props.updateOnboarding({ makingRequest: false });
       if (record) {
         updateCustomer({ userInfo: { id: record.id } });
         Alert.alert(
@@ -103,17 +103,28 @@ class LoginScreen extends Component {
             }
           ]
         );
+
+        this.props.updateOnboarding({ makingRequest: false });
         navigation.dispatch({ type: record.lastStage });
       } else {
+        this.props.updateOnboarding({ makingRequest: false });
         navigation.dispatch({ type: "Home" });
       }
     } catch (err) {
       if (err.data.errors[0] === "Password incorrect") {
         this.props.updateOnboarding({
-          errorType: "signInError",
-          makingRequest: false
+          errorType: "signInError"
         });
       }
+
+      if (err.data.errors[0] === "Email not found") {
+        this.props.updateOnboarding({
+          errorType: "emailNotFound"
+        });
+      }
+      this.props.updateOnboarding({
+        makingRequest: false
+      });
     }
   };
   render() {
@@ -134,7 +145,9 @@ class LoginScreen extends Component {
             >
               <View style={styles.loginContainer}>
                 <View style={styles.inputContainer}>
-                  {this.props.errorType === "signInError" ? (
+                  {this.props.errorType === "signInError" ||
+                  this.props.errorType === "emailFormat" ||
+                  this.props.errorType === "emailNotFound" ? (
                     <FieldError navigation={this.props.navigation} />
                   ) : (
                     <View />
@@ -144,6 +157,7 @@ class LoginScreen extends Component {
                     <Text style={styles.labelStyle}>{I18n.t("email")}</Text>
                     <View style={styles.inputInternalContainer}>
                       <TextInput
+                        allowFontScaling={false}
                         style={styles.inputText}
                         onChangeText={text => this.isValidEmail(text)}
                         onChange={text => this.isValidEmail(text)}
@@ -154,7 +168,8 @@ class LoginScreen extends Component {
                         placeholderTextColor={"rgba(255,255,255,0.5)"}
                         keyboardType={"email-address"}
                       />
-                      {this.props.errorType === "signInError" ? (
+                      {this.props.errorType === "signInError" ||
+                      this.props.errorType === "emailFormat" ? (
                         <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
@@ -173,10 +188,12 @@ class LoginScreen extends Component {
                     <Text style={styles.labelStyle}>{I18n.t("password")}</Text>
                     <View style={styles.inputInternalContainer}>
                       <TextInput
+                        allowFontScaling={false}
                         style={styles.inputText}
                         onChangeText={text =>
                           this.props.updateOnboarding({ password: text })
                         }
+                        autoCapitalize={"none"}
                         value={this.props.password}
                         placeholder={I18n.t("password")}
                         secureTextEntry={true}
@@ -204,7 +221,7 @@ class LoginScreen extends Component {
                       }
                       style={styles.forgotPasswordLabel}
                     >
-                      {I18n.t("forgotPassword")}
+                      {I18n.t("customerOnboarding.login.forgotPassword")}
                     </Text>
                   </View>
                 </View>
@@ -238,8 +255,9 @@ class LoginScreen extends Component {
                       }
                       style={styles.createAccountPadding}
                     >
-                      <Text style={styles.buttonEnabledText}>
-                        Create an Account »
+                      <Text style={styles.transitionButtonText}>
+                        {I18n.t("customerOnboarding.register.createAnAccount")}{" "}
+                        »
                       </Text>
                     </TouchableOpacity>
                   </View>

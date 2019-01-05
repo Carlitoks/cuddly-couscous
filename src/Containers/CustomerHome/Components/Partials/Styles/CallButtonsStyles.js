@@ -1,5 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
-import { moderateScale } from "../../../../../Util/Scaling";
+import { moderateScale, scaledFontSize } from "../../../../../Util/Scaling";
 import Fonts from "./../../../../../Themes/Fonts";
 import { Metrics } from "../../../../../Themes";
 import colors from "./../../../../../Themes/Colors";
@@ -11,7 +11,7 @@ export default StyleSheet.create({
   callButtonContainer: {
     flexDirection: "column",
     justifyContent: "flex-end",
-    alignItems: "flex-end",
+    alignItems: "center",
     marginBottom: iPhoneXModels ? 70 : 0
   },
   callNowButtonContainer: {
@@ -20,8 +20,7 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   callNowButton: {
-    height: moderateScale(Metrics.width * 0.15),
-    width: Metrics.width * 0.78,
+    minWidth: Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -36,8 +35,7 @@ export default StyleSheet.create({
     elevation: 8
   },
   callNowButtonDisable: {
-    height: moderateScale(Metrics.width * 0.15),
-    width: Metrics.width * 0.78,
+    minWidth: Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -48,42 +46,44 @@ export default StyleSheet.create({
   },
   callNowButtonText: {
     color: "white",
-    fontSize: moderateScale(20),
-    paddingLeft: moderateScale(19),
+    fontSize: scaledFontSize(17),
     fontWeight: "600",
     lineHeight: moderateScale(20),
-    fontFamily: Fonts.BaseFont
+    fontFamily: Fonts.BaseFont,
+    padding: Metrics.width * 0.05,
   },
   callNowButtonTextDisabled: {
     color: "#ccc",
-    fontSize: moderateScale(20),
-    paddingLeft: moderateScale(19),
+    fontSize: scaledFontSize(17),
     fontWeight: "600",
     lineHeight: moderateScale(20),
-    fontFamily: Fonts.BaseFont
+    fontFamily: Fonts.BaseFont,
+    padding: Metrics.width * 0.05,
   },
   audioOnlyButtonContainer: { flexDirection: "column" },
   audioOnlyButton: {
-    height: iOS ? moderateScale(55) : moderateScale(49),
-    width: moderateScale(377),
+    minWidth: Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: moderateScale(10),
-    paddingTop: moderateScale(17)
+    paddingTop: moderateScale(17),
   },
   audioOnlyButtonText: {
     color: "white",
-    fontSize: moderateScale(20),
+    fontSize: scaledFontSize(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
-    fontFamily: Fonts.BaseFont
+    fontFamily: Fonts.BaseFont,
+    paddingBottom: Metrics.width * 0.02,
   },
   audioOnlyButtonTextDisabled: {
     color: "#ccc",
-    fontSize: moderateScale(20),
+    fontSize: scaledFontSize(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
-    fontFamily: Fonts.BaseFont
-  }
+    fontFamily: Fonts.BaseFont,
+    paddingBottom: Metrics.width * 0.02,
+  },
+  iconPadding: {paddingLeft: Metrics.width * 0.05}
 });

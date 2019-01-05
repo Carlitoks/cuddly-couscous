@@ -38,9 +38,9 @@ export default class Questions extends Component {
     return (
       <React.Fragment>
         <Text style={styles.questionHelpText}>
-          {home
+          { home
             ? `${I18n.t(`customerHome.help`)} ${firstName}?`
-            : I18n.t(`onboardingView.help`)}
+            : I18n.t(`customerHome.help`) }
         </Text>
         <Carousel
           ref={c => {
@@ -56,7 +56,7 @@ export default class Questions extends Component {
           vertical={true}
           loop={true}
           autoplay={true}
-          autoplayInterval={4500}
+          autoplayInterval={8000}
           enableMomentum={false}
           lockScrollWhileSnapping={false}
           sliderHeight={60}
