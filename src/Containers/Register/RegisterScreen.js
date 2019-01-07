@@ -172,7 +172,8 @@ class RegisterScreen extends Component {
           style={{
             ...styles.termsAndConditionsText,
             fontFamily: fonts.BoldFont,
-            textDecorationLine: "underline"
+            textDecorationLine: "underline",
+            lineHeight: 30
           }}
           onPress={() =>
             Linking.openURL(TermsConditionsURI).catch(err =>
@@ -188,7 +189,8 @@ class RegisterScreen extends Component {
           style={{
             ...styles.termsAndConditionsText,
             fontFamily: fonts.BoldFont,
-            textDecorationLine: "underline"
+            textDecorationLine: "underline",
+            lineHeight: 30
           }}
           onPress={() =>
             Linking.openURL(PrivacyPolicyURI).catch(err =>
