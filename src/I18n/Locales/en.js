@@ -644,6 +644,8 @@ export default (ENG = {
 
   customerOnboarding: {
     connectToLinguist: "Connect to a Linguist Now",
+    tenFreeMinutes: "{{time}} FREE Minutes",
+    canIHelpYou: "Can I help you?",
     login: {
       provideInformation:
         "Provide your name, email and a password so that you can access your account in the future.",
