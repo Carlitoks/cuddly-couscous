@@ -70,9 +70,9 @@ import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
 import ConnectingView from "../Call/Linguist/Connecting/ConnectingView";
 import PaymentsView from "../Payments/PaymentsView";
-import OnboardingScreen from '../Containers/Onboarding/OnboardingScreen';
-import LoginScreen from '../Containers/Login/LoginScreen';
-import RegisterScreen from '../Containers/Register/RegisterScreen';
+import OnboardingScreen from "../Containers/Onboarding/OnboardingScreen";
+import LoginScreen from "../Containers/Login/LoginScreen";
+import RegisterScreen from "../Containers/Register/RegisterScreen";
 
 const Navigation = StackNavigator(
   {
@@ -468,7 +468,12 @@ const Navigation = StackNavigator(
         // )
         //   return null;
 
-        if (sceneProps.scene.route.routeName === "RateView") {
+        if (
+          sceneProps.scene.route.routeName === "RateView" ||
+          sceneProps.scene.route.routeName === "OnboardingView" ||
+          sceneProps.scene.route.routeName === "LoginScreen" ||
+          sceneProps.scene.route.routeName === "RegisterScreen"
+        ) {
           return CardStackStyleInterpolator.forFadeFromBottomAndroid(
             sceneProps
           );
