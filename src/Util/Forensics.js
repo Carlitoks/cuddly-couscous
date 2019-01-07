@@ -1,4 +1,5 @@
 import DeviceInfo from 'react-native-device-info';
+import AXIOS from "../Config/AxiosConfig";
 
 // list of events to send to the server in the next
 // batch that gets flushed
@@ -72,13 +73,17 @@ export const flushEvents = () => {
       lastFlushed: lastFlushed.getTime()
     }
   });
-  api.post("/forensics", {
-    sentAt: now,
-    events: events
-  }).then(() => {
-    events = [];
-    lastFlushed = new Date();
-  }).catch(() => {
-    recordApiError("POST", "/forensics");
-  });
+  try {
+    AXIOS.post("/forensics", {
+      sentAt: now,
+      events: events
+    }).then(() => {
+      events = [];
+      lastFlushed = new Date();
+    }).catch(() => {
+      recordApiError("POST", "/forensics");
+    });
+  } catch (e) {
+    console.log('oh dear, failed on forensics', e);
+  }
 };
