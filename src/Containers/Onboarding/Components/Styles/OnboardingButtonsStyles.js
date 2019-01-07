@@ -13,7 +13,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
-    marginBottom: iPhoneXModels ? 70 : 0
+    marginBottom: iPhoneXModels ? 150 : 0
   },
   callNowButtonContainer: {
     flexDirection: "column",
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     shadowOpacity: 0.38,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
-    elevation: 8,
+    elevation: 8
   },
   callNowButtonDisable: {
     maxWidth: Metrics.width * 0.78,
@@ -53,14 +53,14 @@ export default StyleSheet.create({
     fontWeight: "600",
     fontFamily: Fonts.BaseFont,
     paddingLeft: metrics.width * 0.05,
-    paddingRight: metrics.width * 0.05,
+    paddingRight: metrics.width * 0.05
   },
   callNowButtonTextDisabled: {
     color: "#ccc",
     fontSize: scaledFontSize(17),
     fontWeight: "600",
     lineHeight: moderateScale(20),
-    fontFamily: Fonts.BaseFont,
+    fontFamily: Fonts.BaseFont
   },
   audioOnlyButtonContainer: { flexDirection: "column" },
   audioOnlyButton: {

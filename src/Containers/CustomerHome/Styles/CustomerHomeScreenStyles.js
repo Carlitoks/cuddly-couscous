@@ -26,7 +26,7 @@ export default StyleSheet.create({
   swapArrows: {
     position: "absolute",
     left: metrics.width * 0.88,
-    top: moderateScale(414),
+    top: moderateScale(418),
     zIndex: 2000
   }
 });
