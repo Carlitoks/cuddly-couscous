@@ -19,6 +19,7 @@ import {
 } from "../../../Ducks/ActiveSessionReducer";
 
 import styles from "./styles";
+import { recordSessionTokboxEvent } from "../../../Util/Forensics";
 
 class SubscriberBox extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class SubscriberBox extends Component {
         //console.log("AUDIO STATS EVENT", event);
       },
       connected: () => {
+        recordSessionTokboxEvent('subscriber.connected', {sessionID: this.props.sessionID});
         console.log("CONNECTED EVENT");
         this.props.update({
           modalReconnect: false
@@ -41,6 +43,7 @@ class SubscriberBox extends Component {
         this.setState({ subscriberError: false });
       },
       disconnected: () => {
+        recordSessionTokboxEvent('subscriber.disconnected', {sessionID: this.props.sessionID});
         console.log("DISCONNECTED EVENT");
         SoundManager["Disconnected"].play();
         this.props.update({
@@ -48,6 +51,10 @@ class SubscriberBox extends Component {
         });
       },
       error: event => {
+        recordSessionTokboxEvent('subscriber.event', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log("SUBSCRIBER ERROR EVENT", event);
         this.props.errorEvent(event);
         this.props.remountPublisherAndSubscriber();
@@ -60,6 +67,10 @@ class SubscriberBox extends Component {
         }
       },
       videoDisabled: event => {
+        recordSessionTokboxEvent('subscriber.videoDisabled', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log(`VIDEO DISABLED EVENT ${event}`);
         this.props.videoState(true);
         this.props.update({
@@ -67,6 +78,7 @@ class SubscriberBox extends Component {
         });
       },
       videoDisableWarning: () => {
+        recordSessionTokboxEvent('subscriber.videoDisableWarning', {sessionID: this.props.sessionID});
         console.log("VIDEO DISABLED WARNING EVENT");
         this.props.updateVideoWarningEvent(
           VIDEO_WARNING.TYPE,
@@ -75,6 +87,7 @@ class SubscriberBox extends Component {
         this.props.videoState(true);
       },
       videoDisableWarningLifted: () => {
+        recordSessionTokboxEvent('subscriber.videoDisableWarning', {sessionID: this.props.sessionID});
         console.log("VIDEO DISABLED WARNING LIFTED EVENT");
         this.props.updateVideoWarningEvent(
           VIDEO_WARNING.TYPE,
@@ -83,6 +96,10 @@ class SubscriberBox extends Component {
         this.props.videoState(false);
       },
       videoEnabled: event => {
+        recordSessionTokboxEvent('subscriber.videoEnabled', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log(`VIDEO ENABLED EVENT ${event}`);
         this.props.videoState(false);
         this.props.update({

@@ -12,6 +12,7 @@ import {
 import { SETTINGS, CAMERA } from "../../../Util/Constants";
 
 import styles from "./styles";
+import { recordSessionTokboxEvent } from "../../../Util/Forensics";
 
 class PublisherBox extends Component {
   constructor(props) {
@@ -24,15 +25,27 @@ class PublisherBox extends Component {
         //console.log(`AUDIO LEVEL EVENT  publisher ${event}`);
       },
       error: event => {
+        recordSessionTokboxEvent('publisher.error', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log("PUBLISHER ERROR EVENT", event);
         this.props.errorEvent(event);
         this.props.remountPublisherAndSubscriber();
       },
       streamCreated: event => {
+        recordSessionTokboxEvent('publisher.streamCreated', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log("STREAM CREATED EVENT", event);
         this.props.publisherStart();
       },
       streamDestroyed: event => {
+        recordSessionTokboxEvent('publisher.streamDestroyed', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log("STREAM DESTROYED EVENT", event);
       }
     };
