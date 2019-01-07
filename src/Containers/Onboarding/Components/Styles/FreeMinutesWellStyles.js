@@ -10,13 +10,26 @@ export default StyleSheet.create({
     width: Metrics.width * 0.89,
     backgroundColor: "#CDCDF4",
     alignSelf: "center",
-    position: "absolute",
+    position: "relative",
     justifyContent: "center",
     alignItems: "flex-start",
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: Iphone5 ? moderateScale(210) : moderateScale(265),
+    top: Iphone5 ? moderateScale(-50) : moderateScale(-50),
+    zIndex: 10
+  },
+  freeMinutesWellContainerHome: {
+    width: Metrics.width * 0.89,
+    backgroundColor: "#CDCDF4",
+    alignSelf: "center",
+    position: "relative",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: "#CDCDF4",
+    top: Iphone5 ? moderateScale(-50) : moderateScale(-50),
     zIndex: 10
   },
   pillButtonContainer: {

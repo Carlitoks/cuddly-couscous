@@ -17,7 +17,8 @@ const placeholderInput = {
 };
 
 export default StyleSheet.create({
-  inputsContainer: { paddingTop: moderateScale(70), flexDirection: 'column' },
+  inputsContainer: { marginTop: moderateScale(-30), flexDirection: 'column' },
+  inputsContainerHome: { marginTop: moderateScale(-30), flexDirection: 'column' },
   inputTitle: {
     color: "#ffffff",
     fontFamily: Fonts.ItalicFont,

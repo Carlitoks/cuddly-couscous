@@ -117,7 +117,7 @@ class FreeMinutesWell extends Component {
         <TouchableOpacity
           activeOpacity={this.props.pointerEvents === 'none' ? 1 : 0.2}
           onPress={() => this.onPressAction()}
-          style={styles.freeMinutesWellContainer}
+          style={this.props.navigation.state.routeName === "OnboardingView" ? styles.freeMinutesWellContainer : styles.freeMinutesWellContainerHome}
         >
           <View style={this.setPillColor()}>
             <Icon
