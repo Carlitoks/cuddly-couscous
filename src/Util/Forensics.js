@@ -61,7 +61,7 @@ export const recordAppStateEvent = (from, to) => {
   });
 };
 
-export const flushEvents = (authToken) => {
+export const flushEvents = () => {
   if (events.length == 0) {
     return;
   }
@@ -78,8 +78,6 @@ export const flushEvents = (authToken) => {
     AXIOS.post("/forensics", {
       sentAt: now,
       events: events
-    },{
-      headers: { Authorization: `Bearer ${authToken}` }
     }).then(() => {
       events = [];
       lastFlushed = new Date();
