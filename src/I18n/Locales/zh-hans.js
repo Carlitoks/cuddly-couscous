@@ -638,22 +638,29 @@
   },
 
   customerOnboarding: {
+    welcome: "Welcome to Jeenie",
+    tenFreeMinutes: "{{time}} FREE Minutes",
+    canIHelpYou: "Can I Help You?",
+    homeCanIhelpYou: "Can I Help You, {{name}}?",
     connectToLinguist: '立即连接至语言专家',
     login: {
       provideInformation: '请输入您的昵称、电子邮件和密码，以便日后访问帐户。',
       createAccountTitle: '创建帐户',
       termsAndPrivacyNotice: '继续即表示，您同意我们的"条款与隐私政策"',
       terms: '条款',
-      privacyPolicy: '隐私政策'
+      privacyPolicy: '隐私政策',
+      forgotPassword: "Forgot Password?"
     },
     register: {
       createAnAccount: '创建帐户',
-      alreadyAccount: '已有帐户？登录'
+      alreadyAccount: '已有帐户？登录',
+      password: "Create Password"
     },
     errors: {
       invalidEmail: '请输入有效的电子邮件地址',
       takenEmail: '您输入的电子邮件地址已被其他帐户占用。请另输入一个电子邮件或登录您的帐户。',
-      emailAndPassword: '电子邮件或密码错误。请重试。'
+      emailAndPassword: '电子邮件或密码错误。请重试。',
+      signInto: "sign in to your account."
     }
   },
 

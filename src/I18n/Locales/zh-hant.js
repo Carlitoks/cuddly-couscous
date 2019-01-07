@@ -638,22 +638,29 @@
   },
 
   customerOnboarding: {
+    welcome: "Welcome to Jeenie",
+    tenFreeMinutes: "{{time}} FREE Minutes",
+    canIHelpYou: "Can I Help You?",
+    homeCanIhelpYou: "Can I Help You, {{name}}?",
     connectToLinguist: '立即和語言專員通話',
     login: {
       provideInformation: '請提供您的姓名、電子郵件和密碼，日後您才能存取使用自己的帳戶。',
       createAccountTitle: '建立帳戶',
       termsAndPrivacyNotice: '繼續使用即表示您同意我們的條款與隱私權政策',
       terms: '條款',
-      privacyPolicy: '隱私權政策'
+      privacyPolicy: '隱私權政策',
+      forgotPassword: "Forgot Password?"
     },
     register: {
       createAnAccount: '建立帳戶',
-      alreadyAccount: '已經有帳戶了？登入'
+      alreadyAccount: '已經有帳戶了？登入',
+      password: "Create Password"
     },
     errors: {
       invalidEmail: '請輸入有效的電子郵件地址',
       takenEmail: '已有另一個帳戶使用您所輸入的電子郵件地址。請輸入另一個電子郵件或登入您的帳戶。',
-      emailAndPassword: '電子郵件和密碼組合不正確。請再試一次。'
+      emailAndPassword: '電子郵件和密碼組合不正確。請再試一次。',
+      signInto: "sign in to your account."
     }
   },
 

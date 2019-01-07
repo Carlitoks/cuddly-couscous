@@ -660,7 +660,7 @@ export default (ENG = {
     },
     register: {
       createAnAccount: "Create an account",
-      alreadyAccount: "¿Already have an account? Sign in",
+      alreadyAccount: "Already have an account? Sign in",
       password: "Create Password"
     },
     errors: {
