@@ -329,7 +329,8 @@ export default (ESP = {
   provideFeedbackModalText:
     "Proporcione comentarios sobre su \nexperiencia usando Jeenie, y \nle daremos \n¡10 minutos adicionales SIN CARGO!",
   provideFeedbackViewPlaceholder: "Agregue sus comentarios aquí",
-  provideFeedbackViewTitle: "Díganos cómo podemos mejorar la experiencia de Jeenie:",
+  provideFeedbackViewTitle:
+    "Díganos cómo podemos mejorar la experiencia de Jeenie:",
   qr: "Código QR",
   quicklyContact: "Póngase en contacto rápidamente con un lingüista",
   rateYour: "Califique su",
@@ -463,7 +464,7 @@ export default (ESP = {
       unit: "minutos",
       add: "Agregar pago para hacer una llamada"
     },
-    help: "¿Puedo ayudarlo ",
+    help: "¿Puedo ayudarlo? ",
     scenarios: {
       s1: "Comprender el menú",
       s2: "Dirigir al conductor del taxi",
@@ -633,7 +634,8 @@ export default (ESP = {
       "Para optimizar la conexión, se ha deshabilitado temporalmente el video de su cliente. El video se reanudará cuando la conexión sea mejor.",
     alertYouCannotSeeLinguist:
       "Para optimizar la conexión, se ha deshabilitado temporalmente el video de su Language Jeenie. El video se reanudará cuando la conexión sea mejor.",
-    createSessionFailed: "Temporalmente no es posible iniciar la llamada. Vuelva a intentarlo.",
+    createSessionFailed:
+      "Temporalmente no es posible iniciar la llamada. Vuelva a intentarlo.",
 
     // used when rating a session
     rating: {
@@ -656,22 +658,26 @@ export default (ESP = {
   },
 
   customerOnboarding: {
-    connectToLinguist: 'Comuníquese con un lingüista ahora',
+    connectToLinguist: "Comuníquese con un lingüista ahora",
     login: {
-      provideInformation: 'Proporcione su nombre, correo electrónico y una contraseña para poder acceder a su cuenta en el futuro.',
-      createAccountTitle: 'Crear cuenta',
-      termsAndPrivacyNotice: 'Si continúa, usted acepta nuestros Términos y Política de privacidad.',
-      terms: 'Términos',
-      privacyPolicy: 'Política de privacidad'
+      provideInformation:
+        "Proporcione su nombre, correo electrónico y una contraseña para poder acceder a su cuenta en el futuro.",
+      createAccountTitle: "Crear cuenta",
+      termsAndPrivacyNotice:
+        "Si continúa, usted acepta nuestros Términos y Política de privacidad.",
+      terms: "Términos",
+      privacyPolicy: "Política de privacidad"
     },
     register: {
-      createAnAccount: 'Crear una cuenta',
-      alreadyAccount: '¿Ya tiene una cuenta? Iniciar sesión'
+      createAnAccount: "Crear una cuenta",
+      alreadyAccount: "¿Ya tiene una cuenta? Iniciar sesión"
     },
     errors: {
-      invalidEmail: 'Ingrese una dirección de correo electrónico válida',
-      takenEmail: 'Ya existe una cuenta con la dirección de correo electrónico que ingresó. Ingrese un correo electrónico diferente o inicie sesión en su cuenta.',
-      emailAndPassword: 'Combinación incorrecta de correo electrónico y contraseña. Vuelva a intentarlo.'
+      invalidEmail: "Ingrese una dirección de correo electrónico válida",
+      takenEmail:
+        "Ya existe una cuenta con la dirección de correo electrónico que ingresó. Ingrese un correo electrónico diferente o inicie sesión en su cuenta.",
+      emailAndPassword:
+        "Combinación incorrecta de correo electrónico y contraseña. Vuelva a intentarlo."
     }
   },
 

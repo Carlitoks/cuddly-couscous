@@ -453,7 +453,7 @@ export default (ENG = {
       unit: "minutes",
       add: "Add Payment to Make a Call"
     },
-    help: "Can I help you, ",
+    help: "Can I help you? ",
     scenarios: {
       s1: "Understand your menu",
       s2: "Direct your taxi driver",
@@ -646,6 +646,7 @@ export default (ENG = {
     connectToLinguist: "Connect to a Linguist Now",
     tenFreeMinutes: "{{time}} FREE Minutes",
     canIHelpYou: "Can I help you?",
+    homeCanIhelpYou: "Can I help {{name}}?",
     login: {
       provideInformation:
         "Provide your name, email and a password so that you can access your account in the future.",
