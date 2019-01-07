@@ -34,7 +34,7 @@ class FreeMinutesWell extends Component {
     if (this.props.stripePaymentToken) {
       return {
         ...styles.pillButtonContainer,
-        backgroundColor: "#ffffff"
+        backgroundColor: "red"
       };
     } else {
       return { ...styles.pillButtonContainer, backgroundColor: "red" };
@@ -45,40 +45,17 @@ class FreeMinutesWell extends Component {
     if (this.props.navigation.state.routeName === "OnboardingView") {
       return I18n.t("customerHome.registrationWelcome.onboardingTitle");
     }
-    if (this.props.availableMinutes > 0) {
-      return I18n.t("customerHome.registrationWelcome.balance", {
-        num: this.props.availableMinutes
-      });
-    }
-
-    if (this.props.stripePaymentToken) {
-      return I18n.t("costPerMinute");
-    } else {
-      return I18n.t("customerHome.account.add");
-    }
+    return I18n.t("customerHome.registrationWelcome.balance", {
+      num: this.props.availableMinutes
+    });
   };
 
   setPillTextStyle = () => {
-    if (this.props.availableMinutes === 0) {
-      if (this.props.stripePaymentToken) {
-        return styles.pricingPillText;
-      } else {
-        return styles.pillButtonText;
-      }
-    } else {
-      return styles.pillButtonText;
-    }
+    return styles.pillButtonText;
   };
 
   setIconColor = () => {
-    if (this.props.availableMinutes > 0) {
-      return "#fff";
-    }
-    if (this.props.stripePaymentToken) {
-      return "#401674";
-    } else {
-      return "#fff";
-    }
+    return "#fff";
   };
 
   renderTitle = () => {
@@ -147,7 +124,6 @@ const mS = state => ({
   availableMinutes: state.userProfile.availableMinutes,
   displayPaymentModal: state.homeFlow.displayPaymentModal,
   stripePaymentToken: state.userProfile.stripePaymentToken,
-  displayPaymentModal: state.homeFlow.displayPaymentModal
 });
 
 const mD = {
