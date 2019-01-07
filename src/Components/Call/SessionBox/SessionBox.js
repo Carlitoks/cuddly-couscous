@@ -28,7 +28,7 @@ import { Platform } from "react-native";
 import { TOKBOX_APIKEY } from "../../../Config/env";
 
 import styles from "./styles";
-import { recordSessionTokboxEvent } from "../../../Util/Forensics";
+import { recordSessionTokboxEvent, recordSessionEvent } from "../../../Util/Forensics";
 
 class SessionBox extends Component {
   constructor(props) {
@@ -137,7 +137,12 @@ class SessionBox extends Component {
     );
   }
 
+  componentWillMount() {
+    recordSessionEvent('componentWillMount', {sessionID: this.props.sessionID});
+  }
+
   componentWillUnmount() {
+    recordSessionEvent('componentWillUnmount', {sessionID: this.props.sessionID});
     NetInfo.isConnected.removeEventListener(
       "connectionChange",
       this.handleConnectivityChange
