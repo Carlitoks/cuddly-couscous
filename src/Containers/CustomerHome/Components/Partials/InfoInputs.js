@@ -36,7 +36,7 @@ class InfoInputs extends Component {
   };
   render() {
     return (
-      <View style={styles.inputsContainer}>
+      <View style={this.props.type === "onboarding" ? styles.inputsContainer : styles.inputsContainerHome}>
         <View style={styles.paddingBottomContainer}>
           <RenderPicker
             navType={this.props.type}
