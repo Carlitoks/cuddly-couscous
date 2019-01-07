@@ -242,10 +242,16 @@ class RegisterScreen extends Component {
                   )}
 
                   <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
+                    {this.props.firstName ? (
+                      <Text style={styles.labelText}>
+                        {I18n.t("firstname")}
+                      </Text>
+                    ) : (
+                      <Text> </Text>
+                    )}
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
-                      allowFontScaling={false}
+                        allowFontScaling={false}
                         style={styles.inputText}
                         onChangeText={text => this.validateFirstName(text)}
                         value={this.props.firstName}
@@ -268,10 +274,14 @@ class RegisterScreen extends Component {
                   </View>
 
                   <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelText}>{I18n.t("email")}</Text>
+                    {this.props.email ? (
+                      <Text style={styles.labelText}>{I18n.t("email")}</Text>
+                    ) : (
+                      <Text> </Text>
+                    )}
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
-                      allowFontScaling={false}
+                        allowFontScaling={false}
                         autoCapitalize={"none"}
                         style={styles.inputText}
                         onChangeText={text => this.isValidEmail(text)}
@@ -299,17 +309,23 @@ class RegisterScreen extends Component {
                   </View>
 
                   <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelText}>
-                      {I18n.t("customerOnboarding.register.password")}
-                    </Text>
+                    {this.props.password ? (
+                      <Text style={styles.labelText}>
+                        {I18n.t("customerOnboarding.register.password")}
+                      </Text>
+                    ) : (
+                      <Text> </Text>
+                    )}
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
-                      allowFontScaling={false}
+                        allowFontScaling={false}
                         style={styles.inputText}
                         onChangeText={text => this.validatePassword(text)}
                         autoCapitalize={"none"}
                         value={this.props.password}
-                        placeholder={I18n.t("customerOnboarding.register.password")}
+                        placeholder={I18n.t(
+                          "customerOnboarding.register.password"
+                        )}
                         secureTextEntry={true}
                         placeholderTextColor={"rgba(255,255,255,0.7)"}
                       />

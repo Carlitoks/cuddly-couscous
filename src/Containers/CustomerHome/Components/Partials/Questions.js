@@ -19,8 +19,8 @@ export default class Questions extends Component {
   }
 
   orderScenarios = () => {
-    const scenarios = I18n.t("customerHome.scenarios");
-    this.setState({ scenarios: Object.keys(scenarios) });
+    const scenarios = Object.keys(I18n.t("customerHome.scenarios")).sort(function (a, b) {return Math.random() - 0.5;});
+    this.setState({ scenarios });
   };
 
   _renderItem = ({ item, index }) => {

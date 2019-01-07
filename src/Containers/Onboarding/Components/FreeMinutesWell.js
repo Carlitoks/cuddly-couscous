@@ -8,6 +8,7 @@ import PaymentModal from "../../../Home/Customer/PaymentModal/PaymentModal";
 
 // Styles
 import styles from "./Styles/FreeMinutesWellStyles";
+import ClockTime from "./../../../Assets/SVG/clockTime";
 
 class FreeMinutesWell extends Component {
   constructor(props) {
@@ -115,17 +116,16 @@ class FreeMinutesWell extends Component {
     return (
       <React.Fragment>
         <TouchableOpacity
-          activeOpacity={this.props.pointerEvents === 'none' ? 1 : 0.2}
+          activeOpacity={this.props.pointerEvents === "none" ? 1 : 0.2}
           onPress={() => this.onPressAction()}
-          style={this.props.navigation.state.routeName === "OnboardingView" ? styles.freeMinutesWellContainer : styles.freeMinutesWellContainerHome}
+          style={
+            this.props.navigation.state.routeName === "OnboardingView"
+              ? styles.freeMinutesWellContainer
+              : styles.freeMinutesWellContainerHome
+          }
         >
           <View style={this.setPillColor()}>
-            <Icon
-              name={"clock"}
-              type={"entypo"}
-              color={this.setIconColor()}
-              size={15}
-            />
+            <ClockTime width={17} height={17} />
             <Text style={this.setPillTextStyle()}>{this.setPillContent()}</Text>
           </View>
           {this.renderTitle()}

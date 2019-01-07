@@ -21,7 +21,8 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   callNowButton: {
-    minWidth: Metrics.width * 0.78,
+    maxWidth: Metrics.width * 0.78,
+    minHeight: Metrics.height * 0.08,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -33,10 +34,11 @@ export default StyleSheet.create({
     shadowOpacity: 0.38,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
-    elevation: 8
+    elevation: 8,
   },
   callNowButtonDisable: {
-    minWidth: Metrics.width * 0.78,
+    maxWidth: Metrics.width * 0.78,
+    minHeight: Metrics.width * 0.05,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -49,9 +51,9 @@ export default StyleSheet.create({
     color: "white",
     fontSize: scaledFontSize(17),
     fontWeight: "600",
-    lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont,
-    padding: metrics.width * 0.05
+    paddingLeft: metrics.width * 0.05,
+    paddingRight: metrics.width * 0.05,
   },
   callNowButtonTextDisabled: {
     color: "#ccc",
@@ -59,7 +61,6 @@ export default StyleSheet.create({
     fontWeight: "600",
     lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont,
-    padding: metrics.width * 0.05
   },
   audioOnlyButtonContainer: { flexDirection: "column" },
   audioOnlyButton: {
