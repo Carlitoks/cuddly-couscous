@@ -154,7 +154,11 @@ class LoginScreen extends Component {
                   )}
 
                   <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelStyle}>{I18n.t("email")}</Text>
+                    {this.props.email ? (
+                      <Text style={styles.labelStyle}>{I18n.t("email")}</Text>
+                    ) : (
+                      <Text> </Text>
+                    )}
                     <View style={styles.inputInternalContainer}>
                       <TextInput
                         allowFontScaling={false}
@@ -185,7 +189,13 @@ class LoginScreen extends Component {
                   </View>
 
                   <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelStyle}>{I18n.t("password")}</Text>
+                    {this.props.password ? (
+                      <Text style={styles.labelStyle}>
+                        {I18n.t("password")}
+                      </Text>
+                    ) : (
+                      <Text> </Text>
+                    )}
                     <View style={styles.inputInternalContainer}>
                       <TextInput
                         allowFontScaling={false}

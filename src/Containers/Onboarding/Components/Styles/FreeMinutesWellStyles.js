@@ -37,7 +37,7 @@ export default StyleSheet.create({
     alignSelf: "flex-start",
     position: "relative",
     justifyContent: "center",
-    alignItems: "flex-start",
+    alignItems: "center",
     borderWidth: 1,
     borderRadius: 30,
     borderColor: "rgba(255,255,255,0.55)",
@@ -53,25 +53,25 @@ export default StyleSheet.create({
     color: "#fff",
     fontWeight: "600",
     fontFamily: Fonts.BoldFont,
-    fontSize: moderateScale(16)
+    fontSize: scaledFontSize(16)
   },
   wellTitle: {
     color: "#401674",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? scaledFontSize(18) : scaledFontSize(22),
+    fontSize: Iphone5 ? scaledFontSize(21) : scaledFontSize(21),
     paddingLeft: 15,
     marginTop: -10
   },
   wellSubtitle: {
     color: "#401674",
     fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? scaledFontSize(10) : scaledFontSize(14),
+    fontSize: Iphone5 ? scaledFontSize(13) : scaledFontSize(13),
     paddingLeft: 15,
     paddingBottom: 15
   },
   pricingPillText: {
     color: "#401674",
-    fontSize: Iphone5 ? scaledFontSize(20) : scaledFontSize(17),
+    fontSize: Iphone5 ? scaledFontSize(16) : scaledFontSize(16),
     textAlign: "center",
     fontWeight: "600",
     fontFamily: Fonts.ItalicFont,

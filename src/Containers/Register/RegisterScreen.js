@@ -242,7 +242,13 @@ class RegisterScreen extends Component {
                   )}
 
                   <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
+                    {this.props.firstName ? (
+                      <Text style={styles.labelText}>
+                        {I18n.t("firstname")}
+                      </Text>
+                    ) : (
+                      <Text> </Text>
+                    )}
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
                         allowFontScaling={false}
@@ -268,7 +274,11 @@ class RegisterScreen extends Component {
                   </View>
 
                   <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelText}>{I18n.t("email")}</Text>
+                    {this.props.email ? (
+                      <Text style={styles.labelText}>{I18n.t("email")}</Text>
+                    ) : (
+                      <Text> </Text>
+                    )}
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
                         allowFontScaling={false}
@@ -299,9 +309,13 @@ class RegisterScreen extends Component {
                   </View>
 
                   <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelText}>
-                      {I18n.t("customerOnboarding.register.password")}
-                    </Text>
+                    {this.props.password ? (
+                      <Text style={styles.labelText}>
+                        {I18n.t("customerOnboarding.register.password")}
+                      </Text>
+                    ) : (
+                      <Text> </Text>
+                    )}
                     <View style={styles.inputsErrorContainer}>
                       <TextInput
                         allowFontScaling={false}
