@@ -18,6 +18,8 @@ import codePush from "react-native-code-push";
 import branch, { BranchEvent } from 'react-native-branch';
 import analytics from "@segment/analytics-react-native";
 
+import I18n from "./I18n/I18n";
+import { setAuthToken } from "./Config/AxiosConfig";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -101,6 +103,7 @@ class App extends Component {
 
         if (auth.isLoggedIn) {
           store.dispatch(addListeners());
+          setAuthToken(auth.token);
         }
       })
       .then(() => {
@@ -142,7 +145,11 @@ class App extends Component {
   // dumpAsyncStorage().then(data => console.log(data));
 
   render() {
-    if (this.state.loadingStore) return null;
+    if (this.state.loadingStore) {
+      // TODO: return static loading screen, like the splash screen
+      // right now we have a flash of blank white screen
+      return null;
+    }
 
     return (
       <Provider store={this.state.store}>

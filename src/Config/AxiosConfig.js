@@ -16,6 +16,14 @@ const AXIOS = axios.create({
   timeout: 30000
 });
 
+export const setAuthToken = (str) => {
+  if (str == null) {
+    delete AXIOS.defaults.headers.common['Authorization'];
+  } else {
+    AXIOS.defaults.headers.common['Authorization'] = 'Bearer ' + str;
+  }
+};
+
 export const MOCK_DATA = {
   USERS: [],
   CALL_HISTORY: {
