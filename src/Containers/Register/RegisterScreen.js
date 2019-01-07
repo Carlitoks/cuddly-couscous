@@ -262,8 +262,8 @@ class RegisterScreen extends Component {
                         <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
-                            type={"evilicon"}
-                            color={"#fff"}
+                            type={"material-community"}
+                            color={"white"}
                             size={15}
                           />
                         </View>
@@ -297,7 +297,7 @@ class RegisterScreen extends Component {
                         <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
-                            type={"evilicon"}
+                            type={"material-community"}
                             color={"#fff"}
                             size={15}
                           />
@@ -333,7 +333,7 @@ class RegisterScreen extends Component {
                         <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
-                            type={"evilicon"}
+                            type={"material-community"}
                             color={"#fff"}
                             size={15}
                           />

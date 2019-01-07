@@ -177,7 +177,7 @@ class LoginScreen extends Component {
                         <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
-                            type={"evilicon"}
+                            type={"material-community"}
                             color={"#fff"}
                             size={15}
                           />
@@ -213,7 +213,7 @@ class LoginScreen extends Component {
                         <View style={styles.errorIconContainer}>
                           <Icon
                             name={"close"}
-                            type={"evilicon"}
+                            type={"material-community"}
                             color={"#fff"}
                             size={15}
                           />

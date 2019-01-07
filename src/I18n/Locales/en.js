@@ -646,7 +646,7 @@ export default (ENG = {
     connectToLinguist: "Connect to a Linguist Now",
     tenFreeMinutes: "{{time}} FREE Minutes",
     canIHelpYou: "Can I help you?",
-    homeCanIhelpYou: "Can I help {{name}}?",
+    homeCanIhelpYou: "Can I help {{firstName}}?",
     login: {
       provideInformation:
         "Provide your name, email and a password so that you can access your account in the future.",
@@ -659,7 +659,7 @@ export default (ENG = {
     },
     register: {
       createAnAccount: "Create an account",
-      alreadyAccount: "¿Already have an account? Sign in",
+      alreadyAccount: "Already have an account? Sign in",
       password: "Create Password"
     },
     errors: {

@@ -91,13 +91,14 @@ export default StyleSheet.create({
     position: "relative",
     left: -20,
     backgroundColor: "red",
-    borderWidth: 1,
+    borderWidth: android ? 1 : 1.5,
     borderColor: "#fff",
     borderRadius: 50,
     height: Metrics.width * 0.06,
     width: Metrics.width * 0.06,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: android ? 1 : 30
   },
   forgotPasswordLabel: {
     fontFamily: Fonts.ItalicFont,
