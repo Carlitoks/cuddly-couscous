@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import Svg, { G, Path } from "react-native-svg";
+import { Iphone5, iPhoneXModels } from "../../Util/Devices";
 
 const SwitchLangs = ({ width, height, viewBox, style, active = false }) => {
   return (
     <Svg
       width={width}
-      height={height}
+      height={Iphone5 ? 66 : iPhoneXModels ? height : height}
       style={style}
       viewBox={viewBox ? viewBox : "0 0 22 73"}
     >

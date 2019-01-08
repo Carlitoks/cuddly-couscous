@@ -1,7 +1,7 @@
 import Metrics from "./Metrics";
 import Colors from "./Colors";
 import { moderateScale } from "../Util/Scaling";
-import { Iphone5 } from "../Util/Devices";
+import { Iphone5, iPhoneXModels } from "../Util/Devices";
 import metrics from "./Metrics";
 
 // This file is for a reusable grouping of Theme items.
@@ -31,7 +31,6 @@ const ApplicationStyles = {
       paddingBottom: 20
     },
     onboardingCallSectionContainer: {
-      marginTop: moderateScale(-75),
       zIndex: 1000000,
       paddingLeft: 25,
       paddingRight: 23,
