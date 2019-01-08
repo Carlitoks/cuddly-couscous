@@ -18,8 +18,8 @@ export default StyleSheet.create({
     width: width * 0.91,
     borderRadius: 4,
     height: height * 0.4925,
-    flexDirection: 'column',
-    justifyContent: 'space-around'
+    flexDirection: "column",
+    justifyContent: "space-around"
   },
   modalTopButton: {
     position: "relative",
@@ -29,7 +29,7 @@ export default StyleSheet.create({
   modalButton: {
     width: width * 0.65,
     height: height * 0.08,
-    alignSelf: "center",
+    alignSelf: "center"
   },
   modalTitle: {
     marginTop: Iphone5 ? moderateScale(75) : 48,
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     color: Colors.gradientColor.top,
     fontFamily: Fonts.LightFont,
     fontWeight: "500",
-    fontSize: Iphone5 ? moderateScale(22) : width * 0.0525,
+    fontSize: Iphone5 ? 22 : width * 0.0525,
     textAlign: "center"
   },
   modalText: {
@@ -48,7 +48,7 @@ export default StyleSheet.create({
     marginHorizontal: Iphone5 ? moderateScale(30) : 30,
     paddingBottom: Iphone5 ? moderateScale(30) : 20,
     textAlign: "center",
-    fontSize: Iphone5 ? moderateScale(20) :  width * 0.0475,
+    fontSize: Iphone5 ? 18 : width * 0.0475,
     fontWeight: "500",
     borderBottomWidth: 0.8,
     borderColor: Colors.gray2
