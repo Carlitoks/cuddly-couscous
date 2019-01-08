@@ -62,6 +62,13 @@ export const recordAppStateEvent = (from, to) => {
   });
 };
 
+export const recordNavigationEvent = (to) => {
+  record({
+    type: 'app.nav',
+    payload: {to}
+  });
+};
+
 // load any events from storage
 export const init = async () => {
   try {
