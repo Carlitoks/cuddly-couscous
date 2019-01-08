@@ -34,7 +34,7 @@ class FreeMinutesWell extends Component {
     if (this.props.stripePaymentToken) {
       return {
         ...styles.pillButtonContainer,
-        backgroundColor: "red"
+        backgroundColor: "#ffffff"
       };
     } else {
       return { ...styles.pillButtonContainer, backgroundColor: "red" };
@@ -43,19 +43,44 @@ class FreeMinutesWell extends Component {
 
   setPillContent = () => {
     if (this.props.navigation.state.routeName === "OnboardingView") {
-      return I18n.t("customerHome.registrationWelcome.onboardingTitle");
+      return I18n.t("customerHome.registrationWelcome.title");
     }
-    return I18n.t("customerHome.registrationWelcome.balance", {
-      num: this.props.availableMinutes
-    });
+    if (this.props.availableMinutes > 0) {
+      return I18n.t("customerHome.registrationWelcome.balance", {
+        num: this.props.availableMinutes
+      });
+    }
+
+    if (this.props.stripePaymentToken) {
+      return I18n.t("costPerMinute");
+    } else {
+      return I18n.t("customerHome.registrationWelcome.balance", {
+        num: this.props.availableMinutes
+      });
+    }
   };
 
   setPillTextStyle = () => {
-    return styles.pillButtonText;
+    if (this.props.availableMinutes === 0) {
+      if (this.props.stripePaymentToken) {
+        return styles.pricingPillText;
+      } else {
+        return styles.pillButtonText;
+      }
+    } else {
+      return styles.pillButtonText;
+    }
   };
 
   setIconColor = () => {
-    return "#fff";
+    if (this.props.availableMinutes > 0) {
+      return "#fff";
+    }
+    if (this.props.stripePaymentToken) {
+      return "#401674";
+    } else {
+      return "#fff";
+    }
   };
 
   renderTitle = () => {

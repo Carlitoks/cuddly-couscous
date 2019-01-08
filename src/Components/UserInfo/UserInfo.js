@@ -12,7 +12,7 @@ const UserInfo = ({ text, rating }) => {
       {/* Component used for call history  */}
 
       <View style={styles.containerStyle}>
-        <Text style={styles.userName}>{text}.</Text>
+        <Text style={styles.userName}>{text.split(' undefined')[0]}.</Text>
         {rating ? (
           <View style={styles.stars}>
           <StarRating

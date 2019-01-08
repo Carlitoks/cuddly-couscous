@@ -88,10 +88,8 @@ const ViewWrapper = ({
         backgroundColor={Colors.transparent}
         translucent={true}
       />
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       {/* Render Child Components */}
       {children}
-      </TouchableWithoutFeedback>
     </View>
   );
 };

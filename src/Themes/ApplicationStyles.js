@@ -13,9 +13,11 @@ const ApplicationStyles = {
       flexGrow: 1,
       backgroundColor: Colors.gradientColor.top
     },
-    avatarSectionContainer: {},
+    avatarSectionContainer: {
+      maxHeight: metrics.height * 0.36
+    },
     callSectionContainer: {
-      marginTop: Iphone5 ? 40 : 35,
+      marginTop: moderateScale(0),
       zIndex: 1000000,
       paddingLeft: 25,
       paddingRight: 23,
@@ -30,13 +32,13 @@ const ApplicationStyles = {
       paddingBottom: 20
     },
     onboardingCallSectionContainer: {
-      marginTop: Iphone5 ? 40 : 35,
+      marginTop: moderateScale(-75),
       zIndex: 1000000,
       paddingLeft: 25,
       paddingRight: 23,
       backgroundColor: "transparent",
       flexDirection: "column",
-      justifyContent: "space-between",
+      justifyContent: "flex-start",
       alignItems: "center"
     },
     rowView: {

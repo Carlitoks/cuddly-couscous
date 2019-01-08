@@ -68,7 +68,7 @@ class PickerSelectComponent extends Component {
         }
       >
         <TouchableOpacity
-          onPress={() => this.props.openSlideMenu(this.props.type)}
+          onPress={() => { this.props.openSlideMenu(this.props.type) }}
         >
           <Text style={styles.inputTitle}>{this.props.title}</Text>
           <View style={styles.currentSelectedLangContainer}>
