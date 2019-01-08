@@ -51,16 +51,14 @@ class LoginScreen extends Component {
 
   isValidEmail = text => {
     let reg = new RegExp(EMAIL_REGEX);
+    console.log(text, reg.test(text), this.props.errorType);
     if (!reg.test(text)) {
       this.props.updateOnboarding({
         isValidEmail: false,
         errorType: "emailFormat"
       });
     } else {
-      if (this.props.errorType === "emailFormat") {
-        this.props.updateOnboarding({ isValidEmail: true, errorType: null });
-      }
-      this.props.updateOnboarding({ isValidEmail: true });
+      this.props.updateOnboarding({ isValidEmail: true, errorType: null });
     }
     this.props.updateOnboarding({ email: text });
   };

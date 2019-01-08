@@ -102,13 +102,7 @@ class RegisterScreen extends Component {
         errorType: "passwordLength"
       });
     } else {
-      if (this.props.errorType === "passwordLength") {
-        this.props.updateOnboarding({
-          isValidPassword: true,
-          errorType: null
-        });
-      }
-      this.props.updateOnboarding({ isValidPassword: true });
+      this.props.updateOnboarding({ isValidPassword: true, errorType: null });
     }
     this.props.updateOnboarding({ password: text });
   };
@@ -178,7 +172,8 @@ class RegisterScreen extends Component {
           style={{
             ...styles.termsAndConditionsText,
             fontFamily: fonts.BoldFont,
-            textDecorationLine: "underline"
+            textDecorationLine: "underline",
+            lineHeight: 30
           }}
           onPress={() =>
             Linking.openURL(TermsConditionsURI).catch(err =>
@@ -194,7 +189,8 @@ class RegisterScreen extends Component {
           style={{
             ...styles.termsAndConditionsText,
             fontFamily: fonts.BoldFont,
-            textDecorationLine: "underline"
+            textDecorationLine: "underline",
+            lineHeight: 30
           }}
           onPress={() =>
             Linking.openURL(PrivacyPolicyURI).catch(err =>
@@ -228,10 +224,7 @@ class RegisterScreen extends Component {
               locations={[0, 1]}
               style={{ height: "100%" }}
             >
-              <View
-                keyboardShouldPersistTaps="handled"
-                style={styles.loginContainer}
-              >
+              <View style={styles.loginContainer}>
                 <View style={styles.inputContainer}>
                   {this.props.errorType ? (
                     <FieldError navigation={this.props.navigation} />
