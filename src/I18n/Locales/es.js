@@ -658,6 +658,10 @@ export default (ESP = {
   },
 
   customerOnboarding: {
+    welcome: "Bienvenido/a Jeenie",
+    tenFreeMinutes: "{{time}} Minutos GRATIS",
+    canIHelpYou: "Le puedo ayudar?",
+    homeCanIhelpYou: "Le puedo ayudar, {{name}}?",
     connectToLinguist: "Comuníquese con un lingüista ahora",
     login: {
       provideInformation:
@@ -666,21 +670,24 @@ export default (ESP = {
       termsAndPrivacyNotice:
         "Si continúa, usted acepta nuestros Términos y Política de privacidad.",
       terms: "Términos",
-      privacyPolicy: "Política de privacidad"
+      privacyPolicy: "Política de privacidad",
+      forgotPassword: "¿Olvidó su contraseña?"
     },
     register: {
       createAnAccount: "Crear una cuenta",
-      alreadyAccount: "¿Ya tiene una cuenta? Iniciar sesión"
+      alreadyAccount: "¿Ya tiene una cuenta? Iniciar sesión",
+      password: "Crear contraseña"
     },
     errors: {
       invalidEmail: "Ingrese una dirección de correo electrónico válida",
       takenEmail:
         "Ya existe una cuenta con la dirección de correo electrónico que ingresó. Ingrese un correo electrónico diferente o inicie sesión en su cuenta.",
       emailAndPassword:
-        "Combinación incorrecta de correo electrónico y contraseña. Vuelva a intentarlo."
+        "Combinación incorrecta de correo electrónico y contraseña. Vuelva a intentarlo.",
+      signInto: "Iniciar sesión."
     }
   },
-
+  
   // for use during primary language selection
   languagesList: {
     eng: "Inglés",

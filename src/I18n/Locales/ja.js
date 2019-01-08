@@ -638,25 +638,31 @@
   },
 
   customerOnboarding: {
+    welcome: "Jeenieヘようこそ",
+    tenFreeMinutes: "{{time}}分無料",
+    canIHelpYou: "ヘルプが必要ですか?",
+    homeCanIhelpYou: "ヘルプが必要ですか, {{name}}?",
     connectToLinguist: '今すぐ通訳スタッフに接続',
     login: {
       provideInformation: '今後アカウントにアクセスできるように、お名前、メールアドレス、パスワードを入力してください。',
       createAccountTitle: 'アカウントを作成',
       termsAndPrivacyNotice: '続けることで、当社の利用規約とプライバシーポリシーに同意することになります',
       terms: '利用規約',
-      privacyPolicy: 'プライバシーポリシー'
+      privacyPolicy: 'プライバシーポリシー',
+      forgotPassword: "パスワードをお忘れですか？"
     },
     register: {
       createAnAccount: 'アカウントを作成',
-      alreadyAccount: 'すでにアカウントをお持ちですか？サインイン'
+      alreadyAccount: 'すでにアカウントをお持ちですか？サインイン',
+      password: "パスワードを作成"
     },
     errors: {
       invalidEmail: '有効なメールアドレスを入力してください',
       takenEmail: '入力したメールアドレスのアカウントはすでに存在しています。別のメールアドレスを入力するか、ご自身のアカウントにサインインしてください。',
-      emailAndPassword: 'メールアドレスとパスワードの組み合わせが誤っています。もう一度お試しください。'
+      emailAndPassword: 'メールアドレスとパスワードの組み合わせが誤まっています。もう一度お試しください。',
+      signInto: "アカウントにサインインする."
     }
   },
-
   // for use during primary language selection
   languagesList: {
     eng: "英語",

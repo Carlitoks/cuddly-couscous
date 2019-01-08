@@ -643,10 +643,11 @@ export default (ENG = {
   },
 
   customerOnboarding: {
+    welcome: "Welcome to Jeenie",
     connectToLinguist: "Connect to a Linguist Now",
     tenFreeMinutes: "{{time}} FREE Minutes",
-    canIHelpYou: "Can I help you?",
-    homeCanIhelpYou: "Can I help {{firstName}}?",
+    canIHelpYou: "Can I Help You?",
+    homeCanIhelpYou: "Can I Help You, {{name}}?",
     login: {
       provideInformation:
         "Provide your name, email and a password so that you can access your account in the future.",
