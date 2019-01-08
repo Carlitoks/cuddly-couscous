@@ -43,7 +43,7 @@ class FreeMinutesWell extends Component {
 
   setPillContent = () => {
     if (this.props.navigation.state.routeName === "OnboardingView") {
-      return I18n.t("customerHome.registrationWelcome.title");
+      return I18n.t("customerOnboarding.welcome");
     }
     if (this.props.availableMinutes > 0) {
       return I18n.t("customerHome.registrationWelcome.balance", {
@@ -127,7 +127,7 @@ class FreeMinutesWell extends Component {
           }
         >
           <View style={this.setPillColor()}>
-            <ClockTime width={17} height={17} />
+            { this.props.navigation.state.routeName === "OnboardingView" ? <React.Fragment /> : <ClockTime width={17} height={17} />}
             <Text style={this.setPillTextStyle()}>{this.setPillContent()}</Text>
           </View>
           {this.renderTitle()}

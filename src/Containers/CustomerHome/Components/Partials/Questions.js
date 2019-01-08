@@ -44,7 +44,7 @@ export default class Questions extends Component {
       <React.Fragment>
         <Text style={styles.questionHelpText}>
           {home
-            ? I18n.t("customerOnboarding.homeCanIhelpYou", { firstName })
+            ? I18n.t("customerOnboarding.homeCanIhelpYou", { name: firstName })
             : I18n.t(`customerOnboarding.canIHelpYou`)}
         </Text>
         <ScrollVertical
