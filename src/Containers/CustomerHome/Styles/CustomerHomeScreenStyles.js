@@ -28,7 +28,7 @@ export default StyleSheet.create({
     position: "absolute",
     left: metrics.width * 0.88,
     top: Iphone5
-      ? moderateScale(318)
+      ? moderateScale(347)
       : iPhoneXModels
       ? moderateScale(385)
       : moderateScale(418),
