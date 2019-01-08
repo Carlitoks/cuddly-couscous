@@ -3,7 +3,7 @@ import { moderateScale, scaledFontSize } from "../../../../../Util/Scaling";
 import Fonts from "./../../../../../Themes/Fonts";
 import { Metrics } from "../../../../../Themes";
 import colors from "./../../../../../Themes/Colors";
-import { iPhoneXModels } from "../../../../../Util/Devices";
+import { iPhoneXModels, Iphone5 } from "../../../../../Util/Devices";
 
 const iOS = Platform.OS === "ios";
 
@@ -46,19 +46,19 @@ export default StyleSheet.create({
   },
   callNowButtonText: {
     color: "white",
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     fontWeight: "600",
     lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont,
-    padding: Metrics.width * 0.05,
+    padding: Metrics.width * 0.05
   },
   callNowButtonTextDisabled: {
     color: "#ccc",
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     fontWeight: "600",
     lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont,
-    padding: Metrics.width * 0.05,
+    padding: Metrics.width * 0.05
   },
   audioOnlyButtonContainer: { flexDirection: "column" },
   audioOnlyButton: {
@@ -67,23 +67,23 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: moderateScale(10),
-    paddingTop: moderateScale(17),
+    paddingTop: moderateScale(17)
   },
   audioOnlyButtonText: {
     color: "white",
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
     fontFamily: Fonts.BaseFont,
-    paddingBottom: Metrics.width * 0.02,
+    paddingBottom: Metrics.width * 0.02
   },
   audioOnlyButtonTextDisabled: {
     color: "#ccc",
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
     fontFamily: Fonts.BaseFont,
-    paddingBottom: Metrics.width * 0.02,
+    paddingBottom: Metrics.width * 0.02
   },
-  iconPadding: {paddingLeft: Metrics.width * 0.05}
+  iconPadding: { paddingLeft: Metrics.width * 0.05 }
 });

@@ -82,7 +82,7 @@ class PaymentModal extends Component {
               </View>
 
               <Button
-                borderRadius={27}
+                borderRadius={28}
                 textStyle={styles.text}
                 title={
                   !this.props.stripePaymentToken
