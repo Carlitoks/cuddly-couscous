@@ -23,21 +23,37 @@ class InfoInputs extends Component {
       return <React.Fragment />;
     } else {
       return (
-        <View style={[styles.paddingBottomContainer]}>
-          <RenderPicker
-            navType={this.props.type}
-            openSlideMenu={this.props.openSlideMenu}
-            title={I18n.t("customerHome.customNote.label")}
-            placeholder={I18n.t("customerHome.customNote.placeholder")}
-            type={"additionalDetails"}
-          />
-        </View>
+        <React.Fragment>
+          <View style={[styles.paddingBottomContainer]}>
+            <RenderPicker
+              navType={this.props.type}
+              openSlideMenu={this.props.openSlideMenu}
+              title={I18n.t("customerHome.customNote.label")}
+              placeholder={I18n.t("customerHome.customNote.placeholder")}
+              type={"additionalDetails"}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.swapCurrentSessionLanguages();
+            }}
+            style={styles.swapArrows}
+          >
+            <SwitchLangs width={18.5} height={70} />
+          </TouchableOpacity>
+        </React.Fragment>
       );
     }
   };
   render() {
     return (
-      <View style={this.props.type === "onboarding" ? styles.inputsContainer : styles.inputsContainerHome}>
+      <View
+        style={
+          this.props.type === "onboarding"
+            ? styles.inputsContainer
+            : styles.inputsContainerHome
+        }
+      >
         <View style={styles.paddingBottomContainer}>
           <RenderPicker
             navType={this.props.type}
@@ -57,14 +73,6 @@ class InfoInputs extends Component {
           />
         </View>
         {this.renderAdditionalDetails()}
-        <TouchableOpacity
-                onPress={() => {
-                  this.props.swapCurrentSessionLanguages();
-                }}
-                style={styles.swapArrows}
-              >
-                <SwitchLangs width={18.5} height={70} />
-              </TouchableOpacity>
       </View>
     );
   }
