@@ -15,6 +15,7 @@ const ApplicationStyles = {
     },
     avatarSectionContainer: {},
     callSectionContainer: {
+      marginTop: Iphone5 ? 40 : 35,
       zIndex: 1000000,
       paddingLeft: 25,
       paddingRight: 23,
@@ -29,6 +30,7 @@ const ApplicationStyles = {
       paddingBottom: 20
     },
     onboardingCallSectionContainer: {
+      marginTop: Iphone5 ? 40 : 35,
       zIndex: 1000000,
       paddingLeft: 25,
       paddingRight: 23,
