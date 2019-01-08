@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { scaledFontSize } from "../../../Util/Scaling";
+import { Iphone5 } from "../../../Util/Devices";
 
 const android = Platform.OS === "android";
 export default StyleSheet.create({
@@ -15,7 +16,7 @@ export default StyleSheet.create({
     borderBottomColor: "#fff",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(18)
+    fontSize: Iphone5 ? 16 : scaledFontSize(18)
   },
   loginContainer: {
     flexDirection: "column",
@@ -48,13 +49,13 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17)
   },
   transitionButtonText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17)
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   signInButtonEnabled: {
@@ -76,7 +77,7 @@ export default StyleSheet.create({
   inputViewContainer: { flexDirection: "column", paddingTop: 10 },
   labelStyle: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: scaledFontSize(13),
+    fontSize: Iphone5 ? 13 : scaledFontSize(13),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 3
@@ -102,7 +103,7 @@ export default StyleSheet.create({
   },
   forgotPasswordLabel: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: scaledFontSize(14),
+    fontSize: Iphone5 ? 13 : scaledFontSize(14),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 5,
