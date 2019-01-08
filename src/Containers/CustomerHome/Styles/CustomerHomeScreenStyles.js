@@ -30,7 +30,7 @@ export default StyleSheet.create({
     top: Iphone5
       ? moderateScale(347)
       : iPhoneXModels
-      ? moderateScale(385)
+      ? moderateScale(420)
       : moderateScale(418),
     zIndex: 2000
   }

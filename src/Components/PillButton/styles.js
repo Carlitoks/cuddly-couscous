@@ -35,7 +35,7 @@ export default StyleSheet.create({
         height: buttonHeight
       },
       ios: {
-        height: Iphone5 ? 38 : buttonHeight + 8
+        height: Iphone5 ? 38 : iPhoneXModels ? 40 : buttonHeight + 8
       }
     }),
     borderRadius: 50,

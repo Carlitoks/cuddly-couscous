@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { Button } from "react-native-elements";
 import { Colors } from "../../Themes";
 import styles from "./styles";
-import { Iphone5 } from "../../Util/Devices";
+import { Iphone5, iPhoneXModels } from "../../Util/Devices";
 import { upperFirst } from "lodash";
 
 const colorMapper = {
@@ -42,7 +42,7 @@ const PillButton = ({
             ? {
                 type: "ionicon",
                 name: icon,
-                size: Iphone5 ? 23 : 30,
+                size: Iphone5 ? 23 : iPhoneXModels ? 25 : 30,
                 color: Colors.primaryColor,
                 iconStyle: { opacity: 0.59 }
               }

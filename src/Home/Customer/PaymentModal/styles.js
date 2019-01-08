@@ -45,7 +45,7 @@ export default StyleSheet.create({
     color: Colors.gradientColor.top,
     fontFamily: Fonts.LightFont,
     fontWeight: "500",
-    fontSize: Iphone5 ? 18 : iPhoneXModels ? 20 : width * 0.0525,
+    fontSize: Iphone5 ? 18 : iPhoneXModels ? 19 : width * 0.0525,
     textAlign: "center"
   },
   modalText: {
@@ -54,7 +54,7 @@ export default StyleSheet.create({
     marginHorizontal: Iphone5 ? moderateScale(30) : 30,
     paddingBottom: Iphone5 ? moderateScale(30) : 20,
     textAlign: "center",
-    fontSize: Iphone5 ? 15 : iPhoneXModels ? 17 : width * 0.0475,
+    fontSize: Iphone5 ? 15 : iPhoneXModels ? 16 : width * 0.0475,
     fontWeight: "500",
     borderBottomWidth: 0.8,
     borderColor: Colors.gray2
