@@ -20,7 +20,7 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   callNowButton: {
-    minWidth: Metrics.width * 0.78,
+    minWidth: iPhoneXModels ? 55 : Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -35,7 +35,7 @@ export default StyleSheet.create({
     elevation: 8
   },
   callNowButtonDisable: {
-    minWidth: Metrics.width * 0.78,
+    minWidth: iPhoneXModels ? 55 : Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -50,10 +50,7 @@ export default StyleSheet.create({
     fontWeight: "600",
     lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont,
-    padding:
-      iOS && !(iPhoneXModels || Iphone5)
-        ? Metrics.width * 0.042
-        : Metrics.width * 0.05
+    padding: Metrics.width * 0.05
   },
   callNowButtonTextDisabled: {
     color: "#ccc",
@@ -61,10 +58,7 @@ export default StyleSheet.create({
     fontWeight: "600",
     lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont,
-    padding:
-      iOS && !(iPhoneXModels || Iphone5)
-        ? Metrics.width * 0.042
-        : Metrics.width * 0.05
+    padding: Metrics.width * 0.05
   },
   audioOnlyButtonContainer: { flexDirection: "column" },
   audioOnlyButton: {
@@ -73,7 +67,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: moderateScale(10),
-    paddingTop: iOS && !(iPhoneXModels || Iphone5) ? 0 : moderateScale(17)
+    paddingTop: moderateScale(17)
   },
   audioOnlyButtonText: {
     color: "white",

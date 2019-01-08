@@ -1,10 +1,9 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import { Metrics, ApplicationStyles } from "../../../Themes";
 import metrics from "../../../Themes/Metrics";
 import { moderateScale } from "../../../Util/Scaling";
 import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
 
-const iOS = Platform.OS === "ios";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
@@ -28,12 +27,10 @@ export default StyleSheet.create({
   swapArrows: {
     position: "absolute",
     left: metrics.width * 0.88,
-    top: Iphone5 //check if the device is an Iphone5
+    top: Iphone5
       ? moderateScale(347)
-      : iPhoneXModels //check if the device is an IphoneX model
+      : iPhoneXModels
       ? moderateScale(420)
-      : iOS && !(iPhoneXModels || Iphone5) //check if the device is an iOS devices different from the iPhone5 or iPhoneX
-      ? moderateScale(408)
       : moderateScale(432),
     zIndex: 2000
   }

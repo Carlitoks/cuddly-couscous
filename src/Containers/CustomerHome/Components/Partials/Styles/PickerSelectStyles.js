@@ -1,9 +1,8 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import { moderateScale, scaledFontSize } from "../../../../../Util/Scaling";
 import { Fonts, Metrics } from "../../../../../Themes";
 import { Iphone5 } from "../../../../../Util/Devices";
 
-const iOS = Platform.OS === "ios";
 const PlaceHolderText = {
   fontFamily: Fonts.BaseFont,
   fontWeight: "500",
@@ -32,7 +31,7 @@ export default StyleSheet.create({
     paddingBottom: 9,
     fontFamily: Fonts.BaseFont,
     fontWeight: "500",
-    fontSize: Iphone5 ? 15 : iOS ? scaledFontSize(16) : scaledFontSize(18),
+    fontSize: Iphone5 ? 15 : scaledFontSize(18),
     color: "#ffffff"
   },
   inputPlaceholderValue: {
@@ -40,7 +39,7 @@ export default StyleSheet.create({
     paddingBottom: 9,
     fontFamily: Fonts.BaseFont,
     fontWeight: "500",
-    fontSize: Iphone5 ? 15 : iOS ? scaledFontSize(16) : scaledFontSize(18),
+    fontSize: Iphone5 ? 15 : scaledFontSize(18),
     color: "#cccccc"
   },
   inputTitle: {
