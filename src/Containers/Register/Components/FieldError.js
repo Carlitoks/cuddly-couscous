@@ -46,7 +46,6 @@ class FieldError extends Component {
   );
 
   renderErrorText = () => {
-    console.log(this.props.errorType);
     if (this.props.errorType === "emailFormat") return this.renderEmailFormat();
 
     if (this.props.errorType === "AlreadyRegistered")

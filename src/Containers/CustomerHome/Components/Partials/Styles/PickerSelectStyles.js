@@ -57,7 +57,6 @@ export default StyleSheet.create({
   homeInputContainer: {
     flexDirection: "column",
     width: Metrics.width * 0.75,
-    marginLeft: -20
   },
   onboardingInputContainer: {
     flexDirection: "column",
