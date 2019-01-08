@@ -59,7 +59,6 @@ export default class Questions extends Component {
         >
           {this.state.scenarios.length > 0 ? (
             this.state.scenarios.map((scenario, index) => {
-              console.log(scenario);
               return this._renderItem(scenario, index);
             })
           ) : (

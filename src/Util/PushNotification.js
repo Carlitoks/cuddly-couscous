@@ -31,8 +31,7 @@ class PushNotifications {
           cb({ tokenFCM: token });
         })
         .catch(error => {
-          console.log(error.response);
-          error.response
+          error.response && error.response.data
             ? displayFormErrors(error.response.data.errors[0])
             : displayFormErrors(error);
         });
