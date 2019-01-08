@@ -1,3 +1,4 @@
+import { AsyncStorage } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import AXIOS from "../Config/AxiosConfig";
 
@@ -61,6 +62,24 @@ export const recordAppStateEvent = (from, to) => {
   });
 };
 
+// load any events from storage
+export const init = async () => {
+  try {
+    const serializedState = await AsyncStorage.getItem("solo.forensics");
+    events = [];
+    if (!!serializedState) {
+      events = JSON.parse(serializedState);
+    }
+  } catch (err) {
+    console.log('error loading forensics', err);
+  }
+};
+
+// persist events to storage
+export const persist = async () => {
+  await AsyncStorage.setItem('solo.forensics', JSON.stringify(events));
+};
+
 export const flushEvents = () => {
   if (events.length == 0) {
     return;
@@ -70,7 +89,7 @@ export const flushEvents = () => {
     event: 'app.forensics',
     payload: {
       current: now,
-      lastFlushed: lastFlushed.getTime()
+      lastFlushed: (!!lastFlushed) ? lastFlushed.getTime() : null
     }
   });
 

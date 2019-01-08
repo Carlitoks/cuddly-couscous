@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { NetInfo, Text, Platform } from 'react-native';
-import deviceinfo from "react-native-device-info";
+import React, { Component } from "react";
+import { Provider } from "react-redux";
+import { NetInfo, Text, AppState, Platform } from "react-native";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 import { codePushAndroidKey, codePushiOSKey, analyticsKey } from "./Config/env";
@@ -20,6 +19,8 @@ import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
 import { setAuthToken } from "./Config/AxiosConfig";
+import { init, recordAppStateEvent, persist } from "./Util/Forensics";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +28,8 @@ class App extends Component {
     this.state = {
       isLoggedIn: false,
       loadingStore: true,
-      store: null
+      store: null,
+      appState: AppState.currentState
     };
 
     // Font doesn't scale
@@ -47,6 +49,7 @@ class App extends Component {
 
   componentWillMount() {
     this.disableAppCenterCrashes();
+    init();
     createStore()
       .then(store => {
         const {
@@ -128,8 +131,37 @@ class App extends Component {
     // you could check the app state to respond differently to push notifications depending on if the app is running in the background or is currently active.
   }
 
+  async componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+
+    branch.subscribe(({ error, params }) => {
+      if (error) {
+        console.error('Error from Branch: ' + error)
+        return
+      }
+      console.log("Branch params: " + JSON.stringify(params))
+
+      // params will never be null if error is null
+    })
+    
+    // let lastParams = await branch.getLatestReferringParams() // params from last open
+    // let installParams = await branch.getFirstReferringParams() // params from original install
+    // console.log("Last", lastParams);
+    // console.log("Install", installParams);
+
+  }
+
   componentWillUnmount() {
+<<<<<<< HEAD
     NetInfo.removeEventListener('connectionChange', this.handleFirstConnectivityChange);
+=======
+    AppState.removeEventListener('change', this._handleAppStateChange);
+    persist();
+    NetInfo.removeEventListener(
+      "connectionChange",
+      this.handleFirstConnectivityChange
+    );
+>>>>>>> recording app state events
   }
 
   handleFirstConnectivityChange = connectionInfo => {
@@ -140,9 +172,16 @@ class App extends Component {
     }
   };
 
+<<<<<<< HEAD
   componentDidMount() {}
 
   // dumpAsyncStorage().then(data => console.log(data));
+=======
+  _handleAppStateChange = (nextState) => {
+    recordAppStateEvent(this.state.appState, nextState);
+    this.setState({appState: nextState});
+  };
+>>>>>>> recording app state events
 
   render() {
     if (this.state.loadingStore) {
