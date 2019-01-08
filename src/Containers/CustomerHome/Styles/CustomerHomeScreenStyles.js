@@ -28,10 +28,10 @@ export default StyleSheet.create({
     position: "absolute",
     left: metrics.width * 0.88,
     top: Iphone5
-      ? moderateScale(318)
+      ? moderateScale(347)
       : iPhoneXModels
-      ? moderateScale(385)
-      : moderateScale(418),
+      ? moderateScale(420)
+      : moderateScale(432),
     zIndex: 2000
   }
 });

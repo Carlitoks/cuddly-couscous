@@ -1,7 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale, scaledFontSize } from "../../../Util/Scaling";
-import { Iphone5 } from "../../../Util/Devices";
+import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
 
 const android = Platform.OS === "android";
 export default StyleSheet.create({
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     height: Metrics.height * 0.91,
-    alignItems: "center",
+    alignItems: "center"
   },
   inputContainer: { width: Metrics.width * 0.85, paddingTop: 10 },
   buttonContainer: {
@@ -38,7 +38,7 @@ export default StyleSheet.create({
   },
   signInButtonDisable: {
     minWidth: Metrics.width * 0.78,
-    minHeight: Metrics.height * 0.08,
+    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
     backgroundColor: Colors.transparent,
     borderColor: "#fff",
     borderWidth: 1,
@@ -78,7 +78,7 @@ export default StyleSheet.create({
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   registerButton: {
     minWidth: Metrics.width * 0.78,
-    minHeight: Metrics.height * 0.08,
+    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

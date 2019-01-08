@@ -31,7 +31,7 @@ export default StyleSheet.create({
     paddingBottom: 9,
     fontFamily: Fonts.BaseFont,
     fontWeight: "500",
-    fontSize: Iphone5 ? 18 : scaledFontSize(18),
+    fontSize: Iphone5 ? 15 : scaledFontSize(18),
     color: "#ffffff"
   },
   inputPlaceholderValue: {
@@ -39,13 +39,13 @@ export default StyleSheet.create({
     paddingBottom: 9,
     fontFamily: Fonts.BaseFont,
     fontWeight: "500",
-    fontSize: Iphone5 ? 18 : scaledFontSize(18),
+    fontSize: Iphone5 ? 15 : scaledFontSize(18),
     color: "#cccccc"
   },
   inputTitle: {
     color: "#ffffff",
     fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 1 : scaledFontSize(13),
+    fontSize: Iphone5 ? 13 : scaledFontSize(13),
     textAlign: "left",
     fontWeight: "300"
   },
