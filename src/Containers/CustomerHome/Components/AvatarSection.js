@@ -20,7 +20,6 @@ export default class AvatarSection extends Component {
           style={[
             styles.rowView,
             {
-              marginTop: -30,
               marginLeft: home ? moderateScale(150) : 90
             }
           ]}

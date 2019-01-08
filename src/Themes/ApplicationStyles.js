@@ -14,13 +14,10 @@ const ApplicationStyles = {
       flexGrow: 1,
       backgroundColor: Colors.gradientColor.top
     },
-    avatarSectionContainer: {},
+    avatarSectionContainer: {
+      maxHeight: metrics.height * 0.36
+    },
     callSectionContainer: {
-      marginTop: Iphone5
-        ? 60
-        : iPhoneXModels
-        ? moderateScale(80)
-        : moderateScale(70),
       zIndex: 1000000,
       paddingLeft: 25,
       paddingRight: 23,
@@ -35,17 +32,12 @@ const ApplicationStyles = {
       paddingBottom: 20
     },
     onboardingCallSectionContainer: {
-      marginTop: Iphone5
-        ? 70
-        : iPhoneXModels
-        ? moderateScale(80)
-        : moderateScale(80),
       zIndex: 1000000,
       paddingLeft: 25,
       paddingRight: 23,
       backgroundColor: "transparent",
       flexDirection: "column",
-      justifyContent: "space-between",
+      justifyContent: "flex-start",
       alignItems: "center"
     },
     rowView: {
