@@ -24,14 +24,4 @@ export default StyleSheet.create({
     backgroundColor: "white",
     height: "100%"
   },
-  swapArrows: {
-    position: "absolute",
-    left: metrics.width * 0.88,
-    top: Iphone5
-      ? moderateScale(347)
-      : iPhoneXModels
-      ? moderateScale(420)
-      : moderateScale(432),
-    zIndex: 2000
-  }
 });

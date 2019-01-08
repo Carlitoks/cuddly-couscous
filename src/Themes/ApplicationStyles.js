@@ -26,7 +26,7 @@ const ApplicationStyles = {
     scrollViewFlex: {
       flexGrow: 1,
       flexDirection: "column",
-      justifyContent: "flex-start",
+      justifyContent: "space-between",
       alignItems: "center",
       paddingBottom: 20
     },

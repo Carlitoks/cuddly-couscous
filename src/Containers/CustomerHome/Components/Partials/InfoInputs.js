@@ -12,6 +12,7 @@ import I18n from "./../../../../I18n/I18n";
 // Styles
 import styles from "./Styles/InfoInputsStyles";
 import { Metrics } from "../../../../Themes";
+import { SwitchLangs } from "../../../../Assets/SVG";
 
 class InfoInputs extends Component {
   constructor(props) {
@@ -56,6 +57,14 @@ class InfoInputs extends Component {
           />
         </View>
         {this.renderAdditionalDetails()}
+        <TouchableOpacity
+                onPress={() => {
+                  this.props.swapCurrentSessionLanguages();
+                }}
+                style={styles.swapArrows}
+              >
+                <SwitchLangs width={18.5} height={70} />
+              </TouchableOpacity>
       </View>
     );
   }
