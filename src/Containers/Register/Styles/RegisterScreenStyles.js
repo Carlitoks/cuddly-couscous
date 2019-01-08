@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale, scaledFontSize } from "../../../Util/Scaling";
+import { Iphone5 } from "../../../Util/Devices";
 
 const android = Platform.OS === "android";
 export default StyleSheet.create({
@@ -15,7 +16,7 @@ export default StyleSheet.create({
     borderBottomColor: "#fff",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(18)
+    fontSize: Iphone5 ? 16 : scaledFontSize(18)
   },
   loginContainer: {
     flexDirection: "column",
@@ -49,20 +50,20 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17)
   },
   transitionButtonText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     padding: Metrics.width * 0.02
   },
   registerAdviseText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: scaledFontSize(15),
+    fontSize: Iphone5 ? 14 : scaledFontSize(15),
     textAlign: "center",
     paddingBottom: 20
   },
@@ -70,7 +71,7 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: scaledFontSize(12),
+    fontSize: Iphone5 ? 11 : scaledFontSize(12),
     textAlign: "center",
     paddingTop: 20
   },
