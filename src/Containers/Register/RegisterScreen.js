@@ -166,41 +166,69 @@ class RegisterScreen extends Component {
       .split(TermsText)[1]
       .split(privacyPolicyText)[0];
     return (
-      <Text style={styles.termsAndConditionsText}>
-        {continueText}
-        <Text
-          style={{
-            ...styles.termsAndConditionsText,
-            fontFamily: fonts.BoldFont,
-            textDecorationLine: "underline",
-            lineHeight: 30
-          }}
-          onPress={() =>
-            Linking.openURL(TermsConditionsURI).catch(err =>
+      <View style={styles.termsAndConditionsViewContainer}>
+        <Text style={styles.termsAndConditionsText}>{continueText}</Text>
+        <TouchableOpacity
+          style={styles.touchableLink}
+          onPress={() => {
+            /* Linking.openURL(TermsConditionsURI).catch(err =>
               console.error("An error occurred", err)
-            )
-          }
+            );*/
+            Linking.canOpenURL(TermsConditionsURI)
+              .then(supported => {
+                if (!supported) {
+                  console.log("Can't handle url: " + TermsConditionsURI);
+                } else {
+                  return Linking.openURL(TermsConditionsURI);
+                }
+              })
+              .catch(err => console.error("An error occurred", err));
+          }}
         >
-          {TermsText}
-        </Text>
+          <Text
+            style={{
+              ...styles.termsAndConditionsText,
+              fontFamily: fonts.BoldFont,
+              textDecorationLine: "underline",
+              lineHeight: 20
+            }}
+          >
+            {` ${TermsText}`}
+          </Text>
+        </TouchableOpacity>
 
         <Text style={styles.termsAndConditionsText}>{AndText}</Text>
-        <Text
-          style={{
-            ...styles.termsAndConditionsText,
-            fontFamily: fonts.BoldFont,
-            textDecorationLine: "underline",
-            lineHeight: 30
-          }}
-          onPress={() =>
-            Linking.openURL(PrivacyPolicyURI).catch(err =>
+        <TouchableOpacity
+          style={styles.touchableLink}
+          onPress={
+            () => {
+              Linking.canOpenURL(PrivacyPolicyURI)
+                .then(supported => {
+                  if (!supported) {
+                    console.log("Can't handle url: " + PrivacyPolicyURI);
+                  } else {
+                    return Linking.openURL(PrivacyPolicyURI);
+                  }
+                })
+                .catch(err => console.error("An error occurred", err));
+            }
+            /* Linking.openURL(PrivacyPolicyURI).catch(err =>
               console.error("An error occurred", err)
-            )
+            )*/
           }
         >
-          {privacyPolicyText}
-        </Text>
-      </Text>
+          <Text
+            style={{
+              ...styles.termsAndConditionsText,
+              fontFamily: fonts.BoldFont,
+              textDecorationLine: "underline",
+              lineHeight: 20
+            }}
+          >
+            {` ${privacyPolicyText}`}
+          </Text>
+        </TouchableOpacity>
+      </View>
     );
   };
   render() {
@@ -340,9 +368,8 @@ class RegisterScreen extends Component {
                         )}
                       </View>
                     </View>
-                    <Text style={styles.termsAndConditionsText}>
-                      {this.renderPrivacyPolicyText()}
-                    </Text>
+
+                    {this.renderPrivacyPolicyText()}
                   </View>
                   <View style={styles.buttonContainer}>
                     <View style={styles.buttonWidthContainer}>

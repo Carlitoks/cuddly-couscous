@@ -71,9 +71,8 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? 11 : scaledFontSize(12),
-    textAlign: "center",
-    paddingTop: 20
+    fontSize: Iphone5 ? 11 : scaledFontSize(13),
+    textAlign: "center"
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   registerButton: {
@@ -121,5 +120,17 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: android ? 1 : 30
+  },
+  termsAndConditionsViewContainer: {
+    flexDirection: "row",
+    width: "100%",
+    zIndex: 1000000000,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginLeft: 15
+  },
+  touchableLink: {
+    alignItems: "center",
+    justifyContent: "flex-start"
   }
 });

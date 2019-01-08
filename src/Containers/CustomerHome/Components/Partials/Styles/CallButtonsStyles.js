@@ -19,7 +19,7 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   callNowButton: {
-    minWidth: iPhoneXModels ? 55 : Metrics.width * 0.78,
+    minWidth: Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     elevation: 8
   },
   callNowButtonDisable: {
-    minWidth: iPhoneXModels ? 55 : Metrics.width * 0.78,
+    minWidth: Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
