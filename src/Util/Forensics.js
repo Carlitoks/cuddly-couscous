@@ -6,11 +6,12 @@ import AXIOS from "../Config/AxiosConfig";
 // batch that gets flushed
 let events = [];
 let lastFlushed = null;
+let version = null;
 
 const record = (evt) => {
   evt.createdAt = new Date();
   evt.meta = {
-    mobileAppVersion: DeviceInfo.getReadableVersion()
+    mobileAppVersion: version
   };
   events.push(evt);
 };
@@ -72,6 +73,7 @@ export const recordNavigationEvent = (to) => {
 // load any events from storage
 export const init = async () => {
   try {
+    version = DeviceInfo.getReadableVersion();
     const serializedState = await AsyncStorage.getItem("solo.forensics");
     events = [];
     if (!!serializedState) {

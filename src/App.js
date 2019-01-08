@@ -97,6 +97,7 @@ class App extends Component {
       })
       .then(store => {
         const { auth } = store.getState();
+        setAuthToken(auth.token);
 
         this.setState({
           isLoggedIn: auth.isLoggedIn,
@@ -106,7 +107,6 @@ class App extends Component {
 
         if (auth.isLoggedIn) {
           store.dispatch(addListeners());
-          setAuthToken(auth.token);
         }
       })
       .then(() => {
