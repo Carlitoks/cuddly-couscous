@@ -31,7 +31,7 @@ export default StyleSheet.create({
       ? moderateScale(347)
       : iPhoneXModels
       ? moderateScale(420)
-      : moderateScale(418),
+      : moderateScale(432),
     zIndex: 2000
   }
 });

@@ -20,7 +20,7 @@ export default StyleSheet.create({
       ? moderateScale(-20)
       : iPhoneXModels
       ? moderateScale(-30)
-      : moderateScale(-80),
+      : moderateScale(-30),
     zIndex: 10
   },
   freeMinutesWellContainerHome: {
@@ -37,7 +37,7 @@ export default StyleSheet.create({
       ? moderateScale(-10)
       : iPhoneXModels
       ? moderateScale(-20)
-      : moderateScale(-50),
+      : moderateScale(-20),
     zIndex: 10
   },
   pillButtonContainer: {
