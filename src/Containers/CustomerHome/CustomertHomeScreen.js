@@ -29,7 +29,7 @@ import I18n from "./../../I18n/I18n";
 import { supportedLangCodes } from "./../../Config/Languages";
 import WelcomeModal from "./Components/Partials/WelcomeModal";
 import FreeMinutesWell from "../Onboarding/Components/FreeMinutesWell";
-import { SwitchLangs } from "../../Assets/SVG";
+
 
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
@@ -138,14 +138,6 @@ class CustomerHomeScreen extends Component {
                 openSlideMenu={this.openSlideMenu}
               />
               <CallButtons navigation={this.props.navigation} />
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.swapCurrentSessionLanguages();
-                }}
-                style={styles.swapArrows}
-              >
-                <SwitchLangs width={22} height={70} />
-              </TouchableOpacity>
             </ScrollView>
             <SlideUpPanel />
           </LinearGradient>

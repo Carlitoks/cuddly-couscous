@@ -11,22 +11,10 @@ export default class CallSection extends Component {
   }
   render() {
     return (
-      <View
-        style={
-          this.props.type === "onboarding"
-            ? [styles.mainContainer, styles.onboardingCallSectionContainer]
-            : [
-                styles.mainContainer,
-                styles.callSectionContainer,
-                styles.columnView
-              ]
-        }
-      >
-        <InfoInputs
-          type={this.props.type}
-          openSlideMenu={this.props.openSlideMenu}
-        />
-      </View>
+      <InfoInputs
+        type={this.props.type}
+        openSlideMenu={this.props.openSlideMenu}
+      />
     );
   }
 }

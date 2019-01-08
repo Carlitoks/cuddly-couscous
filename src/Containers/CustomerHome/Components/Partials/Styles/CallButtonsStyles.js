@@ -10,13 +10,12 @@ const iOS = Platform.OS === "ios";
 export default StyleSheet.create({
   callButtonContainer: {
     flexDirection: "column",
-    justifyContent: "flex-end",
     alignItems: "center",
-    marginBottom: iPhoneXModels ? 70 : 0
+    justifyContent: 'flex-end',
+    paddingTop: 10
   },
   callNowButtonContainer: {
     flexDirection: "column",
-    paddingBottom: 14,
     alignSelf: "center"
   },
   callNowButton: {
@@ -66,8 +65,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: moderateScale(10),
-    paddingTop: moderateScale(17)
+    paddingTop: moderateScale(10)
   },
   audioOnlyButtonText: {
     color: "white",

@@ -9,6 +9,7 @@ import Questions from "./Partials/Questions";
 // Styles
 import styles from "./Styles/AvatarSectionStyles";
 import { moderateScale } from "../../../Util/Scaling";
+import SilhouetteWavesBackground from "./../../../Assets/SVG/SilhouetteWavesBackground";
 
 export default class AvatarSection extends Component {
   renderSections = () => {
@@ -16,33 +17,20 @@ export default class AvatarSection extends Component {
 
     return (
       <View style={[styles.columnView]}>
-        <View
-          style={[
-            styles.rowView,
-            {
-              marginLeft: home ? moderateScale(150) : 90
-            }
-          ]}
-        >
-          <View style={{ zIndex: 10 }}>
-            <Questions home={home} firstName={firstName} />
-          </View>
-          <FemaleSilhouette home={home} />
+        <SilhouetteWavesBackground
+          style={{ position: "absolute" }}
+          width={375}
+          height={243}
+        />
+        <View style={{ zIndex: 100, paddingLeft: 20, top: -200 }}>
+          <Questions home={home} firstName={firstName} />
         </View>
-        <SGWaves />
       </View>
     );
   };
   render() {
     return (
-      <View style={styles.avatarSectionContainer}>
-        <LinearGradient
-          colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-          locations={[0, 1]}
-        >
-          {this.renderSections()}
-        </LinearGradient>
-      </View>
+      <View style={styles.avatarSectionContainer}>{this.renderSections()}</View>
     );
   }
 }
