@@ -17,8 +17,11 @@ const placeholderInput = {
 };
 
 export default StyleSheet.create({
-  inputsContainer: { marginTop: moderateScale(-95), flexDirection: 'column' },
-  inputsContainerHome: { marginTop: moderateScale(-73), flexDirection: 'column' },
+  inputsContainer: { marginTop: moderateScale(-95), flexDirection: "column" },
+  inputsContainerHome: {
+    marginTop: moderateScale(-73),
+    flexDirection: "column"
+  },
   inputTitle: {
     color: "#ffffff",
     fontFamily: Fonts.ItalicFont,
@@ -54,6 +57,9 @@ export default StyleSheet.create({
     ...placeholderInput,
     fontWeight: "500"
   },
-  paddingBottomContainer: { flexDirection: "column", paddingBottom: 17 },
+  paddingBottomContainer: {
+    flexDirection: "column",
+    paddingBottom: 17
+  },
   marginTop: { marginTop: -55 }
 });

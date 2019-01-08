@@ -1,3 +1,4 @@
+import { StyleSheet, Platform } from "react-native";
 import Metrics from "./Metrics";
 import Colors from "./Colors";
 import { moderateScale } from "../Util/Scaling";
@@ -6,7 +7,7 @@ import metrics from "./Metrics";
 
 // This file is for a reusable grouping of Theme items.
 // Similar to an XML fragment layout in Android
-
+const iOS = Platform.OS === "ios";
 const ApplicationStyles = {
   screen: {
     mainContainer: {
