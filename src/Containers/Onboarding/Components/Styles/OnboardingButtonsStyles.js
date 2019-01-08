@@ -3,7 +3,7 @@ import { moderateScale, scaledFontSize } from "../../../../Util/Scaling";
 import Fonts from "../../../../Themes/Fonts";
 import { Metrics } from "../../../../Themes";
 import colors from "../../../../Themes/Colors";
-import { iPhoneXModels } from "../../../../Util/Devices";
+import { iPhoneXModels, Iphone5 } from "../../../../Util/Devices";
 import metrics from "./../../../../Themes/Metrics";
 
 const iOS = Platform.OS === "ios";
@@ -13,7 +13,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
-    marginBottom: iPhoneXModels ? 70 : 0
+    marginBottom: iPhoneXModels ? 150 : 0
   },
   callNowButtonContainer: {
     flexDirection: "column",
@@ -21,13 +21,14 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   callNowButton: {
-    minWidth: Metrics.width * 0.78,
+    maxWidth: Metrics.width * 0.78,
+    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#fff",
-    borderRadius: 25,
+    borderRadius: 27,
     backgroundColor: "#F39100",
     shadowColor: "rgba(0,0,0,1)",
     shadowOpacity: 0.38,
@@ -36,7 +37,8 @@ export default StyleSheet.create({
     elevation: 8
   },
   callNowButtonDisable: {
-    minWidth: Metrics.width * 0.78,
+    maxWidth: Metrics.width * 0.78,
+    minHeight: Metrics.width * 0.05,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -47,19 +49,18 @@ export default StyleSheet.create({
   },
   callNowButtonText: {
     color: "white",
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     fontWeight: "600",
-    lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont,
-    padding: metrics.width * 0.05
+    paddingLeft: metrics.width * 0.05,
+    paddingRight: metrics.width * 0.05
   },
   callNowButtonTextDisabled: {
     color: "#ccc",
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     fontWeight: "600",
     lineHeight: moderateScale(20),
-    fontFamily: Fonts.BaseFont,
-    padding: metrics.width * 0.05
+    fontFamily: Fonts.BaseFont
   },
   audioOnlyButtonContainer: { flexDirection: "column" },
   audioOnlyButton: {
@@ -71,7 +72,7 @@ export default StyleSheet.create({
   },
   audioOnlyButtonText: {
     color: "white",
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
     fontFamily: Fonts.BaseFont,
@@ -79,7 +80,7 @@ export default StyleSheet.create({
   },
   audioOnlyButtonTextDisabled: {
     color: "#ccc",
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
     fontFamily: Fonts.BaseFont,

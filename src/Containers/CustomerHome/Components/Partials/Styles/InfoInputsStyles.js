@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { moderateScale } from "../../../../../Util/Scaling";
 import { Fonts, Metrics } from "../../../../../Themes";
+import metrics from "../../../../../Themes/Metrics";
 
 const PlaceHolderText = {
   fontFamily: Fonts.BaseFont,
@@ -17,7 +18,8 @@ const placeholderInput = {
 };
 
 export default StyleSheet.create({
-  inputsContainer: { paddingTop: moderateScale(70), flexDirection: 'column' },
+  inputsContainer: { marginTop: moderateScale(-80), flexDirection: 'column'},
+  inputsContainerHome: { flexDirection: 'column', marginTop: moderateScale(-1)},
   inputTitle: {
     color: "#ffffff",
     fontFamily: Fonts.ItalicFont,
@@ -53,6 +55,11 @@ export default StyleSheet.create({
     ...placeholderInput,
     fontWeight: "500"
   },
-  paddingBottomContainer: { flexDirection: "column", paddingBottom: 17 },
-  marginTop: { marginTop: -55 }
+  paddingBottomContainer: { flexDirection: "column", paddingBottom: 5 },
+  swapArrows: {
+    position: "absolute",
+    left: moderateScale(350),
+    top: moderateScale(60),
+    zIndex: 1000
+  }
 });

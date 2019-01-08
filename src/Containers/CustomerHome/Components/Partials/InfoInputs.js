@@ -12,6 +12,7 @@ import I18n from "./../../../../I18n/I18n";
 // Styles
 import styles from "./Styles/InfoInputsStyles";
 import { Metrics } from "../../../../Themes";
+import { SwitchLangs } from "../../../../Assets/SVG";
 
 class InfoInputs extends Component {
   constructor(props) {
@@ -22,21 +23,37 @@ class InfoInputs extends Component {
       return <React.Fragment />;
     } else {
       return (
-        <View style={[styles.paddingBottomContainer]}>
-          <RenderPicker
-            navType={this.props.type}
-            openSlideMenu={this.props.openSlideMenu}
-            title={I18n.t("customerHome.customNote.label")}
-            placeholder={I18n.t("customerHome.customNote.placeholder")}
-            type={"additionalDetails"}
-          />
-        </View>
+        <React.Fragment>
+          <View style={[styles.paddingBottomContainer]}>
+            <RenderPicker
+              navType={this.props.type}
+              openSlideMenu={this.props.openSlideMenu}
+              title={I18n.t("customerHome.customNote.label")}
+              placeholder={I18n.t("customerHome.customNote.placeholder")}
+              type={"additionalDetails"}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.swapCurrentSessionLanguages();
+            }}
+            style={styles.swapArrows}
+          >
+            <SwitchLangs width={18.5} height={70} />
+          </TouchableOpacity>
+        </React.Fragment>
       );
     }
   };
   render() {
     return (
-      <View style={styles.inputsContainer}>
+      <View
+        style={
+          this.props.type === "onboarding"
+            ? styles.inputsContainer
+            : styles.inputsContainerHome
+        }
+      >
         <View style={styles.paddingBottomContainer}>
           <RenderPicker
             navType={this.props.type}

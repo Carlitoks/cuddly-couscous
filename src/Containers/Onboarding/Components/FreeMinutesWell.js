@@ -8,6 +8,7 @@ import PaymentModal from "../../../Home/Customer/PaymentModal/PaymentModal";
 
 // Styles
 import styles from "./Styles/FreeMinutesWellStyles";
+import ClockTime from "./../../../Assets/SVG/clockTime";
 
 class FreeMinutesWell extends Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class FreeMinutesWell extends Component {
 
   setPillContent = () => {
     if (this.props.navigation.state.routeName === "OnboardingView") {
-      return I18n.t("customerHome.registrationWelcome.onboardingTitle");
+      return I18n.t("customerHome.registrationWelcome.title");
     }
     if (this.props.availableMinutes > 0) {
       return I18n.t("customerHome.registrationWelcome.balance", {
@@ -53,7 +54,9 @@ class FreeMinutesWell extends Component {
     if (this.props.stripePaymentToken) {
       return I18n.t("costPerMinute");
     } else {
-      return I18n.t("customerHome.account.add");
+      return I18n.t("customerHome.registrationWelcome.balance", {
+        num: this.props.availableMinutes
+      });
     }
   };
 
@@ -115,17 +118,16 @@ class FreeMinutesWell extends Component {
     return (
       <React.Fragment>
         <TouchableOpacity
-          activeOpacity={this.props.pointerEvents === 'none' ? 1 : 0.2}
+          activeOpacity={this.props.pointerEvents === "none" ? 1 : 0.2}
           onPress={() => this.onPressAction()}
-          style={styles.freeMinutesWellContainer}
+          style={
+            this.props.navigation.state.routeName === "OnboardingView"
+              ? styles.freeMinutesWellContainer
+              : styles.freeMinutesWellContainerHome
+          }
         >
           <View style={this.setPillColor()}>
-            <Icon
-              name={"clock"}
-              type={"entypo"}
-              color={this.setIconColor()}
-              size={15}
-            />
+            <ClockTime width={17} height={17} />
             <Text style={this.setPillTextStyle()}>{this.setPillContent()}</Text>
           </View>
           {this.renderTitle()}
@@ -147,7 +149,6 @@ const mS = state => ({
   availableMinutes: state.userProfile.availableMinutes,
   displayPaymentModal: state.homeFlow.displayPaymentModal,
   stripePaymentToken: state.userProfile.stripePaymentToken,
-  displayPaymentModal: state.homeFlow.displayPaymentModal
 });
 
 const mD = {

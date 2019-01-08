@@ -1,7 +1,7 @@
 import Metrics from "./Metrics";
 import Colors from "./Colors";
 import { moderateScale } from "../Util/Scaling";
-import { Iphone5 } from "../Util/Devices";
+import { Iphone5, iPhoneXModels } from "../Util/Devices";
 import metrics from "./Metrics";
 
 // This file is for a reusable grouping of Theme items.
@@ -13,7 +13,9 @@ const ApplicationStyles = {
       flexGrow: 1,
       backgroundColor: Colors.gradientColor.top
     },
-    avatarSectionContainer: {},
+    avatarSectionContainer: {
+      maxHeight: metrics.height * 0.30
+    },
     callSectionContainer: {
       zIndex: 1000000,
       paddingLeft: 25,
@@ -34,7 +36,7 @@ const ApplicationStyles = {
       paddingRight: 23,
       backgroundColor: "transparent",
       flexDirection: "column",
-      justifyContent: "space-between",
+      justifyContent: "flex-start",
       alignItems: "center"
     },
     rowView: {

@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { scaledFontSize } from "../../../Util/Scaling";
+import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
 
 const android = Platform.OS === "android";
 export default StyleSheet.create({
@@ -15,7 +16,7 @@ export default StyleSheet.create({
     borderBottomColor: "#fff",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(18)
+    fontSize: Iphone5 ? 16 : scaledFontSize(18)
   },
   loginContainer: {
     flexDirection: "column",
@@ -23,7 +24,7 @@ export default StyleSheet.create({
     height: Metrics.height * 0.91,
     alignItems: "center"
   },
-  inputContainer: { width: Metrics.width * 0.85, paddingTop: 50 },
+  inputContainer: { width: Metrics.width * 0.85, paddingTop: 10 },
   buttonContainer: {
     flexDirection: "column",
     alignItems: "center",
@@ -36,6 +37,7 @@ export default StyleSheet.create({
   },
   signInButtonDisable: {
     minWidth: Metrics.width * 0.78,
+    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
     backgroundColor: Colors.transparent,
     borderColor: "#fff",
     borderWidth: 1,
@@ -47,19 +49,18 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17),
-    padding: Metrics.width * 0.05
+    fontSize: Iphone5 ? 14 : scaledFontSize(17)
   },
   transitionButtonText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17),
-    padding: Metrics.width * 0.02
+    fontSize: Iphone5 ? 14 : scaledFontSize(17)
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   signInButtonEnabled: {
     minWidth: Metrics.width * 0.78,
+    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -76,7 +77,7 @@ export default StyleSheet.create({
   inputViewContainer: { flexDirection: "column", paddingTop: 10 },
   labelStyle: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: scaledFontSize(13),
+    fontSize: Iphone5 ? 13 : scaledFontSize(13),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 3
@@ -91,17 +92,18 @@ export default StyleSheet.create({
     position: "relative",
     left: -20,
     backgroundColor: "red",
-    borderWidth: 1,
+    borderWidth: android ? 1 : 1.5,
     borderColor: "#fff",
     borderRadius: 50,
     height: Metrics.width * 0.06,
     width: Metrics.width * 0.06,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: android ? 1 : 30
   },
   forgotPasswordLabel: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: scaledFontSize(14),
+    fontSize: Iphone5 ? 13 : scaledFontSize(14),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 5,

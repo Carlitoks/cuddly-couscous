@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { Metrics, ApplicationStyles } from "../../../Themes";
 import metrics from "../../../Themes/Metrics";
 import { moderateScale } from "../../../Util/Scaling";
+import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -23,10 +24,4 @@ export default StyleSheet.create({
     backgroundColor: "white",
     height: "100%"
   },
-  swapArrows: {
-    position: "absolute",
-    left: metrics.width * 0.88,
-    top: moderateScale(448),
-    zIndex: 2000
-  }
 });

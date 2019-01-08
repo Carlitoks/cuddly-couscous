@@ -102,13 +102,7 @@ class RegisterScreen extends Component {
         errorType: "passwordLength"
       });
     } else {
-      if (this.props.errorType === "passwordLength") {
-        this.props.updateOnboarding({
-          isValidPassword: true,
-          errorType: null
-        });
-      }
-      this.props.updateOnboarding({ isValidPassword: true });
+      this.props.updateOnboarding({ isValidPassword: true, errorType: null });
     }
     this.props.updateOnboarding({ password: text });
   };
@@ -172,39 +166,69 @@ class RegisterScreen extends Component {
       .split(TermsText)[1]
       .split(privacyPolicyText)[0];
     return (
-      <Text style={styles.termsAndConditionsText}>
-        {continueText}
-        <Text
-          style={{
-            ...styles.termsAndConditionsText,
-            fontFamily: fonts.BoldFont,
-            textDecorationLine: "underline"
-          }}
-          onPress={() =>
-            Linking.openURL(TermsConditionsURI).catch(err =>
+      <View style={styles.termsAndConditionsViewContainer}>
+        <Text style={styles.termsAndConditionsText}>{continueText}</Text>
+        <TouchableOpacity
+          style={styles.touchableLink}
+          onPress={() => {
+            /* Linking.openURL(TermsConditionsURI).catch(err =>
               console.error("An error occurred", err)
-            )
-          }
+            );*/
+            Linking.canOpenURL(TermsConditionsURI)
+              .then(supported => {
+                if (!supported) {
+                  console.log("Can't handle url: " + TermsConditionsURI);
+                } else {
+                  return Linking.openURL(TermsConditionsURI);
+                }
+              })
+              .catch(err => console.error("An error occurred", err));
+          }}
         >
-          {TermsText}
-        </Text>
+          <Text
+            style={{
+              ...styles.termsAndConditionsText,
+              fontFamily: fonts.BoldFont,
+              textDecorationLine: "underline",
+              lineHeight: 20
+            }}
+          >
+            {` ${TermsText}`}
+          </Text>
+        </TouchableOpacity>
 
         <Text style={styles.termsAndConditionsText}>{AndText}</Text>
-        <Text
-          style={{
-            ...styles.termsAndConditionsText,
-            fontFamily: fonts.BoldFont,
-            textDecorationLine: "underline"
-          }}
-          onPress={() =>
-            Linking.openURL(PrivacyPolicyURI).catch(err =>
+        <TouchableOpacity
+          style={styles.touchableLink}
+          onPress={
+            () => {
+              Linking.canOpenURL(PrivacyPolicyURI)
+                .then(supported => {
+                  if (!supported) {
+                    console.log("Can't handle url: " + PrivacyPolicyURI);
+                  } else {
+                    return Linking.openURL(PrivacyPolicyURI);
+                  }
+                })
+                .catch(err => console.error("An error occurred", err));
+            }
+            /* Linking.openURL(PrivacyPolicyURI).catch(err =>
               console.error("An error occurred", err)
-            )
+            )*/
           }
         >
-          {privacyPolicyText}
-        </Text>
-      </Text>
+          <Text
+            style={{
+              ...styles.termsAndConditionsText,
+              fontFamily: fonts.BoldFont,
+              textDecorationLine: "underline",
+              lineHeight: 20
+            }}
+          >
+            {` ${privacyPolicyText}`}
+          </Text>
+        </TouchableOpacity>
+      </View>
     );
   };
   render() {
@@ -216,164 +240,185 @@ class RegisterScreen extends Component {
     } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
-        <View style={[styles.mainContainer]}>
-          <LinearGradient
-            colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-            locations={[0, 1]}
-            style={{ height: "100%" }}
-          >
-            <LinguistHeader type={"login"} navigation={this.props.navigation} />
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={[styles.mainContainer]}>
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
               locations={[0, 1]}
               style={{ height: "100%" }}
             >
-              <View
-                keyboardShouldPersistTaps="handled"
-                style={styles.loginContainer}
+              <LinguistHeader
+                type={"login"}
+                navigation={this.props.navigation}
+              />
+              <LinearGradient
+                colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
+                locations={[0, 1]}
+                style={{ height: "100%" }}
               >
-                <View style={styles.inputContainer}>
-                  {this.props.errorType ? (
-                    <FieldError navigation={this.props.navigation} />
-                  ) : (
-                    <Text style={styles.registerAdviseText}>
-                      {I18n.t("customerOnboarding.login.provideInformation")}
-                    </Text>
-                  )}
+                <View style={styles.loginContainer}>
+                  <View style={styles.inputContainer}>
+                    {this.props.errorType ? (
+                      <FieldError navigation={this.props.navigation} />
+                    ) : (
+                      <Text style={styles.registerAdviseText}>
+                        {I18n.t("customerOnboarding.login.provideInformation")}
+                      </Text>
+                    )}
 
-                  <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
-                    <View style={styles.inputsErrorContainer}>
-                      <TextInput
-                      allowFontScaling={false}
-                        style={styles.inputText}
-                        onChangeText={text => this.validateFirstName(text)}
-                        value={this.props.firstName}
-                        placeholder={I18n.t("firstname")}
-                        placeholderTextColor={"rgba(255,255,255,0.7)"}
-                      />
-                      {this.props.errorType === "firstNameFormat" ? (
-                        <View style={styles.errorIconContainer}>
-                          <Icon
-                            name={"close"}
-                            type={"evilicon"}
-                            color={"#fff"}
-                            size={15}
-                          />
-                        </View>
+                    <View style={styles.inputViewContainer}>
+                      {this.props.firstName ? (
+                        <Text style={styles.labelText}>
+                          {I18n.t("firstname")}
+                        </Text>
                       ) : (
-                        <React.Fragment />
+                        <Text> </Text>
                       )}
+                      <View style={styles.inputsErrorContainer}>
+                        <TextInput
+                          allowFontScaling={false}
+                          style={styles.inputText}
+                          onChangeText={text => this.validateFirstName(text)}
+                          value={this.props.firstName}
+                          placeholder={I18n.t("firstname")}
+                          placeholderTextColor={"rgba(255,255,255,0.7)"}
+                        />
+                        {this.props.errorType === "firstNameFormat" ? (
+                          <View style={styles.errorIconContainer}>
+                            <Icon
+                              name={"close"}
+                              type={"material-community"}
+                              color={"white"}
+                              size={15}
+                            />
+                          </View>
+                        ) : (
+                          <React.Fragment />
+                        )}
+                      </View>
                     </View>
-                  </View>
 
-                  <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelText}>{I18n.t("email")}</Text>
-                    <View style={styles.inputsErrorContainer}>
-                      <TextInput
-                      allowFontScaling={false}
-                        autoCapitalize={"none"}
-                        style={styles.inputText}
-                        onChangeText={text => this.isValidEmail(text)}
-                        onChange={text => this.isValidEmail(text)}
-                        onBlur={() => this.isValidEmail(this.props.email)}
-                        value={this.props.email}
-                        placeholder={I18n.t("email")}
-                        placeholderTextColor={"rgba(255,255,255,0.7)"}
-                        keyboardType={"email-address"}
-                      />
-                      {this.props.errorType === "emailFormat" ||
-                      this.props.errorType === "AlreadyRegistered" ? (
-                        <View style={styles.errorIconContainer}>
-                          <Icon
-                            name={"close"}
-                            type={"evilicon"}
-                            color={"#fff"}
-                            size={15}
-                          />
-                        </View>
+                    <View style={styles.inputViewContainer}>
+                      {this.props.email ? (
+                        <Text style={styles.labelText}>{I18n.t("email")}</Text>
                       ) : (
-                        <React.Fragment />
+                        <Text> </Text>
                       )}
+                      <View style={styles.inputsErrorContainer}>
+                        <TextInput
+                          allowFontScaling={false}
+                          autoCapitalize={"none"}
+                          style={styles.inputText}
+                          onChangeText={text => this.isValidEmail(text)}
+                          onChange={text => this.isValidEmail(text)}
+                          onBlur={() => this.isValidEmail(this.props.email)}
+                          value={this.props.email}
+                          placeholder={I18n.t("email")}
+                          placeholderTextColor={"rgba(255,255,255,0.7)"}
+                          keyboardType={"email-address"}
+                        />
+                        {this.props.errorType === "emailFormat" ||
+                        this.props.errorType === "AlreadyRegistered" ? (
+                          <View style={styles.errorIconContainer}>
+                            <Icon
+                              name={"close"}
+                              type={"material-community"}
+                              color={"#fff"}
+                              size={15}
+                            />
+                          </View>
+                        ) : (
+                          <React.Fragment />
+                        )}
+                      </View>
                     </View>
-                  </View>
 
-                  <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelText}>
-                      {I18n.t("customerOnboarding.register.password")}
-                    </Text>
-                    <View style={styles.inputsErrorContainer}>
-                      <TextInput
-                      allowFontScaling={false}
-                        style={styles.inputText}
-                        onChangeText={text => this.validatePassword(text)}
-                        autoCapitalize={"none"}
-                        value={this.props.password}
-                        placeholder={I18n.t("customerOnboarding.register.password")}
-                        secureTextEntry={true}
-                        placeholderTextColor={"rgba(255,255,255,0.7)"}
-                      />
-                      {this.props.errorType === "passwordLength" ? (
-                        <View style={styles.errorIconContainer}>
-                          <Icon
-                            name={"close"}
-                            type={"evilicon"}
-                            color={"#fff"}
-                            size={15}
-                          />
-                        </View>
+                    <View style={styles.inputViewContainer}>
+                      {this.props.password ? (
+                        <Text style={styles.labelText}>
+                          {I18n.t("customerOnboarding.register.password")}
+                        </Text>
                       ) : (
-                        <React.Fragment />
+                        <Text> </Text>
                       )}
+                      <View style={styles.inputsErrorContainer}>
+                        <TextInput
+                          allowFontScaling={false}
+                          style={styles.inputText}
+                          onChangeText={text => this.validatePassword(text)}
+                          autoCapitalize={"none"}
+                          value={this.props.password}
+                          placeholder={I18n.t(
+                            "customerOnboarding.register.password"
+                          )}
+                          secureTextEntry={true}
+                          placeholderTextColor={"rgba(255,255,255,0.7)"}
+                        />
+                        {this.props.errorType === "passwordLength" ? (
+                          <View style={styles.errorIconContainer}>
+                            <Icon
+                              name={"close"}
+                              type={"material-community"}
+                              color={"#fff"}
+                              size={15}
+                            />
+                          </View>
+                        ) : (
+                          <React.Fragment />
+                        )}
+                      </View>
                     </View>
-                  </View>
-                  <Text style={styles.termsAndConditionsText}>
+
                     {this.renderPrivacyPolicyText()}
-                  </Text>
-                </View>
-                <View style={styles.buttonContainer}>
-                  <View style={styles.buttonWidthContainer}>
-                    <TouchableOpacity
-                      onPress={() => this.submit()}
-                      disabled={
-                        !isValidPassword ||
-                        !isValidFirstName ||
-                        !isValidEmail ||
-                        makingRequest ||
-                        (!this.props.email || !this.props.password)
-                      }
-                      style={
-                        !isValidPassword ||
-                        !isValidFirstName ||
-                        !isValidEmail ||
-                        makingRequest ||
-                        (!this.props.email || !this.props.password)
-                          ? styles.signInButtonDisable
-                          : styles.registerButton
-                      }
-                    >
-                      <Text style={styles.buttonEnabledText}>
-                        {I18n.t("customerOnboarding.register.createAnAccount")}
-                      </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      style={styles.createAccountPadding}
-                      onPress={() =>
-                        this.props.navigation.dispatch({ type: "LoginScreen" })
-                      }
-                    >
-                      <Text style={styles.transitionButtonText}>
-                        {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
-                      </Text>
-                    </TouchableOpacity>
                   </View>
-                  <SGWaves height={51} width={Metrics.width} />
+                  <View style={styles.buttonContainer}>
+                    <View style={styles.buttonWidthContainer}>
+                      <TouchableOpacity
+                        onPress={() => this.submit()}
+                        disabled={
+                          !isValidPassword ||
+                          !isValidFirstName ||
+                          !isValidEmail ||
+                          makingRequest ||
+                          (!this.props.email || !this.props.password)
+                        }
+                        style={
+                          !isValidPassword ||
+                          !isValidFirstName ||
+                          !isValidEmail ||
+                          makingRequest ||
+                          (!this.props.email || !this.props.password)
+                            ? styles.signInButtonDisable
+                            : styles.registerButton
+                        }
+                      >
+                        <Text style={styles.buttonEnabledText}>
+                          {I18n.t(
+                            "customerOnboarding.register.createAnAccount"
+                          )}
+                        </Text>
+                      </TouchableOpacity>
+
+                      <TouchableOpacity
+                        style={styles.createAccountPadding}
+                        onPress={() =>
+                          this.props.navigation.dispatch({
+                            type: "LoginScreen"
+                          })
+                        }
+                      >
+                        <Text style={styles.transitionButtonText}>
+                          {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <SGWaves height={51} width={Metrics.width} />
+                  </View>
                 </View>
-              </View>
+              </LinearGradient>
             </LinearGradient>
-          </LinearGradient>
-        </View>
+          </View>
+        </TouchableWithoutFeedback>
       </ViewWrapper>
     );
   }

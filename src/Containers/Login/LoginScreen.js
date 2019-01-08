@@ -5,7 +5,9 @@ import {
   Alert,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native";
 import LinguistHeader from "../CustomerHome/Components/Header";
 import LinearGradient from "react-native-linear-gradient";
@@ -57,10 +59,7 @@ class LoginScreen extends Component {
         errorType: "emailFormat"
       });
     } else {
-      if (this.props.errorType === "emailFormat") {
-        this.props.updateOnboarding({ isValidEmail: true, errorType: null });
-      }
-      this.props.updateOnboarding({ isValidEmail: true });
+      this.props.updateOnboarding({ isValidEmail: true, errorType: null });
     }
     this.props.updateOnboarding({ email: text });
   };
@@ -131,142 +130,159 @@ class LoginScreen extends Component {
     const { makingRequest, isValidEmail } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
-        <View style={[styles.mainContainer]}>
-          <LinearGradient
-            colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-            locations={[0, 1]}
-            style={{ height: "100%" }}
-          >
-            <LinguistHeader type={"login"} navigation={this.props.navigation} />
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={[styles.mainContainer]}>
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
               locations={[0, 1]}
               style={{ height: "100%" }}
             >
-              <View style={styles.loginContainer}>
-                <View style={styles.inputContainer}>
-                  {this.props.errorType === "signInError" ||
-                  this.props.errorType === "emailFormat" ||
-                  this.props.errorType === "emailNotFound" ? (
-                    <FieldError navigation={this.props.navigation} />
-                  ) : (
-                    <View />
-                  )}
+              <LinguistHeader
+                type={"login"}
+                navigation={this.props.navigation}
+              />
+              <LinearGradient
+                colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
+                locations={[0, 1]}
+                style={{ height: "100%" }}
+              >
+                <View style={styles.loginContainer}>
+                  <View style={styles.inputContainer}>
+                    {this.props.errorType === "signInError" ||
+                    this.props.errorType === "emailFormat" ||
+                    this.props.errorType === "emailNotFound" ? (
+                      <FieldError navigation={this.props.navigation} />
+                    ) : (
+                      <View />
+                    )}
 
-                  <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelStyle}>{I18n.t("email")}</Text>
-                    <View style={styles.inputInternalContainer}>
-                      <TextInput
-                        allowFontScaling={false}
-                        style={styles.inputText}
-                        onChangeText={text => this.isValidEmail(text)}
-                        onChange={text => this.isValidEmail(text)}
-                        autoCapitalize={"none"}
-                        onBlur={() => this.isValidEmail(this.props.email)}
-                        value={this.props.email}
-                        placeholder={I18n.t("email")}
-                        placeholderTextColor={"rgba(255,255,255,0.5)"}
-                        keyboardType={"email-address"}
-                      />
-                      {this.props.errorType === "signInError" ||
-                      this.props.errorType === "emailFormat" ? (
-                        <View style={styles.errorIconContainer}>
-                          <Icon
-                            name={"close"}
-                            type={"evilicon"}
-                            color={"#fff"}
-                            size={15}
-                          />
-                        </View>
+                    <View style={styles.inputViewContainer}>
+                      {this.props.email ? (
+                        <Text style={styles.labelStyle}>{I18n.t("email")}</Text>
                       ) : (
-                        <React.Fragment />
+                        <Text> </Text>
                       )}
+                      <View style={styles.inputInternalContainer}>
+                        <TextInput
+                          allowFontScaling={false}
+                          style={styles.inputText}
+                          onChangeText={text => this.isValidEmail(text)}
+                          onChange={text => this.isValidEmail(text)}
+                          autoCapitalize={"none"}
+                          onBlur={() => this.isValidEmail(this.props.email)}
+                          value={this.props.email}
+                          placeholder={I18n.t("email")}
+                          placeholderTextColor={"rgba(255,255,255,0.5)"}
+                          keyboardType={"email-address"}
+                        />
+                        {this.props.errorType === "signInError" ||
+                        this.props.errorType === "emailFormat" ? (
+                          <View style={styles.errorIconContainer}>
+                            <Icon
+                              name={"close"}
+                              type={"material-community"}
+                              color={"#fff"}
+                              size={15}
+                            />
+                          </View>
+                        ) : (
+                          <React.Fragment />
+                        )}
+                      </View>
                     </View>
-                  </View>
 
-                  <View style={styles.inputViewContainer}>
-                    <Text style={styles.labelStyle}>{I18n.t("password")}</Text>
-                    <View style={styles.inputInternalContainer}>
-                      <TextInput
-                        allowFontScaling={false}
-                        style={styles.inputText}
-                        onChangeText={text =>
-                          this.props.updateOnboarding({ password: text })
+                    <View style={styles.inputViewContainer}>
+                      {this.props.password ? (
+                        <Text style={styles.labelStyle}>
+                          {I18n.t("password")}
+                        </Text>
+                      ) : (
+                        <Text> </Text>
+                      )}
+                      <View style={styles.inputInternalContainer}>
+                        <TextInput
+                          allowFontScaling={false}
+                          style={styles.inputText}
+                          onChangeText={text =>
+                            this.props.updateOnboarding({ password: text })
+                          }
+                          autoCapitalize={"none"}
+                          value={this.props.password}
+                          placeholder={I18n.t("password")}
+                          secureTextEntry={true}
+                          placeholderTextColor={"rgba(255,255,255,0.5)"}
+                        />
+                        {this.props.errorType === "signInError" ? (
+                          <View style={styles.errorIconContainer}>
+                            <Icon
+                              name={"close"}
+                              type={"material-community"}
+                              color={"#fff"}
+                              size={15}
+                            />
+                          </View>
+                        ) : (
+                          <React.Fragment />
+                        )}
+                      </View>
+
+                      <Text
+                        onPress={() =>
+                          this.props.navigation.dispatch({
+                            type: "ForgotPasswordView"
+                          })
                         }
-                        autoCapitalize={"none"}
-                        value={this.props.password}
-                        placeholder={I18n.t("password")}
-                        secureTextEntry={true}
-                        placeholderTextColor={"rgba(255,255,255,0.5)"}
-                      />
-                      {this.props.errorType === "signInError" ? (
-                        <View style={styles.errorIconContainer}>
-                          <Icon
-                            name={"close"}
-                            type={"evilicon"}
-                            color={"#fff"}
-                            size={15}
-                          />
-                        </View>
-                      ) : (
-                        <React.Fragment />
-                      )}
+                        style={styles.forgotPasswordLabel}
+                      >
+                        {I18n.t("customerOnboarding.login.forgotPassword")}
+                      </Text>
                     </View>
+                  </View>
+                  <View style={styles.buttonContainer}>
+                    <View style={styles.buttonWidthContainer}>
+                      <TouchableOpacity
+                        onPress={() => this.submit()}
+                        disabled={
+                          !isValidEmail ||
+                          makingRequest ||
+                          (!this.props.email || !this.props.password)
+                        }
+                        style={
+                          !isValidEmail ||
+                          makingRequest ||
+                          (!this.props.email || !this.props.password)
+                            ? styles.signInButtonDisable
+                            : styles.signInButtonEnabled
+                        }
+                      >
+                        <Text style={styles.buttonEnabledText}>
+                          {I18n.t("signIn")}
+                        </Text>
+                      </TouchableOpacity>
 
-                    <Text
-                      onPress={() =>
-                        this.props.navigation.dispatch({
-                          type: "ForgotPasswordView"
-                        })
-                      }
-                      style={styles.forgotPasswordLabel}
-                    >
-                      {I18n.t("customerOnboarding.login.forgotPassword")}
-                    </Text>
+                      <TouchableOpacity
+                        onPress={() =>
+                          this.props.navigation.dispatch({
+                            type: "RegisterScreen"
+                          })
+                        }
+                        style={styles.createAccountPadding}
+                      >
+                        <Text style={styles.transitionButtonText}>
+                          {I18n.t(
+                            "customerOnboarding.register.createAnAccount"
+                          )}{" "}
+                          »
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <SGWaves height={51} width={Metrics.width} />
                   </View>
                 </View>
-                <View style={styles.buttonContainer}>
-                  <View style={styles.buttonWidthContainer}>
-                    <TouchableOpacity
-                      onPress={() => this.submit()}
-                      disabled={
-                        !isValidEmail ||
-                        makingRequest ||
-                        (!this.props.email || !this.props.password)
-                      }
-                      style={
-                        !isValidEmail ||
-                        makingRequest ||
-                        (!this.props.email || !this.props.password)
-                          ? styles.signInButtonDisable
-                          : styles.signInButtonEnabled
-                      }
-                    >
-                      <Text style={styles.buttonEnabledText}>
-                        {I18n.t("signIn")}
-                      </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      onPress={() =>
-                        this.props.navigation.dispatch({
-                          type: "RegisterScreen"
-                        })
-                      }
-                      style={styles.createAccountPadding}
-                    >
-                      <Text style={styles.transitionButtonText}>
-                        {I18n.t("customerOnboarding.register.createAnAccount")}{" "}
-                        »
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                  <SGWaves height={51} width={Metrics.width} />
-                </View>
-              </View>
+              </LinearGradient>
             </LinearGradient>
-          </LinearGradient>
-        </View>
+          </View>
+        </TouchableWithoutFeedback>
       </ViewWrapper>
     );
   }

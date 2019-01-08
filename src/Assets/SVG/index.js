@@ -26,6 +26,7 @@ import FemaleSilhouette from './femaleSilhouette';
 import SGWaves from './SGWaves';
 import TranslationSwap from './translationSwap';
 import SwitchLangs from './switchLangs';
+import ClockTime from './clockTime';
 
 export {
   Audio,
@@ -55,5 +56,6 @@ export {
   FemaleSilhouette,
   SGWaves,
   TranslationSwap,
-  SwitchLangs
+  SwitchLangs,
+  ClockTime
 };

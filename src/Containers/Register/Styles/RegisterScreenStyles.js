@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale, scaledFontSize } from "../../../Util/Scaling";
+import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
 
 const android = Platform.OS === "android";
 export default StyleSheet.create({
@@ -15,7 +16,7 @@ export default StyleSheet.create({
     borderBottomColor: "#fff",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(18)
+    fontSize: Iphone5 ? 16 : scaledFontSize(18)
   },
   loginContainer: {
     flexDirection: "column",
@@ -23,7 +24,7 @@ export default StyleSheet.create({
     height: Metrics.height * 0.91,
     alignItems: "center"
   },
-  inputContainer: { width: Metrics.width * 0.85, paddingTop: 50 },
+  inputContainer: { width: Metrics.width * 0.85, paddingTop: 10 },
   buttonContainer: {
     flexDirection: "column",
     alignItems: "center",
@@ -37,6 +38,7 @@ export default StyleSheet.create({
   },
   signInButtonDisable: {
     minWidth: Metrics.width * 0.78,
+    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
     backgroundColor: Colors.transparent,
     borderColor: "#fff",
     borderWidth: 1,
@@ -48,21 +50,20 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17),
-    padding: Metrics.width * 0.05
+    fontSize: Iphone5 ? 14 : scaledFontSize(17)
   },
   transitionButtonText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : scaledFontSize(17),
     padding: Metrics.width * 0.02
   },
   registerAdviseText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: scaledFontSize(15),
+    fontSize: Iphone5 ? 14 : scaledFontSize(15),
     textAlign: "center",
     paddingBottom: 20
   },
@@ -70,14 +71,13 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: scaledFontSize(12),
-    textAlign: "center",
-    paddingTop: 20
+    fontSize: Iphone5 ? 11 : scaledFontSize(13),
+    textAlign: "center"
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   registerButton: {
-    width: Metrics.width * 0.78,
-    height: Metrics.width * 0.15,
+    minWidth: Metrics.width * 0.78,
+    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -110,14 +110,27 @@ export default StyleSheet.create({
   },
   errorIconContainer: {
     position: "relative",
-    left: -20,
+    left: -30,
     backgroundColor: "red",
-    borderWidth: 1,
+    borderWidth: android ? 1 : 1.5,
     borderColor: "#fff",
     borderRadius: 50,
     height: Metrics.width * 0.06,
     width: Metrics.width * 0.06,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: android ? 1 : 30
+  },
+  termsAndConditionsViewContainer: {
+    flexDirection: "row",
+    width: "100%",
+    zIndex: 1000000000,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginLeft: 15
+  },
+  touchableLink: {
+    alignItems: "center",
+    justifyContent: "flex-start"
   }
 });
