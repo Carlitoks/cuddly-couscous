@@ -22,9 +22,9 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     height: Metrics.height * 0.91,
-    alignItems: "center"
+    alignItems: "center",
   },
-  inputContainer: { width: Metrics.width * 0.85, paddingTop: 50 },
+  inputContainer: { width: Metrics.width * 0.85, paddingTop: 10 },
   buttonContainer: {
     flexDirection: "column",
     alignItems: "center",
