@@ -14,10 +14,9 @@ const ApplicationStyles = {
       backgroundColor: Colors.gradientColor.top
     },
     avatarSectionContainer: {
-      maxHeight: metrics.height * 0.36
+      maxHeight: metrics.height * 0.30
     },
     callSectionContainer: {
-      marginTop: moderateScale(0),
       zIndex: 1000000,
       paddingLeft: 25,
       paddingRight: 23,
@@ -27,7 +26,7 @@ const ApplicationStyles = {
     scrollViewFlex: {
       flexGrow: 1,
       flexDirection: "column",
-      justifyContent: "space-between",
+      justifyContent: "flex-start",
       alignItems: "center",
       paddingBottom: 20
     },

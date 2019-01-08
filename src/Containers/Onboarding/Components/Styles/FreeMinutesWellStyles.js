@@ -16,7 +16,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: Iphone5 ? moderateScale(-40) : moderateScale(-80),
+    top: Iphone5 ? moderateScale(-0) : moderateScale(-0),
     zIndex: 10
   },
   freeMinutesWellContainerHome: {
@@ -29,8 +29,8 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: Iphone5 ? moderateScale(-10) : moderateScale(-50),
-    zIndex: 10
+    top: Iphone5 ? moderateScale(0) : moderateScale(0),
+    zIndex: 10,
   },
   pillButtonContainer: {
     backgroundColor: "#63A901",
