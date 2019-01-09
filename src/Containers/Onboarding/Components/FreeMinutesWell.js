@@ -86,7 +86,7 @@ class FreeMinutesWell extends Component {
   renderTitle = () => {
     if (this.props.navigation.state.routeName === "OnboardingView") {
       return (
-        <Text numberOfLines={1} style={styles.wellTitle}>
+        <Text numberOfLines={this.props.navigation.state.routeName === "OnboardingView" ? 1 : 0} style={styles.wellTitle}>
           {I18n.t("customerHome.registrationWelcome.title")}
         </Text>
       );
@@ -131,7 +131,7 @@ class FreeMinutesWell extends Component {
             <Text style={this.setPillTextStyle()}>{this.setPillContent()}</Text>
           </View>
           {this.renderTitle()}
-          <Text numberOfLines={1} style={styles.wellSubtitle}>{this.renderSubtitle()}</Text>
+          <Text numberOfLines={this.props.navigation.state.routeName === "OnboardingView" ? 1 : 0} style={styles.wellSubtitle}>{this.renderSubtitle()}</Text>
         </TouchableOpacity>
         <PaymentModal
           visible={this.props.displayPaymentModal}

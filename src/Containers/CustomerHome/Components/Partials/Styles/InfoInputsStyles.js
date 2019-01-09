@@ -25,7 +25,7 @@ export default StyleSheet.create({
       Metrics.height <= 600
         ? moderateScale(120)
         : Metrics.height <= 680
-        ? moderateScale(70)
+        ? moderateScale(80)
         : moderateScale(-80)
   },
   inputsContainerHome: {
