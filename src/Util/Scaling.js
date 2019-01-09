@@ -11,8 +11,6 @@ const guidelineBaseHeight = 1136;
 const scale = size => (width / guidelineBaseWidth) * size;
 const verticalScale = size => (height / guidelineBaseHeight) * size;
 const moderateScale = (size, factor = 0) => {
-  localeLang = getDeviceLocale().split('-')[0];
-  localeLang !== 'en' ? factor = 0.5 : 0;
   return size + (scale(size) - size) * factor;
 };
 
