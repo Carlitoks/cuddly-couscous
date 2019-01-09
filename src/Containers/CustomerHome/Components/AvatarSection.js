@@ -22,14 +22,13 @@ export default class AvatarSection extends Component {
         <SilhouetteWavesBackground
           style={{ position: "absolute" }}
           width={metrics.width}
-          height={Iphone5 ? 210 : 233}
+          height={Iphone5 ? 200 : 233}
         />
         <View
           style={{
             zIndex: 100,
             paddingLeft: 20,
-            top: -200,
-            marginLeft: Iphone5 ? 20 : 0
+            top: -200
           }}
         >
           <Questions home={home} firstName={firstName} />
