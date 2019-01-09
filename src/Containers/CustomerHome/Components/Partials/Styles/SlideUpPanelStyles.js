@@ -20,14 +20,14 @@ export default StyleSheet.create({
     paddingLeft: 14,
     fontWeight: "500",
     fontFamily: Fonts.BaseFont,
-    fontSize: scaledFontSize(14),
+    fontSize: moderateScale(14),
     color: "#757575"
   },
   availableLangContainerText: {
     paddingLeft: 14,
     fontWeight: "500",
     fontFamily: Fonts.BaseFont,
-    fontSize: scaledFontSize(14),
+    fontSize: moderateScale(14),
     color: "#333333"
   },
   scrollContainer: {
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     paddingLeft: 26,
     fontWeight: "500",
     fontFamily: Fonts.BaseFont,
-    fontSize: scaledFontSize(18),
+    fontSize: moderateScale(18),
   },
   LangViewContainer: {
     height: 48,
@@ -73,7 +73,7 @@ export default StyleSheet.create({
     paddingLeft: 26,
     fontWeight: "500",
     fontFamily: Fonts.BaseFont,
-    fontSize: scaledFontSize(18),
+    fontSize: moderateScale(18),
     color: "#9B9B9B"
   },
   selectLangButton: {
@@ -85,7 +85,7 @@ export default StyleSheet.create({
   additionalInformationInput: {
     paddingLeft: 10,
     fontFamily: Fonts.BaseFont,
-    fontSize: scaledFontSize(14),
+    fontSize: moderateScale(14),
     color: "#333333",
   },
 });

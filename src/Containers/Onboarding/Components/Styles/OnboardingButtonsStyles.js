@@ -49,7 +49,7 @@ export default StyleSheet.create({
   },
   callNowButtonText: {
     color: "white",
-    fontSize: Iphone5 ? 14 : scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : moderateScale(17),
     fontWeight: "600",
     fontFamily: Fonts.BaseFont,
     paddingLeft: metrics.width * 0.05,
@@ -57,7 +57,7 @@ export default StyleSheet.create({
   },
   callNowButtonTextDisabled: {
     color: "#ccc",
-    fontSize: Iphone5 ? 14 : scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : moderateScale(17),
     fontWeight: "600",
     lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont
@@ -72,7 +72,7 @@ export default StyleSheet.create({
   },
   audioOnlyButtonText: {
     color: "white",
-    fontSize: Iphone5 ? 14 : scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : moderateScale(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
     fontFamily: Fonts.BaseFont,
@@ -80,7 +80,7 @@ export default StyleSheet.create({
   },
   audioOnlyButtonTextDisabled: {
     color: "#ccc",
-    fontSize: Iphone5 ? 14 : scaledFontSize(17),
+    fontSize: Iphone5 ? 14 : moderateScale(17),
     fontWeight: "500",
     lineHeight: moderateScale(28),
     fontFamily: Fonts.BaseFont,

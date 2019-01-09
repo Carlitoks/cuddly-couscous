@@ -4,6 +4,8 @@ import { iPhoneXModels, Iphone5 } from "../../../../../Util/Devices";
 import { Fonts, Metrics } from "../../../../../Themes";
 import metrics from "../../../../../Themes/Metrics";
 
+console.log(Metrics.height);
+
 const PlaceHolderText = {
   fontFamily: Fonts.BaseFont,
   fontWeight: "500",
@@ -21,7 +23,12 @@ const placeholderInput = {
 export default StyleSheet.create({
   inputsContainer: {
     flexDirection: "column",
-    marginTop: moderateScale(45)
+    marginTop:
+      Metrics.height <= 600
+        ? moderateScale(120)
+        : Metrics.height <= 680
+        ? moderateScale(100)
+        : moderateScale(0)
   },
   inputsContainerHome: {
     flexDirection: "column",

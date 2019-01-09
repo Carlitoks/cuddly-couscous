@@ -34,8 +34,8 @@ export default StyleSheet.create({
     fontSize: Iphone5
       ? 13
       : iPhoneXModels
-      ? scaledFontSize(19)
-      : scaledFontSize(18),
+      ? moderateScale(19)
+      : moderateScale(18),
     color: "#ffffff"
   },
   inputPlaceholderValue: {
@@ -46,14 +46,14 @@ export default StyleSheet.create({
     fontSize: Iphone5
       ? 13
       : iPhoneXModels
-      ? scaledFontSize(19)
-      : scaledFontSize(18),
+      ? moderateScale(19)
+      : moderateScale(18),
     color: "#cccccc"
   },
   inputTitle: {
     color: "#ffffff",
     fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 13 : scaledFontSize(13),
+    fontSize: Iphone5 ? 13 : moderateScale(13),
     textAlign: "left",
     fontWeight: "300"
   },

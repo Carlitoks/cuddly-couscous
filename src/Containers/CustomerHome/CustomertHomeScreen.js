@@ -30,7 +30,6 @@ import { supportedLangCodes } from "./../../Config/Languages";
 import WelcomeModal from "./Components/Partials/WelcomeModal";
 import FreeMinutesWell from "../Onboarding/Components/FreeMinutesWell";
 
-
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
@@ -131,8 +130,12 @@ class CustomerHomeScreen extends Component {
               alwaysBounceVertical={false}
               contentContainerStyle={styles.scrollViewFlex}
             >
-              <AvatarSection home={true} firstName={firstName} />
-              <FreeMinutesWell navigation={this.props.navigation} />
+              <AvatarSection
+                home={true}
+                firstName={firstName}
+                pointerEvents={"none"}
+                navigation={this.props.navigation}
+              />
               <CallSection
                 navigation={this.props.navigation}
                 openSlideMenu={this.openSlideMenu}
