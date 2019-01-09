@@ -22,7 +22,7 @@ export default class AvatarSection extends Component {
         <SilhouetteWavesBackground
           style={{ position: "absolute" }}
           width={metrics.width}
-          height={Iphone5 ? 210 : 243}
+          height={Iphone5 ? 210 : 233}
         />
         <View
           style={{

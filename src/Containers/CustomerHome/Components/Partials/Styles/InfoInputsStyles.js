@@ -4,8 +4,6 @@ import { iPhoneXModels, Iphone5 } from "../../../../../Util/Devices";
 import { Fonts, Metrics } from "../../../../../Themes";
 import metrics from "../../../../../Themes/Metrics";
 
-console.log(Metrics.height);
-
 const PlaceHolderText = {
   fontFamily: Fonts.BaseFont,
   fontWeight: "500",
@@ -27,19 +25,17 @@ export default StyleSheet.create({
       Metrics.height <= 600
         ? moderateScale(120)
         : Metrics.height <= 680
-        ? moderateScale(100)
-        : moderateScale(0)
+        ? moderateScale(70)
+        : moderateScale(-80)
   },
   inputsContainerHome: {
     flexDirection: "column",
-    marginTop: iPhoneXModels ? 0 : moderateScale(-50),
-    top: iPhoneXModels
-      ? moderateScale(-80)
-      : Iphone5
-      ? 10
-      : android
-      ? 0
-      : moderateScale(-60),
+    marginTop:
+      Metrics.height <= 600
+        ? moderateScale(90)
+        : Metrics.height <= 680
+        ? moderateScale(60)
+        : moderateScale(-100),
     left: Iphone5 ? -20 : moderateScale(-20)
   },
   inputTitle: {
@@ -80,20 +76,12 @@ export default StyleSheet.create({
   paddingBottomContainer: { flexDirection: "column", paddingBottom: 5 },
   swapArrows: {
     position: "absolute",
-    left: iPhoneXModels
-      ? moderateScale(360)
-      : Iphone5
-      ? moderateScale(330)
-      : android
-      ? moderateScale(350)
-      : moderateScale(380),
-    top: iPhoneXModels
-      ? moderateScale(55)
-      : Iphone5
-      ? moderateScale(55)
-      : android
-      ? moderateScale(60)
-      : moderateScale(55),
+    left: metrics.width * 0.77,
+    top: Metrics.height <= 600
+    ? moderateScale(46)
+    : Metrics.height <= 680
+    ? moderateScale(46)
+    : moderateScale(47),
     zIndex: 1000
   }
 });

@@ -143,7 +143,7 @@ class FreeMinutesWell extends Component {
       </React.Fragment>
     );
   }
-}
+};
 
 const mS = state => ({
   availableMinutes: state.userProfile.availableMinutes,

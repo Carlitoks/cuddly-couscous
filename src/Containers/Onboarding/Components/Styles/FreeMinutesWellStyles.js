@@ -29,13 +29,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: Iphone5
-      ? moderateScale(-30)
-      : iPhoneXModels
-      ? moderateScale(-70)
-      : android
-      ? moderateScale(-20)
-      : moderateScale(-80),
+    top: Iphone5 ? moderateScale(-30) : moderateScale(-140),
     zIndex: 10
   },
   pillButtonContainer: {
