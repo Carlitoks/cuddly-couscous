@@ -107,6 +107,7 @@ export default StyleSheet.create({
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 5,
+    paddingRight: 5,
     textAlign: "right",
     paddingTop: 10
   }

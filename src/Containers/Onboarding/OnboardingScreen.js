@@ -74,8 +74,11 @@ class OnboardingScreen extends Component {
               alwaysBounceVertical={false}
               contentContainerStyle={styles.scrollViewFlex}
             >
-              <AvatarSection />
-              <FreeMinutesWell pointerEvents={"none"} navigation={this.props.navigation} />
+              <AvatarSection
+                pointerEvents={"none"}
+                navigation={this.props.navigation}
+              />
+
               <CallSection
                 navigation={this.props.navigation}
                 openSlideMenu={this.openSlideMenu}

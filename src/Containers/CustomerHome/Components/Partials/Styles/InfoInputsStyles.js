@@ -20,7 +20,8 @@ const placeholderInput = {
 
 export default StyleSheet.create({
   inputsContainer: {
-    marginTop: iPhoneXModels ? moderateScale(-65) : moderateScale(-80),
+    //marginTop: iPhoneXModels ? moderateScale(-65) : 0,
+    top: moderateScale(-10),
     flexDirection: "column"
   },
   inputsContainerHome: {

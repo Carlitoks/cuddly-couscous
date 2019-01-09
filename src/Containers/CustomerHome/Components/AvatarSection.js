@@ -11,11 +11,11 @@ import styles from "./Styles/AvatarSectionStyles";
 import { moderateScale } from "../../../Util/Scaling";
 import { Iphone5 } from "../../../Util/Devices";
 import SilhouetteWavesBackground from "./../../../Assets/SVG/SilhouetteWavesBackground";
-import metrics from './../../../Themes/Metrics';
-
+import metrics from "./../../../Themes/Metrics";
+import FreeMinutesWell from "../../Onboarding/Components/FreeMinutesWell";
 export default class AvatarSection extends Component {
   renderSections = () => {
-    const { firstName, home } = this.props;
+    const { firstName, home, pointerEvents, navigation } = this.props;
 
     return (
       <View style={[styles.columnView]}>
@@ -34,6 +34,10 @@ export default class AvatarSection extends Component {
         >
           <Questions home={home} firstName={firstName} />
         </View>
+        <FreeMinutesWell
+          pointerEvents={pointerEvents}
+          navigation={navigation}
+        />
       </View>
     );
   };
