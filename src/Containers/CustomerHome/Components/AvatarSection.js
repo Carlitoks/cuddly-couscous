@@ -9,6 +9,7 @@ import Questions from "./Partials/Questions";
 // Styles
 import styles from "./Styles/AvatarSectionStyles";
 import { moderateScale } from "../../../Util/Scaling";
+import { Iphone5 } from "../../../Util/Devices";
 import SilhouetteWavesBackground from "./../../../Assets/SVG/SilhouetteWavesBackground";
 
 export default class AvatarSection extends Component {
@@ -20,9 +21,16 @@ export default class AvatarSection extends Component {
         <SilhouetteWavesBackground
           style={{ position: "absolute" }}
           width={375}
-          height={243}
+          height={Iphone5 ? 210 : 243}
         />
-        <View style={{ zIndex: 100, paddingLeft: 20, top: -200 }}>
+        <View
+          style={{
+            zIndex: 100,
+            paddingLeft: 20,
+            top: -200,
+            marginLeft: Iphone5 ? 20 : 0
+          }}
+        >
           <Questions home={home} firstName={firstName} />
         </View>
       </View>

@@ -5,6 +5,7 @@ import { Metrics } from "../../../../Themes";
 import colors from "../../../../Themes/Colors";
 import { iPhoneXModels, Iphone5 } from "../../../../Util/Devices";
 
+const android = Platform.OS === "android";
 export default StyleSheet.create({
   freeMinutesWellContainer: {
     width: Metrics.width * 0.89,
@@ -29,8 +30,14 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: Iphone5 ? moderateScale(0) : moderateScale(0),
-    zIndex: 10,
+    top: Iphone5
+      ? moderateScale(-30)
+      : iPhoneXModels
+      ? moderateScale(-70)
+      : android
+      ? moderateScale(-20)
+      : moderateScale(-80),
+    zIndex: 10
   },
   pillButtonContainer: {
     backgroundColor: "#63A901",
@@ -58,7 +65,7 @@ export default StyleSheet.create({
   wellTitle: {
     color: "#401674",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 17 : scaledFontSize(21),
+    fontSize: Iphone5 ? 15 : scaledFontSize(21),
     paddingLeft: 15,
     marginTop: -10
   },

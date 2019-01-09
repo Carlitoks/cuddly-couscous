@@ -71,7 +71,7 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? 11 : scaledFontSize(13),
+    fontSize: Iphone5 ? 10 : scaledFontSize(12),
     textAlign: "center"
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
@@ -122,6 +122,7 @@ export default StyleSheet.create({
     marginBottom: android ? 1 : 30
   },
   termsAndConditionsViewContainer: {
+    marginTop: 25,
     flexDirection: "row",
     width: "100%",
     zIndex: 1000000000,
