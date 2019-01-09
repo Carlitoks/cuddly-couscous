@@ -452,7 +452,7 @@ export default (ESP = {
     customNote: {
       label: "Detalles adicionales",
       placeholder: "Opcional",
-      description: "Detalles adicionales para su lingüista:"
+      description: "Detalles Adicionales para su Lingüista:"
     },
     buttons: {
       video: "Conectarse ahora",

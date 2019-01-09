@@ -441,7 +441,7 @@ export default (ENG = {
     customNote: {
       label: "Additional details",
       placeholder: "Optional",
-      description: "Additional details for your linguist:"
+      description: "Additional Details for Your Linguist:"
     },
     buttons: {
       video: "Connect Now",
