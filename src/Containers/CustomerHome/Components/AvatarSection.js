@@ -11,6 +11,7 @@ import styles from "./Styles/AvatarSectionStyles";
 import { moderateScale } from "../../../Util/Scaling";
 import { Iphone5 } from "../../../Util/Devices";
 import SilhouetteWavesBackground from "./../../../Assets/SVG/SilhouetteWavesBackground";
+import metrics from './../../../Themes/Metrics';
 
 export default class AvatarSection extends Component {
   renderSections = () => {
@@ -20,7 +21,7 @@ export default class AvatarSection extends Component {
       <View style={[styles.columnView]}>
         <SilhouetteWavesBackground
           style={{ position: "absolute" }}
-          width={375}
+          width={metrics.width}
           height={Iphone5 ? 210 : 243}
         />
         <View
