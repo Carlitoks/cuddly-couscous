@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import { Platform } from "react-native";
 import Svg, { G, Path } from "react-native-svg";
 import { Iphone5, iPhoneXModels } from "../../Util/Devices";
 
+const android = Platform.OS === "android";
 const SwitchLangs = ({ width, height, viewBox, style, active = false }) => {
   return (
     <Svg
       width={width}
-      height={Iphone5 ? 52 : iPhoneXModels ? height : height}
+      height={Iphone5 ? 52 : iPhoneXModels ? height : android ? height : 52}
       style={style}
       viewBox={viewBox ? viewBox : "0 0 22 73"}
     >

@@ -5,6 +5,7 @@ import { Metrics } from "../../../../Themes";
 import colors from "../../../../Themes/Colors";
 import { iPhoneXModels, Iphone5 } from "../../../../Util/Devices";
 
+const android = Platform.OS === "android";
 export default StyleSheet.create({
   freeMinutesWellContainer: {
     width: Metrics.width * 0.89,
@@ -32,8 +33,10 @@ export default StyleSheet.create({
     top: Iphone5
       ? moderateScale(-30)
       : iPhoneXModels
-      ? moderateScale(-80)
-      : moderateScale(0),
+      ? moderateScale(-70)
+      : android
+      ? moderateScale(-20)
+      : moderateScale(-80),
     zIndex: 10
   },
   pillButtonContainer: {

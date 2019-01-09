@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { moderateScale } from "../../../../../Util/Scaling";
 import { iPhoneXModels, Iphone5 } from "../../../../../Util/Devices";
 import { Fonts, Metrics } from "../../../../../Themes";
@@ -10,7 +10,7 @@ const PlaceHolderText = {
   fontSize: moderateScale(18),
   color: "white"
 };
-
+const android = Platform.OS === "android";
 const placeholderInput = {
   borderBottomWidth: 1,
   borderBottomColor: "#8C8C8C",
@@ -26,8 +26,14 @@ export default StyleSheet.create({
   inputsContainerHome: {
     flexDirection: "column",
     marginTop: iPhoneXModels ? 0 : moderateScale(-50),
-    top: iPhoneXModels ? moderateScale(-80) : Iphone5 ? 10 : moderateScale(0),
-    left: iPhoneXModels ? moderateScale(-20) : Iphone5 ? -20 : moderateScale(0)
+    top: iPhoneXModels
+      ? moderateScale(-80)
+      : Iphone5
+      ? 10
+      : android
+      ? 0
+      : moderateScale(-60),
+    left: Iphone5 ? -20 : moderateScale(-20)
   },
   inputTitle: {
     color: "#ffffff",
@@ -71,12 +77,16 @@ export default StyleSheet.create({
       ? moderateScale(360)
       : Iphone5
       ? moderateScale(330)
-      : moderateScale(350),
+      : android
+      ? moderateScale(350)
+      : moderateScale(380),
     top: iPhoneXModels
       ? moderateScale(55)
       : Iphone5
       ? moderateScale(55)
-      : moderateScale(60),
+      : android
+      ? moderateScale(60)
+      : moderateScale(55),
     zIndex: 1000
   }
 });
