@@ -30,7 +30,7 @@ export default StyleSheet.create({
     borderRadius: 4,
     borderColor: "#CDCDF4",
     top: Iphone5
-      ? moderateScale(-50)
+      ? moderateScale(-30)
       : iPhoneXModels
       ? moderateScale(-80)
       : moderateScale(0),
@@ -62,7 +62,7 @@ export default StyleSheet.create({
   wellTitle: {
     color: "#401674",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 17 : scaledFontSize(21),
+    fontSize: Iphone5 ? 15 : scaledFontSize(21),
     paddingLeft: 15,
     marginTop: -10
   },

@@ -71,7 +71,7 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? 11 : scaledFontSize(12),
+    fontSize: Iphone5 ? 10 : scaledFontSize(12),
     textAlign: "center"
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },

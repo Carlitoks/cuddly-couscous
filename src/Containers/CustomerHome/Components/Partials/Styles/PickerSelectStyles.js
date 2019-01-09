@@ -32,7 +32,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontWeight: "500",
     fontSize: Iphone5
-      ? 15
+      ? 13
       : iPhoneXModels
       ? scaledFontSize(19)
       : scaledFontSize(18),
@@ -44,7 +44,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontWeight: "500",
     fontSize: Iphone5
-      ? 15
+      ? 13
       : iPhoneXModels
       ? scaledFontSize(19)
       : scaledFontSize(18),

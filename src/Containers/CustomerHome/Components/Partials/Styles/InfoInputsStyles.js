@@ -26,8 +26,8 @@ export default StyleSheet.create({
   inputsContainerHome: {
     flexDirection: "column",
     marginTop: iPhoneXModels ? 0 : moderateScale(-50),
-    top: iPhoneXModels ? moderateScale(-80) : moderateScale(0),
-    left: iPhoneXModels ? moderateScale(-20) : moderateScale(0)
+    top: iPhoneXModels ? moderateScale(-80) : Iphone5 ? 10 : moderateScale(0),
+    left: iPhoneXModels ? moderateScale(-20) : Iphone5 ? -20 : moderateScale(0)
   },
   inputTitle: {
     color: "#ffffff",
@@ -67,8 +67,16 @@ export default StyleSheet.create({
   paddingBottomContainer: { flexDirection: "column", paddingBottom: 5 },
   swapArrows: {
     position: "absolute",
-    left: iPhoneXModels ? moderateScale(360) : moderateScale(350),
-    top: iPhoneXModels ? moderateScale(55) : moderateScale(60),
+    left: iPhoneXModels
+      ? moderateScale(360)
+      : Iphone5
+      ? moderateScale(330)
+      : moderateScale(350),
+    top: iPhoneXModels
+      ? moderateScale(55)
+      : Iphone5
+      ? moderateScale(55)
+      : moderateScale(60),
     zIndex: 1000
   }
 });
