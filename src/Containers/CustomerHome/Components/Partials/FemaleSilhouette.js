@@ -5,7 +5,7 @@ import silhouette from "../../../../Assets/Images/femaleSilhouette.json";
 
 const FemaleSilhouette = props => {
   return (
-    <View style={styles.profileImageBackground}>
+    <View style={ props.home ? styles.profileImageBackground : styles.profileImageBackgroundOnboarding}>
       <Image
         source={{
           uri: silhouette.image

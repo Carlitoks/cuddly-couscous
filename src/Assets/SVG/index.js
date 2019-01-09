@@ -25,6 +25,8 @@ import RoundCheckMark from "./roundCheckMark";
 import FemaleSilhouette from './femaleSilhouette';
 import SGWaves from './SGWaves';
 import TranslationSwap from './translationSwap';
+import SwitchLangs from './switchLangs';
+import ClockTime from './clockTime';
 
 export {
   Audio,
@@ -53,5 +55,7 @@ export {
   RoundCheckMark,
   FemaleSilhouette,
   SGWaves,
-  TranslationSwap
+  TranslationSwap,
+  SwitchLangs,
+  ClockTime
 };

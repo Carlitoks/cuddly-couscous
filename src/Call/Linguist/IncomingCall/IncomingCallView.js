@@ -114,7 +114,8 @@ class IncomingCall extends Component {
     }
   }
 
-  takeCall = isAccept => {
+  takeCall = (isAccepted) => {
+    const isAccept = isAccepted;
     const { invitationID, token, sessionID, navigation } = this.props;
     timer.clearInterval("verifyCallId");
     Permissions.checkMultiple(["camera", "microphone"]).then(response => {
@@ -197,7 +198,7 @@ class IncomingCall extends Component {
               <Image style={styles.smallAvatar} source={this.selectImage()} />
 
               <Text style={styles.callerNameText}>
-                {this.props.customerName}
+                { this.props.customerName.split('undefined')[0] }
               </Text>
 
               <Text style={styles.incomingCallText}>

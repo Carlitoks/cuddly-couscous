@@ -14,7 +14,7 @@
 #import <AppCenterReactNative/AppCenterReactNative.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-
+#import <React/RCTLinkingManager.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RNFIRMessaging.h"
@@ -56,7 +56,12 @@
    [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   return YES;
 }
-
+- (BOOL)application:(UIApplication *)application
+   openURL:(NSURL *)url
+   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [RCTLinkingManager application:application openURL:url options:options];
+}
  - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
  {
    [RNFIRMessaging willPresentNotification:notification withCompletionHandler:completionHandler];

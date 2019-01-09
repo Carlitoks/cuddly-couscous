@@ -9,7 +9,7 @@ import SlidingUpPanel from "rn-sliding-up-panel";
 import styles from "./Styles/PickerSelectStyles";
 import { Icon, Divider } from "react-native-elements";
 import Metrics from "./../../../../Themes/Metrics";
-import { translateLanguage } from './../../../../I18n/I18n';
+import { translateLanguage } from "./../../../../I18n/I18n";
 
 class PickerSelectComponent extends Component {
   constructor(props) {
@@ -22,7 +22,10 @@ class PickerSelectComponent extends Component {
     ) {
       return (
         <Text style={styles.inputValue}>
-          { translateLanguage(FilterLangsByCodes([this.props.session.primaryLangCode])[0]["3"], FilterLangsByCodes([this.props.session.primaryLangCode])[0].name)}
+          {translateLanguage(
+            FilterLangsByCodes([this.props.session.primaryLangCode])[0]["3"],
+            FilterLangsByCodes([this.props.session.primaryLangCode])[0].name
+          )}
         </Text>
       );
     } else if (
@@ -31,7 +34,10 @@ class PickerSelectComponent extends Component {
     ) {
       return (
         <Text style={styles.inputValue}>
-          {translateLanguage(FilterLangsByCodes([this.props.session.secondaryLangCode])[0]["3"], FilterLangsByCodes([this.props.session.secondaryLangCode])[0].name)}
+          {translateLanguage(
+            FilterLangsByCodes([this.props.session.secondaryLangCode])[0]["3"],
+            FilterLangsByCodes([this.props.session.secondaryLangCode])[0].name
+          )}
         </Text>
       );
     }
@@ -55,14 +61,14 @@ class PickerSelectComponent extends Component {
   render() {
     return (
       <View
-        style={{
-          flexDirection: "column",
-          width: Metrics.width * 0.75,
-          marginLeft: -20
-        }}
+        style={
+          this.props.navType === "onboarding"
+            ? styles.onboardingInputContainer
+            : styles.homeInputContainer
+        }
       >
         <TouchableOpacity
-          onPress={() => this.props.openSlideMenu(this.props.type)}
+          onPress={() => { this.props.openSlideMenu(this.props.type) }}
         >
           <Text style={styles.inputTitle}>{this.props.title}</Text>
           <View style={styles.currentSelectedLangContainer}>

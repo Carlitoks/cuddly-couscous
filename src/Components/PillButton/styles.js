@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions, Platform } from "react-native";
 import { Fonts, Colors } from "../../Themes";
+import { Iphone5, iPhoneXModels } from "../../Util/Devices";
 
 const buttonHeight = 41;
 
@@ -23,7 +24,7 @@ export default StyleSheet.create({
     bottom: 0
   },
   text: {
-    fontSize: 18,
+    fontSize: Iphone5 ? 15 : iPhoneXModels ? 15 : 18,
     fontWeight: "500",
     fontFamily: Fonts.BaseFont,
     color: Colors.white
@@ -34,7 +35,7 @@ export default StyleSheet.create({
         height: buttonHeight
       },
       ios: {
-        height: buttonHeight + 8
+        height: Iphone5 ? 38 : iPhoneXModels ? 40 : buttonHeight + 8
       }
     }),
     borderRadius: 50,

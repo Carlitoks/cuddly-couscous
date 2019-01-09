@@ -209,7 +209,9 @@ class MenuView extends Component {
         </ScrollView>
         <View style={styles.containerVersion}>
           <View style={styles.version}>
-            <Text style={styles.textVersion}>version {Version}</Text>
+            <Text style={styles.textVersion}>
+              {I18n.t("version")} {Version}
+            </Text>
           </View>
         </View>
       </View>

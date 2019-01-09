@@ -153,6 +153,7 @@ class CallButtons extends Component {
               type={"ionicon"}
               color={this.isDisabled() ? "#ccc" : "#fff"}
               size={23}
+              style={styles.iconPadding}
             />
             <Text
               style={

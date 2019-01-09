@@ -3,13 +3,13 @@ import { View } from "react-native";
 import { Button } from "react-native-elements";
 import { Colors } from "../../Themes";
 import styles from "./styles";
-
+import { Iphone5, iPhoneXModels } from "../../Util/Devices";
 import { upperFirst } from "lodash";
 
 const colorMapper = {
   red: Colors.redButton,
-  orange: 'orange',
-  green: 'green'
+  orange: "orange",
+  green: "green"
 };
 
 const PillButton = ({
@@ -42,15 +42,13 @@ const PillButton = ({
             ? {
                 type: "ionicon",
                 name: icon,
-                size: 30,
+                size: Iphone5 ? 23 : iPhoneXModels ? 25 : 30,
                 color: Colors.primaryColor,
                 iconStyle: { opacity: 0.59 }
               }
             : null
         }
-        backgroundColor={
-          color
-        }
+        backgroundColor={color}
         buttonStyle={[
           styles.button,
           !!buttonCustomStyle ? buttonCustomStyle : null

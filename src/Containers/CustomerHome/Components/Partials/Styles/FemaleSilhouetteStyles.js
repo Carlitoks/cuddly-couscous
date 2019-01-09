@@ -1,16 +1,23 @@
 import { StyleSheet } from "react-native";
 import { moderateScale } from "../../../../../Util/Scaling";
 import { Iphone5 } from "../../../../../Util/Devices";
+import metrics from './../../../../../Themes/Metrics';
 
 export default StyleSheet.create({
   profileImageBackground: {
-    position: "relative",
-    left: Iphone5 ? -55 : -35
+    position: "absolute",
+    zIndex: 0,
+    left: moderateScale(225),
+    bottom: 0.5,
+  },
+  profileImageBackgroundOnboarding: {
+    position: "absolute",
+    zIndex: 0
   },
   avatarImage: {
     backgroundColor: "transparent",
-    width: Iphone5 ? moderateScale(220) : moderateScale(261),
-    height: Iphone5 ? moderateScale(240) : moderateScale(311),
+    height: metrics.height * 0.28,
+    width: metrics.width * 0.58,
     opacity: 0.8
   }
 });

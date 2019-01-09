@@ -67,7 +67,7 @@ class RateView extends Component {
   };
   handleSessionInfoName() {
     if (this.props.customerName) {
-      return this.props.customerName;
+      return this.props.customerName.split('undefined')[0];
     } else if (this.props.linguist) {
       return `${this.props.linguist.firstName} ${
         this.props.linguist.lastInitial

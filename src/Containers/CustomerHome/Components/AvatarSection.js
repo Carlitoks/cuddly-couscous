@@ -8,29 +8,37 @@ import Questions from "./Partials/Questions";
 
 // Styles
 import styles from "./Styles/AvatarSectionStyles";
+import { moderateScale } from "../../../Util/Scaling";
+import { Iphone5 } from "../../../Util/Devices";
+import SilhouetteWavesBackground from "./../../../Assets/SVG/SilhouetteWavesBackground";
 
 export default class AvatarSection extends Component {
   renderSections = () => {
+    const { firstName, home } = this.props;
+
     return (
-      <View style={styles.rowView}>
-        <View>
-          <Questions />
+      <View style={[styles.columnView]}>
+        <SilhouetteWavesBackground
+          style={{ position: "absolute" }}
+          width={375}
+          height={Iphone5 ? 210 : 243}
+        />
+        <View
+          style={{
+            zIndex: 100,
+            paddingLeft: 20,
+            top: -200,
+            marginLeft: Iphone5 ? 20 : 0
+          }}
+        >
+          <Questions home={home} firstName={firstName} />
         </View>
-        <FemaleSilhouette />
-        <SGWaves />
       </View>
     );
   };
   render() {
     return (
-      <View style={[styles.mainContainer, styles.avatarSectionContainer]}>
-        <LinearGradient
-          colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-          locations={[0, 1]}
-        >
-          {this.renderSections()}
-        </LinearGradient>
-      </View>
+      <View style={styles.avatarSectionContainer}>{this.renderSections()}</View>
     );
   }
 }
