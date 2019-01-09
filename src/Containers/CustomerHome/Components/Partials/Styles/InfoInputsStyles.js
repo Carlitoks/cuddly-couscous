@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { moderateScale } from "../../../../../Util/Scaling";
+import { iPhoneXModels, Iphone5 } from "../../../../../Util/Devices";
 import { Fonts, Metrics } from "../../../../../Themes";
 import metrics from "../../../../../Themes/Metrics";
 
@@ -18,8 +19,16 @@ const placeholderInput = {
 };
 
 export default StyleSheet.create({
-  inputsContainer: { marginTop: moderateScale(-80), flexDirection: 'column'},
-  inputsContainerHome: { flexDirection: 'column', marginTop: moderateScale(-1)},
+  inputsContainer: {
+    marginTop: iPhoneXModels ? moderateScale(-65) : moderateScale(-80),
+    flexDirection: "column"
+  },
+  inputsContainerHome: {
+    flexDirection: "column",
+    marginTop: iPhoneXModels ? 0 : moderateScale(-50),
+    top: iPhoneXModels ? moderateScale(-80) : moderateScale(0),
+    left: iPhoneXModels ? moderateScale(-20) : moderateScale(0)
+  },
   inputTitle: {
     color: "#ffffff",
     fontFamily: Fonts.ItalicFont,
@@ -58,8 +67,8 @@ export default StyleSheet.create({
   paddingBottomContainer: { flexDirection: "column", paddingBottom: 5 },
   swapArrows: {
     position: "absolute",
-    left: moderateScale(350),
-    top: moderateScale(60),
+    left: iPhoneXModels ? moderateScale(360) : moderateScale(350),
+    top: iPhoneXModels ? moderateScale(55) : moderateScale(60),
     zIndex: 1000
   }
 });
