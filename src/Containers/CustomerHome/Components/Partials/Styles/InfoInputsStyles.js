@@ -24,12 +24,7 @@ const placeholderInput = {
 export default StyleSheet.create({
   inputsContainer: {
     flexDirection: "column",
-    marginTop:
-      Metrics.height <= 600
-        ? moderateScale(120, 0)
-        : Metrics.height <= 680
-        ? moderateScale(100, 0)
-        : moderateScale(60, 0)
+    marginTop: moderateScale(20)
   },
   inputsContainerHome: {
     flexDirection: "column",

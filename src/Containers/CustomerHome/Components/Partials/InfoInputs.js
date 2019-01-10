@@ -69,7 +69,7 @@ class InfoInputs extends Component {
   }
   render() {
     return (
-      <View style={this.renderStyles()}>
+      <View style={styles.inputsContainer}>
         <View style={styles.paddingBottomContainer}>
           <RenderPicker
             navType={this.props.type}

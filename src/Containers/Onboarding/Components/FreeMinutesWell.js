@@ -128,9 +128,9 @@ class FreeMinutesWell extends Component {
           activeOpacity={this.props.pointerEvents === "none" ? 1 : 0.2}
           onPress={() => this.onPressAction()}
           style={
-            this.props.navigation.state.routeName === "OnboardingView"
-              ? styles.freeMinutesWellContainer
-              : styles.freeMinutesWellContainerHome
+            
+              styles.freeMinutesWellContainer
+      
           }
         >
           <View style={this.setPillColor()}>

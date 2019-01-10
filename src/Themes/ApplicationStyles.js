@@ -14,7 +14,6 @@ const ApplicationStyles = {
       backgroundColor: Colors.gradientColor.top
     },
     avatarSectionContainer: {
-      maxHeight: metrics.height * 0.30
     },
     callSectionContainer: {
       zIndex: 1000000,

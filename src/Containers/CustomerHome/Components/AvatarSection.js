@@ -19,16 +19,17 @@ export default class AvatarSection extends Component {
 
     return (
       <View style={[styles.columnView]}>
-        <SilhouetteWavesBackground
-          style={{ position: "absolute" }}
+      <View style={{position: 'absolute'}}>
+      <SilhouetteWavesBackground
           width={metrics.width}
-          height={Iphone5 ? 200 : 233}
+          height={metrics.height * 0.30}
         />
+        </View>
         <View
           style={{
             zIndex: 100,
             paddingLeft: 20,
-            top: -200
+            marginTop: 40
           }}
         >
           <Questions home={home} firstName={firstName} />

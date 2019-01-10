@@ -16,13 +16,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#CDCDF4",
-    top: Iphone5
-      ? moderateScale(-90, 0)
-      : iPhoneXModels
-      ? moderateScale(-150)
-      : iOS
-      ? moderateScale(-100, 0)
-      : moderateScale(-120, 0),
+    marginTop: moderateScale(45),
     zIndex: 10
   },
   freeMinutesWellContainerHome: {
