@@ -653,7 +653,7 @@ export default (ENG = {
         "Provide your name, email and a password so you can access your account in the future.",
       createAccountTitle: "Create Account",
       termsAndPrivacyNotice:
-        "By continuing, you agree to our Terms of Use and Privacy Policy.",
+        "By continuing, you agree to our Terms and Privacy Policy.",
       terms: "Terms",
       privacyPolicy: "Privacy Policy",
       forgotPassword: "Forgot password?"
