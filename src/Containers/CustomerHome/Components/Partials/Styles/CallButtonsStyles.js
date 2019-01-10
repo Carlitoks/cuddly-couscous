@@ -12,7 +12,8 @@ export default StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-end",
-    paddingTop: Iphone5 ? 25 : 10
+    paddingTop: 20,
+    marginBottom: iPhoneXModels ? 50 : 0
   },
   callNowButtonContainer: {
     flexDirection: "column",
@@ -25,7 +26,7 @@ export default StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#fff",
-    borderRadius: 25,
+    borderRadius: 27,
     backgroundColor: "#F39100",
     shadowColor: "rgba(0,0,0,1)",
     shadowOpacity: 0.38,
@@ -40,7 +41,7 @@ export default StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#cccccc",
-    borderRadius: 25,
+    borderRadius: 27,
     backgroundColor: colors.gradientColor.bottom
   },
   callNowButtonText: {
@@ -49,7 +50,10 @@ export default StyleSheet.create({
     fontWeight: "600",
     lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont,
-    padding: Metrics.width * 0.05
+    paddingTop: Iphone5 ? 12 : Metrics.width * 0.05,
+    paddingBottom: Iphone5 ? 12 : Metrics.width * 0.05,
+    paddingLeft: Metrics.width * 0.05,
+    paddingRight: Metrics.width * 0.05
   },
   callNowButtonTextDisabled: {
     color: "#ccc",
@@ -57,8 +61,8 @@ export default StyleSheet.create({
     fontWeight: "600",
     lineHeight: moderateScale(20, 0),
     fontFamily: Fonts.BaseFont,
-    paddingTop: Iphone5 ? 12 : Metrics.width * 0.05,
-    paddingBottom: Iphone5 ? 12 : Metrics.width * 0.05,
+    paddingTop: Iphone5 ? 12 : Metrics.width * 0.045,
+    paddingBottom: Iphone5 ? 12 : Metrics.width * 0.045,
     paddingLeft: Metrics.width * 0.05,
     paddingRight: Metrics.width * 0.05
   },

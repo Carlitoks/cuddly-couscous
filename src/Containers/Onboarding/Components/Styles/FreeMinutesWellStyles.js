@@ -18,6 +18,8 @@ export default StyleSheet.create({
     borderColor: "#CDCDF4",
     top: Iphone5
       ? moderateScale(-90, 0)
+      : iPhoneXModels
+      ? moderateScale(-150)
       : iOS
       ? moderateScale(-100, 0)
       : moderateScale(-120, 0),
@@ -35,6 +37,8 @@ export default StyleSheet.create({
     borderColor: "#CDCDF4",
     top: Iphone5
       ? moderateScale(-90, 0)
+      : iPhoneXModels
+      ? moderateScale(-150)
       : iOS
       ? moderateScale(-100, 0)
       : moderateScale(-140, 0),
