@@ -130,16 +130,19 @@ class CustomerHomeScreen extends Component {
               alwaysBounceVertical={false}
               contentContainerStyle={styles.scrollViewFlex}
             >
-              <AvatarSection
-                home={true}
-                firstName={firstName}
-                pointerEvents={"none"}
-                navigation={this.props.navigation}
-              />
-              <CallSection
-                navigation={this.props.navigation}
-                openSlideMenu={this.openSlideMenu}
-              />
+              <View style={{justifyContent: 'flex-end', alignItems: 'center'}}>
+                <AvatarSection
+                  home={true}
+                  firstName={firstName}
+                  pointerEvents={"none"}
+                  navigation={this.props.navigation}
+                />
+                <CallSection
+                  navigation={this.props.navigation}
+                  openSlideMenu={this.openSlideMenu}
+                />
+              </View>
+
               <CallButtons navigation={this.props.navigation} />
             </ScrollView>
             <SlideUpPanel />

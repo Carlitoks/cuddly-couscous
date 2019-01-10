@@ -6,6 +6,7 @@ import ScrollVertical from "../../../../Util/ScrollText";
 
 // Styles
 import styles from "./Styles/QuestionStyles";
+import { Metrics } from "../../../../Themes";
 
 export default class Questions extends Component {
   constructor(props) {
@@ -47,23 +48,25 @@ export default class Questions extends Component {
             ? I18n.t("customerOnboarding.homeCanIhelpYou", { name: firstName })
             : I18n.t(`customerOnboarding.canIHelpYou`)}
         </Text>
-        <ScrollVertical
-          onChange={index => {
-            this.index = index;
-          }}
-          onLoad={() => {
-            this.forceUpdate();
-          }}
-          enableAnimation
-          enableTouchable={false}
-          delay={8000}
-          duration={0}
-          scrollHeight={50}
-        >
-          {this.state.scenarios.map((scenario, index) => {
-            return this._renderItem(scenario, index);
-          })}
-        </ScrollVertical>
+        <View style={{top: 10, maxWidth: Metrics.width * 0.88}}>
+          <ScrollVertical
+            onChange={index => {
+              this.index = index;
+            }}
+            onLoad={() => {
+              this.forceUpdate();
+            }}
+            enableAnimation
+            enableTouchable={false}
+            delay={8000}
+            duration={0}
+            scrollHeight={Metrics.height * 0.08}
+          >
+            {this.state.scenarios.map((scenario, index) => {
+              return this._renderItem(scenario, index);
+            })}
+          </ScrollVertical>
+        </View>
       </React.Fragment>
     );
   }

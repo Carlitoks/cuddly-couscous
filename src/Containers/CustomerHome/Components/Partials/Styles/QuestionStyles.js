@@ -4,7 +4,7 @@ import {
   scale,
   scaledFontSize
 } from "../../../../../Util/Scaling";
-import { Fonts } from "../../../../../Themes";
+import { Fonts, Metrics } from "../../../../../Themes";
 import { Iphone5 } from "../../../../../Util/Devices";
 
 export default StyleSheet.create({
@@ -25,6 +25,10 @@ export default StyleSheet.create({
   },
   questionsContainer: {
     flexDirection: "column",
-    height: 50
+    height: Metrics.height * 0.08,
+  },
+  questionsContainerHome: {
+    flexDirection: "column",
+    height: Metrics.height * 0.08,
   }
 });
