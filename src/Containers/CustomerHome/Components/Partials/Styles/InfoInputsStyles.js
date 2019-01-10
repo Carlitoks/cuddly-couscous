@@ -29,7 +29,7 @@ export default StyleSheet.create({
       : Metrics.height <= 680
       ? moderateScale(80)
       : iOS
-      ? moderateScale(70)
+      ? moderateScale(80)
       : moderateScale(20),
     marginBottom: iPhoneXModels ? 50 : 0
   },
@@ -40,7 +40,7 @@ export default StyleSheet.create({
       : iPhoneXModels
       ? moderateScale(-80)
       : iOS
-      ? moderateScale(90)
+      ? moderateScale(100)
       : Metrics.height <= 600
       ? moderateScale(90)
       : Metrics.height <= 680
