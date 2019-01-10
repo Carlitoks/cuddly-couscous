@@ -18,7 +18,7 @@ export default StyleSheet.create({
   },
   callNowButtonContainer: {
     flexDirection: "column",
-    paddingBottom: 14,
+    paddingBottom: Iphone5 ? 0 : 14,
     alignSelf: "center"
   },
   callNowButton: {

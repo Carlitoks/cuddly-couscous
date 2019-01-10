@@ -20,7 +20,7 @@ import { clear as clearOnboarding } from "../../Ducks/OnboardingReducer";
 // Styles
 import styles from "./Styles/OnboardingScreenStyles";
 import OnboardingButtons from "./Components/OnboardingButtons";
-
+import DeviceInfo from "react-native-device-info";
 class OnboardingScreen extends Component {
   componentWillMount() {
     const {
@@ -57,6 +57,7 @@ class OnboardingScreen extends Component {
     this.props.openSlideMenu({ type });
   };
   render() {
+    console.warn(DeviceInfo.getModel(), DeviceInfo.getDeviceName());
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>

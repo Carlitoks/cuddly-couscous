@@ -22,62 +22,51 @@ const placeholderInput = {
 export default StyleSheet.create({
   inputsContainer: {
     flexDirection: "column",
-    marginTop: Iphone5
-      ? 90
-      : Metrics.height <= 600
-      ? moderateScale(120, 0)
-      : Metrics.height <= 680
-      ? moderateScale(80, 0)
-      : iOS
-      ? moderateScale(80, 0)
-      : moderateScale(20, 0),
-    marginBottom: iPhoneXModels ? 50 : 0
+    marginTop:
+      Metrics.height <= 600
+        ? moderateScale(120, 0)
+        : Metrics.height <= 680
+        ? moderateScale(80, 0)
+        : moderateScale(20, 0)
   },
   inputsContainerHome: {
     flexDirection: "column",
-    marginTop: Iphone5
-      ? 75
-      : iPhoneXModels
-      ? moderateScale(-80, 0)
-      : iOS
-      ? moderateScale(100, 0)
-      : Metrics.height <= 600
-      ? moderateScale(90, 0)
-      : Metrics.height <= 680
-      ? moderateScale(60, 0)
-      : moderateScale(20, 0),
-    left: Iphone5 ? -15 : moderateScale(-20, 0)
+    marginTop:
+      Metrics.height <= 600
+        ? moderateScale(90, 0)
+        : Metrics.height <= 680
+        ? moderateScale(60, 0)
+        : moderateScale(20, 0)
   },
-  /*TODO PEDRO: Dude necesito que uses estos estilos para ios, quita las validaciones de si es ios 
-  y usa las resoluciones, entre los minutos y el input solo tiene que haber unos 20pt de separacion.
-  OJO: No quites el 0*/
+
   inputsContainerIos: {
     flexDirection: "column",
-    marginTop: Iphone5
-      ? 90
-      : Metrics.height <= 600
-      ? moderateScale(120, 0)
-      : Metrics.height <= 680
-      ? moderateScale(80, 0)
-      : iOS
-      ? moderateScale(80, 0)
-      : moderateScale(20, 0),
-    marginBottom: iPhoneXModels ? 50 : 0
+    marginTop:
+      Metrics.height <= 580
+        ? moderateScale(100, 0)
+        : Metrics.height <= 680
+        ? moderateScale(80, 0)
+        : Metrics.height <= 740
+        ? moderateScale(80, 0)
+        : Metrics.height <= 820
+        ? moderateScale(80, 0)
+        : moderateScale(20, 0)
+    //marginBottom: iPhoneXModels ? 50 : 0
   },
   inputsContainerHomeIos: {
     flexDirection: "column",
-    marginTop: Iphone5
-      ? 75
-      : iPhoneXModels
-      ? moderateScale(-80, 0)
-      : iOS
-      ? moderateScale(100, 0)
-      : Metrics.height <= 600
-      ? moderateScale(90, 0)
-      : Metrics.height <= 680
-      ? moderateScale(60, 0)
-      : moderateScale(20, 0),
-    left: Iphone5 ? -15 : moderateScale(-20, 0)
+    marginTop:
+      Metrics.height <= 580
+        ? moderateScale(90, 0)
+        : Metrics.height <= 680
+        ? moderateScale(80, 0)
+        : Metrics.height <= 740
+        ? moderateScale(80, 0)
+        : Metrics.height <= 820
+        ? moderateScale(80, 0)
+        : moderateScale(20, 0),
+    //marginBottom: iPhoneXModels ? 50 : 0
+    left: Iphone5 ? -15 : 0
   },
   inputTitle: {
     color: "#ffffff",
@@ -118,33 +107,28 @@ export default StyleSheet.create({
   swapArrows: {
     position: "absolute",
     left: metrics.width * 0.77,
-    top: Iphone5
-      ? 42
-      : iPhoneXModels
-      ? moderateScale(43, 0)
-      : iOS
-      ? moderateScale(48, 0)
-      : Metrics.height <= 600
-      ? moderateScale(46, 0)
-      : Metrics.height <= 680
-      ? moderateScale(46, 0)
-      : moderateScale(47, 0),
+    top:
+      Metrics.height <= 600
+        ? moderateScale(46, 0)
+        : Metrics.height <= 680
+        ? moderateScale(46, 0)
+        : moderateScale(47, 0),
     zIndex: 1000
   },
   swapArrowsIos: {
     position: "absolute",
     left: metrics.width * 0.77,
-    top: Iphone5
-      ? 42
-      : iPhoneXModels
-      ? moderateScale(43, 0)
-      : iOS
-      ? moderateScale(48, 0)
-      : Metrics.height <= 600
-      ? moderateScale(46, 0)
-      : Metrics.height <= 680
-      ? moderateScale(46, 0)
-      : moderateScale(47, 0),
+    top:
+      Metrics.height <= 580
+        ? moderateScale(42, 0)
+        : Metrics.height <= 680
+        ? moderateScale(80, 0)
+        : Metrics.height <= 740
+        ? moderateScale(80, 0)
+        : Metrics.height <= 820
+        ? moderateScale(80, 0)
+        : moderateScale(20, 0),
+    //marginBottom: iPhoneXModels ? 50 : 0
     zIndex: 1000
   }
 });
