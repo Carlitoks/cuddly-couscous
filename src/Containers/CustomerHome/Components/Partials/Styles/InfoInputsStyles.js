@@ -82,12 +82,13 @@ export default StyleSheet.create({
   swapArrows: {
     position: "absolute",
     left: metrics.width * 0.77,
-    top:
-      Metrics.height <= 600
-        ? moderateScale(46)
-        : Metrics.height <= 680
-        ? moderateScale(46)
-        : moderateScale(47),
+    top: Iphone5
+      ? 42
+      : Metrics.height <= 600
+      ? moderateScale(46)
+      : Metrics.height <= 680
+      ? moderateScale(46)
+      : moderateScale(47),
     zIndex: 1000
   }
 });
