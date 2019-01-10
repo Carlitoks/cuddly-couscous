@@ -57,19 +57,15 @@ class InfoInputs extends Component {
   };
 
   renderStyles() {
-    if (Platform.OS === "android") {
-      return this.props.type === "onboarding"
-        ? styles.inputsContainer
-        : styles.inputsContainerHome;
+    if (this.props.type === "onboarding") {
+      return styles.inputsContainer;
     } else {
-      return this.props.type === "onboarding"
-        ? styles.inputsContainerIos
-        : styles.inputsContainerHomeIos;
+      return styles.inputsContainerHome;
     }
   }
   render() {
     return (
-      <View style={styles.inputsContainer}>
+      <View style={this.renderStyles()}>
         <View style={styles.paddingBottomContainer}>
           <RenderPicker
             navType={this.props.type}
