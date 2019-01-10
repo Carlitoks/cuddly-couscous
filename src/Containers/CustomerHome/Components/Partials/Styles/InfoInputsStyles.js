@@ -52,7 +52,7 @@ export default StyleSheet.create({
         ? moderateScale(120, 0)
         : Metrics.height <= 820
         ? moderateScale(75, 0)
-        : moderateScale(20, 0)
+        : moderateScale(60, 0)
     //marginBottom: iPhoneXModels ? 50 : 0
   },
   inputsContainerHomeIos: {
@@ -66,7 +66,7 @@ export default StyleSheet.create({
         ? moderateScale(100, 0)
         : Metrics.height <= 820
         ? moderateScale(60, 0)
-        : moderateScale(20, 0),
+        : moderateScale(40, 0),
     //marginBottom: iPhoneXModels ? 50 : 0
     left: -15
   },
@@ -129,7 +129,7 @@ export default StyleSheet.create({
         ? moderateScale(48, 0)
         : Metrics.height <= 820
         ? moderateScale(48, 0)
-        : moderateScale(20, 0),
+        : moderateScale(48, 0),
     //marginBottom: iPhoneXModels ? 50 : 0
     zIndex: 1000
   }
