@@ -4,8 +4,6 @@ import { iPhoneXModels, Iphone5 } from "../../../../../Util/Devices";
 import { Fonts, Metrics } from "../../../../../Themes";
 import metrics from "../../../../../Themes/Metrics";
 
-console.log(metrics.height);
-
 const iOS = Platform.OS === "ios";
 const PlaceHolderText = {
   fontFamily: Fonts.BaseFont,
@@ -28,12 +26,8 @@ export default StyleSheet.create({
   },
   inputsContainerHome: {
     flexDirection: "column",
-    marginTop:
-      Metrics.height <= 600
-        ? moderateScale(80, 0)
-        : Metrics.height <= 680
-        ? moderateScale(70, 0)
-        : moderateScale(50, 0)
+    marginTop: moderateScale(20),
+    left: iOS ? -15 : 0
   },
 
   inputsContainerIos: {
