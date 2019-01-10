@@ -40,7 +40,7 @@ export default StyleSheet.create({
       : iPhoneXModels
       ? moderateScale(-80)
       : iOS
-      ? moderateScale(90)
+      ? moderateScale(100)
       : Metrics.height <= 600
       ? moderateScale(90)
       : Metrics.height <= 680
