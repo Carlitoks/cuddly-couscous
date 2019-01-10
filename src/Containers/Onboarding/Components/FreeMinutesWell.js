@@ -87,13 +87,7 @@ class FreeMinutesWell extends Component {
   renderTitle = () => {
     if (this.props.navigation.state.routeName === "OnboardingView") {
       return (
-        <Text
-          style={
-            getDeviceLocale().split("-")[0] === "es"
-              ? styles.wellTitleSpanish
-              : styles.wellTitle
-          }
-        >
+        <Text style={styles.wellTitle}>
           {I18n.t("customerHome.registrationWelcome.title")}
         </Text>
       );
@@ -127,11 +121,7 @@ class FreeMinutesWell extends Component {
         <TouchableOpacity
           activeOpacity={this.props.pointerEvents === "none" ? 1 : 0.2}
           onPress={() => this.onPressAction()}
-          style={
-            
-              styles.freeMinutesWellContainer
-      
-          }
+          style={styles.freeMinutesWellContainer}
         >
           <View style={this.setPillColor()}>
             {this.props.navigation.state.routeName === "OnboardingView" ? (
@@ -144,11 +134,7 @@ class FreeMinutesWell extends Component {
             <Text style={this.setPillTextStyle()}>{this.setPillContent()}</Text>
           </View>
           {this.renderTitle()}
-          <Text
-            style={this.props.navigation.state.routeName === "OnboardingView" && getDeviceLocale().split("-")[0] === "es"  ? styles.wellSubtitleSpanish : styles.wellSubtitle}
-          >
-            {this.renderSubtitle()}
-          </Text>
+          <Text style={styles.wellSubtitle}>{this.renderSubtitle()}</Text>
         </TouchableOpacity>
         <PaymentModal
           visible={this.props.displayPaymentModal}
