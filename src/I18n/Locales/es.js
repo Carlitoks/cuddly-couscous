@@ -321,7 +321,7 @@ export default (ESP = {
   pricing: "Precios",
   privacyPolicy: "Política de privacidad",
   proficiencyLevelOf: "Nivel de competencia de ",
-  promoCodeTitle: "Ingresar un Código de promoción",
+  promoCodeTitle: "Código de promoción",
   promoCodeInput: "Código de promoción",
   progressiveImageComponent: "Componente de imagen progresiva",
   provideFeedback: "Proporcionar comentarios",
