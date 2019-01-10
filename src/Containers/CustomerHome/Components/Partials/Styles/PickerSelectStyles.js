@@ -6,7 +6,7 @@ import { Iphone5, iPhoneXModels } from "../../../../../Util/Devices";
 const PlaceHolderText = {
   fontFamily: Fonts.BaseFont,
   fontWeight: "500",
-  fontSize: moderateScale(18),
+  fontSize: moderateScale(18, 0),
   color: "white"
 };
 
@@ -14,7 +14,7 @@ const placeholderInput = {
   borderBottomWidth: 1,
   borderBottomColor: "#8C8C8C",
   backgroundColor: "transparent",
-  width: moderateScale(298)
+  width: moderateScale(298, 0)
 };
 
 export default StyleSheet.create({
@@ -34,8 +34,8 @@ export default StyleSheet.create({
     fontSize: Iphone5
       ? 13
       : iPhoneXModels
-      ? moderateScale(19)
-      : moderateScale(18),
+      ? moderateScale(19, 0)
+      : moderateScale(18, 0),
     color: "#ffffff"
   },
   inputPlaceholderValue: {
@@ -46,14 +46,14 @@ export default StyleSheet.create({
     fontSize: Iphone5
       ? 13
       : iPhoneXModels
-      ? moderateScale(19)
-      : moderateScale(18),
+      ? moderateScale(19, 0)
+      : moderateScale(18, 0),
     color: "#cccccc"
   },
   inputTitle: {
     color: "#ffffff",
     fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 13 : moderateScale(13),
+    fontSize: Iphone5 ? 13 : moderateScale(13, 0),
     textAlign: "left",
     fontWeight: "300"
   },

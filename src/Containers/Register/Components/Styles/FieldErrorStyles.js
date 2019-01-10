@@ -12,7 +12,7 @@ export default StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 10,
         width: Metrics.width * 0.6,
-        fontSize: moderateScale(15)
+        fontSize: moderateScale(15, 0)
       },
       redErrorAlertUnderlineText: {
         textDecorationLine: "underline"

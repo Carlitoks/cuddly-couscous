@@ -7,7 +7,7 @@ export default StyleSheet.create({
   profileImageBackground: {
     position: "absolute",
     zIndex: 0,
-    left: moderateScale(225),
+    left: moderateScale(225, 0),
     bottom: 0.5,
   },
   profileImageBackgroundOnboarding: {

@@ -16,7 +16,7 @@ export default StyleSheet.create({
     borderBottomColor: "#fff",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 16 : moderateScale(18)
+    fontSize: Iphone5 ? 16 : moderateScale(18, 0)
   },
   loginContainer: {
     flexDirection: "column",
@@ -50,20 +50,20 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 14 : moderateScale(17)
+    fontSize: Iphone5 ? 14 : moderateScale(17, 0)
   },
   transitionButtonText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 14 : moderateScale(17),
+    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
     padding: Metrics.width * 0.02
   },
   registerAdviseText: {
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? 14 : moderateScale(15),
+    fontSize: Iphone5 ? 14 : moderateScale(15, 0),
     textAlign: "center",
     paddingBottom: 20
   },
@@ -71,7 +71,7 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? 10 : moderateScale(12),
+    fontSize: Iphone5 ? 10 : moderateScale(12, 0),
     textAlign: "center"
   },
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
@@ -97,7 +97,7 @@ export default StyleSheet.create({
   },
   labelText: {
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(13),
+    fontSize: moderateScale(13, 0),
     fontWeight: "400",
     color: "#FFFFFF",
     paddingLeft: 3

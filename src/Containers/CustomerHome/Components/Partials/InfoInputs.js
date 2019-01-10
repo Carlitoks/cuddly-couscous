@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Platform
+} from "react-native";
 import RenderPicker from "./PickerSelect";
 import TranslationSwap from "../../../../Assets/SVG/translationSwap";
 import {
@@ -37,7 +43,11 @@ class InfoInputs extends Component {
             onPress={() => {
               this.props.swapCurrentSessionLanguages();
             }}
-            style={styles.swapArrows}
+            style={
+              Platform.OS === "android"
+                ? styles.swapArrows
+                : styles.swapArrowsIos
+            }
           >
             <SwitchLangs width={18.5} height={70} />
           </TouchableOpacity>
@@ -45,15 +55,21 @@ class InfoInputs extends Component {
       );
     }
   };
+
+  renderStyles() {
+    if (Platform.OS === "android") {
+      return this.props.type === "onboarding"
+        ? styles.inputsContainer
+        : styles.inputsContainerHome;
+    } else {
+      return this.props.type === "onboarding"
+        ? styles.inputsContainerIos
+        : styles.inputsContainerHomeIos;
+    }
+  }
   render() {
     return (
-      <View
-        style={
-          this.props.type === "onboarding"
-            ? styles.inputsContainer
-            : styles.inputsContainerHome
-        }
-      >
+      <View style={this.renderStyles()}>
         <View style={styles.paddingBottomContainer}>
           <RenderPicker
             navType={this.props.type}

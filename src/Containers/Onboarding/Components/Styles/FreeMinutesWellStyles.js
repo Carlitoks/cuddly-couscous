@@ -17,10 +17,10 @@ export default StyleSheet.create({
     borderRadius: 4,
     borderColor: "#CDCDF4",
     top: Iphone5
-      ? moderateScale(-90)
+      ? moderateScale(-90, 0)
       : iOS
-      ? moderateScale(-100)
-      : moderateScale(-120),
+      ? moderateScale(-100, 0)
+      : moderateScale(-120, 0),
     zIndex: 10
   },
   freeMinutesWellContainerHome: {
@@ -34,10 +34,10 @@ export default StyleSheet.create({
     borderRadius: 4,
     borderColor: "#CDCDF4",
     top: Iphone5
-      ? moderateScale(-90)
+      ? moderateScale(-90, 0)
       : iOS
-      ? moderateScale(-100)
-      : moderateScale(-140),
+      ? moderateScale(-100, 0)
+      : moderateScale(-140, 0),
     zIndex: 10
   },
   pillButtonContainer: {
@@ -62,25 +62,25 @@ export default StyleSheet.create({
     color: "#fff",
     fontWeight: "600",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 14 : moderateScale(16)
+    fontSize: Iphone5 ? 14 : moderateScale(16, 0)
   },
   wellTitle: {
     color: "#401674",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 15 : moderateScale(21),
+    fontSize: Iphone5 ? 15 : moderateScale(21, 0),
     paddingLeft: 15,
     marginTop: -10
   },
   wellSubtitle: {
     color: "#401674",
     fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 12 : moderateScale(13),
+    fontSize: Iphone5 ? 12 : moderateScale(13, 0),
     paddingLeft: 15,
     paddingBottom: 15
   },
   pricingPillText: {
     color: "#401674",
-    fontSize: Iphone5 ? 14 : moderateScale(16),
+    fontSize: Iphone5 ? 14 : moderateScale(16, 0),
     textAlign: "center",
     fontWeight: "600",
     fontFamily: Fonts.ItalicFont,
@@ -90,7 +90,7 @@ export default StyleSheet.create({
     color: "#fff",
     alignSelf: "center",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(25),
+    fontSize: moderateScale(25, 0),
     fontWeight: "500"
   }
 });

@@ -8,7 +8,7 @@ const iOS = Platform.OS === "ios";
 const PlaceHolderText = {
   fontFamily: Fonts.BaseFont,
   fontWeight: "500",
-  fontSize: moderateScale(18),
+  fontSize: moderateScale(18, 0),
   color: "white"
 };
 const android = Platform.OS === "android";
@@ -16,7 +16,7 @@ const placeholderInput = {
   borderBottomWidth: 1,
   borderBottomColor: "#8C8C8C",
   backgroundColor: "transparent",
-  width: moderateScale(298)
+  width: moderateScale(298, 0)
 };
 
 export default StyleSheet.create({
@@ -25,12 +25,12 @@ export default StyleSheet.create({
     marginTop: Iphone5
       ? 90
       : Metrics.height <= 600
-      ? moderateScale(120)
+      ? moderateScale(120, 0)
       : Metrics.height <= 680
-      ? moderateScale(80)
+      ? moderateScale(80, 0)
       : iOS
-      ? moderateScale(80)
-      : moderateScale(20),
+      ? moderateScale(80, 0)
+      : moderateScale(20, 0),
     marginBottom: iPhoneXModels ? 50 : 0
   },
   inputsContainerHome: {
@@ -38,20 +38,51 @@ export default StyleSheet.create({
     marginTop: Iphone5
       ? 75
       : iPhoneXModels
-      ? moderateScale(-80)
+      ? moderateScale(-80, 0)
       : iOS
-      ? moderateScale(100)
+      ? moderateScale(100, 0)
       : Metrics.height <= 600
-      ? moderateScale(90)
+      ? moderateScale(90, 0)
       : Metrics.height <= 680
-      ? moderateScale(60)
-      : moderateScale(20),
-    left: Iphone5 ? -15 : moderateScale(-20)
+      ? moderateScale(60, 0)
+      : moderateScale(20, 0),
+    left: Iphone5 ? -15 : moderateScale(-20, 0)
+  },
+  /*TODO PEDRO: Dude necesito que uses estos estilos para ios, quita las validaciones de si es ios 
+  y usa las resoluciones, entre los minutos y el input solo tiene que haber unos 20pt de separacion.
+  OJO: No quites el 0*/
+  inputsContainerIos: {
+    flexDirection: "column",
+    marginTop: Iphone5
+      ? 90
+      : Metrics.height <= 600
+      ? moderateScale(120, 0)
+      : Metrics.height <= 680
+      ? moderateScale(80, 0)
+      : iOS
+      ? moderateScale(80, 0)
+      : moderateScale(20, 0),
+    marginBottom: iPhoneXModels ? 50 : 0
+  },
+  inputsContainerHomeIos: {
+    flexDirection: "column",
+    marginTop: Iphone5
+      ? 75
+      : iPhoneXModels
+      ? moderateScale(-80, 0)
+      : iOS
+      ? moderateScale(100, 0)
+      : Metrics.height <= 600
+      ? moderateScale(90, 0)
+      : Metrics.height <= 680
+      ? moderateScale(60, 0)
+      : moderateScale(20, 0),
+    left: Iphone5 ? -15 : moderateScale(-20, 0)
   },
   inputTitle: {
     color: "#ffffff",
     fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(13),
+    fontSize: moderateScale(13, 0),
     textAlign: "left",
     fontWeight: "300"
   },
@@ -90,14 +121,30 @@ export default StyleSheet.create({
     top: Iphone5
       ? 42
       : iPhoneXModels
-      ? moderateScale(43)
+      ? moderateScale(43, 0)
       : iOS
-      ? moderateScale(48)
+      ? moderateScale(48, 0)
       : Metrics.height <= 600
-      ? moderateScale(46)
+      ? moderateScale(46, 0)
       : Metrics.height <= 680
-      ? moderateScale(46)
-      : moderateScale(47),
+      ? moderateScale(46, 0)
+      : moderateScale(47, 0),
+    zIndex: 1000
+  },
+  swapArrowsIos: {
+    position: "absolute",
+    left: metrics.width * 0.77,
+    top: Iphone5
+      ? 42
+      : iPhoneXModels
+      ? moderateScale(43, 0)
+      : iOS
+      ? moderateScale(48, 0)
+      : Metrics.height <= 600
+      ? moderateScale(46, 0)
+      : Metrics.height <= 680
+      ? moderateScale(46, 0)
+      : moderateScale(47, 0),
     zIndex: 1000
   }
 });

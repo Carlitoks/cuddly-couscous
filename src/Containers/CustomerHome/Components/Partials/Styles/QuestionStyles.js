@@ -11,7 +11,7 @@ export default StyleSheet.create({
   questionText: {
     color: "#FFFFFF",
     fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 16 : moderateScale(21),
+    fontSize: Iphone5 ? 16 : moderateScale(21, 0),
     fontWeight: "300",
     textAlign: "left",
     zIndex: 1000000
@@ -19,7 +19,7 @@ export default StyleSheet.create({
   questionHelpText: {
     color: "#FFFFFF",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? 19 : moderateScale(26),
+    fontSize: Iphone5 ? 19 : moderateScale(26, 0),
     fontWeight: "300",
     textAlign: "left"
   },
