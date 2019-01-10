@@ -47,7 +47,7 @@ export default StyleSheet.create({
         : Metrics.height <= 680
         ? moderateScale(110, 0)
         : Metrics.height <= 740
-        ? moderateScale(80, 0)
+        ? moderateScale(60, 0)
         : Metrics.height <= 820
         ? moderateScale(80, 0)
         : moderateScale(20, 0)
@@ -61,7 +61,7 @@ export default StyleSheet.create({
         : Metrics.height <= 680
         ? moderateScale(100, 0)
         : Metrics.height <= 740
-        ? moderateScale(80, 0)
+        ? moderateScale(50, 0)
         : Metrics.height <= 820
         ? moderateScale(80, 0)
         : moderateScale(20, 0),
@@ -124,7 +124,7 @@ export default StyleSheet.create({
         : Metrics.height <= 680
         ? moderateScale(48, 0)
         : Metrics.height <= 740
-        ? moderateScale(80, 0)
+        ? moderateScale(48, 0)
         : Metrics.height <= 820
         ? moderateScale(80, 0)
         : moderateScale(20, 0),
