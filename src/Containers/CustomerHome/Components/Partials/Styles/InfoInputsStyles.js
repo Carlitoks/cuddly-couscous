@@ -28,12 +28,17 @@ export default StyleSheet.create({
       ? moderateScale(120)
       : Metrics.height <= 680
       ? moderateScale(80)
-      : moderateScale(-80)
+      : iOS
+      ? moderateScale(70)
+      : moderateScale(-80),
+    marginBottom: iPhoneXModels ? 50 : 0
   },
   inputsContainerHome: {
     flexDirection: "column",
     marginTop: Iphone5
       ? 75
+      : iPhoneXModels
+      ? moderateScale(-80)
       : iOS
       ? moderateScale(90)
       : Metrics.height <= 600
@@ -84,6 +89,10 @@ export default StyleSheet.create({
     left: metrics.width * 0.77,
     top: Iphone5
       ? 42
+      : iPhoneXModels
+      ? moderateScale(43)
+      : iOS
+      ? moderateScale(48)
       : Metrics.height <= 600
       ? moderateScale(46)
       : Metrics.height <= 680
