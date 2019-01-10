@@ -46,7 +46,6 @@ class InfoInputs extends Component {
     }
   };
   render() {
-    console.warn(Metrics.height);
     return (
       <View
         style={
