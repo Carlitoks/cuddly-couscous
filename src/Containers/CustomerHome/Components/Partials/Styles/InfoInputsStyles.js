@@ -30,7 +30,7 @@ export default StyleSheet.create({
       ? moderateScale(80)
       : iOS
       ? moderateScale(70)
-      : moderateScale(-80),
+      : moderateScale(20),
     marginBottom: iPhoneXModels ? 50 : 0
   },
   inputsContainerHome: {
@@ -45,7 +45,7 @@ export default StyleSheet.create({
       ? moderateScale(90)
       : Metrics.height <= 680
       ? moderateScale(60)
-      : moderateScale(-80),
+      : moderateScale(20),
     left: Iphone5 ? -15 : moderateScale(-20)
   },
   inputTitle: {
