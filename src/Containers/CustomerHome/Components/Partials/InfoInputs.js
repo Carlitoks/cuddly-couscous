@@ -13,7 +13,7 @@ import I18n from "./../../../../I18n/I18n";
 import styles from "./Styles/InfoInputsStyles";
 import { Iphone5 } from "../../../../Util/Devices";
 import { SwitchLangs } from "../../../../Assets/SVG";
-
+import { Metrics } from "../../../../Themes";
 class InfoInputs extends Component {
   constructor(props) {
     super(props);

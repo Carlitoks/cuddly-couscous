@@ -4,6 +4,7 @@ import { iPhoneXModels, Iphone5 } from "../../../../../Util/Devices";
 import { Fonts, Metrics } from "../../../../../Themes";
 import metrics from "../../../../../Themes/Metrics";
 
+const iOS = Platform.OS === "ios";
 const PlaceHolderText = {
   fontFamily: Fonts.BaseFont,
   fontWeight: "500",
@@ -21,22 +22,31 @@ const placeholderInput = {
 export default StyleSheet.create({
   inputsContainer: {
     flexDirection: "column",
-    marginTop:
-      Metrics.height <= 600
-        ? moderateScale(120)
-        : Metrics.height <= 680
-        ? moderateScale(80)
-        : moderateScale(-80)
+    marginTop: Iphone5
+      ? 90
+      : Metrics.height <= 600
+      ? moderateScale(120)
+      : Metrics.height <= 680
+      ? moderateScale(80)
+      : iOS
+      ? moderateScale(70)
+      : moderateScale(-80),
+    marginBottom: iPhoneXModels ? 50 : 0
   },
   inputsContainerHome: {
     flexDirection: "column",
-    marginTop:
-      Metrics.height <= 600
-        ? moderateScale(90)
-        : Metrics.height <= 680
-        ? moderateScale(60)
-        : moderateScale(-100),
-    left: Iphone5 ? -20 : moderateScale(-20)
+    marginTop: Iphone5
+      ? 75
+      : iPhoneXModels
+      ? moderateScale(-80)
+      : iOS
+      ? moderateScale(90)
+      : Metrics.height <= 600
+      ? moderateScale(90)
+      : Metrics.height <= 680
+      ? moderateScale(60)
+      : moderateScale(-80),
+    left: Iphone5 ? -15 : moderateScale(-20)
   },
   inputTitle: {
     color: "#ffffff",
@@ -77,11 +87,17 @@ export default StyleSheet.create({
   swapArrows: {
     position: "absolute",
     left: metrics.width * 0.77,
-    top: Metrics.height <= 600
-    ? moderateScale(46)
-    : Metrics.height <= 680
-    ? moderateScale(46)
-    : moderateScale(47),
+    top: Iphone5
+      ? 42
+      : iPhoneXModels
+      ? moderateScale(43)
+      : iOS
+      ? moderateScale(48)
+      : Metrics.height <= 600
+      ? moderateScale(46)
+      : Metrics.height <= 680
+      ? moderateScale(46)
+      : moderateScale(47),
     zIndex: 1000
   }
 });

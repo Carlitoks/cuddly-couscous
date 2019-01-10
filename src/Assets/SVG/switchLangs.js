@@ -8,7 +8,7 @@ const SwitchLangs = ({ width, height, viewBox, style, active = false }) => {
   return (
     <Svg
       width={width}
-      height={Iphone5 ? 52 : iPhoneXModels ? height : android ? height : 52}
+      height={Iphone5 ? 52 : iPhoneXModels ? height : android ? height : 58}
       style={style}
       viewBox={viewBox ? viewBox : "0 0 22 73"}
     >
