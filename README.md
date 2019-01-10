@@ -39,7 +39,7 @@ Initial setup for Android Studio:
 * Do custom install & add latest SDK
 * From the Welcome Screen, go to Configure -> SDK Manager
     * Install other SDKs (Android 7.0+)
-* From Welcome Screen, import existing project
+* From Welcome Screen, choose "Open an existing Android Studio project"
     * Import an existing project: open the `android/app/` directory.
 * Let Gradle automatically sync
   * it will probably fail several times, just keep clicking the blue links to install any missing dependencies
