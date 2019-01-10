@@ -45,7 +45,7 @@ export default StyleSheet.create({
       Metrics.height <= 580
         ? moderateScale(100, 0)
         : Metrics.height <= 680
-        ? moderateScale(80, 0)
+        ? moderateScale(110, 0)
         : Metrics.height <= 740
         ? moderateScale(80, 0)
         : Metrics.height <= 820
@@ -59,14 +59,14 @@ export default StyleSheet.create({
       Metrics.height <= 580
         ? moderateScale(90, 0)
         : Metrics.height <= 680
-        ? moderateScale(80, 0)
+        ? moderateScale(100, 0)
         : Metrics.height <= 740
         ? moderateScale(80, 0)
         : Metrics.height <= 820
         ? moderateScale(80, 0)
         : moderateScale(20, 0),
     //marginBottom: iPhoneXModels ? 50 : 0
-    left: Iphone5 ? -15 : 0
+    left: -15
   },
   inputTitle: {
     color: "#ffffff",
@@ -122,7 +122,7 @@ export default StyleSheet.create({
       Metrics.height <= 580
         ? moderateScale(42, 0)
         : Metrics.height <= 680
-        ? moderateScale(80, 0)
+        ? moderateScale(48, 0)
         : Metrics.height <= 740
         ? moderateScale(80, 0)
         : Metrics.height <= 820
