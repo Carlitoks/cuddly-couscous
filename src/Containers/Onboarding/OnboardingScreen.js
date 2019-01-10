@@ -57,7 +57,6 @@ class OnboardingScreen extends Component {
     this.props.openSlideMenu({ type });
   };
   render() {
-    console.warn(DeviceInfo.getModel(), DeviceInfo.getDeviceName());
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>

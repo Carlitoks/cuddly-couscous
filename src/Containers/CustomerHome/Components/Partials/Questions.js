@@ -30,7 +30,14 @@ export default class Questions extends Component {
 
   _renderItem = (item, index) => {
     return (
-      <View key={index} style={styles.questionsContainer}>
+      <View
+        key={index}
+        style={
+          this.props.home
+            ? styles.questionsContainerHome
+            : styles.questionsContainer
+        }
+      >
         <Text style={styles.questionText}>{`${I18n.t(
           `customerHome.scenarios.${item}`
         )}`}</Text>

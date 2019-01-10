@@ -26,11 +26,10 @@ export default StyleSheet.create({
   questionsContainer: {
     flexDirection: "column",
     height: 50
-  }
+  },
   questionsContainerHome: {
-    marginTop: 20,
+    marginTop: 10,
     flexDirection: "column",
-    height: 50,
-    backgroundColor: "red"
+    height: 50
   }
 });
