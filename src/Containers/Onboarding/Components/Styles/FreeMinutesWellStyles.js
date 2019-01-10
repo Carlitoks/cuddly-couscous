@@ -75,10 +75,24 @@ export default StyleSheet.create({
     paddingLeft: 15,
     marginTop: -10
   },
+  wellTitleSpanish: {
+    color: "#401674",
+    fontFamily: Fonts.BoldFont,
+    fontSize: Iphone5 ? 15 : moderateScale(21, 0.5),
+    paddingLeft: 15,
+    marginTop: -10
+  },
   wellSubtitle: {
     color: "#401674",
     fontFamily: Fonts.ItalicFont,
     fontSize: Iphone5 ? 12 : moderateScale(13, 0),
+    paddingLeft: 15,
+    paddingBottom: 15
+  },
+  wellSubtitleSpanish: {
+    color: "#401674",
+    fontFamily: Fonts.ItalicFont,
+    fontSize: Iphone5 ? 12 : moderateScale(13, 0.5),
     paddingLeft: 15,
     paddingBottom: 15
   },

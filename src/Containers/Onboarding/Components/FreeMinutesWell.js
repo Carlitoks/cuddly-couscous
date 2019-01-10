@@ -9,6 +9,7 @@ import PaymentModal from "../../../Home/Customer/PaymentModal/PaymentModal";
 // Styles
 import styles from "./Styles/FreeMinutesWellStyles";
 import ClockTime from "./../../../Assets/SVG/clockTime";
+import { getDeviceLocale } from "react-native-device-info";
 
 class FreeMinutesWell extends Component {
   constructor(props) {
@@ -86,7 +87,13 @@ class FreeMinutesWell extends Component {
   renderTitle = () => {
     if (this.props.navigation.state.routeName === "OnboardingView") {
       return (
-        <Text numberOfLines={this.props.navigation.state.routeName === "OnboardingView" ? 1 : 0} style={styles.wellTitle}>
+        <Text
+          style={
+            getDeviceLocale().split("-")[0] === "es"
+              ? styles.wellTitleSpanish
+              : styles.wellTitle
+          }
+        >
           {I18n.t("customerHome.registrationWelcome.title")}
         </Text>
       );
@@ -127,11 +134,21 @@ class FreeMinutesWell extends Component {
           }
         >
           <View style={this.setPillColor()}>
-            { this.props.navigation.state.routeName === "OnboardingView" ? <React.Fragment /> : this.props.availableMinutes === 0 ? <React.Fragment /> : <ClockTime width={17} height={17} />}
+            {this.props.navigation.state.routeName === "OnboardingView" ? (
+              <React.Fragment />
+            ) : this.props.availableMinutes === 0 ? (
+              <React.Fragment />
+            ) : (
+              <ClockTime width={17} height={17} />
+            )}
             <Text style={this.setPillTextStyle()}>{this.setPillContent()}</Text>
           </View>
           {this.renderTitle()}
-          <Text numberOfLines={this.props.navigation.state.routeName === "OnboardingView" ? 1 : 0} style={styles.wellSubtitle}>{this.renderSubtitle()}</Text>
+          <Text
+            style={this.props.navigation.state.routeName === "OnboardingView" && getDeviceLocale().split("-")[0] === "es"  ? styles.wellSubtitleSpanish : styles.wellSubtitle}
+          >
+            {this.renderSubtitle()}
+          </Text>
         </TouchableOpacity>
         <PaymentModal
           visible={this.props.displayPaymentModal}
@@ -143,12 +160,12 @@ class FreeMinutesWell extends Component {
       </React.Fragment>
     );
   }
-};
+}
 
 const mS = state => ({
   availableMinutes: state.userProfile.availableMinutes,
   displayPaymentModal: state.homeFlow.displayPaymentModal,
-  stripePaymentToken: state.userProfile.stripePaymentToken,
+  stripePaymentToken: state.userProfile.stripePaymentToken
 });
 
 const mD = {
