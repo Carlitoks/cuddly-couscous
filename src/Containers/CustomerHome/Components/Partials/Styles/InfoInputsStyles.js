@@ -57,7 +57,6 @@ export default StyleSheet.create({
         ? moderateScale(60, 0)
         : moderateScale(40, 0),
     //marginBottom: iPhoneXModels ? 50 : 0
-    left: -15
   },
   inputTitle: {
     color: "#ffffff",
