@@ -55,7 +55,7 @@ export default StyleSheet.create({
         ? moderateScale(100, 0)
         : Metrics.height <= 820
         ? moderateScale(60, 0)
-        : moderateScale(40, 0),
+        : moderateScale(40, 0)
     //marginBottom: iPhoneXModels ? 50 : 0
   },
   inputTitle: {
@@ -93,7 +93,11 @@ export default StyleSheet.create({
     ...placeholderInput,
     fontWeight: "500"
   },
-  paddingBottomContainer: { flexDirection: "column", paddingBottom: 5 },
+  paddingBottomContainer: {
+    flexDirection: "column",
+    paddingBottom: 5,
+    zIndex: 1000
+  },
   swapArrows: {
     position: "absolute",
     left: metrics.width * 0.77,
@@ -103,7 +107,7 @@ export default StyleSheet.create({
         : Metrics.height <= 680
         ? moderateScale(46, 0)
         : moderateScale(47, 0),
-    zIndex: 1000
+    zIndex: 900
   },
   swapArrowsIos: {
     position: "absolute",
@@ -118,7 +122,6 @@ export default StyleSheet.create({
         : Metrics.height <= 820
         ? moderateScale(48, 0)
         : moderateScale(48, 0),
-    //marginBottom: iPhoneXModels ? 50 : 0
-    zIndex: 1000
+    zIndex: 900
   }
 });
