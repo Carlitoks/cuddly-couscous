@@ -1,9 +1,9 @@
 ﻿export default (ZHTW = {
   accept: "接受",
   acceptAllPermissionsCustomer:
-    "您必須先在手機設定中接受麥克風和相機權限，才能撥打電話",
+    "您必須先在設定中啟用麥克風和相機權限，才能使用翻譯精靈通話。",
   acceptAllPermissionsLinguist:
-    "您必須先在手機設定中接受麥克風和相機權限，才能接聽電話",
+    "您必須先在裝置設定中接受麥克風和相機權限，才能接聽電話",
   add: "新增",
   addANewCard: "新增卡片...",
   addLanguage: "新增語言",
@@ -200,18 +200,18 @@
   iAm18: "我已經年滿 18 歲",
   iAmNotSure: "我不確定",
   igniteGenerated: "點擊產生畫面",
-  incomingCall: "視訊來電...",
+  incomingCall: "來電...",
   iNeedAssistanceWith: "(可不填) 我需要的協助是...",
   iNeedSomethingElse: "(可不填) 我需要的協助是...",
   interfaceLocalization: "語言",
   intermediate: "中等",
   invalidPromoCode: "促銷代碼無效",
   invalidPaymentDetails:
-    "您提供的付款詳細資料無效。請檢查輸入錯誤。",
+    "您提供的付款詳細資料無效。  請檢查輸入錯誤。",
   isReconnecting: "正在重新連線...",
   keepWaiting: "繼續等候",
   isConnecting: "正在接通 {{firstName}} {{lastInitial}}...",
-  isReconnecting: "正在重新接通 {{firstName}} {{lastInitial}}...",
+  linguistReconnecting: "正在重新連線 {{firstName}} {{lastInitial}}...",
   languageCommand: "您要求的語言",
   languageHelp: "隨時隨地提供語言協助",
   languageInterpretation: "您曾經做過<lang>翻譯嗎？",
@@ -234,7 +234,7 @@
   lauchScreenSwipe2:
     "無論置身世上何處，都能即時與精通外語的真人通話。",
   lauchScreenSwipe3:
-    "翻譯精靈目前支援\n中文（普通話） <> 英文\n以及日文 <> 英文。\n\n即將推出其他語言。",
+    "翻譯精靈目前支援\n中文（普通話）<> 英文\n以及日本 <> 英文。\n\n即將推出其他語言。",
   lauchScreenSwipe4:
     "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
   lauchScreenSwipe5:
@@ -302,7 +302,7 @@
   passwordMatch: "密碼不符。",
   passwordLengthValidation: "密碼至少須包含 8 個字元。",
   payAsYouGo: "現購現付",
-  payAsYouGoPricing: "Pay-as-you-go =",
+  payAsYouGoPricing: "現購現付 =",
   payAsYouGoPricingUnder: " 每分鐘 1 美元",
   paymentDetails: "付款詳細資料",
   paymentDetailsCreated: "付款資訊更新成功。",
@@ -480,7 +480,7 @@
       s27: "請別人推薦餐廳",
       s28: "通報緊急事件",
       s29: "找路",
-      s30: "與醫護人員交談」"
+      s30: "與醫護人員交談"
     },
     registrationWelcome: {
       balance: "{{num}} 分鐘",
@@ -581,7 +581,7 @@
     errUnexpected: "發生非預期錯誤。",
     errTemporary: "發生暫時性錯誤。",
     errTemporaryTryAgain:
-      "發生暫時性錯誤。請稍候幾分鐘再繼續。",
+      "發生暫時性錯誤。  請稍候幾分鐘再繼續。",
     errLogin: "登入時發生問題",
     errDefaultAuth: "認證過期或無效。",
     errNoUser: "找不到符合該電子郵件地址的用戶",
@@ -594,7 +594,8 @@
     errEventScenarioMissing: "必須指定情境。",
     errPaymentDetailsRequired: "必須填寫付款詳細資料才能繼續。",
     errEventTimeExpired: "這個代碼的時間已經用完了。",
-    errEventAlreadyUsed: "這是使用過的代碼。"
+    errEventAlreadyUsed: "這是使用過的代碼。",
+    errLocationRestricted: "您所在地區目前不適用翻譯精靈。"
   },
 
   // for use in session-related screens
@@ -614,6 +615,7 @@
       "為保持最佳連線品質，目前已暫時停用客戶的視訊。連線品質改善後即可繼續使用視訊。",
     alertYouCannotSeeLinguist:
       "為保持最佳連線品質，目前已暫時停用翻譯精靈的視訊功能。連線品質改善後即可繼續使用視訊。",
+    createSessionFailed: "暫時無法開始通話。請再試一次。",
 
     // used when rating a session
     rating: {
@@ -632,6 +634,33 @@
         appearance: "外觀",
         noise: "背景噪音"
       }
+    }
+  },
+
+  customerOnboarding: {
+    welcome: "歡迎來到Jeenie",
+    tenFreeMinutes: "{{time}} 分鐘免費",
+    canIHelpYou: "我可以幫助您嗎?",
+    homeCanIhelpYou: "我可以幫助您嗎, {{name}}?",
+    connectToLinguist: '立即和語言專員通話',
+    login: {
+      provideInformation: '請提供您的姓名、電子郵件和密碼，日後您才能存取使用自己的帳戶。',
+      createAccountTitle: '建立帳戶',
+      termsAndPrivacyNotice: '繼續使用即表示您同意我們的條款與隱私權政策',
+      terms: '條款',
+      privacyPolicy: '隱私權政策',
+      forgotPassword: "忘記密碼？"
+    },
+    register: {
+      createAnAccount: '建立帳戶',
+      alreadyAccount: '已經有帳戶了？登入',
+      password: "創建密碼"
+    },
+    errors: {
+      invalidEmail: '請輸入有效的電子郵件地址',
+      takenEmail: '已有另一個帳戶使用您所輸入的電子郵件地址。請輸入另一個電子郵件或登入您的帳戶。',
+      emailAndPassword: '電子郵件和密碼組合不正確。請再試一次。',
+      signInto: "登陸您的賬號。"
     }
   },
 

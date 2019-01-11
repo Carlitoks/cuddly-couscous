@@ -10,7 +10,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     flexWrap: "wrap",
     position: "absolute",
-    top: Iphone5 ? moderateScale(290) : moderateScale(335),
+    top: Iphone5 ? moderateScale(290, 0) : moderateScale(335, 0),
     bottom: 0,
     left: Iphone5 ? Metrics.width * 0.75 : Metrics.width * 0.72,
     right: 0,
@@ -34,34 +34,34 @@ export default StyleSheet.create({
     color: "#fff",
     alignSelf: "center",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? moderateScale(25) : moderateScale(35),
+    fontSize: Iphone5 ? moderateScale(25, 0) : moderateScale(35, 0),
     fontWeight: "500"
   },
   availableMinutesText: {
     color: "#fff",
     alignSelf: "center",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? moderateScale(10) : moderateScale(12)
+    fontSize: Iphone5 ? moderateScale(10, 0) : moderateScale(12, 0)
   },
   pricingTopText: {
     color: "#401674",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? moderateScale(10) : moderateScale(12),
+    fontSize: Iphone5 ? moderateScale(10, 0) : moderateScale(12, 0),
     textAlign: "center"
   },
   pricingBottomText: {
     color: "#401674",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? moderateScale(18) : moderateScale(21),
+    fontSize: Iphone5 ? moderateScale(18, 0) : moderateScale(21, 0),
     textAlign: "center"
   },
   addPaymentText: {
     color: "#FFFFFF",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? moderateScale(10) : moderateScale(12),
+    fontSize: Iphone5 ? moderateScale(10, 0) : moderateScale(12, 0),
     textAlign: "center",
     marginBottom: 20,
-    lineHeight: Iphone5 ? moderateScale(12) : moderateScale(14),
+    lineHeight: Iphone5 ? moderateScale(12, 0) : moderateScale(14, 0),
     width: Metrics.width * 0.18
   }
 });

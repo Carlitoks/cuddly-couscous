@@ -83,7 +83,7 @@ class ForgotPasswordView extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
+      <View style={styles.scrollContainer}>
         <HeaderView
           headerLeftComponent={
             <GoBackButton navigation={this.props.navigation} />
@@ -139,7 +139,7 @@ class ForgotPasswordView extends Component {
           disabled={this.validateEmail()}
           fill={!this.validateEmail()}
         />
-      </ViewWrapper>
+      </View>
     );
   }
 }

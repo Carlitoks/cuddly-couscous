@@ -8,29 +8,42 @@ import Questions from "./Partials/Questions";
 
 // Styles
 import styles from "./Styles/AvatarSectionStyles";
-
+import { moderateScale } from "../../../Util/Scaling";
+import { Iphone5 } from "../../../Util/Devices";
+import SilhouetteWavesBackground from "./../../../Assets/SVG/SilhouetteWavesBackground";
+import metrics from "./../../../Themes/Metrics";
+import FreeMinutesWell from "../../Onboarding/Components/FreeMinutesWell";
 export default class AvatarSection extends Component {
   renderSections = () => {
+    const { firstName, home, pointerEvents, navigation } = this.props;
+
     return (
-      <View style={styles.rowView}>
-        <View>
-          <Questions />
+      <View style={[styles.columnView]}>
+      <View style={{position: 'absolute'}}>
+      <SilhouetteWavesBackground
+          width={metrics.width}
+          height={metrics.height * 0.30}
+        />
         </View>
-        <FemaleSilhouette />
-        <SGWaves />
+        <View
+          style={{
+            zIndex: 100,
+            paddingLeft: 20,
+            marginTop: 40
+          }}
+        >
+          <Questions home={home} firstName={firstName} />
+        </View>
+        <FreeMinutesWell
+          pointerEvents={pointerEvents}
+          navigation={navigation}
+        />
       </View>
     );
   };
   render() {
     return (
-      <View style={[styles.mainContainer, styles.avatarSectionContainer]}>
-        <LinearGradient
-          colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-          locations={[0, 1]}
-        >
-          {this.renderSections()}
-        </LinearGradient>
-      </View>
+      <View style={styles.avatarSectionContainer}>{this.renderSections()}</View>
     );
   }
 }

@@ -1,5 +1,8 @@
 import { StyleSheet } from "react-native";
 import { Metrics, ApplicationStyles } from "../../../Themes";
+import metrics from "../../../Themes/Metrics";
+import { moderateScale } from "../../../Util/Scaling";
+import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -20,5 +23,5 @@ export default StyleSheet.create({
   wrapperContainer: {
     backgroundColor: "white",
     height: "100%"
-  }
+  },
 });

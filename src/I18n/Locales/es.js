@@ -1,12 +1,12 @@
 export default (ESP = {
   accept: "Aceptar",
   acceptAllPermissionsCustomer:
-    "Debe aceptar los permisos del micrófono y de la cámara en la configuración del teléfono antes de poder hacer una llamada.",
+    "Debe habilitar los permisos del micrófono y de la cámara en la configuración para hacer una llamada con Jeenie.",
   acceptAllPermissionsLinguist:
-    "Debe aceptar los permisos del micrófono y de la cámara en la configuración del teléfono antes de poder aceptar una llamada entrante.",
-  add: "Añadir",
-  addANewCard: "Añadir una nueva tarjeta...",
-  addLanguage: "Añadir idioma",
+    "Debe aceptar los permisos del micrófono y de la cámara en la configuración antes de poder aceptar una llamada.",
+  add: "Agregar",
+  addANewCard: "Agregar una nueva tarjeta...",
+  addLanguage: "Agregar idioma",
   airport: "Aeropuerto",
   alignQRCode: "Alinear el código QR dentro del marco",
   all: "Todos",
@@ -55,17 +55,21 @@ export default (ESP = {
   celebrateAndEnjoyAlternative:
     "Celebre nuestro lanzamiento y \ndisfrute de 10 minutos con Jeenie \n¡SIN CARGO!",
   celebrateWithUs: "¡Celebre nuestro lanzamiento con nosotros!",
-  changeSettings: "Para cambiar su configuración, diríjase a Configuración > Jeenie",
+  changeSettings:
+    "Para cambiar su configuración, diríjase a Configuración > Jeenie",
   cancelCallCustomer: "La llamada no está disponible",
-  chargeAdvice: "Se le cobrará por minuto por el tiempo transcurrido después de 8 minutos.",
+  chargeAdvice:
+    "Se le cobrará por minuto por el tiempo transcurrido después de 8 minutos.",
   checkYourConnection: "Verifique su conexión",
   checkYourEmail:
-    "Le hemos enviado un enlace para restablecer su contraseña. Revise su correo electrónico",
-  checkYourEmailOnBoarding: "Revise su correo electrónico para completar el registro.",
+    "Le hemos enviado un enlace para restablecer su contraseña. Revise su correo electrónico.",
+  checkYourEmailOnBoarding:
+    "Revise su correo electrónico para completar el registro.",
   citizenShip: "Ciudadanía",
   cityFamiliarity: "Familiaridad con la ciudad",
   cantReachCustomer: "Parece que el usuario perdió la conexión",
-  cantReachLinguist: "No se puede establecer la comunicación con su lingüista en este momento",
+  cantReachLinguist:
+    "No se puede establecer la comunicación con su lingüista en este momento",
   card: "Tarjeta",
   componentExamples: "Ejemplos de componentes",
   confirm: "Confirmar",
@@ -112,7 +116,8 @@ export default (ESP = {
   editProfile: "Editar perfil",
   email: "Correo electrónico",
   emailCustomerText: "Al continuar, acepta nuestra ",
-  emailFormatValidation: "El correo electrónico debe ser una dirección de correo electrónico válida.",
+  emailFormatValidation:
+    "El correo electrónico debe ser una dirección de correo electrónico válida.",
   emptyEmail: "Correo electrónico vacío",
   emptyPassword: "Contraseña vacía",
   endCall: "Finalizar llamada",
@@ -122,7 +127,8 @@ export default (ESP = {
   enterLastNameField: "Ingrese su apellido",
   enterNameField: "Ingrese su nombre",
   enterPayment: "Ingrese la información de pago",
-  enterPaymentDetailsToContinue: "Ingrese la información de pago para continuar",
+  enterPaymentDetailsToContinue:
+    "Ingrese la información de pago para continuar",
   enterPaymentDetails: "Ingrese o modifique su información de pago",
   enterPaymentDetails2:
     "Su llamada finalizará una vez que el saldo de su cuenta sea de 0 minutos. Ingrese su información de pago para hablar todo el tiempo que necesite",
@@ -200,7 +206,7 @@ export default (ESP = {
   iAm18: "Tengo 18 años de edad o más",
   iAmNotSure: "No estoy seguro",
   igniteGenerated: "Pantallas Ignite Generate",
-  incomingCall: "Videollamada entrante...",
+  incomingCall: "Llamada entrante...",
   iNeedAssistanceWith: "(Opcional) Necesito ayuda con...",
   iNeedSomethingElse: "(Opcional) Necesito ayuda con...",
   interfaceLocalization: "Idioma",
@@ -211,7 +217,7 @@ export default (ESP = {
   isReconnecting: "se está reconectando...",
   keepWaiting: "Seguir esperando",
   isConnecting: "{{firstName}} {{lastInitial}}. se está conectando...",
-  isReconnecting: "{{firstName}} {{lastInitial}}. se está reconectando...",
+  linguistReconnecting: "{{firstName}} {{lastInitial}} se está reconectando...",
   languageCommand: "Language at Your Command",
   languageHelp: "Ayuda con el idioma dondequiera que esté",
   languageInterpretation: "¿Ha interpretado <lang> en el pasado?",
@@ -250,12 +256,14 @@ export default (ESP = {
   linguistLastName: "Apellido",
   linguistName: "Nombre",
   linguistNumber: "Ingrese un número de teléfono",
-  linguistNumberText: "Le enviaremos un código por mensaje de texto para verificar su teléfono.",
+  linguistNumberText:
+    "Le enviaremos un código por mensaje de texto para verificar su teléfono.",
   linguistPassword: "Contraseña",
   linguistPasswordTitle: "Crear su contraseña",
   locale: "I18n Locale",
   login: "Iniciar sesión",
-  loginLogoutExampleTitle: "Ejemplo de inicio/cierre de sesión con Redux + Sagas",
+  loginLogoutExampleTitle:
+    "Ejemplo de inicio/cierre de sesión con Redux + Sagas",
   loginWithFacebook: "Iniciar sesión con Facebook",
   logOut: "Cerrar sesión",
   logOutConfirmation: "Confirmar.",
@@ -302,7 +310,7 @@ export default (ESP = {
   passwordMatch: "Las contraseñas no coinciden.",
   passwordLengthValidation: "La contraseña debe tener 8 o más caracteres.",
   payAsYouGo: "Pague sobre la marcha",
-  payAsYouGoPricing: "Pay-as-you-go =",
+  payAsYouGoPricing: "Pague sobre la marcha =",
   payAsYouGoPricingUnder: " $1 por minuto",
   paymentDetails: "Información del pago",
   paymentDetailsCreated: "Su información de pago se actualizó con éxito.",
@@ -313,15 +321,16 @@ export default (ESP = {
   pricing: "Precios",
   privacyPolicy: "Política de privacidad",
   proficiencyLevelOf: "Nivel de competencia de ",
-  promoCodeTitle: "Ingresar un Código de promoción",
+  promoCodeTitle: "Código de promoción",
   promoCodeInput: "Código de promoción",
   progressiveImageComponent: "Componente de imagen progresiva",
   provideFeedback: "Proporcionar comentarios",
   provideFeedbackModalTitle: "¿Necesita más tiempo con Jeenie?",
   provideFeedbackModalText:
     "Proporcione comentarios sobre su \nexperiencia usando Jeenie, y \nle daremos \n¡10 minutos adicionales SIN CARGO!",
-  provideFeedbackViewPlaceholder: "Añada sus comentarios aquí",
-  provideFeedbackViewTitle: "Díganos cómo podemos mejorar la experiencia de Jeenie:",
+  provideFeedbackViewPlaceholder: "Agregue sus comentarios aquí",
+  provideFeedbackViewTitle:
+    "Díganos cómo podemos mejorar la experiencia de Jeenie:",
   qr: "Código QR",
   quicklyContact: "Póngase en contacto rápidamente con un lingüista",
   rateYour: "Califique su",
@@ -342,7 +351,7 @@ export default (ESP = {
   saveContinue: "Guardar y continuar",
   scanQR: "Escanear QR",
   scanQRCode: "Escanear código QR",
-  scenarioNotes: "Añadir información adicional aquí",
+  scenarioNotes: "Agregar información adicional aquí",
   schedule: "Programar",
   scheduleLinguist: "Programar un lingüista",
   search: "Buscar",
@@ -368,7 +377,8 @@ export default (ESP = {
   thereNoInternetConnection: "No hay conexión a internet",
   time: "Hora",
   timeWithCost: "$1/min por tiempo adicional",
-  timeStatic1: "Las llamadas tienen una duración preestablecida de 8 minutos durante el período de prueba.",
+  timeStatic1:
+    "Las llamadas tienen una duración preestablecida de 8 minutos durante el período de prueba.",
   timeCompliments: "Cumplidos de Jeenie",
   timeAddMore: "Cada llamada tiene un tiempo máximo de 60 minutos.",
   timeStatic2: "Si necesita más tiempo, puede agregarlo durante la llamada.",
@@ -377,7 +387,8 @@ export default (ESP = {
   termsConditions: "Términos y condiciones",
   termsOfUse: "Términos de uso",
   themeSettings: "Configuración de temas",
-  temporaryError: "Se ha producido un error temporal; inténtelo de nuevo más tarde.",
+  temporaryError:
+    "Se ha producido un error temporal; inténtelo de nuevo más tarde.",
   toggleExtraTimeDisable:
     "Esta llamada terminará automáticamente después del tiempo especificado anteriormente.",
   toggleExtraTimeEnable:
@@ -393,7 +404,7 @@ export default (ESP = {
   thankYou: " Gracias",
   thankYouFeedback: " Gracias por sus comentarios",
   thankYouFeedbackModalText:
-    "Hemos añadido \n10 minutos adicionales para que usted \ncontinúe usando Jeenie.",
+    "Hemos agregado \n10 minutos adicionales para que usted \ncontinúe usando Jeenie.",
   theCallWillEnd: "La llamada terminará después de {{minutes}} minutos",
   undefined: "Indefinido",
   unspecified: "No especificado",
@@ -405,9 +416,12 @@ export default (ESP = {
   usageExamples: "Ejemplos de uso",
   username: "Nombre de usuario",
   userProfile: "Mi perfil",
-  unableToConnect: "No se pudo conectar a la llamada \n\n¿Le gustaría volver a intentarlo?",
+  unableToConnect:
+    "No se pudo conectar a la llamada \n\n¿Le gustaría volver a intentarlo?",
   verifyNumber: "Verificar teléfono",
-  verifyNumberText: "Ingrese el código de verificación que recibió por mensaje de texto.",
+  verifyNumberText:
+    "Ingrese el código de verificación que recibió por mensaje de texto.",
+  version: "versión",
   video: "Video",
   videoHasBeenTurnedOff:
     "Se ha desactivado el video para optimizar esta llamada. Se reanudará cuando ambos participantes tengan una mejor conexión.",
@@ -418,7 +432,8 @@ export default (ESP = {
   weAreWorking: "Estamos trabajando para restablecer su conexión.",
   welcome: "Bienvenido",
   welcomeTo: "Bienvenido a",
-  weSendEmail: "Controle su casilla de correo electrónico para restablecer su contraseña.",
+  weSendEmail:
+    "Controle su casilla de correo electrónico para restablecer su contraseña.",
   whatWouldYouLike: "¿Qué le gustaría hacer?",
   yes: "Sí",
   youWillBeKnown: "Se lo conocerá como",
@@ -449,7 +464,7 @@ export default (ESP = {
       unit: "minutos",
       add: "Agregar pago para hacer una llamada"
     },
-    help: "¿Puedo ayudarlo?",
+    help: "¿Puedo ayudarlo? ",
     scenarios: {
       s1: "Comprender el menú",
       s2: "Dirigir al conductor del taxi",
@@ -483,9 +498,10 @@ export default (ESP = {
       s30: "Hablar con un profesional médico"
     },
     registrationWelcome: {
-      balance: "{{num}} min",
+      balance: "{{num}} minutos",
       title: "¡Los primeros 10 minutos son gratuitos!",
-      description: "Después de los primeros 10 minutos, el precio es de $1 por minuto.",
+      description:
+        "Después de los primeros 10 minutos, el precio es de $1 USD por minuto.",
       buttons: {
         dismiss: "Comenzar a usar Jeenie",
         payment: "Agregar información de pago ahora"
@@ -502,11 +518,11 @@ export default (ESP = {
   // text for customer related to payments and rates
   payments: {
     currentRate: "$1/min",
-    currentBalance: "{{minutes}} min",
+    currentBalance: "{{minutes}} minutos",
     enterPaymentToTalk:
-      "Ingrese la información de pago para seguir hablando. Hable todo lo que quiera por $1/min.",
+      "Ingrese la información de pago para seguir hablando. Hable todo lo que quiera por $1 USD/min.",
     currentRateDescription:
-      "Las llamadas cuestan $1/min, y puede hablar hasta 60 minutos. En el futuro, se ofrecerán descuentos por paquetes de minutos."
+      "Las llamadas cuestan $1 USD/min, y puede hablar hasta 60 minutos. En el futuro, se ofrecerán descuentos por paquetes de minutos."
   },
 
   operatingHours: {
@@ -528,9 +544,9 @@ export default (ESP = {
     title: "Precios y saldo de la cuenta",
     titleNoMinutesNoCard: "¿Necesita más tiempo con Jeenie?",
     currentRate: "$1/min",
-    currentBalance: "{{minutes}} min",
+    currentBalance: "{{minutes}} minutos",
     buttons: {
-      gotIt: "¡Entendido!",
+      gotIt: "Aceptar",
       addCard: "Agregar información de pago",
       updateCard: "Actualizar información de pago"
     }
@@ -541,7 +557,7 @@ export default (ESP = {
     screenTitle: "Precios y saldo de la cuenta",
     pricing: {
       title: "Precios:",
-      rate: "1 USD/minuto"
+      rate: "$1 USD/minuto"
     },
     balance: {
       title: "Saldo de la cuenta:",
@@ -563,7 +579,7 @@ export default (ESP = {
       hasMinutesAndCard:
         "Si se queda sin minutos, le cobraremos automáticamente $1 USD por minuto a su tarjeta para evitar desconectar la llamada.",
       hasMinutesNoCard:
-        "Para seguir hablando cuando finalicen sus minutos restantes, ingrese ahora la información de pago.",
+        "Para seguir hablando cuando finalicen sus minutos restantes, agregue la información de pago ahora.",
       noMinutesHasCard:
         "Automáticamente le cobraremos $1 USD por minuto a su tarjeta.",
       noMinutesNoCard:
@@ -572,7 +588,7 @@ export default (ESP = {
     buttons: {
       continue: "Continuar",
       accept: "Aceptar precios",
-      gotIt: "¡Entendido!"
+      gotIt: "Aceptar"
     }
   },
 
@@ -581,10 +597,11 @@ export default (ESP = {
     errUnexpected: "Se produjo un error inesperado.",
     errTemporary: "Se ha producido un error temporal.",
     errTemporaryTryAgain:
-      "Se ha producido un error temporal.  Inténtelo de nuevo en unos minutos.",
+      "Se ha producido un error temporal. Inténtelo de nuevo en unos minutos.",
     errLogin: "Hubo un problema al iniciar sesión.",
     errDefaultAuth: "Sus credenciales han caducado o no son válidas.",
-    errNoUser: "No se encontró a ningún usuario para esa dirección de correo electrónico.",
+    errNoUser:
+      "No se encontró a ningún usuario para esa dirección de correo electrónico.",
     errNoEmail: "Correo electrónico no encontrado",
     errPasswordIncorrect: "La contraseña era incorrecta.",
     errAuthRequired: "Debe iniciar sesión de nuevo.",
@@ -592,9 +609,11 @@ export default (ESP = {
     errEventUnavailable: "Este código no está disponible actualmente.",
     errEventInactive: "Este código no está activo.",
     errEventScenarioMissing: "Se debe especificar un escenario.",
-    errPaymentDetailsRequired: "Debe ingresar la información de pago para continuar.",
+    errPaymentDetailsRequired:
+      "Debe ingresar la información de pago para continuar.",
     errEventTimeExpired: "No queda tiempo disponible para este código.",
-    errEventAlreadyUsed: "Este código ya ha sido usado."
+    errEventAlreadyUsed: "Este código ya ha sido usado.",
+    errLocationRestricted: "Jeenie no está disponible actualmente en su área."
   },
 
   // for use in session-related screens
@@ -603,7 +622,8 @@ export default (ESP = {
     callCancel: "Esta llamada fue cancelada por el cliente",
     callAnswered: "Esta llamada ha sido tomada por otro lingüista.",
     callFail: "El cliente no pudo conectarse.",
-    callFailCustomer: "Hubo un problema en la comunicación con su Language Jeenie.",
+    callFailCustomer:
+      "Hubo un problema en la comunicación con su Language Jeenie.",
     alertGeneralCannotSee:
       "Para optimizar la conexión, se ha deshabilitado temporalmente el video. El video se reanudará cuando la conexión sea mejor.",
     alertLinguistCannotSeeYou:
@@ -614,6 +634,8 @@ export default (ESP = {
       "Para optimizar la conexión, se ha deshabilitado temporalmente el video de su cliente. El video se reanudará cuando la conexión sea mejor.",
     alertYouCannotSeeLinguist:
       "Para optimizar la conexión, se ha deshabilitado temporalmente el video de su Language Jeenie. El video se reanudará cuando la conexión sea mejor.",
+    createSessionFailed:
+      "Temporalmente no es posible iniciar la llamada. Vuelva a intentarlo.",
 
     // used when rating a session
     rating: {
@@ -635,6 +657,37 @@ export default (ESP = {
     }
   },
 
+  customerOnboarding: {
+    welcome: "Bienvenido/a a Jeenie",
+    tenFreeMinutes: "{{time}} minutos GRATIS",
+    canIHelpYou: "¿Le puedo ayudar?",
+    homeCanIhelpYou: "¿Le puedo ayudar, {{name}}?",
+    connectToLinguist: "Conectarse ahora",
+    login: {
+      provideInformation:
+        "Proporcione su nombre, correo electrónico y una contraseña para poder acceder a su cuenta en el futuro.",
+      createAccountTitle: "Crear cuenta",
+      termsAndPrivacyNotice:
+        "Si continúa, usted acepta nuestros Términos de uso y Política de privacidad.",
+      terms: "Términos de uso",
+      privacyPolicy: "Política de privacidad",
+      forgotPassword: "¿Olvidó su contraseña?"
+    },
+    register: {
+      createAnAccount: "Crear una cuenta",
+      alreadyAccount: "¿Ya tiene una cuenta? Iniciar sesión",
+      password: "Crear contraseña"
+    },
+    errors: {
+      invalidEmail: "Ingrese una dirección de correo electrónico válida",
+      takenEmail:
+        "Ya existe una cuenta con la dirección de correo electrónico que ingresó. Ingrese un correo electrónico diferente o inicie sesión en su cuenta.",
+      emailAndPassword:
+        "Combinación incorrecta de correo electrónico y contraseña. Vuelva a intentarlo.",
+      signInto: "Iniciar sesión."
+    }
+  },
+  
   // for use during primary language selection
   languagesList: {
     eng: "Inglés",

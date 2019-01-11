@@ -41,7 +41,6 @@ class PromoCodeListView extends Component {
   }
 
   componentWillMount() {
-    console.log("promocodelistview");
     if (this.props.scenarios < 1) {
       this.props.getItems("scenarios", this.props.navigation.state.params);
     }

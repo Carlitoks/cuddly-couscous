@@ -168,7 +168,7 @@ class LinguistView extends Component {
   handleSessionInfoName() {
     const { customerName } = this.props;
 
-    return customerName ? `${customerName}` : "Customer";
+    return customerName ? `${customerName.split(' undefined')[0]}` : "Customer";
   }
 
   selectImage = () => {

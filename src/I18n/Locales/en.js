@@ -3,7 +3,7 @@ export default (ENG = {
   acceptAllPermissionsCustomer:
     "You must enable microphone and camera permissions in your settings in order to make a call with Jeenie.",
   acceptAllPermissionsLinguist:
-    "You must accept microphone and camera permissions in your device settings before you can accept an incoming call",
+    "You must accept microphone and camera permissions in your settings before you can accept an incoming call.",
   add: "Add",
   addANewCard: "Add a new card...",
   addLanguage: "Add Language",
@@ -60,7 +60,7 @@ export default (ENG = {
   chargeAdvice: "You will be charged per minute for any time over 8 minutes.",
   checkYourConnection: "Please check your connection",
   checkYourEmail:
-    "We have sent you a link to reset your password. Please check your email",
+    "We have sent you a link to reset your password. Please check your email.",
   checkYourEmailOnBoarding: "Check your email to complete registration.",
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
@@ -354,7 +354,7 @@ export default (ENG = {
   selectListLanguage: "Select at least one item in each list.",
   sessionInQueue: "Session in Queue",
   settings: "Settings",
-  signIn: "Sign In",
+  signIn: "Sign in",
   skipAddLater: "Skip & Add Later",
   somethingElse: "Something else",
   spanish: "Spanish",
@@ -377,7 +377,7 @@ export default (ENG = {
   termsConditions: "Terms & Conditions",
   termsOfUse: "Terms of Use",
   themeSettings: "Theme Settings",
-  temporaryError: "A temporary error as occurred, please try again later.",
+  temporaryError: "A temporary error has occurred, please try again later.",
   toggleExtraTimeDisable:
     "This call will end automatically after the time specified above.",
   toggleExtraTimeEnable:
@@ -408,6 +408,7 @@ export default (ENG = {
   unableToConnect: "Unable to connect to call \n\nWould you like to try again?",
   verifyNumber: "Verify Phone",
   verifyNumberText: "Enter the verfication code you received via text.",
+  version: "version",
   video: "Video",
   videoHasBeenTurnedOff:
     "Video has been turned off to optimize this call. It will resume when both participants have stronger connectivity.",
@@ -424,20 +425,23 @@ export default (ENG = {
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during call",
   youCanChangeThis: "You can turn video on/off during call",
-
+  //new onboarding
+  onboardingView: {
+    help: "Can I help you?"
+  },
   // new customer home screen
   customerHome: {
     primaryLang: {
-      label: "I Speak"
+      label: "I speak"
     },
     secondaryLang: {
-      label: "I Need Help with",
-      placeholder: "Choose Language"
+      label: "I need help with",
+      placeholder: "Choose language"
     },
     customNote: {
-      label: "Additional Details",
+      label: "Additional details",
       placeholder: "Optional",
-      description: "Additional Details for Your Linguist:"
+      description: "Additional details for your linguist:"
     },
     buttons: {
       video: "Connect Now",
@@ -447,9 +451,9 @@ export default (ENG = {
       pricing: "pricing",
       rate: "$1/min",
       unit: "minutes",
-      add: "Add Payment to Make a Call"
+      add: "Add payment to make a call"
     },
-    help: "Can I help you?",
+    help: "Can I help you? ",
     scenarios: {
       s1: "Understand your menu",
       s2: "Direct your taxi driver",
@@ -483,9 +487,10 @@ export default (ENG = {
       s30: "Speak to a medical professional"
     },
     registrationWelcome: {
-      balance: "{{num}} min",
-      title: "Your First 10 Minutes are Free!",
-      description: "After your first 10 minutes, pricing is $1 per minute.",
+      balance: "{{num}} minutes",
+      onboardingTitle: "10 FREE Minutes",
+      title: "Your First 10 Minutes Are Free!",
+      description: "After your first 10 minutes, pricing is $1 USD per minute.",
       buttons: {
         dismiss: "Start Using Jeenie",
         payment: "Add Payment Information Now"
@@ -495,8 +500,8 @@ export default (ENG = {
 
   // for use in session language selection
   sessionLang: {
-    selections: "I Need Help With:",
-    comingSoon: "Languages Coming Soon"
+    selections: "I need help with:",
+    comingSoon: "Languages coming soon"
   },
 
   // text for customer related to payments and rates
@@ -528,9 +533,9 @@ export default (ENG = {
     title: "Pricing and Account Balance",
     titleNoMinutesNoCard: "Need more time with Jeenie?",
     currentRate: "$1/min",
-    currentBalance: "{{minutes}} min",
+    currentBalance: "{{minutes}} minutes",
     buttons: {
-      gotIt: "Got it!",
+      gotIt: "Got It!",
       addCard: "Add Payment Information",
       updateCard: "Update Payment Information"
     }
@@ -555,7 +560,7 @@ export default (ENG = {
       descriptionHasMinutes:
         "To avoid being disconnected in the middle of a call, add payment information now.",
       descriptionLowMinutes:
-        "Your account balance is low. To avoid being disconnected during your next call, please add payment information now.",
+        "Your account balance is low. To avoid being disconnected during your next call, add payment information now.",
       descriptionNoMinutes:
         "You must add payment information in order to continue."
     },
@@ -572,7 +577,7 @@ export default (ENG = {
     buttons: {
       continue: "Continue",
       accept: "Accept Pricing",
-      gotIt: "Got it!"
+      gotIt: "Got It!"
     }
   },
 
@@ -581,7 +586,7 @@ export default (ENG = {
     errUnexpected: "An unexpected error occured.",
     errTemporary: "A temporary error has occurred.",
     errTemporaryTryAgain:
-      "A temporary error has occurred.  Try again in a few minutes.",
+      "A temporary error has occurred. Try again in a few minutes.",
     errLogin: "There was a problem logging in",
     errDefaultAuth: "Your credentials have expired or are invalid.",
     errNoUser: "No user found for that email address",
@@ -634,6 +639,37 @@ export default (ENG = {
         appearance: "Appearance",
         noise: "Background Noise"
       }
+    }
+  },
+
+  customerOnboarding: {
+    welcome: "Welcome to Jeenie",
+    connectToLinguist: "Connect Now",
+    tenFreeMinutes: "{{time}} FREE Minutes",
+    canIHelpYou: "Can I help you?",
+    homeCanIhelpYou: "Can I help you, {{name}}?",
+    login: {
+      provideInformation:
+        "Provide your name, email and a password so you can access your account in the future.",
+      createAccountTitle: "Create Account",
+      termsAndPrivacyNotice:
+        "By continuing, you agree to our Terms and Privacy Policy.",
+      terms: "Terms",
+      privacyPolicy: "Privacy Policy",
+      forgotPassword: "Forgot password?"
+    },
+    register: {
+      createAnAccount: "Create Account",
+      alreadyAccount: "Already have an account? Sign in",
+      password: "Create password"
+    },
+    errors: {
+      invalidEmail: "Please enter a valid email address",
+      takenEmail:
+        "An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.",
+      emailAndPassword:
+        "Incorrect email and password combination.\nPlease try again.",
+      signInto: "Sign in to your account."
     }
   },
 
