@@ -42,6 +42,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		1C5969BE89CF48E198AA1644 /* branch.json in Resources */ = {isa = PBXBuildFile; fileRef = 24C9710E143C49078BDFD670 /* branch.json */; };
 		1DECD2398B2E4FBCBEED3F3A /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24B14C468BB94593ACB98949 /* libRNImagePicker.a */; };
 		229C93D7C88AD6A05907B46E /* Instabug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3EC27FF3C6EB5DBB32714C /* Instabug.framework */; };
 		25EFEED8A1BD42638B48881E /* libAppCenterReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79437274A1C643129C53A697 /* libAppCenterReactNative.a */; };
@@ -72,6 +73,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		84F0420AB56345AE8824A84B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 30EF032C1D104FA8AE075464 /* Entypo.ttf */; };
 		88110E0721C9D18700C69A4F /* elastic_musical5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 88110DD521C9D18700C69A4F /* elastic_musical5.wav */; };
+		8820B63A21DD4AD3006014E3 /* NewSolo.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 07B9C2DE2019549A00BEA4A0 /* NewSolo.entitlements */; };
 		90BD70F45E5044A984881B22 /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9790D040E7C3467EA2231F81 /* SFProDisplay-Regular.otf */; };
 		A992041920D9D2F100122220 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A992041820D9D2F100122220 /* libRNSound.a */; };
 		A997C09A20CBD4BD00F80149 /* incoming_call_notification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A997C09920CBD4BD00F80149 /* incoming_call_notification.mp3 */; };
@@ -512,6 +514,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NewSolo/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		24B14C468BB94593ACB98949 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
+		24C9710E143C49078BDFD670 /* branch.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = branch.json; path = ../branch.json; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* NewSolo-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NewSolo-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* NewSolo-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NewSolo-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E3EC27FF3C6EB5DBB32714C /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
@@ -812,6 +815,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				24C9710E143C49078BDFD670 /* branch.json */,
 			);
 			name = NewSolo;
 			sourceTree = "<group>";
@@ -1138,6 +1142,9 @@
 								enabled = 0;
 							};
 							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.SafariKeychain = {
 								enabled = 1;
 							};
 						};
@@ -1637,6 +1644,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8820B63A21DD4AD3006014E3 /* NewSolo.entitlements in Resources */,
 				07F59C4320E708D40019D8E8 /* Elastic_Notification15.wav in Resources */,
 				07171C1920E18B1000D26656 /* Elastic_Done11.wav in Resources */,
 				07171C1720E18AE300D26656 /* Elastic_Error1.wav in Resources */,
@@ -1667,6 +1675,7 @@
 				90BD70F45E5044A984881B22 /* SFProDisplay-Regular.otf in Resources */,
 				707EEECD00914A33BE946150 /* AppCenter-Config.plist in Resources */,
 				30810F654474452497A52119 /* SFProDisplay-RegularItalic.otf in Resources */,
+				1C5969BE89CF48E198AA1644 /* branch.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

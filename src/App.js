@@ -14,6 +14,7 @@ import deviceinfo from "react-native-device-info";
 import { InterfaceSupportedLanguages } from "./Config/Languages";
 import Crashes from 'appcenter-crashes';
 import codePush from "react-native-code-push";
+import branch, { BranchEvent } from 'react-native-branch'
 
 import I18n from "./I18n/I18n";
 class App extends Component {
@@ -128,7 +129,23 @@ class App extends Component {
     }
   };
 
-  componentDidMount() {}
+  async componentDidMount() {
+    branch.subscribe(({ error, params }) => {
+      if (error) {
+        console.error('Error from Branch: ' + error)
+        return
+      }
+      console.log("Branch params: " + JSON.stringify(params))
+
+      // params will never be null if error is null
+    })
+    
+    // let lastParams = await branch.getLatestReferringParams() // params from last open
+    // let installParams = await branch.getFirstReferringParams() // params from original install
+    // console.log("Last", lastParams);
+    // console.log("Install", installParams);
+
+  }
 
   // dumpAsyncStorage().then(data => console.log(data));
 

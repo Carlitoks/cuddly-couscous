@@ -3,6 +3,7 @@ package com.newsolo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.branch.rnbranch.RNBranchPackage;
 import com.sudoplz.reactnativeamplitudeanalytics.RNAmplitudeSDKPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.instabug.reactlibrary.RNInstabugReactnativePackage;
@@ -34,6 +35,9 @@ import com.BV.LinearGradient.LinearGradientPackage;
 
 import java.util.Arrays;
 import java.util.List;
+// import Branch and RNBranch
+import io.branch.rnbranch.RNBranchPackage;
+import io.branch.referral.Branch;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -53,6 +57,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNBranchPackage(),
             new RNAmplitudeSDKPackage(MainApplication.this),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
             		new RNInstabugReactnativePackage.Builder("1ef778fa18d0379f12f7ebaed42eba02",MainApplication.this)
@@ -100,5 +105,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    Branch.getAutoInstance(this);
   }
 }

@@ -276,7 +276,7 @@ class PaymentsView extends Component {
             bold={false}
             fill={!!optional || valid}
             loading={loading}
-            disabled={!!!optional && (!!!cardInfo || !valid || loading)}
+            disabled={!!!cardInfo || !valid || loading}
           />
         </HeaderView>
       </ViewWrapper>

@@ -145,6 +145,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-branch')
     compile 'com.amplitude:android-sdk:2.19.1'
     compile project(':react-native-amplitude-analytics')
     compile project(':react-native-code-push')
