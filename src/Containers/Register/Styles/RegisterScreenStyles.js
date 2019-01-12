@@ -128,7 +128,8 @@ export default StyleSheet.create({
     zIndex: 1000000000,
     justifyContent: "flex-start",
     alignItems: "center",
-    marginLeft: 15
+    marginLeft: 15,
+    flexWrap: 'wrap'
   },
   touchableLink: {
     alignItems: "center",

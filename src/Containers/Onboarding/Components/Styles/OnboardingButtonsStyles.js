@@ -65,6 +65,7 @@ export default StyleSheet.create({
   },
   audioOnlyButtonContainer: { flexDirection: "column" },
   audioOnlyButton: {
+    maxWidth: Metrics.width * 0.90,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

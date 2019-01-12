@@ -4,6 +4,9 @@ import android.os.Bundle; // here
 
 import com.facebook.react.ReactActivity;
 
+import io.branch.rnbranch.*; // <-- add this
+import android.content.Intent; // <-- and this
+
 public class MainActivity extends ReactActivity {
 
     /**
@@ -19,5 +22,18 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    // Override onStart, onNewIntent:
+    @Override
+    protected void onStart() {
+        super.onStart();
+        RNBranchModule.initSession(getIntent().getData(), this);
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 }

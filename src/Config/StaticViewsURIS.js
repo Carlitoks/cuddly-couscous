@@ -1,6 +1,6 @@
-export const HelpURI = "https://signup.gps.network/docs/legal/faq.html";
-export const TroubleshootURI = "https://signup.gps.network";
+export const HelpURI = "https://jeenie.com/docs/legal/faq.html";
+export const TroubleshootURI = "https://jeenie.com";
 export const TermsConditionsURI =
-  "https://signup.gps.network/docs/legal/terms.html";
+  "https://jeenie.com/docs/legal/terms.html";
 export const PrivacyPolicyURI =
-  "https://signup.gps.network/docs/legal/privacy.html";
+  "https://jeenie.com/docs/legal/privacy.html";
