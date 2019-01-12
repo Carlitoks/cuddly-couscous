@@ -187,7 +187,7 @@ class MenuView extends Component {
                   ? styles.selectedOptionMenu
                   : styles.optionMenu
               }
-              onPress={() => Linking.openURL("https://signup.gps.network")}
+              onPress={() => Linking.openURL("https://jeenie.com")}
             >
               <Text style={styles.colorText} icon>
                 {I18n.t("becomeLinguist")}
