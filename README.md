@@ -25,6 +25,8 @@ The api server will automatically start on port `5110`, but the image also has a
 
 Install Android Studio, as well as `react-native-debugger`.  Or just use the vagrant vm provided by running `vagrant up`... it will take a while to run.
 
+> Note: have been unable to get the emulator to run in the VM, or connect a physical device.... so have mostly abandoned efforts at making this work.
+
 To use the VM:
 
 * run `vagrant up`
