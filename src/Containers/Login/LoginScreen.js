@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import LinguistHeader from '../CustomerHome/Components/Header';
-import { Colors, Metrics } from '../../Themes';
+import { Colors, Metrics, Fonts } from '../../Themes';
 import {
   openSlideMenu,
   updateLocation,
@@ -34,8 +34,11 @@ import I18n from '../../I18n/I18n';
 
 // Styles
 import styles from './Styles/LoginScreenStyles';
+import { moderateScale } from '../../Util/Scaling';
 import SGWaves from '../../Assets/SVG/SGWaves';
-import { EMAIL_REGEX } from '../../Util/Constants';
+import { help, EMAIL_REGEX } from '../../Util/Constants';
+import metrics from '../../Themes/Metrics';
+import { Icon } from 'react-native-elements';
 import FieldError from '../Register/Components/FieldError';
 import { update as updateOnboarding } from '../../Ducks/OnboardingReducer';
 

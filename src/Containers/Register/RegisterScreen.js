@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import LinguistHeader from '../CustomerHome/Components/Header';
-import { Colors, Metrics } from '../../Themes';
+import { Colors, Metrics, Fonts } from '../../Themes';
 import {
   openSlideMenu,
   updateLocation,
