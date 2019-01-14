@@ -36,36 +36,6 @@ import CallButtons from "./Components/Partials/CallButtons";
 import { moderateScale } from "../../Util/Scaling";
 
 class CustomerHomeScreen extends Component {
-  componentDidMount() {
-    const { linguistProfile, isLoggedIn } = this.props;
-    if (!linguistProfile && isLoggedIn) {
-      //checkOperatingHours(true);
-    }
-
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.usageError
-    ) {
-      Alert.alert(
-        I18n.t("invalidCode"),
-        this.props.navigation.state.params.usageError
-      );
-    }
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.minutesGranted
-    ) {
-      Alert.alert(
-        I18n.t("minutesAdded"),
-        I18n.t("complimentMinutes", {
-          maxMinutesPerUser: this.props.navigation.state.params
-            .maxMinutesPerUser,
-          organizer: this.props.navigation.state.params.organization
-        })
-      );
-    }
-  }
-
   componentWillMount() {
     getGeolocationCoords()
       .then(response => {
@@ -98,6 +68,41 @@ class CustomerHomeScreen extends Component {
     }
   }
 
+  componentDidMount() {
+    const { linguistProfile, isLoggedIn, uuid, token, getProfileAsync,  } = this.props;
+
+    if (uuid !== "" && token !== "") {
+      getProfileAsync(uuid, token);
+    }
+
+    if (!linguistProfile && isLoggedIn) {
+      //checkOperatingHours(true);
+    }
+
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.usageError
+    ) {
+      Alert.alert(
+        I18n.t("invalidCode"),
+        this.props.navigation.state.params.usageError
+      );
+    }
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.minutesGranted
+    ) {
+      Alert.alert(
+        I18n.t("minutesAdded"),
+        I18n.t("complimentMinutes", {
+          maxMinutesPerUser: this.props.navigation.state.params
+            .maxMinutesPerUser,
+          organizer: this.props.navigation.state.params.organization
+        })
+      );
+    }
+  }
+
   setPrimaryLangCode = () => {
     return this.props.primaryLangCode
       ? this.props.primaryLangCode
@@ -112,10 +117,7 @@ class CustomerHomeScreen extends Component {
     this.props.openSlideMenu({ type });
   };
   render() {
-    const { uuid, token, getProfileAsync, firstName } = this.props;
-    if (uuid !== "" && token !== "") {
-      getProfileAsync(uuid, token);
-    }
+    const { firstName } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
