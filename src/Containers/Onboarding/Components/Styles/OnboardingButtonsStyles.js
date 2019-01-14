@@ -29,9 +29,9 @@ export default StyleSheet.create({
   },
   callNowButton: {
     ...primaryButton,
-    borderColor: '#fff',
-    backgroundColor: '#F39100',
-    shadowColor: 'rgba(0,0,0,1)',
+    borderColor: "#fff",
+    backgroundColor: "#F39100",
+    shadowColor: "rgba(0,0,0,1)",
     shadowOpacity: 0.38,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
@@ -39,7 +39,7 @@ export default StyleSheet.create({
   },
   callNowButtonDisable: {
     ...primaryButton,
-    borderColor: '#cccccc',
+    borderColor: "#cccccc",
     backgroundColor: colors.gradientColor.bottom
   },
   callNowButtonText: {

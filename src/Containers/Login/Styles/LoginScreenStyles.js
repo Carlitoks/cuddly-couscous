@@ -1,19 +1,19 @@
-import { StyleSheet, Platform } from 'react-native';
-import { Metrics, ApplicationStyles, Fonts, Colors } from '../../../Themes';
-import { moderateScale, setTextProperties } from '../../../Util/Scaling';
-import { Iphone5, iPhoneXModels } from '../../../Util/Devices';
+import { StyleSheet, Platform } from "react-native";
+import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
+import { moderateScale, setTextProperties } from "../../../Util/Scaling";
+import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
 
 const activeButtonStyles = {
   minWidth: Metrics.width * 0.78,
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
   borderWidth: 1,
-  borderRadius: 30,
-  borderColor: '#fff'
+  borderRadius: 25,
+  borderColor: "#fff"
 };
 
-const android = Platform.OS === 'android';
+const android = Platform.OS === "android";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
@@ -42,13 +42,13 @@ export default StyleSheet.create({
   },
   buttonWidthContainer: {
     paddingBottom: 30,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center"
   },
   signInButtonEnabled: {
     ...activeButtonStyles,
-    backgroundColor: '#F39100',
-    shadowColor: 'rgba(0,0,0,1)',
+    backgroundColor: "#F39100",
+    shadowColor: "rgba(0,0,0,1)",
     shadowOpacity: 0.38,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
@@ -73,7 +73,7 @@ export default StyleSheet.create({
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   inputViewContainer: { flexDirection: 'column', paddingTop: 10 },
   labelStyle: {
-    ...setTextProperties('#fff', Fonts.ItalicFont, moderateScale(13, 0), '400'),
+    ...setTextProperties("#fff", Fonts.ItalicFont, moderateScale(13, 0), "400"),
     paddingLeft: 3
   },
   inputInternalContainer: {
@@ -96,7 +96,7 @@ export default StyleSheet.create({
     marginBottom: android ? 1 : 30
   },
   forgotPasswordLabel: {
-    ...setTextProperties('#fff', Fonts.ItalicFont, moderateScale(14, 0), '400'),
+    ...setTextProperties("#fff", Fonts.ItalicFont, moderateScale(14, 0), "400"),
     paddingLeft: 5,
     paddingRight: 5,
     textAlign: 'right',
