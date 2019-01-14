@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
-import { moderateScale, setTextProperties } from '../../../../Util/Scaling';
-import Fonts from '../../../../Themes/Fonts';
-import { Metrics } from '../../../../Themes';
-import colors from '../../../../Themes/Colors';
-import { iPhoneXModels, Iphone5 } from '../../../../Util/Devices';
-import metrics from '../../../../Themes/Metrics';
+import { StyleSheet, Platform } from "react-native";
+import { moderateScale, setTextProperties } from "../../../../Util/Scaling";
+import Fonts from "../../../../Themes/Fonts";
+import { Metrics } from "../../../../Themes";
+import colors from "../../../../Themes/Colors";
+import { iPhoneXModels, Iphone5 } from "../../../../Util/Devices";
+import metrics from "./../../../../Themes/Metrics";
 
 const primaryButton = {
   minWidth: Metrics.width * 0.78,
@@ -14,6 +14,16 @@ const primaryButton = {
   alignItems: 'center',
   borderWidth: 1,
   borderRadius: 27
+};
+
+const primaryButton = {
+    minWidth: Metrics.width * 0.78,
+    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 27,
 };
 
 export default StyleSheet.create({
@@ -29,9 +39,9 @@ export default StyleSheet.create({
   },
   callNowButton: {
     ...primaryButton,
-    borderColor: '#fff',
-    backgroundColor: '#F39100',
-    shadowColor: 'rgba(0,0,0,1)',
+    borderColor: "#fff",
+    backgroundColor: "#F39100",
+    shadowColor: "rgba(0,0,0,1)",
     shadowOpacity: 0.38,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
@@ -39,7 +49,7 @@ export default StyleSheet.create({
   },
   callNowButtonDisable: {
     ...primaryButton,
-    borderColor: '#cccccc',
+    borderColor: "#cccccc",
     backgroundColor: colors.gradientColor.bottom
   },
   callNowButtonText: {

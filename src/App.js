@@ -34,9 +34,10 @@ class App extends Component {
     // Font doesn't scale
     Text.allowFontScaling = false;
 
-    codePush.sync({ deploymentKey: Platform.OS === 'ios' ? codePushiOSKey : codePushAndroidKey });
-
-    if (__DEV__) {
+    codePush.sync({
+      deploymentKey: Platform.OS === "ios" ? codePushiOSKey : codePushAndroidKey
+    });
+    if(__DEV__) {
       import('./Config/ReactotronConfig').then(() => console.log('Reactotron Configured'));
     }
   }
