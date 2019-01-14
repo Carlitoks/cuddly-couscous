@@ -90,6 +90,7 @@ export const persist = async () => {
 };
 
 export const flushEvents = () => {
+  console.log("called flush")
   if (events.length == 0) {
     return;
   }
