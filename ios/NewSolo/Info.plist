@@ -7,7 +7,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>jeenie://</string>
+				<string>jeenie</string>
 			</array>
 		</dict>
 	</array>
