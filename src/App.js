@@ -16,6 +16,7 @@ import Crashes from "appcenter-crashes";
 import codePush from "react-native-code-push";
 import branch, { BranchEvent } from "react-native-branch";
 import analytics from "@segment/analytics-react-native";
+import { reacttoTronConfig } from './Config/ReactotronConfig';
 
 import I18n from "./I18n/I18n";
 class App extends Component {
@@ -31,9 +32,11 @@ class App extends Component {
     //Font doesn't scale
     Text.allowFontScaling = false;
 
-    codePush.sync({
-      deploymentKey: Platform.OS === "ios" ? codePushiOSKey : codePushAndroidKey
-    });
+    codePush.sync({ deploymentKey: Platform.OS === 'ios' ? codePushiOSKey : codePushAndroidKey  });
+
+    if(__DEV__) {
+      import('./Config/ReactotronConfig').then(() => console.log('Reactotron Configured'));
+    }
   }
 
   disableAppCenterCrashes = async () => {

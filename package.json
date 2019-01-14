@@ -78,7 +78,8 @@
     "babel-preset-react-native": "4.0.0",
     "jest": "21.2.1",
     "metro-react-native-babel-preset": "^0.48.3",
-    "react-test-renderer": "16.0.0"
+    "react-test-renderer": "16.0.0",
+    "reactotron-react-native": "^2.1.4"
   },
   "jest": {
     "preset": "react-native"

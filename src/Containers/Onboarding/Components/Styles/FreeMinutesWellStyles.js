@@ -1,21 +1,25 @@
 import { StyleSheet, Platform } from "react-native";
-import { moderateScale, scaledFontSize } from "../../../../Util/Scaling";
+import { moderateScale, setTextProperties } from "../../../../Util/Scaling";
 import Fonts from "../../../../Themes/Fonts";
 import { Metrics } from "../../../../Themes";
-import colors from "../../../../Themes/Colors";
 import { iPhoneXModels, Iphone5 } from "../../../../Util/Devices";
+
+const WellContainerStyles = {
+  width: Metrics.width * 0.89,
+  backgroundColor: "#CDCDF4",
+  alignSelf: "center",
+  justifyContent: "center",
+  alignItems: "flex-start",
+  borderWidth: 1,
+  borderRadius: 4,
+  borderColor: "#CDCDF4",
+  zIndex: 10
+};
 
 const iOS = Platform.OS === "ios";
 export default StyleSheet.create({
   freeMinutesWellContainer: {
-    width: Metrics.width * 0.89,
-    backgroundColor: "#CDCDF4",
-    alignSelf: "center",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: "#CDCDF4",
+    ...WellContainerStyles,
     marginTop: Iphone5
       ? moderateScale(45)
       : iOS
@@ -25,23 +29,14 @@ export default StyleSheet.create({
     paddingBottom: 15
   },
   freeMinutesWellContainerHome: {
-    width: Metrics.width * 0.89,
-    backgroundColor: "#CDCDF4",
-    alignSelf: "center",
-    position: "relative",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: "#CDCDF4",
-    top: Iphone5
+    ...WellContainerStyles,
+    marginTop: Iphone5
       ? moderateScale(-90, 0)
       : iPhoneXModels
       ? moderateScale(-150)
       : iOS
       ? moderateScale(-100, 0)
-      : moderateScale(-140, 0),
-    zIndex: 10
+      : moderateScale(-140, 0)
   },
   pillButtonContainer: {
     backgroundColor: "#63A901",
@@ -61,54 +56,47 @@ export default StyleSheet.create({
     padding: 10
   },
   pillButtonText: {
-    paddingLeft: 5,
-    color: "#fff",
-    fontWeight: "600",
-    fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 14 : moderateScale(16, 0)
+    ...setTextProperties(
+      "#fff",
+      Fonts.BoldFont,
+      Iphone5 ? 14 : moderateScale(16, 0),
+      "600"
+    ),
+    paddingLeft: 5
   },
   wellTitle: {
-    color: "#401674",
-    fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 15 : moderateScale(21, 0),
-    paddingLeft: 15,
-    marginTop: -10
-  },
-  wellTitleSpanish: {
-    color: "#401674",
-    fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 15 : moderateScale(21, 0.5),
+    ...setTextProperties(
+      "#401674",
+      Fonts.BoldFont,
+      Iphone5 ? 15 : moderateScale(21, 0),
+      null
+    ),
     paddingLeft: 15,
     marginTop: -10
   },
   wellSubtitle: {
-    color: "#401674",
-    fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 12 : moderateScale(13, 0),
+    ...setTextProperties(
+      "#401674",
+      Fonts.ItalicFont,
+      Iphone5 ? 12 : moderateScale(13, 0),
+      null
+    ),
     paddingLeft: 15,
     marginTop: -10
     // paddingBottom: 15
   },
-  wellSubtitleSpanish: {
-    color: "#401674",
-    fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 12 : moderateScale(13, 0.5),
-    paddingLeft: 15,
-    paddingBottom: 15
-  },
   pricingPillText: {
-    color: "#401674",
-    fontSize: Iphone5 ? 14 : moderateScale(16, 0),
+    ...setTextProperties(
+      "#401674",
+      Fonts.ItalicFont,
+      Iphone5 ? 14 : moderateScale(16, 0),
+      "600"
+    ),
     textAlign: "center",
-    fontWeight: "600",
-    fontFamily: Fonts.ItalicFont,
     paddingLeft: 5
   },
   availableMinutesPillText: {
-    color: "#fff",
-    alignSelf: "center",
-    fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(25, 0),
-    fontWeight: "500"
+    ...setTextProperties("#fff", Fonts.BaseFont, moderateScale(25, 0), "500"),
+    alignSelf: "center"
   }
 });

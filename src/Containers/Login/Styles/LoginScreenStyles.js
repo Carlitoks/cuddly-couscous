@@ -1,7 +1,18 @@
 import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
-import { moderateScale } from "../../../Util/Scaling";
+import { moderateScale, setTextProperties } from "../../../Util/Scaling";
 import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
+
+const activeButtonStyles = {
+  minWidth: Metrics.width * 0.78,
+  minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  borderWidth: 1,
+  borderRadius: 25,
+  borderColor: "#fff"
+};
 
 const android = Platform.OS === "android";
 export default StyleSheet.create({
@@ -35,38 +46,8 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  signInButtonDisable: {
-    minWidth: Metrics.width * 0.78,
-    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
-    backgroundColor: Colors.transparent,
-    borderColor: "#fff",
-    borderWidth: 1,
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  buttonEnabledText: {
-    textAlign: "center",
-    color: "#fff",
-    fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0)
-  },
-  transitionButtonText: {
-    textAlign: "center",
-    color: "#fff",
-    fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0)
-  },
-  createAccountPadding: { paddingTop: 20, width: Metrics.width },
   signInButtonEnabled: {
-    minWidth: Metrics.width * 0.78,
-    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#fff",
-    borderRadius: 25,
+    ...activeButtonStyles,
     backgroundColor: "#F39100",
     shadowColor: "rgba(0,0,0,1)",
     shadowOpacity: 0.38,
@@ -74,12 +55,32 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     elevation: 8
   },
+  signInButtonDisable: {
+    ...activeButtonStyles,
+    backgroundColor: Colors.transparent
+  },
+  buttonEnabledText: {
+    ...setTextProperties(
+      "#fff",
+      Fonts.BoldFont,
+      Iphone5 ? 14 : moderateScale(17, 0),
+      null
+    ),
+    textAlign: "center"
+  },
+  transitionButtonText: {
+    ...setTextProperties(
+      "#fff",
+      Fonts.BoldFont,
+      Iphone5 ? 14 : moderateScale(17, 0),
+      null
+    ),
+    textAlign: "center"
+  },
+  createAccountPadding: { paddingTop: 20, width: Metrics.width },
   inputViewContainer: { flexDirection: "column", paddingTop: 10 },
   labelStyle: {
-    fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 13 : moderateScale(13, 0),
-    fontWeight: "400",
-    color: "#FFFFFF",
+    ...setTextProperties("#fff", Fonts.ItalicFont, moderateScale(13, 0), "400"),
     paddingLeft: 3
   },
   inputInternalContainer: {
@@ -102,10 +103,7 @@ export default StyleSheet.create({
     marginBottom: android ? 1 : 30
   },
   forgotPasswordLabel: {
-    fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 13 : moderateScale(14, 0),
-    fontWeight: "400",
-    color: "#FFFFFF",
+    ...setTextProperties("#fff", Fonts.ItalicFont, moderateScale(14, 0), "400"),
     paddingLeft: 5,
     paddingRight: 5,
     textAlign: "right",

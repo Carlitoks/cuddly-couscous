@@ -139,7 +139,9 @@ class CustomerHomeScreen extends Component {
               alwaysBounceVertical={false}
               contentContainerStyle={styles.scrollViewFlex}
             >
-              <View style={{justifyContent: 'flex-end', alignItems: 'center'}}>
+              <View
+                style={{ justifyContent: "flex-end", alignItems: "center" }}
+              >
                 <AvatarSection
                   home={true}
                   firstName={firstName}
