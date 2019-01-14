@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { NetInfo, Text, Platform } from "react-native";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
-import { codePushAndroidKey, codePushiOSKey } from './Config/env';
+import { codePushAndroidKey, codePushiOSKey } from "./Config/env";
 
 import { delayUpdateInfo } from "./Ducks/NetworkInfoReducer";
 import { updateSettings } from "./Ducks/SettingsReducer";
@@ -12,9 +12,9 @@ import { addListeners } from "./Ducks/PushNotificationReducer";
 import { switchLanguage } from "./I18n/I18n";
 import deviceinfo from "react-native-device-info";
 import { InterfaceSupportedLanguages } from "./Config/Languages";
-import Crashes from 'appcenter-crashes';
+import Crashes from "appcenter-crashes";
 import codePush from "react-native-code-push";
-import branch, { BranchEvent } from 'react-native-branch'
+import branch, { BranchEvent } from "react-native-branch";
 
 import I18n from "./I18n/I18n";
 class App extends Component {
@@ -30,8 +30,9 @@ class App extends Component {
     //Font doesn't scale
     Text.allowFontScaling = false;
 
-    codePush.sync({ deploymentKey: Platform.OS === 'ios' ? codePushiOSKey : codePushAndroidKey  });
-
+    codePush.sync({
+      deploymentKey: Platform.OS === "ios" ? codePushiOSKey : codePushAndroidKey
+    });
   }
 
   disableAppCenterCrashes = async () => {
@@ -129,23 +130,7 @@ class App extends Component {
     }
   };
 
-  async componentDidMount() {
-    branch.subscribe(({ error, params }) => {
-      if (error) {
-        console.error('Error from Branch: ' + error)
-        return
-      }
-      console.log("Branch params: " + JSON.stringify(params))
-
-      // params will never be null if error is null
-    })
-    
-    // let lastParams = await branch.getLatestReferringParams() // params from last open
-    // let installParams = await branch.getFirstReferringParams() // params from original install
-    // console.log("Last", lastParams);
-    // console.log("Install", installParams);
-
-  }
+  async componentDidMount() {}
 
   // dumpAsyncStorage().then(data => console.log(data));
 
