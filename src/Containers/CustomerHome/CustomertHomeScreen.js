@@ -38,7 +38,7 @@ class CustomerHomeScreen extends Component {
 
     analytics.identify(uuid, {
       name: firstName
-    })
+    });
 
     getGeolocationCoords()
       .then(response => {

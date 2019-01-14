@@ -16,6 +16,16 @@ const primaryButton = {
   borderRadius: 27
 };
 
+const primaryButton = {
+    minWidth: Metrics.width * 0.78,
+    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 27,
+};
+
 export default StyleSheet.create({
   callButtonContainer: {
     flexDirection: 'column',
