@@ -153,8 +153,8 @@ class RegisterScreen extends Component {
         errorType: 'firstNameFormat'
       });
     } else {
-      if (errorType === 'firstNameFormat') {
-        updateOnboarding({
+      if (this.props.errorType === 'firstNameFormat') {
+        this.props.updateOnboarding({
           isValidFirstName: true,
           errorType: null
         });
@@ -196,8 +196,8 @@ class RegisterScreen extends Component {
           },
           registerDeviceResponse.payload.deviceToken
         );
-        const logInUserResponse = await logInAsync(email, password);
-        await asyncUpdateUser(
+        const logInUserResponse = await logInAsync(this.props.email, this.props.password);
+        const updateUserResponse = await asyncUpdateUser(
           {
             id: registerUserResponse.payload.id,
             firstName
