@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   ScrollView,
   View,
@@ -9,11 +9,12 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Linking
-} from "react-native";
-import LinguistHeader from "../CustomerHome/Components/Header";
-import LinearGradient from "react-native-linear-gradient";
-import { Colors, Metrics, Fonts } from "../../Themes";
-import { connect } from "react-redux";
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
+import { Icon } from 'react-native-elements';
+import LinguistHeader from '../CustomerHome/Components/Header';
+import { Colors, Metrics, Fonts } from '../../Themes';
 import {
   openSlideMenu,
   updateLocation,
@@ -25,13 +26,9 @@ import {
   getProfileAsync,
   updateView as updateUserProfile,
   getNativeLang
-} from "../../Ducks/UserProfileReducer";
-import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
-import {
-  logInAsync,
-  haveSession,
-  registerDevice
-} from "../../Ducks/AuthReducer";
+} from '../../Ducks/UserProfileReducer';
+import { checkRecord } from '../../Ducks/OnboardingRecordReducer';
+import { logInAsync, haveSession, registerDevice } from '../../Ducks/AuthReducer';
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
@@ -68,14 +65,14 @@ class RegisterScreen extends Component {
   }
 
   isValidEmail = text => {
-    let reg = new RegExp(EMAIL_REGEX);
+    const reg = new RegExp(EMAIL_REGEX);
     if (!reg.test(text)) {
       this.props.updateOnboarding({
         isValidEmail: false,
-        errorType: "emailFormat"
+        errorType: 'emailFormat'
       });
     } else {
-      if (this.props.errorType === "emailFormat") {
+      if (this.props.errorType === 'emailFormat') {
         this.props.updateOnboarding({ isValidEmail: true, errorType: null });
       }
       this.props.updateOnboarding({ isValidEmail: true });
@@ -158,10 +155,10 @@ class RegisterScreen extends Component {
     if (reg.test(text) || text.trim()=="") {
       this.props.updateOnboarding({
         isValidFirstName: false,
-        errorType: "firstNameFormat"
+        errorType: 'firstNameFormat'
       });
     } else {
-      if (this.props.errorType === "firstNameFormat") {
+      if (this.props.errorType === 'firstNameFormat') {
         this.props.updateOnboarding({
           isValidFirstName: true,
           errorType: null
@@ -176,7 +173,7 @@ class RegisterScreen extends Component {
     if (text.length < 5) {
       this.props.updateOnboarding({
         isValidPassword: false,
-        errorType: "passwordLength"
+        errorType: 'passwordLength'
       });
     } else {
       this.props.updateOnboarding({ isValidPassword: true, errorType: null });
@@ -203,7 +200,7 @@ class RegisterScreen extends Component {
     try {
       this.props.updateOnboarding({ errorType: null, makingRequest: true });
       const registerDeviceResponse = await registerDevice();
-      if (registerDeviceResponse.type !== "networkErrors/error") {
+      if (registerDeviceResponse.type !== 'networkErrors/error') {
         const registerUserResponse = await asyncCreateUser(
           {
             email: this.props.email,
@@ -211,10 +208,7 @@ class RegisterScreen extends Component {
           },
           registerDeviceResponse.payload.deviceToken
         );
-        const logInUserResponse = await logInAsync(
-          this.props.email,
-          this.props.password
-        );
+        const logInUserResponse = await logInAsync(this.props.email, this.props.password);
         const updateUserResponse = await asyncUpdateUser(
           {
             id: registerUserResponse.payload.id,
@@ -238,15 +232,11 @@ class RegisterScreen extends Component {
   };
 
   renderPrivacyPolicyText = () => {
-    const privacyPolicyAndTermsText = I18n.t(
-      "customerOnboarding.login.termsAndPrivacyNotice"
-    );
-    const privacyPolicyText = I18n.t("customerOnboarding.login.privacyPolicy");
-    const TermsText = I18n.t("customerOnboarding.login.terms");
+    const privacyPolicyAndTermsText = I18n.t('customerOnboarding.login.termsAndPrivacyNotice');
+    const privacyPolicyText = I18n.t('customerOnboarding.login.privacyPolicy');
+    const TermsText = I18n.t('customerOnboarding.login.terms');
     const continueText = privacyPolicyAndTermsText.split(TermsText)[0];
-    const AndText = privacyPolicyAndTermsText
-      .split(TermsText)[1]
-      .split(privacyPolicyText)[0];
+    const AndText = privacyPolicyAndTermsText.split(TermsText)[1].split(privacyPolicyText)[0];
     return (
       <View style={styles.termsAndConditionsViewContainer}>
         <Text style={styles.termsAndConditionsText}>{continueText}</Text>
@@ -255,23 +245,23 @@ class RegisterScreen extends Component {
           onPress={() => {
             /* Linking.openURL(TermsConditionsURI).catch(err =>
               console.error("An error occurred", err)
-            );*/
+            ); */
             Linking.canOpenURL(TermsConditionsURI)
               .then(supported => {
                 if (!supported) {
-                  console.log("Can't handle url: " + TermsConditionsURI);
+                  console.log(`Can't handle url: ${TermsConditionsURI}`);
                 } else {
                   return Linking.openURL(TermsConditionsURI);
                 }
               })
-              .catch(err => console.error("An error occurred", err));
+              .catch(err => console.error('An error occurred', err));
           }}
         >
           <Text
             style={{
               ...styles.termsAndConditionsText,
               fontFamily: fonts.BoldFont,
-              textDecorationLine: "underline",
+              textDecorationLine: 'underline',
               lineHeight: 20
             }}
           >
@@ -287,23 +277,23 @@ class RegisterScreen extends Component {
               Linking.canOpenURL(PrivacyPolicyURI)
                 .then(supported => {
                   if (!supported) {
-                    console.log("Can't handle url: " + PrivacyPolicyURI);
+                    console.log(`Can't handle url: ${PrivacyPolicyURI}`);
                   } else {
                     return Linking.openURL(PrivacyPolicyURI);
                   }
                 })
-                .catch(err => console.error("An error occurred", err));
+                .catch(err => console.error('An error occurred', err));
             }
             /* Linking.openURL(PrivacyPolicyURI).catch(err =>
               console.error("An error occurred", err)
-            )*/
+            ) */
           }
         >
           <Text
             style={{
               ...styles.termsAndConditionsText,
               fontFamily: fonts.BoldFont,
-              textDecorationLine: "underline",
+              textDecorationLine: 'underline',
               lineHeight: 20
             }}
           >
@@ -313,13 +303,9 @@ class RegisterScreen extends Component {
       </View>
     );
   };
+
   render() {
-    const {
-      makingRequest,
-      isValidEmail,
-      isValidFirstName,
-      isValidPassword
-    } = this.props;
+    const { makingRequest, isValidEmail, isValidFirstName, isValidPassword } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -327,16 +313,13 @@ class RegisterScreen extends Component {
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
               locations={[0, 1]}
-              style={{ height: "100%" }}
+              style={{ height: '100%' }}
             >
-              <LinguistHeader
-                type={"login"}
-                navigation={this.props.navigation}
-              />
+              <LinguistHeader type="login" navigation={this.props.navigation} />
               <LinearGradient
                 colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
                 locations={[0, 1]}
-                style={{ height: "100%" }}
+                style={{ height: '100%' }}
               >
                 <View style={styles.loginContainer}>
                   <View style={styles.inputContainer}>
@@ -344,17 +327,15 @@ class RegisterScreen extends Component {
                       <FieldError navigation={this.props.navigation} />
                     ) : (
                       <Text style={styles.registerAdviseText}>
-                        {I18n.t("customerOnboarding.login.provideInformation")}
+                        {I18n.t('customerOnboarding.login.provideInformation')}
                       </Text>
                     )}
 
                     <View style={styles.inputViewContainer}>
                       {this.props.firstName ? (
-                        <Text style={styles.labelText}>
-                          {I18n.t("firstname")}
-                        </Text>
+                        <Text style={styles.labelText}>{I18n.t('firstname')}</Text>
                       ) : (
-                        <Text> </Text>
+                        <Text />
                       )}
                       <View style={styles.inputsErrorContainer}>
                         <TextInput
@@ -362,17 +343,12 @@ class RegisterScreen extends Component {
                           style={styles.inputText}
                           onChangeText={text => this.validateFirstName(text)}
                           value={this.props.firstName}
-                          placeholder={I18n.t("firstname")}
-                          placeholderTextColor={"rgba(255,255,255,0.7)"}
+                          placeholder={I18n.t('firstname')}
+                          placeholderTextColor="rgba(255,255,255,0.7)"
                         />
-                        {this.props.errorType === "firstNameFormat" ? (
+                        {this.props.errorType === 'firstNameFormat' ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon
-                              name={"close"}
-                              type={"material-community"}
-                              color={"white"}
-                              size={15}
-                            />
+                            <Icon name="close" type="material-community" color="white" size={15} />
                           </View>
                         ) : (
                           <React.Fragment />
@@ -382,31 +358,26 @@ class RegisterScreen extends Component {
 
                     <View style={styles.inputViewContainer}>
                       {this.props.email ? (
-                        <Text style={styles.labelText}>{I18n.t("email")}</Text>
+                        <Text style={styles.labelText}>{I18n.t('email')}</Text>
                       ) : (
-                        <Text> </Text>
+                        <Text />
                       )}
                       <View style={styles.inputsErrorContainer}>
                         <TextInput
                           allowFontScaling={false}
-                          autoCapitalize={"none"}
+                          autoCapitalize="none"
                           style={styles.inputText}
                           onChangeText={text => this.isValidEmail(text)}
                           onBlur={() => this.isValidEmail(this.props.email)}
                           value={this.props.email}
-                          placeholder={I18n.t("email")}
-                          placeholderTextColor={"rgba(255,255,255,0.7)"}
-                          keyboardType={"email-address"}
+                          placeholder={I18n.t('email')}
+                          placeholderTextColor="rgba(255,255,255,0.7)"
+                          keyboardType="email-address"
                         />
-                        {this.props.errorType === "emailFormat" ||
-                        this.props.errorType === "AlreadyRegistered" ? (
+                        {this.props.errorType === 'emailFormat' ||
+                        this.props.errorType === 'AlreadyRegistered' ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon
-                              name={"close"}
-                              type={"material-community"}
-                              color={"#fff"}
-                              size={15}
-                            />
+                            <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
                         ) : (
                           <React.Fragment />
@@ -417,32 +388,25 @@ class RegisterScreen extends Component {
                     <View style={styles.inputViewContainer}>
                       {this.props.password ? (
                         <Text style={styles.labelText}>
-                          {I18n.t("customerOnboarding.register.password")}
+                          {I18n.t('customerOnboarding.register.password')}
                         </Text>
                       ) : (
-                        <Text> </Text>
+                        <Text />
                       )}
                       <View style={styles.inputsErrorContainer}>
                         <TextInput
                           allowFontScaling={false}
                           style={styles.inputText}
                           onChangeText={text => this.validatePassword(text)}
-                          autoCapitalize={"none"}
+                          autoCapitalize="none"
                           value={this.props.password}
-                          placeholder={I18n.t(
-                            "customerOnboarding.register.password"
-                          )}
-                          secureTextEntry={true}
-                          placeholderTextColor={"rgba(255,255,255,0.7)"}
+                          placeholder={I18n.t('customerOnboarding.register.password')}
+                          secureTextEntry
+                          placeholderTextColor="rgba(255,255,255,0.7)"
                         />
-                        {this.props.errorType === "passwordLength" ? (
+                        {this.props.errorType === 'passwordLength' ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon
-                              name={"close"}
-                              type={"material-community"}
-                              color={"#fff"}
-                              size={15}
-                            />
+                            <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
                         ) : (
                           <React.Fragment />
@@ -474,9 +438,7 @@ class RegisterScreen extends Component {
                         }
                       >
                         <Text style={styles.buttonEnabledText}>
-                          {I18n.t(
-                            "customerOnboarding.register.createAnAccount"
-                          )}
+                          {I18n.t('customerOnboarding.register.createAnAccount')}
                         </Text>
                       </TouchableOpacity>
 
@@ -484,12 +446,12 @@ class RegisterScreen extends Component {
                         style={styles.createAccountPadding}
                         onPress={() =>
                           this.props.navigation.dispatch({
-                            type: "LoginScreen"
+                            type: 'LoginScreen'
                           })
                         }
                       >
                         <Text style={styles.transitionButtonText}>
-                          {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
+                          {`${I18n.t('alreadyAccount')} ${I18n.t('signIn')} »`}
                         </Text>
                       </TouchableOpacity>
                     </View>
