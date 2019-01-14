@@ -15,7 +15,8 @@ import deviceinfo from "react-native-device-info";
 import { InterfaceSupportedLanguages } from "./Config/Languages";
 import Crashes from "appcenter-crashes";
 import codePush from "react-native-code-push";
-import branch, { BranchEvent } from "react-native-branch";
+import branch, { BranchEvent } from 'react-native-branch'
+import { reacttoTronConfig } from './Config/ReactotronConfig';
 import analytics from "@segment/analytics-react-native";
 import { reacttoTronConfig } from './Config/ReactotronConfig';
 

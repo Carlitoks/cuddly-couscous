@@ -31,6 +31,39 @@ import styles from './Styles/CustomerHomeScreenStyles';
 import CallButtons from './Components/Partials/CallButtons';
 
 class CustomerHomeScreen extends Component {
+  componentDidMount() {
+    const { linguistProfile, isLoggedIn, uuid, token, getProfileAsync,  } = this.props;
+
+    if (uuid !== "" && token !== "") {
+      getProfileAsync(uuid, token);
+    }
+    if (!linguistProfile && isLoggedIn) {
+      //checkOperatingHours(true);
+    }
+
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.usageError
+    ) {
+      Alert.alert(
+        I18n.t("invalidCode"),
+        this.props.navigation.state.params.usageError
+      );
+    }
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.minutesGranted
+    ) {
+      Alert.alert(
+        I18n.t("minutesAdded"),
+        I18n.t("complimentMinutes", {
+          maxMinutesPerUser: this.props.navigation.state.params
+            .maxMinutesPerUser,
+          organizer: this.props.navigation.state.params.organization
+        })
+      );
+    }
+  }
   componentWillMount() {
     const {  uuid, firstName, secondaryLangCode, navigation } = this.props;
 
@@ -61,41 +94,6 @@ class CustomerHomeScreen extends Component {
     InCallManager.stop();
     if (navigation.state.params && navigation.state.params.alertFail) {
       Alert.alert(I18n.t('notification'), I18n.t('session.callFailCustomer'));
-    }
-  }
-
-  componentDidMount() {
-    const { linguistProfile, isLoggedIn, uuid, token, getProfileAsync,  } = this.props;
-
-    if (uuid !== "" && token !== "") {
-      getProfileAsync(uuid, token);
-    }
-
-    if (!linguistProfile && isLoggedIn) {
-      //checkOperatingHours(true);
-    }
-
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.usageError
-    ) {
-      Alert.alert(
-        I18n.t("invalidCode"),
-        this.props.navigation.state.params.usageError
-      );
-    }
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.minutesGranted
-    ) {
-      Alert.alert(
-        I18n.t("minutesAdded"),
-        I18n.t("complimentMinutes", {
-          maxMinutesPerUser: this.props.navigation.state.params
-            .maxMinutesPerUser,
-          organizer: this.props.navigation.state.params.organization
-        })
-      );
     }
   }
 
