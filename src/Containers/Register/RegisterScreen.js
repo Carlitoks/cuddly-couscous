@@ -153,8 +153,8 @@ class RegisterScreen extends Component {
         errorType: 'firstNameFormat'
       });
     } else {
-      if (errorType === 'firstNameFormat') {
-        updateOnboarding({
+      if (this.props.errorType === 'firstNameFormat') {
+        this.props.updateOnboarding({
           isValidFirstName: true,
           errorType: null
         });

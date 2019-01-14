@@ -153,7 +153,7 @@ class LoginScreen extends Component {
                           allowFontScaling={false}
                           style={styles.inputText}
                           onChangeText={text => this.isValidEmail(text)}
-                          autoCapitalize={"none"}
+                          autoCapitalize="none"
                           onBlur={() => this.isValidEmail(this.props.email)}
                           value={this.props.email}
                           placeholder={I18n.t('email')}
