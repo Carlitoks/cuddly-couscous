@@ -13,5 +13,7 @@
 	</array>
 	<key>com.apple.developer.networking.multipath</key>
 	<true/>
+	<key>beta-reports-active</key>
+    	<true/>
 </dict>
 </plist>
