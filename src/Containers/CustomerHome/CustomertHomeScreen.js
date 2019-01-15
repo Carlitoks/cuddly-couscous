@@ -96,7 +96,6 @@ class CustomerHomeScreen extends Component {
       Alert.alert(I18n.t('notification'), I18n.t('session.callFailCustomer'));
     }
   }
-
   setPrimaryLangCode = () => {
     const { primaryLangCode, nativeLangCode } = this.props;
     if (primaryLangCode) {

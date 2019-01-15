@@ -153,8 +153,8 @@ class RegisterScreen extends Component {
         errorType: 'firstNameFormat'
       });
     } else {
-      if (this.props.errorType === 'firstNameFormat') {
-        this.props.updateOnboarding({
+      if (errorType === 'firstNameFormat') {
+        updateOnboarding({
           isValidFirstName: true,
           errorType: null
         });
@@ -352,8 +352,8 @@ class RegisterScreen extends Component {
                           autoCapitalize="none"
                           style={styles.inputText}
                           onChangeText={text => this.isValidEmail(text)}
-                          onBlur={() => this.isValidEmail(this.props.email)}
-                          value={this.props.email}
+                          onBlur={() => this.isValidEmail(email)}
+                          value={email}
                           placeholder={I18n.t('email')}
                           placeholderTextColor="rgba(255,255,255,0.7)"
                           keyboardType="email-address"
