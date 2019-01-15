@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Text, Image, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { Metrics, Colors } from '../../../Themes';
+import FemaleSilhouette from './Partials/FemaleSilhouette';
+import SGWaves from './Partials/Waves';
 import Questions from './Partials/Questions';
-import SilhouetteWavesBackground from '../../../Assets/SVG/SilhouetteWavesBackground';
-import FreeMinutesWell from '../../Onboarding/Components/FreeMinutesWell';
+
 // Styles
 import styles from './Styles/AvatarSectionStyles';
+import { moderateScale } from '../../../Util/Scaling';
+import { Iphone5 } from '../../../Util/Devices';
+import SilhouetteWavesBackground from '../../../Assets/SVG/SilhouetteWavesBackground';
+import metrics from '../../../Themes/Metrics';
+import FreeMinutesWell from '../../Onboarding/Components/FreeMinutesWell';
 
 export default class AvatarSection extends Component {
   renderSections = () => {
