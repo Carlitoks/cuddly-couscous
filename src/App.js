@@ -132,22 +132,6 @@ class App extends Component {
 
   async componentDidMount() {
     AppState.addEventListener('change', this._handleAppStateChange);
-
-    branch.subscribe(({ error, params }) => {
-      if (error) {
-        console.error('Error from Branch: ' + error)
-        return
-      }
-      console.log("Branch params: " + JSON.stringify(params))
-
-      // params will never be null if error is null
-    })
-    
-    // let lastParams = await branch.getLatestReferringParams() // params from last open
-    // let installParams = await branch.getFirstReferringParams() // params from original install
-    // console.log("Last", lastParams);
-    // console.log("Install", installParams);
-
   }
 
   componentWillUnmount() {
