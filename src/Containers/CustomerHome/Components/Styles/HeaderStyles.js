@@ -1,7 +1,7 @@
-import { StyleSheet, Platform } from 'react-native'
-import { Metrics, ApplicationStyles, Fonts, Colors } from '../../../../Themes'
+import { StyleSheet, Platform } from 'react-native';
+import { Metrics, ApplicationStyles, Fonts, Colors } from '../../../../Themes';
 
-const iOS = Platform.OS === "ios";
+const iOS = Platform.OS === 'ios';
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -18,12 +18,12 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   titleTextStyle: {
-    color: "#fff",
+    color: '#fff',
     fontFamily: Fonts.BaseFont,
-    fontSize: 18,
+    fontSize: 18
   },
   createAccountTitleTextStyle: {
-    color: "#fff",
+    color: '#fff',
     fontFamily: Fonts.BaseFont,
     fontSize: 18,
     fontWeight: '500',
@@ -31,9 +31,9 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   containerMenu: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-start",
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     height: 50,
     width: 50
   },
@@ -42,8 +42,8 @@ export default StyleSheet.create({
     padding: 0
   },
   buttonQR: {
-    alignItems: "flex-end",
-    justifyContent: "center",
+    alignItems: 'flex-end',
+    justifyContent: 'center',
     width: 50,
     height: 50,
     marginRight: 15
@@ -52,9 +52,9 @@ export default StyleSheet.create({
     padding: 5,
     margin: 0,
     paddingBottom: 0,
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: '#401674',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#401674'
   },
   headerOuter: {
     marginTop: iOS ? 30 : 20,
@@ -62,4 +62,5 @@ export default StyleSheet.create({
     borderBottomWidth: 0,
     height: 45
   },
-})
+  headerContainer: { flexDirection: 'column', justifyContent: 'flex-start' }
+});

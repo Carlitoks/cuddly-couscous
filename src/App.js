@@ -1,6 +1,7 @@
-import React, { Component } from "react";
-import { Provider } from "react-redux";
-import { NetInfo, Text, Platform } from "react-native";
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { NetInfo, Text, Platform } from 'react-native';
+import deviceinfo from "react-native-device-info";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 import { codePushAndroidKey, codePushiOSKey, analyticsKey } from "./Config/env";
@@ -18,7 +19,7 @@ import branch, { BranchEvent } from "react-native-branch";
 import analytics from "@segment/analytics-react-native";
 import { reacttoTronConfig } from './Config/ReactotronConfig';
 
-import I18n from "./I18n/I18n";
+import I18n from './I18n/I18n';
 class App extends Component {
   constructor(props) {
     super(props);
@@ -29,12 +30,12 @@ class App extends Component {
       store: null
     };
 
-    //Font doesn't scale
+    // Font doesn't scale
     Text.allowFontScaling = false;
 
-    codePush.sync({ deploymentKey: Platform.OS === 'ios' ? codePushiOSKey : codePushAndroidKey  });
+    codePush.sync({ deploymentKey: Platform.OS === 'ios' ? codePushiOSKey : codePushAndroidKey });
 
-    if(__DEV__) {
+    if (__DEV__) {
       import('./Config/ReactotronConfig').then(() => console.log('Reactotron Configured'));
     }
   }
@@ -59,12 +60,12 @@ class App extends Component {
         if (!userLocaleSet) {
           const deviceLocale = deviceinfo.getDeviceLocale();
           const shortDeviceLocale = deviceLocale.substring(0, 2);
-          let interfaceLocaleCode = "";
+          let interfaceLocaleCode = '';
 
-          if (shortDeviceLocale === "zh") {
+          if (shortDeviceLocale === 'zh') {
             interfaceLocaleCode = deviceLocale.substring(0, 7).toLowerCase();
           } else {
-            interfaceLocaleCode = shortDeviceLocale ? shortDeviceLocale : "en";
+            interfaceLocaleCode = shortDeviceLocale || "en";
           }
 
           const interfaceLocale = InterfaceSupportedLanguages.find(
@@ -105,10 +106,7 @@ class App extends Component {
       })
       .then(() => {
         // Even Listener to Detect Network Change
-        NetInfo.addEventListener(
-          "connectionChange",
-          this.handleFirstConnectivityChange
-        );
+        NetInfo.addEventListener('connectionChange', this.handleFirstConnectivityChange);
 
         // We Get The Initial Network Information
         return NetInfo.getConnectionInfo();
@@ -121,21 +119,15 @@ class App extends Component {
         });
 
         // Even Listener to Detect Network Change
-        NetInfo.addEventListener(
-          "connectionChange",
-          this.handleFirstConnectivityChange
-        );
+        NetInfo.addEventListener('connectionChange', this.handleFirstConnectivityChange);
       });
-    //PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
-    //PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
+    // PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
+    // PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
     // you could check the app state to respond differently to push notifications depending on if the app is running in the background or is currently active.
   }
 
   componentWillUnmount() {
-    NetInfo.removeEventListener(
-      "connectionChange",
-      this.handleFirstConnectivityChange
-    );
+    NetInfo.removeEventListener('connectionChange', this.handleFirstConnectivityChange);
   }
 
   handleFirstConnectivityChange = connectionInfo => {
@@ -146,11 +138,7 @@ class App extends Component {
     }
   };
 
-  /*componentDidMount() {
-    if (!analytics.ready) {
-      analytics.setup("segment_write_key", {}).catch(() => {});
-    }
-  }*/
+  componentDidMount() {}
 
   // dumpAsyncStorage().then(data => console.log(data));
 

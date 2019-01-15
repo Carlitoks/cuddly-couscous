@@ -14,7 +14,7 @@ const moderateScale = (size, factor = 0.5) => {
   return size + (scale(size) - size) * factor;
 };
 
-setTextProperties = (color, fontFamily, fontSize, fontWeight) => {
+const setTextProperties = (color, fontFamily, fontSize, fontWeight) => {
   return {
     color,
     fontFamily,

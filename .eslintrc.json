@@ -12,7 +12,8 @@
     "jsx-a11y/href-no-hash": [0],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "linebreak-style": "off",
-    "react/prop-types": [0]
+    "react/prop-types": [0],
+    "no-shadow": "off"
   },
   "parserOptions": {
     "ecmaFeatures": {
