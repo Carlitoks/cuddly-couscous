@@ -1,15 +1,20 @@
 import { AsyncStorage } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import AXIOS from "../Config/AxiosConfig";
+import {getClient} from "../Config/AxiosConfig";
 
 // list of events to send to the server in the next
 // batch that gets flushed
 let events = [];
 let lastFlushed = null;
 let version = null;
+let authToken = false;
+
+export const setAuthToken = (str) => {
+  authToken = str;
+};
 
 const record = (evt) => {
-  evt.createdAt = new Date();
+  evt.createdAt = new Date().getTime();
   evt.meta = {
     mobileAppVersion: version
   };
@@ -29,6 +34,13 @@ export const recordSessionTokboxEvent = (name, payload) => {
     payload
   });
 };
+
+export const recordApiCall = (method, path) => {
+  record({
+    event: 'api.call',
+    payload: {method, path}
+  });
+}
 
 export const recordApiError = (method, path, payload = {}) => {
   record({
@@ -65,7 +77,7 @@ export const recordAppStateEvent = (from, to) => {
 
 export const recordNavigationEvent = (to) => {
   record({
-    type: 'app.nav',
+    event: 'app.nav',
     payload: {to}
   });
 };
@@ -90,8 +102,7 @@ export const persist = async () => {
 };
 
 export const flushEvents = () => {
-  console.log("called flush")
-  if (events.length == 0) {
+  if (events.length == 0 || !authToken) {
     return;
   }
   const now = new Date().getTime();
@@ -99,14 +110,20 @@ export const flushEvents = () => {
     event: 'app.forensics',
     payload: {
       current: now,
-      lastFlushed: (!!lastFlushed) ? lastFlushed.getTime() : null
+      lastFlushed: (!!lastFlushed) ? lastFlushed.getTime() : null,
+      numEvents: events.length
     }
   });
 
   try {
-    AXIOS.post("/forensics", {
+    let api = getClient();
+    api.post("/forensics", {
       sentAt: now,
       events: events
+    }, {
+      headers: {
+        'Authorization': "Bearer " + authToken
+      }
     }).then(() => {
       events = [];
       lastFlushed = new Date();

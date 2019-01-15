@@ -18,8 +18,7 @@ import branch, { BranchEvent } from 'react-native-branch';
 import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
-import { setAuthToken } from "./Config/AxiosConfig";
-import { init, recordAppStateEvent, persist } from "./Util/Forensics";
+import { init, setAuthToken, recordAppStateEvent, persist } from "./Util/Forensics";
 
 class App extends Component {
   constructor(props) {
