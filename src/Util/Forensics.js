@@ -101,7 +101,12 @@ export const persist = async () => {
   await AsyncStorage.setItem('solo.forensics', JSON.stringify(events));
 };
 
-export const flushEvents = () => {
+export const clear = async () => {
+  events = [];
+  AsyncStorage.setItem('solo.forensics', JSON.stringify(events));
+}
+
+export const flushEvents = async () => {
   if (events.length == 0 || !authToken) {
     return;
   }
@@ -115,18 +120,19 @@ export const flushEvents = () => {
     }
   });
 
+  const eventsToSend = events
+  await clear();
+
   try {
     let api = getClient();
+    lastFlushed = new Date();
     api.post("/forensics", {
       sentAt: now,
-      events: events
+      events: eventsToSend
     }, {
       headers: {
         'Authorization': "Bearer " + authToken
       }
-    }).then(() => {
-      events = [];
-      lastFlushed = new Date();
     }).catch(() => {
       recordApiError("POST", "/forensics");
     });

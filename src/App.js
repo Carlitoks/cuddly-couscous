@@ -19,6 +19,7 @@ import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
 import { init, setAuthToken, recordAppStateEvent, persist } from "./Util/Forensics";
+import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 
 class App extends Component {
   constructor(props) {
@@ -174,9 +175,11 @@ class App extends Component {
     }
 
     return (
-      <Provider store={this.state.store}>
-        <ReduxNavigation />
-      </Provider>
+      <AppErrorBoundary>
+        <Provider store={this.state.store}>
+          <ReduxNavigation />
+        </Provider>
+      </AppErrorBoundary>
     );
   }
 }
