@@ -270,7 +270,7 @@ class UserProfileView extends Component {
                   subtitle={
                     gender === "decline" || gender === ""
                       ? I18n.t("unspecifiedGender")
-                      : _capitalize(gender)
+                      : _capitalize(gender === 'male' ? I18n.t("male") : I18n.t("female"))
                   }
                   subtitleStyle={styles.listSubtitle}
                   onPress={() => {

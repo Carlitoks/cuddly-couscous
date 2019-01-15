@@ -47,10 +47,10 @@ export default class CallHistoryComponent extends Component {
                     item.duration >= 60
                       ? `${moment
                           .utc(item.duration * 1000)
-                          .format("mm:ss")} mins`
+                          .format("mm:ss")} ${I18n.t('minutes')}`
                       : `${moment
                           .utc(item.duration * 1000)
-                          .format("mm:ss")} seconds`
+                          .format("mm:ss")} ${I18n.t('seconds')}`
                   }
                   avatar={
                     item.avatarURL
@@ -64,10 +64,10 @@ export default class CallHistoryComponent extends Component {
                       ? item.duration >= 60
                         ? `${moment
                             .utc(item.duration * 1000)
-                            .format("mm:ss")} mins`
+                            .format("mm:ss")} ${I18n.t('minutes')}`
                         : `${moment
                             .utc(item.duration * 1000)
-                            .format("mm:ss")} seconds`
+                            .format("mm:ss")} ${I18n.t('seconds')}`
                       : item.missedCall
                   }
                   subtitleStyle={styles.colorStyle}

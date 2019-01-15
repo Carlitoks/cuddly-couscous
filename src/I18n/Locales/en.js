@@ -264,6 +264,7 @@ export default (ENG = {
   maxTimeLimit: "Max. Time Limit",
   minutesAbbreviation: "{{minutes}} min",
   minutes: "minutes",
+  seconds: "seconds",
   missed: "Missed",
   modifyPayment: "Modify payment information",
   mute: "Mute",
