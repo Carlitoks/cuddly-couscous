@@ -135,7 +135,7 @@ export default (reducer = (state, action) => {
       break;
 
     default:
-      if (!action.payload && action.type.indexOf("View") != -1) {
+      if (!action.payload && (action.type.indexOf("View") != -1 || action.type.indexOf("Screen") != -1)) {
         amplitude.logEvent("Navigation", {
           "View Name": action.type.toString()
         });
