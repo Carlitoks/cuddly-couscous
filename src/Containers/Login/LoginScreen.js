@@ -34,11 +34,8 @@ import I18n from '../../I18n/I18n';
 
 // Styles
 import styles from './Styles/LoginScreenStyles';
-import { moderateScale } from '../../Util/Scaling';
 import SGWaves from '../../Assets/SVG/SGWaves';
-import { help, EMAIL_REGEX } from '../../Util/Constants';
-import metrics from '../../Themes/Metrics';
-import { Icon } from 'react-native-elements';
+import { EMAIL_REGEX } from '../../Util/Constants';
 import FieldError from '../Register/Components/FieldError';
 import { update as updateOnboarding } from '../../Ducks/OnboardingReducer';
 

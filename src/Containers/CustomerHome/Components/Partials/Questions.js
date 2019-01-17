@@ -5,7 +5,6 @@ import ScrollVertical from '../../../../Util/ScrollText';
 
 // Styles
 import styles from './Styles/QuestionStyles';
-import { Metrics } from '../../../../Themes';
 
 export default class Questions extends Component {
   constructor(props) {
