@@ -154,8 +154,8 @@ class LoginScreen extends Component {
                           style={styles.inputText}
                           onChangeText={text => this.isValidEmail(text)}
                           autoCapitalize="none"
-                          onBlur={() => this.isValidEmail(this.props.email)}
-                          value={this.props.email}
+                          onBlur={() => this.isValidEmail(email)}
+                          value={email}
                           placeholder={I18n.t('email')}
                           placeholderTextColor="rgba(255,255,255,0.5)"
                           keyboardType="email-address"

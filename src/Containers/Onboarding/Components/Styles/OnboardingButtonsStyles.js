@@ -8,22 +8,12 @@ import metrics from '../../../../Themes/Metrics';
 
 const primaryButton = {
   minWidth: Metrics.width * 0.78,
+  minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
   borderWidth: 1,
-  borderRadius: 30,
-  marginTop: metrics.width < 375 ? 15 : 0,
-};
-
-const primaryButton = {
-    minWidth: Metrics.width * 0.78,
-    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 27,
+  borderRadius: 27
 };
 
 export default StyleSheet.create({
