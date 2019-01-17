@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
 import I18n from '../../../../I18n/I18n';
 import ScrollVertical from '../../../../Util/ScrollText';
 
 // Styles
 import styles from './Styles/QuestionStyles';
-import { Metrics } from '../../../../Themes';
 
 export default class Questions extends Component {
   constructor(props) {

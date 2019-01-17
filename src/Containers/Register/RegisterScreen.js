@@ -270,7 +270,7 @@ class RegisterScreen extends Component {
             ) */
           }
         >
-          <Text style={styleMedia.termsAndConditionsTextLink}>{` ${privacyPolicyText}`}</Text>
+          <Text style={styles.termsAndConditionsTextLink}>{` ${privacyPolicyText}`}</Text>
         </TouchableOpacity>
       </View>
     );

@@ -13,7 +13,8 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "linebreak-style": "off",
     "react/prop-types": [0],
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "react/prefer-stateless-function": "off"
   },
   "parserOptions": {
     "ecmaFeatures": {

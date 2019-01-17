@@ -1,87 +1,74 @@
-import React, { Component } from "react";
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Platform
-} from "react-native";
-import RenderPicker from "./PickerSelect";
-import TranslationSwap from "../../../../Assets/SVG/translationSwap";
+import React, { Component } from 'react';
+import { View, TouchableOpacity, Platform } from 'react-native';
+import { connect } from 'react-redux';
+import RenderPicker from './PickerSelect';
 import {
   modifyAdditionalDetails,
   swapCurrentSessionLanguages
-} from "../../../../Ducks/NewSessionReducer";
-import { connect } from "react-redux";
-import I18n from "./../../../../I18n/I18n";
+} from '../../../../Ducks/NewSessionReducer';
+import I18n from '../../../../I18n/I18n';
 
 // Styles
-import styles from "./Styles/InfoInputsStyles";
-import { Iphone5 } from "../../../../Util/Devices";
-import { SwitchLangs } from "../../../../Assets/SVG";
-import { Metrics } from "../../../../Themes";
+import styles from './Styles/InfoInputsStyles';
+import { SwitchLangs } from '../../../../Assets/SVG';
+
 class InfoInputs extends Component {
-  constructor(props) {
-    super(props);
-  }
   renderAdditionalDetails = () => {
-    if (this.props.type === "onboarding") {
+    const { type, openSlideMenu, swapCurrentSessionLanguages } = this.props;
+    if (type === 'onboarding') {
       return <React.Fragment />;
-    } else {
-      return (
-        <React.Fragment>
-          <View style={[styles.paddingBottomContainer]}>
-            <RenderPicker
-              navType={this.props.type}
-              openSlideMenu={this.props.openSlideMenu}
-              title={I18n.t("customerHome.customNote.label")}
-              placeholder={I18n.t("customerHome.customNote.placeholder")}
-              type={"additionalDetails"}
-            />
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.swapCurrentSessionLanguages();
-            }}
-            style={
-              Platform.OS === "android"
-                ? styles.swapArrows
-                : styles.swapArrowsIos
-            }
-          >
-            <SwitchLangs width={18.5} height={70} />
-          </TouchableOpacity>
-        </React.Fragment>
-      );
     }
+    return (
+      <React.Fragment>
+        <View style={[styles.paddingBottomContainer]}>
+          <RenderPicker
+            navType={type}
+            openSlideMenu={openSlideMenu}
+            title={I18n.t('customerHome.customNote.label')}
+            placeholder={I18n.t('customerHome.customNote.placeholder')}
+            type="additionalDetails"
+          />
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            swapCurrentSessionLanguages();
+          }}
+          style={Platform.OS === 'android' ? styles.swapArrows : styles.swapArrowsIos}
+        >
+          <SwitchLangs width={18.5} height={70} />
+        </TouchableOpacity>
+      </React.Fragment>
+    );
   };
 
   renderStyles() {
-    if (this.props.type === "onboarding") {
+    const { type } = this.props;
+    if (type === 'onboarding') {
       return styles.inputsContainer;
-    } else {
-      return styles.inputsContainerHome;
     }
+    return styles.inputsContainerHome;
   }
+
   render() {
+    const { type, openSlideMenu } = this.props;
     return (
       <View style={this.renderStyles()}>
         <View style={styles.paddingBottomContainer}>
           <RenderPicker
-            navType={this.props.type}
-            openSlideMenu={this.props.openSlideMenu}
-            title={I18n.t("customerHome.secondaryLang.label")}
-            placeholder={I18n.t("customerHome.secondaryLang.placeholder")}
-            type={"secondaryLang"}
+            navType={type}
+            openSlideMenu={openSlideMenu}
+            title={I18n.t('customerHome.secondaryLang.label')}
+            placeholder={I18n.t('customerHome.secondaryLang.placeholder')}
+            type="secondaryLang"
           />
         </View>
         <View style={[styles.paddingBottomContainer]}>
           <RenderPicker
-            navType={this.props.type}
-            openSlideMenu={this.props.openSlideMenu}
-            title={I18n.t("customerHome.primaryLang.label")}
-            placeholder={I18n.t("customerHome.secondaryLang.placeholder")}
-            type={"primaryLang"}
+            navType={type}
+            openSlideMenu={openSlideMenu}
+            title={I18n.t('customerHome.primaryLang.label')}
+            placeholder={I18n.t('customerHome.secondaryLang.placeholder')}
+            type="primaryLang"
           />
         </View>
         {this.renderAdditionalDetails()}
@@ -90,11 +77,9 @@ class InfoInputs extends Component {
   }
 }
 
-const mS = state => {
-  return {
-    session: state.newSessionReducer.session
-  };
-};
+const mS = state => ({
+  session: state.newSessionReducer.session
+});
 
 const mD = {
   modifyAdditionalDetails,

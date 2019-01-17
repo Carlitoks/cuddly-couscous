@@ -1,26 +1,25 @@
-import React, { Component } from "react";
-import { ScrollView, View, Alert } from "react-native";
-import LinguistHeader from "../CustomerHome/Components/Header";
-import AvatarSection from "../CustomerHome/Components/AvatarSection";
-import CallSection from "../CustomerHome/Components/CallSection";
-import LinearGradient from "react-native-linear-gradient";
-import { Colors } from "../../Themes";
-import { connect } from "react-redux";
-import SlideUpPanel from "../CustomerHome/Components/Partials/SlideUpPanel";
+import React, { Component } from 'react';
+import { ScrollView, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
+import LinguistHeader from '../CustomerHome/Components/Header';
+import AvatarSection from '../CustomerHome/Components/AvatarSection';
+import CallSection from '../CustomerHome/Components/CallSection';
+import { Colors } from '../../Themes';
+import SlideUpPanel from '../CustomerHome/Components/Partials/SlideUpPanel';
 import {
   openSlideMenu,
   updateLocation,
   ensureSessionDefaults
-} from "../../Ducks/NewSessionReducer";
-import { getGeolocationCoords } from "../../Util/Helpers";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
-import FreeMinutesWell from "./Components/FreeMinutesWell";
-import { clear as clearOnboarding } from "../../Ducks/OnboardingReducer";
+} from '../../Ducks/NewSessionReducer';
+import { getGeolocationCoords } from '../../Util/Helpers';
+import ViewWrapper from '../ViewWrapper/ViewWrapper';
+import { clear as clearOnboarding } from '../../Ducks/OnboardingReducer';
 
 // Styles
-import styles from "./Styles/OnboardingScreenStyles";
-import OnboardingButtons from "./Components/OnboardingButtons";
-import DeviceInfo from "react-native-device-info";
+import styles from './Styles/OnboardingScreenStyles';
+import OnboardingButtons from './Components/OnboardingButtons';
+
 class OnboardingScreen extends Component {
   componentWillMount() {
     const {
@@ -41,54 +40,49 @@ class OnboardingScreen extends Component {
         });
       })
       .catch(err => {
-        console.log("GeoLocation error  ", err);
+        console.log('GeoLocation error  ', err);
       });
 
     ensureSessionDefaults({
-      primaryLangCode: primaryLangCode ? primaryLangCode : "eng",
-      secondaryLangCode: secondaryLangCode ? secondaryLangCode : ""
+      primaryLangCode: primaryLangCode || 'eng',
+      secondaryLangCode: secondaryLangCode || ''
     });
     if (isLoggedIn && token) {
-      navigation.dispatch({ type: "Home" });
+      navigation.dispatch({ type: 'Home' });
     }
   }
 
   openSlideMenu = type => {
-    this.props.openSlideMenu({ type });
+    const { openSlideMenu } = this.props;
+    openSlideMenu({ type });
   };
+
   render() {
+    const { navigation } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
           <LinearGradient
             colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
             locations={[0, 1]}
-            style={{ height: "100%" }}
+            style={styles.heightFull}
           >
-            <LinguistHeader
-              type={"onboarding"}
-              navigation={this.props.navigation}
-            />
+            <LinguistHeader type="onboarding" navigation={navigation} />
             <ScrollView
-              automaticallyAdjustContentInsets={true}
+              automaticallyAdjustContentInsets
               alwaysBounceVertical={false}
               contentContainerStyle={styles.scrollViewFlex}
             >
-              <View
-                style={{ justifyContent: "flex-end", alignItems: "center" }}
-              >
-                <AvatarSection
-                  pointerEvents={"none"}
-                  navigation={this.props.navigation}
-                />
+              <View style={styles.bottomContainer}>
+                <AvatarSection pointerEvents="none" navigation={navigation} />
 
                 <CallSection
-                  navigation={this.props.navigation}
+                  navigation={navigation}
                   openSlideMenu={this.openSlideMenu}
-                  type={"onboarding"}
+                  type="onboarding"
                 />
               </View>
-              <OnboardingButtons navigation={this.props.navigation} />
+              <OnboardingButtons navigation={navigation} />
             </ScrollView>
             <SlideUpPanel />
           </LinearGradient>

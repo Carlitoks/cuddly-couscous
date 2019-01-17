@@ -17,26 +17,38 @@ const WellContainerStyles = {
 };
 
 const iOS = Platform.OS === 'ios';
+
+const renderMarginTopHome = () => {
+  if (Iphone5) {
+    return moderateScale(-90, 0);
+  }
+  if (iPhoneXModels) {
+    return moderateScale(-150);
+  }
+  if (iOS) {
+    return moderateScale(-100, 0);
+  }
+  return moderateScale(-100, 0);
+};
+
+const renderMarginTopGeneral = () => {
+  if (Iphone5) {
+    return moderateScale(45);
+  }
+  if (iOS) {
+    return moderateScale(85);
+  }
+  return moderateScale(45);
+};
+
 export default StyleSheet.create({
   freeMinutesWellContainer: {
     ...WellContainerStyles,
-    marginTop: Iphone5
-      ? moderateScale(45)
-      : iOS
-      ? moderateScale(85)
-      : moderateScale(45),
-    zIndex: 10,
-    paddingBottom: 15
+    marginTop: renderMarginTopGeneral()
   },
   freeMinutesWellContainerHome: {
     ...WellContainerStyles,
-    marginTop: Iphone5
-      ? moderateScale(-90, 0)
-      : iPhoneXModels
-      ? moderateScale(-150)
-      : iOS
-      ? moderateScale(-100, 0)
-      : moderateScale(-100, 0)
+    marginTop: renderMarginTopHome()
   },
   pillButtonContainer: {
     backgroundColor: '#63A901',
