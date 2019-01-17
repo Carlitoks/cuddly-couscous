@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
+import { Reactotron } from 'reactotron-react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,6 +30,7 @@ class ScrollVertical extends Component {
       duration: this.props.duration || 500,
       enableAnimation: true,
       enableTouchable: true,
+      fadeAnim: new Animated.Value(1),
     };
   }
 
@@ -97,27 +99,44 @@ class ScrollVertical extends Component {
     }
     Animated.sequence([
       Animated.timing(
+        this.state.fadeAnim,
+      {
+        toValue: 0,
+        duration: this.state.duration,
+      }           
+      ),
+      Animated.timing(
         this.state.translateValue,
         {
           isInteraction: false,
           easing: Easing.linear,
           duration: this.state.duration,
           toValue: { x: 0, y: this.state.tempValue },
-        },
+        },       
       ),
+      Animated.timing(
+        this.state.fadeAnim,
+      {
+        toValue: 1,
+        duration: this.state.duration,
+      }           
+      ),
+
     ]).start(() => {
       if (this.state.tempValue - this.state.scrollHeight === -this.state.contentOffsetY) {
       this.state.translateValue.setValue({ x: 0, y: 0 });
       this.state.tempValue = 0;
     }
     this.startAnimation();
+    console.log("lel");
   });
   }
 
   render() {
+    let { fadeAnim } = this.state;
     return (
       <View
-    style={[styles.container, { height: this.state.scrollHeight }, this.props.container]}
+    style={[styles.container, { maxHeight: this.state.scrollHeight }, this.props.container]}
   >
     {
       this.state.content.length > 1
@@ -126,6 +145,7 @@ class ScrollVertical extends Component {
           {
             flexDirection: 'column',
             transform: [{ translateY: this.state.translateValue.y }],
+            opacity: fadeAnim
           }]}
         >
         {this.state.content}

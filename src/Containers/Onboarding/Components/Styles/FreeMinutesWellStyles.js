@@ -36,7 +36,7 @@ export default StyleSheet.create({
       ? moderateScale(-150)
       : iOS
       ? moderateScale(-100, 0)
-      : moderateScale(-140, 0)
+      : moderateScale(-100, 0)
   },
   pillButtonContainer: {
     backgroundColor: '#63A901',
