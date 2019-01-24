@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {getClient} from "../Config/AxiosConfig";
+import {forensicsEnabled} from "../Config/env";
 
 // list of events to send to the server in the next
 // batch that gets flushed
@@ -14,6 +15,9 @@ export const setAuthToken = (str) => {
 };
 
 const record = (evt) => {
+  if (!forensicsEnabled) {
+    return;
+  }
   evt.createdAt = new Date().getTime();
   evt.meta = {
     mobileAppVersion: version
@@ -84,6 +88,9 @@ export const recordNavigationEvent = (to) => {
 
 // load any events from storage
 export const init = async () => {
+  if (!forensicsEnabled) {
+    return;
+  }
   try {
     version = DeviceInfo.getReadableVersion();
     const serializedState = await AsyncStorage.getItem("solo.forensics");
@@ -107,6 +114,9 @@ export const clear = async () => {
 }
 
 export const flushEvents = async () => {
+  if (!forensicsEnabled) {
+    return;
+  }
   if (events.length == 0 || !authToken) {
     return;
   }
