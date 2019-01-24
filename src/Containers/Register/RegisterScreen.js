@@ -310,7 +310,6 @@ class RegisterScreen extends Component {
                           autoCapitalize={"none"}
                           style={styles.inputText}
                           onChangeText={text => this.isValidEmail(text)}
-                          onChange={text => this.isValidEmail(text)}
                           onBlur={() => this.isValidEmail(this.props.email)}
                           value={this.props.email}
                           placeholder={I18n.t("email")}

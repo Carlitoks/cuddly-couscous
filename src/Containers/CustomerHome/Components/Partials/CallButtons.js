@@ -54,7 +54,9 @@ class CallButtons extends Component {
       updateSettings,
       selectedScenario,
       modifyAVModePreference,
-      customerUpdateSettings
+      customerUpdateSettings,
+      video,
+      mic
     } = this.props;
     cleanSelected();
     clearPromoCode();
@@ -84,6 +86,16 @@ class CallButtons extends Component {
           ) {
             await checkCallPermissions(valueToUpdate => {
               this.props.customerUpdateSettings(valueToUpdate);
+              Permissions.checkMultiple(["camera", "microphone"]).then(
+                response => {
+                  if (
+                    response.camera == "authorized" &&
+                    response.microphone == "authorized"
+                  ) {
+                    navigation.dispatch({ type: "CustomerView" });
+                  }
+                }
+              );
             });
           }
           if (
@@ -193,6 +205,7 @@ const mS = state => ({
   sessionId: state.activeSessionReducer.sessionID,
   token: state.auth.token,
   video: state.activeSessionReducer.video,
+  mic: state.activeSessionReducer.mic,
   approxTime: state.activeSessionReducer.selectedTime,
   timer: state.activeSessionReducer.timer,
   counterId: state.activeSessionReducer.counterId,
