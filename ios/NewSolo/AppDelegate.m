@@ -25,13 +25,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
-  // Uncomment this line to use the test key instead of the live one.
-  #ifdef DEBUG
-      [RNBranch useTestInstance];
-  #endif
-  #ifdef DEBUG
-    [RNBranch setDebug];
-  #endif
+  
   [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
   NSURL *jsCodeLocation;
 
