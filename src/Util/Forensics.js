@@ -39,10 +39,17 @@ export const recordSessionTokboxEvent = (name, payload) => {
   });
 };
 
-export const recordApiCall = (method, path) => {
-  record({
+export const recordApiCall = (method, path, payload = null) => {
+  record({ 
     event: 'api.call',
-    payload: {method, path}
+    payload: !!payload ? {method, path, payload} : {method, path}
+  });
+}
+
+export const recordPushNotificationEvent = (name, payload = null) => {
+  record({
+    event: 'app.push-notification.' + name,
+    payload: !!payload ? payload : null
   });
 }
 

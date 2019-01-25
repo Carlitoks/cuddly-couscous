@@ -51,7 +51,7 @@ class SubscriberBox extends Component {
         });
       },
       error: event => {
-        recordSessionTokboxEvent('subscriber.event', {
+        recordSessionTokboxEvent('subscriber.error', {
           sessionID: this.props.sessionID,
           event
         });
@@ -60,6 +60,7 @@ class SubscriberBox extends Component {
         this.props.remountPublisherAndSubscriber();
       },
       videoDataReceived: () => {
+        recordSessionTokboxEvent('subscriber.videoDataReceived', {sessionID: this.props.sessionID});
         if (this.props.visibility) {
           this.props.update({
             modalReconnect: false
@@ -87,7 +88,7 @@ class SubscriberBox extends Component {
         this.props.videoState(true);
       },
       videoDisableWarningLifted: () => {
-        recordSessionTokboxEvent('subscriber.videoDisableWarning', {sessionID: this.props.sessionID});
+        recordSessionTokboxEvent('subscriber.videoDisableWarningLifted', {sessionID: this.props.sessionID});
         console.log("VIDEO DISABLED WARNING LIFTED EVENT");
         this.props.updateVideoWarningEvent(
           VIDEO_WARNING.TYPE,

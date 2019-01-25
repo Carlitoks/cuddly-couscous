@@ -73,7 +73,7 @@ class SessionBox extends Component {
         this.props.errorEvent(event);
       },
       sessionConnected: () => {
-        recordSessionTokboxEvent('session.connected', {sessionID: this.props.sessionID});
+        recordSessionTokboxEvent('session.sessionConnected', {sessionID: this.props.sessionID});
         console.log("SESSION CONNECTED EVENT");
         this.props.connectionConnectedEvent();
         this.props.updateSettings({
@@ -81,7 +81,7 @@ class SessionBox extends Component {
         });
       },
       sessionReconnected: () => {
-        recordSessionTokboxEvent('session.reconnected', {sessionID: this.props.sessionID});
+        recordSessionTokboxEvent('session.sessionReconnected', {sessionID: this.props.sessionID});
         console.log("SESSION RECONNECTED EVENT");
         //this.props.videoState(true);
         SoundManager["Reconnected"].play();
@@ -90,12 +90,12 @@ class SessionBox extends Component {
         });
       },
       sessionDisconnected: () => {
-        recordSessionTokboxEvent('session.disconnected', {sessionID: this.props.sessionID});
+        recordSessionTokboxEvent('session.sessionDisconnected', {sessionID: this.props.sessionID});
         console.log("SESSION DISCONNECTED EVENT");
         this.props.connectionDisconnectEvent();
       },
       sessionReconnecting: () => {
-        recordSessionTokboxEvent('session.reconnecting', {sessionID: this.props.sessionID});
+        recordSessionTokboxEvent('session.sessionReconnecting', {sessionID: this.props.sessionID});
         console.log("SESSION RECONNECTING EVENT");
       },
       signal: event => {
