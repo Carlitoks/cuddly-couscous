@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import InCallManager from "react-native-incall-manager";
 import {
   changeStatus,
-  reloadStatus,
   updateSettings,
   asyncGetAccountInformation,
   getCurrentAvailability
@@ -14,11 +13,9 @@ import {
   getProfileAsync
 } from "../../Ducks/UserProfileReducer";
 
-import {
-  incomingCallNotification
-} from '../../Ducks/PushNotificationReducer';
+import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
 
-import {View, Text, ScrollView, Alert, AppState, NetInfo} from "react-native";
+import { View, Text, ScrollView, Alert, AppState, NetInfo } from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
 import timer from "react-native-timer";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
@@ -42,7 +39,7 @@ import styles from "./styles";
 import { Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
 import { checkForAllPermissions } from "../../Util/Permission";
-import {Sessions} from "../../Api";
+import { Sessions } from "../../Api";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -57,44 +54,45 @@ class Home extends Component {
     timer.clearInterval("counterId");
     this.props.clear();
     this.props.asyncGetAccountInformation();
-    AppState.addEventListener('change', this._handleAppStateChange);
-    NetInfo.addEventListener(
-      'connectionChange',
-      this.monitorConnectivity,
-    );
+    AppState.addEventListener("change", this._handleAppStateChange);
+    NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
     InCallManager.stop();
   }
 
-
-  monitorConnectivity = (connectionInfo) => {
-    if(connectionInfo.type !== 'none'){
+  monitorConnectivity = connectionInfo => {
+    if (connectionInfo.type !== "none") {
       this.props.getCurrentAvailability();
     }
   };
 
   getCurrentUnansweredCalls = async () => {
-    const invitations = await Sessions.GetInvitations(this.props.uuid, this.props.token);
-    if(invitations.data.length > 0){
-      const filteredCalls = await invitations.data.filter((call) => (!call.responded || !call.accepted));
-      try{
-        if(filteredCalls.length > 0){
-          const session = await Sessions.GetSessionInfoLinguist(filteredCalls[0].session.id, this.props.token);
-          if(session.data.status === 'unassigned'){
+    const invitations = await Sessions.GetInvitations(
+      this.props.uuid,
+      this.props.token
+    );
+    if (invitations.data.length > 0) {
+      const filteredCalls = await invitations.data.filter(
+        call => !call.responded || !call.accepted
+      );
+      try {
+        if (filteredCalls.length > 0) {
+          const session = await Sessions.GetSessionInfoLinguist(
+            filteredCalls[0].session.id,
+            this.props.token
+          );
+          if (session.data.status === "unassigned") {
             this.props.incomingCallNotification(filteredCalls[0].id);
           }
         }
-      }catch (e) {
+      } catch (e) {
         console.log(e);
       }
     }
   };
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this._handleAppStateChange);
-    NetInfo.removeEventListener(
-      'connectionChange',
-      this.monitorConnectivity
-    );
+    AppState.removeEventListener("change", this._handleAppStateChange);
+    NetInfo.removeEventListener("connectionChange", this.monitorConnectivity);
   }
 
   componentDidMount() {
@@ -139,12 +137,15 @@ class Home extends Component {
     }
   }
 
-  _handleAppStateChange = (nextAppState) => {
-      this.props.getCurrentAvailability();
-      if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-        this.getCurrentUnansweredCalls();
-      }
-    this.setState({appState: nextAppState});
+  _handleAppStateChange = nextAppState => {
+    this.props.getCurrentAvailability();
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === "active"
+    ) {
+      this.getCurrentUnansweredCalls();
+    }
+    this.setState({ appState: nextAppState });
   };
 
   selectImage = () => {
@@ -283,7 +284,7 @@ const mS = state => ({
   timer: state.activeSessionReducer.timer,
   counterId: state.activeSessionReducer.counterId,
   networkInfoType: state.networkInfo.type,
-  nav: state.nav,
+  nav: state.nav
 });
 
 const mD = {
@@ -292,7 +293,6 @@ const mD = {
   updateView,
   getProfileAsync,
   changeStatus,
-  reloadStatus,
   asyncGetInvitationDetail,
   asyncGetAccountInformation,
   clear,
