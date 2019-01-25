@@ -18,7 +18,7 @@ import branch, { BranchEvent } from 'react-native-branch';
 import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
-import { init, setAuthToken, recordAppStateEvent, persist } from "./Util/Forensics";
+import { init, setAuthToken, recordAppStateEvent, persist, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 
 class App extends Component {
@@ -149,6 +149,7 @@ class App extends Component {
   }
 
   handleFirstConnectivityChange = connectionInfo => {
+    recordNetworkEvent(connectionInfo);
     const { store } = this.state;
 
     if (store) {

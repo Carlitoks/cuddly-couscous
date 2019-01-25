@@ -86,6 +86,13 @@ export const recordNavigationEvent = (to) => {
   });
 };
 
+export const recordNetworkEvent = (info) => {
+  record({
+    event: 'app.network',
+    payload: {...info}
+  });
+}
+
 // load any events from storage
 export const init = async () => {
   if (!forensicsEnabled) {
