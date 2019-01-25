@@ -111,7 +111,7 @@ export const init = async () => {
 };
 
 // persist events to storage
-export const persist = async () => {
+export const persistEvents = async () => {
   await AsyncStorage.setItem('solo.forensics', JSON.stringify(events));
 };
 

@@ -18,7 +18,7 @@ import branch, { BranchEvent } from 'react-native-branch';
 import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
-import { init, setAuthToken, recordAppStateEvent, persist, recordNetworkEvent } from "./Util/Forensics";
+import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 
 class App extends Component {
@@ -140,7 +140,7 @@ class App extends Component {
     NetInfo.removeEventListener('connectionChange', this.handleFirstConnectivityChange);
 =======
     AppState.removeEventListener('change', this._handleAppStateChange);
-    persist();
+    persistEvents();
     NetInfo.removeEventListener(
       "connectionChange",
       this.handleFirstConnectivityChange
@@ -165,6 +165,12 @@ class App extends Component {
   _handleAppStateChange = (nextState) => {
     recordAppStateEvent(this.state.appState, nextState);
     this.setState({appState: nextState});
+
+    // if app is being killed or shutdown for whatever
+    // reason, try to persist
+    if (nextState == 'inactive') {
+      persistEvents();
+    }
   };
 >>>>>>> recording app state events
 
