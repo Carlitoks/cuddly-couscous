@@ -48,9 +48,7 @@ pod 'AppCenter/Crashes', '~> 1.6.1'
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
-  pod 'react-native-amplitude-analytics', :path => '../node_modules/react-native-amplitude-analytics'
-
-  pod 'Amplitude-iOS', '~> 4.3.1'
+  pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
 
 end
 

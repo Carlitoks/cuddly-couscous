@@ -145,9 +145,9 @@ android {
 }
 
 dependencies {
+    compile project(':@segment_analytics-react-native')
     compile project(':react-native-branch')
     compile 'com.amplitude:android-sdk:2.19.1'
-    compile project(':react-native-amplitude-analytics')
     compile project(':react-native-code-push')
     compile project(':instabug-reactnative')
     compile project(':tipsi-stripe')

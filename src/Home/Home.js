@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, StatusBar } from "react-native";
-import RNAmplitude from "react-native-amplitude-analytics";
 import { amplitudKey } from "../Config/env";
 import HomeCustomer from "./Customer/HomeCustomer";
 import HomeLinguist from "./Linguist/HomeLinguist";
@@ -16,9 +15,6 @@ import { Colors } from "../Themes";
 class Home extends Component {
   componentWillMount() {
     const { isLoggedIn, navigation, uuid, token, nativeLangCode } = this.props;
-
-    const amplitude = new RNAmplitude(amplitudKey);
-    amplitude.setUserId(uuid);
 
     PushNotifications.getNotificationsBackground();
 
