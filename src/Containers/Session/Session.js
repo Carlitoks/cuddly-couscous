@@ -193,19 +193,38 @@ class Session extends Component {
 
   // call ended by user
   triggerEndCall () {
-    this.setState({endingCall: true})
-    if (this.props.role == 'linguist') {
-      // TODO: alert "are you sure?"
-      this.props.triggerEndCall();
-    } else {
-      this.props.triggerEndCall();
+    if (!this.props.isLinguist) {
+      this._triggerEndCall();
+      return;
     }
-    this.sendSignal('endCall');
+
+    // TODO: alert "are you sure?"
+    this._triggerEndCall();
+
+  }
+
+  _triggerEndCall () {
+    let reason = 'done';
+    // TODO: figure out proper end reason
+    this.setState({endingCall: true});
+    this.sendSignal('endingCall', {reason});
+
+
+    this.props.endSession(reason).then((res) => {
+      this.setState({endingCall: false, endedCall: true});
+      this.sendSignal('endedCall');
+    }).catch((e) => {
+      this.setState({endingCall: false, endedCall: true});
+      this.sendSignal('endingCallFailed');
+    }).finally(() => {
+      // TODO: navigate to target state
+    });
   }
 
   // call ended by a remote participant
   handleCallEnded () {
     this.props.handleCallEnded();
+    // TODO:
     // if connected, go to rate screen
     // if connecting, alert about cancelation, go home
   }
@@ -258,6 +277,8 @@ class Session extends Component {
 const mS = (state) => ({
   user: state.userProfile, // TODO: replace with state.activeUser.user
   role: state.currentSession.role,
+  isCustomer: state.currentSession.role,
+  isLinguist: state.currentSession.role,
   session: state.currentSession.session,
   credentials: state.currentSession.credentials,
   remoteParticipant: state.currentSession.remoteParticipant,

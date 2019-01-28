@@ -3,13 +3,18 @@ import api from '../Config/AxiosConfig';
 // The purpose of this reducer is to manage the status of an active Jeenie session.
 // Note that this does NOT include anything related to connection handling with
 // Tokbox.
+
 const ACTIONS = {
   UPDATE: 'currentSessionReducer/update',
   CLEAR: 'currentSessionReducer/clear'
 }
 
 const initialState = {
+  // role info for convenience elsewhere
   role: '', // linguist|customer
+  isLinguist: false,
+  isCustomer: true,
+
   // session params sent to the server
   session: {},
   // related session event data, if relevant
@@ -31,13 +36,18 @@ const initialState = {
 export const createNewSession = (params) => (dispatch) => {
   return new Promise((resolve, reject) => {
     dispatch(clear());
-    dispatch(update({role: 'customer', session: params}));
+    dispatch(update({
+      role: 'customer',
+      isLinguist: false,
+      isCustomer: true,
+      session: params
+    }));
     api.post('/sessions').then((res) => {
       dispatch(update({credentials: res.data}));
       resolve(res.data);
     }).catch((e) => {
       if (!!e.response) {
-        dispatch(update({createError: e.response.data}))
+        dispatch(update({createError: e.response.data}));
       }
       reject(e);
     });
@@ -64,10 +74,7 @@ export const handleEndedSession = () => (dispatch) => {
 
 
 // action creators
-export const update = () => ({
-  type: ACTIONS.UPDATE,
-  payload
-});
+export const update = (payload) => ({type: ACTIONS.UPDATE, payload});
 export const clear = () => ({type: ACTIONS.CLEAR});
 
 // the exported reducer
@@ -89,7 +96,7 @@ export default currentSessionReducer = (state = initialState, action) => {
     }
 
     default: {
-      throw new Error('unknown action');
+      return state;
     }
   }
 };
