@@ -1,5 +1,17 @@
 import {Component} from 'react';
-import {View} from 'react-native';
+import {TouchableWithoutFeedback} from 'react-native';
+import {KeepAwake} from "react-native-keep-awake";
+import { connect } from 'react-redux';
+
+import {endSession, handleEndedSession} from '../Ducks/CurrentSessionReducer';
+
+import {CustomerConnecting} from "./CustomerConnecting/CustomerConnecting";
+import {LinguistConnecting} from "./LinguistConnecting/LinguistConnecting";
+import {PoorConnectionWarning} from "./PoorConnectionWarning/PoorConnectionWarning";
+import {ReconnectionState} from "./ReconnectionState/ReconnectionState";
+import {SessionWrapper} from "./SessionWrapper/SessionWrapper";
+import {Publisher} from "./Publisher/Publisher";
+import {Subscriber} from "./Subscriber/Subscriber";
 
 newSubscriberState = (connectionId) => {
   return {
@@ -114,6 +126,18 @@ class Session extends Component {
 
   }
 
+  componentDidMount () {
+    // TODO: init some things:
+    // * app state listeners
+    // * push notification listeners
+  }
+
+  componentWillUnmount () {
+    // TODO: unregister listeners:
+    // * app state
+    // * push notification
+  }
+
   // hide/show call controls
   toggleDisplayControls () {
     this.setState({display: {controlsVisible: !this.state.display.controlsVisible}});
@@ -169,12 +193,21 @@ class Session extends Component {
 
   // call ended by user
   triggerEndCall () {
-    this.setState({endCallLoading: true})
+    this.setState({endingCall: true})
+    if (this.props.role == 'linguist') {
+      // TODO: alert "are you sure?"
+      this.props.triggerEndCall();
+    } else {
+      this.props.triggerEndCall();
+    }
+    this.sendSignal('endCall');
   }
 
-  // call ended by other side
+  // call ended by a remote participant
   handleCallEnded () {
-
+    this.props.handleCallEnded();
+    // if connected, go to rate screen
+    // if connecting, alert about cancelation, go home
   }
 
   render () {
@@ -194,11 +227,10 @@ class Session extends Component {
         )}
 
         { this.shouldRenderSession() && (
-          <Session session={ this.props.session }>
-            {/* Publisher renders audio mode screen */}
+          <SessionWrapper session={ this.props.session }>
             <Publisher publisher={ this.publisher }></Publisher>
             <Subscriber></Subscriber>
-          </Session>
+          </SessionWrapper>
         )}
 
         { this.poorConnectionAlertVisible() && (
@@ -222,3 +254,18 @@ class Session extends Component {
     );
   }
 }
+
+const mS = (state) => ({
+  user: state.userProfile, // TODO: replace with state.activeUser.user
+  role: state.currentSession.role,
+  session: state.currentSession.session,
+  credentials: state.currentSession.credentials,
+  remoteParticipant: state.currentSession.remoteParticipant,
+});
+
+const mD = {
+  endSession,
+  handleEndedSession,
+}
+
+export default connect(mS, mD)(Session);
