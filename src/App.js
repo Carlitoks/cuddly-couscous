@@ -28,6 +28,7 @@ import {
 import { setAuthToken as setApiAuthToken } from "./Config/AxiosConfig";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
+import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 
 class App extends Component {
   constructor(props) {

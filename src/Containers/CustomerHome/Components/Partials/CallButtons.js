@@ -119,8 +119,9 @@ class CallButtons extends Component {
       ...this.props.session
     })
     .then(() => {
-      navigation.dispatch({type: "SessionView"});
+      this.props.navigation.dispatch({type: "SessionView"});
     }).catch((e) => {
+      console.log("error", e)
       Alert.alert(
         I18n.t('error'),
         translateApiError(e),

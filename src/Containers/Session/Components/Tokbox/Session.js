@@ -1,5 +1,10 @@
-import {Text} from "react-native";
+import React from "react";
+import {Text, View} from "react-native";
 
 export const Session = (props) => {
-  return (<Text>Session</Text>);
+  return (
+    <View>
+      <Text>Session</Text>
+      { props.children }
+    </View>);
 };

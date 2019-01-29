@@ -1,5 +1,5 @@
-import {Component} from 'react';
-import {TouchableWithoutFeedback} from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, TouchableWithoutFeedback} from 'react-native';
 import {KeepAwake} from "react-native-keep-awake";
 import { connect } from 'react-redux';
 
@@ -9,9 +9,12 @@ import {CustomerConnecting} from "./Components/CustomerConnecting";
 import {LinguistConnecting} from "./Components/LinguistConnecting";
 import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
 import {ReconnectionState} from "./Components/ReconnectionState";
+import {SessionControls} from "./Components/SessionControls";
 import {Session} from "./Components/Tokbox/Session";
 import {Publisher} from "./Components/Tokbox/Publisher";
 import {Subscriber} from "./Components/Tokbox/Subscriber";
+
+import styles from "./styles.js";
 
 newSubscriberState = (connectionId) => {
   return {
@@ -231,44 +234,49 @@ class SessionView extends Component {
 
   render () {
     return (
-      <TouchableWithoutFeedback onPress={ this.toggleDisplayControls() }>
-        <KeepAwake />
+      <TouchableWithoutFeedback onPress={ () => this.toggleDisplayControls() }>
+        <View style={styles.container}>
 
-        { this.props.isLinguist && !this.state.initiallyConnected && (
-          <LinguistConnecting onTimeout={ this.handleConnectingTimeout() } />
-        )}
-        { this.props.isCustomer && !this.state.initiallyConnected && (
-          <CustomerConnecting />
-        )}
+          {/* <KeepAwake /> */}
 
-        { this.shouldShowReconnectionState() && (
-          <ReconnectionState user={this.props.user} participant={ this.getDisconnectedParticipant() } />
-        )}
+          <Text style={styles.text}>Hello session</Text>
 
-        { this.shouldRenderSession() && (
-          <Session session={ this.props.session }>
-            <Publisher publisher={ this.publisher }></Publisher>
-            <Subscriber></Subscriber>
-          </Session>
-        )}
+          { this.props.isLinguist && !this.state.initiallyConnected && (
+            <LinguistConnecting onTimeout={ this.handleConnectingTimeout } />
+          )}
+          { this.props.isCustomer && !this.state.initiallyConnected && (
+            <CustomerConnecting />
+          )}
 
-        { this.poorConnectionAlertVisible() && (
-          <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
-        )}
+          { this.shouldShowReconnectionState() && (
+            <ReconnectionState user={this.props.user} participant={ this.getDisconnectedParticipant() } />
+          )}
 
-        <SessionControls
-          cameraFlipEnabled={ this.state.controls.cameraFlipEnabled }
-          onCameraFlipPressed= { this.toggleCameraFlip() }
-          speakerEnabled = { this.state.controls.speakerEnabled}
-          onSpeakerPressed = { this.toggleSpeaker() }
-          micEnabled = { this.state.controls.micEnabled }
-          onMicPressed =  { this.toggleMic() }
-          videoEnabled = { this.state.controls.videoEnabled }
-          onVideoPressed = { this.toggleVideo() }
-          endingCall = { this.state.endingCall }
-          onEndCallPressed = { this.triggerEndCall() }
-        />
+          { this.shouldRenderSession() && (
+            <Session session={ this.props.session }>
+              <Publisher publisher={ this.publisher }></Publisher>
+              <Subscriber></Subscriber>
+            </Session>
+          )}
 
+          { this.poorConnectionAlertVisible() && (
+            <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
+          )}
+
+          <SessionControls
+            cameraFlipEnabled={ this.state.controls.cameraFlipEnabled }
+            onCameraFlipPressed= { this.toggleCameraFlip }
+            speakerEnabled = { this.state.controls.speakerEnabled}
+            onSpeakerPressed = { this.toggleSpeaker }
+            micEnabled = { this.state.controls.micEnabled }
+            onMicPressed =  { this.toggleMic }
+            videoEnabled = { this.state.controls.videoEnabled }
+            onVideoPressed = { this.toggleVideo }
+            endingCall = { this.state.endingCall }
+            onEndCallPressed = { this.triggerEndCall }
+          />
+          
+        </View>
       </TouchableWithoutFeedback>
     );
   }
@@ -276,12 +284,12 @@ class SessionView extends Component {
 
 const mS = (state) => ({
   user: state.userProfile, // TODO: replace with state.activeUser.user
-  role: state.currentSession.role,
-  isCustomer: state.currentSession.role,
-  isLinguist: state.currentSession.role,
-  session: state.currentSession.session,
-  credentials: state.currentSession.credentials,
-  remoteParticipant: state.currentSession.remoteParticipant,
+  role: state.currentSessionReducer.role,
+  isCustomer: state.currentSessionReducer.isCustomer,
+  isLinguist: state.currentSessionReducer.isLinguist,
+  session: state.currentSessionReducer.session,
+  credentials: state.currentSessionReducer.credentials,
+  remoteParticipant: state.currentSessionReducer.remoteParticipant,
 });
 
 const mD = {

@@ -114,7 +114,9 @@ export const modifyAVModePreference = payload => (dispatch, getState) => {
 export const ensureSessionDefaults = payload => (dispatch, getState) => {
   currentSessionState = {
     ...getState().newSessionReducer.session,
-    primaryLangCode: payload.primaryLangCode
+    primaryLangCode: payload.primaryLangCode,
+    type: "immediate_virtual",
+    matchMethod: "first_available"
   };
 
   dispatch(changeSessionLangCode(currentSessionState));
