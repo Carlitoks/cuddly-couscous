@@ -42,7 +42,7 @@ export const createNewSession = (params) => (dispatch) => {
       isCustomer: true,
       session: params
     }));
-    api.post('/sessions').then((res) => {
+    api.post('/sessions', params).then((res) => {
       dispatch(update({credentials: res.data}));
       resolve(res.data);
     }).catch((e) => {
@@ -82,7 +82,7 @@ export default currentSessionReducer = (state = initialState, action) => {
   const {type, payload} = action;
 
   switch (type) {
-    case UPDATE: {
+    case ACTIONS.UPDATE: {
       return {
         ...state,
         ...payload

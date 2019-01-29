@@ -59,10 +59,14 @@ import RegisterScreen from "../Containers/Register/RegisterScreen";
 import LocationPermissionView from "../Containers/Permissions/LocationPermissionView";
 import NotificationPermissionView from "../Containers/Permissions/NotificationPermissionView";
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
+<<<<<<< HEAD
 import PaymentScreen from "../Containers/Payments/PaymentScreen";
 import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
+=======
+import SessionView from "../Containers/Session/SessionView";
+>>>>>>> minor reorg
 
 const Navigation = StackNavigator(
   {
@@ -376,6 +380,13 @@ const Navigation = StackNavigator(
     },
     CameraMicPermissionView: {
       screen: CameraMicPermissionView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    SessionView: {
+      screen: SessionView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"

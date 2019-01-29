@@ -3,15 +3,15 @@ import {TouchableWithoutFeedback} from 'react-native';
 import {KeepAwake} from "react-native-keep-awake";
 import { connect } from 'react-redux';
 
-import {endSession, handleEndedSession} from '../Ducks/CurrentSessionReducer';
+import {endSession, handleEndedSession} from '../../Ducks/CurrentSessionReducer';
 
-import {CustomerConnecting} from "./CustomerConnecting/CustomerConnecting";
-import {LinguistConnecting} from "./LinguistConnecting/LinguistConnecting";
-import {PoorConnectionWarning} from "./PoorConnectionWarning/PoorConnectionWarning";
-import {ReconnectionState} from "./ReconnectionState/ReconnectionState";
-import {SessionWrapper} from "./SessionWrapper/SessionWrapper";
-import {Publisher} from "./Publisher/Publisher";
-import {Subscriber} from "./Subscriber/Subscriber";
+import {CustomerConnecting} from "./Components/CustomerConnecting";
+import {LinguistConnecting} from "./Components/LinguistConnecting";
+import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
+import {ReconnectionState} from "./Components/ReconnectionState";
+import {Session} from "./Components/Tokbox/Session";
+import {Publisher} from "./Components/Tokbox/Publisher";
+import {Subscriber} from "./Components/Tokbox/Subscriber";
 
 newSubscriberState = (connectionId) => {
   return {
@@ -46,7 +46,7 @@ newSubscriberState = (connectionId) => {
   }
 }
 
-class Session extends Component {
+class SessionView extends Component {
 
   // setup initial state, received props include:
   // * isLinguist|isCustomer - role of the user in question
@@ -246,10 +246,10 @@ class Session extends Component {
         )}
 
         { this.shouldRenderSession() && (
-          <SessionWrapper session={ this.props.session }>
+          <Session session={ this.props.session }>
             <Publisher publisher={ this.publisher }></Publisher>
             <Subscriber></Subscriber>
-          </SessionWrapper>
+          </Session>
         )}
 
         { this.poorConnectionAlertVisible() && (
@@ -289,4 +289,4 @@ const mD = {
   handleEndedSession,
 }
 
-export default connect(mS, mD)(Session);
+export default connect(mS, mD)(SessionView);

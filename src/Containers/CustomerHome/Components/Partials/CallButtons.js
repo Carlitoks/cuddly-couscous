@@ -8,14 +8,30 @@ import {
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import Permissions from "react-native-permissions";
-import I18n from "../../../../I18n/I18n";
+import I18n, { translateApiError } from "../../../../I18n/I18n";
 import { GetInfo } from "../../../../Ducks/SessionInfoReducer";
 import { modifyAVModePreference } from "../../../../Ducks/NewSessionReducer";
 import { clear as clearSettings, update as customerUpdateSettings } from "../../../../Ducks/ActiveSessionReducer";
 import { cleanSelected } from "../../../../Ducks/HomeFlowReducer";
 import { clearPromoCode } from "../../../../Ducks/PromoCodeReducer";
 import { updateSettings } from "../../../../Ducks/ContactLinguistReducer";
-import { checkCallPermissions } from "../../../../Util/Permission";
+import Permissions from "react-native-permissions";
+import {
+  setPermission,
+  displayOpenSettingsAlert,
+  checkForAllPermissions,
+  checkCallPermissions
+} from "../../../../Util/Permission";
+import {
+  Languages,
+  DefaultLanguagePairMap
+} from "../../../../Config/Languages";
+import {
+  getLocalizedCategories,
+  SUPPORTED_LANGS
+} from "../../../../Util/Constants";
+import{createNewSession} from "../../../../Ducks/CurrentSessionReducer";
+
 // Styles
 import styles from "./Styles/CallButtonsStyles";
 import { moderateScaleViewports } from "../../../../Util/Scaling";
@@ -82,7 +98,7 @@ class CallButtons extends Component {
               customerUpdateSettings(valueToUpdate);
               Permissions.checkMultiple(["camera", "microphone"]).then((response) => {
                 if (response.camera == "authorized" && response.microphone == "authorized") {
-                  navigation.dispatch({ type: "CustomerView" });
+                  this.createCall();
                 }
               });
             });
@@ -91,12 +107,29 @@ class CallButtons extends Component {
           }
         }
         if (response.camera == "authorized" && response.microphone == "authorized") {
-          navigation.dispatch({ type: "CustomerView" });
+          this.createCall();
         }
         return null;
       });
     }
   };
+
+  createCall () {
+    this.props.createNewSession({
+      ...this.props.session
+    })
+    .then(() => {
+      navigation.dispatch({type: "SessionView"});
+    }).catch((e) => {
+      Alert.alert(
+        I18n.t('error'),
+        translateApiError(e),
+        [
+          {text: 'OK'},
+        ],
+      );
+    });
+  }
 
   setLanguages = () => {
     const { session, updateSettings } = this.props;
@@ -200,6 +233,9 @@ const mD = {
   cleanSelected,
   clearPromoCode,
   modifyAVModePreference,
+
+  // from refactor
+  createNewSession,
 };
 
 export default connect(
