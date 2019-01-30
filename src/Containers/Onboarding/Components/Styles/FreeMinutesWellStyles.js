@@ -33,11 +33,11 @@ const renderMarginTopHome = () => {
 };
 
 const renderMarginTopGeneral = () => {
-  if (Iphone5) {
-    return moderateScale(45);
+  if (metrics.width <= 320){
+    return moderateScale(80);
   }
-  if (iOS) {
-    return moderateScale(85);
+  if(metrics.width >= 370){
+    return moderateScale(110);
   }
   return moderateScale(95);
 };
@@ -89,7 +89,7 @@ export default StyleSheet.create({
     paddingLeft: 5
   },
   availableMinutesPillText: {
-    ...setTextProperties('#fff', Fonts.BaseFont, moderateScale(25, metrics.width < 375 ? 0.5 : 0), '500'),
+    ...setTextProperties('#fff', Fonts.BaseFont, moderateScale(25, metrics.width < 360 ? 0.5 : 0), '500'),
     alignSelf: 'center'
   }
 });

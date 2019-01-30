@@ -42,9 +42,9 @@ renderOpacityWave = () => {
 };
 
 const SilhouetteWavesBackground = ({ width, height, viewBox }) => {
-  const widthCanvas = width || 375;
-  const heightCanvas = height || 243;
-  Reactotron.log(metrics.width);
+  /* Default Values
+  const widthCanvas = 375;
+  const heightCanvas = 243; */
   return (
     <Svg
       width={ metrics.width }

@@ -22,7 +22,6 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: iPhoneXModels ? 50 : 0,
-    marginTop: 20
   },
   callNowButtonContainer: {
     flexDirection: 'column',
@@ -59,18 +58,15 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: moderateScale(10, 0),
     paddingTop: moderateScale(17, 0)
   },
   audioOnlyButtonText: {
     ...setTextProperties('#fff', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '500'),
     lineHeight: moderateScale(28, 0),
-    paddingBottom: metrics.width * 0.02
   },
   audioOnlyButtonTextDisabled: {
     ...setTextProperties('#ccc', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '500'),
     lineHeight: moderateScale(28, 0),
-    paddingBottom: metrics.width * 0.02
   },
   iconPadding: { paddingLeft: metrics.width * 0.05 }
 });
