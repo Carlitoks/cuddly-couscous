@@ -16,11 +16,14 @@ import {Subscriber} from "./Components/Tokbox/Subscriber";
 
 import styles from "./styles.js";
 
-newSubscriberState = (connectionId) => {
+newParticipantState = (connectionId) => {
   return {
     platform: null,           // mobile|web|sip
     legacyVersion: false,
     subscribedToMyStream: false,    // are they successfully subscribed to me?
+    initiallyConnected: false,
+    currentlyConnected: false,
+    connecting: false,
     user: {
       firstName: "",
       lastInitial: "",
@@ -80,6 +83,7 @@ class SessionView extends Component {
       // state of other participants, see `newSubscriberState`, this is a map indexed by their
       // tokbox connection ID
       remoteParticipants: {},
+      remoteParticipant: newParticipantState(),
 
       // state of user's connection/stream to tokbox
       connection: {
@@ -192,7 +196,15 @@ class SessionView extends Component {
   poorConnectionAlertMessage () { return ""; }
   shouldRenderSession() { return true; }
   shouldShowReconnectionState () { return false; }
-  handleConnectingTimeout () {}
+  handleInitialCustomerTimeout () {
+    this.props.endSession('timeout').finally(() => {
+      this.props.navigation.dispatch({type: "CustomerRetryView"});
+    });
+  }
+
+  hasInitiallyConnected () {
+    return this.state.remoteParticipant.initiallyConnected && this.state.initiallyConnected;
+  }
 
   // call ended by user
   triggerEndCall () {
@@ -242,10 +254,15 @@ class SessionView extends Component {
           <Text style={styles.text}>Hello session</Text>
 
           { this.props.isLinguist && !this.state.initiallyConnected && (
-            <LinguistConnecting onTimeout={ this.handleConnectingTimeout } />
+            <LinguistConnecting onTimeout={ this.handleInitialConnectionTimeout } />
           )}
-          { this.props.isCustomer && !this.state.initiallyConnected && (
-            <CustomerConnecting />
+          { !this.hasInitiallyConnected() && (
+            <CustomerConnecting
+              user = { this.state.remoteParticipant.user }
+              connected = { this.state.remoteParticipant.connected }
+              connecting = { this.state.remoteParticipant.connecting }
+              onTimeout = { () => { this.handleInitialCustomerTimeout() } }
+            />
           )}
 
           { this.shouldShowReconnectionState() && (
@@ -275,7 +292,7 @@ class SessionView extends Component {
             endingCall = { this.state.endingCall }
             onEndCallPressed = { this.triggerEndCall }
           />
-          
+
         </View>
       </TouchableWithoutFeedback>
     );

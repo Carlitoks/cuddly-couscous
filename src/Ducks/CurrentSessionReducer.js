@@ -1,4 +1,5 @@
 import api from '../Config/AxiosConfig';
+import { getLastUpdateTime } from 'react-native-device-info';
 
 // The purpose of this reducer is to manage the status of an active Jeenie session.
 // Note that this does NOT include anything related to connection handling with
@@ -16,6 +17,7 @@ const initialState = {
   isCustomer: true,
 
   // session params sent to the server
+  sessionID: null,
   session: {},
   // related session event data, if relevant
   event: {},
@@ -31,6 +33,7 @@ const initialState = {
   acceptInviteError: null,
   began: false,
   ended: false,
+  ending: false,
 };
 
 export const createNewSession = (params) => (dispatch) => {
@@ -43,7 +46,8 @@ export const createNewSession = (params) => (dispatch) => {
       session: params
     }));
     api.post('/sessions', params).then((res) => {
-      dispatch(update({credentials: res.data}));
+      console.log(res.data)
+      dispatch(update({credentials: res.data, sessionID: res.data.sessionID}));
       resolve(res.data);
     }).catch((e) => {
       if (!!e.response) {
@@ -63,7 +67,19 @@ export const declineSessionInvite = (inviteID) => (dispatch) => {
 };
 
 // initiate ending the session
-export const endSession = (reason) => (dispatch) => {
+export const endSession = (reason) => (dispatch, getState) => {
+  const {sessionID} = getState().currentSessionReducer;
+
+  dispatch(update({ending: true}));
+  return new Promise((resolve, reject) => {
+    api.put(`/sessions/${sessionID}/end`, {reason})
+    .then(resolve)
+    .catch(reject)
+    .finally(() => {
+      dispatch(update({ending: false, ended: true}));
+    });
+  });
+  
   return Promise.reject('not implemented');
 };
 
