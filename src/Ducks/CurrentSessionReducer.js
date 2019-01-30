@@ -25,6 +25,7 @@ const initialState = {
   credentials: {},
   // incoming invite
   invite: {},
+
   // data about remote user, either the linguist, or customer
   remoteParticipant: {},
 
@@ -36,7 +37,7 @@ const initialState = {
   ending: false,
 };
 
-export const createNewSession = (params) => (dispatch) => {
+export const createNewSession = (params) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     dispatch(clear());
     dispatch(update({
@@ -46,8 +47,14 @@ export const createNewSession = (params) => (dispatch) => {
       session: params
     }));
     api.post('/sessions', params).then((res) => {
-      console.log(res.data)
-      dispatch(update({credentials: res.data, sessionID: res.data.sessionID}));
+      dispatch(update({
+        credentials: res.data,
+        sessionID: res.data.sessionID,
+        session: {
+          ...getState().currentSessionReducer.session,
+          id: res.data.sessionID
+        }
+      }));
       resolve(res.data);
     }).catch((e) => {
       if (!!e.response) {
@@ -56,6 +63,10 @@ export const createNewSession = (params) => (dispatch) => {
       reject(e);
     });
   });
+};
+
+export const setRemoteParticipant = (user) => (dispatch) => {
+  dispatch(update({remoteParticipant: user}));
 };
 
 export const acceptSessionInvite = (params) => (dispatch) => {
@@ -79,15 +90,12 @@ export const endSession = (reason) => (dispatch, getState) => {
       dispatch(update({ending: false, ended: true}));
     });
   });
-  
-  return Promise.reject('not implemented');
 };
 
 // session was ended by another participant
 export const handleEndedSession = () => (dispatch) => {
   dispatch(clear());
 };
-
 
 // action creators
 export const update = (payload) => ({type: ACTIONS.UPDATE, payload});

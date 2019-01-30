@@ -28,8 +28,8 @@ export class CustomerRetryView extends Component {
 
   render () {
     return (
-      <View>
-        <Text>Cancel or retry?</Text>
+      <View style={{paddingTop: 100}}>
+        <Text>All busy, or unavailable :(</Text>
         <Button
           title = "Retry"
           onPress = {() => { this.retry() }}

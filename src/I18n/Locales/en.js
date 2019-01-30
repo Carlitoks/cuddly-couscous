@@ -722,6 +722,7 @@ export default (ENG = {
   
   // for use in session-related screens
   session: {
+    errFailedToConnect: "Lost connection with Jeenie.  Please try again.",
     callTime: "Call Time: {{time}}",
     callCancel: "This call was canceled by the customer",
     callAnswered: "This call has been taken by another linguist.",

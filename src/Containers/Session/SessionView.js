@@ -137,12 +137,18 @@ class SessionView extends Component {
     // TODO: init some things:
     // * app state listeners
     // * push notification listeners
+    // * linguist connecting, end call, 
   }
 
   componentWillUnmount () {
+    this.cleanup();
+  }
+
+  cleanup () {
     // TODO: unregister listeners:
     // * app state
     // * push notification
+
   }
 
   // hide/show call controls
@@ -196,14 +202,59 @@ class SessionView extends Component {
   poorConnectionAlertMessage () { return ""; }
   shouldRenderSession() { return true; }
   shouldShowReconnectionState () { return false; }
+  
   handleInitialCustomerTimeout () {
     this.props.endSession('timeout').finally(() => {
+      this.cleanup();
       this.props.navigation.dispatch({type: "CustomerRetryView"});
+    });
+  }
+
+  handleRemoteParticipantConnecting (user) {
+    this.setState({
+      remoteParticipant: {
+        ...this.state.remoteParticipant,
+        connected: false,
+        connecting: true,
+        user
+      }
+    })
+  }
+
+  handleRemoteParticipantConnected (user) {
+    this.setState({
+      remoteParticipant: {
+        ...this.state.remoteParticipant,
+        initiallyConnected: true,
+        connected: true,
+        connecting: false,
+        user
+      }
+    });
+  }
+
+  handleRemoteParticipantDisconnected (user) {
+    this.setState({
+      remoteParticipant: {
+        ...this.state.remoteParticipant,
+        connected: false,
+        connecting: false,
+        user
+      }
     });
   }
 
   hasInitiallyConnected () {
     return this.state.remoteParticipant.initiallyConnected && this.state.initiallyConnected;
+  }
+
+  // if an initial connection error is triggered, then just
+  // alert the error and send back to home screen
+  handleInitialConnectionError (i18nKey) {
+    Alert.alert(I18n.t("error"), I18n.t(i18nKey), [{text: I18n.t("ok")}]);
+    this.props.triggerEndCall("error")
+    this.cleanup();
+    this.props.navigation.dispatch({type: "Home"});
   }
 
   // call ended by user
@@ -232,7 +283,10 @@ class SessionView extends Component {
       this.setState({endingCall: false, endedCall: true});
       this.sendSignal('endingCallFailed');
     }).finally(() => {
+      this.cleanup();
       // TODO: navigate to target state
+      // * rate view if connected
+      // * otherwise home?
     });
   }
 
@@ -253,14 +307,20 @@ class SessionView extends Component {
 
           <Text style={styles.text}>Hello session</Text>
 
-          { this.props.isLinguist && !this.state.initiallyConnected && (
-            <LinguistConnecting onTimeout={ this.handleInitialConnectionTimeout } />
+          { this.props.isLinguist && !this.hasInitiallyConnected() && (
+            <LinguistConnecting
+              remoteParticipant = {this.state.remoteParticipant}
+              session = { this.props.session }
+              onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
+              onTimeout = { () => { this.handleInitialLinguistTimeout() } }
+            />
           )}
-          { !this.hasInitiallyConnected() && (
+          { this.props.isCustomer && !this.hasInitiallyConnected() && (
             <CustomerConnecting
-              user = { this.state.remoteParticipant.user }
-              connected = { this.state.remoteParticipant.connected }
-              connecting = { this.state.remoteParticipant.connecting }
+              remoteParticipant = {this.state.remoteParticipant}
+              session = { this.props.session }
+              secondsUntilTimeout = { 10 }
+              onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
               onTimeout = { () => { this.handleInitialCustomerTimeout() } }
             />
           )}

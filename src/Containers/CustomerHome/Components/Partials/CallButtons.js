@@ -115,6 +115,7 @@ class CallButtons extends Component {
   };
 
   createCall () {
+    // TODO: disable button
     this.props.createNewSession({
       ...this.props.session
     })
