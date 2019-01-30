@@ -24,8 +24,6 @@ import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
 import I18n from "./../../I18n/I18n";
 import { supportedLangCodes } from "./../../Config/Languages";
-import WelcomeModal from "./Components/Partials/WelcomeModal";
-import FreeMinutesWell from "../Onboarding/Components/FreeMinutesWell";
 import analytics from '@segment/analytics-react-native'
 
 // Styles
@@ -34,7 +32,7 @@ import CallButtons from './Components/Partials/CallButtons';
 
 class CustomerHomeScreen extends Component {
   componentWillMount() {
-    const {  uuid, firstName } = this.props;
+    const {  uuid, firstName, secondaryLangCode, navigation } = this.props;
 
     analytics.identify(uuid, {
       name: firstName

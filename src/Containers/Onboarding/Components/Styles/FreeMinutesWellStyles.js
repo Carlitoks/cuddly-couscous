@@ -3,6 +3,7 @@ import { moderateScale, setTextProperties } from '../../../../Util/Scaling';
 import Fonts from '../../../../Themes/Fonts';
 import { Metrics } from '../../../../Themes';
 import { iPhoneXModels, Iphone5 } from '../../../../Util/Devices';
+import metrics from "../../../../Themes/Metrics";
 
 const WellContainerStyles = {
   width: Metrics.width * 0.89,
@@ -38,7 +39,7 @@ const renderMarginTopGeneral = () => {
   if (iOS) {
     return moderateScale(85);
   }
-  return moderateScale(45);
+  return moderateScale(95);
 };
 
 export default StyleSheet.create({
@@ -68,27 +69,27 @@ export default StyleSheet.create({
     padding: 10
   },
   pillButtonText: {
-    ...setTextProperties('#fff', Fonts.BoldFont, Iphone5 ? 14 : moderateScale(16, 0), '600'),
+    ...setTextProperties('#fff', Fonts.BoldFont, Iphone5 ? 14 : moderateScale(16, metrics.width < 360 ? 0.5 : 0), '600'),
     paddingLeft: 5
   },
   wellTitle: {
-    ...setTextProperties('#401674', Fonts.BoldFont, Iphone5 ? 15 : moderateScale(21, 0), null),
+    ...setTextProperties('#401674', Fonts.BoldFont, Iphone5 ? 15 : moderateScale(21, metrics.width < 360 ? 0.5 : 0), null),
     paddingLeft: 15,
     marginTop: -10
   },
   wellSubtitle: {
-    ...setTextProperties('#401674', Fonts.ItalicFont, Iphone5 ? 12 : moderateScale(13, 0), null),
+    ...setTextProperties('#401674', Fonts.ItalicFont, Iphone5 ? 12 : moderateScale(13, metrics.width < 360 ? 0.5 : 0), null),
     paddingLeft: 15,
     marginTop: -10
     // paddingBottom: 15
   },
   pricingPillText: {
-    ...setTextProperties('#401674', Fonts.ItalicFont, Iphone5 ? 14 : moderateScale(16, 0), '600'),
+    ...setTextProperties('#401674', Fonts.ItalicFont, Iphone5 ? 14 : moderateScale(16, metrics.width < 360 ? 0.5 : 0), '600'),
     textAlign: 'center',
     paddingLeft: 5
   },
   availableMinutesPillText: {
-    ...setTextProperties('#fff', Fonts.BaseFont, moderateScale(25, 0), '500'),
+    ...setTextProperties('#fff', Fonts.BaseFont, moderateScale(25, metrics.width < 375 ? 0.5 : 0), '500'),
     alignSelf: 'center'
   }
 });

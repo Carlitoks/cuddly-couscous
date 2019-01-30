@@ -1,5 +1,6 @@
 import { Dimensions, PixelRatio } from "react-native";
 import { getDeviceLocale } from "react-native-device-info";
+import {Metrics} from "../Themes";
 
 const { width, height } = Dimensions.get("window");
 const realWidth = height > width ? width : height;

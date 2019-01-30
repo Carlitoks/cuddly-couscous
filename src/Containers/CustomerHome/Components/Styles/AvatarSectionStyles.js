@@ -23,7 +23,7 @@ export default StyleSheet.create({
     bottom: 0
   },
   absolutePosition: {
-    position: 'absolute'
+    position: 'absolute',
   },
   questionsContainer: {
     zIndex: 100,

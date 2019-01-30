@@ -1,5 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
 import { Metrics, ApplicationStyles, Fonts, Colors } from '../../../../Themes';
+import {moderateScale} from "../../../../Util/Scaling";
 
 const iOS = Platform.OS === 'ios';
 
@@ -20,12 +21,12 @@ export default StyleSheet.create({
   titleTextStyle: {
     color: '#fff',
     fontFamily: Fonts.BaseFont,
-    fontSize: 18
+    fontSize: moderateScale(18, 0)
   },
   createAccountTitleTextStyle: {
     color: '#fff',
     fontFamily: Fonts.BaseFont,
-    fontSize: 18,
+    fontSize: moderateScale(18, 0),
     fontWeight: '500',
     textAlign: 'center',
     justifyContent: 'center'
@@ -34,8 +35,8 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    height: 50,
-    width: 50
+    height: moderateScale(50, 0),
+    width: moderateScale(50, 0)
   },
   IconMenu: {
     color: Colors.primaryColor,
@@ -60,7 +61,7 @@ export default StyleSheet.create({
     marginTop: iOS ? 30 : 20,
     padding: 0,
     borderBottomWidth: 0,
-    height: 45
+    height: moderateScale(45, 0)
   },
   headerContainer: { flexDirection: 'column', justifyContent: 'flex-start' }
 });

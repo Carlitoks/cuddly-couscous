@@ -1,8 +1,5 @@
 import Metrics from "./Metrics";
 import Colors from "./Colors";
-import { moderateScale } from "../Util/Scaling";
-import { Iphone5, iPhoneXModels } from "../Util/Devices";
-import metrics from "./Metrics";
 
 // This file is for a reusable grouping of Theme items.
 // Similar to an XML fragment layout in Android
