@@ -5,12 +5,11 @@ import { Iphone5, iPhoneXModels } from '../../../Util/Devices';
 
 const activeButtonStyles = {
   minWidth: Metrics.width * 0.78,
-  minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
   borderWidth: 1,
-  borderRadius: 25,
+  borderRadius: 30,
   borderColor: '#fff'
 };
 
@@ -61,7 +60,11 @@ export default StyleSheet.create({
   },
   buttonEnabledText: {
     ...setTextProperties('#fff', Fonts.BoldFont, Iphone5 ? 14 : moderateScale(17, 0), null),
-    textAlign: 'center'
+    textAlign: 'center',
+    paddingTop: Metrics.width * 0.05,
+    paddingBottom: Metrics.width * 0.05,
+    paddingLeft: Metrics.width * 0.05,
+    paddingRight: Metrics.width * 0.05
   },
   transitionButtonText: {
     ...setTextProperties('#fff', Fonts.BoldFont, Iphone5 ? 14 : moderateScale(17, 0), null),

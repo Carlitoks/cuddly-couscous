@@ -38,7 +38,6 @@ export default StyleSheet.create({
   },
   signInButtonDisable: {
     minWidth: Metrics.width * 0.78,
-    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
     backgroundColor: Colors.transparent,
     borderColor: '#fff',
     borderWidth: 1,
@@ -50,7 +49,11 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: '#fff',
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0)
+    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
+    paddingTop: Metrics.width * 0.05,
+    paddingBottom: Metrics.width * 0.05,
+    paddingLeft: Metrics.width * 0.05,
+    paddingRight: Metrics.width * 0.05
   },
   transitionButtonText: {
     textAlign: 'center',
@@ -83,7 +86,6 @@ export default StyleSheet.create({
   createAccountPadding: { paddingTop: 20, width: Metrics.width },
   registerButton: {
     minWidth: Metrics.width * 0.78,
-    minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

@@ -44,10 +44,9 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: Iphone5 ? 14 : moderateScale(17, 0),
     fontWeight: '600',
-    lineHeight: moderateScale(20),
     fontFamily: Fonts.BaseFont,
-    paddingTop: Iphone5 ? 12 : Metrics.width * 0.05,
-    paddingBottom: Iphone5 ? 12 : Metrics.width * 0.05,
+    paddingTop: Metrics.width * 0.05,
+    paddingBottom: Metrics.width * 0.05,
     paddingLeft: Metrics.width * 0.05,
     paddingRight: Metrics.width * 0.05
   },
@@ -55,10 +54,9 @@ export default StyleSheet.create({
     color: '#ccc',
     fontSize: Iphone5 ? 14 : moderateScale(17, 0),
     fontWeight: '600',
-    lineHeight: moderateScale(20, 0),
     fontFamily: Fonts.BaseFont,
-    paddingTop: Iphone5 ? 12 : Metrics.width * 0.045,
-    paddingBottom: Iphone5 ? 12 : Metrics.width * 0.045,
+    paddingTop: Metrics.width * 0.045,
+    paddingBottom: Metrics.width * 0.045,
     paddingLeft: Metrics.width * 0.05,
     paddingRight: Metrics.width * 0.05
   },
@@ -74,7 +72,6 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: Iphone5 ? 14 : moderateScale(17, 0),
     fontWeight: '500',
-    lineHeight: moderateScale(28, 0),
     fontFamily: Fonts.BaseFont,
     paddingBottom: Metrics.width * 0.02
   },
@@ -82,7 +79,6 @@ export default StyleSheet.create({
     color: '#ccc',
     fontSize: Iphone5 ? 14 : moderateScale(17, 0),
     fontWeight: '500',
-    lineHeight: moderateScale(28, 0),
     fontFamily: Fonts.BaseFont,
     paddingBottom: Metrics.width * 0.02
   },

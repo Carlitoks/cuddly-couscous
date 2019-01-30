@@ -8,12 +8,12 @@ import metrics from '../../../../Themes/Metrics';
 
 const primaryButton = {
   minWidth: Metrics.width * 0.78,
-  minHeight: iPhoneXModels ? 55 : Metrics.height * 0.08,
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
   borderWidth: 1,
-  borderRadius: 27
+  borderRadius: 30,
+  marginTop: metrics.width < 375 ? 15 : 0,
 };
 
 export default StyleSheet.create({
@@ -25,7 +25,6 @@ export default StyleSheet.create({
   },
   callNowButtonContainer: {
     flexDirection: 'column',
-    paddingBottom: Iphone5 ? 0 : 14,
     alignSelf: 'center'
   },
   callNowButton: {
@@ -45,12 +44,14 @@ export default StyleSheet.create({
   },
   callNowButtonText: {
     ...setTextProperties('#fff', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '600'),
-    paddingLeft: metrics.width * 0.05,
-    paddingRight: metrics.width * 0.05
+    paddingTop: Metrics.width * 0.05,
+    paddingBottom: Metrics.width * 0.05,
+    paddingLeft: Metrics.width * 0.05,
+    paddingRight: Metrics.width * 0.05
+
   },
   callNowButtonTextDisabled: {
     ...setTextProperties('#ccc', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '600'),
-    lineHeight: moderateScale(20, 0)
   },
   audioOnlyButtonContainer: { flexDirection: 'column' },
   audioOnlyButton: {
@@ -62,11 +63,9 @@ export default StyleSheet.create({
   },
   audioOnlyButtonText: {
     ...setTextProperties('#fff', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '500'),
-    lineHeight: moderateScale(28, 0),
   },
   audioOnlyButtonTextDisabled: {
     ...setTextProperties('#ccc', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '500'),
-    lineHeight: moderateScale(28, 0),
   },
   iconPadding: { paddingLeft: metrics.width * 0.05 }
 });

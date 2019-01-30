@@ -33,13 +33,17 @@ const renderMarginTopHome = () => {
 };
 
 const renderMarginTopGeneral = () => {
-  if (metrics.width <= 320){
-    return moderateScale(80);
+  if (iOS) {
+    if (metrics.width <= 320) {
+      return moderateScale(80);
+    }
+    if (metrics.width >= 370) {
+      return moderateScale(110);
+    }
+    return moderateScale(95);
+  } else {
+    return moderateScale(95);
   }
-  if(metrics.width >= 370){
-    return moderateScale(110);
-  }
-  return moderateScale(95);
 };
 
 export default StyleSheet.create({
