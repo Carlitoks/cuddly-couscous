@@ -1,39 +1,36 @@
 import React, {Component} from 'react';
-import {View, Text, TouchableWithoutFeedback} from 'react-native';
+import {NetInfo, AppState, View, Text, TouchableWithoutFeedback} from 'react-native';
 import {KeepAwake} from "react-native-keep-awake";
 import { connect } from 'react-redux';
 
-import {endSession, handleEndedSession} from '../../Ducks/CurrentSessionReducer';
+import {endSession, handleEndedSession, setRemoteParticipant} from '../../Ducks/CurrentSessionReducer';
 
 import {CustomerConnecting} from "./Components/CustomerConnecting";
 import {LinguistConnecting} from "./Components/LinguistConnecting";
 import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
 import {ReconnectionState} from "./Components/ReconnectionState";
+import {CallTimer} from './Components/CallTimer';
 import {SessionControls} from "./Components/SessionControls";
 import {Session} from "./Components/Tokbox/Session";
-import {Publisher} from "./Components/Tokbox/Publisher";
-import {Subscriber} from "./Components/Tokbox/Subscriber";
 
 import styles from "./styles.js";
 
-newParticipantState = (connectionId) => {
+newParticipantState = (props) => {
   return {
     platform: null,           // mobile|web|sip
     legacyVersion: false,
-    subscribedToMyStream: false,    // are they successfully subscribed to me?
-    initiallyConnected: false,
-    currentlyConnected: false,
-    connecting: false,
+    connection: {
+      initiallyConnected: false,
+      connected: false,
+      connecting: false,
+      receivingThrottled: false,
+      receivingAudio: false,
+      receivingVideo: false,
+    },
     user: {
+      ...props.remoteParticipant,
       firstName: "",
       lastInitial: "",
-    },
-    connection: {
-      id: connectionId,
-    },
-    stream: {
-      id: null,
-      subscribed: false,
     },
     controls: {
       micEnabled: null,
@@ -43,26 +40,41 @@ newParticipantState = (connectionId) => {
     },
     app: {
       state: '', // background|foreground
-    },
-    heartbeat: {
-      active: false,
-      interval: null,
-      lastReceived: null,
+      network: '',
     }
   }
 }
 
 class SessionView extends Component {
-
-  // setup initial state, received props include:
-  // * isLinguist|isCustomer - role of the user in question
-  // * endedViaPushNotification - if session was ended via push notification
-  // * user
-  // * session creation params
-  // * session cnx info
-  constructor(props) {
+  
+  constructor (props) {
     super(props);
+    this.init(props);
+    this.TEST();
+  }
 
+  TEST () {
+    this._testScenario_linguistConnects();
+  }
+
+  _testScenario_linguistConnects() {
+    // trigger connecting
+    setTimeout(() => {
+      this.props.setRemoteParticipant({
+        id: "22222222-2222-2222-2222-222222222223",
+        firstName: "Evan",
+        lastInitial: "V"
+      });
+      this.handleRemoteParticipantConnecting();
+    }, 3000);
+
+    // trigger connected
+    setTimeout(() => {
+      this.handleRemoteParticipantConnected();
+    }, 7000);
+  }
+
+  init (props) {
     // anything referenced in the template and/or passed to child
     // components as props needs to be defined in `state`
     this.state = {
@@ -83,59 +95,40 @@ class SessionView extends Component {
       // state of other participants, see `newSubscriberState`, this is a map indexed by their
       // tokbox connection ID
       remoteParticipants: {},
-      remoteParticipant: newParticipantState(),
+      remoteParticipant: newParticipantState(props),
 
-      // state of user's connection/stream to tokbox
+      // basic state of user's connection/stream to av session (tokbox)
       connection: {
-        connectionID: null, // tokbox connection ID
         initiallyConnected: false,
-        currentlyConnected: false,
-        reconnecting: false,
+        connected: false,
         connecting: true
       },
 
-      // state of user's stream to tokbox
-      stream: {
-        id: null,
-        created: false,
-        published: false
-      },
-
       // higher level Solo session state - like did we "connect" to the other person successfully at any point?
-      session: {
+      status: {
         initiallyConnectedToParticipant: false,
+        ending: false,
+        ended: false,
       },
 
       // signal to send to other participants
       signal: {},
 
+      appState: AppState.currentState,
+      networkConnection: null
     };
-
-    // event handlers for tokbox API
-    this.otSessionHandlers = {
-      signal: (e) => {
-
-      },
-    };
-
-    this.otPublisherHandlers = {};
-    this.otSubscriberHandlers = {};
 
     this.endingCall = false; // NOTE: probably need this in `state` as well - it's here to prevent double taps
     this.callTimer = null;
-    this.initialConnectingTimer = null;
-
-    // status of call from server
-    this.status = {
-      interval: null,
-      polling: false,
-    };
-
   }
 
   componentDidMount () {
+    AppState.addEventListener('change', this.handleAppStateChange);
+    NetInfo.addEventListener("connectionChange", this.handleConnectionChange);
+    console.log(this.props.navigation);
+    // this.blurSubscription = this.props.navigation.addListener("didBlur", this.cleanup);
+
     // TODO: init some things:
-    // * app state listeners
     // * push notification listeners
     // * linguist connecting, end call, 
   }
@@ -145,10 +138,75 @@ class SessionView extends Component {
   }
 
   cleanup () {
-    // TODO: unregister listeners:
-    // * app state
-    // * push notification
+    console.log("SessionView.cleanup");
+    AppState.removeEventListener('change', this.handleAppStateChange);
+    NetInfo.removeEventListener("connectionChange", this.handleConnectionChange);
+    if (!!this.blurSubscription) {
+      this.blurSubscription.remove();
+    }
 
+    // TODO: unregister listeners:
+    // * push notification
+    // * any audio things, incallManager, etc...
+
+  }
+
+  handleAppStateChange (nextState) {
+    this.setState({appState: nextState});
+    switch (nextState) {
+      case 'background': this.appWillEnterBackground(); break;
+      case 'foreground': this.appWillEnterForeground(); break;
+      case 'inactive': this.appWillBeSuspended(); break;
+    }
+  }
+  
+  appWillEnterBackground () {
+
+  }
+
+  appWillEnterForeground () {
+
+  }
+
+  appWillBeSuspended () {
+
+  }
+
+  handleConnectionChange (info) {
+    const currentState = info.effectiveType.toLowerCase();
+    const prevState = this.state.networkConnection;
+
+    this.setState({networkConnection: currentState});
+
+    // lost internet connection
+    if (currentState == "none" && prevState != "none") {
+      this.handleLostNetworkConnection();
+      return;
+    }
+
+    // regained connection
+    if (currentState != "none" && prevState == "none") {
+      this.handleRegainedNetworkConnection();
+      return;
+    }
+
+    this.handleNetworkConnectionTypeChanged(prevState, currentState);
+  }
+
+  handleLostNetworkConnection () {
+
+  }
+
+  handleRegainedNetworkConnection () {
+
+  }
+
+  handleNetworkConnectionTypeChanged (fromType, toType) {
+
+  }
+
+  hasNetworkConnection () {
+    return this.state.networkConnection != "none";
   }
 
   // hide/show call controls
@@ -202,7 +260,7 @@ class SessionView extends Component {
   poorConnectionAlertMessage () { return ""; }
   shouldRenderSession() { return true; }
   shouldShowReconnectionState () { return false; }
-  
+
   handleInitialCustomerTimeout () {
     this.props.endSession('timeout').finally(() => {
       this.cleanup();
@@ -210,36 +268,37 @@ class SessionView extends Component {
     });
   }
 
-  handleRemoteParticipantConnecting (user) {
+  handleUserConnecting () {}
+  handleUserConnected () {}
+  handleUserDisconnected () {}
+
+  handleRemoteParticipantConnecting () {
     this.setState({
       remoteParticipant: {
         ...this.state.remoteParticipant,
         connected: false,
         connecting: true,
-        user
       }
     })
   }
 
-  handleRemoteParticipantConnected (user) {
+  handleRemoteParticipantConnected () {
     this.setState({
       remoteParticipant: {
         ...this.state.remoteParticipant,
         initiallyConnected: true,
         connected: true,
         connecting: false,
-        user
       }
     });
   }
 
-  handleRemoteParticipantDisconnected (user) {
+  handleRemoteParticipantDisconnected () {
     this.setState({
       remoteParticipant: {
         ...this.state.remoteParticipant,
         connected: false,
         connecting: false,
-        user
       }
     });
   }
@@ -298,6 +357,12 @@ class SessionView extends Component {
     // if connecting, alert about cancelation, go home
   }
 
+  triggerRetryCall () {
+    // TODO: end current call
+    // create new call
+    // force reload component somehow... "initState(props)"
+  }
+
   render () {
     return (
       <TouchableWithoutFeedback onPress={ () => this.toggleDisplayControls() }>
@@ -319,38 +384,76 @@ class SessionView extends Component {
             <CustomerConnecting
               remoteParticipant = {this.state.remoteParticipant}
               session = { this.props.session }
-              secondsUntilTimeout = { 10 }
+              secondsUntilTimeout = { 60 }
               onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
               onTimeout = { () => { this.handleInitialCustomerTimeout() } }
             />
           )}
 
           { this.shouldShowReconnectionState() && (
-            <ReconnectionState user={this.props.user} participant={ this.getDisconnectedParticipant() } />
+            <ReconnectionState
+              user = { this.props.user }
+              isCustomer = { this.props.isCustomer }
+              isLinguist = { this.props.isLinguist }
+              networkConnection = { this.state.networkConnection }
+              userConnection = { this.state.connection }
+              participantConnection = { this.state.remoteParticipant }
+              onEnd = {() => { this.triggerEndCall() }}
+              onTryAgain = {() => { this.triggerRetryCall() }}
+            />
           )}
 
           { this.shouldRenderSession() && (
-            <Session session={ this.props.session }>
-              <Publisher publisher={ this.publisher }></Publisher>
-              <Subscriber></Subscriber>
-            </Session>
+            <Session
+              user = {this.props.user }
+              session = { this.props.session }
+              credentials = { this.props.credentials }
+              remoteParticipant = { this.props.remoteParticipant }
+              networkConnection = { this.state.networkConnection }
+              appState = { this.state.appState }
+              controls = { this.state.controls }
+              sessionStatus = { this.state.status }
+              onSessionEnded = {() => { this.handleCallEnded() }}
+
+              // keep or remove?
+              sendSignal = { this.state.signal }
+              onSignalReceived = {null}
+
+              // update basic connection status of remote participant
+              onRemoteParticipantConnecting = {null}
+              onRemoteParticipantConnectingFailed = {null}
+              onRemoteParticipantConnected = {null}
+              onRemoteParticipantDisconnected = {null}
+              onRemoteParticipantReconnected = {null}
+              onRemoteParticipantPoorConnection = {null}
+              onRemoteParticipantUpdated = {null} // for things like...
+
+              // update basic connection status of user
+              onUserConnecting = {null}
+              onUserConnectingFailed = {null}
+              onUserConnected = {null}
+              onUserDisconnected = {null}
+              onUserReconnected = {null}
+              onUserPoorConnection = {null}
+            />
           )}
 
           { this.poorConnectionAlertVisible() && (
             <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
           )}
 
+          <CallTimer />
           <SessionControls
             cameraFlipEnabled={ this.state.controls.cameraFlipEnabled }
-            onCameraFlipPressed= { this.toggleCameraFlip }
+            onCameraFlipPressed= {() => { this.toggleCameraFlip() }}
             speakerEnabled = { this.state.controls.speakerEnabled}
-            onSpeakerPressed = { this.toggleSpeaker }
+            onSpeakerPressed = {() => { this.toggleSpeaker() }}
             micEnabled = { this.state.controls.micEnabled }
-            onMicPressed =  { this.toggleMic }
+            onMicPressed =  {() => { this.toggleMic() }}
             videoEnabled = { this.state.controls.videoEnabled }
-            onVideoPressed = { this.toggleVideo }
+            onVideoPressed = {() => { this.toggleVideo() }}
             endingCall = { this.state.endingCall }
-            onEndCallPressed = { this.triggerEndCall }
+            onEndCallPressed = {() => { this.triggerEndCall() }}
           />
 
         </View>
@@ -372,6 +475,7 @@ const mS = (state) => ({
 const mD = {
   endSession,
   handleEndedSession,
+  setRemoteParticipant,
 }
 
 export default connect(mS, mD)(SessionView);

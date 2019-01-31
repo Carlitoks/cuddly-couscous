@@ -124,7 +124,7 @@ export class CustomerConnecting extends Component {
           <Text>Connecting to linguist...: { this.state.seconds }</Text>
         )}
         { this.props.remoteParticipant.connecting && (
-          <Text>{this.props.remoteParticipant.firstName} connecting...: { this.state.seconds }</Text>
+          <Text>{this.props.remoteParticipant.user.firstName} connecting...: { this.state.seconds }</Text>
         )}
       </View>
     );

@@ -19,6 +19,7 @@ run-cmd:
 
 reload-fixtures:
 	docker-compose run --rm solo-api dev:load-fixtures
+	docker-compose run --rm solo-api linguists:reindex
 
 npm-install:
 	docker-compose run --rm appcenter npm install
