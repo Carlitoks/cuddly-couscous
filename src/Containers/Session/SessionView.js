@@ -418,6 +418,7 @@ class SessionView extends Component {
             <CustomerConnecting
               remoteUser = {this.props.remoteUser}
               remoteUserState = {this.state.remoteUserState}
+              connection = { this.state.connection }
               session = { this.props.session }
               secondsUntilTimeout = { 60 }
               onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }

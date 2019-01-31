@@ -1,6 +1,6 @@
 export const testLinguistConnects = (comp) => {
     comp.handleUserConnecting();
-    setTimeout(() => {comp.handleUserConnected()}, 1000);
+    setTimeout(() => {comp.handleUserConnected()}, 10000);
 
     // trigger remote user connecting
     setTimeout(() => {

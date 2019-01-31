@@ -116,15 +116,24 @@ export class CustomerConnecting extends Component {
     this.props.onTimeout();
   }
 
+  getConnectionText () {
+    const rc = this.props.remoteUserState.connection;
+    const mc = this.props.connection;
+    if (!rc.connected && !rc.connecting) {
+      return `Connecting to linguist... ${this.state.seconds}`;
+    }
+    if (rc.connecting) {
+      return `${this.props.remoteUser.firstName} is connecting...: ${this.state.seconds}`;
+    }
+    if (mc.connecting) {
+      return `You are still connecting...: ${ this.state.seconds }`;
+    }
+  }
+
   render () {
     return (
       <View>
-        { !this.props.remoteUserState.connection.connecting && (
-          <Text>Connecting to linguist...: { this.state.seconds }</Text>
-        )}
-        { this.props.remoteUserState.connection.connecting && (
-          <Text>{this.props.remoteUser.firstName} is connecting...: { this.state.seconds }</Text>
-        )}
+        <Text>{ this.getConnectionText() }</Text>
       </View>
     );
   }
