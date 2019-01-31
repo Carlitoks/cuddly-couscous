@@ -3,7 +3,7 @@ import {NetInfo, AppState, View, Text, TouchableWithoutFeedback} from 'react-nat
 import {KeepAwake} from "react-native-keep-awake";
 import { connect } from 'react-redux';
 
-import {endSession, handleEndedSession, setRemoteParticipant} from '../../Ducks/CurrentSessionReducer';
+import {endSession, handleEndedSession, setRemoteUser} from '../../Ducks/CurrentSessionReducer';
 
 import {CustomerConnecting} from "./Components/CustomerConnecting";
 import {LinguistConnecting} from "./Components/LinguistConnecting";
@@ -15,7 +15,7 @@ import {Session} from "./Components/Tokbox/Session";
 
 import styles from "./styles.js";
 
-newParticipantState = (props) => {
+newRemoteUserState = (props) => {
   return {
     platform: null,           // mobile|web|sip
     legacyVersion: false,
@@ -27,11 +27,6 @@ newParticipantState = (props) => {
       receivingAudio: false,
       receivingVideo: false,
     },
-    user: {
-      ...props.remoteParticipant,
-      firstName: "",
-      lastInitial: "",
-    },
     controls: {
       micEnabled: null,
       videoEnabled: null,
@@ -40,7 +35,7 @@ newParticipantState = (props) => {
     },
     app: {
       state: '', // background|foreground
-      network: '',
+      networkConnection: '',
     }
   }
 }
@@ -53,27 +48,6 @@ class SessionView extends Component {
     this.TEST();
   }
 
-  TEST () {
-    this._testScenario_linguistConnects();
-  }
-
-  _testScenario_linguistConnects() {
-    // trigger connecting
-    setTimeout(() => {
-      this.props.setRemoteParticipant({
-        id: "22222222-2222-2222-2222-222222222223",
-        firstName: "Evan",
-        lastInitial: "V"
-      });
-      this.handleRemoteParticipantConnecting();
-    }, 3000);
-
-    // trigger connected
-    setTimeout(() => {
-      this.handleRemoteParticipantConnected();
-    }, 7000);
-  }
-
   init (props) {
     // anything referenced in the template and/or passed to child
     // components as props needs to be defined in `state`
@@ -84,6 +58,21 @@ class SessionView extends Component {
         controlsVisible: true,
       },
 
+      app: {
+        state: AppState.currentState,
+        networkConnection: null
+      },
+
+      // basic state of user's connection/stream to av session (tokbox)
+      connection: {
+        initiallyConnected: true,
+        connected: false,
+        connecting: true,
+        receivingThrottled: false,
+        receivingAudio: false,
+        receivingVideo: false,
+      },
+
       // user's call control state
       controls: {
         cameraFlipEnabled: false,
@@ -92,34 +81,44 @@ class SessionView extends Component {
         speakerEnabled: true, // todo, harder than it seems...
       },
 
-      // state of other participants, see `newSubscriberState`, this is a map indexed by their
+      // state of multiple participants, would be mapped by their userId ... ?
       // tokbox connection ID
-      remoteParticipants: {},
-      remoteParticipant: newParticipantState(props),
-
-      // basic state of user's connection/stream to av session (tokbox)
-      connection: {
-        initiallyConnected: false,
-        connected: false,
-        connecting: true
-      },
+      remoteUserStates: {},
+      remoteUserState: newRemoteUserState(props),
 
       // higher level Solo session state - like did we "connect" to the other person successfully at any point?
       status: {
-        initiallyConnectedToParticipant: false,
         ending: false,
         ended: false,
       },
 
       // signal to send to other participants
       signal: {},
-
-      appState: AppState.currentState,
-      networkConnection: null
     };
 
     this.endingCall = false; // NOTE: probably need this in `state` as well - it's here to prevent double taps
     this.callTimer = null;
+  }
+
+  TEST () {
+    this._test_linguistConnects();
+  }
+
+  _test_linguistConnects() {
+    // trigger connecting
+    setTimeout(() => {
+      this.props.setRemoteUser({
+        id: "22222222-2222-2222-2222-222222222223",
+        firstName: "Evan",
+        lastInitial: "V"
+      });
+      this.handleRemoteUserConnecting();
+    }, 3000);
+
+    // trigger connected
+    setTimeout(() => {
+      this.handleRemoteUserConnected();
+    }, 7000);
   }
 
   componentDidMount () {
@@ -175,7 +174,10 @@ class SessionView extends Component {
     const currentState = info.effectiveType.toLowerCase();
     const prevState = this.state.networkConnection;
 
-    this.setState({networkConnection: currentState});
+    this.setState({app: {
+      ...this.state.app,
+      networkConnection: currentState
+    }});
 
     // lost internet connection
     if (currentState == "none" && prevState != "none") {
@@ -201,11 +203,11 @@ class SessionView extends Component {
   }
 
   handleNetworkConnectionTypeChanged (fromType, toType) {
-
+    this.sendSignal("connectionType", {fromType, toType});
   }
 
   hasNetworkConnection () {
-    return this.state.networkConnection != "none";
+    return this.state.app.networkConnection != "none";
   }
 
   // hide/show call controls
@@ -271,39 +273,49 @@ class SessionView extends Component {
   handleUserConnected () {}
   handleUserDisconnected () {}
 
-  handleRemoteParticipantConnecting () {
+  handleRemoteUserConnecting () {
     this.setState({
-      remoteParticipant: {
-        ...this.state.remoteParticipant,
-        connected: false,
-        connecting: true,
+      remoteUserState: {
+        ...this.state.remoteUserState,
+        connection: {
+          ...this.state.remoteUserState.connection,
+          connected: false,
+          connecting: true,
+        }
       }
     })
   }
 
-  handleRemoteParticipantConnected () {
+  handleRemoteUserConnected () {
     this.setState({
-      remoteParticipant: {
-        ...this.state.remoteParticipant,
-        initiallyConnected: true,
-        connected: true,
-        connecting: false,
+      remoteUserState: {
+        ...this.state.remoteUserState,
+        connection: {
+          ...this.state.remoteUserState.connection,
+          initiallyConnected: true,
+          connected: true,
+          connecting: false,
+        }
       }
     });
   }
 
-  handleRemoteParticipantDisconnected () {
+  handleRemoteUserDisconnected () {
     this.setState({
-      remoteParticipant: {
-        ...this.state.remoteParticipant,
-        connected: false,
-        connecting: false,
+      remoteUserState: {
+        ...this.state.remoteUserState,
+        connection: {
+          ...this.state.remoteUserState.connection,
+          initiallyConnected: true,
+          connected: false,
+          connecting: false,
+        }
       }
     });
   }
 
   hasInitiallyConnected () {
-    return this.state.remoteParticipant.initiallyConnected && this.state.initiallyConnected;
+    return this.state.remoteUserState.connection.initiallyConnected && this.state.connection.initiallyConnected;
   }
 
   // if an initial connection error is triggered, then just
@@ -376,11 +388,12 @@ class SessionView extends Component {
 
           {/* <KeepAwake /> */}
 
-          <Text style={styles.text}>Hello session</Text>
+          <Text style={styles.text}>Hello {this.props.user.firstName}</Text>
 
           { this.props.isLinguist && !this.hasInitiallyConnected() && (
             <LinguistConnecting
-              remoteParticipant = {this.state.remoteParticipant}
+              remoteUser = {this.props.remoteUser}
+              remoteUserState = {this.state.remoteUserState}
               session = { this.props.session }
               onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
               onTimeout = { () => { this.handleInitialLinguistTimeout() } }
@@ -388,7 +401,8 @@ class SessionView extends Component {
           )}
           { this.props.isCustomer && !this.hasInitiallyConnected() && (
             <CustomerConnecting
-              remoteParticipant = {this.state.remoteParticipant}
+              remoteUser = {this.props.remoteUser}
+              remoteUserState = {this.state.remoteUserState}
               session = { this.props.session }
               secondsUntilTimeout = { 60 }
               onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
@@ -399,11 +413,12 @@ class SessionView extends Component {
           { this.shouldShowReconnectionState() && (
             <ReconnectionState
               user = { this.props.user }
+              remoteUser = {this.props.remoteUser}
+              remoteUserState = {this.state.remoteUserState}
               isCustomer = { this.props.isCustomer }
               isLinguist = { this.props.isLinguist }
               networkConnection = { this.state.networkConnection }
               userConnection = { this.state.connection }
-              participantConnection = { this.state.remoteParticipant }
               onEnd = {() => { this.triggerEndCall() }}
               onTryAgain = {() => { this.triggerRetryCall() }}
             />
@@ -414,11 +429,11 @@ class SessionView extends Component {
               user = {this.props.user }
               session = { this.props.session }
               credentials = { this.props.credentials }
-              remoteParticipant = { this.props.remoteParticipant }
-              networkConnection = { this.state.networkConnection }
-              appState = { this.state.appState }
-              controls = { this.state.controls }
-              sessionStatus = { this.state.status }
+              remoteUser = {this.props.remoteUser}
+              remoteUserState = {this.state.remoteUserState}
+              localAppState = { this.state.app }
+              localControlState = { this.state.controls }
+              localSessionStatus = { this.state.status }
               onSessionEnded = {() => { this.handleCallEnded() }}
 
               // keep or remove?
@@ -426,13 +441,13 @@ class SessionView extends Component {
               onSignalReceived = {null}
 
               // update basic connection status of remote participant
-              onRemoteParticipantConnecting = {null}
-              onRemoteParticipantConnectingFailed = {null}
-              onRemoteParticipantConnected = {null}
-              onRemoteParticipantDisconnected = {null}
-              onRemoteParticipantReconnected = {null}
-              onRemoteParticipantPoorConnection = {null}
-              onRemoteParticipantUpdated = {null} // for things like...
+              onRemoteUserConnecting = {null}
+              onRemoteUserConnectingFailed = {null}
+              onRemoteUserConnected = {null}
+              onRemoteUserDisconnected = {null}
+              onRemoteUserReconnected = {null}
+              onRemoteUserPoorConnection = {null}
+              onRemoteUserUpdated = {null} // for things like...
 
               // update basic connection status of user
               onUserConnecting = {null}
@@ -453,7 +468,7 @@ class SessionView extends Component {
             cameraFlipEnabled={ this.state.controls.cameraFlipEnabled }
             onCameraFlipPressed= {() => { this.toggleCameraFlip() }}
             speakerEnabled = { this.state.controls.speakerEnabled}
-            onSpeakerPressed = {() => { this.toggleSpeaker() }}
+            onSpeakerPressed = {() => {  this.toggleSpeaker() }}
             micEnabled = { this.state.controls.micEnabled }
             onMicPressed =  {() => { this.toggleMic() }}
             videoEnabled = { this.state.controls.videoEnabled }
@@ -470,18 +485,13 @@ class SessionView extends Component {
 
 const mS = (state) => ({
   user: state.userProfile, // TODO: replace with state.activeUser.user
-  role: state.currentSessionReducer.role,
-  isCustomer: state.currentSessionReducer.isCustomer,
-  isLinguist: state.currentSessionReducer.isLinguist,
-  session: state.currentSessionReducer.session,
-  credentials: state.currentSessionReducer.credentials,
-  remoteParticipant: state.currentSessionReducer.remoteParticipant,
+  ...state.currentSessionReducer
 });
 
 const mD = {
   endSession,
   handleEndedSession,
-  setRemoteParticipant,
+  setRemoteUser,
 }
 
 export default connect(mS, mD)(SessionView);

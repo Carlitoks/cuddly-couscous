@@ -40,7 +40,7 @@ export class CustomerConnecting extends Component {
 
   componentDidUpdate (prevProps) {
     // reset the timer if someone is connecting
-    if (!prevProps.remoteParticipant.connecting && this.props.remoteParticipant.connecting) {
+    if (!prevProps.remoteUserState.connection.connecting && this.props.remoteUserState.connection.connecting) {
       this.setState({seconds: this.props.secondsUntilTimeout});
     }
   }
@@ -120,11 +120,11 @@ export class CustomerConnecting extends Component {
   render () {
     return (
       <View>
-        { !this.props.remoteParticipant.connecting && (
+        { !this.props.remoteUserState.connection.connecting && (
           <Text>Connecting to linguist...: { this.state.seconds }</Text>
         )}
-        { this.props.remoteParticipant.connecting && (
-          <Text>{this.props.remoteParticipant.user.firstName} connecting...: { this.state.seconds }</Text>
+        { this.props.remoteUserState.connection.connecting && (
+          <Text>{this.props.remoteUser.firstName} is connecting...: { this.state.seconds }</Text>
         )}
       </View>
     );

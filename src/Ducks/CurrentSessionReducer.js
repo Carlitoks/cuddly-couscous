@@ -26,8 +26,8 @@ const initialState = {
   // incoming invite
   invite: {},
 
-  // data about remote user, either the linguist, or customer
-  remoteParticipant: {},
+  // user info of the other person, either the linguist, or customer
+  remoteUser: {},
 
   // TODO: initial error handling?
   createError: null,
@@ -65,8 +65,8 @@ export const createNewSession = (params) => (dispatch, getState) => {
   });
 };
 
-export const setRemoteParticipant = (user) => (dispatch) => {
-  dispatch(update({remoteParticipant: user}));
+export const setRemoteUser = (user) => (dispatch) => {
+  dispatch(update({remoteUser: user}));
 };
 
 export const acceptSessionInvite = (params) => (dispatch) => {

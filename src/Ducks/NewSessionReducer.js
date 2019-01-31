@@ -257,8 +257,8 @@ const initialState = {
   session: {
     type: "",
     matchMethod: "",
-    primaryLangCode: "",
-    secondaryLangCode: "",
+    primaryLangCode: "eng",
+    secondaryLangCode: "cmn",
     avModePreference: null,
     eventID: null,
     scenarioID: null,
