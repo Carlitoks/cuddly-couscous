@@ -5,6 +5,8 @@ import api from "../../../Config/AxiosConfig";
 export class CustomerConnecting extends Component {
   constructor (props) {
     super(props);
+    console.log("CustomerConnecting.constructor");
+
     // sentinel for callbacks
     this.abortTimers = false;
 
@@ -21,8 +23,6 @@ export class CustomerConnecting extends Component {
     this.state = {
       seconds: props.secondsUntilTimeout
     }
-
-    console.log("MOUNTING");
   }
 
   // start timeout and status polling intervals
@@ -47,10 +47,8 @@ export class CustomerConnecting extends Component {
 
   // cleanup countdowns
   componentWillUnmount () {
-    this.abortTimers = true;
-    clearInterval(this.countdownIntervalID);
-    clearInterval(this.pollIntervalID);
-    console.log("Will unmount");
+    console.log("CustomerConnecting.componentWillUnmount");
+    this.cleanup();
   }
 
   handleCountdownInterval () {
@@ -102,6 +100,7 @@ export class CustomerConnecting extends Component {
   }
 
   cleanup() {
+    console.log("CustomerConnecting.componentWillUnmount");
     this.abortTimers = true;
     clearInterval(this.countdownIntervalID);
     clearInterval(this.pollIntervalID);

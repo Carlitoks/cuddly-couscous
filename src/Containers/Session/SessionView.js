@@ -14,6 +14,7 @@ import {SessionControls} from "./Components/SessionControls";
 import {Session} from "./Components/Tokbox/Session";
 
 import styles from "./styles.js";
+import * as tests from './SessionView.tests';
 
 newRemoteUserState = (props) => {
   return {
@@ -101,24 +102,7 @@ class SessionView extends Component {
   }
 
   TEST () {
-    this._test_linguistConnects();
-  }
-
-  _test_linguistConnects() {
-    // trigger connecting
-    setTimeout(() => {
-      this.props.setRemoteUser({
-        id: "22222222-2222-2222-2222-222222222223",
-        firstName: "Evan",
-        lastInitial: "V"
-      });
-      this.handleRemoteUserConnecting();
-    }, 3000);
-
-    // trigger connected
-    setTimeout(() => {
-      this.handleRemoteUserConnected();
-    }, 7000);
+    tests.testLinguistConnects(this);
   }
 
   componentDidMount () {
@@ -260,7 +244,16 @@ class SessionView extends Component {
   poorConnectionAlertVisible () { return false; }
   poorConnectionAlertMessage () { return ""; }
   shouldRenderSession() { return true; }
-  shouldShowReconnectionState () { return false; }
+  
+  shouldShowReconnectionState () {
+    return (
+      this.hasInitiallyConnected() &&
+      (
+        !this.state.connection.connected ||
+        !this.state.remoteUserState.connection.connected
+      )
+    );
+  }
 
   handleInitialCustomerTimeout () {
     this.props.endSession('timeout').finally(() => {
@@ -414,10 +407,9 @@ class SessionView extends Component {
             <ReconnectionState
               user = { this.props.user }
               remoteUser = {this.props.remoteUser}
-              remoteUserState = {this.state.remoteUserState}
+              remoteUserConnection = {this.state.remoteUserState.connection}
               isCustomer = { this.props.isCustomer }
               isLinguist = { this.props.isLinguist }
-              networkConnection = { this.state.networkConnection }
               userConnection = { this.state.connection }
               onEnd = {() => { this.triggerEndCall() }}
               onTryAgain = {() => { this.triggerRetryCall() }}
