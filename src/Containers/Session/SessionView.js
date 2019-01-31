@@ -125,7 +125,8 @@ class SessionView extends Component {
   componentDidMount () {
     AppState.addEventListener('change', this.handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.handleConnectionChange);
-    console.log(this.props.navigation);
+
+    // TODO: after #1732
     // this.blurSubscription = this.props.navigation.addListener("didBlur", this.cleanup);
 
     // TODO: init some things:
@@ -134,6 +135,7 @@ class SessionView extends Component {
   }
 
   componentWillUnmount () {
+    console.log("SessionView.componentWillUnmount");
     this.cleanup();
   }
 
@@ -141,9 +143,6 @@ class SessionView extends Component {
     console.log("SessionView.cleanup");
     AppState.removeEventListener('change', this.handleAppStateChange);
     NetInfo.removeEventListener("connectionChange", this.handleConnectionChange);
-    if (!!this.blurSubscription) {
-      this.blurSubscription.remove();
-    }
 
     // TODO: unregister listeners:
     // * push notification
@@ -329,23 +328,30 @@ class SessionView extends Component {
   }
 
   _triggerEndCall () {
+    // double tap prevention
+    if (this.endingCall) {
+      return;
+    }
+    // TODO: figure out proper end reason, and proper target view
+    // * rate view if connected
+    // * otherwise home?
     let reason = 'done';
-    // TODO: figure out proper end reason
+    let targetView = "Home";
+    this.endingCall = true;
+
     this.setState({endingCall: true});
     this.sendSignal('endingCall', {reason});
-
-
     this.props.endSession(reason).then((res) => {
       this.setState({endingCall: false, endedCall: true});
       this.sendSignal('endedCall');
     }).catch((e) => {
+      this.endingCall = false;
       this.setState({endingCall: false, endedCall: true});
       this.sendSignal('endingCallFailed');
     }).finally(() => {
       this.cleanup();
-      // TODO: navigate to target state
-      // * rate view if connected
-      // * otherwise home?
+      this.endingCall = false;
+      this.props.navigation.dispatch({type: targetView});
     });
   }
 
