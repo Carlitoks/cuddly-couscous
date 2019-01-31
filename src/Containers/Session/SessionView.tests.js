@@ -1,5 +1,8 @@
 export const testLinguistConnects = (comp) => {
-    // trigger connecting
+    comp.handleUserConnecting();
+    setTimeout(() => {comp.handleUserConnected()}, 1000);
+
+    // trigger remote user connecting
     setTimeout(() => {
       comp.props.setRemoteUser({
         id: "22222222-2222-2222-2222-222222222223",

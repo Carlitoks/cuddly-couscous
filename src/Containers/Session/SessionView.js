@@ -46,7 +46,6 @@ class SessionView extends Component {
   constructor (props) {
     super(props);
     this.init(props);
-    this.TEST();
   }
 
   init (props) {
@@ -66,9 +65,9 @@ class SessionView extends Component {
 
       // basic state of user's connection/stream to av session (tokbox)
       connection: {
-        initiallyConnected: true,
+        initiallyConnected: false,
         connected: false,
-        connecting: true,
+        connecting: false,
         receivingThrottled: false,
         receivingAudio: false,
         receivingVideo: false,
@@ -115,6 +114,8 @@ class SessionView extends Component {
     // TODO: init some things:
     // * push notification listeners
     // * linguist connecting, end call, 
+
+    this.TEST();
   }
 
   componentWillUnmount () {
@@ -262,9 +263,30 @@ class SessionView extends Component {
     });
   }
 
-  handleUserConnecting () {}
-  handleUserConnected () {}
-  handleUserDisconnected () {}
+  handleUserConnecting () {
+    this.setState({connection: {
+      ...this.state.connection,
+      connected: false,
+      connecting: true,
+    }});
+  }
+
+  handleUserConnected () {
+    this.setState({connection: {
+      ...this.state.connection,
+      initiallyConnected: true,
+      connected: true,
+      connecting: false,
+    }});
+  }
+
+  handleUserDisconnected () {
+    this.setState({connection: {
+      ...this.state.connection,
+      connected: false,
+      connecting: false,
+    }});
+  }
 
   handleRemoteUserConnecting () {
     this.setState({
