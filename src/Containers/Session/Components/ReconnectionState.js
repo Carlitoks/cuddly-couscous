@@ -25,11 +25,14 @@ export class ReconnectionState extends Component {
   }
 
   launchAlert () {
-    let buttons = [
-      {text: "Keep Waiting"},
-      {text: "End Call"}
-    ];
-    Alert.alert("Connection error", "Still not connected, what do you want to do?", buttons);
+    let keepWaitingText = "Keep Waiting";
+    let endCallText = "End Call";
+    if (this.props.isCustomer) {
+      keepWaitingText = "Try to Reconnect"
+    }
+
+    let buttons = [{text: keepWaitingText, onPress = () => {this.resetTimeout}}];
+    Alert.alert("Connection error", "Still not connected, what do you want to do?", buttons, {cancelable: false});
   }
 
   cleanup () {
