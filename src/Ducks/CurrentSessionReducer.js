@@ -29,6 +29,9 @@ const initialState = {
   // user info of the other person, either the linguist, or customer
   remoteUser: {},
 
+  // One day:
+  // remoteUsers: {}
+
   // TODO: initial error handling?
   createError: null,
   acceptInviteError: null,
@@ -75,6 +78,15 @@ export const acceptSessionInvite = (params) => (dispatch) => {
 
 export const declineSessionInvite = (inviteID) => (dispatch) => {
   return Promise.reject('not implemented');
+};
+
+export const setSessionBegan = () => (dispatch) => {
+  dispatch(update({began: true}));
+}
+
+export const canRejoinSession = () => (dispapch) => {
+  // TODO: check status route - if remote user is still
+  // connected, user could rejoin that session
 };
 
 // initiate ending the session
