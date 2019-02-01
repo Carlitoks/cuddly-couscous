@@ -12,6 +12,10 @@ export const CREDIT_CARD_FORMATS = [
 ];
 
 export const ONLY_LETTER_REGEX = "^[a-zA-Z]+$";
+
+// check for special chars and numbers
+export const INVALID_NAME_REGEX = /[!@#\$%\^&\*\(\)'"\+-={}\[\];:\\\/\?\.,<>~`_\|0-9\s]+/gm;
+
 // TODO: refactor and remove these constants, any language options should be based off the lists in `src/Config/Languages.js`
 export const SUPPORTED_LANGS = ["eng", "cmn", "yue", "jpn"];
 
