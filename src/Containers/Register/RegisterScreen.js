@@ -42,7 +42,7 @@ import {
 import { updateSettings } from "../../Ducks/ContactLinguistReducer";
 import I18n from "./../../I18n/I18n";
 import Permissions from "react-native-permissions";
-import { checkCallPermissions} from "../../Util/Permission";
+import { checkRegisterCallPermissions} from "../../Util/Permission";
 
 // Styles
 import styles from "./Styles/RegisterScreenStyles";
@@ -103,7 +103,7 @@ class RegisterScreen extends Component {
             response.camera !== "authorized" ||
             response.microphone !== "authorized"
           ) {
-            await checkCallPermissions(valueToUpdate => {
+            await checkRegisterCallPermissions(valueToUpdate => {
               customerUpdateSettings(valueToUpdate);
               Permissions.checkMultiple(["camera", "microphone"]).then(
                 response => {
@@ -113,9 +113,22 @@ class RegisterScreen extends Component {
                   ) {
                     navigation.dispatch({ type: "CustomerView" });
                   }
+
+                  if(response.camera == "undetermined" ||
+                  response.microphone == "undetermined"){
+                    ;
+                  }else if (
+                    response.camera == "restricted" ||
+                    response.microphone == "restricted" ||
+                    (response.camera == "denied" || response.microphone == "denied")
+                  ) {
+                    navigation.dispatch({ type: "Home" });
+        
+                  }
                 }
               );
             });
+            
           }
           if (
             response.camera == "restricted" ||
