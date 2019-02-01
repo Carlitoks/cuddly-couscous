@@ -41,7 +41,7 @@ import I18n from "./../../I18n/I18n";
 import styles from "./Styles/RegisterScreenStyles";
 import { moderateScale } from "../../Util/Scaling";
 import SGWaves from "./../../Assets/SVG/SGWaves";
-import { help, EMAIL_REGEX, ONLY_LETTER_REGEX } from "../../Util/Constants";
+import { help, EMAIL_REGEX, INVALID_NAME_REGEX } from "../../Util/Constants";
 import {
   asyncCreateUser,
   asyncUpdateUser
@@ -77,8 +77,8 @@ class RegisterScreen extends Component {
   };
 
   validateFirstName = text => {
-    let reg = new RegExp(ONLY_LETTER_REGEX);
-    if (!reg.test(text)) {
+    let reg = new RegExp(INVALID_NAME_REGEX);
+    if (reg.test(text) || text.trim()=="") {
       this.props.updateOnboarding({
         isValidFirstName: false,
         errorType: "firstNameFormat"
@@ -92,7 +92,7 @@ class RegisterScreen extends Component {
       }
       this.props.updateOnboarding({ isValidFirstName: true });
     }
-    this.props.updateOnboarding({ firstName: text });
+    this.props.updateOnboarding({ firstName: text.trim() });
   };
 
   validatePassword = text => {
