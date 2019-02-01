@@ -15,12 +15,9 @@ import deviceinfo from "react-native-device-info";
 import { InterfaceSupportedLanguages } from "./Config/Languages";
 import Crashes from "appcenter-crashes";
 import codePush from "react-native-code-push";
-import branch, { BranchEvent } from 'react-native-branch'
-import { reacttoTronConfig } from './Config/ReactotronConfig';
+import branch, { BranchEvent } from 'react-native-branch';
 import analytics from "@segment/analytics-react-native";
-import { reacttoTronConfig } from './Config/ReactotronConfig';
 
-import I18n from './I18n/I18n';
 class App extends Component {
   constructor(props) {
     super(props);
