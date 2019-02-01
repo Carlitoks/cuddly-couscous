@@ -86,7 +86,7 @@ class RegisterScreen extends Component {
   checkAvailableMinutes = async () => {
     const {
       navigation,
-      customerUpdateSettings, 
+      customerUpdateSettings,
       updateSettings,
       modifyAVModePreference
     } = this.props;
@@ -96,7 +96,7 @@ class RegisterScreen extends Component {
     });
     customerUpdateSettings({ video: true });
     modifyAVModePreference({ avModePreference: "video" });
-     
+
       Permissions.checkMultiple(["camera", "microphone"]).then(
         async response => {
           if (
@@ -123,12 +123,12 @@ class RegisterScreen extends Component {
                     (response.camera == "denied" || response.microphone == "denied")
                   ) {
                     navigation.dispatch({ type: "Home" });
-        
+
                   }
                 }
               );
             });
-            
+
           }
           if (
             response.camera == "restricted" ||
@@ -155,7 +155,7 @@ class RegisterScreen extends Component {
 
   validateFirstName = text => {
     let reg = new RegExp(INVALID_NAME_REGEX);
-    if (reg.test(text)) {
+    if (reg.test(text) || text.trim()=="") {
       this.props.updateOnboarding({
         isValidFirstName: false,
         errorType: "firstNameFormat"
@@ -169,7 +169,7 @@ class RegisterScreen extends Component {
       }
       this.props.updateOnboarding({ isValidFirstName: true });
     }
-    this.props.updateOnboarding({ firstName: text });
+    this.props.updateOnboarding({ firstName: text.trim() });
   };
 
   validatePassword = text => {
