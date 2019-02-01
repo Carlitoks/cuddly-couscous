@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NetInfo, AppState, View, Text, TouchableWithoutFeedback} from 'react-native';
+import {Alert, NetInfo, AppState, View, Text, TouchableWithoutFeedback} from 'react-native';
 import {KeepAwake} from "react-native-keep-awake";
 import { connect } from 'react-redux';
 
@@ -101,7 +101,8 @@ class SessionView extends Component {
   }
 
   TEST () {
-    tests.testLinguistConnects(this);
+    // tests.testLinguistConnects(this);
+    tests.testUserDisconnects(this);
   }
 
   componentDidMount () {
