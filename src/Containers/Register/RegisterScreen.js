@@ -78,7 +78,7 @@ class RegisterScreen extends Component {
 
   validateFirstName = text => {
     let reg = new RegExp(INVALID_NAME_REGEX);
-    if (reg.test(text)) {
+    if (reg.test(text) || text.trim()=="") {
       this.props.updateOnboarding({
         isValidFirstName: false,
         errorType: "firstNameFormat"
@@ -92,7 +92,7 @@ class RegisterScreen extends Component {
       }
       this.props.updateOnboarding({ isValidFirstName: true });
     }
-    this.props.updateOnboarding({ firstName: text });
+    this.props.updateOnboarding({ firstName: text.trim() });
   };
 
   validatePassword = text => {
