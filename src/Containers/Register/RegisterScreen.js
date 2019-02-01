@@ -48,7 +48,7 @@ import { checkRegisterCallPermissions} from "../../Util/Permission";
 import styles from "./Styles/RegisterScreenStyles";
 import { moderateScale } from "../../Util/Scaling";
 import SGWaves from "./../../Assets/SVG/SGWaves";
-import { help, EMAIL_REGEX, ONLY_LETTER_REGEX } from "../../Util/Constants";
+import { help, EMAIL_REGEX, INVALID_NAME_REGEX } from "../../Util/Constants";
 import {
   asyncCreateUser,
   asyncUpdateUser
@@ -154,8 +154,8 @@ class RegisterScreen extends Component {
     };
 
   validateFirstName = text => {
-    let reg = new RegExp(ONLY_LETTER_REGEX);
-    if (!reg.test(text)) {
+    let reg = new RegExp(INVALID_NAME_REGEX);
+    if (reg.test(text)) {
       this.props.updateOnboarding({
         isValidFirstName: false,
         errorType: "firstNameFormat"

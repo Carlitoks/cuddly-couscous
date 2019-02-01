@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import I18n from "../I18n/I18n";
 import moment from "moment";
-import { EMAIL_REGEX } from "./Constants";
+import { EMAIL_REGEX, INVALID_NAME_REGEX } from "./Constants";
 /**
  * @description Seconds to minutes and seconds String
  *
@@ -215,8 +215,8 @@ export const is403Response = error => {
  * @returns {Boolean} true when it's match and false if isn't
  */
 export const onlyLetters = str => {
-  const letterRegex = /^[a-zA-Z]+$/;
-  return letterRegex.test(str);
+  let reg = new RegExp(INVALID_NAME_REGEX);
+  return reg.test(str);
 };
 
 /**
