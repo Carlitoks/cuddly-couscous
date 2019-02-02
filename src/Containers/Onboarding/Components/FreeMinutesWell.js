@@ -97,6 +97,9 @@ class FreeMinutesWell extends Component {
   };
 
   renderSubtitle = () => {
+    if (this.props.navigation.state.routeName === "OnboardingView") {
+      return <React.Fragment />;
+    }
     if (this.props.availableMinutes === 0) {
       return (
         <Text style={styles.wellSubtitle}>
@@ -107,8 +110,7 @@ class FreeMinutesWell extends Component {
         </Text>
       )
     } else {
-      // return I18n.t("customerHome.registrationWelcome.description");
-      return <React.Fragment />;
+      return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
     }
   };
 
