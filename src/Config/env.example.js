@@ -4,3 +4,4 @@ export const stripePublishableKey = "";
 export const instabugToken = "";
 export const codePushiOSKey = "";
 export const codePushAndroidKey = "";
+export const analyticsKey = "";

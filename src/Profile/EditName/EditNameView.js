@@ -58,7 +58,7 @@ class EditNameView extends Component {
       valid = false;
     }
 
-    if (!onlyLetters(this.props.formFirstName)) {
+    if (onlyLetters(this.props.formFirstName)) {
       updates = {
         ...updates,
         FirstnameErrorMessage: I18n.t("errorLetters")
@@ -66,7 +66,7 @@ class EditNameView extends Component {
       valid = false;
     }
 
-    if (!onlyLetters(this.props.formLastName)) {
+    if (onlyLetters(this.props.formLastName)) {
       updates = {
         ...updates,
         LastnameErrorMessage: I18n.t("errorLetters")
@@ -151,8 +151,8 @@ class EditNameView extends Component {
               {formPreferredName
                 ? `${formPreferredName}`
                 : formFirstName || formLastName
-                  ? `${formFirstName} ${formLastName}`
-                  : I18n.t("mainTitle")}
+                ? `${formFirstName} ${formLastName}`
+                : I18n.t("mainTitle")}
             </Text>
           }
           navbarType={"Basic"}
@@ -172,7 +172,7 @@ class EditNameView extends Component {
                     containerStyle={styles.containerInput}
                     placeholder={I18n.t("linguistName")}
                     onChangeText={text => {
-                      if (onlyLetters(text) || text == "") {
+                      if (!onlyLetters(text) || text == "") {
                         this.props.updateForm({
                           firstname: text
                         });
@@ -188,7 +188,7 @@ class EditNameView extends Component {
                   containerStyle={styles.containerInput}
                   placeholder={I18n.t("linguistLastName")}
                   onChangeText={text => {
-                    if (onlyLetters(text) || text == "") {
+                    if (!onlyLetters(text) || text == "") {
                       this.props.updateForm({
                         lastname: text
                       });
@@ -205,7 +205,7 @@ class EditNameView extends Component {
                   placeholder={I18n.t("preferredName")}
                   value={formPreferredName}
                   onChangeText={text => {
-                    if (onlyLetters(text) || text == "") {
+                    if (!onlyLetters(text) || text == "") {
                       this.props.updateForm({
                         preferredName: text
                       });
@@ -251,4 +251,7 @@ const mD = {
   updateProfileAsync
 };
 
-export default connect(mS, mD)(EditNameView);
+export default connect(
+  mS,
+  mD
+)(EditNameView);

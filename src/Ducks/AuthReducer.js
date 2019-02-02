@@ -23,6 +23,8 @@ import { clear as cleanNewSessionReducer } from './NewSessionReducer';
 
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
+import analytics from '@segment/analytics-react-native'
+
 
 // Actions
 export const ACTIONS = {
@@ -47,8 +49,11 @@ export const logOut = payload => ({
 });
 
 export const logOutAsync = () => (dispatch, getState) => {
+  
   const { userProfile, auth } = getState();
   // delete device in server
+  analytics.reset()
+
   User.deleteDevice(userProfile.id, auth.deviceId, auth.token)
     .then(() => {
       dispatch(registerFCM({ tokenFCM: null }));

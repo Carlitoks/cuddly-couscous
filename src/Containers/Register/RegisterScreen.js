@@ -17,7 +17,8 @@ import { connect } from "react-redux";
 import {
   openSlideMenu,
   updateLocation,
-  ensureSessionDefaults
+  ensureSessionDefaults,
+  modifyAVModePreference
 } from "../../Ducks/NewSessionReducer";
 
 import {
@@ -34,8 +35,14 @@ import {
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
-import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
+import {
+  clear as clearActiveSession,
+  update as customerUpdateSettings
+} from "../../Ducks/ActiveSessionReducer";
+import { updateSettings } from "../../Ducks/ContactLinguistReducer";
 import I18n from "./../../I18n/I18n";
+import Permissions from "react-native-permissions";
+import { checkRegisterCallPermissions} from "../../Util/Permission";
 
 // Styles
 import styles from "./Styles/RegisterScreenStyles";
@@ -75,6 +82,76 @@ class RegisterScreen extends Component {
     }
     this.props.updateOnboarding({ email: text });
   };
+
+  checkAvailableMinutes = async () => {
+    const {
+      navigation,
+      customerUpdateSettings,
+      updateSettings,
+      modifyAVModePreference
+    } = this.props;
+    updateSettings({
+      selectedScenarioId:
+        null
+    });
+    customerUpdateSettings({ video: true });
+    modifyAVModePreference({ avModePreference: "video" });
+
+      Permissions.checkMultiple(["camera", "microphone"]).then(
+        async response => {
+          if (
+            response.camera !== "authorized" ||
+            response.microphone !== "authorized"
+          ) {
+            await checkRegisterCallPermissions(valueToUpdate => {
+              customerUpdateSettings(valueToUpdate);
+              Permissions.checkMultiple(["camera", "microphone"]).then(
+                response => {
+                  if (
+                    response.camera == "authorized" &&
+                    response.microphone == "authorized"
+                  ) {
+                    navigation.dispatch({ type: "CustomerView" });
+                  }
+
+                  if(response.camera == "undetermined" ||
+                  response.microphone == "undetermined"){
+                    ;
+                  }else if (
+                    response.camera == "restricted" ||
+                    response.microphone == "restricted" ||
+                    (response.camera == "denied" || response.microphone == "denied")
+                  ) {
+                    navigation.dispatch({ type: "Home" });
+
+                  }
+                }
+              );
+            });
+
+          }
+          if (
+            response.camera == "restricted" ||
+            response.microphone == "restricted" ||
+            (response.camera == "denied" || response.microphone == "denied")
+          ) {
+            Alert.alert(
+              I18n.t("appPermissions"),
+              I18n.t("acceptAllPermissionsCustomer"),
+              [{ text: I18n.t("ok") }]
+            );
+            navigation.dispatch({ type: "Home" });
+
+          }
+          if (
+            response.camera == "authorized" &&
+            response.microphone == "authorized"
+          ) {
+            navigation.dispatch({ type: "CustomerView" });
+          }
+        }
+      );
+    };
 
   validateFirstName = text => {
     let reg = new RegExp(INVALID_NAME_REGEX);
@@ -120,7 +197,7 @@ class RegisterScreen extends Component {
       id,
       updateView,
       updateUserProfile,
-      asyncUpdateUser
+      asyncUpdateUser, primaryLangCode,secondaryLangCode
     } = this.props;
 
     try {
@@ -148,7 +225,12 @@ class RegisterScreen extends Component {
         const updateUserProfileResponse = await updateUserProfile({
           isNewUser: true
         });
-        navigation.dispatch({ type: "Home" });
+
+        if(!primaryLangCode || !secondaryLangCode){
+          navigation.dispatch({ type: "Home" });
+        }else{
+          this.checkAvailableMinutes();
+        }
       }
     } catch (err) {
       this.props.updateOnboarding({ makingRequest: false });
@@ -458,7 +540,10 @@ const mD = {
   checkRecord,
   asyncCreateUser,
   asyncUpdateUser,
-  updateOnboarding
+  updateOnboarding,
+  customerUpdateSettings,
+  updateSettings,
+  modifyAVModePreference
 };
 
 export default connect(

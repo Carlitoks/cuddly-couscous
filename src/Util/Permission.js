@@ -137,3 +137,50 @@ export const checkCallPermissions = updateSetting => {
       }
     });
 };
+
+/**
+ * @description  Function to check for all phone permissions needed for the call
+ *
+ * @param {function} updateSetting Reducer function to update values on ActiveSessionReducer
+ */
+export const checkRegisterCallPermissions = updateSetting => {
+  const appPermissions = ["camera", "microphone"];
+  let appPermissionsStatus = {};
+
+  Permissions.checkMultiple(appPermissions)
+    .then(PermissionsStatus => {
+      appPermissionsStatus = PermissionsStatus;
+    })
+    .then(() => {
+      if (
+        appPermissionsStatus.camera == "undetermined" ||
+        appPermissionsStatus.camera == "restricted" ||
+        appPermissionsStatus.camera == "denied"
+      ) {
+        return Permissions.request("camera");
+      }
+    })
+    .then(cameraResponse => {
+      if (cameraResponse == "authorized") {
+        updateSetting({ video: true });
+      }else{
+        updateSetting({ video: false });
+      }
+    })
+    .then(() => {
+      if (
+        appPermissionsStatus.microphone == "undetermined" ||
+        appPermissionsStatus.microphone == "restricted" ||
+        appPermissionsStatus.microphone == "denied"
+      ) {
+        return Permissions.request("microphone");
+      }
+    })
+    .then(microphoneResponse => {
+      if (microphoneResponse == "authorized") {
+        updateSetting({ mic: true });
+      }else{
+        updateSetting({ mic: false });
+      }
+    });
+};

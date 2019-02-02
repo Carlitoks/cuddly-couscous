@@ -27,7 +27,8 @@ const initialState = {
   interfaceLocale: InterfaceSupportedLanguages.find(
     language => language[1] === "en"
   ),
-  userLocaleSet: false
+  userLocaleSet: false,
+  segmentSettings: false
 };
 
 // Reducer

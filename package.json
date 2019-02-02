@@ -16,6 +16,7 @@
     "postinstall": "cp patches/OTScreenCapturer.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTScreenCapturer.java && cp patches/OTSessionManager.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTSessionManager.java"
   },
   "dependencies": {
+    "@segment/analytics-react-native": "^0.0.1-beta.3",
     "appcenter": "1.5.1",
     "appcenter-analytics": "1.5.1",
     "appcenter-crashes": "1.5.1",
@@ -28,7 +29,6 @@
     "prop-types": "^15.5.10",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
-    "react-native-amplitude-analytics": "^0.2.6",
     "react-native-animatable": "^1.3.0",
     "react-native-background-timer": "2.0.0",
     "react-native-branch": "^2.3.3",

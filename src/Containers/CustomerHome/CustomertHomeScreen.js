@@ -29,6 +29,7 @@ import I18n from "./../../I18n/I18n";
 import { supportedLangCodes } from "./../../Config/Languages";
 import WelcomeModal from "./Components/Partials/WelcomeModal";
 import FreeMinutesWell from "../Onboarding/Components/FreeMinutesWell";
+import analytics from '@segment/analytics-react-native'
 
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
@@ -37,6 +38,12 @@ import { moderateScale } from "../../Util/Scaling";
 
 class CustomerHomeScreen extends Component {
   componentWillMount() {
+    const {  uuid, firstName } = this.props;
+
+    analytics.identify(uuid, {
+      name: firstName
+    })
+
     getGeolocationCoords()
       .then(response => {
         this.props.updateLocation({

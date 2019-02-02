@@ -19,29 +19,20 @@ export const updateSettings = payload => ({
   payload
 });
 
-export const reloadStatus = status => (dispatch, getState) => {
-  const { auth, profileLinguist, userProfile } = getState();
-  Linguist.update(userProfile.id, auth.token, {
-    available: status
-  }).catch(err => {
-    dispatch(networkError(err));
-  });
-};
-
 export const getCurrentAvailability = () => (dispatch, getState) => {
   const { auth } = getState();
   dispatch(updateSettings({ loading: true }));
   return User.get(auth.uuid, auth.token)
     .then(({ data }) => {
-      let availability = data.linguistProfile.available ? data.linguistProfile.available : false;
+      let availability = data.linguistProfile.available
+        ? data.linguistProfile.available
+        : false;
       dispatch(
         updateSettings({
           available: availability,
           loading: false
         })
       );
-      dispatch(changeStatus(availability));
-
     })
     .catch(error => {
       dispatch(networkError(error));
@@ -62,7 +53,9 @@ export const changeStatus = status => (dispatch, getState) => {
       available: status
     })
       .then(res => {
-        let available = res.data.linguistProfile.available ? res.data.linguistProfile.available : status;
+        let available = res.data.linguistProfile.available
+          ? res.data.linguistProfile.available
+          : status;
         dispatch(
           updateSettings({
             available,
@@ -104,9 +97,8 @@ export const asyncGetAccountInformation = () => (dispatch, getState) => {
 
 export const getTotalDuration = callHistory => {
   const amountDuration = callHistory
-    .map(
-      callDetail =>
-        callDetail.session.duration ? callDetail.session.duration : 0
+    .map(callDetail =>
+      callDetail.session.duration ? callDetail.session.duration : 0
     )
     .reduce((amount, duration) => amount + duration);
 

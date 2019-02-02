@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { NetInfo, Text, Platform } from "react-native";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
-import { codePushAndroidKey, codePushiOSKey } from "./Config/env";
+import { codePushAndroidKey, codePushiOSKey, analyticsKey } from "./Config/env";
 
 import { delayUpdateInfo } from "./Ducks/NetworkInfoReducer";
 import { updateSettings } from "./Ducks/SettingsReducer";
@@ -15,6 +15,7 @@ import { InterfaceSupportedLanguages } from "./Config/Languages";
 import Crashes from "appcenter-crashes";
 import codePush from "react-native-code-push";
 import branch, { BranchEvent } from "react-native-branch";
+import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
 class App extends Component {
@@ -44,7 +45,11 @@ class App extends Component {
     createStore()
       .then(store => {
         const {
-          settings: { userLocaleSet, interfaceLocale: storeInterfaceLocale }
+          settings: {
+            segmentSettings,
+            userLocaleSet,
+            interfaceLocale: storeInterfaceLocale
+          }
         } = store.getState();
 
         // ================================
@@ -72,6 +77,14 @@ class App extends Component {
           switchLanguage(storeInterfaceLocale[1], this);
         }
         // ================================
+        if (!segmentSettings) {
+          analytics
+            .setup(analyticsKey, {trackAppLifecycleEvents: true})
+            .then(() =>
+              store.dispatch(updateSettings({ segmentSettings: true }))
+            )
+            .catch(error => console.log(error));
+        }
         return store;
       })
       .then(store => {
@@ -130,7 +143,11 @@ class App extends Component {
     }
   };
 
-  async componentDidMount() {}
+  /*componentDidMount() {
+    if (!analytics.ready) {
+      analytics.setup("segment_write_key", {}).catch(() => {});
+    }
+  }*/
 
   // dumpAsyncStorage().then(data => console.log(data));
 
