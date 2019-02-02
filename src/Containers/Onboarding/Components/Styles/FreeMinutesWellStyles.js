@@ -86,6 +86,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.ItalicFont,
     fontSize: Iphone5 ? 12 : moderateScale(13, 0),
     paddingLeft: 15,
+    marginTop: -10
     // paddingBottom: 15
   },
   wellSubtitleSpanish: {
