@@ -79,7 +79,7 @@ class App extends Component {
         // ================================
         if (!segmentSettings) {
           analytics
-            .setup(analyticsKey, {})
+            .setup(analyticsKey, {trackAppLifecycleEvents: true})
             .then(() =>
               store.dispatch(updateSettings({ segmentSettings: true }))
             )
