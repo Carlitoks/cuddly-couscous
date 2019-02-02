@@ -21,7 +21,8 @@ export default StyleSheet.create({
       : iOS
       ? moderateScale(85)
       : moderateScale(45),
-    zIndex: 10
+    zIndex: 10,
+    paddingBottom: 15
   },
   freeMinutesWellContainerHome: {
     width: Metrics.width * 0.89,
@@ -85,7 +86,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.ItalicFont,
     fontSize: Iphone5 ? 12 : moderateScale(13, 0),
     paddingLeft: 15,
-    paddingBottom: 15
+    // paddingBottom: 15
   },
   wellSubtitleSpanish: {
     color: "#401674",
