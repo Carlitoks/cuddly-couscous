@@ -98,13 +98,17 @@ class FreeMinutesWell extends Component {
 
   renderSubtitle = () => {
     if (this.props.availableMinutes === 0) {
-      if (this.props.stripePaymentToken) {
-        return I18n.t("pricingScreen.descriptions.noMinutesHasCard");
-      } else {
-        return I18n.t("pricingScreen.descriptions.noMinutesNoCard");
-      }
+      return (
+        <Text style={styles.wellSubtitle}>
+          {!!this.props.stripePaymentToken ?
+            I18n.t("pricingScreen.descriptions.noMinutesHasCard") :
+            I18n.t("pricingScreen.descriptions.noMinutesNoCard")
+          }
+        </Text>
+      )
     } else {
-      return I18n.t("customerHome.registrationWelcome.description");
+      // return I18n.t("customerHome.registrationWelcome.description");
+      return <React.Fragment />;
     }
   };
 
@@ -134,7 +138,7 @@ class FreeMinutesWell extends Component {
             <Text style={this.setPillTextStyle()}>{this.setPillContent()}</Text>
           </View>
           {this.renderTitle()}
-          <Text style={styles.wellSubtitle}>{this.renderSubtitle()}</Text>
+          {this.renderSubtitle()}
         </TouchableOpacity>
         <PaymentModal
           visible={this.props.displayPaymentModal}

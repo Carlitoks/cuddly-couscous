@@ -31,7 +31,7 @@ class OnboardingButtons extends Component {
               containerStyle={styles.iconPadding}
             />
             <Text style={styles.callNowButtonText}>
-            {I18n.t("customerOnboarding.connectToLinguist")}
+            {I18n.t("getStarted")}
             </Text>
           </TouchableOpacity>
         </View>
