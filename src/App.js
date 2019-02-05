@@ -136,16 +136,9 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-<<<<<<< HEAD
     NetInfo.removeEventListener('connectionChange', this.handleFirstConnectivityChange);
-=======
     AppState.removeEventListener('change', this._handleAppStateChange);
     persistEvents();
-    NetInfo.removeEventListener(
-      "connectionChange",
-      this.handleFirstConnectivityChange
-    );
->>>>>>> recording app state events
   }
 
   handleFirstConnectivityChange = connectionInfo => {
@@ -157,11 +150,6 @@ class App extends Component {
     }
   };
 
-<<<<<<< HEAD
-  componentDidMount() {}
-
-  // dumpAsyncStorage().then(data => console.log(data));
-=======
   _handleAppStateChange = (nextState) => {
     recordAppStateEvent(this.state.appState, nextState);
     this.setState({appState: nextState});
@@ -172,7 +160,6 @@ class App extends Component {
       persistEvents();
     }
   };
->>>>>>> recording app state events
 
   render() {
     if (this.state.loadingStore) {
