@@ -49,7 +49,6 @@ import {
   asyncUpdateUser
 } from "./../../Ducks/CustomerProfileReducer";
 import FieldError from "./Components/FieldError";
-import { Icon } from "react-native-elements";
 import metrics from "../../Themes/Metrics";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 import fonts from "../../Themes/Fonts";
@@ -57,6 +56,7 @@ import {
   TermsConditionsURI,
   PrivacyPolicyURI
 } from "../../Config/StaticViewsURIS";
+
 class RegisterScreen extends Component {
   isValidEmail = text => {
     const { updateOnboarding, errorType } = this.props;
