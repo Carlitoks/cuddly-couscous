@@ -429,6 +429,11 @@ export default (ENG = {
   onboardingView: {
     help: "Can I help you?"
   },
+
+  loading: {
+    tagline: "Language at Your Command"
+  },
+  
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -437,6 +442,11 @@ export default (ENG = {
     secondaryLang: {
       label: "I need help with",
       placeholder: "Choose language"
+    },
+    scenario: {
+      label: "Scenario",
+      placeholder: "Optional",
+      description: "Subject of your call"
     },
     customNote: {
       label: "Additional details",
@@ -495,6 +505,13 @@ export default (ENG = {
         dismiss: "Start Using Jeenie",
         payment: "Add Payment Information Now"
       }
+    },
+    sessionPermissions: {
+      heading: "Almost There!",
+      title: "Microphone & Camera",
+      description: "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
+      button: "Enabled Microphone & Camera",
+      back: "Back"
     }
   },
 
@@ -648,7 +665,26 @@ export default (ENG = {
     tenFreeMinutes: "{{time}} FREE Minutes",
     canIHelpYou: "Can I help you?",
     homeCanIhelpYou: "Can I help you, {{name}}?",
+    intro: {
+      title: "Travel with Confidence",
+      description: "24/7 access to live, human translators for language help and cultural advice at the tap of a button.",
+      button: "Continue"
+    },
+    allSet: "You're all set!",
+    location: {
+      title: "Enable Location",
+      description: "Jeenie works best when you share your location. To get the most out of Jeenie, turn on location services.",
+      button: "Turn on Location Services",
+      skip: "Skip"
+    },
+    notification: {
+      title: "Enable Notifications",
+      description: "Turn on push notifications so Jeenie can keep you up-to-date.",
+      button: "Turn on Notifications",
+      skip: "Skip",
+    },
     login: {
+      title: "First, tell us about yourself:",
       provideInformation:
         "Provide your name, email and a password so you can access your account in the future.",
       createAccountTitle: "Create Account",
@@ -658,6 +694,7 @@ export default (ENG = {
       privacyPolicy: "Privacy Policy",
       forgotPassword: "Forgot password?"
     },
+
     register: {
       createAnAccount: "Create Account",
       alreadyAccount: "Already have an account? Sign in",
