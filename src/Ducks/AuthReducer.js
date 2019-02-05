@@ -25,6 +25,7 @@ import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import analytics from '@segment/analytics-react-native'
 
+import { setAuthToken } from "../Util/Forensics";
 
 // Actions
 export const ACTIONS = {
@@ -51,6 +52,7 @@ export const logOut = payload => ({
 export const logOutAsync = () => (dispatch, getState) => {
   
   const { userProfile, auth } = getState();
+  setAuthToken(null);
   // delete device in server
   analytics.reset()
 
@@ -111,6 +113,7 @@ export const registerDevice = () => dispatch => {
   return Auth.registerDevice(deviceInfo)
     .then(response => {
       dispatch(updateDeviceToken(response.data));
+      setAuthToken(response.data.token);
       return dispatch(
         update({
           deviceToken: response.data.token,
@@ -137,6 +140,7 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
 
   return Auth.login(email, password, auth.deviceToken)
     .then(response => {
+      setAuthToken(response.data.token);
       dispatch(updateForm({ performingRequest: false }));
       dispatch(addListeners());
       return dispatch(

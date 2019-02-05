@@ -1,6 +1,7 @@
 import AXIOS from "../Config/AxiosConfig";
 import { Languages } from "../Config/Languages";
 import Countries from "../Config/countries";
+import { recordSessionEvent, recordApiError } from "../Util/Forensics";
 
 const BASE_URI = "/sessions";
 
@@ -26,6 +27,19 @@ const Session = {
     location,
     avModePreference
   ) => {
+    recordSessionEvent('create', {
+      type,
+      matchMethod,
+      primaryLangCode,
+      secondaryLangCode,
+      scenarioID,
+      estimatedMinutes,
+      customScenario,
+      eventID,
+      location,
+      avModePreference
+    });
+
     return AXIOS.post(
       `${BASE_URI}`,
       {
@@ -43,7 +57,10 @@ const Session = {
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {
       return res;
-    }).catch(err => console.log(err));
+    }).catch((err) => {
+      recordApiError("POST", "/v1/sessions");
+      console.log(err);
+    });
   },
   // The customer invite a linguist
   // example:
@@ -72,11 +89,17 @@ const Session = {
   },
   // Customer ends session - signal kick to all participants
   EndSession: (sessionID, reason, token) => {
+    recordSessionEvent('end', {
+      sessionID,
+      reason
+    });
     return AXIOS.put(
       `${BASE_URI}/${sessionID}/end`,
       { reason },
       { headers: { Authorization: `Bearer ${token}` } }
-    );
+    ).catch((e) => {
+      recordApiError('PUT', '/v1/sessions/{id}/end', {sessionID});
+    });
   },
   //  Participants rate the session
   RatingSession: (RateInformation, sessionID, token) => {

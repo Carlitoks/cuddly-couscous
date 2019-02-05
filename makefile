@@ -17,6 +17,9 @@ setup:
 run-cmd:
 	docker-compose run --rm solo-api $(CMD)
 
+reload-fixtures:
+	docker-compose run --rm solo-api dev:load-fixtures
+
 npm-install:
 	docker-compose run --rm appcenter npm install
 

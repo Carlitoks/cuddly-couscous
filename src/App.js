@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { NetInfo, Text, Platform } from 'react-native';
-import deviceinfo from "react-native-device-info";
+import React, { Component } from "react";
+import { Provider } from "react-redux";
+import { NetInfo, Text, AppState, Platform } from "react-native";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 import { codePushAndroidKey, codePushiOSKey, analyticsKey } from "./Config/env";
@@ -18,6 +17,10 @@ import codePush from "react-native-code-push";
 import branch, { BranchEvent } from 'react-native-branch';
 import analytics from "@segment/analytics-react-native";
 
+import I18n from "./I18n/I18n";
+import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
+import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +28,8 @@ class App extends Component {
     this.state = {
       isLoggedIn: false,
       loadingStore: true,
-      store: null
+      store: null,
+      appState: AppState.currentState
     };
 
     // Font doesn't scale
@@ -45,6 +49,7 @@ class App extends Component {
 
   componentWillMount() {
     this.disableAppCenterCrashes();
+    init();
     createStore()
       .then(store => {
         const {
@@ -92,6 +97,7 @@ class App extends Component {
       })
       .then(store => {
         const { auth } = store.getState();
+        setAuthToken(auth.token);
 
         this.setState({
           isLoggedIn: auth.isLoggedIn,
@@ -125,11 +131,18 @@ class App extends Component {
     // you could check the app state to respond differently to push notifications depending on if the app is running in the background or is currently active.
   }
 
+  async componentDidMount() {
+    AppState.addEventListener('change', this._handleAppStateChange);
+  }
+
   componentWillUnmount() {
     NetInfo.removeEventListener('connectionChange', this.handleFirstConnectivityChange);
+    AppState.removeEventListener('change', this._handleAppStateChange);
+    persistEvents();
   }
 
   handleFirstConnectivityChange = connectionInfo => {
+    recordNetworkEvent(connectionInfo);
     const { store } = this.state;
 
     if (store) {
@@ -137,17 +150,30 @@ class App extends Component {
     }
   };
 
-  componentDidMount() {}
+  _handleAppStateChange = (nextState) => {
+    recordAppStateEvent(this.state.appState, nextState);
+    this.setState({appState: nextState});
 
-  // dumpAsyncStorage().then(data => console.log(data));
+    // if app is being killed or shutdown for whatever
+    // reason, try to persist
+    if (nextState == 'inactive') {
+      persistEvents();
+    }
+  };
 
   render() {
-    if (this.state.loadingStore) return null;
+    if (this.state.loadingStore) {
+      // TODO: return static loading screen, like the splash screen
+      // right now we have a flash of blank white screen
+      return null;
+    }
 
     return (
-      <Provider store={this.state.store}>
-        <ReduxNavigation />
-      </Provider>
+      <AppErrorBoundary>
+        <Provider store={this.state.store}>
+          <ReduxNavigation />
+        </Provider>
+      </AppErrorBoundary>
     );
   }
 }

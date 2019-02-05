@@ -5,3 +5,4 @@ export const instabugToken = "";
 export const codePushiOSKey = "";
 export const codePushAndroidKey = "";
 export const analyticsKey = "";
+export const forensicsEnabled = false;
