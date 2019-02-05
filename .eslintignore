@@ -1,5 +1,4 @@
 # Ignore everything:
-src/App.js
 src/**
 !src/*
 !src/Containers/*
@@ -7,4 +6,5 @@ src/**
 !src/Containers/Login/**
 !src/Containers/Onboarding/**
 !src/Containers/Register/**
+src/App.js
 # Except for this directories:

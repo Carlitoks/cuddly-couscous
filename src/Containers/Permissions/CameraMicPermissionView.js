@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { Colors } from '../../Themes';
@@ -7,45 +7,24 @@ import { updateLocation, ensureSessionDefaults } from '../../Ducks/NewSessionRed
 import { getGeolocationCoords } from '../../Util/Helpers';
 import ViewWrapper from '../ViewWrapper/ViewWrapper';
 import { clear as clearOnboarding } from '../../Ducks/OnboardingReducer';
+
 // Styles
-import styles from './Styles/OnboardingScreenStyles';
-import OnboardingButtons from './Components/OnboardingButtons';
+import styles from './Styles/PermissionViewStyles';
+import PermissionButtons from './Components/PermissionButtons';
 import I18n from '../../I18n/I18n';
+import Permissions from 'react-native-permissions';
 
 const JeenieLogo = require('../../Assets/Images/Landing-Jeenie-TM.png');
-const backgroundImage = require('../../Assets/Images/zhang.png');
 
-class OnboardingScreen extends Component {
-  componentWillMount() {
-    const {
-      navigation,
-      isLoggedIn,
-      token,
-      clearOnboarding,
-      updateLocation,
-      primaryLangCode,
-      ensureSessionDefaults,
-      secondaryLangCode
-    } = this.props;
-    clearOnboarding();
-    getGeolocationCoords()
-      .then(response => {
-        updateLocation({
-          location: [response.coords.longitude, response.coords.latitude]
-        });
-      })
-      .catch(err => {
-        console.log('GeoLocation error  ', err);
-      });
-
-    ensureSessionDefaults({
-      primaryLangCode: primaryLangCode || 'eng',
-      secondaryLangCode: secondaryLangCode || ''
+class CameraMicPermissionView extends Component {
+  componentWillMount(){
+    const { navigation } = this.props;
+    Permissions.checkMultiple(['camera', 'microphone']).then((checkPermissions) => {
+        if(checkPermissions.camera === 'authorized' && checkPermissions.microphone === 'authorized'){
+            navigation.dispatch({ type: 'Home' });
+        }
     });
-    if (isLoggedIn && token) {
-      navigation.dispatch({ type: 'Home' });
-    }
-  }
+}
 
   render() {
     const { navigation } = this.props;
@@ -59,25 +38,23 @@ class OnboardingScreen extends Component {
           >
             <View style={styles.topLogoContainer}>
               <Image source={JeenieLogo} />
-              <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
-              <Text style={styles.subtitleText}>
-                {I18n.t('customerOnboarding.intro.description')}
+              <Text style={styles.allSet}>
+                {I18n.t('customerHome.sessionPermissions.heading')}
               </Text>
             </View>
 
             <View style={styles.backgroundImageContainer}>
-              <Image style={styles.backgroundImage} source={backgroundImage} />
+              
             </View>
 
-            <LinearGradient
-              colors={[Colors.bottomOnboardingGradient.top, Colors.bottomOnboardingGradient.bottom]}
-              locations={[0, 1]}
-              style={styles.gradientFullWidht}
-            >
+            
               <View style={styles.bottomButtonsContainer}>
-                <OnboardingButtons navigation={navigation} />
+              <Text style={styles.titleText}>{I18n.t('customerHome.sessionPermissions.title')}</Text>
+              <Text style={styles.subtitleText}>
+                {I18n.t('customerHome.sessionPermissions.description')}
+              </Text>
+                <PermissionButtons navigation={navigation} check={'CameraMic'} />
               </View>
-            </LinearGradient>
           </LinearGradient>
         </View>
       </ViewWrapper>
@@ -101,4 +78,4 @@ const mD = {
 export default connect(
   mS,
   mD
-)(OnboardingScreen);
+)(CameraMicPermissionView);

@@ -21,8 +21,8 @@ export default StyleSheet.create({
   loginContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: Metrics.height * 0.91,
-    alignItems: 'center'
+    alignItems: 'center',
+    flexGrow: 1
   },
   inputContainer: { width: Metrics.width * 0.85, paddingTop: 10 },
   buttonContainer: {
@@ -33,15 +33,6 @@ export default StyleSheet.create({
   },
   buttonWidthContainer: {
     paddingBottom: 30,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  signInButtonDisable: {
-    minWidth: Metrics.width * 0.78,
-    backgroundColor: Colors.transparent,
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -83,7 +74,7 @@ export default StyleSheet.create({
     textDecorationLine: 'underline',
     lineHeight: 20
   },
-  createAccountPadding: { paddingTop: 20, width: Metrics.width },
+  createAccountPadding: { paddingTop: 24, width: Metrics.width },
   registerButton: {
     minWidth: Metrics.width * 0.78,
     flexDirection: 'row',
@@ -91,13 +82,22 @@ export default StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#fff',
-    borderRadius: 25,
+    borderRadius: 30,
     backgroundColor: '#F39100',
     shadowColor: 'rgba(0,0,0,1)',
     shadowOpacity: 0.38,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
     elevation: 8
+  },
+  signInButtonDisable: {
+    minWidth: Metrics.width * 0.78,
+    backgroundColor: Colors.transparent,
+    borderColor: '#fff',
+    borderWidth: 1,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   inputViewContainer: {
     flexDirection: 'column',
@@ -130,7 +130,7 @@ export default StyleSheet.create({
     marginBottom: android ? 1 : 30
   },
   termsAndConditionsViewContainer: {
-    marginTop: 25,
+    marginBottom: 15,
     flexDirection: 'row',
     width: '100%',
     zIndex: 1000000000,
@@ -143,5 +143,19 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start'
   },
-  height: { height: '100%' }
+  height: { height: '100%' },
+  titleText: {
+    fontFamily: Fonts.BoldFont,
+    color: '#fff',
+    fontSize: moderateScale(20, 0),
+    textAlign: 'center',
+    paddingTop: moderateScale(20, 0),
+    paddingBottom: moderateScale(20, 0)
+  },
+  topLogoContainer: {
+    marginTop: moderateScale(60),
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }
 });

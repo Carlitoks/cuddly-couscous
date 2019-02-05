@@ -16,7 +16,7 @@ export default StyleSheet.create({
     flexGrow: 1
   },
   topLogoContainer: {
-    marginTop: moderateScale(60),
+    marginTop: moderateScale(76, 0),
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -34,7 +34,8 @@ export default StyleSheet.create({
     color: '#fff',
     fontSize: moderateScale(18, 0),
     textAlign: 'center',
-    maxWidth: moderateScale(317, 0)
+    maxWidth: moderateScale(317, 0),
+    marginBottom: moderateScale(39, 0)
   },
   backgroundImageContainer: {
     position: 'absolute',
@@ -44,5 +45,12 @@ export default StyleSheet.create({
   },
   backgroundImage: { width: moderateScale(286, 0) },
   bottomButtonsContainer: { top: moderateScale(-35, 0) },
-  gradientFullWidht: { width: '100%' }
+  gradientFullWidht: { width: '100%' },
+  allSet: {
+    fontFamily: Fonts.BaseFont,
+    color: '#fff',
+    fontSize: moderateScale(36, 0),
+    textAlign: 'center',
+    marginTop: moderateScale(88, 0)
+  }
 });

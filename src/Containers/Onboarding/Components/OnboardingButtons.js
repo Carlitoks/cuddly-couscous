@@ -17,13 +17,6 @@ class OnboardingButtons extends Component {
             onPress={() => navigation.dispatch({ type: 'RegisterScreen' })}
             style={styles.callNowButton}
           >
-            <Icon
-              name="ios-videocam"
-              type="ionicon"
-              color="#fff"
-              size={23}
-              containerStyle={styles.iconPadding}
-            />
             <Text style={styles.callNowButtonText}>
             {I18n.t("getStarted")}
             </Text>

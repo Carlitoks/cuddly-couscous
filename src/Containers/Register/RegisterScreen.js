@@ -7,14 +7,14 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Linking,
+  Image,
   View
-} from "react-native";
-import LinearGradient from "react-native-linear-gradient";
-import { connect } from "react-redux";
-import { Icon } from "react-native-elements";
-import Permissions from "react-native-permissions";
-import LinguistHeader from "../CustomerHome/Components/Header";
-import { Colors, Metrics } from "../../Themes";
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
+import { Icon } from 'react-native-elements';
+import { Colors } from '../../Themes';
 import {
   ensureSessionDefaults,
   modifyAVModePreference,
@@ -41,13 +41,19 @@ import I18n, { translateApiErrorString } from "./../../I18n/I18n";
 import { checkRegisterCallPermissions } from "../../Util/Permission";
 // Styles
 import styles from "./Styles/RegisterScreenStyles";
-import SGWaves from "./../../Assets/SVG/SGWaves";
-import { EMAIL_REGEX, help, INVALID_NAME_REGEX } from "../../Util/Constants";
-import { asyncCreateUser, asyncUpdateUser } from "./../../Ducks/CustomerProfileReducer";
+import { EMAIL_REGEX, INVALID_NAME_REGEX } from "../../Util/Constants";
+import {
+  asyncCreateUser,
+  asyncUpdateUser
+} from "./../../Ducks/CustomerProfileReducer";
 import FieldError from "./Components/FieldError";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
-import { PrivacyPolicyURI, TermsConditionsURI } from "../../Config/StaticViewsURIS";
+import {
+  TermsConditionsURI,
+  PrivacyPolicyURI
+} from "../../Config/StaticViewsURIS";
 
+const JeenieLogo = require('../../Assets/Images/Landing-Jeenie-TM.png');
 class RegisterScreen extends Component {
   isValidEmail = text => {
     const { updateOnboarding, errorType } = this.props;
@@ -103,10 +109,10 @@ class RegisterScreen extends Component {
   };
 
   validateFirstName = text => {
-    const { errorType, updateOnboarding } = this.props;
-    const reg = new RegExp(INVALID_NAME_REGEX);
-    if (reg.test(text) || text.trim() == '') {
-      this.props.updateOnboarding({
+    const {errorType, updateOnboarding} = this.props;
+    let reg = new RegExp(INVALID_NAME_REGEX);
+    if (reg.test(text) || text.trim()=="") {
+      updateOnboarding({
         isValidFirstName: false,
         errorType: 'firstNameFormat'
       });
@@ -119,7 +125,7 @@ class RegisterScreen extends Component {
       }
       updateOnboarding({ isValidFirstName: true });
     }
-    this.props.updateOnboarding({ firstName: text.trim() });
+    updateOnboarding({ firstName: text.trim() });
   };
 
   validatePassword = text => {
@@ -175,11 +181,7 @@ class RegisterScreen extends Component {
             isNewUser: true
           });
           this.props.updateOnboarding({ makingRequest: false });
-          if (!primaryLangCode || !secondaryLangCode) {
-            navigation.dispatch({ type: 'Home' });
-          } else {
-            this.checkAvailableMinutes();
-          }
+          navigation.dispatch({ type: "LocationPermissionView" });
         }
         this.props.updateOnboarding({ makingRequest: false });
       }
@@ -274,20 +276,15 @@ class RegisterScreen extends Component {
               locations={[0, 1]}
               style={styles.height}
             >
-              <LinguistHeader type="login" navigation={navigation} />
-              <LinearGradient
-                colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-                locations={[0, 1]}
-                style={styles.height}
-              >
                 <View style={styles.loginContainer}>
+                <View style={styles.topLogoContainer}>
+                  <Image source={JeenieLogo} />
+                  <Text style={styles.titleText}>{I18n.t('customerOnboarding.login.title')}</Text>
                   <View style={styles.inputContainer}>
                     {errorType ? (
                       <FieldError navigation={navigation} />
                     ) : (
-                      <Text style={styles.registerAdviseText}>
-                        {I18n.t('customerOnboarding.login.provideInformation')}
-                      </Text>
+                      <React.Fragment />
                     )}
 
                     <View style={styles.inputViewContainer}>
@@ -367,10 +364,10 @@ class RegisterScreen extends Component {
                         )}
                       </View>
                     </View>
-
-                    {this.renderPrivacyPolicyText()}
+                  </View>
                   </View>
                   <View style={styles.buttonContainer}>
+                  {this.renderPrivacyPolicyText()}
                     <View style={styles.buttonWidthContainer}>
                       <TouchableOpacity
                         onPress={() => this.submit()}
@@ -392,7 +389,7 @@ class RegisterScreen extends Component {
                         }
                       >
                         <Text style={styles.buttonEnabledText}>
-                          {I18n.t('customerOnboarding.register.createAnAccount')}
+                          {I18n.t('continue')}
                         </Text>
                       </TouchableOpacity>
 
@@ -409,10 +406,8 @@ class RegisterScreen extends Component {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                    <SGWaves height={51} width={Metrics.width} />
                   </View>
                 </View>
-              </LinearGradient>
             </LinearGradient>
           </View>
         </TouchableWithoutFeedback>

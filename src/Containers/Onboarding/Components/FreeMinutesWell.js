@@ -88,18 +88,21 @@ class FreeMinutesWell extends Component {
   };
 
   renderSubtitle = () => {
+    const { availableMinutes, stripePaymentToken } = this.props;
     if (this.props.navigation.state.routeName === "OnboardingView") {
       return <React.Fragment />;
     }
-    if (this.props.availableMinutes === 0) {
+    if (availableMinutes === 0) {
       return (
         <Text style={styles.wellSubtitle}>
-          {!!this.props.stripePaymentToken ?
+          {!!stripePaymentToken ?
             I18n.t("pricingScreen.descriptions.noMinutesHasCard") :
             I18n.t("pricingScreen.descriptions.noMinutesNoCard")
           }
         </Text>
       )
+    } else {
+      return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
     }
     
     return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
