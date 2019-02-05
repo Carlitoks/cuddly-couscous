@@ -22,8 +22,8 @@ export default (reducer = (state, action) => {
 
   switch (action.type) {
     case "back":
+      analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
-      amplitude.logEvent("Navigation", { "View Name": action.type.toString() });
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.back(),
         state

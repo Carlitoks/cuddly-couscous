@@ -120,32 +120,13 @@ class RegisterScreen extends Component {
                 }
               );
             });
-
-          }
-          if (
-            response.camera == "restricted" ||
-            response.microphone == "restricted" ||
-            (response.camera == "denied" || response.microphone == "denied")
-          ) {
-            Alert.alert(
-              I18n.t("appPermissions"),
-              I18n.t("acceptAllPermissionsCustomer"),
-              [{ text: I18n.t("ok") }]
-            );
-            navigation.dispatch({ type: "Home" });
-
-          }
-          if (
-            response.camera == "authorized" &&
-            response.microphone == "authorized"
-          ) {
-            navigation.dispatch({ type: "CustomerView" });
           }
         }
       );
     };
 
   validateFirstName = text => {
+    const {errorType, updateOnboarding} = this.props;
     let reg = new RegExp(INVALID_NAME_REGEX);
     if (reg.test(text) || text.trim()=="") {
       this.props.updateOnboarding({

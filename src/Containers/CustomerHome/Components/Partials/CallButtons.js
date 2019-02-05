@@ -91,19 +91,6 @@ class CallButtons extends Component {
           ) {
             navigation.dispatch({ type: "CustomerView" });
           }
-        }
-        if (
-          response.camera === 'restricted' ||
-          response.microphone === 'restricted' ||
-          (response.camera === 'denied' || response.microphone === 'denied')
-        ) {
-          Alert.alert(I18n.t('appPermissions'), I18n.t('acceptAllPermissionsCustomer'), [
-            { text: I18n.t('ok') }
-          ]);
-        }
-        if (response.camera === 'authorized' && response.microphone === 'authorized') {
-          navigation.dispatch({ type: 'CustomerView' });
-        }
       });
     }
   };
