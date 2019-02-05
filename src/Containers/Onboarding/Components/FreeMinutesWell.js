@@ -100,10 +100,9 @@ class FreeMinutesWell extends Component {
           }
         </Text>
       )
-    } else {
-      return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
     }
-    return I18n.t('customerHome.registrationWelcome.description');
+    
+    return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
   };
 
   onPressAction = () => {
