@@ -46,6 +46,10 @@ build/
 .gradle
 local.properties
 *.iml
+android/app/gradle/
+android/app/gradlew
+android/app/gradlew.bat
+android/app/src/main/res/drawable-*
 
 # node.js
 #
