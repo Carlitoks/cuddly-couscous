@@ -18,7 +18,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.BoldFont,
     fontSize: Iphone5 ? 16 : moderateScale(18, 0)
   },
-  loginContainer: {
+  registerContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',

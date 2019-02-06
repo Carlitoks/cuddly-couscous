@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { ApplicationStyles, Fonts } from '../../../Themes';
+import { ApplicationStyles, Fonts, Metrics, Colors } from '../../../Themes';
 import { moderateScale } from '../../../Util/Scaling';
 
 export default StyleSheet.create({
@@ -8,12 +8,20 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     height: '100%'
   },
+  mainOnboardingContainer: {
+    backgroundColor: Colors.gradientColor.top,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    width: '100%'
+  },
   gradientContainer: {
     height: '100%',
     justifyContent: 'space-between',
     flexDirection: 'column',
     alignItems: 'center',
-    flexGrow: 1
+    flexGrow: 1,
+    width: '100%'
   },
   topLogoContainer: {
     marginTop: moderateScale(60),
@@ -38,11 +46,12 @@ export default StyleSheet.create({
   },
   backgroundImageContainer: {
     position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: moderateScale(248, 0)
   },
-  backgroundImage: { width: moderateScale(286, 0) },
+  backgroundImage: {
+    width: moderateScale(246, Metrics.width <= 320 ? 1 : 0),
+    height: moderateScale(395, Metrics.width <= 320 ? 1 : 0),
+    resizeMode: 'cover',
+  },
   bottomButtonsContainer: { top: moderateScale(-35, 0) },
-  gradientFullWidht: { width: '100%' }
+  gradientFullWidth: { width: '100%', zIndex: 10 }
 });

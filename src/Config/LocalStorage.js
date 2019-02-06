@@ -13,7 +13,6 @@ export const saveState = async state => {
   try {
     const serializedState = JSON.stringify(state);
     await AsyncStorage.setItem("onvoy-store", serializedState);
-
     return true;
   } catch (err) {
     // Ignore writing errors

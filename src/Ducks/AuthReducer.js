@@ -15,6 +15,7 @@ import {
   changeStatus,
   clearSettings as clearLinguistProfile
 } from "./ProfileLinguistReducer";
+import { clear as fullClearOnboarding } from './OnboardingReducer';
 
 import { clearSettingsInterface } from "./SettingsReducer";
 
@@ -50,7 +51,7 @@ export const logOut = payload => ({
 });
 
 export const logOutAsync = () => (dispatch, getState) => {
-  
+
   const { userProfile, auth } = getState();
   setAuthToken(null);
   // delete device in server
@@ -71,7 +72,8 @@ export const logOutAsync = () => (dispatch, getState) => {
       dispatch(clearLinguistProfile());
       // dispatch(clearSettingsInterface());
       PushNotification.cleanListeners();
-      dispatch(cleanNewSessionReducer())
+      dispatch(cleanNewSessionReducer());
+      dispatch(fullClearOnboarding());
       dispatch({ type: "OnboardingView" });
     });
 };

@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import throttle from "lodash/throttle";
-
 import { saveState, loadState } from "./LocalStorage";
 import rootReducer from "../Ducks";
 
@@ -44,7 +43,12 @@ const getStore = () =>
           profileLinguist: store.getState().profileLinguist,
           pushNotification: store.getState().pushNotification,
           onboardingRecord: store.getState().onboardingRecord,
-          homeFlow: store.getState().homeFlow
+          homeFlow: store.getState().homeFlow,
+          onboardingReducer: {
+            completedLocation: store.getState().onboardingReducer.completedLocation,
+            completedNotification: store.getState().onboardingReducer.completedNotification,
+            completedMicAndCamera: store.getState().onboardingReducer.completedMicAndCamera
+          },
         }).then(() => {
           // console.log("STATE PERSISTED")
         });

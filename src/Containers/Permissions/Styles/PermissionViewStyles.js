@@ -44,13 +44,17 @@ export default StyleSheet.create({
     top: moderateScale(248, 0)
   },
   backgroundImage: { width: moderateScale(286, 0) },
-  bottomButtonsContainer: { top: moderateScale(-35, 0) },
-  gradientFullWidht: { width: '100%' },
+  bottomButtonsContainer: { top: moderateScale(-35, 0), alignItems: 'center' },
   allSet: {
     fontFamily: Fonts.BaseFont,
     color: '#fff',
     fontSize: moderateScale(36, 0),
     textAlign: 'center',
     marginTop: moderateScale(88, 0)
-  }
+  },
+  fullBackgroundCover: {
+    width: '100%', height: '100%'
+  },
+  backgroundOpacity: {opacity: 0.5},
+  gradientFullWidth: { width: '100%', zIndex: 10 }
 });

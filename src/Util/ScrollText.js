@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
-import { Reactotron } from 'reactotron-react-native';
 
 const styles = StyleSheet.create({
   container: {

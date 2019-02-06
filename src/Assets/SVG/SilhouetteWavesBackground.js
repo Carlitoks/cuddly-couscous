@@ -11,7 +11,6 @@ import Svg, {
 } from "react-native-svg";
 import {moderateScale} from "../../Util/Scaling";
 import metrics from "../../Themes/Metrics";
-import Reactotron from 'reactotron-react-native';
 
 moveInsideComponents = () => {
   if(metrics.width < 360){

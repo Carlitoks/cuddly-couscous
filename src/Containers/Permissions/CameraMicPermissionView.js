@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
-import { View, Text, Image, Platform } from 'react-native';
+import React, {Component} from 'react';
+import {Image, Platform, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { connect } from 'react-redux';
-import { Colors } from '../../Themes';
-import { updateLocation, ensureSessionDefaults } from '../../Ducks/NewSessionReducer';
-import { getGeolocationCoords } from '../../Util/Helpers';
+import {connect} from 'react-redux';
+import {Colors} from '../../Themes';
+import {ensureSessionDefaults, updateLocation} from '../../Ducks/NewSessionReducer';
 import ViewWrapper from '../ViewWrapper/ViewWrapper';
-import { clear as clearOnboarding } from '../../Ducks/OnboardingReducer';
-
+import {clear as clearOnboarding} from '../../Ducks/OnboardingReducer';
 // Styles
 import styles from './Styles/PermissionViewStyles';
 import PermissionButtons from './Components/PermissionButtons';

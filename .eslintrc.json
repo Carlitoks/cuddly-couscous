@@ -14,7 +14,8 @@
     "linebreak-style": "off",
     "react/prop-types": [0],
     "no-shadow": "off",
-    "react/prefer-stateless-function": "off"
+    "react/prefer-stateless-function": "off",
+    "quotes": [0]
   },
   "parserOptions": {
     "ecmaFeatures": {

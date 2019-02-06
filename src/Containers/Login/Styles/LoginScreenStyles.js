@@ -31,14 +31,15 @@ export default StyleSheet.create({
   loginContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: Metrics.height * 0.91,
-    alignItems: 'center'
+    alignItems: 'center',
+    flexGrow: 1
   },
   inputContainer: { width: Metrics.width * 0.85, paddingTop: 10 },
   buttonContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    paddingTop: 20
   },
   buttonWidthContainer: {
     paddingBottom: 30,
@@ -70,7 +71,7 @@ export default StyleSheet.create({
     ...setTextProperties('#fff', Fonts.BoldFont, Iphone5 ? 14 : moderateScale(17, 0), null),
     textAlign: 'center'
   },
-  createAccountPadding: { paddingTop: 20, width: Metrics.width },
+  createAccountPadding: { paddingTop: 24, width: Metrics.width },
   inputViewContainer: { flexDirection: 'column', paddingTop: 10 },
   labelStyle: {
     ...setTextProperties("#fff", Fonts.ItalicFont, moderateScale(13, 0), "400"),
@@ -101,5 +102,19 @@ export default StyleSheet.create({
     paddingRight: 5,
     textAlign: 'right',
     paddingTop: 10
+  },
+  titleText: {
+    fontFamily: Fonts.BoldFont,
+    color: '#fff',
+    fontSize: moderateScale(20, 0),
+    textAlign: 'center',
+    paddingTop: moderateScale(20, 0),
+    paddingBottom: moderateScale(20, 0)
+  },
+  topLogoContainer: {
+    marginTop: moderateScale(60),
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 });
