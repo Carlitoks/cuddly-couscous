@@ -14,7 +14,8 @@ const WellContainerStyles = {
   borderWidth: 1,
   borderRadius: 4,
   borderColor: '#CDCDF4',
-  zIndex: 10
+  zIndex: 10,
+  paddingBottom: 15
 };
 
 const iOS = Platform.OS === 'ios';
@@ -85,7 +86,6 @@ export default StyleSheet.create({
     ...setTextProperties('#401674', Fonts.ItalicFont, Iphone5 ? 12 : moderateScale(13, metrics.width < 360 ? 0.5 : 0), null),
     paddingLeft: 15,
     marginTop: -10
-    // paddingBottom: 15
   },
   pricingPillText: {
     ...setTextProperties('#401674', Fonts.ItalicFont, Iphone5 ? 14 : moderateScale(16, metrics.width < 360 ? 0.5 : 0), '600'),
