@@ -32,12 +32,16 @@ const initialState = {
   // One day:
   // remoteUsers: {}
 
+  // basic existence state
+  status: {
+    began: false, // did both sides initially connect?
+    ended: false,
+    ending: false
+  },
+
   // TODO: initial error handling?
   createError: null,
   acceptInviteError: null,
-  began: false,
-  ended: false,
-  ending: false,
 };
 
 export const createNewSession = (params) => (dispatch, getState) => {
@@ -80,8 +84,13 @@ export const declineSessionInvite = (inviteID) => (dispatch) => {
   return Promise.reject('not implemented');
 };
 
-export const setSessionBegan = () => (dispatch) => {
-  dispatch(update({began: true}));
+export const setSessionBegan = () => (dispatch, getState) => {
+  dispatch(update({
+    status: {
+      ...getState().currentSessionReducer.status,
+      began: true
+    }
+  }));
 }
 
 export const canRejoinSession = () => (dispapch) => {

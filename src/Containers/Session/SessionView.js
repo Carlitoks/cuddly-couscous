@@ -3,7 +3,7 @@ import {Alert, NetInfo, AppState, View, Text, TouchableWithoutFeedback} from 're
 import {KeepAwake} from "react-native-keep-awake";
 import { connect } from 'react-redux';
 
-import {endSession, handleEndedSession, setRemoteUser} from '../../Ducks/CurrentSessionReducer';
+import {endSession, handleEndedSession, setRemoteUser, setSessionBegan} from '../../Ducks/CurrentSessionReducer';
 
 import {CustomerConnecting} from "./Components/CustomerConnecting";
 import {LinguistConnecting} from "./Components/LinguistConnecting";
@@ -278,7 +278,12 @@ class SessionView extends Component {
       initiallyConnected: true,
       connected: true,
       connecting: false,
-    }});
+    }}, () => {
+      const rc = this.state.remoteUserState.connection;
+      if (rc.initiallyConnected && rc.connected) {
+        this.props.setSessionBegan();
+      }
+    });
   }
 
   handleUserDisconnected () {
@@ -313,6 +318,11 @@ class SessionView extends Component {
           connecting: false,
         }
       }
+    }, () => {
+      const lc = this.state.connection;
+      if (lc.initiallyConnected && lc.connected) {
+        this.props.setSessionBegan();
+      }
     });
   }
 
@@ -344,18 +354,18 @@ class SessionView extends Component {
   }
 
   // call ended by user
-  triggerEndCall () {
+  triggerEndCall (reason) {
     if (!this.props.isLinguist) {
-      this._triggerEndCall();
+      this._triggerEndCall(reason);
       return;
     }
 
     // TODO: alert "are you sure?"
-    this._triggerEndCall();
+    this._triggerEndCall(reason);
 
   }
 
-  _triggerEndCall () {
+  _triggerEndCall (reason) {
     // double tap prevention
     if (this.endingCall) {
       return;
@@ -363,7 +373,6 @@ class SessionView extends Component {
     // TODO: figure out proper end reason, and proper target view
     // * rate view if connected
     // * otherwise home?
-    let reason = 'done';
     let targetView = "Home";
     this.endingCall = true;
 
@@ -381,17 +390,19 @@ class SessionView extends Component {
       this.endingCall = false;
       this.props.navigation.dispatch({type: targetView});
     });
+    Alert.alert("Ended Session", reason);
   }
 
   // call ended by a remote participant
-  handleCallEnded () {
+  handleCallEnded (reason) {
     this.props.handleCallEnded();
     // TODO:
-    // if connected, go to rate screen
+    // if connected & done, go to rate screen
     // if connecting, alert about cancelation, go home
+    // if 
   }
 
-  triggerRetryCall () {
+  triggerRetryCall (endReason, startReason) {
     // TODO: end current call
     // create new call
     // force reload component somehow... "initState(props)"
@@ -406,6 +417,8 @@ class SessionView extends Component {
 
           <Text style={styles.text}>Hello {this.props.user.firstName}</Text>
 
+          {/* TODO: consider a dedicated component for triggering a call retry? */}
+
           { this.props.isLinguist && !this.hasInitiallyConnected() && (
             <LinguistConnecting
               remoteUser = {this.props.remoteUser}
@@ -413,6 +426,7 @@ class SessionView extends Component {
               session = { this.props.session }
               onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
               onTimeout = { () => { this.handleInitialLinguistTimeout() } }
+              onCancel = {() => { this.triggerEndCall("cancel") }}
             />
           )}
           { this.props.isCustomer && !this.hasInitiallyConnected() && (
@@ -422,8 +436,9 @@ class SessionView extends Component {
               connection = { this.state.connection }
               session = { this.props.session }
               secondsUntilTimeout = { 60 }
-              onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
-              onTimeout = { () => { this.handleInitialCustomerTimeout() } }
+              onCancel = {() => { this.triggerEndCall("cancel") }}
+              onError = {() => { this.handleInitialConnectionError("session.errFailedToConnect") }}
+              onTimeout = {() => { this.handleInitialCustomerTimeout() }}
             />
           )}
 
@@ -435,8 +450,8 @@ class SessionView extends Component {
               isCustomer = { this.props.isCustomer }
               isLinguist = { this.props.isLinguist }
               userConnection = { this.state.connection }
-              onEnd = {() => { this.triggerEndCall() }}
-              onTryAgain = {() => { this.triggerRetryCall() }}
+              onEnd = {(reason) => { this.triggerEndCall(reason) }}
+              onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
             />
           )}
 
@@ -479,19 +494,21 @@ class SessionView extends Component {
             <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
           )}
 
-          <CallTimer />
-          <SessionControls
-            cameraFlipEnabled={ this.state.controls.cameraFlipEnabled }
-            onCameraFlipPressed= {() => { this.toggleCameraFlip() }}
-            speakerEnabled = { this.state.controls.speakerEnabled}
-            onSpeakerPressed = {() => {  this.toggleSpeaker() }}
-            micEnabled = { this.state.controls.micEnabled }
-            onMicPressed =  {() => { this.toggleMic() }}
-            videoEnabled = { this.state.controls.videoEnabled }
-            onVideoPressed = {() => { this.toggleVideo() }}
-            endingCall = { this.state.endingCall }
-            onEndCallPressed = {() => { this.triggerEndCall() }}
-          />
+          {/* <CallTimer /> */}
+          { this.props.status.began && (
+            <SessionControls
+              cameraFlipEnabled={ this.state.controls.cameraFlipEnabled }
+              onCameraFlipPressed= {() => { this.toggleCameraFlip() }}
+              speakerEnabled = { this.state.controls.speakerEnabled}
+              onSpeakerPressed = {() => {  this.toggleSpeaker() }}
+              micEnabled = { this.state.controls.micEnabled }
+              onMicPressed =  {() => { this.toggleMic() }}
+              videoEnabled = { this.state.controls.videoEnabled }
+              onVideoPressed = {() => { this.toggleVideo() }}
+              endingCall = { this.state.endingCall }
+              onEndCallPressed = {() => { this.triggerEndCall("done") }}
+            />
+          )}
 
         </View>
       </TouchableWithoutFeedback>
@@ -508,6 +525,7 @@ const mD = {
   endSession,
   handleEndedSession,
   setRemoteUser,
+  setSessionBegan,
 }
 
 export default connect(mS, mD)(SessionView);

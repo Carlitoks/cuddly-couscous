@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Text, View} from "react-native";
+import {Button, Text, View} from "react-native";
 import api from "../../../Config/AxiosConfig";
 
 export class CustomerConnecting extends Component {
@@ -116,6 +116,11 @@ export class CustomerConnecting extends Component {
     this.props.onTimeout();
   }
 
+  cancel () {
+    this.cleanup();
+    this.props.onCancel();
+  }
+
   getConnectionText () {
     const rc = this.props.remoteUserState.connection;
     const mc = this.props.connection;
@@ -134,6 +139,10 @@ export class CustomerConnecting extends Component {
     return (
       <View>
         <Text>{ this.getConnectionText() }</Text>
+        <Button
+          title = "Cancel"
+          onPress = {()=> { this.cancel() }}
+        />
       </View>
     );
   }

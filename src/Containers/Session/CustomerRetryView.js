@@ -8,7 +8,8 @@ export class CustomerRetryView extends Component {
 
   retry () {
     this.props.createNewSession({
-      ...this.props.session
+      ...this.props.session,
+      startReason: "retry_timeout"
     }).then(() => {
       this.props.navigation.dispatch({type: "SessionView"});
     }).catch((e) => {

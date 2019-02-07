@@ -31,16 +31,19 @@ export const testUserDisconnects = (comp) => {
     firstName: "Evan",
     lastInitial: "V"
   });
+  comp.handleUserConnecting();
+  comp.handleUserConnected();
 
   setTimeout(() => {
-    comp.handleUserConnecting();
-    comp.handleUserConnected();
     comp.handleRemoteUserConnecting();
-    comp.handleRemoteUserConnected();  
+  }, 1000);
+  setTimeout(() => {
+    comp.handleRemoteUserConnected();
   }, 3000);
 
   setTimeout(() => {
-    comp.handleUserDisconnected();
+    // comp.handleUserDisconnected();
+    comp.handleRemoteUserDisconnected();
   }, 6000);
 };
 
