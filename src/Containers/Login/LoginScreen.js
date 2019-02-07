@@ -1,40 +1,58 @@
-import React, {Component} from 'react';
-import {Alert, Image, Keyboard, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {connect} from 'react-redux';
-import {Icon} from 'react-native-elements';
-import {Colors} from '../../Themes';
-import {ensureSessionDefaults, openSlideMenu, updateLocation} from '../../Ducks/NewSessionReducer';
+import React, { Component } from "react";
+import {
+  Alert,
+  Image,
+  Keyboard,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import { connect } from "react-redux";
+import { Icon } from "react-native-elements";
+import { Colors } from "../../Themes";
+import {
+  ensureSessionDefaults,
+  openSlideMenu,
+  updateLocation,
+} from "../../Ducks/NewSessionReducer";
 
-import {getNativeLang, getProfileAsync, updateView as updateUserProfile} from '../../Ducks/UserProfileReducer';
-import {checkRecord} from '../../Ducks/OnboardingRecordReducer';
-import {haveSession, logInAsync, registerDevice} from '../../Ducks/AuthReducer';
+import {
+  getNativeLang,
+  getProfileAsync,
+  updateView as updateUserProfile,
+} from "../../Ducks/UserProfileReducer";
+import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
+import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer";
 
-import ViewWrapper from '../ViewWrapper/ViewWrapper';
-import {clear as clearEvents} from '../../Ducks/EventsReducer';
-import {clear as clearActiveSession} from '../../Ducks/ActiveSessionReducer';
-import I18n from '../../I18n/I18n';
+import ViewWrapper from "../ViewWrapper/ViewWrapper";
+import { clear as clearEvents } from "../../Ducks/EventsReducer";
+import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
+import I18n from "../../I18n/I18n";
 // Styles
-import styles from './Styles/LoginScreenStyles';
-import {EMAIL_REGEX} from '../../Util/Constants';
-import FieldError from '../Register/Components/FieldError';
-import {noOnboarding, update as updateOnboarding} from '../../Ducks/OnboardingReducer';
+import styles from "./Styles/LoginScreenStyles";
+import { EMAIL_REGEX } from "../../Util/Constants";
+import FieldError from "../Register/Components/FieldError";
+import { noOnboarding, update as updateOnboarding } from "../../Ducks/OnboardingReducer";
+import Header from "../CustomerHome/Components/Header";
 
-const JeenieLogo = require('../../Assets/Images/Landing-Jeenie-TM.png');
+const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
 class LoginScreen extends Component {
-  isValidEmail = text => {
-    const {updateOnboarding} = this.props;
+  isValidEmail = (text) => {
+    const { updateOnboarding } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
     if (!reg.test(text)) {
       updateOnboarding({
         isValidEmail: false,
-        errorType: 'emailFormat'
+        errorType: "emailFormat",
       });
     } else {
-      updateOnboarding({isValidEmail: true, errorType: null});
+      updateOnboarding({ isValidEmail: true, errorType: null });
     }
-    updateOnboarding({email: text});
+    updateOnboarding({ email: text });
   };
 
   submit = async () => {
@@ -49,43 +67,45 @@ class LoginScreen extends Component {
       updateOnboarding,
       email,
       password,
-      noOnboarding
+      noOnboarding,
     } = this.props;
     try {
-      updateOnboarding({errorType: null, makingRequest: true});
+      updateOnboarding({ errorType: null, makingRequest: true });
       await registerDevice();
       const logInUserResponse = await logInAsync(email, password);
       const getUserProfile = await getProfileAsync(
         logInUserResponse.payload.uuid,
-        logInUserResponse.payload.token
+        logInUserResponse.payload.token,
       );
       await updateUserProfile({
-        selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode)
+        selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode),
       });
       const record = await checkRecord(email);
       if (record) {
-        updateCustomer({userInfo: {id: record.id}});
-        Alert.alert(I18n.t('finishOnboarding'), I18n.t('finishOnboardingMessage'), [
+        updateCustomer({ userInfo: { id: record.id } });
+        Alert.alert(I18n.t("finishOnboarding"), I18n.t("finishOnboardingMessage"), [
           {
-            text: I18n.t('ok')
-          }
+            text: I18n.t("ok"),
+          },
         ]);
 
-        updateOnboarding({makingRequest: false});
-        navigation.dispatch({type: record.lastStage});
+        updateOnboarding({ makingRequest: false });
+        navigation.dispatch({ type: record.lastStage });
       } else {
-        updateOnboarding({makingRequest: false});
+        updateOnboarding({ makingRequest: false });
         noOnboarding();
-        navigation.dispatch({type: 'Home'});
+        navigation.dispatch({ type: "Home" });
       }
     } catch (err) {
-      if (err.data.errors[0] === 'Password incorrect') {
+      if (err.data.errors[0] === "Password incorrect") {
         updateOnboarding({
-          errorType: 'signInError'
+          errorType: "signInError",
         });
-      }else if (err.data.errors[0] === "Email not found") {
-        this.props.updateOnboarding({
-          errorType: "emailNotFound"
+      }
+
+      if (err.data.errors[0] === "Email not found") {
+        updateOnboarding({
+          errorType: "emailNotFound",
         });
       }else{
         Alert.alert(I18n.t("error"), translateApiErrorString(err.data.errors[0]   , "api.errTemporary"), [
@@ -94,7 +114,7 @@ class LoginScreen extends Component {
         navigation.dispatch({ type: "OnboardingView" });
       }
       updateOnboarding({
-        makingRequest: false
+        makingRequest: false,
       });
     }
   };
@@ -107,7 +127,7 @@ class LoginScreen extends Component {
       errorType,
       email,
       password,
-      updateOnboarding
+      updateOnboarding,
     } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
@@ -116,24 +136,24 @@ class LoginScreen extends Component {
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
               locations={[0, 1]}
-              style={{height: '100%'}}
+              style={styles.fullHeight}
             >
-
-                <View style={styles.loginContainer}>
-                  <View style={styles.topLogoContainer}>
-                    <Image source={JeenieLogo}/>
-                    <Text style={styles.titleText}>{I18n.t('customerOnboarding.login.title')}</Text>
+              <Header navigation={navigation} />
+              <View style={styles.loginContainer}>
+                <View style={styles.topLogoContainer}>
+                  <Image source={JeenieLogo} />
+                  <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>
                   <View style={styles.inputContainer}>
-                    {errorType === 'signInError' ||
-                    errorType === 'emailFormat' ||
-                    errorType === 'emailNotFound' ? (
-                      <FieldError navigation={navigation}/>
-                    ) : (
-                      <View/>
-                    )}
+                    {errorType === "signInError"
+                    || errorType === "emailFormat"
+                    || errorType === "emailNotFound" ? (
+                      <FieldError navigation={navigation} />
+                      ) : (
+                        <View />
+                      )}
 
                     <View style={styles.inputViewContainer}>
-                      {email ? <Text style={styles.labelStyle}>{I18n.t('email')}</Text> : <Text/>}
+                      {email ? <Text style={styles.labelStyle}>{I18n.t("email")}</Text> : <Text />}
                       <View style={styles.inputInternalContainer}>
                         <TextInput
                           allowFontScaling={false}
@@ -142,55 +162,54 @@ class LoginScreen extends Component {
                           autoCapitalize="none"
                           onBlur={() => this.isValidEmail(email)}
                           value={email}
-                          placeholder={I18n.t('email')}
+                          placeholder={I18n.t("email")}
                           placeholderTextColor="rgba(255,255,255,0.5)"
                           keyboardType="email-address"
                         />
-                        {errorType === 'signInError' || errorType === 'emailFormat' ? (
+                        {errorType === "signInError" || errorType === "emailFormat" ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon name="close" type="material-community" color="#fff" size={15}/>
+                            <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
                         ) : (
-                          <React.Fragment/>
+                          <React.Fragment />
                         )}
                       </View>
                     </View>
 
                     <View style={styles.inputViewContainer}>
                       {password ? (
-                        <Text style={styles.labelStyle}>{I18n.t('password')}</Text>
+                        <Text style={styles.labelStyle}>{I18n.t("password")}</Text>
                       ) : (
-                        <Text/>
+                        <Text />
                       )}
                       <View style={styles.inputInternalContainer}>
                         <TextInput
                           allowFontScaling={false}
                           style={styles.inputText}
-                          onChangeText={text => updateOnboarding({password: text})}
+                          onChangeText={text => updateOnboarding({ password: text })}
                           autoCapitalize="none"
                           value={password}
-                          placeholder={I18n.t('password')}
+                          placeholder={I18n.t("password")}
                           secureTextEntry
                           placeholderTextColor="rgba(255,255,255,0.5)"
                         />
-                        {errorType === 'signInError' ? (
+                        {errorType === "signInError" ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon name="close" type="material-community" color="#fff" size={15}/>
+                            <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
                         ) : (
-                          <React.Fragment/>
+                          <React.Fragment />
                         )}
                       </View>
 
                       <Text
-                        onPress={() =>
-                          navigation.dispatch({
-                            type: 'ForgotPasswordView'
-                          })
+                        onPress={() => navigation.dispatch({
+                          type: "ForgotPasswordView",
+                        })
                         }
                         style={styles.forgotPasswordLabel}
                       >
-                        {I18n.t('customerOnboarding.login.forgotPassword')}
+                        {I18n.t("customerOnboarding.login.forgotPassword")}
                       </Text>
                     </View>
                   </View>
@@ -206,19 +225,20 @@ class LoginScreen extends Component {
                           : styles.signInButtonEnabled
                       }
                     >
-                      <Text style={styles.buttonEnabledText}>{I18n.t('signIn')}</Text>
+                      <Text style={styles.buttonEnabledText}>{I18n.t("signIn")}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                      onPress={() =>
-                        navigation.dispatch({
-                          type: 'RegisterScreen'
-                        })
+                      onPress={() => navigation.dispatch({
+                        type: "RegisterView",
+                      })
                       }
                       style={styles.createAccountPadding}
                     >
                       <Text style={styles.transitionButtonText}>
-                        {I18n.t('customerOnboarding.register.createAnAccount')} »
+                        {I18n.t("customerOnboarding.register.createAnAccount")}
+                        {" "}
+»
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -245,7 +265,7 @@ const mS = state => ({
   password: state.onboardingReducer.password,
   errorType: state.onboardingReducer.errorType,
   makingRequest: state.onboardingReducer.makingRequest,
-  isValidEmail: state.onboardingReducer.isValidEmail
+  isValidEmail: state.onboardingReducer.isValidEmail,
 });
 
 const mD = {
@@ -262,10 +282,10 @@ const mD = {
   getNativeLang,
   checkRecord,
   updateOnboarding,
-  noOnboarding
+  noOnboarding,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(LoginScreen);

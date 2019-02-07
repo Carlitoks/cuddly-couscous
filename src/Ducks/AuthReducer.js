@@ -74,7 +74,7 @@ export const logOutAsync = () => (dispatch, getState) => {
       PushNotification.cleanListeners();
       dispatch(cleanNewSessionReducer());
       dispatch(fullClearOnboarding());
-      dispatch({ type: "OnboardingView" });
+      dispatch({ type: "IntroView" });
     });
 };
 

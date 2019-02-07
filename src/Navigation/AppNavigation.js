@@ -111,14 +111,14 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    LoginScreen: {
+    LoginView: {
       screen: LoginScreen,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
       }
     },
-    RegisterScreen: {
+    RegisterView: {
       screen: RegisterScreen,
       navigationOptions: {
         gesturesEnabled: false,
@@ -294,13 +294,6 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    LoginView: {
-      screen: LoginView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
     ScanScreenView: {
       screen: ScanScreenView,
       navigationOptions: {
@@ -378,7 +371,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    OnboardingView: {
+    IntroView: {
       screen: OnboardingScreen,
       navigationOptions: {
         gesturesEnabled: false,
@@ -480,7 +473,7 @@ const Navigation = StackNavigator(
     }
   },
   {
-    initialRouteName: "OnboardingView",
+    initialRouteName: "IntroView",
     headerMode: "none",
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {
@@ -494,9 +487,9 @@ const Navigation = StackNavigator(
 
         if (
           sceneProps.scene.route.routeName === "RateView" ||
-          sceneProps.scene.route.routeName === "OnboardingView" ||
-          sceneProps.scene.route.routeName === "LoginScreen" ||
-          sceneProps.scene.route.routeName === "RegisterScreen"
+          sceneProps.scene.route.routeName === "IntroView" ||
+          sceneProps.scene.route.routeName === "LoginView" ||
+          sceneProps.scene.route.routeName === "RegisterView"
         ) {
           return CardStackStyleInterpolator.forFadeFromBottomAndroid(
             sceneProps
