@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Permissions from 'react-native-permissions';
 import {updateLocation} from '../../../Ducks/NewSessionReducer';
 import {update as updateOnboarding} from '../../../Ducks/OnboardingReducer';
+
 // Styles
 import styles from './Styles/PermissionButtonsStyles';
 import I18n from '../../../I18n/I18n';
@@ -98,24 +99,23 @@ class PermissionButtons extends Component {
     const { navigation } = this.props;
     if(navigation.state.routeName === 'LocationPermissionView'){
       if (Platform.OS === 'android') {
-        navigation.dispatch({ type: 'Home' });
+        return navigation.dispatch({ type: 'Home' });
       } else {
-        navigation.dispatch({ type: 'NotificationPermissionView' });
+        return navigation.dispatch({ type: 'NotificationPermissionView' });
       }
     }
 
     if(navigation.state.routeName === 'NotificationPermissionView'){
-      navigation.dispatch({ type: 'Home' });
+      return navigation.dispatch({ type: 'Home' });
     } else {
-      navigation.dispatch({ type: 'Home' });
+      return navigation.dispatch({ type: 'Home' });
     }
   };
 
   render() {
     const { navigation, check } = this.props;
-    const style = this.props.style || {};
     return (
-      <View style={[styles.permissionButtonsContainer, ...style]}>
+      <View style={[styles.permissionButtonsContainer]}>
         <View style={styles.checkPermissionContainer}>
           <TouchableOpacity
             onPress={() => this.checkPermission()}

@@ -54,13 +54,15 @@ class OnboardingScreen extends Component {
     const {navigation} = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
-        <View style={[styles.mainOnboardingContainer]}>
-          <LinearGradient
-            colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-            locations={[0, 1]}
-            style={styles.gradientContainer}
-          >
-            <View style={styles.topLogoContainer}>
+        <LinearGradient
+          collapsable={false}
+          colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
+          locations={[0, 1]}
+          style={styles.gradientContainer}
+        >
+        <View style={[styles.mainOnboardingContainer]} collapsable={false}>
+          <View style={styles.bodyContainer}>
+            <View style={styles.topLogoContainer} collapsable={false}>
               <Image source={JeenieLogo}/>
               <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
               <Text style={styles.subtitleText}>
@@ -72,15 +74,16 @@ class OnboardingScreen extends Component {
               locations={[0.067, 0.99]}
               style={styles.gradientFullWidth}
             >
-              <View style={styles.bottomButtonsContainer}>
+              <View style={styles.bottomButtonsContainer} collapsable={false}>
                 <OnboardingButtons navigation={navigation}/>
               </View>
             </LinearGradient>
-          </LinearGradient>
-          <View style={styles.backgroundImageContainer}>
-            <Image style={styles.backgroundImage} source={backgroundImage}/>
           </View>
+            <View style={styles.backgroundImageContainer} collapsable={false}>
+              <Image style={styles.backgroundImage} source={backgroundImage}/>
+            </View>
         </View>
+        </LinearGradient>
       </ViewWrapper>
     );
   }

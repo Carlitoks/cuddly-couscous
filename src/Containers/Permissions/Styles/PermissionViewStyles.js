@@ -44,7 +44,7 @@ export default StyleSheet.create({
     top: moderateScale(248, 0)
   },
   backgroundImage: { width: moderateScale(286, 0) },
-  bottomButtonsContainer: { top: moderateScale(-35, 0), alignItems: 'center' },
+  bottomButtonsContainer: { paddingBottom: moderateScale(35, 0), alignItems: 'center' },
   allSet: {
     fontFamily: Fonts.BaseFont,
     color: '#fff',

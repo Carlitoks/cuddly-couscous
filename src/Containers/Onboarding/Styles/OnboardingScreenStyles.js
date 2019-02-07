@@ -6,22 +6,24 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
     backgroundColor: 'white',
-    height: '100%'
+    flex: 1,
   },
   mainOnboardingContainer: {
-    backgroundColor: Colors.gradientColor.top,
     flexDirection: 'column',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    width: '100%'
+    flex: 1,
+  },
+  bodyContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flex: 1,
+    width: '100%',
+    zIndex: 10
   },
   gradientContainer: {
-    height: '100%',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    alignItems: 'center',
     flexGrow: 1,
-    width: '100%'
   },
   topLogoContainer: {
     marginTop: moderateScale(60),
@@ -46,12 +48,13 @@ export default StyleSheet.create({
   },
   backgroundImageContainer: {
     position: 'absolute',
+    bottom: 0,
   },
   backgroundImage: {
     width: moderateScale(246, Metrics.width <= 320 ? 1 : 0),
     height: moderateScale(395, Metrics.width <= 320 ? 1 : 0),
     resizeMode: 'cover',
   },
-  bottomButtonsContainer: { top: moderateScale(-35, 0) },
+  bottomButtonsContainer: { paddingBottom: moderateScale(35, 0) },
   gradientFullWidth: { width: '100%', zIndex: 10 }
 });

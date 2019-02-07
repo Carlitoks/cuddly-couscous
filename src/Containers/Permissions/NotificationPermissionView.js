@@ -22,7 +22,8 @@ class NotificationPermissionView extends Component {
     this.checkCurrentPermissions();
   }
 
-  checkCurrentPermissions = async() => {
+  checkCurrentPermissions = async () => {
+    const { navigation, updateOnboarding} = this.props;
     const checkPermissions = await Permissions.check('notification');
     if(checkPermissions === 'authorized'){
       updateOnboarding({completedNotification: true});
@@ -50,7 +51,7 @@ class NotificationPermissionView extends Component {
               </View>
               <LinearGradient
                 colors={[Colors.bottomOnboardingGradient.top, Colors.bottomOnboardingGradient.bottom]}
-                locations={[0.067, 0.99]}
+                locations={[0, 1]}
                 style={styles.gradientFullWidth}
               >
               <View style={styles.bottomButtonsContainer}>
