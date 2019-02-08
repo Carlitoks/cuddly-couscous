@@ -27,10 +27,10 @@ import {
 import { checkRecord } from '../../Ducks/OnboardingRecordReducer';
 import { logInAsync, haveSession, registerDevice } from '../../Ducks/AuthReducer';
 
-import ViewWrapper from '../ViewWrapper/ViewWrapper';
-import { clear as clearEvents } from '../../Ducks/EventsReducer';
-import { clear as clearActiveSession } from '../../Ducks/ActiveSessionReducer';
-import I18n from '../../I18n/I18n';
+import ViewWrapper from "../ViewWrapper/ViewWrapper";
+import { clear as clearEvents } from "../../Ducks/EventsReducer";
+import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
+import I18n,{translateApiErrorString} from "./../../I18n/I18n";
 
 // Styles
 import styles from './Styles/LoginScreenStyles';
@@ -98,12 +98,15 @@ class LoginScreen extends Component {
         updateOnboarding({
           errorType: 'signInError'
         });
-      }
-
-      if (err.data.errors[0] === 'Email not found') {
-        updateOnboarding({
-          errorType: 'emailNotFound'
+      }else if (err.data.errors[0] === "Email not found") {
+        this.props.updateOnboarding({
+          errorType: "emailNotFound"
         });
+      }else{
+        Alert.alert(I18n.t("error"), translateApiErrorString(err.data.errors[0]   , "api.errTemporary"), [
+          { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
+        ]);
+        navigation.dispatch({ type: "OnboardingView" });
       }
       updateOnboarding({
         makingRequest: false

@@ -22,7 +22,7 @@ import { getGeolocationCoords } from "../../Util/Helpers";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
-import I18n from "./../../I18n/I18n";
+import I18n, {translateApiErrorString} from "./../../I18n/I18n";
 import { supportedLangCodes } from "./../../Config/Languages";
 import analytics from '@segment/analytics-react-native'
 
@@ -34,6 +34,14 @@ class CustomerHomeScreen extends Component {
   componentDidMount() {
     const { linguistProfile, isLoggedIn, uuid, token, getProfileAsync,  } = this.props;
 
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.apiError
+    ) {
+      Alert.alert(I18n.t("error"), translateApiErrorString(this.props.navigation.state.params.apiError.data.errors[0]   , "api.errTemporary"), [
+        { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
+      ]);
+    }
     if (uuid !== "" && token !== "") {
       getProfileAsync(uuid, token);
     }

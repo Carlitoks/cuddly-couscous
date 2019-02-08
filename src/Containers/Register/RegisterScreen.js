@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   View,
+  Alert,
   Text,
   TextInput,
   TouchableOpacity,
@@ -35,7 +36,7 @@ import {
   update as customerUpdateSettings
 } from "../../Ducks/ActiveSessionReducer";
 import { updateSettings } from "../../Ducks/ContactLinguistReducer";
-import I18n from "./../../I18n/I18n";
+import I18n,{translateApiErrorString} from "./../../I18n/I18n";
 import Permissions from "react-native-permissions";
 import { checkRegisterCallPermissions} from "../../Util/Permission";
 
@@ -202,7 +203,13 @@ class RegisterScreen extends Component {
         }
       }
     } catch (err) {
-      updateOnboarding({ makingRequest: false });
+      if (err.data.errors[0] != "cannot access another use") {
+        Alert.alert(I18n.t("error"), translateApiErrorString(err.data.errors[0]   , "api.errTemporary"), [
+          { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
+        ]);
+        navigation.dispatch({ type: "OnboardingView" });
+      }
+      this.props.updateOnboarding({ makingRequest: false });
     }
   };
 

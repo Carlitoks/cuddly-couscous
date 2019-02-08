@@ -59,8 +59,9 @@ const Session = {
       return res;
     }).catch((err) => {
       recordApiError("POST", "/v1/sessions");
-      console.log(err);
-    });
+      console.log("Code error session ", err.response);
+      throw err;
+  });
   },
   // The customer invite a linguist
   // example:
