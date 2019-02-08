@@ -102,7 +102,7 @@ class SessionView extends Component {
 
   TEST () {
     // tests.testLinguistConnects(this);
-    tests.testUserDisconnects(this);
+    // tests.testUserDisconnects(this);
   }
 
   componentDidMount () {
@@ -245,7 +245,6 @@ class SessionView extends Component {
 
   poorConnectionAlertVisible () { return false; }
   poorConnectionAlertMessage () { return ""; }
-  shouldRenderSession() { return true; }
   
   shouldShowReconnectionState () {
     return (
@@ -455,40 +454,42 @@ class SessionView extends Component {
             />
           )}
 
-          { this.shouldRenderSession() && (
-            <Session
-              user = {this.props.user }
-              session = { this.props.session }
-              credentials = { this.props.credentials }
-              remoteUser = {this.props.remoteUser}
-              remoteUserState = {this.state.remoteUserState}
-              localAppState = { this.state.app }
-              localControlState = { this.state.controls }
-              localSessionStatus = { this.state.status }
-              onSessionEnded = {() => { this.handleCallEnded() }}
+          {/* 
+              This triggers most of the relevant events by handling the actual
+              connection to Tokobx.
+         */}
+          <Session
+            user = {this.props.user }
+            session = { this.props.session }
+            credentials = { this.props.credentials }
+            remoteUser = {this.props.remoteUser}
+            remoteUserState = {this.state.remoteUserState}
+            localAppState = { this.state.app }
+            localControlState = { this.state.controls }
+            localSessionStatus = { this.state.status }
+            onSessionEnded = {() => { this.handleCallEnded() }}
 
-              // keep or remove?
-              sendSignal = { this.state.signal }
-              onSignalReceived = {null}
+            // keep or remove?
+            sendSignal = { this.state.signal }
+            onSignalReceived = {null}
 
-              // update basic connection status of remote participant
-              onRemoteUserConnecting = {null}
-              onRemoteUserConnectingFailed = {null}
-              onRemoteUserConnected = {null}
-              onRemoteUserDisconnected = {null}
-              onRemoteUserReconnected = {null}
-              onRemoteUserPoorConnection = {null}
-              onRemoteUserUpdated = {null} // for things like...
+            // update basic connection status of remote participant
+            onRemoteUserConnecting = {() => { this.handleRemoteUserConnecting() }}
+            onRemoteUserConnectingFailed = {() => { this.handleRemoteUserDisconnected() }}
+            onRemoteUserConnected = {() => { this.handleRemoteUserConnected() }}
+            onRemoteUserDisconnected = {() => { this.handleRemoteUserDisconnected() }}
+            onRemoteUserReconnected = {() => { this.handleRemoteUserConnected() }}
+            onRemoteUserPoorConnection = {null}
+            onRemoteUserUpdated = {null} // for things like...
 
-              // update basic connection status of user
-              onUserConnecting = {null}
-              onUserConnectingFailed = {null}
-              onUserConnected = {null}
-              onUserDisconnected = {null}
-              onUserReconnected = {null}
-              onUserPoorConnection = {null}
-            />
-          )}
+            // update basic connection status of user
+            onUserConnecting = {() => { this.handleUserConnecting() }}
+            onUserConnectingFailed = {() => { this.handleUserDisconnected() }}
+            onUserConnected = {() => { this.handleUserConnected() }}
+            onUserDisconnected = {() => { this.handleUserDisconnected() }}
+            onUserReconnected = {() => { this.handleUserConnected() }}
+            onUserPoorConnection = {null}
+          />
 
           { this.poorConnectionAlertVisible() && (
             <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
