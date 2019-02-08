@@ -46,6 +46,9 @@ build/
 .gradle
 local.properties
 *.iml
+android/.settings
+android/app/.classpath
+android/app/.settings
 android/app/gradle/
 android/app/gradlew
 android/app/gradlew.bat
