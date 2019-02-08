@@ -12,7 +12,7 @@ import OnboardingButtons from './Components/OnboardingButtons';
 import I18n from '../../I18n/I18n';
 
 const JeenieLogo = require('../../Assets/Images/Landing-Jeenie-TM.png');
-const backgroundImage = require('../../Assets/Images/zheng.png');
+const backgroundImage = require('../../Assets/Images/IphonexV1.png');
 
 class OnboardingScreen extends Component {
   componentWillMount() {

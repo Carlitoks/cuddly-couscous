@@ -48,12 +48,12 @@ export default StyleSheet.create({
   },
   backgroundImageContainer: {
     position: 'absolute',
-    bottom: 0,
+    bottom: -40,
   },
   backgroundImage: {
-    width: moderateScale(246, Metrics.width <= 320 ? 1 : 0),
-    height: moderateScale(395, Metrics.width <= 320 ? 1 : 0),
-    resizeMode: 'cover',
+    width: moderateScale(Metrics.width * 0.70, Metrics.width <= 320 ? 0.35 : 0),
+    height: moderateScale(Metrics.height * 0.70, Metrics.width <= 320 ? 0.35 : 0),
+    resizeMode: 'contain',
   },
   bottomButtonsContainer: { paddingBottom: moderateScale(35, 0) },
   gradientFullWidth: { width: '100%', zIndex: 10 }
