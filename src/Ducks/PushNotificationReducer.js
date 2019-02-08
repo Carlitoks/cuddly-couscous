@@ -13,6 +13,8 @@ import PushNotification from "../Util/PushNotification";
 import { networkError } from "./NetworkErrorsReducer";
 import timer from "react-native-timer";
 import I18n, { translateLanguage } from "../I18n/I18n";
+import {recordPushNotificationEvent} from "../Util/Forensics";
+
 // Actions
 export const ACTIONS = {
   REGISTER: "pushnotification/register"
