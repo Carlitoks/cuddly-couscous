@@ -9,7 +9,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingTop: 20,
-    marginBottom: iPhoneXModels ? 50 : 0
+    paddingBottom: iPhoneXModels ? 50 : 0
   },
   callNowButtonContainer: {
     flexDirection: 'column',
