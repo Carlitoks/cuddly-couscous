@@ -65,7 +65,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: moderateScale(10, 0)
+    paddingTop: moderateScale(30, 0)
   },
   audioOnlyButtonText: {
     color: 'white',

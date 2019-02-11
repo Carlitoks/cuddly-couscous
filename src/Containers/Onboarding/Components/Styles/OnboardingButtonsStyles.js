@@ -59,7 +59,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: moderateScale(17, 0)
+    paddingTop: moderateScale(30, 0)
   },
   audioOnlyButtonText: {
     ...setTextProperties('#fff', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '500'),
