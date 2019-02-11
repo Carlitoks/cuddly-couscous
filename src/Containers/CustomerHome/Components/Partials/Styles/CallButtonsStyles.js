@@ -1,15 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { moderateScale } from '../../../../../Util/Scaling';
 import { Metrics, Colors, Fonts } from '../../../../../Themes';
-import { iPhoneXModels, Iphone5 } from '../../../../../Util/Devices';
+import { iPhoneXModels, Iphone5, isIphoneXorAbove } from '../../../../../Util/Devices';
 
 export default StyleSheet.create({
   callButtonContainer: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingTop: 20,
-    paddingBottom: iPhoneXModels ? 50 : 0
+    paddingBottom: isIphoneXorAbove() ? 50 : 0
   },
   callNowButtonContainer: {
     flexDirection: 'column',

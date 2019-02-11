@@ -3,7 +3,7 @@ import { moderateScale, setTextProperties } from '../../../../Util/Scaling';
 import Fonts from '../../../../Themes/Fonts';
 import { Metrics } from '../../../../Themes';
 import colors from '../../../../Themes/Colors';
-import { iPhoneXModels, Iphone5 } from '../../../../Util/Devices';
+import { iPhoneXModels, Iphone5, isIphoneXorAbove } from '../../../../Util/Devices';
 import metrics from '../../../../Themes/Metrics';
 
 const primaryButton = {
@@ -19,9 +19,9 @@ const primaryButton = {
 export default StyleSheet.create({
   callButtonContainer: {
     flexDirection: 'column',
-    justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingBottom: iPhoneXModels ? 50 : 0,
+    justifyContent: 'flex-end',
+    paddingBottom: isIphoneXorAbove() ? 50 : 0,
   },
   callNowButtonContainer: {
     flexDirection: 'column',
