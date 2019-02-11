@@ -174,13 +174,14 @@ class RegisterScreen extends Component {
           await updateUserProfile({
             isNewUser: true
           });
-
+          this.props.updateOnboarding({ makingRequest: false });
           if (!primaryLangCode || !secondaryLangCode) {
             navigation.dispatch({ type: 'Home' });
           } else {
             this.checkAvailableMinutes();
           }
         }
+        this.props.updateOnboarding({ makingRequest: false });
       }
     } catch (err) {
       if (err.data.errors[0] != 'cannot access another use') {
