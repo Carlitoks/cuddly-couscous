@@ -15,7 +15,6 @@ import {
 import { getGeolocationCoords } from '../../Util/Helpers';
 import ViewWrapper from '../ViewWrapper/ViewWrapper';
 import { clear as clearOnboarding } from '../../Ducks/OnboardingReducer';
-
 // Styles
 import styles from './Styles/OnboardingScreenStyles';
 import OnboardingButtons from './Components/OnboardingButtons';

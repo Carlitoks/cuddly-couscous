@@ -6,7 +6,8 @@ const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   outerView: {
-    zIndex: 2
+    zIndex: 2,
+    paddingTop: 5,
   },
   outerViewBackground: {
     backgroundColor: Colors.gradientColor.top

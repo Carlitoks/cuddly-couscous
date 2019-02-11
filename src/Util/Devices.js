@@ -15,10 +15,10 @@ export const Iphone6 =
   DeviceInfo.getModel() == "iPhone 6 Plus";
 
 export const iPhoneXModels =
-  DeviceInfo.getDeviceName() == "iPhone X" ||
-  DeviceInfo.getDeviceName() == "iPhone XR" ||
-  DeviceInfo.getDeviceName() == "iPhone XS" ||
-  DeviceInfo.getDeviceName() == "iPhone XS Max";
+  DeviceInfo.getModel() == "iPhone X" ||
+  DeviceInfo.getModel() == "iPhone XR" ||
+  DeviceInfo.getModel() == "iPhone XS" ||
+  DeviceInfo.getModel() == "iPhone XS Max";
 
 let top;
 export const topIOS = () => {
