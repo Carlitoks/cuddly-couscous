@@ -1,33 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
-  View,
   Alert,
+  Keyboard,
+  Linking,
   Text,
   TextInput,
   TouchableOpacity,
-  Keyboard,
   TouchableWithoutFeedback,
-  Linking
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import { connect } from 'react-redux';
-import { Icon } from 'react-native-elements';
-import LinguistHeader from '../CustomerHome/Components/Header';
-import { Colors, Metrics } from '../../Themes';
+  View
+} from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import { connect } from "react-redux";
+import { Icon } from "react-native-elements";
+import Permissions from "react-native-permissions";
+import LinguistHeader from "../CustomerHome/Components/Header";
+import { Colors, Metrics } from "../../Themes";
 import {
-  openSlideMenu,
-  updateLocation,
   ensureSessionDefaults,
-  modifyAVModePreference
+  modifyAVModePreference,
+  openSlideMenu,
+  updateLocation
 } from "../../Ducks/NewSessionReducer";
 
 import {
+  getNativeLang,
   getProfileAsync,
-  updateView as updateUserProfile,
-  getNativeLang
-} from '../../Ducks/UserProfileReducer';
-import { checkRecord } from '../../Ducks/OnboardingRecordReducer';
-import { logInAsync, haveSession, registerDevice } from '../../Ducks/AuthReducer';
+  updateView as updateUserProfile
+} from "../../Ducks/UserProfileReducer";
+import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
+import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer";
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
@@ -36,27 +37,16 @@ import {
   update as customerUpdateSettings
 } from "../../Ducks/ActiveSessionReducer";
 import { updateSettings } from "../../Ducks/ContactLinguistReducer";
-import I18n,{translateApiErrorString} from "./../../I18n/I18n";
-import Permissions from "react-native-permissions";
-import { checkRegisterCallPermissions} from "../../Util/Permission";
-
+import I18n, { translateApiErrorString } from "./../../I18n/I18n";
+import { checkRegisterCallPermissions } from "../../Util/Permission";
 // Styles
 import styles from "./Styles/RegisterScreenStyles";
-import { moderateScale } from "../../Util/Scaling";
 import SGWaves from "./../../Assets/SVG/SGWaves";
-import { help, EMAIL_REGEX, INVALID_NAME_REGEX } from "../../Util/Constants";
-import {
-  asyncCreateUser,
-  asyncUpdateUser
-} from "./../../Ducks/CustomerProfileReducer";
+import { EMAIL_REGEX, help, INVALID_NAME_REGEX } from "../../Util/Constants";
+import { asyncCreateUser, asyncUpdateUser } from "./../../Ducks/CustomerProfileReducer";
 import FieldError from "./Components/FieldError";
-import metrics from "../../Themes/Metrics";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
-import fonts from "../../Themes/Fonts";
-import {
-  TermsConditionsURI,
-  PrivacyPolicyURI
-} from "../../Config/StaticViewsURIS";
+import { PrivacyPolicyURI, TermsConditionsURI } from "../../Config/StaticViewsURIS";
 
 class RegisterScreen extends Component {
   isValidEmail = text => {
@@ -84,52 +74,38 @@ class RegisterScreen extends Component {
       modifyAVModePreference
     } = this.props;
     updateSettings({
-      selectedScenarioId:
-        null
+      selectedScenarioId: null
     });
     customerUpdateSettings({ video: true });
-    modifyAVModePreference({ avModePreference: "video" });
+    modifyAVModePreference({ avModePreference: 'video' });
 
-      Permissions.checkMultiple(["camera", "microphone"]).then(
-        async response => {
-          if (
-            response.camera !== "authorized" ||
-            response.microphone !== "authorized"
-          ) {
-            await checkRegisterCallPermissions(valueToUpdate => {
-              customerUpdateSettings(valueToUpdate);
-              Permissions.checkMultiple(["camera", "microphone"]).then(
-                response => {
-                  if (
-                    response.camera == "authorized" &&
-                    response.microphone == "authorized"
-                  ) {
-                    navigation.dispatch({ type: "CustomerView" });
-                  }
+    Permissions.checkMultiple(['camera', 'microphone']).then(async response => {
+      if (response.camera !== 'authorized' || response.microphone !== 'authorized') {
+        await checkRegisterCallPermissions(valueToUpdate => {
+          customerUpdateSettings(valueToUpdate);
+          Permissions.checkMultiple(['camera', 'microphone']).then(response => {
+            if (response.camera == 'authorized' && response.microphone == 'authorized') {
+              navigation.dispatch({ type: 'CustomerView' });
+            }
 
-                  if(response.camera == "undetermined" ||
-                  response.microphone == "undetermined"){
-                    ;
-                  }else if (
-                    response.camera == "restricted" ||
-                    response.microphone == "restricted" ||
-                    (response.camera == "denied" || response.microphone == "denied")
-                  ) {
-                    navigation.dispatch({ type: "Home" });
-
-                  }
-                }
-              );
-            });
-          }
-        }
-      );
-    };
+            if (response.camera == 'undetermined' || response.microphone == 'undetermined') {
+            } else if (
+              response.camera == 'restricted' ||
+              response.microphone == 'restricted' ||
+              (response.camera == 'denied' || response.microphone == 'denied')
+            ) {
+              navigation.dispatch({ type: 'Home' });
+            }
+          });
+        });
+      }
+    });
+  };
 
   validateFirstName = text => {
-    const {errorType, updateOnboarding} = this.props;
-    let reg = new RegExp(INVALID_NAME_REGEX);
-    if (reg.test(text) || text.trim()=="") {
+    const { errorType, updateOnboarding } = this.props;
+    const reg = new RegExp(INVALID_NAME_REGEX);
+    if (reg.test(text) || text.trim() == '') {
       this.props.updateOnboarding({
         isValidFirstName: false,
         errorType: 'firstNameFormat'
@@ -170,7 +146,9 @@ class RegisterScreen extends Component {
       updateOnboarding,
       email,
       password,
-      firstName, primaryLangCode,secondaryLangCode
+      firstName,
+      primaryLangCode,
+      secondaryLangCode
     } = this.props;
 
     try {
@@ -184,30 +162,34 @@ class RegisterScreen extends Component {
           },
           registerDeviceResponse.payload.deviceToken
         );
-        const logInUserResponse = await logInAsync(email, password);
-        await asyncUpdateUser(
-          {
-            id: registerUserResponse.payload.id,
-            firstName
-          },
-          logInUserResponse.payload.token
-        );
-        await updateUserProfile({
-          isNewUser: true
-        });
+        if (registerUserResponse.payload.errorType !== "AlreadyRegistered") {
+          const logInUserResponse = await logInAsync(email, password);
+          await asyncUpdateUser(
+            {
+              id: registerUserResponse.payload.id,
+              firstName
+            },
+            logInUserResponse.payload.token
+          );
+          await updateUserProfile({
+            isNewUser: true
+          });
 
-        if(!primaryLangCode || !secondaryLangCode){
-          navigation.dispatch({ type: "Home" });
-        }else{
-          this.checkAvailableMinutes();
+          if (!primaryLangCode || !secondaryLangCode) {
+            navigation.dispatch({ type: 'Home' });
+          } else {
+            this.checkAvailableMinutes();
+          }
         }
       }
     } catch (err) {
-      if (err.data.errors[0] != "cannot access another use") {
-        Alert.alert(I18n.t("error"), translateApiErrorString(err.data.errors[0]   , "api.errTemporary"), [
-          { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
-        ]);
-        navigation.dispatch({ type: "OnboardingView" });
+      if (err.data.errors[0] != 'cannot access another use') {
+        Alert.alert(
+          I18n.t('error'),
+          translateApiErrorString(err.data.errors[0], 'api.errTemporary'),
+          [{ text: I18n.t('ok'), onPress: () => console.log('OK Pressed') }]
+        );
+        navigation.dispatch({ type: 'OnboardingView' });
       }
       this.props.updateOnboarding({ makingRequest: false });
     }
