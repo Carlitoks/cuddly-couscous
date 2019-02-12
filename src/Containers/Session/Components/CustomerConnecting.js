@@ -100,7 +100,7 @@ export class CustomerConnecting extends Component {
   }
 
   cleanup() {
-    console.log("CustomerConnecting.componentWillUnmount");
+    console.log("CustomerConnecting.cleanup");
     this.abortTimers = true;
     clearInterval(this.countdownIntervalID);
     clearInterval(this.pollIntervalID);

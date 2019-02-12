@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 
+// TODO: portrait vs landscape styles
+
 export default styles = StyleSheet.create({
   //
   sessionContainer: {

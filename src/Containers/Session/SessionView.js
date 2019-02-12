@@ -9,7 +9,6 @@ import {CustomerConnecting} from "./Components/CustomerConnecting";
 import {LinguistConnecting} from "./Components/LinguistConnecting";
 import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
 import {ReconnectionState} from "./Components/ReconnectionState";
-import {CallTimer} from './Components/CallTimer';
 import {SessionControls} from "./Components/SessionControls";
 import {Session} from "./Components/Tokbox/Session";
 
@@ -459,9 +458,10 @@ class SessionView extends Component {
 
           { this.props.isLinguist && !this.hasInitiallyConnected() && (
             <LinguistConnecting
+              user = { this.props.user }
               remoteUser = {this.props.remoteUser}
               remoteUserState = {this.state.remoteUserState}
-              session = { this.props.session }
+              userConnection = { this.state.connection }
               onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
               onTimeout = { () => { this.handleInitialLinguistTimeout() } }
               onCancel = {() => { this.triggerEndCall("cancel") }}
@@ -492,7 +492,6 @@ class SessionView extends Component {
               onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
             />
           )}
-
 
           { this.poorConnectionAlertVisible() && (
             <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />

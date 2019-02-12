@@ -63,9 +63,9 @@ import PaymentScreen from "../Containers/Payments/PaymentScreen";
 import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
-
 import SessionView from "../Containers/Session/SessionView";
 import CustomerRetryView from "../Containers/Session/CustomerRetryView";
+import LinguistIncomingCallView from "../Containers/Session/LinguistIncomingCallView";
 
 const Navigation = StackNavigator(
   {
@@ -384,6 +384,8 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
+
+    // New session handling routes
     SessionView: {
       screen: SessionView,
       navigationOptions: {
@@ -393,6 +395,13 @@ const Navigation = StackNavigator(
     },
     CustomerRetryView: {
       screen: CustomerRetryView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    LinguistIncomingCallView: {
+      screen: LinguistIncomingCallView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"

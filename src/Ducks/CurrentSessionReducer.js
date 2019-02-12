@@ -23,7 +23,9 @@ const initialState = {
   event: {},
   // credentials for joining session
   credentials: {},
+
   // incoming invite
+  inviteID: null,
   invite: {},
 
   // user info of the other person, either the linguist, or customer
@@ -42,6 +44,7 @@ const initialState = {
   // TODO: initial error handling?
   createError: null,
   acceptInviteError: null,
+  respondingToInvite: false,
 };
 
 export const createNewSession = (params) => (dispatch, getState) => {
@@ -76,12 +79,65 @@ export const setRemoteUser = (user) => (dispatch) => {
   dispatch(update({remoteUser: user}));
 };
 
-export const acceptSessionInvite = (params) => (dispatch) => {
-  return Promise.reject('not implemented');
+export const receiveSessionInvite = (invite) => (dispatch) => {
+  return new Promise((resolve) => {
+    dispatch(clear());
+    dispatch(update({
+      role: "linguist",
+      isLinguist: true,
+      isCustomer: false,
+      invite,
+      inviteID: invite.id,
+      session,
+      sessionID: invite.session.id,
+      remoteUser: invite.createdBy,
+      event: invite.event,
+    }));
+    resolve();
+  });
 };
 
-export const declineSessionInvite = (inviteID) => (dispatch) => {
-  return Promise.reject('not implemented');
+export const acceptSessionInvite = () => (dispatch, getState) => {
+  const {inviteID,respondingToInvite} = getState().currentSessionReducer;
+  if (respondingToInvite) {
+    return;
+  }
+
+  dispatch(update({respondingToInvite: true}));
+  return new Promise((resolve, reject) => {
+    api.put(`/session-invitations/${inviteID}`, {accept: true})
+    .then((res) => {
+      dispatch(update({
+        credentials: res.data,
+        acceptInviteError: null
+      }));
+      resolve(res);
+    })
+    .catch((e) => {
+      dispatch(update({acceptInviteError: e}));
+      reject(e);
+    })
+    .finally(() => {
+      dispatch(update({respondingToInvite: false}));
+    });
+  });
+};
+
+export const declineSessionInvite = () => (dispatch, getState) => {
+  const {inviteID,respondingToInvite} = getState().currentSessionReducer;
+  if (respondingToInvite) {
+    return;
+  }
+
+  dispatch(update({respondingToInvite: true}));
+  return new Promise((resolve, reject) => {
+    api.put(`/session-invitations/${inviteID}`, {accept: false})
+    .then(resolve)
+    .catch(reject)
+    .finally(() => {
+      dispatch(update({respondingToInvite: false}));
+    });
+  });
 };
 
 export const setSessionBegan = () => (dispatch, getState) => {

@@ -12,8 +12,10 @@ import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
 import { networkError } from "./NetworkErrorsReducer";
 import timer from "react-native-timer";
-import I18n, { translateLanguage } from "../I18n/I18n";
-import {recordPushNotificationEvent} from "../Util/Forensics";
+import I18n, { translateLanguage, translateApiError } from "../I18n/I18n";
+import {recordPushNotificationEvent, recordAppError} from "../Util/Forensics";
+import { receiveSessionInvite } from "./CurrentSessionReducer";
+import api from "../Config/AxiosConfig";
 
 // Actions
 export const ACTIONS = {
@@ -30,11 +32,6 @@ export const remoteNotificationReceived = notification => dispatch => {
     case "session:linguist-accepted":
       recordPushNotificationEvent("session:linguist-accepted", notification);
       dispatch(linguistAcceptedNotification(JSON.parse(notification.linguist)));
-      break;
-
-    case "session:connection-event":
-      recordPushNotificationEvent("session:connection-event", notification);
-      dispatch(connectionEventNotification());
       break;
 
     case "session:end":
@@ -76,61 +73,38 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
     invitationId &&
     isLinguist &&
     profileLinguist.available &&
-    CurrentView != "IncomingCallView" &&
-    CurrentView != "LinguistView" &&
+    CurrentView != "LinguistIncomingCallView" &&
+    CurrentView != "SessionView" &&
     CurrentView != "RateView"
   ) {
-    timer.clearInterval("counterId");
-    timer.clearInterval("timer");
-    timer.clearInterval("verifyCallId");
-    dispatch(clear());
-    Sessions.linguistFetchesInvite(invitationId, auth.token)
-      .then(res => {
-        const data = res.data;
-        dispatch(
-          updateSettings({
-            invitationID: invitationId,
-            reconnecting: false,
-            sessionID: data.session.id
-          })
-        );
-        dispatch(
-          updateSettings({
-            customerName: data.createdBy
-              ? `${data.createdBy.firstName} ${data.createdBy.lastInitial}.`
-              : "",
-            avatarURL: data.createdBy ? data.createdBy.avatarURL : "",
-            estimatedMinutes: data.session.estimatedMinutes
-              ? `~ ${data.session.estimatedMinutes} mins`
-              : `~ Unspecified`,
-            languages:
-              data.session &&
-              `${translateLanguage(data.session.primaryLangCode)} - ${translateLanguage(data.session.secondaryLangCode)}`,
-            customScenarioNote: data.session && data.session.customScenarioNote,
-            customerScenario: getCategory(data.session),
 
-          })
-        );
-          Sessions.GetSessionInfoLinguist(data.session.id, auth.token).then((session) => {
-            if(session.data.status === 'unassigned'){
-              if(data.responded || data.accepted){
-                dispatch({ type: "Home" });
-              } else {
-                dispatch({ type: "IncomingCallView" });
-              }
-            }
-            if (session.data.status === "cancelled") {
-              dispatch({ type: "Home", params: { alertCancelled: true } });
-            }
-            if (session.data.status === "assigned") {
-              if (auth.uuid !== session.data.linguist.id) {
-                Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
-              }
-              dispatch({ type: "Home"});
-            }
-          }).catch(error => console.log(error));
-      })
-      .catch(error => dispatch(networkError(error)));
+    // fetch invite, validate status, display incoming call if relevant
+    api.get(`/session-invitations/${invitationId}`)
+    .then ((res) => {
+      dispatch(receiveSessionInvite(res.data));
+      return api.get(`/sessions/${res.data.session.id}/linguist`);
+    })
+    .then((res) => {
+      switch (res.data.status) {
+        case "unassigned": {
+          dispatch({ type: "LinguistIncomingCallView" });
+          break;
+        }
+        case "assigned": {
+          Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
+          break;
+        }
+        case "cancelled": {
+          Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
+          break;
+        }
+      }
+    })
+    .catch((e) => {
+      Alert.alert(I18n.t("error"), translateApiError(e));
+      // TODO: record forensics error
+      // TODO: nav to home + alert?
+    });
   }
 };
 
