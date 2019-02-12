@@ -6,6 +6,7 @@ dev_auth/
 src/Config/env.js
 src/Config/env.js.bak
 .appcenter/vars.env
+.vagrant/
 
 # OSX
 #

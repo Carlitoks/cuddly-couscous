@@ -1,99 +1,90 @@
-import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
-import { Icon } from "react-native-elements";
-import { connect } from "react-redux";
-import I18n from "../../../I18n/I18n";
-import { updateSettings as updateHomeFlow } from "../../../Ducks/HomeFlowReducer";
-import PaymentModal from "../../../Home/Customer/PaymentModal/PaymentModal";
+import React, { Component } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import I18n from '../../../I18n/I18n';
+import { updateSettings as updateHomeFlow } from '../../../Ducks/HomeFlowReducer';
+import PaymentModal from '../../../Home/Customer/PaymentModal/PaymentModal';
 
 // Styles
-import styles from "./Styles/FreeMinutesWellStyles";
-import ClockTime from "./../../../Assets/SVG/clockTime";
-import { getDeviceLocale } from "react-native-device-info";
+import styles from './Styles/FreeMinutesWellStyles';
+import ClockTime from '../../../Assets/SVG/clockTime';
 
 class FreeMinutesWell extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   setPillColor = () => {
-    if (this.props.navigation.state.routeName === "OnboardingView") {
+    const { navigation, availableMinutes, stripePaymentToken } = this.props;
+    if (navigation.state.routeName === 'OnboardingView') {
       return styles.pillButtonContainer;
     }
-    if (this.props.availableMinutes >= 10) {
+    if (availableMinutes >= 10) {
       return styles.pillButtonContainer;
     }
 
-    if (this.props.availableMinutes > 5 && this.props.availableMinutes < 10) {
-      return { ...styles.pillButtonContainer, backgroundColor: "orange" };
+    if (availableMinutes > 5 && availableMinutes < 10) {
+      return { ...styles.pillButtonContainer, backgroundColor: 'orange' };
     }
 
-    if (this.props.availableMinutes > 0 && this.props.availableMinutes <= 5) {
-      return { ...styles.pillButtonContainer, backgroundColor: "red" };
+    if (availableMinutes > 0 && availableMinutes <= 5) {
+      return { ...styles.pillButtonContainer, backgroundColor: 'red' };
     }
 
-    if (this.props.stripePaymentToken) {
+    if (stripePaymentToken) {
       return {
         ...styles.pillButtonContainer,
-        backgroundColor: "#ffffff"
+        backgroundColor: '#ffffff'
       };
-    } else {
-      return { ...styles.pillButtonContainer, backgroundColor: "red" };
     }
+    return { ...styles.pillButtonContainer, backgroundColor: 'red' };
   };
 
   setPillContent = () => {
-    if (this.props.navigation.state.routeName === "OnboardingView") {
-      return I18n.t("customerOnboarding.welcome");
+    const { navigation, availableMinutes, stripePaymentToken } = this.props;
+    if (navigation.state.routeName === 'OnboardingView') {
+      return I18n.t('customerOnboarding.welcome');
     }
-    if (this.props.availableMinutes > 0) {
-      return I18n.t("customerHome.registrationWelcome.balance", {
-        num: this.props.availableMinutes
+    if (availableMinutes > 0) {
+      return I18n.t('customerHome.registrationWelcome.balance', {
+        num: availableMinutes
       });
     }
 
-    if (this.props.stripePaymentToken) {
-      return I18n.t("costPerMinute");
-    } else {
-      return I18n.t("customerHome.registrationWelcome.balance", {
-        num: this.props.availableMinutes
-      });
+    if (stripePaymentToken) {
+      return I18n.t('costPerMinute');
     }
+    return I18n.t('customerHome.registrationWelcome.balance', {
+      num: availableMinutes
+    });
   };
 
   setPillTextStyle = () => {
-    if (this.props.availableMinutes === 0) {
-      if (this.props.stripePaymentToken) {
+    const { availableMinutes, stripePaymentToken } = this.props;
+    if (availableMinutes === 0) {
+      if (stripePaymentToken) {
         return styles.pricingPillText;
-      } else {
-        return styles.pillButtonText;
       }
-    } else {
       return styles.pillButtonText;
     }
+    return styles.pillButtonText;
   };
 
   setIconColor = () => {
-    if (this.props.availableMinutes > 0) {
-      return "#fff";
+    const { availableMinutes, stripePaymentToken } = this.props;
+    if (availableMinutes > 0) {
+      return '#fff';
     }
-    if (this.props.stripePaymentToken) {
-      return "#401674";
-    } else {
-      return "#fff";
+    if (stripePaymentToken) {
+      return '#401674';
     }
+    return '#fff';
   };
 
   renderTitle = () => {
-    if (this.props.navigation.state.routeName === "OnboardingView") {
+    const { navigation } = this.props;
+    if (navigation.state.routeName === 'OnboardingView') {
       return (
-        <Text style={styles.wellTitle}>
-          {I18n.t("customerHome.registrationWelcome.title")}
-        </Text>
+        <Text style={styles.wellTitle}>{I18n.t('customerHome.registrationWelcome.title')}</Text>
       );
-    } else {
-      return <React.Fragment />;
     }
+    return <React.Fragment />;
   };
 
   renderSubtitle = () => {
@@ -109,45 +100,52 @@ class FreeMinutesWell extends Component {
           }
         </Text>
       )
-    } else {
-      return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
     }
+    
+    return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
   };
 
   onPressAction = () => {
-    if (this.props.navigation.state.routeName === "OnboardingView") {
+    const { navigation, updateHomeFlow } = this.props;
+    if (navigation.state.routeName === 'OnboardingView') {
       return null;
-    } else {
-      return this.props.updateHomeFlow({ displayPaymentModal: true });
     }
+    return updateHomeFlow({ displayPaymentModal: true });
   };
+
+  renderClock = () => {
+    const { navigation, availableMinutes } = this.props;
+    if (navigation.state.routeName === 'OnboardingView') {
+      return <React.Fragment />;
+    }
+    if (availableMinutes === 0) {
+      return <React.Fragment />;
+    }
+    return <ClockTime width={17} height={17} />;
+  };
+
   render() {
+    const { navigation, updateHomeFlow, pointerEvents, displayPaymentModal } = this.props;
     return (
       <React.Fragment>
         <TouchableOpacity
-          activeOpacity={this.props.pointerEvents === "none" ? 1 : 0.2}
+          activeOpacity={pointerEvents === 'none' ? 1 : 0.2}
           onPress={() => this.onPressAction()}
           style={styles.freeMinutesWellContainer}
         >
           <View style={this.setPillColor()}>
-            {this.props.navigation.state.routeName === "OnboardingView" ? (
-              <React.Fragment />
-            ) : this.props.availableMinutes === 0 ? (
-              <React.Fragment />
-            ) : (
-              <ClockTime width={17} height={17} />
-            )}
+            {this.renderClock()}
             <Text style={this.setPillTextStyle()}>{this.setPillContent()}</Text>
           </View>
           {this.renderTitle()}
           {this.renderSubtitle()}
         </TouchableOpacity>
         <PaymentModal
-          visible={this.props.displayPaymentModal}
+          visible={displayPaymentModal}
           closeModal={() => {
-            this.props.updateHomeFlow({ displayPaymentModal: false });
+            updateHomeFlow({ displayPaymentModal: false });
           }}
-          navigation={this.props.navigation}
+          navigation={navigation}
         />
       </React.Fragment>
     );

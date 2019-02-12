@@ -1,7 +1,8 @@
-import { StyleSheet, Platform } from 'react-native'
-import { Metrics, ApplicationStyles, Fonts, Colors } from '../../../../Themes'
+import { StyleSheet, Platform } from 'react-native';
+import { Metrics, ApplicationStyles, Fonts, Colors } from '../../../../Themes';
+import {moderateScale} from "../../../../Util/Scaling";
 
-const iOS = Platform.OS === "ios";
+const iOS = Platform.OS === 'ios';
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -18,32 +19,32 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   titleTextStyle: {
-    color: "#fff",
+    color: '#fff',
     fontFamily: Fonts.BaseFont,
-    fontSize: 18,
+    fontSize: moderateScale(18, 0)
   },
   createAccountTitleTextStyle: {
-    color: "#fff",
+    color: '#fff',
     fontFamily: Fonts.BaseFont,
-    fontSize: 18,
+    fontSize: moderateScale(18, 0),
     fontWeight: '500',
     textAlign: 'center',
     justifyContent: 'center'
   },
   containerMenu: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    height: 50,
-    width: 50
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    height: moderateScale(50, 0),
+    width: moderateScale(50, 0)
   },
   IconMenu: {
     color: Colors.primaryColor,
     padding: 0
   },
   buttonQR: {
-    alignItems: "flex-end",
-    justifyContent: "center",
+    alignItems: 'flex-end',
+    justifyContent: 'center',
     width: 50,
     height: 50,
     marginRight: 15
@@ -52,14 +53,15 @@ export default StyleSheet.create({
     padding: 5,
     margin: 0,
     paddingBottom: 0,
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: '#401674',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#401674'
   },
   headerOuter: {
     marginTop: iOS ? 30 : 20,
     padding: 0,
     borderBottomWidth: 0,
-    height: 45
+    height: moderateScale(45, 0)
   },
-})
+  headerContainer: { flexDirection: 'column', justifyContent: 'flex-start' }
+});

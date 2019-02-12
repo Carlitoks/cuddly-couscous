@@ -11,6 +11,7 @@ import { registerFCM } from "../Ducks/PushNotificationReducer";
 import { User } from "../Api";
 import CustomerHomeScreen from '../Containers/CustomerHome/CustomertHomeScreen';
 import { Colors } from "../Themes";
+import { flushEvents } from "../Util/Forensics";
 
 class Home extends Component {
   componentWillMount() {
@@ -53,6 +54,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.updateFCMToken();
+    flushEvents();
   }
 
   componentWillUnmount() {

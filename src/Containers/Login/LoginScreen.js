@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
-  ScrollView,
   View,
   Alert,
   Text,
@@ -8,60 +7,51 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard
-} from "react-native";
-import LinguistHeader from "../CustomerHome/Components/Header";
-import LinearGradient from "react-native-linear-gradient";
-import { Colors, Metrics, Fonts } from "../../Themes";
-import { connect } from "react-redux";
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
+import { Icon } from 'react-native-elements';
+import LinguistHeader from '../CustomerHome/Components/Header';
+import { Colors, Metrics, Fonts } from '../../Themes';
 import {
   openSlideMenu,
   updateLocation,
   ensureSessionDefaults
-} from "../../Ducks/NewSessionReducer";
+} from '../../Ducks/NewSessionReducer';
 
 import {
   getProfileAsync,
   updateView as updateUserProfile,
   getNativeLang
-} from "../../Ducks/UserProfileReducer";
-import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
-import {
-  logInAsync,
-  haveSession,
-  registerDevice
-} from "../../Ducks/AuthReducer";
+} from '../../Ducks/UserProfileReducer';
+import { checkRecord } from '../../Ducks/OnboardingRecordReducer';
+import { logInAsync, haveSession, registerDevice } from '../../Ducks/AuthReducer';
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
-import I18n from "./../../I18n/I18n";
+import I18n,{translateApiErrorString} from "./../../I18n/I18n";
 
 // Styles
-import styles from "./Styles/LoginScreenStyles";
-import { moderateScale } from "../../Util/Scaling";
-import SGWaves from "./../../Assets/SVG/SGWaves";
-import { help, EMAIL_REGEX } from "../../Util/Constants";
-import metrics from "../../Themes/Metrics";
-import { Icon } from "react-native-elements";
-import FieldError from "../Register/Components/FieldError";
-import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
+import styles from './Styles/LoginScreenStyles';
+import SGWaves from '../../Assets/SVG/SGWaves';
+import { EMAIL_REGEX } from '../../Util/Constants';
+import FieldError from '../Register/Components/FieldError';
+import { update as updateOnboarding } from '../../Ducks/OnboardingReducer';
 
 class LoginScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   isValidEmail = text => {
-    let reg = new RegExp(EMAIL_REGEX);
+    const { updateOnboarding } = this.props;
+    const reg = new RegExp(EMAIL_REGEX);
     if (!reg.test(text)) {
-      this.props.updateOnboarding({
+      updateOnboarding({
         isValidEmail: false,
-        errorType: "emailFormat"
+        errorType: 'emailFormat'
       });
     } else {
-      this.props.updateOnboarding({ isValidEmail: true, errorType: null });
+      updateOnboarding({ isValidEmail: true, errorType: null });
     }
-    this.props.updateOnboarding({ email: text });
+    updateOnboarding({ email: text });
   };
 
   submit = async () => {
@@ -72,62 +62,68 @@ class LoginScreen extends Component {
       checkRecord,
       updateCustomer,
       getProfileAsync,
-      getNativeLang
+      getNativeLang,
+      updateOnboarding,
+      email,
+      password
     } = this.props;
     try {
-      this.props.updateOnboarding({ errorType: null, makingRequest: true });
-      const registerDeviceResponse = await registerDevice();
-      const logInUserResponse = await logInAsync(
-        this.props.email,
-        this.props.password
-      );
+      updateOnboarding({ errorType: null, makingRequest: true });
+      await registerDevice();
+      const logInUserResponse = await logInAsync(email, password);
       const getUserProfile = await getProfileAsync(
         logInUserResponse.payload.uuid,
         logInUserResponse.payload.token
       );
-      const updateUserProfileResponse = await updateUserProfile({
-        selectedNativeLanguage: getNativeLang(
-          getUserProfile.payload.nativeLangCode
-        )
+      await updateUserProfile({
+        selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode)
       });
-      const record = await checkRecord(this.props.email);
+      const record = await checkRecord(email);
       if (record) {
         updateCustomer({ userInfo: { id: record.id } });
-        Alert.alert(
-          I18n.t("finishOnboarding"),
-          I18n.t("finishOnboardingMessage"),
-          [
-            {
-              text: I18n.t("ok")
-            }
-          ]
-        );
+        Alert.alert(I18n.t('finishOnboarding'), I18n.t('finishOnboardingMessage'), [
+          {
+            text: I18n.t('ok')
+          }
+        ]);
 
-        this.props.updateOnboarding({ makingRequest: false });
+        updateOnboarding({ makingRequest: false });
         navigation.dispatch({ type: record.lastStage });
       } else {
-        this.props.updateOnboarding({ makingRequest: false });
-        navigation.dispatch({ type: "Home" });
+        updateOnboarding({ makingRequest: false });
+        navigation.dispatch({ type: 'Home' });
       }
     } catch (err) {
-      if (err.data.errors[0] === "Password incorrect") {
-        this.props.updateOnboarding({
-          errorType: "signInError"
+      if (err.data.errors[0] === 'Password incorrect') {
+        updateOnboarding({
+          errorType: 'signInError'
         });
-      }
-
-      if (err.data.errors[0] === "Email not found") {
+      }else if (err.data.errors[0] === "Email not found") {
         this.props.updateOnboarding({
           errorType: "emailNotFound"
         });
+      }else{
+        Alert.alert(I18n.t("error"), translateApiErrorString(err.data.errors[0]   , "api.errTemporary"), [
+          { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
+        ]);
+        navigation.dispatch({ type: "OnboardingView" });
       }
-      this.props.updateOnboarding({
+      updateOnboarding({
         makingRequest: false
       });
     }
   };
+
   render() {
-    const { makingRequest, isValidEmail } = this.props;
+    const {
+      makingRequest,
+      isValidEmail,
+      navigation,
+      errorType,
+      email,
+      password,
+      updateOnboarding
+    } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -135,54 +131,41 @@ class LoginScreen extends Component {
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
               locations={[0, 1]}
-              style={{ height: "100%" }}
+              style={{ height: '100%' }}
             >
-              <LinguistHeader
-                type={"login"}
-                navigation={this.props.navigation}
-              />
+              <LinguistHeader type="login" navigation={navigation} />
               <LinearGradient
                 colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
                 locations={[0, 1]}
-                style={{ height: "100%" }}
+                style={{ height: '100%' }}
               >
                 <View style={styles.loginContainer}>
                   <View style={styles.inputContainer}>
-                    {this.props.errorType === "signInError" ||
-                    this.props.errorType === "emailFormat" ||
-                    this.props.errorType === "emailNotFound" ? (
-                      <FieldError navigation={this.props.navigation} />
+                    {errorType === 'signInError' ||
+                    errorType === 'emailFormat' ||
+                    errorType === 'emailNotFound' ? (
+                      <FieldError navigation={navigation} />
                     ) : (
                       <View />
                     )}
 
                     <View style={styles.inputViewContainer}>
-                      {this.props.email ? (
-                        <Text style={styles.labelStyle}>{I18n.t("email")}</Text>
-                      ) : (
-                        <Text> </Text>
-                      )}
+                      {email ? <Text style={styles.labelStyle}>{I18n.t('email')}</Text> : <Text />}
                       <View style={styles.inputInternalContainer}>
                         <TextInput
                           allowFontScaling={false}
                           style={styles.inputText}
                           onChangeText={text => this.isValidEmail(text)}
-                          autoCapitalize={"none"}
-                          onBlur={() => this.isValidEmail(this.props.email)}
-                          value={this.props.email}
-                          placeholder={I18n.t("email")}
-                          placeholderTextColor={"rgba(255,255,255,0.5)"}
-                          keyboardType={"email-address"}
+                          autoCapitalize="none"
+                          onBlur={() => this.isValidEmail(email)}
+                          value={email}
+                          placeholder={I18n.t('email')}
+                          placeholderTextColor="rgba(255,255,255,0.5)"
+                          keyboardType="email-address"
                         />
-                        {this.props.errorType === "signInError" ||
-                        this.props.errorType === "emailFormat" ? (
+                        {errorType === 'signInError' || errorType === 'emailFormat' ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon
-                              name={"close"}
-                              type={"material-community"}
-                              color={"#fff"}
-                              size={15}
-                            />
+                            <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
                         ) : (
                           <React.Fragment />
@@ -191,34 +174,25 @@ class LoginScreen extends Component {
                     </View>
 
                     <View style={styles.inputViewContainer}>
-                      {this.props.password ? (
-                        <Text style={styles.labelStyle}>
-                          {I18n.t("password")}
-                        </Text>
+                      {password ? (
+                        <Text style={styles.labelStyle}>{I18n.t('password')}</Text>
                       ) : (
-                        <Text> </Text>
+                        <Text />
                       )}
                       <View style={styles.inputInternalContainer}>
                         <TextInput
                           allowFontScaling={false}
                           style={styles.inputText}
-                          onChangeText={text =>
-                            this.props.updateOnboarding({ password: text })
-                          }
-                          autoCapitalize={"none"}
-                          value={this.props.password}
-                          placeholder={I18n.t("password")}
-                          secureTextEntry={true}
-                          placeholderTextColor={"rgba(255,255,255,0.5)"}
+                          onChangeText={text => updateOnboarding({ password: text })}
+                          autoCapitalize="none"
+                          value={password}
+                          placeholder={I18n.t('password')}
+                          secureTextEntry
+                          placeholderTextColor="rgba(255,255,255,0.5)"
                         />
-                        {this.props.errorType === "signInError" ? (
+                        {errorType === 'signInError' ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon
-                              name={"close"}
-                              type={"material-community"}
-                              color={"#fff"}
-                              size={15}
-                            />
+                            <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
                         ) : (
                           <React.Fragment />
@@ -227,13 +201,13 @@ class LoginScreen extends Component {
 
                       <Text
                         onPress={() =>
-                          this.props.navigation.dispatch({
-                            type: "ForgotPasswordView"
+                          navigation.dispatch({
+                            type: 'ForgotPasswordView'
                           })
                         }
                         style={styles.forgotPasswordLabel}
                       >
-                        {I18n.t("customerOnboarding.login.forgotPassword")}
+                        {I18n.t('customerOnboarding.login.forgotPassword')}
                       </Text>
                     </View>
                   </View>
@@ -241,37 +215,26 @@ class LoginScreen extends Component {
                     <View style={styles.buttonWidthContainer}>
                       <TouchableOpacity
                         onPress={() => this.submit()}
-                        disabled={
-                          !isValidEmail ||
-                          makingRequest ||
-                          (!this.props.email || !this.props.password)
-                        }
+                        disabled={!isValidEmail || makingRequest || (!email || !password)}
                         style={
-                          !isValidEmail ||
-                          makingRequest ||
-                          (!this.props.email || !this.props.password)
+                          !isValidEmail || makingRequest || (!email || !password)
                             ? styles.signInButtonDisable
                             : styles.signInButtonEnabled
                         }
                       >
-                        <Text style={styles.buttonEnabledText}>
-                          {I18n.t("signIn")}
-                        </Text>
+                        <Text style={styles.buttonEnabledText}>{I18n.t('signIn')}</Text>
                       </TouchableOpacity>
 
                       <TouchableOpacity
                         onPress={() =>
-                          this.props.navigation.dispatch({
-                            type: "RegisterScreen"
+                          navigation.dispatch({
+                            type: 'RegisterScreen'
                           })
                         }
                         style={styles.createAccountPadding}
                       >
                         <Text style={styles.transitionButtonText}>
-                          {I18n.t(
-                            "customerOnboarding.register.createAnAccount"
-                          )}{" "}
-                          »
+                          {I18n.t('customerOnboarding.register.createAnAccount')} »
                         </Text>
                       </TouchableOpacity>
                     </View>

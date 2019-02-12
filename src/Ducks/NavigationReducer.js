@@ -2,6 +2,8 @@ import { NavigationActions } from "react-navigation";
 import AppNavigation from "../Navigation/AppNavigation";
 import Instabug from "instabug-reactnative";
 import analytics from "@segment/analytics-react-native";
+import { loadState } from "../Config/LocalStorage";
+import { recordNavigationEvent } from "../Util/Forensics";
 
 const initialState = AppNavigation.router.getStateForAction(
   AppNavigation.router.getActionForPathAndParams("SelectRoleView")
@@ -20,6 +22,8 @@ export default (reducer = (state, action) => {
 
   switch (action.type) {
     case "back":
+      analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.back(),
         state
@@ -36,6 +40,7 @@ export default (reducer = (state, action) => {
 
     case "Home":
       analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -51,6 +56,7 @@ export default (reducer = (state, action) => {
 
     case "CustomerView":
       analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -61,6 +67,7 @@ export default (reducer = (state, action) => {
 
     case "LinguistView":
       analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -71,6 +78,7 @@ export default (reducer = (state, action) => {
 
     case "IncomingCallView":
       analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -83,6 +91,7 @@ export default (reducer = (state, action) => {
 
     case "CheckYourEmailView":
       analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -95,6 +104,7 @@ export default (reducer = (state, action) => {
 
     case "RateView":
       analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -105,6 +115,7 @@ export default (reducer = (state, action) => {
 
     case "SelectRoleView/Reset":
       analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -115,6 +126,7 @@ export default (reducer = (state, action) => {
 
     case "NameCustomerView":
       analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -126,11 +138,8 @@ export default (reducer = (state, action) => {
       break;
 
     default:
-      if (
-        !action.payload &&
-        (action.type.indexOf("View") != -1 ||
-          action.type.indexOf("Screen") != -1)
-      ) {
+      if (!action.payload && (action.type.indexOf("View") != -1 || action.type.indexOf("Screen") != -1)) {
+        recordNavigationEvent(action.type.toString());
         analytics.screen(action.type.toString());
       }
       newState = AppNavigation.router.getStateForAction(

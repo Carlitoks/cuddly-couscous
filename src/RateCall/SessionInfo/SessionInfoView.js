@@ -13,7 +13,7 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import _isUndefined from "lodash/isUndefined";
 import moment from "moment";
 
-import I18n from "../../I18n/I18n";
+import I18n, {translateLanguage} from "../../I18n/I18n";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
 import { Languages } from "../../Config/Languages";
@@ -33,14 +33,8 @@ class SessionInfoView extends Component {
 
   render() {
     const { sessionInfo } = this.props;
-    let primaryLang = this.filterList(sessionInfo.primaryLangCode)[0];
-    primaryLang = !_isUndefined(primaryLang)
-      ? primaryLang.name
-      : "this languague not exits";
-    let secondLang = this.filterList(sessionInfo.secondaryLangCode)[0];
-    secondLang = !_isUndefined(secondLang)
-      ? secondLang.name
-      : I18n.t("english");
+    let primaryLang = translateLanguage(sessionInfo.primaryLangCode);
+    let secondLang = translateLanguage(sessionInfo.secondaryLangCode);
 
     return (
       <ViewWrapper style={styles.scrollContainer}>
@@ -56,7 +50,7 @@ class SessionInfoView extends Component {
               : Images.avatar
           }
           avatarHeight={150}
-          avatarTitle={sessionInfo.firstName + " " + sessionInfo.lastInitial}
+          avatarTitle={sessionInfo.firstName + " " + (sessionInfo.lastInitial ? sessionInfo.lastInitial : '')}
           stars={sessionInfo.rating ? sessionInfo.rating : 0}
         >
           <ScrollView

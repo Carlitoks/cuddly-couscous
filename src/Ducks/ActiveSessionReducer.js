@@ -499,7 +499,7 @@ export const createSession = ({
       // dispatch(resetCounter());
       // dispatch(resetCounterVerify());
       // dispatch(clear());
-      dispatch({ type: "Home", params: { alertCreateSessionFail: true } });
+      dispatch({ type: "Home", params: { alertCreateSessionFail: true, apiError: error.response } });
     });
 };
 

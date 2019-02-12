@@ -1,37 +1,34 @@
 import React, { Component } from "react";
 import {
-  ScrollView,
-  View,
   Alert,
+  Keyboard,
+  Linking,
   Text,
   TextInput,
   TouchableOpacity,
-  Keyboard,
   TouchableWithoutFeedback,
-  Linking
+  View
 } from "react-native";
-import LinguistHeader from "../CustomerHome/Components/Header";
 import LinearGradient from "react-native-linear-gradient";
-import { Colors, Metrics, Fonts } from "../../Themes";
 import { connect } from "react-redux";
+import { Icon } from "react-native-elements";
+import Permissions from "react-native-permissions";
+import LinguistHeader from "../CustomerHome/Components/Header";
+import { Colors, Metrics } from "../../Themes";
 import {
-  openSlideMenu,
-  updateLocation,
   ensureSessionDefaults,
-  modifyAVModePreference
+  modifyAVModePreference,
+  openSlideMenu,
+  updateLocation
 } from "../../Ducks/NewSessionReducer";
 
 import {
+  getNativeLang,
   getProfileAsync,
-  updateView as updateUserProfile,
-  getNativeLang
+  updateView as updateUserProfile
 } from "../../Ducks/UserProfileReducer";
 import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
-import {
-  logInAsync,
-  haveSession,
-  registerDevice
-} from "../../Ducks/AuthReducer";
+import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer";
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
@@ -40,47 +37,33 @@ import {
   update as customerUpdateSettings
 } from "../../Ducks/ActiveSessionReducer";
 import { updateSettings } from "../../Ducks/ContactLinguistReducer";
-import I18n from "./../../I18n/I18n";
-import Permissions from "react-native-permissions";
-import { checkRegisterCallPermissions} from "../../Util/Permission";
-
+import I18n, { translateApiErrorString } from "./../../I18n/I18n";
+import { checkRegisterCallPermissions } from "../../Util/Permission";
 // Styles
 import styles from "./Styles/RegisterScreenStyles";
-import { moderateScale } from "../../Util/Scaling";
 import SGWaves from "./../../Assets/SVG/SGWaves";
-import { help, EMAIL_REGEX, INVALID_NAME_REGEX } from "../../Util/Constants";
-import {
-  asyncCreateUser,
-  asyncUpdateUser
-} from "./../../Ducks/CustomerProfileReducer";
+import { EMAIL_REGEX, help, INVALID_NAME_REGEX } from "../../Util/Constants";
+import { asyncCreateUser, asyncUpdateUser } from "./../../Ducks/CustomerProfileReducer";
 import FieldError from "./Components/FieldError";
-import { Icon } from "react-native-elements";
-import metrics from "../../Themes/Metrics";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
-import fonts from "../../Themes/Fonts";
-import {
-  TermsConditionsURI,
-  PrivacyPolicyURI
-} from "../../Config/StaticViewsURIS";
-class RegisterScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
+import { PrivacyPolicyURI, TermsConditionsURI } from "../../Config/StaticViewsURIS";
 
+class RegisterScreen extends Component {
   isValidEmail = text => {
-    let reg = new RegExp(EMAIL_REGEX);
+    const { updateOnboarding, errorType } = this.props;
+    const reg = new RegExp(EMAIL_REGEX);
     if (!reg.test(text)) {
-      this.props.updateOnboarding({
+      updateOnboarding({
         isValidEmail: false,
-        errorType: "emailFormat"
+        errorType: 'emailFormat'
       });
     } else {
-      if (this.props.errorType === "emailFormat") {
-        this.props.updateOnboarding({ isValidEmail: true, errorType: null });
+      if (errorType === 'emailFormat') {
+        updateOnboarding({ isValidEmail: true, errorType: null });
       }
-      this.props.updateOnboarding({ isValidEmail: true });
+      updateOnboarding({ isValidEmail: true });
     }
-    this.props.updateOnboarding({ email: text });
+    updateOnboarding({ email: text });
   };
 
   checkAvailableMinutes = async () => {
@@ -91,162 +74,134 @@ class RegisterScreen extends Component {
       modifyAVModePreference
     } = this.props;
     updateSettings({
-      selectedScenarioId:
-        null
+      selectedScenarioId: null
     });
     customerUpdateSettings({ video: true });
-    modifyAVModePreference({ avModePreference: "video" });
+    modifyAVModePreference({ avModePreference: 'video' });
 
-      Permissions.checkMultiple(["camera", "microphone"]).then(
-        async response => {
-          if (
-            response.camera !== "authorized" ||
-            response.microphone !== "authorized"
-          ) {
-            await checkRegisterCallPermissions(valueToUpdate => {
-              customerUpdateSettings(valueToUpdate);
-              Permissions.checkMultiple(["camera", "microphone"]).then(
-                response => {
-                  if (
-                    response.camera == "authorized" &&
-                    response.microphone == "authorized"
-                  ) {
-                    navigation.dispatch({ type: "CustomerView" });
-                  }
+    Permissions.checkMultiple(['camera', 'microphone']).then(async response => {
+      if (response.camera !== 'authorized' || response.microphone !== 'authorized') {
+        await checkRegisterCallPermissions(valueToUpdate => {
+          customerUpdateSettings(valueToUpdate);
+          Permissions.checkMultiple(['camera', 'microphone']).then(response => {
+            if (response.camera == 'authorized' && response.microphone == 'authorized') {
+              navigation.dispatch({ type: 'CustomerView' });
+            }
 
-                  if(response.camera == "undetermined" ||
-                  response.microphone == "undetermined"){
-                    ;
-                  }else if (
-                    response.camera == "restricted" ||
-                    response.microphone == "restricted" ||
-                    (response.camera == "denied" || response.microphone == "denied")
-                  ) {
-                    navigation.dispatch({ type: "Home" });
-
-                  }
-                }
-              );
-            });
-
-          }
-          if (
-            response.camera == "restricted" ||
-            response.microphone == "restricted" ||
-            (response.camera == "denied" || response.microphone == "denied")
-          ) {
-            Alert.alert(
-              I18n.t("appPermissions"),
-              I18n.t("acceptAllPermissionsCustomer"),
-              [{ text: I18n.t("ok") }]
-            );
-            navigation.dispatch({ type: "Home" });
-
-          }
-          if (
-            response.camera == "authorized" &&
-            response.microphone == "authorized"
-          ) {
-            navigation.dispatch({ type: "CustomerView" });
-          }
-        }
-      );
-    };
+            if (response.camera == 'undetermined' || response.microphone == 'undetermined') {
+            } else if (
+              response.camera == 'restricted' ||
+              response.microphone == 'restricted' ||
+              (response.camera == 'denied' || response.microphone == 'denied')
+            ) {
+              navigation.dispatch({ type: 'Home' });
+            }
+          });
+        });
+      }
+    });
+  };
 
   validateFirstName = text => {
-    let reg = new RegExp(INVALID_NAME_REGEX);
-    if (reg.test(text) || text.trim()=="") {
+    const { errorType, updateOnboarding } = this.props;
+    const reg = new RegExp(INVALID_NAME_REGEX);
+    if (reg.test(text) || text.trim() == '') {
       this.props.updateOnboarding({
         isValidFirstName: false,
-        errorType: "firstNameFormat"
+        errorType: 'firstNameFormat'
       });
     } else {
-      if (this.props.errorType === "firstNameFormat") {
-        this.props.updateOnboarding({
+      if (errorType === 'firstNameFormat') {
+        updateOnboarding({
           isValidFirstName: true,
           errorType: null
         });
       }
-      this.props.updateOnboarding({ isValidFirstName: true });
+      updateOnboarding({ isValidFirstName: true });
     }
     this.props.updateOnboarding({ firstName: text.trim() });
   };
 
   validatePassword = text => {
+    const { updateOnboarding } = this.props;
     if (text.length < 5) {
-      this.props.updateOnboarding({
+      updateOnboarding({
         isValidPassword: false,
-        errorType: "passwordLength"
+        errorType: 'passwordLength'
       });
     } else {
-      this.props.updateOnboarding({ isValidPassword: true, errorType: null });
+      updateOnboarding({ isValidPassword: true, errorType: null });
     }
-    this.props.updateOnboarding({ password: text });
+    updateOnboarding({ password: text });
   };
 
   submit = async () => {
-    const { registerDevice, navigation } = this.props;
     const {
-      email,
-      password,
-      deviceToken,
       asyncCreateUser,
       logInAsync,
-      checkRecord,
-      updateCustomer,
-      id,
-      updateView,
       updateUserProfile,
-      asyncUpdateUser, primaryLangCode,secondaryLangCode
+      asyncUpdateUser,
+      registerDevice,
+      navigation,
+      updateOnboarding,
+      email,
+      password,
+      firstName,
+      primaryLangCode,
+      secondaryLangCode
     } = this.props;
 
     try {
-      this.props.updateOnboarding({ errorType: null, makingRequest: true });
+      updateOnboarding({ errorType: null, makingRequest: true });
       const registerDeviceResponse = await registerDevice();
-      if (registerDeviceResponse.type !== "networkErrors/error") {
+      if (registerDeviceResponse.type !== 'networkErrors/error') {
         const registerUserResponse = await asyncCreateUser(
           {
-            email: this.props.email,
-            password: this.props.password
+            email,
+            password
           },
           registerDeviceResponse.payload.deviceToken
         );
-        const logInUserResponse = await logInAsync(
-          this.props.email,
-          this.props.password
-        );
-        const updateUserResponse = await asyncUpdateUser(
-          {
-            id: registerUserResponse.payload.id,
-            firstName: this.props.firstName
-          },
-          logInUserResponse.payload.token
-        );
-        const updateUserProfileResponse = await updateUserProfile({
-          isNewUser: true
-        });
-
-        if(!primaryLangCode || !secondaryLangCode){
-          navigation.dispatch({ type: "Home" });
-        }else{
-          this.checkAvailableMinutes();
+        if (registerUserResponse.payload.errorType !== "AlreadyRegistered") {
+          const logInUserResponse = await logInAsync(email, password);
+          await asyncUpdateUser(
+            {
+              id: registerUserResponse.payload.id,
+              firstName
+            },
+            logInUserResponse.payload.token
+          );
+          await updateUserProfile({
+            isNewUser: true
+          });
+          this.props.updateOnboarding({ makingRequest: false });
+          if (!primaryLangCode || !secondaryLangCode) {
+            navigation.dispatch({ type: 'Home' });
+          } else {
+            this.checkAvailableMinutes();
+          }
         }
+        this.props.updateOnboarding({ makingRequest: false });
       }
     } catch (err) {
+      if (err.data.errors[0] != 'cannot access another use') {
+        Alert.alert(
+          I18n.t('error'),
+          translateApiErrorString(err.data.errors[0], 'api.errTemporary'),
+          [{ text: I18n.t('ok'), onPress: () => console.log('OK Pressed') }]
+        );
+        navigation.dispatch({ type: 'OnboardingView' });
+      }
       this.props.updateOnboarding({ makingRequest: false });
     }
   };
 
   renderPrivacyPolicyText = () => {
-    const privacyPolicyAndTermsText = I18n.t(
-      "customerOnboarding.login.termsAndPrivacyNotice"
-    );
-    const privacyPolicyText = I18n.t("customerOnboarding.login.privacyPolicy");
-    const TermsText = I18n.t("customerOnboarding.login.terms");
+    const privacyPolicyAndTermsText = I18n.t('customerOnboarding.login.termsAndPrivacyNotice');
+    const privacyPolicyText = I18n.t('customerOnboarding.login.privacyPolicy');
+    const TermsText = I18n.t('customerOnboarding.login.terms');
     const continueText = privacyPolicyAndTermsText.split(TermsText)[0];
-    const AndText = privacyPolicyAndTermsText
-      .split(TermsText)[1]
-      .split(privacyPolicyText)[0];
+    const AndText = privacyPolicyAndTermsText.split(TermsText)[1].split(privacyPolicyText)[0];
     return (
       <View style={styles.termsAndConditionsViewContainer}>
         <Text style={styles.termsAndConditionsText}>{continueText}</Text>
@@ -255,28 +210,20 @@ class RegisterScreen extends Component {
           onPress={() => {
             /* Linking.openURL(TermsConditionsURI).catch(err =>
               console.error("An error occurred", err)
-            );*/
+            ); */
             Linking.canOpenURL(TermsConditionsURI)
               .then(supported => {
                 if (!supported) {
-                  console.log("Can't handle url: " + TermsConditionsURI);
+                  console.log(`Can't handle url: ${TermsConditionsURI}`);
                 } else {
                   return Linking.openURL(TermsConditionsURI);
                 }
+                return null;
               })
-              .catch(err => console.error("An error occurred", err));
+              .catch(err => console.error('An error occurred', err));
           }}
         >
-          <Text
-            style={{
-              ...styles.termsAndConditionsText,
-              fontFamily: fonts.BoldFont,
-              textDecorationLine: "underline",
-              lineHeight: 20
-            }}
-          >
-            {` ${TermsText}`}
-          </Text>
+          <Text style={styles.termsAndConditionsTextLink}>{` ${TermsText}`}</Text>
         </TouchableOpacity>
 
         <Text style={styles.termsAndConditionsText}>{AndText}</Text>
@@ -287,38 +234,36 @@ class RegisterScreen extends Component {
               Linking.canOpenURL(PrivacyPolicyURI)
                 .then(supported => {
                   if (!supported) {
-                    console.log("Can't handle url: " + PrivacyPolicyURI);
+                    console.log(`Can't handle url: ${PrivacyPolicyURI}`);
                   } else {
                     return Linking.openURL(PrivacyPolicyURI);
                   }
+                  return null;
                 })
-                .catch(err => console.error("An error occurred", err));
+                .catch(err => console.error('An error occurred', err));
             }
             /* Linking.openURL(PrivacyPolicyURI).catch(err =>
               console.error("An error occurred", err)
-            )*/
+            ) */
           }
         >
-          <Text
-            style={{
-              ...styles.termsAndConditionsText,
-              fontFamily: fonts.BoldFont,
-              textDecorationLine: "underline",
-              lineHeight: 20
-            }}
-          >
-            {` ${privacyPolicyText}`}
-          </Text>
+          <Text style={styles.termsAndConditionsTextLink}>{` ${privacyPolicyText}`}</Text>
         </TouchableOpacity>
       </View>
     );
   };
+
   render() {
     const {
       makingRequest,
       isValidEmail,
       isValidFirstName,
-      isValidPassword
+      isValidPassword,
+      navigation,
+      errorType,
+      firstName,
+      email,
+      password
     } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
@@ -327,52 +272,42 @@ class RegisterScreen extends Component {
             <LinearGradient
               colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
               locations={[0, 1]}
-              style={{ height: "100%" }}
+              style={styles.height}
             >
-              <LinguistHeader
-                type={"login"}
-                navigation={this.props.navigation}
-              />
+              <LinguistHeader type="login" navigation={navigation} />
               <LinearGradient
                 colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
                 locations={[0, 1]}
-                style={{ height: "100%" }}
+                style={styles.height}
               >
                 <View style={styles.loginContainer}>
                   <View style={styles.inputContainer}>
-                    {this.props.errorType ? (
-                      <FieldError navigation={this.props.navigation} />
+                    {errorType ? (
+                      <FieldError navigation={navigation} />
                     ) : (
                       <Text style={styles.registerAdviseText}>
-                        {I18n.t("customerOnboarding.login.provideInformation")}
+                        {I18n.t('customerOnboarding.login.provideInformation')}
                       </Text>
                     )}
 
                     <View style={styles.inputViewContainer}>
-                      {this.props.firstName ? (
-                        <Text style={styles.labelText}>
-                          {I18n.t("firstname")}
-                        </Text>
+                      {firstName ? (
+                        <Text style={styles.labelText}>{I18n.t('firstname')}</Text>
                       ) : (
-                        <Text> </Text>
+                        <Text />
                       )}
                       <View style={styles.inputsErrorContainer}>
                         <TextInput
                           allowFontScaling={false}
                           style={styles.inputText}
                           onChangeText={text => this.validateFirstName(text)}
-                          value={this.props.firstName}
-                          placeholder={I18n.t("firstname")}
-                          placeholderTextColor={"rgba(255,255,255,0.7)"}
+                          value={firstName}
+                          placeholder={I18n.t('firstname')}
+                          placeholderTextColor="rgba(255,255,255,0.7)"
                         />
-                        {this.props.errorType === "firstNameFormat" ? (
+                        {errorType === 'firstNameFormat' ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon
-                              name={"close"}
-                              type={"material-community"}
-                              color={"white"}
-                              size={15}
-                            />
+                            <Icon name="close" type="material-community" color="white" size={15} />
                           </View>
                         ) : (
                           <React.Fragment />
@@ -381,32 +316,22 @@ class RegisterScreen extends Component {
                     </View>
 
                     <View style={styles.inputViewContainer}>
-                      {this.props.email ? (
-                        <Text style={styles.labelText}>{I18n.t("email")}</Text>
-                      ) : (
-                        <Text> </Text>
-                      )}
+                      {email ? <Text style={styles.labelText}>{I18n.t('email')}</Text> : <Text />}
                       <View style={styles.inputsErrorContainer}>
                         <TextInput
                           allowFontScaling={false}
-                          autoCapitalize={"none"}
+                          autoCapitalize="none"
                           style={styles.inputText}
                           onChangeText={text => this.isValidEmail(text)}
-                          onBlur={() => this.isValidEmail(this.props.email)}
-                          value={this.props.email}
-                          placeholder={I18n.t("email")}
-                          placeholderTextColor={"rgba(255,255,255,0.7)"}
-                          keyboardType={"email-address"}
+                          onBlur={() => this.isValidEmail(email)}
+                          value={email}
+                          placeholder={I18n.t('email')}
+                          placeholderTextColor="rgba(255,255,255,0.7)"
+                          keyboardType="email-address"
                         />
-                        {this.props.errorType === "emailFormat" ||
-                        this.props.errorType === "AlreadyRegistered" ? (
+                        {errorType === 'emailFormat' || errorType === 'AlreadyRegistered' ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon
-                              name={"close"}
-                              type={"material-community"}
-                              color={"#fff"}
-                              size={15}
-                            />
+                            <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
                         ) : (
                           <React.Fragment />
@@ -415,34 +340,27 @@ class RegisterScreen extends Component {
                     </View>
 
                     <View style={styles.inputViewContainer}>
-                      {this.props.password ? (
+                      {password ? (
                         <Text style={styles.labelText}>
-                          {I18n.t("customerOnboarding.register.password")}
+                          {I18n.t('customerOnboarding.register.password')}
                         </Text>
                       ) : (
-                        <Text> </Text>
+                        <Text />
                       )}
                       <View style={styles.inputsErrorContainer}>
                         <TextInput
                           allowFontScaling={false}
                           style={styles.inputText}
                           onChangeText={text => this.validatePassword(text)}
-                          autoCapitalize={"none"}
-                          value={this.props.password}
-                          placeholder={I18n.t(
-                            "customerOnboarding.register.password"
-                          )}
-                          secureTextEntry={true}
-                          placeholderTextColor={"rgba(255,255,255,0.7)"}
+                          autoCapitalize="none"
+                          value={password}
+                          placeholder={I18n.t('customerOnboarding.register.password')}
+                          secureTextEntry
+                          placeholderTextColor="rgba(255,255,255,0.7)"
                         />
-                        {this.props.errorType === "passwordLength" ? (
+                        {errorType === 'passwordLength' ? (
                           <View style={styles.errorIconContainer}>
-                            <Icon
-                              name={"close"}
-                              type={"material-community"}
-                              color={"#fff"}
-                              size={15}
-                            />
+                            <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
                         ) : (
                           <React.Fragment />
@@ -461,35 +379,33 @@ class RegisterScreen extends Component {
                           !isValidFirstName ||
                           !isValidEmail ||
                           makingRequest ||
-                          (!this.props.email || !this.props.password)
+                          (!email || !password)
                         }
                         style={
                           !isValidPassword ||
                           !isValidFirstName ||
                           !isValidEmail ||
                           makingRequest ||
-                          (!this.props.email || !this.props.password)
+                          (!email || !password)
                             ? styles.signInButtonDisable
                             : styles.registerButton
                         }
                       >
                         <Text style={styles.buttonEnabledText}>
-                          {I18n.t(
-                            "customerOnboarding.register.createAnAccount"
-                          )}
+                          {I18n.t('customerOnboarding.register.createAnAccount')}
                         </Text>
                       </TouchableOpacity>
 
                       <TouchableOpacity
                         style={styles.createAccountPadding}
                         onPress={() =>
-                          this.props.navigation.dispatch({
-                            type: "LoginScreen"
+                          navigation.dispatch({
+                            type: 'LoginScreen'
                           })
                         }
                       >
                         <Text style={styles.transitionButtonText}>
-                          {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
+                          {`${I18n.t('alreadyAccount')} ${I18n.t('signIn')} »`}
                         </Text>
                       </TouchableOpacity>
                     </View>

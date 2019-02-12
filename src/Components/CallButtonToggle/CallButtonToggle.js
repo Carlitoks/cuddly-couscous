@@ -34,6 +34,14 @@ class CallButtonToggle extends Component {
     };
   }
 
+  componentDidMount(){
+    if (this.props.speaker) {
+      InCallManager.setForceSpeakerphoneOn(true);
+    } else {
+      InCallManager.setForceSpeakerphoneOn(false);
+    }
+  }
+
   toggleIcon = () => {
     switch (this.props.name) {
       case "Mute":

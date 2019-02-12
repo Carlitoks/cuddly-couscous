@@ -1,91 +1,73 @@
-import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Button, ScrollView } from "react-native";
-import PickerSelect from "react-native-picker-select";
-import { FilterLangsByCodes } from "../../../../Config/Languages";
-import { connect } from "react-redux";
-import SlidingUpPanel from "rn-sliding-up-panel";
+import React, { Component } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
 // Styles
-import styles from "./Styles/PickerSelectStyles";
-import { Icon, Divider } from "react-native-elements";
-import Metrics from "./../../../../Themes/Metrics";
-import { translateLanguage } from "./../../../../I18n/I18n";
+import { Icon, Divider } from 'react-native-elements';
+import styles from './Styles/PickerSelectStyles';
+import { FilterLangsByCodes } from '../../../../Config/Languages';
+import { translateLanguage } from '../../../../I18n/I18n';
 
 class PickerSelectComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
   showCurrentSelectedLang = () => {
-    if (
-      this.props.type === "primaryLang" &&
-      this.props.session.primaryLangCode
-    ) {
+    const { type, session, placeholder } = this.props;
+    if (type === 'primaryLang' && session.primaryLangCode) {
       return (
         <Text style={styles.inputValue}>
           {translateLanguage(
-            FilterLangsByCodes([this.props.session.primaryLangCode])[0]["3"],
-            FilterLangsByCodes([this.props.session.primaryLangCode])[0].name
-          )}
-        </Text>
-      );
-    } else if (
-      this.props.type === "secondaryLang" &&
-      this.props.session.secondaryLangCode
-    ) {
-      return (
-        <Text style={styles.inputValue}>
-          {translateLanguage(
-            FilterLangsByCodes([this.props.session.secondaryLangCode])[0]["3"],
-            FilterLangsByCodes([this.props.session.secondaryLangCode])[0].name
+            FilterLangsByCodes([session.primaryLangCode])[0]['3'],
+            FilterLangsByCodes([session.primaryLangCode])[0].name
           )}
         </Text>
       );
     }
-    return (
-      <Text style={styles.inputPlaceholderValue}>{this.props.placeholder}</Text>
-    );
+    if (type === 'secondaryLang' && session.secondaryLangCode) {
+      return (
+        <Text style={styles.inputValue}>
+          {translateLanguage(
+            FilterLangsByCodes([session.secondaryLangCode])[0]['3'],
+            FilterLangsByCodes([session.secondaryLangCode])[0].name
+          )}
+        </Text>
+      );
+    }
+    return <Text style={styles.inputPlaceholderValue}>{placeholder}</Text>;
   };
 
   showCurrentCustomScenarioNote = () => {
-    if (this.props.session.customScenarioNote.length > 0)
+    const { session, placeholder } = this.props;
+    if (session.customScenarioNote.length > 0)
       return (
-        <Text style={styles.inputValue}>
-          {`${this.props.session.customScenarioNote.substring(0, 50)}...`}
-        </Text>
+        <Text style={styles.inputValue}>{`${session.customScenarioNote.substring(0, 50)}...`}</Text>
       );
-    return (
-      <Text style={styles.inputPlaceholderValue}>{this.props.placeholder}</Text>
-    );
+    return <Text style={styles.inputPlaceholderValue}>{placeholder}</Text>;
   };
 
   render() {
+    const { navType, openSlideMenu, title, type, isSlideUpMenuVisible } = this.props;
     return (
       <View
         style={
-          this.props.navType === "onboarding"
-            ? styles.onboardingInputContainer
-            : styles.homeInputContainer
+          navType === 'onboarding' ? styles.onboardingInputContainer : styles.homeInputContainer
         }
       >
         <TouchableOpacity
-          onPress={() => { this.props.openSlideMenu(this.props.type) }}
+          onPress={() => {
+            openSlideMenu(type);
+          }}
         >
-          <Text style={styles.inputTitle}>{this.props.title}</Text>
+          <Text style={styles.inputTitle}>{title}</Text>
           <View style={styles.currentSelectedLangContainer}>
-            {this.props.type === "additionalDetails"
+            {type === 'additionalDetails'
               ? this.showCurrentCustomScenarioNote()
               : this.showCurrentSelectedLang()}
-            {this.props.type === "additionalDetails" ? (
+            {type === 'additionalDetails' ? (
               <React.Fragment />
             ) : (
               <Icon
-                color={"#ffffff"}
-                name={
-                  this.props.isSlideUpMenuVisible
-                    ? "chevron-up"
-                    : "chevron-down"
-                }
-                type={"evilicon"}
+                color="#ffffff"
+                name={isSlideUpMenuVisible ? 'chevron-up' : 'chevron-down'}
+                type="evilicon"
                 size={17}
               />
             )}
@@ -97,12 +79,10 @@ class PickerSelectComponent extends Component {
   }
 }
 
-const mS = state => {
-  return {
-    session: state.newSessionReducer.session,
-    isSlideUpMenuVisible: state.newSessionReducer.isSlideUpMenuVisible
-  };
-};
+const mS = state => ({
+  session: state.newSessionReducer.session,
+  isSlideUpMenuVisible: state.newSessionReducer.isSlideUpMenuVisible
+});
 
 const mD = {};
 

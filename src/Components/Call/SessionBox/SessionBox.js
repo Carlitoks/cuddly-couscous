@@ -28,6 +28,7 @@ import { Platform } from "react-native";
 import { TOKBOX_APIKEY } from "../../../Config/env";
 
 import styles from "./styles";
+import { recordSessionTokboxEvent, recordSessionEvent } from "../../../Util/Forensics";
 
 class SessionBox extends Component {
   constructor(props) {
@@ -40,6 +41,10 @@ class SessionBox extends Component {
         console.log(`ARCHIVE STOPPED EVENT ${event}`);
       },
       connectionCreated: event => {
+        recordSessionTokboxEvent('session.connectionCreated', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log("CONNECTION CREATED EVENT", event);
         timer.clearInterval("counterId");
         this.props.subscriberStart();
@@ -49,17 +54,26 @@ class SessionBox extends Component {
         this.props.resetCounter();
       },
       connectionDestroyed: event => {
+        recordSessionTokboxEvent('session.connectionDestroyed', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log("CONNECTION DESTROYED EVENT", event);
         this.props.updateSettings({
           modalReconnect: true
         });
       },
       error: event => {
+        recordSessionTokboxEvent('session.error', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log("SESSION ERROR EVENT", event);
         this.remountSessionOnError();
         this.props.errorEvent(event);
       },
       sessionConnected: () => {
+        recordSessionTokboxEvent('session.sessionConnected', {sessionID: this.props.sessionID});
         console.log("SESSION CONNECTED EVENT");
         this.props.connectionConnectedEvent();
         this.props.updateSettings({
@@ -67,6 +81,7 @@ class SessionBox extends Component {
         });
       },
       sessionReconnected: () => {
+        recordSessionTokboxEvent('session.sessionReconnected', {sessionID: this.props.sessionID});
         console.log("SESSION RECONNECTED EVENT");
         //this.props.videoState(true);
         SoundManager["Reconnected"].play();
@@ -75,14 +90,20 @@ class SessionBox extends Component {
         });
       },
       sessionDisconnected: () => {
+        recordSessionTokboxEvent('session.sessionDisconnected', {sessionID: this.props.sessionID});
         console.log("SESSION DISCONNECTED EVENT");
         this.props.connectionDisconnectEvent();
       },
       sessionReconnecting: () => {
+        recordSessionTokboxEvent('session.sessionReconnecting', {sessionID: this.props.sessionID});
         console.log("SESSION RECONNECTING EVENT");
       },
       signal: event => {
         console.log("SIGNAL EVENT", event);
+        recordSessionTokboxEvent('session.signal', {
+          sessionID: this.props.sessionID,
+          event
+        });
         this.props.signalEvent(event);
         if (event.type == "WARNING") {
           this.props.updateSettings({
@@ -91,10 +112,18 @@ class SessionBox extends Component {
         }
       },
       streamCreated: event => {
+        recordSessionTokboxEvent('session.streamCreated', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log("STREAM CREATED EVENT", event);
         this.props.streamCreatedEvent(event);
       },
       streamDestroyed: event => {
+        recordSessionTokboxEvent('session.streamDestroyed', {
+          sessionID: this.props.sessionID,
+          event
+        });
         console.log("STREAM DESTROYED EVENT", event);
         this.props.streamDestroyedEvent(event);
       }
@@ -108,7 +137,12 @@ class SessionBox extends Component {
     );
   }
 
+  componentWillMount() {
+    recordSessionEvent('componentWillMount', {sessionID: this.props.sessionID});
+  }
+
   componentWillUnmount() {
+    recordSessionEvent('componentWillUnmount', {sessionID: this.props.sessionID});
     NetInfo.isConnected.removeEventListener(
       "connectionChange",
       this.handleConnectivityChange
@@ -173,6 +207,7 @@ class SessionBox extends Component {
               <View />
             ) : (
               <Publisher
+                sessionID={this.sessionID}
                 remountComponent={this.remountPublisherAndSubscriber}
               />
             )}
@@ -180,6 +215,7 @@ class SessionBox extends Component {
               <View />
             ) : (
               <Subscriber
+                sessionID={this.sessionID}
                 remountComponent={this.remountPublisherAndSubscriber}
               />
             )}
@@ -206,6 +242,7 @@ class SessionBox extends Component {
 }
 
 const mS = state => ({
+  sessionID: state.activeSessionReducer.sessionID,
   tokboxSessionID: state.activeSessionReducer.tokboxID,
   tokboxSessionToken: state.activeSessionReducer.tokboxToken,
   signal: state.activeSessionReducer.signal,

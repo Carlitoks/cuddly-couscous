@@ -1,65 +1,51 @@
-import React, { Component } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Platform,
-  StatusBar,
-  Keyboard
-} from "react-native";
-import { Header, Icon } from "react-native-elements";
-import { QR, NavMenu, CloseIcon } from "../../../Assets/SVG";
-import { Colors } from "../../../Themes";
+import React, { Component } from 'react';
+import { View, TouchableOpacity, StatusBar, Keyboard } from 'react-native';
+import { Header } from 'react-native-elements';
+import { QR, NavMenu, CloseIcon } from '../../../Assets/SVG';
+import { Colors } from '../../../Themes';
 
 // Styles
-import styles from "./Styles/HeaderStyles";
-import I18n from "./../../../I18n/I18n";
+import styles from './Styles/HeaderStyles';
+import I18n from '../../../I18n/I18n';
 
 export default class LinguistHeader extends Component {
   renderTitle = () => {
-    if (this.props.navigation.state.routeName === "RegisterScreen") {
+    const { navigation } = this.props;
+    if (navigation.state.routeName === 'RegisterScreen') {
       return {
-        text: I18n.t("customerOnboarding.register.createAnAccount"),
+        text: I18n.t('customerOnboarding.register.createAnAccount'),
         style: styles.createAccountTitleTextStyle
       };
     }
-
-    if (this.props.navigation.state.routeName === "LoginScreen") {
+    if (navigation.state.routeName === 'LoginScreen') {
       return {
-        text: I18n.t("signIn"),
+        text: I18n.t('signIn'),
         style: styles.createAccountTitleTextStyle
       };
     }
-    return { text: I18n.t("appName"), style: styles.titleTextStyle };
+    return { text: I18n.t('appName'), style: styles.titleTextStyle };
   };
+
   renderLeftComponent = () => {
-    if (this.props.type === "onboarding") {
+    const { type, navigation } = this.props;
+    if (type === 'onboarding') {
       return (
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.containerMenu}
-          onPress={() => null}
-        />
+        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
       );
     }
-
     if (
-      this.props.navigation.state.routeName === "RegisterScreen" ||
-      this.props.navigation.state.routeName === "LoginScreen"
+      navigation.state.routeName === 'RegisterScreen' ||
+      navigation.state.routeName === 'LoginScreen'
     ) {
       return (
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.containerMenu}
-          onPress={() => null}
-        />
+        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
       );
     }
-
     return (
       <TouchableOpacity
         activeOpacity={1}
         style={styles.containerMenu}
-        onPress={() => this.navigate("DrawerOpen")}
+        onPress={() => this.navigate('DrawerOpen')}
       >
         <NavMenu width={30} height={20} />
       </TouchableOpacity>
@@ -67,25 +53,19 @@ export default class LinguistHeader extends Component {
   };
 
   renderRightComponent = () => {
-    if (this.props.type === "onboarding") {
+    const { type, navigation } = this.props;
+    if (type === 'onboarding') {
       return (
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.containerMenu}
-          onPress={() => null}
-        />
+        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
       );
     }
 
     if (
-      this.props.navigation.state.routeName === "RegisterScreen" ||
-      this.props.navigation.state.routeName === "LoginScreen"
+      navigation.state.routeName === 'RegisterScreen' ||
+      navigation.state.routeName === 'LoginScreen'
     ) {
       return (
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => this.navigate("OnboardingView")}
-        >
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate('OnboardingView')}>
           <View style={styles.buttonQR}>
             <CloseIcon width={13} height={13} />
           </View>
@@ -94,10 +74,7 @@ export default class LinguistHeader extends Component {
     }
 
     return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => this.navigate("ScanScreenView")}
-      >
+      <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate('ScanScreenView')}>
         <View style={styles.buttonQR}>
           <QR width={20} height={20} />
         </View>
@@ -106,18 +83,19 @@ export default class LinguistHeader extends Component {
   };
 
   navigate = screenName => {
+    const { navigation } = this.props;
     Keyboard.dismiss();
-    this.props.navigation.dispatch({ type: screenName });
+    navigation.dispatch({ type: screenName });
   };
 
   render() {
     return (
-      <View style={{ flexDirection: "column", justifyContent: "flex-start" }}>
+      <View style={styles.headerContainer}>
         <StatusBar
           barStyle="light-content"
           hidden={false}
           backgroundColor={Colors.gradientColor.top}
-          translucent={true}
+          translucent
         />
         <Header
           backgroundColor={Colors.transparent}

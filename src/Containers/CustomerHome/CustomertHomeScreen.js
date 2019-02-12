@@ -1,87 +1,50 @@
-import React, { Component } from "react";
-import { ScrollView, View, Alert, TouchableOpacity } from "react-native";
-import timer from "react-native-timer";
-import InCallManager from "react-native-incall-manager";
-import LinguistHeader from "./Components/Header";
-import AvatarSection from "./Components/AvatarSection";
-import CallSection from "./Components/CallSection";
-import LinearGradient from "react-native-linear-gradient";
-import { Colors, Metrics } from "../../Themes";
-import { connect } from "react-redux";
-import SlideUpPanel from "./Components/Partials/SlideUpPanel";
+import React, { Component } from 'react';
+import { ScrollView, View, Alert } from 'react-native';
+import timer from 'react-native-timer';
+import InCallManager from 'react-native-incall-manager';
+import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
+import LinguistHeader from './Components/Header';
+import AvatarSection from './Components/AvatarSection';
+import CallSection from './Components/CallSection';
+import { Colors } from '../../Themes';
+import SlideUpPanel from './Components/Partials/SlideUpPanel';
 import {
   openSlideMenu,
   updateLocation,
   ensureSessionDefaults,
   swapCurrentSessionLanguages
-} from "../../Ducks/NewSessionReducer";
+} from '../../Ducks/NewSessionReducer';
 
-import {
-  getProfileAsync,
-  updateView as updateUserProfile
-} from "../../Ducks/UserProfileReducer";
+import { getProfileAsync, updateView as updateUserProfile } from '../../Ducks/UserProfileReducer';
 
 import { getGeolocationCoords } from "../../Util/Helpers";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
-import I18n from "./../../I18n/I18n";
+import I18n, {translateApiErrorString} from "./../../I18n/I18n";
 import { supportedLangCodes } from "./../../Config/Languages";
-import WelcomeModal from "./Components/Partials/WelcomeModal";
-import FreeMinutesWell from "../Onboarding/Components/FreeMinutesWell";
 import analytics from '@segment/analytics-react-native'
 
 // Styles
-import styles from "./Styles/CustomerHomeScreenStyles";
-import CallButtons from "./Components/Partials/CallButtons";
-import { moderateScale } from "../../Util/Scaling";
+import styles from './Styles/CustomerHomeScreenStyles';
+import CallButtons from './Components/Partials/CallButtons';
 
 class CustomerHomeScreen extends Component {
-  componentWillMount() {
-    const {  uuid, firstName } = this.props;
-
-    analytics.identify(uuid, {
-      name: firstName
-    })
-
-    getGeolocationCoords()
-      .then(response => {
-        this.props.updateLocation({
-          location: [response.coords.longitude, response.coords.latitude]
-        });
-      })
-      .catch(err => {
-        console.log("GeoLocation error  ", err);
-      });
-
-    this.props.ensureSessionDefaults({
-      primaryLangCode: this.setPrimaryLangCode(),
-      secondaryLangCode: this.props.secondaryLangCode
-        ? this.props.secondaryLangCode
-        : ""
-    });
-
-    //Clean call
-    timer.clearInterval("timer");
-    timer.clearInterval("counterId");
-    this.props.clearEvents();
-    this.props.clearActiveSession();
-    InCallManager.stop();
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.alertFail
-    ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callFailCustomer"));
-    }
-  }
-
   componentDidMount() {
     const { linguistProfile, isLoggedIn, uuid, token, getProfileAsync,  } = this.props;
 
+    if (
+      this.props.navigation.state.params &&
+      this.props.navigation.state.params.apiError
+    ) {
+      Alert.alert(I18n.t("error"), translateApiErrorString(this.props.navigation.state.params.apiError.data.errors[0]   , "api.errTemporary"), [
+        { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
+      ]);
+    }
     if (uuid !== "" && token !== "") {
       getProfileAsync(uuid, token);
     }
-
     if (!linguistProfile && isLoggedIn) {
       //checkOperatingHours(true);
     }
@@ -109,50 +72,84 @@ class CustomerHomeScreen extends Component {
       );
     }
   }
+  componentWillMount() {
+    const {  uuid, firstName, secondaryLangCode, navigation } = this.props;
 
+    analytics.identify(uuid, {
+      name: firstName
+    });
+
+    getGeolocationCoords()
+      .then(response => {
+        updateLocation({
+          location: [response.coords.longitude, response.coords.latitude]
+        });
+      })
+      .catch(err => {
+        console.log('GeoLocation error  ', err);
+      });
+
+    ensureSessionDefaults({
+      primaryLangCode: this.setPrimaryLangCode(),
+      secondaryLangCode: secondaryLangCode || ''
+    });
+
+    // Clean call
+    timer.clearInterval('timer');
+    timer.clearInterval('counterId');
+    clearEvents();
+    clearActiveSession();
+    InCallManager.stop();
+    if (navigation.state.params && navigation.state.params.alertFail) {
+      Alert.alert(I18n.t('notification'), I18n.t('session.callFailCustomer'));
+    }
+  }
   setPrimaryLangCode = () => {
-    return this.props.primaryLangCode
-      ? this.props.primaryLangCode
-      : this.props.nativeLangCode
-      ? supportedLangCodes.includes(this.props.nativeLangCode)
-        ? this.props.nativeLangCode
-        : "eng"
-      : "eng";
+    const { primaryLangCode, nativeLangCode } = this.props;
+    if (primaryLangCode) {
+      return primaryLangCode;
+    }
+    if (nativeLangCode) {
+      return supportedLangCodes.includes(nativeLangCode);
+    }
+    if (nativeLangCode === 'eng') {
+      return 'eng';
+    }
+    return 'eng';
   };
 
   openSlideMenu = type => {
-    this.props.openSlideMenu({ type });
+    const { openSlideMenu } = this.props;
+    openSlideMenu({ type });
   };
+
   render() {
-    const { firstName } = this.props;
+    const { firstName, navigation } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
           <LinearGradient
             colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
             locations={[0, 1]}
-            style={{ height: "100%" }}
+            style={styles.height}
           >
-            <LinguistHeader navigation={this.props.navigation} />
+            <LinguistHeader navigation={navigation} />
             <ScrollView
-              automaticallyAdjustContentInsets={true}
+              automaticallyAdjustContentInsets
               alwaysBounceVertical={false}
               contentContainerStyle={styles.scrollViewFlex}
             >
-              <View style={{justifyContent: 'flex-end', alignItems: 'center'}}>
+              <View style={styles.flexEndCenter}>
                 <AvatarSection
-                  home={true}
+                  home
                   firstName={firstName}
-                  pointerEvents={"none"}
-                  navigation={this.props.navigation}
+                  pointerEvents="none"
+                  navigation={navigation}
                 />
-                <CallSection
-                  navigation={this.props.navigation}
-                  openSlideMenu={this.openSlideMenu}
-                />
+                <CallSection navigation={navigation} openSlideMenu={this.openSlideMenu} />
               </View>
 
-              <CallButtons navigation={this.props.navigation} />
+              <CallButtons navigation={navigation} />
             </ScrollView>
             <SlideUpPanel />
           </LinearGradient>

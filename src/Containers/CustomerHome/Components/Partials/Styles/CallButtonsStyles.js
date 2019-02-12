@@ -1,34 +1,29 @@
-import { StyleSheet, Platform } from "react-native";
-import { moderateScale, scaledFontSize } from "../../../../../Util/Scaling";
-import Fonts from "./../../../../../Themes/Fonts";
-import { Metrics } from "../../../../../Themes";
-import colors from "./../../../../../Themes/Colors";
-import { iPhoneXModels, Iphone5 } from "../../../../../Util/Devices";
-
-const iOS = Platform.OS === "ios";
+import { StyleSheet } from 'react-native';
+import { moderateScale } from '../../../../../Util/Scaling';
+import { Metrics, Colors, Fonts } from '../../../../../Themes';
+import { iPhoneXModels, Iphone5, isIphoneXorAbove } from '../../../../../Util/Devices';
 
 export default StyleSheet.create({
   callButtonContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    paddingTop: 20,
-    marginBottom: iPhoneXModels ? 50 : 0
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: isIphoneXorAbove() ? 50 : 0
   },
   callNowButtonContainer: {
-    flexDirection: "column",
-    alignSelf: "center"
+    flexDirection: 'column',
+    alignSelf: 'center'
   },
   callNowButton: {
     minWidth: Metrics.width * 0.78,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderWidth: 1,
-    borderColor: "#fff",
+    borderColor: '#fff',
     borderRadius: 27,
-    backgroundColor: "#F39100",
-    shadowColor: "rgba(0,0,0,1)",
+    backgroundColor: '#F39100',
+    shadowColor: 'rgba(0,0,0,1)',
     shadowOpacity: 0.38,
     shadowRadius: 20,
     shadowOffset: { width: 0, height: 0 },
@@ -36,57 +31,53 @@ export default StyleSheet.create({
   },
   callNowButtonDisable: {
     minWidth: Metrics.width * 0.78,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderWidth: 1,
-    borderColor: "#cccccc",
+    borderColor: '#cccccc',
     borderRadius: 27,
-    backgroundColor: colors.gradientColor.bottom
+    backgroundColor: Colors.gradientColor.bottom
   },
   callNowButtonText: {
-    color: "white",
+    color: 'white',
     fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "600",
-    lineHeight: moderateScale(20),
+    fontWeight: '600',
     fontFamily: Fonts.BaseFont,
-    paddingTop: Iphone5 ? 12 : Metrics.width * 0.05,
-    paddingBottom: Iphone5 ? 12 : Metrics.width * 0.05,
+    paddingTop: Metrics.width * 0.05,
+    paddingBottom: Metrics.width * 0.05,
     paddingLeft: Metrics.width * 0.05,
     paddingRight: Metrics.width * 0.05
   },
   callNowButtonTextDisabled: {
-    color: "#ccc",
+    color: '#ccc',
     fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "600",
-    lineHeight: moderateScale(20, 0),
+    fontWeight: '600',
     fontFamily: Fonts.BaseFont,
-    paddingTop: Iphone5 ? 12 : Metrics.width * 0.045,
-    paddingBottom: Iphone5 ? 12 : Metrics.width * 0.045,
+    paddingTop: Metrics.width * 0.045,
+    paddingBottom: Metrics.width * 0.045,
     paddingLeft: Metrics.width * 0.05,
     paddingRight: Metrics.width * 0.05
   },
-  audioOnlyButtonContainer: { flexDirection: "column" },
+  audioOnlyButtonContainer: { flexDirection: 'column' },
   audioOnlyButton: {
     minWidth: Metrics.width * 0.78,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: moderateScale(10, 0)
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: moderateScale(30, 0)
   },
   audioOnlyButtonText: {
-    color: "white",
+    color: 'white',
     fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "500",
-    lineHeight: moderateScale(28, 0),
+    fontWeight: '500',
     fontFamily: Fonts.BaseFont,
     paddingBottom: Metrics.width * 0.02
   },
   audioOnlyButtonTextDisabled: {
-    color: "#ccc",
+    color: '#ccc',
     fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "500",
-    lineHeight: moderateScale(28, 0),
+    fontWeight: '500',
     fontFamily: Fonts.BaseFont,
     paddingBottom: Metrics.width * 0.02
   },

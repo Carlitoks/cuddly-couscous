@@ -1,5 +1,6 @@
-import { Dimensions } from "react-native";
-import { getDeviceLocale } from 'react-native-device-info';
+import { Dimensions, PixelRatio } from "react-native";
+import { getDeviceLocale } from "react-native-device-info";
+import {Metrics} from "../Themes";
 
 const { width, height } = Dimensions.get("window");
 const realWidth = height > width ? width : height;
@@ -14,9 +15,13 @@ const moderateScale = (size, factor = 0.5) => {
   return size + (scale(size) - size) * factor;
 };
 
-const scaledFontSize = fontSize => {
-  const scaleFactor = width <= 375 ? 1 : width <= 414 ? 1.15 : 1.25;
-  return fontSize * scaleFactor;
+const setTextProperties = (color, fontFamily, fontSize, fontWeight) => {
+  return {
+    color,
+    fontFamily,
+    fontSize,
+    fontWeight
+  };
 };
 
-export { scale, verticalScale, moderateScale, scaledFontSize };
+export { scale, verticalScale, moderateScale, setTextProperties };

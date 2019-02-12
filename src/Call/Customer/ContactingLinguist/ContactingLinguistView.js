@@ -21,7 +21,6 @@ import { Images, Colors } from "../../../Themes";
 // REDUCERS
 import { closeCall, update } from "../../../Ducks/ActiveSessionReducer";
 import { updateSettings } from "../../../Ducks/ContactLinguistReducer";
-import I18n from "../../../I18n/I18n";
 import {
   setPermission,
   displayOpenSettingsAlert
@@ -29,6 +28,7 @@ import {
 import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
 import DeviceInfo from "react-native-device-info";
+import I18n from './../../../I18n/I18n';
 
 class ContactingLinguist extends Component {
   constructor(props) {
@@ -140,7 +140,7 @@ class ContactingLinguist extends Component {
               />
             )}
           <Text style={styles.connectingMessage}>
-            {this.props.connectingMessage}
+            {I18n.t('contactingLinguist')}
           </Text>
         </View>
         {/* Call Buttons */}

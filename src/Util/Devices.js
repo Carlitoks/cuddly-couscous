@@ -1,4 +1,5 @@
 import DeviceInfo from "react-native-device-info";
+import { Platform, Dimensions } from 'react-native';
 
 const IphoneX = DeviceInfo.getModel() == "iPhone X";
 
@@ -19,6 +20,8 @@ export const iPhoneXModels =
   DeviceInfo.getDeviceName() == "iPhone XR" ||
   DeviceInfo.getDeviceName() == "iPhone XS" ||
   DeviceInfo.getDeviceName() == "iPhone XS Max";
+
+export function isIphoneXorAbove() {   const dimen = Dimensions.get('window');   return (     Platform.OS === 'ios' &&     !Platform.isPad &&     !Platform.isTVOS &&     ((dimen.height === 812 || dimen.width === 812) || (dimen.height === 896 || dimen.width === 896))   ); }
 
 let top;
 export const topIOS = () => {

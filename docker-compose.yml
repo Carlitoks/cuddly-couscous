@@ -46,7 +46,7 @@ services:
     image: postgres:9.6-alpine
     environment:
       POSTGRES_USER: solo-platform
-      POSTGRES_PASSWORD: solo-platform-db-password
+      POSTGRES_PASSWORD: solo-platform
       POSTGRES_DB: solo-platform
 
   # for viewing/debugging raw data in postgres

@@ -1,49 +1,29 @@
-import React, { Component } from "react";
-import { Text, Image, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
-import { Metrics, Colors } from "../../../Themes";
-import FemaleSilhouette from "./Partials/FemaleSilhouette";
-import SGWaves from "./Partials/Waves";
-import Questions from "./Partials/Questions";
-
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import Questions from './Partials/Questions';
+import SilhouetteWavesBackground from '../../../Assets/SVG/SilhouetteWavesBackground';
+import FreeMinutesWell from '../../Onboarding/Components/FreeMinutesWell';
 // Styles
-import styles from "./Styles/AvatarSectionStyles";
-import { moderateScale } from "../../../Util/Scaling";
-import { Iphone5 } from "../../../Util/Devices";
-import SilhouetteWavesBackground from "./../../../Assets/SVG/SilhouetteWavesBackground";
-import metrics from "./../../../Themes/Metrics";
-import FreeMinutesWell from "../../Onboarding/Components/FreeMinutesWell";
+import styles from './Styles/AvatarSectionStyles';
+
 export default class AvatarSection extends Component {
   renderSections = () => {
     const { firstName, home, pointerEvents, navigation } = this.props;
 
     return (
       <View style={[styles.columnView]}>
-      <View style={{position: 'absolute'}}>
-      <SilhouetteWavesBackground
-          width={metrics.width}
-          height={metrics.height * 0.30}
-        />
+        <View style={styles.absolutePosition}>
+          <SilhouetteWavesBackground />
         </View>
-        <View
-          style={{
-            zIndex: 100,
-            paddingLeft: 20,
-            marginTop: 40
-          }}
-        >
+        <View style={styles.questionsContainer}>
           <Questions home={home} firstName={firstName} />
         </View>
-        <FreeMinutesWell
-          pointerEvents={pointerEvents}
-          navigation={navigation}
-        />
+        <FreeMinutesWell pointerEvents={pointerEvents} navigation={navigation} />
       </View>
     );
   };
+
   render() {
-    return (
-      <View style={styles.avatarSectionContainer}>{this.renderSections()}</View>
-    );
+    return <View style={styles.avatarSectionContainer}>{this.renderSections()}</View>;
   }
 }
