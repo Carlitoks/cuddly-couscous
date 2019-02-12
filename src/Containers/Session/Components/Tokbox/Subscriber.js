@@ -3,7 +3,7 @@ import {View} from "react-native";
 import {OTSubscriber} from "opentok-react-native";
 import styles from "./styles";
 
-import { recordSessionTokboxEvent } from "../../../Util/Forensics";
+import { recordSessionTokboxEvent } from "../../../../Util/Forensics";
 
 export class Subscriber extends Component {
   constructor(props) {
@@ -37,9 +37,7 @@ export class Subscriber extends Component {
         });
       },
       videoDataReceived: () => {
-        recordSessionTokboxEvent('subscriber.videoDataReceived', {
-          sessionID: this.props.session.id
-        });
+        // NOTE: not recording forensics for this on purpose, it gets called on every frame
       },
       videoDisabled: (event) => {
         recordSessionTokboxEvent('subscriber.videoDisabled', {
@@ -64,15 +62,24 @@ export class Subscriber extends Component {
         });
       },
     };
+    console.log("subscriber.constructor");
+  }
+
+  componentWillUnmount () {
+    console.log("subscriber.componentWillUnmount");
   }
 
   render () {
+    const {status} = this.props;
+
     return (
       <View style={styles.subscriberContainer}>
+      {!status.ending && (
         <OTSubscriber
           style={styles.subscriber}
           eventHandlers = { this.eventHandlers }
         />
+      )}
       </View>
     );
   }

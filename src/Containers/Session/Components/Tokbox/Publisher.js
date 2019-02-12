@@ -3,7 +3,7 @@ import {View} from "react-native";
 import {OTPublisher} from "opentok-react-native";
 import styles from "./styles";
 
-import { recordSessionTokboxEvent } from "../../../Util/Forensics";
+import { recordSessionTokboxEvent } from "../../../../Util/Forensics";
 
 export class Publisher extends Component {
   constructor(props) {
@@ -15,10 +15,8 @@ export class Publisher extends Component {
 
     this.eventHandlers = {
       audioLevel: (event) => {
-        recordSessionTokboxEvent('publisher.audioLevel', {
-          event,
-          sessionID: this.props.session.id
-        });
+        // NOTE: not recording in forensics, because called to frequently
+        // console.log("publisher.audioLevel", event);
       },
       error: (event) => {
         recordSessionTokboxEvent('publisher.error', {
@@ -39,15 +37,25 @@ export class Publisher extends Component {
         });
       }
     };
+
+    console.log("publisher.constructor");
+  }
+
+  componentWillUnmount () {
+    console.log("publisher.componentWillUnmount");
   }
 
   render () {
+    const {status} = this.props;
+
     return (
       <View style={styles.publisherContainer}>
+      {!status.ending && (
         <OTPublisher
           style={styles.publisher}
           eventHandlers = { this.eventHandlers }
         />
+      )}
       </View>
     );
   }

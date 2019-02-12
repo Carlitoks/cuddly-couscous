@@ -8,7 +8,7 @@ import { OTSession } from 'opentok-react-native';
 
 import {TOKBOX_APIKEY} from  "../../../../Config/env";
 
-import { recordSessionTokboxEvent } from "../../../Util/Forensics";
+import { recordSessionTokboxEvent } from "../../../../Util/Forensics";
 
 export class Session extends Component {
   constructor (props) {
@@ -80,6 +80,8 @@ export class Session extends Component {
         });
       }
     };
+
+    console.log("Session.constructor");
   }
 
   componentDidMount () {
@@ -88,7 +90,7 @@ export class Session extends Component {
   }
 
   componentWillUnmount () {
-
+    console.log("Session.componentWillUnmount");
   }
 
   _handleAppStateChange () {
@@ -107,11 +109,12 @@ export class Session extends Component {
   }
 
   render () {
-    const {mounted, credentials} = this.props;
+    const {session, credentials, localSessionStatus} = this.props;
+    const {mounted} = this.state;
 
     return (
       <View style={styles.sessionContainer}>
-        {mounted && (
+        {mounted && !localSessionStatus.ended && (
           <OTSession 
             style = {styles.session}
             apiKey = {TOKBOX_APIKEY}
@@ -120,11 +123,13 @@ export class Session extends Component {
             eventHandlers = { this.eventHandlers }
           >
             <Publisher
-              session = {this.props.session}
+              session = {session}
+              status = {localSessionStatus}
               onError = {() => { this.remount() }}
             />
             <Subscriber
-              session = {this.props.session}
+              session = {session}
+              status = {localSessionStatus}
               onError = {() => { this.remount() }}
             />
           </OTSession>

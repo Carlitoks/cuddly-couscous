@@ -13,7 +13,6 @@ import {CallTimer} from './Components/CallTimer';
 import {SessionControls} from "./Components/SessionControls";
 import {Session} from "./Components/Tokbox/Session";
 
-import styles from "./styles.js";
 import * as tests from './SessionView.tests';
 
 newRemoteUserState = (props) => {
@@ -257,7 +256,9 @@ class SessionView extends Component {
   }
 
   handleInitialCustomerTimeout () {
+    this.setState({status:{ending: true, ended: false}});
     this.props.endSession('timeout').finally(() => {
+      this.setState({status:{ending: false, ended: true}});
       this.cleanup();
       this.props.navigation.dispatch({type: "CustomerRetryView"});
     });
@@ -375,20 +376,19 @@ class SessionView extends Component {
     let targetView = "Home";
     this.endingCall = true;
 
-    this.setState({endingCall: true});
+    this.setState({status:{ending: true, ended: false}});
     this.sendSignal('endingCall', {reason});
     this.props.endSession(reason).then((res) => {
-      this.setState({endingCall: false, endedCall: true});
       this.sendSignal('endedCall');
     }).catch((e) => {
-      this.endingCall = false;
-      this.setState({endingCall: false, endedCall: true});
       this.sendSignal('endingCallFailed');
     }).finally(() => {
+      this.setState({status:{ending: false, ended: true}});
       this.cleanup();
       this.endingCall = false;
       this.props.navigation.dispatch({type: targetView});
     });
+
     Alert.alert("Ended Session", reason);
   }
 
@@ -410,49 +410,11 @@ class SessionView extends Component {
   render () {
     return (
       <TouchableWithoutFeedback onPress={ () => this.toggleDisplayControls() }>
-        <View style={styles.container}>
+        <View style={{flex: 1}}>
 
           {/* <KeepAwake /> */}
 
-          <Text style={styles.text}>Hello {this.props.user.firstName}</Text>
-
           {/* TODO: consider a dedicated component for triggering a call retry? */}
-
-          { this.props.isLinguist && !this.hasInitiallyConnected() && (
-            <LinguistConnecting
-              remoteUser = {this.props.remoteUser}
-              remoteUserState = {this.state.remoteUserState}
-              session = { this.props.session }
-              onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
-              onTimeout = { () => { this.handleInitialLinguistTimeout() } }
-              onCancel = {() => { this.triggerEndCall("cancel") }}
-            />
-          )}
-          { this.props.isCustomer && !this.hasInitiallyConnected() && (
-            <CustomerConnecting
-              remoteUser = {this.props.remoteUser}
-              remoteUserState = {this.state.remoteUserState}
-              connection = { this.state.connection }
-              session = { this.props.session }
-              secondsUntilTimeout = { 60 }
-              onCancel = {() => { this.triggerEndCall("cancel") }}
-              onError = {() => { this.handleInitialConnectionError("session.errFailedToConnect") }}
-              onTimeout = {() => { this.handleInitialCustomerTimeout() }}
-            />
-          )}
-
-          { this.shouldShowReconnectionState() && (
-            <ReconnectionState
-              user = { this.props.user }
-              remoteUser = {this.props.remoteUser}
-              remoteUserConnection = {this.state.remoteUserState.connection}
-              isCustomer = { this.props.isCustomer }
-              isLinguist = { this.props.isLinguist }
-              userConnection = { this.state.connection }
-              onEnd = {(reason) => { this.triggerEndCall(reason) }}
-              onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
-            />
-          )}
 
           {/* 
               This triggers most of the relevant events by handling the actual
@@ -494,6 +456,43 @@ class SessionView extends Component {
             // other status updates?
             onUserPoorConnection = {null}
           />
+
+          { this.props.isLinguist && !this.hasInitiallyConnected() && (
+            <LinguistConnecting
+              remoteUser = {this.props.remoteUser}
+              remoteUserState = {this.state.remoteUserState}
+              session = { this.props.session }
+              onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
+              onTimeout = { () => { this.handleInitialLinguistTimeout() } }
+              onCancel = {() => { this.triggerEndCall("cancel") }}
+            />
+          )}
+          { this.props.isCustomer && !this.hasInitiallyConnected() && (
+            <CustomerConnecting
+              remoteUser = {this.props.remoteUser}
+              remoteUserState = {this.state.remoteUserState}
+              connection = { this.state.connection }
+              session = { this.props.session }
+              secondsUntilTimeout = { 10 }
+              onCancel = {() => { this.triggerEndCall("cancel") }}
+              onError = {() => { this.handleInitialConnectionError("session.errFailedToConnect") }}
+              onTimeout = {() => { this.handleInitialCustomerTimeout() }}
+            />
+          )}
+
+          { this.shouldShowReconnectionState() && (
+            <ReconnectionState
+              user = { this.props.user }
+              remoteUser = {this.props.remoteUser}
+              remoteUserConnection = {this.state.remoteUserState.connection}
+              isCustomer = { this.props.isCustomer }
+              isLinguist = { this.props.isLinguist }
+              userConnection = { this.state.connection }
+              onEnd = {(reason) => { this.triggerEndCall(reason) }}
+              onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
+            />
+          )}
+
 
           { this.poorConnectionAlertVisible() && (
             <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Text, View} from "react-native";
+import {Button, Text, View, StyleSheet} from "react-native";
 import api from "../../../Config/AxiosConfig";
 
 export class CustomerConnecting extends Component {
@@ -137,13 +137,35 @@ export class CustomerConnecting extends Component {
 
   render () {
     return (
-      <View>
-        <Text>{ this.getConnectionText() }</Text>
-        <Button
-          title = "Cancel"
-          onPress = {()=> { this.cancel() }}
-        />
+      <View style = {styles.container}>
+        <View style = {styles.content}>
+          <Text style = {styles.text}>{ this.getConnectionText() }</Text>
+          <Button
+            title = "Cancel"
+            onPress = {()=> { this.cancel() }}
+          />
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: "100%",
+    width: "100%",
+    backgroundColor: "rgba(0,0,0,0.5)",
+    paddingTop: "33%"
+  },
+  content: {
+    color: "#ffffff"
+  },
+  text: {
+    fontSize: 20,
+    color: "#fff",
+    padding: 30
+  }
+});

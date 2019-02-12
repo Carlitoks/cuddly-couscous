@@ -9,12 +9,16 @@ let events = [];
 let lastFlushed = null;
 let version = null;
 let authToken = false;
+let logForensics = true;
 
 export const setAuthToken = (str) => {
   authToken = str;
 };
 
 const record = (evt) => {
+  if (logForensics) {
+    console.log(evt);
+  }
   if (!forensicsEnabled) {
     return;
   }
