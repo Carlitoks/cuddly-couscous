@@ -60,7 +60,7 @@ class SubscriberBox extends Component {
         this.props.remountPublisherAndSubscriber();
       },
       videoDataReceived: () => {
-        recordSessionTokboxEvent('subscriber.videoDataReceived', {sessionID: this.props.sessionID});
+        // NOTE: not recording this in forensics due to frequency of calls
         if (this.props.visibility) {
           this.props.update({
             modalReconnect: false
