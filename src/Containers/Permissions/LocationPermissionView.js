@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {Colors} from '../../Themes';
 import ViewWrapper from '../ViewWrapper/ViewWrapper';
 import { update as updateOnboarding } from '../../Ducks/OnboardingReducer';
+import Permission from 'react-native-permissions';
 
 // Styles
 import styles from './Styles/PermissionViewStyles';
@@ -28,9 +29,13 @@ class LocationPermissionView extends Component {
       updateOnboarding({completedLocation: true});
       if (Platform.OS === 'android') {
         updateOnboarding({completedNotification: true});
-        navigation.dispatch({ type: 'Home' });
+        return navigation.dispatch({ type: 'Home' });
       } else {
-        navigation.dispatch({ type: 'NotificationPermissionView' });
+        const notificationPermission = await Permission.check('notification');
+        if(notificationPermission === 'undetermined'){
+          return navigation.dispatch({ type: 'NotificationPermissionView' });
+        }
+        return navigation.dispatch({ type: 'Home' });
       }
     }
   };

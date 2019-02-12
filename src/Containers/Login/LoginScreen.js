@@ -142,16 +142,14 @@ class LoginScreen extends Component {
               <View style={styles.loginContainer}>
                 <View style={styles.topLogoContainer}>
                   <Image source={JeenieLogo} />
-                  <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>
+                  {errorType === "signInError"
+                  || errorType === "emailFormat"
+                  || errorType === "emailNotFound" ? (
+                    <FieldError navigation={navigation} />
+                  ) : (
+                    <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>
+                  )}
                   <View style={styles.inputContainer}>
-                    {errorType === "signInError"
-                    || errorType === "emailFormat"
-                    || errorType === "emailNotFound" ? (
-                      <FieldError navigation={navigation} />
-                      ) : (
-                        <View />
-                      )}
-
                     <View style={styles.inputViewContainer}>
                       {email ? <Text style={styles.labelStyle}>{I18n.t("email")}</Text> : <Text />}
                       <View style={styles.inputInternalContainer}>

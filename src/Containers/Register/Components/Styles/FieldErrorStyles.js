@@ -25,6 +25,8 @@ export default StyleSheet.create({
         alignItems: "center",
         borderWidth: 1,
         borderRadius: 4,
-        borderColor: "#FFFFFF"
+        borderColor: "#FFFFFF",
+        marginTop: moderateScale(20, 0),
+        marginBottom: moderateScale(20, 0),
       }
 });

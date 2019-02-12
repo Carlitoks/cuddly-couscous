@@ -37,6 +37,7 @@ import {
 } from "../../Ducks/ActiveSessionReducer";
 import { updateSettings } from "../../Ducks/ContactLinguistReducer";
 import I18n from "../../I18n/I18n";
+import Permission from 'react-native-permissions';
 // Styles
 import styles from "./Styles/RegisterScreenStyles";
 import { EMAIL_REGEX, INVALID_NAME_REGEX } from "../../Util/Constants";
@@ -49,6 +50,10 @@ import Header from "../CustomerHome/Components/Header";
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
 class RegisterScreen extends Component {
+  componentWillMount = async () => {
+    const LocationPermission = await Permission.check('location');
+    console.log(LocationPermission);
+  };
   isValidEmail = (text) => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
@@ -137,7 +142,15 @@ class RegisterScreen extends Component {
             isNewUser: true
           });
           this.props.updateOnboarding({ makingRequest: false });
-          navigation.dispatch({ type: "LocationPermissionView" });
+          const LocationPermission = await Permission.check('location');
+          if(LocationPermission === 'undetermined'){
+            return navigation.dispatch({ type: "LocationPermissionView" });
+          }
+          const NotificationPermission = await Permission.check('notification');
+          if(NotificationPermission === 'undetermined'){
+            navigation.dispatch({ type: "NotificationPermissionView" });
+          }
+          return navigation.dispatch({ type: "Home" });
         }
         this.props.updateOnboarding({ makingRequest: false });
       }
@@ -236,10 +249,8 @@ class RegisterScreen extends Component {
               <View style={styles.registerContainer}>
                 <View style={styles.topLogoContainer}>
                   <Image source={JeenieLogo} />
-                  <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>
+                  {errorType ? <FieldError navigation={navigation} /> : <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>}
                   <View style={styles.inputContainer}>
-                    {errorType ? <FieldError navigation={navigation} /> : <React.Fragment />}
-
                     <View style={styles.inputViewContainer}>
                       {firstName ? (
                         <Text style={styles.labelText}>{I18n.t("firstname")}</Text>

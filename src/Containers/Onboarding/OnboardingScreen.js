@@ -6,6 +6,7 @@ import {Colors} from '../../Themes';
 import {ensureSessionDefaults, updateLocation} from '../../Ducks/NewSessionReducer';
 import ViewWrapper from '../ViewWrapper/ViewWrapper';
 import {clearOnboarding} from '../../Ducks/OnboardingReducer';
+import Permission from 'react-native-permissions';
 // Styles
 import styles from './Styles/OnboardingScreenStyles';
 import OnboardingButtons from './Components/OnboardingButtons';
@@ -15,7 +16,7 @@ const JeenieLogo = require('../../Assets/Images/Landing-Jeenie-TM.png');
 const backgroundImage = require('../../Assets/Images/IphonexV1.png');
 
 class OnboardingScreen extends Component {
-  componentWillMount() {
+  componentWillMount = async() => {
     const {
       navigation,
       isLoggedIn,
@@ -36,16 +37,24 @@ class OnboardingScreen extends Component {
     if (isLoggedIn && token) {
       if (completedLocation) {
         if (completedNotification) {
-          navigation.dispatch({type: 'Home'});
+          return navigation.dispatch({type: 'Home'});
         } else {
           if (Platform.OS === 'android') {
-            navigation.dispatch({type: 'Home'});
+            return navigation.dispatch({type: 'Home'});
           } else {
-            navigation.dispatch({type: 'NotificationPermissionView'});
+            const NotificationPermission = await Permission.check('notification');
+            if(NotificationPermission === 'undetermined'){
+              return navigation.dispatch({ type: "NotificationPermissionView" });
+            }
+            return navigation.dispatch({ type: "Home" });
           }
         }
       } else {
-        navigation.dispatch({type: 'LocationPermissionView'});
+        const LocationPermission = await Permission.check('location');
+        if(LocationPermission === 'undetermined'){
+          return navigation.dispatch({ type: "LocationPermissionView" });
+        }
+        return navigation.dispatch({ type: "Home" });
       }
     }
   }
