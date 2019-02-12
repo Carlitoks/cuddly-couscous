@@ -479,6 +479,8 @@ class SessionView extends Component {
             onRemoteUserConnected = {() => { this.handleRemoteUserConnected() }}
             onRemoteUserDisconnected = {() => { this.handleRemoteUserDisconnected() }}
             onRemoteUserReconnected = {() => { this.handleRemoteUserConnected() }}
+
+            // other status updates?
             onRemoteUserPoorConnection = {null}
             onRemoteUserUpdated = {null} // for things like...
 
@@ -488,6 +490,8 @@ class SessionView extends Component {
             onUserConnected = {() => { this.handleUserConnected() }}
             onUserDisconnected = {() => { this.handleUserDisconnected() }}
             onUserReconnected = {() => { this.handleUserConnected() }}
+
+            // other status updates?
             onUserPoorConnection = {null}
           />
 

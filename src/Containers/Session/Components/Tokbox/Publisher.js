@@ -1,5 +1,9 @@
 import React, {Component} from "react";
+import {View} from "react-native";
 import {OTPublisher} from "opentok-react-native";
+import styles from "./styles";
+
+import { recordSessionTokboxEvent } from "../../../Util/Forensics";
 
 export class Publisher extends Component {
   constructor(props) {
@@ -11,22 +15,40 @@ export class Publisher extends Component {
 
     this.eventHandlers = {
       audioLevel: (event) => {
+        recordSessionTokboxEvent('publisher.audioLevel', {
+          event,
+          sessionID: this.props.session.id
+        });
       },
       error: (event) => {
+        recordSessionTokboxEvent('publisher.error', {
+          event,
+          sessionID: this.props.session.id
+        });
       },
       streamCreated: (event) => {
+        recordSessionTokboxEvent('publisher.streamCreated', {
+          event,
+          sessionID: this.props.session.id
+        });
       },
       streamDestroyed: (event) => {
+        recordSessionTokboxEvent('publisher.streamDestroyed', {
+          event,
+          sessionID: this.props.session.id
+        });
       }
     };
   }
 
   render () {
     return (
-      <OTPublisher
-        style={{ width: 100, height: 100 }}
-        eventHandlers = { this.eventHandlers }
-      />
+      <View style={styles.publisherContainer}>
+        <OTPublisher
+          style={styles.publisher}
+          eventHandlers = { this.eventHandlers }
+        />
+      </View>
     );
   }
 };
