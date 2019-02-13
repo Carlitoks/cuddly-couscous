@@ -80,6 +80,7 @@ export const setRemoteUser = (user) => (dispatch) => {
 };
 
 export const receiveSessionInvite = (invite) => (dispatch) => {
+  console.log(invite);
   return new Promise((resolve) => {
     dispatch(clear());
     dispatch(update({

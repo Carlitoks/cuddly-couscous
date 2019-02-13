@@ -1,10 +1,13 @@
 import React, {Component} from "react";
 import {View, Text, StyleSheet, Alert} from "react-native";
 import { connect } from "react-redux";
+import I18n, { translateApiError } from "../../I18n/I18n";
+
 import TextButton from "../../Components/Widgets/TextButton";
 
 import {acceptSessionInvite, declineSessionInvite} from "../../Ducks/CurrentSessionReducer";
-import I18n, { translateApiError } from "../../I18n/I18n";
+import api from "../../Config/AxiosConfig";
+
 
 export class LinguistIncomingCallView extends Component {
 
@@ -17,13 +20,14 @@ export class LinguistIncomingCallView extends Component {
 
     this.abortTimers = false;
     this.responding = false;
+    this.pollFailures = 0;
     this.pollIntervalID = null;
     this.countdownIntervalID = null;
   }
 
   componentDidMount () {
-    this.pollIntervalID = setInterval(this.handlePollInterval, 2000);
-    this.countdownIntervalID = setInterval(this.handleCountdownInterval, 250);
+    this.pollIntervalID = setInterval(() => { this.handlePollInterval() }, 2000);
+    this.countdownIntervalID = setInterval(() => { this.handleCountdownInterval() }, 250);
   }
 
   componentWillUnmount () {
@@ -56,7 +60,7 @@ export class LinguistIncomingCallView extends Component {
     });
   }
 
-  handleDecline () {    
+  handleDecline () {
     if (this.responding) {
       return;
     }
@@ -75,7 +79,48 @@ export class LinguistIncomingCallView extends Component {
       return;
     }
 
-    // TODO: handle cancel/assigned
+    api.get(`/sessions/${this.props.sessionID}/linguist`)
+    .then((res) => {
+      this.pollFailures = 0;
+      switch (res.data.status) {
+        case "assigned": {
+          this.handleUnavailable("assigned");
+          break;
+        }
+        case "cancelled": {
+          this.handleUnavailable("cancel");
+          break;
+        }
+      }
+    })
+    .catch((e) => {
+      this.pollFailures++;
+      if (this.pollFailures >= 3) {
+        this.handleUnavailable("lostConnection");
+      }
+    });
+  }
+
+  handleUnavailable (reason) {
+    let title = I18n.t("notification");
+    let body = "Call no longer available";
+    switch (reason) {
+      case "assigned": {
+        body = translateApiErrorString("api.errSessionAssigned");
+        break;
+      }
+      case "cancelled": {
+        body = translateApiErrorString("api.errSessionUnavailable");
+        break;
+      }
+      case "lostConnection": {
+        title = I18n.t("error");
+        body = I18n.t("api.errUnknown");
+      }
+    }
+    this.cleanup();
+    Alert.alert(title, body);
+    this.props.navigation.dispatch({type: "Home"});
   }
 
   handleCountdownInterval () {
