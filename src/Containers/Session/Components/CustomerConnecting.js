@@ -52,8 +52,8 @@ export class CustomerConnecting extends Component {
   }
 
   handleCountdownInterval () {
-    if (this.abortTimers) {
-      clearInterval(this.countdownIntervalID);
+    if (!this || this.abortTimers) {
+      // clearInterval(this.countdownIntervalID);
       return;
     }
     const now = new Date();
@@ -72,6 +72,11 @@ export class CustomerConnecting extends Component {
   }
 
   handleStatusPollInterval () {
+    if (!this || this.abortTimers) {
+      // clearInterval(this.pollIntervalID);
+      return;
+    }
+
     api.get(`/sessions/${this.props.session.id}/linguist`).then((res) => {
       this.pollFailures = 0;
       if (this.abortTimers) {

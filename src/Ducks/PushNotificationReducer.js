@@ -77,14 +77,27 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
     CurrentView != "SessionView" &&
     CurrentView != "RateView"
   ) {
+    if (!invitationId) {
+      return;
+    }
+
+    // TODO: consider blacklisting previously handled invites here
 
     // fetch invite, validate status, display incoming call if relevant
     api.get(`/session-invitations/${invitationId}`)
     .then ((res) => {
+      // don't handle if we've already responded to this invite
+      if (res.data.responded) {
+        return Promise.resolve(false);
+      }
       dispatch(receiveSessionInvite(res.data));
       return api.get(`/sessions/${res.data.session.id}/linguist`);
     })
     .then((res) => {
+      if (!res) {
+        return;
+      }
+
       switch (res.data.status) {
         case "unassigned": {
           dispatch({ type: "LinguistIncomingCallView" });
@@ -98,10 +111,15 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
           Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
           break;
         }
+        default: {
+          Alert.alert(I18n.t("notification"), "Call no longer available.");
+        }
       }
     })
     .catch((e) => {
-      Alert.alert(I18n.t("error"), translateApiError(e));
+      // Alert.alert(I18n.t("error"), translateApiError(e));
+      Alert.alert(I18n.t("error"), JSON.stringify(e));
+      
       // TODO: record forensics error
       // TODO: nav to home + alert?
     });

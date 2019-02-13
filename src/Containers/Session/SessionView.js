@@ -388,7 +388,7 @@ class SessionView extends Component {
       this.props.navigation.dispatch({type: targetView});
     });
 
-    Alert.alert("Ended Session", reason);
+    // Alert.alert("Ended Session", reason);
   }
 
   // call ended by a remote participant
@@ -462,6 +462,7 @@ class SessionView extends Component {
               remoteUser = {this.props.remoteUser}
               remoteUserState = {this.state.remoteUserState}
               userConnection = { this.state.connection }
+              secondsUntilTimeout = { 60 }
               onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
               onTimeout = { () => { this.handleInitialLinguistTimeout() } }
               onCancel = {() => { this.triggerEndCall("cancel") }}
@@ -473,7 +474,7 @@ class SessionView extends Component {
               remoteUserState = {this.state.remoteUserState}
               connection = { this.state.connection }
               session = { this.props.session }
-              secondsUntilTimeout = { 10 }
+              secondsUntilTimeout = { 60 }
               onCancel = {() => { this.triggerEndCall("cancel") }}
               onError = {() => { this.handleInitialConnectionError("session.errFailedToConnect") }}
               onTimeout = {() => { this.handleInitialCustomerTimeout() }}

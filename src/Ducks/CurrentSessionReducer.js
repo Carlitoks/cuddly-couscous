@@ -88,7 +88,7 @@ export const receiveSessionInvite = (invite) => (dispatch) => {
       isCustomer: false,
       invite,
       inviteID: invite.id,
-      session,
+      session: invite.session,
       sessionID: invite.session.id,
       remoteUser: invite.createdBy,
       event: invite.event,
