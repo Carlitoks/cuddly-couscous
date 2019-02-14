@@ -37,6 +37,14 @@ import styles from "./Styles/CallButtonsStyles";
 import { moderateScaleViewports } from "../../../../Util/Scaling";
 
 class CallButtons extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      createDisabled: false,
+    };
+  }
+
   componentWillMount() {
     this.setLanguages();
   }
@@ -115,21 +123,27 @@ class CallButtons extends Component {
   };
 
   createCall () {
-    // TODO: disable button
-    this.props.createNewSession({
-      ...this.props.session
-    })
-    .then(() => {
-      this.props.navigation.dispatch({type: "SessionView"});
-    }).catch((e) => {
-      console.log("error", e)
-      Alert.alert(
-        I18n.t('error'),
-        translateApiError(e),
-        [
-          {text: 'OK'},
-        ],
-      );
+    if (this.state.createDisabled) {
+      return;
+    }
+    this.setState({createDisabled: true}, () => {
+      this.props.createNewSession({
+        ...this.props.session
+      })
+      .then(() => {
+        this.props.navigation.dispatch({type: "SessionView"});
+      }).catch((e) => {
+        console.log("error", e)
+        Alert.alert(
+          I18n.t('error'),
+          translateApiError(e),
+          [
+            {text: 'OK'},
+          ],
+        );
+      }).finally(() => {
+        this.setState({createDisabled: false});
+      });
     });
   }
 
