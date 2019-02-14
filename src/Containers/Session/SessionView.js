@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Alert, NetInfo, AppState, View, Text, TouchableWithoutFeedback} from 'react-native';
 import {KeepAwake} from "react-native-keep-awake";
 import { connect } from 'react-redux';
+import I18n, {translateApiError} from "../../I18n/I18n";
 
 import {endSession, handleEndedSession, setRemoteUser, setSessionBegan} from '../../Ducks/CurrentSessionReducer';
 
@@ -13,6 +14,7 @@ import {SessionControls} from "./Components/SessionControls";
 import {Session} from "./Components/Tokbox/Session";
 
 import * as tests from './SessionView.tests';
+import { stringify } from 'querystring';
 
 newRemoteUserState = (props) => {
   return {
@@ -345,11 +347,9 @@ class SessionView extends Component {
 
   // if an initial connection error is triggered, then just
   // alert the error and send back to home screen
-  handleInitialConnectionError (i18nKey) {
-    Alert.alert(I18n.t("error"), I18n.t(i18nKey), [{text: I18n.t("ok")}]);
-    this.props.triggerEndCall("error")
-    this.cleanup();
-    this.props.navigation.dispatch({type: "Home"});
+  handleInitialConnectionError (reason, i18nKey) {
+    // Alert.alert(I18n.t("error"), I18n.t(i18nKey), [{text: I18n.t("ok")}]);
+    this._triggerEndCall(reason);
   }
 
   // call ended by user
@@ -365,30 +365,29 @@ class SessionView extends Component {
   }
 
   _triggerEndCall (reason) {
-    // double tap prevention
-    if (this.endingCall) {
+    if (this.state.status.ending) {
       return;
     }
+
     // TODO: figure out proper end reason, and proper target view
     // * rate view if connected
     // * otherwise home?
     let targetView = "Home";
     this.endingCall = true;
 
-    this.setState({status:{ending: true, ended: false}});
-    this.sendSignal('endingCall', {reason});
-    this.props.endSession(reason).then((res) => {
-      this.sendSignal('endedCall');
-    }).catch((e) => {
-      this.sendSignal('endingCallFailed');
-    }).finally(() => {
-      this.setState({status:{ending: false, ended: true}});
-      this.cleanup();
-      this.endingCall = false;
-      this.props.navigation.dispatch({type: targetView});
+    this.setState({status:{ending: true, ended: false}}, () => {
+      this.sendSignal('endingCall', {reason});
+      this.props.endSession(reason).then((res) => {
+        this.sendSignal('endedCall');
+      }).catch((e) => {
+        this.sendSignal('endingCallFailed');
+      }).finally(() => {
+        this.setState({status:{ending: false, ended: true}});
+        this.cleanup();
+        this.endingCall = false;
+        this.props.navigation.dispatch({type: targetView});
+      });
     });
-
-    // Alert.alert("Ended Session", reason);
   }
 
   // call ended by a remote participant
@@ -463,7 +462,7 @@ class SessionView extends Component {
               remoteUserState = {this.state.remoteUserState}
               userConnection = { this.state.connection }
               secondsUntilTimeout = { 60 }
-              onError = { () => { this.handleInitialConnectionError("session.errFailedToConnect") } }
+              onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") } }
               onTimeout = { () => { this.handleInitialLinguistTimeout() } }
               onCancel = {() => { this.triggerEndCall("cancel") }}
             />
@@ -476,7 +475,7 @@ class SessionView extends Component {
               session = { this.props.session }
               secondsUntilTimeout = { 60 }
               onCancel = {() => { this.triggerEndCall("cancel") }}
-              onError = {() => { this.handleInitialConnectionError("session.errFailedToConnect") }}
+              onError = {(reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
               onTimeout = {() => { this.handleInitialCustomerTimeout() }}
             />
           )}

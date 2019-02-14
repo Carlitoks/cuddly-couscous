@@ -120,16 +120,16 @@ export class LinguistIncomingCallView extends Component {
     let body = "Call no longer available";
     switch (reason) {
       case "assigned": {
-        body = translateApiErrorString("api.errSessionAssigned");
+        body = I18n.t("api.errSessionAssigned");
         break;
       }
       case "cancelled": {
-        body = translateApiErrorString("api.errSessionUnavailable");
+        body = I18n.t("api.errSessionUnavailable");
         break;
       }
       case "lostConnection": {
         title = I18n.t("error");
-        body = I18n.t("api.errUnknown");
+        body = "Lost connection to the server." // I18n.t("err.lostConnection")
       }
     }
     this.cleanup();

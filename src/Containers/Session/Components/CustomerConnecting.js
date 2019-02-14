@@ -97,9 +97,9 @@ export class CustomerConnecting extends Component {
       }
       this.pollFailures++;
 
-      if (this.pollFailures >= 5) {
+      if (this.pollFailures >= 3) {
         console.log("failed", this.pollFailures);
-        this.error();
+        this.error("disconnect_local");
       }
     });
   }
@@ -111,9 +111,9 @@ export class CustomerConnecting extends Component {
     clearInterval(this.pollIntervalID);
   }
 
-  error () {
+  error (reason) {
     this.cleanup();
-    this.props.onError();
+    this.props.onError(reason);
   }
 
   timeout () {
