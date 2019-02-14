@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {View, Text, StyleSheet, Alert} from "react-native";
 import { connect } from "react-redux";
 import I18n, { translateApiError } from "../../I18n/I18n";
+import moment from "moment";
 
 import TextButton from "../../Components/Widgets/TextButton";
 
@@ -13,16 +14,20 @@ export class LinguistIncomingCallView extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-
-    };
+    
+    const now = new Date();
 
     this.abortTimers = false;
     this.responding = false;
     this.pollFailures = 0;
     this.pollIntervalID = null;
+    this.callTimeoutAt = moment(props.session.createdAt).add(55, "s"); // taking 5 seconds off to encourage pickup before call actually times out on customer side.
     this.countdownIntervalID = null;
+    
+    this.state = {
+      linguists: null,
+      seconds: this.getSecondsRemaining(),
+    };
   }
 
   componentDidMount () {
@@ -38,6 +43,14 @@ export class LinguistIncomingCallView extends Component {
     this.abortTimers = true;
     clearInterval(this.pollIntervalID);
     clearInterval(this.countdownIntervalID);
+  }
+
+  getSecondsRemaining () {
+    const now = new Date();
+    const nowSeconds = now.getTime() / 1000;
+    const timeoutSeconds = this.callTimeoutAt.unix() - nowSeconds;
+    const s = parseInt(timeoutSeconds, 10);
+    return s >= 0 ? s : 0;
   }
 
   handleAccept () {
@@ -82,6 +95,7 @@ export class LinguistIncomingCallView extends Component {
     api.get(`/sessions/${this.props.sessionID}/linguist`)
     .then((res) => {
       this.pollFailures = 0;
+      this.setState({linguists: res.data.queue.sent});
       switch (res.data.status) {
         case "assigned": {
           this.handleUnavailable("assigned");
@@ -124,19 +138,23 @@ export class LinguistIncomingCallView extends Component {
   }
 
   handleCountdownInterval () {
-    if (!this || this.responding || this.abortTimers) {
+    if (!this || this.abortTimers) {
       return;
     }
-
-
+    this.setState({
+      seconds: this.getSecondsRemaining()
+    });
   }
 
   render () {
     const {session, remoteUser} = this.props;
+    const {seconds, linguists} = this.state;
     return (
       <View style = {styles.container}>
         <Text style = {styles.text}>Incoming Call, from {remoteUser.firstName}</Text>
         <Text style = {styles.text}>{session.primaryLangCode} - {session.secondaryLangCode}</Text>
+        <Text style = {styles.text}>Call available for: { seconds }</Text>
+        {!!linguists && linguists > 1 && (<Text style = {styles.text}>Other linguists notified: { linguists-1 }</Text>)}
         <View style = {styles.buttonContainer}>
           <TextButton
             text = "Decline"
@@ -158,11 +176,12 @@ export class LinguistIncomingCallView extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
-    width: "100%",
-    paddingTop: "33%"
+    flex: 1,
+    paddingTop: "33%",
+    backgroundColor: "#518"
   },
   text: {
+    color: "#fff",
     fontSize: 20,
   },
   buttonContainer: {
