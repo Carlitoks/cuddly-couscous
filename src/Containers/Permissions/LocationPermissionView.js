@@ -33,7 +33,7 @@ class LocationPermissionView extends Component {
       } else {
         const notificationPermission = await Permission.check('notification');
         if(notificationPermission === 'undetermined'){
-          return navigation.dispatch({ type: 'NotificationPermissionView' });
+          return navigation.dispatch({ type: 'Home' });
         }
         return navigation.dispatch({ type: 'Home' });
       }

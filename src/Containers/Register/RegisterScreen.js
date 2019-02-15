@@ -150,7 +150,7 @@ class RegisterScreen extends Component {
           if( Platform.OS !== 'android' ){
             const NotificationPermission = await Permission.check('notification');
             if(NotificationPermission === 'undetermined'){
-              navigation.dispatch({ type: "NotificationPermissionView" });
+              navigation.dispatch({ type: "Home" });
             }
           }
           return navigation.dispatch({ type: "Home" });

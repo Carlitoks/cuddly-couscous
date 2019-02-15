@@ -44,7 +44,7 @@ class OnboardingScreen extends Component {
           } else {
             const NotificationPermission = await Permission.check('notification');
             if(NotificationPermission === 'undetermined'){
-              return navigation.dispatch({ type: "NotificationPermissionView" });
+              return navigation.dispatch({ type: "Home" });
             }
             return navigation.dispatch({ type: "Home" });
           }

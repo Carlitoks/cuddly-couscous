@@ -31,7 +31,7 @@ class PermissionButtons extends Component {
           updateOnboarding({ completedNotification: true });
           navigation.dispatch({ type: "Home" });
         } else {
-          navigation.dispatch({ type: "NotificationPermissionView" });
+          navigation.dispatch({ type: "Home" });
         }
       }
       if (permission === "notification") {
@@ -52,7 +52,7 @@ class PermissionButtons extends Component {
           updateOnboarding({ completedNotification: true });
           navigation.dispatch({ type: "Home" });
         } else {
-          navigation.dispatch({ type: "NotificationPermissionView" });
+          navigation.dispatch({ type: "Home" });
         }
       }
     }
@@ -110,7 +110,7 @@ class PermissionButtons extends Component {
       if (Platform.OS === "android") {
         return navigation.dispatch({ type: "Home" });
       }
-      return navigation.dispatch({ type: "NotificationPermissionView" });
+      return navigation.dispatch({ type: "Home" });
     }
 
     if (navigation.state.routeName === "NotificationPermissionView") {
