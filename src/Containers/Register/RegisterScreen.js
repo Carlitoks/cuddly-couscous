@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  Platform
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
@@ -146,15 +147,18 @@ class RegisterScreen extends Component {
           if(LocationPermission === 'undetermined'){
             return navigation.dispatch({ type: "LocationPermissionView" });
           }
-          const NotificationPermission = await Permission.check('notification');
-          if(NotificationPermission === 'undetermined'){
-            navigation.dispatch({ type: "NotificationPermissionView" });
+          if( Platform.OS !== 'android' ){
+            const NotificationPermission = await Permission.check('notification');
+            if(NotificationPermission === 'undetermined'){
+              navigation.dispatch({ type: "NotificationPermissionView" });
+            }
           }
           return navigation.dispatch({ type: "Home" });
         }
         this.props.updateOnboarding({ makingRequest: false });
       }
     } catch (err) {
+      console.log(err);
       if (err.data.errors[0] != 'cannot access another use') {
         Alert.alert(
           I18n.t('error'),
