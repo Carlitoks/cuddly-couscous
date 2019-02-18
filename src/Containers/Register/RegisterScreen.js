@@ -47,6 +47,7 @@ import FieldError from "./Components/FieldError";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 import { PrivacyPolicyURI, TermsConditionsURI } from "../../Config/StaticViewsURIS";
 import Header from "../CustomerHome/Components/Header";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
@@ -249,6 +250,7 @@ class RegisterScreen extends Component {
               locations={[0, 1]}
               style={styles.height}
             >
+              <KeyboardAwareScrollView enableResetScrollToCoords resetScrollToCoords={{x: 0, y: 0}} enableOnAndroid>
               <Header navigation={navigation} />
               <View style={styles.registerContainer}>
                 <View style={styles.topLogoContainer}>
@@ -373,6 +375,7 @@ class RegisterScreen extends Component {
                   </View>
                 </View>
               </View>
+              </KeyboardAwareScrollView>
             </LinearGradient>
           </View>
         </TouchableWithoutFeedback>
