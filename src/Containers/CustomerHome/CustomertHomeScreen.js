@@ -41,21 +41,12 @@ class CustomerHomeScreen extends Component {
       clearActiveSession,
       navigation,
       firstName,
+      completedLocation
     } = this.props;
 
     analytics.identify(uuid, {
       name: firstName,
     });
-
-    getGeolocationCoords()
-      .then((response) => {
-        updateLocation({
-          location: [response.coords.longitude, response.coords.latitude],
-        });
-      })
-      .catch((err) => {
-        console.log("GeoLocation error  ", err);
-      });
 
     ensureSessionDefaults({
       primaryLangCode: this.setPrimaryLangCode(),
@@ -163,6 +154,7 @@ const mS = state => ({
   token: state.auth.token,
   uuid: state.auth.uuid,
   firstName: state.userProfile.firstName,
+  completedLocation: state.onboardingReducer.completedLocation
 });
 
 const mD = {

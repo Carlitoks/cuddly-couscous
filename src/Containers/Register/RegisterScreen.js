@@ -48,14 +48,44 @@ import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 import { PrivacyPolicyURI, TermsConditionsURI } from "../../Config/StaticViewsURIS";
 import Header from "../CustomerHome/Components/Header";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { moderateScale } from "../../Util/Scaling";
 
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
 class RegisterScreen extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      showLogo: true,
+    }
+  }
   componentWillMount = async () => {
     const LocationPermission = await Permission.check('location');
     console.log(LocationPermission);
   };
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      this._keyboardDidShow,
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this._keyboardDidHide,
+    );
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  _keyboardDidShow = () => {
+    this.setState({ showLogo: false });
+  }
+
+  _keyboardDidHide = () => {
+    this.setState({ showLogo: true });
+  }
   isValidEmail = (text) => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
@@ -250,11 +280,11 @@ class RegisterScreen extends Component {
               locations={[0, 1]}
               style={styles.height}
             >
-              <KeyboardAwareScrollView enableResetScrollToCoords resetScrollToCoords={{x: 0, y: 0}} enableOnAndroid>
+              <KeyboardAwareScrollView enableOnAndroid extraScrollHeight={80}>
               <Header navigation={navigation} />
               <View style={styles.registerContainer}>
                 <View style={styles.topLogoContainer}>
-                  <Image source={JeenieLogo} />
+                  { this.state.showLogo ? <Image source={JeenieLogo} /> : <React.Fragment/>}
                   {errorType ? <FieldError navigation={navigation} /> : <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>}
                   <View style={styles.inputContainer}>
                     <View style={styles.inputViewContainer}>
