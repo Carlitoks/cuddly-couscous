@@ -144,14 +144,15 @@ class ContactingLinguist extends Component {
           </Text>
         </View>
         {/* Call Buttons */}
-        <View style={styles.controlsContainer}>
+        {this.props.counter > 2 ? <View style={styles.controlsContainer}>
           <SessionControls
             closeCall={closeCall}
             reason={REASON.CANCEL}
             switch={() => {}}
             contacting
           />
-        </View>
+        </View> : <React.Fragment/>
+        }
       </ScrollView>
     );
   }
