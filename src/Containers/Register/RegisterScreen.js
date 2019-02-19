@@ -53,39 +53,10 @@ import { moderateScale } from "../../Util/Scaling";
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
 class RegisterScreen extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      showLogo: true,
-    }
-  }
   componentWillMount = async () => {
     const LocationPermission = await Permission.check('location');
     console.log(LocationPermission);
   };
-  componentDidMount() {
-    this.keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      this._keyboardDidShow,
-    );
-    this.keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      this._keyboardDidHide,
-    );
-  }
-
-  componentWillUnmount() {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-  }
-
-  _keyboardDidShow = () => {
-    this.setState({ showLogo: false });
-  }
-
-  _keyboardDidHide = () => {
-    this.setState({ showLogo: true });
-  }
   isValidEmail = (text) => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
@@ -148,7 +119,19 @@ class RegisterScreen extends Component {
       email,
       password,
       firstName,
+      isValidPassword,
+      isValidFirstName,
+      isValidEmail,
+      makingRequest,
     } = this.props;
+
+    if (!isValidPassword
+      || !isValidFirstName
+      || !isValidEmail
+      || makingRequest
+      || (!email || !password)) {
+      return null;
+    }
 
     try {
       updateOnboarding({ errorType: null, makingRequest: true });
@@ -280,11 +263,12 @@ class RegisterScreen extends Component {
               locations={[0, 1]}
               style={styles.height}
             >
-              <KeyboardAwareScrollView enableOnAndroid extraScrollHeight={80}>
               <Header navigation={navigation} />
+
               <View style={styles.registerContainer}>
+                <KeyboardAwareScrollView enableOnAndroid>
                 <View style={styles.topLogoContainer}>
-                  { this.state.showLogo ? <Image source={JeenieLogo} /> : <React.Fragment/>}
+                  <Image source={JeenieLogo} />
                   {errorType ? <FieldError navigation={navigation} /> : <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>}
                   <View style={styles.inputContainer}>
                     <View style={styles.inputViewContainer}>
@@ -301,6 +285,7 @@ class RegisterScreen extends Component {
                           value={firstName}
                           placeholder={I18n.t("firstname")}
                           placeholderTextColor="rgba(255,255,255,0.7)"
+                          returnKeyType="done"
                         />
                         {errorType === "firstNameFormat" ? (
                           <View style={styles.errorIconContainer}>
@@ -325,6 +310,7 @@ class RegisterScreen extends Component {
                           placeholder={I18n.t("email")}
                           placeholderTextColor="rgba(255,255,255,0.7)"
                           keyboardType="email-address"
+                          returnKeyType="done"
                         />
                         {errorType === "emailFormat" || errorType === "AlreadyRegistered" ? (
                           <View style={styles.errorIconContainer}>
@@ -354,6 +340,7 @@ class RegisterScreen extends Component {
                           placeholder={I18n.t("customerOnboarding.register.password")}
                           secureTextEntry
                           placeholderTextColor="rgba(255,255,255,0.7)"
+                          returnKeyType="done"
                         />
                         {errorType === "passwordLength" ? (
                           <View style={styles.errorIconContainer}>
@@ -366,6 +353,7 @@ class RegisterScreen extends Component {
                     </View>
                   </View>
                 </View>
+                </KeyboardAwareScrollView>
                 <View style={styles.buttonContainer}>
                   {this.renderPrivacyPolicyText()}
                   <View style={styles.buttonWidthContainer}>
@@ -405,7 +393,6 @@ class RegisterScreen extends Component {
                   </View>
                 </View>
               </View>
-              </KeyboardAwareScrollView>
             </LinearGradient>
           </View>
         </TouchableWithoutFeedback>

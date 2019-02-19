@@ -486,8 +486,7 @@ const Navigation = StackNavigator(
         //   return null;
 
         if (
-          sceneProps.scene.route.routeName === "RateView" ||
-          sceneProps.scene.route.routeName === "IntroView"
+          sceneProps.scene.route.routeName === "RateView"
         ) {
           return CardStackStyleInterpolator.forFadeFromBottomAndroid(
             sceneProps
