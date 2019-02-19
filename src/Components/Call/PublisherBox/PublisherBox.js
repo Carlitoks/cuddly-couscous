@@ -56,6 +56,18 @@ class PublisherBox extends Component {
     });
   }
 
+  componentDidUpdate (prevProps) {
+    if (
+      this.props.mic != prevProps.mic ||
+      this.props.video != prevProps.video
+    ) {
+      recordSessionEvent("publisherBox.componentDidUpdate", {
+        mic: this.props.mic,
+        video: this.props.video
+      });
+    }
+  }
+
   render() {
     const {
       mic,
