@@ -5,7 +5,6 @@ import Instabug, { BugReporting, Surveys, FeatureRequests } from 'instabug-react
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import I18n from "react-native-i18n";
 import { instabugToken } from "../../Config/env";
-import Reactotron from 'reactotron-react-native';
 
 import { Colors } from "../../Themes";
 

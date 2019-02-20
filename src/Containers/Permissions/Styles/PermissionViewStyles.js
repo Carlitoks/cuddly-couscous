@@ -1,32 +1,22 @@
 import { StyleSheet } from 'react-native';
-import { ApplicationStyles, Fonts, Metrics, Colors } from '../../../Themes';
+import { ApplicationStyles, Fonts } from '../../../Themes';
 import { moderateScale } from '../../../Util/Scaling';
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
     backgroundColor: 'white',
-    flex: 1,
-  },
-  mainOnboardingContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    flex: 1,
-  },
-  bodyContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flex: 1,
-    width: '100%',
-    zIndex: 10
+    height: '100%'
   },
   gradientContainer: {
-    flexGrow: 1,
+    height: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexGrow: 1
   },
   topLogoContainer: {
-    marginTop: moderateScale(60),
+    marginTop: moderateScale(76, 0),
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -44,17 +34,27 @@ export default StyleSheet.create({
     color: '#fff',
     fontSize: moderateScale(18, 0),
     textAlign: 'center',
-    maxWidth: moderateScale(317, 0)
+    maxWidth: moderateScale(317, 0),
+    marginBottom: moderateScale(39, 0)
   },
   backgroundImageContainer: {
     position: 'absolute',
-    bottom: -40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: moderateScale(248, 0)
   },
-  backgroundImage: {
-    width: moderateScale(Metrics.width * 0.70, Metrics.width <= 320 ? 0.35 : 0),
-    height: moderateScale(Metrics.height * 0.70, Metrics.width <= 320 ? 0.35 : 0),
-    resizeMode: 'contain',
+  backgroundImage: { width: moderateScale(286, 0) },
+  bottomButtonsContainer: { paddingBottom: moderateScale(35, 0), alignItems: 'center' },
+  allSet: {
+    fontFamily: Fonts.BaseFont,
+    color: '#fff',
+    fontSize: moderateScale(36, 0),
+    textAlign: 'center',
+    marginTop: moderateScale(88, 0)
   },
-  bottomButtonsContainer: { paddingBottom: moderateScale(35, 0) },
+  fullBackgroundCover: {
+    width: '100%', height: '100%'
+  },
+  backgroundOpacity: {opacity: 0.5},
   gradientFullWidth: { width: '100%', zIndex: 10 }
 });

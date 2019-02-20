@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
-import I18n from '../../../I18n/I18n';
-import { updateSettings as updateHomeFlow } from '../../../Ducks/HomeFlowReducer';
-import PaymentModal from '../../../Home/Customer/PaymentModal/PaymentModal';
+import React, { Component } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
+import I18n from "../../../I18n/I18n";
+import { updateSettings as updateHomeFlow } from "../../../Ducks/HomeFlowReducer";
+import PaymentModal from "../../../Home/Customer/PaymentModal/PaymentModal";
 
 // Styles
-import styles from './Styles/FreeMinutesWellStyles';
-import ClockTime from '../../../Assets/SVG/clockTime';
+import styles from "./Styles/FreeMinutesWellStyles";
+import ClockTime from "../../../Assets/SVG/clockTime";
 
 class FreeMinutesWell extends Component {
   setPillColor = () => {
     const { navigation, availableMinutes, stripePaymentToken } = this.props;
-    if (navigation.state.routeName === 'OnboardingView') {
+    if (navigation.state.routeName === "IntroView") {
       return styles.pillButtonContainer;
     }
     if (availableMinutes >= 10) {
@@ -20,38 +20,38 @@ class FreeMinutesWell extends Component {
     }
 
     if (availableMinutes > 5 && availableMinutes < 10) {
-      return { ...styles.pillButtonContainer, backgroundColor: 'orange' };
+      return { ...styles.pillButtonContainer, backgroundColor: "orange" };
     }
 
     if (availableMinutes > 0 && availableMinutes <= 5) {
-      return { ...styles.pillButtonContainer, backgroundColor: 'red' };
+      return { ...styles.pillButtonContainer, backgroundColor: "red" };
     }
 
     if (stripePaymentToken) {
       return {
         ...styles.pillButtonContainer,
-        backgroundColor: '#ffffff'
+        backgroundColor: "#ffffff",
       };
     }
-    return { ...styles.pillButtonContainer, backgroundColor: 'red' };
+    return { ...styles.pillButtonContainer, backgroundColor: "red" };
   };
 
   setPillContent = () => {
     const { navigation, availableMinutes, stripePaymentToken } = this.props;
-    if (navigation.state.routeName === 'OnboardingView') {
-      return I18n.t('customerOnboarding.welcome');
+    if (navigation.state.routeName === "IntroView") {
+      return I18n.t("customerOnboarding.welcome");
     }
     if (availableMinutes > 0) {
-      return I18n.t('customerHome.registrationWelcome.balance', {
-        num: availableMinutes
+      return I18n.t("customerHome.registrationWelcome.balance", {
+        num: availableMinutes,
       });
     }
 
     if (stripePaymentToken) {
-      return I18n.t('costPerMinute');
+      return I18n.t("costPerMinute");
     }
-    return I18n.t('customerHome.registrationWelcome.balance', {
-      num: availableMinutes
+    return I18n.t("customerHome.registrationWelcome.balance", {
+      num: availableMinutes,
     });
   };
 
@@ -69,37 +69,39 @@ class FreeMinutesWell extends Component {
   setIconColor = () => {
     const { availableMinutes, stripePaymentToken } = this.props;
     if (availableMinutes > 0) {
-      return '#fff';
+      return "#fff";
     }
     if (stripePaymentToken) {
-      return '#401674';
+      return "#401674";
     }
-    return '#fff';
+    return "#fff";
   };
 
   renderTitle = () => {
     const { navigation } = this.props;
-    if (navigation.state.routeName === 'OnboardingView') {
+    if (navigation.state.routeName === "IntroView") {
       return (
-        <Text style={styles.wellTitle}>{I18n.t('customerHome.registrationWelcome.title')}</Text>
+        <Text style={styles.wellTitle}>{I18n.t("customerHome.registrationWelcome.title")}</Text>
       );
     }
     return <React.Fragment />;
   };
 
   renderSubtitle = () => {
-    if (this.props.navigation.state.routeName === "OnboardingView") {
+    const { availableMinutes, stripePaymentToken, navigation } = this.props;
+    if (navigation.state.routeName === "IntroView") {
       return <React.Fragment />;
     }
-    if (this.props.availableMinutes === 0) {
+    if (availableMinutes === 0) {
       return (
         <Text style={styles.wellSubtitle}>
-          {!!this.props.stripePaymentToken ?
-            I18n.t("pricingScreen.descriptions.noMinutesHasCard") :
-            I18n.t("pricingScreen.descriptions.noMinutesNoCard")
-          }
+          {stripePaymentToken
+            ? I18n.t("pricingScreen.descriptions.noMinutesHasCard")
+            : I18n.t("pricingScreen.descriptions.noMinutesNoCard")}
         </Text>
       )
+    } else {
+      return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
     }
     
     return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
@@ -107,7 +109,7 @@ class FreeMinutesWell extends Component {
 
   onPressAction = () => {
     const { navigation, updateHomeFlow } = this.props;
-    if (navigation.state.routeName === 'OnboardingView') {
+    if (navigation.state.routeName === "IntroView") {
       return null;
     }
     return updateHomeFlow({ displayPaymentModal: true });
@@ -115,7 +117,7 @@ class FreeMinutesWell extends Component {
 
   renderClock = () => {
     const { navigation, availableMinutes } = this.props;
-    if (navigation.state.routeName === 'OnboardingView') {
+    if (navigation.state.routeName === "IntroView") {
       return <React.Fragment />;
     }
     if (availableMinutes === 0) {
@@ -125,11 +127,13 @@ class FreeMinutesWell extends Component {
   };
 
   render() {
-    const { navigation, updateHomeFlow, pointerEvents, displayPaymentModal } = this.props;
+    const {
+      navigation, updateHomeFlow, pointerEvents, displayPaymentModal,
+    } = this.props;
     return (
       <React.Fragment>
         <TouchableOpacity
-          activeOpacity={pointerEvents === 'none' ? 1 : 0.2}
+          activeOpacity={pointerEvents === "none" ? 1 : 0.2}
           onPress={() => this.onPressAction()}
           style={styles.freeMinutesWellContainer}
         >
@@ -155,14 +159,14 @@ class FreeMinutesWell extends Component {
 const mS = state => ({
   availableMinutes: state.userProfile.availableMinutes,
   displayPaymentModal: state.homeFlow.displayPaymentModal,
-  stripePaymentToken: state.userProfile.stripePaymentToken
+  stripePaymentToken: state.userProfile.stripePaymentToken,
 });
 
 const mD = {
-  updateHomeFlow
+  updateHomeFlow,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(FreeMinutesWell);

@@ -72,7 +72,7 @@ class Home extends Component {
     );
     if (invitations.data.length > 0) {
       const filteredCalls = await invitations.data.filter(
-        call => !call.responded || !call.accepted
+        call => !call.responded
       );
       try {
         if (filteredCalls.length > 0) {

@@ -35,7 +35,8 @@ class CallButtons extends Component {
       modifyAVModePreference,
       customerUpdateSettings,
       video,
-      mic
+      mic,
+      completedMicAndCamera
     } = this.props;
     cleanSelected();
     clearPromoCode();
@@ -56,41 +57,34 @@ class CallButtons extends Component {
       customerUpdateSettings({ video: type === "video" });
       Permissions.checkMultiple(["camera", "microphone"]).then(
         async response => {
-          if (
-            response.camera !== "authorized" ||
-            response.microphone !== "authorized"
-          ) {
+        if (
+          response.camera !== "authorized" ||
+          response.microphone !== "authorized"
+        ) {
+          if(completedMicAndCamera){
             await checkCallPermissions(valueToUpdate => {
               this.props.customerUpdateSettings(valueToUpdate);
               Permissions.checkMultiple(["camera", "microphone"]).then(
                 response => {
-                  if (
-                    response.camera == "authorized" &&
-                    response.microphone == "authorized"
-                  ) {
-                    navigation.dispatch({ type: "CustomerView" });
-                  }
+                if (
+                  response.camera == "authorized" &&
+                  response.microphone == "authorized"
+                ) {
+                  navigation.dispatch({ type: "CustomerView" });
                 }
+              }
               );
             });
+          }else {
+            navigation.dispatch({ type: "CameraMicPermissionView" });
           }
-          if (
-            response.camera == "restricted" ||
-            response.microphone == "restricted" ||
-            (response.camera == "denied" || response.microphone == "denied")
-          ) {
-            Alert.alert(
-              I18n.t("appPermissions"),
-              I18n.t("acceptAllPermissionsCustomer"),
-              [{ text: I18n.t("ok") }]
-            );
-          }
-          if (
-            response.camera == "authorized" &&
-            response.microphone == "authorized"
-          ) {
-            navigation.dispatch({ type: "CustomerView" });
-          }
+        }
+        if (
+          response.camera == "authorized" &&
+          response.microphone == "authorized"
+        ) {
+          navigation.dispatch({ type: "CustomerView" });
+        }
       });
     }
   };
@@ -195,7 +189,8 @@ const mS = state => ({
   primaryLangCode: state.contactLinguist.primaryLangCode,
   stripeCustomerID: state.userProfile.stripeCustomerID,
   stripePaymentToken: state.userProfile.stripePaymentToken,
-  session: state.newSessionReducer.session
+  session: state.newSessionReducer.session,
+  completedMicAndCamera: state.onboardingReducer.completedMicAndCamera
 });
 
 const mD = {

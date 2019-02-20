@@ -74,26 +74,46 @@ export default StyleSheet.create({
     padding: 10
   },
   pillButtonText: {
-    ...setTextProperties('#fff', Fonts.BoldFont, Iphone5 ? 14 : moderateScale(16, metrics.width < 360 ? 0.5 : 0), '600'),
+    ...setTextProperties(
+      "#fff",
+      Fonts.BoldFont,
+      Iphone5 ? 14 : moderateScale(16, 0),
+      "600"
+    ),
     paddingLeft: 5
   },
   wellTitle: {
-    ...setTextProperties('#401674', Fonts.BoldFont, Iphone5 ? 15 : moderateScale(21, metrics.width < 360 ? 0.5 : 0), null),
+    ...setTextProperties(
+      "#401674",
+      Fonts.BoldFont,
+      Iphone5 ? 15 : moderateScale(21, 0),
+      null
+    ),
     paddingLeft: 15,
     marginTop: -10
   },
   wellSubtitle: {
-    ...setTextProperties('#401674', Fonts.ItalicFont, Iphone5 ? 12 : moderateScale(13, metrics.width < 360 ? 0.5 : 0), null),
+    ...setTextProperties(
+      "#401674",
+      Fonts.ItalicFont,
+      Iphone5 ? 12 : moderateScale(13, 0),
+      null
+    ),
     paddingLeft: 15,
     marginTop: -10
   },
   pricingPillText: {
-    ...setTextProperties('#401674', Fonts.ItalicFont, Iphone5 ? 14 : moderateScale(16, metrics.width < 360 ? 0.5 : 0), '600'),
-    textAlign: 'center',
+    ...setTextProperties(
+      "#401674",
+      Fonts.ItalicFont,
+      Iphone5 ? 14 : moderateScale(16, 0),
+      "600"
+    ),
+    textAlign: "center",
     paddingLeft: 5
   },
   availableMinutesPillText: {
-    ...setTextProperties('#fff', Fonts.BaseFont, moderateScale(25, metrics.width < 360 ? 0.5 : 0), '500'),
-    alignSelf: 'center'
+    ...setTextProperties("#fff", Fonts.BaseFont, moderateScale(25, 0), "500"),
+    alignSelf: "center"
   }
 });

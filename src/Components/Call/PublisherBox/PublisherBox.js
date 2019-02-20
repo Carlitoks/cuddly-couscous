@@ -12,7 +12,7 @@ import {
 import { SETTINGS, CAMERA } from "../../../Util/Constants";
 
 import styles from "./styles";
-import { recordSessionTokboxEvent } from "../../../Util/Forensics";
+import { recordSessionTokboxEvent, recordSessionEvent } from "../../../Util/Forensics";
 
 class PublisherBox extends Component {
   constructor(props) {
@@ -49,6 +49,23 @@ class PublisherBox extends Component {
         console.log("STREAM DESTROYED EVENT", event);
       }
     };
+
+    recordSessionEvent("publisherBox.constructor", {
+      mic: props.mic,
+      video: props.video
+    });
+  }
+
+  componentDidUpdate (prevProps) {
+    if (
+      this.props.mic != prevProps.mic ||
+      this.props.video != prevProps.video
+    ) {
+      recordSessionEvent("publisherBox.componentDidUpdate", {
+        mic: this.props.mic,
+        video: this.props.video
+      });
+    }
   }
 
   render() {

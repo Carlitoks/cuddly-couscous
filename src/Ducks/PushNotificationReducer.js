@@ -65,7 +65,8 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
     isLinguist &&
     profileLinguist.available &&
     CurrentView != "IncomingCallView" &&
-    CurrentView != "LinguistView"
+    CurrentView != "LinguistView" && 
+    CurrentView != "RateView"
   ) {
     timer.clearInterval("counterId");
     timer.clearInterval("timer");

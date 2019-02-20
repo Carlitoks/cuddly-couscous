@@ -3,7 +3,7 @@
   acceptAllPermissionsCustomer:
     "您必须在设置中开启麦克风和相机的访问权限才能使用翻译精灵拨打电话。",
   acceptAllPermissionsLinguist:
-    "您必须在设备设置中开启麦克风和相机的访问权限才能接听来电",
+    "您必须在设置中开启麦克风和相机的访问权限才能接听来电",
   add: "添加",
   addANewCard: "添加新卡",
   addLanguage: "添加语言",
@@ -60,7 +60,7 @@
   chargeAdvice: "超过 8 分钟的通话按分钟计费。",
   checkYourConnection: "请检查您的连接",
   checkYourEmail:
-    "我们已向您发送了重置密码的链接。请查收电子邮件",
+    "我们已向您发送了重置密码的链接。请查收电子邮件。",
   checkYourEmailOnBoarding: "查收电子邮件以完成注册。",
   citizenShip: "公民身份",
   cityFamiliarity: "城市熟悉度",
@@ -86,7 +86,7 @@
   compliments: "{{organizer}} 赠送 {{minutes}} 分钟",
   complimentsOf: "{{organizer}}请客",
   complimentMinutes:
-    "{{organizer}} 慷慨赠送 {{maxMinutesPerUser}} 分钟",
+    "增加了 {{organizer}} 赠送的 {{maxMinutesPerUser}} 分钟",
   minutesAdded: "分钟数已增加",
   invalidCode: "代码无效",
   invalidCodeMsg: "{{message}}",
@@ -234,7 +234,7 @@
   lauchScreenSwipe2:
     "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
-    "目前，翻译精灵支持\n中文（普通话）<>英语\n和日语<>英语。\n\n即将推出其他语言。",
+    "目前，翻译精灵支持\n中文（普通话） <> 英语\n和日语 <> 英语。\n\n即将推出其他语言。",
   lauchScreenSwipe4:
     "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
   lauchScreenSwipe5:
@@ -408,6 +408,7 @@
   unableToConnect: "通话无法接通\n\n您要重试吗？",
   verifyNumber: "验证电话",
   verifyNumberText: "输入您收到的短信验证码。",
+  version: "版本",
   video: "视频",
   videoHasBeenTurnedOff:
     "为优化通话质量，视频已暂时关闭。通话双方连接稳定后便可恢复。",
@@ -424,15 +425,27 @@
   youWillBeKnown: "您会被称为",
   youCanAddTime: "您可以在通话过程中增加时间",
   youCanChangeThis: "您可以在通话过程中打开/关闭视频",
+  //new onboarding
+  onboardingView: {
+    help: "有什么能够帮您的吗？"
+  },
 
+  loading: {
+    tagline: "您要求的语言"
+  }, 
   // new customer home screen
   customerHome: {
     primaryLang: {
-      label: "我使用的语言是"
+      label: "我说"
     },
     secondaryLang: {
-      label: "我需要获取以下帮助",
+      label: "我需要获取帮助的语言是",
       placeholder: "选择语言"
+    },
+    scenario: {
+      label: "情境",
+      placeholder: "可选",
+      description: "通话主题"
     },
     customNote: {
       label: "其他细节",
@@ -447,9 +460,9 @@
       pricing: "价格",
       rate: "1 美元每分钟",
       unit: "分钟",
-      add: "添加付款信息以开始通话"
+      add: "付款后即可开始通话"
     },
-    help: "有什么能够帮您的吗？",
+    help: "有什么能够帮您的吗？ ",
     scenarios: {
       s1: "理解菜单",
       s2: "为您的的士司机指路",
@@ -484,18 +497,26 @@
     },
     registrationWelcome: {
       balance: "{{num}} 分钟",
+      onboardingTitle: "免费 10 分钟",
       title: "前 10 分钟免费！",
       description: "10 分钟后，每分钟收费 1 美元。",
       buttons: {
         dismiss: "开始使用翻译精灵",
         payment: "立即添加付款信息"
       }
+    },
+    sessionPermissions: {
+      heading: "即将完成！",
+      title: "麦克风和相机",
+      description: "与语言专家建立连接时，翻译精灵需获取您麦克风和相机的使用权限。",
+      button: "启用麦克风和相机",
+      back: "返回"
     }
   },
 
   // for use in session language selection
   sessionLang: {
-    selections: "我需要获取以下帮助：",
+    selections: "我需要获取帮助的语言是：",
     comingSoon: "即将推出更多语种"
   },
 
@@ -565,7 +586,7 @@
       hasMinutesNoCard:
         "若要在剩余的分钟数用尽后继续通话，请立即输入付款信息。",
       noMinutesHasCard:
-        "我们将自动向您的卡片扣款，收费为每分钟 1 美元。",
+        "我们将自动向您的银行卡扣款，收费为每分钟 1 美元。",
       noMinutesNoCard:
         "您必须立即添加付款信息，才能连接至语言专家。"
     },
@@ -581,7 +602,7 @@
     errUnexpected: "发生意外错误。",
     errTemporary: "发生暂时性错误。",
     errTemporaryTryAgain:
-      "发生暂时性错误。  请过几分钟再试。",
+      "发生暂时性错误。请过几分钟再试。",
     errLogin: "登录出错",
     errDefaultAuth: "认证无效或已过期",
     errNoUser: "找不到此电子邮件地址的用户",
@@ -638,29 +659,53 @@
   },
 
   customerOnboarding: {
-    welcome: "欢迎来到Jeenie",
-    tenFreeMinutes: "{{time}} 分钟免费 ",
-    canIHelpYou: "我可以帮助您吗?",
-    homeCanIhelpYou: "我可以帮助您吗, {{name}}?",
-    connectToLinguist: '立即连接至翻译精灵',
+    welcome: "欢迎来到翻译精灵",
+    connectToLinguist: "立即连接",
+    tenFreeMinutes: "免费 {{time}} 分钟",
+    canIHelpYou: "有什么能够帮您的吗？",
+    homeCanIhelpYou: "{{name}}，有什么能够帮您的吗？",
+    intro: {
+      title: "无忧旅行",
+      description: "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助及文化建议。",
+      button: "继续"
+    },
+    allSet: "设置完成！",
+    location: {
+      title: "启用定位",
+      description: "共享位置可让翻译精灵为您提供更好的服务。为最大限度地发挥翻译精灵的功能，请打开定位服务。",
+      button: "打开定位服务",
+      skip: "跳过"
+    },
+    notification: {
+      title: "启用通知",
+      description: "打开推送通知，掌握翻译精灵最新动态。",
+      button: "打开通知",
+      skip: "跳过",
+    },
     login: {
-      provideInformation: '请输入您的昵称、电子邮件和密码，以便日后访问帐户。',
-      createAccountTitle: '创建帐户',
-      termsAndPrivacyNotice: '继续即表示，您同意我们的"条款与隐私政策"',
-      terms: '条款',
-      privacyPolicy: '隐私政策',
+      title: "首先，我们需要获取您的相关信息：",
+      provideInformation:
+        "请输入您的昵称、电子邮件和密码，以便日后访问帐户。",
+      createAccountTitle: "创建帐户",
+      termsAndPrivacyNotice:
+        "继续即表示，您同意我们的\"条款与隐私政策\"。",
+      terms: "条款",
+      privacyPolicy: "隐私政策",
       forgotPassword: "忘记密码？"
     },
+
     register: {
-      createAnAccount: '创建帐户',
-      alreadyAccount: '已有帐户？登录',
+      createAnAccount: "创建帐户",
+      alreadyAccount: "已有帐号？登录",
       password: "创建密码"
     },
     errors: {
-      invalidEmail: '请输入有效的电子邮件地址',
-      takenEmail: '您输入的电子邮件地址已被其他帐户占用。请另输入一个电子邮件或登录您的帐户。',
-      emailAndPassword: '电子邮件或密码错误。请重试。',
-      signInto: "登陆您的账号。"
+      invalidEmail: "请输入有效的电子邮件地址",
+      takenEmail:
+        "您输入的电子邮件地址已被注册。\n请输入其他电子邮件或\n登录您的帐户。",
+      emailAndPassword:
+        "电子邮件或密码错误。\n请重试。",
+      signInto: "登录您的帐户。"
     }
   },
 

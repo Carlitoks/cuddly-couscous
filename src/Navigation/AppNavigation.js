@@ -73,6 +73,9 @@ import PaymentsView from "../Payments/PaymentsView";
 import OnboardingScreen from "../Containers/Onboarding/OnboardingScreen";
 import LoginScreen from "../Containers/Login/LoginScreen";
 import RegisterScreen from "../Containers/Register/RegisterScreen";
+import LocationPermissionView from "../Containers/Permissions/LocationPermissionView";
+import NotificationPermissionView from "../Containers/Permissions/NotificationPermissionView";
+import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
 
 const Navigation = StackNavigator(
   {
@@ -108,14 +111,14 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    LoginScreen: {
+    LoginView: {
       screen: LoginScreen,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
       }
     },
-    RegisterScreen: {
+    RegisterView: {
       screen: RegisterScreen,
       navigationOptions: {
         gesturesEnabled: false,
@@ -291,13 +294,6 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    LoginView: {
-      screen: LoginView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
     ScanScreenView: {
       screen: ScanScreenView,
       navigationOptions: {
@@ -375,7 +371,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    OnboardingView: {
+    IntroView: {
       screen: OnboardingScreen,
       navigationOptions: {
         gesturesEnabled: false,
@@ -453,10 +449,31 @@ const Navigation = StackNavigator(
           drawerLockMode: "locked-closed"
         }
       }
+    },
+    LocationPermissionView: {
+      screen: LocationPermissionView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    NotificationPermissionView: {
+      screen: NotificationPermissionView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    CameraMicPermissionView: {
+      screen: CameraMicPermissionView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
     }
   },
   {
-    initialRouteName: "OnboardingView",
+    initialRouteName: "IntroView",
     headerMode: "none",
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {
@@ -469,10 +486,7 @@ const Navigation = StackNavigator(
         //   return null;
 
         if (
-          sceneProps.scene.route.routeName === "RateView" ||
-          sceneProps.scene.route.routeName === "OnboardingView" ||
-          sceneProps.scene.route.routeName === "LoginScreen" ||
-          sceneProps.scene.route.routeName === "RegisterScreen"
+          sceneProps.scene.route.routeName === "RateView"
         ) {
           return CardStackStyleInterpolator.forFadeFromBottomAndroid(
             sceneProps

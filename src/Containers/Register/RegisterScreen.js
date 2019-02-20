@@ -1,31 +1,31 @@
 import React, { Component } from "react";
 import {
   Alert,
+  Image,
   Keyboard,
   Linking,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
+  Platform
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
-import Permissions from "react-native-permissions";
-import LinguistHeader from "../CustomerHome/Components/Header";
-import { Colors, Metrics } from "../../Themes";
+import { Colors } from "../../Themes";
 import {
   ensureSessionDefaults,
   modifyAVModePreference,
   openSlideMenu,
-  updateLocation
+  updateLocation,
 } from "../../Ducks/NewSessionReducer";
 
 import {
   getNativeLang,
   getProfileAsync,
-  updateView as updateUserProfile
+  updateView as updateUserProfile,
 } from "../../Ducks/UserProfileReducer";
 import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
 import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer";
@@ -34,31 +34,39 @@ import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import {
   clear as clearActiveSession,
-  update as customerUpdateSettings
+  update as customerUpdateSettings,
 } from "../../Ducks/ActiveSessionReducer";
 import { updateSettings } from "../../Ducks/ContactLinguistReducer";
-import I18n, { translateApiErrorString } from "./../../I18n/I18n";
-import { checkRegisterCallPermissions } from "../../Util/Permission";
+import I18n from "../../I18n/I18n";
+import Permission from 'react-native-permissions';
 // Styles
 import styles from "./Styles/RegisterScreenStyles";
-import SGWaves from "./../../Assets/SVG/SGWaves";
-import { EMAIL_REGEX, help, INVALID_NAME_REGEX } from "../../Util/Constants";
-import { asyncCreateUser, asyncUpdateUser } from "./../../Ducks/CustomerProfileReducer";
+import { EMAIL_REGEX, INVALID_NAME_REGEX } from "../../Util/Constants";
+import { asyncCreateUser, asyncUpdateUser } from "../../Ducks/CustomerProfileReducer";
 import FieldError from "./Components/FieldError";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 import { PrivacyPolicyURI, TermsConditionsURI } from "../../Config/StaticViewsURIS";
+import Header from "../CustomerHome/Components/Header";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { moderateScale } from "../../Util/Scaling";
+
+const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
 class RegisterScreen extends Component {
-  isValidEmail = text => {
+  componentWillMount = async () => {
+    const LocationPermission = await Permission.check('location');
+    console.log(LocationPermission);
+  };
+  isValidEmail = (text) => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
     if (!reg.test(text)) {
       updateOnboarding({
         isValidEmail: false,
-        errorType: 'emailFormat'
+        errorType: "emailFormat",
       });
     } else {
-      if (errorType === 'emailFormat') {
+      if (errorType === "emailFormat") {
         updateOnboarding({ isValidEmail: true, errorType: null });
       }
       updateOnboarding({ isValidEmail: true });
@@ -66,68 +74,32 @@ class RegisterScreen extends Component {
     updateOnboarding({ email: text });
   };
 
-  checkAvailableMinutes = async () => {
-    const {
-      navigation,
-      customerUpdateSettings,
-      updateSettings,
-      modifyAVModePreference
-    } = this.props;
-    updateSettings({
-      selectedScenarioId: null
-    });
-    customerUpdateSettings({ video: true });
-    modifyAVModePreference({ avModePreference: 'video' });
-
-    Permissions.checkMultiple(['camera', 'microphone']).then(async response => {
-      if (response.camera !== 'authorized' || response.microphone !== 'authorized') {
-        await checkRegisterCallPermissions(valueToUpdate => {
-          customerUpdateSettings(valueToUpdate);
-          Permissions.checkMultiple(['camera', 'microphone']).then(response => {
-            if (response.camera == 'authorized' && response.microphone == 'authorized') {
-              navigation.dispatch({ type: 'CustomerView' });
-            }
-
-            if (response.camera == 'undetermined' || response.microphone == 'undetermined') {
-            } else if (
-              response.camera == 'restricted' ||
-              response.microphone == 'restricted' ||
-              (response.camera == 'denied' || response.microphone == 'denied')
-            ) {
-              navigation.dispatch({ type: 'Home' });
-            }
-          });
-        });
-      }
-    });
-  };
-
-  validateFirstName = text => {
-    const { errorType, updateOnboarding } = this.props;
+  validateFirstName = (text) => {
+    const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(INVALID_NAME_REGEX);
-    if (reg.test(text) || text.trim() == '') {
-      this.props.updateOnboarding({
+    if (reg.test(text) || text.trim() == "") {
+      updateOnboarding({
         isValidFirstName: false,
-        errorType: 'firstNameFormat'
+        errorType: "firstNameFormat",
       });
     } else {
-      if (errorType === 'firstNameFormat') {
+      if (errorType === "firstNameFormat") {
         updateOnboarding({
           isValidFirstName: true,
-          errorType: null
+          errorType: null,
         });
       }
       updateOnboarding({ isValidFirstName: true });
     }
-    this.props.updateOnboarding({ firstName: text.trim() });
+    updateOnboarding({ firstName: text.trim() });
   };
 
-  validatePassword = text => {
+  validatePassword = (text) => {
     const { updateOnboarding } = this.props;
     if (text.length < 5) {
       updateOnboarding({
         isValidPassword: false,
-        errorType: 'passwordLength'
+        errorType: "passwordLength",
       });
     } else {
       updateOnboarding({ isValidPassword: true, errorType: null });
@@ -147,20 +119,30 @@ class RegisterScreen extends Component {
       email,
       password,
       firstName,
-      primaryLangCode,
-      secondaryLangCode
+      isValidPassword,
+      isValidFirstName,
+      isValidEmail,
+      makingRequest,
     } = this.props;
+
+    if (!isValidPassword
+      || !isValidFirstName
+      || !isValidEmail
+      || makingRequest
+      || (!email || !password)) {
+      return null;
+    }
 
     try {
       updateOnboarding({ errorType: null, makingRequest: true });
       const registerDeviceResponse = await registerDevice();
-      if (registerDeviceResponse.type !== 'networkErrors/error') {
+      if (registerDeviceResponse.type !== "networkErrors/error") {
         const registerUserResponse = await asyncCreateUser(
           {
             email,
-            password
+            password,
           },
-          registerDeviceResponse.payload.deviceToken
+          registerDeviceResponse.payload.deviceToken,
         );
         if (registerUserResponse.payload.errorType !== "AlreadyRegistered") {
           const logInUserResponse = await logInAsync(email, password);
@@ -175,15 +157,22 @@ class RegisterScreen extends Component {
             isNewUser: true
           });
           this.props.updateOnboarding({ makingRequest: false });
-          if (!primaryLangCode || !secondaryLangCode) {
-            navigation.dispatch({ type: 'Home' });
-          } else {
-            this.checkAvailableMinutes();
+          const LocationPermission = await Permission.check('location');
+          if(LocationPermission === 'undetermined'){
+            return navigation.dispatch({ type: "LocationPermissionView" });
           }
+          if( Platform.OS !== 'android' ){
+            const NotificationPermission = await Permission.check('notification');
+            if(NotificationPermission === 'undetermined'){
+              navigation.dispatch({ type: "Home" });
+            }
+          }
+          return navigation.dispatch({ type: "Home" });
         }
         this.props.updateOnboarding({ makingRequest: false });
       }
     } catch (err) {
+      console.log(err);
       if (err.data.errors[0] != 'cannot access another use') {
         Alert.alert(
           I18n.t('error'),
@@ -197,9 +186,9 @@ class RegisterScreen extends Component {
   };
 
   renderPrivacyPolicyText = () => {
-    const privacyPolicyAndTermsText = I18n.t('customerOnboarding.login.termsAndPrivacyNotice');
-    const privacyPolicyText = I18n.t('customerOnboarding.login.privacyPolicy');
-    const TermsText = I18n.t('customerOnboarding.login.terms');
+    const privacyPolicyAndTermsText = I18n.t("customerOnboarding.login.termsAndPrivacyNotice");
+    const privacyPolicyText = I18n.t("customerOnboarding.login.privacyPolicy");
+    const TermsText = I18n.t("customerOnboarding.login.terms");
     const continueText = privacyPolicyAndTermsText.split(TermsText)[0];
     const AndText = privacyPolicyAndTermsText.split(TermsText)[1].split(privacyPolicyText)[0];
     return (
@@ -212,7 +201,7 @@ class RegisterScreen extends Component {
               console.error("An error occurred", err)
             ); */
             Linking.canOpenURL(TermsConditionsURI)
-              .then(supported => {
+              .then((supported) => {
                 if (!supported) {
                   console.log(`Can't handle url: ${TermsConditionsURI}`);
                 } else {
@@ -220,7 +209,7 @@ class RegisterScreen extends Component {
                 }
                 return null;
               })
-              .catch(err => console.error('An error occurred', err));
+              .catch(err => console.error("An error occurred", err));
           }}
         >
           <Text style={styles.termsAndConditionsTextLink}>{` ${TermsText}`}</Text>
@@ -232,7 +221,7 @@ class RegisterScreen extends Component {
           onPress={
             () => {
               Linking.canOpenURL(PrivacyPolicyURI)
-                .then(supported => {
+                .then((supported) => {
                   if (!supported) {
                     console.log(`Can't handle url: ${PrivacyPolicyURI}`);
                   } else {
@@ -240,7 +229,7 @@ class RegisterScreen extends Component {
                   }
                   return null;
                 })
-                .catch(err => console.error('An error occurred', err));
+                .catch(err => console.error("An error occurred", err));
             }
             /* Linking.openURL(PrivacyPolicyURI).catch(err =>
               console.error("An error occurred", err)
@@ -263,7 +252,7 @@ class RegisterScreen extends Component {
       errorType,
       firstName,
       email,
-      password
+      password,
     } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
@@ -274,25 +263,17 @@ class RegisterScreen extends Component {
               locations={[0, 1]}
               style={styles.height}
             >
-              <LinguistHeader type="login" navigation={navigation} />
-              <LinearGradient
-                colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-                locations={[0, 1]}
-                style={styles.height}
-              >
-                <View style={styles.loginContainer}>
-                  <View style={styles.inputContainer}>
-                    {errorType ? (
-                      <FieldError navigation={navigation} />
-                    ) : (
-                      <Text style={styles.registerAdviseText}>
-                        {I18n.t('customerOnboarding.login.provideInformation')}
-                      </Text>
-                    )}
+              <Header navigation={navigation} />
 
+              <View style={styles.registerContainer}>
+                <KeyboardAwareScrollView enableOnAndroid>
+                <View style={styles.topLogoContainer}>
+                  <Image source={JeenieLogo} />
+                  {errorType ? <FieldError navigation={navigation} /> : <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>}
+                  <View style={styles.inputContainer}>
                     <View style={styles.inputViewContainer}>
                       {firstName ? (
-                        <Text style={styles.labelText}>{I18n.t('firstname')}</Text>
+                        <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
                       ) : (
                         <Text />
                       )}
@@ -302,10 +283,11 @@ class RegisterScreen extends Component {
                           style={styles.inputText}
                           onChangeText={text => this.validateFirstName(text)}
                           value={firstName}
-                          placeholder={I18n.t('firstname')}
+                          placeholder={I18n.t("firstname")}
                           placeholderTextColor="rgba(255,255,255,0.7)"
+                          returnKeyType="done"
                         />
-                        {errorType === 'firstNameFormat' ? (
+                        {errorType === "firstNameFormat" ? (
                           <View style={styles.errorIconContainer}>
                             <Icon name="close" type="material-community" color="white" size={15} />
                           </View>
@@ -316,7 +298,7 @@ class RegisterScreen extends Component {
                     </View>
 
                     <View style={styles.inputViewContainer}>
-                      {email ? <Text style={styles.labelText}>{I18n.t('email')}</Text> : <Text />}
+                      {email ? <Text style={styles.labelText}>{I18n.t("email")}</Text> : <Text />}
                       <View style={styles.inputsErrorContainer}>
                         <TextInput
                           allowFontScaling={false}
@@ -325,11 +307,12 @@ class RegisterScreen extends Component {
                           onChangeText={text => this.isValidEmail(text)}
                           onBlur={() => this.isValidEmail(email)}
                           value={email}
-                          placeholder={I18n.t('email')}
+                          placeholder={I18n.t("email")}
                           placeholderTextColor="rgba(255,255,255,0.7)"
                           keyboardType="email-address"
+                          returnKeyType="done"
                         />
-                        {errorType === 'emailFormat' || errorType === 'AlreadyRegistered' ? (
+                        {errorType === "emailFormat" || errorType === "AlreadyRegistered" ? (
                           <View style={styles.errorIconContainer}>
                             <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
@@ -342,7 +325,7 @@ class RegisterScreen extends Component {
                     <View style={styles.inputViewContainer}>
                       {password ? (
                         <Text style={styles.labelText}>
-                          {I18n.t('customerOnboarding.register.password')}
+                          {I18n.t("customerOnboarding.register.password")}
                         </Text>
                       ) : (
                         <Text />
@@ -354,11 +337,12 @@ class RegisterScreen extends Component {
                           onChangeText={text => this.validatePassword(text)}
                           autoCapitalize="none"
                           value={password}
-                          placeholder={I18n.t('customerOnboarding.register.password')}
+                          placeholder={I18n.t("customerOnboarding.register.password")}
                           secureTextEntry
                           placeholderTextColor="rgba(255,255,255,0.7)"
+                          returnKeyType="done"
                         />
-                        {errorType === 'passwordLength' ? (
+                        {errorType === "passwordLength" ? (
                           <View style={styles.errorIconContainer}>
                             <Icon name="close" type="material-community" color="#fff" size={15} />
                           </View>
@@ -367,52 +351,48 @@ class RegisterScreen extends Component {
                         )}
                       </View>
                     </View>
-
-                    {this.renderPrivacyPolicyText()}
-                  </View>
-                  <View style={styles.buttonContainer}>
-                    <View style={styles.buttonWidthContainer}>
-                      <TouchableOpacity
-                        onPress={() => this.submit()}
-                        disabled={
-                          !isValidPassword ||
-                          !isValidFirstName ||
-                          !isValidEmail ||
-                          makingRequest ||
-                          (!email || !password)
-                        }
-                        style={
-                          !isValidPassword ||
-                          !isValidFirstName ||
-                          !isValidEmail ||
-                          makingRequest ||
-                          (!email || !password)
-                            ? styles.signInButtonDisable
-                            : styles.registerButton
-                        }
-                      >
-                        <Text style={styles.buttonEnabledText}>
-                          {I18n.t('customerOnboarding.register.createAnAccount')}
-                        </Text>
-                      </TouchableOpacity>
-
-                      <TouchableOpacity
-                        style={styles.createAccountPadding}
-                        onPress={() =>
-                          navigation.dispatch({
-                            type: 'LoginScreen'
-                          })
-                        }
-                      >
-                        <Text style={styles.transitionButtonText}>
-                          {`${I18n.t('alreadyAccount')} ${I18n.t('signIn')} »`}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                    <SGWaves height={51} width={Metrics.width} />
                   </View>
                 </View>
-              </LinearGradient>
+                </KeyboardAwareScrollView>
+                <View style={styles.buttonContainer}>
+                  {this.renderPrivacyPolicyText()}
+                  <View style={styles.buttonWidthContainer}>
+                    <TouchableOpacity
+                      onPress={() => this.submit()}
+                      disabled={
+                        !isValidPassword
+                        || !isValidFirstName
+                        || !isValidEmail
+                        || makingRequest
+                        || (!email || !password)
+                      }
+                      style={
+                        !isValidPassword
+                        || !isValidFirstName
+                        || !isValidEmail
+                        || makingRequest
+                        || (!email || !password)
+                          ? styles.signInButtonDisable
+                          : styles.registerButton
+                      }
+                    >
+                      <Text style={styles.buttonEnabledText}>{I18n.t("continue")}</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={styles.createAccountPadding}
+                      onPress={() => navigation.dispatch({
+                        type: "LoginView",
+                      })
+                      }
+                    >
+                      <Text style={styles.transitionButtonText}>
+                        {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
             </LinearGradient>
           </View>
         </TouchableWithoutFeedback>
@@ -438,7 +418,7 @@ const mS = state => ({
   password: state.onboardingReducer.password,
   firstName: state.onboardingReducer.firstName,
   isValidFirstName: state.onboardingReducer.isValidFirstName,
-  isValidPassword: state.onboardingReducer.isValidPassword
+  isValidPassword: state.onboardingReducer.isValidPassword,
 });
 
 const mD = {
@@ -459,10 +439,10 @@ const mD = {
   updateOnboarding,
   customerUpdateSettings,
   updateSettings,
-  modifyAVModePreference
+  modifyAVModePreference,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(RegisterScreen);

@@ -1,109 +1,95 @@
-import React, { Component } from 'react';
-import { ScrollView, View, Alert } from 'react-native';
-import timer from 'react-native-timer';
-import InCallManager from 'react-native-incall-manager';
-import LinearGradient from 'react-native-linear-gradient';
-import { connect } from 'react-redux';
-import LinguistHeader from './Components/Header';
-import AvatarSection from './Components/AvatarSection';
-import CallSection from './Components/CallSection';
-import { Colors } from '../../Themes';
-import SlideUpPanel from './Components/Partials/SlideUpPanel';
+import React, { Component } from "react";
+import { ScrollView, View, Alert } from "react-native";
+import timer from "react-native-timer";
+import InCallManager from "react-native-incall-manager";
+import LinearGradient from "react-native-linear-gradient";
+import { connect } from "react-redux";
+import analytics from "@segment/analytics-react-native";
+import LinguistHeader from "./Components/Header";
+import AvatarSection from "./Components/AvatarSection";
+import CallSection from "./Components/CallSection";
+import { Colors } from "../../Themes";
+import SlideUpPanel from "./Components/Partials/SlideUpPanel";
 import {
   openSlideMenu,
   updateLocation,
   ensureSessionDefaults,
-  swapCurrentSessionLanguages
-} from '../../Ducks/NewSessionReducer';
+  swapCurrentSessionLanguages,
+} from "../../Ducks/NewSessionReducer";
 
-import { getProfileAsync, updateView as updateUserProfile } from '../../Ducks/UserProfileReducer';
+import { getProfileAsync, updateView as updateUserProfile } from "../../Ducks/UserProfileReducer";
 
 import { getGeolocationCoords } from "../../Util/Helpers";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
-import I18n, {translateApiErrorString} from "./../../I18n/I18n";
-import { supportedLangCodes } from "./../../Config/Languages";
-import analytics from '@segment/analytics-react-native'
+import I18n from "../../I18n/I18n";
+import { supportedLangCodes } from "../../Config/Languages";
 
 // Styles
-import styles from './Styles/CustomerHomeScreenStyles';
-import CallButtons from './Components/Partials/CallButtons';
+import styles from "./Styles/CustomerHomeScreenStyles";
+import CallButtons from "./Components/Partials/CallButtons";
 
 class CustomerHomeScreen extends Component {
-  componentDidMount() {
-    const { linguistProfile, isLoggedIn, uuid, token, getProfileAsync,  } = this.props;
-
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.apiError
-    ) {
-      Alert.alert(I18n.t("error"), translateApiErrorString(this.props.navigation.state.params.apiError.data.errors[0]   , "api.errTemporary"), [
-        { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
-      ]);
-    }
-    if (uuid !== "" && token !== "") {
-      getProfileAsync(uuid, token);
-    }
-    if (!linguistProfile && isLoggedIn) {
-      //checkOperatingHours(true);
-    }
-
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.usageError
-    ) {
-      Alert.alert(
-        I18n.t("invalidCode"),
-        this.props.navigation.state.params.usageError
-      );
-    }
-    if (
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.minutesGranted
-    ) {
-      Alert.alert(
-        I18n.t("minutesAdded"),
-        I18n.t("complimentMinutes", {
-          maxMinutesPerUser: this.props.navigation.state.params
-            .maxMinutesPerUser,
-          organizer: this.props.navigation.state.params.organization
-        })
-      );
-    }
-  }
   componentWillMount() {
-    const {  uuid, firstName, secondaryLangCode, navigation } = this.props;
+    const {
+      uuid,
+      updateLocation,
+      ensureSessionDefaults,
+      secondaryLangCode,
+      clearEvents,
+      clearActiveSession,
+      navigation,
+      firstName,
+      completedLocation
+    } = this.props;
 
     analytics.identify(uuid, {
-      name: firstName
+      name: firstName,
     });
-
-    getGeolocationCoords()
-      .then(response => {
-        updateLocation({
-          location: [response.coords.longitude, response.coords.latitude]
-        });
-      })
-      .catch(err => {
-        console.log('GeoLocation error  ', err);
-      });
 
     ensureSessionDefaults({
       primaryLangCode: this.setPrimaryLangCode(),
-      secondaryLangCode: secondaryLangCode || ''
+      secondaryLangCode: secondaryLangCode || "",
     });
 
     // Clean call
-    timer.clearInterval('timer');
-    timer.clearInterval('counterId');
+    timer.clearInterval("timer");
+    timer.clearInterval("counterId");
     clearEvents();
     clearActiveSession();
     InCallManager.stop();
     if (navigation.state.params && navigation.state.params.alertFail) {
-      Alert.alert(I18n.t('notification'), I18n.t('session.callFailCustomer'));
+      Alert.alert(I18n.t("notification"), I18n.t("session.callFailCustomer"));
     }
   }
+
+  componentDidMount() {
+    const {
+      linguistProfile, isLoggedIn, uuid, token, getProfileAsync,
+    } = this.props;
+
+    if (uuid !== "" && token !== "") {
+      getProfileAsync(uuid, token);
+    }
+    if (!linguistProfile && isLoggedIn) {
+      // checkOperatingHours(true);
+    }
+
+    if (this.props.navigation.state.params && this.props.navigation.state.params.usageError) {
+      Alert.alert(I18n.t("invalidCode"), this.props.navigation.state.params.usageError);
+    }
+    if (this.props.navigation.state.params && this.props.navigation.state.params.minutesGranted) {
+      Alert.alert(
+        I18n.t("minutesAdded"),
+        I18n.t("complimentMinutes", {
+          maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
+          organizer: this.props.navigation.state.params.organization,
+        }),
+      );
+    }
+  }
+
   setPrimaryLangCode = () => {
     const { primaryLangCode, nativeLangCode } = this.props;
     if (primaryLangCode) {
@@ -112,13 +98,13 @@ class CustomerHomeScreen extends Component {
     if (nativeLangCode) {
       return supportedLangCodes.includes(nativeLangCode);
     }
-    if (nativeLangCode === 'eng') {
-      return 'eng';
+    if (nativeLangCode === "eng") {
+      return "eng";
     }
-    return 'eng';
+    return "eng";
   };
 
-  openSlideMenu = type => {
+  openSlideMenu = (type) => {
     const { openSlideMenu } = this.props;
     openSlideMenu({ type });
   };
@@ -167,7 +153,8 @@ const mS = state => ({
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   token: state.auth.token,
   uuid: state.auth.uuid,
-  firstName: state.userProfile.firstName
+  firstName: state.userProfile.firstName,
+  completedLocation: state.onboardingReducer.completedLocation
 });
 
 const mD = {
@@ -178,10 +165,10 @@ const mD = {
   clearActiveSession,
   getProfileAsync,
   updateUserProfile,
-  swapCurrentSessionLanguages
+  swapCurrentSessionLanguages,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(CustomerHomeScreen);

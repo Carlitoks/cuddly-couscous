@@ -229,12 +229,12 @@ class IncomingCall extends Component {
                   </Text>
                 </View>
               )}
-              <View style={styles.inlineContainer}>
+              {/* <View style={styles.inlineContainer}>
                 <Icon style={styles.icon} size={25} name="watch-later" />
                 <Text style={styles.notificationText}>
                   {this.props.estimatedMinutes}
                 </Text>
-              </View>
+              </View> */}
             </Row>
 
             {/* Call Buttons */}

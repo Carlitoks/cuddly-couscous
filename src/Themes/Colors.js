@@ -29,6 +29,10 @@ const colors = {
     top: "rgba(255,255,255,0.1)",
     bottom: "white"
   },
+  bottomOnboardingGradient: {
+    top: 'rgba(20, 19, 19, 0)',
+    bottom: '#4B2B8D'
+  },
   linguistFormButton: "#ebedfa",
   linguistFormText: "#677bd8",
   onTintColor: "#4cd963",

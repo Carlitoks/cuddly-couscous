@@ -1,91 +1,98 @@
-import React, { Component } from 'react';
-import { ScrollView, View } from 'react-native';
+import React, {Component} from 'react';
+import {Image, Platform, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { connect } from 'react-redux';
-import LinguistHeader from '../CustomerHome/Components/Header';
-import AvatarSection from '../CustomerHome/Components/AvatarSection';
-import CallSection from '../CustomerHome/Components/CallSection';
-import { Colors } from '../../Themes';
-import SlideUpPanel from '../CustomerHome/Components/Partials/SlideUpPanel';
-import {
-  openSlideMenu,
-  updateLocation,
-  ensureSessionDefaults
-} from '../../Ducks/NewSessionReducer';
-import { getGeolocationCoords } from '../../Util/Helpers';
+import {connect} from 'react-redux';
+import {Colors} from '../../Themes';
+import {ensureSessionDefaults, updateLocation} from '../../Ducks/NewSessionReducer';
 import ViewWrapper from '../ViewWrapper/ViewWrapper';
-import { clear as clearOnboarding } from '../../Ducks/OnboardingReducer';
+import {clearOnboarding} from '../../Ducks/OnboardingReducer';
+import Permission from 'react-native-permissions';
 // Styles
 import styles from './Styles/OnboardingScreenStyles';
 import OnboardingButtons from './Components/OnboardingButtons';
+import I18n from '../../I18n/I18n';
+
+const JeenieLogo = require('../../Assets/Images/Landing-Jeenie-TM.png');
+const backgroundImage = require('../../Assets/Images/IphonexV1.png');
 
 class OnboardingScreen extends Component {
-  componentWillMount() {
+  componentWillMount = async() => {
     const {
       navigation,
       isLoggedIn,
       token,
       clearOnboarding,
-      updateLocation,
       primaryLangCode,
       ensureSessionDefaults,
-      secondaryLangCode
+      secondaryLangCode,
+      completedLocation,
+      completedNotification
     } = this.props;
     clearOnboarding();
-    getGeolocationCoords()
-      .then(response => {
-        updateLocation({
-          location: [response.coords.longitude, response.coords.latitude]
-        });
-      })
-      .catch(err => {
-        console.log('GeoLocation error  ', err);
-      });
-
     ensureSessionDefaults({
       primaryLangCode: primaryLangCode || 'eng',
       secondaryLangCode: secondaryLangCode || ''
     });
+
     if (isLoggedIn && token) {
-      navigation.dispatch({ type: 'Home' });
+      if (completedLocation) {
+        if (completedNotification) {
+          return navigation.dispatch({type: 'Home'});
+        } else {
+          if (Platform.OS === 'android') {
+            return navigation.dispatch({type: 'Home'});
+          } else {
+            const NotificationPermission = await Permission.check('notification');
+            if(NotificationPermission === 'undetermined'){
+              return navigation.dispatch({ type: "Home" });
+            }
+            return navigation.dispatch({ type: "Home" });
+          }
+        }
+      } else {
+        const LocationPermission = await Permission.check('location');
+        if(LocationPermission === 'undetermined'){
+          return navigation.dispatch({ type: "LocationPermissionView" });
+        }
+        return navigation.dispatch({ type: "Home" });
+      }
     }
   }
 
-  openSlideMenu = type => {
-    const { openSlideMenu } = this.props;
-    openSlideMenu({ type });
-  };
-
   render() {
-    const { navigation } = this.props;
+    const {navigation} = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
-        <View style={[styles.mainContainer]}>
-          <LinearGradient
-            colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-            locations={[0, 1]}
-            style={styles.heightFull}
-          >
-            <LinguistHeader type="onboarding" navigation={navigation} />
-            <ScrollView
-              automaticallyAdjustContentInsets
-              alwaysBounceVertical={false}
-              contentContainerStyle={styles.scrollViewFlex}
+        <LinearGradient
+          collapsable={false}
+          colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
+          locations={[0, 1]}
+          style={styles.gradientContainer}
+        >
+        <View style={[styles.mainOnboardingContainer]} collapsable={false}>
+          <View style={styles.bodyContainer}>
+            <View style={styles.topLogoContainer} collapsable={false}>
+              <Image source={JeenieLogo}/>
+              <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
+              <Text style={styles.subtitleText}>
+                {I18n.t('customerOnboarding.intro.description')}
+              </Text>
+            </View>
+            <LinearGradient
+              colors={[Colors.bottomOnboardingGradient.top, Colors.bottomOnboardingGradient.bottom]}
+              locations={[0.067, 0.99]}
+              style={styles.gradientFullWidth}
             >
-              <View style={styles.bottomContainer}>
-                <AvatarSection pointerEvents="none" navigation={navigation} />
-
-                <CallSection
-                  navigation={navigation}
-                  openSlideMenu={this.openSlideMenu}
-                  type="onboarding"
-                />
+              <View style={styles.bottomButtonsContainer} collapsable={false}>
+                <OnboardingButtons navigation={navigation}/>
               </View>
-              <OnboardingButtons navigation={navigation} />
-            </ScrollView>
-            <SlideUpPanel />
-          </LinearGradient>
+            </LinearGradient>
+          </View>
+            <View style={styles.backgroundImageContainer} collapsable={false}>
+              <Image style={styles.backgroundImage} source={backgroundImage}/>
+            </View>
         </View>
+        </LinearGradient>
       </ViewWrapper>
     );
   }
@@ -95,11 +102,12 @@ const mS = state => ({
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   token: state.auth.token,
-  isLoggedIn: state.auth.isLoggedIn
+  isLoggedIn: state.auth.isLoggedIn,
+  completedLocation: state.onboardingReducer.completedLocation,
+  completedNotification: state.onboardingReducer.completedNotification
 });
 
 const mD = {
-  openSlideMenu,
   updateLocation,
   ensureSessionDefaults,
   clearOnboarding

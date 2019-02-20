@@ -45,7 +45,7 @@ class CheckYourEmailView extends Component {
         {/* Next Button */}
         <BottomButton
           title={I18n.t("next")}
-          onPress={() => navigation.dispatch({ type: "OnboardingView" })}
+          onPress={() => navigation.dispatch({ type: "IntroView" })}
           bold={true}
           fill
         />
