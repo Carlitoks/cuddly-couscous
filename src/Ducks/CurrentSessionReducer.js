@@ -171,8 +171,10 @@ export const endSession = (reason) => (dispatch, getState) => {
 };
 
 // session was ended by another participant
-export const handleEndedSession = () => (dispatch) => {
-  dispatch(clear());
+export const handleEndedSession = (reason) => (dispatch) => {
+  // TODO: end reason here may be trigger for other things
+  dispatch(update({ending: false, ended: true}));
+  return Promise.resolve(true);
 };
 
 // action creators

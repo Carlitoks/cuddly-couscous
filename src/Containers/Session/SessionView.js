@@ -257,11 +257,22 @@ class SessionView extends Component {
   }
 
   handleInitialCustomerTimeout () {
+    let endReason = "timeout";
+
     this.setState({status:{ending: true, ended: false}});
     this.props.endSession('timeout').finally(() => {
       this.setState({status:{ending: false, ended: true}});
       this.cleanup();
       this.props.navigation.dispatch({type: "CustomerRetryView"});
+    });
+  }
+
+  handleInitialLinguistTimeout () {
+    this.setState({status: {ending: true, ended:false}});
+    this.props.endSession('failure_remote').finally(() => {
+      this.setState({status:{ending: false, ended: true}});
+      this.cleanup();
+      this.props.navigation.dispatch({type: "Home"});
     });
   }
 
@@ -365,13 +376,11 @@ class SessionView extends Component {
   }
 
   _triggerEndCall (reason) {
-    if (this.state.status.ending) {
+    if (this.state.status.ending || this.endingCall) {
       return;
     }
 
-    // TODO: figure out proper end reason, and proper target view
-    // * rate view if connected
-    // * otherwise home?
+    // TODO: figure out proper target view
     let targetView = "Home";
     this.endingCall = true;
 
@@ -392,11 +401,17 @@ class SessionView extends Component {
 
   // call ended by a remote participant
   handleCallEnded (reason) {
-    this.props.handleCallEnded();
-    // TODO:
+    // TODO: figure out proper target view: rate vs home
     // if connected & done, go to rate screen
-    // if connecting, alert about cancelation, go home
-    // if 
+    let targetView = "Home";
+    
+    // if in the process of connecting, call was cancelled by the other party
+    Alert.alert("Cancelled", "The call was cancelled by the other party.");
+
+    this.props.handleEndedSession().finally(() => {
+      this.cleanup();
+      this.props.navigation.dispatch({type: targetView});
+    });
   }
 
   triggerRetryCall (endReason, startReason) {
@@ -442,7 +457,7 @@ class SessionView extends Component {
 
             // other status updates?
             onRemoteUserPoorConnection = {null}
-            onRemoteUserUpdated = {null} // for things like...
+            onRemoteUserUpdated = {(user) => { this.props.setRemoteUser(user) }}
 
             // update basic connection status of user
             onUserConnecting = {() => { this.handleUserConnecting() }}
@@ -461,9 +476,12 @@ class SessionView extends Component {
               remoteUser = {this.props.remoteUser}
               remoteUserState = {this.state.remoteUserState}
               userConnection = { this.state.connection }
-              secondsUntilTimeout = { 60 }
+              status = { this.state.status }
+              session = { this.props.session }
+              secondsUntilTimeout = { 30 }
               onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") } }
-              onTimeout = { () => { this.handleInitialLinguistTimeout() } }
+              onTimeout = { () => { this.handleInitialLinguistTimeout() }}
+              onRemoteCancel = {() => { this.handleCallEnded() }}
               onCancel = {() => { this.triggerEndCall("cancel") }}
             />
           )}
@@ -472,8 +490,11 @@ class SessionView extends Component {
               remoteUser = {this.props.remoteUser}
               remoteUserState = {this.state.remoteUserState}
               connection = { this.state.connection }
+              status = { this.state.status }
               session = { this.props.session }
               secondsUntilTimeout = { 60 }
+              onLinguistIdentified = {(user) => { this.props.setRemoteUser(user) }}
+              onRemoteCancel = {() => { this.handleCallEnded() }}
               onCancel = {() => { this.triggerEndCall("cancel") }}
               onError = {(reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
               onTimeout = {() => { this.handleInitialCustomerTimeout() }}

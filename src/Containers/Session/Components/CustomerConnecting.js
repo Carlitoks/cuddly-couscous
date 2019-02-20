@@ -21,7 +21,8 @@ export class CustomerConnecting extends Component {
 
     // visual component state
     this.state = {
-      seconds: props.secondsUntilTimeout
+      seconds: props.secondsUntilTimeout,
+      cancelling: false,
     }
   }
 
@@ -39,8 +40,10 @@ export class CustomerConnecting extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    // reset the timer if someone is connecting
-    if (!prevProps.remoteUserState.connection.connecting && this.props.remoteUserState.connection.connecting) {
+    // reset the timer if linguist has been assigned
+    if (!prevProps.remoteUser || !prevProps.remoteUser.id && this.props.remoteUser && this.props.remoteUser.id) {
+      this.countdown = this.props.secondsUntilTimeout;
+      this.countdownUpdatedAt = new Date();
       this.setState({seconds: this.props.secondsUntilTimeout});
     }
   }
@@ -73,22 +76,32 @@ export class CustomerConnecting extends Component {
 
   handleStatusPollInterval () {
     if (!this || this.abortTimers) {
-      // clearInterval(this.pollIntervalID);
       return;
     }
 
-    api.get(`/sessions/${this.props.session.id}/linguist`).then((res) => {
-      this.pollFailures = 0;
+    api.get(`/sessions/${this.props.session.id}/status`).then((res) => {
       if (this.abortTimers) {
         return;
       }
 
+      this.pollFailures = 0;
       // check if no match
       if (!!res.data && !!res.data.queue) {
         const q = res.data.queue;
         if (q.total == 0 || (q.total == q.declined)) {
           this.timeout();
+          return;
         }
+      }
+
+      // check if a linguist was just assigned - update the session remote user if so
+      if (!this.props.remoteUser || !this.props.remoteUser.id && res.data.linguist && res.data.linguist.id) {
+        this.props.onLinguistIdentified(res.data.linguist);
+      }
+
+      // check if session was ended
+      if (res.data.session.ended) {
+        this.remoteCancel();
       }
 
     }).catch((e) => {
@@ -98,7 +111,6 @@ export class CustomerConnecting extends Component {
       this.pollFailures++;
 
       if (this.pollFailures >= 3) {
-        console.log("failed", this.pollFailures);
         this.error("disconnect_local");
       }
     });
@@ -116,25 +128,45 @@ export class CustomerConnecting extends Component {
     this.props.onError(reason);
   }
 
+  remoteCancel () {
+    this.cleanup();
+    this.props.onRemoteCancel();
+  }
+
   timeout () {
     this.cleanup();
     this.props.onTimeout();
   }
 
   cancel () {
+    if (this.props.status.ending) {
+      return;
+    }
     this.cleanup();
     this.props.onCancel();
   }
 
   getConnectionText () {
+    const ru = this.props.remoteUser;
     const rc = this.props.remoteUserState.connection;
     const mc = this.props.connection;
+
+    // still searching for a linguist
+    if (!ru.id) {
+      return `Searching for linguist... ${this.state.seconds}`;
+    }
+    
+    // have a linguist, but not connecting yet
     if (!rc.connected && !rc.connecting) {
       return `Connecting to linguist... ${this.state.seconds}`;
     }
+
+    // have a specific linguist
     if (rc.connecting) {
       return `${this.props.remoteUser.firstName} is connecting...: ${this.state.seconds}`;
     }
+
+    // linguist connected, but we still haven't
     if (mc.connecting) {
       return `You are still connecting...: ${ this.state.seconds }`;
     }
@@ -148,6 +180,7 @@ export class CustomerConnecting extends Component {
           <Button
             title = "Cancel"
             onPress = {()=> { this.cancel() }}
+            disabled = { this.props.status.ending }
           />
         </View>
       </View>
