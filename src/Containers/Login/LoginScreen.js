@@ -30,7 +30,7 @@ import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiErrorString } from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/LoginScreenStyles";
 import { EMAIL_REGEX } from "../../Util/Constants";
@@ -107,11 +107,6 @@ class LoginScreen extends Component {
         updateOnboarding({
           errorType: "emailNotFound",
         });
-      }else{
-        Alert.alert(I18n.t("error"), translateApiErrorString(err.data.errors[0]   , "api.errTemporary"), [
-          { text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }
-        ]);
-        navigation.dispatch({ type: "OnboardingView" });
       }
       updateOnboarding({
         makingRequest: false,
