@@ -18,15 +18,15 @@ export class LinguistIncomingCallView extends Component {
     const now = new Date();
 
     this.abortTimers = false;
-    this.responding = false;
     this.pollFailures = 0;
     this.pollIntervalID = null;
-    this.callTimeoutAt = moment(props.session.createdAt).add(55, "s"); // taking 5 seconds off to encourage pickup before call actually times out on customer side.
+    this.callTimeoutAt = moment(props.session.createdAt).add(65, "s"); // taking 5 seconds off to encourage pickup before call actually times out on customer side.
     this.countdownIntervalID = null;
     
     this.state = {
       linguists: null,
       seconds: this.getSecondsRemaining(),
+      responding: false,
     };
   }
 
@@ -54,41 +54,45 @@ export class LinguistIncomingCallView extends Component {
   }
 
   handleAccept () {
-    if (this.responding) {
+    if (this.state.responding) {
       return;
     }
-    this.responding = true;
-    this.cleanup();
 
-    this.props.acceptSessionInvite()
-    .then(() => {
-      this.props.navigation.dispatch({type: "SessionView"});
-    })
-    .catch((e) => {
-      Alert.alert(I18n.t("notification"), translateApiError(e, "api.errUnexpected"));
-      this.props.navigation.dispatch({type: "Home"});
-    })
-    .finally(() => {
-      this.responding = false;
+    this.setState({responding: true}, () => {
+      this.cleanup();
+  
+      this.props.acceptSessionInvite()
+      .then(() => {
+        this.props.navigation.dispatch({type: "SessionView"});
+      })
+      .catch((e) => {
+        Alert.alert(I18n.t("notification"), translateApiError(e, "api.errUnexpected"));
+        this.props.navigation.dispatch({type: "Home"});
+      })
+      .finally(() => {
+        this.setState({responding: false});
+      });
     });
   }
 
   handleDecline () {
-    if (this.responding) {
+    if (this.state.responding) {
       return;
     }
-    this.responding = true;
-    this.cleanup();
 
-    this.props.declineSessionInvite()
-    .finally(() => {
-      this.responding = false;
-      this.props.navigation.dispatch({type: "Home"});
-    });
+    this.setState({responding: true}, () => {
+      this.cleanup();
+  
+      this.props.declineSessionInvite()
+      .finally(() => {
+        this.setState({responding: false});
+        this.props.navigation.dispatch({type: "Home"});
+      });  
+    })
   }
 
   handlePollInterval () {
-    if (!this || this.responding || this.abortTimers) {
+    if (!this || this.abortTimers || this.state.responding) {
       return;
     }
 
