@@ -1,10 +1,14 @@
 import React, {Component} from "react";
-import {Alert, View, Text} from "react-native";
+import {View, Button, StyleSheet, Text, TouchableHighlight} from "react-native";
+import Modal from "react-native-modal";
 
 export class ReconnectionState extends Component {
   constructor (props) {
     super(props);
     this.timeoutID = null;
+    this.state = {
+      isVisible: true
+    };
   }
 
   componentDidMount () {
@@ -20,24 +24,33 @@ export class ReconnectionState extends Component {
       clearTimeout(this.timeoutID);
     }
     this.timeoutID = setTimeout(() => {
-      this.launchAlert();
-    }, 10000);
+      const {userConnection, remoteUserConnection} = this.props;
+      if (!userConnection.connected || !remoteUserConnection.connected) {
+        this.launchModal();
+      }
+    }, 3000);
   }
 
-  launchAlert () {
-    const {isCustomer, userConnection} = this.props;
-    let keepWaitingText = "Keep Waiting";
-    let endCallText = "End Call";
-    if (isCustomer) {
-      keepWaitingText = "Try to Reconnect"
-    }
+  launchModal () {
+    this.setState({modalVisible: true});
 
-    let buttons = [{text: keepWaitingText, onPress: () => {this.resetTimeout()}}];
-    if (isCustomer && userConnection.connected) {
-      buttons.push({text: "Try Another Jeenie", onPress: () => { this.onRetry(); }});
-    }
-    buttons.push({text: endCallText, onPress: () => { this.onEnd() }});
-    Alert.alert("Connection error", "Still not connected, what do you want to do?", buttons, {cancelable: false});
+    // const {isCustomer, userConnection} = this.props;
+    // let keepWaitingText = "Keep Waiting";
+    // let endCallText = "End Call";
+    // if (isCustomer) {
+    //   keepWaitingText = "Try to Reconnect"
+    // }
+
+    // let buttons = [{text: keepWaitingText, onPress: () => {this.resetTimeout()}}];
+    // if (isCustomer && userConnection.connected) {
+    //   buttons.push({text: "Try Another Jeenie", onPress: () => { this.onRetry(); }});
+    // }
+    // buttons.push({text: endCallText, onPress: () => { this.onEnd() }});
+    // Alert.alert("Connection error", "Still not connected, what do you want to do?", buttons, {cancelable: false});
+  }
+
+  dismissModal () {
+    this.setState({modalVisible: false});
   }
 
   getEndReason () {
@@ -49,35 +62,63 @@ export class ReconnectionState extends Component {
   }
 
   onEnd () {
+    this.cleanup();
     this.props.onEnd(this.getEndReason());
   }
 
   onRetry () {
+    this.cleanup();
     this.props.onRetry(this.getEndReason(), "retry_disconnect");
   }
 
   cleanup () {
+    this.setState({isVisible: false});
     if (!!this.timeoutID) {
       clearTimeout(this.timeoutID);
     }
   }
 
   getReconnectingMessage () {
-    return "Reconnecting...";
-  }
+    const {userApp, userConnection, remoteUser, remoteUserConnection} = this.props;
+    if (userApp.networkConnection == "none" || !userConnection.connected) {
+      return "Reconnecting..."
+    }
 
-  renderModal () {
-    return (
-      <React.Fragment />
-    );
+    if (!remoteUserConnection.connected) {
+      return `${remoteUser.firstName} is reconnecting...`;
+    }
+
+    return "Reconnecting...";
   }
 
   render () {
     return (
-      <View style={{marginTop: 100, width: "100%", height: 50, backgroundColor: "#00ff33", padding: 20}}>
-        { this.renderModal() }
-        <Text style={{color: "#ffffff"}}>{ this.getReconnectingMessage() }</Text>
-      </View>
+      <Modal 
+        isVisible={this.state.isVisible}
+        style = {{margin: 0}}
+      >
+        <View style = {styles.backdrop}>
+          <View style = {styles.content}>
+            <Text style={styles.text}>{ this.getReconnectingMessage() }</Text>
+            <Button title="End" onPress={() => { this.onEnd() }} />
+          </View>
+        </View>
+      </Modal>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  backdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.33)",
+  },
+  content: {
+    backgroundColor: "#fff",
+    padding: 20,
+  },
+  text: {
+    fontSize: 30,
+    color: "#44a"
+  }
+});

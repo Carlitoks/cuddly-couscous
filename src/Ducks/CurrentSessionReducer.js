@@ -32,13 +32,19 @@ const initialState = {
   remoteUser: {},
 
   // One day:
-  // remoteUsers: {}
+  // remoteUsers: []
 
   // basic existence state
   status: {
     began: false, // did both sides initially connect?
     ended: false,
-    ending: false
+    ending: false,
+  },
+
+  timer: {
+    running: false,
+    // list of events, each item in format of `{action: "start|stop", time: Date().getTime()}`
+    events: []
   },
 
   // TODO: initial error handling?

@@ -36,6 +36,7 @@ newRemoteUserState = (props) => {
     app: {
       state: '', // background|foreground
       networkConnection: '',
+      hasNetworkConnection: false
     }
   }
 }
@@ -59,10 +60,12 @@ class SessionView extends Component {
 
       app: {
         state: AppState.currentState,
-        networkConnection: null
+        networkConnection: null,
+        hasNetworkConnection: true
       },
 
-      // basic state of user's connection/stream to av session (tokbox)
+      // basic state of user's connection/stream to av session (tokbox), note this is NOT
+      // about the devices network connection
       connection: {
         initiallyConnected: false,
         connected: false,
@@ -101,7 +104,7 @@ class SessionView extends Component {
 
   TEST () {
     // tests.testLinguistConnects(this);
-    // tests.testUserDisconnects(this);
+    tests.testUserDisconnects(this);
   }
 
   componentDidMount () {
@@ -249,6 +252,7 @@ class SessionView extends Component {
     return (
       this.hasInitiallyConnected() &&
       (
+        "none" == this.state.app.networkConnection ||
         !this.state.connection.connected ||
         !this.state.remoteUserState.connection.connected
       )
@@ -467,54 +471,10 @@ class SessionView extends Component {
             onUserPoorConnection = {null}
           />
 
-          {/* If there is a remote user, but we haven't connected to them yet, show the initial connection screen */}
-          {!!this.props.remoteUser.id && !this.hasInitiallyConnected() && (
-            <UserConnecting
-              user = { this.props.user }
-              remoteUser = {this.props.remoteUser}
-              remoteUserState = {this.state.remoteUserState}
-              connection = { this.state.connection }
-              status = { this.state.status }
-              session = { this.props.session }
-              secondsUntilError = { 30 }
-              onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
-              onRemoteCancel = {() => { this.handleCallEnded() }}
-              onCancel = {() => { this.triggerEndCall("cancel") }}
-            />
-          )}
-
-          {/* If we are the customer and haven't been matched to a linguist yet, display matching state */}
-          {!this.props.remoteUser || !this.props.remoteUser.id && this.props.isCustomer && (
-            <CustomerMatching
-              session = { this.props.session }
-              status = { this.state.status }
-              secondsUntilTimeout = { 70 }
-              onCancel = {() => { this.triggerEndCall("cancel") }}
-              onTimeout = {() => { this.handleInitialCustomerTimeout() }}
-              onError = {(reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
-              onLinguistIdentified = {(user) => { this.props.setRemoteUser(user) }}
-            />
-          )}
-
-          { this.shouldShowReconnectionState() && (
-            <ReconnectionState
-              user = { this.props.user }
-              remoteUser = {this.props.remoteUser}
-              remoteUserConnection = {this.state.remoteUserState.connection}
-              isCustomer = { this.props.isCustomer }
-              isLinguist = { this.props.isLinguist }
-              userConnection = { this.state.connection }
-              onEnd = {(reason) => { this.triggerEndCall(reason) }}
-              onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
-            />
-          )}
-
+          {/* <SessionHeader /> */}
           { this.poorConnectionAlertVisible() && (
             <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
           )}
-
-          {/* <CallTimer /> */}
-          { this.props.status.began && (
             <SessionControls
               cameraFlipEnabled={ this.state.controls.cameraFlipEnabled }
               onCameraFlipPressed= {() => { this.toggleCameraFlip() }}
@@ -527,7 +487,51 @@ class SessionView extends Component {
               endingCall = { this.state.endingCall }
               onEndCallPressed = {() => { this.triggerEndCall("done") }}
             />
+
+          {/* If there is a remote user, but we haven't connected to them yet, show the initial connection screen */}
+          {!!this.props.remoteUser.id && !this.hasInitiallyConnected() && (
+          <UserConnecting
+            user = { this.props.user }
+            remoteUser = {this.props.remoteUser}
+            remoteUserState = {this.state.remoteUserState}
+            connection = { this.state.connection }
+            status = { this.state.status }
+            session = { this.props.session }
+            secondsUntilError = { 30 }
+            onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
+            onRemoteCancel = {() => { this.handleCallEnded() }}
+            onCancel = {() => { this.triggerEndCall("cancel") }}
+          />
           )}
+
+          {/* If we are the customer and haven't been matched to a linguist yet, display matching state */}
+          {!this.props.remoteUser || !this.props.remoteUser.id && this.props.isCustomer && (
+          <CustomerMatching
+            session = { this.props.session }
+            status = { this.state.status }
+            secondsUntilTimeout = { 70 }
+            onCancel = {() => { this.triggerEndCall("cancel") }}
+            onTimeout = {() => { this.handleInitialCustomerTimeout() }}
+            onError = {(reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
+            onLinguistIdentified = {(user) => { this.props.setRemoteUser(user) }}
+          />
+          )}
+          
+          {/* If the initial connection was established, but one party has been disconnected... */}
+          {this.shouldShowReconnectionState() && (
+          <ReconnectionState
+            user = { this.props.user }
+            remoteUser = {this.props.remoteUser}
+            remoteUserConnection = {this.state.remoteUserState.connection}
+            isCustomer = { this.props.isCustomer }
+            isLinguist = { this.props.isLinguist }
+            userConnection = { this.state.connection }
+            userApp = { this.state.app }
+            onEnd = {(reason) => { this.triggerEndCall(reason) }}
+            onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
+          />
+          )}
+
 
         </View>
       </TouchableWithoutFeedback>

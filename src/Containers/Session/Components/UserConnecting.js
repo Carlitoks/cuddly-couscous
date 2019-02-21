@@ -140,7 +140,7 @@ export class UserConnecting extends Component {
     }
     
     // other person is connecting
-    return `${ru.firstName} is still connecting...`;
+    return `${ru.firstName} is connecting...`;
   }
 
   render () {

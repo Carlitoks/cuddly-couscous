@@ -6,7 +6,6 @@ export default styles = StyleSheet.create({
   //
   sessionContainer: {
     flex: 1,
-    flexDirection: 'row',
     backgroundColor: "#44aa44",
     padding: 20
   },
@@ -35,7 +34,8 @@ export default styles = StyleSheet.create({
   //
   publisherContainer: {
     backgroundColor: "#4444aa",
-    padding: 20
+    padding: 20,
+    zIndex: 0,
   },
 
   // 
@@ -43,6 +43,7 @@ export default styles = StyleSheet.create({
     height: 100,
     width: 100,
     backgroundColor: "#6666cc",
-    padding: 20
+    padding: 20,
+    zIndex: 0,
   },
 });
