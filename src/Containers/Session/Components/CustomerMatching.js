@@ -1,10 +1,11 @@
 import React, {Component} from "react";
-import {Button, View, Text, StyleSheet} from "react-native";
+import {Button, Text, View, StyleSheet} from "react-native";
 import api from "../../../Config/AxiosConfig";
 
-export class LinguistConnecting extends Component {
-  constructor(props) {
+export class CustomerMatching extends Component {
+  constructor (props) {
     super(props);
+    console.log("CustomerMatching.constructor");
 
     // sentinel for callbacks
     this.abortTimers = false;
@@ -22,9 +23,10 @@ export class LinguistConnecting extends Component {
     this.state = {
       seconds: props.secondsUntilTimeout,
       cancelling: false,
-    };
+    }
   }
 
+  // start timeout and status polling intervals
   componentDidMount () {
     // updating this fairly frequently so that it doesn't look
     // like the time skips
@@ -35,45 +37,12 @@ export class LinguistConnecting extends Component {
     this.pollIntervalID = setInterval(() => {
       this.handleStatusPollInterval();
     }, 3000);
-
   }
 
+  // cleanup countdowns
   componentWillUnmount () {
-    console.log("LinguistConnecting.componentWillUnmount");
+    console.log("CustomerMatching.componentWillUnmount");
     this.cleanup();
-  }
-
-  cleanup() {
-    console.log("LinguistConnecting.cleanup");
-    this.abortTimers = true;
-    clearInterval(this.countdownIntervalID);
-    clearInterval(this.pollIntervalID);
-  }
-
-  handleStatusPollInterval () {
-    if (!this || this.abortTimers) {
-      return;
-    }
-    const {session} = this.props;
-
-    api.get(`/sessions/${session.id}/status`)
-    .then((res) => {
-      if (this.abortTimers) {
-        return;
-      }
-      this.pollFailures = 0;
-      // check if session was ended by remote party
-      if (res.data.session.ended) {
-        this.remoteCancel();
-        return;
-      }
-    })
-    .catch((e) => {
-      this.pollFailures++;
-      if (this.pollFailures >= 3) {
-        this.error("disconnect_local");
-      }
-    })
   }
 
   handleCountdownInterval () {
@@ -90,20 +59,59 @@ export class LinguistConnecting extends Component {
       seconds: parseInt(this.countdown, 10)
     });
 
+
     // did we timeout?
     if (this.countdown <= 0) {
       this.timeout();
     }
   }
 
-  remoteCancel () {
-    this.cleanup();
-    this.props.onRemoteCancel();
+  handleStatusPollInterval () {
+    if (!this || this.abortTimers) {
+      return;
+    }
+
+    api.get(`/sessions/${this.props.session.id}/status`).then((res) => {
+      if (this.abortTimers) {
+        return;
+      }
+      this.pollFailures = 0;
+
+      // check if no match
+      if (!!res.data && !!res.data.queue) {
+        const q = res.data.queue;
+        if (q.total == 0 || (q.total == q.declined)) {
+          this.timeout();
+          return;
+        }
+      }
+
+      // check if a linguist was just assigned - update the session remote user if so
+      if (res.data.linguist && res.data.linguist.id) {
+        this.props.onLinguistIdentified(res.data.linguist);
+      }
+
+      // check if session was ended - this shouldn't be possible at this stage, but check anyway
+      if (res.data.session.ended) {
+        this.remoteCancel();
+      }
+    }).catch((e) => {
+      if (this.abortTimers) {
+        return;
+      }
+      this.pollFailures++;
+
+      if (this.pollFailures >= 3) {
+        this.error("failure_local");
+      }
+    });
   }
 
-  cancel () {
-    this.cleanup();
-    this.props.onCancel();
+  cleanup() {
+    console.log("CustomerMatching.cleanup");
+    this.abortTimers = true;
+    clearInterval(this.countdownIntervalID);
+    clearInterval(this.pollIntervalID);
   }
 
   error (reason) {
@@ -111,20 +119,33 @@ export class LinguistConnecting extends Component {
     this.props.onError(reason);
   }
 
+  remoteCancel () {
+    this.cleanup();
+    this.props.onRemoteCancel();
+  }
+
   timeout () {
     this.cleanup();
     this.props.onTimeout();
   }
 
+  cancel () {
+    if (this.props.status.ending) {
+      return;
+    }
+    this.cleanup();
+    this.props.onCancel();
+  }
+
   getConnectionText () {
-    return `Connecting to ${this.props.remoteUser.firstName}...`
+    return `Searching for linguist... ${ this.state.seconds }`
   }
 
   render () {
     return (
       <View style = {styles.container}>
         <View style = {styles.content}>
-          <Text style = {styles.text}>{ this.getConnectionText() } ({this.state.seconds})</Text>
+          <Text style = {styles.text}>{ this.getConnectionText() }</Text>
           <Button
             title = "Cancel"
             onPress = {()=> { this.cancel() }}

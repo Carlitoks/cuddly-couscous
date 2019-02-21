@@ -6,15 +6,14 @@ import I18n, {translateApiError} from "../../I18n/I18n";
 
 import {endSession, handleEndedSession, setRemoteUser, setSessionBegan} from '../../Ducks/CurrentSessionReducer';
 
-import {CustomerConnecting} from "./Components/CustomerConnecting";
-import {LinguistConnecting} from "./Components/LinguistConnecting";
+import {UserConnecting} from "./Components/UserConnecting";
+import {CustomerMatching} from "./Components/CustomerMatching";
 import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
 import {ReconnectionState} from "./Components/ReconnectionState";
 import {SessionControls} from "./Components/SessionControls";
 import {Session} from "./Components/Tokbox/Session";
 
 import * as tests from './SessionView.tests';
-import { stringify } from 'querystring';
 
 newRemoteUserState = (props) => {
   return {
@@ -257,8 +256,6 @@ class SessionView extends Component {
   }
 
   handleInitialCustomerTimeout () {
-    let endReason = "timeout";
-
     this.setState({status:{ending: true, ended: false}});
     this.props.endSession('timeout').finally(() => {
       this.setState({status:{ending: false, ended: true}});
@@ -359,8 +356,8 @@ class SessionView extends Component {
   // if an initial connection error is triggered, then just
   // alert the error and send back to home screen
   handleInitialConnectionError (reason, i18nKey) {
-    // Alert.alert(I18n.t("error"), I18n.t(i18nKey), [{text: I18n.t("ok")}]);
-    this._triggerEndCall(reason);
+    Alert.alert("Failed to Connect", I18n.t(i18nKey))
+    this._triggerEndCall(reason)
   }
 
   // call ended by user
@@ -470,34 +467,32 @@ class SessionView extends Component {
             onUserPoorConnection = {null}
           />
 
-          { this.props.isLinguist && !this.hasInitiallyConnected() && (
-            <LinguistConnecting
+          {/* If there is a remote user, but we haven't connected to them yet, show the initial connection screen */}
+          {!!this.props.remoteUser.id && !this.hasInitiallyConnected() && (
+            <UserConnecting
               user = { this.props.user }
-              remoteUser = {this.props.remoteUser}
-              remoteUserState = {this.state.remoteUserState}
-              userConnection = { this.state.connection }
-              status = { this.state.status }
-              session = { this.props.session }
-              secondsUntilTimeout = { 30 }
-              onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") } }
-              onTimeout = { () => { this.handleInitialLinguistTimeout() }}
-              onRemoteCancel = {() => { this.handleCallEnded() }}
-              onCancel = {() => { this.triggerEndCall("cancel") }}
-            />
-          )}
-          { this.props.isCustomer && !this.hasInitiallyConnected() && (
-            <CustomerConnecting
               remoteUser = {this.props.remoteUser}
               remoteUserState = {this.state.remoteUserState}
               connection = { this.state.connection }
               status = { this.state.status }
               session = { this.props.session }
-              secondsUntilTimeout = { 60 }
-              onLinguistIdentified = {(user) => { this.props.setRemoteUser(user) }}
+              secondsUntilError = { 30 }
+              onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
               onRemoteCancel = {() => { this.handleCallEnded() }}
               onCancel = {() => { this.triggerEndCall("cancel") }}
-              onError = {(reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
+            />
+          )}
+
+          {/* If we are the customer and haven't been matched to a linguist yet, display matching state */}
+          {!this.props.remoteUser || !this.props.remoteUser.id && this.props.isCustomer && (
+            <CustomerMatching
+              session = { this.props.session }
+              status = { this.state.status }
+              secondsUntilTimeout = { 70 }
+              onCancel = {() => { this.triggerEndCall("cancel") }}
               onTimeout = {() => { this.handleInitialCustomerTimeout() }}
+              onError = {(reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
+              onLinguistIdentified = {(user) => { this.props.setRemoteUser(user) }}
             />
           )}
 
