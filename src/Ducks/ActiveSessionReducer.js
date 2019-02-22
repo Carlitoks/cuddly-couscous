@@ -351,6 +351,7 @@ export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 export const EndCall = (sessionID, reason, token) => dispatch => {
   return Sessions.EndSession(sessionID, reason, token)
     .then(response => {
+      console.log(response, sessionID, reason, token);
       if (reason === REASON.CANCEL) {
         dispatch(clear());
         dispatch(clearEvents());
@@ -507,8 +508,9 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
       const { data } = response;
+
       if (data.status !== "assigned") {
-        if (contactLinguist.counter >= TIME.CALL_TIMEOUT) {
+        if (contactLinguist.counter >= 55) {
           timer.clearInterval("counterId");
           timer.clearInterval("verifyCallId");
           dispatch(resetCounter());
@@ -524,7 +526,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
             dispatch(HandleEndCall(sessionID, REASON.TIMEOUT, token));
         } else {
           if (
-            contactLinguist.counter >= TIME.CALL_TIMEOUT ||
+            contactLinguist.counter >= 55 ||
             data.queue.declined === data.queue.total
           ) {
             timer.clearInterval("counterId");
@@ -543,7 +545,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
           }
         }
       } else {
-        if (contactLinguist.counter >= TIME.CALL_TIMEOUT) {
+        if (contactLinguist.counter >= 55) {
           timer.clearInterval("counterId");
           timer.clearInterval("verifyCallId");
           dispatch(resetCounter());

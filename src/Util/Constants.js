@@ -71,10 +71,9 @@ export const getLocalizedCategories = locale => ({
 });
 
 export const TIME = {
-  TIMEOUT: 70,
+  TIMEOUT: 60,
   RECONNECT: 50,
-  HIDEMODAL: 55,
-  CALL_TIMEOUT: 65,
+  HIDEMODAL: 55
 };
 
 export const PLATFORM = {

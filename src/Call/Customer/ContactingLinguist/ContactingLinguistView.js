@@ -25,7 +25,7 @@ import {
   setPermission,
   displayOpenSettingsAlert
 } from "../../../Util/Permission";
-import { REASON, STATUS_TOKBOX, TIME } from "../../../Util/Constants";
+import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
 import DeviceInfo from "react-native-device-info";
 import I18n from './../../../I18n/I18n';
@@ -86,8 +86,8 @@ class ContactingLinguist extends Component {
     }
   }
 
-  seventySecondsCounter(counter) {
-    return 70 - counter;
+  sixtySecondsCounter(counter) {
+    return 60 - counter;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -129,9 +129,9 @@ class ContactingLinguist extends Component {
         <View style={styles.connectingMessageContainer}>
           {!this.props.modalReconnect &&
             this.props.counter > 0 &&
-            this.props.counter < TIME.CALL_TIMEOUT + 5 && (
+            this.props.counter < 60 && (
               <CallTimer
-                time={this.seventySecondsCounter(this.props.counter)}
+                time={this.sixtySecondsCounter(this.props.counter)}
                 withOut
                 changeVisible={() => console.log("change")}
                 red={false}
