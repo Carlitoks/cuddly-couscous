@@ -7,11 +7,15 @@ export class ReconnectionState extends Component {
     super(props);
     this.timeoutID = null;
     this.state = {
-      isVisible: true
+      showOptions: false
     };
   }
 
-  componentDidMount () {
+  init () {
+    if (!!this.timeoutID) {
+      clearTimeout(this.timeoutID);
+    }
+    this.setState({showOptions: false});
     this.resetTimeout();
   }
 
@@ -19,89 +23,135 @@ export class ReconnectionState extends Component {
     this.cleanup();
   }
 
-  resetTimeout () {
-    if (!!this.timeoutID) {
-      clearTimeout(this.timeoutID);
+  componentDidUpdate (prevProps) {
+    if (prevProps.isVisible && !this.props.isVisible) {
+      this.cleanup();
+    } else if (!prevProps.isVisible && this.props.isVisible) {
+      this.init();
     }
+  }
+
+  resetTimeout () {
     this.timeoutID = setTimeout(() => {
-      const {userConnection, remoteUserConnection} = this.props;
-      if (!userConnection.connected || !remoteUserConnection.connected) {
-        this.launchModal();
+      if (!this.props.isVisible) {
+        this.cleanup();
+        return;
       }
-    }, 3000);
+      this.showOptions();
+    }, 10000);
   }
 
-  launchModal () {
-    this.setState({modalVisible: true});
-
-    // const {isCustomer, userConnection} = this.props;
-    // let keepWaitingText = "Keep Waiting";
-    // let endCallText = "End Call";
-    // if (isCustomer) {
-    //   keepWaitingText = "Try to Reconnect"
-    // }
-
-    // let buttons = [{text: keepWaitingText, onPress: () => {this.resetTimeout()}}];
-    // if (isCustomer && userConnection.connected) {
-    //   buttons.push({text: "Try Another Jeenie", onPress: () => { this.onRetry(); }});
-    // }
-    // buttons.push({text: endCallText, onPress: () => { this.onEnd() }});
-    // Alert.alert("Connection error", "Still not connected, what do you want to do?", buttons, {cancelable: false});
+  showOptions () {
+    this.setState({showOptions: true});
   }
 
-  dismissModal () {
-    this.setState({modalVisible: false});
+  dismissOptions () {
+    this.setState({showOptions: false});
   }
 
   getEndReason () {
-    if (!this.props.userConnection.connected) {
-      return "disconnect_local";
-    } else {
+    if (!this.props.remoteUserConnection.connected) {
       return "disconnect_remote";
+    } else {
+      return "disconnect_local";
     }
   }
 
-  onEnd () {
+  keepWaiting () {
+    this.dismissOptions();
+    this.resetTimeout();
+  }
+
+  endCall () {
     this.cleanup();
     this.props.onEnd(this.getEndReason());
   }
 
-  onRetry () {
+  retryCall () {
     this.cleanup();
     this.props.onRetry(this.getEndReason(), "retry_disconnect");
   }
 
   cleanup () {
-    this.setState({isVisible: false});
-    if (!!this.timeoutID) {
-      clearTimeout(this.timeoutID);
-    }
+    this.dismissOptions();
+    clearTimeout(this.timeoutID);
   }
 
-  getReconnectingMessage () {
+  isEnding () {
+    return this.props.status.ending || this.props.status.ended;
+  }
+
+  getConnectionMessage () {
     const {userApp, userConnection, remoteUser, remoteUserConnection} = this.props;
-    if (userApp.networkConnection == "none" || !userConnection.connected) {
-      return "Reconnecting..."
+    const {showOptions} = this.state;
+    const localDisconnect = userApp.networkConnection == "none" || !userConnection.connected;
+    const remoteDisconnect = !remoteUserConnection.connected;
+    const connected = userApp.hasNetworkConnection && userConnection.connected && remoteUserConnection.connected;
+
+    if (this.isEnding()) {
+      return "Ending...";
     }
 
-    if (!remoteUserConnection.connected) {
-      return `${remoteUser.firstName} is reconnecting...`;
+    if (!connected) {
+      if (showOptions) {
+        return localDisconnect ? "You have been disconnected." : `${remoteUser.firstName} has been disconnected.`;
+      }
+      return localDisconnect ? "Reconnecting..." : `${remoteUser.firstName} is reconnecting...`;
     }
 
-    return "Reconnecting...";
+    return "Connected";
+  }
+
+  renderButtons () {
+    const {isCustomer, userConnection, userApp} = this.props;
+
+    let buttons = [
+      {
+        title: isCustomer ? "Try to Reconnect" : "Keep Waiting",
+        onPress: () => { this.keepWaiting() }
+      }
+    ];
+
+    // if customer still has a network connection, provide option to try someone else
+    if (isCustomer && userApp.hasNetworkConnection) {
+      buttons.push({
+        title: "Try Another Jeenie",
+        onPress: () => { this.retryCall() }
+      });
+    }
+
+    buttons.push({
+      title: "End Call",
+      onPress: () => { this.endCall() }
+    });
+  
+    return buttons.map((button, i) => {
+      return (
+        <View key={i} style={{marginTop: 5}}>
+          <Button title={button.title} onPress={() => { button.onPress() }} />
+        </View>
+      );
+    });
   }
 
   render () {
-    return (
+    return !this.isEnding() && (
       <Modal 
-        isVisible={this.state.isVisible}
-        style = {{margin: 0}}
+        isVisible={this.props.isVisible}
+        style = {styles.modal}
+        animationIn = {"fadeInDown"}
+        animationOut = {"fadeOutUp"}
+        hasBackdrop = {false}
       >
-        <View style = {styles.backdrop}>
-          <View style = {styles.content}>
-            <Text style={styles.text}>{ this.getReconnectingMessage() }</Text>
-            <Button title="End" onPress={() => { this.onEnd() }} />
+        <View style = {styles.content}>
+          <Text style={styles.text}>{ this.getConnectionMessage() }</Text>
+          
+          {/* render user options maybe */}
+          {this.state.showOptions && (
+          <View style={styles.buttonContainer}>
+            { this.renderButtons() }
           </View>
+          )}
         </View>
       </Modal>
     );
@@ -109,16 +159,19 @@ export class ReconnectionState extends Component {
 }
 
 const styles = StyleSheet.create({
-  backdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.33)",
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   content: {
     backgroundColor: "#fff",
     padding: 20,
   },
+  buttonContainer: {
+
+  },
   text: {
-    fontSize: 30,
+    fontSize: 20,
     color: "#44a"
   }
 });

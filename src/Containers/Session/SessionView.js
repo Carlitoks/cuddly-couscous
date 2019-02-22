@@ -88,12 +88,6 @@ class SessionView extends Component {
       remoteUserStates: {},
       remoteUserState: newRemoteUserState(props),
 
-      // higher level Solo session state - like did we "connect" to the other person successfully at any point?
-      status: {
-        ending: false,
-        ended: false,
-      },
-
       // signal to send to other participants
       signal: {},
     };
@@ -104,7 +98,9 @@ class SessionView extends Component {
 
   TEST () {
     // tests.testLinguistConnects(this);
-    tests.testUserDisconnects(this);
+    // tests.testRemoteUserDisconnects(this);
+    tests.testLocalUserDisconnects(this);
+    // tests.testUserLostNetwork(this);
   }
 
   componentDidMount () {
@@ -134,7 +130,6 @@ class SessionView extends Component {
     // TODO: unregister listeners:
     // * push notification
     // * any audio things, incallManager, etc...
-
   }
 
   handleAppStateChange (nextState) {
@@ -161,10 +156,14 @@ class SessionView extends Component {
   handleConnectionChange (info) {
     const currentState = info.effectiveType.toLowerCase();
     const prevState = this.state.networkConnection;
+    this.handleNetworkConnectionTypeChanged(prevState, currentState);
+  }
 
+  handleNetworkConnectionTypeChanged (prevState, currentState) {
     this.setState({app: {
       ...this.state.app,
-      networkConnection: currentState
+      networkConnection: currentState,
+      hasNetworkConnection: currentState != "none"
     }});
 
     // lost internet connection
@@ -178,24 +177,16 @@ class SessionView extends Component {
       this.handleRegainedNetworkConnection();
       return;
     }
-
-    this.handleNetworkConnectionTypeChanged(prevState, currentState);
-  }
-
-  handleLostNetworkConnection () {
-
-  }
-
-  handleRegainedNetworkConnection () {
-
-  }
-
-  handleNetworkConnectionTypeChanged (fromType, toType) {
+    
     this.sendSignal("connectionType", {fromType, toType});
   }
 
-  hasNetworkConnection () {
-    return this.state.app.networkConnection != "none";
+  handleLostNetworkConnection () {
+    // TODO: anything to pass down to children, like a force reload of certain components?
+  }
+
+  handleRegainedNetworkConnection () {
+    // TODO: anything to pass down to children, like a force reload of certain components?
   }
 
   // hide/show call controls
@@ -251,6 +242,7 @@ class SessionView extends Component {
   shouldShowReconnectionState () {
     return (
       this.hasInitiallyConnected() &&
+      (!this.props.status.ending || !this.props.status.ended) &&
       (
         "none" == this.state.app.networkConnection ||
         !this.state.connection.connected ||
@@ -260,18 +252,14 @@ class SessionView extends Component {
   }
 
   handleInitialCustomerTimeout () {
-    this.setState({status:{ending: true, ended: false}});
     this.props.endSession('timeout').finally(() => {
-      this.setState({status:{ending: false, ended: true}});
       this.cleanup();
       this.props.navigation.dispatch({type: "CustomerRetryView"});
     });
   }
 
   handleInitialLinguistTimeout () {
-    this.setState({status: {ending: true, ended:false}});
     this.props.endSession('failure_remote').finally(() => {
-      this.setState({status:{ending: false, ended: true}});
       this.cleanup();
       this.props.navigation.dispatch({type: "Home"});
     });
@@ -377,7 +365,7 @@ class SessionView extends Component {
   }
 
   _triggerEndCall (reason) {
-    if (this.state.status.ending || this.endingCall) {
+    if (this.props.status.ending || this.endingCall) {
       return;
     }
 
@@ -385,18 +373,15 @@ class SessionView extends Component {
     let targetView = "Home";
     this.endingCall = true;
 
-    this.setState({status:{ending: true, ended: false}}, () => {
-      this.sendSignal('endingCall', {reason});
-      this.props.endSession(reason).then((res) => {
-        this.sendSignal('endedCall');
-      }).catch((e) => {
-        this.sendSignal('endingCallFailed');
-      }).finally(() => {
-        this.setState({status:{ending: false, ended: true}});
-        this.cleanup();
-        this.endingCall = false;
-        this.props.navigation.dispatch({type: targetView});
-      });
+    this.sendSignal('endingCall', {reason});
+    this.props.endSession(reason).then((res) => {
+      this.sendSignal('endedCall');
+    }).catch((e) => {
+      this.sendSignal('endingCallFailed');
+    }).finally(() => {
+      this.cleanup();
+      this.endingCall = false;
+      this.props.navigation.dispatch({type: targetView});
     });
   }
 
@@ -442,7 +427,7 @@ class SessionView extends Component {
             remoteUserState = {this.state.remoteUserState}
             localAppState = { this.state.app }
             localControlState = { this.state.controls }
-            localSessionStatus = { this.state.status }
+            localSessionStatus = { this.props.status }
             onSessionEnded = {() => { this.handleCallEnded() }}
 
             // keep or remove?
@@ -469,12 +454,12 @@ class SessionView extends Component {
 
             // other status updates?
             onUserPoorConnection = {null}
-          />
-
-          {/* <SessionHeader /> */}
-          { this.poorConnectionAlertVisible() && (
+          >
+            {/* <SessionHeader /> */}
+            { this.poorConnectionAlertVisible() && (
             <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
-          )}
+            )}
+
             <SessionControls
               cameraFlipEnabled={ this.state.controls.cameraFlipEnabled }
               onCameraFlipPressed= {() => { this.toggleCameraFlip() }}
@@ -487,6 +472,7 @@ class SessionView extends Component {
               endingCall = { this.state.endingCall }
               onEndCallPressed = {() => { this.triggerEndCall("done") }}
             />
+          </Session>
 
           {/* If there is a remote user, but we haven't connected to them yet, show the initial connection screen */}
           {!!this.props.remoteUser.id && !this.hasInitiallyConnected() && (
@@ -495,7 +481,7 @@ class SessionView extends Component {
             remoteUser = {this.props.remoteUser}
             remoteUserState = {this.state.remoteUserState}
             connection = { this.state.connection }
-            status = { this.state.status }
+            status = { this.props.status }
             session = { this.props.session }
             secondsUntilError = { 30 }
             onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
@@ -508,7 +494,7 @@ class SessionView extends Component {
           {!this.props.remoteUser || !this.props.remoteUser.id && this.props.isCustomer && (
           <CustomerMatching
             session = { this.props.session }
-            status = { this.state.status }
+            status = { this.props.status }
             secondsUntilTimeout = { 70 }
             onCancel = {() => { this.triggerEndCall("cancel") }}
             onTimeout = {() => { this.handleInitialCustomerTimeout() }}
@@ -518,9 +504,10 @@ class SessionView extends Component {
           )}
           
           {/* If the initial connection was established, but one party has been disconnected... */}
-          {this.shouldShowReconnectionState() && (
           <ReconnectionState
+            isVisible = { this.shouldShowReconnectionState() }
             user = { this.props.user }
+            status = { this.props.status }
             remoteUser = {this.props.remoteUser}
             remoteUserConnection = {this.state.remoteUserState.connection}
             isCustomer = { this.props.isCustomer }
@@ -530,8 +517,6 @@ class SessionView extends Component {
             onEnd = {(reason) => { this.triggerEndCall(reason) }}
             onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
           />
-          )}
-
 
         </View>
       </TouchableWithoutFeedback>
@@ -548,7 +533,7 @@ const mD = {
   endSession,
   handleEndedSession,
   setRemoteUser,
-  setSessionBegan,
+  setSessionBegan, // NOTE: will trigger the first timer event
 }
 
 export default connect(mS, mD)(SessionView);

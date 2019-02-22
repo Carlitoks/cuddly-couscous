@@ -1,3 +1,7 @@
+const after = (ms, cb) => {
+  setTimeout(cb, ms);
+}
+
 // customer starts call
 // linguist accepts
 // linguist connects
@@ -23,42 +27,52 @@ export const testLinguistConnects = (comp) => {
 
 };
 
-// both users connect
-// then user disconnects
-export const testUserDisconnects = (comp) => {
+const setupReconnectionStateTest = (comp) => {
   // user connects
   comp.handleUserConnecting();
-  setTimeout(() => { comp.handleUserConnected(); }, 500);
+  after(500, () => { comp.handleUserConnected(); });
 
   // linguist assigned
-  setTimeout(() => {
+  after(1000, () => {
     comp.props.setRemoteUser({
       id: "22222222-2222-2222-2222-222222222223",
       firstName: "Evan",
       lastInitial: "V"
     });
-  }, 1000);
+  });
 
   // linguist connects
-  setTimeout(() => {
-    comp.handleRemoteUserConnecting();
-  }, 1500);
-  setTimeout(() => {
-    comp.handleRemoteUserConnected();
-  }, 2000);
+  after(1500, () => { comp.handleRemoteUserConnecting(); });
+  after(2000, () => { comp.handleRemoteUserConnected(); });
+};
 
-  // remote user disconnects
-  setTimeout(() => { comp.handleRemoteUserDisconnected(); }, 4000);
-  // setTimeout(() => { comp.handleRemoteUserConnecting(); }, 6000);
-  // setTimeout(() => { comp.handleRemoteUserConnected(); }, 8000);
+// both users connect
+// then user disconnects
+export const testRemoteUserDisconnects = (comp) => {
+  setupReconnectionStateTest(comp);
+  after(4000, () => { comp.handleRemoteUserDisconnected(); });
+  after(6000, () => { comp.handleRemoteUserConnecting(); });
+  after(8000, () => { comp.handleRemoteUserConnected(); });
+  after(10000, () => { comp.handleRemoteUserDisconnected(); });
+};
 
+export const testLocalUserDisconnects = (comp) => {
+  setupReconnectionStateTest(comp);
+  after(4000, () => { comp.handleUserDisconnected(); });
+  after(6000, () => { comp.handleUserConnecting(); });
+  after(8000, () => { comp.handleUserConnected(); });
+  after(10000, () => { comp.handleUserDisconnected(); });
 };
 
 // user loses connection
 export const testUserLostNetwork = (comp) => {
-
+  setupReconnectionStateTest(comp);
+  after(4000, () => { comp.handleNetworkConnectionTypeChanged("wifi", "none"); });
+  after(4500, () => { comp.handleUserDisconnected(); });
+  after(6000, () => { comp.handleNetworkConnectionTypeChanged("none", "wifi"); });
+  after(6500, () => { comp.handleUserConnecting(); });
+  after(8000, () => { comp.handleUserConnected(); });
+  after(10000, () => { comp.handleNetworkConnectionTypeChanged("wifi", "none"); });
+  // after(10500, () => { comp.handleUserDisconnected(); });
 };
 
-export const testRemoteUserDisconnects = (comp) => {
-
-};

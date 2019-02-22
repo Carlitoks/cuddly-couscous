@@ -44,7 +44,8 @@ const initialState = {
   timer: {
     running: false,
     // list of events, each item in format of `{action: "start|stop", time: Date().getTime()}`
-    events: []
+    events: [],
+    // TODO: time limit restriction
   },
 
   // TODO: initial error handling?
