@@ -131,7 +131,7 @@ class CallButtons extends Component {
         ...this.props.session
       })
       .then(() => {
-        this.props.navigation.dispatch({type: "SessionView"});
+        this.props.navigation.dispatch({type: "CustomerMatchingView"});
       }).catch((e) => {
         console.log("error", e)
         Alert.alert(

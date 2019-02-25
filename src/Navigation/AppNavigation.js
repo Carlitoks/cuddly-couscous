@@ -66,6 +66,7 @@ import EditCardScreen from "../Containers/Payments/EditCardScreen";
 
 // new session views
 import SessionView from "../Containers/Session/SessionView";
+import CustomerMatchingView from "../Containers/Session/CustomerMatchingView"
 import CustomerRetryView from "../Containers/Session/CustomerRetryView";
 import LinguistIncomingCallView from "../Containers/Session/LinguistIncomingCallView";
 
@@ -390,6 +391,13 @@ const Navigation = StackNavigator(
     // New session handling routes
     SessionView: {
       screen: SessionView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    CustomerMatchingView: {
+      screen: CustomerMatchingView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"

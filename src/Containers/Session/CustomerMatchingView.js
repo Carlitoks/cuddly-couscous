@@ -1,8 +1,15 @@
 import React, {Component} from "react";
-import {Button, Text, View, StyleSheet} from "react-native";
-import api from "../../../Config/AxiosConfig";
+import {Alert, Button, Text, View, StyleSheet} from "react-native";
+import { connect } from "react-redux";
+import api from "../../Config/AxiosConfig";
 
-export class CustomerMatching extends Component {
+import {createNewSession, endSession, handleEndedSession, setRemoteUser} from "../../Ducks/CurrentSessionReducer";
+import { translateApiError } from "../../I18n/I18n";
+
+// TODO: actually define some constants somewhere
+const secondsUntilTimeout = 70;
+
+export class CustomerMatchingView extends Component {
   constructor (props) {
     super(props);
     console.log("CustomerMatching.constructor");
@@ -13,7 +20,7 @@ export class CustomerMatching extends Component {
     // timeout countdown state
     this.countdownIntervalID = null;
     this.countdownUpdatedAt = new Date();
-    this.countdown = props.secondsUntilTimeout;
+    this.countdown = secondsUntilTimeout;
 
     // status poll state
     this.pollIntervalID = null;
@@ -21,7 +28,7 @@ export class CustomerMatching extends Component {
 
     // visual component state
     this.state = {
-      seconds: props.secondsUntilTimeout,
+      seconds: secondsUntilTimeout,
       cancelling: false,
     }
   }
@@ -43,6 +50,13 @@ export class CustomerMatching extends Component {
   componentWillUnmount () {
     console.log("CustomerMatching.componentWillUnmount");
     this.cleanup();
+  }
+
+  componentDidUpdate(prevProps) {
+    // was a remote user identified? Could have been identified via Push notification
+    if (!prevProps.remoteUser && !prevProps.remoteUser.id && !!this.props.remoteUser && this.props.remoteUser.id) {
+      this.linguistIdentified()
+    }
   }
 
   handleCountdownInterval () {
@@ -88,12 +102,14 @@ export class CustomerMatching extends Component {
 
       // check if a linguist was just assigned - update the session remote user if so
       if (res.data.linguist && res.data.linguist.id) {
-        this.props.onLinguistIdentified(res.data.linguist);
+        this.linguistIdentified(res.data.linguist);
+        return;
       }
 
       // check if session was ended - this shouldn't be possible at this stage, but check anyway
       if (res.data.session.ended) {
         this.remoteCancel();
+        return;
       }
     }).catch((e) => {
       if (this.abortTimers) {
@@ -102,9 +118,18 @@ export class CustomerMatching extends Component {
       this.pollFailures++;
 
       if (this.pollFailures >= 3) {
-        this.error("failure_local");
+        this.lostConnection();
+        return;
       }
     });
+  }
+
+  linguistIdentified (user = null) {
+    this.cleanup();
+    if (!!user) {
+      this.props.setRemoteUser(user);  
+    }
+    this.props.navigation.dispatch({type: "SessionView"});
   }
 
   cleanup() {
@@ -114,19 +139,35 @@ export class CustomerMatching extends Component {
     clearInterval(this.pollIntervalID);
   }
 
-  error (reason) {
+  lostConnection () {
     this.cleanup();
-    this.props.onError(reason);
+    this.props.endSession("failure_local")
+    .catch((e) => {
+      Alert.alert("Error", translateApiError(e));
+    }).finally(() => {
+      this.props.navigation.dispatch({type: "Home"});
+    });
   }
 
   remoteCancel () {
     this.cleanup();
-    this.props.onRemoteCancel();
+    this.props.handleEndedSession().finally(() => {
+      Alert.alert("Canceled", "Call canceled by remote party");
+      this.props.navigation.dispatch({type: "Home"});
+    });
   }
 
   timeout () {
+    if (this.props.status.ending) {
+      return;
+    }
     this.cleanup();
-    this.props.onTimeout();
+    this.props.endSession("timeout")
+    .catch((e) => {
+      Alert.alert("Error", translateApiError(e));
+    }).finally(() => {
+      this.props.navigation.dispatch({type: "Home"});
+    });
   }
 
   cancel () {
@@ -134,7 +175,12 @@ export class CustomerMatching extends Component {
       return;
     }
     this.cleanup();
-    this.props.onCancel();
+    this.props.endSession("cancel")
+    .catch((e) => {
+      Alert.alert("Error", translateApiError(e));
+    }).finally(() => {
+      this.props.navigation.dispatch({type: "Home"});
+    });
   }
 
   getConnectionText () {
@@ -159,12 +205,8 @@ export class CustomerMatching extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    height: "100%",
-    width: "100%",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    flex: 1,
+    backgroundColor: "#5d4cb6",
     paddingTop: "33%"
   },
   content: {
@@ -176,3 +218,18 @@ const styles = StyleSheet.create({
     padding: 30
   }
 });
+
+const mS = (state) => {
+  return {
+    ...state.currentSessionReducer
+  }
+};
+
+const mD = {
+  createNewSession,
+  setRemoteUser,
+  endSession,
+  handleEndedSession
+};
+
+export default connect(mS, mD)(CustomerMatchingView)

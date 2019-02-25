@@ -45,8 +45,10 @@ export class ReconnectionState extends Component {
     this.setState({showOptions: true});
   }
 
-  dismissOptions () {
-    this.setState({showOptions: false});
+  async dismissOptions () {
+    return new Promise((resolve) => {
+      this.setState({showOptions: false}, resolve);
+    });
   }
 
   getEndReason () {
@@ -62,19 +64,19 @@ export class ReconnectionState extends Component {
     this.resetTimeout();
   }
 
-  endCall () {
-    this.cleanup();
+  async endCall () {
+    await this.cleanup();
     this.props.onEnd(this.getEndReason());
   }
 
-  retryCall () {
-    this.cleanup();
+  async retryCall () {
+    await this.cleanup();
     this.props.onRetry(this.getEndReason(), "retry_disconnect");
   }
 
-  cleanup () {
-    this.dismissOptions();
+  async cleanup () {
     clearTimeout(this.timeoutID);
+    await this.dismissOptions();
   }
 
   isEnding () {

@@ -4,10 +4,9 @@ import {KeepAwake} from "react-native-keep-awake";
 import { connect } from 'react-redux';
 import I18n, {translateApiError} from "../../I18n/I18n";
 
-import {endSession, handleEndedSession, setRemoteUser, setSessionBegan} from '../../Ducks/CurrentSessionReducer';
+import {createNewSession, endSession, handleEndedSession, setRemoteUser, setSessionBegan} from '../../Ducks/CurrentSessionReducer';
 
 import {UserConnecting} from "./Components/UserConnecting";
-import {CustomerMatching} from "./Components/CustomerMatching";
 import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
 import {ReconnectionState} from "./Components/ReconnectionState";
 import {SessionControls} from "./Components/SessionControls";
@@ -401,9 +400,24 @@ class SessionView extends Component {
   }
 
   triggerRetryCall (endReason, startReason) {
-    // TODO: end current call
-    // create new call
-    // force reload component somehow... "initState(props)"
+    this.endingCall = true;
+    this.props.endSession(endReason).finally(() => {
+      this.endingCall = false;
+      this.props.createNewSession({
+        ...this.props.newSessionParams,
+        reason: startReason
+      })
+      .then((res) => {
+        this.props.navigation.dispatch({type: "CustomerMatchingView"})
+      })
+      .catch((e) => {
+        Alert.alert(I18n.t("error"), translateApiError(e));
+        this.props.navigation.dispatch({type: "Home"});
+      })
+      .finally((res) => {
+        this.cleanup();
+      });
+    });
   }
 
   render () {
@@ -489,19 +503,6 @@ class SessionView extends Component {
             onCancel = {() => { this.triggerEndCall("cancel") }}
           />
           )}
-
-          {/* If we are the customer and haven't been matched to a linguist yet, display matching state */}
-          {!this.props.remoteUser || !this.props.remoteUser.id && this.props.isCustomer && (
-          <CustomerMatching
-            session = { this.props.session }
-            status = { this.props.status }
-            secondsUntilTimeout = { 70 }
-            onCancel = {() => { this.triggerEndCall("cancel") }}
-            onTimeout = {() => { this.handleInitialCustomerTimeout() }}
-            onError = {(reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
-            onLinguistIdentified = {(user) => { this.props.setRemoteUser(user) }}
-          />
-          )}
           
           {/* If the initial connection was established, but one party has been disconnected... */}
           <ReconnectionState
@@ -526,6 +527,7 @@ class SessionView extends Component {
 
 const mS = (state) => ({
   user: state.userProfile, // TODO: replace with state.activeUser.user
+  newSessionParams: state.newSessionReducer.session,
   ...state.currentSessionReducer
 });
 
@@ -534,6 +536,7 @@ const mD = {
   handleEndedSession,
   setRemoteUser,
   setSessionBegan, // NOTE: will trigger the first timer event
+  createNewSession,
 }
 
 export default connect(mS, mD)(SessionView);

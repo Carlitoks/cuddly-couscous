@@ -11,7 +11,7 @@ export class CustomerRetryView extends Component {
       ...this.props.session,
       startReason: "retry_timeout"
     }).then(() => {
-      this.props.navigation.dispatch({type: "SessionView"});
+      this.props.navigation.dispatch({type: "CustomerMatchingView"});
     }).catch((e) => {
       Alert.alert(
         'Unable to connect',
