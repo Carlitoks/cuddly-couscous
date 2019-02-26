@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     left: 0,
     height: "100%",
     width: "100%",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "#5d4cb6",
     paddingTop: "33%"
   },
   content: {

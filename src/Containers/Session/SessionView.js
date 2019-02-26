@@ -86,9 +86,6 @@ class SessionView extends Component {
       // tokbox connection ID
       remoteUserStates: {},
       remoteUserState: newRemoteUserState(props),
-
-      // signal to send to other participants
-      signal: {},
     };
 
     this.endingCall = false; // NOTE: probably need this in `state` as well - it's here to prevent double taps
@@ -176,8 +173,6 @@ class SessionView extends Component {
       this.handleRegainedNetworkConnection();
       return;
     }
-    
-    this.sendSignal("connectionType", {fromType, toType});
   }
 
   handleLostNetworkConnection () {
@@ -193,19 +188,12 @@ class SessionView extends Component {
     this.setState({display: {controlsVisible: !this.state.display.controlsVisible}});
   }
 
-  // to not break old apps
-  sendLegacySignal() {}
-  sendSignal (type, data) {
-    this.setState({signal: {type, data}});
-  }
-
   toggleVideo () {
     const enabled = !this.state.controls.videoEnabled;
     this.setState({controls:{
       ...this.state.controls,
       videoEnabled: enabled
     }});
-    this.sendSignal('videoStatus', {enabled});
   }
 
   toggleMic () {
@@ -214,7 +202,6 @@ class SessionView extends Component {
       ...this.state.controls,
       micEnabled: enabled
     }});
-    this.sendSignal('micStatus', {enabled});
   }
 
   toggleSpeaker () {
@@ -223,7 +210,6 @@ class SessionView extends Component {
       ...this.state.controls,
       speakerEnabled: enabled
     }});
-    this.sendSignal('speakerStatus', {enabled});
   }
 
   toggleCameraFlip () {
@@ -232,7 +218,6 @@ class SessionView extends Component {
       ...this.state.controls,
       cameraFlipEnabled: enabled
     }});
-    this.sendSignal('cameraFlipStatus', {enabled});
   }
 
   poorConnectionAlertVisible () { return false; }
@@ -341,6 +326,10 @@ class SessionView extends Component {
     });
   }
 
+  updateRemoteUserState (data) {
+    this.setState({remoteUserState: data});
+  }
+
   hasInitiallyConnected () {
     return this.state.remoteUserState.connection.initiallyConnected && this.state.connection.initiallyConnected;
   }
@@ -373,12 +362,7 @@ class SessionView extends Component {
     let targetView = "Home";
     this.endingCall = true;
 
-    this.sendSignal('endingCall', {reason});
-    this.props.endSession(reason).then((res) => {
-      this.sendSignal('endedCall');
-    }).catch((e) => {
-      this.sendSignal('endingCallFailed');
-    }).finally(() => {
+    this.props.endSession(reason).finally(() => {
       this.cleanup();
       this.endingCall = false;
       this.props.navigation.dispatch({type: targetView});
@@ -429,8 +413,6 @@ class SessionView extends Component {
 
           {/* <KeepAwake /> */}
 
-          {/* TODO: consider a dedicated component for triggering a call retry? */}
-
           {/* 
               This triggers most of the relevant events by handling the actual
               connection to Tokobx.
@@ -446,20 +428,16 @@ class SessionView extends Component {
             localSessionStatus = { this.props.status }
             onSessionEnded = {() => { this.handleCallEnded() }}
 
-            // keep or remove?
-            sendSignal = { this.state.signal }
-            onSignalReceived = {null}
-
             // update basic connection status of remote participant
             onRemoteUserConnecting = {() => { this.handleRemoteUserConnecting() }}
             onRemoteUserConnectingFailed = {() => { this.handleRemoteUserDisconnected() }}
             onRemoteUserConnected = {() => { this.handleRemoteUserConnected() }}
             onRemoteUserDisconnected = {() => { this.handleRemoteUserDisconnected() }}
             onRemoteUserReconnected = {() => { this.handleRemoteUserConnected() }}
+            onRemoteUserUpdated = {(userState) => { this.updateRemoteUserState(userState) }}
 
             // other status updates?
             onRemoteUserPoorConnection = {null}
-            onRemoteUserUpdated = {(user) => { this.props.setRemoteUser(user) }}
 
             // update basic connection status of user
             onUserConnecting = {() => { this.handleUserConnecting() }}
@@ -472,6 +450,8 @@ class SessionView extends Component {
             onUserPoorConnection = {null}
           >
             {/* <SessionHeader /> */}
+            {/* <AudioModeBackground /> */}
+
             { this.poorConnectionAlertVisible() && (
             <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
             )}
