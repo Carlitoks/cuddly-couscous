@@ -98,7 +98,7 @@ class SessionView extends Component {
   TEST () {
     // tests.testLinguistConnects(this);
     // tests.testRemoteUserDisconnects(this);
-    tests.testLocalUserDisconnects(this);
+    // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
   }
 
@@ -386,14 +386,15 @@ class SessionView extends Component {
   }
 
   // call ended by a remote participant
-  handleCallEnded (reason) {
+  handleRemoteCancel () {
+    Alert.alert("Cancelled", "The call was cancelled by the other party.");
+    this.handleRemoteEnded();
+  }
+
+  handleRemoteEnded () {
+    let targetView = "Home";
     // TODO: figure out proper target view: rate vs home
     // if connected & done, go to rate screen
-    let targetView = "Home";
-    
-    // if in the process of connecting, call was cancelled by the other party
-    Alert.alert("Cancelled", "The call was cancelled by the other party.");
-
     this.props.handleEndedSession().finally(() => {
       this.cleanup();
       this.props.navigation.dispatch({type: targetView});
@@ -500,7 +501,7 @@ class SessionView extends Component {
             session = { this.props.session }
             secondsUntilError = { 30 }
             onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
-            onRemoteCancel = {() => { this.handleCallEnded() }}
+            onRemoteCancel = {() => { this.handleRemoteCancel() }}
             onCancel = {() => { this.triggerEndCall("cancel") }}
           />
           )}
