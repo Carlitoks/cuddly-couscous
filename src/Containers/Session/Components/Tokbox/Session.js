@@ -101,6 +101,15 @@ export class Session extends Component {
 
   }
 
+  isTransitioning () {
+    const {localSessionStatus} = this.props;
+    return (
+      localSessionStatus.creating ||
+      localSessionStatus.ending ||
+      localSessionStatus.ended
+    );
+  }
+
   remount () {
     this.setState({mounted: false});
     setTimeout(() => {
@@ -114,7 +123,7 @@ export class Session extends Component {
 
     return (
       <View style={styles.sessionContainer}>
-        {mounted && !localSessionStatus.ended && (
+        {mounted && !this.isTransitioning() && (
           <OTSession 
             style = {styles.session}
             apiKey = {TOKBOX_APIKEY}

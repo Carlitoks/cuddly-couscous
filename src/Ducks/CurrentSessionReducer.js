@@ -36,6 +36,8 @@ const initialState = {
 
   // basic existence state
   status: {
+    creating: true,
+    created: false,
     began: false, // did both sides initially connect?
     ended: false,
     ending: false,
@@ -61,7 +63,8 @@ export const createNewSession = (params) => (dispatch, getState) => {
       role: 'customer',
       isLinguist: false,
       isCustomer: true,
-      session: params
+      session: params,
+      status: { creating: true, created: false, began: false, ending: false, ended: false }
     }));
     api.post('/sessions', params).then((res) => {
       dispatch(update({
@@ -70,7 +73,8 @@ export const createNewSession = (params) => (dispatch, getState) => {
         session: {
           ...getState().currentSessionReducer.session,
           id: res.data.sessionID
-        }
+        },
+        status: { creating: false, created: true, began: false, ending: false, ended: false }
       }));
       resolve(res.data);
     }).catch((e) => {
@@ -86,8 +90,8 @@ export const setRemoteUser = (user) => (dispatch) => {
   dispatch(update({remoteUser: user}));
 };
 
-export const receiveSessionInvite = (invite) => (dispatch) => {
-  console.log(invite);
+export const receiveSessionInvite = (invite) => (dispatch, getState) => {
+  const {status} = getState().currentSessionReducer;
   return new Promise((resolve) => {
     dispatch(clear());
     dispatch(update({
@@ -100,13 +104,14 @@ export const receiveSessionInvite = (invite) => (dispatch) => {
       sessionID: invite.session.id,
       remoteUser: invite.createdBy,
       event: invite.event,
+      status: { creating: false, created: true, began: false, ending: false, ended: false }
     }));
     resolve();
   });
 };
 
 export const acceptSessionInvite = () => (dispatch, getState) => {
-  const {inviteID,respondingToInvite} = getState().currentSessionReducer;
+  const {inviteID, respondingToInvite} = getState().currentSessionReducer;
   if (respondingToInvite) {
     return;
   }
@@ -132,7 +137,7 @@ export const acceptSessionInvite = () => (dispatch, getState) => {
 };
 
 export const declineSessionInvite = () => (dispatch, getState) => {
-  const {inviteID,respondingToInvite} = getState().currentSessionReducer;
+  const {inviteID, respondingToInvite} = getState().currentSessionReducer;
   if (respondingToInvite) {
     return;
   }
@@ -149,9 +154,10 @@ export const declineSessionInvite = () => (dispatch, getState) => {
 };
 
 export const setSessionBegan = () => (dispatch, getState) => {
+  const {status} = getState().currentSessionReducer;
   dispatch(update({
     status: {
-      ...getState().currentSessionReducer.status,
+      ...status,
       began: true
     }
   }));
@@ -164,23 +170,44 @@ export const canRejoinSession = () => (dispapch) => {
 
 // initiate ending the session
 export const endSession = (reason) => (dispatch, getState) => {
-  const {sessionID} = getState().currentSessionReducer;
+  const {sessionID, status} = getState().currentSessionReducer;
 
-  dispatch(update({ending: true}));
+  dispatch(update({
+    status: {
+      ...status,
+      ending: true,
+      ended: false
+    }
+  }));
+
   return new Promise((resolve, reject) => {
     api.put(`/sessions/${sessionID}/end`, {reason})
     .then(resolve)
     .catch(reject)
     .finally(() => {
-      dispatch(update({ending: false, ended: true}));
+      const {status} = getState().currentSessionReducer;
+      dispatch(update({
+        status: {
+          ...status,
+          ending: false,
+          ended: true
+        }
+      }));
     });
   });
 };
 
 // session was ended by another participant
-export const handleEndedSession = (reason) => (dispatch) => {
+export const handleEndedSession = (reason) => (dispatch, getState) => {
   // TODO: end reason here may be trigger for other things
-  dispatch(update({ending: false, ended: true}));
+  const {status} = getState().currentSessionReducer;
+  dispatch(update({
+    status: {
+      ...status,
+      ending: false,
+      ended: true
+    }
+  }));
   return Promise.resolve(true);
 };
 

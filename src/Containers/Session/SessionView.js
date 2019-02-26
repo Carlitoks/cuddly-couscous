@@ -239,9 +239,10 @@ class SessionView extends Component {
   poorConnectionAlertMessage () { return ""; }
   
   shouldShowReconnectionState () {
+    const {status} = this.props;
     return (
       this.hasInitiallyConnected() &&
-      (!this.props.status.ending || !this.props.status.ended) &&
+      (!status.ending && !status.ended) &&
       (
         "none" == this.state.app.networkConnection ||
         !this.state.connection.connected ||
