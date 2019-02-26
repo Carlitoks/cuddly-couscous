@@ -166,7 +166,7 @@ export class CustomerMatchingView extends Component {
     .catch((e) => {
       Alert.alert("Error", translateApiError(e));
     }).finally(() => {
-      this.props.navigation.dispatch({type: "Home"});
+      this.props.navigation.dispatch({type: "CustomerRetryView"});
     });
   }
 
