@@ -79,7 +79,7 @@ class LinguistView extends Component {
     } else {
       InCallManager.getIsWiredHeadsetPluggedIn()
         .then(res => {
-          InCallManager.start({ media: "audio" });
+          InCallManager.start({ media: "video" });
           let isWiredHeadsetPluggedIn = res.isWiredHeadsetPluggedIn;
           if (isWiredHeadsetPluggedIn) {
             this.props.updateSettings({ speaker: false });
