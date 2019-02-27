@@ -88,3 +88,11 @@ export const CAMERA = {
   FRONT: "front",
   BACK: "back"
 };
+
+export const SOUNDS = {
+  END_CALL: 'elastic_done3.wav',
+  INCOMING_CALL: 'elastic_musical5.wav',
+  EXTRA_TIME: 'elastic_done5.wav',
+  DISCONNECTED: 'Elastic_Error1.wav',
+  RECONNECTED: 'Elastic_Done11.wav'
+};

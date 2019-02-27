@@ -18,10 +18,18 @@ import SoundManager from "../../Util/SoundManager";
 import {
   changeStatus
 } from "../../Ducks/ProfileLinguistReducer";
+import Sound from "react-native-sound";
+import {SOUNDS} from "../../Util/Constants";
 
 class RateView extends Component {
   componentWillMount() {
-    SoundManager["EndCall"].play();
+    const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
+      if (error) {
+        console.log("error loading sound", error);
+        return;
+      }
+      EndCall.play(() => {});
+    });
     this.props.changeStatus(true);
   }
   

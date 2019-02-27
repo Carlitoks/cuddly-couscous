@@ -47,12 +47,13 @@ import {
   BackgroundCleanInterval,
   BackgroundStart
 } from "../../../Util/Background";
-import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
+import {REASON, TIME, STATUS_TOKBOX, SOUNDS} from "../../../Util/Constants";
 import ConnectingView from "../Connecting/ConnectingView";
 import { Fade } from "../../../Effects";
 import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
 import FCM from "react-native-fcm";
 import DeviceInfo from "react-native-device-info";
+import Sound from "react-native-sound";
 
 class LinguistView extends Component {
   constructor() {
@@ -196,7 +197,13 @@ class LinguistView extends Component {
 
   closeCallLinguist = reason => {
     displayEndCall(() => {
-      SoundManager["EndCall"].play();
+      const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
+        if (error) {
+          console.log("error loading sound", error);
+          return;
+        }
+        EndCall.play(() => {});
+      });
       this.props.closeCall(REASON.DONE);
     });
   };

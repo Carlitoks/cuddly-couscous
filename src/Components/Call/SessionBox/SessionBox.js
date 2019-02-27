@@ -29,6 +29,8 @@ import { TOKBOX_APIKEY } from "../../../Config/env";
 
 import styles from "./styles";
 import { recordSessionTokboxEvent, recordSessionEvent } from "../../../Util/Forensics";
+import Sound from "react-native-sound";
+import {SOUNDS} from "../../../Util/Constants";
 
 class SessionBox extends Component {
   constructor(props) {
@@ -84,7 +86,13 @@ class SessionBox extends Component {
         recordSessionTokboxEvent('session.sessionReconnected', {sessionID: this.props.sessionID});
         console.log("SESSION RECONNECTED EVENT");
         //this.props.videoState(true);
-        SoundManager["Reconnected"].play();
+        const Reconnected = new Sound(SOUNDS.RECONNECTED, Sound.MAIN_BUNDLE, error => {
+          if (error) {
+            console.log("error loading sound", error);
+            return;
+          }
+          Reconnected.play();
+        });
         this.props.updateSettings({
           modalReconnect: false
         });

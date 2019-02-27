@@ -4,7 +4,7 @@ import _sortBy from "lodash/sortBy";
 import { Vibration } from "react-native";
 import timer from "react-native-timer";
 import { GetSessionInfoLinguist } from "./SessionInfoReducer";
-import { REASON, STATUS_TOKBOX, TIME } from "../Util/Constants";
+import {REASON, SOUNDS, STATUS_TOKBOX, TIME} from "../Util/Constants";
 import { networkError } from "./NetworkErrorsReducer";
 import {modifyAVModePreference} from "./NewSessionReducer";
 import {
@@ -32,8 +32,9 @@ import {
   changeStatus,
   updateSettings as updateProfileLinguist
 } from "./ProfileLinguistReducer";
-import SoundManager from "../Util/SoundManager";
+import SoundManager, { EndCallSound } from "../Util/SoundManager";
 import DeviceInfo from "react-native-device-info";
+import Sound from 'react-native-sound';
 
 const ACTIONS = {
   CLEAR: "activeSession/clear",
@@ -639,12 +640,12 @@ export const startTimer = () => (dispatch, getState) => {
                   })
                 );
                 //Play Sound
-                SoundManager["ExtraTime"].play(success => {
-                  if (success) {
-                    //console.log("successfully finished playing");
-                  } else {
-                    console.log("playback failed due to audio decoding errors");
+                const ExtraTime = new Sound(SOUNDS.EXTRA_TIME, Sound.MAIN_BUNDLE, error => {
+                  if (error) {
+                    console.log("error loading sound", error);
+                    return;
                   }
+                    ExtraTime.play();
                 });
                 displayTimeAlert(extraTime, event => {
                   dispatch(update(event));
@@ -702,7 +703,14 @@ export const closeCall = (reason, alert) => (dispatch, getState) => {
     dispatch(update({ modalReconnect: false }));
   }
 
-  SoundManager["EndCall"].play();
+  const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log("error loading sound", error);
+      return;
+    }
+    EndCall.play(() => {});
+  });
+
   if (reason !== "Abort") {
     if (activeSessionReducer.sessionID) {
       activeSessionReducer.sessionID &&
@@ -922,7 +930,13 @@ export const startTimerLinguist = () => (dispatch, getState) => {
 
 export const closeCallReconnect = reason => dispatch => {
   //CHECK
-  SoundManager["EndCall"].play();
+  const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log("error loading sound", error);
+      return;
+    }
+    EndCall.play(() => {});
+  });
   dispatch(update({ modalReconnect: false }));
   dispatch(sendSignal(REASON.DONE, "Ended by Linguist"));
   dispatch({ type: "RateView" });

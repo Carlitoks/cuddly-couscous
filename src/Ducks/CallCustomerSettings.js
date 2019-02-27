@@ -1,6 +1,6 @@
 import { networkError } from "./NetworkErrorsReducer";
 import { Sessions } from "../Api";
-import { REASON, TIME } from "../Util/Constants";
+import {REASON, SOUNDS, TIME} from "../Util/Constants";
 import {
   updateSettings as updateContactLinguist,
   resetCounter
@@ -20,6 +20,7 @@ import {
   cleanNotifications
 } from "../Util/PushNotification";
 import { displayTimeAlert } from "../Util/Alerts";
+import Sound from "react-native-sound";
 
 // Actions
 export const ACTIONS = {
@@ -299,7 +300,13 @@ export const closeCall = reason => (dispatch, getState) => {
     cleanNotifications();
   }
 
-  SoundManager["EndCall"].play();
+  const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log("error loading sound", error);
+      return;
+    }
+    EndCall.play(() => {});
+  });
   if (reason !== "Abort") {
     tokbox.sessionID && dispatch(EndCall(tokbox.sessionID, reason, auth.token));
   }

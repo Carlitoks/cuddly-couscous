@@ -23,7 +23,7 @@ import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
 import SoundManager from "../../../Util/SoundManager";
-import { VIBRATE_PATTERN } from "../../../Util/Constants";
+import {SOUNDS, VIBRATE_PATTERN} from "../../../Util/Constants";
 import Permissions from "react-native-permissions";
 import { checkForAllPermissions } from "../../../Util/Permission";
 import Sound from "react-native-sound";
@@ -36,7 +36,7 @@ class IncomingCall extends Component {
     acceptIsDisabled: false,
     endIsDisabled: false,
     incomingCallRingTone: new Sound(
-      "elastic_musical5.wav",
+      SOUNDS.INCOMING_CALL,
       Sound.MAIN_BUNDLE,
       error => {
         if (error) {

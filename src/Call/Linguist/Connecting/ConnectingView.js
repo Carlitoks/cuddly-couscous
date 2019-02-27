@@ -29,18 +29,19 @@ import {
 } from "../../../Ducks/ContactLinguistReducer";
 import I18n from "../../../I18n/I18n";
 import { displayEndCall } from "../../../Util/Alerts";
-import { REASON, STATUS_TOKBOX } from "../../../Util/Constants";
+import { REASON, STATUS_TOKBOX, SOUNDS } from "../../../Util/Constants";
 import SoundManager from "../../../Util/SoundManager";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import DeviceInfo from "react-native-device-info";
 import InCallManager from "react-native-incall-manager";
+import Sound from "react-native-sound";
 class ConnectingView extends Component {
   constructor(props) {
     super(props);
   }
 
   componentWillMount() {
-    SoundManager["IncomingCall"].stop();
+    //SoundManager["IncomingCall"].stop();
     InCallManager.start({ media: "audio" });
     this.conectingTimer();
     const systemName = DeviceInfo.getSystemName();
@@ -105,7 +106,13 @@ class ConnectingView extends Component {
 
   closeCallLinguist = reason => {
     displayEndCall(() => {
-      SoundManager["EndCall"].play();
+      const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
+        if (error) {
+          console.log("error loading sound", error);
+          return;
+        }
+        EndCall.play(() => {});
+      });
       this.props.closeCall(REASON.CANCEL);
     });
   };
