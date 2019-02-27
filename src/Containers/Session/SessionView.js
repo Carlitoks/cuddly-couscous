@@ -78,8 +78,8 @@ class SessionView extends Component {
       controls: {
         cameraFlipEnabled: false,
         micEnabled: true,
-        videoEnabled: props.session.avModePreference,
-        speakerEnabled: true, // todo, harder than it seems...
+        videoEnabled: props.session.avModePreference == "video",
+        speakerEnabled: true, // todo, harder than it seems... do we have headphones, etc...?
       },
 
       // state of multiple participants, would be mapped by their userId ... ?
@@ -426,7 +426,7 @@ class SessionView extends Component {
             localAppState = { this.state.app }
             localControlState = { this.state.controls }
             localSessionStatus = { this.props.status }
-            onSessionEnded = {() => { this.handleCallEnded() }}
+            onSessionEnded = {() => { this.handleRemoteEnded() }}
 
             // update basic connection status of remote participant
             onRemoteUserConnecting = {() => { this.handleRemoteUserConnecting() }}

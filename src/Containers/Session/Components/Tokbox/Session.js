@@ -10,7 +10,7 @@ import {TOKBOX_APIKEY} from  "../../../../Config/env";
 
 import { recordSessionTokboxEvent, recordSessionEvent } from "../../../../Util/Forensics";
 
-const newRemoteUserState = () => {
+const newUserState = () => {
   return {
     connectionID: null,
     streamID: null,
@@ -38,16 +38,13 @@ export class Session extends Component {
       signal: {type: "", data: ""}
     };
 
-    this.remoteUserState = newRemoteUserState();
+    this.remoteUserState = newUserState();
+    this.remoteUserState.legacyVersion = true;
+
     // this.remoteUserStates = []; // one day...
 
-    this.localUserState = {
-      publishing: false,
-      subscribing: false,
-      sessionErrorCount: 0,
-      publisherErrorCount: 0,
-      subscriberErrorCount: 0
-    }
+    this.localUserState = newUserState();
+    this.remoteUserState.legacyVersion = false;
 
     // heartbeats to check for remote connection loss
     this.sendingHeartbeat = false;
@@ -140,12 +137,21 @@ export class Session extends Component {
         this.props.onRemoteUserDisconnected();
       },
       signal: (event) => {
+        // ensure signal is from remote participant we actually know about
+        if (event.connectionId != this.remoteUserState.connectionID) {
+          return;
+        }
         recordSessionTokboxEvent('session.signal', {
           event,
           sessionID: this.props.session.id
         });
 
-        this.receiveSignal(event.type, event.data);
+        let data = null;
+        if (!!event.data && event.data != "") {
+          data = JSON.parse(event.data);
+        }
+
+        this.receiveSignal(event.type, data);
       },
 
       archiveStarted: (event) => {
@@ -167,6 +173,9 @@ export class Session extends Component {
   componentDidMount () {
     // app state listener
     // netinfo listener
+    setTimeout(() => {
+      this.sendSignal("TEST", {foo: "bar"});
+    }, 5000);
   }
 
   componentWillUnmount () {
@@ -234,8 +243,13 @@ export class Session extends Component {
     }
   }
 
-  sendSignal (type, data = {}) {
-    this.setState({signal: {type, data}})
+  sendSignal (type, payload = null) {
+    recordSessionEvent("session.sendSignal", {type, payload});
+    let data = "";
+    if (!!payload) {
+      data = JSON.stringify(payload);
+    }
+    this.setState({signal: {type, data}});
   }
 
   receiveSignal (name, payload = null) {
@@ -250,12 +264,12 @@ export class Session extends Component {
         // this.beginExpectingHeartbeat();
         break;
       }
-      case 'ended': {
+      case 'ending': {
         this.props.onSessionEnded();
         break;
       }
       case 'controls': {
-        this.props.updateRemoteUserState({
+        this.props.onRemoteUserUpdated({
           ...this.props.remoteUserState,
           controls: payload
         });
