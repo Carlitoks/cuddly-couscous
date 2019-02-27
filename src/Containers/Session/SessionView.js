@@ -90,6 +90,7 @@ class SessionView extends Component {
 
     this.endingCall = false; // NOTE: probably need this in `state` as well - it's here to prevent double taps
     this.callTimer = null;
+    this.unmounting = false;
   }
 
   TEST () {
@@ -97,6 +98,13 @@ class SessionView extends Component {
     // tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
+  }
+
+  setState (data, cb = null) {
+    if (this.unmounting) {
+      return;
+    }
+    super.setState(data, cb);
   }
 
   componentDidMount () {
@@ -122,6 +130,7 @@ class SessionView extends Component {
     console.log("SessionView.cleanup");
     AppState.removeEventListener('change', this.handleAppStateChange);
     NetInfo.removeEventListener("connectionChange", this.handleConnectionChange);
+    this.unmounting = true;
 
     // TODO: unregister listeners:
     // * push notification

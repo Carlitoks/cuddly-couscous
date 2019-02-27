@@ -38,6 +38,8 @@ export class Session extends Component {
       signal: {type: "", data: ""}
     };
 
+    this.endedByRemote = false;
+
     this.remoteUserState = newUserState();
     this.remoteUserState.legacyVersion = true;
 
@@ -51,6 +53,8 @@ export class Session extends Component {
     this.sendHeartbeatIntervalID = null;
     this.receivingHeartbeat = false;
     this.receiveHeartbeatIntervalID = null;
+
+    this.unmounting = false;
 
     this.eventHandlers = {
 
@@ -94,6 +98,12 @@ export class Session extends Component {
         // TODO: send local state
       },
       connectionDestroyed: (event) => {
+        // HACK
+        if (this.state.unmounting) {
+          console.log("RETURNING EARLY ON connectionDestroyed");
+          return;
+        }
+
         recordSessionTokboxEvent('session.connectionDestroyed', {
           event,
           sessionID: this.props.session.id
@@ -170,6 +180,13 @@ export class Session extends Component {
     recordSessionEvent("session.constructor");
   }
 
+  setState (data, cb = null) {
+    if (this.unmounting) {
+      return;
+    }
+    super.setState(data, cb);
+  }  
+
   componentDidMount () {
     // app state listener
     // netinfo listener
@@ -207,8 +224,22 @@ export class Session extends Component {
 
   }
 
-  cleanup () {
-    this.setState({unmounting: true, mounted: false});
+  handleCallEnded () {
+    this.endedByRemote = true;
+    this.cleanup(() => {
+      console.log("session.props.onSessionEnded()");
+      this.props.onSessionEnded();
+    });
+  }
+
+  cleanup (cb = null) {
+    console.log("session.cleanup");
+    this.setState({unmounting: true, mounted: false}, () => {
+      this.unmounting = true;
+      if (!!cb) {
+        cb();
+      }
+    });
   }
 
   // check prop state for changes that should be signaled to other participants
@@ -218,10 +249,10 @@ export class Session extends Component {
 
     // are we ending?
     if (!oldP.localSessionStatus.ending && newP.localSessionStatus.ending) {
+      if (this.endedByRemote) {
+        return;
+      }
       this.sendSignal("ending");
-    }
-    if (!oldP.localSessionStatus.ended && newP.localSessionStatus.ended) {
-      this.sendSignal("ended");
     }
 
     if (oldP.localAppState.state != newP.localAppState.state) {
@@ -244,6 +275,10 @@ export class Session extends Component {
   }
 
   sendSignal (type, payload = null) {
+    if (this.state.unmounting) {
+      return;
+    }
+    
     recordSessionEvent("session.sendSignal", {type, payload});
     let data = "";
     if (!!payload) {
@@ -253,6 +288,10 @@ export class Session extends Component {
   }
 
   receiveSignal (name, payload = null) {
+    if (this.state.unmounting) {
+      return;
+    }
+
     switch (name) {
       // legacy signals
       case 'VIDEO_WARN': {
@@ -265,7 +304,7 @@ export class Session extends Component {
         break;
       }
       case 'ending': {
-        this.props.onSessionEnded();
+        this.handleCallEnded();
         break;
       }
       case 'controls': {
@@ -302,7 +341,6 @@ export class Session extends Component {
     const {localSessionStatus} = this.props;
     return (
       localSessionStatus.creating ||
-      localSessionStatus.ending ||
       localSessionStatus.ended
     );
   }
@@ -333,6 +371,7 @@ export class Session extends Component {
             eventHandlers = { this.eventHandlers }
             signal = { this.state.signal }
           >
+            {/* don't mount the publisher/subscriber if we're in the process of ending the call*/}
             <Publisher
               session = {session}
               status = {localSessionStatus}
