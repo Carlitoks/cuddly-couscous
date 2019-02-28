@@ -56,6 +56,7 @@ export default (reducer = (state, action) => {
 
     case "CustomerView":
       analytics.screen(action.type.toString());
+      analytics.track("Checkout Started");
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
@@ -104,6 +105,7 @@ export default (reducer = (state, action) => {
 
     case "RateView":
       analytics.screen(action.type.toString());
+      analytics.track("Order Completed");
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
