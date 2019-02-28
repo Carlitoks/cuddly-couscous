@@ -41,13 +41,6 @@ class CallButtonToggle extends Component {
     } else {
       InCallManager.setForceSpeakerphoneOn(false);
     }
-    Sound.setCategory('Playback');
-    Sound.setMode('Default');
-    Sound.setActive(true);
-  }
-
-  componentWillUnmount(){
-    Sound.setActive(false);
   }
 
   toggleIcon = () => {

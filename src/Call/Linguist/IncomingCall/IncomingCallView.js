@@ -92,7 +92,7 @@ class IncomingCall extends Component {
 
   startSound = async () => {
     await this.sleep(500);
-    Sound.setCategory('Playback');
+    Sound.setCategory("Playback", false);
     Sound.setMode('Default');
     Sound.setActive(true);
     this.state.incomingCallRingTone.setNumberOfLoops(-1);

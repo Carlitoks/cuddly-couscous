@@ -14,7 +14,7 @@ import RateExperienceThumbs from "./RateExperienceThumbs";
 import WhatWasGood from "./WhatWasGood";
 import WhatCouldBeBetter from "./WhatCouldBeBetter";
 import { Images } from "../../Themes";
-import SoundManager from "../../Util/SoundManager";
+import SoundManager, {playSound} from "../../Util/SoundManager";
 import {
   changeStatus
 } from "../../Ducks/ProfileLinguistReducer";
@@ -23,13 +23,7 @@ import {SOUNDS} from "../../Util/Constants";
 
 class RateView extends Component {
   componentWillMount() {
-    const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
-      if (error) {
-        console.log("error loading sound", error);
-        return;
-      }
-      EndCall.play(() => {});
-    });
+    playSound(SOUNDS.END_CALL);
     this.props.changeStatus(true);
   }
   

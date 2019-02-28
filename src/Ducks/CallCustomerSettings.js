@@ -21,6 +21,7 @@ import {
 } from "../Util/PushNotification";
 import { displayTimeAlert } from "../Util/Alerts";
 import Sound from "react-native-sound";
+import {playSound} from "../Util/SoundManager";
 
 // Actions
 export const ACTIONS = {
@@ -299,14 +300,7 @@ export const closeCall = reason => (dispatch, getState) => {
     dispatch(resetTimerAsync());
     cleanNotifications();
   }
-
-  const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      console.log("error loading sound", error);
-      return;
-    }
-    EndCall.play(() => {});
-  });
+  playSound(SOUNDS.END_CALL);
   if (reason !== "Abort") {
     tokbox.sessionID && dispatch(EndCall(tokbox.sessionID, reason, auth.token));
   }

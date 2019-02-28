@@ -30,7 +30,7 @@ import {
 import I18n from "../../../I18n/I18n";
 import { displayEndCall } from "../../../Util/Alerts";
 import { REASON, STATUS_TOKBOX, SOUNDS } from "../../../Util/Constants";
-import SoundManager from "../../../Util/SoundManager";
+import SoundManager, {playSound} from "../../../Util/SoundManager";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import DeviceInfo from "react-native-device-info";
 import InCallManager from "react-native-incall-manager";
@@ -106,13 +106,7 @@ class ConnectingView extends Component {
 
   closeCallLinguist = reason => {
     displayEndCall(() => {
-      const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
-        if (error) {
-          console.log("error loading sound", error);
-          return;
-        }
-        EndCall.play(() => {});
-      });
+      playSound(SOUNDS.END_CALL);
       this.props.closeCall(REASON.CANCEL);
     });
   };

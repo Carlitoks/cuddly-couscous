@@ -15,7 +15,7 @@ import { BackgroundInterval } from "../Util/Background";
 import {REASON, SOUNDS} from "../Util/Constants";
 import { displayEndCall } from "../Util/Alerts";
 import { emitLocalNotification } from "../Util/PushNotification";
-import SoundManager from "../Util/SoundManager";
+import SoundManager, {playSound} from "../Util/SoundManager";
 import Sound from "react-native-sound";
 
 // Actions
@@ -196,13 +196,7 @@ export const startTimer = () => (dispatch, getState) => {
 
 export const closeCall = reason => (dispatch, getState) => {
   displayEndCall(() => {
-    const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
-      if (error) {
-        console.log("error loading sound", error);
-        return;
-      }
-      EndCall.play(() => {});
-    });
+    playSound(SOUNDS.END_CALL);
     dispatch(EndCall());
     debugger
   });
@@ -221,13 +215,7 @@ export const EndCall = () => (dispatch, getState) => {
 };
 
 export const closeCallReconnect = reason => dispatch => {
-  const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
-    if (error) {
-      console.log("error loading sound", error);
-      return;
-    }
-    EndCall.play(() => {});
-  });
+  playSound(SOUNDS.END_CALL);
   dispatch(sendSignal(REASON.DONE, "Ended by Linguist"));
   dispatch({ type: "RateView" });
 };

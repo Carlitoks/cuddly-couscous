@@ -22,7 +22,7 @@ import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import Slide from "../../../Effects/Slide/Slide";
 import CallTimer from "../../../Components/CallTimer/CallTimer";
-import SoundManager from "../../../Util/SoundManager";
+import SoundManager, {playSound} from "../../../Util/SoundManager";
 import I18n from "../../../I18n/I18n";
 import Instabug from "instabug-reactnative";
 
@@ -197,13 +197,7 @@ class LinguistView extends Component {
 
   closeCallLinguist = reason => {
     displayEndCall(() => {
-      const EndCall = new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
-        if (error) {
-          console.log("error loading sound", error);
-          return;
-        }
-        EndCall.play(() => {});
-      });
+      playSound(SOUNDS.END_CALL);
       this.props.closeCall(REASON.DONE);
     });
   };

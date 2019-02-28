@@ -5,6 +5,29 @@ import {SOUNDS} from "./Constants";
 //Sound.enableInSilenceMode(true);
 //Sound.setCategory("Playback", true);
 
+export const playSound = (sound) => {
+  Sound.setActive(true);
+  Sound.setCategory("Ambient", true);
+  Sound.setMode('VideoChat');
+  const SoundPlay = new Sound(sound, Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log("error loading sound", error);
+      return;
+    } else{
+      SoundPlay.play((success) => {
+        console.log(success);
+        if (success) {
+          console.log(success);
+        } else {
+          console.log('playback failed due to audio decoding errors');
+        }
+        SoundPlay.release();
+        Sound.setActive(false);
+      });
+    }
+  });
+};
+
 export default (SoundManager = {
   EndCall: new Sound(SOUNDS.END_CALL, Sound.MAIN_BUNDLE, error => {
     if (error) {
