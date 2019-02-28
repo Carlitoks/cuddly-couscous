@@ -524,8 +524,8 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
             dispatch(HandleEndCall(sessionID, REASON.TIMEOUT, token));
         } else {
           if (
-            contactLinguist.counter >= TIME.CALL_TIMEOUT ||
-            data.queue.declined === data.queue.total
+            contactLinguist.counter >= TIME.CALL_TIMEOUT
+            || (data.queue.total > 0 && data.queue.declined === data.queue.total)
           ) {
             timer.clearInterval("counterId");
             timer.clearInterval("verifyCallId");
