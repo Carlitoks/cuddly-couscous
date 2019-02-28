@@ -98,16 +98,13 @@ export class Session extends Component {
         // TODO: send local state
       },
       connectionDestroyed: (event) => {
-        // HACK
-        if (this.state.unmounting) {
-          console.log("RETURNING EARLY ON connectionDestroyed");
-          return;
-        }
-
         recordSessionTokboxEvent('session.connectionDestroyed', {
           event,
           sessionID: this.props.session.id
         });
+        if (this.unmounting) {
+          return;
+        }
         this.remoteUserState = newRemoteUserState();
         this.props.onRemoteUserDisconnected();
       },
@@ -136,6 +133,10 @@ export class Session extends Component {
           sessionID: this.props.session.id
         });
 
+        if (this.unmounting) {
+          return;
+        }
+        
         this.remoteUserState = {
           ...this.remoteUserState,
           streamID: null,
@@ -190,9 +191,6 @@ export class Session extends Component {
   componentDidMount () {
     // app state listener
     // netinfo listener
-    setTimeout(() => {
-      this.sendSignal("TEST", {foo: "bar"});
-    }, 5000);
   }
 
   componentWillUnmount () {
