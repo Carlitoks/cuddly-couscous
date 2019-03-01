@@ -7,7 +7,7 @@ import timer from "react-native-timer";
 import NoVideoScreen from "../../NoVideoScreen/NoVideoScreen";
 import CallAvatarName from "../../CallAvatarName/CallAvatarName";
 import { Publisher, Subscriber } from "../../";
-import SoundManager from "../../../Util/SoundManager";
+import SoundManager, {playSound} from "../../../Util/SoundManager";
 import {
   connectionConnectedEvent,
   connectionDisconnectEvent,
@@ -29,6 +29,8 @@ import { TOKBOX_APIKEY } from "../../../Config/env";
 
 import styles from "./styles";
 import { recordSessionTokboxEvent, recordSessionEvent } from "../../../Util/Forensics";
+import Sound from "react-native-sound";
+import {SOUNDS} from "../../../Util/Constants";
 
 class SessionBox extends Component {
   constructor(props) {
@@ -84,7 +86,7 @@ class SessionBox extends Component {
         recordSessionTokboxEvent('session.sessionReconnected', {sessionID: this.props.sessionID});
         console.log("SESSION RECONNECTED EVENT");
         //this.props.videoState(true);
-        SoundManager["Reconnected"].play();
+        playSound(SOUNDS.RECONNECTED);
         this.props.updateSettings({
           modalReconnect: false
         });

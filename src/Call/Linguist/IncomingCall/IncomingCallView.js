@@ -23,10 +23,11 @@ import styles from "./styles";
 import { Images, Colors } from "../../../Themes";
 import I18n from "../../../I18n/I18n";
 import SoundManager from "../../../Util/SoundManager";
-import { VIBRATE_PATTERN } from "../../../Util/Constants";
+import {SOUNDS, VIBRATE_PATTERN} from "../../../Util/Constants";
 import Permissions from "react-native-permissions";
 import { checkForAllPermissions } from "../../../Util/Permission";
 import Sound from "react-native-sound";
+import IncallManager from 'react-native-incall-manager';
 
 class IncomingCall extends Component {
   state = {
@@ -35,7 +36,7 @@ class IncomingCall extends Component {
     acceptIsDisabled: false,
     endIsDisabled: false,
     incomingCallRingTone: new Sound(
-      "elastic_musical5.wav",
+      SOUNDS.INCOMING_CALL,
       Sound.MAIN_BUNDLE,
       error => {
         if (error) {
@@ -91,6 +92,9 @@ class IncomingCall extends Component {
 
   startSound = async () => {
     await this.sleep(500);
+    Sound.setCategory("Playback", false);
+    Sound.setMode('Default');
+    Sound.setActive(true);
     this.state.incomingCallRingTone.setNumberOfLoops(-1);
     this.state.incomingCallRingTone.play();
   };
@@ -100,6 +104,7 @@ class IncomingCall extends Component {
     this.props.clearSettings();
     this.state.incomingCallRingTone.stop();
     this.state.incomingCallRingTone.release();
+    Sound.setActive(false);
   }
 
   changeButtonState(value, type) {
