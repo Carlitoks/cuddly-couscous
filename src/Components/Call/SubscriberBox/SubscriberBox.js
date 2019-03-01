@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, Alert } from "react-native";
 import { OTSubscriber as SubscriberTokbox } from "opentok-react-native";
-import SoundManager from "../../../Util/SoundManager";
+import SoundManager, {playSound} from "../../../Util/SoundManager";
 import I18n from "../../../I18n/I18n";
-import { SETTINGS, VIDEO_WARNING } from "../../../Util/Constants";
+import {SETTINGS, SOUNDS, VIDEO_WARNING} from "../../../Util/Constants";
 import {
   updateSettings as updateCustomerSettings,
   resetReconnectCounter
@@ -20,6 +20,7 @@ import {
 
 import styles from "./styles";
 import { recordSessionTokboxEvent } from "../../../Util/Forensics";
+import Sound from "react-native-sound";
 
 class SubscriberBox extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class SubscriberBox extends Component {
       disconnected: () => {
         recordSessionTokboxEvent('subscriber.disconnected', {sessionID: this.props.sessionID});
         console.log("DISCONNECTED EVENT");
-        SoundManager["Disconnected"].play();
+        playSound(SOUNDS.DISCONNECTED);
         this.props.update({
           modalReconnect: true
         });

@@ -25,7 +25,6 @@
 		0789580320C1D5BE002F5702 /* elastic_done3.wav in Frameworks */ = {isa = PBXBuildFile; fileRef = 078957D320C1D5BE002F5702 /* elastic_done3.wav */; };
 		0789580520C1D5CB002F5702 /* elastic_done5.wav in Frameworks */ = {isa = PBXBuildFile; fileRef = 0789580420C1D5CB002F5702 /* elastic_done5.wav */; };
 		079A46DBEB214E899A948026 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA03D84021B546C48F0FF00A /* OpenSans-Light.ttf */; };
-		079EBED7208854AE0024BBDA /* libRNInCallManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 079EBED8208854AE0024BBDA /* libRNInCallManager.a */; };
 		07ACDDC41FE6D74A00EDA234 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		07BCFE7120CAB24800A1F515 /* OTInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BCFE7020CAB24800A1F515 /* OTInstall.swift */; };
 		07EE05E120BF6A7E00BA592D /* elastic_done3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 07EE05E020BF6A7D00BA592D /* elastic_done3.wav */; };
@@ -75,6 +74,7 @@
 		88110E0721C9D18700C69A4F /* elastic_musical5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 88110DD521C9D18700C69A4F /* elastic_musical5.wav */; };
 		8820B63A21DD4AD3006014E3 /* NewSolo.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 07B9C2DE2019549A00BEA4A0 /* NewSolo.entitlements */; };
 		90BD70F45E5044A984881B22 /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9790D040E7C3467EA2231F81 /* SFProDisplay-Regular.otf */; };
+		A23934682225A4F6004EE1A7 /* libRNInCallManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 079EC07E208FA4E10024BBDA /* libRNInCallManager.a */; };
 		A992041920D9D2F100122220 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A992041820D9D2F100122220 /* libRNSound.a */; };
 		A997C09A20CBD4BD00F80149 /* incoming_call_notification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A997C09920CBD4BD00F80149 /* incoming_call_notification.mp3 */; };
 		A9ECA33420D33B97002B4DA7 /* GoogleService-Info.plist in Frameworks */ = {isa = PBXBuildFile; fileRef = A9ECA33220D33B79002B4DA7 /* GoogleService-Info.plist */; };
@@ -578,7 +578,7 @@
 				A9ECA33620D3439D002B4DA7 /* incoming_call_notification.mp3 in Frameworks */,
 				0789580520C1D5CB002F5702 /* elastic_done5.wav in Frameworks */,
 				0789580320C1D5BE002F5702 /* elastic_done3.wav in Frameworks */,
-				079EBED7208854AE0024BBDA /* libRNInCallManager.a in Frameworks */,
+				A23934682225A4F6004EE1A7 /* libRNInCallManager.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				07ACDDC41FE6D74A00EDA234 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -1106,7 +1106,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = ZBN2633FB9;
-						LastSwiftMigration = 930;
+						LastSwiftMigration = "";
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -1912,7 +1912,12 @@
 					"$(SRCROOT)/../node_modules/react-native-sound/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/**",
 				);
-				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited) $(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager $(SRCROOT)/../node_modules/react-native-image-picker/ios $(SRCROOT)/../node_modules/react-native-fcm/ios/**";
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
+					"$(SRCROOT)/../node_modules/react-native-fcm/ios/**",
+				);
 				INFOPLIST_FILE = NewSolo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1958,10 +1963,7 @@
 				INFOPLIST_FILE = NewSolo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gps.solo;
 				PRODUCT_NAME = NewSolo;
 				PROVISIONING_PROFILE_SPECIFIER = "";

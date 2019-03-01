@@ -49,6 +49,7 @@ import { PrivacyPolicyURI, TermsConditionsURI } from "../../Config/StaticViewsUR
 import Header from "../CustomerHome/Components/Header";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { moderateScale } from "../../Util/Scaling";
+import analytics from "@segment/analytics-react-native";
 
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
@@ -57,6 +58,11 @@ class RegisterScreen extends Component {
     const LocationPermission = await Permission.check('location');
     console.log(LocationPermission);
   };
+
+  componentDidMount () {
+    analytics.track("Product Added");
+  }
+
   isValidEmail = (text) => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(EMAIL_REGEX);

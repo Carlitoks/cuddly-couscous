@@ -22,7 +22,7 @@ import ModalReconnect from "../../../Components/ModalReconnect/ModalReconnect";
 import SessionControls from "../../../Components/SessionControls/SessionControls";
 import Slide from "../../../Effects/Slide/Slide";
 import CallTimer from "../../../Components/CallTimer/CallTimer";
-import SoundManager from "../../../Util/SoundManager";
+import SoundManager, {playSound} from "../../../Util/SoundManager";
 import I18n from "../../../I18n/I18n";
 import Instabug from "instabug-reactnative";
 
@@ -47,12 +47,13 @@ import {
   BackgroundCleanInterval,
   BackgroundStart
 } from "../../../Util/Background";
-import { REASON, TIME, STATUS_TOKBOX } from "../../../Util/Constants";
+import {REASON, TIME, STATUS_TOKBOX, SOUNDS} from "../../../Util/Constants";
 import ConnectingView from "../Connecting/ConnectingView";
 import { Fade } from "../../../Effects";
 import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
 import FCM from "react-native-fcm";
 import DeviceInfo from "react-native-device-info";
+import Sound from "react-native-sound";
 
 class LinguistView extends Component {
   constructor() {
@@ -79,7 +80,7 @@ class LinguistView extends Component {
     } else {
       InCallManager.getIsWiredHeadsetPluggedIn()
         .then(res => {
-          InCallManager.start({ media: "audio" });
+          InCallManager.start({ media: "video" });
           let isWiredHeadsetPluggedIn = res.isWiredHeadsetPluggedIn;
           if (isWiredHeadsetPluggedIn) {
             this.props.updateSettings({ speaker: false });
@@ -196,7 +197,7 @@ class LinguistView extends Component {
 
   closeCallLinguist = reason => {
     displayEndCall(() => {
-      SoundManager["EndCall"].play();
+      playSound(SOUNDS.END_CALL);
       this.props.closeCall(REASON.DONE);
     });
   };

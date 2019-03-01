@@ -78,7 +78,7 @@ export default (ENG = {
   connectNow: "Connect Now",
   connecting: "Connecting",
   contactingLinguist:
-    "Connecting you to a \nLanguage Jeenie in less \nthan 1 minute",
+    "Connecting you to a \nLanguage Jeenie in \napproximately 1 minute",
   continue: "Continue",
   continueUsingJeenie: "Continue Using Jeenie",
   continueForFree: "Continue",

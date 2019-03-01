@@ -4,7 +4,7 @@ import _sortBy from "lodash/sortBy";
 import { Vibration } from "react-native";
 import timer from "react-native-timer";
 import { GetSessionInfoLinguist } from "./SessionInfoReducer";
-import { REASON, STATUS_TOKBOX, TIME } from "../Util/Constants";
+import {REASON, SOUNDS, STATUS_TOKBOX, TIME} from "../Util/Constants";
 import { networkError } from "./NetworkErrorsReducer";
 import {modifyAVModePreference} from "./NewSessionReducer";
 import {
@@ -32,8 +32,9 @@ import {
   changeStatus,
   updateSettings as updateProfileLinguist
 } from "./ProfileLinguistReducer";
-import SoundManager from "../Util/SoundManager";
+import SoundManager, { playSound } from "../Util/SoundManager";
 import DeviceInfo from "react-native-device-info";
+import Sound from 'react-native-sound';
 
 const ACTIONS = {
   CLEAR: "activeSession/clear",
@@ -351,7 +352,6 @@ export const endSession = () => ({ type: ACTIONS.ENDSESSION });
 export const EndCall = (sessionID, reason, token) => dispatch => {
   return Sessions.EndSession(sessionID, reason, token)
     .then(response => {
-      console.log(response, sessionID, reason, token);
       if (reason === REASON.CANCEL) {
         dispatch(clear());
         dispatch(clearEvents());
@@ -508,9 +508,8 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
   Sessions.GetSessionInfoLinguist(sessionID, token)
     .then(response => {
       const { data } = response;
-
       if (data.status !== "assigned") {
-        if (contactLinguist.counter >= 55) {
+        if (contactLinguist.counter >= TIME.CALL_TIMEOUT) {
           timer.clearInterval("counterId");
           timer.clearInterval("verifyCallId");
           dispatch(resetCounter());
@@ -526,8 +525,8 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
             dispatch(HandleEndCall(sessionID, REASON.TIMEOUT, token));
         } else {
           if (
-            contactLinguist.counter >= 55 ||
-            data.queue.declined === data.queue.total
+            contactLinguist.counter >= TIME.CALL_TIMEOUT
+            || (data.queue.total > 0 && data.queue.declined === data.queue.total)
           ) {
             timer.clearInterval("counterId");
             timer.clearInterval("verifyCallId");
@@ -545,7 +544,7 @@ export const verifyCall = (sessionID, token) => (dispatch, getState) => {
           }
         }
       } else {
-        if (contactLinguist.counter >= 55) {
+        if (contactLinguist.counter >= TIME.CALL_TIMEOUT) {
           timer.clearInterval("counterId");
           timer.clearInterval("verifyCallId");
           dispatch(resetCounter());
@@ -641,13 +640,7 @@ export const startTimer = () => (dispatch, getState) => {
                   })
                 );
                 //Play Sound
-                SoundManager["ExtraTime"].play(success => {
-                  if (success) {
-                    //console.log("successfully finished playing");
-                  } else {
-                    console.log("playback failed due to audio decoding errors");
-                  }
-                });
+                playSound(SOUNDS.EXTRA_TIME);
                 displayTimeAlert(extraTime, event => {
                   dispatch(update(event));
                 });
@@ -704,7 +697,8 @@ export const closeCall = (reason, alert) => (dispatch, getState) => {
     dispatch(update({ modalReconnect: false }));
   }
 
-  SoundManager["EndCall"].play();
+  playSound(SOUNDS.END_CALL);
+
   if (reason !== "Abort") {
     if (activeSessionReducer.sessionID) {
       activeSessionReducer.sessionID &&
@@ -924,7 +918,7 @@ export const startTimerLinguist = () => (dispatch, getState) => {
 
 export const closeCallReconnect = reason => dispatch => {
   //CHECK
-  SoundManager["EndCall"].play();
+  playSound(SOUNDS.END_CALL);
   dispatch(update({ modalReconnect: false }));
   dispatch(sendSignal(REASON.DONE, "Ended by Linguist"));
   dispatch({ type: "RateView" });

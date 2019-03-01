@@ -14,14 +14,16 @@ import RateExperienceThumbs from "./RateExperienceThumbs";
 import WhatWasGood from "./WhatWasGood";
 import WhatCouldBeBetter from "./WhatCouldBeBetter";
 import { Images } from "../../Themes";
-import SoundManager from "../../Util/SoundManager";
+import SoundManager, {playSound} from "../../Util/SoundManager";
 import {
   changeStatus
 } from "../../Ducks/ProfileLinguistReducer";
+import Sound from "react-native-sound";
+import {SOUNDS} from "../../Util/Constants";
 
 class RateView extends Component {
   componentWillMount() {
-    SoundManager["EndCall"].play();
+    playSound(SOUNDS.END_CALL);
     this.props.changeStatus(true);
   }
   
