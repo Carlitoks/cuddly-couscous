@@ -13,11 +13,10 @@ MOBILE_APP_LINGUIST_REQUIRED_VERSION: ""
 MOBILE_APP_LINGUIST_SUGGESTED_VERSION: ""
 
 CLUSTER_LOADBALANCER_SOURCE_IP_ADDRESSES: [] #leave this alone for dev
+COUNTRY_CODE_BLACKLIST: []
 
 LOG_LEVEL: debug # debug|info|warn|error
-
-MOBILE_APP_PUSH_NOTIFICATION_SOUNDS:
-  linguistIncomingCall: "elastic_musical5.wav"
+LOG_FORMAT: json # json|logfmt
 
 POSTGRES_USER: solo-platform
 POSTGRES_PASS: solo-platform
@@ -64,6 +63,9 @@ INVITER_QUEUE_TIMEOUT: 10 # seconds
 
 FCM_ENABLED: false
 FCM_SERVER_KEY: replace-this-with-real-key
+
+PUSHY_ENABLED: false
+PUSHY_API_KEY: replace-this-with-real-key
 
 # mapping of channel to webhook URL.  Note that these don't have to
 # correspond to the actual Slack channel names - they are just keys
