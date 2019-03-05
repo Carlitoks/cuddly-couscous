@@ -668,19 +668,19 @@ export default (ENG = {
     homeCanIhelpYou: "Can I help you, {{name}}?",
     intro: {
       title: "Travel with Confidence",
-      description: "24/7 access to live, human translators for language help and cultural advice at the tap of a button.",
+      description: "On demand access to live, human translators for language help and cultural advice at the tap of a button.",
       button: "Continue"
     },
     allSet: "You're all set!",
     location: {
       title: "Enable Location",
-      description: "Jeenie works best when you share your location. To get the most out of Jeenie, turn on location services.",
+      description: "Sharing your location with Jeenie allows us to automatically recommend the right languages and human translators.",
       button: "Turn on Location Services",
       skip: "Skip"
     },
     notification: {
       title: "Enable Notifications",
-      description: "Turn on push notifications so Jeenie can keep you up-to-date.",
+      description: "Turning on push notifications allows Jeenie to alert you when relevant new services are available in your area.",
       button: "Turn on Notifications",
       skip: "Skip",
     },

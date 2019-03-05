@@ -17,7 +17,7 @@ export const ONLY_LETTER_REGEX = "^[a-zA-Z]+$";
 export const INVALID_NAME_REGEX = /[!@#\$%\^&\*\(\)'"\+-={}\[\];:\\\/\?\.,<>~`_\|0-9\s]+/gm;
 
 // TODO: refactor and remove these constants, any language options should be based off the lists in `src/Config/Languages.js`
-export const SUPPORTED_LANGS = ["eng", "cmn", "yue", "jpn"];
+export const SUPPORTED_LANGS = ["eng", "cmn", "yue", "jpn", 'spa'];
 
 //Set cost to 0 until free is up
 export const TIME_OPTIONS = [
