@@ -668,7 +668,7 @@ export default (ENG = {
     homeCanIhelpYou: "Can I help you, {{name}}?",
     intro: {
       title: "Travel with Confidence",
-      description: "On demand access to live, human translators for language help and cultural advice at the tap of a button.",
+      description: "On demand 24/7 access to live, human translators for language help and cultural advice at the tap of a button.",
       button: "Continue"
     },
     allSet: "You're all set!",
