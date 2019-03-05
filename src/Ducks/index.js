@@ -30,10 +30,12 @@ import tokbox from "./tokboxReducer";
 import userProfile from "./UserProfileReducer";
 import newSessionReducer from './NewSessionReducer';
 import onboardingReducer from './OnboardingReducer';
+import appConfigReducer from './AppConfigReducer';
 
 // Combine all the reducers
 const rootReducer = combineReducers({
   activeSessionReducer,
+  appConfigReducer,
   auth,
   callCustomerSettings,
   callHistory,

@@ -19,7 +19,9 @@ import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
 import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
+import { setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
+import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 
 class App extends Component {
   constructor(props) {
@@ -98,6 +100,7 @@ class App extends Component {
       .then(store => {
         const { auth } = store.getState();
         setAuthToken(auth.token);
+        setApiAuthToken(auth.token);
 
         this.setState({
           isLoggedIn: auth.isLoggedIn,
@@ -107,6 +110,10 @@ class App extends Component {
 
         if (auth.isLoggedIn) {
           store.dispatch(addListeners());
+
+          // things that should be reloaded periodically
+          // store.dispatch(loadConfig(true)).catch(console.log),
+          store.dispatch(loadSessionScenarios(true)).catch(console.log);
         }
       })
       .then(() => {

@@ -127,7 +127,6 @@ class ScrollVertical extends Component {
       this.state.tempValue = 0;
     }
     this.startAnimation();
-    console.log("lel");
   });
   }
 
