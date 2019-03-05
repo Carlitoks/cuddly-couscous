@@ -44,6 +44,7 @@ const getStore = () =>
           pushNotification: store.getState().pushNotification,
           onboardingRecord: store.getState().onboardingRecord,
           homeFlow: store.getState().homeFlow,
+          appConfigReducer: store.getState().appConfigReducer,
           onboardingReducer: {
             completedLocation: store.getState().onboardingReducer.completedLocation,
             completedNotification: store.getState().onboardingReducer.completedNotification,
