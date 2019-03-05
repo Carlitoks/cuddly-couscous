@@ -1879,7 +1879,6 @@ export const comingSoonCodes = [
   "pol",
   "por",
   "rus",
-  "spa",
   "swe",
   "tha",
   "tur",
@@ -1887,25 +1886,26 @@ export const comingSoonCodes = [
   "zsm"
 ];
 
-// languages available for session selection// TODO: export this config to replace SUPPORTED_LANGS
-export const supportedLangCodes = ["eng", "cmn", "yue", "jpn"];
+// languages available for session selection
+// TODO: export this config to replace SUPPORTED_LANGS
+export const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "spa"];
 
 // default secondary language for a given primary language
 export const DefaultLanguagePairMap = {
   eng: "cmn",
   cmn: "eng",
   yue: "eng",
-  jpn: "eng"
-  // spa: "eng",
+  jpn: "eng",
+  spa: "eng",
 };
 
 // allowed secondary language choices for each primary language
 export const AllowedLanguagePairs = {
-  eng: ["cmn", "yue", "jpn"],
+  eng: ["cmn", "yue", "jpn", "spa"],
   cmn: ["eng"],
   yue: ["eng"],
-  jpn: ["eng"]
-  // spa: ["eng"],
+  jpn: ["eng"],
+  spa: ["eng"],
 };
 
 // raw map of which language is the default selection for which countries
@@ -1929,8 +1929,8 @@ export const LangCountryMap = {
   ],
   cmn: ["cn", "tw", "sg"],
   yue: ["hk", "mo"],
-  jpn: ["jp"]
-  // 'spa': [], // TODO
+  jpn: ["jp"],
+  spa: [], // TODO
 };
 
 // optimized lookup map of country codes to target default language
