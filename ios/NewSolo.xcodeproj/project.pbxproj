@@ -75,6 +75,7 @@
 		8820B63A21DD4AD3006014E3 /* NewSolo.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 07B9C2DE2019549A00BEA4A0 /* NewSolo.entitlements */; };
 		90BD70F45E5044A984881B22 /* SFProDisplay-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9790D040E7C3467EA2231F81 /* SFProDisplay-Regular.otf */; };
 		A23934682225A4F6004EE1A7 /* libRNInCallManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 079EC07E208FA4E10024BBDA /* libRNInCallManager.a */; };
+		A2393552222F0CD3004EE1A7 /* elastic_musical5_extended.wav in Resources */ = {isa = PBXBuildFile; fileRef = A2393521222F0CD3004EE1A7 /* elastic_musical5_extended.wav */; };
 		A992041920D9D2F100122220 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A992041820D9D2F100122220 /* libRNSound.a */; };
 		A997C09A20CBD4BD00F80149 /* incoming_call_notification.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A997C09920CBD4BD00F80149 /* incoming_call_notification.mp3 */; };
 		A9ECA33420D33B97002B4DA7 /* GoogleService-Info.plist in Frameworks */ = {isa = PBXBuildFile; fileRef = A9ECA33220D33B79002B4DA7 /* GoogleService-Info.plist */; };
@@ -538,6 +539,7 @@
 		95FE2F137AA24B4C953B3FFB /* SFProDisplay-RegularItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProDisplay-RegularItalic.otf"; path = "../src/Assets/Fonts/SFProDisplay-RegularItalic.otf"; sourceTree = "<group>"; };
 		96C43E5743FC407292BFEE56 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		9790D040E7C3467EA2231F81 /* SFProDisplay-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SFProDisplay-Regular.otf"; path = "../src/Assets/Fonts/SFProDisplay-Regular.otf"; sourceTree = "<group>"; };
+		A2393521222F0CD3004EE1A7 /* elastic_musical5_extended.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = elastic_musical5_extended.wav; path = ../android/app/src/main/res/raw/elastic_musical5_extended.wav; sourceTree = "<group>"; };
 		A499BC0F9869464997E60350 /* AppCenter-Config.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "NewSolo/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		A678DE2936DF4F61B5F22B33 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		A8F3D9D6FC08440BB2801098 /* libOpenTokReactNative.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libOpenTokReactNative.a; sourceTree = "<group>"; };
@@ -847,6 +849,7 @@
 		736FFB2316BD40519032836C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A2393521222F0CD3004EE1A7 /* elastic_musical5_extended.wav */,
 				88110DD521C9D18700C69A4F /* elastic_musical5.wav */,
 				30EF032C1D104FA8AE075464 /* Entypo.ttf */,
 				67BDE58F472E461891436189 /* EvilIcons.ttf */,
@@ -1647,6 +1650,7 @@
 				90BD70F45E5044A984881B22 /* SFProDisplay-Regular.otf in Resources */,
 				707EEECD00914A33BE946150 /* AppCenter-Config.plist in Resources */,
 				30810F654474452497A52119 /* SFProDisplay-RegularItalic.otf in Resources */,
+				A2393552222F0CD3004EE1A7 /* elastic_musical5_extended.wav in Resources */,
 				1C5969BE89CF48E198AA1644 /* branch.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
