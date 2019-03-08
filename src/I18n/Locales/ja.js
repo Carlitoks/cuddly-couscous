@@ -78,7 +78,7 @@
   connectNow: "今すぐ接続",
   connecting: "接続中",
   contactingLinguist:
-    "1分以内に\nLanguage Jeenieに\nお繋ぎします",
+    "\nLanguage Jeenieに\nお繋ぎします - 約1分かかります",
   continue: "続ける",
   continueUsingJeenie: "Jeenieで続ける",
   continueForFree: "続ける",
@@ -234,7 +234,7 @@
   lauchScreenSwipe2:
     "世界のどこにいても、リアルタイムで、サポートが必要な言語を母国語とする通訳スタッフに連絡を取ることができます。",
   lauchScreenSwipe3:
-    "現在Jeenieでは、\n「標準中国語<>英語」\nと「日本語<>英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
+    "現在Jeenieでは、\n「標準中国語⇔英語」\nと「日本語⇔英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
   lauchScreenSwipe4:
     "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
   lauchScreenSwipe5:
@@ -264,6 +264,7 @@
   maxTimeLimit: "最長時間制限",
   minutesAbbreviation: "{{minutes}}分",
   minutes: "分",
+  seconds: "秒",
   missed: "不在着信",
   modifyPayment: "お支払い情報の変更",
   mute: "ミュート",
@@ -667,19 +668,19 @@
     homeCanIhelpYou: "{{name}}様、必要なサポートをお聞かせください。",
     intro: {
       title: "安心して旅行を楽しみましょう",
-      description: "ボタンをタップするだけで、24時間リアルタイムで機械ではなく実際の通訳スタッフが言語サポートや文化に関するアドバイスを提供いたします。",
+      description: "必要な時に、ボタンをタップするだけで、24時間リアルタイムで機械ではなく実際の通訳スタッフが言語サポートや文化に関するアドバイスを提供いたします。",
       button: "続ける"
     },
     allSet: "設定は完了です！",
     location: {
       title: "位置情報をオンに設定",
-      description: "位置情報をオンにするとJeenieの機能を最大限にご活用いただけます。Jeenieの機能を最大限にご活用いただくため、位置情報をオンにしてください。",
+      description: "位置情報をJeenieと共有することで、Jeenieによって適切な言語と通訳スタッフが自動的に提案されるようになります。",
       button: "位置情報をオンに設定",
       skip: "スキップ"
     },
     notification: {
       title: "通知をオンに設定",
-      description: "Jeenieより最新情報を通知いたしますのでプッシュ通知をオンにしてください。",
+      description: "プッシュ通知をオンに設定すると、ユーザーの現在地周辺エリアで新しいサービスが利用できるようになるとJeenieからの通知が表示されるようになります。",
       button: "通知をオンに設定",
       skip: "スキップ",
     },
