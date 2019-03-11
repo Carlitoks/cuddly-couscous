@@ -71,7 +71,7 @@ class OnboardingScreen extends Component {
               <View style={styles.bottomButtonsContainer} collapsable={false}>
                 <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
                 <Text style={styles.subtitleText}>
-                  {I18n.t('customerOnboarding.intro.description_onboard')}
+                  {I18n.t('customerOnboarding.intro.description')}
               </Text>
                 <OnboardingButtons navigation={navigation}/>
               </View>
@@ -79,7 +79,7 @@ class OnboardingScreen extends Component {
             <View style={styles.backgroundImageContainer} collapsable={false}>
               <Image style={styles.backgroundImage} source={backgroundImage}/>
             </View>
-            </View>          
+            </View>
       </ViewWrapper>
     );
   }

@@ -7,7 +7,7 @@ export default StyleSheet.create({
   wrapperContainer: {
     backgroundColor: 'white',
     flex: 1,
-    
+
   },
   mainOnboardingContainer: {
     flexDirection: 'column',
@@ -54,9 +54,9 @@ export default StyleSheet.create({
     bottom: 0,
   },
   backgroundImage: {
-    width: moderateScale(Metrics.width ,  0),
-    height: moderateScale(Metrics.height  ,  0),
-    resizeMode: 'stretch',
+    width: moderateScale(Metrics.width * 0.70, Metrics.width <= 320 ? 0.35 : 0),
+    height: moderateScale(Metrics.height * 0.70, Metrics.width <= 320 ? 0.35 : 0),
+    resizeMode: 'cover',
   },
   bottomButtonsContainer: { paddingBottom: moderateScale(20, 0) },
   gradientFullWidth: { width: '100%', zIndex: 10 }
