@@ -24,7 +24,7 @@ export default StyleSheet.create({
     alignItems: "center",
     flexGrow: 1
   },
-  inputContainer: { width: Metrics.width * 0.85, paddingTop: 10 },
+  inputContainer: { width: Metrics.width * 0.85, paddingTop: 20 },
   buttonContainer: {
     flexDirection: "column",
     alignItems: "center",
@@ -48,30 +48,30 @@ export default StyleSheet.create({
   },
   transitionButtonText: {
     textAlign: "center",
-    color: "#fff",
+    color: "#401674",
     fontFamily: Fonts.BoldFont,
     fontSize: Iphone5 ? 14 : moderateScale(17, 0),
     padding: Metrics.width * 0.02
   },
   registerAdviseText: {
     textAlign: "center",
-    color: "#fff",
+    color: "#666666",
     fontFamily: Fonts.BaseFont,
     fontSize: Iphone5 ? 14 : moderateScale(15, 0),
     paddingBottom: 20
   },
   termsAndConditionsText: {
     textAlign: "center",
-    color: "#fff",
+    color: "#666666",
     fontFamily: Fonts.BaseFont,
     fontSize: Iphone5 ? 10 : moderateScale(12, 0)
   },
   termsAndConditionsTextLink: {
     textAlign: "center",
-    color: "#fff",
+    color: "#666666",
     fontSize: Iphone5 ? 10 : moderateScale(12, 0),
     fontFamily: Fonts.BoldFont,
-    textDecorationLine: "underline",
+    //textDecorationLine: "underline",
     lineHeight: 20
   },
   createAccountPadding: { paddingTop: 24, width: Metrics.width },
@@ -130,13 +130,13 @@ export default StyleSheet.create({
     marginBottom: android ? 1 : 30
   },
   termsAndConditionsViewContainer: {
-    marginBottom: 15,
+    marginBottom: moderateScale(55, 0),
     flexDirection: "row",
     width: "100%",
     zIndex: 1000000000,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
-    marginLeft: 15,
+    marginLeft: 10,
     flexWrap: "wrap"
   },
   touchableLink: {
@@ -149,11 +149,11 @@ export default StyleSheet.create({
     color: "#333333",
     fontSize: moderateScale(20, 0),
     textAlign: "center",
-    paddingTop: moderateScale(20, 0),
+    paddingTop: moderateScale(60, 0),
     paddingBottom: moderateScale(20, 0)
   },
   topLogoContainer: {
-    marginTop: moderateScale(30),
+    marginTop: moderateScale(18),
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center"

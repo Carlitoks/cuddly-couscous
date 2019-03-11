@@ -369,8 +369,8 @@ class RegisterScreen extends Component {
                     </View>
                   </View>
                 </KeyboardAwareScrollView>
+                {this.renderPrivacyPolicyText()}
                 <View style={styles.buttonContainer}>
-                  {this.renderPrivacyPolicyText()}
                   <View style={styles.buttonWidthContainer}>
                     <TouchableOpacity
                       onPress={() => this.submit()}
