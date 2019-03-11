@@ -74,7 +74,7 @@ export default StyleSheet.create({
     //textDecorationLine: "underline",
     lineHeight: 20
   },
-  createAccountPadding: { paddingTop: 24, width: Metrics.width },
+  createAccountPadding: { paddingTop: Iphone5 ? 15 : 24, width: Metrics.width },
   registerButton: {
     minWidth: Metrics.width * 0.78,
     flexDirection: "row",
