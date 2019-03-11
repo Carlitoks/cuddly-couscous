@@ -142,7 +142,7 @@ class LoginScreen extends Component {
                   errorType === "emailNotFound" ? (
                     <FieldError navigation={navigation} />
                   ) : (
-                    <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>
+                    <Text style={styles.titleText}>{I18n.t("signIn")}</Text>
                   )}
                   <View style={styles.inputContainer}>
                     <View style={styles.inputViewContainer}>

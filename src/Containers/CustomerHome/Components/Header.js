@@ -32,7 +32,7 @@ export default class LinguistHeader extends Component {
       navigation.state.routeName === "LoginView"
     ) {
       return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("IntroView")}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
             <Icon name="chevron-left" type="evilicon" color="#401674" size={50} />
           </View>

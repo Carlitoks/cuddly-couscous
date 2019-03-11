@@ -41,8 +41,8 @@ class MenuView extends Component {
   }
 
   componentWillMount() {
-    const { firstName, lastName } = this.props;
-    if (!firstName && !lastName) {
+    const { firstName, lastName, isLoggedIn } = this.props;
+    if (!firstName && !lastName && isLoggedIn) {
       this.props.getProfileAsync(this.props.uuid, this.props.token);
     }
   }
@@ -228,7 +228,8 @@ const mS = state => ({
   avatarURL: state.userProfile.avatarURL,
   avatarBase64: state.userProfile.avatarBase64,
   uuid: state.auth.uuid,
-  token: state.auth.token
+  token: state.auth.token,
+  isLoggedIn: state.auth.isLoggedIn
 });
 
 const mD = {
