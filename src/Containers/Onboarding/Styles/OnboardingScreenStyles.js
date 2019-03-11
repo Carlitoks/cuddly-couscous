@@ -54,8 +54,8 @@ export default StyleSheet.create({
     bottom: 0,
   },
   backgroundImage: {
-    width: moderateScale(Metrics.width * 0.70, Metrics.width <= 320 ? 0.35 : 0),
-    height: moderateScale(Metrics.height * 0.70, Metrics.width <= 320 ? 0.35 : 0),
+    width: moderateScale(Metrics.width ,  0),
+    height: moderateScale(Metrics.height  ,  0),
     resizeMode: 'cover',
   },
   bottomButtonsContainer: { paddingBottom: moderateScale(20, 0) },
