@@ -669,6 +669,7 @@ export default (ENG = {
     intro: {
       title: "Travel with Confidence",
       description: "On demand 24/7 access to live, human translators for language help and cultural advice at the tap of a button.",
+      description_onboard: "24/7 access to live, human translators\n for languate help and cultural advice\n at the tap of a button.",
       button: "Continue"
     },
     allSet: "You're all set!",

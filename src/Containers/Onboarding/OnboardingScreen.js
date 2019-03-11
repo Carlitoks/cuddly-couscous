@@ -71,7 +71,7 @@ class OnboardingScreen extends Component {
               <View style={styles.bottomButtonsContainer} collapsable={false}>
                 <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
                 <Text style={styles.subtitleText}>
-                  {I18n.t('customerOnboarding.intro.description')}
+                  {I18n.t('customerOnboarding.intro.description_onboard')}
               </Text>
                 <OnboardingButtons navigation={navigation}/>
               </View>
