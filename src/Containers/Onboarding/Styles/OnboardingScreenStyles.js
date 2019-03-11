@@ -7,6 +7,7 @@ export default StyleSheet.create({
   wrapperContainer: {
     backgroundColor: 'white',
     flex: 1,
+    
   },
   mainOnboardingContainer: {
     flexDirection: 'column',
@@ -26,7 +27,7 @@ export default StyleSheet.create({
     flexGrow: 1,
   },
   topLogoContainer: {
-    marginTop: moderateScale(60),
+    marginTop: moderateScale(95),
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -44,17 +45,19 @@ export default StyleSheet.create({
     color: '#fff',
     fontSize: moderateScale(18, 0),
     textAlign: 'center',
-    maxWidth: moderateScale(317, 0)
+    maxWidth: moderateScale(317, 0),
+    paddingBottom: moderateScale(40, 0)
+
   },
   backgroundImageContainer: {
     position: 'absolute',
-    bottom: -40,
+    bottom: 0,
   },
   backgroundImage: {
-    width: moderateScale(Metrics.width * 0.70, Metrics.width <= 320 ? 0.35 : 0),
-    height: moderateScale(Metrics.height * 0.70, Metrics.width <= 320 ? 0.35 : 0),
-    resizeMode: 'contain',
+    width: moderateScale(Metrics.width  , Metrics.width <= 320 ? 0.35 : 0),
+    height: moderateScale(Metrics.height  , Metrics.width <= 320 ? 0.35 : 0),
+    resizeMode: 'stretch',
   },
-  bottomButtonsContainer: { paddingBottom: moderateScale(35, 0) },
+  bottomButtonsContainer: { paddingBottom: moderateScale(20, 0) },
   gradientFullWidth: { width: '100%', zIndex: 10 }
 });
