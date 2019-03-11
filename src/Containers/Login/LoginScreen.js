@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
@@ -16,13 +16,13 @@ import { Colors } from "../../Themes";
 import {
   ensureSessionDefaults,
   openSlideMenu,
-  updateLocation,
+  updateLocation
 } from "../../Ducks/NewSessionReducer";
 
 import {
   getNativeLang,
   getProfileAsync,
-  updateView as updateUserProfile,
+  updateView as updateUserProfile
 } from "../../Ducks/UserProfileReducer";
 import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
 import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer";
@@ -38,16 +38,16 @@ import FieldError from "../Register/Components/FieldError";
 import { noOnboarding, update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 import Header from "../CustomerHome/Components/Header";
 
-const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
+const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM-purple.png");
 
 class LoginScreen extends Component {
-  isValidEmail = (text) => {
+  isValidEmail = text => {
     const { updateOnboarding } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
     if (!reg.test(text)) {
       updateOnboarding({
         isValidEmail: false,
-        errorType: "emailFormat",
+        errorType: "emailFormat"
       });
     } else {
       updateOnboarding({ isValidEmail: true, errorType: null });
@@ -67,7 +67,7 @@ class LoginScreen extends Component {
       updateOnboarding,
       email,
       password,
-      noOnboarding,
+      noOnboarding
     } = this.props;
     try {
       updateOnboarding({ errorType: null, makingRequest: true });
@@ -75,18 +75,18 @@ class LoginScreen extends Component {
       const logInUserResponse = await logInAsync(email, password);
       const getUserProfile = await getProfileAsync(
         logInUserResponse.payload.uuid,
-        logInUserResponse.payload.token,
+        logInUserResponse.payload.token
       );
       await updateUserProfile({
-        selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode),
+        selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode)
       });
       const record = await checkRecord(email);
       if (record) {
         updateCustomer({ userInfo: { id: record.id } });
         Alert.alert(I18n.t("finishOnboarding"), I18n.t("finishOnboardingMessage"), [
           {
-            text: I18n.t("ok"),
-          },
+            text: I18n.t("ok")
+          }
         ]);
 
         updateOnboarding({ makingRequest: false });
@@ -99,17 +99,17 @@ class LoginScreen extends Component {
     } catch (err) {
       if (err.data.errors[0] === "Password incorrect") {
         updateOnboarding({
-          errorType: "signInError",
+          errorType: "signInError"
         });
       }
 
       if (err.data.errors[0] === "Email not found") {
         updateOnboarding({
-          errorType: "emailNotFound",
+          errorType: "emailNotFound"
         });
       }
       updateOnboarding({
-        makingRequest: false,
+        makingRequest: false
       });
     }
   };
@@ -122,14 +122,14 @@ class LoginScreen extends Component {
       errorType,
       email,
       password,
-      updateOnboarding,
+      updateOnboarding
     } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={[styles.mainContainer]}>
             <LinearGradient
-              colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
+              colors={["white", "white"]}
               locations={[0, 1]}
               style={styles.fullHeight}
             >
@@ -137,9 +137,9 @@ class LoginScreen extends Component {
               <View style={styles.loginContainer}>
                 <View style={styles.topLogoContainer}>
                   <Image source={JeenieLogo} />
-                  {errorType === "signInError"
-                  || errorType === "emailFormat"
-                  || errorType === "emailNotFound" ? (
+                  {errorType === "signInError" ||
+                  errorType === "emailFormat" ||
+                  errorType === "emailNotFound" ? (
                     <FieldError navigation={navigation} />
                   ) : (
                     <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>
@@ -156,7 +156,7 @@ class LoginScreen extends Component {
                           onBlur={() => this.isValidEmail(email)}
                           value={email}
                           placeholder={I18n.t("email")}
-                          placeholderTextColor="rgba(255,255,255,0.5)"
+                          placeholderTextColor="#303033"
                           keyboardType="email-address"
                         />
                         {errorType === "signInError" || errorType === "emailFormat" ? (
@@ -184,7 +184,7 @@ class LoginScreen extends Component {
                           value={password}
                           placeholder={I18n.t("password")}
                           secureTextEntry
-                          placeholderTextColor="rgba(255,255,255,0.5)"
+                          placeholderTextColor="#303033"
                         />
                         {errorType === "signInError" ? (
                           <View style={styles.errorIconContainer}>
@@ -196,9 +196,10 @@ class LoginScreen extends Component {
                       </View>
 
                       <Text
-                        onPress={() => navigation.dispatch({
-                          type: "ForgotPasswordView",
-                        })
+                        onPress={() =>
+                          navigation.dispatch({
+                            type: "ForgotPasswordView"
+                          })
                         }
                         style={styles.forgotPasswordLabel}
                       >
@@ -218,20 +219,28 @@ class LoginScreen extends Component {
                           : styles.signInButtonEnabled
                       }
                     >
-                      <Text style={styles.buttonEnabledText}>{I18n.t("signIn")}</Text>
+                      <Text
+                        style={[
+                          styles.buttonEnabledText,
+                          !isValidEmail || makingRequest || (!email || !password)
+                            ? { color: "#C4C4C4" }
+                            : { color: "white" }
+                        ]}
+                      >
+                        {I18n.t("signIn")}
+                      </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                      onPress={() => navigation.dispatch({
-                        type: "RegisterView",
-                      })
+                      onPress={() =>
+                        navigation.dispatch({
+                          type: "RegisterView"
+                        })
                       }
                       style={styles.createAccountPadding}
                     >
                       <Text style={styles.transitionButtonText}>
-                        {I18n.t("customerOnboarding.register.createAnAccount")}
-                        {" "}
-»
+                        {I18n.t("customerOnboarding.register.createAnAccount")} »
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -258,7 +267,7 @@ const mS = state => ({
   password: state.onboardingReducer.password,
   errorType: state.onboardingReducer.errorType,
   makingRequest: state.onboardingReducer.makingRequest,
-  isValidEmail: state.onboardingReducer.isValidEmail,
+  isValidEmail: state.onboardingReducer.isValidEmail
 });
 
 const mD = {
@@ -275,10 +284,10 @@ const mD = {
   getNativeLang,
   checkRecord,
   updateOnboarding,
-  noOnboarding,
+  noOnboarding
 };
 
 export default connect(
   mS,
-  mD,
+  mD
 )(LoginScreen);
