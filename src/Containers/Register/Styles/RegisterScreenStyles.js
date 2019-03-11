@@ -74,7 +74,7 @@ export default StyleSheet.create({
     //textDecorationLine: "underline",
     lineHeight: 20
   },
-  createAccountPadding: { paddingTop: Iphone5 ? 15 : 24, width: Metrics.width },
+  createAccountPadding: { paddingTop: 24, width: Metrics.width },
   registerButton: {
     minWidth: Metrics.width * 0.78,
     flexDirection: "row",
@@ -130,7 +130,7 @@ export default StyleSheet.create({
     marginBottom: android ? 1 : 30
   },
   termsAndConditionsViewContainer: {
-    marginBottom: moderateScale(55, 0),
+    marginTop: Iphone5 ? moderateScale(10, 0) : moderateScale(25, 0),
     flexDirection: "row",
     width: "100%",
     zIndex: 1000000000,

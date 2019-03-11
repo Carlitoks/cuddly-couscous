@@ -56,7 +56,7 @@ const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM-purple.png");
 class RegisterScreen extends Component {
   componentWillMount = async () => {
     const LocationPermission = await Permission.check("location");
-    console.log(LocationPermission);
+    //console.log(LocationPermission);
   };
 
   componentDidMount() {
@@ -368,8 +368,9 @@ class RegisterScreen extends Component {
                       </View>
                     </View>
                   </View>
+                  {this.renderPrivacyPolicyText()}
                 </KeyboardAwareScrollView>
-                {this.renderPrivacyPolicyText()}
+
                 <View style={styles.buttonContainer}>
                   <View style={styles.buttonWidthContainer}>
                     <TouchableOpacity
