@@ -24,7 +24,7 @@ export default StyleSheet.create({
     width: Metrics.width * 0.85,
     borderBottomWidth: 1,
     borderBottomColor: "#303033",
-    color: "#000",
+    color: "#000000",
     fontFamily: Fonts.BoldFont,
     fontSize: Metrics.height <= 568 ? 16 : moderateScale(18, 0)
   },

@@ -95,7 +95,7 @@ export default StyleSheet.create({
   signInButtonDisable: {
     minWidth: Metrics.width * 0.78,
     backgroundColor: Colors.transparent,
-    borderColor: "#303033",
+    borderColor: "#C4C4C4",
     borderWidth: 1,
     borderRadius: 30,
     alignItems: "center",

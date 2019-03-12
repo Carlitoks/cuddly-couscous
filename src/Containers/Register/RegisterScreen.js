@@ -272,98 +272,117 @@ class RegisterScreen extends Component {
 
               <ScrollView contentContainerStyle={styles.registerContainer}>
                 <KeyboardAwareScrollView enableOnAndroid={true}>
-                <View style={styles.topLogoContainer}>
-                  <Image source={JeenieLogo} />
-                  {errorType ? <FieldError navigation={navigation} /> : <Text style={styles.titleText}>{I18n.t("customerOnboarding.login.title")}</Text>}
-                  <View style={styles.inputContainer}>
-                    <View style={styles.inputViewContainer}>
-                      {firstName ? (
-                        <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
-                      ) : (
-                        <Text />
-                      )}
-                      <View style={styles.inputsErrorContainer}>
-                        <TextInput
-                          allowFontScaling={false}
-                          style={styles.inputText}
-                          onChangeText={text => this.validateFirstName(text)}
-                          onSubmitEditing={() => { this.secondTextInput.focus(); }}
-                          blurOnSubmit={false}
-                          value={firstName}
-                          placeholder={I18n.t("firstname")}
-                          placeholderTextColor="#303033"
-                          returnKeyType="done"
-                        />
-                        {errorType === "firstNameFormat" ? (
-                          <View style={styles.errorIconContainer}>
-                            <Icon name="close" type="material-community" color="white" size={15} />
-                          </View>
+                  <View style={styles.topLogoContainer}>
+                    <Image source={JeenieLogo} />
+                    {errorType ? (
+                      <FieldError navigation={navigation} />
+                    ) : (
+                      <Text style={styles.titleText}>
+                        {I18n.t("customerOnboarding.login.title")}
+                      </Text>
+                    )}
+                    <View style={styles.inputContainer}>
+                      <View style={styles.inputViewContainer}>
+                        {firstName ? (
+                          <Text style={styles.labelText}>{I18n.t("firstname")}</Text>
                         ) : (
-                          <React.Fragment />
+                          <Text />
                         )}
+                        <View style={styles.inputsErrorContainer}>
+                          <TextInput
+                            allowFontScaling={false}
+                            style={styles.inputText}
+                            onChangeText={text => this.validateFirstName(text)}
+                            onSubmitEditing={() => {
+                              this.secondTextInput.focus();
+                            }}
+                            blurOnSubmit={false}
+                            value={firstName}
+                            placeholder={I18n.t("firstname")}
+                            placeholderTextColor="#C4C4C4"
+                            returnKeyType="done"
+                          />
+                          {errorType === "firstNameFormat" ? (
+                            <View style={styles.errorIconContainer}>
+                              <Icon
+                                name="close"
+                                type="material-community"
+                                color="white"
+                                size={15}
+                              />
+                            </View>
+                          ) : (
+                            <React.Fragment />
+                          )}
+                        </View>
                       </View>
-                    </View>
 
-                    <View style={styles.inputViewContainer}>
-                      {email ? <Text style={styles.labelText}>{I18n.t("email")}</Text> : <Text />}
-                      <View style={styles.inputsErrorContainer}>
-                        <TextInput
-                          ref={(input) => { this.secondTextInput = input; }}
-                          allowFontScaling={false}
-                          autoCapitalize="none"
-                          style={styles.inputText}
-                          onChangeText={text => this.isValidEmail(text)}
-                          onBlur={() => this.isValidEmail(email)}
-                          onSubmitEditing={() => { this.ThirdTextInput.focus(); }}
-                          blurOnSubmit={false}
-                          value={email}
-                          placeholder={I18n.t("email")}
-                          placeholderTextColor="#303033"
-                          keyboardType="email-address"
-                          returnKeyType="done"
-                        />
-                        {errorType === "emailFormat" || errorType === "AlreadyRegistered" ? (
-                          <View style={styles.errorIconContainer}>
-                            <Icon name="close" type="material-community" color="#fff" size={15} />
-                          </View>
-                        ) : (
-                          <React.Fragment />
-                        )}
+                      <View style={styles.inputViewContainer}>
+                        {email ? <Text style={styles.labelText}>{I18n.t("email")}</Text> : <Text />}
+                        <View style={styles.inputsErrorContainer}>
+                          <TextInput
+                            ref={input => {
+                              this.secondTextInput = input;
+                            }}
+                            allowFontScaling={false}
+                            autoCapitalize="none"
+                            style={styles.inputText}
+                            onChangeText={text => this.isValidEmail(text)}
+                            onBlur={() => this.isValidEmail(email)}
+                            onSubmitEditing={() => {
+                              this.ThirdTextInput.focus();
+                            }}
+                            blurOnSubmit={false}
+                            value={email}
+                            placeholder={I18n.t("email")}
+                            placeholderTextColor="#C4C4C4"
+                            keyboardType="email-address"
+                            returnKeyType="done"
+                          />
+                          {errorType === "emailFormat" || errorType === "AlreadyRegistered" ? (
+                            <View style={styles.errorIconContainer}>
+                              <Icon name="close" type="material-community" color="#fff" size={15} />
+                            </View>
+                          ) : (
+                            <React.Fragment />
+                          )}
+                        </View>
                       </View>
-                    </View>
 
-                    <View style={styles.inputViewContainer}>
-                      {password ? (
-                        <Text style={styles.labelText}>
-                          {I18n.t("customerOnboarding.register.password")}
-                        </Text>
-                      ) : (
-                        <Text />
-                      )}
-                      <View style={styles.inputsErrorContainer}>
-                        <TextInput
-                          ref={(input) => { this.ThirdTextInput = input; }}
-                          allowFontScaling={false}
-                          style={styles.inputText}
-                          onChangeText={text => this.validatePassword(text)}
-                          autoCapitalize="none"
-                          value={password}
-                          placeholder={I18n.t("customerOnboarding.register.password")}
-                          secureTextEntry
-                          placeholderTextColor="#303033"
-                          returnKeyType="done"
-                        />
-                        {errorType === "passwordLength" ? (
-                          <View style={styles.errorIconContainer}>
-                            <Icon name="close" type="material-community" color="#fff" size={15} />
-                          </View>
+                      <View style={styles.inputViewContainer}>
+                        {password ? (
+                          <Text style={styles.labelText}>
+                            {I18n.t("customerOnboarding.register.password")}
+                          </Text>
                         ) : (
-                          <React.Fragment />
+                          <Text />
                         )}
+                        <View style={styles.inputsErrorContainer}>
+                          <TextInput
+                            ref={input => {
+                              this.ThirdTextInput = input;
+                            }}
+                            allowFontScaling={false}
+                            style={styles.inputText}
+                            onChangeText={text => this.validatePassword(text)}
+                            autoCapitalize="none"
+                            value={password}
+                            placeholder={I18n.t("customerOnboarding.register.password")}
+                            secureTextEntry
+                            placeholderTextColor="#C4C4C4"
+                            returnKeyType="done"
+                          />
+                          {errorType === "passwordLength" ? (
+                            <View style={styles.errorIconContainer}>
+                              <Icon name="close" type="material-community" color="#fff" size={15} />
+                            </View>
+                          ) : (
+                            <React.Fragment />
+                          )}
+                        </View>
                       </View>
                     </View>
                   </View>
-                </View>
                   {this.renderPrivacyPolicyText()}
                 </KeyboardAwareScrollView>
 

@@ -156,7 +156,7 @@ class LoginScreen extends Component {
                           onBlur={() => this.isValidEmail(email)}
                           value={email}
                           placeholder={I18n.t("email")}
-                          placeholderTextColor="#303033"
+                          placeholderTextColor="#C4C4C4"
                           keyboardType="email-address"
                         />
                         {errorType === "signInError" || errorType === "emailFormat" ? (
@@ -184,7 +184,7 @@ class LoginScreen extends Component {
                           value={password}
                           placeholder={I18n.t("password")}
                           secureTextEntry
-                          placeholderTextColor="#303033"
+                          placeholderTextColor="#C4C4C4"
                         />
                         {errorType === "signInError" ? (
                           <View style={styles.errorIconContainer}>
