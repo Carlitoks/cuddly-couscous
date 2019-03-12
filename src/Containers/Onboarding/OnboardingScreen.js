@@ -64,18 +64,25 @@ class OnboardingScreen extends Component {
     return (
       <ViewWrapper style={styles.wrapperContainer}>
       <View style={[styles.mainOnboardingContainer]} collapsable={false}>
+
           <View style={styles.bodyContainer}>
+      
             <View style={styles.topLogoContainer} collapsable={false}>
               <Image source={JeenieLogo}/>
             </View>
+      <LinearGradient colors={[ "rgba(196, 196, 196, 0) 0%" , "rgba(0, 0, 0, 0.22) 42.54%"]} style={styles.gradientContainer} >
+
               <View style={styles.bottomButtonsContainer} collapsable={false}>
+
                 <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
                 <Text style={styles.subtitleText}>
                   {I18n.t('customerOnboarding.intro.description_onboard')}
               </Text>
-                <OnboardingButtons navigation={navigation}/>
               </View>
+                <OnboardingButtons navigation={navigation}/>
+          </LinearGradient>
           </View>
+
             <View style={styles.backgroundImageContainer} collapsable={false}>
               <Image style={styles.backgroundImage} source={backgroundImage}/>
             </View>

@@ -24,7 +24,8 @@ export default StyleSheet.create({
     zIndex: 10
   },
   gradientContainer: {
-    flexGrow: 1,
+    flex: 1,
+  justifyContent: 'flex-end',
   },
   topLogoContainer: {
     marginTop: moderateScale(95),
@@ -43,11 +44,11 @@ export default StyleSheet.create({
   subtitleText: {
     fontFamily: Fonts.BaseFont,
     color: '#fff',
-    fontSize: moderateScale(18, 0),
+    fontSize: moderateScale(16, 0),
     textAlign: 'center',
     maxWidth: moderateScale(317, 0),
-    paddingBottom: moderateScale(40, 0)
-
+    paddingBottom: moderateScale(40, 0),
+    fontWeight: 'bold'
   },
   backgroundImageContainer: {
     position: 'absolute',
