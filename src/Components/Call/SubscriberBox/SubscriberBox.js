@@ -46,7 +46,7 @@ class SubscriberBox extends Component {
       disconnected: () => {
         recordSessionTokboxEvent('subscriber.disconnected', {sessionID: this.props.sessionID});
         console.log("DISCONNECTED EVENT");
-        playSound(SOUNDS.DISCONNECTED);
+        //playSound(SOUNDS.DISCONNECTED);
         this.props.update({
           modalReconnect: true
         });
