@@ -14,7 +14,7 @@ import {
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
-import { Colors } from "../../Themes";
+import { Colors, Metrics } from "../../Themes";
 import {
   ensureSessionDefaults,
   modifyAVModePreference,

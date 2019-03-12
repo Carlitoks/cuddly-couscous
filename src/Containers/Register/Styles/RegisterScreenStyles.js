@@ -3,7 +3,9 @@ import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale } from "../../../Util/Scaling";
 import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
 
+//const { width, height } = Dimensions.get("window");
 const android = Platform.OS === "android";
+
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
@@ -16,7 +18,7 @@ export default StyleSheet.create({
     borderBottomColor: "#303033",
     color: "#000000",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 16 : moderateScale(18, 0)
+    fontSize: Metrics.height <= 568 ? 16 : moderateScale(18, 0)
   },
   registerContainer: {
     flexDirection: "column",
@@ -64,7 +66,7 @@ export default StyleSheet.create({
     textAlign: "center",
     color: "#666666",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? 10 : moderateScale(12, 0)
+    fontSize: Metrics.height <= 568 ? 10 : moderateScale(12, 0)
   },
   termsAndConditionsTextLink: {
     textAlign: "center",
@@ -130,7 +132,7 @@ export default StyleSheet.create({
     marginBottom: android ? 1 : 30
   },
   termsAndConditionsViewContainer: {
-    marginTop: Iphone5 ? moderateScale(10, 0) : moderateScale(25, 0),
+    marginTop: Metrics.height <= 568 ? moderateScale(10, 0) : moderateScale(25, 0),
     flexDirection: "row",
     width: "100%",
     zIndex: 1000000000,

@@ -26,7 +26,7 @@ export default StyleSheet.create({
     borderBottomColor: "#303033",
     color: "#000",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 16 : moderateScale(18, 0)
+    fontSize: Metrics.height <= 568 ? 16 : moderateScale(18, 0)
   },
   loginContainer: {
     flexDirection: "column",
@@ -61,7 +61,12 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent
   },
   buttonEnabledText: {
-    ...setTextProperties("#C4C4C4", Fonts.BoldFont, Iphone5 ? 14 : moderateScale(17, 0), null),
+    ...setTextProperties(
+      "#C4C4C4",
+      Fonts.BoldFont,
+      Metrics.height <= 568 ? 14 : moderateScale(17, 0),
+      null
+    ),
     textAlign: "center",
     paddingTop: Metrics.width * 0.05,
     paddingBottom: Metrics.width * 0.05,
@@ -69,7 +74,12 @@ export default StyleSheet.create({
     paddingRight: Metrics.width * 0.05
   },
   transitionButtonText: {
-    ...setTextProperties("#401674", Fonts.BoldFont, Iphone5 ? 14 : moderateScale(17, 0), null),
+    ...setTextProperties(
+      "#401674",
+      Fonts.BoldFont,
+      Metrics.height <= 568 ? 14 : moderateScale(17, 0),
+      null
+    ),
     textAlign: "center"
   },
   createAccountPadding: { paddingTop: 24, width: Metrics.width },
