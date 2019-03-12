@@ -291,7 +291,7 @@ class RegisterScreen extends Component {
                           blurOnSubmit={false}
                           value={firstName}
                           placeholder={I18n.t("firstname")}
-                          placeholderTextColor="rgba(255,255,255,0.7)"
+                          placeholderTextColor="#303033"
                           returnKeyType="done"
                         />
                         {errorType === "firstNameFormat" ? (
