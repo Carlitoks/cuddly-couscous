@@ -1,4 +1,4 @@
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, StateUtils } from "react-navigation";
 import AppNavigation from "../Navigation/AppNavigation";
 import Instabug from "instabug-reactnative";
 import analytics from "@segment/analytics-react-native";
@@ -134,6 +134,34 @@ export default (reducer = (state, action) => {
           index: 0,
           actions: [
             NavigationActions.navigate({ routeName: "NameCustomerView" })
+          ]
+        })
+      );
+      break;
+
+    case "LoginView":
+      analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ routeName: 'IntroView' }),
+            NavigationActions.navigate({ routeName: "LoginView" })
+          ]
+        })
+      );
+      break;
+
+    case "RegisterView":
+      analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ routeName: 'IntroView' }),
+            NavigationActions.navigate({ routeName: "RegisterView" })
           ]
         })
       );
