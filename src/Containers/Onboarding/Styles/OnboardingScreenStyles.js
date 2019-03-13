@@ -25,7 +25,9 @@ export default StyleSheet.create({
   },
   gradientContainer: {
     flex: 1,
-  justifyContent: 'flex-end',
+    justifyContent: 'flex-end',
+    height: "75%",
+    width: "100%"
   },
   topLogoContainer: {
     marginTop: moderateScale(95),
@@ -46,7 +48,6 @@ export default StyleSheet.create({
     color: '#fff',
     fontSize: moderateScale(16, 0),
     textAlign: 'center',
-    maxWidth: moderateScale(317, 0),
     paddingBottom: moderateScale(40, 0),
     fontWeight: 'bold'
   },

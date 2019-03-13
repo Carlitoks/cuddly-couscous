@@ -70,7 +70,7 @@ class OnboardingScreen extends Component {
             <View style={styles.topLogoContainer} collapsable={false}>
               <Image source={JeenieLogo}/>
             </View>
-      <LinearGradient colors={[ "rgba(196, 196, 196, 0) 0%" , "rgba(0, 0, 0, 0.22) 42.54%"]} style={styles.gradientContainer} >
+          <LinearGradient colors={[ "rgba(196, 196, 196, 0) 0%" , "rgba(0, 0, 0, 0.22) 42.54%"]} style={styles.gradientContainer} >
 
               <View style={styles.bottomButtonsContainer} collapsable={false}>
 
