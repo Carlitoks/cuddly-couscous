@@ -134,7 +134,7 @@ export default StyleSheet.create({
   termsAndConditionsViewContainer: {
     marginTop: Metrics.height <= 568 ? moderateScale(10, 0) : moderateScale(25, 0),
     flexDirection: "row",
-    width: "100%",
+    width: "90%",
     zIndex: 1000000000,
     justifyContent: "center",
     alignItems: "center",
