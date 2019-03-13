@@ -64,7 +64,7 @@ export default StyleSheet.create({
   backgroundImage: {
     width: moderateScale(Metrics.width ,  0),
     height: moderateScale(Metrics.height  ,  0),
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
   },
   backgroundOpacity: {opacity: 0.5},
   gradientFullWidth: { width: '100%', zIndex: 10 }
