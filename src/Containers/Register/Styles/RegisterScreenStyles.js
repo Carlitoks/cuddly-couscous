@@ -15,10 +15,10 @@ export default StyleSheet.create({
   inputText: {
     width: Metrics.width * 0.85,
     borderBottomWidth: 1,
-    borderBottomColor: "#303033",
+    borderBottomColor: "#C4C4C4",
     color: "#000000",
     fontFamily: Fonts.BoldFont,
-    fontSize: Metrics.height <= 568 ? 16 : moderateScale(18, 0)
+    fontSize: moderateScale(18, 0)
   },
   registerContainer: {
     flexDirection: "column",

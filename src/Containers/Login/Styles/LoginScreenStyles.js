@@ -23,7 +23,7 @@ export default StyleSheet.create({
   inputText: {
     width: Metrics.width * 0.85,
     borderBottomWidth: 1,
-    borderBottomColor: "#303033",
+    borderBottomColor: "#C4C4C4",
     color: "#000000",
     fontFamily: Fonts.BoldFont,
     fontSize: Metrics.height <= 568 ? 16 : moderateScale(18, 0)
@@ -85,7 +85,7 @@ export default StyleSheet.create({
   createAccountPadding: { paddingTop: 24, width: Metrics.width },
   inputViewContainer: { flexDirection: "column", paddingTop: 10 },
   labelStyle: {
-    ...setTextProperties("#fff", Fonts.ItalicFont, moderateScale(13, 0), "400"),
+    ...setTextProperties("#401674", Fonts.ItalicFont, moderateScale(13, 0), "400"),
     paddingLeft: 3
   },
   inputInternalContainer: {
@@ -108,7 +108,7 @@ export default StyleSheet.create({
     marginBottom: android ? 1 : 30
   },
   forgotPasswordLabel: {
-    ...setTextProperties("#fff", Fonts.ItalicFont, moderateScale(14, 0), "400"),
+    ...setTextProperties("#401674", Fonts.ItalicFont, moderateScale(14, 0), "400"),
     paddingLeft: 5,
     paddingRight: 5,
     textAlign: "right",

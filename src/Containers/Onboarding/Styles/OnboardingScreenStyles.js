@@ -49,7 +49,9 @@ export default StyleSheet.create({
     fontSize: moderateScale(16, 0),
     textAlign: 'center',
     paddingBottom: moderateScale(40, 0),
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    paddingLeft: 23,
+    paddingRight: 23
   },
   backgroundImageContainer: {
     position: 'absolute',
@@ -60,6 +62,6 @@ export default StyleSheet.create({
     height: moderateScale(Metrics.height  ,  0),
     resizeMode: 'cover',
   },
-  bottomButtonsContainer: { paddingBottom: moderateScale(20, 0) },
+  bottomButtonsContainer: { paddingBottom: moderateScale(26, 0) },
   gradientFullWidth: { width: '100%', zIndex: 10 }
 });

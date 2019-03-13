@@ -66,7 +66,7 @@ class OnboardingScreen extends Component {
       <View style={[styles.mainOnboardingContainer]} collapsable={false}>
 
           <View style={styles.bodyContainer}>
-      
+
             <View style={styles.topLogoContainer} collapsable={false}>
               <Image source={JeenieLogo}/>
             </View>
@@ -76,10 +76,10 @@ class OnboardingScreen extends Component {
 
                 <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
                 <Text style={styles.subtitleText}>
-                  {I18n.t('customerOnboarding.intro.description_onboard')}
+                  {I18n.t('customerOnboarding.intro.description')}
               </Text>
-              </View>
                 <OnboardingButtons navigation={navigation}/>
+              </View>
           </LinearGradient>
           </View>
 
