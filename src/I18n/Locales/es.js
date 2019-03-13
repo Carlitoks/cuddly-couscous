@@ -4,9 +4,9 @@ export default (ESP = {
     "Debe habilitar los permisos del micrófono y de la cámara en la configuración para hacer una llamada con Jeenie.",
   acceptAllPermissionsLinguist:
     "Debe aceptar los permisos del micrófono y de la cámara en sus configuraciones antes de poder aceptar una llamada entrante.",
-  add: "Añadir",
-  addANewCard: "Añadir una nueva tarjeta...",
-  addLanguage: "Añadir idioma",
+  add: "Agregar",
+  addANewCard: "Agregar una nueva tarjeta...",
+  addLanguage: "Agregar idioma",
   airport: "Aeropuerto",
   alignQRCode: "Alinear el código QR dentro del marco",
   all: "Todos",
@@ -78,7 +78,7 @@ export default (ESP = {
   connectNow: "Conectarse ahora",
   connecting: "Conectando",
   contactingLinguist:
-    "Lo comunicaremos con un \nLanguage Jeenie en menos \nde 1 minuto",
+    "Lo comunicaremos con un \nLanguage Jeenie en \naproximadamente 1 minuto",
   continue: "Continuar",
   continueUsingJeenie: "Continuar usando Jeenie",
   continueForFree: "Continuar",
@@ -264,6 +264,7 @@ export default (ESP = {
   maxTimeLimit: "Límite de tiempo máximo",
   minutesAbbreviation: "{{minutes}} min",
   minutes: "minutos",
+  seconds: "segundos",
   missed: "Llamadas perdidas",
   modifyPayment: "Modificar información de pago",
   mute: "Silenciar",
@@ -320,7 +321,7 @@ export default (ESP = {
   provideFeedbackModalTitle: "¿Necesita más tiempo con Jeenie?",
   provideFeedbackModalText:
     "Proporcione comentarios sobre su \nexperiencia usando Jeenie, y \nle daremos \n¡10 minutos adicionales SIN CARGO!",
-  provideFeedbackViewPlaceholder: "Añada sus comentarios aquí",
+  provideFeedbackViewPlaceholder: "Agregue sus comentarios aquí",
   provideFeedbackViewTitle: "Díganos cómo podemos mejorar la experiencia de Jeenie:",
   qr: "Código QR",
   quicklyContact: "Póngase en contacto rápidamente con un lingüista",
@@ -342,7 +343,7 @@ export default (ESP = {
   saveContinue: "Guardar y continuar",
   scanQR: "Escanear QR",
   scanQRCode: "Escanear código QR",
-  scenarioNotes: "Añadir información adicional aquí",
+  scenarioNotes: "Agregar información adicional aquí",
   schedule: "Programar",
   scheduleLinguist: "Programar un lingüista",
   search: "Buscar",
@@ -393,7 +394,7 @@ export default (ESP = {
   thankYou: " Gracias",
   thankYouFeedback: " Gracias por sus comentarios",
   thankYouFeedbackModalText:
-    "Hemos añadido \n10 minutos adicionales para que usted \ncontinúe usando Jeenie.",
+    "Hemos agregado \n10 minutos adicionales para que usted \ncontinúe usando Jeenie.",
   theCallWillEnd: "La llamada terminará después de {{minutes}} minutos",
   undefined: "Indefinido",
   unspecified: "No especificado",
@@ -667,19 +668,19 @@ export default (ESP = {
     homeCanIhelpYou: "¿Puedo ayudarlo, {{name}}?",
     intro: {
       title: "Viaje con confianza",
-      description: "Acceda las 24 horas del día, los 7 días de la semana, a traductores en vivo para obtener ayuda con idiomas y asesoramiento cultural con solo tocar un botón.",
+      description: "Acceda a pedido las 24 horas del día, los 7 días de la semana, a traductores en vivo para obtener ayuda con idiomas y asesoramiento cultural con solo tocar un botón.",
       button: "Continuar"
     },
     allSet: "¡Listo!",
     location: {
       title: "Habilitar la ubicación",
-      description: "Jeenie funciona mejor cuando comparte su ubicación. Para aprovechar al máximo Jeenie, active los servicios de ubicación.",
+      description: "Compartir su ubicación con Jeenie nos permitirá recomendarle automáticamente los idiomas y traductores en vivo adecuados para usted.",
       button: "Activar los servicios de ubicación",
       skip: "Omitir"
     },
     notification: {
       title: "Habilitar las notificaciones",
-      description: "Activar notificación push para que Jeenie pueda mantenerlo informado.",
+      description: "Activar las notificaciones push le permite a Jeenie alertarlo cuando hay nuevos servicios relevantes disponibles en su área.",
       button: "Activar las notificaciones",
       skip: "Omitir",
     },

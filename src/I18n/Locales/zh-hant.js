@@ -78,7 +78,7 @@
   connectNow: "立即連線",
   connecting: "連線中",
   contactingLinguist:
-    "將在 1 分鐘內為您接通\n語言翻譯精靈\n",
+    "大約 1 分鐘後將接通\n語言翻譯精靈\n",
   continue: "繼續",
   continueUsingJeenie: "繼續使用翻譯精靈",
   continueForFree: "繼續",
@@ -86,7 +86,7 @@
   compliments: "{{organizer}} 贈送 {{minutes}} 分鐘",
   complimentsOf: "{{organizer}}請客",
   complimentMinutes:
-    "增加了 {{organizer}} 贈送的 {{maxMinutesPerUser}} 分鐘",
+    "{{organizer}} 慷慨餽贈，增加了 {{maxMinutesPerUser}} 分鐘",
   minutesAdded: "已增加分鐘數",
   invalidCode: "代碼無效",
   invalidCodeMsg: "{{message}}",
@@ -105,7 +105,7 @@
   disableExtraTime: "不願意延長時間",
   dining: "餐廳",
   discountsOffered:
-    "購買高通話量分鐘數可享折扣\n\n。",
+    "購買高通話量\n分鐘數可享\n折扣。",
   discountsOfferedAlternative:
     "預購分鐘數可享折扣\n ",
   duration: "時長",
@@ -234,7 +234,7 @@
   lauchScreenSwipe2:
     "無論置身世上何處，都能即時與精通外語的真人通話。",
   lauchScreenSwipe3:
-    "翻譯精靈目前支援\n中文（普通話） <> 英文\n以及日文 <> 英文。\n\n即將推出其他語言。",
+    "翻譯精靈目前支援\n中文（普通話）<> 英文\n以及日本 <> 英文。\n\n即將推出其他語言。",
   lauchScreenSwipe4:
     "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
   lauchScreenSwipe5:
@@ -264,6 +264,7 @@
   maxTimeLimit: "時間上限",
   minutesAbbreviation: "{{minutes}} 分鐘",
   minutes: "分鐘",
+  seconds: "秒",
   missed: "未接",
   modifyPayment: "修改付款資訊",
   mute: "靜音",
@@ -587,7 +588,7 @@
       hasMinutesNoCard:
         "若要在剩餘分鐘數用完後繼續通話，請立即輸入付款資訊。",
       noMinutesHasCard:
-        "我們會自動使用您的銀行卡扣款，每分鐘收費 1 美元。",
+        "我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
       noMinutesNoCard:
         "您必須立即新增付款資訊，才能和語言專員通話。"
     },
@@ -667,19 +668,19 @@
     homeCanIhelpYou: "{{name}}，需要幫忙嗎？",
     intro: {
       title: "放心旅行",
-      description: "24 小時全天候，只要按一下按鈕，隨時有真人譯者提供語言協助和文化建議。",
+      description: "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助和文化建議。",
       button: "繼續"
     },
     allSet: "準備好了！",
     location: {
       title: "啟用位置",
-      description: "如果您分享位置資訊，翻譯精靈能發揮最佳功能。為善用翻譯精靈，請開啟位置服務。",
+      description: "若您與翻譯精靈分享所在位置，我們就能自動推薦正確的語言和真人譯者。",
       button: "開啟位置服務",
       skip: "略過"
     },
     notification: {
       title: "啟用通知",
-      description: "開啟推播通知後，翻譯精靈才能讓您隨時掌握最新消息。",
+      description: "開啟推播通知後，只要您所在地區出現相關的新服務，翻譯精靈便會提醒您。",
       button: "開啟通知",
       skip: "略過",
     },

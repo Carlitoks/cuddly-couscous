@@ -78,7 +78,7 @@
   connectNow: "立即连接",
   connecting: "正在连接",
   contactingLinguist:
-    "1 分钟内\n可为您接通\n语言翻译精灵",
+    "约 1 分钟内\n可为您接通\n语言翻译精灵",
   continue: "继续",
   continueUsingJeenie: "继续使用翻译精灵",
   continueForFree: "继续",
@@ -86,7 +86,7 @@
   compliments: "{{organizer}} 赠送 {{minutes}} 分钟",
   complimentsOf: "{{organizer}}请客",
   complimentMinutes:
-    "增加了 {{organizer}} 赠送的 {{maxMinutesPerUser}} 分钟",
+    "{{organizer}} 慷慨赠送 {{maxMinutesPerUser}} 分钟",
   minutesAdded: "分钟数已增加",
   invalidCode: "代码无效",
   invalidCodeMsg: "{{message}}",
@@ -234,7 +234,7 @@
   lauchScreenSwipe2:
     "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
-    "目前，翻译精灵支持\n中文（普通话） <> 英语\n和日语 <> 英语。\n\n即将推出其他语言。",
+    "目前，翻译精灵支持\n中文（普通话）<>英语\n和日语<>英语。\n\n即将推出其他语言。",
   lauchScreenSwipe4:
     "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
   lauchScreenSwipe5:
@@ -264,6 +264,7 @@
   maxTimeLimit: "最大时限",
   minutesAbbreviation: "{{minutes}} 分钟",
   minutes: "分钟",
+  seconds: "秒",
   missed: "未接来电",
   modifyPayment: "修改付款信息",
   mute: "静音",
@@ -432,7 +433,8 @@
 
   loading: {
     tagline: "您要求的语言"
-  }, 
+  },
+  
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -586,7 +588,7 @@
       hasMinutesNoCard:
         "若要在剩余的分钟数用尽后继续通话，请立即输入付款信息。",
       noMinutesHasCard:
-        "我们将自动向您的银行卡扣款，收费为每分钟 1 美元。",
+        "我们将自动向您的卡片扣款，收费为每分钟 1 美元。",
       noMinutesNoCard:
         "您必须立即添加付款信息，才能连接至语言专家。"
     },
@@ -666,19 +668,19 @@
     homeCanIhelpYou: "{{name}}，有什么能够帮您的吗？",
     intro: {
       title: "无忧旅行",
-      description: "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助及文化建议。",
+      description: "轻轻一点，24 小时全天候真人译员实时在线按需提供语言帮助及文化建议。",
       button: "继续"
     },
     allSet: "设置完成！",
     location: {
       title: "启用定位",
-      description: "共享位置可让翻译精灵为您提供更好的服务。为最大限度地发挥翻译精灵的功能，请打开定位服务。",
+      description: "允许翻译精灵访问您的位置可使我们能够为您自动推荐合适的真人译员。",
       button: "打开定位服务",
       skip: "跳过"
     },
     notification: {
       title: "启用通知",
-      description: "打开推送通知，掌握翻译精灵最新动态。",
+      description: "打开推送通知可使翻译精灵在您所在地域推出新服务时及时告知您。",
       button: "打开通知",
       skip: "跳过",
     },
