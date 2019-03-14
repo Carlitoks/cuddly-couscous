@@ -18,7 +18,9 @@ export default StyleSheet.create({
     borderBottomColor: "#C4C4C4",
     color: "#000000",
     fontFamily: Fonts.BoldFont,
-    fontSize: moderateScale(18, 0)
+    fontSize: moderateScale(18, 0),
+    paddingVertical: Iphone5 ? 4 : moderateScale(7, 0),
+
   },
   registerContainer: {
     flexDirection: "column",
@@ -134,7 +136,7 @@ export default StyleSheet.create({
   termsAndConditionsViewContainer: {
     marginTop: Metrics.height <= 568 ? moderateScale(10, 0) : moderateScale(25, 0),
     flexDirection: "row",
-    width: "90%",
+    width: "95%",
     zIndex: 1000000000,
     justifyContent: "center",
     alignItems: "center",
