@@ -105,15 +105,17 @@ class PermissionButtons extends Component {
   };
 
   pressReturn = () => {
-    const { navigation } = this.props;
+    const { navigation, updateOnboarding } = this.props;
     if (navigation.state.routeName === "LocationPermissionView") {
       if (Platform.OS === "android") {
+        updateOnboarding({ completedLocation: true });
         return navigation.dispatch({ type: "Home" });
       }
       return navigation.dispatch({ type: "Home" });
     }
 
     if (navigation.state.routeName === "NotificationPermissionView") {
+      updateOnboarding({ completedNotification: true });
       return navigation.dispatch({ type: "Home" });
     }
     return navigation.dispatch({ type: "Home" });

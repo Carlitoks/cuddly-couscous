@@ -163,7 +163,7 @@ export default (ENG = {
   finishOnboarding: "Finish onboarding",
   finishOnboardingMessage:
     "Please finish your registration in order to use the app",
-  firstname: "First name",
+  firstname: "First Name",
   firstnameFormatValidation: "First name must be only letters.",
   fluent: "Fluent",
   forgotPassword: "Reset Your Password",
@@ -434,7 +434,7 @@ export default (ENG = {
   loading: {
     tagline: "Language at Your Command"
   },
-  
+
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -699,7 +699,7 @@ export default (ENG = {
     register: {
       createAnAccount: "Create Account",
       alreadyAccount: "Already have an account? Sign in",
-      password: "Create password"
+      password: "Create Password"
     },
     errors: {
       invalidEmail: "Please enter a valid email address",

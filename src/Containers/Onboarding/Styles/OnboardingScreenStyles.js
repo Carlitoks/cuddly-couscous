@@ -7,6 +7,7 @@ export default StyleSheet.create({
   wrapperContainer: {
     backgroundColor: 'white',
     flex: 1,
+
   },
   mainOnboardingContainer: {
     flexDirection: 'column',
@@ -23,10 +24,13 @@ export default StyleSheet.create({
     zIndex: 10
   },
   gradientContainer: {
-    flexGrow: 1,
+    flex: 1,
+    justifyContent: 'flex-end',
+    height: "75%",
+    width: "100%"
   },
   topLogoContainer: {
-    marginTop: moderateScale(60),
+    marginTop: moderateScale(95),
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -42,19 +46,22 @@ export default StyleSheet.create({
   subtitleText: {
     fontFamily: Fonts.BaseFont,
     color: '#fff',
-    fontSize: moderateScale(18, 0),
+    fontSize: moderateScale(16, 0),
     textAlign: 'center',
-    maxWidth: moderateScale(317, 0)
+    paddingBottom: moderateScale(40, 0),
+    fontWeight: 'bold',
+    paddingLeft: 23,
+    paddingRight: 23
   },
   backgroundImageContainer: {
     position: 'absolute',
-    bottom: -40,
+    bottom: 0,
   },
   backgroundImage: {
-    width: moderateScale(Metrics.width * 0.70, Metrics.width <= 320 ? 0.35 : 0),
-    height: moderateScale(Metrics.height * 0.70, Metrics.width <= 320 ? 0.35 : 0),
-    resizeMode: 'contain',
+    width: moderateScale(Metrics.width ,  0),
+    height: moderateScale(Metrics.height  ,  0),
+    resizeMode: 'cover',
   },
-  bottomButtonsContainer: { paddingBottom: moderateScale(35, 0) },
+  bottomButtonsContainer: { paddingBottom: moderateScale(26, 0) },
   gradientFullWidth: { width: '100%', zIndex: 10 }
 });

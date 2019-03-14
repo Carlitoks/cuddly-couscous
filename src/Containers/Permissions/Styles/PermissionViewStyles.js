@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { ApplicationStyles, Fonts } from '../../../Themes';
+import { ApplicationStyles, Fonts, Metrics } from '../../../Themes';
 import { moderateScale } from '../../../Util/Scaling';
 
 export default StyleSheet.create({
@@ -44,7 +44,9 @@ export default StyleSheet.create({
     top: moderateScale(248, 0)
   },
   backgroundImage: { width: moderateScale(286, 0) },
-  bottomButtonsContainer: { paddingBottom: moderateScale(35, 0), alignItems: 'center' },
+  bottomButtonsContainer: { paddingBottom: moderateScale(35, 0), alignItems: 'center',flex: 1,
+  justifyContent: 'flex-end',
+  marginBottom: 15},
   allSet: {
     fontFamily: Fonts.BaseFont,
     color: '#fff',
@@ -54,6 +56,15 @@ export default StyleSheet.create({
   },
   fullBackgroundCover: {
     width: '100%', height: '100%'
+  },
+  backgroundImageContainer: {
+    position: 'absolute',
+    bottom: 0,
+  },
+  backgroundImage: {
+    width: moderateScale(Metrics.width ,  0),
+    height: moderateScale(Metrics.height  ,  0),
+    resizeMode: 'cover',
   },
   backgroundOpacity: {opacity: 0.5},
   gradientFullWidth: { width: '100%', zIndex: 10 }

@@ -86,7 +86,7 @@ class SessionBox extends Component {
         recordSessionTokboxEvent('session.sessionReconnected', {sessionID: this.props.sessionID});
         console.log("SESSION RECONNECTED EVENT");
         //this.props.videoState(true);
-        playSound(SOUNDS.RECONNECTED);
+        //playSound(SOUNDS.RECONNECTED);
         this.props.updateSettings({
           modalReconnect: false
         });
@@ -253,7 +253,7 @@ const mS = state => ({
   counterId: state.contactLinguist.counterId,
   isConnectedToInternet: state.activeSessionReducer.isConnectedToInternet,
   publisherSubscriberError: state.activeSessionReducer.publisherSubscriberError,
-  video: state.activeSessionReducer.video, 
+  video: state.activeSessionReducer.video,
   avModePreference: state.newSessionReducer.session.avModePreference
 });
 

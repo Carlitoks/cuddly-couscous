@@ -14,7 +14,7 @@ import I18n from '../../I18n/I18n';
 import Permissions from "react-native-permissions";
 
 const JeenieLogo = require('../../Assets/Images/Landing-Jeenie-TM.png');
-const backgroundImage = require('../../Assets/Images/LocationViewBackground.jpg');
+const backgroundImage = require('../../Assets/Images/LocationViewBackground.png');
 
 class LocationPermissionView extends Component {
 
@@ -45,26 +45,15 @@ class LocationPermissionView extends Component {
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
-          <LinearGradient
-            colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-            locations={[0, 1]}
-            style={styles.gradientContainer}
-          >
-            <ImageBackground source={backgroundImage} imageStyle={styles.backgroundOpacity}
-                             style={[styles.fullBackgroundCover, styles.gradientContainer]}>
+            <View style={styles.backgroundImageContainer} collapsable={false}>
+              <Image style={styles.backgroundImage} source={backgroundImage}/>
+            </View>
               <View style={styles.topLogoContainer}>
                 <Image source={JeenieLogo}/>
                 {Platform.OS === 'android' ? <Text style={styles.allSet}>
                   {I18n.t('customerOnboarding.allSet')}
                 </Text> : <React.Fragment/>}
               </View>
-              <View style={styles.backgroundImageContainer}>
-              </View>
-              <LinearGradient
-                colors={[Colors.bottomOnboardingGradient.top, Colors.bottomOnboardingGradient.bottom]}
-                locations={[0.067, 0.99]}
-                style={styles.gradientFullWidth}
-              >
               <View style={styles.bottomButtonsContainer}>
                 <Text style={styles.titleText}>{I18n.t('customerOnboarding.location.title')}</Text>
                 <Text style={styles.subtitleText}>
@@ -72,9 +61,6 @@ class LocationPermissionView extends Component {
                 </Text>
                 <PermissionButtons navigation={navigation} check={'Location'}/>
               </View>
-              </LinearGradient>
-            </ImageBackground>
-          </LinearGradient>
         </View>
       </ViewWrapper>
     );

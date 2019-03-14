@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import {
-  View, TouchableOpacity, StatusBar, Keyboard,
-} from "react-native";
+import { View, TouchableOpacity, StatusBar, Keyboard } from "react-native";
 import { Header, Icon } from "react-native-elements";
 import { QR, NavMenu, CloseIcon } from "../../../Assets/SVG";
 import { Colors } from "../../../Themes";
@@ -14,8 +12,8 @@ export default class LinguistHeader extends Component {
   renderTitle = () => {
     const { navigation } = this.props;
     if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
+      navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "LoginView"
     ) {
       return null;
     }
@@ -30,13 +28,13 @@ export default class LinguistHeader extends Component {
       );
     }
     if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
+      navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "LoginView"
     ) {
       return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("IntroView")}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
-            <Icon name="chevron-left" type="evilicon" color="#fff" size={50} />
+            <Icon name="chevron-left" type="evilicon" color="#401674" size={50} />
           </View>
         </TouchableOpacity>
       );
@@ -61,8 +59,8 @@ export default class LinguistHeader extends Component {
     }
 
     if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
+      navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "LoginView"
     ) {
       return (
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
@@ -81,15 +79,15 @@ export default class LinguistHeader extends Component {
   renderHeaderInnerStyles = () => {
     const { navigation } = this.props;
     if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
+      navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "LoginView"
     ) {
       return styles.headerInner;
     }
     return styles.headerInnerHome;
   };
 
-  navigate = (screenName) => {
+  navigate = screenName => {
     const { navigation } = this.props;
     Keyboard.dismiss();
     navigation.dispatch({ type: screenName });

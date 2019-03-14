@@ -13,7 +13,7 @@ import OnboardingButtons from './Components/OnboardingButtons';
 import I18n from '../../I18n/I18n';
 
 const JeenieLogo = require('../../Assets/Images/Landing-Jeenie-TM.png');
-const backgroundImage = require('../../Assets/Images/IphonexV1.png');
+const backgroundImage = require('../../Assets/Images/IphonexV1.1.png');
 
 class OnboardingScreen extends Component {
   componentWillMount = async() => {
@@ -63,36 +63,30 @@ class OnboardingScreen extends Component {
     const {navigation} = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
-        <LinearGradient
-          collapsable={false}
-          colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-          locations={[0, 1]}
-          style={styles.gradientContainer}
-        >
-        <View style={[styles.mainOnboardingContainer]} collapsable={false}>
+      <View style={[styles.mainOnboardingContainer]} collapsable={false}>
+
           <View style={styles.bodyContainer}>
+
             <View style={styles.topLogoContainer} collapsable={false}>
               <Image source={JeenieLogo}/>
-              <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
-              <Text style={styles.subtitleText}>
-                {I18n.t('customerOnboarding.intro.description')}
-              </Text>
             </View>
-            <LinearGradient
-              colors={[Colors.bottomOnboardingGradient.top, Colors.bottomOnboardingGradient.bottom]}
-              locations={[0.067, 0.99]}
-              style={styles.gradientFullWidth}
-            >
+          <LinearGradient colors={[ "rgba(196, 196, 196, 0) 0%" , "rgba(0, 0, 0, 0.22) 42.54%"]} style={styles.gradientContainer} >
+
               <View style={styles.bottomButtonsContainer} collapsable={false}>
+
+                <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
+                <Text style={styles.subtitleText}>
+                  {I18n.t('customerOnboarding.intro.description')}
+              </Text>
                 <OnboardingButtons navigation={navigation}/>
               </View>
-            </LinearGradient>
+          </LinearGradient>
           </View>
+
             <View style={styles.backgroundImageContainer} collapsable={false}>
               <Image style={styles.backgroundImage} source={backgroundImage}/>
             </View>
-        </View>
-        </LinearGradient>
+            </View>
       </ViewWrapper>
     );
   }

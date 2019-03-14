@@ -640,7 +640,7 @@ export const startTimer = () => (dispatch, getState) => {
                   })
                 );
                 //Play Sound
-                playSound(SOUNDS.EXTRA_TIME);
+                //playSound(SOUNDS.EXTRA_TIME);
                 displayTimeAlert(extraTime, event => {
                   dispatch(update(event));
                 });
@@ -826,8 +826,8 @@ export const asyncAcceptsInvite = (
                   })
                 );
                 dispatch(
-                  modifyAVModePreference({ 
-                    avModePreference: res.data.session.avModePreference 
+                  modifyAVModePreference({
+                    avModePreference: res.data.session.avModePreference
                   })
                   );
                 dispatch(
