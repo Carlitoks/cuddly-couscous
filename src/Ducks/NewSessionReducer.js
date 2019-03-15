@@ -4,8 +4,19 @@ import {
   SupportedLanguages,
   ComingSoonLanguages,
   AllowedLanguagePairs,
-  FilterLangsByCodes
+  FilterLangsByCodes, LanguagesRollover
 } from "../Config/Languages";
+import timer from "react-native-timer";
+import { REASON, SOUNDS } from "../Util/Constants";
+import { resetCounter, updateSettings as updateContactLinguist } from "./ContactLinguistReducer";
+import { BackgroundCleanInterval } from "../Util/Background";
+import { cleanNotifications } from "../Util/PushNotification";
+import { playSound } from "../Util/SoundManager";
+import {
+  HandleEndCall,
+  resetTimerAsync,
+  update as updateActieSessionReducer
+} from "./ActiveSessionReducer";
 
 const ACTIONS = {
   CLEAR: "newSession/clear",
@@ -80,7 +91,10 @@ export const cleanReducerAndKeepLangConfig = payload => (
     primaryLangCode: currentSession.primaryLangCode,
     secondaryLangCode: currentSession.secondaryLangCode
   };
-  newState = { ...initialState, session: newSession };
+  newState = {
+    ...initialState,
+    session: newSession
+  };
   dispatch(cleanAndKeep(newState));
 };
 
@@ -151,6 +165,35 @@ export const swapCurrentSessionLanguages = () => (dispatch, getState) => {
   dispatch(swapLanguages(currentSessionState));
 };
 
+export const switchCallLang = (reason) => (dispatch, getState) => {
+  const { contactLinguist, activeSessionReducer, auth } = getState();
+  const { primaryLangCode, secondaryLangCode } = getState().newSessionReducer.session;
+  try {
+    timer.clearInterval("counterId");
+    timer.clearInterval("timer");
+    timer.clearInterval("verifyCallId");
+    dispatch(
+      updateContactLinguist({
+        modalContact: false
+      })
+    );
+    dispatch(resetCounter());
+    BackgroundCleanInterval(activeSessionReducer.timer);
+    dispatch(resetTimerAsync());
+    cleanNotifications();
+    dispatch(updateActieSessionReducer({ modalReconnect: false }));
+    const currentSessionState = {
+      ...getState().newSessionReducer.session,
+      secondaryLangCode: LanguagesRollover[secondaryLangCode] ? LanguagesRollover[secondaryLangCode] : secondaryLangCode,
+      primaryLangCode: LanguagesRollover[primaryLangCode] ? LanguagesRollover[primaryLangCode] : primaryLangCode
+    };
+
+    dispatch(swapLanguages(currentSessionState));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const initialState = {
   // this should map exactly to the data structure for `POST /sessions`
   // this is the object you pass to `ActiveSessionReducer.createAndJoinSession()` when the session
@@ -209,7 +252,10 @@ const newSessionReducer = (state = initialState, action = {}) => {
       };
     }
     case ACTIONS.CLOSE_SLIDE_MENU: {
-      return { ...state, isSlideUpMenuVisible: false };
+      return {
+        ...state,
+        isSlideUpMenuVisible: false
+      };
     }
     case ACTIONS.CHANGE_SESSION_LANG_CODE: {
       return {
@@ -219,13 +265,22 @@ const newSessionReducer = (state = initialState, action = {}) => {
       };
     }
     case ACTIONS.MODIFY_ADDITIONAL_INFO: {
-      return { ...state, session: payload };
+      return {
+        ...state,
+        session: payload
+      };
     }
     case ACTIONS.MODIFY_LOCATION: {
-      return { ...state, session: payload };
+      return {
+        ...state,
+        session: payload
+      };
     }
     case ACTIONS.SWAP_LANGUAGES: {
-      return { ...state, session: payload };
+      return {
+        ...state,
+        session: payload
+      };
     }
     case ACTIONS.CLEAN_AND_KEEP_LANG: {
       return { ...initialState, ...payload };

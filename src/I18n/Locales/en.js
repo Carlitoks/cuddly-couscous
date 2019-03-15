@@ -390,6 +390,7 @@ export default (ENG = {
   tryAgain: "Try again",
   tryAnother: "Try Another Jeenie",
   tryToReconnect: "Try to Reconnect",
+  tryAnotherLang: "Try {{lang}}",
   troubleshoot: "Troubleshoot",
   thankYou: " Thank You",
   thankYouFeedback: " Thank You for your feedback",

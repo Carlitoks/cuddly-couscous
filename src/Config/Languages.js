@@ -2150,3 +2150,7 @@ export const InterfaceSupportedLanguages = [
     name: "Español"
   }
 ];
+
+export const LanguagesRollover = {
+  "yue": "cmn"
+};
