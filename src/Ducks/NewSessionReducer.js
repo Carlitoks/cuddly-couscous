@@ -45,6 +45,7 @@ export const update = payload => {
 };
 
 export const openSlideMenu = payload => {
+  console.log(payload);
   return {
     type: ACTIONS.OPEN_SLIDE_MENU,
     payload
@@ -81,10 +82,7 @@ export const cleanAndKeep = payload => ({
   payload
 });
 
-export const cleanReducerAndKeepLangConfig = payload => (
-  dispatch,
-  getState
-) => {
+export const cleanReducerAndKeepLangConfig = payload => (dispatch, getState) => {
   const currentSession = getState().newSessionReducer.session;
   newSession = {
     ...initialState.session,
