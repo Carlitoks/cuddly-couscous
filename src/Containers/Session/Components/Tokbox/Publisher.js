@@ -23,6 +23,7 @@ export class Publisher extends Component {
           event,
           sessionID: this.props.session.id
         });
+        this.props.onError();
       },
       streamCreated: (event) => {
         recordSessionTokboxEvent('publisher.streamCreated', {
@@ -30,13 +31,14 @@ export class Publisher extends Component {
           sessionID: this.props.session.id
         });
 
-        // TODO: update localUserState with streamID & connectionID
+        this.props.onStreamCreated(event);
       },
       streamDestroyed: (event) => {
         recordSessionTokboxEvent('publisher.streamDestroyed', {
           event,
           sessionID: this.props.session.id
         });
+        this.props.onStreamDestroyed();
       }
     };
 

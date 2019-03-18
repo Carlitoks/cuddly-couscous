@@ -92,14 +92,13 @@ export class UserConnecting extends Component {
     });
 
     // did we timeout?
-    if (this.countdown <= 0) {
-      const ru = this.props.remoteUser;
-      const mc = this.props.connection;
-  
+    if (this.countdown <= 0) {  
       const {connection, remoteUserState} = this.props;
+      const lc = connection;
+      const rc = remoteUserState.connection
 
       // have we still not connected?
-      if (!mc.connected || mc.connecting) {
+      if (!lc.connected || lc.connecting) {
         this.error("failure_local");
         return;
       }
@@ -109,6 +108,8 @@ export class UserConnecting extends Component {
         this.error("failure_remote");
         return;
       }
+
+      // TODO: maybe we connected, but aren't receiving data yet, need to track the initial receipt of a/v
 
       // default case - assume failure on our side
       this.error("failure_local");

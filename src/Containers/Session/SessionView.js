@@ -22,6 +22,10 @@ newRemoteUserState = (props) => {
       initiallyConnected: false,
       connected: false,
       connecting: false,
+      initiallySending: false,
+      sendingAudio: false,
+      sendingVideo: false,
+      initiallyReceiving: false,
       receivingThrottled: false,
       receivingAudio: false,
       receivingVideo: false,
@@ -69,6 +73,10 @@ class SessionView extends Component {
         initiallyConnected: false,
         connected: false,
         connecting: false,
+        initiallySending: false,
+        sendingAudio: false,
+        sendingVideo: false,
+        initiallyReceiving: false,
         receivingThrottled: false,
         receivingAudio: false,
         receivingVideo: false,
@@ -235,7 +243,7 @@ class SessionView extends Component {
   shouldShowReconnectionState () {
     const {status} = this.props;
     return (
-      this.hasInitiallyConnected() &&
+      status.began &&
       (!status.ending && !status.ended) &&
       (
         "none" == this.state.app.networkConnection ||
@@ -273,12 +281,30 @@ class SessionView extends Component {
       initiallyConnected: true,
       connected: true,
       connecting: false,
+    }});
+  }
+
+  handleUserReceivingAV (ops) {
+    this.setState({connection: {
+      ...this.state.connection,
+      initiallyReceiving: true,
+      receivingAudio: ops.audio,
+      receivingVideo: ops.video
     }}, () => {
       const rc = this.state.remoteUserState.connection;
-      if (rc.initiallyConnected && rc.connected) {
+      if (rc.connected && rc.initiallyReceiving) {
         this.props.setSessionBegan();
       }
     });
+  }
+
+  handleUserSendingAV (ops) {
+    this.setState({connection: {
+      ...this.state.connection,
+      initiallySending: true,
+      sendingAudio: ops.audio,
+      sendingVideo: ops.video,
+    }});
   }
 
   handleUserDisconnected () {
@@ -313,12 +339,40 @@ class SessionView extends Component {
           connecting: false,
         }
       }
+    });
+  }
+
+  handleRemoteUserReceivingAV (ops) {
+    this.setState({
+      remoteUserState: {
+        ...this.state.remoteUserState,
+        connection: {
+          ...this.state.remoteUserState.connection,
+          initiallyReceiving: true,
+          receivingVideo: ops.video,
+          receivingAudio: ops.audio,
+        }
+      }
     }, () => {
       const lc = this.state.connection;
-      if (lc.initiallyConnected && lc.connected) {
+      if (lc.connected && lc.initiallyReceiving) {
         this.props.setSessionBegan();
       }
     });
+  }
+
+  handleRemoteUserSendingAV (ops) {
+    this.setState({
+      remoteUserState: {
+        ...this.state.remoteUserState,
+        connection: {
+          ...this.state.remoteUserState.connection,
+          initiallySending: true,
+          sendingAudio: ops.audio,
+          sendingVideo: ops.video,
+        }
+      }
+    })
   }
 
   handleRemoteUserDisconnected () {
@@ -337,10 +391,6 @@ class SessionView extends Component {
 
   updateRemoteUserState (data) {
     this.setState({remoteUserState: data});
-  }
-
-  hasInitiallyConnected () {
-    return this.state.remoteUserState.connection.initiallyConnected && this.state.connection.initiallyConnected;
   }
 
   // if an initial connection error is triggered, then just
@@ -444,6 +494,8 @@ class SessionView extends Component {
             onRemoteUserDisconnected = {() => { this.handleRemoteUserDisconnected() }}
             onRemoteUserReconnected = {() => { this.handleRemoteUserConnected() }}
             onRemoteUserUpdated = {(userState) => { this.updateRemoteUserState(userState) }}
+            onRemoteUserReceivingAV = {(ops) => { this.handleRemoteUserReceivingAV(ops) }}
+            onRemoteUserSendingAV = {(ops) => { this.handleRemoteUserSendingAV(ops) }}
 
             // other status updates?
             onRemoteUserPoorConnection = {null}
@@ -454,6 +506,8 @@ class SessionView extends Component {
             onUserConnected = {() => { this.handleUserConnected() }}
             onUserDisconnected = {() => { this.handleUserDisconnected() }}
             onUserReconnected = {() => { this.handleUserConnected() }}
+            onUserReceivingAV = {(ops) => { this.handleUserReceivingAV(ops) }}
+            onUserSendingAV = {(ops) => { this.handleUserSendingAV(ops) }}
 
             // other status updates?
             onUserPoorConnection = {null}
@@ -480,7 +534,7 @@ class SessionView extends Component {
           </Session>
 
           {/* If there is a remote user, but we haven't connected to them yet, show the initial connection screen */}
-          {!!this.props.remoteUser.id && !this.hasInitiallyConnected() && (
+          {!!this.props.remoteUser.id && !this.props.status.began && (
           <UserConnecting
             user = { this.props.user }
             remoteUser = {this.props.remoteUser}

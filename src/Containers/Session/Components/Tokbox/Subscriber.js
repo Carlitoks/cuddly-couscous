@@ -24,6 +24,8 @@ export class Subscriber extends Component {
         recordSessionTokboxEvent('subscriber.connected', {
           sessionID: this.props.session.id
         });
+
+        this.props.onConnected();
       },
       disconnected: () => {
         recordSessionTokboxEvent('subscriber.disconnected', {
@@ -35,6 +37,7 @@ export class Subscriber extends Component {
           event,
           sessionID: this.props.session.id
         });
+        this.props.onError();
       },
       videoDataReceived: () => {
         // NOTE: not recording forensics for this on purpose, it gets called on every frame

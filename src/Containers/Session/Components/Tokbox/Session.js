@@ -123,9 +123,18 @@ export class Session extends Component {
           publishingVideo: event.hasVideo,
         };
 
-        // TODO: set brief timeout to check if "connected" - extra signal may be received to 
-        // set if this is a modern or legacy version
         this.props.onRemoteUserConnected();
+
+        const ops = {
+          audio: event.hasAudio,
+          video: event.hasVideo
+        }
+        this.props.onRemoteUserSendingAV(ops);
+  
+        if (this.localUserState.subscribing) {
+          this.props.onUserReceivingAV(ops);
+          this.notifyIfReceiving();
+        }
       },
       streamDestroyed: (event) => {
         recordSessionTokboxEvent('session.streamDestroyed', {
@@ -220,6 +229,53 @@ export class Session extends Component {
 
   handleExpectHeartbeatInterval () {
 
+  }
+
+
+  publisherStreamCreated (ops) {
+    this.localUserState = {
+      ...this.localUserState,
+      connectionID: ops.connectionId,
+      streamID: ops.streamId,
+      publishing: true,
+      publishingAudio: ops.hasAudio,
+      publishingVideo: ops.hasVideo,
+    };
+    this.props.onUserSendingAV({
+      audio: ops.hasAudio,
+      video: ops.hasVideo,
+    });
+  }
+
+  publisherStreamDestroyed () {
+    this.localUserState = {
+      ...this.localUserState,
+      streamID: null,
+      connectionID: null,
+      publishing: false,
+      publishingAudio: false,
+      publishingVideo: false,
+    };
+
+    // TODO: props.onUserStoppedSendingAV()?
+  }
+
+  subscriberConnected () {
+    this.localUserState.subscribing = true;
+    if (this.remoteUserState.publishing) {
+      this.props.onUserReceivingAV({
+        audio: this.remoteUserState.publishingAudio,
+        video: this.remoteUserState.publishingVideo,
+      });
+    }
+
+    this.notifyIfReceiving()
+  }
+
+  notifyIfReceiving () {
+    if (this.localUserState.subscribing && this.remoteUserState.publishing) {
+      this.sendSignal('receivingAV');
+    }
   }
 
   handleCallEnded () {
@@ -320,6 +376,14 @@ export class Session extends Component {
 
         break;
       }
+      case 'receivingAV': {
+        this.remoteUserState.subscribing = true;
+        this.props.onRemoteUserReceivingAV({
+          audio: this.localUserState.publishingAudio,
+          video: this.localUserState.publishingVideo,
+        });
+        break;
+      }
       case 'heartbeat': {
         this.remoteUserState.lastHeartbeatAt = new Date();
         break;
@@ -373,11 +437,14 @@ export class Session extends Component {
             <Publisher
               session = {session}
               status = {localSessionStatus}
+              onStreamCreated = {(ops) => { this.publisherStreamCreated(ops) }}
+              onStreamDestroyed = {() => { this.publisherStreamDestroyed() }}
               onError = {() => { this.remount() }}
             />
             <Subscriber
               session = {session}
               status = {localSessionStatus}
+              onConnected = {() => { this.subscriberConnected() }}
               onError = {() => { this.remount() }}
             />
           </OTSession>
