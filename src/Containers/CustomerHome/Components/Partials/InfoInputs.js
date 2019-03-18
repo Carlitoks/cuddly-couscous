@@ -20,7 +20,7 @@ class InfoInputs extends Component {
     }
     return (
       <React.Fragment>
-        <View style={[styles.paddingBottomContainer]}>
+        <View style={[styles.paddingBottomContainer, { marginBottom: 10 }]}>
           <RenderPicker
             navType={type}
             openSlideMenu={openSlideMenu}
@@ -50,8 +50,7 @@ class InfoInputs extends Component {
   }
 
   render() {
-    const { type, openSlideMenu } = this.props;
-    console.log("props from infoInputs", this.props);
+    const { type, openSlideMenu, session } = this.props;
     return (
       <View style={this.renderStyles()}>
         <View style={styles.paddingBottomContainer}>
@@ -81,7 +80,7 @@ class InfoInputs extends Component {
             type="scenarioSelection"
           />
         </View>
-        {this.renderAdditionalDetails()}
+        {session.customScenarioSelected === "custom" ? this.renderAdditionalDetails() : null}
       </View>
     );
   }

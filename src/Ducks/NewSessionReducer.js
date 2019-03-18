@@ -27,7 +27,8 @@ const ACTIONS = {
   MODIFY_ADDITIONAL_INFO: "newSession/modifyAdditionalInfo",
   MODIFY_LOCATION: "newSession/modifyLocation",
   SWAP_LANGUAGES: "newSession/swapLanguages",
-  CLEAN_AND_KEEP_LANG: "newSession/cleanAndKeepLang"
+  CLEAN_AND_KEEP_LANG: "newSession/cleanAndKeepLang",
+  UPDATE_SCENARIO_ID: "newSession/updateScenarioID"
 };
 
 export const clear = payload => {
@@ -45,7 +46,6 @@ export const update = payload => {
 };
 
 export const openSlideMenu = payload => {
-  console.log(payload);
   return {
     type: ACTIONS.OPEN_SLIDE_MENU,
     payload
@@ -59,6 +59,11 @@ export const closeSlideMenu = payload => ({
 
 export const changeSessionLangCode = payload => ({
   type: ACTIONS.CHANGE_SESSION_LANG_CODE,
+  payload
+});
+
+export const changeSessionScenarioID = payload => ({
+  type: ACTIONS.UPDATE_SCENARIO_ID,
   payload
 });
 
@@ -145,6 +150,23 @@ export const changeLangCode = payload => (dispatch, getState) => {
   dispatch(changeSessionLangCode(currentSessionState));
 };
 
+export const updateSelectedScenario = payload => (dispatch, getState) => {
+  if (payload.scenarioID === "custom") {
+    currentSessionState = {
+      ...getState().newSessionReducer.session,
+      scenarioID: payload.scenarioID,
+      customScenarioSelected: "custom"
+    };
+  } else {
+    currentSessionState = {
+      ...getState().newSessionReducer.session,
+      scenarioID: payload.scenarioID,
+      customScenarioSelected: "notCustom"
+    };
+  }
+
+  dispatch(changeSessionScenarioID(currentSessionState));
+};
 export const updateLocation = payload => (dispatch, getState) => {
   currentSessionState = {
     ...getState().newSessionReducer.session,
@@ -209,6 +231,7 @@ const initialState = {
     avModePreference: null,
     eventID: null,
     scenarioID: null,
+    customScenarioSelected: "",
     customScenarioNote: "",
     location: [null, null]
     /* etc... */
@@ -282,6 +305,13 @@ const newSessionReducer = (state = initialState, action = {}) => {
     }
     case ACTIONS.CLEAN_AND_KEEP_LANG: {
       return { ...initialState, ...payload };
+    }
+    case ACTIONS.UPDATE_SCENARIO_ID: {
+      return {
+        ...state,
+        session: payload,
+        isSlideUpMenuVisible: false
+      };
     }
     default: {
       return state;

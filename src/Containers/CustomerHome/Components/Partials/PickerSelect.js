@@ -37,12 +37,13 @@ class PickerSelectComponent extends Component {
 
   showScenarioList = () => {
     const { scenariosList, session, placeholder } = this.props;
-    if (session.scenarioID) {
-      return (
-        <Text style={styles.inputValue}>
-          {scenariosList.filter(scenario => scenario.id === session.scenarioID)}
-        </Text>
-      );
+
+    if (session.scenarioID && session.scenarioID != "custom") {
+      const selectedScenario = scenariosList.find(scenario => scenario.id === session.scenarioID);
+      return <Text style={styles.inputValue}>{selectedScenario.title}</Text>;
+    }
+    if (session.customScenarioSelected === "custom") {
+      return <Text style={styles.inputValue}>{"Other"}</Text>;
     }
     return <Text style={styles.inputPlaceholderValue}>{placeholder}</Text>;
   };
@@ -57,9 +58,7 @@ class PickerSelectComponent extends Component {
   };
 
   render() {
-    const { navType, openSlideMenu, title, type, isSlideUpMenuVisible, scenariosList } = this.props;
-    console.log("props from PickSelect", this.props);
-    console.log("Scenarios from the api", Scenarios);
+    const { navType, openSlideMenu, title, type, isSlideUpMenuVisible, session } = this.props;
     return (
       <View
         style={
