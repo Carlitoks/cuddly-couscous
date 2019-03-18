@@ -173,6 +173,20 @@ export default (reducer = (state, action) => {
       );
       break;
 
+    case "LinguistIncomingCallView":
+      analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 1,
+          actions: [
+            NavigationActions.navigate({ routeName: "Home" }),
+            NavigationActions.navigate({ routeName: "LinguistIncomingCallView" })
+          ]
+        })
+      );
+      break;
+
     case "CustomerMatchingView":
       analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
