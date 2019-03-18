@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-
+import I18n from "../../../../I18n/I18n";
 // Styles
 import { Icon, Divider } from "react-native-elements";
 import styles from "./Styles/PickerSelectStyles";
@@ -43,7 +43,7 @@ class PickerSelectComponent extends Component {
       return <Text style={styles.inputValue}>{selectedScenario.title}</Text>;
     }
     if (session.customScenarioSelected === "custom") {
-      return <Text style={styles.inputValue}>{"Other"}</Text>;
+      return <Text style={styles.inputValue}>{I18n.t("other")}</Text>;
     }
     return <Text style={styles.inputPlaceholderValue}>{placeholder}</Text>;
   };

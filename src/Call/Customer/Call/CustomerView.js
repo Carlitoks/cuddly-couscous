@@ -43,20 +43,9 @@ import styles from "./styles";
 
 import I18n from "../../../I18n/I18n";
 import ContactingLinguistView from "../ContactingLinguist/ContactingLinguistView";
-import {
-  emitLocalNotification,
-  cleanNotifications
-} from "../../../Util/PushNotification";
-import {
-  BackgroundCleanInterval,
-  BackgroundStart
-} from "../../../Util/Background";
-import {
-  REASON,
-  TIME,
-  STATUS_TOKBOX,
-  SUPPORTED_LANGS
-} from "../../../Util/Constants";
+import { emitLocalNotification, cleanNotifications } from "../../../Util/PushNotification";
+import { BackgroundCleanInterval, BackgroundStart } from "../../../Util/Background";
+import { REASON, TIME, STATUS_TOKBOX, SUPPORTED_LANGS } from "../../../Util/Constants";
 import InCallManager from "react-native-incall-manager";
 import PoorConnectionAlert from "../../../Components/PoorConnectionAlert/PoorConnectionAlert";
 import DeviceInfo from "react-native-device-info";
@@ -92,10 +81,7 @@ class CustomerView extends Component {
           }
         })
         .catch(err => {
-          console.log(
-            "InCallManager.getIsWiredHeadsetPluggedIn() catch: ",
-            err
-          );
+          console.log("InCallManager.getIsWiredHeadsetPluggedIn() catch: ", err);
         });
     }
 
@@ -132,19 +118,13 @@ class CustomerView extends Component {
       message: `${I18n.t("contactingLinguist")} ...`
     });
 
-    const name = this.props.preferredName
-      ? this.props.preferredName
-      : this.props.firstName;
+    const name = this.props.preferredName ? this.props.preferredName : this.props.firstName;
     const role = !!this.props.linguistProfile ? "Linguist" : "Customer";
-    const device = !!this.props.deviceId
-      ? ` DeviceID: ${this.props.deviceId} `
-      : "";
+    const device = !!this.props.deviceId ? ` DeviceID: ${this.props.deviceId} ` : "";
     const session = !!this.props.customerTokboxSessionID
       ? ` SessionID: ${this.props.customerTokboxSessionID} `
       : "";
-    Instabug.setUserData(
-      `${name} ${this.props.lastName} (${role})${device}${session}`
-    );
+    Instabug.setUserData(`${name} ${this.props.lastName} (${role})${device}${session}`);
     this.connectCall();
   }
 
@@ -192,21 +172,14 @@ class CustomerView extends Component {
   }
 
   connectCall = async () => {
-    const userNativeLangIsSupported =
-      SUPPORTED_LANGS.indexOf(this.props.primaryLangCode[3]) >= 0;
-    const {
-      createSession,
-      selectedCallTime,
-      selectedScenarioId,
-      token,
-      session
-    } = this.props;
-    if(session.primaryLangCode !== '' && session.secondaryLangCode !== ''){
+    const userNativeLangIsSupported = SUPPORTED_LANGS.indexOf(this.props.primaryLangCode[3]) >= 0;
+    const { createSession, selectedCallTime, selectedScenarioId, token, session } = this.props;
+    if (session.primaryLangCode !== "" && session.secondaryLangCode !== "") {
       await createSession({
         primaryLangCode: session.primaryLangCode,
         secondaryLangCode: session.secondaryLangCode,
         estimatedMinutes: selectedCallTime,
-        scenarioID: selectedScenarioId,
+        scenarioID: session.scenarioID === "custom" ? null : session.scenarioID,
         customScenarioNote: session.customScenarioNote,
         token: token,
         eventID: null,
@@ -244,25 +217,18 @@ class CustomerView extends Component {
     const { red, timeBtn, closeCall, elapsedTime } = this.props;
 
     return (
-      <TouchableWithoutFeedback
-        onPress={() => this.setState({ visible: !visible })}
-      >
+      <TouchableWithoutFeedback onPress={() => this.setState({ visible: !visible })}>
         <View style={styles.fullPage}>
           <ModalReconnect
             closeCall={closeCall}
             callTimeOut={this.callTimeOut}
             reconnectCall={this.connectCall}
           />
-          <SessionHandler
-            image={this.selectImage()}
-            sessionInfoName={this.handleSessionInfoName()}
-          >
+          <SessionHandler image={this.selectImage()} sessionInfoName={this.handleSessionInfoName()}>
             <Slide visible={visible} min={0} max={112}>
               <View style={styles.containerControls}>
                 {(this.props.localVideoWarning == "ENABLED" ||
-                  this.props.signalVideoWarning == "ENABLED") && (
-                  <PoorConnectionAlert />
-                )}
+                  this.props.signalVideoWarning == "ENABLED") && <PoorConnectionAlert />}
                 <CallTimer
                   time={elapsedTime}
                   changeVisible={() => this.setState({ visible: !visible })}
@@ -271,28 +237,23 @@ class CustomerView extends Component {
                   buttonPress={() => this.addMoreTime()}
                 />
 
-                <SessionControls
-                  closeCall={closeCall}
-                  reason={REASON.DONE}
-                  switch={() => {}}
-                />
+                <SessionControls closeCall={closeCall} reason={REASON.DONE} switch={() => {}} />
               </View>
             </Slide>
           </SessionHandler>
           <KeepAwake />
 
-          {this.props.tokboxStatus !== STATUS_TOKBOX.STREAM &&
-            this.props.elapsedTime < 1 && (
-              <View style={styles.containerContacting}>
-                <ContactingLinguistView
-                  navigation={this.props.navigation}
-                  callTimeOut={this.callTimeOut}
-                  closeCall={closeCall}
-                  connect={this.connectCall}
-                  switch={() => {}}
-                />
-              </View>
-            )}
+          {this.props.tokboxStatus !== STATUS_TOKBOX.STREAM && this.props.elapsedTime < 1 && (
+            <View style={styles.containerContacting}>
+              <ContactingLinguistView
+                navigation={this.props.navigation}
+                callTimeOut={this.callTimeOut}
+                closeCall={closeCall}
+                connect={this.connectCall}
+                switch={() => {}}
+              />
+            </View>
+          )}
         </View>
       </TouchableWithoutFeedback>
     );
@@ -328,7 +289,7 @@ const mS = state => ({
   signalVideoWarning: state.activeSessionReducer.signalVideoWarning,
   customerLocation: state.activeSessionReducer.location,
   event: state.events,
-  session: state.newSessionReducer.session,
+  session: state.newSessionReducer.session
 });
 
 const mD = {

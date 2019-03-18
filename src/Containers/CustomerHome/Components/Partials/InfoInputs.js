@@ -14,21 +14,23 @@ import { SwitchLangs } from "../../../../Assets/SVG";
 
 class InfoInputs extends Component {
   renderAdditionalDetails = () => {
-    const { type, openSlideMenu, swapCurrentSessionLanguages } = this.props;
+    const { type, openSlideMenu, swapCurrentSessionLanguages, session } = this.props;
     if (type === "onboarding") {
       return <React.Fragment />;
     }
     return (
       <React.Fragment>
-        <View style={[styles.paddingBottomContainer, { marginBottom: 10 }]}>
-          <RenderPicker
-            navType={type}
-            openSlideMenu={openSlideMenu}
-            title={I18n.t("customerHome.customNote.label")}
-            placeholder={I18n.t("customerHome.customNote.placeholder")}
-            type="additionalDetails"
-          />
-        </View>
+        {session.customScenarioSelected === "custom" ? (
+          <View style={[styles.paddingBottomContainer, { marginBottom: 15 }]}>
+            <RenderPicker
+              navType={type}
+              openSlideMenu={openSlideMenu}
+              title={I18n.t("customerHome.customNote.label")}
+              placeholder={I18n.t("customerHome.customNote.placeholder")}
+              type="additionalDetails"
+            />
+          </View>
+        ) : null}
         <TouchableOpacity
           onPress={() => {
             swapCurrentSessionLanguages();
@@ -80,7 +82,7 @@ class InfoInputs extends Component {
             type="scenarioSelection"
           />
         </View>
-        {session.customScenarioSelected === "custom" ? this.renderAdditionalDetails() : null}
+        {this.renderAdditionalDetails()}
       </View>
     );
   }
