@@ -95,6 +95,7 @@ export class Session extends Component {
         this.remoteUserState.connectionID = event.connectionId;
         this.remoteUserState.meta = JSON.parse(event.data);
         this.props.onRemoteUserConnecting();
+        this.sendSignal("notLegacyVersion");
         // TODO: send local state
       },
       connectionDestroyed: (event) => {
@@ -245,6 +246,16 @@ export class Session extends Component {
       audio: ops.hasAudio,
       video: ops.hasVideo,
     });
+
+    // if the remote user has a legacy version, we have to assume they are receiving
+    // what we are publishing.  Otherwise, we wait to receive a signal from the
+    // other side that they are in successfully subscribed
+    if (this.remoteUserState.legacyVersion) {
+      this.props.onRemoteUserReceivingAV({
+        audio: ops.hasAudio,
+        video: ops.hasVideo,
+      });
+    }
   }
 
   publisherStreamDestroyed () {
@@ -354,6 +365,7 @@ export class Session extends Component {
 
       // new signals
       case 'notLegacyVersion': {
+        this.remoteUserState.legacyVersion = false;
         // this.beginExpectingHeartbeat();
         break;
       }
