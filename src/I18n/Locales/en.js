@@ -643,6 +643,22 @@ export default (ENG = {
     // used when rating a session
     rating: {
       submit: "Submit",
+      addComment: "Add Comments",
+      questionGood: "What was good?",
+      questionBetter: "What could be better?",
+      rateCustomer: "Rate Your Customer",
+      rateLinguist: "Rate Your Linguist",
+      report: "Report a problem by gently shaking your device",
+      submit: "Submit",
+      resolvedCustomer: "Was your issue resolved?",
+      resolvedLinguist: "Was their issue resolved?",
+      classification: "Call Classification",
+      classifications: {
+        trial: "Trial Call",
+        demo: "Product Demo Call",
+        support: "Language Practice",
+        langPractice: "Customer Support"
+      },
       flags: {
         langAbility: "Language Ability",
         time: "Time to Connect",
