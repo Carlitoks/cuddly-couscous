@@ -12,7 +12,7 @@ const TextButton = ({ IconName, StateIcon, onPress, title, color }) => {
       <Icon
         style={StateIcon ? { color: color } : { color: "#cdcdcd" }}
         name={IconName}
-        size={40}
+        size={60}
       />
       <Text
         style={
