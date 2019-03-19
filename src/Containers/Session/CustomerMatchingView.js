@@ -53,9 +53,11 @@ export class CustomerMatchingView extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log("did update...")
     // was a remote user identified? Could have been identified via Push notification
-    if (!prevProps.remoteUser && !prevProps.remoteUser.id && !!this.props.remoteUser && this.props.remoteUser.id) {
-      this.linguistIdentified()
+    if ( (!prevProps.remoteUser || !prevProps.remoteUser.id) && !!this.props.remoteUser && !!this.props.remoteUser.id) {
+      console.log("got remote user....")
+      this.linguistIdentified();
     }
   }
 
@@ -91,10 +93,10 @@ export class CustomerMatchingView extends Component {
       }
       this.pollFailures = 0;
 
-      // check if no match
+      // check if all linguists declined
       if (!!res.data && !!res.data.queue) {
         const q = res.data.queue;
-        if (q.total == 0 || (q.total == q.declined)) {
+        if (q.total != 0 && (q.total == q.declined)) {
           this.timeout();
           return;
         }

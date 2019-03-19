@@ -102,7 +102,7 @@ class SessionView extends Component {
   }
 
   TEST () {
-    // tests.testLinguistConnects(this);
+    tests.testRemoteUserConnects(this);
     // tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);

@@ -57,6 +57,17 @@ const initialState = {
 };
 
 export const createNewSession = (params) => (dispatch, getState) => {
+
+  // Test HACK
+  setTimeout(() => {
+    console.log("setting remote user");
+    dispatch(setRemoteUser({
+      id: "22222222-2222-2222-2222-222222222223",
+      firstName: "Evan",
+      lastInitial: "V"
+    }));
+  }, 2000);
+
   return new Promise((resolve, reject) => {
     dispatch(clear());
     dispatch(update({
