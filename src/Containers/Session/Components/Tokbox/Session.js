@@ -39,6 +39,7 @@ export class Session extends Component {
       signal: {type: "", data: ""}
     };
 
+    this.originalSessionID = props.session.id;
     this.endedByRemote = false;
 
     this.remoteUserState = newUserState();
@@ -81,7 +82,13 @@ export class Session extends Component {
       return;
     }
     super.setState(data, cb);
-  }  
+  }
+
+  mounted () {
+    return !this.unmounting
+      && !this.state.unmounting
+      && this.state.mounted
+  }
 
   componentDidMount () {
     // app state listener
@@ -356,8 +363,15 @@ export class Session extends Component {
     const oldP = prevProps;
     const newP = this.props;
 
-    // TODO: HANDLE SESSIN ID CHANGE - IF NEW SESSION GETS CREATED BY 
-    // CLIENT, THERE'S A BRIEF PERIOD WHERE STATE GETS WEIRD.
+    if (this.unmounting) {
+      return;
+    }
+
+    // handle edge case where new session could have been created
+    if (newP.session.id != this.originalSessionID) {
+      this.unmounting = true;
+      return;
+    }
 
     // are we ending?
     if (!oldP.localSessionStatus.ending && newP.localSessionStatus.ending) {
@@ -479,11 +493,10 @@ export class Session extends Component {
 
   render () {
     const {session, credentials, localSessionStatus} = this.props;
-    const {mounted} = this.state;
 
     return (
       <View style={styles.sessionContainer}>
-        {mounted && !this.isTransitioning() && (
+        {this.mounted() && !this.isTransitioning() && (
           <OTSession 
             style = {styles.session}
             apiKey = {TOKBOX_APIKEY}
