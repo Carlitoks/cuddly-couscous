@@ -56,136 +56,20 @@ export class Session extends Component {
 
     this.unmounting = false;
 
+    // handler invoked by tokbox: https://github.com/opentok/opentok-react-native/blob/master/docs/OTSession.md#events
     this.eventHandlers = {
-
-      // handles connection state for the local user
-      sessionConnected: () => {
-        recordSessionTokboxEvent('session.sessionConnected', {
-          sessionID: this.props.session.id
-        });
-        this.props.onUserConnected();
-      },
-      sessionReconnected: () => {
-        recordSessionTokboxEvent('session.sessionReconnected', {
-          sessionID: this.props.session.id
-        });
-        this.props.onUserConnected();
-      },
-      sessionDisconnected: () => {
-        recordSessionTokboxEvent('session.sessionDisconnected', {
-          sessionID: this.props.session.id
-        });
-        this.props.onUserDisconnected();
-      },
-      sessionReconnecting: () => {
-        recordSessionTokboxEvent('session.sessionReconnecting', {
-          sessionID: this.props.session.id
-        });
-        this.props.onUserConnecting();
-      },
-
-      // handles connection state for the remote user
-      connectionCreated: (event) => {
-        recordSessionTokboxEvent('session.connectionCreated', {
-          event,
-          sessionID: this.props.session.id
-        });
-
-        // a remote user is connecting
-        this.remoteUserState.connectionID = event.connectionId;
-        this.remoteUserState.meta = JSON.parse(event.data);
-        this.props.onRemoteUserConnecting();
-        this.sendSignal("notLegacyVersion");
-        // TODO: send local state
-      },
-      connectionDestroyed: (event) => {
-        recordSessionTokboxEvent('session.connectionDestroyed', {
-          event,
-          sessionID: this.props.session.id
-        });
-        if (this.unmounting) {
-          return;
-        }
-        this.remoteUserState = newRemoteUserState();
-        this.props.onRemoteUserDisconnected();
-      },
-      streamCreated: (event) => {
-        recordSessionTokboxEvent('session.streamCreated', {
-          event,
-          sessionID: this.props.session.id
-        });
-
-        // TODO: for 3-way calls, ensure stream info associated to proper connection
-        this.remoteUserState = {
-          ...this.remoteUserState,
-          streamID: event.streamId,
-          publishing: true,
-          publishingAudio: event.hasAudio,
-          publishingVideo: event.hasVideo,
-        };
-
-        this.props.onRemoteUserConnected();
-
-        const ops = {
-          audio: event.hasAudio,
-          video: event.hasVideo
-        }
-        this.props.onRemoteUserSendingAV(ops);
-  
-        if (this.localUserState.subscribing) {
-          this.props.onUserReceivingAV(ops);
-          this.notifyIfReceiving();
-        }
-      },
-      streamDestroyed: (event) => {
-        recordSessionTokboxEvent('session.streamDestroyed', {
-          event,
-          sessionID: this.props.session.id
-        });
-
-        if (this.unmounting) {
-          return;
-        }
-        
-        this.remoteUserState = {
-          ...this.remoteUserState,
-          streamID: null,
-          publishing: false,
-          publishingAudio: false,
-          publishingVideo: false,
-        };
-
-        this.props.onRemoteUserDisconnected();
-      },
-      signal: (event) => {
-        // ensure signal is from remote participant we actually know about
-        if (event.connectionId != this.remoteUserState.connectionID) {
-          return;
-        }
-        recordSessionTokboxEvent('session.signal', {
-          event,
-          sessionID: this.props.session.id
-        });
-
-        let data = null;
-        if (!!event.data && event.data != "") {
-          data = JSON.parse(event.data);
-        }
-
-        this.receiveSignal(event.type, data);
-      },
-
-      archiveStarted: (event) => {
-      },
-      archiveStopped: (event) => {
-      },
-      error: (event) => {
-        recordSessionTokboxEvent('session.error', {
-          event,
-          sessionID: this.props.session.id
-        });
-        this.remount();
-      },
+      sessionConnected: () => { this.onSessionConnected(); },
+      sessionReconnected: () => { this.onSessionReconnected(); },
+      sessionDisconnected: () => { this.onSessionDisconnected(); },
+      sessionReconnecting: () => { this.onSessionReconnecting(); },
+      connectionCreated: (event) => { this.onConnectionCreated(event); },
+      connectionDestroyed: (event) => { this.onConnectionDestroyed(event); },
+      streamCreated: (event) => { this.onStreamCreated(event); },
+      streamDestroyed: (event) => { this.onStreamDestroyed(event); },
+      signal: (event) => { this.onSignal(event); },
+      archiveStarted: (event) => {},
+      archiveStopped: (event) => {},
+      error: (event) => { this.onError(event); },
     };
 
     recordSessionEvent("session.constructor");
@@ -206,6 +90,147 @@ export class Session extends Component {
   componentWillUnmount () {
     recordSessionEvent("session.componentWillUnmount");
     this.cleanup();
+  }
+
+  onSessionConnected () {
+    recordSessionTokboxEvent('session.sessionConnected', {
+      sessionID: this.props.session.id
+    });
+    this.props.onUserConnected();
+  }
+
+  onSessionReconnected () {
+    recordSessionTokboxEvent('session.sessionReconnected', {
+      sessionID: this.props.session.id
+    });
+    this.props.onUserConnected();
+  }
+
+  onSessionDisconnected () {
+    recordSessionTokboxEvent('session.sessionDisconnected', {
+      sessionID: this.props.session.id
+    });
+    this.props.onUserDisconnected();
+  }
+
+  onSessionReconnecting () {
+    recordSessionTokboxEvent('session.sessionReconnecting', {
+      sessionID: this.props.session.id
+    });
+    this.props.onUserConnecting();
+  }
+
+  // handles connection state for the remote user
+  onConnectionCreated (event) {
+    recordSessionTokboxEvent('session.connectionCreated', {
+      event,
+      sessionID: this.props.session.id
+    });
+
+    // a remote user is connecting
+    this.remoteUserState.connectionID = event.connectionId;
+    this.remoteUserState.meta = JSON.parse(event.data);
+    this.props.onRemoteUserConnecting();
+    this.sendSignal("notLegacyVersion");
+
+    // TODO: send local state (controls, app state, etc...)
+
+  }
+
+  onConnectionDestroyed (event) {
+    recordSessionTokboxEvent('session.connectionDestroyed', {
+      event,
+      sessionID: this.props.session.id
+    });
+
+    // if we're unmounting return early because informing the system that the remote
+    // has disconnected will trigger a reconnection state. But, if we're in the process
+    // of ending the sessino we expect the remote user to disconnect.
+    if (this.unmounting) {
+      return;
+    }
+
+    this.remoteUserState = newRemoteUserState();
+    this.props.onRemoteUserDisconnected();
+  }
+
+  onStreamCreated (event) {
+    recordSessionTokboxEvent('session.streamCreated', {
+      event,
+      sessionID: this.props.session.id
+    });
+
+    // TODO: for 3-way calls, ensure stream info associated to proper connection
+    this.remoteUserState = {
+      ...this.remoteUserState,
+      streamID: event.streamId,
+      publishing: true,
+      publishingAudio: event.hasAudio,
+      publishingVideo: event.hasVideo,
+    };
+
+    this.props.onRemoteUserConnected();
+
+    const ops = {
+      audio: event.hasAudio,
+      video: event.hasVideo
+    }
+    this.props.onRemoteUserSendingAV(ops);
+
+    if (this.localUserState.subscribing) {
+      this.props.onUserReceivingAV(ops);
+      this.notifyIfReceiving();
+    }
+  }
+
+  onStreamDestroyed (event) {
+    recordSessionTokboxEvent('session.streamDestroyed', {
+      event,
+      sessionID: this.props.session.id
+    });
+
+    // if we're unmounting return early because informing the system that the remote
+    // has disconnected will trigger a reconnection state. But, if we're in the process
+    // of ending the sessino we expect the remote user to disconnect.
+    if (this.unmounting) {
+      return;
+    }
+    
+    this.remoteUserState = {
+      ...this.remoteUserState,
+      streamID: null,
+      publishing: false,
+      publishingAudio: false,
+      publishingVideo: false,
+    };
+
+    this.props.onRemoteUserDisconnected();
+  }
+
+  onSignal (event) {
+    // ensure signal is from remote participant we actually know about
+    if (event.connectionId != this.remoteUserState.connectionID) {
+      return;
+    }
+    recordSessionTokboxEvent('session.signal', {
+      event,
+      sessionID: this.props.session.id
+    });
+
+    let data = null;
+    if (!!event.data && event.data != "") {
+      data = JSON.parse(event.data);
+    }
+
+    this.receiveSignal(event.type, data);
+  }
+
+  onError (event) {
+    recordSessionTokboxEvent('session.error', {
+      event,
+      sessionID: this.props.session.id
+    });
+    this.remount();
   }
 
   beginSendingHeartbeat () {
