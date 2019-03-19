@@ -10,7 +10,7 @@ const ACTIONS = {
   CLEAR: 'currentSessionReducer/clear'
 }
 
-const initialState = {
+const initState = () => ({
   // role info for convenience elsewhere
   role: '', // linguist|customer
   isLinguist: false,
@@ -54,7 +54,7 @@ const initialState = {
   createError: null,
   acceptInviteError: null,
   respondingToInvite: false,
-};
+});
 
 export const createNewSession = (params) => (dispatch, getState) => {
 
@@ -77,6 +77,7 @@ export const createNewSession = (params) => (dispatch, getState) => {
       session: params,
       status: { creating: true, created: false, began: false, ending: false, ended: false }
     }));
+
     api.post('/sessions', params).then((res) => {
       dispatch(update({
         credentials: res.data,
@@ -264,7 +265,7 @@ export const update = (payload) => ({type: ACTIONS.UPDATE, payload});
 export const clear = () => ({type: ACTIONS.CLEAR});
 
 // the exported reducer
-export default currentSessionReducer = (state = initialState, action) => {
+export default currentSessionReducer = (state = null, action) => {
   const {type, payload} = action;
 
   switch (type) {
@@ -276,13 +277,11 @@ export default currentSessionReducer = (state = initialState, action) => {
     }
 
     case ACTIONS.CLEAR: {
-      return {
-        ...initialState
-      };
+      return initState();
     }
 
     default: {
-      return state;
+      return state || initState();
     }
   }
 };

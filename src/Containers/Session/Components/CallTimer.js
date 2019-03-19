@@ -7,13 +7,13 @@ export class CallTimer extends Component {
 
     // timer values to render
     this.state = {
-      minutes: 5,
+      minutes: 0,
       seconds: 0
     };
 
     // timestamp when the timer last started
     this.startedAt = null;
-    // how much was elapsed from previous timer events
+    // how much time elapsed from previous timer events
     this.previouslyElapsed = 0;
 
     this.mounted = true;
