@@ -53,10 +53,8 @@ export class CustomerMatchingView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("did update...")
     // was a remote user identified? Could have been identified via Push notification
     if ( (!prevProps.remoteUser || !prevProps.remoteUser.id) && !!this.props.remoteUser && !!this.props.remoteUser.id) {
-      console.log("got remote user....")
       this.linguistIdentified();
     }
   }

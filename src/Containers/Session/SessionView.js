@@ -4,11 +4,12 @@ import {KeepAwake} from "react-native-keep-awake";
 import { connect } from 'react-redux';
 import I18n, {translateApiError} from "../../I18n/I18n";
 
-import {createNewSession, endSession, handleEndedSession, setRemoteUser, setSessionBegan} from '../../Ducks/CurrentSessionReducer';
+import {createNewSession, endSession, handleEndedSession, setRemoteUser, setSessionBegan, startTimer, stopTimer} from '../../Ducks/CurrentSessionReducer';
 
 import {UserConnecting} from "./Components/UserConnecting";
 import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
 import {ReconnectionState} from "./Components/ReconnectionState";
+import {CallTimer} from "./Components/CallTimer";
 import {SessionControls} from "./Components/SessionControls";
 import {Session} from "./Components/Tokbox/Session";
 
@@ -282,6 +283,9 @@ class SessionView extends Component {
       connected: true,
       connecting: false,
     }});
+    if (this.props.status.began) {
+      this.props.startTimer();
+    }
   }
 
   handleUserReceivingAV (ops) {
@@ -313,6 +317,7 @@ class SessionView extends Component {
       connected: false,
       connecting: false,
     }});
+    this.props.stopTimer();
   }
 
   handleRemoteUserConnecting () {
@@ -340,6 +345,9 @@ class SessionView extends Component {
         }
       }
     });
+    if (this.props.status.began) {
+      this.props.startTimer();
+    }
   }
 
   handleRemoteUserReceivingAV (ops) {
@@ -387,6 +395,7 @@ class SessionView extends Component {
         }
       }
     });
+    this.props.stopTimer();
   }
 
   updateRemoteUserState (data) {
@@ -514,6 +523,7 @@ class SessionView extends Component {
           >
             {/* <SessionHeader /> */}
             {/* <AudioModeBackground /> */}
+            <CallTimer timer = { this.props.timer } />
 
             { this.poorConnectionAlertVisible() && (
             <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
@@ -582,6 +592,8 @@ const mD = {
   setRemoteUser,
   setSessionBegan, // NOTE: will trigger the first timer event
   createNewSession,
+  startTimer,
+  stopTimer
 }
 
 export default connect(mS, mD)(SessionView);

@@ -172,7 +172,40 @@ export const setSessionBegan = () => (dispatch, getState) => {
       began: true
     }
   }));
+  dispatch(startTimer());
 }
+
+export const startTimer = () => (dispatch, getState) => {
+  const {running, events} = getState().currentSessionReducer.timer;
+  if (running) {
+    return;
+  }
+  let e = events;
+  e.push({
+    action: "start",
+    time: new Date().getTime()
+  });
+  dispatch(update({timer: {
+    running: true,
+    events: e,
+  }}));
+};
+
+export const stopTimer = () => (dispatch, getState) => {
+  const {running, events} = getState().currentSessionReducer.timer;
+  if (!running) {
+    return;
+  }
+  let e = events;
+  e.push({
+    action: "stop",
+    time: new Date().getTime()
+  });
+  dispatch(update({timer: {
+    running: false,
+    events: e,
+  }}));
+};
 
 export const canRejoinSession = () => (dispapch) => {
   // TODO: check status route - if remote user is still
@@ -181,7 +214,7 @@ export const canRejoinSession = () => (dispapch) => {
 
 // initiate ending the session
 export const endSession = (reason) => (dispatch, getState) => {
-  const {sessionID, status} = getState().currentSessionReducer;
+  const {sessionID, status, timer} = getState().currentSessionReducer;
 
   dispatch(update({
     status: {
@@ -190,9 +223,13 @@ export const endSession = (reason) => (dispatch, getState) => {
       ended: false
     }
   }));
+  dispatch(stopTimer());
 
   return new Promise((resolve, reject) => {
-    api.put(`/sessions/${sessionID}/end`, {reason})
+    api.put(`/sessions/${sessionID}/end`, {
+      reason,
+      timer: timer.events
+    })
     .then(resolve)
     .catch(reject)
     .finally(() => {
