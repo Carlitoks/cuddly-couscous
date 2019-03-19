@@ -9,44 +9,66 @@ export class Publisher extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.mounted = true;
 
-    };
-
+    // tokbox event handlers: https://github.com/opentok/opentok-react-native/blob/master/docs/OTPublisher.md#events
     this.eventHandlers = {
-      audioLevel: (event) => {
-        // NOTE: not recording in forensics, because called to frequently
-        // console.log("publisher.audioLevel", event);
-      },
-      error: (event) => {
-        recordSessionTokboxEvent('publisher.error', {
-          event,
-          sessionID: this.props.session.id
-        });
-        this.props.onError();
-      },
-      streamCreated: (event) => {
-        recordSessionTokboxEvent('publisher.streamCreated', {
-          event,
-          sessionID: this.props.session.id
-        });
-
-        this.props.onStreamCreated(event);
-      },
-      streamDestroyed: (event) => {
-        recordSessionTokboxEvent('publisher.streamDestroyed', {
-          event,
-          sessionID: this.props.session.id
-        });
-        this.props.onStreamDestroyed();
-      }
+      audioLevel: (event) => { this.onAudioLevel(event); },
+      error: (event) => { this.onError(event); },
+      streamCreated: (event) => { this.onStreamCreated(event); },
+      streamDestroyed: (event) => { this.onStreamDestroyed(event); },
     };
 
     console.log("publisher.constructor");
   }
 
   componentWillUnmount () {
+    this.mounted = false;
     console.log("publisher.componentWillUnmount");
+  }
+
+  onAudioLevel (event) {
+    // NOTE: not recording in forensics, because called to frequently
+    // console.log("publisher.audioLevel", event);
+  }
+
+  onError (event) {
+    recordSessionTokboxEvent('publisher.error', {
+      event,
+      sessionID: this.props.session.id
+    });
+
+    if (!this.mounted) {
+      return;
+    }
+
+    this.props.onError(event);
+  }
+
+  onStreamCreated (event) {
+    recordSessionTokboxEvent('publisher.streamCreated', {
+      event,
+      sessionID: this.props.session.id
+    });
+
+    if (!this.mounted) {
+      return;
+    }
+
+    this.props.onStreamCreated(event);
+  }
+
+  onStreamDestroyed (event) {
+    recordSessionTokboxEvent('publisher.streamDestroyed', {
+      event,
+      sessionID: this.props.session.id
+    });
+
+    if (!this.mounted) {
+      return;
+    }
+
+    this.props.onStreamDestroyed(event);
   }
 
   render () {

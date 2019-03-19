@@ -8,68 +8,110 @@ import { recordSessionTokboxEvent } from "../../../../Util/Forensics";
 export class Subscriber extends Component {
   constructor(props) {
     super(props);
+    this.mounted = true;
 
-    this.state = {
-
+    this.subscriberProperties = {
+      subscribeToAudio: false,
+      subscribeToVideo: true,
     };
 
+    // have we initially received any video?
+    this.receiving = false;
+
+    // tokbox event handlers: https://github.com/opentok/opentok-react-native/blob/master/docs/OTSubscriber.md#events
     this.eventHandlers = {
-      audioLevel: (event) => {
-      },
-      audioNetworkStats: (event) => {
-      },
-      videoNetworkStats: (event) => {
-      },
-      connected: () => {
-        recordSessionTokboxEvent('subscriber.connected', {
-          sessionID: this.props.session.id
-        });
-
-        this.props.onConnected();
-      },
-      disconnected: () => {
-        recordSessionTokboxEvent('subscriber.disconnected', {
-          sessionID: this.props.session.id
-        });
-      },
-      error: (event) => {
-        recordSessionTokboxEvent('subscriber.error', {
-          event,
-          sessionID: this.props.session.id
-        });
-        this.props.onError();
-      },
-      videoDataReceived: () => {
-        // NOTE: not recording forensics for this on purpose, it gets called on every frame
-      },
-      videoDisabled: (event) => {
-        recordSessionTokboxEvent('subscriber.videoDisabled', {
-          event,
-          sessionID: this.props.session.id
-        });
-      },
-      videoDisableWarning: () => {
-        recordSessionTokboxEvent('subscriber.videoDisableWarning', {
-          sessionID: this.props.session.id
-        });
-      },
-      videoDisableWarningLifted: () => {
-        recordSessionTokboxEvent('subscriber.videoDisableWarningLifted', {
-          sessionID: this.props.session.id
-        });
-      },
-      videoEnabled: (event) => {
-        recordSessionTokboxEvent('subscriber.videoEnabled', {
-          event,
-          sessionID: this.props.session.id
-        });
-      },
+      audioLevel: (event) => { this.onAudioLevel(event); },
+      audioNetworkStats: (event) => { this.onAudioNetworkStats(event); },
+      videoNetworkStats: (event) => { this.onVideoNetworkStats(event); },
+      connected: () => { this.onConnected(); },
+      disconnected: () => { this.onDisconnected(); },
+      error: (event) => { this.onError(event); },
+      videoDataReceived: () => { this.onVideoDataReceived(); },
+      videoDisabled: (event) => { this.onVideoDisabled(event); },
+      videoDisableWarning: () => { this.onVideoDisableWarning(); },
+      videoDisableWarningLifted: () => { this.onVideoDisableWarningLifted(); },
+      videoEnabled: (event) => { this.onVideoEnabled(event); },
     };
+
     console.log("subscriber.constructor");
   }
 
   componentWillUnmount () {
+    this.mounted = false;
     console.log("subscriber.componentWillUnmount");
+  }
+
+  onAudioLevel (event) {
+
+  }
+
+  onAudioNetworkStats (event) {
+
+  }
+
+  onVideoNetworkStats (event) {
+
+  }
+
+  onConnected () {
+    recordSessionTokboxEvent('subscriber.connected', {
+      sessionID: this.props.session.id
+    });
+  }
+
+  onDisconnected () {
+    recordSessionTokboxEvent('subscriber.disconnected', {
+      sessionID: this.props.session.id
+    });
+  }
+
+  onError (event) {
+    recordSessionTokboxEvent('subscriber.error', {
+      event,
+      sessionID: this.props.session.id
+    });
+    this.props.onError(event);
+  }
+
+  onVideoDataReceived () {
+    // NOTE: not recording forensics for this on every call on purpose, it gets called on every frame
+
+    // NOTE: also tried to using this as the trigger for props.onReceiving - that led to major instability
+
+    if (this.receiving) {
+      return;
+    }
+    this.receiving = true;
+    recordSessionTokboxEvent('subscriber.videoDataReceived', {
+      sessionID: this.props.session.id
+    });
+    this.props.onReceiving();
+  }
+
+  onVideoDisabled (event) {
+    recordSessionTokboxEvent('subscriber.videoDisabled', {
+      event,
+      sessionID: this.props.session.id
+    });
+  }
+
+  onVideoDisableWarning () {
+    recordSessionTokboxEvent('subscriber.videoDisableWarning', {
+      sessionID: this.props.session.id
+    });
+  }
+
+  onVideoDisableWarningLifted () {
+    recordSessionTokboxEvent('subscriber.videoDisableWarningLifted', {
+      sessionID: this.props.session.id
+    });
+  }
+
+  onVideoEnabled (event) {
+    recordSessionTokboxEvent('subscriber.videoEnabled', {
+      event,
+      sessionID: this.props.session.id
+    });
   }
 
   render () {
@@ -79,8 +121,10 @@ export class Subscriber extends Component {
       <View style={styles.subscriberContainer}>
       {!status.ending && (
         <OTSubscriber
-          style={styles.subscriber}
+          properties = { this.subscriberProperties }
           eventHandlers = { this.eventHandlers }
+          style = { styles.subscriber }
+          streamProperties = { this.props.streamProperties }
         />
       )}
       </View>

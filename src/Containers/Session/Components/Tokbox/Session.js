@@ -35,6 +35,7 @@ export class Session extends Component {
     this.state = {
       unmounting: false,
       mounted: true,
+      streamProperties: {},
       signal: {type: "", data: ""}
     };
 
@@ -97,7 +98,7 @@ export class Session extends Component {
       sessionID: this.props.session.id
     });
     this.props.onUserConnected();
-  }
+}
 
   onSessionReconnected () {
     recordSessionTokboxEvent('session.sessionReconnected', {
@@ -132,6 +133,7 @@ export class Session extends Component {
     this.remoteUserState.meta = JSON.parse(event.data);
     this.props.onRemoteUserConnecting();
     this.sendSignal("notLegacyVersion");
+    // TODO: test sending back-to-back signals
 
     // TODO: send local state (controls, app state, etc...)
 
@@ -170,17 +172,27 @@ export class Session extends Component {
     };
 
     this.props.onRemoteUserConnected();
-
     const ops = {
       audio: event.hasAudio,
       video: event.hasVideo
     }
     this.props.onRemoteUserSendingAV(ops);
-
     if (this.localUserState.subscribing) {
       this.props.onUserReceivingAV(ops);
       this.notifyIfReceiving();
     }
+
+    // update stream property state, then notify system of
+    // remote connection
+    this.setState({streamProperties: {
+      ...this.state.streamProperties,
+      [event.streamId]: {
+        subscribeToAudio: true,
+        subscribeToVideo: true,
+        style: {
+          ...styles.subscriber
+        }
+    }}});
   }
 
   onStreamDestroyed (event) {
@@ -203,6 +215,13 @@ export class Session extends Component {
       publishingAudio: false,
       publishingVideo: false,
     };
+
+    // stop tracking stream internally
+    if (!!this.state.streamProperties[event.streamId]) {
+      let s = this.state.streamProperties;
+      delete s[event.streamId];
+      this.setState({streamProperties: s});
+    }
 
     this.props.onRemoteUserDisconnected();
   }
@@ -296,7 +315,7 @@ export class Session extends Component {
     // TODO: props.onUserStoppedSendingAV()?
   }
 
-  subscriberConnected () {
+  subscriberReceiving () {
     this.localUserState.subscribing = true;
     if (this.remoteUserState.publishing) {
       this.props.onUserReceivingAV({
@@ -336,6 +355,9 @@ export class Session extends Component {
   componentDidUpdate (prevProps) {
     const oldP = prevProps;
     const newP = this.props;
+
+    // TODO: HANDLE SESSIN ID CHANGE - IF NEW SESSION GETS CREATED BY 
+    // CLIENT, THERE'S A BRIEF PERIOD WHERE STATE GETS WEIRD.
 
     // are we ending?
     if (!oldP.localSessionStatus.ending && newP.localSessionStatus.ending) {
@@ -470,19 +492,19 @@ export class Session extends Component {
             eventHandlers = { this.eventHandlers }
             signal = { this.state.signal }
           >
-            {/* don't mount the publisher/subscriber if we're in the process of ending the call*/}
             <Publisher
               session = {session}
               status = {localSessionStatus}
-              onStreamCreated = {(ops) => { this.publisherStreamCreated(ops) }}
-              onStreamDestroyed = {() => { this.publisherStreamDestroyed() }}
-              onError = {() => { this.remount() }}
+              onStreamCreated = {(event) => { this.publisherStreamCreated(event) }}
+              onStreamDestroyed = {(event) => { this.publisherStreamDestroyed(event) }}
+              onError = {(event) => { this.remount() }}
             />
             <Subscriber
               session = {session}
               status = {localSessionStatus}
-              onConnected = {() => { this.subscriberConnected() }}
-              onError = {() => { this.remount() }}
+              streamProperties = { this.state.streamProperties }
+              onReceiving = {() => { this.subscriberReceiving() }}
+              onError = {(event) => { this.remount() }}
             />
           </OTSession>
         )}
