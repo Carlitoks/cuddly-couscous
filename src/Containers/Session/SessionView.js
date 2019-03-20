@@ -10,6 +10,8 @@ import {createNewSession, endSession, handleEndedSession, setRemoteUser, setSess
 import {UserConnecting} from "./Components/UserConnecting";
 import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
 import {ReconnectionState} from "./Components/ReconnectionState";
+import {SessionHeader} from "./Components/SessionHeader";
+import {AudioModeBackground} from "./Components/AudioModeBackground";
 import {CallTimer} from "./Components/CallTimer";
 import {SessionControls} from "./Components/SessionControls";
 import {Session as TokboxSession} from "./Components/Tokbox/Session";
@@ -97,7 +99,7 @@ class SessionView extends Component {
   }
 
   TEST () {
-    // tests.testRemoteUserConnects(this);
+    tests.testRemoteUserConnects(this);
     // tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
@@ -375,6 +377,10 @@ class SessionView extends Component {
     this.setState({localUserState: merge(this.state.localUserState, data)}, cb);
   }
 
+  showAudioMode () {
+    return true;
+  }
+
   // if an initial connection error is triggered, then just
   // alert the error and send back to home screen
   handleInitialConnectionError (reason, i18nKey) {
@@ -491,8 +497,12 @@ class SessionView extends Component {
             // TODO: onUserReceivingAVUnthrottled = {}
 
           >
-            {/* <SessionHeader user = { this.props.remoteUser } /> */}
-            {/* <AudioModeBackground /> */}
+            <SessionHeader user={ this.props.remoteUser } />
+
+            {this.showAudioMode() && (
+            <AudioModeBackground user={ this.props.remoteUser } />
+            )}
+
             <CallTimer timer = { this.props.timer } />
 
             { this.poorConnectionAlertVisible() && (
