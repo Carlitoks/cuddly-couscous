@@ -10,6 +10,19 @@ import {TOKBOX_APIKEY} from  "../../../../Config/env";
 
 import { recordSessionTokboxEvent, recordSessionEvent } from "../../../../Util/Forensics";
 
+// custom app signals sent/received via tokbox connection
+const SIGNALS = {
+  ENDING: 'ending', // signal that other side is ending the call
+  NOT_LEGACY_VERSION: 'notLegacyVersion', // signal that other side has a modern version of the app
+  APP_STATE: 'appState', // signal about other sides app state (background/active, etc)
+  NETWORK_STATE: 'networkConnection', // signal about other sides connection type (wifi/cell)
+  CONTROL_STATE: 'controls', // signal for other sides call control state (video/mute/speaker/cameraFlip)
+  VIDEO_THROTTLED: 'videoThrottled', // signal if other sides video receiving has been throttled by tokbox
+  LEGACY_VIDEO_THROTTLED: 'VIDEO_WARN', // legacy signal if other sides video receiving has been throttled by tokbox
+  RECEIVING_AV: 'receivingAV', // signal from other side they are initially receiving audio/video from this side
+  HEARTBEAT: 'heartbeat', // periodic heartbeat from other side to prove connection is still active
+};
+
 const newUserState = () => {
   return {
     connectionID: null,
@@ -139,7 +152,9 @@ export class Session extends Component {
     this.remoteUserState.connectionID = event.connectionId;
     this.remoteUserState.meta = JSON.parse(event.data);
     this.props.onRemoteUserConnecting();
-    this.sendSignal("notLegacyVersion");
+    this.sendSignal(SIGNALS.NOT_LEGACY_VERSION);
+
+    
     // TODO: test sending back-to-back signals
 
     // TODO: send local state (controls, app state, etc...)
@@ -336,7 +351,7 @@ export class Session extends Component {
 
   notifyIfReceiving () {
     if (this.localUserState.subscribing && this.remoteUserState.publishing) {
-      this.sendSignal('receivingAV');
+      this.sendSignal(SIGNALS.RECEIVING_AV);
     }
   }
 
@@ -378,14 +393,14 @@ export class Session extends Component {
       if (this.endedByRemote) {
         return;
       }
-      this.sendSignal("ending");
+      this.sendSignal(SIGNALS.ENDING);
     }
 
     if (oldP.localAppState.state != newP.localAppState.state) {
-      this.sendSignal("appState", {state: newP.localAppState.state});
+      this.sendSignal(SIGNALS.APP_STATE, {state: newP.localAppState.state});
     }
     if (oldP.localAppState.networkConnection != newP.localAppState.networkConnection) {
-      this.sendSignal("networkConnection", {type: newP.localAppState.networkConnection});
+      this.sendSignal(SIGNALS.NETWORK_STATE, {type: newP.localAppState.networkConnection});
     }
 
     const oldC = oldP.localControlState;
@@ -396,7 +411,7 @@ export class Session extends Component {
       oldC.speakerEnabled != newC.speakerEnabled ||
       oldC.cameraFlipEnabled != newC.cameraFlipEnabled
     ) {
-      this.sendSignal("controls", newC);
+      this.sendSignal(SIGNALS.CONTROL_STATE, newC);
     }
   }
 
@@ -420,36 +435,49 @@ export class Session extends Component {
 
     switch (name) {
       // legacy signals
-      case 'VIDEO_WARN': {
+      case SIGNALS.LEGACY_VIDEO_THROTTLED: {
         break;
       }
 
       // new signals
-      case 'notLegacyVersion': {
+      case SIGNALS.NOT_LEGACY_VERSION: {
         this.remoteUserState.legacyVersion = false;
         // this.beginExpectingHeartbeat();
         break;
       }
-      case 'ending': {
+      case SIGNALS.ENDING: {
         this.handleCallEnded();
         break;
       }
-      case 'controls': {
+      case SIGNALS.CONTROL_STATE: {
         this.props.onRemoteUserUpdated({
           ...this.props.remoteUserState,
           controls: payload
         });
         break;
       }
-      case 'appState': {
-
+      case SIGNALS.APP_STATE: {
+        this.props.onRemoteUserUpdated({
+          ...this.props.remoteUserState,
+          app: {
+            ...this.props.remoteUserState.app,
+            state: payload.state,
+          }
+        });
         break;
       }
-      case 'networkConnection': {
-
+      case SIGNALS.NETWORK_STATE: {
+        this.props.onRemoteUserUpdated({
+          ...this.props.remoteUserState,
+          app: {
+            ...this.props.remoteUserState.app,
+            networkConnection: payload.type,
+            hasHetworkConnection: "none" != payload.type,
+          }
+        });
         break;
       }
-      case 'receivingAV': {
+      case SIGNALS.RECEIVING_AV: {
         this.remoteUserState.subscribing = true;
         this.props.onRemoteUserReceivingAV({
           audio: this.localUserState.publishingAudio,
@@ -457,7 +485,7 @@ export class Session extends Component {
         });
         break;
       }
-      case 'heartbeat': {
+      case SIGNALS.HEARTBEAT: {
         this.remoteUserState.lastHeartbeatAt = new Date();
         break;
       }
