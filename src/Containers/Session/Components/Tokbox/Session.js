@@ -61,7 +61,7 @@ export class Session extends Component {
     // this.remoteUserStates = []; // one day...
 
     this.localUserState = newUserState();
-    this.remoteUserState.legacyVersion = false;
+    this.localUserState.legacyVersion = false;
 
     // heartbeats to check for remote connection loss
     this.sendingHeartbeat = false;
@@ -174,7 +174,7 @@ export class Session extends Component {
       return;
     }
 
-    this.remoteUserState = newRemoteUserState();
+    this.remoteUserState = newUserState();
     this.props.onRemoteUserDisconnected();
   }
 
@@ -396,15 +396,17 @@ export class Session extends Component {
       this.sendSignal(SIGNALS.ENDING);
     }
 
-    if (oldP.localAppState.state != newP.localAppState.state) {
-      this.sendSignal(SIGNALS.APP_STATE, {state: newP.localAppState.state});
+    const oldS = oldP.localUserState.app;
+    const newS = newP.localUserState.app;
+    if (oldS.state != newS.state) {
+      this.sendSignal(SIGNALS.APP_STATE, {state: newS.state});
     }
-    if (oldP.localAppState.networkConnection != newP.localAppState.networkConnection) {
-      this.sendSignal(SIGNALS.NETWORK_STATE, {type: newP.localAppState.networkConnection});
+    if (oldS.networkConnection != newS.networkConnection) {
+      this.sendSignal(SIGNALS.NETWORK_STATE, {type: newS.networkConnection});
     }
 
-    const oldC = oldP.localControlState;
-    const newC = newP.localControlState;
+    const oldC = oldP.localUserState.controls;
+    const newC = newP.localUserState.controls;
     if (
       oldC.micEnabled != newC.micEnabled ||
       oldC.videoEnabled != newC.videoEnabled ||

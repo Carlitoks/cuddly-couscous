@@ -93,8 +93,8 @@ export class UserConnecting extends Component {
 
     // did we timeout?
     if (this.countdown <= 0) {  
-      const {connection, remoteUserState} = this.props;
-      const lc = connection;
+      const {localUserState, remoteUserState} = this.props;
+      const lc = localUserState.connection;
       const rc = remoteUserState.connection
 
       // have we still not connected?
@@ -110,6 +110,7 @@ export class UserConnecting extends Component {
       }
 
       // TODO: maybe we connected, but aren't receiving data yet, need to track the initial receipt of a/v
+      console.log("TODO: handle more cases");
 
       // default case - assume failure on our side
       this.error("failure_local");
@@ -133,7 +134,7 @@ export class UserConnecting extends Component {
 
   getConnectionText () {
     const ru = this.props.remoteUser;
-    const mc = this.props.connection;
+    const mc = this.props.localUserState.connection;
 
     // we are in the process of connecting
     if (!mc.connected && mc.connecting) {
