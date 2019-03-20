@@ -84,6 +84,18 @@ export default (reducer = (state, action) => {
       );
       break;
 
+      case "RatingsView":
+      analytics.screen(action.type.toString());
+      analytics.track("Order Completed");
+      recordNavigationEvent(action.type.toString());
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "RatingsView" })]
+        })
+      );
+      break;
+
     case "LoginView":
       analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());

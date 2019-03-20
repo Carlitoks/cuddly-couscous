@@ -8,5 +8,6 @@ src/**
 !src/Containers/Onboarding/**
 !src/Containers/Register/**
 !src/Containers/Permissions/**
+!src/Containers/Rating/**
 !src/Containers/ForgotPassword/**
 src/App.js

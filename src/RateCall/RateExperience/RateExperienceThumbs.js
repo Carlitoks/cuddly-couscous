@@ -9,7 +9,7 @@ import { styles } from "./styles";
 
 class RateExperienceThumbs extends Component {
   buttonThumbs(selectedIndex) {
-    if (selectedIndex == 0) {
+    if (selectedIndex === 0) {
       this.togglethumbsUp();
     } else {
       this.togglethumbsDown();

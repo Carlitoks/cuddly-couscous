@@ -1,6 +1,7 @@
 import { Sessions } from "../Api";
 
 import { networkError } from "./NetworkErrorsReducer";
+import Reactotron from 'reactotron-react-native';
 
 // Actions
 export const ACTIONS = {
@@ -70,6 +71,29 @@ export const UpdateFlags = (
       }
       break;
     }
+    case "callClassification": {
+      if (selected) {
+        Reactotron.log("Selected");
+        /* if the icon is selected we are going to push the name of the icon into the array WhatCouldBetter
+       also we need to remove in what whas good question that element and update the state, if we want to cancel the selection
+       we remove that element of WhatCouldBetter and we update the state of the icon.
+       */
+        letCallClassification.push(Key);
+        dispatch(updateOptions(IconState));
+        const index = letCallClassification.indexOf(Key);
+        if (index !== -1) {
+          letCallClassification.splice(index, 1);
+        }
+      } else {
+        Reactotron.log("Unselected");
+        const index = letCallClassification.indexOf(Key);
+        if (index !== -1) {
+          letCallClassification.splice(index, 1);
+        }
+        dispatch(updateOptions(IconState));
+      }
+      break;
+    }
   }
 };
 
@@ -104,6 +128,7 @@ export const submitRateCall = (RateInformation, sessionID, token) => (
 
 let WhatWasGood = [];
 let WhatCouldBetter = [];
+let letCallClassification = [];
 
 // Initial State
 const initialState = {
@@ -112,6 +137,7 @@ const initialState = {
   sessionID: "",
   customerName: "",
   avatarURL: "",
+  comments: "",
   // color Tab thumbs
   thumbsUp: false,
   thumbsDown: false,
@@ -135,7 +161,13 @@ const initialState = {
   iconConnectionSecondList: false,
   iconBackgroundNoiseSecondList: false,
   iconVoiceClaritySecondList: false,
-  iconDistractionsSecondList: false
+  iconDistractionsSecondList: false,
+
+  //States for call classification
+  iconTrialThirdList: false,
+  iconDemoThirdList: false,
+  iconSupportThirdList: false,
+  iconLangPracticeThirdList: false,
 };
 
 // Reducer

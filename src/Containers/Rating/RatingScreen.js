@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
+import Swiper from "react-native-swiper";
 import SlideUpPanel from "../CustomerHome/Components/Partials/SlideUpPanel";
 import AvatarSection from "./Components/AvatarSection";
 import RateComponent from "./Components/RateComponent";
 import CallClassification from "./Components/CallClassification";
 import CallTags from "./Components/CallTags";
-
+import { openSlideMenu } from "../../Ducks/NewSessionReducer";
+import { clearOptions, submitRateCall } from "../../Ducks/RateCallReducer";
+import I18n from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/RatingsScreenStyles";
-import metrics from "../../Themes/Metrics";
-import Swiper from "react-native-swiper";
-import reactotron from "reactotron-react-native";
 
 class RatingScreen extends Component {
 
@@ -19,59 +19,196 @@ class RatingScreen extends Component {
     super(props);
     this.state = {
       index: 0,
-      enableScroll: false
+      enableScroll: false,
     };
   }
 
+  submit = () => {
+    const {
+      rating, thumbsUp, sessionID, submitRateCall, token, clearOptions, navigation,
+    } = this.props;
+
+    let rateInformation;
+
+    if (thumbsUp) {
+      rateInformation = {
+        ...rateInformation,
+        resolved: true,
+      };
+    } else {
+      rateInformation = {
+        ...rateInformation,
+        resolved: false,
+      };
+    }
+
+    if (rating > 0) {
+      rateInformation = {
+        ...rateInformation,
+        stars: rating,
+      };
+    }
+    if (sessionID) {
+      submitRateCall(rateInformation, sessionID, token)
+        .then((response) => {
+          clearOptions();
+          navigation.dispatch({ type: "Home" });
+        })
+        .catch((err) => {
+          console.log(err);
+          clearOptions();
+          navigation.dispatch({ type: "Home" });
+        });
+    } else {
+      clearOptions();
+      navigation.dispatch({ type: "Home" });
+    }
+  };
+
   nextSlide = () => {
-    if (this.state.index === 0) {
-      this.swiperRef.scrollBy(1);
-      this.setState({ enableScroll: true });
+    const {
+      index,
+    } = this.state;
+
+    const {
+      linguistProfile,
+    } = this.props;
+    if (index === 0) {
+      if (this.canContinue()) {
+        this.swiperRef.scrollBy(1);
+        this.setState({ enableScroll: true});
+      }
     }
 
-    if (this.state.index === 1) {
-      this.swiperRef.scrollBy(2);
+    if (index === 1) {
+      if (linguistProfile) {
+        this.swiperRef.scrollBy(2);
+      } else {
+        this.submit();
+      }
     }
 
-    if (this.state.index === 2) {
-      this.swiperRef.scrollBy(3);
+    if (index === 2) {
+      this.submit();
     }
+  };
 
+  canContinue = () => {
+    const {
+      rating,
+      thumbsUp,
+      thumbsDown,
+    } = this.props;
+    return rating && (thumbsUp || thumbsDown);
+  };
+
+  openSlideMenu = (type) => {
+    const { openSlideMenu } = this.props;
+    openSlideMenu({ type });
+  };
+
+  renderSwiper = () => {
+    const { linguistProfile } = this.props;
+    const { index, enableScroll } = this.state;
+    if (linguistProfile) {
+      return (
+        <Swiper
+          containerStyle={styles.swiperContainer}
+          ref={swiperRef => this.swiperRef = swiperRef}
+          index={index}
+          scrollEnabled={enableScroll}
+          loop={false}
+          onIndexChanged={index => this.setState({ index })}
+          showsPagination={false}
+          showsButtons={false}
+        >
+          <RateComponent />
+          <CallClassification />
+          <CallTags openSlideMenu={this.openSlideMenu} />
+        </Swiper>
+      );
+    }
+    return (
+      <Swiper
+        containerStyle={styles.swiperContainer}
+        ref={swiperRef => this.swiperRef = swiperRef}
+        index={index}
+        scrollEnabled={enableScroll}
+        loop={false}
+        onIndexChanged={index => this.setState({ index })}
+        showsPagination={false}
+        showsButtons={false}
+      >
+        <RateComponent />
+        <CallTags openSlideMenu={this.openSlideMenu} />
+      </Swiper>
+    );
+  };
+
+  renderPagination = () => {
+    const { linguistProfile } = this.props;
+    const { index } = this.state;
+    const screenNumber = linguistProfile ? 3 : 2;
+    const pagination = [];
+    for (let i = 0; i < screenNumber; i += 1) {
+      if (i === index) {
+        pagination.push(<View key={i} style={styles.selectedDot} />);
+      } else {
+        pagination.push(<View key={i} style={styles.baseDot} />);
+      }
+    }
+    return pagination;
   };
 
   render() {
-    const { firstName, navigation } = this.props;
+    const { navigation } = this.props;
     return (
       <View style={styles.ratingScreenContainer}>
-        <AvatarSection navigation={navigation}/>
-        <Swiper style={styles.swiperContainer} ref={(swiperRef) => this.swiperRef = swiperRef} index={0} scrollEnabled={this.state.enableScroll}
-                loop={false} paginationStyle={styles.paginationStyle} showsButtons={false}>
-            <RateComponent />
-            <CallClassification />
-            <CallTags />
-        </Swiper>
-
+        <AvatarSection navigation={navigation} />
+        {this.renderSwiper()}
         <View style={styles.bottomButtonContainer}>
-          <Text style={styles.reportProblemText}>Report a problem by gently shaking your device</Text>
-          <TouchableOpacity style={[styles.baseButton, styles.enabledButton]}
-                            onPress={() => this.nextSlide()}
+          <View
+            style={styles.paginationContainer}
           >
-            <Text style={[styles.baseButtonText, styles.baseButtonTextEnabled]}>
-              Submit
+            {this.renderPagination()}
+          </View>
+          <TouchableOpacity
+            style={[
+              styles.baseButton,
+              this.canContinue() ? styles.enabledButton : styles.disabledButton]}
+            onPress={() => this.nextSlide()}
+          >
+            <Text
+              style={[
+                styles.baseButtonText,
+                this.canContinue() ? styles.baseButtonTextEnabled : styles.baseButtonTextDisabled]}
+            >
+              {I18n.t("session.rating.submit")}
             </Text>
           </TouchableOpacity>
         </View>
-        <SlideUpPanel/>
+        <SlideUpPanel />
       </View>
     );
   }
 }
 
-const mS = state => ({});
+const mS = state => ({
+  thumbsUp: state.rateCall.thumbsUp,
+  thumbsDown: state.rateCall.thumbsDown,
+  rating: state.rateCall.rating,
+  linguistProfile: state.userProfile.linguistProfile,
+  sessionID: state.rateCall.sessionID,
+  token: state.auth.token,
+});
 
-const mD = {};
+const mD = {
+  openSlideMenu,
+  submitRateCall,
+  clearOptions,
+};
 
 export default connect(
   mS,
-  mD
+  mD,
 )(RatingScreen);

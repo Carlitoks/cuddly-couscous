@@ -1,67 +1,192 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { TagSelect } from 'react-native-tag-select';
-import { Divider } from 'react-native-elements';
-
-
+import {
+  ScrollView, Text, TouchableOpacity, View,
+} from "react-native";
+import { TagSelect } from "react-native-tag-select";
+import { Divider } from "react-native-elements";
+import { connect } from "react-redux";
+import { BadIcons, GoodIcons } from "./RateListIcons";
+import { UpdateFlags } from "../../../Ducks/RateCallReducer";
+import I18n from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallTagsStyles";
 
-export default class CallTags extends Component {
+class CallTags extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      whatWasGood: [
-        { id: 1, label: 'Time To Connect' },
-        { id: 2, label: 'Language Ability' },
-        { id: 3, label: 'Professionalism' },
-      ],
-      couldBeBetter: [
-        { id: 1, label: 'Connection' },
-        { id: 2, label: 'Voice Clarity' },
-        { id: 3, label: 'Appearance' },
-        { id: 4, label: 'Friendliness' },
-        { id: 5, label: 'Hard to Understand' },
-        { id: 6, label: 'Background Noise' },
-      ]
+      whatWasGood: [],
+      couldBeBetter: [],
     };
   }
 
+  componentWillMount() {
+    const couldBeBetter = [];
+    const whatWasGood = [];
+    const { linguistProfile } = this.props;
+    BadIcons.map((item, i) => {
+      if (linguistProfile) {
+        if (
+          item.IconName !== "waitTime"
+          && item.IconName !== "professionalism"
+          && item.IconName !== "language"
+        ) {
+          return couldBeBetter.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
+        }
+      }
+      return couldBeBetter.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
+    });
+
+    GoodIcons.map((item, i) => {
+      if (linguistProfile) {
+        if (
+          item.IconName !== "waitTime"
+          && item.IconName !== "professionalism"
+          && item.IconName !== "language"
+        ) {
+          return whatWasGood.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
+        }
+      }
+      return whatWasGood.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
+    });
+    this.setState({ whatWasGood, couldBeBetter });
+  }
+
+  TagsHandle = (icon, flag) => {
+    this.genericToggleFunction(
+      icon.IconName,
+      icon.IconState,
+      this.props[icon.IconState],
+      flag,
+      icon.OffState,
+      icon.Key,
+    );
+  };
+
+  genericToggleFunction = (
+    IconName,
+    StateName,
+    IconState,
+    flagsStore,
+    OffState,
+    Key,
+  ) => {
+    const { UpdateFlags } = this.props;
+    const ObjectState = {};
+    ObjectState[StateName] = !IconState;
+    const ObjectOffState = {};
+    ObjectOffState[OffState] = false;
+    UpdateFlags(
+      IconName,
+      ObjectState,
+      flagsStore,
+      !IconState,
+      ObjectOffState,
+      Key,
+    );
+  };
+
+  renderWhatWasGood = () => {
+    const { rating } = this.props;
+    const { whatWasGood } = this.state;
+    if (rating >= 4) {
+      return (
+        <View>
+          <Text style={[styles.baseText, styles.paddingTop]}>{I18n.t("session.rating.questionGood")}</Text>
+          <TagSelect
+            data={whatWasGood}
+            max={1}
+            ref={(tag) => {
+              this.tag = tag;
+            }}
+            onItemPress={item => this.TagsHandle(item, "positiveFlags")}
+            itemStyle={[styles.baseTagsStyle, styles.tagUnselected]}
+            itemLabelStyle={[styles.baseTagText, styles.baseTagTextUnselected]}
+            itemStyleSelected={[styles.baseTagsStyle, styles.tagSelected]}
+            itemLabelStyleSelected={[styles.baseTagText, styles.baseTagTextSelected]}
+            containerStyle={styles.tagsContainer}
+          />
+        </View>
+      );
+    }
+    return <React.Fragment />;
+  };
+
+  renderCouldBeBetter = () => {
+    const { rating } = this.props;
+    const { couldBeBetter } = this.state;
+    if (rating <= 3) {
+      return (
+        <View>
+          <Text style={[styles.baseText, styles.paddingTop]}>{I18n.t("session.rating.questionBetter")}</Text>
+          <TagSelect
+            data={couldBeBetter}
+            max={1}
+            ref={(tag) => {
+              this.tag = tag;
+            }}
+            onItemPress={item => this.TagsHandle(item, "negativeFlags")}
+            itemStyle={[styles.baseTagsStyle, styles.tagUnselected]}
+            itemLabelStyle={[styles.baseTagText, styles.baseTagTextUnselected]}
+            itemStyleSelected={[styles.baseTagsStyle, styles.tagSelected]}
+            itemLabelStyleSelected={[styles.baseTagText, styles.baseTagTextSelected]}
+            containerStyle={styles.tagsContainer}
+          />
+        </View>
+      );
+    }
+    return <React.Fragment />;
+  };
+
   render() {
-    return <ScrollView contenContinerStyle={styles.flexEndCenter}>
-      <Text style={styles.baseText}>What was good?</Text>
-      <TagSelect
-        data={this.state.whatWasGood}
-        max={1}
-        ref={(tag) => {
-          this.tag = tag;
-        }}
-        itemStyle={[ styles.baseTagsStyle, styles.tagUnselected]}
-        itemLabelStyle={[styles.baseTagText, styles.baseTagTextUnselected]}
-        itemStyleSelected={[ styles.baseTagsStyle, styles.tagSelected]}
-        itemLabelStyleSelected={[styles.baseTagText, styles.baseTagTextSelected]}
-        containerStyle={styles.tagsContainer}
-      />
-
-      <Text style={styles.baseText}>What could be better?</Text>
-      <TagSelect
-        data={this.state.couldBeBetter}
-        max={1}
-        ref={(tag) => {
-          this.tag = tag;
-        }}
-        itemStyle={[ styles.baseTagsStyle, styles.tagUnselected]}
-        itemLabelStyle={[styles.baseTagText, styles.baseTagTextUnselected]}
-        itemStyleSelected={[ styles.baseTagsStyle, styles.tagSelected]}
-        itemLabelStyleSelected={[styles.baseTagText, styles.baseTagTextSelected]}
-        containerStyle={styles.tagsContainer}
-      />
-
-      <View style={styles.bottomDividerContainer}>
-        <Divider style={styles.divider} />
-        <Text style={styles.addComments}>+ Add Comments</Text>
-        <Divider style={styles.divider} />
-      </View>
-    </ScrollView>;
+    const { whatWasGood, couldBeBetter } = this.state;
+    const { openSlideMenu, ratingComments } = this.props;
+    return (
+      <ScrollView contenContinerStyle={styles.flexEndCenter}>
+        {this.renderWhatWasGood()}
+        {this.renderCouldBeBetter()}
+        <View style={styles.bottomDividerContainer}>
+          <Divider style={styles.divider} />
+          <TouchableOpacity onPress={() => openSlideMenu("ratingComments")}>
+            <Text
+              style={styles.addComments}
+              numberOfLines={1}
+            >
+              {ratingComments || `+ ${I18n.t("session.rating.addComment")}`}
+            </Text>
+          </TouchableOpacity>
+          <Divider style={styles.divider} />
+        </View>
+      </ScrollView>
+    );
   }
 }
+
+const mS = state => ({
+  ratingComments: state.rateCall.comments,
+  iconWaitTimeFirstList: state.rateCall.iconWaitTimeFirstList,
+  iconProfessionalismFirstList: state.rateCall.iconProfessionalismFirstList,
+  iconFriendlinessFirstList: state.rateCall.iconFriendlinessFirstList,
+  iconLanguageAbilityFirstList: state.rateCall.iconLanguageAbilityFirstList,
+  iconUnderstandFirstList: state.rateCall.iconUnderstandFirstList,
+  iconAudioQualityFirstList: state.rateCall.iconAudioQualityFirstList,
+  iconWaitTimeSecondList: state.rateCall.iconWaitTimeSecondList,
+  iconProfessionalismSecondList: state.rateCall.iconProfessionalismSecondList,
+  iconFriendlinessSecondList: state.rateCall.iconFriendlinessSecondList,
+  iconLanguageAbilitySecondList: state.rateCall.iconLanguageAbilitySecondList,
+  iconUnderstandSecondList: state.rateCall.iconUnderstandSecondList,
+  iconConnectionSecondList: state.rateCall.iconConnectionSecondList,
+  iconBackgroundNoiseSecondList: state.rateCall.iconBackgroundNoiseSecondList,
+  iconVoiceClaritySecondList: state.rateCall.iconVoiceClaritySecondList,
+  iconDistractionsSecondList: state.rateCall.iconDistractionsSecondList,
+  rating: state.rateCall.rating,
+});
+
+const mD = {
+  UpdateFlags,
+};
+
+export default connect(
+  mS,
+  mD,
+)(CallTags);
