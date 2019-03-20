@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { Metrics, ApplicationStyles, Fonts } from "../../../Themes";
 import metrics from "../../../Themes/Metrics";
 import { moderateScale } from "../../../Util/Scaling";
+import {isIphoneXorAbove} from "../../../Util/Devices";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -38,7 +39,7 @@ export default StyleSheet.create({
   bottomButtonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 25,
+    paddingBottom: isIphoneXorAbove() ? 50 : 25,
   },
   reportProblemText: {
     fontFamily: Fonts.ItalicFont,

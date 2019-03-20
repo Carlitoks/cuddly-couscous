@@ -1,7 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { Metrics, ApplicationStyles, Fonts } from "../../../../Themes";
 import metrics from "../../../../Themes/Metrics";
 import { moderateScale } from "../../../../Util/Scaling";
+import {isIphoneXorAbove} from "../../../../Util/Devices";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -34,8 +35,9 @@ export default StyleSheet.create({
   },
   mainAvatarSectionContainer: {
     backgroundColor: "#401674",
+    paddingTop: isIphoneXorAbove() ? 25 : Platform.OS === 'ios' ? 10 : 0,
   },
-  avatar: { width: metrics.width * 0.25, height: metrics.width * 0.25, borderRadius: 100 },
+  avatar: { width: metrics.width * 0.25, height: metrics.width * 0.25, borderRadius: Platform.OS === 'ios' ? metrics.width * 0.25/2 : 100 },
   firstName: {
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(26, 0),
