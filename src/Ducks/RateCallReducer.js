@@ -1,7 +1,6 @@
 import { Sessions } from "../Api";
 
 import { networkError } from "./NetworkErrorsReducer";
-import Reactotron from 'reactotron-react-native';
 
 // Actions
 export const ACTIONS = {
