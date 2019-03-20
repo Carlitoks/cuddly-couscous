@@ -92,9 +92,6 @@ class SessionView extends Component {
       }),
     };
 
-    console.log('initial local user state:');
-    console.log(this.state.localUserState); // TODO: check app.network
-
     this.endingCall = false;
     this.unmounting = false;
   }
