@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Alert, NetInfo, AppState, View, Text, TouchableWithoutFeedback} from 'react-native';
-import {KeepAwake} from "react-native-keep-awake";
+import {Animated, Alert, NetInfo, AppState, View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import KeepAwake from "react-native-keep-awake";
 import { connect } from 'react-redux';
 import I18n, {translateApiError} from "../../I18n/I18n";
 import merge from 'lodash/merge';
@@ -204,7 +204,7 @@ class SessionView extends Component {
 
   toggleVideo () {
     const {controls} = this.state.localUserState;
-    this.setState({controls: {
+    this.updateLocalUserState({controls: {
       ...controls,
       videoEnabled: !controls.videoEnabled
     }});
@@ -212,7 +212,7 @@ class SessionView extends Component {
 
   toggleMic () {
     const {controls} = this.state.localUserState;
-    this.setState({controls: {
+    this.updateLocalUserState({controls: {
       ...controls,
       micEnabled: !controls.micEnabled
     }});
@@ -220,7 +220,7 @@ class SessionView extends Component {
 
   toggleSpeaker () {
     const {controls} = this.state.localUserState;
-    this.setState({controls: {
+    this.updateLocalUserState({controls: {
       ...controls,
       speakerEnabled: !controls.speakerEnabled
     }});
@@ -377,8 +377,8 @@ class SessionView extends Component {
     this.setState({localUserState: merge(this.state.localUserState, data)}, cb);
   }
 
-  showAudioMode () {
-    return true;
+  showAudioMode (bool) {
+    return bool;
   }
 
   // if an initial connection error is triggered, then just
@@ -455,11 +455,12 @@ class SessionView extends Component {
 
   render () {
     const {localUserState, remoteUserState} = this.state;
+
     return (
       <TouchableWithoutFeedback onPress={ () => this.toggleDisplayControls() }>
         <View style={{flex: 1}}>
 
-          {/* <KeepAwake /> */}
+          <KeepAwake />
 
           <TokboxSession
             user = {this.props.user }
@@ -497,30 +498,33 @@ class SessionView extends Component {
             // TODO: onUserReceivingAVUnthrottled = {}
 
           >
-            <SessionHeader user={ this.props.remoteUser } />
-
-            {this.showAudioMode() && (
+            {this.showAudioMode(false) && (
             <AudioModeBackground user={ this.props.remoteUser } />
             )}
 
-            <CallTimer timer = { this.props.timer } />
-
+            <SessionHeader user={ this.props.remoteUser } />
             { this.poorConnectionAlertVisible() && (
-            <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
+              <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
             )}
+            
+            <View style={ styles.controlContainer }>
+              <View style={ styles.controls }>
+                <CallTimer timer = { this.props.timer } />
+                <SessionControls
+                  cameraFlipEnabled={ localUserState.controls.cameraFlipEnabled }
+                  onCameraFlipPressed= {() => { this.toggleCameraFlip() }}
+                  speakerEnabled = { localUserState.controls.speakerEnabled}
+                  onSpeakerPressed = {() => {  this.toggleSpeaker() }}
+                  micEnabled = { localUserState.controls.micEnabled }
+                  onMicPressed =  {() => { this.toggleMic() }}
+                  videoEnabled = { localUserState.controls.videoEnabled }
+                  onVideoPressed = {() => { this.toggleVideo() }}
+                  endingCall = { this.state.endingCall }
+                  onEndCallPressed = {() => { this.triggerEndCall("done") }}
+                />
+              </View>
+            </View>
 
-            <SessionControls
-              cameraFlipEnabled={ localUserState.controls.cameraFlipEnabled }
-              onCameraFlipPressed= {() => { this.toggleCameraFlip() }}
-              speakerEnabled = { localUserState.controls.speakerEnabled}
-              onSpeakerPressed = {() => {  this.toggleSpeaker() }}
-              micEnabled = { localUserState.controls.micEnabled }
-              onMicPressed =  {() => { this.toggleMic() }}
-              videoEnabled = { localUserState.controls.videoEnabled }
-              onVideoPressed = {() => { this.toggleVideo() }}
-              endingCall = { this.state.endingCall }
-              onEndCallPressed = {() => { this.triggerEndCall("done") }}
-            />
           </TokboxSession>
 
           {/* If there is a remote user, but we haven't connected to them yet, show the initial connection screen */}
@@ -559,6 +563,20 @@ class SessionView extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  controlContainer: {
+    position: 'absolute',
+    top: 0,
+    left:0,
+    bottom: 0,
+    right: 0,
+  },
+  controls: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  }
+});
 
 const mS = (state) => ({
   user: state.userProfile, // TODO: replace with state.activeUser.user

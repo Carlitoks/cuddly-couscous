@@ -11,12 +11,15 @@ export const SessionHeader = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 40,
+    position: "absolute",
     width: "100%",
-    backgroundColor: "#33a"
+    top: 0,
+    left: 0,
+    padding: 15,
+    backgroundColor: "rgba(0, 0, 0, 0.33)"
   },
   text: {
-    fontSize: 15,
+    fontSize: 20,
     color: "#fff"
   }
 });

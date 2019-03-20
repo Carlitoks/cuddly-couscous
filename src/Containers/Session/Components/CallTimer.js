@@ -113,8 +113,11 @@ export class CallTimer extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    alignItems: "center"
+    width: "100%",
+    padding: 15,
+    backgroundColor: "rgba(0, 0, 0, 0.33)",
+    alignItems: "center",
+    marginBottom: 3
   },
   text: {
     color: "#fff"

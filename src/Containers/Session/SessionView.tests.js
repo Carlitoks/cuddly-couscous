@@ -10,14 +10,14 @@ export const testRemoteUserConnects = (comp) => {
     comp.handleUserConnecting();
     comp.handleRemoteUserConnecting();
 
-    after(1000, () => {
+    after(500, () => {
       comp.handleUserConnected();
       comp.handleRemoteUserConnected();
       comp.handleUserSendingAV({audio: true, video: true});
       comp.handleRemoteUserSendingAV({audio: true, video: true});
     });
 
-    after(2000, () => {
+    after(1000, () => {
       comp.handleUserReceivingAV({audio: true, video: true});
       comp.handleRemoteUserReceivingAV({audio: true, video: true});
     });

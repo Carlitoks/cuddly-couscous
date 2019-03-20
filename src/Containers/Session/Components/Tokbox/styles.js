@@ -3,47 +3,46 @@ import { StyleSheet } from "react-native";
 // TODO: portrait vs landscape styles
 
 export default styles = StyleSheet.create({
-  //
+
   sessionContainer: {
-    flex: 1,
-    backgroundColor: "#44aa44",
-    padding: 20
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
   },
 
-  //
   session: {
-    flex: 1,
-    backgroundColor: "#66cc66",
-    padding: 20
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
   },
 
-  //
   subscriberContainer: {
-    backgroundColor: "#aa4444",
-    padding: 20
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
 
-  //
   subscriber: {
-    height: 100,
-    width: 100,
-    backgroundColor: "#cc6666",
-    padding: 20
+    height: "100%",
+    height: "100%"
   },
   
-  //
   publisherContainer: {
-    backgroundColor: "#4444aa",
-    padding: 20,
-    zIndex: 0,
+    position: "absolute",
+    top: 50,
+    right: 10,
+    height: 125,
+    width: 75
   },
 
-  // 
   publisher: {
-    height: 100,
-    width: 100,
-    backgroundColor: "#6666cc",
-    padding: 20,
-    zIndex: 0,
+    height: "100%",
+    width: "100%",
   },
 });

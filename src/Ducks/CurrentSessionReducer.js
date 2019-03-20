@@ -56,17 +56,19 @@ const initState = () => ({
   respondingToInvite: false,
 });
 
-export const createNewSession = (params) => (dispatch, getState) => {
-
-  // Test HACK
+const localTestHack = (dispatch) => {
   setTimeout(() => {
-    console.log("setting remote user");
     dispatch(setRemoteUser({
       id: "22222222-2222-2222-2222-222222222223",
       firstName: "Evan",
       lastInitial: "V"
     }));
-  }, 2000);
+  }, 750);
+};
+
+export const createNewSession = (params) => (dispatch, getState) => {
+
+  localTestHack(dispatch);
 
   return new Promise((resolve, reject) => {
     dispatch(clear());
