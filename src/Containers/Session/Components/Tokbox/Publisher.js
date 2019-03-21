@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {View} from "react-native";
 import {OTPublisher} from "opentok-react-native";
-import styles from "./styles";
+import {publisherStyles} from "./styles";
 
 import { recordSessionTokboxEvent } from "../../../../Util/Forensics";
 
@@ -72,7 +72,8 @@ export class Publisher extends Component {
   }
 
   render () {
-    const {status} = this.props;
+    const {status, localUserState} = this.props;
+    const styles = publisherStyles(localUserState.controls.videoEnabled);
 
     return (
       <View style={styles.publisherContainer}>

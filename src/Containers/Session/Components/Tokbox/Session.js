@@ -48,7 +48,21 @@ export class Session extends Component {
     this.state = {
       unmounting: false,
       mounted: true,
+
+      // local UI settings
+      display: {
+        primaryFeed: 'subscriber' // publisher | subscriber
+      },
+
+      // config to pass to the tokbox subscriber for each available stream
       streamProperties: {},
+      
+      // config to pass to the tokbox publisher
+      publisherProperties: {
+
+      },
+
+      // signal to send to other participant
       signal: {type: "", data: ""}
     };
 
@@ -494,14 +508,6 @@ export class Session extends Component {
     }
   }
 
-  _handleAppStateChange () {
-
-  }
-
-  _handleNetInfoChange () {
-
-  }
-
   isTransitioning () {
     const {localSessionStatus} = this.props;
     return (
@@ -522,7 +528,7 @@ export class Session extends Component {
   }
 
   render () {
-    const {session, credentials, localSessionStatus} = this.props;
+    const {session, credentials, localSessionStatus, localUserState, remoteUserState} = this.props;
 
     return (
       <View style={styles.sessionContainer}>
@@ -538,6 +544,8 @@ export class Session extends Component {
             <Publisher
               session = {session}
               status = {localSessionStatus}
+              localUserState = {localUserState}
+              remoteUserState = {remoteUserState}
               onStreamCreated = {(event) => { this.publisherStreamCreated(event) }}
               onStreamDestroyed = {(event) => { this.publisherStreamDestroyed(event) }}
               onError = {(event) => { this.remount() }}
@@ -545,10 +553,16 @@ export class Session extends Component {
             <Subscriber
               session = {session}
               status = {localSessionStatus}
+              localUserState = {localUserState}
+              remoteUserState = {remoteUserState}
               streamProperties = { this.state.streamProperties }
               onReceiving = {() => { this.subscriberReceiving() }}
               onError = {(event) => { this.remount() }}
             />
+
+            {/* NOTE: not possible to implement yet: https://github.com/opentok/opentok-react-native/issues/162 */}
+            {/* <View style={ styles.primaryFeedToggle }></View> */}
+
           </OTSession>
         )}
         { this.props.children }
