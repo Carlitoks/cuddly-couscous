@@ -127,6 +127,50 @@ export class Session extends Component {
     this.cleanup();
   }
 
+  // check prop state for changes that should be signaled to other participants
+  componentDidUpdate (prevProps) {
+    const oldP = prevProps;
+    const newP = this.props;
+
+    if (this.unmounting) {
+      return;
+    }
+
+    // handle edge case where new session could have been created
+    if (newP.session.id != this.originalSessionID) {
+      this.unmounting = true;
+      return;
+    }
+
+    // are we ending?
+    if (!oldP.localSessionStatus.ending && newP.localSessionStatus.ending) {
+      if (this.endedByRemote) {
+        return;
+      }
+      this.sendSignal(SIGNALS.ENDING);
+    }
+
+    const oldS = oldP.localUserState.app;
+    const newS = newP.localUserState.app;
+    if (oldS.state != newS.state) {
+      this.sendSignal(SIGNALS.APP_STATE, {state: newS.state});
+    }
+    if (oldS.networkConnection != newS.networkConnection) {
+      this.sendSignal(SIGNALS.NETWORK_STATE, {type: newS.networkConnection});
+    }
+
+    const oldC = oldP.localUserState.controls;
+    const newC = newP.localUserState.controls;
+    if (
+      oldC.micEnabled != newC.micEnabled ||
+      oldC.videoEnabled != newC.videoEnabled ||
+      oldC.speakerEnabled != newC.speakerEnabled ||
+      oldC.cameraFlipEnabled != newC.cameraFlipEnabled
+    ) {
+      this.sendSignal(SIGNALS.CONTROL_STATE, newC);
+    }
+  }
+
   onSessionConnected () {
     recordSessionTokboxEvent('session.sessionConnected', {
       sessionID: this.props.session.id
@@ -342,13 +386,10 @@ export class Session extends Component {
     this.localUserState = {
       ...this.localUserState,
       streamID: null,
-      connectionID: null,
       publishing: false,
       publishingAudio: false,
       publishingVideo: false,
     };
-
-    // TODO: props.onUserStoppedSendingAV()?
   }
 
   subscriberReceiving () {
@@ -360,7 +401,27 @@ export class Session extends Component {
       });
     }
 
-    this.notifyIfReceiving()
+    this.notifyIfReceiving();
+  }
+
+  subscriberVideoEnabled (event) {
+    console.log('subscriberVideoEnabled', event);
+
+  }
+
+  subscriberVideoDisabled (event) {
+    console.log('subscriberVideoDisabled', event);
+
+  }
+
+  subscriberVideoThrottled () {
+    // ...
+    this.props.onUserReceivingAVThrottled();
+  }
+
+  subscriberVideoUnthrottled () {
+    // ...
+    this.props.onUserReceivingAVUnthrottled();
   }
 
   notifyIfReceiving () {
@@ -385,50 +446,6 @@ export class Session extends Component {
         cb();
       }
     });
-  }
-
-  // check prop state for changes that should be signaled to other participants
-  componentDidUpdate (prevProps) {
-    const oldP = prevProps;
-    const newP = this.props;
-
-    if (this.unmounting) {
-      return;
-    }
-
-    // handle edge case where new session could have been created
-    if (newP.session.id != this.originalSessionID) {
-      this.unmounting = true;
-      return;
-    }
-
-    // are we ending?
-    if (!oldP.localSessionStatus.ending && newP.localSessionStatus.ending) {
-      if (this.endedByRemote) {
-        return;
-      }
-      this.sendSignal(SIGNALS.ENDING);
-    }
-
-    const oldS = oldP.localUserState.app;
-    const newS = newP.localUserState.app;
-    if (oldS.state != newS.state) {
-      this.sendSignal(SIGNALS.APP_STATE, {state: newS.state});
-    }
-    if (oldS.networkConnection != newS.networkConnection) {
-      this.sendSignal(SIGNALS.NETWORK_STATE, {type: newS.networkConnection});
-    }
-
-    const oldC = oldP.localUserState.controls;
-    const newC = newP.localUserState.controls;
-    if (
-      oldC.micEnabled != newC.micEnabled ||
-      oldC.videoEnabled != newC.videoEnabled ||
-      oldC.speakerEnabled != newC.speakerEnabled ||
-      oldC.cameraFlipEnabled != newC.cameraFlipEnabled
-    ) {
-      this.sendSignal(SIGNALS.CONTROL_STATE, newC);
-    }
   }
 
   sendSignal (type, payload = null) {
@@ -557,6 +574,10 @@ export class Session extends Component {
               remoteUserState = {remoteUserState}
               streamProperties = { this.state.streamProperties }
               onReceiving = {() => { this.subscriberReceiving() }}
+              onVideoDisabled = {(event) => { this.subscriberVideoDisabled(event) }}
+              onVideoEnabled = {(event) => { this.subscriberVideoEnabled(event) }}
+              onVideoDisableWarning = {() => { this.subscriberVideoThrottled() }}
+              onVideoDisableWarningLifted = {() => { this.subscriberVideoUnthrottled() }}
               onError = {(event) => { this.remount() }}
             />
 

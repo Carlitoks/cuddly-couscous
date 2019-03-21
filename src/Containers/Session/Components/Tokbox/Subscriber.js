@@ -93,18 +93,21 @@ export class Subscriber extends Component {
       event,
       sessionID: this.props.session.id
     });
+    this.props.onVideoDisabled(event);
   }
 
   onVideoDisableWarning () {
     recordSessionTokboxEvent('subscriber.videoDisableWarning', {
       sessionID: this.props.session.id
     });
+    this.props.onVideoDisableWarning();
   }
 
   onVideoDisableWarningLifted () {
     recordSessionTokboxEvent('subscriber.videoDisableWarningLifted', {
       sessionID: this.props.session.id
     });
+    this.props.onVideoDisableWarningLifted();    
   }
 
   onVideoEnabled (event) {
@@ -112,6 +115,7 @@ export class Subscriber extends Component {
       event,
       sessionID: this.props.session.id
     });
+    this.onVideoEnabled(event);
   }
 
   render () {

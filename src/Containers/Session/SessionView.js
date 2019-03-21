@@ -99,7 +99,7 @@ class SessionView extends Component {
   }
 
   TEST () {
-    tests.testRemoteUserConnects(this);
+    // tests.testRemoteUserConnects(this);
     // tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
@@ -316,6 +316,18 @@ class SessionView extends Component {
     this.props.stopTimer();
   }
 
+  handleUserReceivingAVThrottled () {
+    this.updateLocalUserState({connection: {
+      receivingThrottled: true
+    }});
+  }
+
+  handleUserReceivingAVUnthrottled () {
+    this.updateLocalUserState({connection: {
+      receivingThrottled: false
+    }});
+  }
+
   handleRemoteUserConnecting () {
     this.updateRemoteUserState({connection: {
       ...this.state.remoteUserState.connection,
@@ -367,6 +379,18 @@ class SessionView extends Component {
       connecting: false,
     }});
     this.props.stopTimer();
+  }
+
+  handleRemoteUserReceivingAVThrottled () {
+    this.updateRemoteUserState({connection: {
+      receivingThrottled: true
+    }});
+  }
+
+  handleRemoteUserReceivingAVUnthrottled () {
+    this.updateRemoteUserState({connection: {
+      receivingThrottled: false
+    }});
   }
 
   updateRemoteUserState (data, cb = null) {
@@ -483,8 +507,8 @@ class SessionView extends Component {
             onRemoteUserUpdated = {(userState) => { this.updateRemoteUserState(userState) }}
             onRemoteUserReceivingAV = {(ops) => { this.handleRemoteUserReceivingAV(ops) }}
             onRemoteUserSendingAV = {(ops) => { this.handleRemoteUserSendingAV(ops) }}
-            // TODO: onRemoteUserReceivingAVThrottled = {}
-            // TODO: onRemoteUserReceivingAVUnthrottled = {}
+            onRemoteUserReceivingAVThrottled = {() => { this.handleRemoteUserReceivingAVThrottled() }}
+            onRemoteUserReceivingAVUnthrottled = {() => { this.handleRemoteUserReceivingAVUnthrottled() }}
 
             // update basic connection status of user
             onUserConnecting = {() => { this.handleUserConnecting() }}
@@ -494,8 +518,8 @@ class SessionView extends Component {
             onUserReconnected = {() => { this.handleUserConnected() }}
             onUserReceivingAV = {(ops) => { this.handleUserReceivingAV(ops) }}
             onUserSendingAV = {(ops) => { this.handleUserSendingAV(ops) }}
-            // TODO: onUserReceivingAVThrottled = {}
-            // TODO: onUserReceivingAVUnthrottled = {}
+            onUserReceivingAVThrottled = {() => { this.handleUserReceivingAVThrottled() }}
+            onUserReceivingAVUnthrottled = {() => { this.handleUserReceivingAVUnthrottled() }}
 
           >
             {this.showAudioMode(false) && (
