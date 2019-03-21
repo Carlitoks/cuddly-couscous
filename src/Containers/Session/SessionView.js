@@ -8,6 +8,7 @@ import merge from 'lodash/merge';
 import {createNewSession, endSession, handleEndedSession, setRemoteUser, setSessionBegan, startTimer, stopTimer} from '../../Ducks/CurrentSessionReducer';
 
 import {UserConnecting} from "./Components/UserConnecting";
+import {SessionEnding} from "./Components/SessionEnding";
 import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
 import {ReconnectionState} from "./Components/ReconnectionState";
 import {SessionHeader} from "./Components/SessionHeader";
@@ -565,6 +566,10 @@ class SessionView extends Component {
             onRemoteCancel = {() => { this.handleRemoteCancel() }}
             onCancel = {() => { this.triggerEndCall("cancel") }}
           />
+          )}
+          
+          {(this.props.status.ending || this.props.status.ended) && (
+          <SessionEnding />
           )}
           
           {/* If the initial connection was established, but one party has been disconnected... */}

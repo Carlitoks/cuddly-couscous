@@ -57,11 +57,6 @@ export class Session extends Component {
       // config to pass to the tokbox subscriber for each available stream
       streamProperties: {},
       
-      // config to pass to the tokbox publisher
-      publisherProperties: {
-
-      },
-
       // signal to send to other participant
       signal: {type: "", data: ""}
     };
