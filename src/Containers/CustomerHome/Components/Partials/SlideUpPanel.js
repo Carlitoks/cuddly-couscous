@@ -180,7 +180,7 @@ class SlideUpPanel extends Component {
       id: "custom",
       active: true,
       category: "custom",
-      title: "Other",
+      title: I18n.t("other"),
       eventID: null
     };
     return (
