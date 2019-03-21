@@ -4,7 +4,7 @@ import { TagSelect } from "react-native-tag-select";
 import { connect } from "react-redux";
 import { CallClassification as CallClassificationIcons } from "./RateListIcons";
 import I18n from "../../../I18n/I18n";
-import { UpdateFlags } from "../../../Ducks/RateCallReducer";
+import { UpdateFlags, updateOptions } from "../../../Ducks/RateCallReducer";
 // Styles
 import styles from "./Styles/CallClassificationStyles";
 
@@ -22,38 +22,9 @@ class CallClassification extends Component {
     this.setState({ callClassification });
   }
 
-  TagsHandle = (icon, flag) => {
-    this.genericToggleFunction(
-      icon.IconName,
-      icon.IconState,
-      this.props[icon.IconState],
-      flag,
-      icon.OffState,
-      icon.Key,
-    );
-  };
-
-  genericToggleFunction = (
-    IconName,
-    StateName,
-    IconState,
-    flagsStore,
-    OffState,
-    Key,
-  ) => {
-    const { UpdateFlags } = this.props;
-    const ObjectState = {};
-    ObjectState[StateName] = !IconState;
-    const ObjectOffState = {};
-    ObjectOffState[OffState] = false;
-    UpdateFlags(
-      IconName,
-      ObjectState,
-      flagsStore,
-      !IconState,
-      ObjectOffState,
-      Key,
-    );
+  TagsHandle = (item) => {
+    const { updateOptions } = this.props;
+    updateOptions({ callType: item.value });
   };
 
   render() {
@@ -67,7 +38,8 @@ class CallClassification extends Component {
           ref={(tag) => {
             this.tag = tag;
           }}
-          onItemPress={item => this.TagsHandle(item, "callClassification")}
+          onMaxError={(error) => console.log(error)}
+          onItemPress={item => this.TagsHandle(item)}
           itemStyle={[styles.baseTagsStyle, styles.tagUnselected]}
           itemLabelStyle={[styles.baseTagText, styles.baseTagTextUnselected]}
           itemStyleSelected={[styles.baseTagsStyle, styles.tagSelected]}
@@ -80,14 +52,11 @@ class CallClassification extends Component {
 }
 
 const mS = state => ({
-  iconTrialThirdList: state.rateCall.iconTrialThirdList,
-  iconDemoThirdList: state.rateCall.iconDemoThirdList,
-  iconSupportThirdList: state.rateCall.iconSupportThirdList,
-  iconLangPracticeThirdList: state.rateCall.iconLangPracticeThirdList,
+  callType: state.rateCall.callType,
 });
 
 const mD = {
-  UpdateFlags,
+  UpdateFlags, updateOptions,
 };
 
 export default connect(

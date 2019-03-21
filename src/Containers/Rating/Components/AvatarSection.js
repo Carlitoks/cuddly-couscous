@@ -32,9 +32,12 @@ class AvatarSection extends Component {
     if (customerName) {
       return customerName.split("undefined")[0];
     } if (linguist) {
-      return `${linguist.firstName} ${
-        linguist.lastInitial
-      }`;
+      if (linguist.lastInitial) {
+        return `${linguist.firstName} ${
+          linguist.lastInitial
+        }`;
+      }
+      return linguist.firstName;
     }
     clearOptions();
     navigation.dispatch({ type: "Home" });

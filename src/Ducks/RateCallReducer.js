@@ -71,29 +71,6 @@ export const UpdateFlags = (
       }
       break;
     }
-    case "callClassification": {
-      if (selected) {
-        Reactotron.log("Selected");
-        /* if the icon is selected we are going to push the name of the icon into the array WhatCouldBetter
-       also we need to remove in what whas good question that element and update the state, if we want to cancel the selection
-       we remove that element of WhatCouldBetter and we update the state of the icon.
-       */
-        letCallClassification.push(Key);
-        dispatch(updateOptions(IconState));
-        const index = letCallClassification.indexOf(Key);
-        if (index !== -1) {
-          letCallClassification.splice(index, 1);
-        }
-      } else {
-        Reactotron.log("Unselected");
-        const index = letCallClassification.indexOf(Key);
-        if (index !== -1) {
-          letCallClassification.splice(index, 1);
-        }
-        dispatch(updateOptions(IconState));
-      }
-      break;
-    }
   }
 };
 
@@ -117,7 +94,8 @@ export const submitRateCall = (RateInformation, sessionID, token) => (
     ...RateInformation,
     negativeFlags: WhatCouldBetter,
     positiveFlags: WhatWasGood,
-    comment: ""
+    comment: getState().rateCall.comments,
+    callType: getState().rateCall.callType,
   };
   return Sessions.RatingSession(RateInformation, sessionID, token)
     .then(response => {
@@ -128,7 +106,6 @@ export const submitRateCall = (RateInformation, sessionID, token) => (
 
 let WhatWasGood = [];
 let WhatCouldBetter = [];
-let letCallClassification = [];
 
 // Initial State
 const initialState = {
@@ -163,11 +140,8 @@ const initialState = {
   iconVoiceClaritySecondList: false,
   iconDistractionsSecondList: false,
 
-  //States for call classification
-  iconTrialThirdList: false,
-  iconDemoThirdList: false,
-  iconSupportThirdList: false,
-  iconLangPracticeThirdList: false,
+  //call classification
+  callType: "",
 };
 
 // Reducer
