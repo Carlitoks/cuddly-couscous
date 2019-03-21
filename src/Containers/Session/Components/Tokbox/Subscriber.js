@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {View} from "react-native";
 import {OTSubscriber} from "opentok-react-native";
-import {subscriberStyles} from "./styles";
+import styles from "./styles";
 
 import { recordSessionTokboxEvent } from "../../../../Util/Forensics";
 
@@ -115,20 +115,19 @@ export class Subscriber extends Component {
       event,
       sessionID: this.props.session.id
     });
-    this.onVideoEnabled(event);
+    this.props.onVideoEnabled(event);
   }
 
   render () {
-    const {status, remoteUserState} = this.props;
-    const styles = subscriberStyles(remoteUserState.controls.videoEnabled);
+    const {status} = this.props;
 
     return (
       <View style={styles.subscriberContainer}>
       {!status.ending && (
         <OTSubscriber
+          style = { styles.subscriber }
           properties = { this.subscriberProperties }
           eventHandlers = { this.eventHandlers }
-          style = { styles.subscriber }
           streamProperties = { this.props.streamProperties }
         />
       )}

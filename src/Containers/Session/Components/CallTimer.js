@@ -75,7 +75,7 @@ export class CallTimer extends Component {
   }
 
   handleInterval () {
-    if (!this.mounted) {
+    if (!this.mounted || !this.props.timer.running) {
       return;
     }
 

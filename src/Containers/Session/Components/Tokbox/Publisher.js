@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {View} from "react-native";
 import {OTPublisher} from "opentok-react-native";
-import {publisherStyles} from "./styles";
+import styles from "./styles";
 
 import { recordSessionTokboxEvent } from "../../../../Util/Forensics";
 
@@ -73,13 +73,15 @@ export class Publisher extends Component {
 
   render () {
     const {status, localUserState} = this.props;
-    const styles = publisherStyles(localUserState.controls.videoEnabled);
+    const enabled = localUserState.controls.videoEnabled;
+    const containerStyles = enabled ? styles.publisherContainerEnabled : styles.publisherContainerDisabled;
+    const publisherStyles = enabled ? styles.publisherEnabled : styles.publisherDisabled;
 
     return (
-      <View style={styles.publisherContainer}>
+      <View style={containerStyles}>
       {!status.ending && (
         <OTPublisher
-          style={styles.publisher}
+          style={publisherStyles}
           eventHandlers = { this.eventHandlers }
           properties= {{
             audioFallbackEnabled: true,
