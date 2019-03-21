@@ -3,7 +3,7 @@ import { CACHE } from "../Config/env";
 
 const ACTIONS = {
   CLEAR: "appConfig/clear",
-  UPDATE: "appConfig/update",
+  UPDATE: "appConfig/update"
 };
 
 export const clear = () => ({
@@ -15,27 +15,36 @@ export const update = payload => ({
   payload
 });
 
-
 const initialState = {
   scenariosLoadedAt: null,
   scenarios: [],
   configLoadedAt: null,
-  config: {},
+  config: {}
 };
 
 export const loadSessionScenarios = (useCache = true) => (dispatch, getState) => {
-  const {scenariosLoadedAt, scenarios} = getState().appConfigReducer;
-  if (useCache && !!scenariosLoadedAt && new Date().getTime() < scenariosLoadedAt + CACHE.SCENARIOS) {
+  console.log("me llamaron");
+  const { scenariosLoadedAt, scenarios } = getState().appConfigReducer;
+  if (
+    useCache &&
+    !!scenariosLoadedAt &&
+    new Date().getTime() < scenariosLoadedAt + CACHE.SCENARIOS
+  ) {
+    console.log("entre al cache");
     return Promise.resolve(scenarios);
   }
 
   return new Promise((resolve, reject) => {
-    api.get("/scenarios")
-      .then((res) => {
-        dispatch(update({
-          scenariosLoadedAt: new Date().getTime(),
-          scenarios: res.data,
-        }));
+    console.log("no entre al cache");
+    api
+      .get("/scenarios")
+      .then(res => {
+        dispatch(
+          update({
+            scenariosLoadedAt: new Date().getTime(),
+            scenarios: res.data
+          })
+        );
         resolve(res.data);
       })
       .catch(reject);
