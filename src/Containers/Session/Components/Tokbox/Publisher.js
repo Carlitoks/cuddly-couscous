@@ -81,6 +81,13 @@ export class Publisher extends Component {
         <OTPublisher
           style={styles.publisher}
           eventHandlers = { this.eventHandlers }
+          properties= {{
+            audioFallbackEnabled: true,
+            publishAudio: localUserState.controls.micEnabled,
+            publishVideo: localUserState.controls.videoEnabled,
+            videoSource: 'camera',
+            cameraPosition: localUserState.controls.cameraFlipEnabled ? 'back' : 'front'
+          }}
         />
       )}
       </View>
