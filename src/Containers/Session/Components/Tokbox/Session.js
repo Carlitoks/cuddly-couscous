@@ -17,8 +17,9 @@ const SIGNALS = {
   APP_STATE: 'appState', // signal about other sides app state (background/active, etc)
   NETWORK_STATE: 'networkConnection', // signal about other sides connection type (wifi/cell)
   CONTROL_STATE: 'controls', // signal for other sides call control state (video/mute/speaker/cameraFlip)
-  VIDEO_THROTTLED: 'videoThrottled', // signal if other sides video receiving has been throttled by tokbox
-  LEGACY_VIDEO_THROTTLED: 'VIDEO_WARN', // legacy signal if other sides video receiving has been throttled by tokbox
+  VIDEO_THROTTLE: 'videoThrottle', // signal if other sides video receiving has been throttled by tokbox
+  VIDEO_THROTTLE_LIFTED: 'videoThrottleLifted', // signal if other side's video has stopped being throttled
+  LEGACY_VIDEO_THROTTLED: 'WARNING', // legacy signal if other sides video receiving has been throttled by tokbox
   RECEIVING_AV: 'receivingAV', // signal from other side they are initially receiving audio/video from this side
   HEARTBEAT: 'heartbeat', // periodic heartbeat from other side to prove connection is still active
 };
@@ -66,7 +67,6 @@ export class Session extends Component {
 
     this.remoteUserState = newUserState();
     this.remoteUserState.legacyVersion = true;
-
     // this.remoteUserStates = []; // one day...
 
     this.localUserState = newUserState();
@@ -162,6 +162,8 @@ export class Session extends Component {
       oldC.speakerEnabled != newC.speakerEnabled ||
       oldC.cameraFlipEnabled != newC.cameraFlipEnabled
     ) {
+      this.localUserState.publishingAudio = newC.micEnabled;
+      this.localUserState.publishingVideo = newC.videoEnabled;
       this.sendSignal(SIGNALS.CONTROL_STATE, newC);
     }
   }
@@ -400,22 +402,22 @@ export class Session extends Component {
   }
 
   subscriberVideoEnabled (event) {
-    console.log('subscriberVideoEnabled', event);
-
+    this.remoteUserState.publishingVideo = true;
+    this.props.onRemoteUserVideoEnabled();
   }
 
   subscriberVideoDisabled (event) {
-    console.log('subscriberVideoDisabled', event);
-
+    this.remoteUserState.publishingVideo = false;
+    this.props.onRemoteUserVideoDisabled();
   }
 
   subscriberVideoThrottled () {
-    // ...
+    this.sendSignal(SIGNALS.VIDEO_THROTTLE);
     this.props.onUserReceivingAVThrottled();
   }
 
   subscriberVideoUnthrottled () {
-    // ...
+    this.sendSignal(SIGNALS.VIDEO_THROTTLE_LIFTED);
     this.props.onUserReceivingAVUnthrottled();
   }
 
@@ -478,9 +480,16 @@ export class Session extends Component {
         break;
       }
       case SIGNALS.CONTROL_STATE: {
+        this.remoteUserState.publishingAudio = payload.micEnabled;
+        this.remoteUserState.publishingVideo = payload.videoEnabled;
         this.props.onRemoteUserUpdated({
           ...this.props.remoteUserState,
-          controls: payload
+          controls: payload,
+          connection: {
+            ...this.props.remoteUserState.connection,
+            sendingAudio: payload.micEnabled,
+            sendingVideo: payload.videoEnabled
+          }
         });
         break;
       }
@@ -511,6 +520,14 @@ export class Session extends Component {
           audio: this.localUserState.publishingAudio,
           video: this.localUserState.publishingVideo,
         });
+        break;
+      }
+      case SIGNALS.VIDEO_THROTTLE: {
+        this.props.onRemoteUserReceivingAVThrottled();
+        break;
+      }
+      case SIGNALS.VIDEO_THROTTLE_LIFTED: {
+        this.props.onRemoteUserReceivingAVUnthrottled();
         break;
       }
       case SIGNALS.HEARTBEAT: {

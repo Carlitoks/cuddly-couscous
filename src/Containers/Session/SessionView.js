@@ -204,19 +204,33 @@ class SessionView extends Component {
   }
 
   toggleVideo () {
-    const {controls} = this.state.localUserState;
-    this.updateLocalUserState({controls: {
-      ...controls,
-      videoEnabled: !controls.videoEnabled
-    }});
+    const {controls, connection} = this.state.localUserState;
+    this.updateLocalUserState({
+      controls: {
+        ...controls,
+        videoEnabled: !controls.videoEnabled,
+      },
+      connection: {
+        ...connection,
+        sendingVideo: !controls.videoEnabled
+      }
+    });
+    this.updateRemoteUserState({connection: {receivingVideo: !controls.videoEnabled}});
   }
 
   toggleMic () {
-    const {controls} = this.state.localUserState;
-    this.updateLocalUserState({controls: {
-      ...controls,
-      micEnabled: !controls.micEnabled
-    }});
+    const {controls, connection} = this.state.localUserState;
+    this.updateLocalUserState({
+      controls: {
+        ...controls,
+        micEnabled: !controls.micEnabled
+      },
+      connection: {
+        ...connection,
+        sendingAudio: !controls.micEnabled
+      }
+    });
+    this.updateRemoteUserState({connection: {receivingAudio: !controls.micEnabled}});
   }
 
   toggleSpeaker () {
@@ -318,15 +332,11 @@ class SessionView extends Component {
   }
 
   handleUserReceivingAVThrottled () {
-    this.updateLocalUserState({connection: {
-      receivingThrottled: true
-    }});
+    this.updateLocalUserState({connection: {receivingThrottled: true}});
   }
 
   handleUserReceivingAVUnthrottled () {
-    this.updateLocalUserState({connection: {
-      receivingThrottled: false
-    }});
+    this.updateLocalUserState({connection: {receivingThrottled: false}});
   }
 
   handleRemoteUserConnecting () {
@@ -383,15 +393,21 @@ class SessionView extends Component {
   }
 
   handleRemoteUserReceivingAVThrottled () {
-    this.updateRemoteUserState({connection: {
-      receivingThrottled: true
-    }});
+    this.updateRemoteUserState({connection: {receivingThrottled: true }});
   }
 
   handleRemoteUserReceivingAVUnthrottled () {
-    this.updateRemoteUserState({connection: {
-      receivingThrottled: false
-    }});
+    this.updateRemoteUserState({connection: {receivingThrottled: false}});
+  }
+
+  handleRemoteUserVideoEnabled () {
+    this.updateLocalUserState({connection: {receivingVideo: true}});
+    this.updateRemoteUserState({connection: {sendingVideo: true}});
+  }
+
+  handleRemoteUserVideoDisabled () {
+    this.updateLocalUserState({connection: {receivingVideo: false}});
+    this.updateRemoteUserState({connection: {sendingVideo: false}});
   }
 
   updateRemoteUserState (data, cb = null) {
@@ -402,8 +418,9 @@ class SessionView extends Component {
     this.setState({localUserState: merge(this.state.localUserState, data)}, cb);
   }
 
-  showAudioMode (bool) {
-    return bool;
+  showAudioMode () {
+    const {receivingVideo, receivingThrottled} = this.state.localUserState.connection;
+    return !receivingVideo || receivingThrottled;
   }
 
   // if an initial connection error is triggered, then just
@@ -510,6 +527,8 @@ class SessionView extends Component {
             onRemoteUserSendingAV = {(ops) => { this.handleRemoteUserSendingAV(ops) }}
             onRemoteUserReceivingAVThrottled = {() => { this.handleRemoteUserReceivingAVThrottled() }}
             onRemoteUserReceivingAVUnthrottled = {() => { this.handleRemoteUserReceivingAVUnthrottled() }}
+            onRemoteUserVideoEnabled = {() => { this.handleRemoteUserVideoEnabled() }}
+            onRemoteUserVideoDisabled = {() => { this.handleRemoteUserVideoDisabled() }}
 
             // update basic connection status of user
             onUserConnecting = {() => { this.handleUserConnecting() }}
@@ -523,7 +542,7 @@ class SessionView extends Component {
             onUserReceivingAVUnthrottled = {() => { this.handleUserReceivingAVUnthrottled() }}
 
           >
-            {this.showAudioMode(false) && (
+            {this.showAudioMode() && (
             <AudioModeBackground user={ this.props.remoteUser } />
             )}
 
