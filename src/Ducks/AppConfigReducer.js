@@ -23,19 +23,16 @@ const initialState = {
 };
 
 export const loadSessionScenarios = (useCache = true) => (dispatch, getState) => {
-  console.log("me llamaron");
   const { scenariosLoadedAt, scenarios } = getState().appConfigReducer;
   if (
     useCache &&
     !!scenariosLoadedAt &&
     new Date().getTime() < scenariosLoadedAt + CACHE.SCENARIOS
   ) {
-    console.log("entre al cache");
     return Promise.resolve(scenarios);
   }
 
   return new Promise((resolve, reject) => {
-    console.log("no entre al cache");
     api
       .get("/scenarios")
       .then(res => {

@@ -95,7 +95,6 @@ class CustomerHomeScreen extends Component {
         })
       );
     }
-    console.log("scenarioList", scenariosList);
     loadSessionScenarios(true);
   }
 
