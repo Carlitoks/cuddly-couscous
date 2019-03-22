@@ -58,6 +58,11 @@ class CallButtons extends Component {
       customerUpdateSettings({ video: type === "video" });
       Permissions.checkMultiple(["camera", "microphone"]).then(async response => {
         if (response.camera !== "authorized" || response.microphone !== "authorized") {
+          if (response.camera === "restricted" || response.microphone === "restricted") {
+            return Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
+              { text: I18n.t("ok") },
+            ]);
+          }
           if (completedMicAndCamera) {
             await checkCallPermissions(valueToUpdate => {
               this.props.customerUpdateSettings(valueToUpdate);
