@@ -29,7 +29,7 @@ class ReconnectOptions extends Component {
         borderRadius={50}
         onPress={async () => {
           this.props.resetConnectingMessage();
-          this.props.switchCallLang();
+          await this.props.switchCallLang();
           await this.props.reconnectCall();
         }}
       />
