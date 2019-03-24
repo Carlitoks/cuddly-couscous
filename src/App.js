@@ -14,12 +14,18 @@ import deviceinfo from "react-native-device-info";
 import { InterfaceSupportedLanguages } from "./Config/Languages";
 import Crashes from "appcenter-crashes";
 import codePush from "react-native-code-push";
-import branch, { BranchEvent } from 'react-native-branch';
+import branch, { BranchEvent } from "react-native-branch";
 import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
-import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
-import { setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
+import {
+  init,
+  setAuthToken,
+  recordAppStateEvent,
+  persistEvents,
+  recordNetworkEvent
+} from "./Util/Forensics";
+import { setAuthToken as setApiAuthToken } from "./Config/AxiosConfig";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 
@@ -40,8 +46,8 @@ class App extends Component {
     codePush.sync({
       deploymentKey: Platform.OS === "ios" ? codePushiOSKey : codePushAndroidKey
     });
-    if(__DEV__) {
-      import('./Config/ReactotronConfig').then(() => console.log('Reactotron Configured'));
+    if (__DEV__) {
+      import("./Config/ReactotronConfig").then(() => console.log("Reactotron Configured"));
     }
   }
 
@@ -55,20 +61,16 @@ class App extends Component {
     createStore()
       .then(store => {
         const {
-          settings: {
-            segmentSettings,
-            userLocaleSet,
-            interfaceLocale: storeInterfaceLocale
-          }
+          settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
 
         // ================================
         if (!userLocaleSet) {
           const deviceLocale = deviceinfo.getDeviceLocale();
           const shortDeviceLocale = deviceLocale.substring(0, 2);
-          let interfaceLocaleCode = '';
+          let interfaceLocaleCode = "";
 
-          if (shortDeviceLocale === 'zh') {
+          if (shortDeviceLocale === "zh") {
             interfaceLocaleCode = deviceLocale.substring(0, 7).toLowerCase();
           } else {
             interfaceLocaleCode = shortDeviceLocale || "en";
@@ -89,10 +91,8 @@ class App extends Component {
         // ================================
         if (!segmentSettings) {
           analytics
-            .setup(analyticsKey, {trackAppLifecycleEvents: true})
-            .then(() =>
-              store.dispatch(updateSettings({ segmentSettings: true }))
-            )
+            .setup(analyticsKey, { trackAppLifecycleEvents: true })
+            .then(() => store.dispatch(updateSettings({ segmentSettings: true })))
             .catch(error => console.log(error));
         }
         return store;
@@ -101,7 +101,6 @@ class App extends Component {
         const { auth } = store.getState();
         setAuthToken(auth.token);
         setApiAuthToken(auth.token);
-
         this.setState({
           isLoggedIn: auth.isLoggedIn,
           loadingStore: false,
@@ -113,12 +112,11 @@ class App extends Component {
 
           // things that should be reloaded periodically
           // store.dispatch(loadConfig(true)).catch(console.log),
-          store.dispatch(loadSessionScenarios(true)).catch(console.log);
         }
       })
       .then(() => {
         // Even Listener to Detect Network Change
-        NetInfo.addEventListener('connectionChange', this.handleFirstConnectivityChange);
+        NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
 
         // We Get The Initial Network Information
         return NetInfo.getConnectionInfo();
@@ -131,7 +129,7 @@ class App extends Component {
         });
 
         // Even Listener to Detect Network Change
-        NetInfo.addEventListener('connectionChange', this.handleFirstConnectivityChange);
+        NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
       });
     // PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
     // PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
@@ -139,12 +137,12 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    AppState.addEventListener('change', this._handleAppStateChange);
+    AppState.addEventListener("change", this._handleAppStateChange);
   }
 
   componentWillUnmount() {
-    NetInfo.removeEventListener('connectionChange', this.handleFirstConnectivityChange);
-    AppState.removeEventListener('change', this._handleAppStateChange);
+    NetInfo.removeEventListener("connectionChange", this.handleFirstConnectivityChange);
+    AppState.removeEventListener("change", this._handleAppStateChange);
     persistEvents();
   }
 
@@ -157,13 +155,13 @@ class App extends Component {
     }
   };
 
-  _handleAppStateChange = (nextState) => {
+  _handleAppStateChange = nextState => {
     recordAppStateEvent(this.state.appState, nextState);
-    this.setState({appState: nextState});
+    this.setState({ appState: nextState });
 
     // if app is being killed or shutdown for whatever
     // reason, try to persist
-    if (nextState == 'inactive') {
+    if (nextState == "inactive") {
       persistEvents();
     }
   };

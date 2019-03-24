@@ -4,8 +4,19 @@ import {
   SupportedLanguages,
   ComingSoonLanguages,
   AllowedLanguagePairs,
-  FilterLangsByCodes
+  FilterLangsByCodes, LanguagesRollover
 } from "../Config/Languages";
+import timer from "react-native-timer";
+import { REASON, SOUNDS } from "../Util/Constants";
+import { resetCounter, updateSettings as updateContactLinguist } from "./ContactLinguistReducer";
+import { BackgroundCleanInterval } from "../Util/Background";
+import { cleanNotifications } from "../Util/PushNotification";
+import { playSound } from "../Util/SoundManager";
+import {
+  HandleEndCall,
+  resetTimerAsync,
+  update as updateActieSessionReducer
+} from "./ActiveSessionReducer";
 
 const ACTIONS = {
   CLEAR: "newSession/clear",
@@ -16,7 +27,8 @@ const ACTIONS = {
   MODIFY_ADDITIONAL_INFO: "newSession/modifyAdditionalInfo",
   MODIFY_LOCATION: "newSession/modifyLocation",
   SWAP_LANGUAGES: "newSession/swapLanguages",
-  CLEAN_AND_KEEP_LANG: "newSession/cleanAndKeepLang"
+  CLEAN_AND_KEEP_LANG: "newSession/cleanAndKeepLang",
+  UPDATE_SCENARIO_ID: "newSession/updateScenarioID"
 };
 
 export const clear = payload => {
@@ -50,6 +62,11 @@ export const changeSessionLangCode = payload => ({
   payload
 });
 
+export const changeSessionScenarioID = payload => ({
+  type: ACTIONS.UPDATE_SCENARIO_ID,
+  payload
+});
+
 export const modifyAdditionalInfo = payload => ({
   type: ACTIONS.MODIFY_ADDITIONAL_INFO,
   payload
@@ -70,17 +87,17 @@ export const cleanAndKeep = payload => ({
   payload
 });
 
-export const cleanReducerAndKeepLangConfig = payload => (
-  dispatch,
-  getState
-) => {
+export const cleanReducerAndKeepLangConfig = payload => (dispatch, getState) => {
   const currentSession = getState().newSessionReducer.session;
   newSession = {
     ...initialState.session,
     primaryLangCode: currentSession.primaryLangCode,
     secondaryLangCode: currentSession.secondaryLangCode
   };
-  newState = { ...initialState, session: newSession };
+  newState = {
+    ...initialState,
+    session: newSession
+  };
   dispatch(cleanAndKeep(newState));
 };
 
@@ -133,6 +150,23 @@ export const changeLangCode = payload => (dispatch, getState) => {
   dispatch(changeSessionLangCode(currentSessionState));
 };
 
+export const updateSelectedScenario = payload => (dispatch, getState) => {
+  if (payload.scenarioID === "custom") {
+    currentSessionState = {
+      ...getState().newSessionReducer.session,
+      scenarioID: payload.scenarioID,
+      customScenarioSelected: "custom"
+    };
+  } else {
+    currentSessionState = {
+      ...getState().newSessionReducer.session,
+      scenarioID: payload.scenarioID,
+      customScenarioSelected: "notCustom"
+    };
+  }
+
+  dispatch(changeSessionScenarioID(currentSessionState));
+};
 export const updateLocation = payload => (dispatch, getState) => {
   currentSessionState = {
     ...getState().newSessionReducer.session,
@@ -149,6 +183,35 @@ export const swapCurrentSessionLanguages = () => (dispatch, getState) => {
     secondaryLangCode: currentState.primaryLangCode
   };
   dispatch(swapLanguages(currentSessionState));
+};
+
+export const switchCallLang = (reason) => (dispatch, getState) => {
+  const { contactLinguist, activeSessionReducer, auth } = getState();
+  const { primaryLangCode, secondaryLangCode } = getState().newSessionReducer.session;
+  try {
+    timer.clearInterval("counterId");
+    timer.clearInterval("timer");
+    timer.clearInterval("verifyCallId");
+    dispatch(
+      updateContactLinguist({
+        modalContact: false
+      })
+    );
+    dispatch(resetCounter());
+    BackgroundCleanInterval(activeSessionReducer.timer);
+    dispatch(resetTimerAsync());
+    cleanNotifications();
+    dispatch(updateActieSessionReducer({ modalReconnect: false }));
+    const currentSessionState = {
+      ...getState().newSessionReducer.session,
+      secondaryLangCode: LanguagesRollover[secondaryLangCode] ? LanguagesRollover[secondaryLangCode] : secondaryLangCode,
+      primaryLangCode: LanguagesRollover[primaryLangCode] ? LanguagesRollover[primaryLangCode] : primaryLangCode
+    };
+
+    dispatch(swapLanguages(currentSessionState));
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const initialState = {
@@ -168,6 +231,7 @@ const initialState = {
     avModePreference: null,
     eventID: null,
     scenarioID: null,
+    customScenarioSelected: "",
     customScenarioNote: "",
     location: [null, null]
     /* etc... */
@@ -209,7 +273,10 @@ const newSessionReducer = (state = initialState, action = {}) => {
       };
     }
     case ACTIONS.CLOSE_SLIDE_MENU: {
-      return { ...state, isSlideUpMenuVisible: false };
+      return {
+        ...state,
+        isSlideUpMenuVisible: false
+      };
     }
     case ACTIONS.CHANGE_SESSION_LANG_CODE: {
       return {
@@ -219,16 +286,32 @@ const newSessionReducer = (state = initialState, action = {}) => {
       };
     }
     case ACTIONS.MODIFY_ADDITIONAL_INFO: {
-      return { ...state, session: payload };
+      return {
+        ...state,
+        session: payload
+      };
     }
     case ACTIONS.MODIFY_LOCATION: {
-      return { ...state, session: payload };
+      return {
+        ...state,
+        session: payload
+      };
     }
     case ACTIONS.SWAP_LANGUAGES: {
-      return { ...state, session: payload };
+      return {
+        ...state,
+        session: payload
+      };
     }
     case ACTIONS.CLEAN_AND_KEEP_LANG: {
       return { ...initialState, ...payload };
+    }
+    case ACTIONS.UPDATE_SCENARIO_ID: {
+      return {
+        ...state,
+        session: payload,
+        isSlideUpMenuVisible: false
+      };
     }
     default: {
       return state;

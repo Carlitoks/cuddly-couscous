@@ -14,7 +14,7 @@ import {
   openSlideMenu,
   updateLocation,
   ensureSessionDefaults,
-  swapCurrentSessionLanguages,
+  swapCurrentSessionLanguages
 } from "../../Ducks/NewSessionReducer";
 
 import { getProfileAsync, updateView as updateUserProfile } from "../../Ducks/UserProfileReducer";
@@ -23,6 +23,7 @@ import { getGeolocationCoords } from "../../Util/Helpers";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
+import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import I18n from "../../I18n/I18n";
 import { supportedLangCodes } from "../../Config/Languages";
 
@@ -45,12 +46,12 @@ class CustomerHomeScreen extends Component {
     } = this.props;
 
     analytics.identify(uuid, {
-      name: firstName,
+      name: firstName
     });
 
     ensureSessionDefaults({
       primaryLangCode: this.setPrimaryLangCode(),
-      secondaryLangCode: secondaryLangCode || "",
+      secondaryLangCode: secondaryLangCode || ""
     });
 
     // Clean call
@@ -66,7 +67,13 @@ class CustomerHomeScreen extends Component {
 
   componentDidMount() {
     const {
-      linguistProfile, isLoggedIn, uuid, token, getProfileAsync,
+      linguistProfile,
+      isLoggedIn,
+      uuid,
+      token,
+      getProfileAsync,
+      scenariosList,
+      loadSessionScenarios
     } = this.props;
 
     if (uuid !== "" && token !== "") {
@@ -84,10 +91,11 @@ class CustomerHomeScreen extends Component {
         I18n.t("minutesAdded"),
         I18n.t("complimentMinutes", {
           maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
-          organizer: this.props.navigation.state.params.organization,
-        }),
+          organizer: this.props.navigation.state.params.organization
+        })
       );
     }
+    loadSessionScenarios(true);
   }
 
   setPrimaryLangCode = () => {
@@ -104,7 +112,7 @@ class CustomerHomeScreen extends Component {
     return "eng";
   };
 
-  openSlideMenu = (type) => {
+  openSlideMenu = type => {
     const { openSlideMenu } = this.props;
     openSlideMenu({ type });
   };
@@ -154,7 +162,8 @@ const mS = state => ({
   token: state.auth.token,
   uuid: state.auth.uuid,
   firstName: state.userProfile.firstName,
-  completedLocation: state.onboardingReducer.completedLocation
+  completedLocation: state.onboardingReducer.completedLocation,
+  scenariosList: state.appConfigReducer.scenarios
 });
 
 const mD = {
@@ -166,9 +175,10 @@ const mD = {
   getProfileAsync,
   updateUserProfile,
   swapCurrentSessionLanguages,
+  loadSessionScenarios
 };
 
 export default connect(
   mS,
-  mD,
+  mD
 )(CustomerHomeScreen);
