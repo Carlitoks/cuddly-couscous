@@ -73,7 +73,7 @@ export class Publisher extends Component {
 
   render () {
     const {status, localUserState} = this.props;
-    const enabled = localUserState.controls.videoEnabled;
+    const enabled = localUserState.controls.videoEnabled && status.began;
     const containerStyles = enabled ? styles.publisherContainerEnabled : styles.publisherContainerDisabled;
     const publisherStyles = enabled ? styles.publisherEnabled : styles.publisherDisabled;
 
