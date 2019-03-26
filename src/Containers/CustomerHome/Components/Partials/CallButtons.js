@@ -15,7 +15,6 @@ import { clear as clearSettings, update as customerUpdateSettings } from "../../
 import { cleanSelected } from "../../../../Ducks/HomeFlowReducer";
 import { clearPromoCode } from "../../../../Ducks/PromoCodeReducer";
 import { updateSettings } from "../../../../Ducks/ContactLinguistReducer";
-import Permissions from "react-native-permissions";
 import {
   setPermission,
   displayOpenSettingsAlert,
