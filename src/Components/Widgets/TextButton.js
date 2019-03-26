@@ -9,8 +9,14 @@ export default function TextButton(props) {
     alignItems: 'center'
   }
 
+  const press = () => {
+    if (!props.disabled) {
+      props.onPress();
+    }
+  };
+
   return (
-    <TouchableOpacity onPress = { props.onPress } style = {buttonStyle}>
+    <TouchableOpacity onPress = {() => { press() }} style = {buttonStyle}>
       <Text style = {props.textStyle }>{props.text}</Text>
     </TouchableOpacity>
   );

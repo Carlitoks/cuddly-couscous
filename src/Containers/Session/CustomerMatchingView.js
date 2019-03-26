@@ -13,7 +13,7 @@ import colors from "../../Themes/Colors";
 import sharedStyles from "./styles";
 
 // TODO: actually define some constants somewhere
-const secondsUntilTimeout = 70;
+const secondsUntilTimeout = 5;
 
 export class CustomerMatchingView extends Component {
   constructor (props) {

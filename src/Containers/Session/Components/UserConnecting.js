@@ -156,7 +156,7 @@ export class UserConnecting extends Component {
     return (
       <View style = {styles.container}>
         <View style = {styles.content}>
-          <Text style = {styles.text}>{ this.getConnectionText() } ({this.state.seconds})</Text>
+          <Text style = {styles.text}>{ this.getConnectionText() }</Text>
           <View style={styles.buttonContainer}>
             <TextButton
               text = {I18n.t("cancel")}
