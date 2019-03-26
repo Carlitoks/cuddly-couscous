@@ -1,6 +1,13 @@
 import React, {Component} from "react";
 import {Button, View, Text, StyleSheet} from "react-native";
 import api from "../../../Config/AxiosConfig";
+import colors from "../../../Themes/Colors";
+import { moderateScale } from "../../../Util/Scaling";
+import I18n from "../../../I18n/I18n";
+
+import sharedStyles from "../styles";
+
+import TextButton from "../../../Components/Widgets/TextButton";
 
 export class UserConnecting extends Component {
   constructor(props) {
@@ -138,11 +145,11 @@ export class UserConnecting extends Component {
 
     // we are in the process of connecting
     if (!mc.connected && mc.connecting) {
-      return `Connecting to ${ru.firstName}...`;
+      return I18n.t("session.connecting.self", {name: ru.firstName});
     }
     
     // other person is connecting
-    return `${ru.firstName} is connecting...`;
+    return I18n.t("session.connecting.user", {name: ru.firstName});
   }
 
   render () {
@@ -150,11 +157,15 @@ export class UserConnecting extends Component {
       <View style = {styles.container}>
         <View style = {styles.content}>
           <Text style = {styles.text}>{ this.getConnectionText() } ({this.state.seconds})</Text>
-          <Button
-            title = "Cancel"
-            onPress = {()=> { this.cancel() }}
-            disabled = { this.props.status.ending }
-          />
+          <View style={styles.buttonContainer}>
+            <TextButton
+              text = {I18n.t("cancel")}
+              style = {sharedStyles.cancelButton}
+              textStyle = { sharedStyles.cancelButtonText }
+              disabled = {this.props.status.ending }
+              onPress = {() => { this.cancel() }}
+            />
+          </View>
         </View>
       </View>
     );
@@ -166,17 +177,21 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     left: 0,
-    height: "100%",
-    width: "100%",
-    backgroundColor: "#5d4cb6",
-    paddingTop: "33%"
+    right: 0,
+    bottom: 0,
+    backgroundColor: colors.backgroundBlue,
   },
   content: {
-    color: "#ffffff"
+    flex: 1,
+    alignItems: "center",
   },
   text: {
-    fontSize: 20,
-    color: "#fff",
-    padding: 30
+    marginTop: "60%",
+    fontSize: moderateScale(20, 0),
+    color: colors.white,
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
   }
 });

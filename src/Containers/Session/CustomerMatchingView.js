@@ -217,10 +217,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundBlue,
-    paddingTop: "33%",
     alignItems: "center",
   },
   spinner: {
+    marginTop: "33%",
     marginBottom: moderateScale(30, 0)
   },
   text: {
