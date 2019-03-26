@@ -1,5 +1,4 @@
 import api from '../Config/AxiosConfig';
-import { getLastUpdateTime } from 'react-native-device-info';
 
 // The purpose of this reducer is to manage the status of an active Jeenie session.
 // Note that this does NOT include anything related to connection handling with

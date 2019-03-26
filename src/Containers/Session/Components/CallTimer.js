@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Text, StyleSheet, View} from "react-native";
+import { formatTimerNumber } from "../../../Util/Format";
 
 export class CallTimer extends Component {
   constructor(props) {
@@ -91,21 +92,11 @@ export class CallTimer extends Component {
     });
   }
 
-  renderNumber (num) {
-    if (num == 0) {
-      return "00";
-    }
-    if (num < 10) {
-      return `0${num}`;
-    }
-    return num;
-  }
-
   render() {
     const {minutes, seconds} = this.state;
     return (
       <View style = {styles.container}>
-        <Text style = {styles.text}>{this.renderNumber(minutes)}:{this.renderNumber(seconds)}</Text>
+        <Text style = {styles.text}>{formatTimerNumber(minutes)}:{formatTimerNumber(seconds)}</Text>
       </View>
     )
   }

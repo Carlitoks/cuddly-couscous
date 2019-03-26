@@ -740,9 +740,11 @@ export default (ENG = {
       "To optimize connectivity, your Language Jeenie's video has been temporarily disabled. Video will resume when connectivity improves.",
     createSessionFailed: "Temporarily unable to start call. Please try again.",
 
+    userConnecting: "{{name}} is connecting...",
+
     // seen while matching custoner to linguist
     matching: {
-      description: "Connecting you to a LANGUAGE JEENIE..."
+      description: "Connecting you to a Language Jeenie in approximately 1 minute",
     },
 
     // used when rating a session

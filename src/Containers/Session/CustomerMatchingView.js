@@ -1,10 +1,16 @@
 import React, {Component} from "react";
-import {Alert, Button, Text, View, StyleSheet} from "react-native";
+import {Alert, ActivityIndicator, Button, Text, View, StyleSheet} from "react-native";
+import TextButton from "../../Components/Widgets/TextButton";
 import { connect } from "react-redux";
 import api from "../../Config/AxiosConfig";
 
 import {createNewSession, endSession, handleEndedSession, setRemoteUser} from "../../Ducks/CurrentSessionReducer";
-import { translateApiError } from "../../I18n/I18n";
+import I18n, { translateApiError } from "../../I18n/I18n";
+import { moderateScale } from "../../Util/Scaling";
+import { formatTimerSeconds } from "../../Util/Format";
+import colors from "../../Themes/Colors";
+
+import sharedStyles from "./styles";
 
 // TODO: actually define some constants somewhere
 const secondsUntilTimeout = 70;
@@ -183,19 +189,23 @@ export class CustomerMatchingView extends Component {
     });
   }
 
-  getConnectionText () {
-    return `Searching for linguist... ${ this.state.seconds }`
-  }
-
   render () {
     return (
       <View style = {styles.container}>
-        <View style = {styles.content}>
-          <Text style = {styles.text}>{ this.getConnectionText() }</Text>
-          <Button
-            title = "Cancel"
-            onPress = {()=> { this.cancel() }}
-            disabled = { this.props.status.ending }
+        <ActivityIndicator
+          size="large"
+          color="white"
+          style={styles.spinner}
+        />
+        <Text style={styles.text}>{ formatTimerSeconds(this.state.seconds) }</Text>
+        <Text style = {styles.text}>{ I18n.t("session.matching.description") }</Text>
+        <View style={styles.buttonContainer}>
+          <TextButton
+            text = {I18n.t("cancel")}
+            style = {sharedStyles.cancelButton}
+            textStyle = { sharedStyles.cancelButtonText }
+            disabled = {this.props.status.ending }
+            onPress = {() => { this.cancel() }}
           />
         </View>
       </View>
@@ -206,17 +216,23 @@ export class CustomerMatchingView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5d4cb6",
-    paddingTop: "33%"
+    backgroundColor: colors.backgroundBlue,
+    paddingTop: "33%",
+    alignItems: "center",
   },
-  content: {
-    color: "#ffffff"
+  spinner: {
+    marginBottom: moderateScale(30, 0)
   },
   text: {
-    fontSize: 20,
-    color: "#fff",
-    padding: 30
-  }
+    fontSize: moderateScale(20, 0),
+    color: colors.white,
+    marginBottom: moderateScale(30, 0),
+    textAlign: "center"
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
 });
 
 const mS = (state) => {
