@@ -16,6 +16,7 @@ import I18n, { translateLanguage, translateApiError } from "../I18n/I18n";
 import {recordPushNotificationEvent, recordAppError} from "../Util/Forensics";
 import { receiveSessionInvite } from "./CurrentSessionReducer";
 import api from "../Config/AxiosConfig";
+import { displayTimeAlert } from "../Util/Alerts";
 
 // Actions
 export const ACTIONS = {
@@ -117,8 +118,11 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
       }
     })
     .catch((e) => {
-      // Alert.alert(I18n.t("error"), translateApiError(e));
-      Alert.alert(I18n.t("error"), JSON.stringify(e));
+      if (!!e && !!e.response && !!e.response.data) {
+        console.log('error receiving invite', e.response.data);
+      }
+
+      Alert.alert(I18n.t("error"), translateApiError(e));
       
       // TODO: record forensics error
       // TODO: nav to home + alert?
