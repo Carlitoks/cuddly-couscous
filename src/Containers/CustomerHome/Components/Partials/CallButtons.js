@@ -135,7 +135,7 @@ class CallButtons extends Component {
         console.log("error", e)
         Alert.alert(
           I18n.t('error'),
-          translateApiError(e),
+          translateApiError(e, "session.createSessionFailed"),
           [
             {text: 'OK'},
           ],
