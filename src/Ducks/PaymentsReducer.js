@@ -23,7 +23,10 @@ const initialState = {
   displayCardField: false,
   cardInfo: { number: "", expMonth: "", expYear: "", cvc: "" },
   loading: false,
-  errors: []
+  errors: [],
+  isValidCC: false,
+  isValidDate: false,
+  isValidCVV: false,
 };
 
 export const setPayment = stripeSourceToken => (dispatch, getState) => {

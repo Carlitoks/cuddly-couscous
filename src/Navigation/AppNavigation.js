@@ -76,6 +76,7 @@ import RegisterScreen from "../Containers/Register/RegisterScreen";
 import LocationPermissionView from "../Containers/Permissions/LocationPermissionView";
 import NotificationPermissionView from "../Containers/Permissions/NotificationPermissionView";
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
+import PaymentScreen from "../Containers/Payments/PaymentScreen";
 
 const Navigation = StackNavigator(
   {
@@ -87,7 +88,7 @@ const Navigation = StackNavigator(
       }
     },
     PaymentsView: {
-      screen: PaymentsView,
+      screen: PaymentScreen,
       navigationOptions: {
         gesturesEnabled: false
       }
@@ -473,7 +474,7 @@ const Navigation = StackNavigator(
     }
   },
   {
-    initialRouteName: "IntroView",
+    initialRouteName: "PaymentsView",
     headerMode: "none",
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {
