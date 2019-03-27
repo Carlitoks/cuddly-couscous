@@ -539,6 +539,34 @@ export default (ENG = {
     }
   },
 
+  // new customer home screen designs
+  newCustomerHome: {
+    numLinguists: "{{num}} Jeenies standing by...",
+    primaryLang: {
+      label: "I speak",
+    },
+    secondaryLang: {
+      label: "Translate to"
+    },
+    scenario: {
+      label: "What are you doing?",
+      placeholder: "Select a scenario (Optional)"
+    },
+    buttons: {
+      audio: "Audio Call",
+      video: "Video Call"
+    },
+    rateNotices: {
+      beforeFirst: "Rate: US $1 per min. First 10 mins FREE.",
+      afterFirst: "Rate: US $1 per min. {{num}} FREE mins remaining",
+      noBalanceNoCard: "Rate: US $1 per min. Please add card to continue",
+      noBalanceHasCard: "Rate: US $1 per min.",
+      noBalanceHasCardPackage: "Rate: US $1 per min. Buy a package for 15% discount.",
+      hasBalance: "Rate: US $1 per min. {{num}}m balance remaining.",
+      hasBalanceAutoreload: "Rate: {{num}}m remaining."
+    }
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "I need help with:",
@@ -678,6 +706,11 @@ export default (ENG = {
     alertYouCannotSeeLinguist:
       "To optimize connectivity, your Language Jeenie's video has been temporarily disabled. Video will resume when connectivity improves.",
     createSessionFailed: "Temporarily unable to start call. Please try again.",
+
+    // seen while matching custoner to linguist
+    matching: {
+      description: "Connecting you to a LANGUAGE JEENIE..."
+    },
 
     // used when rating a session
     rating: {
