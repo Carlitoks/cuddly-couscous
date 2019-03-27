@@ -1877,7 +1877,6 @@ export const comingSoonCodes = [
   "nor",
   "nld",
   "pol",
-  "por",
   "rus",
   "swe",
   "tha",
@@ -1888,7 +1887,7 @@ export const comingSoonCodes = [
 
 // languages available for session selection
 // TODO: export this config to replace SUPPORTED_LANGS
-export const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "spa"];
+export const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "spa", "por"];
 
 // default secondary language for a given primary language
 export const DefaultLanguagePairMap = {
@@ -1897,15 +1896,17 @@ export const DefaultLanguagePairMap = {
   yue: "eng",
   jpn: "eng",
   spa: "eng",
+  por: "eng"
 };
 
 // allowed secondary language choices for each primary language
 export const AllowedLanguagePairs = {
-  eng: ["cmn", "yue", "jpn", "spa"],
+  eng: ["cmn", "yue", "jpn", "spa", "por"],
   cmn: ["eng"],
   yue: ["eng"],
   jpn: ["eng"],
   spa: ["eng"],
+  por: ["eng"],
 };
 
 // raw map of which language is the default selection for which countries
@@ -1930,7 +1931,8 @@ export const LangCountryMap = {
   cmn: ["cn", "tw", "sg"],
   yue: ["hk", "mo"],
   jpn: ["jp"],
-  spa: [], // TODO
+  spa: ["ar","bo","cl","co","cr","cu","dr","ec","sv","gq","gt","hn","mx","ni","pa","py","pe","es","uy","ve"],
+  por: ["pt","br"]
 };
 
 // optimized lookup map of country codes to target default language
@@ -1942,7 +1944,8 @@ export const LocaleLangMap = {
   "zh-hans": "cmn",
   "zh-hant": "yue",
   es: "spa",
-  ja: "jpn"
+  ja: "jpn",
+  // pt: "por"
 };
 
 function buildCountryLangMap() {
@@ -2148,7 +2151,11 @@ export const InterfaceSupportedLanguages = [
   {
     1: "es",
     name: "Español"
-  }
+  },
+  // {
+  //   1: "pt",
+  //   name: "Português"
+  // }
 ];
 
 export const LanguagesRollover = {

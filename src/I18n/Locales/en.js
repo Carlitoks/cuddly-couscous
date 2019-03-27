@@ -436,6 +436,28 @@ export default (ENG = {
     tagline: "Language at Your Command"
   },
 
+  // generic language often used in navigation or forms
+  actions: {
+    cancel: "Cancel",
+    remove: "Remove",
+    close: "Close",
+    save: "Save",
+    update: "Update",
+    submit: "Submit",
+    continue: "Continue",
+    next: "Next",
+    back: "Back",
+    prev: "Previous",
+    reset: "Reset",
+    clear: "Clear",
+    ok: "Ok",
+    done: "Done",
+    finished: "Finished",
+    select: "Select",
+    choose: "Choose",
+    skip: "Skip",
+  },
+
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -517,6 +539,34 @@ export default (ENG = {
     }
   },
 
+  // new customer home screen designs
+  newCustomerHome: {
+    numLinguists: "{{num}} Jeenies standing by...",
+    primaryLang: {
+      label: "I speak",
+    },
+    secondaryLang: {
+      label: "Translate to"
+    },
+    scenario: {
+      label: "What are you doing?",
+      placeholder: "Select a scenario (Optional)"
+    },
+    buttons: {
+      audio: "Audio Call",
+      video: "Video Call"
+    },
+    rateNotices: {
+      beforeFirst: "Rate: US $1 per min. First 10 mins FREE.",
+      afterFirst: "Rate: US $1 per min. {{num}} FREE mins remaining",
+      noBalanceNoCard: "Rate: US $1 per min. Please add card to continue",
+      noBalanceHasCard: "Rate: US $1 per min.",
+      noBalanceHasCardPackage: "Rate: US $1 per min. Buy a package for 15% discount.",
+      hasBalance: "Rate: US $1 per min. {{num}}m balance remaining.",
+      hasBalanceAutoreload: "Rate: {{num}}m remaining."
+    }
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "I need help with:",
@@ -527,10 +577,26 @@ export default (ENG = {
   payments: {
     currentRate: "$1/min",
     currentBalance: "{{minutes}} min",
-    enterPaymentToTalk:
-      "Enter payment details to keep talking. Talk as long as you like for $1/min.",
-    currentRateDescription:
-      "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future."
+    enterPaymentToTalk: "Enter payment details to keep talking. Talk as long as you like for $1/min.",
+    currentRateDescription: "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future.",
+    addCard: "Add a Card",
+    removeCard: "Remove Card",
+    removeCardAlert: "Are you sure you want to delete this credit card?  This action cannot be undone.",
+    noCardNotice: "You don't have any cards yet.",
+    number: {
+      title: "Card Number",
+      errInvalid: "Invalid Card Number",
+    },
+    expiration: {
+      title: "Expiration Date",
+      placeholder: "MM/YY",
+      errInvalid: "Invalid Expiration Date"
+    },
+    cvv: {
+      title: "CVV",
+      errInvalid: "Invalid CVV",
+      description: 'The CVV ("Card Verification Value") on your credit or debit card is a 3 digit number for VISA, MasterCard and Discover cards.  On American Express cards it is a 4 digit number.',
+    }
   },
 
   operatingHours: {
@@ -640,6 +706,11 @@ export default (ENG = {
     alertYouCannotSeeLinguist:
       "To optimize connectivity, your Language Jeenie's video has been temporarily disabled. Video will resume when connectivity improves.",
     createSessionFailed: "Temporarily unable to start call. Please try again.",
+
+    // seen while matching custoner to linguist
+    matching: {
+      description: "Connecting you to a LANGUAGE JEENIE..."
+    },
 
     // used when rating a session
     rating: {
