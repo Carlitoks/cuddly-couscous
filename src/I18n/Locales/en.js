@@ -436,6 +436,28 @@ export default (ENG = {
     tagline: "Language at Your Command"
   },
 
+  // generic language often used in navigation or forms
+  actions: {
+    cancel: "Cancel",
+    remove: "Remove",
+    close: "Close",
+    save: "Save",
+    update: "Update",
+    submit: "Submit",
+    continue: "Continue",
+    next: "Next",
+    back: "Back",
+    prev: "Previous",
+    reset: "Reset",
+    clear: "Clear",
+    ok: "Ok",
+    done: "Done",
+    finished: "Finished",
+    select: "Select",
+    choose: "Choose",
+    skip: "Skip",
+  },
+
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -527,10 +549,26 @@ export default (ENG = {
   payments: {
     currentRate: "$1/min",
     currentBalance: "{{minutes}} min",
-    enterPaymentToTalk:
-      "Enter payment details to keep talking. Talk as long as you like for $1/min.",
-    currentRateDescription:
-      "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future."
+    enterPaymentToTalk: "Enter payment details to keep talking. Talk as long as you like for $1/min.",
+    currentRateDescription: "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future.",
+    addCard: "Add a Card",
+    removeCard: "Remove Card",
+    removeCardAlert: "Are you sure you want to delete this credit card?  This action cannot be undone.",
+    noCardNotice: "You don't have any cards yet.",
+    number: {
+      title: "Card Number",
+      errInvalid: "Invalid Card Number",
+    },
+    expiration: {
+      title: "Expiration Date",
+      placeholder: "MM/YY",
+      errInvalid: "Invalid Expiration Date"
+    },
+    cvv: {
+      title: "CVV",
+      errInvalid: "Invalid CVV",
+      description: 'The CVV ("Card Verification Value") on your credit or debit card is a 3 digit number for VISA, MasterCard and Discover cards.  On American Express cards it is a 4 digit number.',
+    }
   },
 
   operatingHours: {
