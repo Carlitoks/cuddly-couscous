@@ -17,7 +17,7 @@ class AddCard extends Component {
     super(props);
     this.state = {
       creditCardIcon: Icons.placeholder,
-      date: "",
+      date: ""
     };
   }
 
@@ -25,12 +25,16 @@ class AddCard extends Component {
     this.setState({ date });
     if (date.length >= 5 && moment(date, "MM/YY").isValid()) {
       const userDate = date.split("/");
-      const updatedCard = { ...this.props.cardInfo, expYear: parseInt(userDate[1]), expMonth: parseInt(userDate[0]) };
+      const updatedCard = {
+        ...this.props.cardInfo,
+        expYear: parseInt(userDate[1]),
+        expMonth: parseInt(userDate[0])
+      };
       this.props.updatePayments({ cardInfo: updatedCard, isValidDate: true });
     }
   };
 
-  onChangeCVV = (cvv) => {
+  onChangeCVV = cvv => {
     const updatedCard = { ...this.props.cardInfo, cvc: cvv };
     this.props.updatePayments({ cardInfo: updatedCard });
     if (cvv.length >= 3) {
@@ -38,9 +42,10 @@ class AddCard extends Component {
     }
   };
 
-  onChange = (card) => {
+  onChange = card => {
     const updatedCard = { ...this.props.cardInfo, number: card };
     this.props.updatePayments({ cardInfo: updatedCard });
+    //console.log(validCC(card).card);
     let currentIcon = validCC(card).card ? Icons[validCC(card).card.type] : Icons.placeholder;
     if (validCC(card).isPotentiallyValid) {
       if (validCC(card).isValid) {
@@ -59,11 +64,15 @@ class AddCard extends Component {
   render() {
     return (
       <View style={styles.flexEndCenter}>
-        <CreditCardNumber creditCard={this.props.cardInfo.number} onChange={this.onChange}
-                          creditCardIcon={this.state.creditCardIcon} isValidCC={this.state.isValidCC}/>
+        <CreditCardNumber
+          creditCard={this.props.cardInfo.number}
+          onChange={this.onChange}
+          creditCardIcon={this.state.creditCardIcon}
+          isValidCC={this.state.isValidCC}
+        />
         <View style={styles.addCardBottomInputs}>
-          <ExpirationDate date={this.state.date} onDateChange={this.onDateChange}/>
-          <CVV CVV={this.props.cardInfo.cvc} onChangeCVV={this.onChangeCVV}/>
+          <ExpirationDate date={this.state.date} onDateChange={this.onDateChange} />
+          <CVV CVV={this.props.cardInfo.cvc} onChangeCVV={this.onChangeCVV} />
         </View>
       </View>
     );
@@ -72,14 +81,14 @@ class AddCard extends Component {
 
 const mS = state => ({
   token: state.auth.token,
-  cardInfo: state.payments.cardInfo,
+  cardInfo: state.payments.cardInfo
 });
 
 const mD = {
-  updatePayments,
+  updatePayments
 };
 
 export default connect(
   mS,
-  mD,
+  mD
 )(AddCard);
