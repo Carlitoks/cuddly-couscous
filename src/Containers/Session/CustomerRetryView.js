@@ -6,10 +6,12 @@ import {createNewSession} from "../../Ducks/CurrentSessionReducer";
 import { moderateScale } from "../../Util/Scaling";
 import colors from "../../Themes/Colors";
 import TextButton from "../../Components/Widgets/TextButton";
-import I18n, {translateApiError} from "../../I18n/I18n";
-import Color from "color";
+import I18n, {translateApiError, translateLanguage} from "../../I18n/I18n";
+
+import {LanguagesRollover} from "../../Config/Languages";
 
 import sharedStyles from "./styles";
+
 export class CustomerRetryView extends Component {
 
   constructor(props) {
@@ -17,7 +19,8 @@ export class CustomerRetryView extends Component {
 
     this.creating = false;
     this.state = {
-      creating: false
+      creating: false,
+      rollover: this.getRolloverConfig()
     };
 
     this.unmounting = false;
@@ -27,16 +30,66 @@ export class CustomerRetryView extends Component {
     this.unmounting = true;
   }
 
+  getRolloverConfig () {
+    const {session} = this.props;
+
+    // prefer rollover for target language first
+    if (!!LanguagesRollover[session.secondaryLangCode]) {
+      return {
+        exists: true,
+        code: LanguagesRollover[session.secondaryLangCode],
+        name: translateLanguage(LanguagesRollover[session.secondaryLangCode]),
+        field: 'secondary',
+      };
+    }
+
+    // otherwise check for primary language
+    if (!!LanguagesRollover[session.primaryLangCode]) {
+      return {
+        exists: true,
+        code: LanguagesRollover[session.primaryLangCode],
+        name: translateLanguage(LanguagesRollover[session.primaryLangCode]),
+        field: 'primary',
+      };
+    }
+
+    return {
+      exists: false,
+      code: '',
+      name: '',
+      field: '',
+    };
+  }
+
   retry () {
+    this.createSession({startReason: "retry_timeout"});
+  }
+
+  retryRollover () {
+    const {session} = this.props;
+    const {rollover} = this.state;
+    const primaryLangCode = rollover.field == 'primary' ? rollover.code : session.primaryLangCode;
+    const secondaryLangCode = rollover.field == 'secondary' ? rollover.code : session.secondaryLangCode;
+    this.createSession({
+      startReason: "retry_timeout",
+      primaryLangCode,
+      secondaryLangCode
+    });
+  }
+
+  createSession (params) {
     if (this.creating || this.unmounting) {
       return;
     }
+
+    const newSessionParams = {
+      ...this.props.session,
+      ...params
+    };
+
     this.creating = true;
     this.setState({creating: true}, () => {
-      this.props.createNewSession({
-        ...this.props.session,
-        startReason: "retry_timeout"
-      }).then(() => {
+      this.props.createNewSession(newSessionParams).then(() => {
         this.unmounting = true;
         this.props.navigation.dispatch({type: "CustomerMatchingView"});
       }).catch((e) => {
@@ -61,6 +114,7 @@ export class CustomerRetryView extends Component {
   }
 
   render () {
+    const {rollover} = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
@@ -68,6 +122,15 @@ export class CustomerRetryView extends Component {
           <Text style={styles.text}>{ I18n.t("session.timeout.tryAgain") }</Text>
         </View>
         <View style={styles.buttonContainer}>
+          {rollover.exists && (
+          <TextButton
+            text={I18n.t("session.timeout.tryLang", {lang: rollover.name})}
+            style={styles.orangeButton}
+            textStyle={sharedStyles.prominentButtonText}
+            disabled = {this.state.creating}
+            onPress = {() => { this.retryRollover() }}
+          />
+          )}
           <TextButton
             text={I18n.t("session.timeout.retry")}
             style={styles.orangeButton}
@@ -124,7 +187,7 @@ const styles = StyleSheet.create({
 
 const mS = (state) => {
   return {
-    session: state.newSessionReducer.session
+    session: state.currentSessionReducer.session
   }
 };
 

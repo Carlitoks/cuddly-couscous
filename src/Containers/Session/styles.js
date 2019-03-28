@@ -16,8 +16,8 @@ export default styles = StyleSheet.create({
     borderColor: colors.white,
   },
   prominentButtonBlue: {
-    backgroundColor: Color(colors.backgroundBlue).lighten(0.05).hex(),
-    borderColor: Color(colors.backgroundBlue).lighten(0.1).hex()
+    backgroundColor: Color(colors.backgroundBlue).lighten(0.1).hex(),
+    borderColor: Color(colors.backgroundBlue).lighten(0.2).hex()
   },
   prominentButtonText: {
     fontSize: moderateScale(15, 0),
