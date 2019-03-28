@@ -197,13 +197,15 @@ export class CustomerMatchingView extends Component {
           color="white"
           style={styles.spinner}
         />
-        <Text style={styles.text}>{ formatTimerSeconds(this.state.seconds) }</Text>
-        <Text style = {styles.text}>{ I18n.t("session.matching.description") }</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{ formatTimerSeconds(this.state.seconds) }</Text>
+          <Text style = {styles.text}>{ I18n.t("session.matching.description") }</Text>
+        </View>
         <View style={styles.buttonContainer}>
           <TextButton
             text = {I18n.t("cancel")}
-            style = {sharedStyles.cancelButton}
-            textStyle = { sharedStyles.cancelButtonText }
+            style = {styles.button}
+            textStyle = {sharedStyles.prominentButtonText}
             disabled = {this.props.status.ending }
             onPress = {() => { this.cancel() }}
           />
@@ -216,12 +218,18 @@ export class CustomerMatchingView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     backgroundColor: colors.backgroundBlue,
-    alignItems: "center",
   },
   spinner: {
     marginTop: "33%",
     marginBottom: moderateScale(30, 0)
+  },
+  textContainer: {
+    width: "100%",
+    alignItems: "center",
+    paddingLeft: "20%",
+    paddingRight: "20%"
   },
   text: {
     fontSize: moderateScale(20, 0),
@@ -231,8 +239,15 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+    width: "100%",
+    alignItems: "center",
     justifyContent: "flex-end",
+    paddingBottom: moderateScale(30, 0)
   },
+  button: {
+    ...sharedStyles.prominentButtonBase,
+    ...sharedStyles.prominentButtonBlue,
+  }
 });
 
 const mS = (state) => {

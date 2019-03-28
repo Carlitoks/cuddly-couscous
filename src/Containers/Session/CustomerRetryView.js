@@ -9,6 +9,7 @@ import TextButton from "../../Components/Widgets/TextButton";
 import I18n, {translateApiError} from "../../I18n/I18n";
 import Color from "color";
 
+import sharedStyles from "./styles";
 export class CustomerRetryView extends Component {
 
   constructor(props) {
@@ -70,14 +71,14 @@ export class CustomerRetryView extends Component {
           <TextButton
             text={I18n.t("session.timeout.retry")}
             style={styles.orangeButton}
-            textStyle={styles.buttonText}
+            textStyle={sharedStyles.prominentButtonText}
             disabled = {this.state.creating}
             onPress = {() => { this.retry() }}
           />
           <TextButton
             text={I18n.t("session.timeout.cancel")}
             style={styles.blueButton}
-            textStyle={styles.buttonText}
+            textStyle={sharedStyles.prominentButtonText}
             disabled = {this.state.creating}
             onPress = {() => { this.cancel() }}
           />
@@ -86,14 +87,6 @@ export class CustomerRetryView extends Component {
     )
   }
 }
-
-const buttonStyle = {
-  width: "70%",
-  height: moderateScale(50, 0),
-  borderWidth: moderateScale(1, 0),
-  borderRadius: moderateScale(30, 0),
-  marginBottom: moderateScale(15, 0),
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -120,19 +113,13 @@ const styles = StyleSheet.create({
     paddingBottom: moderateScale(30, 0),
   },
   orangeButton: {
-    ...buttonStyle,
-    backgroundColor: colors.backgroundOrange,
-    borderColor: colors.white,
+    ...sharedStyles.prominentButtonBase,
+    ...sharedStyles.prominentButtonOrange,
   },
   blueButton: {
-    ...buttonStyle,
-    backgroundColor: Color(colors.backgroundBlue).lighten(0.05).hex(),
-    borderColor: Color(colors.backgroundBlue).lighten(0.1).hex()
+    ...sharedStyles.prominentButtonBase,
+    ...sharedStyles.prominentButtonBlue,
   },
-  buttonText: {
-    fontSize: moderateScale(15, 0),
-    color: colors.white,
-  }
 });
 
 const mS = (state) => {
