@@ -160,8 +160,8 @@ export class UserConnecting extends Component {
           <View style={styles.buttonContainer}>
             <TextButton
               text = {I18n.t("cancel")}
-              style = {sharedStyles.cancelButton}
-              textStyle = { sharedStyles.cancelButtonText }
+              style = {styles.button}
+              textStyle = { sharedStyles.prominentButtonText }
               disabled = {this.props.status.ending }
               onPress = {() => { this.cancel() }}
             />
@@ -193,5 +193,12 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
+    width: "100%",
+    alignItems: "center",
+    marginBottom: moderateScale(30, 0)
+  },
+  button: {
+    ...sharedStyles.prominentButtonBase,
+    ...sharedStyles.prominentButtonBlue
   }
 });
