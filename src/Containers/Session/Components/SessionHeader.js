@@ -1,10 +1,13 @@
 import React from "react";
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, Image, StyleSheet} from "react-native";
+import { moderateScale } from "../../../Util/Scaling";
+import images from "../../../Themes/Images";
 
-export const SessionHeader = (props) => {
+export const SessionHeader = ({user}) => {
   return (
     <View style = { styles.container }>
-      <Text style = { styles.text }>{props.user.firstName}</Text>
+      <Image style={styles.avatarImage} source={!!user.avatarURL ? user.avatarURL : images.avatar} />
+      <Text style = { styles.text }>{user.firstName}</Text>
     </View>
   );
 };
@@ -16,10 +19,20 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     padding: 15,
-    backgroundColor: "rgba(0, 0, 0, 0.33)"
+    backgroundColor: "rgba(0, 0, 0, 0.33)",
+    flexDirection: 'row',
+    alignItems: "center"
+  },
+  avatarImage: {
+    height: 40,
+    width: 40,
+    marginRight: 20,
+    borderRadius: 75,
+    borderWidth: 1,
+    borderColor: "gray"
   },
   text: {
-    fontSize: 20,
+    fontSize: moderateScale(20, 0),
     color: "#fff"
   }
 });
