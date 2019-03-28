@@ -23,6 +23,14 @@ export const testRemoteUserConnects = (comp) => {
     });
 };
 
+export const testRemoteUserConnectsAndDisablesVideo = (comp) => {
+  testRemoteUserConnects(comp);
+  after(1500, () => {
+    comp.handleUserReceivingAV({audio: true, video: false});
+    comp.handleRemoteUserSendingAV({audio: true, video: false});
+  });
+};
+
 // both users connect
 // then user disconnects
 export const testRemoteUserDisconnects = (comp) => {

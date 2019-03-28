@@ -1,10 +1,15 @@
 import React from "react";
-import {Text, View, StyleSheet} from "react-native";
+import {Text, View, Image, StyleSheet} from "react-native";
+import colors from "../../../Themes/Colors";
+import images from "../../../Themes/Images";
 
-export const AudioModeBackground = (props) => {
+
+export const AudioModeBackground = ({user}) => {
   return (
-    <View style = { styles.container }>
-      <Text style = { styles.text }>AUDIO MODE BACKGROUND</Text>
+    <View style={styles.container}>
+      <View style={styles.avatarContainer}>
+        <Image style={styles.avatarImage} source={!!user.avatarURL ? user.avatarURL : images.avatar} />
+      </View>
     </View>
   );
 };
@@ -16,11 +21,25 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: "#f00",
-    paddingTop: "33%",
+    backgroundColor: colors.backgroundBlue,
+    paddingTop: "40%",
+    alignItems: "center"
   },
-  text: {
-    fontSize: 20,
-    color: "#fff"
+  avatarContainer: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    borderWidth: 0.5,
+    borderColor: colors.white,
+    backgroundColor: colors.transparent,
+    paddingHorizontal: 25,
+    paddingVertical: 25
+  },
+  avatarImage: {
+    height: 150,
+    width: 150,
+    borderRadius: 75,
+    borderWidth: 4,
+    borderColor: "gray"
   }
 });

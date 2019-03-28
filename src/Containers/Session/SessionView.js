@@ -51,7 +51,8 @@ const newUserState = (obj = {}) => {
     app: {
       state: '', // background|foreground
       networkConnection: '',
-      hasNetworkConnection: false
+      hasNetworkConnection: false,
+      // batteryLevel: '', // TODO: track battery level, one day
     }
   }, obj);
 };
@@ -101,6 +102,7 @@ class SessionView extends Component {
 
   TEST () {
     // tests.testRemoteUserConnects(this);
+    tests.testRemoteUserConnectsAndDisablesVideo(this);
     // tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
