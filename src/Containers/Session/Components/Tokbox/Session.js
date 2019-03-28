@@ -108,6 +108,7 @@ export class Session extends Component {
 
   mounted () {
     return !this.unmounting
+      && this.props.localUserState.app.hasHetworkConnection
       && !this.state.unmounting
       && this.state.mounted
   }
