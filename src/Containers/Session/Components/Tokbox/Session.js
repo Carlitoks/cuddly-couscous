@@ -209,11 +209,11 @@ export class Session extends Component {
     this.remoteUserState.meta = JSON.parse(event.data);
     this.props.onRemoteUserConnecting();
     this.sendSignal(SIGNALS.NOT_LEGACY_VERSION);
-
     
-    // TODO: test sending back-to-back signals
-
-    // TODO: send local state (controls, app state, etc...)
+    const {localUserState} = this.props;
+    this.sendSignal(SIGNALS.APP_STATE, {state: localUserState.app.state});
+    this.sendSignal(SIGNALS.NETWORK_STATE, {type: localUserState.app.networkConnection});
+    this.sendSignal(SIGNALS.CONTROL_STATE, localUserState.controls);
 
   }
 

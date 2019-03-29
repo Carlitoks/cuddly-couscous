@@ -104,7 +104,7 @@ class SessionView extends Component {
 
   TEST () {
     // tests.testRemoteUserConnects(this);
-    tests.testRemoteUserConnectsAndDisablesVideo(this);
+    // tests.testRemoteUserConnectsAndDisablesVideo(this);
     // tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
@@ -120,13 +120,9 @@ class SessionView extends Component {
   componentDidMount () {
     AppState.addEventListener('change', this.handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.handleConnectionChange);
-
-    // TODO: after #1732
-    // this.blurSubscription = this.props.navigation.addListener("didBlur", this.cleanup);
-
-    // TODO: init some things:
-    // * push notification listeners
-    // * linguist connecting, end call, 
+    NetInfo.getConnectionInfo().then((info) => {
+      this.updateLocalUserState({app: {networkConnection: info.type}});
+    });
 
     this.TEST();
   }
