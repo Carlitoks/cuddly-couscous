@@ -17,10 +17,17 @@ class AddCard extends Component {
     super(props);
     this.state = {
       creditCardIcon: Icons.placeholder,
-      date: ""
+      date: "",
+      currentTooltipIcon: Icons.info_cvv
     };
   }
-
+  onOpenTooltip = () => {
+    console.log("holaaaa");
+    this.setState({ currentTooltipIcon: Icons.info_cvv_pressed });
+  };
+  onCloseTooltip = () => {
+    this.setState({ currentTooltipIcon: Icons.info_cvv });
+  };
   onDateChange = date => {
     this.setState({ date });
     if (date.length >= 5 && moment(date, "MM/YY").isValid()) {
@@ -72,7 +79,13 @@ class AddCard extends Component {
         />
         <View style={styles.addCardBottomInputs}>
           <ExpirationDate date={this.state.date} onDateChange={this.onDateChange} />
-          <CVV CVV={this.props.cardInfo.cvc} onChangeCVV={this.onChangeCVV} />
+          <CVV
+            CVV={this.props.cardInfo.cvc}
+            onChangeCVV={this.onChangeCVV}
+            onOpenTooltip={this.onOpenTooltip}
+            onCloseTooltip={this.onCloseTooltip}
+            currentTooltipIcon={this.state.currentTooltipIcon}
+          />
         </View>
       </View>
     );

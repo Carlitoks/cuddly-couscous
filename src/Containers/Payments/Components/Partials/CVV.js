@@ -23,14 +23,14 @@ const CvvInput = props => {
       />
 
       <View style={styles.CVVIconContainer}>
-        <TouchableOpacity onPress={props.onTooltipPressed()}>
-          {props.toolTipPressed ? (
-            <Image resizeMode="contain" style={styles.CVVIcon} source={Icons.info_cvv_pressed} />
-          ) : (
-            <Image resizeMode="contain" style={styles.CVVIcon} source={Icons.info_cvv} />
-          )}
-        </TouchableOpacity>
-        <Tooltip backgroundColor="white" popover={<Text>Info here</Text>} />
+        <Tooltip
+          backgroundColor="white"
+          popover={<Text>Info here</Text>}
+          onClose={() => props.onOpenTooltip()}
+          onClose={() => props.onOpenTooltip()}
+        >
+          <Image resizeMode="contain" style={styles.CVVIcon} source={props.currentTooltipIcon} />
+        </Tooltip>
       </View>
     </View>
   );
