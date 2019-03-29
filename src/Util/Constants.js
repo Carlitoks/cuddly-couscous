@@ -109,19 +109,21 @@ export const CUSTOMER_FREE_MINUTES = 5;
 
 export const SESSION = {
   START: {
-    NORMAL: 'normal',
-    RETRY_FAILURE: 'retry_failure',
-    RETRY_TIMEOUT: 'retry_timeout',
-    RETRY_DISCONNECT: 'retry_disconnect'
+    NORMAL: 'normal', // customer initiated a new call
+    RECONNECT: 'reconnect', // customer is attempting to connect again to their previous linguist
+    RETRY_CANCEL: "retry_cancel", // customer is trying another call after the previous one was canceled by the remote user
+    RETRY_FAILURE: 'retry_failure', // customer is trying another call after previous one failed to initially connect
+    RETRY_TIMEOUT: 'retry_timeout', // customer is trying another call after previous one did not result in a match
+    RETRY_DISCONNECT: 'retry_disconnect' // customer is trying another call after previous one was disconnected mid call
   },
   END: {
-    DONE: 'done',
-    CANCEL: 'cancel',
-    TIMEOUT: 'timeout',
-    FAILURE_LOCAL: 'failure_local',
-    FAILURE_REMOTE: 'failure_remote',
-    DISCONNECT_LOCAL: 'disconnect_local',
-    DISCONNECT_REMOTE: 'disconnect_remote'
+    DONE: 'done', // call ended normally by one side
+    CANCEL: 'cancel', // call ended before connection was established between both sides
+    TIMEOUT: 'timeout', // call ended because no linguist accepted the call within the time limit
+    FAILURE_LOCAL: 'failure_local', // call ended because local side failed to initially connect to the session
+    FAILURE_REMOTE: 'failure_remote', // call ended because the remote side failed to initially connect to the session
+    DISCONNECT_LOCAL: 'disconnect_local', // call ended because local side disconnected during the session
+    DISCONNECT_REMOTE: 'disconnect_remote' // call ended because remote side disocnnected during the session
   },
   TIME: {
     MATCH: 70 * DURATION.SECONDS,
