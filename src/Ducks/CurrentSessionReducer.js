@@ -68,7 +68,7 @@ const localTestHack = (dispatch) => {
 
 export const createNewSession = (params) => (dispatch, getState) => {
 
-  // localTestHack(dispatch);
+  localTestHack(dispatch);
 
   return new Promise((resolve, reject) => {
     dispatch(clear());

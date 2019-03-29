@@ -31,6 +31,20 @@ export const testRemoteUserConnectsAndDisablesVideo = (comp) => {
   });
 };
 
+export const testRemoteUserConnectsAndGetsReceivingThrottled = (comp) => {
+  testRemoteUserConnects(comp);
+  after(1500, () => { comp.handleRemoteUserReceivingAVThrottled(); });
+  after(4000, () => { comp.handleRemoteUserReceivingAVUnthrottled(); });
+  after(6000, () => { comp.handleRemoteUserReceivingAVThrottled(); });
+};
+
+export const testRemoteUserConnectsAndLocalUserGetsReceivingThrottled = (comp) => {
+  testRemoteUserConnects(comp);
+  after(1500, () => { comp.handleUserReceivingAVThrottled(); });
+  after(4000, () => { comp.handleUserReceivingAVUnthrottled(); });
+  after(6000, () => { comp.handleUserReceivingAVThrottled(); });
+};
+
 // both users connect
 // then user disconnects
 export const testRemoteUserDisconnects = (comp) => {

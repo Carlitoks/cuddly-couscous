@@ -105,6 +105,8 @@ class SessionView extends Component {
   TEST () {
     // tests.testRemoteUserConnects(this);
     // tests.testRemoteUserConnectsAndDisablesVideo(this);
+    tests.testRemoteUserConnectsAndGetsReceivingThrottled(this);
+    // tests.testRemoteUserConnectsAndLocalUserGetsReceivingThrottled(this);
     // tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
