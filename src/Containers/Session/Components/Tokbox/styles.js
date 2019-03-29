@@ -11,7 +11,8 @@ export default styles = StyleSheet.create({
     top: 0,
     left: 0,
     bottom: 0,
-    right: 0
+    right: 0,
+    backgroundColor: Color(colors.backgroundBlue).darken(0.2)
   },
   session: {
     position: 'absolute',
@@ -19,7 +20,6 @@ export default styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: Color(colors.backgroundBlue).darken(0.2)
   },
 
   publisherContainerEnabled: {

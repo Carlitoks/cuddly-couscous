@@ -751,6 +751,8 @@ export default (ENG = {
     reconnection: {
       notice: "You have been disconnected.",
       noticeUser: "{{name}} has been disconnected.",
+      attempting: "Trying to reconnect...",
+      attemptingUser: "{{name}} is trying to reconnect...",
       waiting: "Waiting for connection...",
       waitingUser: "Waiting for {{name}} to reconnect...",
       reconnecting: "Reconnecting...",

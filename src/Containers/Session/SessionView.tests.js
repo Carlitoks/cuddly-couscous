@@ -50,17 +50,17 @@ export const testRemoteUserConnectsAndLocalUserGetsReceivingThrottled = (comp) =
 export const testRemoteUserDisconnects = (comp) => {
   testRemoteUserConnects(comp);
   after(4000, () => { comp.handleRemoteUserDisconnected(); });
-  // after(6000, () => { comp.handleRemoteUserConnecting(); });
-  // after(8000, () => { comp.handleRemoteUserConnected(); });
-  // after(10000, () => { comp.handleRemoteUserDisconnected(); });
+  after(16000, () => { comp.handleRemoteUserConnecting(); });
+  after(24000, () => { comp.handleRemoteUserConnected(); });
+  after(30000, () => { comp.handleRemoteUserDisconnected(); });
 };
 
 export const testLocalUserDisconnects = (comp) => {
   testRemoteUserConnects(comp);
   after(4000, () => { comp.handleUserDisconnected(); });
-  after(6000, () => { comp.handleUserConnecting(); });
-  after(8000, () => { comp.handleUserConnected(); });
-  after(10000, () => { comp.handleUserDisconnected(); });
+  after(16000, () => { comp.handleUserConnecting(); });
+  after(24000, () => { comp.handleUserConnected(); });
+  after(30000, () => { comp.handleUserDisconnected(); });
 };
 
 // user loses connection
@@ -72,6 +72,6 @@ export const testUserLostNetwork = (comp) => {
   after(6500, () => { comp.handleUserConnecting(); });
   after(8000, () => { comp.handleUserConnected(); });
   after(10000, () => { comp.handleNetworkConnectionTypeChanged("wifi", "none"); });
-  // after(10500, () => { comp.handleUserDisconnected(); });
+  after(10500, () => { comp.handleUserDisconnected(); });
 };
 

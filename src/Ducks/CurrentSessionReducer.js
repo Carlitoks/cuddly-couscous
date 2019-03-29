@@ -63,12 +63,12 @@ const localTestHack = (dispatch) => {
       firstName: "Evan",
       lastInitial: "V"
     }));
-  }, 750);
+  }, 2000);
 };
 
 export const createNewSession = (params) => (dispatch, getState) => {
 
-  localTestHack(dispatch);
+  // localTestHack(dispatch);
 
   return new Promise((resolve, reject) => {
     dispatch(clear());

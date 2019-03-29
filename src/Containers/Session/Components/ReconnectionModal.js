@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {View, Button, StyleSheet, Text, TouchableHighlight} from "react-native";
 import Modal from "react-native-modal";
-import { SESSION } from "../../../Util/Constants";
+import { SESSION, DURATION } from "../../../Util/Constants";
 import I18n from "../../../I18n/I18n";
 
 import TextButton from "../../../Components/Widgets/TextButton";
@@ -45,17 +45,23 @@ export class ReconnectionModal extends Component {
     }
 
     // check if either the local or remote user has started reconnecting
+    //
+    // NOTE: this currently does not work as expected - it was traced back to the fact
+    // that `prevProps.remoteUserConnection.connecting` and `this.props.remoteUserConnection.connecting`
+    // are both changing at the same time... so the condition where it was previously false but is now true
+    // is never met.  I have no explanation for how that's possible... but I'm moving on for now.
     const oldLC = prevProps.userConnection;
     const newLC = this.props.userConnection;
     const oldRC = prevProps.remoteUserConnection;
     const newRC = this.props.remoteUserConnection;
+
     if (
       (!oldLC.connecting && newLC.connecting)
-      || (oldRC.connecting && newRC.connecting)
+      || (!oldRC.connecting && newRC.connecting)
     ) {
       this.waiting = false;
       this.dismissOptions();
-      this.resetTimeout();
+      this.resetTimeout();  
     }
   }
 
@@ -65,6 +71,7 @@ export class ReconnectionModal extends Component {
         this.cleanup();
         return;
       }
+      this.waiting = false;
       this.showOptions();
     }, SESSION.TIME.RECONNECT);
   }
@@ -88,6 +95,7 @@ export class ReconnectionModal extends Component {
   }
 
   keepWaiting () {
+    this.waiting = true;
     this.dismissOptions();
     this.resetTimeout();
   }
@@ -116,7 +124,6 @@ export class ReconnectionModal extends Component {
     const {userApp, userConnection, remoteUser, remoteUserConnection} = this.props;
     const {showOptions} = this.state;
     const localDisconnect = userApp.networkConnection == "none" || !userConnection.connected;
-    const remoteDisconnect = !remoteUserConnection.connected;
     const connected = userApp.hasNetworkConnection && userConnection.connected && remoteUserConnection.connected;
 
     if (this.isEnding()) {
@@ -124,14 +131,6 @@ export class ReconnectionModal extends Component {
     }
 
     if (!connected) {
-      if (showOptions) {
-        return localDisconnect ? I18n.t('session.reconnection.notice') : I18n.t('session.reconnection.noticeUser', {name: remoteUser.firstName});
-      }
-
-      if (this.waiting) {
-        return localDisconnect ? I18n.t('session.reconnection.waiting') : I18n.t('session.reconnection.waitingUser', {name: remoteUser.firstName});
-      }
-
       if (userConnection.connecting) {
         return I18n.t('session.reconnection.reconnecting');
       }
@@ -139,21 +138,29 @@ export class ReconnectionModal extends Component {
         return I18n.t('session.reconnection.reconnectingUser', {name: remoteUser.firstName});
       }
 
-      // this condition shouldn't be possible...
-      return localDisconnect ? I18n.t('session.reconnection.notice') : I18n.t('session.reconnection.noticeUser', {name: remoteUser.firstName});
+      if (showOptions) {
+        if (this.waiting) {
+          return localDisconnect ? I18n.t('session.reconnection.waiting') : I18n.t('session.reconnection.waitingUser', {name: remoteUser.firstName});
+        }
+        return localDisconnect ? I18n.t('session.reconnection.notice') : I18n.t('session.reconnection.noticeUser', {name: remoteUser.firstName});
+      }
+
+      if (this.waiting) {
+        return localDisconnect ? I18n.t('session.reconnection.waiting') : I18n.t('session.reconnection.waitingUser', {name: remoteUser.firstName});
+      }
+      return localDisconnect ? I18n.t('session.reconnection.attempting') : I18n.t('session.reconnection.attemptingUser', {name: remoteUser.firstName});
     }
 
     return I18n.t('session.reconnection.reconnected');
   }
 
   renderButtons () {
-    const {isCustomer, userConnection, userApp} = this.props;
+    const {isCustomer, userApp} = this.props;
 
     let buttons = [
       {
         title: I18n.t("session.reconnection.actions.wait"),
         onPress: () => {
-          this.waiting = true;
           this.keepWaiting();
         }
       }

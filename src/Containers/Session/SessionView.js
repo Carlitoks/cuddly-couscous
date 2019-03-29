@@ -18,7 +18,7 @@ import {SessionControls} from "./Components/SessionControls";
 import {Session as TokboxSession} from "./Components/Tokbox/Session";
 
 import * as tests from './SessionView.tests';
-import { SESSION } from '../../Util/Constants';
+import { SESSION, DURATION } from '../../Util/Constants';
 
 // The user state for local and remote users is the same format.  The object describes
 // the users general connection status to the session, app and control states.
@@ -107,7 +107,7 @@ class SessionView extends Component {
     // tests.testRemoteUserConnectsAndDisablesVideo(this);
     // tests.testRemoteUserConnectsAndGetsReceivingThrottled(this);
     // tests.testRemoteUserConnectsAndLocalUserGetsReceivingThrottled(this);
-    tests.testRemoteUserDisconnects(this);
+    // tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
   }
@@ -139,10 +139,6 @@ class SessionView extends Component {
     AppState.removeEventListener('change', this.handleAppStateChange);
     NetInfo.removeEventListener("connectionChange", this.handleConnectionChange);
     this.unmounting = true;
-
-    // TODO: unregister listeners:
-    // * push notification
-    // * any audio things, incallManager, etc...
   }
 
   handleAppStateChange (nextState) {
@@ -259,12 +255,12 @@ class SessionView extends Component {
   shouldShowReconnectionState () {
     const {status} = this.props;
     return (
-      status.began &&
-      (!status.ending && !status.ended) &&
-      (
-        "none" == this.state.localUserState.app.networkConnection ||
-        !this.state.localUserState.connection.connected ||
-        !this.state.remoteUserState.connection.connected
+      status.began
+      && (!status.ending && !status.ended)
+      && (
+        "none" == this.state.localUserState.app.networkConnection
+        || !this.state.localUserState.connection.connected
+        || !this.state.remoteUserState.connection.connected
       )
     );
   }
@@ -452,7 +448,7 @@ class SessionView extends Component {
     }
 
     let targetView = "Home";
-    if (this.props.status.began) {
+    if (this.props.status.began && this.state.localUserState.app.hasNetworkConnection) {
       targetView = "RateView";
     }
     this.endingCall = true;
@@ -472,7 +468,7 @@ class SessionView extends Component {
 
   handleRemoteEnded () {
     let targetView = "Home";
-    if (this.props.status.began) {
+    if (this.props.status.began && this.state.localUserState.app.hasNetworkConnection) {
       targetView = "RateView";
     }
 
@@ -592,7 +588,7 @@ class SessionView extends Component {
             localUserState = { localUserState }
             status = { this.props.status }
             session = { this.props.session }
-            secondsUntilError = { SESSION.TIME.CONNECT }
+            secondsUntilError = { SESSION.TIME.CONNECT / DURATION.SECONDS }
             onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
             onRemoteCancel = {() => { this.handleRemoteCancel() }}
             onCancel = {() => { this.triggerEndCall(SESSION.END.CANCEL) }}
