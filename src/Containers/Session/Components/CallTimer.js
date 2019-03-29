@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Text, StyleSheet, View} from "react-native";
 import { formatTimerNumber } from "../../../Util/Format";
+import { moderateScale } from "../../../Util/Scaling";
 
 export class CallTimer extends Component {
   constructor(props) {
@@ -105,12 +106,13 @@ export class CallTimer extends Component {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    padding: 15,
+    padding: 10,
     backgroundColor: "rgba(0, 0, 0, 0.33)",
     alignItems: "center",
-    marginBottom: 3
+    marginBottom: 1
   },
   text: {
+    fontSize: moderateScale(20, 0),
     color: "#fff"
   }
 });

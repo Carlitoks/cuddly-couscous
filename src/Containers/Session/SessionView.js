@@ -105,8 +105,8 @@ class SessionView extends Component {
   TEST () {
     // tests.testRemoteUserConnects(this);
     // tests.testRemoteUserConnectsAndDisablesVideo(this);
-    tests.testRemoteUserConnectsAndGetsReceivingThrottled(this);
-    // tests.testRemoteUserConnectsAndLocalUserGetsReceivingThrottled(this);
+    // tests.testRemoteUserConnectsAndGetsReceivingThrottled(this);
+    tests.testRemoteUserConnectsAndLocalUserGetsReceivingThrottled(this);
     // tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
@@ -251,8 +251,10 @@ class SessionView extends Component {
     }});
   }
 
-  poorConnectionAlertVisible () { return false; }
-  poorConnectionAlertMessage () { return ""; }
+  poorConnectionAlertVisible () {
+    const {localUserState, remoteUserState} = this.state;
+    return localUserState.connection.receivingThrottled || remoteUserState.connection.receivingThrottled;
+  }
   
   shouldShowReconnectionState () {
     const {status} = this.props;
@@ -553,12 +555,16 @@ class SessionView extends Component {
             )}
 
             <SessionHeader user={ this.props.remoteUser } />
-            { this.poorConnectionAlertVisible() && (
-              <PoorConnectionWarning message={ this.poorConnectionAlertMessage () } />
-            )}
             
             <View style={ styles.controlContainer }>
               <View style={ styles.controls }>
+                { this.poorConnectionAlertVisible() && (
+                <PoorConnectionWarning
+                  isCustomer={this.props.isCustomer}
+                  localThrottle={localUserState.connection.receivingThrottled}
+                  remoteThrottle={remoteUserState.connection.receivingThrottled}
+                />
+                )}
                 <CallTimer timer = { this.props.timer } />
                 <SessionControls
                   cameraFlipEnabled={ localUserState.controls.cameraFlipEnabled }

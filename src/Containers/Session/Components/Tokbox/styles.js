@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import colors from "../../../../Themes/Colors";
+import Color from "color";
 
 // TODO: portrait vs landscape styles
 
@@ -18,7 +19,7 @@ export default styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: colors.backgroundBlue
+    backgroundColor: Color(colors.backgroundBlue).darken(0.2)
   },
 
   publisherContainerEnabled: {

@@ -1,6 +1,48 @@
 import React from "react";
-import {Text} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
+import { moderateScale } from "../../../Util/Scaling";
+import colors from "../../../Themes/Colors";
+import I18n from "../../../I18n/I18n";
 
-export const PoorConnectionWarning = (props) => {
-  return (<Text>PoorConnectionWarning</Text>);
+export const PoorConnectionWarning = ({isCustomer, localThrottle, remoteThrottle}) => {
+
+  let text = I18n.t('session.alertGeneralCannotSee');
+  if (isCustomer) {
+    if (localThrottle) {
+      text = I18n.t('session.alertYouCannotSeeLinguist');
+    } else if (remoteThrottle) {
+      text = I18n.t('session.alertLinguistCannotSeeYou');
+    }
+  } else {
+    if (localThrottle) {
+      text = I18n.t('session.alertYouCannotSeeCustomer');
+    } else if (remoteThrottle) {
+      text = I18n.t('session.alertCustomerCannotSeeYou');
+    }
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>{text}</Text>
+      {/* <View style={styles.background}>
+      </View> */}
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
+    marginBottom: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.33)",
+  },
+  text: {
+    fontSize: moderateScale(12, 0),
+    color: colors.white,
+    textAlign: "center"
+  }
+});

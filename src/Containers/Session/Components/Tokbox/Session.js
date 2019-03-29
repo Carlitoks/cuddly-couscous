@@ -9,6 +9,7 @@ import { OTSession } from 'opentok-react-native';
 import {TOKBOX_APIKEY} from  "../../../../Config/env";
 
 import { recordSessionTokboxEvent, recordSessionEvent } from "../../../../Util/Forensics";
+import { VIDEO_WARNING } from "../../../../Util/Constants";
 
 // custom app signals sent/received via tokbox connection
 const SIGNALS = {
@@ -19,7 +20,7 @@ const SIGNALS = {
   CONTROL_STATE: 'controls', // signal for other sides call control state (video/mute/speaker/cameraFlip)
   VIDEO_THROTTLE: 'videoThrottle', // signal if other sides video receiving has been throttled by tokbox
   VIDEO_THROTTLE_LIFTED: 'videoThrottleLifted', // signal if other side's video has stopped being throttled
-  LEGACY_VIDEO_THROTTLED: 'WARNING', // legacy signal if other sides video receiving has been throttled by tokbox
+  LEGACY_VIDEO_THROTTLED: VIDEO_WARNING.TYPE, // legacy signal if other sides video receiving has been throttled/unthrottled by tokbox
   RECEIVING_AV: 'receivingAV', // signal from other side they are initially receiving audio/video from this side
   HEARTBEAT: 'heartbeat', // periodic heartbeat from other side to prove connection is still active
 };
@@ -474,6 +475,16 @@ export class Session extends Component {
     switch (name) {
       // legacy signals
       case SIGNALS.LEGACY_VIDEO_THROTTLED: {
+        switch (payload) {
+          case VIDEO_WARNING.ENABLED: {
+            this.props.onRemoteUserReceivingAVThrottled();
+            break;
+          }
+          case VIDEO_WARNING.DISABLED: {
+            this.props.onRemoteUserReceivingAVUnthrottled();
+            break;
+          }
+        }
         break;
       }
 
