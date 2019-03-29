@@ -50,9 +50,9 @@ export const testRemoteUserConnectsAndLocalUserGetsReceivingThrottled = (comp) =
 export const testRemoteUserDisconnects = (comp) => {
   testRemoteUserConnects(comp);
   after(4000, () => { comp.handleRemoteUserDisconnected(); });
-  after(6000, () => { comp.handleRemoteUserConnecting(); });
-  after(8000, () => { comp.handleRemoteUserConnected(); });
-  after(10000, () => { comp.handleRemoteUserDisconnected(); });
+  // after(6000, () => { comp.handleRemoteUserConnecting(); });
+  // after(8000, () => { comp.handleRemoteUserConnected(); });
+  // after(10000, () => { comp.handleRemoteUserDisconnected(); });
 };
 
 export const testLocalUserDisconnects = (comp) => {

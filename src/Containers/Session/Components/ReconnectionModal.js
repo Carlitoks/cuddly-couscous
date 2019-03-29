@@ -2,14 +2,21 @@ import React, {Component} from "react";
 import {View, Button, StyleSheet, Text, TouchableHighlight} from "react-native";
 import Modal from "react-native-modal";
 import { SESSION } from "../../../Util/Constants";
+import I18n from "../../../I18n/I18n";
 
-export class ReconnectionState extends Component {
+import TextButton from "../../../Components/Widgets/TextButton";
+
+import sharedStyles from "../styles";
+import { moderateScale } from "../../../Util/Scaling";
+
+export class ReconnectionModal extends Component {
   constructor (props) {
     super(props);
     this.timeoutID = null;
     this.state = {
       showOptions: false
     };
+    this.waiting = false;
   }
 
   init () {
@@ -17,6 +24,7 @@ export class ReconnectionState extends Component {
       clearTimeout(this.timeoutID);
     }
     this.setState({showOptions: false});
+    this.waiting = false;
     this.resetTimeout();
   }
 
@@ -29,6 +37,25 @@ export class ReconnectionState extends Component {
       this.cleanup();
     } else if (!prevProps.isVisible && this.props.isVisible) {
       this.init();
+    }
+
+    // beyond here doesn't matter if the modal isn't shown
+    if (!this.props.isVisible) {
+      return;
+    }
+
+    // check if either the local or remote user has started reconnecting
+    const oldLC = prevProps.userConnection;
+    const newLC = this.props.userConnection;
+    const oldRC = prevProps.remoteUserConnection;
+    const newRC = this.props.remoteUserConnection;
+    if (
+      (!oldLC.connecting && newLC.connecting)
+      || (oldRC.connecting && newRC.connecting)
+    ) {
+      this.waiting = false;
+      this.dismissOptions();
+      this.resetTimeout();
     }
   }
 
@@ -53,10 +80,10 @@ export class ReconnectionState extends Component {
   }
 
   getEndReason () {
-    if (!this.props.remoteUserConnection.connected) {
-      return SESSION.END.DISCONNECT_REMOTE;
-    } else {
+    if (!this.props.userConnection.connected) {
       return SESSION.END.DISCONNECT_LOCAL;
+    } else {
+      return SESSION.END.DISCONNECT_REMOTE;
     }
   }
 
@@ -78,6 +105,7 @@ export class ReconnectionState extends Component {
   async cleanup () {
     clearTimeout(this.timeoutID);
     await this.dismissOptions();
+    this.waiting = false;
   }
 
   isEnding () {
@@ -92,17 +120,30 @@ export class ReconnectionState extends Component {
     const connected = userApp.hasNetworkConnection && userConnection.connected && remoteUserConnection.connected;
 
     if (this.isEnding()) {
-      return "Ending...";
+      return I18n.t('session.reconnection.ending');
     }
 
     if (!connected) {
       if (showOptions) {
-        return localDisconnect ? "You have been disconnected." : `${remoteUser.firstName} has been disconnected.`;
+        return localDisconnect ? I18n.t('session.reconnection.notice') : I18n.t('session.reconnection.noticeUser', {name: remoteUser.firstName});
       }
-      return localDisconnect ? "Reconnecting..." : `${remoteUser.firstName} is reconnecting...`;
+
+      if (this.waiting) {
+        return localDisconnect ? I18n.t('session.reconnection.waiting') : I18n.t('session.reconnection.waitingUser', {name: remoteUser.firstName});
+      }
+
+      if (userConnection.connecting) {
+        return I18n.t('session.reconnection.reconnecting');
+      }
+      if (remoteUserConnection.connecting) {
+        return I18n.t('session.reconnection.reconnectingUser', {name: remoteUser.firstName});
+      }
+
+      // this condition shouldn't be possible...
+      return localDisconnect ? I18n.t('session.reconnection.notice') : I18n.t('session.reconnection.noticeUser', {name: remoteUser.firstName});
     }
 
-    return "Connected";
+    return I18n.t('session.reconnection.reconnected');
   }
 
   renderButtons () {
@@ -110,28 +151,36 @@ export class ReconnectionState extends Component {
 
     let buttons = [
       {
-        title: isCustomer ? "Try to Reconnect" : "Keep Waiting",
-        onPress: () => { this.keepWaiting() }
+        title: I18n.t("session.reconnection.actions.wait"),
+        onPress: () => {
+          this.waiting = true;
+          this.keepWaiting();
+        }
       }
     ];
 
     // if customer still has a network connection, provide option to try someone else
     if (isCustomer && userApp.hasNetworkConnection) {
       buttons.push({
-        title: "Try Another Jeenie",
+        title: I18n.t('session.reconnection.actions.tryAnother'),
         onPress: () => { this.retryCall() }
       });
     }
 
     buttons.push({
-      title: "End Call",
+      title: I18n.t('session.reconnection.actions.end'),
       onPress: () => { this.endCall() }
     });
   
     return buttons.map((button, i) => {
       return (
         <View key={i} style={{marginTop: 5}}>
-          <Button title={button.title} onPress={() => { button.onPress() }} />
+          <TextButton
+            text={button.title}
+            onPress={() => { button.onPress() }}
+            style={styles.button}
+            textStyle={sharedStyles.prominentButtonText}
+          />
         </View>
       );
     });
@@ -164,17 +213,29 @@ export class ReconnectionState extends Component {
 const styles = StyleSheet.create({
   modal: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   content: {
     backgroundColor: "#fff",
     padding: 20,
-  },
-  buttonContainer: {
-
+    borderRadius: 10,
+    width: "90%",
+    alignItems: "center"
   },
   text: {
-    fontSize: 20,
-    color: "#44a"
+    fontSize: moderateScale(20, 0),
+    color: "#44a",
+  },
+  buttonContainer: {
+    marginTop: 20,
+    width: "100%",
+  },
+  button: {
+    ...sharedStyles.prominentButtonBase,
+    ...sharedStyles.prominentButtonBlue,
+    marginTop: 5,
+    marginBottom: 0,
+    alignSelf: "center",
+    width: "100%"
   }
 });

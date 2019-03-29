@@ -747,6 +747,24 @@ export default (ENG = {
       basic: "Connecting...",
     },
 
+    // seen when a user is in a session, but one side has been disconnected
+    reconnection: {
+      notice: "You have been disconnected.",
+      noticeUser: "{{name}} has been disconnected.",
+      waiting: "Waiting for connection...",
+      waitingUser: "Waiting for {{name}} to reconnect...",
+      reconnecting: "Reconnecting...",
+      reconnectingUser: "{{name}} is reconnecting...",
+      ending: "Ending...",
+      reconnected: "Reconnected",
+      actions: {
+        reconnect: "Try To Reconnect",
+        wait: "Keep Waiting",
+        tryAnother: "Try Another Jeenie",
+        end: "End Call"
+      },
+    },
+
     // seen while matching custoner to linguist
     matching: {
       description: "Connecting you to a Language Jeenie in approximately 1 minute",

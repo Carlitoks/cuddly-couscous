@@ -10,7 +10,7 @@ import {createNewSession, endSession, handleEndedSession, setRemoteUser, setSess
 import {UserConnecting} from "./Components/UserConnecting";
 import {SessionEnding} from "./Components/SessionEnding";
 import {PoorConnectionWarning} from "./Components/PoorConnectionWarning";
-import {ReconnectionState} from "./Components/ReconnectionState";
+import {ReconnectionModal} from "./Components/ReconnectionModal";
 import {SessionHeader} from "./Components/SessionHeader";
 import {AudioModeBackground} from "./Components/AudioModeBackground";
 import {CallTimer} from "./Components/CallTimer";
@@ -106,8 +106,8 @@ class SessionView extends Component {
     // tests.testRemoteUserConnects(this);
     // tests.testRemoteUserConnectsAndDisablesVideo(this);
     // tests.testRemoteUserConnectsAndGetsReceivingThrottled(this);
-    tests.testRemoteUserConnectsAndLocalUserGetsReceivingThrottled(this);
-    // tests.testRemoteUserDisconnects(this);
+    // tests.testRemoteUserConnectsAndLocalUserGetsReceivingThrottled(this);
+    tests.testRemoteUserDisconnects(this);
     // tests.testLocalUserDisconnects(this);
     // tests.testUserLostNetwork(this);
   }
@@ -604,7 +604,7 @@ class SessionView extends Component {
           )}
           
           {/* If the initial connection was established, but one party has been disconnected... */}
-          <ReconnectionState
+          <ReconnectionModal
             isVisible = { this.shouldShowReconnectionState() }
             user = { this.props.user }
             status = { this.props.status }
