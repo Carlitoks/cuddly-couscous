@@ -196,9 +196,8 @@ export default (reducer = (state, action) => {
       // from being properly cleaned up
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
-          index: 1,
+          index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: "Home" }),
             NavigationActions.navigate({ routeName: "CustomerMatchingView" })
           ]
         })

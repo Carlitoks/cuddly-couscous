@@ -53,7 +53,7 @@ const newUserState = (obj = {}) => {
       state: '', // background|foreground
       networkConnection: '',
       hasNetworkConnection: false,
-      // orientation: 'portrait' // TODO: portrait vs landscape orientation
+      // orientation: '' // TODO: portrait|landscape
       // batteryLevel: '', // TODO: track battery level, one day
     }
   }, obj);
@@ -451,8 +451,10 @@ class SessionView extends Component {
       return;
     }
 
-    // TODO: figure out proper target view
     let targetView = "Home";
+    if (this.props.status.began) {
+      targetView = "RateView";
+    }
     this.endingCall = true;
 
     this.props.endSession(reason).finally(() => {
@@ -470,8 +472,10 @@ class SessionView extends Component {
 
   handleRemoteEnded () {
     let targetView = "Home";
-    // TODO: figure out proper target view: rate vs home
-    // if connected & done, go to rate screen
+    if (this.props.status.began) {
+      targetView = "RateView";
+    }
+
     this.props.handleEndedSession().finally(() => {
       this.cleanup();
       this.props.navigation.dispatch({type: targetView});

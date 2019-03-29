@@ -1,4 +1,5 @@
 import api from '../Config/AxiosConfig';
+import { updateOptions } from './RateCallReducer';
 
 // The purpose of this reducer is to manage the status of an active Jeenie session.
 // Note that this does NOT include anything related to connection handling with
@@ -67,7 +68,7 @@ const localTestHack = (dispatch) => {
 
 export const createNewSession = (params) => (dispatch, getState) => {
 
-  // localTestHack(dispatch);
+  localTestHack(dispatch);
 
   return new Promise((resolve, reject) => {
     dispatch(clear());
@@ -99,8 +100,15 @@ export const createNewSession = (params) => (dispatch, getState) => {
   });
 };
 
-export const setRemoteUser = (user) => (dispatch) => {
+export const setRemoteUser = (user) => (dispatch, getState) => {
   dispatch(update({remoteUser: user}));
+
+  // TEMPORARY: also update rate view reducer
+  dispatch(updateOptions({
+    sessionID: getState().currentSessionReducer.sessionID,
+    customerName: !!user.preferredName ? user.preferredName : user.firstName,
+    avatarURL: !!user.avatarURL ? user.avatarURL : ""
+  }));
 };
 
 export const receiveSessionInvite = (invite) => (dispatch, getState) => {
@@ -119,6 +127,14 @@ export const receiveSessionInvite = (invite) => (dispatch, getState) => {
       event: invite.event,
       status: { creating: false, created: true, began: false, ending: false, ended: false }
     }));
+
+    // TEMPORARY: update rate view
+    dispatch(updateOptions({
+      sessionID: getState().currentSessionReducer.sessionID,
+      customerName: !!invite.createdBy.preferredName ? invite.createdBy.preferredName : invite.createdBy.firstName,
+      avatarURL: !!invite.createdBy.avatarURL ? invite.createdBy.avatarURL : ""
+    }));
+
     resolve();
   });
 };
