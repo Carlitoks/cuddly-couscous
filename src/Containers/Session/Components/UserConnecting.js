@@ -8,6 +8,7 @@ import I18n from "../../../I18n/I18n";
 import sharedStyles from "../styles";
 
 import TextButton from "../../../Components/Widgets/TextButton";
+import { SESSION } from "../../../Util/Constants";
 
 export class UserConnecting extends Component {
   constructor(props) {
@@ -79,7 +80,7 @@ export class UserConnecting extends Component {
     .catch((e) => {
       this.pollFailures++;
       if (this.pollFailures >= 3) {
-        this.error("failure_local");
+        this.error(SESSION.END.FAILURE_LOCAL);
       }
     })
   }
@@ -106,13 +107,13 @@ export class UserConnecting extends Component {
 
       // have we still not connected?
       if (!lc.connected || lc.connecting) {
-        this.error("failure_local");
+        this.error(SESSION.END.FAILURE_LOCAL);
         return;
       }
 
       // is there another person, and are they not connected yet?
       if (!rc.connected || rc.connecting) {
-        this.error("failure_remote");
+        this.error(SESSION.END.FAILURE_REMOTE);
         return;
       }
 
@@ -120,7 +121,7 @@ export class UserConnecting extends Component {
       console.log("TODO: handle more cases");
 
       // default case - assume failure on our side
-      this.error("failure_local");
+      this.error(SESSION.END.FAILURE_LOCAL);
     }
   }
 

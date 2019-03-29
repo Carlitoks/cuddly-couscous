@@ -11,9 +11,7 @@ import { formatTimerSeconds } from "../../Util/Format";
 import colors from "../../Themes/Colors";
 
 import sharedStyles from "./styles";
-
-// TODO: actually define some constants somewhere
-const secondsUntilTimeout = 5;
+import { SESSION, DURATION } from "../../Util/Constants";
 
 export class CustomerMatchingView extends Component {
   constructor (props) {
@@ -24,9 +22,12 @@ export class CustomerMatchingView extends Component {
     this.abortTimers = false;
 
     // timeout countdown state
+    const now = new Date();
     this.countdownIntervalID = null;
-    this.countdownUpdatedAt = new Date();
-    this.countdown = secondsUntilTimeout;
+    this.countdownStartedAt = now;
+    this.countdownUpdatedAt = now;
+    this.elapsed = 0;
+    this.countdown = SESSION.TIME.MATCH;
 
     // status poll state
     this.pollIntervalID = null;
@@ -34,9 +35,10 @@ export class CustomerMatchingView extends Component {
 
     // visual component state
     this.state = {
-      seconds: secondsUntilTimeout,
+      remaining: SESSION.TIME.MATCH / DURATION.SECONDS,
+      elapsed: 0,
       cancelling: false,
-    }
+    };
   }
 
   // start timeout and status polling intervals
@@ -71,12 +73,14 @@ export class CustomerMatchingView extends Component {
     }
 
     const now = new Date();
-    const nowSeconds = now.getTime() / 1000;
-    const lastSeconds = this.countdownUpdatedAt.getTime() / 1000;
-    this.countdown -= nowSeconds - lastSeconds;
+    const nowMillis = now.getTime();
+    const lastMillis = this.countdownUpdatedAt.getTime();
+    const elapsedMillis = nowMillis - this.countdownStartedAt.getTime();
+    this.countdown -= nowMillis - lastMillis;
     this.countdownUpdatedAt = now;
     this.setState({
-      seconds: parseInt(this.countdown, 10)
+      remaining: parseInt(this.countdown / DURATION.SECONDS, 10),
+      elapsed: parseInt(elapsedMillis / DURATION.SECONDS, 10)
     });
 
 
@@ -147,7 +151,7 @@ export class CustomerMatchingView extends Component {
 
   lostConnection () {
     this.cleanup();
-    this.props.endSession("failure_local")
+    this.props.endSession(SESSION.END.FAILURE_LOCAL)
     .catch((e) => {
       Alert.alert("Error", translateApiError(e));
     }).finally(() => {
@@ -168,7 +172,7 @@ export class CustomerMatchingView extends Component {
       return;
     }
     this.cleanup();
-    this.props.endSession("timeout")
+    this.props.endSession(SESSION.END.TIMEOUT)
     .catch((e) => {
       Alert.alert("Error", translateApiError(e));
     }).finally(() => {
@@ -181,7 +185,7 @@ export class CustomerMatchingView extends Component {
       return;
     }
     this.cleanup();
-    this.props.endSession("cancel")
+    this.props.endSession(SESSION.END.CANCEL)
     .catch((e) => {
       Alert.alert("Error", translateApiError(e));
     }).finally(() => {
@@ -190,6 +194,7 @@ export class CustomerMatchingView extends Component {
   }
 
   render () {
+    const {remaining, elapsed} = this.state;
     return (
       <View style = {styles.container}>
         <ActivityIndicator
@@ -198,17 +203,22 @@ export class CustomerMatchingView extends Component {
           style={styles.spinner}
         />
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{ formatTimerSeconds(this.state.seconds) }</Text>
+          {elapsed >= 10 && (
+            <Text style={styles.text}>{ formatTimerSeconds(remaining) }</Text>
+          )}
+          
           <Text style = {styles.text}>{ I18n.t("session.matching.description") }</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TextButton
-            text = {I18n.t("cancel")}
-            style = {styles.button}
-            textStyle = {sharedStyles.prominentButtonText}
-            disabled = {this.props.status.ending }
-            onPress = {() => { this.cancel() }}
-          />
+          {elapsed >= 2 && (
+            <TextButton
+              text = {I18n.t("cancel")}
+              style = {styles.button}
+              textStyle = {sharedStyles.prominentButtonText}
+              disabled = {this.props.status.ending }
+              onPress = {() => { this.cancel() }}
+            />
+          )}
         </View>
       </View>
     );

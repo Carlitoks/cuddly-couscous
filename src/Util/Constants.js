@@ -106,3 +106,26 @@ export const DURATION = {
 };
 
 export const CUSTOMER_FREE_MINUTES = 5;
+
+export const SESSION = {
+  START: {
+    NORMAL: 'normal',
+    RETRY_FAILURE: 'retry_failure',
+    RETRY_TIMEOUT: 'retry_timeout',
+    RETRY_DISCONNECT: 'retry_disconnect'
+  },
+  END: {
+    DONE: 'done',
+    CANCEL: 'cancel',
+    TIMEOUT: 'timeout',
+    FAILURE_LOCAL: 'failure_local',
+    FAILURE_REMOTE: 'failure_remote',
+    DISCONNECT_LOCAL: 'disconnect_local',
+    DISCONNECT_REMOTE: 'disconnect_remote'
+  },
+  TIME: {
+    MATCH: 70 * DURATION.SECONDS,
+    CONNECT: 30 * DURATION.SECONDS,
+    RECONNECT: 10 * DURATION.SECONDS,
+  }
+};

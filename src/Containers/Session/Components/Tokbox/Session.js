@@ -314,9 +314,16 @@ export class Session extends Component {
       sessionID: this.props.session.id
     });
 
+    // decode the event data, which will usually be json
     let data = null;
     if (!!event.data && event.data != "") {
-      data = JSON.parse(event.data);
+      try {
+        // it's probably json
+        data = JSON.parse(event.data);
+      } catch (e) {
+        // but if that didn't work, maybe it's just a string
+        data = event.data;
+      }
     }
 
     this.receiveSignal(event.type, data);

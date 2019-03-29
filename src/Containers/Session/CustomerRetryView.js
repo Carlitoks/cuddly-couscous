@@ -11,6 +11,7 @@ import I18n, {translateApiError, translateLanguage} from "../../I18n/I18n";
 import {LanguagesRollover} from "../../Config/Languages";
 
 import sharedStyles from "./styles";
+import { SESSION } from "../../Util/Constants";
 
 export class CustomerRetryView extends Component {
 
@@ -62,16 +63,18 @@ export class CustomerRetryView extends Component {
   }
 
   retry () {
-    this.createSession({startReason: "retry_timeout"});
+    // TODO: check for retry_cancel
+    this.createSession({startReason: SESSION.START.RETRY_TIMEOUT});
   }
 
   retryRollover () {
+    // TODO: check for retry_cancel
     const {session} = this.props;
     const {rollover} = this.state;
     const primaryLangCode = rollover.field == 'primary' ? rollover.code : session.primaryLangCode;
     const secondaryLangCode = rollover.field == 'secondary' ? rollover.code : session.secondaryLangCode;
     this.createSession({
-      startReason: "retry_timeout",
+      startReason: SESSION.START.RETRY_TIMEOUT,
       primaryLangCode,
       secondaryLangCode
     });

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {View, Button, StyleSheet, Text, TouchableHighlight} from "react-native";
 import Modal from "react-native-modal";
+import { SESSION } from "../../../Util/Constants";
 
 export class ReconnectionState extends Component {
   constructor (props) {
@@ -38,7 +39,7 @@ export class ReconnectionState extends Component {
         return;
       }
       this.showOptions();
-    }, 10000);
+    }, SESSION.TIME.RECONNECT);
   }
 
   showOptions () {
@@ -53,9 +54,9 @@ export class ReconnectionState extends Component {
 
   getEndReason () {
     if (!this.props.remoteUserConnection.connected) {
-      return "disconnect_remote";
+      return SESSION.END.DISCONNECT_REMOTE;
     } else {
-      return "disconnect_local";
+      return SESSION.END.DISCONNECT_LOCAL;
     }
   }
 
@@ -71,7 +72,7 @@ export class ReconnectionState extends Component {
 
   async retryCall () {
     await this.cleanup();
-    this.props.onRetry(this.getEndReason(), "retry_disconnect");
+    this.props.onRetry(this.getEndReason(), SESSION.START.RETRY_DISCONNECT);
   }
 
   async cleanup () {

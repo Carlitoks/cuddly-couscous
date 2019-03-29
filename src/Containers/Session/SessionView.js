@@ -18,6 +18,7 @@ import {SessionControls} from "./Components/SessionControls";
 import {Session as TokboxSession} from "./Components/Tokbox/Session";
 
 import * as tests from './SessionView.tests';
+import { SESSION } from '../../Util/Constants';
 
 // The user state for local and remote users is the same format.  The object describes
 // the users general connection status to the session, app and control states.
@@ -52,6 +53,7 @@ const newUserState = (obj = {}) => {
       state: '', // background|foreground
       networkConnection: '',
       hasNetworkConnection: false,
+      // orientation: 'portrait' // TODO: portrait vs landscape orientation
       // batteryLevel: '', // TODO: track battery level, one day
     }
   }, obj);
@@ -268,14 +270,14 @@ class SessionView extends Component {
   }
 
   handleInitialCustomerTimeout () {
-    this.props.endSession('timeout').finally(() => {
+    this.props.endSession(SESSION.END.TIMEOUT).finally(() => {
       this.cleanup();
       this.props.navigation.dispatch({type: "CustomerRetryView"});
     });
   }
 
   handleInitialLinguistTimeout () {
-    this.props.endSession('failure_remote').finally(() => {
+    this.props.endSession(SESSION.END.FAILURE_REMOTE).finally(() => {
       this.cleanup();
       this.props.navigation.dispatch({type: "Home"});
     });
@@ -566,7 +568,7 @@ class SessionView extends Component {
                   videoEnabled = { localUserState.controls.videoEnabled }
                   onVideoPressed = {() => { this.toggleVideo() }}
                   endingCall = { this.state.endingCall }
-                  onEndCallPressed = {() => { this.triggerEndCall("done") }}
+                  onEndCallPressed = {() => { this.triggerEndCall(SESSION.END.DONE) }}
                 />
               </View>
             </View>
@@ -582,10 +584,10 @@ class SessionView extends Component {
             localUserState = { localUserState }
             status = { this.props.status }
             session = { this.props.session }
-            secondsUntilError = { 30 }
+            secondsUntilError = { SESSION.TIME.CONNECT }
             onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
             onRemoteCancel = {() => { this.handleRemoteCancel() }}
-            onCancel = {() => { this.triggerEndCall("cancel") }}
+            onCancel = {() => { this.triggerEndCall(SESSION.END.CANCEL) }}
           />
           )}
           
