@@ -8,7 +8,8 @@ const Icons = {
   jcb: require("./../../Assets/Images/ccIcons/stp_card_jcb.png"),
   placeholder: require("./../../Assets/Images/ccIcons/stp_card_unknown.png"),
   visa: require("./../../Assets/Images/ccIcons/stp_card_visa.png"),
-  info_cvv: require("./../../Assets/Images/Info_outline.png")
+  info_cvv: require("./../../Assets/Images/Info_outline.png"),
+  info_cvv_pressed: require("./../../Assets/Images/info_input_pressed.png")
 };
 
 export default Icons;
