@@ -1,5 +1,5 @@
 import api from '../Config/AxiosConfig';
-import { updateOptions } from './RateCallReducer';
+import { updateOptions as updateRatingsView } from './RateCallReducer';
 
 // The purpose of this reducer is to manage the status of an active Jeenie session.
 // Note that this does NOT include anything related to connection handling with
@@ -66,6 +66,7 @@ const localTestHack = (dispatch) => {
   }, 2000);
 };
 
+// create a new session as a customer
 export const createNewSession = (params) => (dispatch, getState) => {
 
   // localTestHack(dispatch);
@@ -100,17 +101,20 @@ export const createNewSession = (params) => (dispatch, getState) => {
   });
 };
 
+// sets the remote user, generally set when a linguist accepts an incoming call
 export const setRemoteUser = (user) => (dispatch, getState) => {
   dispatch(update({remoteUser: user}));
 
   // TEMPORARY: also update rate view reducer
-  dispatch(updateOptions({
+  dispatch(updateRatingsView({
     sessionID: getState().currentSessionReducer.sessionID,
     customerName: !!user.preferredName ? user.preferredName : user.firstName,
     avatarURL: !!user.avatarURL ? user.avatarURL : ""
   }));
 };
 
+// as a linguist, receive a session invite - it is assumed tkat the invite
+// is valid to recive at this point
 export const receiveSessionInvite = (invite) => (dispatch, getState) => {
   const {status} = getState().currentSessionReducer;
   return new Promise((resolve) => {
@@ -129,7 +133,7 @@ export const receiveSessionInvite = (invite) => (dispatch, getState) => {
     }));
 
     // TEMPORARY: update rate view
-    dispatch(updateOptions({
+    dispatch(updateRatingsView({
       sessionID: getState().currentSessionReducer.sessionID,
       customerName: !!invite.createdBy.preferredName ? invite.createdBy.preferredName : invite.createdBy.firstName,
       avatarURL: !!invite.createdBy.avatarURL ? invite.createdBy.avatarURL : ""
@@ -139,6 +143,7 @@ export const receiveSessionInvite = (invite) => (dispatch, getState) => {
   });
 };
 
+// accept a previously received session invite
 export const acceptSessionInvite = () => (dispatch, getState) => {
   const {inviteID, respondingToInvite} = getState().currentSessionReducer;
   if (respondingToInvite) {
@@ -165,6 +170,7 @@ export const acceptSessionInvite = () => (dispatch, getState) => {
   });
 };
 
+// decline the previously received session invite
 export const declineSessionInvite = () => (dispatch, getState) => {
   const {inviteID, respondingToInvite} = getState().currentSessionReducer;
   if (respondingToInvite) {
@@ -182,6 +188,7 @@ export const declineSessionInvite = () => (dispatch, getState) => {
   });
 };
 
+// mark the session as having begun, and start the session timer
 export const setSessionBegan = () => (dispatch, getState) => {
   const {status} = getState().currentSessionReducer;
   dispatch(update({
@@ -193,6 +200,7 @@ export const setSessionBegan = () => (dispatch, getState) => {
   dispatch(startTimer());
 }
 
+// start the session timer
 export const startTimer = () => (dispatch, getState) => {
   const {running, events} = getState().currentSessionReducer.timer;
   if (running) {
@@ -209,6 +217,7 @@ export const startTimer = () => (dispatch, getState) => {
   }}));
 };
 
+// stop the session timer
 export const stopTimer = () => (dispatch, getState) => {
   const {running, events} = getState().currentSessionReducer.timer;
   if (!running) {
