@@ -492,6 +492,7 @@ export class Session extends Component {
       case SIGNALS.NOT_LEGACY_VERSION: {
         this.remoteUserState.legacyVersion = false;
         // this.beginExpectingHeartbeat();
+        // this.beginSendingHeartbeat();
         break;
       }
       case SIGNALS.ENDING: {

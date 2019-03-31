@@ -1,13 +1,17 @@
 import React, {Component} from "react";
-import {View, Text, StyleSheet, Alert} from "react-native";
+import {View, Text, Image, StyleSheet, Alert} from "react-native";
 import { connect } from "react-redux";
 import I18n, { translateApiError } from "../../I18n/I18n";
 import moment from "moment";
 
 import TextButton from "../../Components/Widgets/TextButton";
+import LinearGradient from "react-native-linear-gradient";
+import colors from "../../Themes/Colors";
 
 import {acceptSessionInvite, declineSessionInvite} from "../../Ducks/CurrentSessionReducer";
 import api from "../../Config/AxiosConfig";
+import { SESSION, DURATION } from "../../Util/Constants";
+import images from "../../Themes/Images";
 
 
 export class LinguistIncomingCallView extends Component {
@@ -15,19 +19,21 @@ export class LinguistIncomingCallView extends Component {
   constructor(props) {
     super(props);
     
-    const now = new Date();
-
     this.abortTimers = false;
     this.pollFailures = 0;
     this.pollIntervalID = null;
-    this.callTimeoutAt = moment(props.session.createdAt).add(65, "s"); // taking 5 seconds off to encourage pickup before call actually times out on customer side.
     this.countdownIntervalID = null;
+    // taking 5 seconds off to encourage pickup before call actually times out on customer side.    
+    this.callTimeoutAt = moment(props.session.createdAt).add((SESSION.TIME.MATCH/DURATION.SECONDS) - 5, "s");
     
     this.state = {
       linguists: null,
       seconds: this.getSecondsRemaining(),
       responding: false,
     };
+
+    // double tap prevention
+    this.resopnding = false;
   }
 
   componentDidMount () {
@@ -57,6 +63,8 @@ export class LinguistIncomingCallView extends Component {
     if (this.state.responding) {
       return;
     }
+
+    // TODO: permission checks
 
     this.setState({responding: true}, () => {
       this.cleanup();
@@ -155,24 +163,44 @@ export class LinguistIncomingCallView extends Component {
     const {seconds, linguists} = this.state;
     return (
       <View style = {styles.container}>
-        <Text style = {styles.text}>Incoming Call, from {remoteUser.firstName}</Text>
-        <Text style = {styles.text}>{session.primaryLangCode} - {session.secondaryLangCode}</Text>
-        <Text style = {styles.text}>Call available for: { seconds }</Text>
-        {!!linguists && linguists > 1 && (<Text style = {styles.text}>Other linguists notified: { linguists-1 }</Text>)}
-        <View style = {styles.buttonContainer}>
-          <TextButton
-            text = "Decline"
-            style = {styles.declineButton}
-            textStyle = {{color: "#ffffff"}}
-            onPress = {() => { this.handleDecline() }}
-          />
-          <TextButton
-            text = "Accept"
-            style = {styles.acceptButton}
-            textStyle = {{color: "#ffffff"}}
-            onPress = {() => { this.handleAccept() }}
-          />
+        <LinearGradient
+          style={styles.backgroundGradient}
+          colors={[
+            colors.gradientColor.top,
+            colors.gradientColor.bottom
+          ]}
+        />
+
+        <View style={styles.contentContainer}>
+
+          <View style={styles.userContainer}>
+            <Image style={styles.avatarImage} source={!!remoteUser.avatarURL ? remoteUser.avatarURL : images.avatar} />
+            <Text style={styles.text}>{remoteUser.firstName}</Text>
+            <Text style={styles.text}>Incoming Call...</Text>
+          </View>
+
+          <View style={styles.infoContainer}>
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <View style = {styles.buttonRow}>
+              <TextButton
+                text = "Decline"
+                style = {styles.declineButton}
+                textStyle = {{color: "#ffffff"}}
+                onPress = {() => { this.handleDecline() }}
+              />
+              <TextButton
+                text = "Accept"
+                style = {styles.acceptButton}
+                textStyle = {{color: "#ffffff"}}
+                onPress = {() => { this.handleAccept() }}
+              />
+            </View>
+          </View>
+
         </View>
+
       </View>
     )
   }
@@ -181,16 +209,42 @@ export class LinguistIncomingCallView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: "33%",
-    backgroundColor: "#518"
+    width: "100%"
+  },
+  backgroundGradient: {
+    ...StyleSheet.absoluteFill
+  },
+  contentContainer: {
+    ...StyleSheet.absoluteFill,
   },
   text: {
-    color: "#fff",
+    color: "#ffffff",
     fontSize: 20,
+    marginBottom: 10
+  },
+  userContainer: {
+    marginTop: "25%",
+    marginBottom: 50,
+    alignItems: "center"
+  },
+  infoContainer: {
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  avatarImage: {
+    height: 100,
+    width: 100,
+    borderRadius: 75,
+    borderWidth: 1,
+    borderColor: "gray",
+    marginBottom: 20
   },
   buttonContainer: {
     flex: 1,
-    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  buttonRow: {
+    flexDirection: 'row'
   },
   acceptButton: {
     flex: 1,
