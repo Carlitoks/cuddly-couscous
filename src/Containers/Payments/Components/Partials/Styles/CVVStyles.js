@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Metrics, Fonts } from "../../../../../Themes";
+import { moderateScale } from "../../../../../Util/Scaling";
 import metrics from "../../../../../Themes/Metrics";
 
 export default StyleSheet.create({
@@ -14,6 +15,17 @@ export default StyleSheet.create({
     padding: 1
   },
   CVVIconContainer: { position: "absolute", right: 0, top: 5 },
+  tooltipContainerStyle: {
+    position: "absolute",
+    right: 0,
+    top: 50,
+    elevation: 1,
+    borderRadius: 5,
+    width: moderateScale(278, 0),
+    height: moderateScale(70, 0)
+    //backgroundColor: "red"
+  },
+  tooltipText: { fontSize: moderateScale(10, 0) },
   CVVIcon: { width: 25, height: 25 },
   CVVInvalidText: {
     fontFamily: Fonts.BaseFont,

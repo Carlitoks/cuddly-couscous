@@ -21,13 +21,15 @@ class AddCard extends Component {
       currentTooltipIcon: Icons.info_cvv
     };
   }
-  onOpenTooltip = () => {
-    console.log("holaaaa");
-    this.setState({ currentTooltipIcon: Icons.info_cvv_pressed });
+  onTooltipPress = () => {
+    this.setState({
+      currentTooltipIcon:
+        this.state.currentTooltipIcon === Icons.info_cvv_pressed
+          ? Icons.info_cvv
+          : Icons.info_cvv_pressed
+    });
   };
-  onCloseTooltip = () => {
-    this.setState({ currentTooltipIcon: Icons.info_cvv });
-  };
+
   onDateChange = date => {
     this.setState({ date });
     if (date.length >= 5 && moment(date, "MM/YY").isValid()) {
@@ -52,7 +54,7 @@ class AddCard extends Component {
   onChange = card => {
     const updatedCard = { ...this.props.cardInfo, number: card };
     this.props.updatePayments({ cardInfo: updatedCard });
-    //console.log(validCC(card).card);
+
     let currentIcon = validCC(card).card ? Icons[validCC(card).card.type] : Icons.placeholder;
     if (validCC(card).isPotentiallyValid) {
       if (validCC(card).isValid) {
@@ -82,8 +84,7 @@ class AddCard extends Component {
           <CVV
             CVV={this.props.cardInfo.cvc}
             onChangeCVV={this.onChangeCVV}
-            onOpenTooltip={this.onOpenTooltip}
-            onCloseTooltip={this.onCloseTooltip}
+            onTooltipPress={this.onTooltipPress}
             currentTooltipIcon={this.state.currentTooltipIcon}
           />
         </View>

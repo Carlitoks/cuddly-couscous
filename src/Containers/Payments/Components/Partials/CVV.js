@@ -4,6 +4,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Tooltip } from "react-native-elements";
 //import { Checkmark, RoundCheckMark, ExclamationMark } from "../../../../Assets/SVG";
 import { moderateScale } from "../../../../Util/Scaling";
+import I18n from "../../../../I18n/I18n";
 import Icons from "../../Icons";
 //styles
 import styles from "./Styles/CVVStyles";
@@ -11,7 +12,8 @@ import styles from "./Styles/CVVStyles";
 const CvvInput = props => {
   return (
     <View style={styles.CVVContainer}>
-      <Text style={styles.CVVText}>CVV</Text>
+      <Text style={styles.CVVText}>{I18n.t("payments.cvv.title")}</Text>
+
       <TextInputMask
         type={"custom"}
         options={{
@@ -22,16 +24,14 @@ const CvvInput = props => {
         style={styles.CVVInput}
       />
 
-      <View style={styles.CVVIconContainer}>
-        <Tooltip
-          backgroundColor="white"
-          popover={<Text>Info here</Text>}
-          onClose={() => props.onOpenTooltip()}
-          onClose={() => props.onOpenTooltip()}
-        >
-          <Image resizeMode="contain" style={styles.CVVIcon} source={props.currentTooltipIcon} />
-        </Tooltip>
-      </View>
+      <TouchableOpacity style={styles.CVVIconContainer} onPress={props.onTooltipPress}>
+        <Image resizeMode="contain" style={styles.CVVIcon} source={props.currentTooltipIcon} />
+      </TouchableOpacity>
+      {props.currentTooltipIcon === Icons.info_cvv_pressed ? (
+        <View style={styles.tooltipContainerStyle}>
+          <Text>{I18n.t("payments.cvv.description")}</Text>
+        </View>
+      ) : null}
     </View>
   );
 };
