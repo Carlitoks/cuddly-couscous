@@ -47,12 +47,11 @@ class PaymentButtons extends Component {
     };
 
     updatePayments({ loading: true });
-    console.log("params", params);
+
     Reactotron.log(params);
     const stripeResponse = await stripe
       .createTokenWithCard(params)
       .then(({ tokenId }) => {
-        console.log("token", tokenId);
         Reactotron.log(tokenId);
         updateView({ stripePaymentToken: tokenId });
         return setPayment(tokenId);
@@ -63,7 +62,7 @@ class PaymentButtons extends Component {
         updatePayments({ loading: false });
       })
       .catch(err => Reactotron.log(err));
-    console.log("stripeResponse", stripeResponse);
+
     Reactotron.log(stripeResponse);
 
     /*.then(({ tokenId }) => {

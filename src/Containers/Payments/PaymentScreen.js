@@ -3,9 +3,9 @@ import { ScrollView, View, Alert, Image, Text } from "react-native";
 import { connect } from "react-redux";
 import Header from "../CustomerHome/Components/Header";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
-import PaymentButtons from './Components/PaymentButtons';
-import NoCardImage from './Components/NoCardImage';
-import AddCard from './Components/AddCard';
+import PaymentButtons from "./Components/PaymentButtons";
+import NoCardImage from "./Components/NoCardImage";
+import AddCard from "./Components/AddCard";
 
 // Styles
 import styles from "./Styles/PaymentScreenStyles";
@@ -24,19 +24,20 @@ class PaymentScreen extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, stripePaymentToken } = this.props;
+    console.log(stripePaymentToken);
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
-            <Header navigation={navigation} />
-            <ScrollView
-              automaticallyAdjustContentInsets
-              alwaysBounceVertical={false}
-              contentContainerStyle={styles.scrollViewFlex}
-            >
-              <AddCard />
-              <PaymentButtons navigation={navigation} />
-            </ScrollView>
+          <Header navigation={navigation} />
+          <ScrollView
+            automaticallyAdjustContentInsets
+            alwaysBounceVertical={false}
+            contentContainerStyle={styles.scrollViewFlex}
+          >
+            {stripePaymentToken ? <AddCard /> : <NoCardImage />}
+            <PaymentButtons navigation={navigation} />
+          </ScrollView>
         </View>
       </ViewWrapper>
     );
@@ -46,13 +47,12 @@ class PaymentScreen extends Component {
 const mS = state => ({
   token: state.auth.token,
   uuid: state.auth.uuid,
+  stripePaymentToken: state.userProfile.stripePaymentToken
 });
 
-const mD = {
-
-};
+const mD = {};
 
 export default connect(
   mS,
-  mD,
+  mD
 )(PaymentScreen);

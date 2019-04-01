@@ -33,21 +33,27 @@ export default StyleSheet.create({
     ...baseButton,
     borderColor: "#fff",
     backgroundColor: "#F39100",
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOpacity: 0.38,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 8
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3
   },
   removeCardButton: {
     ...baseButton,
     borderColor: "#fff",
     backgroundColor: "#FF3B30",
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOpacity: 0.38,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 8
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3
   },
   addCardButtonDisable: {
     ...baseButton,
