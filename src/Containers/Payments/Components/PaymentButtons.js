@@ -60,7 +60,7 @@ class PaymentButtons extends Component {
         clearPayments();
         updatePayments({ errors: [] });
         updatePayments({ loading: false });
-        navigation.dispatch({ type: "PaymentDetailScreen" });
+        navigation.dispatch({ type: "Home" });
       })
       .catch(err => Reactotron.log(err));
 

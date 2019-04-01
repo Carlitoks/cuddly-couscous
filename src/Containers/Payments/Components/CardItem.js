@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { number as validCC } from "card-validator";
 import Icons from "../Icons";
@@ -20,12 +20,27 @@ class CardItem extends Component {
   }
 
   render() {
+    const { StripePaymentSourceMeta } = this.props;
+    console.log(StripePaymentSourceMeta);
     return (
       <View style={styles.flexEndCenter}>
-        <View style={styles.itemContainer}>
-          <Text style={styles.itemText}>XXXX XXXX XXXX 1234</Text>
-          <Image resizeMode="contain" style={styles.cardIcon} source={Icons.visa} />
-        </View>
+        <TouchableOpacity style={styles.itemContainer}>
+          <Text style={styles.itemText}>
+            XXXX XXXX XXXX{" "}
+            {StripePaymentSourceMeta && StripePaymentSourceMeta.last4
+              ? StripePaymentSourceMeta.last4
+              : "XXXX"}
+          </Text>
+          <Image
+            resizeMode="contain"
+            style={styles.cardIcon}
+            source={
+              StripePaymentSourceMeta && StripePaymentSourceMeta.brand
+                ? Icons[StripePaymentSourceMeta.brand.toLowerCase()]
+                : Icons.cvc
+            }
+          />
+        </TouchableOpacity>
       </View>
     );
   }
@@ -33,7 +48,8 @@ class CardItem extends Component {
 
 const mS = state => ({
   token: state.auth.token,
-  cardInfo: state.payments.cardInfo
+  cardInfo: state.payments.cardInfo,
+  StripePaymentSourceMeta: state.userProfile.StripePaymentSourceMeta
 });
 
 const mD = {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import { Text, View, TouchableOpacity, Alert } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
 import Reactotron from "reactotron-react-native";
@@ -22,7 +22,26 @@ class PaymentButtons extends Component {
     return (isValidCC && isValidDate && isValidCVV) || loading;
   };
 
-  removePaymentCard = () => {};
+  removePaymentCard = () => {
+    const { removePayment } = this.props;
+    Alert.alert(
+      I18n.t("payments.removeCard"),
+      I18n.t("payments.removeCardAlert"),
+      [
+        {
+          text: I18n.t("actions.remove"),
+          onPress: () => {
+            removePayment();
+          }
+        },
+        {
+          text: I18n.t("actions.cancel"),
+          onPress: () => {}
+        }
+      ],
+      { cancelable: false }
+    );
+  };
 
   render() {
     return (
