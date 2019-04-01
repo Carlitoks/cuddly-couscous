@@ -77,6 +77,7 @@ import LocationPermissionView from "../Containers/Permissions/LocationPermission
 import NotificationPermissionView from "../Containers/Permissions/NotificationPermissionView";
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
 import PaymentScreen from "../Containers/Payments/PaymentScreen";
+import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 
 const Navigation = StackNavigator(
   {
@@ -89,6 +90,12 @@ const Navigation = StackNavigator(
     },
     PaymentsView: {
       screen: PaymentScreen,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    PaymentDetailScreen: {
+      screen: PaymentDetailScreen,
       navigationOptions: {
         gesturesEnabled: false
       }
@@ -486,12 +493,8 @@ const Navigation = StackNavigator(
         // )
         //   return null;
 
-        if (
-          sceneProps.scene.route.routeName === "RateView"
-        ) {
-          return CardStackStyleInterpolator.forFadeFromBottomAndroid(
-            sceneProps
-          );
+        if (sceneProps.scene.route.routeName === "RateView") {
+          return CardStackStyleInterpolator.forFadeFromBottomAndroid(sceneProps);
         } else {
           return CardStackStyleInterpolator.forHorizontal(sceneProps);
         }

@@ -89,15 +89,14 @@ class PaymentModal extends Component {
                 onPress={() => {
                   if (!this.props.stripePaymentToken) {
                     this.props.navigation.dispatch({
-                      type: "PaymentsView",
+                      type: "PaymentDetailScreen",
                       params: {
                         title: I18n.t("paymentDetails"),
                         messageText: I18n.t("enterPaymentDetails"),
                         buttonText: I18n.t("save"),
                         buttonTextIfEmpty: I18n.t("save"),
                         optional: true,
-                        onSubmit: () =>
-                          this.props.navigation.dispatch({ type: "Home" })
+                        onSubmit: () => this.props.navigation.dispatch({ type: "Home" })
                       }
                     });
                     this.props.updateHomeFlow({ displayPaymentModal: false });

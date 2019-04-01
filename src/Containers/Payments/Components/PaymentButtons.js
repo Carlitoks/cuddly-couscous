@@ -54,12 +54,13 @@ class PaymentButtons extends Component {
       .then(({ tokenId }) => {
         Reactotron.log(tokenId);
         updateView({ stripePaymentToken: tokenId });
-        return setPayment(tokenId);
+        setPayment(tokenId);
       })
       .then(() => {
         clearPayments();
         updatePayments({ errors: [] });
         updatePayments({ loading: false });
+        navigation.dispatch({ type: "PaymentDetailScreen" });
       })
       .catch(err => Reactotron.log(err));
 
@@ -88,7 +89,7 @@ class PaymentButtons extends Component {
           <Text
             style={!this.isDisabled() ? styles.addCardButtonDisabled : styles.addCardButtonText}
           >
-            {I18n.t("pricingScreen.paymentInfo.linkNoCard")}
+            {I18n.t("save")}
           </Text>
         </TouchableOpacity>
       </View>

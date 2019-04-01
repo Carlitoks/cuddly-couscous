@@ -24,8 +24,8 @@ class PaymentScreen extends Component {
   }
 
   render() {
-    const { navigation, stripePaymentToken } = this.props;
-    console.log(stripePaymentToken);
+    const { navigation } = this.props;
+
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -35,7 +35,7 @@ class PaymentScreen extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-            {stripePaymentToken ? <AddCard /> : <NoCardImage />}
+            <AddCard />
             <PaymentButtons navigation={navigation} />
           </ScrollView>
         </View>
