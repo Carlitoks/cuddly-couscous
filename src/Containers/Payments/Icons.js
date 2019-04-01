@@ -7,7 +7,7 @@ const Icons = {
   discover: require("./../../Assets/Images/ccIcons/stp_card_discover.png"),
   jcb: require("./../../Assets/Images/ccIcons/stp_card_jcb.png"),
   placeholder: require("./../../Assets/Images/ccIcons/stp_card_unknown.png"),
-  visa: require("./../../Assets/Images/ccIcons/stp_card_visa.png")
+  visa: require("./../../Assets/Images/ccIcons/stp_card_visa.png"),
   info_cvv: require("./../../Assets/Images/Info_outline.png")
 };
 
