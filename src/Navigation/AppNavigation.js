@@ -474,7 +474,7 @@ const Navigation = StackNavigator(
     }
   },
   {
-    initialRouteName: "PaymentsView",
+    initialRouteName: "PaymentDetailView",
     headerMode: "none",
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {

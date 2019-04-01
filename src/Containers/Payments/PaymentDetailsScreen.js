@@ -3,10 +3,8 @@ import { ScrollView, View, Alert, Image, Text } from "react-native";
 import { connect } from "react-redux";
 import Header from "../CustomerHome/Components/Header";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
-import PaymentButtons from "./Components/PaymentButtons";
-import NoCardImage from "./Components/NoCardImage";
-import AddCard from "./Components/AddCard";
-
+import RemoveCardButton from "./Components/RemoveCardButton";
+import CardItem from "./Components/CardItem";
 // Styles
 import styles from "./Styles/PaymentScreenStyles";
 import metrics from "../../Themes/Metrics";
@@ -34,7 +32,8 @@ class PaymentScreen extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-            <PaymentButtons navigation={navigation} />
+            <CardItem navigation={navigation} />
+            <RemoveCardButton />
           </ScrollView>
         </View>
       </ViewWrapper>

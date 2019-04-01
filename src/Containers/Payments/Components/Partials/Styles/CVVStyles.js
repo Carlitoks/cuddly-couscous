@@ -19,10 +19,16 @@ export default StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 50,
-    elevation: 1,
-    borderRadius: 5,
     width: moderateScale(278, 0),
-    height: moderateScale(70, 0)
+    height: moderateScale(70, 0),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3
     //backgroundColor: "red"
   },
   tooltipText: { fontSize: moderateScale(10, 0) },
