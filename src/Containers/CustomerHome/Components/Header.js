@@ -55,6 +55,10 @@ export default class LinguistHeader extends Component {
     }
     if (
       navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "PaymentDetailScreen" ||
+      navigation.state.routeName === "PaymentScreen" ||
+      navigation.state.routeName === "CardInfoScreen" ||
+      navigation.state.routeName === "EditCardScreen" ||
       navigation.state.routeName === "LoginView"
     ) {
       return (
