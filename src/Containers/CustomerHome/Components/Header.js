@@ -67,6 +67,26 @@ export default class LinguistHeader extends Component {
       );
     }
 
+    if (
+      navigation.state.routeName === "PaymentDetailScreen" 
+    ) {
+      return (
+        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
+      );    
+    }
+
+    if (
+      navigation.state.routeName === "PaymentScreen" 
+    ) {
+        return (
+          <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
+            <View style={styles.cancelButton}>
+              <Text style={styles.cancelStyle}>{I18n.t("cancel")}</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      }
+
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("ScanScreenView")}>
         <View style={styles.buttonQR}>

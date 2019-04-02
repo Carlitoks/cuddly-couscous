@@ -25,6 +25,11 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(18, 0),
   },
+  cancelStyle: {
+    color: "#fff",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScale(18, 0),
+  },
   createAccountTitleTextStyle: {
     color: "#fff",
     fontFamily: Fonts.BaseFont,
@@ -52,8 +57,8 @@ export default StyleSheet.create({
     height: 50,
     marginRight: 15,
   },
-  buttonGoBack: {
-    alignItems: "flex-start",
+  cancelButton: {
+    alignItems: "flex-end",
     justifyContent: "center",
   },
   headerInner: {
