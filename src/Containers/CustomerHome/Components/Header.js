@@ -17,6 +17,32 @@ export default class LinguistHeader extends Component {
     ) {
       return null;
     }
+
+
+    if (navigation.state.routeName === "PaymentDetailScreen") {
+    return { text: I18n.t("paymentDetails"), style: styles.titleTextStyle };      
+    }
+
+    if (
+      navigation.state.routeName === "PaymentScreen" 
+    ) {
+    return { text: I18n.t("payments.addCard"), style: styles.titleTextStyle };
+        
+      }
+
+    if (
+      navigation.state.routeName === "CardInfoScreen" 
+    ) {
+    return { text: "Card Info", style: styles.titleTextStyle };
+        
+      }
+
+    if (
+      navigation.state.routeName === "EditCardScreen" 
+    ) {
+    return { text: "Edit Card", style: styles.titleTextStyle };
+
+      }
     return { text: I18n.t("appName"), style: styles.titleTextStyle };
   };
 
