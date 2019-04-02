@@ -10,15 +10,19 @@ const CreditCardNumber = props => {
     <View style={styles.CCNContainer}>
       <Text style={styles.CCNText}>Card Number</Text>
       <View style={styles.CCNInputContainer}>
-        <TextInputMask
-          type={"credit-card"}
-          options={{
-            obfuscated: false
-          }}
-          value={props.creditCard}
-          onChangeText={props.onChange}
-          style={styles.CCNInput}
-        />
+        {props.type === "cardInfo" ? (
+          <Text style={styles.CCNInput}>{props.creditCard}</Text>
+        ) : (
+          <TextInputMask
+            type={"credit-card"}
+            options={{
+              obfuscated: false
+            }}
+            value={props.creditCard}
+            onChangeText={props.onChange}
+            style={styles.CCNInput}
+          />
+        )}
         <View style={styles.CCIconContainer}>
           <Image resizeMode="contain" style={styles.CCIcon} source={props.creditCardIcon} />
         </View>

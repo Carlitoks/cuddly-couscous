@@ -34,9 +34,6 @@ class PaymentButtons extends Component {
 }
 
 const mS = state => ({
-  isValidCC: state.payments.isValidCC,
-  isValidDate: state.payments.isValidDate,
-  isValidCVV: state.payments.isValidCVV,
   loading: state.payments.loading,
   cardInfo: state.payments.cardInfo
 });

@@ -71,19 +71,35 @@ class AddCard extends Component {
   };
 
   render() {
+    const { type, StripePaymentSourceMeta } = this.props;
+    let creditCardNumber;
+    let creditCardIcon;
+    if (type === "cardInfo" && StripePaymentSourceMeta) {
+      creditCardNumber = "XXXX-XXXX-XXXX-" + StripePaymentSourceMeta.last4.toString();
+      creditCardIcon = Icons[StripePaymentSourceMeta.brand.toLowerCase()];
+    }
     return (
       <View style={styles.flexEndCenter}>
         <CreditCardNumber
-          creditCard={this.props.cardInfo.number}
-          onChange={this.onChange}
-          creditCardIcon={this.state.creditCardIcon}
+          type={"cardInfo"}
+          creditCard={
+            type === "cardInfo" && StripePaymentSourceMeta
+              ? creditCardNumber
+              : this.props.cardInfo.number
+          }
+          onChange={type ? null : this.onChange}
+          creditCardIcon={
+            type === "cardInfo" && StripePaymentSourceMeta
+              ? creditCardIcon
+              : this.state.creditCardIcon
+          }
           isValidCC={this.state.isValidCC}
         />
         <View style={styles.addCardBottomInputs}>
-          <ExpirationDate date={this.state.date} onDateChange={this.onDateChange} />
+          <ExpirationDate date={this.state.date} onDateChange={type ? null : this.onDateChange} />
           <CVV
             CVV={this.props.cardInfo.cvc}
-            onChangeCVV={this.onChangeCVV}
+            onChangeCVV={type ? null : this.onChangeCVV}
             onTooltipPress={this.onTooltipPress}
             currentTooltipIcon={this.state.currentTooltipIcon}
           />
@@ -95,7 +111,8 @@ class AddCard extends Component {
 
 const mS = state => ({
   token: state.auth.token,
-  cardInfo: state.payments.cardInfo
+  cardInfo: state.payments.cardInfo,
+  StripePaymentSourceMeta: state.userProfile.StripePaymentSourceMeta
 });
 
 const mD = {

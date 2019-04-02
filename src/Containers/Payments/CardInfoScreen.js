@@ -32,7 +32,7 @@ class CardInfoScreen extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-            <AddCard />
+            <AddCard type={"cardInfo"} />
           </ScrollView>
         </View>
       </ViewWrapper>
