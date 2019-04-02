@@ -11,8 +11,8 @@ import {viewSessionInvite, acceptSessionInvite, declineSessionInvite} from "../.
 import api from "../../Config/AxiosConfig";
 import { SESSION, DURATION } from "../../Util/Constants";
 import images from "../../Themes/Images";
-import * as Ionicon from "react-native-vector-icons/Ionicons";
-import * as MDIcon from "react-native-vector-icons/MaterialIcons";
+import Ionicon from "react-native-vector-icons/Ionicons";
+import MDIcon from "react-native-vector-icons/MaterialIcons";
 
 import { moderateScale } from "../../Util/Scaling";
 
@@ -214,25 +214,24 @@ export class LinguistIncomingCallView extends Component {
 
           <View style={styles.userContainer}>
             <Image style={styles.avatarImage} source={!!remoteUser.avatarURL ? remoteUser.avatarURL : images.avatar} />
-            <Text style={styles.text}>{remoteUser.firstName}</Text>
-            <Text style={styles.text}>{I18n.t('incomingCall')}</Text>
+            <Text style={styles.userNameText}>{remoteUser.firstName}</Text>
+            <Text style={styles.incomingCallText}>{I18n.t('incomingCall')}</Text>
           </View>
 
           <View style={styles.infoContainer}>
             {/* languages row */}
             <View style={styles.infoRowContainer}>
-              {/* <MDIcon name="forum" style={styles.infoRowIcon} size={25} /> */}
-              <Text style={styles.infoRowText}>TEXT!!</Text>
-            </View>
-
-            {/* <View style={styles.infoRowContainer}>
-              <MDIcon name="help" style={styles.infoRowIcon} size={25} />
+              <MDIcon name={"forum"} size={25} style={styles.infoRowIcon} />
               <Text style={styles.infoRowText}>TEXT!!</Text>
             </View>
             <View style={styles.infoRowContainer}>
-              <MDIcon name="textsms" style={styles.infoRowIcon} size={25} />
+              <MDIcon name={"help"} size={25} style={styles.infoRowIcon} />
               <Text style={styles.infoRowText}>TEXT!!</Text>
-            </View> */}
+            </View>
+            <View style={styles.infoRowContainer}>
+              <MDIcon name={"textsms"} size={25} style={styles.infoRowIcon} />
+              <Text style={styles.infoRowText}>TEXT!! But, like this one might be really long because the user in theory could have entereed something with a lot of worods and blah blah}lah blbah and weeee anbecause that would be really neat hahahahaa/e  help plz kthx</Text>
+            </View>
           </View>
 
           <View style={styles.buttonContainer}>
@@ -268,26 +267,30 @@ const styles = StyleSheet.create({
   contentContainer: {
     ...StyleSheet.absoluteFill,
   },
-  text: {
+  userNameText: {
     color: "#ffffff",
-    fontSize: 20,
-    marginBottom: 10
+    fontSize: moderateScale(30, 0),
+    marginBottom: 5
+  },
+  incomingCallText: {
+    color: "#ffffff",
+    fontSize: moderateScale(20, 0),
   },
   userContainer: {
-    marginTop: "25%",
-    marginBottom: 50,
+    marginTop: "15%",
     alignItems: "center"
   },
   infoContainer: {
-    paddingLeft: 20,
-    paddingRight: 20,
+    marginTop: moderateScale(40, 0)
   },
   infoRowContainer: {
+    flexDirection: 'row',
     marginBottom: 10,
-    paddingLeft: moderateScale(30, 0),
+    paddingLeft: moderateScale(60, 0),
     paddingRight: moderateScale(30, 0)
   },
   infoRowIcon: {
+    color: "#fff",
     marginRight: moderateScale(15, 0)
   },
   infoRowText: {
@@ -311,16 +314,6 @@ const styles = StyleSheet.create({
     paddingRight: moderateScale(50, 0),
     flexDirection: 'row',
     justifyContent: "space-between"
-  },
-  acceptButton: {
-    flex: 1,
-    height: 50,
-    backgroundColor: "#44aa44"
-  },
-  declineButton: {
-    flex: 1,
-    height: 50,
-    backgroundColor: "#aa4444"
   }
 });
 
