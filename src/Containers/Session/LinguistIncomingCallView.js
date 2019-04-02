@@ -4,15 +4,45 @@ import { connect } from "react-redux";
 import I18n, { translateApiError } from "../../I18n/I18n";
 import moment from "moment";
 
-import TextButton from "../../Components/Widgets/TextButton";
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../Themes/Colors";
 
-import {acceptSessionInvite, declineSessionInvite} from "../../Ducks/CurrentSessionReducer";
+import {viewSessionInvite, acceptSessionInvite, declineSessionInvite} from "../../Ducks/CurrentSessionReducer";
 import api from "../../Config/AxiosConfig";
 import { SESSION, DURATION } from "../../Util/Constants";
 import images from "../../Themes/Images";
+import * as Ionicon from "react-native-vector-icons/Ionicons";
+import * as MDIcon from "react-native-vector-icons/MaterialIcons";
 
+import { moderateScale } from "../../Util/Scaling";
+
+const IconButton = ({backgroundColor, iconRotation, onPress, pressed}) => {
+  // TODO: styles while pressed
+  return (
+      <Ionicon.Button
+        name = {'md-call'}
+        borderRadius={100}
+        containerViewStyle={{
+          borderRadius: 100,
+          textAlign: "center",
+        }}
+        backgroundColor={ backgroundColor }
+        onPress ={() => { onPress() }}
+        style={{
+          height: 60,
+          width: 60,
+          justifyContent: "center",
+          borderRadius: 100
+        }}
+        iconStyle={{
+          marginRight: 0,
+          transform: [{rotate: iconRotation}]
+        }}
+        size={40}
+        color={'white'}
+      />
+  );
+}
 
 export class LinguistIncomingCallView extends Component {
 
@@ -40,6 +70,10 @@ export class LinguistIncomingCallView extends Component {
   componentDidMount () {
     this.pollIntervalID = setInterval(() => { this.handlePollInterval() }, 2000);
     this.countdownIntervalID = setInterval(() => { this.handleCountdownInterval() }, 250);
+    this.props.viewSessionInvite().catch((e) => {
+      console.log("failed to mark invite as viewed");
+      console.log(e);
+    });
   }
 
   componentWillUnmount () {
@@ -141,6 +175,7 @@ export class LinguistIncomingCallView extends Component {
         break;
       }
       case "cancelled": {
+        // TODO: set proper message
         body = I18n.t("api.errSessionUnavailable");
         break;
       }
@@ -175,41 +210,50 @@ export class LinguistIncomingCallView extends Component {
             colors.gradientColor.bottom
           ]}
         />
-
         <View style={styles.contentContainer}>
 
           <View style={styles.userContainer}>
             <Image style={styles.avatarImage} source={!!remoteUser.avatarURL ? remoteUser.avatarURL : images.avatar} />
             <Text style={styles.text}>{remoteUser.firstName}</Text>
-            <Text style={styles.text}>Incoming Call...</Text>
+            <Text style={styles.text}>{I18n.t('incomingCall')}</Text>
           </View>
 
           <View style={styles.infoContainer}>
+            {/* languages row */}
+            <View style={styles.infoRowContainer}>
+              {/* <MDIcon name="forum" style={styles.infoRowIcon} size={25} /> */}
+              <Text style={styles.infoRowText}>TEXT!!</Text>
+            </View>
+
+            {/* <View style={styles.infoRowContainer}>
+              <MDIcon name="help" style={styles.infoRowIcon} size={25} />
+              <Text style={styles.infoRowText}>TEXT!!</Text>
+            </View>
+            <View style={styles.infoRowContainer}>
+              <MDIcon name="textsms" style={styles.infoRowIcon} size={25} />
+              <Text style={styles.infoRowText}>TEXT!!</Text>
+            </View> */}
           </View>
 
           <View style={styles.buttonContainer}>
             <View style = {styles.buttonRow}>
-              <TextButton
-                text = "Decline"
-                style = {styles.declineButton}
-                textStyle = {{color: "#ffffff"}}
-                disabled={this.state.responding}
-                onPress = {() => { this.handleDecline() }}
+              <IconButton
+                backgroundColor={'red'}
+                iconRotation={'135deg'}
+                onPress={() => { this.handleDecline() }}
+                pressed={this.state.responding}
               />
-              <TextButton
-                text = "Accept"
-                style = {styles.acceptButton}
-                textStyle = {{color: "#ffffff"}}
-                disabled={this.state.responding}
-                onPress = {() => { this.handleAccept() }}
+              <IconButton
+                backgroundColor={'green'}
+                iconRotation={'0deg'}
+                onPress={() => { this.handleAccept() }}
+                pressed={this.state.responding}
               />
             </View>
           </View>
-
         </View>
-
       </View>
-    )
+    );
   }
 }
 
@@ -238,6 +282,17 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
+  infoRowContainer: {
+    marginBottom: 10,
+    paddingLeft: moderateScale(30, 0),
+    paddingRight: moderateScale(30, 0)
+  },
+  infoRowIcon: {
+    marginRight: moderateScale(15, 0)
+  },
+  infoRowText: {
+    color: "#fff"
+  },
   avatarImage: {
     height: 100,
     width: 100,
@@ -249,9 +304,13 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end",
+    paddingBottom: moderateScale(50, 0)
   },
   buttonRow: {
-    flexDirection: 'row'
+    paddingLeft: moderateScale(50, 0),
+    paddingRight: moderateScale(50, 0),
+    flexDirection: 'row',
+    justifyContent: "space-between"
   },
   acceptButton: {
     flex: 1,
@@ -272,6 +331,7 @@ const mS = (state) => {
 };
 
 const mD = {
+  viewSessionInvite,
   acceptSessionInvite,
   declineSessionInvite
 };

@@ -1,6 +1,7 @@
 import api from '../Config/AxiosConfig';
 import { updateOptions as updateRatingsView } from './RateCallReducer';
 import {merge as lodashMerge} from 'lodash/merge';
+import { getGeolocationCoords } from '../Util/Helpers';
 
 // The purpose of this reducer is to manage the status of an active Jeenie session.
 // Note that this does NOT include anything related to connection handling with
@@ -142,6 +143,25 @@ export const receiveSessionInvite = (invite) => (dispatch, getState) => {
     }));
 
     resolve();
+  });
+};
+
+export const viewSessionInvite = () => (dispatch, getState) => {
+  const {inviteID} = getState().currentSessionReducer;
+  return new Promise((resolve, reject) => {
+    let payload = {
+      viewed: true
+    };
+
+    getGeolocationCoords()
+    .then((res) => {
+      payload.location = [res.coords.longitude, res.coords.latitude];
+    })
+    .finally(() => {
+      return api.put(`/session-invitations/${inviteID}`, payload);
+    })
+    .then(resolve)
+    .catch(reject);
   });
 };
 
