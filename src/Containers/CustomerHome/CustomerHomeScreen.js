@@ -1,32 +1,23 @@
 import React, { Component } from "react";
-import { ScrollView, View, Alert } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import timer from "react-native-timer";
 import InCallManager from "react-native-incall-manager";
-import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
 import analytics from "@segment/analytics-react-native";
-import LinguistHeader from "./Components/Header";
+import Header from "./Components/Header";
 import AvatarSection from "./Components/AvatarSection";
-import CallSection from "./Components/CallSection";
-import { Colors } from "../../Themes";
-import SlideUpPanel from "./Components/Partials/SlideUpPanel";
-import {
-  openSlideMenu,
-  updateLocation,
-  ensureSessionDefaults,
-  swapCurrentSessionLanguages
-} from "../../Ducks/NewSessionReducer";
+import CallInputs from "./Components/CallInputs";
+import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
+import { ensureSessionDefaults, updateLocation } from "../../Ducks/NewSessionReducer";
 
-import { getProfileAsync, updateView as updateUserProfile } from "../../Ducks/UserProfileReducer";
-
-import { getGeolocationCoords } from "../../Util/Helpers";
+import { openSlideMenu } from "../../Ducks/LogicReducer";
+import { getProfileAsync } from "../../Ducks/UserProfileReducer";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import I18n from "../../I18n/I18n";
 import { supportedLangCodes } from "../../Config/Languages";
-
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
@@ -42,16 +33,16 @@ class CustomerHomeScreen extends Component {
       clearActiveSession,
       navigation,
       firstName,
-      completedLocation
+      completedLocation,
     } = this.props;
 
     analytics.identify(uuid, {
-      name: firstName
+      name: firstName,
     });
 
     ensureSessionDefaults({
       primaryLangCode: this.setPrimaryLangCode(),
-      secondaryLangCode: secondaryLangCode || ""
+      secondaryLangCode: secondaryLangCode || "",
     });
 
     // Clean call
@@ -72,8 +63,7 @@ class CustomerHomeScreen extends Component {
       uuid,
       token,
       getProfileAsync,
-      scenariosList,
-      loadSessionScenarios
+      loadSessionScenarios,
     } = this.props;
 
     if (uuid !== "" && token !== "") {
@@ -91,8 +81,8 @@ class CustomerHomeScreen extends Component {
         I18n.t("minutesAdded"),
         I18n.t("complimentMinutes", {
           maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
-          organizer: this.props.navigation.state.params.organization
-        })
+          organizer: this.props.navigation.state.params.organization,
+        }),
       );
     }
     loadSessionScenarios(true);
@@ -112,41 +102,29 @@ class CustomerHomeScreen extends Component {
     return "eng";
   };
 
-  openSlideMenu = type => {
+  openSlideMenu = (type) => {
     const { openSlideMenu } = this.props;
-    openSlideMenu({ type });
+    return openSlideMenu({ type });
   };
 
   render() {
-    const { firstName, navigation } = this.props;
+    const { navigation } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
-        <View style={[styles.mainContainer]}>
-          <LinearGradient
-            colors={[Colors.gradientColor.top, Colors.gradientColor.bottom]}
-            locations={[0, 1]}
-            style={styles.height}
+        <View style={styles.mainContainerHome}>
+          <Header navigation={navigation}/>
+          <ScrollView
+            automaticallyAdjustContentInsets
+            alwaysBounceVertical={false}
+            contentContainerStyle={styles.scrollViewFlex}
           >
-            <LinguistHeader navigation={navigation} />
-            <ScrollView
-              automaticallyAdjustContentInsets
-              alwaysBounceVertical={false}
-              contentContainerStyle={styles.scrollViewFlex}
-            >
-              <View style={styles.flexEndCenter}>
-                <AvatarSection
-                  home
-                  firstName={firstName}
-                  pointerEvents="none"
-                  navigation={navigation}
-                />
-                <CallSection navigation={navigation} openSlideMenu={this.openSlideMenu} />
-              </View>
-
-              <CallButtons navigation={navigation} />
-            </ScrollView>
-            <SlideUpPanel />
-          </LinearGradient>
+            <View style={styles.flexEndCenter}>
+              <AvatarSection/>
+              <CallInputs navigation={navigation} openSlideMenu={this.openSlideMenu}/>
+            </View>
+            <CallButtons navigation={navigation}/>
+          </ScrollView>
+          <SlideUpPanel/>
         </View>
       </ViewWrapper>
     );
@@ -154,8 +132,6 @@ class CustomerHomeScreen extends Component {
 }
 
 const mS = state => ({
-  isSlideUpMenuVisible: state.newSessionReducer.isSlideUpMenuVisible,
-  session: state.newSessionReducer.session,
   nativeLangCode: state.userProfile.nativeLangCode,
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
@@ -163,7 +139,6 @@ const mS = state => ({
   uuid: state.auth.uuid,
   firstName: state.userProfile.firstName,
   completedLocation: state.onboardingReducer.completedLocation,
-  scenariosList: state.appConfigReducer.scenarios
 });
 
 const mD = {
@@ -173,12 +148,10 @@ const mD = {
   clearEvents,
   clearActiveSession,
   getProfileAsync,
-  updateUserProfile,
-  swapCurrentSessionLanguages,
-  loadSessionScenarios
+  loadSessionScenarios,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(CustomerHomeScreen);

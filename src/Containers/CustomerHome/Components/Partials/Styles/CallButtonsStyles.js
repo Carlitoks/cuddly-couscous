@@ -1,87 +1,57 @@
 import { StyleSheet } from "react-native";
-import { moderateScale } from "../../../../../Util/Scaling";
-import { Metrics, Colors, Fonts } from "../../../../../Themes";
-import { iPhoneXModels, Iphone5, isIphoneXorAbove } from "../../../../../Util/Devices";
+import { moderateScaleViewports } from "../../../../../Util/Scaling";
+import { Fonts } from "../../../../../Themes";
+import { isIphoneXorAbove } from "../../../../../Util/Devices";
+import metrics from "../../../../../Themes/Metrics";
 
 export default StyleSheet.create({
+  iconPadding: { paddingLeft: moderateScaleViewports(24) },
   callButtonContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    flexWrap: "wrap",
-    paddingBottom: isIphoneXorAbove() ? 50 : 0
-  },
-  callNowButtonContainer: {
-    flexWrap: "wrap",
-    flexDirection: "column",
-    alignSelf: "center"
-  },
-  callNowButton: {
-    minWidth: Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "flex-end",
+    borderRadius: moderateScaleViewports(10),
+    minWidth: metrics.width * 0.80,
+    bottom: moderateScaleViewports(-5),
+    paddingBottom: isIphoneXorAbove() ? 50 : 0,
+    position: "absolute",
+  },
+  audioCallButton: {
+    backgroundColor: "#3F1674",
+    flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#fff",
-    borderRadius: 27,
+    borderRadius: moderateScaleViewports(10),
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  videoCallButton: {
     backgroundColor: "#F39100",
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOpacity: 0.38,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 8
-  },
-  callNowButtonDisable: {
-    minWidth: Metrics.width * 0.78,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-around",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    borderRadius: 27,
-    backgroundColor: Colors.gradientColor.bottom
-  },
-  callNowButtonText: {
-    color: "white",
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "600",
-    fontFamily: Fonts.BaseFont,
-    paddingTop: Metrics.width * 0.05,
-    paddingBottom: Metrics.width * 0.05,
-    paddingLeft: Metrics.width * 0.05,
-    paddingRight: Metrics.width * 0.05
-  },
-  callNowButtonTextDisabled: {
-    color: "#ccc",
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "600",
-    fontFamily: Fonts.BaseFont,
-    paddingTop: Metrics.width * 0.045,
-    paddingBottom: Metrics.width * 0.045,
-    paddingLeft: Metrics.width * 0.05,
-    paddingRight: Metrics.width * 0.05
-  },
-  audioOnlyButtonContainer: { flexDirection: "column" },
-  audioOnlyButton: {
-    minWidth: Metrics.width * 0.78,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: moderateScale(30, 0)
+    borderRadius: moderateScaleViewports(10),
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
   },
   audioOnlyButtonText: {
     color: "white",
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
+    fontSize: moderateScaleViewports(16),
     fontWeight: "500",
     fontFamily: Fonts.BaseFont,
-    paddingBottom: Metrics.width * 0.02
+    paddingTop: moderateScaleViewports(18),
+    paddingBottom: moderateScaleViewports(18),
+    paddingLeft: moderateScaleViewports(10),
+    paddingRight: moderateScaleViewports(30),
   },
-  audioOnlyButtonTextDisabled: {
-    color: "#ccc",
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "500",
+  callNowButtonText: {
+    color: "white",
+    fontSize: moderateScaleViewports(16),
+    fontWeight: "600",
     fontFamily: Fonts.BaseFont,
-    paddingBottom: Metrics.width * 0.02
+    paddingTop: moderateScaleViewports(18),
+    paddingBottom: moderateScaleViewports(18),
+    paddingLeft: moderateScaleViewports(10),
+    paddingRight: moderateScaleViewports(30),
   },
-  iconPadding: { paddingLeft: Metrics.width * 0.05 }
 });

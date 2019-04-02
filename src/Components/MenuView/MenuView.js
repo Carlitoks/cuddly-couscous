@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { AppState, Linking } from "react-native";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import MaterialCIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Instabug from "instabug-reactnative";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import {
@@ -156,6 +157,46 @@ class MenuView extends Component {
             >
               <Text style={styles.colorText}>{I18n.t("promoCodeTitle")}</Text>
             </Icon.Button>
+          )}
+
+          {this.isACustomer() && (
+            <MaterialCIcons.Button
+              name="qrcode"
+              size={25}
+              backgroundColor={
+                isCurrentView(navigation, "ScanScreenView")
+                  ? Colors.selectedBackground
+                  : Colors.background
+              }
+              iconStyle={
+                isCurrentView(navigation, "ScanScreenView")
+                  ? styles.selectedOptionMenu
+                  : styles.optionMenu
+              }
+              onPress={() => this.checkCurrentPage(navigation, "ScanScreenView")}
+            >
+              <Text style={styles.colorText}>{I18n.t("scanQRCode")}</Text>
+            </MaterialCIcons.Button>
+          )}
+
+          {this.isACustomer() && (
+            <MaterialCIcons.Button
+              name="credit-card"
+              size={25}
+              backgroundColor={
+                isCurrentView(navigation, "PaymentsView")
+                  ? Colors.selectedBackground
+                  : Colors.background
+              }
+              iconStyle={
+                isCurrentView(navigation, "PaymentsView")
+                  ? styles.selectedOptionMenu
+                  : styles.optionMenu
+              }
+              onPress={() => this.checkCurrentPage(navigation, "PaymentsView")}
+            >
+              <Text style={styles.colorText}>{I18n.t("modifyPayment")}</Text>
+            </MaterialCIcons.Button>
           )}
 
           {/* Report a problem  */}

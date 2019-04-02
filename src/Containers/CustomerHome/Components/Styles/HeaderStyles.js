@@ -1,5 +1,10 @@
-import { StyleSheet, Platform } from "react-native";
-import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../../Themes";
+import { Platform, StyleSheet } from "react-native";
+import {
+  ApplicationStyles,
+  Colors,
+  Fonts,
+  Metrics,
+} from "../../../../Themes";
 import { moderateScale } from "../../../../Util/Scaling";
 
 const iOS = Platform.OS === "ios";

@@ -17,12 +17,11 @@ import {
   resetTimerAsync,
   update as updateActieSessionReducer
 } from "./ActiveSessionReducer";
+import { closeSlideMenu } from './LogicReducer'
 
 const ACTIONS = {
   CLEAR: "newSession/clear",
   UPDATE: "newSession/update",
-  OPEN_SLIDE_MENU: "newSession/openSlideMenu",
-  CLOSE_SLIDE_MENU: "newSession/closeSlideMenu",
   CHANGE_SESSION_LANG_CODE: "newSession/changeSessionLangCode",
   MODIFY_ADDITIONAL_INFO: "newSession/modifyAdditionalInfo",
   MODIFY_LOCATION: "newSession/modifyLocation",
@@ -44,18 +43,6 @@ export const update = payload => {
     payload
   };
 };
-
-export const openSlideMenu = payload => {
-  return {
-    type: ACTIONS.OPEN_SLIDE_MENU,
-    payload
-  };
-};
-
-export const closeSlideMenu = payload => ({
-  type: ACTIONS.CLOSE_SLIDE_MENU,
-  payload
-});
 
 export const changeSessionLangCode = payload => ({
   type: ACTIONS.CHANGE_SESSION_LANG_CODE,
@@ -134,19 +121,18 @@ export const ensureSessionDefaults = payload => (dispatch, getState) => {
 };
 
 export const changeLangCode = payload => (dispatch, getState) => {
-  if (getState().newSessionReducer.langCodeSelection === "secondaryLang") {
+  if (getState().LogicReducer.selection === "secondaryLang") {
     currentSessionState = {
       ...getState().newSessionReducer.session,
       secondaryLangCode: payload.langCode
     };
-  } else if (getState().newSessionReducer.langCodeSelection === "primaryLang") {
+  } else if (getState().LogicReducer.selection === "primaryLang") {
     currentSessionState = {
       ...getState().newSessionReducer.session,
       primaryLangCode: payload.langCode,
       secondaryLangCode: ""
     };
   }
-
   dispatch(changeSessionLangCode(currentSessionState));
 };
 
@@ -265,24 +251,10 @@ const newSessionReducer = (state = initialState, action = {}) => {
     case ACTIONS.UPDATE: {
       return { ...state, ...payload };
     }
-    case ACTIONS.OPEN_SLIDE_MENU: {
-      return {
-        ...state,
-        isSlideUpMenuVisible: true,
-        langCodeSelection: payload.type
-      };
-    }
-    case ACTIONS.CLOSE_SLIDE_MENU: {
-      return {
-        ...state,
-        isSlideUpMenuVisible: false
-      };
-    }
     case ACTIONS.CHANGE_SESSION_LANG_CODE: {
       return {
         ...state,
-        session: payload,
-        isSlideUpMenuVisible: false
+        session: payload
       };
     }
     case ACTIONS.MODIFY_ADDITIONAL_INFO: {

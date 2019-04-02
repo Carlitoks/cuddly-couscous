@@ -1,29 +1,31 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import {
+  Alert,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import Permissions from "react-native-permissions";
 import I18n from "../../../../I18n/I18n";
 import { GetInfo } from "../../../../Ducks/SessionInfoReducer";
 import { modifyAVModePreference } from "../../../../Ducks/NewSessionReducer";
-import {
-  clear as clearSettings,
-  update as customerUpdateSettings
-} from "../../../../Ducks/ActiveSessionReducer";
+import { clear as clearSettings, update as customerUpdateSettings } from "../../../../Ducks/ActiveSessionReducer";
 import { cleanSelected } from "../../../../Ducks/HomeFlowReducer";
 import { clearPromoCode } from "../../../../Ducks/PromoCodeReducer";
 import { updateSettings } from "../../../../Ducks/ContactLinguistReducer";
 import { checkCallPermissions } from "../../../../Util/Permission";
-
 // Styles
 import styles from "./Styles/CallButtonsStyles";
+import { moderateScaleViewports } from "../../../../Util/Scaling";
 
 class CallButtons extends Component {
   componentWillMount() {
     this.setLanguages();
   }
 
-  checkAvailableMinutes = async type => {
+  checkAvailableMinutes = async (type) => {
     const {
       session,
       navigation,
@@ -37,7 +39,7 @@ class CallButtons extends Component {
       customerUpdateSettings,
       video,
       mic,
-      completedMicAndCamera
+      completedMicAndCamera,
     } = this.props;
     cleanSelected();
     clearPromoCode();
@@ -59,26 +61,26 @@ class CallButtons extends Component {
       ]);
     } else {
       updateSettings({
-        selectedScenarioId: selectedScenario && selectedScenario[0] ? selectedScenario[0].id : null
+        selectedScenarioId: selectedScenario && selectedScenario[0] ? selectedScenario[0].id : null,
       });
 
       customerUpdateSettings({ video: type === "video" });
-      Permissions.checkMultiple(["camera", "microphone"]).then(async response => {
+      Permissions.checkMultiple(["camera", "microphone"]).then(async (response) => {
         if (response.camera !== "authorized" || response.microphone !== "authorized") {
           if (
-            response.camera === "restricted" ||
-            response.microphone === "restricted" ||
-            response.camera === "denied" ||
-            response.microphone === "denied"
+            response.camera === "restricted"
+            || response.microphone === "restricted"
+            || response.camera === "denied"
+            || response.microphone === "denied"
           ) {
             return Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
-              { text: I18n.t("ok") }
+              { text: I18n.t("ok") },
             ]);
           }
           if (completedMicAndCamera) {
-            await checkCallPermissions(valueToUpdate => {
-              this.props.customerUpdateSettings(valueToUpdate);
-              Permissions.checkMultiple(["camera", "microphone"]).then(response => {
+            await checkCallPermissions((valueToUpdate) => {
+              customerUpdateSettings(valueToUpdate);
+              Permissions.checkMultiple(["camera", "microphone"]).then((response) => {
                 if (response.camera == "authorized" && response.microphone == "authorized") {
                   navigation.dispatch({ type: "CustomerView" });
                 }
@@ -91,6 +93,7 @@ class CallButtons extends Component {
         if (response.camera == "authorized" && response.microphone == "authorized") {
           navigation.dispatch({ type: "CustomerView" });
         }
+        return null;
       });
     }
   };
@@ -101,21 +104,8 @@ class CallButtons extends Component {
       primaryLangCode: session.primaryLangCode,
       secundaryLangCode: session.secondaryLangCode,
       selectedScenarioId: session.scenarioID === "custom" ? null : session.scenarioID,
-      customScenarioNote: session.customScenarioNote
+      customScenarioNote: session.customScenarioNote,
     });
-  };
-
-  renderButtonStyles = type => {
-    if (type === "video") {
-      if (this.isDisabled()) {
-        return { ...styles.callNowButtonDisable };
-      }
-      return styles.callNowButton;
-    }
-    if (this.isDisabled()) {
-      return { ...styles.audioOnlyButton, color: "#cccccc" };
-    }
-    return styles.audioOnlyButton;
   };
 
   isDisabled = () => {
@@ -126,43 +116,45 @@ class CallButtons extends Component {
   render() {
     return (
       <View style={styles.callButtonContainer}>
-        <View style={styles.callNowButtonContainer}>
-          <TouchableOpacity
-            disabled={this.isDisabled()}
-            onPress={() => this.checkAvailableMinutes("video")}
-            style={this.renderButtonStyles("video")}
+        <TouchableOpacity
+          disabled={this.isDisabled()}
+          onPress={() => this.checkAvailableMinutes("audio")}
+          style={styles.audioCallButton}
+        >
+          <Icon
+            name="phone"
+            type="material-community"
+            color="#fff"
+            size={moderateScaleViewports(17)}
+            containerStyle={styles.iconPadding}
+          />
+
+
+          <Text
+            style={styles.audioOnlyButtonText}
           >
-            <Icon
-              name="ios-videocam"
-              type="ionicon"
-              color={this.isDisabled() ? "#ccc" : "#fff"}
-              size={23}
-              style={styles.iconPadding}
-            />
-            <Text
-              style={
-                this.isDisabled() ? styles.callNowButtonTextDisabled : styles.callNowButtonText
-              }
-            >
-              {I18n.t("customerHome.buttons.video")}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.audioOnlyButtonContainer}>
-          <TouchableOpacity
-            disabled={this.isDisabled()}
-            onPress={() => this.checkAvailableMinutes("audio")}
-            style={this.renderButtonStyles("audio")}
+            {I18n.t("newCustomerHome.buttons.audio")}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          disabled={this.isDisabled()}
+          onPress={() => this.checkAvailableMinutes("video")}
+          style={styles.videoCallButton}
+        >
+          <Icon
+            name="ios-videocam"
+            type="ionicon"
+            color="#fff"
+            size={moderateScaleViewports(17)}
+            containerStyle={styles.iconPadding}
+          />
+          <Text
+            style={styles.callNowButtonText}
           >
-            <Text
-              style={
-                this.isDisabled() ? styles.audioOnlyButtonTextDisabled : styles.audioOnlyButtonText
-              }
-            >
-              {I18n.t("customerHome.buttons.audio")}
-            </Text>
-          </TouchableOpacity>
-        </View>
+            {I18n.t("newCustomerHome.buttons.video")}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -197,7 +189,7 @@ const mS = state => ({
   stripeCustomerID: state.userProfile.stripeCustomerID,
   stripePaymentToken: state.userProfile.stripePaymentToken,
   session: state.newSessionReducer.session,
-  completedMicAndCamera: state.onboardingReducer.completedMicAndCamera
+  completedMicAndCamera: state.onboardingReducer.completedMicAndCamera,
 });
 
 const mD = {
@@ -207,10 +199,10 @@ const mD = {
   clearSettings,
   cleanSelected,
   clearPromoCode,
-  modifyAVModePreference
+  modifyAVModePreference,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(CallButtons);

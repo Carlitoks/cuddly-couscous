@@ -1,33 +1,23 @@
-import { StyleSheet } from 'react-native';
-import { Metrics, ApplicationStyles } from '../../../../Themes';
+import { StyleSheet } from "react-native";
+import {
+  ApplicationStyles,
+  Colors,
+  Fonts,
+  Metrics
+} from "../../../../Themes";
+import { moderateScaleViewports } from "../../../../Util/Scaling";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  container: {
-    paddingBottom: Metrics.baseMargin
+  avatarContainer: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: Colors.gradientColor.top,
+    height: Metrics.width <= 320 ? Metrics.height * 0.60 : Metrics.height * 0.70,
+    width: Metrics.width,
+    paddingTop: moderateScaleViewports(21),
   },
-  logo: {
-    marginTop: Metrics.doubleSection,
-    height: Metrics.images.logo,
-    width: Metrics.images.logo,
-    resizeMode: 'contain'
-  },
-  centered: {
-    alignItems: 'center'
-  },
-  linearGradient: {
-    flex: 1
-  },
-  wavesSection: {
-    position: 'absolute',
-    bottom: 0
-  },
-  absolutePosition: {
-    position: 'absolute',
-  },
-  questionsContainer: {
-    zIndex: 100,
-    paddingLeft: 20,
-    marginTop: 40
-  }
+  jeeniesStandingBy: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(17), color: "#fff" },
+  jeeniesImg: { marginTop: moderateScaleViewports(27) },
 });
