@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet, Alert} from "react-native";
 import { connect } from "react-redux";
 import I18n, { translateApiError } from "../../I18n/I18n";
 import moment from "moment";
+import Permissions from "react-native-permissions";
 
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../Themes/Colors";
@@ -100,22 +101,42 @@ export class LinguistIncomingCallView extends Component {
       return;
     }
 
-    // TODO: permission checks
-    this.responding = true;
+    // FIRST, ensure proper permissions, otherwise app will probably crash
+    this.responding = true;    
     this.setState({responding: true}, () => {
-      this.cleanup();
-  
-      this.props.acceptSessionInvite()
-      .then(() => {
-        this.props.navigation.dispatch({type: "SessionView"});
-      })
-      .catch((e) => {
-        Alert.alert(I18n.t("notification"), translateApiError(e, "api.errUnexpected"));
-        this.props.navigation.dispatch({type: "Home"});
+      let allowed = false
+      Permissions.checkMultiple(["camera", "microphone"]).then((response) => {
+        if (
+          response.camera == 'authorized'
+          && response.microphone == 'authorized'
+        ) {
+          allowed = true;
+        }
       })
       .finally(() => {
-        this.responding = false;
-        this.setState({responding: false});
+
+        // alert and return early if both camera and mic permissions are not set
+        if (!allowed) {
+          this.cleanup();
+          Alert.alert(I18n.t("error"), I18n.t('permissions'), [
+            {text: I18n.t('ok'), onPress: () => { this.props.navigation.dispatch({type: "Home"}) }}
+          ]);
+          return;
+        }
+
+        this.cleanup();  
+        this.props.acceptSessionInvite()
+        .then(() => {
+          this.props.navigation.dispatch({type: "SessionView"});
+        })
+        .catch((e) => {
+          Alert.alert(I18n.t("notification"), translateApiError(e, "api.errUnexpected"));
+          this.props.navigation.dispatch({type: "Home"});
+        })
+        .finally(() => {
+          this.responding = false;
+          this.setState({responding: false});
+        });  
       });
     });
   }
