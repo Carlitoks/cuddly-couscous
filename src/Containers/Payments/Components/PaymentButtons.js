@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import { Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
 import Reactotron from "reactotron-react-native";
@@ -47,26 +47,21 @@ class PaymentButtons extends Component {
     };
 
     updatePayments({ loading: true });
-    console.log("hola");
     Reactotron.log(params);
     const stripeResponse = await stripe
       .createTokenWithCard(params)
       .then(({ tokenId }) => {
-        console.log("hola 2");
         Reactotron.log(tokenId);
         updateView({ stripePaymentToken: tokenId });
         setPayment(tokenId);
       })
       .then(() => {
-        console.log("hola 3");
         clearPayments();
         updatePayments({ errors: [] });
         updatePayments({ loading: false });
         navigation.dispatch({ type: "Home" });
       })
       .catch(err => Reactotron.log(err));
-
-    Reactotron.log(stripeResponse);
 
     /*.then(({ tokenId }) => {
           Reactotron.log(tokenId);

@@ -13,13 +13,11 @@ import metrics from "../../Themes/Metrics";
 import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
 
-const addCard = require("../../Assets/Images/addcard.png");
-
 class PaymentDetailScreen extends Component {
   componentWillMount() {
     stripe.setOptions({
-      publishableKey: stripePublishableKey,
-      androidPayMode: "test" // Android only
+      publishableKey: stripePublishableKey
+      //androidPayMode: "test" // Android only
     });
   }
 

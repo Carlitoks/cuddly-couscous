@@ -18,31 +18,21 @@ export default class LinguistHeader extends Component {
       return null;
     }
 
-
     if (navigation.state.routeName === "PaymentDetailScreen") {
-    return { text: I18n.t("paymentDetails"), style: styles.titleTextStyle };      
+      return { text: I18n.t("paymentDetails"), style: styles.titleTextStyle };
     }
 
-    if (
-      navigation.state.routeName === "PaymentScreen" 
-    ) {
-    return { text: I18n.t("payments.addCard"), style: styles.titleTextStyle };
-        
-      }
+    if (navigation.state.routeName === "PaymentsView") {
+      return { text: I18n.t("payments.addCard"), style: styles.titleTextStyle };
+    }
 
-    if (
-      navigation.state.routeName === "CardInfoScreen" 
-    ) {
-    return { text: "Card Info", style: styles.titleTextStyle };
-        
-      }
+    if (navigation.state.routeName === "CardInfoScreen") {
+      return { text: "Card Info", style: styles.titleTextStyle };
+    }
 
-    if (
-      navigation.state.routeName === "EditCardScreen" 
-    ) {
-    return { text: "Edit Card", style: styles.titleTextStyle };
-
-      }
+    if (navigation.state.routeName === "EditCardScreen") {
+      return { text: "Edit Card", style: styles.titleTextStyle };
+    }
     return { text: I18n.t("appName"), style: styles.titleTextStyle };
   };
 
@@ -53,18 +43,26 @@ export default class LinguistHeader extends Component {
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
       );
     }
-    if (
-      navigation.state.routeName === "RegisterView" ||
-      navigation.state.routeName === "PaymentDetailScreen" ||
-      navigation.state.routeName === "PaymentScreen" ||
-      navigation.state.routeName === "CardInfoScreen" ||
-      navigation.state.routeName === "EditCardScreen" ||
-      navigation.state.routeName === "LoginView"
-    ) {
+    if (navigation.state.routeName === "LoginView") {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
             <Icon name="chevron-left" type="evilicon" color="#401674" size={50} />
+          </View>
+        </TouchableOpacity>
+      );
+    }
+    if (
+      navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "PaymentDetailScreen" ||
+      navigation.state.routeName === "PaymentsView" ||
+      navigation.state.routeName === "CardInfoScreen" ||
+      navigation.state.routeName === "EditCardScreen"
+    ) {
+      return (
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
+          <View style={styles.buttonGoBack}>
+            <Icon name="chevron-left" type="evilicon" color="white" size={50} />
           </View>
         </TouchableOpacity>
       );
@@ -81,7 +79,7 @@ export default class LinguistHeader extends Component {
   };
 
   renderRightComponent = () => {
-    const { type, navigation } = this.props;
+    const { type, navigation, safeEditCard } = this.props;
 
     if (type === "onboarding") {
       return (
@@ -118,7 +116,7 @@ export default class LinguistHeader extends Component {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("EditCardScreen")}>
           <View style={styles.cancelButton}>
-            <Text style={styles.cancelStyle}>{Edit}</Text>
+            <Text style={styles.cancelStyle}>{"Edit"}</Text>
           </View>
         </TouchableOpacity>
       );
@@ -126,7 +124,7 @@ export default class LinguistHeader extends Component {
 
     if (navigation.state.routeName === "EditCardScreen") {
       return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("PaymentDetailScreen")}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.props.safeEditCard()}>
           <View style={styles.cancelButton}>
             <Text style={styles.cancelStyle}>{I18n.t("save")}</Text>
           </View>

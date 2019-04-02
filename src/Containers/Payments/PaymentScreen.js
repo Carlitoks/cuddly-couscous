@@ -16,8 +16,8 @@ import { stripePublishableKey } from "../../Config/env";
 class PaymentScreen extends Component {
   componentWillMount() {
     stripe.setOptions({
-      publishableKey: stripePublishableKey,
-      androidPayMode: "test" // Android only
+      publishableKey: stripePublishableKey
+      //androidPayMode: "test" // Android only
     });
   }
 
