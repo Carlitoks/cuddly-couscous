@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, StatusBar, Keyboard } from "react-native";
+import { View, TouchableOpacity, StatusBar, Keyboard, Text } from "react-native";
 import { Header, Icon } from "react-native-elements";
 import { QR, NavMenu, CloseIcon } from "../../../Assets/SVG";
 import { Colors } from "../../../Themes";
@@ -52,6 +52,7 @@ export default class LinguistHeader extends Component {
 
   renderRightComponent = () => {
     const { type, navigation } = this.props;
+    console.log("navigation.state.routeName", navigation.state.routeName);
     if (type === "onboarding") {
       return (
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
@@ -67,25 +68,21 @@ export default class LinguistHeader extends Component {
       );
     }
 
-    if (
-      navigation.state.routeName === "PaymentDetailScreen" 
-    ) {
+    if (navigation.state.routeName === "PaymentDetailScreen") {
       return (
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
-      );    
+      );
     }
 
-    if (
-      navigation.state.routeName === "PaymentScreen" 
-    ) {
-        return (
-          <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
-            <View style={styles.cancelButton}>
-              <Text style={styles.cancelStyle}>{I18n.t("cancel")}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      }
+    if (navigation.state.routeName === "PaymentsView") {
+      return (
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
+          <View style={styles.cancelButton}>
+            <Text style={styles.cancelStyle}>{I18n.t("cancel")}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
 
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("ScanScreenView")}>

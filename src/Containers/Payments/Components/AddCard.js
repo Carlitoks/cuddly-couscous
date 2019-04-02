@@ -85,7 +85,7 @@ class AddCard extends Component {
     return (
       <View style={styles.flexEndCenter}>
         <CreditCardNumber
-          type={"cardInfo"}
+          type={type}
           creditCard={
             type === "cardInfo" && StripePaymentSourceMeta
               ? cardInfo.creditCardNumber
@@ -101,14 +101,14 @@ class AddCard extends Component {
         />
         <View style={styles.addCardBottomInputs}>
           <ExpirationDate
-            type={"cardInfo"}
+            type={type}
             date={
               type === "cardInfo" && StripePaymentSourceMeta ? cardInfo.expDate : this.state.date
             }
             onDateChange={this.onDateChange}
           />
           <CVV
-            type={"cardInfo"}
+            type={type}
             CVV={this.props.cardInfo.cvc}
             onChangeCVV={this.onChangeCVV}
             onTooltipPress={this.onTooltipPress}
