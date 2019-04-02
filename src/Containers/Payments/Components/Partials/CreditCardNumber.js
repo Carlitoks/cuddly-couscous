@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text, Platform } from "react-native";
+import { View, Image, TextInput, Text, Platform } from "react-native";
 
 //styles
 import styles from "./Styles/CreditCardNumberStyles";
@@ -11,7 +11,9 @@ const CreditCardNumber = props => {
       <Text style={styles.CCNText}>Card Number</Text>
       <View style={styles.CCNInputContainer}>
         {props.type === "cardInfo" ? (
-          <Text style={styles.CCNInput}>{props.creditCard}</Text>
+          <TextInput editable={false} style={styles.CCNInput}>
+            {props.creditCard}
+          </TextInput>
         ) : (
           <TextInputMask
             type={"credit-card"}

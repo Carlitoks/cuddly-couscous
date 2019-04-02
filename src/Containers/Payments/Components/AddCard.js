@@ -72,11 +72,15 @@ class AddCard extends Component {
 
   render() {
     const { type, StripePaymentSourceMeta } = this.props;
-    let creditCardNumber;
-    let creditCardIcon;
+    let cardInfo = { creditCardNumber: "", creditCardIcon: "", expDate: "" };
+
     if (type === "cardInfo" && StripePaymentSourceMeta) {
-      creditCardNumber = "XXXX-XXXX-XXXX-" + StripePaymentSourceMeta.last4.toString();
-      creditCardIcon = Icons[StripePaymentSourceMeta.brand.toLowerCase()];
+      cardInfo.creditCardNumber = "XXXX-XXXX-XXXX-" + StripePaymentSourceMeta.last4.toString();
+      cardInfo.creditCardIcon = Icons[StripePaymentSourceMeta.brand.toLowerCase()];
+      cardInfo.expDate =
+        StripePaymentSourceMeta.expMonth.toString() +
+        "/" +
+        StripePaymentSourceMeta.expYear.toString();
     }
     return (
       <View style={styles.flexEndCenter}>
@@ -84,22 +88,29 @@ class AddCard extends Component {
           type={"cardInfo"}
           creditCard={
             type === "cardInfo" && StripePaymentSourceMeta
-              ? creditCardNumber
+              ? cardInfo.creditCardNumber
               : this.props.cardInfo.number
           }
-          onChange={type ? null : this.onChange}
+          onChange={this.onChange}
           creditCardIcon={
             type === "cardInfo" && StripePaymentSourceMeta
-              ? creditCardIcon
+              ? cardInfo.creditCardIcon
               : this.state.creditCardIcon
           }
           isValidCC={this.state.isValidCC}
         />
         <View style={styles.addCardBottomInputs}>
-          <ExpirationDate date={this.state.date} onDateChange={type ? null : this.onDateChange} />
+          <ExpirationDate
+            type={"cardInfo"}
+            date={
+              type === "cardInfo" && StripePaymentSourceMeta ? cardInfo.expDate : this.state.date
+            }
+            onDateChange={this.onDateChange}
+          />
           <CVV
+            type={"cardInfo"}
             CVV={this.props.cardInfo.cvc}
-            onChangeCVV={type ? null : this.onChangeCVV}
+            onChangeCVV={this.onChangeCVV}
             onTooltipPress={this.onTooltipPress}
             currentTooltipIcon={this.state.currentTooltipIcon}
           />
