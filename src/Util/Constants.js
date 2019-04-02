@@ -120,6 +120,8 @@ export const SESSION = {
     DONE: 'done', // call ended normally by one side
     CANCEL: 'cancel', // call ended before connection was established between both sides
     TIMEOUT: 'timeout', // call ended because no linguist accepted the call within the time limit
+    TIME_EXCEEDED: 'time_exceeded', // session had a hard time limit, so call was ended
+    BALANCE_EXCEEDED: 'balance_exceeded', // paying customer's balance was empty, so call was ended
     FAILURE_LOCAL: 'failure_local', // call ended because local side failed to initially connect to the session
     FAILURE_REMOTE: 'failure_remote', // call ended because the remote side failed to initially connect to the session
     DISCONNECT_LOCAL: 'disconnect_local', // call ended because local side disconnected during the session

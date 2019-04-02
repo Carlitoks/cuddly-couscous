@@ -72,7 +72,18 @@ const localTestHack = (dispatch) => {
 // create a new session as a customer
 export const createNewSession = (params) => (dispatch, getState) => {
 
+  // TODO: clear the new session reducer?
+
   // localTestHack(dispatch);
+
+  // ... why?
+  if ('custom' == params.scenarioID) {
+    delete params.scenarioID;
+  }
+
+  if (!!params.customScenarioNote) {
+    params.customScenario = params.customScenarioNote
+  }
 
   return new Promise((resolve, reject) => {
     dispatch(clear());

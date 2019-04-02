@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {View, Text, Image, StyleSheet, Alert} from "react-native";
 import { connect } from "react-redux";
-import I18n, { translateApiError } from "../../I18n/I18n";
+import I18n, { translateApiError, translateLanguage, translateProperty } from "../../I18n/I18n";
 import moment from "moment";
 import Permissions from "react-native-permissions";
 
@@ -61,6 +61,9 @@ export class LinguistIncomingCallView extends Component {
       linguists: null,
       seconds: this.getSecondsRemaining(),
       responding: false,
+      primaryLangName: translateLanguage(props.session.primaryLangCode),
+      secondaryLangName: translateLanguage(props.session.secondaryLangCode),
+      scenarioText: (!!props.invite.session.scenario & !!props.invite.session.scenario.id) ? translateProperty(props.invite.session.scenario, 'title') : false
     };
 
     // double tap prevention
@@ -220,8 +223,8 @@ export class LinguistIncomingCallView extends Component {
   }
 
   render () {
-    const {session, remoteUser} = this.props;
-    const {seconds, linguists} = this.state;
+    const {session, remoteUser, invite} = this.props;
+    const {seconds, linguists, primaryLangName, secondaryLangName, scenarioText} = this.state;
     return (
       <View style = {styles.container}>
         <LinearGradient
@@ -243,16 +246,22 @@ export class LinguistIncomingCallView extends Component {
             {/* languages row */}
             <View style={styles.infoRowContainer}>
               <MDIcon name={"forum"} size={25} style={styles.infoRowIcon} />
-              <Text style={styles.infoRowText}>TEXT!!</Text>
+              <Text style={styles.infoRowText}>{primaryLangName} - {secondaryLangName}</Text>
             </View>
+
+            {!!scenarioText && (
             <View style={styles.infoRowContainer}>
               <MDIcon name={"help"} size={25} style={styles.infoRowIcon} />
-              <Text style={styles.infoRowText}>TEXT!!</Text>
+              <Text style={styles.infoRowText}>{scenarioText}</Text>
             </View>
+            )}
+
+            {!!invite.session && !!invite.session.customScenarioNote && (
             <View style={styles.infoRowContainer}>
               <MDIcon name={"textsms"} size={25} style={styles.infoRowIcon} />
-              <Text style={styles.infoRowText}>TEXT!! But, like this one might be really long because the user in theory could have entereed something with a lot of worods and blah blah}lah blbah and weeee anbecause that would be really neat hahahahaa/e  help plz kthx</Text>
+              <Text style={styles.infoRowText}>{invite.session.customScenarioNote}</Text>
             </View>
+            )}
           </View>
 
           <View style={styles.buttonContainer}>
