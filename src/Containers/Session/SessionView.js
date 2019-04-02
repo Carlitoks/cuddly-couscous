@@ -265,6 +265,11 @@ class SessionView extends Component {
     );
   }
 
+  beginSession () {
+    this.props.setSessionBegan();
+    // TODO: sound stuff, InCallManager stuff
+  }
+
   handleInitialCustomerTimeout () {
     this.props.endSession(SESSION.END.TIMEOUT).finally(() => {
       this.cleanup();
@@ -308,7 +313,7 @@ class SessionView extends Component {
     }}, () => {
       const rc = this.state.remoteUserState.connection;
       if (rc.connected && rc.initiallyReceiving) {
-        this.props.setSessionBegan();
+        this.beginSession();
       }
     });
   }
@@ -368,7 +373,7 @@ class SessionView extends Component {
     }}, () => {
       const lc = this.state.localUserState.connection;
       if (lc.connected && lc.initiallyReceiving) {
-        this.props.setSessionBegan();
+        this.beginSession();
       }
     });
   }

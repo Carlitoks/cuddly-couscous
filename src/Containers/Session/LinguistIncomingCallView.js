@@ -34,6 +34,7 @@ export class LinguistIncomingCallView extends Component {
 
     // double tap prevention
     this.resopnding = false;
+    this.unmounting = false;
   }
 
   componentDidMount () {
@@ -47,6 +48,7 @@ export class LinguistIncomingCallView extends Component {
 
   cleanup () {
     this.abortTimers = true;
+    this.unmounting = true;
     clearInterval(this.pollIntervalID);
     clearInterval(this.countdownIntervalID);
   }
@@ -60,12 +62,12 @@ export class LinguistIncomingCallView extends Component {
   }
 
   handleAccept () {
-    if (this.state.responding) {
+    if (this.responding || this.unmounting) {
       return;
     }
 
     // TODO: permission checks
-
+    this.responding = true;
     this.setState({responding: true}, () => {
       this.cleanup();
   
@@ -78,21 +80,24 @@ export class LinguistIncomingCallView extends Component {
         this.props.navigation.dispatch({type: "Home"});
       })
       .finally(() => {
+        this.responding = false;
         this.setState({responding: false});
       });
     });
   }
 
   handleDecline () {
-    if (this.state.responding) {
+    if (this.responding || this.unmounting) {
       return;
     }
 
+    this.responding = true;
     this.setState({responding: true}, () => {
       this.cleanup();
   
       this.props.declineSessionInvite()
       .finally(() => {
+        this.responding = false;
         this.setState({responding: false});
         this.props.navigation.dispatch({type: "Home"});
       });  
@@ -188,12 +193,14 @@ export class LinguistIncomingCallView extends Component {
                 text = "Decline"
                 style = {styles.declineButton}
                 textStyle = {{color: "#ffffff"}}
+                disabled={this.state.responding}
                 onPress = {() => { this.handleDecline() }}
               />
               <TextButton
                 text = "Accept"
                 style = {styles.acceptButton}
                 textStyle = {{color: "#ffffff"}}
+                disabled={this.state.responding}
                 onPress = {() => { this.handleAccept() }}
               />
             </View>

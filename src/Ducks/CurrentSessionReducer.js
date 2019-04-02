@@ -1,13 +1,15 @@
 import api from '../Config/AxiosConfig';
 import { updateOptions as updateRatingsView } from './RateCallReducer';
+import {merge as lodashMerge} from 'lodash/merge';
 
 // The purpose of this reducer is to manage the status of an active Jeenie session.
 // Note that this does NOT include anything related to connection handling with
 // Tokbox.
 
 const ACTIONS = {
-  UPDATE: 'currentSessionReducer/update',
-  CLEAR: 'currentSessionReducer/clear'
+  UPDATE: 'currentSessionReducer/update', // set the state
+  MERGE: 'currentSessionReducer/merge', // merge in nested updates to state
+  CLEAR: 'currentSessionReducer/clear' // reset state to initial state
 }
 
 const initState = () => ({
@@ -288,6 +290,7 @@ export const handleEndedSession = (reason) => (dispatch, getState) => {
 
 // action creators
 export const update = (payload) => ({type: ACTIONS.UPDATE, payload});
+export const merge = (payload) => ({type: ACTIONS.MERGE, payload});
 export const clear = () => ({type: ACTIONS.CLEAR});
 
 // the exported reducer
@@ -300,6 +303,10 @@ export default currentSessionReducer = (state = null, action) => {
         ...state,
         ...payload
       }
+    }
+
+    case ACTIONS.MERGE: {
+      return lodashMerge(state, payload);
     }
 
     case ACTIONS.CLEAR: {
