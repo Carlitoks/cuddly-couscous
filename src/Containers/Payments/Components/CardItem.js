@@ -20,11 +20,14 @@ class CardItem extends Component {
   }
 
   render() {
-    const { StripePaymentSourceMeta } = this.props;
-    console.log(StripePaymentSourceMeta);
+    const { StripePaymentSourceMeta, navigation } = this.props;
+
     return (
       <View style={styles.flexEndCenter}>
-        <TouchableOpacity style={styles.itemContainer}>
+        <TouchableOpacity
+          style={styles.itemContainer}
+          onPress={() => navigation.dispatch({ type: "CardInfoScreen" })}
+        >
           <Text style={styles.itemText}>
             XXXX XXXX XXXX{" "}
             {StripePaymentSourceMeta && StripePaymentSourceMeta.last4
