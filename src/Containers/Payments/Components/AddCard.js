@@ -87,13 +87,13 @@ class AddCard extends Component {
         <CreditCardNumber
           type={type}
           creditCard={
-            type === "cardInfo" && StripePaymentSourceMeta
+            (type === "cardInfo" || type === "cardEdit") && StripePaymentSourceMeta
               ? cardInfo.creditCardNumber
               : this.props.cardInfo.number
           }
           onChange={this.onChange}
           creditCardIcon={
-            type === "cardInfo" && StripePaymentSourceMeta
+            (type === "cardInfo" || type === "cardEdit") && StripePaymentSourceMeta
               ? cardInfo.creditCardIcon
               : this.state.creditCardIcon
           }

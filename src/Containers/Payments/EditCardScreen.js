@@ -10,7 +10,7 @@ import styles from "./Styles/PaymentScreenStyles";
 import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
 
-class CardInfoScreen extends Component {
+class EditCardScreen extends Component {
   componentWillMount() {
     stripe.setOptions({
       publishableKey: stripePublishableKey,
@@ -30,7 +30,7 @@ class CardInfoScreen extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-            <AddCard type={"cardInfo"} />
+            <AddCard type={"cardEdit"} />
           </ScrollView>
         </View>
       </ViewWrapper>
@@ -49,4 +49,4 @@ const mD = {};
 export default connect(
   mS,
   mD
-)(CardInfoScreen);
+)(EditCardScreen);

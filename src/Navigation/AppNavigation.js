@@ -79,6 +79,7 @@ import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissi
 import PaymentScreen from "../Containers/Payments/PaymentScreen";
 import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
+import EditCardScreen from "../Containers/Payments/EditCardScreen";
 
 const Navigation = StackNavigator(
   {
@@ -103,6 +104,12 @@ const Navigation = StackNavigator(
     },
     CardInfoScreen: {
       screen: CardInfoScreen,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    EditCardScreen: {
+      screen: EditCardScreen,
       navigationOptions: {
         gesturesEnabled: false
       }
