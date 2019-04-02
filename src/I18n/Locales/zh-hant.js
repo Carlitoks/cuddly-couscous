@@ -105,7 +105,7 @@
   disableExtraTime: "不願意延長時間",
   dining: "餐廳",
   discountsOffered:
-    "購買高通話量\n分鐘數可享\n折扣。",
+    "購買高通話量分鐘數可享\n\n折扣。",
   discountsOfferedAlternative:
     "預購分鐘數可享折扣\n ",
   duration: "時長",
@@ -215,7 +215,7 @@
   languageCommand: "您要求的語言",
   languageHelp: "隨時隨地提供語言協助",
   languageInterpretation: "您曾經做過<lang>翻譯嗎？",
-  LanguagePairs: "語言對", // not use
+  LanguagePairs: "語言對」", // not use
   language: "語言",
   languages: "語言",
   languagesComingSoon: "即將推出各種語言",
@@ -390,6 +390,7 @@
   tryAgain: "再試一次",
   tryAnother: "嘗試其他翻譯精靈",
   tryToReconnect: "嘗試重新連線",
+  tryAnotherLang: "嘗試 {{lang}}",
   troubleshoot: "疑難排解",
   thankYou: " 謝謝",
   thankYouFeedback: " 感謝您反映的意見",
@@ -434,7 +435,29 @@
   loading: {
     tagline: "您要求的語言"
   },
-  
+
+  // generic language often used in navigation or forms
+  actions: {
+    cancel: "取消",
+    remove: "移除",
+    close: "關閉",
+    save: "儲存",
+    update: "更新",
+    submit: "送出",
+    continue: "繼續",
+    next: "下一步",
+    back: "返回",
+    prev: "上一步",
+    reset: "重設",
+    clear: "清除",
+    ok: "確定",
+    done: "完成",
+    finished: "結束",
+    select: "選取",
+    choose: "選擇",
+    skip: "略過"
+  },
+
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -516,6 +539,34 @@
     }
   },
 
+  // new customer home screen designs
+  newCustomerHome: {
+    numLinguists: "{{num}} 位翻譯精靈待命中...",
+    primaryLang: {
+      label: "我說"
+    },
+    secondaryLang: {
+      label: "翻譯成"
+    },
+    scenario: {
+      label: "您在做什麼？",
+      placeholder: "請選取一種情境 (可選)"
+    },
+    buttons: {
+      audio: "語音通話",
+      video: "視訊通話"
+    },
+    rateNotices: {
+      beforeFirst: "費率：每分鐘 1 美元，前 10 分鐘免費。",
+      afterFirst: "費率：每分鐘 1 美元，免費時間還剩 {{num}} 分鐘",
+      noBalanceNoCard: "費率：每分鐘 1 美元。請新增卡片以利繼續通話",
+      noBalanceHasCard: "費率：每分鐘 1 美元。",
+      noBalanceHasCardPackage: "費率：每分鐘 1 美元。購買套餐可享 15% 折扣。",
+      hasBalance: "費率：每分鐘 1 美元，還剩 {{num}} 分鐘。",
+      hasBalanceAutoreload: "費率：還剩 {{num}} 分鐘。"
+    }
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "我需要這個語言的協助：",
@@ -526,10 +577,26 @@
   payments: {
     currentRate: "每分鐘 1 美元",
     currentBalance: "{{minutes}} 分鐘",
-    enterPaymentToTalk:
-      "輸入付款詳細資料即可繼續通話。每分鐘 1 美元就能暢所欲言。",
-    currentRateDescription:
-      "通話費用每分鐘 1 美元，時間不可超過 60 分鐘。日後將推出大量儲值分鐘數可享折扣的服務。"
+    enterPaymentToTalk: "輸入付款詳細資料即可繼續通話。每分鐘 1 美元就能暢所欲言。",
+    currentRateDescription: "通話費用每分鐘 1 美元，時間不可超過 60 分鐘。日後將推出大量儲值分鐘數可享折扣的服務。",
+    addCard: "新增卡片",
+    removeCard: "移除卡片",
+    removeCardAlert: "您確定要刪除這張銀行卡嗎？  這是無法復原的操作。",
+    noCardNotice: "您還沒有新增任何卡片。",
+    number: {
+      title: "卡號",
+      errInvalid: "卡號無效"
+    },
+    expiration: {
+      title: "到期日",
+      placeholder: "月/年",
+      errInvalid: "到期日無效"
+    },
+    cvv: {
+      title: "CVV",
+      errInvalid: "CVV 無效",
+      description: 'VISA、MasterCard 和 Discover 等信用卡或簽帳金融卡上的 CVV (「卡片驗證值」) 是 3 位數字。  American Express 卡片上的則是 4 位數字。'
+    }
   },
 
   operatingHours: {
@@ -604,7 +671,7 @@
     errUnexpected: "發生非預期錯誤。",
     errTemporary: "發生暫時性錯誤。",
     errTemporaryTryAgain:
-      "發生暫時性錯誤。請稍候幾分鐘再繼續。",
+      "A temporary error has occurred. Try again in a few minutes.",
     errLogin: "登入時發生問題",
     errDefaultAuth: "認證過期或無效。",
     errNoUser: "找不到符合該電子郵件地址的用戶",
@@ -640,9 +707,30 @@
       "為保持最佳連線品質，目前已暫時停用翻譯精靈的視訊功能。連線品質改善後即可繼續使用視訊。",
     createSessionFailed: "暫時無法開始通話。請再試一次。",
 
+    // seen while matching custoner to linguist
+    matching: {
+      description: "正在為您接通語言翻譯精靈..."
+    },
+
     // used when rating a session
     rating: {
       submit: "送出",
+      addComment: "新增留言",
+      questionGood: "有哪些不錯的地方？",
+      questionBetter: "還能更好嗎？",
+      rateCustomer: "為客戶評分",
+      rateLinguist: "為語言專員評分",
+      report: "輕輕晃動裝置就能通報問題",
+      submit: "送出",
+      resolvedCustomer: "您的問題解決了嗎？",
+      resolvedLinguist: "他們的問題解決了嗎？",
+      classification: "通話分類",
+      classifications: {
+        trial: "試用通話",
+        demo: "產品展示通話",
+        support: "語言練習",
+        langPractice: "客戶支援"
+      },
       flags: {
         langAbility: "語言能力",
         time: "連線時間",
@@ -682,7 +770,7 @@
       title: "啟用通知",
       description: "開啟推播通知後，只要您所在地區出現相關的新服務，翻譯精靈便會提醒您。",
       button: "開啟通知",
-      skip: "略過",
+      skip: "略過"
     },
     login: {
       title: "首先，翻譯精靈需要您的相關資訊：",
@@ -707,7 +795,7 @@
         "已有另一個帳戶使用您所輸入的電子郵件地址。\n請輸入另一個電子郵件或\n登入您的帳戶。",
       emailAndPassword:
         "電子郵件和密碼組合不正確。\n請再試一次。",
-      signInto: "登入您的帳戶。"
+      signInto: "登入您的帳戶."
     }
   },
 

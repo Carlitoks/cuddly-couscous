@@ -390,6 +390,7 @@
   tryAgain: "もう一度お試しください",
   tryAnother: "別のJeenieをお試しください",
   tryToReconnect: "再接続してください",
+  tryAnotherLang: "{{lang}}を試す",
   troubleshoot: "トラブルシューティング",
   thankYou: " ありがとうございます",
   thankYouFeedback: " ご意見をお聞かせいただきありがとうございました",
@@ -434,7 +435,29 @@
   loading: {
     tagline: "必要な時に使える言語サービス"
   },
-  
+
+  // generic language often used in navigation or forms
+  actions: {
+    cancel: "キャンセル",
+    remove: "削除",
+    close: "閉じる",
+    save: "保存",
+    update: "更新",
+    submit: "送信",
+    continue: "続ける",
+    next: "次へ",
+    back: "戻る",
+    prev: "前へ",
+    reset: "リセット",
+    clear: "クリア",
+    ok: "OK",
+    done: "終了",
+    finished: "終了",
+    select: "選択",
+    choose: "選択",
+    skip: "スキップ"
+  },
+
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -516,6 +539,34 @@
     }
   },
 
+  // new customer home screen designs
+  newCustomerHome: {
+    numLinguists: "{{num}}人のJeenieの通訳スタッフが待機しています…",
+    primaryLang: {
+      label: "話せる言語："
+    },
+    secondaryLang: {
+      label: "翻訳 - 翻訳先言語："
+    },
+    scenario: {
+      label: "何をしていますか？",
+      placeholder: "シナリオを選択（オプション）"
+    },
+    buttons: {
+      audio: "音声通話",
+      video: "ビデオ通話"
+    },
+    rateNotices: {
+      beforeFirst: "料金：1分あたり$1（米ドル） | 最初の10分は無料。",
+      afterFirst: "料金：1分あたり$1（米ドル） | 無料通話残り{{num}}分",
+      noBalanceNoCard: "料金：1分あたり$1（米ドル） | 続けるにはカードを追加してください",
+      noBalanceHasCard: "料金：1分あたり$1（米ドル）",
+      noBalanceHasCardPackage: "料金：1分あたり$1（米ドル） | 15%割引でパッケージをご購入ください。",
+      hasBalance: "料金：1分あたり$1（米ドル） | 残り時間：{{num}}分",
+      hasBalanceAutoreload: "料金：残り時間：{{num}}分"
+    }
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "必要なサポート：",
@@ -526,10 +577,26 @@
   payments: {
     currentRate: "$1/分",
     currentBalance: "{{minutes}}分",
-    enterPaymentToTalk:
-      "通話を続けるにはお支払い情報を入力してください。1分あたり$1で好きなだけお話いただけます。",
-    currentRateDescription:
-      "通話は1分あたり$1で、最長60分ご利用いただけます。長時間の通話に適用される割引は今後提供予定です。"
+    enterPaymentToTalk: "通話を続けるにはお支払い情報を入力してください。1分あたり$1で好きなだけお話いただけます。",
+    currentRateDescription: "通話は1分あたり$1で、最長60分ご利用いただけます。長時間の通話に適用される割引は今後提供予定です。",
+    addCard: "カードを追加",
+    removeCard: "カードを削除",
+    removeCardAlert: "このクレジットカードを削除しますか？  この操作は取り消しできません。",
+    noCardNotice: "まだカードが登録されていません。",
+    number: {
+      title: "カード番号",
+      errInvalid: "カード番号が無効です"
+    },
+    expiration: {
+      title: "有効期限",
+      placeholder: "MM/YY",
+      errInvalid: "有効期限が無効です"
+    },
+    cvv: {
+      title: "CVV",
+      errInvalid: "CVVが無効です",
+      description: 'クレジットカードまたはデビットカードのCVV（セキュリティコード）は、VISA、マスターカード、ディスカバーカードの場合、3桁のコードとなります。  アメリカン・エキスプレスの場合、4桁のコードとなります。'
+    }
   },
 
   operatingHours: {
@@ -604,7 +671,7 @@
     errUnexpected: "予期せぬエラーが発生しました。",
     errTemporary: "一時的なエラーが発生しました。",
     errTemporaryTryAgain:
-      "一時的なエラーが発生しました。数分後にもう一度お試しください。",
+      "A temporary error has occurred. Try again in a few minutes.",
     errLogin: "ログイン中に問題が発生しました",
     errDefaultAuth: "認証情報が期限切れか無効です。",
     errNoUser: "このメールアドレスのユーザーが見つかりませんでした",
@@ -640,9 +707,30 @@
       "接続を最適化するため、Language Jeenieのビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
     createSessionFailed: "一時的に通話を開始できません。もう一度お試しください。",
 
+    // seen while matching custoner to linguist
+    matching: {
+      description: "LANGUAGE JEENIEに接続中…"
+    },
+
     // used when rating a session
     rating: {
       submit: "送信",
+      addComment: "コメントを追加",
+      questionGood: "気に入った点をお聞かせください。",
+      questionBetter: "改善点をお聞かせください。",
+      rateCustomer: "お客様を評価してください",
+      rateLinguist: "通訳スタッフを評価してください",
+      report: "お使いのデバイスを軽く振って問題を報告してください",
+      submit: "送信",
+      resolvedCustomer: "問題は解決しましたか？",
+      resolvedLinguist: "問題は解決しましたか？",
+      classification: "通話の分類",
+      classifications: {
+        trial: "トライアル通話",
+        demo: "製品デモ通話",
+        support: "言語の練習",
+        langPractice: "カスタマーサポート"
+      },
       flags: {
         langAbility: "語学力",
         time: "接続までの時間",
@@ -682,7 +770,7 @@
       title: "通知をオンに設定",
       description: "プッシュ通知をオンに設定すると、ユーザーの現在地周辺エリアで新しいサービスが利用できるようになるとJeenieからの通知が表示されるようになります。",
       button: "通知をオンに設定",
-      skip: "スキップ",
+      skip: "スキップ"
     },
     login: {
       title: "最初にご自身についてお聞かせください。",
@@ -707,7 +795,7 @@
         "入力したメールアドレスのアカウントはすでに存在しています。\n別のメールアドレスを入力するか、\nご自身のアカウントにサインインしてください。",
       emailAndPassword:
         "メールアドレスとパスワードの組み合わせが誤っています。\nもう一度お試しください。",
-      signInto: "アカウントにサインイン"
+      signInto: "アカウントにサインイン."
     }
   },
 
