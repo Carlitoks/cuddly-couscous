@@ -47,16 +47,18 @@ class PaymentButtons extends Component {
     };
 
     updatePayments({ loading: true });
-
+    console.log("hola");
     Reactotron.log(params);
     const stripeResponse = await stripe
       .createTokenWithCard(params)
       .then(({ tokenId }) => {
+        console.log("hola 2");
         Reactotron.log(tokenId);
         updateView({ stripePaymentToken: tokenId });
         setPayment(tokenId);
       })
       .then(() => {
+        console.log("hola 3");
         clearPayments();
         updatePayments({ errors: [] });
         updatePayments({ loading: false });

@@ -11,7 +11,7 @@ const CvvInput = props => {
   return (
     <View style={styles.CVVContainer}>
       <Text style={styles.CVVText}>{I18n.t("payments.cvv.title")}</Text>
-      {props.type === "cardInfo" ? (
+      {props.type === "cardInfo" || props.type === "cardEdit" ? (
         <TextInput editable={false} style={styles.CVVInput}>
           ***
         </TextInput>

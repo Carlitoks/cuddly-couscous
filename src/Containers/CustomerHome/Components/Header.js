@@ -78,7 +78,7 @@ export default class LinguistHeader extends Component {
 
   renderRightComponent = () => {
     const { type, navigation } = this.props;
-    console.log("navigation.state.routeName", navigation.state.routeName);
+
     if (type === "onboarding") {
       return (
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
@@ -102,7 +102,7 @@ export default class LinguistHeader extends Component {
 
     if (navigation.state.routeName === "PaymentsView") {
       return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("PaymentDetailScreen")}>
           <View style={styles.cancelButton}>
             <Text style={styles.cancelStyle}>{I18n.t("cancel")}</Text>
           </View>
@@ -110,31 +110,25 @@ export default class LinguistHeader extends Component {
       );
     }
 
-      if (
-        navigation.state.routeName === "CardInfoScreen" 
-      ) {
-          return (
-            <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("EditCardScreen")}>
-              <View style={styles.cancelButton}>
-                <Text style={styles.cancelStyle}>{Edit}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }
+    if (navigation.state.routeName === "CardInfoScreen") {
+      return (
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("EditCardScreen")}>
+          <View style={styles.cancelButton}>
+            <Text style={styles.cancelStyle}>{Edit}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
 
-        if (
-          navigation.state.routeName === "EditCardScreen" 
-        ) {
-            return (
-              <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("PaymentDetailScreen")}>
-                <View style={styles.cancelButton}>
-                  <Text style={styles.cancelStyle}>{I18n.t("save")}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }
-
-      
+    if (navigation.state.routeName === "EditCardScreen") {
+      return (
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("PaymentDetailScreen")}>
+          <View style={styles.cancelButton}>
+            <Text style={styles.cancelStyle}>{I18n.t("save")}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
 
     return (
       <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("ScanScreenView")}>
