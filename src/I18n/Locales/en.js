@@ -772,9 +772,12 @@ export default (ENG = {
       description: "Connecting you to a Language Jeenie in approximately 1 minute",
     },
 
-    // seen when no matches are available
-    timeout: {
+    // retry screen seen when no matches are available, or initial connection to session fails
+    retry: {
       busy: "All of our Language Jeenies are currently busy.",
+      failureLocal: "An issue occurred while connecting to your Language Jeenie.",
+      failureRemote: "Your Language Jeenie was unable to connect.",
+      cancelRemote: "Your Language Jeenie was unable to accept the call.",
       tryAgain: "Would you like to try again?",
       retry: "Try Again",
       tryLang: "Try {{lang}}",

@@ -468,16 +468,19 @@ class SessionView extends Component {
   // call ended by a remote participant
   handleRemoteCancel () {
     Alert.alert("Cancelled", "The call was cancelled by the other party.");
-    this.handleRemoteEnded();
+    this.handleRemoteEnded(SESSION.END.CANCEL);
   }
 
-  handleRemoteEnded () {
+  handleRemoteEnded (reason) {
+
+    // TODO: if customer and reason is certain types, go to CustomerRetryView
+
     let targetView = "Home";
     if (this.props.status.began && this.state.localUserState.app.hasNetworkConnection) {
       targetView = "RateView";
     }
 
-    this.props.handleEndedSession().finally(() => {
+    this.props.handleEndedSession(reason).finally(() => {
       this.cleanup();
       this.props.navigation.dispatch({type: targetView});
     });
@@ -523,7 +526,7 @@ class SessionView extends Component {
             remoteUserState = { remoteUserState }
             localUserState = { localUserState }
 
-            onSessionEnded = {() => { this.handleRemoteEnded() }}
+            onSessionEnded = {(reason) => { this.handleRemoteEnded(reason) }}
 
             // update basic connection status of remote participant
             onRemoteUserConnecting = {() => { this.handleRemoteUserConnecting() }}

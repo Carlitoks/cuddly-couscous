@@ -144,7 +144,8 @@ export class Session extends Component {
       if (this.endedByRemote) {
         return;
       }
-      this.sendSignal(SIGNALS.ENDING);
+      this.sendSignal(SIGNALS.ENDING, {reason: newP.session.endReason});
+      return;
     }
 
     const oldS = oldP.localUserState.app;
@@ -436,11 +437,11 @@ export class Session extends Component {
     }
   }
 
-  handleCallEnded () {
+  handleCallEnded (reason) {
     this.endedByRemote = true;
     this.cleanup(() => {
       console.log("session.props.onSessionEnded()");
-      this.props.onSessionEnded();
+      this.props.onSessionEnded(reason);
     });
   }
 
@@ -496,7 +497,7 @@ export class Session extends Component {
         break;
       }
       case SIGNALS.ENDING: {
-        this.handleCallEnded();
+        this.handleCallEnded(payload.reason);
         break;
       }
       case SIGNALS.CONTROL_STATE: {

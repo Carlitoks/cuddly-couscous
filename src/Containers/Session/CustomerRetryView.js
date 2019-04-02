@@ -121,13 +121,13 @@ export class CustomerRetryView extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{ I18n.t("session.timeout.busy") }</Text>
-          <Text style={styles.text}>{ I18n.t("session.timeout.tryAgain") }</Text>
+          <Text style={styles.text}>{ I18n.t("session.retry.busy") }</Text>
+          <Text style={styles.text}>{ I18n.t("session.retry.tryAgain") }</Text>
         </View>
         <View style={styles.buttonContainer}>
           {rollover.exists && (
           <TextButton
-            text={I18n.t("session.timeout.tryLang", {lang: rollover.name})}
+            text={I18n.t("session.retry.tryLang", {lang: rollover.name})}
             style={styles.orangeButton}
             textStyle={sharedStyles.prominentButtonText}
             disabled = {this.state.creating}
@@ -135,14 +135,14 @@ export class CustomerRetryView extends Component {
           />
           )}
           <TextButton
-            text={I18n.t("session.timeout.retry")}
+            text={I18n.t("session.retry.retry")}
             style={styles.orangeButton}
             textStyle={sharedStyles.prominentButtonText}
             disabled = {this.state.creating}
             onPress = {() => { this.retry() }}
           />
           <TextButton
-            text={I18n.t("session.timeout.cancel")}
+            text={I18n.t("session.retry.cancel")}
             style={styles.blueButton}
             textStyle={sharedStyles.prominentButtonText}
             disabled = {this.state.creating}

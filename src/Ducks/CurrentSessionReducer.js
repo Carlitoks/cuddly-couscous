@@ -1,6 +1,6 @@
 import api from '../Config/AxiosConfig';
 import { updateOptions as updateRatingsView } from './RateCallReducer';
-import {merge as lodashMerge} from 'lodash/merge';
+import lodashMerge from 'lodash/merge';
 import { getGeolocationCoords } from '../Util/Helpers';
 
 // The purpose of this reducer is to manage the status of an active Jeenie session.
@@ -76,11 +76,12 @@ export const createNewSession = (params) => (dispatch, getState) => {
 
   // localTestHack(dispatch);
 
-  // ... why?
+  // ... why?  Would like to remove this hack
   if ('custom' == params.scenarioID) {
     delete params.scenarioID;
   }
 
+  // this is because an old mistake on the server named the field incorrectly in one place
   if (!!params.customScenarioNote) {
     params.customScenario = params.customScenarioNote
   }
@@ -130,7 +131,6 @@ export const setRemoteUser = (user) => (dispatch, getState) => {
 // as a linguist, receive a session invite - it is assumed tkat the invite
 // is valid to recive at this point
 export const receiveSessionInvite = (invite) => (dispatch, getState) => {
-  const {status} = getState().currentSessionReducer;
   return new Promise((resolve) => {
     dispatch(clear());
     dispatch(update({
@@ -274,13 +274,17 @@ export const canRejoinSession = () => (dispapch) => {
 
 // initiate ending the session
 export const endSession = (reason) => (dispatch, getState) => {
-  const {sessionID, status, timer} = getState().currentSessionReducer;
+  const {sessionID, status, session, timer} = getState().currentSessionReducer;
 
   dispatch(update({
     status: {
       ...status,
       ending: true,
       ended: false
+    },
+    session: {
+      ...session,
+      endReason: reason
     }
   }));
   dispatch(stopTimer());
@@ -293,10 +297,9 @@ export const endSession = (reason) => (dispatch, getState) => {
     .then(resolve)
     .catch(reject)
     .finally(() => {
-      const {status} = getState().currentSessionReducer;
       dispatch(update({
         status: {
-          ...status,
+          ...getState().currentSessionReducer.status,
           ending: false,
           ended: true
         }
@@ -307,13 +310,16 @@ export const endSession = (reason) => (dispatch, getState) => {
 
 // session was ended by another participant
 export const handleEndedSession = (reason) => (dispatch, getState) => {
-  // TODO: end reason here may be trigger for other things
-  const {status} = getState().currentSessionReducer;
+  const {status, session} = getState().currentSessionReducer;
   dispatch(update({
     status: {
       ...status,
       ending: false,
       ended: true
+    },
+    session: {
+      ...session,
+      endReason: reason
     }
   }));
   return Promise.resolve(true);
@@ -337,7 +343,7 @@ export default currentSessionReducer = (state = null, action) => {
     }
 
     case ACTIONS.MERGE: {
-      return lodashMerge(state, payload);
+      return lodashMerge(state || initState(), payload);
     }
 
     case ACTIONS.CLEAR: {

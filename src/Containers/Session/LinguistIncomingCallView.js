@@ -49,21 +49,23 @@ export class LinguistIncomingCallView extends Component {
 
   constructor(props) {
     super(props);
+    const {session} = props;
     
     this.abortTimers = false;
     this.pollFailures = 0;
     this.pollIntervalID = null;
     this.countdownIntervalID = null;
     // taking 5 seconds off to encourage pickup before call actually times out on customer side.    
-    this.callTimeoutAt = moment(props.session.createdAt).add((SESSION.TIME.MATCH/DURATION.SECONDS) - 5, "s");
+    this.callTimeoutAt = moment(session.createdAt).add((SESSION.TIME.MATCH/DURATION.SECONDS) - 5, "s");
     
     this.state = {
       linguists: null,
       seconds: this.getSecondsRemaining(),
       responding: false,
-      primaryLangName: translateLanguage(props.session.primaryLangCode),
-      secondaryLangName: translateLanguage(props.session.secondaryLangCode),
-      scenarioText: (!!props.invite.session.scenario & !!props.invite.session.scenario.id) ? translateProperty(props.invite.session.scenario, 'title') : false
+      primaryLangName: translateLanguage(session.primaryLangCode),
+      secondaryLangName: translateLanguage(session.secondaryLangCode),
+      scenarioText: (!!session.scenario && !!session.scenario.id) ? translateProperty(session.scenario, 'title') : false,
+      customScenarioText: (!!session.customScenarioNote) ? session.customScenarioNote : false,
     };
 
     // double tap prevention
@@ -163,7 +165,7 @@ export class LinguistIncomingCallView extends Component {
   }
 
   handlePollInterval () {
-    if (!this || this.abortTimers || this.state.responding) {
+    if (this.abortTimers || this.state.responding) {
       return;
     }
 
@@ -224,7 +226,7 @@ export class LinguistIncomingCallView extends Component {
 
   render () {
     const {session, remoteUser, invite} = this.props;
-    const {seconds, linguists, primaryLangName, secondaryLangName, scenarioText} = this.state;
+    const {seconds, linguists, primaryLangName, secondaryLangName, scenarioText, customScenarioText} = this.state;
     return (
       <View style = {styles.container}>
         <LinearGradient
@@ -243,23 +245,20 @@ export class LinguistIncomingCallView extends Component {
           </View>
 
           <View style={styles.infoContainer}>
-            {/* languages row */}
             <View style={styles.infoRowContainer}>
               <MDIcon name={"forum"} size={25} style={styles.infoRowIcon} />
               <Text style={styles.infoRowText}>{primaryLangName} - {secondaryLangName}</Text>
             </View>
-
             {!!scenarioText && (
             <View style={styles.infoRowContainer}>
               <MDIcon name={"help"} size={25} style={styles.infoRowIcon} />
               <Text style={styles.infoRowText}>{scenarioText}</Text>
             </View>
             )}
-
-            {!!invite.session && !!invite.session.customScenarioNote && (
+            {!!customScenarioText && (
             <View style={styles.infoRowContainer}>
               <MDIcon name={"textsms"} size={25} style={styles.infoRowIcon} />
-              <Text style={styles.infoRowText}>{invite.session.customScenarioNote}</Text>
+              <Text style={styles.infoRowText}>{customScenarioText}</Text>
             </View>
             )}
           </View>
