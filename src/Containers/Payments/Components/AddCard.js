@@ -32,6 +32,9 @@ class AddCard extends Component {
 
   onDateChange = date => {
     this.setState({ date });
+    this.props.updatePayments({
+      expDate: ""
+    });
     if (date.length >= 5 && moment(date, "MM/YY").isValid()) {
       if (moment(date, "MM/YY").unix() >= moment(new Date(), "MM/YY").unix()) {
         const userDate = date.split("/");
@@ -40,7 +43,11 @@ class AddCard extends Component {
           expYear: parseInt(userDate[1]),
           expMonth: parseInt(userDate[0])
         };
-        this.props.updatePayments({ cardInfo: updatedCard, isValidDate: true });
+        this.props.updatePayments({
+          cardInfo: updatedCard,
+          isValidDate: true,
+          expDate: this.state.date
+        });
       } else {
         this.setState({ date: "" });
       }
@@ -107,7 +114,11 @@ class AddCard extends Component {
           <ExpirationDate
             type={type}
             date={
-              type === "cardInfo" && StripePaymentSourceMeta ? cardInfo.expDate : this.state.date
+              type === "cardInfo" && StripePaymentSourceMeta
+                ? cardInfo.expDate
+                : this.state.date != ""
+                ? this.state.date
+                : this.props.expDate
             }
             onDateChange={this.onDateChange}
           />
@@ -127,6 +138,7 @@ class AddCard extends Component {
 const mS = state => ({
   token: state.auth.token,
   cardInfo: state.payments.cardInfo,
+  expDate: state.payments.expDate,
   StripePaymentSourceMeta: state.userProfile.StripePaymentSourceMeta
 });
 
