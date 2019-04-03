@@ -15,6 +15,7 @@ const ExpirationDate = props => {
         </TextInput>
       ) : (
         <TextInputMask
+          placeholder="MM/YY"
           type={"datetime"}
           options={{
             format: "MM/YY"

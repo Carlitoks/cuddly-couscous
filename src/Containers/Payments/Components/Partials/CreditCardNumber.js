@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Image, TextInput, Text, Platform } from "react-native";
+import I18n from "../../../../I18n/I18n";
 
 //styles
 import styles from "./Styles/CreditCardNumberStyles";
@@ -8,7 +9,7 @@ import { TextInputMask } from "react-native-masked-text";
 const CreditCardNumber = props => {
   return (
     <View style={styles.CCNContainer}>
-      <Text style={styles.CCNText}>Card Number</Text>
+      <Text style={styles.CCNText}>{I18n.t("payments.number.title")}</Text>
       <View style={styles.CCNInputContainer}>
         {props.type === "cardInfo" ? (
           <TextInput editable={false} style={styles.CCNInput}>
@@ -17,6 +18,7 @@ const CreditCardNumber = props => {
         ) : (
           <TextInputMask
             type={"credit-card"}
+            placeholder="XXXX - XXXX - XXXX - XXXX"
             options={{
               obfuscated: false
             }}
@@ -25,9 +27,11 @@ const CreditCardNumber = props => {
             style={styles.CCNInput}
           />
         )}
-        <View style={styles.CCIconContainer}>
-          <Image resizeMode="contain" style={styles.CCIcon} source={props.creditCardIcon} />
-        </View>
+        {props.creditCard ? (
+          <View style={styles.CCIconContainer}>
+            <Image resizeMode="contain" style={styles.CCIcon} source={props.creditCardIcon} />
+          </View>
+        ) : null}
       </View>
       {!props.isValidCC && props.creditCard > 0 ? (
         <Text style={styles.CCNInvalidText}>Invalid Card Number</Text>
