@@ -33,13 +33,17 @@ class AddCard extends Component {
   onDateChange = date => {
     this.setState({ date });
     if (date.length >= 5 && moment(date, "MM/YY").isValid()) {
-      const userDate = date.split("/");
-      const updatedCard = {
-        ...this.props.cardInfo,
-        expYear: parseInt(userDate[1]),
-        expMonth: parseInt(userDate[0])
-      };
-      this.props.updatePayments({ cardInfo: updatedCard, isValidDate: true });
+      if (moment(date, "MM/YY").unix() >= moment(new Date(), "MM/YY").unix()) {
+        const userDate = date.split("/");
+        const updatedCard = {
+          ...this.props.cardInfo,
+          expYear: parseInt(userDate[1]),
+          expMonth: parseInt(userDate[0])
+        };
+        this.props.updatePayments({ cardInfo: updatedCard, isValidDate: true });
+      } else {
+        this.setState({ date: "" });
+      }
     }
   };
 
