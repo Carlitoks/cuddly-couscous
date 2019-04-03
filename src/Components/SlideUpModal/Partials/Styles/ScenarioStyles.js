@@ -1,44 +1,55 @@
 import { StyleSheet } from 'react-native';
-import { moderateScale } from '../../../../Util/Scaling';
+import { moderateScaleViewports } from '../../../../Util/Scaling';
 import { Fonts, Metrics } from '../../../../Themes';
 
 export default StyleSheet.create({
   scrollContainer: {
     backgroundColor: '#fff',
-    left: 4,
-    width: Metrics.width * 0.98,
+    left: Metrics.width * 0.05,
+    width: Metrics.width * 0.90,
     borderRadius: 5
   },
   availableLangContainer: {
     height: 48,
     width: '100%',
     justifyContent: 'center',
-    backgroundColor: 'rgba(185,185,185,0.14)'
   },
   availableLangContainerText: {
-    paddingLeft: 14,
-    fontWeight: '500',
+    paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(14, 0),
-    color: '#333333'
+    fontSize: moderateScaleViewports(14, 0),
+    color: '#848688'
   },
-  dividerStyle: { backgroundColor: '#CCCCCC', height: 1 },
+  dividerStyle: { backgroundColor: "rgba(90, 90, 90, 0.2)", height: 0.5, width: Metrics.width * 0.80, marginLeft: Metrics.width * 0.05 },
   LangViewContainer: {
     height: 48,
     width: '100%',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    paddingBottom: 19,
+    paddingTop: 13
   },
   selectLangButton: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignContent: 'center'
+    alignContent: 'center',
   },
   availableLangText: {
-    paddingLeft: 26,
-    fontWeight: '500',
+    paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(18, 0)
+    fontSize: moderateScaleViewports(13),
+    color: "#1C1B1B"
   },
   checkPadding: { paddingRight: 30 },
+  closeScenarioList: {
+    borderRadius: 5,
+    backgroundColor: "#fff",
+    position: "absolute",
+    bottom: -60,
+    width: Metrics.width * 0.90,
+    left: Metrics.width * 0.05,
+    alignItems: "center"
+  },
+  cancelButtonText: {fontFamily: Fonts.BaseFont, color:"#3F1674", fontSize: 16, paddingTop: 16, paddingBottom: 16},
+  iconNameContainer: {flexDirection: 'row', justifyContent: 'flex-start', alignItems: "center", paddingLeft: 40},
 });

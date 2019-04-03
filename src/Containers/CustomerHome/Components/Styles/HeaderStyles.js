@@ -6,6 +6,7 @@ import {
   Metrics,
 } from "../../../../Themes";
 import { moderateScale } from "../../../../Util/Scaling";
+import {isIphoneXorAbove} from "../../../../Util/Devices";
 
 const iOS = Platform.OS === "ios";
 
@@ -81,10 +82,11 @@ export default StyleSheet.create({
     backgroundColor: "#401674"
   },
   headerOuter: {
-    marginTop: iOS ? 30 : 20,
+    marginTop: iOS ? isIphoneXorAbove() ? 35 : 30 : 20,
     padding: 0,
     borderBottomWidth: 0,
     height: moderateScale(45, 0)
   },
-  headerContainer: { flexDirection: "column", justifyContent: "flex-start" }
+  headerContainer: { flexDirection: "column", justifyContent: "flex-start", backgroundColor: Colors.gradientColor.top },
+  minutesLeftContainer: { marginRight: 15 }
 });

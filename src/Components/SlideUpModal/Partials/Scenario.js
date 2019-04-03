@@ -41,7 +41,10 @@ class Scenario extends Component {
     const currentIcon = this.renderCheck(scenario.id);
     return (
       <React.Fragment>
-        <Text style={ButtonStyle}>{scenario.title}</Text>
+        <View style={styles.iconNameContainer}>
+          <Icon name="ios-bus" type="ionicon" size={23} />
+          <Text style={ButtonStyle}>{scenario.title}</Text>
+        </View>
         {currentIcon}
       </React.Fragment>
     );
@@ -102,19 +105,24 @@ class Scenario extends Component {
   };
 
   render() {
+    const { closeSlideMenu } = this.props;
     return (
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <React.Fragment>
-          <View style={styles.availableLangContainer}>
-            <Text style={styles.availableLangContainerText}>
-              {I18n.t("customerHome.scenario.description")}
-            </Text>
-          </View>
-          <Divider style={styles.dividerStyle} />
-          {this.renderScenariosList()}
-          {this.renderCustomOption()}
-        </React.Fragment>
-      </ScrollView>
+      <React.Fragment>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <React.Fragment>
+            <View style={styles.availableLangContainer}>
+              <Text style={styles.availableLangContainerText}>
+                {I18n.t("customerHome.scenario.description")}
+              </Text>
+            </View>
+            {this.renderScenariosList()}
+            {this.renderCustomOption()}
+          </React.Fragment>
+        </ScrollView>
+        <TouchableOpacity style={styles.closeScenarioList} onPress={() => closeSlideMenu()} >
+          <Text style={styles.cancelButtonText}>Cancel</Text>
+        </TouchableOpacity>
+      </React.Fragment>
     );
   }
 }

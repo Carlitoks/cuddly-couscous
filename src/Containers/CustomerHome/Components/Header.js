@@ -9,6 +9,7 @@ import {
 import { Header, Icon } from "react-native-elements";
 import { NavMenu } from "../../../Assets/SVG";
 import { Colors } from "../../../Themes";
+import HeaderMinutesLeft from "./Partials/HeaderMinutesLeft";
 // Styles
 import styles from "./Styles/HeaderStyles";
 import I18n from "../../../I18n/I18n";
@@ -140,7 +141,9 @@ export default class LinguistHeader extends Component {
     }
 
     return (
-      <React.Fragment />
+      <View style={styles.minutesLeftContainer}>
+        <HeaderMinutesLeft navigation={navigation} />
+      </View>
     );
   };
 
@@ -168,7 +171,6 @@ export default class LinguistHeader extends Component {
         <StatusBar
           hidden={false}
           backgroundColor={navigation.state.routeName === "Home" ? Colors.gradientColor.top : "transparent"}
-          translucent
         />
         <Header
           backgroundColor={Colors.transparent}

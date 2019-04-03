@@ -207,8 +207,6 @@ const initialState = {
   availableLanguages: SupportedLanguages,
   comingSoonLanguages: ComingSoonLanguages,
   languagePair: [],
-  langCodeSelection: null,
-  isSlideUpMenuVisible: false,
   session: {
     type: "",
     matchMethod: "",

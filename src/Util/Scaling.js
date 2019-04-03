@@ -20,6 +20,8 @@ const moderateScaleViewports = (size, factor = 0.5) => {
     factor = 0.25;
   if(width > 360)
     factor = 0;
+  if(width >= 414)
+    factor = -0.3;
   return size + (scale(size) - size) * factor;
 };
 

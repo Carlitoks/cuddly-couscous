@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import { connect } from "react-redux";
 import SlidingUpPanel from "rn-sliding-up-panel";
 import styles from "./Styles/SlideUpPanelStyles";
-import { Metrics } from "../../Themes";
+import { Metrics, Fonts } from "../../Themes";
 import { closeSlideMenu } from "../../Ducks/LogicReducer";
 import Languages from './Partials/Languages';
 import Comments from './Partials/Comments';
@@ -16,9 +16,9 @@ class SlideUpPanel extends Component {
       <SlidingUpPanel
         visible={isSlideUpMenuVisible}
         onRequestClose={() => closeSlideMenu()}
-        height={Metrics.height * 0.7}
+        height={selection === "scenarioSelection" ? Metrics.height * 0.50 : Metrics.height * 0.7}
         allowDragging={false}
-        draggableRange={{ top: Metrics.height * 0.7, bottom: 0 }}
+        draggableRange={{ top: selection === "scenarioSelection" ? Metrics.height * 0.60 : Metrics.height * 0.7, bottom: 0 }}
       >
         <View Style={styles.backgroundContainer}>
           {selection === "additionalDetails"

@@ -10,7 +10,8 @@ export default StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#64A901",
     borderRadius: moderateScaleViewports(10),
-    marginTop: moderateScaleViewports(-165),
+    marginTop: moderateScaleViewports(-130),
+    width: metrics.width * 0.90,
   },
   pricingText: {
     fontFamily: Fonts.BaseFont,
@@ -28,27 +29,26 @@ export default StyleSheet.create({
     alignItems: "center",
     paddingTop: moderateScaleViewports(15),
     paddingLeft: moderateScaleViewports(14),
+    paddingRight: moderateScaleViewports(14),
   },
   langInputs: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center",
-    minWidth: metrics.width * 0.80,
+    alignItems: "center"
   },
   scenarioInputContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    minWidth: metrics.width * 0.80,
   },
-  swapLangsInput: { marginTop: moderateScaleViewports(26) },
+  swapLangsInput: { marginTop: moderateScaleViewports(26), paddingLeft: 12, paddingRight: 12 },
 
   /**
    * RenderPickerLangStyles
    */
   renderPickerContainer: {
     flexDirection: "column",
-    width: metrics.width * 0.30,
+    flex: 1,
   },
 
   /**
@@ -67,6 +67,14 @@ export default StyleSheet.create({
     paddingLeft: moderateScaleViewports(13),
     borderRadius: 4,
     elevation: 1,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    maxHeight: moderateScaleViewports(42),
   },
 
   /**
@@ -75,8 +83,8 @@ export default StyleSheet.create({
   renderPickerScenarioContainer: {
     flexDirection: "column",
     marginTop: moderateScaleViewports(10),
-    width: metrics.width * 0.755,
     paddingBottom: moderateScaleViewports(15),
+    flex: 1,
   },
 
 });

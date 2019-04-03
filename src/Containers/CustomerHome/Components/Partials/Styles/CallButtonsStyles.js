@@ -13,7 +13,7 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     minWidth: metrics.width * 0.80,
     bottom: moderateScaleViewports(-5),
-    paddingBottom: isIphoneXorAbove() ? 50 : 0,
+    paddingBottom: isIphoneXorAbove() ? 70 : 0,
     position: "absolute",
   },
   audioCallButton: {
