@@ -121,6 +121,7 @@ class AddCard extends Component {
                 : this.props.expDate
             }
             onDateChange={this.onDateChange}
+            isValidDate={this.props.isValidDate}
           />
           <CVV
             type={type}
@@ -136,6 +137,7 @@ class AddCard extends Component {
 }
 
 const mS = state => ({
+  isValidDate: state.payments.isValidDate,
   token: state.auth.token,
   cardInfo: state.payments.cardInfo,
   expDate: state.payments.expDate,

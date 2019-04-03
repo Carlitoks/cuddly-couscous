@@ -62,13 +62,9 @@ export const changePayment = stripeSourceToken => (dispatch, getState) => {
 
   return User.removePayment(id, token)
     .then(response => {
-      console.log("response del remove", response);
-      console.log("remove");
       dispatch(updateView({ stripePaymentToken: null }));
     })
     .then(response => {
-      console.log("response del set", response);
-      console.log("set");
       User.setPayment(id, token, stripeSourceToken).then(response => {
         const { stripeCustomerID, stripePaymentToken } = response.data;
         dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
