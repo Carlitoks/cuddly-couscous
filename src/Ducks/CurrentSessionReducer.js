@@ -2,6 +2,7 @@ import api from '../Config/AxiosConfig';
 import { updateOptions as updateRatingsView } from './RateCallReducer';
 import lodashMerge from 'lodash/merge';
 import { getGeolocationCoords } from '../Util/Helpers';
+import {SESSION} from "../Util/Constants";
 
 // The purpose of this reducer is to manage the status of an active Jeenie session.
 // Note that this does NOT include anything related to connection handling with
@@ -308,9 +309,29 @@ export const endSession = (reason) => (dispatch, getState) => {
   });
 };
 
-// session was ended by another participant
+// session was ended by another participant.  The received reason is the
+// reason as sent from their client.  Therefore, it is modified here
+// to be accurate from the perspective of this client.
+//
+// Example: if the remote user ends the call because of "failure_local" on THEIR client,
+// that implies that on this client the end reason is "failure_remote".
 export const handleEndedSession = (reason) => (dispatch, getState) => {
   const {status, session} = getState().currentSessionReducer;
+  let endReason = reason;
+  switch (reason) {
+    case SESSION.END.FAILURE_LOCAL: {
+      endReason = SESSION.END.FAILURE_REMOTE; break;
+    }
+    case SESSION.END.FAILURE_REMOTE: {
+      endReason = SESSION.END.FAILURE_LOCAL; break;
+    }
+    case SESSION.END.DISCONNECT_LOCAL: {
+      endReason = SESSION.END.DISCONNECT_REMOTE; break;
+    }
+    case SESSION.END.DISCONNECT_REMOTE: {
+      endReason = SESSION.END.DISCONNECT_LOCAL; break;
+    }
+  }
   dispatch(update({
     status: {
       ...status,
@@ -319,7 +340,7 @@ export const handleEndedSession = (reason) => (dispatch, getState) => {
     },
     session: {
       ...session,
-      endReason: reason
+      endReason
     }
   }));
   return Promise.resolve(true);

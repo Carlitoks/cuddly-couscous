@@ -428,23 +428,18 @@ class SessionView extends Component {
     return !receivingVideo || receivingThrottled;
   }
 
-  // if an initial connection error is triggered, then just
-  // alert the error and send back to home screen
-  handleInitialConnectionError (reason, i18nKey) {
-    Alert.alert("Failed to Connect", I18n.t(i18nKey))
-    this._triggerEndCall(reason)
-  }
-
-  // call ended by user
-  triggerEndCall (reason) {
-    if (!this.props.isLinguist) {
+  // call ended by user locally
+  triggerEndCall (reason, confirm = false) {
+    if (confirm) {
+      Alert.alert(I18n.t("notification"), "Are you sure?", [
+        {text: I18n.t('yes'), onPress: () => {
+          this._triggerEndCall(reason);
+        }},
+        {text: I18n.t('no')}
+      ]);
+    } else {
       this._triggerEndCall(reason);
-      return;
     }
-
-    // TODO: alert "are you sure?"
-    this._triggerEndCall(reason);
-
   }
 
   _triggerEndCall (reason) {
@@ -452,38 +447,124 @@ class SessionView extends Component {
       return;
     }
 
-    let targetView = "Home";
-    if (this.props.status.began && this.state.localUserState.app.hasNetworkConnection) {
-      targetView = "RateView";
-    }
     this.endingCall = true;
-
     this.props.endSession(reason).finally(() => {
       this.cleanup();
       this.endingCall = false;
-      this.props.navigation.dispatch({type: targetView});
+      this.props.navigation.dispatch({type: this.chooseSessionEndedView(true)});
     });
   }
 
-  // call ended by a remote participant
-  handleRemoteCancel () {
-    Alert.alert("Cancelled", "The call was cancelled by the other party.");
-    this.handleRemoteEnded(SESSION.END.CANCEL);
-  }
-
+  // call was ended by the remote participant
   handleRemoteEnded (reason) {
 
-    // TODO: if customer and reason is certain types, go to CustomerRetryView
-
-    let targetView = "Home";
-    if (this.props.status.began && this.state.localUserState.app.hasNetworkConnection) {
-      targetView = "RateView";
-    }
-
+    // we call this first to update the session, which also
+    // ensures the end reason is accurate from the perspective
+    // of this client
     this.props.handleEndedSession(reason).finally(() => {
       this.cleanup();
-      this.props.navigation.dispatch({type: targetView});
+      this.props.navigation.dispatch({type: this.chooseSessionEndedView(false)});
     });
+  }
+
+  // figure out the proper state to navigate the user to once the session has ended, 
+  // and also display an alert in cases where that is needed
+  chooseSessionEndedView(endedByLocal) {
+    const {session, isCustomer} = this.props;
+    const {began} = this.props.status;
+    const {hasNetworkConnection} = this.state.localUserState.app;
+    let targetView = "Home";
+    let alert = false;
+
+    console.log("SessionView.chooseSessionEndedView: ", session.endReason);
+
+    switch (session.endReason) {
+      case SESSION.END.DONE: {
+        targetView = began && hasNetworkConnection ? "RateView" : "Home";
+        break;
+      }
+      case SESSION.END.CANCEL: {
+        if (isCustomer) {
+          targetView = (endedByLocal) ? "Home" : "CustomerRetryView";
+        } else {
+          targetView = "Home";
+          if (!endedByLocal) {
+            alert = {
+              title: I18n.t('notification'),
+              body: "Call was canceled by the customer." //I18n.t()
+            };
+          }
+        }
+        break;
+      }
+      case SESSION.END.DISCONNECT_LOCAL: {
+        targetView = (isCustomer) ? "CustomerRetryView" : "RateView"
+        if (!isCustomer) {
+          alert = {
+            title: I18n.t('notification'),
+            body: "You were disconnected from the call."
+          };
+        }
+        break;
+      }
+      case SESSION.END.DISCONNECT_REMOTE: {
+        targetView = (isCustomer) ? "CustomerRetryView" : "RateView"
+        if (!isCustomer) {
+          alert = {
+            title: I18n.t('notification'),
+            body: "Your customer was disconnected from the call."
+          };
+        }
+        break;
+      }
+      case SESSION.END.BALANCE_EXCEEDED: {
+        targetView = "RateView";
+        if (isCustomer) {
+          alert = {
+            title: I18n.t('notification'),
+            body: "Your account has run out of time." //I18n.t()
+          };
+        }
+        break;
+      }
+      case SESSION.END.TIME_EXCEEDED: {
+        targetView = "RateView";
+        if (isCustomer) {
+          alert = {
+            title: I18n.t('notification'),
+            body: "Call exceeded the time limit." //I18n.t()
+          };
+        }
+        break
+      }
+      case SESSION.END.FAILURE_LOCAL: {
+        targetView = (isCustomer) ? "CustomerRetryView" : "Home";
+        if (!isCustomer) {
+          alert = {
+            title: I18n.t('notification'),
+            body: "We were unable to connect you to the customer." //I18n.t()
+          };
+        }
+        break;
+      }
+      case SESSION.END.FAILURE_REMOTE: {
+        targetView = (isCustomer) ? "CustomerRetryView" : "Home";
+        if (!isCustomer) {
+          alert = {
+            title: I18n.t('notification'),
+            body: "The customer was unable to connect." //I18n.t()
+          };
+        }
+        break;
+      }
+      default: targetView = "Home";
+    }
+
+    if (!!alert) {
+      Alert.alert(alert.title, alert.body);
+    }
+
+    return targetView;
   }
 
   triggerRetryCall (endReason, startReason) {
@@ -580,7 +661,7 @@ class SessionView extends Component {
                   videoEnabled = { localUserState.controls.videoEnabled }
                   onVideoPressed = {() => { this.toggleVideo() }}
                   endingCall = { this.state.endingCall }
-                  onEndCallPressed = {() => { this.triggerEndCall(SESSION.END.DONE) }}
+                  onEndCallPressed = {() => { this.triggerEndCall(SESSION.END.DONE, true) }}
                 />
               </View>
             </View>
@@ -597,9 +678,9 @@ class SessionView extends Component {
             status = { this.props.status }
             session = { this.props.session }
             secondsUntilError = { SESSION.TIME.CONNECT / DURATION.SECONDS }
-            onError = { (reason) => { this.handleInitialConnectionError(reason, "session.errFailedToConnect") }}
-            onRemoteCancel = {() => { this.handleRemoteCancel() }}
-            onCancel = {() => { this.triggerEndCall(SESSION.END.CANCEL) }}
+            onError = {(reason) => { this.triggerEndCall(reason, false) }}
+            onRemoteEnded = {(reason) => { this.handleRemoteEnded(reason) }}
+            onCancel = {() => { this.triggerEndCall(SESSION.END.CANCEL, false) }}
           />
           )}
           
@@ -618,7 +699,7 @@ class SessionView extends Component {
             isLinguist = { this.props.isLinguist }
             userConnection = { localUserState.connection }
             userApp = { localUserState.app }
-            onEnd = {(reason) => { this.triggerEndCall(reason) }}
+            onEnd = {(reason) => { this.triggerEndCall(reason, false) }}
             onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
           />
 

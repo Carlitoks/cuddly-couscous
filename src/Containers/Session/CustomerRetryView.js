@@ -35,23 +35,25 @@ export class CustomerRetryView extends Component {
     const {session} = this.props;
 
     // prefer rollover for target language first
-    if (!!LanguagesRollover[session.secondaryLangCode]) {
-      return {
-        exists: true,
-        code: LanguagesRollover[session.secondaryLangCode],
-        name: translateLanguage(LanguagesRollover[session.secondaryLangCode]),
-        field: 'secondary',
-      };
-    }
-
-    // otherwise check for primary language
-    if (!!LanguagesRollover[session.primaryLangCode]) {
-      return {
-        exists: true,
-        code: LanguagesRollover[session.primaryLangCode],
-        name: translateLanguage(LanguagesRollover[session.primaryLangCode]),
-        field: 'primary',
-      };
+    if (session.endReason == SESSION.END.TIMEOUT) {
+      if (!!LanguagesRollover[session.secondaryLangCode]) {
+        return {
+          exists: true,
+          code: LanguagesRollover[session.secondaryLangCode],
+          name: translateLanguage(LanguagesRollover[session.secondaryLangCode]),
+          field: 'secondary',
+        };
+      }
+  
+      // otherwise check for primary language
+      if (!!LanguagesRollover[session.primaryLangCode]) {
+        return {
+          exists: true,
+          code: LanguagesRollover[session.primaryLangCode],
+          name: translateLanguage(LanguagesRollover[session.primaryLangCode]),
+          field: 'primary',
+        };
+      }
     }
 
     return {
@@ -62,9 +64,60 @@ export class CustomerRetryView extends Component {
     };
   }
 
+  retryReasonText () {
+    const {session} = this.props;
+    switch (session.endReason) {
+      case SESSION.END.TIMEOUT: {
+        return I18n.t("session.retry.busy");
+      }
+      case SESSION.END.CANCEL: {
+        return I18n.t("session.retry.cancelRemote");
+      }
+      case SESSION.END.FAILURE_LOCAL: {
+        return I18n.t("session.retry.failureLocal");
+      }
+      case SESSION.END.FAILURE_REMOTE: {
+        return I18n.t("session.retry.failureRemote");
+      }
+      case SESSION.END.DISCONNECT_LOCAL: {
+        return I18n.t("session.retry.disconnectLocal");
+      }
+      case SESSION.END.DISCONNECT_REMOTE: {
+        return I18n.t("session.retry.disconnectRemote");
+      }
+      default: {
+        return I18n.t("session.retry.busy");
+      }
+    }
+  }
+
   retry () {
-    // TODO: check for retry_cancel
-    this.createSession({startReason: SESSION.START.RETRY_TIMEOUT});
+    const {session} = this.props;
+    let startReason = null; ;
+    switch (session.endReason) {
+      case SESSION.END.TIMEOUT: {
+        startReason = SESSION.START.RETRY_TIMEOUT; break;
+      }
+      case SESSION.END.CANCEL: {
+        startReason = SESSION.START.RETRY_CANCEL; break;
+      }
+      case SESSION.END.FAILURE_LOCAL: {
+        startReason = SESSION.START.RETRY_FAILURE; break;
+      }
+      case SESSION.END.FAILURE_REMOTE: {
+        startReason = SESSION.START.RETRY_FAILURE; break;
+      }
+      case SESSION.END.DISCONNECT_LOCAL: {
+        startReason = SESSION.START.RETRY_DISCONNECT; break;
+      }
+      case SESSION.END.DISCONNECT_REMOTE: {
+        startReason = SESSION.START.RETRY_DISCONNECT; break;
+      }
+      default: {
+        startReason = SESSION.START.RETRY_TIMEOUT; break;
+      }
+    }
+    this.createSession({startReason});
   }
 
   retryRollover () {
@@ -121,7 +174,7 @@ export class CustomerRetryView extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{ I18n.t("session.retry.busy") }</Text>
+          <Text style={styles.text}>{ this.retryReasonText() }</Text>
           <Text style={styles.text}>{ I18n.t("session.retry.tryAgain") }</Text>
         </View>
         <View style={styles.buttonContainer}>

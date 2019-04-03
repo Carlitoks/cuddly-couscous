@@ -73,7 +73,8 @@ export class UserConnecting extends Component {
       this.pollFailures = 0;
       // check if session was ended by remote party
       if (res.data.session.ended) {
-        this.remoteCancel();
+        // TODO: ckeck for explicit reason
+        this.remoteEnded(res.data.session.endReason);
         return;
       }
     })
@@ -125,9 +126,9 @@ export class UserConnecting extends Component {
     }
   }
 
-  remoteCancel () {
+  remoteEnded (reason) {
     this.cleanup();
-    this.props.onRemoteCancel();
+    this.props.onRemoteEnded(reason);
   }
 
   cancel () {
