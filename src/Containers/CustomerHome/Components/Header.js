@@ -104,7 +104,7 @@ export default class LinguistHeader extends Component {
 
     if (navigation.state.routeName === "PaymentsView") {
       return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("PaymentDetailScreen")}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.cancelButton}>
             <Text style={styles.cancelStyle}>{I18n.t("cancel")}</Text>
           </View>
