@@ -5,7 +5,7 @@ import { moderateScale } from "../../../../Util/Scaling";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  flexEndCenter: { justifyContent: "center", alignItems: "center" },
+  flexEndCenter: { justifyContent: "center", alignItems: "center", marginTop: 20 },
   baseText: {
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(20, 0),
