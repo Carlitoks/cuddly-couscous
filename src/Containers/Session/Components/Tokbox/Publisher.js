@@ -73,7 +73,8 @@ export class Publisher extends Component {
 
   render () {
     const {status, localUserState} = this.props;
-    const enabled = localUserState.controls.videoEnabled && status.began;
+    const {controls} = this.props.localUserState;
+    const enabled = (controls.videoEnabled || controls.cameraFlipEnabled) && status.began;
     const containerStyles = enabled ? styles.publisherContainerEnabled : styles.publisherContainerDisabled;
     const publisherStyles = enabled ? styles.publisherEnabled : styles.publisherDisabled;
 
@@ -85,10 +86,10 @@ export class Publisher extends Component {
           eventHandlers = { this.eventHandlers }
           properties= {{
             audioFallbackEnabled: true,
-            publishAudio: localUserState.controls.micEnabled,
-            publishVideo: localUserState.controls.videoEnabled,
+            publishAudio: controls.micEnabled,
+            publishVideo: controls.videoEnabled || controls.cameraFlipEnabled,
             videoSource: 'camera',
-            cameraPosition: localUserState.controls.cameraFlipEnabled ? 'back' : 'front'
+            cameraPosition: controls.cameraFlipEnabled ? 'back' : 'front'
           }}
         />
       )}

@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Animated, Alert, NetInfo, AppState, View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {Platform, Alert, NetInfo, AppState, View, Text, StyleSheet, NativeModules, NativeEventEmitter, TouchableWithoutFeedback} from 'react-native';
 import KeepAwake from "react-native-keep-awake";
 import { connect } from 'react-redux';
 import I18n, {translateApiError} from "../../I18n/I18n";
 import merge from 'lodash/merge';
+import InCallManager from "react-native-incall-manager";
 
 import {createNewSession, endSession, handleEndedSession, setRemoteUser, setSessionBegan, startTimer, stopTimer} from '../../Ducks/CurrentSessionReducer';
 
@@ -49,12 +50,14 @@ const newUserState = (obj = {}) => {
       speakerEnabled: null,
       cameraFlipEnabled: null,
     },
+    // TODO: rename to `device`
     app: {
       state: '', // background|foreground
       networkConnection: '',
       hasNetworkConnection: false,
       // orientation: '' // TODO: portrait|landscape
       // batteryLevel: '', // TODO: track battery level, one day
+      // headset: true/false
     }
   }, obj);
 };
@@ -100,6 +103,9 @@ class SessionView extends Component {
 
     this.endingCall = false;
     this.unmounting = false;
+
+    // used only on android
+    this.wiredHeadsetListener = false;
   }
 
   TEST () {
@@ -126,7 +132,33 @@ class SessionView extends Component {
       this.updateLocalUserState({app: {networkConnection: info.type}});
     });
 
+    if (Platform.OS == "android") {
+      this.androidComponentDidMount();
+    }
+    if (Platform.OS == "ios") {
+      this.iosComponentDidMount();
+    }
+
     this.TEST();
+  }
+
+  androidComponentDidMount () {
+    const nativeBridge = NativeModules.InCallManager;
+    const NativeModule = new NativeEventEmitter(nativeBridge);
+    this.wiredHeadsetListener = NativeModule.addListener("WiredHeadset", (deviceState) => {
+      this.setWiredHeadsetState(deviceState.isPlugged);
+    });
+  }
+
+  iosComponentDidMount () {
+    InCallManager.getIsWiredHeadsetPluggedIn()
+    .then((res) => {
+      this.setWiredHeadsetState(res.isWiredHeadsetPluggedIn);
+    })
+    .catch((err) => {
+      // todo: forensics
+      console.log("InCallManager.getIsWiredHeadsetPluggedIn() catch: ", err);
+    });
   }
 
   componentWillUnmount () {
@@ -139,6 +171,34 @@ class SessionView extends Component {
     AppState.removeEventListener('change', this.handleAppStateChange);
     NetInfo.removeEventListener("connectionChange", this.handleConnectionChange);
     this.unmounting = true;
+    InCallManager.stop();
+
+    if (Platform.OS == "android") {
+      this.androidComponentCleanup();
+    }
+    if (Platform.OS == "ios") {
+      this.iosComponentCleanup();
+    }    
+  }
+
+  androidComponentCleanup () {
+    if (!!this.wiredHeadsetListener) {
+      this.wiredHeadsetListener.remove();
+    }
+  }
+
+  iosComponentCleanup () {
+
+  }
+
+  setWiredHeadsetState(isPluggedIn) {
+    if (isPluggedIn) {
+      this.props.updateLocalUserState({controls: {speakerEnabled: false}});
+      InCallManager.setForceSpeakerphoneOn(false);
+    } else {
+      this.props.updateLocalUserState({controls: {speakerEnabled: true}});
+      InCallManager.setForceSpeakerphoneOn(true);
+    }
   }
 
   handleAppStateChange (nextState) {
@@ -233,10 +293,12 @@ class SessionView extends Component {
 
   toggleSpeaker () {
     const {controls} = this.state.localUserState;
+    const enabled = !controls.speakerEnabled
     this.updateLocalUserState({controls: {
       ...controls,
-      speakerEnabled: !controls.speakerEnabled
+      speakerEnabled: enabled
     }});
+    InCallManager.setForceSpeakerphoneOn(enabled);
   }
 
   toggleCameraFlip () {
@@ -267,7 +329,9 @@ class SessionView extends Component {
 
   beginSession () {
     this.props.setSessionBegan();
-    // TODO: sound stuff, InCallManager stuff
+    InCallManager.start({media: 'audio'});
+
+    // TODO: react-native-sound settings?  Just in case?
   }
 
   handleInitialCustomerTimeout () {

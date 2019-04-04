@@ -122,9 +122,11 @@ export class LinguistIncomingCallView extends Component {
     clearInterval(this.countdownIntervalID);
 
     // stop the sound
-    this.incomingCallSound.stop();
-    this.incomingCallSound.release();
-    Sound.setActive(false);
+    if (!!this.incomingCallSound) {
+      this.incomingCallSound.stop();
+      this.incomingCallSound.release();
+      Sound.setActive(false);  
+    }
   }
 
   getSecondsRemaining () {
