@@ -591,15 +591,6 @@ export class Session extends Component {
             eventHandlers = { this.eventHandlers }
             signal = { this.state.signal }
           >
-            <Publisher
-              session = {session}
-              status = {localSessionStatus}
-              localUserState = {localUserState}
-              remoteUserState = {remoteUserState}
-              onStreamCreated = {(event) => { this.publisherStreamCreated(event) }}
-              onStreamDestroyed = {(event) => { this.publisherStreamDestroyed(event) }}
-              onError = {(event) => { this.remount() }}
-            />
             <Subscriber
               session = {session}
               status = {localSessionStatus}
@@ -611,6 +602,17 @@ export class Session extends Component {
               onVideoEnabled = {(event) => { this.subscriberVideoEnabled(event) }}
               onVideoDisableWarning = {() => { this.subscriberVideoThrottled() }}
               onVideoDisableWarningLifted = {() => { this.subscriberVideoUnthrottled() }}
+              onError = {(event) => { this.remount() }}
+            />
+
+            {/* publisher needs to be later so it overlays on top of other elements */}
+            <Publisher
+              session = {session}
+              status = {localSessionStatus}
+              localUserState = {localUserState}
+              remoteUserState = {remoteUserState}
+              onStreamCreated = {(event) => { this.publisherStreamCreated(event) }}
+              onStreamDestroyed = {(event) => { this.publisherStreamDestroyed(event) }}
               onError = {(event) => { this.remount() }}
             />
 
