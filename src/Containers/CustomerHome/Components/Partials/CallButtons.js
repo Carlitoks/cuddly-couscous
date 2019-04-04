@@ -119,7 +119,7 @@ class CallButtons extends Component {
         <TouchableOpacity
           disabled={this.isDisabled()}
           onPress={() => this.checkAvailableMinutes("audio")}
-          style={styles.audioCallButton}
+          style={this.isDisabled() ? styles.audioCallButtonDisable : styles.audioCallButton}
         >
           <Icon
             name="phone"
@@ -140,7 +140,7 @@ class CallButtons extends Component {
         <TouchableOpacity
           disabled={this.isDisabled()}
           onPress={() => this.checkAvailableMinutes("video")}
-          style={styles.videoCallButton}
+          style={this.isDisabled() ? styles.videoCallButtonDisable : styles.videoCallButton }
         >
           <Icon
             name="ios-videocam"

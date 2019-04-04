@@ -10,6 +10,8 @@ import {
 } from "../../../Ducks/NewSessionReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
 import I18n  from "../../../I18n/I18n";
+import { Bus, Shopping, Dinning, Translator, Teamwork, Layers } from "../../../Assets/SVG";
+import Reactotron from "reactotron-react-native";
 
 class Scenario extends Component {
   renderCheck = currentLang => {
@@ -33,16 +35,36 @@ class Scenario extends Component {
     return <React.Fragment />;
   };
 
+  renderIcon = (scenarioId) => {
+    switch(scenarioId){
+      case "00000000-0000-0000-0000-000000000002":
+        return <Bus />;
+      case "00000000-0000-0000-0000-000000000005":
+        return <Dinning />;
+      case "00000000-0000-0000-0000-000000000003":
+        return <Shopping />;
+      case "00000000-0000-0000-0000-000000000007":
+        return <Translator />;
+      case "00000000-0000-0000-0000-000000000010":
+        return <Teamwork />;
+      case "00000000-0000-0000-0000-000000000100":
+        return <Layers />;
+      default:
+        return <Layers />;
+    }
+  };
+
   renderScenarioListButtonContent = scenario => {
     let ButtonStyle = {
       ...styles.availableLangText,
       color: Colors.pricingViewBlack
     };
     const currentIcon = this.renderCheck(scenario.id);
+    Reactotron.log(scenario);
     return (
       <React.Fragment>
         <View style={styles.iconNameContainer}>
-          <Icon name="ios-bus" type="ionicon" size={23} />
+          { this.renderIcon(scenario.id) }
           <Text style={ButtonStyle}>{scenario.title}</Text>
         </View>
         {currentIcon}
@@ -108,13 +130,13 @@ class Scenario extends Component {
     const { closeSlideMenu } = this.props;
     return (
       <React.Fragment>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.availableLangContainer}>
+          <Text style={styles.availableLangContainerText}>
+            {I18n.t("customerHome.scenario.description")}
+          </Text>
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
           <React.Fragment>
-            <View style={styles.availableLangContainer}>
-              <Text style={styles.availableLangContainerText}>
-                {I18n.t("customerHome.scenario.description")}
-              </Text>
-            </View>
             {this.renderScenariosList()}
             {this.renderCustomOption()}
           </React.Fragment>

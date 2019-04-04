@@ -14,7 +14,7 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: Colors.gradientColor.top,
-    height: Metrics.width <= 320 || Metrics.width >= 414 ? Metrics.height * 0.65 : Metrics.height * 0.70,
+    height: Metrics.width <= 320 || Metrics.width >= 375 ? Metrics.height * 0.63 : Metrics.height * 0.70,
     width: Metrics.width,
     paddingTop: moderateScaleViewports(21),
   },

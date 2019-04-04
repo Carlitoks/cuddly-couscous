@@ -4,6 +4,13 @@ import { Fonts } from "../../../../../Themes";
 import { isIphoneXorAbove } from "../../../../../Util/Devices";
 import metrics from "../../../../../Themes/Metrics";
 
+const baseButton = {
+  flexDirection: "row",
+  justifyContent: "space-around",
+  alignItems: "center",
+  borderRadius: moderateScaleViewports(10),
+};
+
 export default StyleSheet.create({
   iconPadding: { paddingLeft: moderateScaleViewports(24) },
   callButtonContainer: {
@@ -17,20 +24,31 @@ export default StyleSheet.create({
     position: "absolute",
   },
   audioCallButton: {
+    ...baseButton,
     backgroundColor: "#3F1674",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    borderRadius: moderateScaleViewports(10),
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
+    borderRightColor: "#fff",
+    borderRightWidth: 1,
+  },
+  audioCallButtonDisable: {
+    ...baseButton,
+    backgroundColor: "#979797",
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderRightColor: "#fff",
+    borderRightWidth: 1,
   },
   videoCallButton: {
+    ...baseButton,
     backgroundColor: "#F39100",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
     borderRadius: moderateScaleViewports(10),
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+  },
+  videoCallButtonDisable: {
+    ...baseButton,
+    backgroundColor: "#979797",
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
   },

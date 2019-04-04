@@ -10,15 +10,22 @@ import Comments from './Partials/Comments';
 import Scenario from './Partials/Scenario';
 
 class SlideUpPanel extends Component {
+  heightForHeader = () => {
+    if(Metrics.width <= 320)
+      return Metrics.height * 0.45;
+    if(Metrics.width >= 375)
+      return Metrics.height * 0.50;
+    return Metrics.height * 0.70;
+  }
   render() {
     const { isSlideUpMenuVisible, closeSlideMenu, selection } = this.props;
     return (
       <SlidingUpPanel
         visible={isSlideUpMenuVisible}
         onRequestClose={() => closeSlideMenu()}
-        height={selection === "scenarioSelection" ? Metrics.height * 0.50 : Metrics.height * 0.7}
+        height={selection === "scenarioSelection" ? this.heightForHeader() : Metrics.height * 0.7}
         allowDragging={false}
-        draggableRange={{ top: selection === "scenarioSelection" ? Metrics.height * 0.60 : Metrics.height * 0.7, bottom: 0 }}
+        draggableRange={{ top: selection === "scenarioSelection" ? Metrics.height * 0.65 : Metrics.height * 0.7, bottom: 0 }}
       >
         <View Style={styles.backgroundContainer}>
           {selection === "additionalDetails"

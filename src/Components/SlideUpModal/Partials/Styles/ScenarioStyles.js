@@ -5,14 +5,19 @@ import { Fonts, Metrics } from '../../../../Themes';
 export default StyleSheet.create({
   scrollContainer: {
     backgroundColor: '#fff',
+    borderRadius: 5,
     left: Metrics.width * 0.05,
-    width: Metrics.width * 0.90,
-    borderRadius: 5
+    width: Metrics.width * 0.90
   },
   availableLangContainer: {
     height: 48,
-    width: '100%',
     justifyContent: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    left: Metrics.width * 0.05,
+    width: Metrics.width * 0.90,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
   },
   availableLangContainerText: {
     paddingLeft: 19,

@@ -145,26 +145,29 @@ class Languages extends Component {
   render() {
     const { selection } = this.props;
     return (
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <React.Fragment>
-          <View style={styles.availableLangContainer}>
-            <Text style={styles.availableLangContainerText}>
-              { selection === "primaryLang"
-                ? I18n.t("customerHome.primaryLang.label")
-                : I18n.t("sessionLang.selections")}
-            </Text>
-          </View>
-          <Divider style={styles.dividerStyle} />
-          {this.renderAvailableLanguages()}
-          <View style={styles.unAvailableLangContainer}>
-            <Text style={styles.unAvailableLangContainerText}>
-              {I18n.t("sessionLang.comingSoon")}
-            </Text>
-          </View>
-          <Divider style={styles.dividerStyle} />
-          {this.renderUnAvailableLanguages()}
-        </React.Fragment>
-      </ScrollView>
+      <React.Fragment>
+
+        <View style={styles.availableLangContainer}>
+          <Text style={styles.availableLangContainerText}>
+            { selection === "primaryLang"
+              ? I18n.t("customerHome.primaryLang.label")
+              : I18n.t("sessionLang.selections")}
+          </Text>
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
+          <React.Fragment>
+            <Divider style={styles.dividerStyle} />
+            {this.renderAvailableLanguages()}
+            <View style={styles.unAvailableLangContainer}>
+              <Text style={styles.unAvailableLangContainerText}>
+                {I18n.t("sessionLang.comingSoon")}
+              </Text>
+            </View>
+            <Divider style={styles.dividerStyle} />
+            {this.renderUnAvailableLanguages()}
+          </React.Fragment>
+        </ScrollView>
+      </React.Fragment>
     );
   }
 }

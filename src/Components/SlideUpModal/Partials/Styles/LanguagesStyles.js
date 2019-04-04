@@ -11,9 +11,13 @@ export default StyleSheet.create({
   },
   availableLangContainer: {
     height: 48,
-    width: '100%',
     justifyContent: 'center',
-    backgroundColor: 'rgba(185,185,185,0.14)'
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    left: 4,
+    width: Metrics.width * 0.98,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0
   },
   availableLangContainerText: {
     paddingLeft: 14,

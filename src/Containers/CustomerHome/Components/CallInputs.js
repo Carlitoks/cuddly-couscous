@@ -7,13 +7,17 @@ import {
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
 import RenderPicker from "./Partials/PickerSelect";
-import { modifyAdditionalDetails, swapCurrentSessionLanguages } from "../../../Ducks/NewSessionReducer";
+import { modifyAdditionalDetails, swapCurrentSessionLanguages, guessSecondaryLangCode } from "../../../Ducks/NewSessionReducer";
 import I18n from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallInputsStyles";
 import { moderateScaleViewports } from "../../../Util/Scaling";
 
 class CallInputs extends Component {
+
+  componentWillMount(){
+    this.props.guessSecondaryLangCode();
+  };
 
   paymentNotice = () => {
     const { isNewUser, availableMinutes, stripePaymentToken } = this.props;
@@ -135,6 +139,7 @@ const mS = state => ({
 const mD = {
   modifyAdditionalDetails,
   swapCurrentSessionLanguages,
+  guessSecondaryLangCode
 };
 
 export default connect(

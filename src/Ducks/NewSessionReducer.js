@@ -4,7 +4,7 @@ import {
   SupportedLanguages,
   ComingSoonLanguages,
   AllowedLanguagePairs,
-  FilterLangsByCodes, LanguagesRollover
+  FilterLangsByCodes, LanguagesRollover, getLangForCity
 } from "../Config/Languages";
 import timer from "react-native-timer";
 import { REASON, SOUNDS } from "../Util/Constants";
@@ -197,6 +197,51 @@ export const switchCallLang = (reason) => (dispatch, getState) => {
     dispatch(swapLanguages(currentSessionState));
   } catch (e) {
     console.log(e);
+  }
+};
+
+// preselect a secondary language for the session based on the primary language, available
+// language config, and the users location, if available
+export const guessSecondaryLangCode = () => (dispatch, getState) => {
+  const {user} = getState().userProfile;
+  const {session} = getState().newSessionReducer;
+  const {primaryLangCode} = session;
+  let secondaryLangCode = false;
+
+  // can't guess if there's no primary language, or no configuration for the lang pairs
+  if (!primaryLangCode || !AllowedLanguagePairs[primaryLangCode]) {
+    return;
+  }
+
+  // if there's only one supported target language then use it
+  if (!!AllowedLanguagePairs[primaryLangCode] && AllowedLanguagePairs[primaryLangCode].length === 1) {
+    secondaryLangCode = AllowedLanguagePairs[primaryLangCode][0];
+  }
+
+  if(user){
+    // maybe we have a recent geo location for the user, so guess based on that
+    if (!secondaryLangCode && !!user.lastGeolocation) {
+      const code = getLangForCity(user.lastGeolocation);
+      if (code !== primaryLangCode && !!AllowedLanguagePairs[primaryLangCode].indexOf(code) !== -1) {
+        secondaryLangCode = code;
+      }
+    }
+
+    // otherwise try to guess from last IP location if available
+    if (!secondaryLangCode && !!!user.lastIPLocation) {
+      const code = getLangForCity(user.lastIPLocation);
+      if (code !== primaryLangCode && !!AllowedLanguagePairs[primaryLangCode].indexOf(code) !== -1) {
+        secondaryLangCode = code;
+      }
+    }
+  }
+
+  // if came up with something, update the session
+  if (!!secondaryLangCode) {
+    dispatch(update({session: {
+        ...session,
+        secondaryLangCode
+      }}));
   }
 };
 
