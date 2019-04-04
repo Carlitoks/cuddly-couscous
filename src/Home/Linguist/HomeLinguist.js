@@ -71,7 +71,7 @@ class Home extends Component {
       this.props.token
     );
     if (invitations.data.length > 0) {
-      const filteredCalls = await invitations.data.filter(call => !call.responded);
+      const filteredCalls = await invitations.data.filter(call => !call.responded && !call.viewed);
       try {
         if (filteredCalls.length > 0) {
           const session = await Sessions.GetSessionInfoLinguist(

@@ -10,10 +10,11 @@ import colors from "../../Themes/Colors";
 
 import {viewSessionInvite, acceptSessionInvite, declineSessionInvite} from "../../Ducks/CurrentSessionReducer";
 import api from "../../Config/AxiosConfig";
-import { SESSION, DURATION } from "../../Util/Constants";
+import { SESSION, DURATION, SOUNDS} from "../../Util/Constants";
 import images from "../../Themes/Images";
 import Ionicon from "react-native-vector-icons/Ionicons";
 import MDIcon from "react-native-vector-icons/MaterialIcons";
+import Sound from "react-native-sound";
 
 import { moderateScale } from "../../Util/Scaling";
 
@@ -68,6 +69,13 @@ export class LinguistIncomingCallView extends Component {
       customScenarioText: (!!session.customScenarioNote) ? session.customScenarioNote : false,
     };
 
+    this.incomingCallSound = new Sound(SOUNDS.INCOMING_CALL, Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log("error loading sound", error);
+        return;
+      }
+    });
+
     // double tap prevention
     this.resopnding = false;
     this.unmounting = false;
@@ -76,10 +84,31 @@ export class LinguistIncomingCallView extends Component {
   componentDidMount () {
     this.pollIntervalID = setInterval(() => { this.handlePollInterval() }, 2000);
     this.countdownIntervalID = setInterval(() => { this.handleCountdownInterval() }, 250);
+
+    // TODO: forensic event
     this.props.viewSessionInvite().catch((e) => {
       console.log("failed to mark invite as viewed");
       console.log(e);
+    }).then(() => {
+      console.log("UPDATED INVITE AS VIEWED");
     });
+
+    // start sound - with a delay to give it time to finish loading (?)
+    setTimeout(() => {
+      Sound.setCategory("Playback", false);
+      Sound.setMode('Default');
+      Sound.setActive(true);
+      this.incomingCallSound.setNumberOfLoops(-1);
+      this.incomingCallSound.play();
+
+      // and set another timeout to ensure it doesn't play forever
+      const killAfter = this.state.seconds;
+      setTimeout(() => {
+        this.incomingCallSound.stop();
+        this.incomingCallSound.release();
+        }, killAfter * DURATION.SECONDS);
+  
+    }, 1 * DURATION.SECONDS);
   }
 
   componentWillUnmount () {
@@ -91,6 +120,11 @@ export class LinguistIncomingCallView extends Component {
     this.unmounting = true;
     clearInterval(this.pollIntervalID);
     clearInterval(this.countdownIntervalID);
+
+    // stop the sound
+    this.incomingCallSound.stop();
+    this.incomingCallSound.release();
+    Sound.setActive(false);
   }
 
   getSecondsRemaining () {
@@ -179,7 +213,7 @@ export class LinguistIncomingCallView extends Component {
           break;
         }
         case "cancelled": {
-          this.handleUnavailable("cancel");
+          this.handleUnavailable("cancelled");
           break;
         }
       }
@@ -201,13 +235,15 @@ export class LinguistIncomingCallView extends Component {
         break;
       }
       case "cancelled": {
-        // TODO: set proper message
-        body = I18n.t("api.errSessionUnavailable");
+        body = I18n.t("session.callCancel");
         break;
       }
       case "lostConnection": {
         title = I18n.t("error");
         body = "Lost connection to the server." // I18n.t("err.lostConnection")
+      }
+      case "localTimeout": {
+        body = "Call no longer available.";
       }
     }
     this.cleanup();
@@ -222,6 +258,11 @@ export class LinguistIncomingCallView extends Component {
     this.setState({
       seconds: this.getSecondsRemaining()
     });
+
+    // check for timeout
+    if (this.state.seconds <= 0) {
+      this.handleUnavailable('localTimeout');
+    }
   }
 
   render () {

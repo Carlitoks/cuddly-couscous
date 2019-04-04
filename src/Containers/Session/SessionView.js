@@ -431,11 +431,11 @@ class SessionView extends Component {
   // call ended by user locally
   triggerEndCall (reason, confirm = false) {
     if (confirm) {
-      Alert.alert(I18n.t("notification"), "Are you sure?", [
-        {text: I18n.t('yes'), onPress: () => {
+      Alert.alert(I18n.t("actions.confirm"), I18n.t('session.confirmEnd'), [
+        {text: I18n.t('actions.yes'), onPress: () => {
           this._triggerEndCall(reason);
         }},
-        {text: I18n.t('no')}
+        {text: I18n.t('actions.no')}
       ]);
     } else {
       this._triggerEndCall(reason);

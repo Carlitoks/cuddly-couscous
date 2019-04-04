@@ -87,8 +87,8 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
     // fetch invite, validate status, display incoming call if relevant
     api.get(`/session-invitations/${invitationId}`)
     .then ((res) => {
-      // don't handle if we've already responded to this invite
-      if (res.data.responded) {
+      // don't handle if we've already responded to or viewed this invite
+      if (res.data.responded || res.data.viewed) {
         return Promise.resolve(false);
       }
       dispatch(receiveSessionInvite(res.data));

@@ -415,28 +415,31 @@ export default (ENG = {
     tagline: "Language at Your Command"
   },
 
-  // generic language often used in navigation or forms
+  // generic language often used in navigation, forms, and dialogs
   actions: {
-    send: "Send",
-    cancel: "Cancel",
-    remove: "Remove",
-    close: "Close",
-    save: "Save",
-    update: "Update",
-    submit: "Submit",
-    continue: "Continue",
-    next: "Next",
     back: "Back",
-    prev: "Previous",
-    reset: "Reset",
-    clear: "Clear",
-    ok: "Ok",
-    done: "Done",
-    finished: "Finished",
-    select: "Select",
+    cancel: "Cancel",
     choose: "Choose",
+    clear: "Clear",
+    close: "Close",
+    confirm: "Confirm",
+    continue: "Continue",
+    done: "Done",
+    edit: "Edit",
+    finished: "Finished",
+    next: "Next",
+    no: "No",
+    ok: "Ok",
+    prev: "Previous",
+    remove: "Remove",
+    reset: "Reset",
+    save: "Save",
+    select: "Select",
+    send: "Send",
     skip: "Skip",
-    edit: "Edit"
+    submit: "Submit",
+    update: "Update",
+    yes: "Yes"
   },
 
   logic: {
@@ -723,8 +726,9 @@ export default (ENG = {
   // for use in session-related screens
   session: {
     errFailedToConnect: "Lost connection with Jeenie.  Please try again.",
+    confirmEnd: "Are you sure you want to end the call?",
     callTime: "Call Time: {{time}}",
-    callCancel: "This call was canceled by the customer",
+    callCancel: "This call was canceled by the customer.",
     callAnswered: "This call has been taken by another linguist.",
     callFail: "The customer was unable to connect.",
     callFailCustomer: "There was a problem connecting to your Language Jeenie.",
