@@ -82,7 +82,7 @@ class RatingScreen extends Component {
 
     if (index === 1) {
       if (linguistProfile) {
-        this.swiperRef.scrollBy(2);
+        this.swiperRef.scrollBy(1);
       } else {
         this.submit();
       }
