@@ -23,6 +23,11 @@ export default styles = StyleSheet.create({
     right: 0,
   },
 
+
+  // https://github.com/opentok/opentok-react-native/issues/162
+  //
+  // because fo this, we have to force move the publisher out of view, because
+  // just hiding it doesn't work on Android
   publisherContainerEnabled: {
     display: 'flex',
     position: "absolute",
@@ -43,11 +48,17 @@ export default styles = StyleSheet.create({
   publisherEnabled: {
     height: "100%",
     width: "100%",
+    zIndex: 99999,
   },
   publisherDisabled: {
+    display: 'none',
+    position: "absolute",
+    top: -50,
+    right: -10,
     height: 0,
-    width: 0,
+    width: 0
   },
+
 
   subscriberContainer: {
     position: 'absolute',
@@ -58,7 +69,7 @@ export default styles = StyleSheet.create({
   },
   subscriber: {
     height: "100%",
-    height: "100%"
+    width: "100%"
   },
 
   // NOTE: not possible to get this fully functional without updates to the lib:
