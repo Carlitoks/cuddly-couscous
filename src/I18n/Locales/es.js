@@ -78,7 +78,7 @@ export default (ESP = {
   connectNow: "Conectarse ahora",
   connecting: "Conectando",
   contactingLinguist:
-    "Lo comunicaremos con un \nLanguage Jeenie en \naproximadamente 1 minuto",
+    "Lo comunicaremos con un \nLanguage Jeenie en \naprox. 1 minuto",
   continue: "Continuar",
   continueUsingJeenie: "Continuar usando Jeenie",
   continueForFree: "Continuar",
@@ -390,6 +390,7 @@ export default (ESP = {
   tryAgain: "Inténtelo nuevamente",
   tryAnother: "Intente con otro Jeenie",
   tryToReconnect: "Intente reconectarse",
+  tryAnotherLang: "Pruebe {{lang}}",
   troubleshoot: "Solución de problemas",
   thankYou: " Gracias",
   thankYouFeedback: " Gracias por sus comentarios",
@@ -434,7 +435,29 @@ export default (ESP = {
   loading: {
     tagline: "Language at Your Command"
   },
-  
+
+  // generic language often used in navigation or forms
+  actions: {
+    cancel: "Cancelar",
+    remove: "Eliminar",
+    close: "Cerrar",
+    save: "Guardar",
+    update: "Actualizar",
+    submit: "Enviar",
+    continue: "Continuar",
+    next: "Siguiente",
+    back: "Volver",
+    prev: "Anterior",
+    reset: "Restablecer",
+    clear: "Borrar",
+    ok: "Aceptar",
+    done: "Listo",
+    finished: "Finalizado",
+    select: "Seleccionar",
+    choose: "Elegir",
+    skip: "Omitir"
+  },
+
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -516,6 +539,34 @@ export default (ESP = {
     }
   },
 
+  // new customer home screen designs
+  newCustomerHome: {
+    numLinguists: "{{num}} Jeenies disponibles...",
+    primaryLang: {
+      label: "Hablo"
+    },
+    secondaryLang: {
+      label: "Traducir a"
+    },
+    scenario: {
+      label: "¿Qué está haciendo?",
+      placeholder: "Seleccione un escenario (opcional)"
+    },
+    buttons: {
+      audio: "Llamada de audio",
+      video: "Videollamada"
+    },
+    rateNotices: {
+      beforeFirst: "Tarifa: $1 USD por minuto. Los primeros 10 minutos son GRATIS.",
+      afterFirst: "Tarifa: $1 USD por minuto. Quedan {{num}} minutos GRATIS",
+      noBalanceNoCard: "Tarifa: $1 USD por minuto. Agregue una tarjeta para continuar.",
+      noBalanceHasCard: "Tarifa: $1 USD por minuto.",
+      noBalanceHasCardPackage: "Tarifa: $1 USD por minuto. Compre un paquete con un descuento del 15 %.",
+      hasBalance: "Tarifa: $1 USD por minuto. Quedan {{num}} minutos de saldo.",
+      hasBalanceAutoreload: "Tarifa: Quedan {{num}} minutos."
+    }
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "Necesito ayuda con:",
@@ -526,10 +577,26 @@ export default (ESP = {
   payments: {
     currentRate: "$1/min",
     currentBalance: "{{minutes}} min",
-    enterPaymentToTalk:
-      "Ingrese la información de pago para seguir hablando. Hable todo lo que quiera por $1/min.",
-    currentRateDescription:
-      "Las llamadas cuestan $1/min, y puede hablar hasta 60 minutos. En el futuro, se ofrecerán descuentos por paquetes de minutos."
+    enterPaymentToTalk: "Ingrese la información de pago para seguir hablando. Hable todo lo que quiera por $1/min.",
+    currentRateDescription: "Las llamadas cuestan $1/min, y puede hablar hasta 60 minutos. En el futuro, se ofrecerán descuentos por paquetes de minutos.",
+    addCard: "Agregar una tarjeta",
+    removeCard: "Eliminar tarjeta",
+    removeCardAlert: "¿Está seguro de que desea eliminar esta tarjeta de crédito?  Esta acción no puede deshacerse.",
+    noCardNotice: "Aún no tiene tarjetas.",
+    number: {
+      title: "Número de tarjeta",
+      errInvalid: "Número de tarjeta no válido"
+    },
+    expiration: {
+      title: "Fecha de vencimiento",
+      placeholder: "MM/AA",
+      errInvalid: "Fecha de vencimiento no válida"
+    },
+    cvv: {
+      title: "CVV",
+      errInvalid: "CVV no válido",
+      description: 'El valor de verificación de la tarjeta (Card Verification Value, CVV) de su tarjeta de crédito o débito es un número de 3 dígitos en las tarjetas VISA, MasterCard y Discover.  En las tarjetas American Express, es un número de 4 dígitos.'
+    }
   },
 
   operatingHours: {
@@ -604,7 +671,7 @@ export default (ESP = {
     errUnexpected: "Se produjo un error inesperado.",
     errTemporary: "Se ha producido un error temporal.",
     errTemporaryTryAgain:
-      "Se ha producido un error temporal. Inténtelo de nuevo en unos minutos.",
+      "A temporary error has occurred. Try again in a few minutes.",
     errLogin: "Hubo un problema al iniciar sesión.",
     errDefaultAuth: "Sus credenciales han caducado o no son válidas.",
     errNoUser: "No se encontró a ningún usuario para esa dirección de correo electrónico.",
@@ -640,9 +707,30 @@ export default (ESP = {
       "Para optimizar la conexión, se ha deshabilitado temporalmente el video de su Language Jeenie. El video se reanudará cuando la conexión sea mejor.",
     createSessionFailed: "Temporalmente no es posible iniciar la llamada. Vuelva a intentarlo.",
 
+    // seen while matching custoner to linguist
+    matching: {
+      description: "Lo comunicaremos con un LANGUAGE JEENIE..."
+    },
+
     // used when rating a session
     rating: {
       submit: "Enviar",
+      addComment: "Agregar comentarios",
+      questionGood: "¿Qué le gustó?",
+      questionBetter: "¿Qué podría ser mejor?",
+      rateCustomer: "Califique a su cliente",
+      rateLinguist: "Califique a su lingüista",
+      report: "Informe un problema agitando suavemente el dispositivo",
+      submit: "Enviar",
+      resolvedCustomer: "¿Se resolvió su problema?",
+      resolvedLinguist: "¿Se resolvió el problema de ellos?",
+      classification: "Clasificación de la llamada",
+      classifications: {
+        trial: "Llamada de prueba",
+        demo: "Llamada de demostración del producto",
+        support: "Práctica del idioma",
+        langPractice: "Asistencia al cliente"
+      },
       flags: {
         langAbility: "Capacidad lingüística",
         time: "Hora de conexión",
@@ -682,7 +770,7 @@ export default (ESP = {
       title: "Habilitar las notificaciones",
       description: "Activar las notificaciones push le permite a Jeenie alertarlo cuando hay nuevos servicios relevantes disponibles en su área.",
       button: "Activar las notificaciones",
-      skip: "Omitir",
+      skip: "Omitir"
     },
     login: {
       title: "Primero, cuéntenos sobre usted:",

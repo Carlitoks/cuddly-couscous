@@ -55,7 +55,7 @@
   celebrateAndEnjoyAlternative:
     "庆祝翻译精灵发布，\n现可免费\n使用 10 分钟。",
   celebrateWithUs: "与我们一同庆祝翻译精灵的发布！",
-  changeSettings: "如需更改您的设置，请转至\"设置\" > \"翻译精灵\"",
+  changeSettings: "如需更改您的设置，请转至“设置” > “翻译精灵”",
   cancelCallCustomer: "无法呼叫",
   chargeAdvice: "超过 8 分钟的通话按分钟计费。",
   checkYourConnection: "请检查您的连接",
@@ -234,7 +234,7 @@
   lauchScreenSwipe2:
     "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
-    "目前，翻译精灵支持\n中文（普通话）<>英语\n和日语<>英语。\n\n即将推出其他语言。",
+    "目前，翻译精灵支持\n中文（普通话）<>英语\n和日本<>英语。\n\n即将推出其他语言。",
   lauchScreenSwipe4:
     "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
   lauchScreenSwipe5:
@@ -298,7 +298,7 @@
   password: "密码",
   passwordAnd: "和",
   passwordLength: "您的密码须至少包含 5 个字符。",
-  passwordLinguistText: "点击\"下一步\"即表示您同意我们的",
+  passwordLinguistText: "点击“下一步”即表示您同意我们的",
   permissionDenied: "App 权限被拒绝",
   passwordMatch: "密码不匹配。",
   passwordLengthValidation: "密码必须是 8 个或 8 个以上字符。",
@@ -390,6 +390,7 @@
   tryAgain: "再试一次",
   tryAnother: "尝试其他翻译精灵",
   tryToReconnect: "尝试重新连接",
+  tryAnotherLang: "试试{{lang}}",
   troubleshoot: "疑难解答",
   thankYou: " 谢谢",
   thankYouFeedback: " 感谢您的反馈",
@@ -434,7 +435,29 @@
   loading: {
     tagline: "您要求的语言"
   },
-  
+
+  // generic language often used in navigation or forms
+  actions: {
+    cancel: "取消",
+    remove: "移除",
+    close: "关闭",
+    save: "保存",
+    update: "更新",
+    submit: "提交",
+    continue: "继续",
+    next: "下一步",
+    back: "返回",
+    prev: "上一步",
+    reset: "重置",
+    clear: "清除",
+    ok: "确定",
+    done: "完成",
+    finished: "结束",
+    select: "选择",
+    choose: "选择",
+    skip: "跳过"
+  },
+
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -516,6 +539,34 @@
     }
   },
 
+  // new customer home screen designs
+  newCustomerHome: {
+    numLinguists: "{{num}} 位翻译精灵时刻伴您左右...",
+    primaryLang: {
+      label: "我说"
+    },
+    secondaryLang: {
+      label: "翻译至"
+    },
+    scenario: {
+      label: "您正在做什么？",
+      placeholder: "选择一个场景（可选）"
+    },
+    buttons: {
+      audio: "音频通话",
+      video: "视频通话"
+    },
+    rateNotices: {
+      beforeFirst: "费率：每分钟 1 美元，前 10 分钟免费。",
+      afterFirst: "费率：每分钟 1 美元，免费时间剩余 {{num}} 分钟",
+      noBalanceNoCard: "费率：每分钟 1 美元，请添加银行卡后继续通话",
+      noBalanceHasCard: "费率：每分钟 1 美元。",
+      noBalanceHasCardPackage: "费率：每分钟 1 美元，购买套餐可享八五折优惠。",
+      hasBalance: "费率：每分钟 1 美元，剩余 {{num}} 分钟。",
+      hasBalanceAutoreload: "费率：剩余 {{num}} 分钟。"
+    }
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "我需要获取帮助的语言是：",
@@ -526,10 +577,26 @@
   payments: {
     currentRate: "1 美元每分钟",
     currentBalance: "{{minutes}} 分钟",
-    enterPaymentToTalk:
-      "输入付款详情后可继续通话。每分钟 1 美元便可畅聊无阻。",
-    currentRateDescription:
-      "通话每分钟 1 美元，最多可通话 60 分钟。今后批量购买分钟数可享折扣。"
+    enterPaymentToTalk: "输入付款详情后可继续通话。每分钟 1 美元便可畅聊无阻。",
+    currentRateDescription: "通话每分钟 1 美元，最多可通话 60 分钟。今后批量购买分钟数可享折扣。",
+    addCard: "添加新卡",
+    removeCard: "移除银行卡",
+    removeCardAlert: "确认删除这张银行卡？  此操作无法撤销。",
+    noCardNotice: "您尚未添加任何银行卡。",
+    number: {
+      title: "卡号",
+      errInvalid: "无效卡号"
+    },
+    expiration: {
+      title: "到期日",
+      placeholder: "月/年",
+      errInvalid: "无效的到期日"
+    },
+    cvv: {
+      title: "CVV",
+      errInvalid: "无效的 CVV",
+      description: '在您 VISA 卡、万事达卡或发现卡等信用卡或借记卡上的 CVV（“银行卡安全码”）是由 3 位数字组成的代码。  在美国运通卡上则是 4 位数字。'
+    }
   },
 
   operatingHours: {
@@ -588,7 +655,7 @@
       hasMinutesNoCard:
         "若要在剩余的分钟数用尽后继续通话，请立即输入付款信息。",
       noMinutesHasCard:
-        "我们将自动向您的卡片扣款，收费为每分钟 1 美元。",
+        "我们将自动向您的银行卡扣款，收费为每分钟 1 美元。",
       noMinutesNoCard:
         "您必须立即添加付款信息，才能连接至语言专家。"
     },
@@ -604,8 +671,8 @@
     errUnexpected: "发生意外错误。",
     errTemporary: "发生暂时性错误。",
     errTemporaryTryAgain:
-      "发生暂时性错误。请过几分钟再试。",
-    errLogin: "登录出错",
+      "A temporary error has occurred. Try again in a few minutes.",
+    errLogin: "登录时出错",
     errDefaultAuth: "认证无效或已过期",
     errNoUser: "找不到此电子邮件地址的用户",
     errNoEmail: "找不到电子邮件",
@@ -640,9 +707,30 @@
       "为优化连接，已暂时禁用语言翻译精灵的视频功能。连接改善后即可恢复视频使用。",
     createSessionFailed: "暂时无法拨打电话。请重试。",
 
+    // seen while matching custoner to linguist
+    matching: {
+      description: "正在为您连线语言翻译精灵..."
+    },
+
     // used when rating a session
     rating: {
       submit: "提交",
+      addComment: "留言",
+      questionGood: "有哪些不错的方面？",
+      questionBetter: "哪些方面还有改善空间？",
+      rateCustomer: "评价您的客户",
+      rateLinguist: "评价您的语言专家",
+      report: "轻轻摇一摇设备即可报告问题",
+      submit: "提交",
+      resolvedCustomer: "您的问题解决了吗？",
+      resolvedLinguist: "他们的问题解决了吗？",
+      classification: "通话类别",
+      classifications: {
+        trial: "试通话",
+        demo: "产品演示通话",
+        support: "语言练习",
+        langPractice: "客户支持"
+      },
       flags: {
         langAbility: "语言能力",
         time: "连线时间",
@@ -682,7 +770,7 @@
       title: "启用通知",
       description: "打开推送通知可使翻译精灵在您所在地域推出新服务时及时告知您。",
       button: "打开通知",
-      skip: "跳过",
+      skip: "跳过"
     },
     login: {
       title: "首先，我们需要获取您的相关信息：",
@@ -690,7 +778,7 @@
         "请输入您的昵称、电子邮件和密码，以便日后访问帐户。",
       createAccountTitle: "创建帐户",
       termsAndPrivacyNotice:
-        "继续即表示，您同意我们的\"条款与隐私政策\"。",
+        "继续即表示，您同意我们的“条款与隐私政策”。",
       terms: "条款",
       privacyPolicy: "隐私政策",
       forgotPassword: "忘记密码？"
@@ -707,7 +795,7 @@
         "您输入的电子邮件地址已被注册。\n请输入其他电子邮件或\n登录您的帐户。",
       emailAndPassword:
         "电子邮件或密码错误。\n请重试。",
-      signInto: "登录您的帐户。"
+      signInto: "登录您的帐户."
     }
   },
 

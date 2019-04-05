@@ -2152,10 +2152,10 @@ export const InterfaceSupportedLanguages = [
     1: "es",
     name: "Español"
   },
-  // {
-  //   1: "pt",
-  //   name: "Português"
-  // }
+  {
+    1: "pt",
+    name: "Português"
+  }
 ];
 
 export const LanguagesRollover = {
