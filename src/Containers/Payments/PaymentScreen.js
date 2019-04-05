@@ -6,7 +6,7 @@ import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import PaymentButtons from "./Components/PaymentButtons";
 import NoCardImage from "./Components/NoCardImage";
 import AddCard from "./Components/AddCard";
-
+import { getProfileAsync } from "../../Ducks/UserProfileReducer";
 // Styles
 import styles from "./Styles/PaymentScreenStyles";
 import metrics from "../../Themes/Metrics";
@@ -48,7 +48,7 @@ const mS = state => ({
   stripePaymentToken: state.userProfile.stripePaymentToken
 });
 
-const mD = {};
+const mD = { getProfileAsync };
 
 export default connect(
   mS,

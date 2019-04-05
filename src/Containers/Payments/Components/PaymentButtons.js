@@ -13,7 +13,7 @@ import {
   setPayment,
   updatePayments
 } from "../../../Ducks/PaymentsReducer";
-import { updateView } from "../../../Ducks/UserProfileReducer";
+import { updateView, getProfileAsync } from "../../../Ducks/UserProfileReducer";
 
 class PaymentButtons extends Component {
   renderButtonStyles = type => {
@@ -36,7 +36,10 @@ class PaymentButtons extends Component {
       updateView,
       setPayment,
       clearPayments,
-      navigation
+      navigation,
+      uuid,
+      token,
+      getProfileAsync
     } = this.props;
 
     const params = {
@@ -59,6 +62,9 @@ class PaymentButtons extends Component {
         clearPayments();
         updatePayments({ errors: [] });
         updatePayments({ loading: false });
+        if (uuid !== "" && token !== "") {
+          getProfileAsync(uuid, token);
+        }
         navigation.dispatch({ type: "Home" });
       })
       .catch(err => Reactotron.log(err));
@@ -99,7 +105,9 @@ const mS = state => ({
   isValidDate: state.payments.isValidDate,
   isValidCVV: state.payments.isValidCVV,
   loading: state.payments.loading,
-  cardInfo: state.payments.cardInfo
+  cardInfo: state.payments.cardInfo,
+  token: state.auth.token,
+  uuid: state.auth.uuid
 });
 
 const mD = {
@@ -107,7 +115,8 @@ const mD = {
   clearPayments,
   setPayment,
   removePayment,
-  updateView
+  updateView,
+  getProfileAsync
 };
 
 export default connect(
