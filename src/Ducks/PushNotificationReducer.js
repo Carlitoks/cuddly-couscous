@@ -14,9 +14,10 @@ import { networkError } from "./NetworkErrorsReducer";
 import timer from "react-native-timer";
 import I18n, { translateLanguage, translateApiError } from "../I18n/I18n";
 import {recordPushNotificationEvent, recordAppError} from "../Util/Forensics";
-import { receiveSessionInvite } from "./CurrentSessionReducer";
+import { receiveSessionInvite, setRemoteUser, handleEndedSession } from "./CurrentSessionReducer";
 import api from "../Config/AxiosConfig";
 import { displayTimeAlert } from "../Util/Alerts";
+import { NotificationActionOption } from "react-native-fcm";
 
 // Actions
 export const ACTIONS = {
@@ -32,12 +33,12 @@ export const remoteNotificationReceived = notification => dispatch => {
 
     case "session:linguist-accepted":
       recordPushNotificationEvent("session:linguist-accepted", notification);
-      dispatch(linguistAcceptedNotification(JSON.parse(notification.linguist)));
+      dispatch(linguistAcceptedNotification(notifications));
       break;
 
     case "session:end":
       recordPushNotificationEvent("session:end", notification);
-      dispatch(sessionEndNotification(notification.sessionID));
+      dispatch(sessionEndNotification(notification));
       break;
 
     default:
@@ -130,31 +131,21 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
   }
 };
 
-const linguistAcceptedNotification = linguist => (dispatch, getState) => {
+const linguistAcceptedNotification = (notification) => (dispatch, getState) => {
   // Logic when a linguist accept a call
-  dispatch(updateConnectingMessage(linguist));
+  if (getState().currentSessionReducer.sessionID == notification.sessionID) {
+    dispatch(setRemoteUser(JSON.parse(notification.linguist)));
+  }
 };
 
-const connectionEventNotification = () => () => {
-  console.log("connectionEventNotification");
-  //TODO: Logic when receive a connection notification
-};
-
-const sessionEndNotification = sessionID => (dispatch, getState) => {
-  const { nav, activeSessionReducer } = getState();
-  const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
+const sessionEndNotification = (notification) => (dispatch, getState) => {
+  const { currentSessionReducer } = getState();
   if (
-    sessionID == activeSessionReducer.sessionID &&
-    !activeSessionReducer.endingSession
+    notification.sessionID == currentSessionReducer.sessionID
+    && !currentSessionReducer.status.ending
+    && !currentSessionReducer.status.ended
   ) {
-    if (
-      !activeSessionReducer.isLinguist &&
-      activeSessionReducer.elapsedTime === 0
-    ) {
-      dispatch(closeCall(REASON.CANCEL), true);
-    } else {
-      dispatch(closeCall(REASON.DONE));
-    }
+    dispatch(handleEndedSession(notification.endReason));
   }
 };
 
