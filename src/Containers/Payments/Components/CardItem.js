@@ -40,7 +40,7 @@ class CardItem extends Component {
             source={
               StripePaymentSourceMeta && StripePaymentSourceMeta.brand
                 ? Icons[StripePaymentSourceMeta.brand.toLowerCase()]
-                : Icons.cvc
+                : null
             }
           />
         </TouchableOpacity>

@@ -17,7 +17,7 @@ import styles from "./Styles/PaymentScreenStyles";
 import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
 import Reactotron from "reactotron-react-native";
-
+import PaymentButtons from "./Components/PaymentButtons";
 class EditCardScreen extends Component {
   componentWillMount() {
     stripe.setOptions({
@@ -75,13 +75,14 @@ class EditCardScreen extends Component {
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
-          <Header navigation={navigation} safeEditCard={this.safeEditCard} />
+          <Header navigation={navigation} />
           <ScrollView
             automaticallyAdjustContentInsets
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
             <AddCard type={"cardEdit"} />
+            <PaymentButtons navigation={navigation} safeEditCard={this.safeEditCard} />
           </ScrollView>
         </View>
       </ViewWrapper>

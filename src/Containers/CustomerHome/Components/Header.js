@@ -102,7 +102,10 @@ export default class LinguistHeader extends Component {
       );
     }
 
-    if (navigation.state.routeName === "PaymentsView") {
+    if (
+      navigation.state.routeName === "PaymentsView" ||
+      navigation.state.routeName === "EditCardScreen"
+    ) {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.cancelButton}>
@@ -117,16 +120,6 @@ export default class LinguistHeader extends Component {
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("EditCardScreen")}>
           <View style={styles.cancelButton}>
             <Text style={styles.cancelStyle}>{"Edit"}</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    }
-
-    if (navigation.state.routeName === "EditCardScreen") {
-      return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => this.props.safeEditCard()}>
-          <View style={styles.cancelButton}>
-            <Text style={styles.cancelStyle}>{I18n.t("save")}</Text>
           </View>
         </TouchableOpacity>
       );
