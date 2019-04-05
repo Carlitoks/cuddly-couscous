@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import colors from "../../../../Themes/Colors";
 import Color from "color";
+import { isIphoneXorAbove } from "../../../../Util/Devices";
 
 // TODO: portrait vs landscape styles
 
@@ -25,10 +26,11 @@ export default styles = StyleSheet.create({
   publisherContainerEnabled: {
     display: 'flex',
     position: "absolute",
-    top: 50,
+    top: isIphoneXorAbove() ? 94 : 50,
     right: 10,
     height: 125,
     width: 75,
+    zIndex: 99999,
   },
   publisherContainerDisabled: {
     display: 'none',
@@ -63,11 +65,11 @@ export default styles = StyleSheet.create({
   // see: https://github.com/opentok/opentok-react-native/issues/162
   primaryFeedToggle: {
     position: "absolute",
-    top: 50,
+    top: isIphoneXorAbove() ? 94 : 50,
     right: 10,
     height: 125,
     width: 75,
-    zIndex: 99999999,
+    zIndex: 99999,
     backgroundColor: "rgba(0, 0, 0, 0.5)"
   }
 });

@@ -221,11 +221,11 @@ class SessionView extends Component {
 
   }
 
-  handleConnectionChange (info) {
+  handleConnectionChange = (info) => {
     const currentState = info.effectiveType.toLowerCase();
     const prevState = this.state.networkConnection;
     this.handleNetworkConnectionTypeChanged(prevState, currentState);
-  }
+  };
 
   handleNetworkConnectionTypeChanged (prevState, currentState) {
     this.updateLocalUserState({app: {

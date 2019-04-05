@@ -72,7 +72,7 @@ export class Publisher extends Component {
   }
 
   render () {
-    const {status, localUserState} = this.props;
+    const {status} = this.props;
     const {controls} = this.props.localUserState;
     const enabled = (controls.videoEnabled || controls.cameraFlipEnabled) && status.began;
     const containerStyles = enabled ? styles.publisherContainerEnabled : styles.publisherContainerDisabled;

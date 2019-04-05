@@ -210,11 +210,14 @@ export class CustomerRetryView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     alignItems: "center",
     backgroundColor: colors.backgroundBlue
   },
   textContainer: {
     marginTop: "33%",
+    width: "100%",
+    alignItems: "center",
     paddingLeft: moderateScale(30, 0),
     paddingRight: moderateScale(30, 0),
   },
