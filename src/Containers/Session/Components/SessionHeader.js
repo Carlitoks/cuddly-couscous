@@ -6,7 +6,7 @@ import images from "../../../Themes/Images";
 export const SessionHeader = ({user}) => {
   return (
     <View style = { styles.container }>
-      <Image style={styles.avatarImage} source={!!user.avatarURL ? {uri: user.avatarURL} : {uri: images.avatar}} />
+      <Image style={styles.avatarImage} source={!!user.avatarURL ? {uri: user.avatarURL} : images.avatar} />
       <Text style = { styles.text }>{user.firstName}</Text>
     </View>
   );

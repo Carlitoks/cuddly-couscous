@@ -282,7 +282,7 @@ export class LinguistIncomingCallView extends Component {
         <View style={styles.contentContainer}>
 
           <View style={styles.userContainer}>
-            <Image style={styles.avatarImage} source={!!remoteUser.avatarURL ? {uri: remoteUser.avatarURL} : {uri: images.avatar}} />
+            <Image style={styles.avatarImage} source={!!remoteUser.avatarURL ? {uri: remoteUser.avatarURL} : images.avatar} />
             <Text style={styles.userNameText}>{remoteUser.firstName}</Text>
             <Text style={styles.incomingCallText}>{I18n.t('incomingCall')}</Text>
           </View>
