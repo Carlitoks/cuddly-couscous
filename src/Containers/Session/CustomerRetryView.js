@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View, Text, Button, StyleSheet} from "react-native";
+import {View, Text, StyleSheet} from "react-native";
 import { connect } from "react-redux";
 
 import {createNewSession} from "../../Ducks/CurrentSessionReducer";

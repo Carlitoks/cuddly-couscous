@@ -2,6 +2,7 @@ import React from "react";
 import {Text, View, Image, StyleSheet} from "react-native";
 import { moderateScale } from "../../../Util/Scaling";
 import images from "../../../Themes/Images";
+import { isIphoneXorAbove } from "../../../Util/Devices";
 
 export const SessionHeader = ({user}) => {
   return (
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     padding: 15,
+    paddingTop: isIphoneXorAbove() ? 59 : 15,
     backgroundColor: "rgba(0, 0, 0, 0.33)",
     flexDirection: 'row',
     alignItems: "center"
@@ -27,7 +29,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     marginRight: 20,
-    borderRadius: 75,
+    borderRadius: 27.5,
     borderWidth: 1,
     borderColor: "gray"
   },

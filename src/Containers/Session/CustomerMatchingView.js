@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Alert, ActivityIndicator, Button, Text, View, StyleSheet} from "react-native";
+import {Alert, ActivityIndicator, Text, View, StyleSheet} from "react-native";
 import TextButton from "../../Components/Widgets/TextButton";
 import { connect } from "react-redux";
 import api from "../../Config/AxiosConfig";

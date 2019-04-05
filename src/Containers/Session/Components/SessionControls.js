@@ -3,6 +3,7 @@ import {View, StyleSheet} from "react-native";
 
 import Icon from "react-native-vector-icons/Ionicons";
 import colors from "../../../Themes/Colors";
+import { isIphoneXorAbove } from "../../../Util/Devices";
 
 const IconButton = ({name, enabled, onPress}) => {
   return (
@@ -97,11 +98,10 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: 'rgba(0, 0, 0, 0.33)',
     paddingTop: 5,
-    paddingBottom: 5,
     paddingLeft: 15,
     paddingRight: 15,
+    paddingBottom: isIphoneXorAbove() ? 38 : 5,
     alignItems: "center",
     justifyContent: "space-evenly",
-    // paddingBottom: TODO: add extra padding for new iPhones
   },
 });

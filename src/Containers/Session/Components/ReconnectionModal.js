@@ -232,6 +232,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: moderateScale(20, 0),
     color: "#44a",
+    textAlign: "center"
   },
   buttonContainer: {
     marginTop: 20,

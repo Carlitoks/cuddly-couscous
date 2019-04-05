@@ -73,7 +73,6 @@ class SessionView extends Component {
     // anything referenced in the template and/or passed to child
     // components as props needs to be defined in `state`
     this.state = {
-
       // local view state for the session display
       display: {
         controlsVisible: true,
@@ -193,22 +192,22 @@ class SessionView extends Component {
 
   setWiredHeadsetState(isPluggedIn) {
     if (isPluggedIn) {
-      this.props.updateLocalUserState({controls: {speakerEnabled: false}});
+      this.updateLocalUserState({controls: {speakerEnabled: false}});
       InCallManager.setForceSpeakerphoneOn(false);
     } else {
-      this.props.updateLocalUserState({controls: {speakerEnabled: true}});
+      this.updateLocalUserState({controls: {speakerEnabled: true}});
       InCallManager.setForceSpeakerphoneOn(true);
     }
   }
 
-  handleAppStateChange (nextState) {
-    this.setState({appState: nextState});
+  handleAppStateChange = (nextState) => {
+    this.updateLocalUserState({app: {state: nextState}});
     switch (nextState) {
       case 'background': this.appWillEnterBackground(); break;
       case 'foreground': this.appWillEnterForeground(); break;
       case 'inactive': this.appWillBeSuspended(); break;
     }
-  }
+  };
   
   appWillEnterBackground () {
 
@@ -330,22 +329,11 @@ class SessionView extends Component {
   beginSession () {
     this.props.setSessionBegan();
     InCallManager.start({media: 'audio'});
+    if (this.state.localUserState.controls.speakerEnabled) {
+      InCallManager.setForceSpeakerphoneOn(true);
+    }
 
     // TODO: react-native-sound settings?  Just in case?
-  }
-
-  handleInitialCustomerTimeout () {
-    this.props.endSession(SESSION.END.TIMEOUT).finally(() => {
-      this.cleanup();
-      this.props.navigation.dispatch({type: "CustomerRetryView"});
-    });
-  }
-
-  handleInitialLinguistTimeout () {
-    this.props.endSession(SESSION.END.FAILURE_REMOTE).finally(() => {
-      this.cleanup();
-      this.props.navigation.dispatch({type: "Home"});
-    });
   }
 
   handleUserConnecting () {
