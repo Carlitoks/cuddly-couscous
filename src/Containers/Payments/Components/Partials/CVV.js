@@ -21,6 +21,7 @@ const CvvInput = props => {
           options={{
             mask: "999"
           }}
+          keyboardType={"number-pad"}
           value={props.CVV}
           onChangeText={text => props.onChangeCVV(text)}
           style={styles.CVVInput}
