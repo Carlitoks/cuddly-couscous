@@ -8,7 +8,7 @@ export const AudioModeBackground = ({user}) => {
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
-        <Image style={styles.avatarImage} source={!!user.avatarURL ? user.avatarURL : images.avatar} />
+        <Image style={styles.avatarImage} source={!!user.avatarURL ? {uri: user.avatarURL} : {uri: images.avatar}} />
       </View>
     </View>
   );
