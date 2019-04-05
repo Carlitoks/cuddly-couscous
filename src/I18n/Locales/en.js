@@ -458,6 +458,19 @@ export default (ENG = {
     skip: "Skip",
   },
 
+  menu: {
+    profile: "Profile",
+    editProfile: "Edit Profile",
+    home: "Home",
+    history: "History",
+    promo: "Enter a Promo Code",
+    qr: "Scan QR Code",
+    payment: "Payment Details",
+    problem: "Report a Problem",
+    becomeLinguist: "Become a Linguist",
+    settings: "Settings"
+  },
+
   // new customer home screen
   customerHome: {
     primaryLang: {
@@ -541,6 +554,8 @@ export default (ENG = {
 
   // new customer home screen designs
   newCustomerHome: {
+    addCard: "Add Card",
+    balance: "{{num}}m",
     numLinguists: "{{num}} Jeenies standing by...",
     primaryLang: {
       label: "I speak",
