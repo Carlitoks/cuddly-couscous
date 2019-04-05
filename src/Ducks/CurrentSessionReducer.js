@@ -268,9 +268,24 @@ export const stopTimer = () => (dispatch, getState) => {
   }}));
 };
 
-export const canRejoinSession = () => (dispapch) => {
-  // TODO: check status route - if remote user is still
-  // connected, user could rejoin that session
+export const canRejoinSession = () => (dispatch, getState) => {
+  const {session, status} = getState().currentSessionReducer;
+  if (!session.id || status.ending || status.ended) {
+    return Promise.resolve(false);
+  }
+
+  return new Promise((resolve, reject) => {
+    api.get(`/sessions/${session.id}/status`)
+    .then((res) => {
+      if (res.data.session.ended) {
+        dispatch(clear());
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    })
+    .catch(reject);
+  });
 };
 
 // initiate ending the session

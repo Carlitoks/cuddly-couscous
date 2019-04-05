@@ -50,6 +50,7 @@ class Home extends Component {
   componentDidMount() {
     this.updateFCMToken();
     flushEvents();
+    // TODO: check for previously ended session
   }
 
   componentWillUnmount() {

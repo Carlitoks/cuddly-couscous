@@ -477,6 +477,7 @@ class SessionView extends Component {
 
   showAudioMode () {
     const {receivingVideo, receivingThrottled} = this.state.localUserState.connection;
+    // TODO: should we really show audio mode if throttled?
     return !receivingVideo || receivingThrottled;
   }
 
@@ -522,7 +523,7 @@ class SessionView extends Component {
   // figure out the proper state to navigate the user to once the session has ended, 
   // and also display an alert in cases where that is needed
   chooseSessionEndedView(endedByLocal) {
-    const {session, isCustomer} = this.props;
+    const {session, isCustomer, isLinguist} = this.props;
     const {began} = this.props.status;
     const {hasNetworkConnection} = this.state.localUserState.app;
     let targetView = "Home";
@@ -551,7 +552,7 @@ class SessionView extends Component {
       }
       case SESSION.END.DISCONNECT_LOCAL: {
         targetView = (isCustomer) ? "CustomerRetryView" : "RateView"
-        if (!isCustomer) {
+        if (isLinguist) {
           alert = {
             title: I18n.t('notification'),
             body: "You were disconnected from the call."
@@ -561,7 +562,7 @@ class SessionView extends Component {
       }
       case SESSION.END.DISCONNECT_REMOTE: {
         targetView = (isCustomer) ? "CustomerRetryView" : "RateView"
-        if (!isCustomer) {
+        if (isLinguist) {
           alert = {
             title: I18n.t('notification'),
             body: "Your customer was disconnected from the call."
@@ -591,7 +592,7 @@ class SessionView extends Component {
       }
       case SESSION.END.FAILURE_LOCAL: {
         targetView = (isCustomer) ? "CustomerRetryView" : "Home";
-        if (!isCustomer) {
+        if (isLinguist) {
           alert = {
             title: I18n.t('notification'),
             body: "We were unable to connect you to the customer." //I18n.t()
@@ -601,7 +602,7 @@ class SessionView extends Component {
       }
       case SESSION.END.FAILURE_REMOTE: {
         targetView = (isCustomer) ? "CustomerRetryView" : "Home";
-        if (!isCustomer) {
+        if (isLinguist) {
           alert = {
             title: I18n.t('notification'),
             body: "The customer was unable to connect." //I18n.t()
