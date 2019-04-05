@@ -43,14 +43,9 @@ export const getProfileAsync = (uid, token) => (dispatch, getState) => {
       const { stripePaymentToken } = data;
 
       if (!pushNotification.tokenFCM) {
-        PushNotification.registerDeviceInFCM(
-          data.id,
-          auth.deviceId,
-          token,
-          payload => {
-            dispatch(registerFCM(payload));
-          }
-        );
+        PushNotification.registerDeviceInFCM(data.id, auth.deviceId, token, payload => {
+          dispatch(registerFCM(payload));
+        });
       }
 
       return dispatch(updateView({ ...data, stripePaymentToken }));
@@ -65,9 +60,7 @@ export const updateProfileAsync = (uid, payload, token) => dispatch => {
         .then(response => {
           const data = {
             ...response.data,
-            preferredName: response.data.preferredName
-              ? response.data.preferredName
-              : ""
+            preferredName: response.data.preferredName ? response.data.preferredName : ""
           };
           return dispatch(updateView(data));
         })

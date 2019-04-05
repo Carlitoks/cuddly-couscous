@@ -12,13 +12,17 @@ import styles from "./Styles/PaymentScreenStyles";
 import metrics from "../../Themes/Metrics";
 import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
-
+import { getProfileAsync } from "../../Ducks/UserProfileReducer";
 class PaymentDetailScreen extends Component {
   componentWillMount() {
+    const { uuid, token, getProfileAsync } = this.props;
     stripe.setOptions({
       publishableKey: stripePublishableKey
       //androidPayMode: "test" // Android only
     });
+    if (uuid !== "" && token !== "") {
+      getProfileAsync(uuid, token);
+    }
   }
 
   render() {
@@ -48,7 +52,7 @@ const mS = state => ({
   stripePaymentToken: state.userProfile.stripePaymentToken
 });
 
-const mD = {};
+const mD = { getProfileAsync };
 
 export default connect(
   mS,

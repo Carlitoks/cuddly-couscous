@@ -62,9 +62,7 @@ class PaymentButtons extends Component {
         clearPayments();
         updatePayments({ errors: [] });
         updatePayments({ loading: false });
-        if (uuid !== "" && token !== "") {
-          getProfileAsync(uuid, token);
-        }
+
         navigation.dispatch({ type: "Home" });
       })
       .catch(err => Reactotron.log(err));
