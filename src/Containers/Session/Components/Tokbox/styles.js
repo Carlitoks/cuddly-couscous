@@ -40,8 +40,8 @@ export default styles = StyleSheet.create({
   publisherContainerDisabled: {
     display: 'none',
     position: "absolute",
-    top: -50,
-    right: -10,
+    top: -200,
+    right: -100,
     height: 0,
     width: 0
   },
@@ -53,8 +53,8 @@ export default styles = StyleSheet.create({
   publisherDisabled: {
     display: 'none',
     position: "absolute",
-    top: -50,
-    right: -10,
+    top: -200,
+    right: -100,
     height: 0,
     width: 0
   },
