@@ -195,7 +195,7 @@ class MenuView extends Component {
               }
               onPress={() => this.checkCurrentPage(navigation, "PaymentsView")}
             >
-              <Text style={styles.colorText}>{I18n.t("modifyPayment")}</Text>
+              <Text style={styles.colorText}>{I18n.t("paymentDetails")}</Text>
             </MaterialCIcons.Button>
           )}
 
