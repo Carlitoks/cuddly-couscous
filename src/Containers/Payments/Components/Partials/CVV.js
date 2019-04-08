@@ -19,7 +19,7 @@ const CvvInput = props => {
         <TextInputMask
           type={"custom"}
           options={{
-            mask: "999"
+            mask: props.brand && props.brand === "american-express" ? "9999" : "999"
           }}
           keyboardType={"number-pad"}
           value={props.CVV}
