@@ -16,7 +16,7 @@ import {SessionHeader} from "./Components/SessionHeader";
 import {AudioModeBackground} from "./Components/AudioModeBackground";
 import {CallTimer} from "./Components/CallTimer";
 import {SessionControls} from "./Components/SessionControls";
-import {Session as TokboxSession} from "./Components/Tokbox/Session";
+import {Session as OpentokSession} from "./Components/Opentok/Session";
 
 import * as tests from './SessionView.tests';
 import { SESSION, DURATION } from '../../Util/Constants';
@@ -650,7 +650,7 @@ class SessionView extends Component {
 
           <KeepAwake />
 
-          <TokboxSession
+          <OpentokSession
             user = {this.props.user }
             session = { this.props.session }
             credentials = { this.props.credentials }
@@ -719,7 +719,7 @@ class SessionView extends Component {
               </View>
             </View>
 
-          </TokboxSession>
+          </OpentokSession>
 
           {/* If there is a remote user, but we haven't connected to them yet, show the initial connection screen */}
           {!!this.props.remoteUser.id && !this.props.status.began && (
