@@ -121,10 +121,10 @@ export class ReconnectionModal extends Component {
   }
 
   getConnectionMessage () {
-    const {userApp, userConnection, remoteUser, remoteUserConnection} = this.props;
+    const {localDevice, userConnection, remoteUser, remoteUserConnection} = this.props;
     const {showOptions} = this.state;
-    const localDisconnect = userApp.networkConnection == "none" || !userConnection.connected;
-    const connected = userApp.hasNetworkConnection && userConnection.connected && remoteUserConnection.connected;
+    const localDisconnect = localDevice.networkConnection == "none" || !userConnection.connected;
+    const connected = localDevice.hasNetworkConnection && userConnection.connected && remoteUserConnection.connected;
 
     if (this.isEnding()) {
       return I18n.t('session.reconnection.ending');
@@ -155,7 +155,7 @@ export class ReconnectionModal extends Component {
   }
 
   renderButtons () {
-    const {isCustomer, userApp} = this.props;
+    const {isCustomer, localDevice} = this.props;
 
     let buttons = [
       {
@@ -167,7 +167,7 @@ export class ReconnectionModal extends Component {
     ];
 
     // if customer still has a network connection, provide option to try someone else
-    if (isCustomer && userApp.hasNetworkConnection) {
+    if (isCustomer && localDevice.hasNetworkConnection) {
       buttons.push({
         title: I18n.t('session.reconnection.actions.tryAnother'),
         onPress: () => { this.retryCall() }

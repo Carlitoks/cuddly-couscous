@@ -109,7 +109,7 @@ export class Session extends Component {
 
   mounted () {
     return !this.unmounting
-      && this.props.localUserState.app.networkConnection != "none"
+      && this.props.localUserState.device.networkConnection != "none"
       && !this.state.unmounting
       && this.state.mounted
   }
@@ -148,10 +148,10 @@ export class Session extends Component {
       return;
     }
 
-    const oldS = oldP.localUserState.app;
-    const newS = newP.localUserState.app;
+    const oldS = oldP.localUserState.device;
+    const newS = newP.localUserState.device;
     if (oldS.state != newS.state) {
-      this.sendSignal(SIGNALS.APP_STATE, {state: newS.state});
+      this.sendSignal(SIGNALS.APP_STATE, {appState: newS.appState});
     }
     if (oldS.networkConnection != newS.networkConnection) {
       this.sendSignal(SIGNALS.NETWORK_STATE, {type: newS.networkConnection});
@@ -213,8 +213,8 @@ export class Session extends Component {
     this.sendSignal(SIGNALS.NOT_LEGACY_VERSION);
     
     const {localUserState} = this.props;
-    this.sendSignal(SIGNALS.APP_STATE, {state: localUserState.app.state});
-    this.sendSignal(SIGNALS.NETWORK_STATE, {type: localUserState.app.networkConnection});
+    this.sendSignal(SIGNALS.APP_STATE, {state: localUserState.device.appState});
+    this.sendSignal(SIGNALS.NETWORK_STATE, {type: localUserState.device.networkConnection});
     this.sendSignal(SIGNALS.CONTROL_STATE, localUserState.controls);
 
   }
@@ -517,9 +517,9 @@ export class Session extends Component {
       case SIGNALS.APP_STATE: {
         this.props.onRemoteUserUpdated({
           ...this.props.remoteUserState,
-          app: {
-            ...this.props.remoteUserState.app,
-            state: payload.state,
+          device: {
+            ...this.props.remoteUserState.device,
+            appState: payload.state,
           }
         });
         break;
@@ -527,8 +527,8 @@ export class Session extends Component {
       case SIGNALS.NETWORK_STATE: {
         this.props.onRemoteUserUpdated({
           ...this.props.remoteUserState,
-          app: {
-            ...this.props.remoteUserState.app,
+          device: {
+            ...this.props.remoteUserState.device,
             networkConnection: payload.type,
             hasHetworkConnection: "none" != payload.type,
           }

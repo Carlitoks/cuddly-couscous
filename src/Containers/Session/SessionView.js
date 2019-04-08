@@ -31,7 +31,6 @@ import { SESSION, DURATION } from '../../Util/Constants';
 // the remote user, can be defined in other areas of the state.
 const newUserState = (obj = {}) => {
   return merge({
-    platform: null,           // mobile|web|sip
     connection: {
       initiallyConnected: false,
       connected: false,
@@ -51,8 +50,9 @@ const newUserState = (obj = {}) => {
       cameraFlipEnabled: null,
     },
     // TODO: rename to `device`
-    app: {
-      state: '', // background|foreground
+    device: {
+      platform: null,           // mobile|web|sip
+      appState: '', // background|foreground
       networkConnection: '',
       hasNetworkConnection: false,
       // orientation: '' // TODO: portrait|landscape
@@ -86,9 +86,9 @@ class SessionView extends Component {
       // local user state, we can make some immediate overrides since
       // we have more info
       localUserState: newUserState({
-        platform: 'mobile',
-        app: {
-          state: AppState.currentState,
+        device: {
+          platform: 'mobile',
+          appState: AppState.currentState,
           hasNetworkConnection: true,
         },
         controls: {
@@ -128,7 +128,7 @@ class SessionView extends Component {
     AppState.addEventListener('change', this.handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.handleConnectionChange);
     NetInfo.getConnectionInfo().then((info) => {
-      this.updateLocalUserState({app: {networkConnection: info.type}});
+      this.handleConnectionChange(info);
     });
 
     if (Platform.OS == "android") {
@@ -201,7 +201,7 @@ class SessionView extends Component {
   }
 
   handleAppStateChange = (nextState) => {
-    this.updateLocalUserState({app: {state: nextState}});
+    this.updateLocalUserState({device: {appState: nextState}});
     switch (nextState) {
       case 'background': this.appWillEnterBackground(); break;
       case 'foreground': this.appWillEnterForeground(); break;
@@ -228,8 +228,8 @@ class SessionView extends Component {
   };
 
   handleNetworkConnectionTypeChanged (prevState, currentState) {
-    this.updateLocalUserState({app: {
-      ...this.state.localUserState.app,
+    this.updateLocalUserState({device: {
+      ...this.state.localUserState.device,
       networkConnection: currentState,
       hasNetworkConnection: currentState != "none"
     }});
@@ -319,7 +319,7 @@ class SessionView extends Component {
       status.began
       && (!status.ending && !status.ended)
       && (
-        "none" == this.state.localUserState.app.networkConnection
+        "none" == this.state.localUserState.device.networkConnection
         || !this.state.localUserState.connection.connected
         || !this.state.remoteUserState.connection.connected
       )
@@ -525,7 +525,7 @@ class SessionView extends Component {
   chooseSessionEndedView(endedByLocal) {
     const {session, isCustomer, isLinguist} = this.props;
     const {began} = this.props.status;
-    const {hasNetworkConnection} = this.state.localUserState.app;
+    const {hasNetworkConnection} = this.state.localUserState.device;
     let targetView = "Home";
     let alert = false;
 
@@ -751,7 +751,7 @@ class SessionView extends Component {
             isCustomer = { this.props.isCustomer }
             isLinguist = { this.props.isLinguist }
             userConnection = { localUserState.connection }
-            userApp = { localUserState.app }
+            localDevice = { localUserState.device }
             onEnd = {(reason) => { this.triggerEndCall(reason, false) }}
             onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
           />
