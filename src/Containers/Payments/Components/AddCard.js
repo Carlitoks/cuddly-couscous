@@ -81,18 +81,30 @@ class AddCard extends Component {
     }
   };
 
-  render() {
+  generateCardInfo = cardInfo => {
     const { type, StripePaymentSourceMeta } = this.props;
-    let cardInfo = { creditCardNumber: "", creditCardIcon: "", expDate: "" };
-
     if (type === "cardInfo" && StripePaymentSourceMeta) {
       cardInfo.creditCardNumber = "XXXX-XXXX-XXXX-" + StripePaymentSourceMeta.last4.toString();
       cardInfo.creditCardIcon = Icons[StripePaymentSourceMeta.brand.toLowerCase()];
-      cardInfo.expDate =
-        StripePaymentSourceMeta.expMonth.toString() +
-        "/" +
-        StripePaymentSourceMeta.expYear.toString();
+      if (StripePaymentSourceMeta.expMonth.toString().length > 1) {
+        cardInfo.expDate =
+          StripePaymentSourceMeta.expMonth.toString() +
+          "/" +
+          StripePaymentSourceMeta.expYear.toString().substring(2);
+      } else {
+        cardInfo.expDate =
+          "0" +
+          StripePaymentSourceMeta.expMonth.toString() +
+          "/" +
+          StripePaymentSourceMeta.expYear.toString().substring(2);
+      }
     }
+    return cardInfo;
+  };
+  render() {
+    const { type, StripePaymentSourceMeta } = this.props;
+    let cardInfo = { creditCardNumber: "", creditCardIcon: "", expDate: "" };
+    cardInfo = this.generateCardInfo(cardInfo);
     return (
       <View style={styles.flexEndCenter}>
         <CreditCardNumber
@@ -125,6 +137,11 @@ class AddCard extends Component {
           />
           <CVV
             type={type}
+            brand={
+              this.props.cardInfo.number && validCC(this.props.cardInfo.number).card
+                ? validCC(this.props.cardInfo.number).card.type
+                : null
+            }
             CVV={this.props.cardInfo.cvc}
             onChangeCVV={this.onChangeCVV}
             onTooltipPress={this.onTooltipPress}
