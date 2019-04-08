@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import I18n, { translateApiError, translateLanguage, translateProperty } from "../../I18n/I18n";
 import moment from "moment";
 import Permissions from "react-native-permissions";
+import KeepAwake from "react-native-keep-awake";
 
 import LinearGradient from "react-native-linear-gradient";
 import colors from "../../Themes/Colors";
@@ -272,6 +273,7 @@ export class LinguistIncomingCallView extends Component {
     const {seconds, linguists, primaryLangName, secondaryLangName, scenarioText, customScenarioText} = this.state;
     return (
       <View style = {styles.container}>
+        <KeepAwake />
         <LinearGradient
           style={styles.backgroundGradient}
           colors={[

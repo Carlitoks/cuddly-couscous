@@ -3,6 +3,7 @@ import {Alert, ActivityIndicator, Text, View, StyleSheet} from "react-native";
 import TextButton from "../../Components/Widgets/TextButton";
 import { connect } from "react-redux";
 import api from "../../Config/AxiosConfig";
+import KeepAwake from "react-native-keep-awake";
 
 import {createNewSession, endSession, handleEndedSession, setRemoteUser} from "../../Ducks/CurrentSessionReducer";
 import I18n, { translateApiError } from "../../I18n/I18n";
@@ -197,6 +198,7 @@ export class CustomerMatchingView extends Component {
     const {remaining, elapsed} = this.state;
     return (
       <View style = {styles.container}>
+        <KeepAwake />
         <ActivityIndicator
           size="large"
           color="white"
