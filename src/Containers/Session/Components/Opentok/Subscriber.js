@@ -54,6 +54,12 @@ export class Subscriber extends Component {
     recordSessionOpentokEvent('subscriber.connected', {
       sessionID: this.props.session.id
     });
+
+    // check if it's an audio-only call initially
+    if ("audio" === this.props.session.avModePreference) {
+      this.receiving = true;
+      this.props.onReceiving();
+    }
   }
 
   onDisconnected () {

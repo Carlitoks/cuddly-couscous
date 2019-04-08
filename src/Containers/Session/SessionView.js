@@ -6,6 +6,8 @@ import I18n, {translateApiError} from "../../I18n/I18n";
 import merge from 'lodash/merge';
 import InCallManager from "react-native-incall-manager";
 
+import api from "../../Config/AxiosConfig";
+
 import {createNewSession, endSession, handleEndedSession, setRemoteUser, setSessionBegan, startTimer, stopTimer} from '../../Ducks/CurrentSessionReducer';
 
 import {UserConnecting} from "./Components/UserConnecting";
@@ -104,8 +106,13 @@ class SessionView extends Component {
       }),
     };
 
+    console.log('props: ', props.session);
+    console.log('localUserState', this.state.localUserState);
+
     this.endingCall = false;
     this.unmounting = false;
+    this.statusPollIntervalID = null;
+    this.statusPollFailures = 0;
 
     // used only on android
     this.wiredHeadsetListener = false;
@@ -175,6 +182,7 @@ class SessionView extends Component {
     NetInfo.removeEventListener("connectionChange", this.handleConnectionChange);
     this.unmounting = true;
     InCallManager.stop();
+    clearInterval(this.statusPollIntervalID);
 
     if (Platform.OS == "android") {
       this.androidComponentCleanup();
@@ -339,7 +347,37 @@ class SessionView extends Component {
       InCallManager.setForceSpeakerphoneOn(true);
     }
 
-    // TODO: react-native-sound settings?  Just in case?
+    this.statusPollIntervalID = setInterval(() => {
+      this.handleSessionStatusPoll();
+    }, 5 * DURATION.SECONDS);
+  }
+
+  handleSessionStatusPoll () {
+    if (this.ending || this.unmounting) {
+      clearInterval(this.statusPollIntervalID);
+      return;
+    }
+
+    api.get(`/sessions/${this.props.session.id}/status`)
+    .then((res) => {
+      if (this.ending || this.unmounting) {
+        return;
+      }
+      this.statusPollFailures = 0;
+      // check if session was ended by remote party
+      if (res.data.session.ended) {
+        this.handleRemoteEnded(res.data.session.endReason);
+      }
+    })
+    .catch((e) => {
+      if (this.ending || this.unmounting) {
+        return;
+      }
+      this.statusPollFailures++;
+      if (this.statusPollFailures >= 3) {
+        this.triggerEndCall(SESSION.END.DISCONNECT_LOCAL);
+      }
+    });
   }
 
   handleUserConnecting () {
@@ -533,7 +571,7 @@ class SessionView extends Component {
 
   // call was ended by the remote participant
   handleRemoteEnded (reason) {
-    recordSessionEvent('handleRemoteEnded');
+    recordSessionEvent('handleRemoteEnded', {reason});
 
     // we call this first to update the session, which also
     // ensures the end reason is accurate from the perspective

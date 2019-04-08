@@ -73,7 +73,6 @@ export class UserConnecting extends Component {
       this.pollFailures = 0;
       // check if session was ended by remote party
       if (res.data.session.ended) {
-        // TODO: ckeck for explicit reason
         this.remoteEnded(res.data.session.endReason);
         return;
       }
@@ -83,7 +82,7 @@ export class UserConnecting extends Component {
       if (this.pollFailures >= 3) {
         this.error(SESSION.END.FAILURE_LOCAL);
       }
-    })
+    });
   }
 
   handleCountdownInterval () {

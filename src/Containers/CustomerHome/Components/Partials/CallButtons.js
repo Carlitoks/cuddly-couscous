@@ -66,10 +66,7 @@ class CallButtons extends Component {
     } = this.props;
     cleanSelected();
     clearPromoCode();
-
-    if (type === "video") {
-      modifyAVModePreference({ avModePreference: type });
-    }
+    modifyAVModePreference({ avModePreference: type });
 
     if (availableMinutes === 0 && !stripePaymentToken) {
       Alert.alert(" ", I18n.t("payments.enterPaymentToTalk"), [
