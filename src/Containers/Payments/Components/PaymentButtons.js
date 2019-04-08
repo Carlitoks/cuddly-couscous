@@ -53,35 +53,51 @@ class PaymentButtons extends Component {
     Reactotron.log(params);
     const stripeResponse = await stripe
       .createTokenWithCard(params)
-      .then(({ tokenId }) => {
+      .then(response => {
+        let tokenId = response.tokenId;
         Reactotron.log(tokenId);
         updateView({ stripePaymentToken: tokenId });
-        setPayment(tokenId);
+        setPayment(tokenId).then(res => {
+          if (res) {
+            updatePayments({ loading: false });
+            Reactotron.log(res);
+            Alert.alert(I18n.t("error"), I18n.t("invalidPaymentDetails"), [
+              {
+                text: I18n.t("ok"),
+                onPress: () => {
+                  navigation.dispatch({
+                    type: "Home"
+                  });
+                }
+              }
+            ]);
+          } else {
+            clearPayments();
+            updatePayments({ errors: [] });
+            updatePayments({ loading: false });
+            navigation.dispatch({ type: "Home" });
+          }
+        });
       })
-      .then(() => {
-        clearPayments();
-        updatePayments({ errors: [] });
-        updatePayments({ loading: false });
-
-        navigation.dispatch({ type: "Home" });
-      })
-      .catch(err => Reactotron.log(err));
-
-    /*.then(({ tokenId }) => {
-          Reactotron.log(tokenId);
-          updateView({ stripePaymentToken: tokenId });
-          return setPayment(tokenId);
-        })
-        .then(_ => {
-          clearPayments();
-          updatePayments({ errors: [] });
-          updatePayments({ loading: false })
-        }).catch(err => Reactotron.log(err));*/
+      .catch(err => {
+        Reactotron.log(err);
+        Alert.alert(I18n.t("api.errTemporaryTryAgain"), "", [
+          {
+            text: I18n.t("ok"),
+            onPress: () => {
+              navigation.dispatch({
+                type: "Home"
+              });
+            }
+          }
+        ]);
+      });
   };
 
   render() {
     return (
       <View style={styles.paymentButtonsContainer}>
+        {this.props.loading ? <ActivityIndicator size="large" color="#F7F7F70" /> : null}
         <TouchableOpacity
           disabled={!this.isDisabled()}
           onPress={() => this.createTokenWithCard()}

@@ -37,10 +37,14 @@ export const setPayment = stripeSourceToken => (dispatch, getState) => {
     auth: { token }
   } = getState();
 
-  return User.setPayment(id, token, stripeSourceToken).then(response => {
-    const { stripeCustomerID, stripePaymentToken } = response.data;
-    dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
-  });
+  return User.setPayment(id, token, stripeSourceToken)
+    .then(response => {
+      const { stripeCustomerID, stripePaymentToken } = response.data;
+      dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
+    })
+    .catch(err => {
+      return err;
+    });
 };
 
 export const removePayment = _ => (dispatch, getState) => {
