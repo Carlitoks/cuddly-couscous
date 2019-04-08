@@ -12,7 +12,7 @@ import {
 import { SETTINGS, CAMERA } from "../../../Util/Constants";
 
 import styles from "./styles";
-import { recordSessionTokboxEvent, recordSessionEvent } from "../../../Util/Forensics";
+import { recordSessionOpentokEvent, recordSessionEvent } from "../../../Util/Forensics";
 
 class PublisherBox extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class PublisherBox extends Component {
         //console.log(`AUDIO LEVEL EVENT  publisher ${event}`);
       },
       error: event => {
-        recordSessionTokboxEvent('publisher.error', {
+        recordSessionOpentokEvent('publisher.error', {
           sessionID: this.props.sessionID,
           event
         });
@@ -34,7 +34,7 @@ class PublisherBox extends Component {
         this.props.remountPublisherAndSubscriber();
       },
       streamCreated: event => {
-        recordSessionTokboxEvent('publisher.streamCreated', {
+        recordSessionOpentokEvent('publisher.streamCreated', {
           sessionID: this.props.sessionID,
           event
         });
@@ -42,7 +42,7 @@ class PublisherBox extends Component {
         this.props.publisherStart();
       },
       streamDestroyed: event => {
-        recordSessionTokboxEvent('publisher.streamDestroyed', {
+        recordSessionOpentokEvent('publisher.streamDestroyed', {
           sessionID: this.props.sessionID,
           event
         });

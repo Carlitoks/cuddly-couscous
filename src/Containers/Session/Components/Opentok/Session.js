@@ -8,7 +8,7 @@ import { OTSession } from 'opentok-react-native';
 
 import {TOKBOX_APIKEY} from  "../../../../Config/env";
 
-import { recordSessionTokboxEvent, recordSessionEvent } from "../../../../Util/Forensics";
+import { recordSessionOpentokEvent, recordSessionEvent } from "../../../../Util/Forensics";
 import { VIDEO_WARNING } from "../../../../Util/Constants";
 
 // custom app signals sent/received via tokbox connection
@@ -97,7 +97,7 @@ export class Session extends Component {
       error: (event) => { this.onError(event); },
     };
 
-    recordSessionEvent("session.constructor");
+    recordSessionEvent("opentok.session.constructor");
   }
 
   setState (data, cb = null) {
@@ -120,7 +120,7 @@ export class Session extends Component {
   }
 
   componentWillUnmount () {
-    recordSessionEvent("session.componentWillUnmount");
+    recordSessionEvent("opentok.session.componentWillUnmount");
     this.cleanup();
   }
 
@@ -172,28 +172,28 @@ export class Session extends Component {
   }
 
   onSessionConnected () {
-    recordSessionTokboxEvent('session.sessionConnected', {
+    recordSessionOpentokEvent('session.sessionConnected', {
       sessionID: this.props.session.id
     });
     this.props.onUserConnected();
 }
 
   onSessionReconnected () {
-    recordSessionTokboxEvent('session.sessionReconnected', {
+    recordSessionOpentokEvent('session.sessionReconnected', {
       sessionID: this.props.session.id
     });
     this.props.onUserConnected();
   }
 
   onSessionDisconnected () {
-    recordSessionTokboxEvent('session.sessionDisconnected', {
+    recordSessionOpentokEvent('session.sessionDisconnected', {
       sessionID: this.props.session.id
     });
     this.props.onUserDisconnected();
   }
 
   onSessionReconnecting () {
-    recordSessionTokboxEvent('session.sessionReconnecting', {
+    recordSessionOpentokEvent('session.sessionReconnecting', {
       sessionID: this.props.session.id
     });
     this.props.onUserConnecting();
@@ -201,7 +201,7 @@ export class Session extends Component {
 
   // handles connection state for the remote user
   onConnectionCreated (event) {
-    recordSessionTokboxEvent('session.connectionCreated', {
+    recordSessionOpentokEvent('session.connectionCreated', {
       event,
       sessionID: this.props.session.id
     });
@@ -220,7 +220,7 @@ export class Session extends Component {
   }
 
   onConnectionDestroyed (event) {
-    recordSessionTokboxEvent('session.connectionDestroyed', {
+    recordSessionOpentokEvent('session.connectionDestroyed', {
       event,
       sessionID: this.props.session.id
     });
@@ -237,7 +237,7 @@ export class Session extends Component {
   }
 
   onStreamCreated (event) {
-    recordSessionTokboxEvent('session.streamCreated', {
+    recordSessionOpentokEvent('session.streamCreated', {
       event,
       sessionID: this.props.session.id
     });
@@ -276,7 +276,7 @@ export class Session extends Component {
   }
 
   onStreamDestroyed (event) {
-    recordSessionTokboxEvent('session.streamDestroyed', {
+    recordSessionOpentokEvent('session.streamDestroyed', {
       event,
       sessionID: this.props.session.id
     });
@@ -311,7 +311,7 @@ export class Session extends Component {
     if (event.connectionId != this.remoteUserState.connectionID) {
       return;
     }
-    recordSessionTokboxEvent('session.signal', {
+    recordSessionOpentokEvent('session.signal', {
       event,
       sessionID: this.props.session.id
     });
@@ -332,7 +332,7 @@ export class Session extends Component {
   }
 
   onError (event) {
-    recordSessionTokboxEvent('session.error', {
+    recordSessionOpentokEvent('session.error', {
       event,
       sessionID: this.props.session.id
     });
@@ -440,13 +440,12 @@ export class Session extends Component {
   handleCallEnded (reason) {
     this.endedByRemote = true;
     this.cleanup(() => {
-      console.log("session.props.onSessionEnded()");
       this.props.onSessionEnded(reason);
     });
   }
 
   cleanup (cb = null) {
-    console.log("session.cleanup");
+    recordSessionEvent("opentok.session.cleanup");
     this.setState({unmounting: true, mounted: false}, () => {
       this.unmounting = true;
       if (!!cb) {
@@ -460,7 +459,7 @@ export class Session extends Component {
       return;
     }
     
-    recordSessionEvent("session.sendSignal", {type, payload});
+    recordSessionEvent("opentok.session.sendSignal", {type, payload});
     let data = "";
     if (!!payload) {
       data = JSON.stringify(payload);
@@ -567,6 +566,7 @@ export class Session extends Component {
   }
 
   remount () {
+    recordSessionEvent('opentok.session.remount');
     this.setState({mounted: false}, () => {
       setTimeout(() => {
         if (this.state.unmounting) {

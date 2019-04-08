@@ -29,22 +29,34 @@ const record = (evt) => {
   events.push(evt);
 };
 
+export const createRecorder = (namePrefix, meta) => {
+  return function (name, payload) {
+    record({
+      event: namePrefix + name,
+      payload: {
+        ...meta,
+        ...payload,
+      }
+    });
+  };
+};
+
 export const recordSessionEvent = (name, payload) => {
   record({
-    event: 'session.'+name,
+    event: `session.` + name,
     payload
-  })
-}
+  });
+};
 
-export const recordSessionTokboxEvent = (name, payload) => {
+export const recordSessionOpentokEvent = (name, payload) => {
   record({
-    event: 'session.tokbox.'+ name,
+    event: 'session.opentok.listener.'+ name,
     payload
   });
 };
 
 export const recordApiCall = (method, path, payload = null) => {
-  record({ 
+  record({
     event: 'api.call',
     payload: !!payload ? {method, path, payload} : {method, path}
   });

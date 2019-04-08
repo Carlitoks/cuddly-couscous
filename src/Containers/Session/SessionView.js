@@ -20,6 +20,7 @@ import {Session as OpentokSession} from "./Components/Opentok/Session";
 
 import * as tests from './SessionView.tests';
 import { SESSION, DURATION } from '../../Util/Constants';
+import { createRecorder } from '../../Util/Forensics';
 
 // The user state for local and remote users is the same format.  The object describes
 // the users general connection status to the session, app and control states.
@@ -62,14 +63,17 @@ const newUserState = (obj = {}) => {
   }, obj);
 };
 
+
+let recordSessionEvent = () => {};
+
 class SessionView extends Component {
   
   constructor (props) {
     super(props);
-    this.init(props);
-  }
+    // set up forensics logger
+    recordSessionEvent = createRecorder(`session.SessionView.`, {sessionID: this.props.session.id});
+    recordSessionEvent('constructor');
 
-  init (props) {
     // anything referenced in the template and/or passed to child
     // components as props needs to be defined in `state`
     this.state = {
@@ -161,12 +165,12 @@ class SessionView extends Component {
   }
 
   componentWillUnmount () {
-    console.log("SessionView.componentWillUnmount");
+    recordSessionEvent('componentWillUnmount');
     this.cleanup();
   }
 
   cleanup () {
-    console.log("SessionView.cleanup");
+    recordSessionEvent('cleanup');
     AppState.removeEventListener('change', this.handleAppStateChange);
     NetInfo.removeEventListener("connectionChange", this.handleConnectionChange);
     this.unmounting = true;
@@ -228,6 +232,7 @@ class SessionView extends Component {
   };
 
   handleNetworkConnectionTypeChanged (prevState, currentState) {
+    recordSessionEvent('handleNetworkConnectionTypeChanged');
     this.updateLocalUserState({device: {
       ...this.state.localUserState.device,
       networkConnection: currentState,
@@ -327,6 +332,7 @@ class SessionView extends Component {
   }
 
   beginSession () {
+    recordSessionEvent('beginSession');
     this.props.setSessionBegan();
     InCallManager.start({media: 'audio'});
     if (this.state.localUserState.controls.speakerEnabled) {
@@ -337,6 +343,7 @@ class SessionView extends Component {
   }
 
   handleUserConnecting () {
+    recordSessionEvent('handleUserConnecting');
     this.updateLocalUserState({connection: {
       ...this.state.localUserState.connection,
       connected: false,
@@ -345,6 +352,7 @@ class SessionView extends Component {
   }
 
   handleUserConnected () {
+    recordSessionEvent('handleUserConnected');
     this.updateLocalUserState({connection: {
       ...this.state.localUserState.connection,
       initiallyConnected: true,
@@ -357,6 +365,7 @@ class SessionView extends Component {
   }
 
   handleUserReceivingAV (ops) {
+    recordSessionEvent('handleUserReceivingAV');
     this.updateLocalUserState({connection: {
       ...this.state.localUserState.connection,
       initiallyReceiving: true,
@@ -371,6 +380,7 @@ class SessionView extends Component {
   }
 
   handleUserSendingAV (ops) {
+    recordSessionEvent('handleUserSendingAV');
     this.updateLocalUserState({connection: {
       ...this.state.localUserState.connection,
       initiallySending: true,
@@ -380,6 +390,7 @@ class SessionView extends Component {
   }
 
   handleUserDisconnected () {
+    recordSessionEvent('handleUserDisconnected');
     this.updateLocalUserState({connection: {
       ...this.state.localUserState.connection,
       connected: false,
@@ -389,14 +400,17 @@ class SessionView extends Component {
   }
 
   handleUserReceivingAVThrottled () {
+    recordSessionEvent('handleUserReceivingAVThrottled');
     this.updateLocalUserState({connection: {receivingThrottled: true}});
   }
 
   handleUserReceivingAVUnthrottled () {
+    recordSessionEvent('handleUserReceivingAVUnthrottled');
     this.updateLocalUserState({connection: {receivingThrottled: false}});
   }
 
   handleRemoteUserConnecting () {
+    recordSessionEvent('handleRemoteUserConnecting');
     this.updateRemoteUserState({connection: {
       ...this.state.remoteUserState.connection,
       connected: false,
@@ -405,6 +419,7 @@ class SessionView extends Component {
   }
 
   handleRemoteUserConnected () {
+    recordSessionEvent('handleRemoteUserConnected');
     this.updateRemoteUserState({connection: {
       ...this.state.remoteUserState.connection,
       initiallyConnected: true,
@@ -417,6 +432,7 @@ class SessionView extends Component {
   }
 
   handleRemoteUserReceivingAV (ops) {
+    recordSessionEvent('handleRemoteUserReceivingAV');
     this.updateRemoteUserState({connection: {
       ...this.state.remoteUserState.connection,
       initiallyReceiving: true,
@@ -431,6 +447,7 @@ class SessionView extends Component {
   }
 
   handleRemoteUserSendingAV (ops) {
+    recordSessionEvent('handleRemoteUserSendingAV');
     this.updateRemoteUserState({connection: {
       ...this.state.remoteUserState.connection,
       initiallySending: true,
@@ -440,6 +457,7 @@ class SessionView extends Component {
   }
 
   handleRemoteUserDisconnected () {
+    recordSessionEvent('handleRemoteUserDisconnected');
     this.updateRemoteUserState({connection: {
       ...this.state.remoteUserState.connection,
       initiallyConnected: true,
@@ -450,19 +468,23 @@ class SessionView extends Component {
   }
 
   handleRemoteUserReceivingAVThrottled () {
+    recordSessionEvent('handleRemoteUserReceivingAVThrottled');
     this.updateRemoteUserState({connection: {receivingThrottled: true }});
   }
 
   handleRemoteUserReceivingAVUnthrottled () {
+    recordSessionEvent('handleRemoteUserReceivingAVUnthrottled');
     this.updateRemoteUserState({connection: {receivingThrottled: false}});
   }
 
   handleRemoteUserVideoEnabled () {
+    recordSessionEvent('handleRemoteUserVideoEnabled');
     this.updateLocalUserState({connection: {receivingVideo: true}});
     this.updateRemoteUserState({connection: {sendingVideo: true}});
   }
 
   handleRemoteUserVideoDisabled () {
+    recordSessionEvent('handleRemoteUserVideoDisabled');
     this.updateLocalUserState({connection: {receivingVideo: false}});
     this.updateRemoteUserState({connection: {sendingVideo: false}});
   }
@@ -483,6 +505,7 @@ class SessionView extends Component {
 
   // call ended by user locally
   triggerEndCall (reason, confirm = false) {
+    recordSessionEvent('triggerEndCall');
     if (confirm) {
       Alert.alert(I18n.t("actions.confirm"), I18n.t('session.confirmEnd'), [
         {text: I18n.t('actions.yes'), onPress: () => {
@@ -510,6 +533,7 @@ class SessionView extends Component {
 
   // call was ended by the remote participant
   handleRemoteEnded (reason) {
+    recordSessionEvent('handleRemoteEnded');
 
     // we call this first to update the session, which also
     // ensures the end reason is accurate from the perspective
@@ -529,7 +553,7 @@ class SessionView extends Component {
     let targetView = "Home";
     let alert = false;
 
-    console.log("SessionView.chooseSessionEndedView: ", session.endReason);
+    console.log("chooseSessionEndedView: ", session.endReason);
 
     switch (session.endReason) {
       case SESSION.END.DONE: {
@@ -621,6 +645,7 @@ class SessionView extends Component {
   }
 
   triggerRetryCall (endReason, startReason) {
+    recordSessionEvent('triggerRetryCall');
     this.endingCall = true;
     this.props.endSession(endReason).finally(() => {
       this.endingCall = false;

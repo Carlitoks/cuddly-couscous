@@ -19,7 +19,7 @@ import {
 } from "../../../Ducks/ActiveSessionReducer";
 
 import styles from "./styles";
-import { recordSessionTokboxEvent } from "../../../Util/Forensics";
+import { recordSessionOpentokEvent } from "../../../Util/Forensics";
 import Sound from "react-native-sound";
 
 class SubscriberBox extends Component {
@@ -36,7 +36,7 @@ class SubscriberBox extends Component {
         //console.log("AUDIO STATS EVENT", event);
       },
       connected: () => {
-        recordSessionTokboxEvent('subscriber.connected', {sessionID: this.props.sessionID});
+        recordSessionOpentokEvent('subscriber.connected', {sessionID: this.props.sessionID});
         console.log("CONNECTED EVENT");
         this.props.update({
           modalReconnect: false
@@ -44,7 +44,7 @@ class SubscriberBox extends Component {
         this.setState({ subscriberError: false });
       },
       disconnected: () => {
-        recordSessionTokboxEvent('subscriber.disconnected', {sessionID: this.props.sessionID});
+        recordSessionOpentokEvent('subscriber.disconnected', {sessionID: this.props.sessionID});
         console.log("DISCONNECTED EVENT");
         //playSound(SOUNDS.DISCONNECTED);
         this.props.update({
@@ -52,7 +52,7 @@ class SubscriberBox extends Component {
         });
       },
       error: event => {
-        recordSessionTokboxEvent('subscriber.error', {
+        recordSessionOpentokEvent('subscriber.error', {
           sessionID: this.props.sessionID,
           event
         });
@@ -69,7 +69,7 @@ class SubscriberBox extends Component {
         }
       },
       videoDisabled: event => {
-        recordSessionTokboxEvent('subscriber.videoDisabled', {
+        recordSessionOpentokEvent('subscriber.videoDisabled', {
           sessionID: this.props.sessionID,
           event
         });
@@ -80,7 +80,7 @@ class SubscriberBox extends Component {
         });
       },
       videoDisableWarning: () => {
-        recordSessionTokboxEvent('subscriber.videoDisableWarning', {sessionID: this.props.sessionID});
+        recordSessionOpentokEvent('subscriber.videoDisableWarning', {sessionID: this.props.sessionID});
         console.log("VIDEO DISABLED WARNING EVENT");
         this.props.updateVideoWarningEvent(
           VIDEO_WARNING.TYPE,
@@ -89,7 +89,7 @@ class SubscriberBox extends Component {
         this.props.videoState(true);
       },
       videoDisableWarningLifted: () => {
-        recordSessionTokboxEvent('subscriber.videoDisableWarningLifted', {sessionID: this.props.sessionID});
+        recordSessionOpentokEvent('subscriber.videoDisableWarningLifted', {sessionID: this.props.sessionID});
         console.log("VIDEO DISABLED WARNING LIFTED EVENT");
         this.props.updateVideoWarningEvent(
           VIDEO_WARNING.TYPE,
@@ -98,7 +98,7 @@ class SubscriberBox extends Component {
         this.props.videoState(false);
       },
       videoEnabled: event => {
-        recordSessionTokboxEvent('subscriber.videoEnabled', {
+        recordSessionOpentokEvent('subscriber.videoEnabled', {
           sessionID: this.props.sessionID,
           event
         });

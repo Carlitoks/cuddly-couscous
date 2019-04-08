@@ -28,7 +28,7 @@ import { Platform } from "react-native";
 import { TOKBOX_APIKEY } from "../../../Config/env";
 
 import styles from "./styles";
-import { recordSessionTokboxEvent, recordSessionEvent } from "../../../Util/Forensics";
+import { recordSessionOpentokEvent, recordSessionEvent } from "../../../Util/Forensics";
 import Sound from "react-native-sound";
 import {SOUNDS} from "../../../Util/Constants";
 
@@ -43,7 +43,7 @@ class SessionBox extends Component {
         console.log(`ARCHIVE STOPPED EVENT ${event}`);
       },
       connectionCreated: event => {
-        recordSessionTokboxEvent('session.connectionCreated', {
+        recordSessionOpentokEvent('session.connectionCreated', {
           sessionID: this.props.sessionID,
           event
         });
@@ -56,7 +56,7 @@ class SessionBox extends Component {
         this.props.resetCounter();
       },
       connectionDestroyed: event => {
-        recordSessionTokboxEvent('session.connectionDestroyed', {
+        recordSessionOpentokEvent('session.connectionDestroyed', {
           sessionID: this.props.sessionID,
           event
         });
@@ -66,7 +66,7 @@ class SessionBox extends Component {
         });
       },
       error: event => {
-        recordSessionTokboxEvent('session.error', {
+        recordSessionOpentokEvent('session.error', {
           sessionID: this.props.sessionID,
           event
         });
@@ -75,7 +75,7 @@ class SessionBox extends Component {
         this.props.errorEvent(event);
       },
       sessionConnected: () => {
-        recordSessionTokboxEvent('session.sessionConnected', {sessionID: this.props.sessionID});
+        recordSessionOpentokEvent('session.sessionConnected', {sessionID: this.props.sessionID});
         console.log("SESSION CONNECTED EVENT");
         this.props.connectionConnectedEvent();
         this.props.updateSettings({
@@ -83,7 +83,7 @@ class SessionBox extends Component {
         });
       },
       sessionReconnected: () => {
-        recordSessionTokboxEvent('session.sessionReconnected', {sessionID: this.props.sessionID});
+        recordSessionOpentokEvent('session.sessionReconnected', {sessionID: this.props.sessionID});
         console.log("SESSION RECONNECTED EVENT");
         //this.props.videoState(true);
         //playSound(SOUNDS.RECONNECTED);
@@ -92,17 +92,17 @@ class SessionBox extends Component {
         });
       },
       sessionDisconnected: () => {
-        recordSessionTokboxEvent('session.sessionDisconnected', {sessionID: this.props.sessionID});
+        recordSessionOpentokEvent('session.sessionDisconnected', {sessionID: this.props.sessionID});
         console.log("SESSION DISCONNECTED EVENT");
         this.props.connectionDisconnectEvent();
       },
       sessionReconnecting: () => {
-        recordSessionTokboxEvent('session.sessionReconnecting', {sessionID: this.props.sessionID});
+        recordSessionOpentokEvent('session.sessionReconnecting', {sessionID: this.props.sessionID});
         console.log("SESSION RECONNECTING EVENT");
       },
       signal: event => {
         console.log("SIGNAL EVENT", event);
-        recordSessionTokboxEvent('session.signal', {
+        recordSessionOpentokEvent('session.signal', {
           sessionID: this.props.sessionID,
           event
         });
@@ -114,7 +114,7 @@ class SessionBox extends Component {
         }
       },
       streamCreated: event => {
-        recordSessionTokboxEvent('session.streamCreated', {
+        recordSessionOpentokEvent('session.streamCreated', {
           sessionID: this.props.sessionID,
           event
         });
@@ -122,7 +122,7 @@ class SessionBox extends Component {
         this.props.streamCreatedEvent(event);
       },
       streamDestroyed: event => {
-        recordSessionTokboxEvent('session.streamDestroyed', {
+        recordSessionOpentokEvent('session.streamDestroyed', {
           sessionID: this.props.sessionID,
           event
         });

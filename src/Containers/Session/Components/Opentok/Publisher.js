@@ -3,7 +3,7 @@ import {View} from "react-native";
 import {OTPublisher} from "opentok-react-native";
 import styles from "./styles";
 
-import { recordSessionTokboxEvent } from "../../../../Util/Forensics";
+import { recordSessionOpentokEvent } from "../../../../Util/Forensics";
 
 export class Publisher extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ export class Publisher extends Component {
   }
 
   onError (event) {
-    recordSessionTokboxEvent('publisher.error', {
+    recordSessionOpentokEvent('publisher.error', {
       event,
       sessionID: this.props.session.id
     });
@@ -46,7 +46,7 @@ export class Publisher extends Component {
   }
 
   onStreamCreated (event) {
-    recordSessionTokboxEvent('publisher.streamCreated', {
+    recordSessionOpentokEvent('publisher.streamCreated', {
       event,
       sessionID: this.props.session.id
     });
@@ -59,7 +59,7 @@ export class Publisher extends Component {
   }
 
   onStreamDestroyed (event) {
-    recordSessionTokboxEvent('publisher.streamDestroyed', {
+    recordSessionOpentokEvent('publisher.streamDestroyed', {
       event,
       sessionID: this.props.session.id
     });

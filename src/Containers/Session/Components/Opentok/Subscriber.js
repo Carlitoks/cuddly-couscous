@@ -3,7 +3,7 @@ import {View} from "react-native";
 import {OTSubscriber} from "opentok-react-native";
 import styles from "./styles";
 
-import { recordSessionTokboxEvent } from "../../../../Util/Forensics";
+import { recordSessionOpentokEvent } from "../../../../Util/Forensics";
 
 export class Subscriber extends Component {
   constructor(props) {
@@ -32,13 +32,10 @@ export class Subscriber extends Component {
       videoDisableWarningLifted: () => { this.onVideoDisableWarningLifted(); },
       videoEnabled: (event) => { this.onVideoEnabled(event); },
     };
-
-    console.log("subscriber.constructor");
   }
 
   componentWillUnmount () {
     this.mounted = false;
-    console.log("subscriber.componentWillUnmount");
   }
 
   onAudioLevel (event) {
@@ -54,19 +51,20 @@ export class Subscriber extends Component {
   }
 
   onConnected () {
-    recordSessionTokboxEvent('subscriber.connected', {
+    recordSessionOpentokEvent('subscriber.connected', {
       sessionID: this.props.session.id
     });
   }
 
   onDisconnected () {
-    recordSessionTokboxEvent('subscriber.disconnected', {
+    recordSessionOpentokEvent('subscriber.disconnected', {
       sessionID: this.props.session.id
     });
+    this.receiving = false;
   }
 
   onError (event) {
-    recordSessionTokboxEvent('subscriber.error', {
+    recordSessionOpentokEvent('subscriber.error', {
       event,
       sessionID: this.props.session.id
     });
@@ -82,14 +80,14 @@ export class Subscriber extends Component {
       return;
     }
     this.receiving = true;
-    recordSessionTokboxEvent('subscriber.videoDataReceived', {
+    recordSessionOpentokEvent('subscriber.videoDataReceived', {
       sessionID: this.props.session.id
     });
     this.props.onReceiving();
   }
 
   onVideoDisabled (event) {
-    recordSessionTokboxEvent('subscriber.videoDisabled', {
+    recordSessionOpentokEvent('subscriber.videoDisabled', {
       event,
       sessionID: this.props.session.id
     });
@@ -97,21 +95,21 @@ export class Subscriber extends Component {
   }
 
   onVideoDisableWarning () {
-    recordSessionTokboxEvent('subscriber.videoDisableWarning', {
+    recordSessionOpentokEvent('subscriber.videoDisableWarning', {
       sessionID: this.props.session.id
     });
     this.props.onVideoDisableWarning();
   }
 
   onVideoDisableWarningLifted () {
-    recordSessionTokboxEvent('subscriber.videoDisableWarningLifted', {
+    recordSessionOpentokEvent('subscriber.videoDisableWarningLifted', {
       sessionID: this.props.session.id
     });
     this.props.onVideoDisableWarningLifted();    
   }
 
   onVideoEnabled (event) {
-    recordSessionTokboxEvent('subscriber.videoEnabled', {
+    recordSessionOpentokEvent('subscriber.videoEnabled', {
       event,
       sessionID: this.props.session.id
     });

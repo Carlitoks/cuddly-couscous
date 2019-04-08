@@ -103,11 +103,14 @@ export class LinguistIncomingCallView extends Component {
       this.incomingCallSound.play();
 
       // and set another timeout to ensure it doesn't play forever
-      const killAfter = this.state.seconds;
+      let killAfter = this.state.seconds * DURATION.SECONDS;
+      if (killAfter <= 0) {
+        killAfter = 30 * DURATION.SECONDS;
+      }
       setTimeout(() => {
         this.incomingCallSound.stop();
         this.incomingCallSound.release();
-        }, killAfter * DURATION.SECONDS);
+        }, killAfter);
   
     }, 1 * DURATION.SECONDS);
   }
