@@ -26,7 +26,7 @@ const ExpirationDate = props => {
           style={styles.EDInput}
         />
       )}
-      {!props.isValidDate && props.date && props.type != "cardInfo" ? (
+      {!props.isValidDate && props.date && props.date.length >= 4 && props.type != "cardInfo" ? (
         <Text style={styles.CCNInvalidText}>{I18n.t("payments.expiration.errInvalid")}</Text>
       ) : (
         <React.Fragment />
