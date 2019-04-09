@@ -138,6 +138,8 @@ export class CustomerRetryView extends Component {
       return;
     }
 
+    // TODO: check if no local network connection
+
     const newSessionParams = {
       ...this.props.session,
       ...params

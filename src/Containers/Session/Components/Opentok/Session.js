@@ -90,6 +90,7 @@ export class Session extends Component {
       connectionCreated: (event) => { this.onConnectionCreated(event); },
       connectionDestroyed: (event) => { this.onConnectionDestroyed(event); },
       streamCreated: (event) => { this.onStreamCreated(event); },
+      streamPropertyChanged: (event) => { this.onStreamPropertyChanged(event); },
       streamDestroyed: (event) => { this.onStreamDestroyed(event); },
       signal: (event) => { this.onSignal(event); },
       archiveStarted: (event) => {},
@@ -145,7 +146,7 @@ export class Session extends Component {
 
     const oldS = oldP.localUserState.device;
     const newS = newP.localUserState.device;
-    if (oldS.state != newS.state) {
+    if (oldS.appState != newS.appState) {
       this.sendSignal(SIGNALS.APP_STATE, {appState: newS.appState});
     }
     if (oldS.networkConnection != newS.networkConnection) {
@@ -154,16 +155,23 @@ export class Session extends Component {
 
     const oldC = oldP.localUserState.controls;
     const newC = newP.localUserState.controls;
+    console.log('Session.componentDidUpdate', oldC.speakerEnabled, newC.speakerEnabled);
     if (
       oldC.micEnabled != newC.micEnabled ||
       oldC.videoEnabled != newC.videoEnabled ||
       oldC.speakerEnabled != newC.speakerEnabled ||
       oldC.cameraFlipEnabled != newC.cameraFlipEnabled
     ) {
+      console.log("SENDING CONTROL STATE!!!!");
       this.localUserState.publishingAudio = newC.micEnabled;
       this.localUserState.publishingVideo = newC.videoEnabled;
       this.sendSignal(SIGNALS.CONTROL_STATE, newC);
     }
+  }
+
+  shouldComponentUpdate (nextProps) {
+    console.log("Session.shouldComponentUpdate", this.props.localUserState.controls.speakerEnabled, nextProps.localUserState.controls.speakerEnabled)
+    return true;
   }
 
   onSessionConnected () {
@@ -268,6 +276,25 @@ export class Session extends Component {
           ...styles.subscriber
         }
     }}});
+  }
+
+  onStreamPropertyChanged (event) {
+    recordSessionOpentokEvent('session.streamPropertyChanged', {
+      event,
+      sessionID: this.props.session.id
+    });
+
+    // NOTE: we're not updating whether or not the remote user is
+    // sending, because that depends on their control state - it could
+    // be that they are sending AV, but TB has thottled and disabled
+    // the video
+    this.props.onUserReceivingAV({
+      audio: event.stream.hasAudio,
+      video: event.stream.hasVideo
+    });
+    
+    // event.stream.hasVideo ? this.props.onRemoteUserVideoEnabled() : this.props.onRemoteUserVideoDisabled();
+    // event.stream.hasAudio ? this.props.onRemoteUserAudioEnabled() : this.props.onRemoteUserAudioDisabled();
   }
 
   onStreamDestroyed (event) {
@@ -496,16 +523,8 @@ export class Session extends Component {
       }
       case SIGNALS.CONTROL_STATE: {
         this.remoteUserState.publishingAudio = payload.micEnabled;
-        this.remoteUserState.publishingVideo = payload.videoEnabled;
-        this.props.onRemoteUserUpdated({
-          ...this.props.remoteUserState,
-          controls: payload,
-          connection: {
-            ...this.props.remoteUserState.connection,
-            sendingAudio: payload.micEnabled,
-            sendingVideo: payload.videoEnabled
-          }
-        });
+        this.remoteUserState.publishingVideo = payload.videoEnabled || payload.cameraFlipEnabled;
+        this.props.onRemoteUserControlStateChanged(payload);
         break;
       }
       case SIGNALS.APP_STATE: {

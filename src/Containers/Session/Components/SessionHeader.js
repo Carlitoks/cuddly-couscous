@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     padding: 15,
-    paddingTop: isIphoneXorAbove() ? 49 : 15,
+    paddingTop: isIphoneXorAbove() ? 45 : 15,
     backgroundColor: "rgba(0, 0, 0, 0.33)",
     flexDirection: 'row',
     alignItems: "center"

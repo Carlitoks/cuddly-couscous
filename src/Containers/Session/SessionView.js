@@ -305,10 +305,12 @@ class SessionView extends Component {
   toggleSpeaker () {
     const {controls} = this.state.localUserState;
     const enabled = !controls.speakerEnabled
-    this.updateLocalUserState({controls: {
+    this.setState({localUserState: {
+      ...this.state.localUserState,
+      controls: {
       ...controls,
       speakerEnabled: enabled
-    }});
+    }}});
     InCallManager.setForceSpeakerphoneOn(enabled);
   }
 
@@ -339,6 +341,9 @@ class SessionView extends Component {
   }
 
   beginSession () {
+    if (this.props.status.began) {
+      return;
+    }
     recordSessionEvent('beginSession');
     this.props.setSessionBegan();
     InCallManager.start({media: 'audio'});
@@ -511,27 +516,53 @@ class SessionView extends Component {
   handleRemoteUserVideoEnabled () {
     recordSessionEvent('handleRemoteUserVideoEnabled');
     this.updateLocalUserState({connection: {receivingVideo: true}});
-    this.updateRemoteUserState({connection: {sendingVideo: true}});
   }
 
   handleRemoteUserVideoDisabled () {
     recordSessionEvent('handleRemoteUserVideoDisabled');
     this.updateLocalUserState({connection: {receivingVideo: false}});
-    this.updateRemoteUserState({connection: {sendingVideo: false}});
+  }
+
+  handleRemoteUserAudioEnabled () {
+    recordSessionEvent('handleRemoteUserAudioEnabled');
+    this.updateLocalUserState({connection: {receivingAudio: true}});
+  }
+
+  handleRemoteUserAudioDisabled () {
+    recordSessionEvent('handleRemoteUserAudioDisabled');
+    this.updateLocalUserState({connection: {receivingAudio: false}});
+  }
+
+  handleRemoteUserControlStateChanged (controls) {
+    recordSessionEvent('handleRemoteUserControlStateChanged');
+    this.updateRemoteUserState({
+      ...this.state.remoteUserState,
+      controls,
+      connection: {
+        ...this.state.remoteUserState.connection,
+        sendingAudio: controls.micEnabled,
+        sendingVideo: controls.videoEnabled || controls.cameraFlipEnabled
+      }
+    });
   }
 
   updateRemoteUserState (data, cb = null) {
-    this.setState({remoteUserState: merge(this.state.remoteUserState, data)}, cb);
+    this.setState({remoteUserState: {
+      ...this.state.remoteUserState,
+      ...data
+    }}, cb);
   }
 
   updateLocalUserState(data, cb = null) {
-    this.setState({localUserState: merge(this.state.localUserState, data)}, cb);
+    this.setState({localUserState: {
+      ...this.state.localUserState,
+      ...data,
+    }}, cb);
   }
 
   showAudioMode () {
-    const {receivingVideo, receivingThrottled} = this.state.localUserState.connection;
-    // TODO: should we really show audio mode if throttled?
-    return !receivingVideo || receivingThrottled;
+    const {localUserState} = this.state;
+    return !localUserState.device.hasNetworkConnection || !localUserState.connection.receivingVideo;
   }
 
   // call ended by user locally
@@ -703,6 +734,11 @@ class SessionView extends Component {
     });
   }
 
+  isTransitioning () {
+    const {status} = this.props;
+    return status.ending || status.ended || status.creating;
+  }
+
   render () {
     const {localUserState, remoteUserState} = this.state;
 
@@ -737,6 +773,9 @@ class SessionView extends Component {
             onRemoteUserReceivingAVUnthrottled = {() => { this.handleRemoteUserReceivingAVUnthrottled() }}
             onRemoteUserVideoEnabled = {() => { this.handleRemoteUserVideoEnabled() }}
             onRemoteUserVideoDisabled = {() => { this.handleRemoteUserVideoDisabled() }}
+            onRemoteUserAudioEnabled = {() => { this.handleRemoteUserAudioEnabled() }}
+            onRemoteUserAudioDisabled = {() => { this.handleRemoteUserAudioDisabled() }}
+            onRemoteUserControlStateChanged = {(controls) => { this.handleRemoteUserControlStateChanged(controls) }}
 
             // update basic connection status of user
             onUserConnecting = {() => { this.handleUserConnecting() }}
@@ -804,6 +843,7 @@ class SessionView extends Component {
           )}
           
           {/* If the initial connection was established, but one party has been disconnected... */}
+          {!this.isTransitioning() && (
           <ReconnectionModal
             isVisible = { this.shouldShowReconnectionState() }
             user = { this.props.user }
@@ -817,6 +857,7 @@ class SessionView extends Component {
             onEnd = {(reason) => { this.triggerEndCall(reason, false) }}
             onRetry = {(end, start) => { this.triggerRetryCall(end, start) }}
           />
+          )}
 
         </View>
       </TouchableWithoutFeedback>
