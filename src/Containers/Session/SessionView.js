@@ -112,7 +112,6 @@ class SessionView extends Component {
     this.endingCall = false;
     this.unmounting = false;
     this.statusPollIntervalID = null;
-    this.statusPollFailures = 0;
 
     // used only on android
     this.wiredHeadsetListener = false;
@@ -261,11 +260,11 @@ class SessionView extends Component {
   }
 
   handleLostNetworkConnection () {
-    // TODO: anything to pass down to children, like a force reload of certain components?
+    this.handleUserDisconnected();
   }
 
   handleRegainedNetworkConnection () {
-    // TODO: anything to pass down to children, like a force reload of certain components?
+    this.handleUserConnecting();
   }
 
   // hide/show call controls
@@ -363,20 +362,14 @@ class SessionView extends Component {
       if (this.ending || this.unmounting) {
         return;
       }
-      this.statusPollFailures = 0;
       // check if session was ended by remote party
       if (res.data.session.ended) {
         this.handleRemoteEnded(res.data.session.endReason);
       }
     })
-    .catch((e) => {
-      if (this.ending || this.unmounting) {
-        return;
-      }
-      this.statusPollFailures++;
-      if (this.statusPollFailures >= 3) {
-        this.triggerEndCall(SESSION.END.DISCONNECT_LOCAL);
-      }
+    .catch(() => {
+      // NOTE: we don't handle errors here on purpose.  If the user has lost connection, that
+      // is handled by the reconnection modal, and triggered by other things.
     });
   }
 

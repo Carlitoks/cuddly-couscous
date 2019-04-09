@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from "react-native";
 import { connect } from "react-redux";
 
 import {createNewSession} from "../../Ducks/CurrentSessionReducer";
-import { moderateScale } from "../../Util/Scaling";
+import { moderateScale, moderateFontSize } from "../../Util/Scaling";
 import colors from "../../Themes/Colors";
 import TextButton from "../../Components/Widgets/TextButton";
 import I18n, {translateApiError, translateLanguage} from "../../I18n/I18n";
@@ -209,8 +209,7 @@ export class CustomerRetryView extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: "100%",
+    ...StyleSheet.absoluteFill,
     alignItems: "center",
     backgroundColor: colors.backgroundBlue
   },
@@ -222,7 +221,7 @@ const styles = StyleSheet.create({
     paddingRight: moderateScale(30, 0),
   },
   text: {
-    fontSize: moderateScale(20, 0),
+    fontSize: moderateFontSize(20),
     textAlign: "center",
     color: colors.white,
     marginBottom: moderateScale(20, 0)

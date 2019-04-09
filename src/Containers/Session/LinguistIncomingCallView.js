@@ -17,7 +17,7 @@ import Ionicon from "react-native-vector-icons/Ionicons";
 import MDIcon from "react-native-vector-icons/MaterialIcons";
 import Sound from "react-native-sound";
 
-import { moderateScale } from "../../Util/Scaling";
+import { moderateScale, moderateFontSize } from "../../Util/Scaling";
 
 const IconButton = ({backgroundColor, iconRotation, onPress, pressed}) => {
   // TODO: styles while pressed
@@ -346,12 +346,12 @@ const styles = StyleSheet.create({
   },
   userNameText: {
     color: "#ffffff",
-    fontSize: moderateScale(30, 0),
+    fontSize: moderateFontSize(30),
     marginBottom: 5
   },
   incomingCallText: {
     color: "#ffffff",
-    fontSize: moderateScale(20, 0),
+    fontSize: moderateFontSize(20),
   },
   userContainer: {
     marginTop: "15%",
@@ -371,7 +371,8 @@ const styles = StyleSheet.create({
     marginRight: moderateScale(15, 0)
   },
   infoRowText: {
-    color: "#fff"
+    color: "#fff",
+    fontSize: moderateFontSize(15)
   },
   avatarImage: {
     height: 100,
