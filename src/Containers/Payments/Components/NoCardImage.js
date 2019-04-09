@@ -9,8 +9,10 @@ import styles from "./Styles/NoCardImageStyles";
 const NoCardImage = props => {
   return (
     <View style={styles.flexEndCenter}>
-      <Image style={styles.imagePosition} source={addCard} />
-      <Text style={styles.noCardText}>{I18n.t("payments.noCardNotice")}</Text>
+      <View style={styles.imageContainer}>
+        <Image style={styles.imagePosition} source={addCard} />
+        <Text style={styles.noCardText}>{I18n.t("payments.noCardNotice")}</Text>
+      </View>
     </View>
   );
 };
