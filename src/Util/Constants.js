@@ -125,7 +125,8 @@ export const SESSION = {
     FAILURE_LOCAL: 'failure_local', // call ended because local side failed to initially connect to the session
     FAILURE_REMOTE: 'failure_remote', // call ended because the remote side failed to initially connect to the session
     DISCONNECT_LOCAL: 'disconnect_local', // call ended because local side disconnected during the session
-    DISCONNECT_REMOTE: 'disconnect_remote' // call ended because remote side disocnnected during the session
+    DISCONNECT_REMOTE: 'disconnect_remote', // call ended because remote side disocnnected during the session
+    ABORTED: 'aborted' // call was ended after creation by someone or a process other than the participants
   },
   TIME: {
     MATCH: 70 * DURATION.SECONDS,

@@ -72,7 +72,7 @@ export class Publisher extends Component {
   }
 
   render () {
-    const {status} = this.props;
+    const {status, session} = this.props;
     const {controls} = this.props.localUserState;
     const enabled = (controls.videoEnabled || controls.cameraFlipEnabled) && status.began;
     const containerStyles = enabled ? styles.publisherContainerEnabled : styles.publisherContainerDisabled;
@@ -82,6 +82,7 @@ export class Publisher extends Component {
       <View style={containerStyles}>
       {!status.ending && (
         <OTPublisher
+          sessionId={session.id}
           style={publisherStyles}
           eventHandlers = { this.eventHandlers }
           properties= {{

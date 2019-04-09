@@ -1,7 +1,7 @@
 import {StyleSheet} from "react-native";
 import Color from "color";
 import colors from "../../Themes/Colors";
-import {moderateScale} from "../../Util/Scaling";
+import {moderateScale, moderateFontSize} from "../../Util/Scaling";
 
 export default styles = StyleSheet.create({
   prominentButtonBase: {
@@ -20,7 +20,7 @@ export default styles = StyleSheet.create({
     borderColor: Color(colors.backgroundBlue).lighten(0.2).hex()
   },
   prominentButtonText: {
-    fontSize: moderateScale(15, 0),
+    fontSize: moderateFontSize(15),
     color: colors.white,
   }
 });

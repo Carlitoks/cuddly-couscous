@@ -85,6 +85,10 @@ export class CustomerRetryView extends Component {
       case SESSION.END.DISCONNECT_REMOTE: {
         return I18n.t("session.retry.disconnectRemote");
       }
+      case SESSION.END.KILLED: {
+        // TODO
+        break;
+      }
       default: {
         return I18n.t("session.retry.busy");
       }
@@ -174,8 +178,12 @@ export class CustomerRetryView extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{ this.retryReasonText() }</Text>
-          <Text style={styles.text}>{ I18n.t("session.retry.tryAgain") }</Text>
+          <View style={styles.textRow}>
+            <Text style={styles.text}>{ this.retryReasonText() }</Text>
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.text}>{ I18n.t("session.retry.tryAgain") }</Text>
+          </View>
         </View>
         <View style={styles.buttonContainer}>
           {rollover.exists && (
@@ -220,11 +228,13 @@ const styles = StyleSheet.create({
     paddingLeft: moderateScale(30, 0),
     paddingRight: moderateScale(30, 0),
   },
+  textRow: {
+    marginBottom: moderateScale(20, 0)
+  },
   text: {
     fontSize: moderateFontSize(20),
     textAlign: "center",
-    color: colors.white,
-    marginBottom: moderateScale(20, 0)
+    color: colors.white
   },
   buttonContainer: {
     flex: 1,

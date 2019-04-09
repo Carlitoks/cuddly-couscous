@@ -7,7 +7,7 @@ import I18n from "../../../I18n/I18n";
 import TextButton from "../../../Components/Widgets/TextButton";
 
 import sharedStyles from "../styles";
-import { moderateScale } from "../../../Util/Scaling";
+import { moderateFontSize } from "../../../Util/Scaling";
 
 export class ReconnectionModal extends Component {
   constructor (props) {
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    fontSize: moderateScale(20, 0),
+    fontSize: moderateFontSize(20),
     color: "#44a",
     textAlign: "center"
   },

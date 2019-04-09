@@ -134,7 +134,7 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
 const linguistAcceptedNotification = (notification) => (dispatch, getState) => {
   // Logic when a linguist accept a call
   if (getState().currentSessionReducer.sessionID == notification.sessionID) {
-    dispatch(setRemoteUser(JSON.parse(notification.linguist)));
+    dispatch(setRemoteUser(notification.linguist));
   }
 };
 

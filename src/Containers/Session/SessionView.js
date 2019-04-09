@@ -584,8 +584,6 @@ class SessionView extends Component {
     let targetView = "Home";
     let alert = false;
 
-    console.log("chooseSessionEndedView: ", session.endReason);
-
     switch (session.endReason) {
       case SESSION.END.DONE: {
         targetView = began && hasNetworkConnection ? "RateView" : "Home";
@@ -649,7 +647,7 @@ class SessionView extends Component {
         targetView = (isCustomer) ? "CustomerRetryView" : "Home";
         if (isLinguist) {
           alert = {
-            title: I18n.t('notification'),
+            title: I18n.t('error'),
             body: "We were unable to connect you to the customer." //I18n.t()
           };
         }
@@ -659,10 +657,18 @@ class SessionView extends Component {
         targetView = (isCustomer) ? "CustomerRetryView" : "Home";
         if (isLinguist) {
           alert = {
-            title: I18n.t('notification'),
+            title: I18n.t('error'),
             body: "The customer was unable to connect." //I18n.t()
           };
         }
+        break;
+      }
+      case SESSION.END.ABORTED: {
+        targetView = "Home";
+        alert = {
+          title: I18n.t('notification'),
+          body: "Call has been ended."
+        };
         break;
       }
       default: targetView = "Home";

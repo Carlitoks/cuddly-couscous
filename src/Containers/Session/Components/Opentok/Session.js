@@ -114,11 +114,6 @@ export class Session extends Component {
       && this.state.mounted
   }
 
-  componentDidMount () {
-    // app state listener
-    // netinfo listener
-  }
-
   componentWillUnmount () {
     recordSessionEvent("opentok.session.componentWillUnmount");
     this.cleanup();
@@ -604,24 +599,28 @@ export class Session extends Component {
               onVideoDisableWarningLifted = {() => { this.subscriberVideoUnthrottled() }}
               onError = {(event) => { this.remount() }}
             />
-
-            {/* publisher needs to be later so it overlays on top of other elements */}
-            <Publisher
-              session = {session}
-              status = {localSessionStatus}
-              localUserState = {localUserState}
-              remoteUserState = {remoteUserState}
-              onStreamCreated = {(event) => { this.publisherStreamCreated(event) }}
-              onStreamDestroyed = {(event) => { this.publisherStreamDestroyed(event) }}
-              onError = {(event) => { this.remount() }}
-            />
-
-            {/* NOTE: not possible to implement yet: https://github.com/opentok/opentok-react-native/issues/162 */}
-            {/* <View style={ styles.primaryFeedToggle }></View> */}
-
           </OTSession>
         )}
+
+        {/* other session UI renders after the session video background */}
         { this.props.children }
+
+        {/* publisher must be rendered after all the other session UI so it overlays on top */}
+        {this.mounted() && !this.isTransitioning() && (
+        <Publisher
+          session = {session}
+          status = {localSessionStatus}
+          localUserState = {localUserState}
+          remoteUserState = {remoteUserState}
+          onStreamCreated = {(event) => { this.publisherStreamCreated(event) }}
+          onStreamDestroyed = {(event) => { this.publisherStreamDestroyed(event) }}
+          onError = {(event) => { this.remount() }}
+        />
+        )}
+
+        {/* NOTE: not possible to implement yet: https://github.com/opentok/opentok-react-native/issues/162 */}
+        {/* <View style={ styles.primaryFeedToggle }></View> */}
+
       </View>
     );
   }

@@ -31,7 +31,7 @@ export default styles = StyleSheet.create({
   publisherContainerEnabled: {
     display: 'flex',
     position: "absolute",
-    top: isIphoneXorAbove() ? 94 : 50,
+    top: isIphoneXorAbove() ? 84 : 50,
     right: 10,
     height: 125,
     width: 75,

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Button, View, Text, StyleSheet} from "react-native";
 import api from "../../../Config/AxiosConfig";
 import colors from "../../../Themes/Colors";
-import { moderateScale } from "../../../Util/Scaling";
+import { moderateScale, moderateFontSize } from "../../../Util/Scaling";
 import I18n from "../../../I18n/I18n";
 
 import sharedStyles from "../styles";
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: "60%",
-    fontSize: moderateScale(20, 0),
+    fontSize: moderateFontSize(20),
     color: colors.white,
   },
   buttonContainer: {

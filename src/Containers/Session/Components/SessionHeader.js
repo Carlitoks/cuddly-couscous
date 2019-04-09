@@ -1,14 +1,18 @@
 import React from "react";
 import {Text, View, Image, StyleSheet} from "react-native";
-import { moderateScale } from "../../../Util/Scaling";
+import { moderateScale, moderateFontSize } from "../../../Util/Scaling";
 import images from "../../../Themes/Images";
 import { isIphoneXorAbove } from "../../../Util/Devices";
 
 export const SessionHeader = ({user}) => {
   return (
     <View style = { styles.container }>
-      <Image style={styles.avatarImage} source={!!user.avatarURL ? {uri: user.avatarURL} : images.avatar} />
-      <Text style = { styles.text }>{user.firstName}</Text>
+      <View style={styles.avatarImageContainer}>
+        <Image style={styles.avatarImage} source={!!user.avatarURL ? {uri: user.avatarURL} : images.avatar} />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style = { styles.text }>{user.firstName}</Text>
+      </View>
     </View>
   );
 };
@@ -20,21 +24,24 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     padding: 15,
-    paddingTop: isIphoneXorAbove() ? 59 : 15,
+    paddingTop: isIphoneXorAbove() ? 49 : 15,
     backgroundColor: "rgba(0, 0, 0, 0.33)",
     flexDirection: 'row',
     alignItems: "center"
   },
+  avatarImageContainer: {
+    marginRight: 20
+  },
   avatarImage: {
     height: 40,
     width: 40,
-    marginRight: 20,
     borderRadius: 75,
     borderWidth: 1,
     borderColor: "gray"
   },
+  textContainer: {},
   text: {
-    fontSize: moderateScale(20, 0),
+    fontSize: moderateFontSize(20),
     color: "#fff"
   }
 });

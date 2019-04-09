@@ -1,6 +1,6 @@
 import React from "react";
 import {Text, View, StyleSheet} from "react-native";
-import { moderateScale } from "../../../Util/Scaling";
+import { moderateFontSize } from "../../../Util/Scaling";
 import colors from "../../../Themes/Colors";
 import I18n from "../../../I18n/I18n";
 
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.33)",
   },
   text: {
-    fontSize: moderateScale(12, 0),
+    fontSize: moderateFontSize(13),
     color: colors.white,
     textAlign: "center"
   }
