@@ -547,17 +547,11 @@ class SessionView extends Component {
   }
 
   updateRemoteUserState (data, cb = null) {
-    this.setState({remoteUserState: {
-      ...this.state.remoteUserState,
-      ...data
-    }}, cb);
+    this.setState({remoteUserState: merge({}, this.state.remoteUserState, data)}, cb);
   }
 
   updateLocalUserState(data, cb = null) {
-    this.setState({localUserState: {
-      ...this.state.localUserState,
-      ...data,
-    }}, cb);
+    this.setState({localUserState: merge({}, this.state.localUserState, data)}, cb);
   }
 
   showAudioMode () {
