@@ -155,23 +155,16 @@ export class Session extends Component {
 
     const oldC = oldP.localUserState.controls;
     const newC = newP.localUserState.controls;
-    console.log('Session.componentDidUpdate', oldC.speakerEnabled, newC.speakerEnabled);
     if (
       oldC.micEnabled != newC.micEnabled ||
       oldC.videoEnabled != newC.videoEnabled ||
       oldC.speakerEnabled != newC.speakerEnabled ||
       oldC.cameraFlipEnabled != newC.cameraFlipEnabled
     ) {
-      console.log("SENDING CONTROL STATE!!!!");
       this.localUserState.publishingAudio = newC.micEnabled;
       this.localUserState.publishingVideo = newC.videoEnabled;
       this.sendSignal(SIGNALS.CONTROL_STATE, newC);
     }
-  }
-
-  shouldComponentUpdate (nextProps) {
-    console.log("Session.shouldComponentUpdate", this.props.localUserState.controls.speakerEnabled, nextProps.localUserState.controls.speakerEnabled)
-    return true;
   }
 
   onSessionConnected () {
