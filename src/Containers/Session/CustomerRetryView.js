@@ -85,10 +85,6 @@ export class CustomerRetryView extends Component {
       case SESSION.END.DISCONNECT_REMOTE: {
         return I18n.t("session.retry.disconnectRemote");
       }
-      case SESSION.END.KILLED: {
-        // TODO
-        break;
-      }
       default: {
         return I18n.t("session.retry.busy");
       }
