@@ -22,6 +22,7 @@ const SIGNALS = {
   VIDEO_THROTTLE_LIFTED: 'videoThrottleLifted', // signal if other side's video has stopped being throttled
   LEGACY_VIDEO_THROTTLED: VIDEO_WARNING.TYPE, // legacy signal if other sides video receiving has been throttled/unthrottled by tokbox
   RECEIVING_AV: 'receivingAV', // signal from other side they are initially receiving audio/video from this side
+  AV_STATUS: 'avStatus', // status of remote side, if they are receiving audio or video
   HEARTBEAT: 'heartbeat', // periodic heartbeat from other side to prove connection is still active
 };
 
@@ -164,6 +165,9 @@ export class Session extends Component {
       this.localUserState.publishingAudio = newC.micEnabled;
       this.localUserState.publishingVideo = newC.videoEnabled;
       this.sendSignal(SIGNALS.CONTROL_STATE, newC);
+
+      // TODO: if legacy version, also update remoteUserReceivingAV - we'll have to assume they are
+      // getting what we are sending, because older apps won't send signals about their state
     }
   }
 
@@ -277,10 +281,17 @@ export class Session extends Component {
       sessionID: this.props.session.id
     });
 
+    // only process stream changes for remote participants - we are assuming that
+    // our own stream properties are determined by the local control state
+    if (event.stream.connectionId == this.localUserState.connectionID) {
+      return;
+    }
+
     // NOTE: we're not updating whether or not the remote user is
     // sending, because that depends on their control state - it could
     // be that they are sending AV, but TB has thottled and disabled
-    // the video
+    // the video, so we only update what we're receiving based on the stream
+    // properties.
     this.props.onUserReceivingAV({
       audio: event.stream.hasAudio,
       video: event.stream.hasVideo
@@ -288,6 +299,10 @@ export class Session extends Component {
     
     // event.stream.hasVideo ? this.props.onRemoteUserVideoEnabled() : this.props.onRemoteUserVideoDisabled();
     // event.stream.hasAudio ? this.props.onRemoteUserAudioEnabled() : this.props.onRemoteUserAudioDisabled();
+    this.sendSignal(SIGNALS.AV_STATUS, {
+      audio: event.stream.hasAudio,
+      video: event.stream.hasVideo
+    });
   }
 
   onStreamDestroyed (event) {
@@ -546,6 +561,13 @@ export class Session extends Component {
         this.props.onRemoteUserReceivingAV({
           audio: this.localUserState.publishingAudio,
           video: this.localUserState.publishingVideo,
+        });
+        break;
+      }
+      case SIGNALS.AV_STATUS: {
+        this.props.onRemoteUserReceivingAV({
+          audio: payload.audio,
+          video: payload.video
         });
         break;
       }

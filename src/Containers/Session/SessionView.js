@@ -241,7 +241,6 @@ class SessionView extends Component {
   handleNetworkConnectionTypeChanged (prevState, currentState) {
     recordSessionEvent('handleNetworkConnectionTypeChanged');
     this.updateLocalUserState({device: {
-      ...this.state.localUserState.device,
       networkConnection: currentState,
       hasNetworkConnection: currentState != "none"
     }});
@@ -273,53 +272,44 @@ class SessionView extends Component {
   }
 
   toggleVideo () {
-    const {controls, connection} = this.state.localUserState;
+    const {controls} = this.state.localUserState;
+    const enabled = !controls.videoEnabled;
     this.updateLocalUserState({
-      controls: {
-        ...controls,
-        videoEnabled: !controls.videoEnabled,
-      },
-      connection: {
-        ...connection,
-        sendingVideo: !controls.videoEnabled
-      }
+      controls: {videoEnabled: enabled},
+      connection: {sendingVideo: enabled || controls.cameraFlipEnabled}
     });
+
+    // TODO: only update this in case of legacy version - move this to Session
     this.updateRemoteUserState({connection: {receivingVideo: !controls.videoEnabled}});
   }
 
   toggleMic () {
-    const {controls, connection} = this.state.localUserState;
+    const enabled = !this.state.localUserState.micEnabled;
     this.updateLocalUserState({
-      controls: {
-        ...controls,
-        micEnabled: !controls.micEnabled
-      },
-      connection: {
-        ...connection,
-        sendingAudio: !controls.micEnabled
-      }
+      controls: {micEnabled: enabled},
+      connection: {sendingAudio: enabled}
     });
-    this.updateRemoteUserState({connection: {receivingAudio: !controls.micEnabled}});
+
+    // TODO: only update this in case of legacy version - move this to Session
+    this.updateRemoteUserState({connection: {receivingAudio: enabled}});
   }
 
   toggleSpeaker () {
-    const {controls} = this.state.localUserState;
-    const enabled = !controls.speakerEnabled
-    this.setState({localUserState: {
-      ...this.state.localUserState,
-      controls: {
-      ...controls,
-      speakerEnabled: enabled
-    }}});
+    const enabled = !this.state.localUserState.speakerEnabled;
+    this.updateLocalUserState({controls: {speakerEnabled: enabled}});
     InCallManager.setForceSpeakerphoneOn(enabled);
   }
 
   toggleCameraFlip () {
-    const {controls} = this.state.localUserState;
-    this.updateLocalUserState({controls: {
-      ...controls,
-      cameraFlipEnabled: !controls.cameraFlipEnabled
-    }});
+    const {controls} = !this.state.localUserState;
+    const enabled = !controls.cameraFlipEnabled;
+    this.updateLocalUserState({
+      controls: {cameraFlipEnabled: enabled},
+      connection: {sendingVideo: enabled || controls.videoEnabled}
+    });
+    
+    // TODO: only update this in case of legacy version - move this to Session
+    this.updateRemoteUserState({connection: {receivingVideo: enabled || controls.videoEnabled}});
   }
 
   poorConnectionAlertVisible () {
@@ -505,7 +495,7 @@ class SessionView extends Component {
 
   handleRemoteUserReceivingAVThrottled () {
     recordSessionEvent('handleRemoteUserReceivingAVThrottled');
-    this.updateRemoteUserState({connection: {receivingThrottled: true }});
+    this.updateRemoteUserState({connection: {receivingThrottled: true}});
   }
 
   handleRemoteUserReceivingAVUnthrottled () {
@@ -536,10 +526,8 @@ class SessionView extends Component {
   handleRemoteUserControlStateChanged (controls) {
     recordSessionEvent('handleRemoteUserControlStateChanged');
     this.updateRemoteUserState({
-      ...this.state.remoteUserState,
       controls,
       connection: {
-        ...this.state.remoteUserState.connection,
         sendingAudio: controls.micEnabled,
         sendingVideo: controls.videoEnabled || controls.cameraFlipEnabled
       }
