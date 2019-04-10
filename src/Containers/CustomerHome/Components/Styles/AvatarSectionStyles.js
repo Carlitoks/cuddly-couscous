@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import {
   ApplicationStyles,
   Colors,
@@ -6,6 +6,24 @@ import {
   Metrics
 } from "../../../../Themes";
 import { moderateScaleViewports } from "../../../../Util/Scaling";
+import {isIphoneXorAbove} from "../../../../Util/Devices";
+
+const setHeaderHeight = () => {
+  if(Metrics.width <= 320){
+    return Metrics.height * 0.60
+  }
+  if(isIphoneXorAbove()){
+    return Metrics.height * 0.65;
+  }
+
+  if(Metrics.width <= 375){
+    if(Platform.OS === 'ios'){
+      return Metrics.height * 0.65;
+    }
+    return Metrics.height * 0.70;
+  }
+  return Metrics.height * 0.65;
+}
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -14,7 +32,7 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: Colors.gradientColor.top,
-    height: Metrics.width <= 320 ? Metrics.height * 0.60 : Metrics.height * 0.70,
+    height: setHeaderHeight(),
     width: Metrics.width,
     paddingTop: moderateScaleViewports(21),
   },

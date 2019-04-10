@@ -12,6 +12,8 @@ import { closeSlideMenu } from "../../../Ducks/LogicReducer";
 import I18n  from "../../../I18n/I18n";
 import { Bus, Shopping, Dinning, Translator, Teamwork, Layers } from "../../../Assets/SVG";
 import Reactotron from "reactotron-react-native";
+import metrics from "../../../Themes/Metrics";
+import {isIphoneXorAbove} from "../../../Util/Devices";
 
 class Scenario extends Component {
   renderCheck = currentLang => {
@@ -76,7 +78,7 @@ class Scenario extends Component {
     return scenariosList.map((scenario, current) => {
       if (scenario.active) {
         return (
-          <React.Fragment key={current}>
+          <View style={{width: metrics.width * 0.90 }} key={current}>
             <TouchableOpacity
               style={styles.LangViewContainer}
               onPress={() => this.changeLangCode(scenario.id)}
@@ -86,7 +88,7 @@ class Scenario extends Component {
               </View>
             </TouchableOpacity>
             <Divider style={styles.dividerStyle} />
-          </React.Fragment>
+          </View>
         );
       }
     });
@@ -128,22 +130,19 @@ class Scenario extends Component {
   render() {
     const { closeSlideMenu } = this.props;
     return (
-      <React.Fragment>
+      <View style={styles.scenarioContainer}>
         <View style={styles.availableLangContainer}>
           <Text style={styles.availableLangContainerText}>
             {I18n.t("newCustomerHome.scenario.label")}
           </Text>
         </View>
-        <ScrollView style={{borderRadius: 100}} contentContainerStyle={styles.scrollContainer} bounces={false}>
-          <React.Fragment>
+        <ScrollView style={styles.fullWidthOnItems} contentContainerStyle={styles.scrollContainer} bounces={false}>
             {this.renderScenariosList()}
-            {this.renderCustomOption()}
-          </React.Fragment>
         </ScrollView>
         <TouchableOpacity style={styles.closeScenarioList} onPress={() => closeSlideMenu()} >
           <Text style={styles.cancelButtonText}>Cancel</Text>
         </TouchableOpacity>
-      </React.Fragment>
+      </View>
     );
   }
 }
