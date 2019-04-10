@@ -53,7 +53,6 @@ export default class LinguistHeader extends Component {
       );
     }
     if (
-      navigation.state.routeName === "RegisterView" ||
       navigation.state.routeName === "PaymentDetailScreen" ||
       navigation.state.routeName === "PaymentsView" ||
       navigation.state.routeName === "CardInfoScreen" ||
@@ -63,6 +62,15 @@ export default class LinguistHeader extends Component {
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
             <Icon name="chevron-left" type="evilicon" color="white" size={50} />
+          </View>
+        </TouchableOpacity>
+      );
+    }
+    if (navigation.state.routeName === "RegisterView") {
+      return (
+        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
+          <View style={styles.buttonGoBack}>
+            <Icon name="chevron-left" type="evilicon" color="#401674" size={50} />
           </View>
         </TouchableOpacity>
       );

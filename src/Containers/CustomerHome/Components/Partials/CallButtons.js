@@ -47,7 +47,7 @@ class CallButtons extends Component {
     }
 
     if (availableMinutes === 0 && !stripePaymentToken) {
-      Alert.alert(I18n.t("payments.enterPaymentToTalk"), "", [
+      Alert.alert(" ", I18n.t("payments.enterPaymentToTalk"), [
         {
           text: I18n.t("ok"),
           onPress: () => {
