@@ -33,7 +33,7 @@ const CreditCardNumber = props => {
           </View>
         ) : null}
       </View>
-      {!props.isValidCC && props.creditCard > 0 && props.creditCard.toString().length > 5 ? (
+      {!props.isValidCC && props.creditCard.toString().length > 16 ? (
         <Text style={styles.CCNInvalidText}>{I18n.t("payments.number.errInvalid")}</Text>
       ) : (
         <React.Fragment />

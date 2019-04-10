@@ -10,10 +10,12 @@ export const ACTIONS = {
 };
 
 // Action Creator
-export const updatePayments = payload => ({
-  type: ACTIONS.UPDATE,
-  payload
-});
+export const updatePayments = payload => {
+  return {
+    type: ACTIONS.UPDATE,
+    payload
+  };
+};
 
 export const clearPayments = () => ({
   type: ACTIONS.CLEAR
@@ -39,10 +41,12 @@ export const setPayment = stripeSourceToken => (dispatch, getState) => {
 
   return User.setPayment(id, token, stripeSourceToken)
     .then(response => {
+      console.log("response", response);
       const { stripeCustomerID, stripePaymentToken } = response.data;
       dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
     })
     .catch(err => {
+      console.log("err reducer", err);
       return err;
     });
 };

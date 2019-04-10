@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform } from "react-native";
 import { connect } from "react-redux";
-import I18n from "../../../I18n/I18n";
+import I18n, { translateApiError } from "../../../I18n/I18n";
 import Reactotron from "reactotron-react-native";
 
 // Styles
@@ -58,17 +58,13 @@ class PaymentButtons extends Component {
         Reactotron.log(tokenId);
         updateView({ stripePaymentToken: tokenId });
         setPayment(tokenId).then(res => {
+          console.log("res", res);
           if (res) {
             updatePayments({ loading: false });
             Reactotron.log(res);
-            Alert.alert(I18n.t("error"), I18n.t("invalidPaymentDetails"), [
+            Alert.alert(I18n.t("error"), translateApiError(res), [
               {
-                text: I18n.t("ok"),
-                onPress: () => {
-                  navigation.dispatch({
-                    type: "Home"
-                  });
-                }
+                text: I18n.t("ok")
               }
             ]);
           } else {
@@ -81,7 +77,13 @@ class PaymentButtons extends Component {
       })
       .catch(err => {
         Reactotron.log(err);
-        Alert.alert(I18n.t("api.errTemporaryTryAgain"), "", [
+        console.log("err", err);
+        Alert.alert(I18n.t("error"), translateApiError(res), [
+          {
+            text: I18n.t("ok")
+          }
+        ]);
+        /*Alert.alert(I18n.t("api.errTemporaryTryAgain"), "", [
           {
             text: I18n.t("ok"),
             onPress: () => {
@@ -90,14 +92,13 @@ class PaymentButtons extends Component {
               });
             }
           }
-        ]);
+        ]);*/
       });
   };
 
   render() {
     return (
       <View style={styles.paymentButtonsContainer}>
-        {this.props.loading ? <ActivityIndicator size="large" color="#F7F7F70" /> : null}
         <TouchableOpacity
           disabled={!this.isDisabled()}
           onPress={() => this.createTokenWithCard()}

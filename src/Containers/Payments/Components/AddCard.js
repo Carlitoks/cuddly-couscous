@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 import { number as validCC } from "card-validator";
 import CreditCardNumber from "./Partials/CreditCardNumber";
@@ -102,11 +102,16 @@ class AddCard extends Component {
     return cardInfo;
   };
   render() {
-    const { type, StripePaymentSourceMeta } = this.props;
+    const { type, StripePaymentSourceMeta, loading } = this.props;
     let cardInfo = { creditCardNumber: "", creditCardIcon: "", expDate: "" };
     cardInfo = this.generateCardInfo(cardInfo);
     return (
       <View style={styles.flexEndCenter}>
+        {loading ? (
+          <ActivityIndicator size="large" color="purple" style={styles.loaderStyle} />
+        ) : (
+          <React.Fragment />
+        )}
         <CreditCardNumber
           type={type}
           creditCard={
@@ -120,7 +125,7 @@ class AddCard extends Component {
               ? cardInfo.creditCardIcon
               : this.state.creditCardIcon
           }
-          isValidCC={this.state.isValidCC}
+          isValidCC={this.props.isValidCC}
         />
         <View style={styles.addCardBottomInputs}>
           <ExpirationDate
@@ -155,6 +160,8 @@ class AddCard extends Component {
 
 const mS = state => ({
   isValidDate: state.payments.isValidDate,
+  loading: state.payments.loading,
+  isValidCC: state.payments.isValidCC,
   token: state.auth.token,
   cardInfo: state.payments.cardInfo,
   expDate: state.payments.expDate,
