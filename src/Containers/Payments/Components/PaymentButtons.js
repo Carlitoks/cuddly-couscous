@@ -58,7 +58,6 @@ class PaymentButtons extends Component {
         Reactotron.log(tokenId);
         updateView({ stripePaymentToken: tokenId });
         setPayment(tokenId).then(res => {
-          console.log("res", res);
           if (res) {
             updatePayments({ loading: false });
             Reactotron.log(res);
@@ -77,8 +76,7 @@ class PaymentButtons extends Component {
       })
       .catch(err => {
         Reactotron.log(err);
-        console.log("err", err);
-        Alert.alert(I18n.t("error"), translateApiError(res), [
+        Alert.alert(I18n.t("error"), translateApiError(err), [
           {
             text: I18n.t("ok")
           }

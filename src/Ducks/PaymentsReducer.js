@@ -41,12 +41,10 @@ export const setPayment = stripeSourceToken => (dispatch, getState) => {
 
   return User.setPayment(id, token, stripeSourceToken)
     .then(response => {
-      console.log("response", response);
       const { stripeCustomerID, stripePaymentToken } = response.data;
       dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
     })
     .catch(err => {
-      console.log("err reducer", err);
       return err;
     });
 };
