@@ -77,7 +77,7 @@ export default class LinguistHeader extends Component {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
-            <Icon name="chevron-left" type="evilicon" color="#401674" size={50} />
+            <Icon name="chevron-left" type="evilicon" color="#401674" size={50}/>
           </View>
         </TouchableOpacity>
       );
@@ -88,7 +88,7 @@ export default class LinguistHeader extends Component {
         style={styles.containerMenu}
         onPress={() => this.navigate("DrawerOpen")}
       >
-        <NavMenu width={30} height={20} />
+        <NavMenu width={30} height={20}/>
       </TouchableOpacity>
     );
   };
@@ -98,7 +98,7 @@ export default class LinguistHeader extends Component {
 
     if (type === "onboarding") {
       return (
-        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
+        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null}/>
       );
     }
 
@@ -107,7 +107,7 @@ export default class LinguistHeader extends Component {
       || navigation.state.routeName === "LoginView"
     ) {
       return (
-        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
+        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null}/>
       );
     }
 
@@ -143,7 +143,7 @@ export default class LinguistHeader extends Component {
     return (
       <View style={styles.minutesLeftContainer}>
         <TouchableOpacity onPress={() => navigation.dispatch({ type: "PaymentsView" })}>
-          <HeaderMinutesLeft navigation={navigation} />
+          <HeaderMinutesLeft navigation={navigation}/>
         </TouchableOpacity>
       </View>
     );
@@ -166,13 +166,28 @@ export default class LinguistHeader extends Component {
     navigation.dispatch({ type: screenName });
   };
 
+  setBackgroundColor = () => {
+    const { navigation } = this.props;
+    if (navigation.state.routeName === "Home") {
+      return Colors.gradientColor.top;
+    }
+    if (
+      navigation.state.routeName === "RegisterView"
+      || navigation.state.routeName === "LoginView"
+    ) {
+      return "#fff";
+    }
+
+    return "transparent";
+  };
+
   render() {
     const { navigation } = this.props;
     return (
       <View style={styles.headerContainer}>
         <StatusBar
           hidden={false}
-          backgroundColor={navigation.state.routeName === "Home" ? Colors.gradientColor.top : "transparent"}
+          backgroundColor={this.setBackgroundColor()}
         />
         <Header
           backgroundColor={Colors.transparent}

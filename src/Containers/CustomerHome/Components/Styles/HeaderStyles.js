@@ -71,7 +71,8 @@ export default StyleSheet.create({
     margin: 0,
     paddingBottom: 0,
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    backgroundColor: "#fff"
   },
   headerInnerHome: {
     padding: 5,
