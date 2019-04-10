@@ -79,6 +79,10 @@ class SessionView extends Component {
     // anything referenced in the template and/or passed to child
     // components as props needs to be defined in `state`
     this.state = {
+      loaded: false,
+      ending: false,
+      endReason: false,
+
       // local view state for the session display
       display: {
         controlsVisible: true,
@@ -105,9 +109,6 @@ class SessionView extends Component {
         }
       }),
     };
-
-    console.log('props: ', props.session);
-    console.log('localUserState', this.state.localUserState);
 
     this.endingCall = false;
     this.unmounting = false;
@@ -137,8 +138,14 @@ class SessionView extends Component {
   componentDidMount () {
     AppState.addEventListener('change', this.handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.handleConnectionChange);
+
     NetInfo.getConnectionInfo().then((info) => {
       this.handleConnectionChange(info);
+      
+      // we use this as the trigger to initially allow the session component, otherwise
+      // it may start loading, trigger an error, then remount and result in event listeners
+      // being registered twice
+      this.setState({loaded: true});
     });
 
     if (Platform.OS == "android") {
@@ -165,8 +172,7 @@ class SessionView extends Component {
       this.setWiredHeadsetState(res.isWiredHeadsetPluggedIn);
     })
     .catch((err) => {
-      // todo: forensics
-      console.log("InCallManager.getIsWiredHeadsetPluggedIn() catch: ", err);
+      recordSessionEvent('error.InCallManager.getIsWiredHeadsetPluggedIn', {error: err});
     });
   }
 
@@ -567,11 +573,18 @@ class SessionView extends Component {
       return;
     }
 
+    // this state update will trigger sending the end signal
+    // to ther participants
     this.endingCall = true;
-    this.props.endSession(reason).finally(() => {
-      this.cleanup();
-      this.endingCall = false;
-      this.props.navigation.dispatch({type: this.chooseSessionEndedView(true)});
+    this.setState({ending: true, endReason: reason}, () => {
+      // injecting a small delay before actually ending and disconnecting
+      setTimeout(() => {
+        this.props.endSession(reason).finally(() => {
+          this.cleanup();
+          this.endingCall = false;
+          this.props.navigation.dispatch({type: this.chooseSessionEndedView(true)});
+        });
+      }, 1000);
     });
   }
 
@@ -718,7 +731,7 @@ class SessionView extends Component {
 
   isTransitioning () {
     const {status} = this.props;
-    return status.ending || status.ended || status.creating;
+    return status.ending || status.ended || status.creating || this.state.ending;
   }
 
   render () {
@@ -730,12 +743,15 @@ class SessionView extends Component {
 
           <KeepAwake />
 
+          {this.state.loaded && (
           <OpentokSession
             user = {this.props.user }
             session = { this.props.session }
             credentials = { this.props.credentials }
             remoteUser = { this.props.remoteUser }
             localSessionStatus = { this.props.status }
+            ending = { this.state.ending }
+            endReason = { this.state.endReason }
             
             remoteUserState = { remoteUserState }
             localUserState = { localUserState }
@@ -770,10 +786,9 @@ class SessionView extends Component {
             onUserReceivingAVThrottled = {() => { this.handleUserReceivingAVThrottled() }}
             onUserReceivingAVUnthrottled = {() => { this.handleUserReceivingAVUnthrottled() }}
 
+            // audio mode background
+            audioModeBackground={this.showAudioMode() ? (<AudioModeBackground user={ this.props.remoteUser } />) : (<React.Fragment />)}
           >
-            {this.showAudioMode() && (
-            <AudioModeBackground user={ this.props.remoteUser } />
-            )}
 
             <SessionHeader user={ this.props.remoteUser } />
             
@@ -803,6 +818,7 @@ class SessionView extends Component {
             </View>
 
           </OpentokSession>
+          )}
 
           {/* If there is a remote user, but we haven't connected to them yet, show the initial connection screen */}
           {!!this.props.remoteUser.id && !this.props.status.began && (

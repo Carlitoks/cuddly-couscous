@@ -3,11 +3,15 @@ import {View} from "react-native";
 import {OTPublisher} from "opentok-react-native";
 import styles from "./styles";
 
-import { recordSessionOpentokEvent } from "../../../../Util/Forensics";
+import { recordSessionOpentokEvent, createRecorder } from "../../../../Util/Forensics";
+
+let recordComponentEvent = () => {};
 
 export class Publisher extends Component {
   constructor(props) {
     super(props);
+    recordComponentEvent = createRecorder(`session.Opentok.Publisher.`, {sessionID: this.props.session.id});
+    recordComponentEvent('constructor');
 
     this.mounted = true;
 
@@ -18,13 +22,11 @@ export class Publisher extends Component {
       streamCreated: (event) => { this.onStreamCreated(event); },
       streamDestroyed: (event) => { this.onStreamDestroyed(event); },
     };
-
-    console.log("publisher.constructor");
   }
 
   componentWillUnmount () {
+    recordComponentEvent('componentWillUnmount');
     this.mounted = false;
-    console.log("publisher.componentWillUnmount");
   }
 
   onAudioLevel (event) {
@@ -82,7 +84,6 @@ export class Publisher extends Component {
       <View style={containerStyles}>
       {!status.ending && (
         <OTPublisher
-          sessionId={session.id}
           style={publisherStyles}
           eventHandlers = { this.eventHandlers }
           properties= {{

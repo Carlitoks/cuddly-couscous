@@ -8,7 +8,7 @@ import { OTSession } from 'opentok-react-native';
 
 import {TOKBOX_APIKEY} from  "../../../../Config/env";
 
-import { recordSessionOpentokEvent, recordSessionEvent } from "../../../../Util/Forensics";
+import { recordSessionOpentokEvent, recordSessionEvent, createRecorder } from "../../../../Util/Forensics";
 import { VIDEO_WARNING } from "../../../../Util/Constants";
 
 // custom app signals sent/received via tokbox connection
@@ -44,9 +44,15 @@ const newUserState = () => {
   }
 }
 
+let recordComponentEvent = () => {};
+
 export class Session extends Component {
   constructor (props) {
     super(props);
+
+    // setup forensics logger
+    recordComponentEvent = createRecorder(`session.Opentok.Session.`, {sessionID: this.props.session.id});
+    recordComponentEvent('constructor');
 
     this.state = {
       unmounting: false,
@@ -98,8 +104,6 @@ export class Session extends Component {
       archiveStopped: (event) => {},
       error: (event) => { this.onError(event); },
     };
-
-    recordSessionEvent("opentok.session.constructor");
   }
 
   setState (data, cb = null) {
@@ -117,7 +121,7 @@ export class Session extends Component {
   }
 
   componentWillUnmount () {
-    recordSessionEvent("opentok.session.componentWillUnmount");
+    recordComponentEvent('componentWillUnmount');
     this.cleanup();
   }
 
@@ -137,11 +141,11 @@ export class Session extends Component {
     }
 
     // are we ending?
-    if (!oldP.localSessionStatus.ending && newP.localSessionStatus.ending) {
+    if (!oldP.ending && newP.ending) {
       if (this.endedByRemote) {
         return;
       }
-      this.sendSignal(SIGNALS.ENDING, {reason: newP.session.endReason});
+      this.sendSignal(SIGNALS.ENDING, {reason: newP.endReason});
       return;
     }
 
@@ -475,7 +479,7 @@ export class Session extends Component {
   }
 
   cleanup (cb = null) {
-    recordSessionEvent("opentok.session.cleanup");
+    recordComponentEvent('cleanup');
     this.setState({unmounting: true, mounted: false}, () => {
       this.unmounting = true;
       if (!!cb) {
@@ -485,11 +489,13 @@ export class Session extends Component {
   }
 
   sendSignal (type, payload = null) {
-    if (this.state.unmounting) {
+    // make sure we have actually connected, and are not in the process
+    // of ending the session
+    if (this.state.unmounting && this.state.localUserState.connectionID != null) {
       return;
     }
     
-    recordSessionEvent("opentok.session.sendSignal", {type, payload});
+    recordComponentEvent("sendSignal", {type, payload});
     let data = "";
     if (!!payload) {
       data = JSON.stringify(payload);
@@ -595,14 +601,15 @@ export class Session extends Component {
   }
 
   remount () {
-    recordSessionEvent('opentok.session.remount');
+    recordComponentEvent('remount');
     this.setState({mounted: false}, () => {
       setTimeout(() => {
         if (this.state.unmounting) {
           return;
         }
+        console.log("~~~REMOUNTING~~~");
         this.setState({mounted: true});
-      }, 500);
+      }, 1000);
     });
   }
 
@@ -633,24 +640,24 @@ export class Session extends Component {
               onVideoDisableWarningLifted = {() => { this.subscriberVideoUnthrottled() }}
               onError = {(event) => { this.remount() }}
             />
+
+            { this.props.audioModeBackground }
+
+            <Publisher
+              session = {session}
+              status = {localSessionStatus}
+              localUserState = {localUserState}
+              remoteUserState = {remoteUserState}
+              onStreamCreated = {(event) => { this.publisherStreamCreated(event) }}
+              onStreamDestroyed = {(event) => { this.publisherStreamDestroyed(event) }}
+              onError = {(event) => { this.remount() }}
+            />
           </OTSession>
         )}
 
         {/* other session UI renders after the session video background */}
         { this.props.children }
 
-        {/* publisher must be rendered after all the other session UI so it overlays on top */}
-        {this.mounted() && !this.isTransitioning() && (
-        <Publisher
-          session = {session}
-          status = {localSessionStatus}
-          localUserState = {localUserState}
-          remoteUserState = {remoteUserState}
-          onStreamCreated = {(event) => { this.publisherStreamCreated(event) }}
-          onStreamDestroyed = {(event) => { this.publisherStreamDestroyed(event) }}
-          onError = {(event) => { this.remount() }}
-        />
-        )}
 
         {/* NOTE: not possible to implement yet: https://github.com/opentok/opentok-react-native/issues/162 */}
         {/* <View style={ styles.primaryFeedToggle }></View> */}

@@ -3,11 +3,16 @@ import {View} from "react-native";
 import {OTSubscriber} from "opentok-react-native";
 import styles from "./styles";
 
-import { recordSessionOpentokEvent } from "../../../../Util/Forensics";
+import { recordSessionOpentokEvent, createRecorder } from "../../../../Util/Forensics";
+
+let recordComponentEvent = () => {};
 
 export class Subscriber extends Component {
   constructor(props) {
     super(props);
+    recordComponentEvent = createRecorder(`session.Opentok.Subscriber.`, {sessionID: this.props.session.id});
+    recordComponentEvent('constructor');
+
     this.mounted = true;
 
     this.subscriberProperties = {
@@ -35,6 +40,7 @@ export class Subscriber extends Component {
   }
 
   componentWillUnmount () {
+    recordComponentEvent('componentWillUnmount');
     this.mounted = false;
   }
 

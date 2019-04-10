@@ -17,7 +17,6 @@ import { SESSION, DURATION } from "../../Util/Constants";
 export class CustomerMatchingView extends Component {
   constructor (props) {
     super(props);
-    console.log("CustomerMatching.constructor");
 
     // sentinel for callbacks
     this.abortTimers = false;
@@ -57,7 +56,6 @@ export class CustomerMatchingView extends Component {
 
   // cleanup countdowns
   componentWillUnmount () {
-    console.log("CustomerMatching.componentWillUnmount");
     this.cleanup();
   }
 
@@ -144,7 +142,6 @@ export class CustomerMatchingView extends Component {
   }
 
   cleanup() {
-    console.log("CustomerMatching.cleanup");
     this.abortTimers = true;
     clearInterval(this.countdownIntervalID);
     clearInterval(this.pollIntervalID);

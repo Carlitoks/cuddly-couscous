@@ -379,7 +379,7 @@ export default currentSessionReducer = (state = null, action) => {
     }
 
     case ACTIONS.MERGE: {
-      return lodashMerge(state || initState(), payload);
+      return lodashMerge({}, state || initState(), payload);
     }
 
     case ACTIONS.CLEAR: {
