@@ -2,12 +2,16 @@ import React, { Component } from "react";
 import {
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
 import RenderPicker from "./Partials/PickerSelect";
-import { modifyAdditionalDetails, swapCurrentSessionLanguages, guessSecondaryLangCode } from "../../../Ducks/NewSessionReducer";
+import {
+  modifyAdditionalDetails,
+  swapCurrentSessionLanguages,
+  guessSecondaryLangCode
+} from "../../../Ducks/NewSessionReducer";
 import I18n from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallInputsStyles";
@@ -15,32 +19,50 @@ import { moderateScaleViewports } from "../../../Util/Scaling";
 
 class CallInputs extends Component {
 
-  componentWillMount(){
+  componentWillMount() {
     this.props.guessSecondaryLangCode();
   };
 
   paymentNotice = () => {
     const { isNewUser, availableMinutes, stripePaymentToken } = this.props;
-    if(isNewUser){
+    if (isNewUser) {
       return I18n.t("newCustomerHome.rateNotices.beforeFirst");
     }
-    if(availableMinutes){
-      if(stripePaymentToken){
-        return I18n.t("newCustomerHome.rateNotices.hasBalance", {num: availableMinutes});
+    if (availableMinutes) {
+      if (stripePaymentToken) {
+        return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: availableMinutes });
       }
     } else {
-      if(!stripePaymentToken)
+      if (!stripePaymentToken) {
         return I18n.t("newCustomerHome.rateNotices.noBalanceNoCard");
+      }
       return I18n.t("newCustomerHome.rateNotices.noBalanceHasCard");
     }
-    return I18n.t("newCustomerHome.rateNotices.hasBalance", {num: availableMinutes});
+    return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: availableMinutes });
   };
 
   render() {
-    const { type, openSlideMenu, swapCurrentSessionLanguages } = this.props;
+    const {
+      type,
+      openSlideMenu,
+      swapCurrentSessionLanguages,
+      stripePaymentToken,
+      navigation
+    } = this.props;
     return (
       <View style={styles.mainInputsContainer}>
-        <Text style={styles.pricingText}>{this.paymentNotice()}</Text>
+        <TouchableOpacity
+          activeOpacity={stripePaymentToken ? 1 : 0}
+          onPress={() => {
+            if (!stripePaymentToken) {
+              return navigation.dispatch({ type: "PaymentsView" });
+            }
+            return null;
+          }
+          }
+        >
+          <Text style={styles.pricingText}>{this.paymentNotice()}</Text>
+        </TouchableOpacity>
         <View style={styles.inputsContainer}>
           <View style={styles.langInputs}>
             <RenderPicker
@@ -144,5 +166,5 @@ const mD = {
 
 export default connect(
   mS,
-  mD,
+  mD
 )(CallInputs);

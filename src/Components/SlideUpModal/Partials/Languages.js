@@ -151,7 +151,7 @@ class Languages extends Component {
           <Text style={styles.availableLangContainerText}>
             { selection === "primaryLang"
               ? I18n.t("customerHome.primaryLang.label")
-              : I18n.t("sessionLang.selections")}
+              : I18n.t("newCustomerHome.secondaryLang.label")}
           </Text>
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>

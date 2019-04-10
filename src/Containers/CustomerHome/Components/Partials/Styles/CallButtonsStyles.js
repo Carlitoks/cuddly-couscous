@@ -6,19 +6,21 @@ import metrics from "../../../../../Themes/Metrics";
 
 const baseButton = {
   flexDirection: "row",
-  justifyContent: "space-around",
-  alignItems: "center",
+  justifyContent: "center",
   borderRadius: moderateScaleViewports(10),
+  alignItems: "center",
+  borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
+  borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
 };
 
 export default StyleSheet.create({
-  iconPadding: { paddingLeft: moderateScaleViewports(24) },
+  iconPadding: { paddingLeft: moderateScaleViewports(24), paddingTop: moderateScaleViewports(2) },
   callButtonContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: "center",
     borderRadius: moderateScaleViewports(10),
-    minWidth: metrics.width * 0.80,
+    width: metrics.width * 0.90,
     bottom: moderateScaleViewports(-5),
     paddingBottom: isIphoneXorAbove() ? 70 : 0,
     position: "absolute",
@@ -30,6 +32,7 @@ export default StyleSheet.create({
     borderBottomRightRadius: 0,
     borderRightColor: "#fff",
     borderRightWidth: 1,
+    flex: 1,
   },
   audioCallButtonDisable: {
     ...baseButton,
@@ -38,6 +41,7 @@ export default StyleSheet.create({
     borderBottomRightRadius: 0,
     borderRightColor: "#fff",
     borderRightWidth: 1,
+    flex: 1,
   },
   videoCallButton: {
     ...baseButton,
@@ -45,17 +49,18 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
+    flex: 1,
   },
   videoCallButtonDisable: {
     ...baseButton,
     backgroundColor: "#979797",
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
+    flex: 1,
   },
   audioOnlyButtonText: {
     color: "white",
     fontSize: moderateScaleViewports(16),
-    fontWeight: "500",
     fontFamily: Fonts.BaseFont,
     paddingTop: moderateScaleViewports(18),
     paddingBottom: moderateScaleViewports(18),
@@ -65,7 +70,6 @@ export default StyleSheet.create({
   callNowButtonText: {
     color: "white",
     fontSize: moderateScaleViewports(16),
-    fontWeight: "600",
     fontFamily: Fonts.BaseFont,
     paddingTop: moderateScaleViewports(18),
     paddingBottom: moderateScaleViewports(18),

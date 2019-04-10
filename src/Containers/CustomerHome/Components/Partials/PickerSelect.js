@@ -43,7 +43,7 @@ class PickerSelectComponent extends Component {
       <View style={styles.flexView}>
         <Text
           nunmberOfLines={1}
-          style={selectedLabelStyle || styles.inputPlaceholderValue}
+          style={styles.inputPlaceholderValue}
         >
           {placeholder}
         </Text>
@@ -94,7 +94,7 @@ class PickerSelectComponent extends Component {
       >
         <Text
           nunmberOfLines={1}
-          style={selectedLabelStyle || styles.inputPlaceholderValue}
+          style={styles.inputPlaceholderValue}
         >
           {placeholder}
         </Text>

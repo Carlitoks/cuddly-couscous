@@ -8,14 +8,21 @@ import { closeSlideMenu } from "../../Ducks/LogicReducer";
 import Languages from './Partials/Languages';
 import Comments from './Partials/Comments';
 import Scenario from './Partials/Scenario';
+import { moderateScaleViewports } from "../../Util/Scaling";
 
 class SlideUpPanel extends Component {
   heightForHeader = () => {
-    if(Metrics.width <= 320)
-      return Metrics.height * 0.45;
-    if(Metrics.width >= 375)
-      return Metrics.height * 0.50;
-    return Metrics.height * 0.70;
+    return moderateScaleViewports(Metrics.height * 0.50);
+  }
+
+  setDraggableRange = () => {
+    if(Metrics.width <= 320){
+      return Metrics.height * 0.62
+    }
+    if(Metrics.width <= 375){
+      return Metrics.height * 0.62
+    }
+    return Metrics.height * 0.65;
   }
   render() {
     const { isSlideUpMenuVisible, closeSlideMenu, selection } = this.props;
@@ -25,7 +32,7 @@ class SlideUpPanel extends Component {
         onRequestClose={() => closeSlideMenu()}
         height={selection === "scenarioSelection" ? this.heightForHeader() : Metrics.height * 0.7}
         allowDragging={false}
-        draggableRange={{ top: selection === "scenarioSelection" ? Metrics.height * 0.65 : Metrics.height * 0.7, bottom: 0 }}
+        draggableRange={{ top: this.setDraggableRange(), bottom: 0 }}
       >
         <View Style={styles.backgroundContainer}>
           {selection === "additionalDetails"

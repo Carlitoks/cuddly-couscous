@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { moderateScale } from "../../../../../Util/Scaling";
+import { moderateScale, moderateScaleViewports } from "../../../../../Util/Scaling";
 import { Fonts, Metrics } from "../../../../../Themes";
 import { Iphone5, iPhoneXModels } from "../../../../../Util/Devices";
 
@@ -45,13 +45,7 @@ export default StyleSheet.create({
     color: "#ffffff",
   },
   inputPlaceholderValue: {
-    paddingTop: 2,
-    paddingBottom: 9,
-    fontFamily: Fonts.BaseFont,
-    fontWeight: "500",
-    fontSize: inputAndPlaceholderTextSize(),
-    color: "#cccccc",
-    flexWrap: "nowrap",
+    fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(13), color: "#B1B1B1",
   },
   inputTitle: {
     color: "#ffffff",

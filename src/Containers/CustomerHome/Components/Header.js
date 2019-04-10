@@ -142,7 +142,9 @@ export default class LinguistHeader extends Component {
 
     return (
       <View style={styles.minutesLeftContainer}>
-        <HeaderMinutesLeft navigation={navigation} />
+        <TouchableOpacity onPress={() => navigation.dispatch({ type: "PaymentsView" })}>
+          <HeaderMinutesLeft navigation={navigation} />
+        </TouchableOpacity>
       </View>
     );
   };

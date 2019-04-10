@@ -119,7 +119,7 @@ class CustomerHomeScreen extends Component {
             contentContainerStyle={styles.scrollViewFlex}
           >
             <View style={styles.flexEndCenter}>
-              <AvatarSection/>
+              <AvatarSection />
               <CallInputs navigation={navigation} openSlideMenu={this.openSlideMenu}/>
             </View>
             <CallButtons navigation={navigation}/>

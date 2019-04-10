@@ -5,7 +5,7 @@ import { Fonts, Metrics } from '../../../../Themes';
 export default StyleSheet.create({
   scrollContainer: {
     backgroundColor: '#fff',
-    borderRadius: 5,
+    borderRadius: 10,
     left: Metrics.width * 0.05,
     width: Metrics.width * 0.90
   },
@@ -13,7 +13,7 @@ export default StyleSheet.create({
     height: 48,
     justifyContent: 'center',
     backgroundColor: '#fff',
-    borderRadius: 5,
+    borderRadius: 10,
     left: Metrics.width * 0.05,
     width: Metrics.width * 0.90,
     borderBottomLeftRadius: 0,
@@ -47,7 +47,7 @@ export default StyleSheet.create({
   },
   checkPadding: { paddingRight: 30 },
   closeScenarioList: {
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: "#fff",
     position: "absolute",
     bottom: -60,

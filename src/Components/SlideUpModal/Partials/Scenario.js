@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Divider, Icon } from "react-native-elements";
 import styles from "./Styles/ScenarioStyles";
-import { Colors } from "../../../Themes";
+import { Colors, Fonts } from "../../../Themes";
 import {
   changeLangCode,
   updateSelectedScenario
@@ -19,54 +19,53 @@ class Scenario extends Component {
       selection,
       scenarioID,
     } = this.props;
-    if (selection !== null && selection === "scenarioSelection") {
-      if (scenarioID != null && scenarioID === currentLang) {
-        return (
-          <Icon
-            color={Colors.gradientColor.top}
-            containerStyle={styles.checkPadding}
-            name="ios-checkmark"
-            type="ionicon"
-          />
-        );
-      }
-      return <React.Fragment />;
-    }
-    return <React.Fragment />;
-  };
-
-  renderIcon = (scenarioId) => {
-    switch(scenarioId){
-      case "00000000-0000-0000-0000-000000000002":
-        return <Bus />;
-      case "00000000-0000-0000-0000-000000000005":
-        return <Dinning />;
-      case "00000000-0000-0000-0000-000000000003":
-        return <Shopping />;
-      case "00000000-0000-0000-0000-000000000007":
-        return <Translator />;
-      case "00000000-0000-0000-0000-000000000010":
-        return <Teamwork />;
-      case "00000000-0000-0000-0000-000000000100":
-        return <Layers />;
-      default:
-        return <Layers />;
-    }
-  };
-
-  renderScenarioListButtonContent = scenario => {
     let ButtonStyle = {
       ...styles.availableLangText,
       color: Colors.pricingViewBlack
     };
-    const currentIcon = this.renderCheck(scenario.id);
-    Reactotron.log(scenario);
+    if (selection !== null && selection === "scenarioSelection") {
+      if (scenarioID != null && scenarioID === currentLang.id) {
+        return (
+          <View style={styles.iconNameContainer}>
+            { this.renderIcon(currentLang.id, "#3F1674") }
+            <Text style={{...ButtonStyle, color: "#3F1674", fontFamily: Fonts.BoldFont }}>{currentLang.title}</Text>
+          </View>
+        );
+      }
+      return <View style={styles.iconNameContainer}>
+        { this.renderIcon(currentLang.id, "black") }
+        <Text style={ButtonStyle}>{currentLang.title}</Text>
+      </View>;
+    }
+    return <View style={styles.iconNameContainer}>
+      { this.renderIcon(currentLang.id, "black") }
+      <Text style={ButtonStyle}>{currentLang.title}</Text>
+    </View>;
+  };
+
+  renderIcon = (scenarioId, selected) => {
+    switch(scenarioId){
+      case "00000000-0000-0000-0000-000000000002":
+        return <Bus fill={selected} />;
+      case "00000000-0000-0000-0000-000000000005":
+        return <Dinning fill={selected} />;
+      case "00000000-0000-0000-0000-000000000003":
+        return <Shopping fill={selected}/>;
+      case "00000000-0000-0000-0000-000000000007":
+        return <Translator fill={selected} />;
+      case "00000000-0000-0000-0000-000000000010":
+        return <Teamwork fill={selected} />;
+      case "00000000-0000-0000-0000-000000000100":
+        return <Layers fill={selected} />;
+      default:
+        return <Layers fill={selected} />;
+    }
+  };
+
+  renderScenarioListButtonContent = scenario => {
+    const currentIcon = this.renderCheck(scenario);
     return (
       <React.Fragment>
-        <View style={styles.iconNameContainer}>
-          { this.renderIcon(scenario.id) }
-          <Text style={ButtonStyle}>{scenario.title}</Text>
-        </View>
         {currentIcon}
       </React.Fragment>
     );
@@ -132,10 +131,10 @@ class Scenario extends Component {
       <React.Fragment>
         <View style={styles.availableLangContainer}>
           <Text style={styles.availableLangContainerText}>
-            {I18n.t("customerHome.scenario.description")}
+            {I18n.t("newCustomerHome.scenario.label")}
           </Text>
         </View>
-        <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
+        <ScrollView style={{borderRadius: 100}} contentContainerStyle={styles.scrollContainer} bounces={false}>
           <React.Fragment>
             {this.renderScenariosList()}
             {this.renderCustomOption()}
