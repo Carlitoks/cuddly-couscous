@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-swiper";
-import SlideUpPanel from "../CustomerHome/Components/Partials/SlideUpPanel";
+import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
 import AvatarSection from "./Components/AvatarSection";
 import RateComponent from "./Components/RateComponent";
 import CallClassification from "./Components/CallClassification";
 import CallTags from "./Components/CallTags";
-import { openSlideMenu } from "../../Ducks/NewSessionReducer";
+import { openSlideMenu } from "../../Ducks/LogicReducer";
 import { clearOptions, submitRateCall } from "../../Ducks/RateCallReducer";
 import I18n from "../../I18n/I18n";
 // Styles

@@ -6,16 +6,19 @@ import {
   modifyAdditionalDetails,
 } from "../../../Ducks/NewSessionReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
+import {
+  updateOptions
+} from "../../../Ducks/RateCallReducer";
 import I18n  from "../../../I18n/I18n";
 
 class Comments extends Component {
   render() {
-    const { modifyAdditionalDetails, customScenarioNote } = this.props;
+    const { modifyAdditionalDetails, customScenarioNote, selection, updateOptions, ratingComments } = this.props;
     return (
       <View style={styles.aditionalInfoContainer}>
         <View style={styles.availableLangContainer}>
           <Text style={styles.availableLangContainerText}>
-            {I18n.t("customerHome.customNote.description")}
+            {selection === "additionalDetails" ? I18n.t("customerHome.customNote.description") : I18n.t("session.rating.addComment")}
           </Text>
         </View>
         <View style={styles.additionalInformationContainer}>
@@ -26,9 +29,9 @@ class Comments extends Component {
             multiline
             blurOnSubmit
             onSubmitEditing={() => closeSlideMenu()}
-            onChangeText={text => modifyAdditionalDetails({ customScenarioNote: text })}
-            value={customScenarioNote}
-            placeholder={I18n.t("customerHome.customNote.placeholder")}
+            onChangeText={text => { selection === "additionalDetails" ? modifyAdditionalDetails({ customScenarioNote: text }) : updateOptions({ comments: text }); }}
+            value={selection === "additionalDetails" ? customScenarioNote : ratingComments}
+            placeholder={selection === "additionalDetails" ? I18n.t("customerHome.customNote.placeholder") : I18n.t("session.rating.addComment")}
             placeholderTextColor="rgba(255,255,255,0.42)"
           />
         </View>
@@ -40,11 +43,14 @@ class Comments extends Component {
 const mS = state => ({
   isSlideUpMenuVisible: state.LogicReducer.isSlideUpMenuVisible,
   selection: state.LogicReducer.selection,
+  ratingComments: state.rateCall.comments,
+  customScenarioNote: state.newSessionReducer.session.customScenarioNote,
 });
 
 const mD = {
   modifyAdditionalDetails,
-  closeSlideMenu
+  closeSlideMenu,
+  updateOptions
 };
 
 export default connect(
