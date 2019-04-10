@@ -284,7 +284,7 @@ class SessionView extends Component {
   }
 
   toggleMic () {
-    const enabled = !this.state.localUserState.micEnabled;
+    const enabled = !this.state.localUserState.controls.micEnabled;
     this.updateLocalUserState({
       controls: {micEnabled: enabled},
       connection: {sendingAudio: enabled}
@@ -295,13 +295,13 @@ class SessionView extends Component {
   }
 
   toggleSpeaker () {
-    const enabled = !this.state.localUserState.speakerEnabled;
+    const enabled = !this.state.localUserState.controls.speakerEnabled;
     this.updateLocalUserState({controls: {speakerEnabled: enabled}});
     InCallManager.setForceSpeakerphoneOn(enabled);
   }
 
   toggleCameraFlip () {
-    const {controls} = !this.state.localUserState;
+    const {controls} = this.state.localUserState;
     const enabled = !controls.cameraFlipEnabled;
     this.updateLocalUserState({
       controls: {cameraFlipEnabled: enabled},
