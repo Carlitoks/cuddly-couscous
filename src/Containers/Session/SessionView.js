@@ -145,18 +145,16 @@ class SessionView extends Component {
     AppState.addEventListener('change', this.handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.handleConnectionChange);
     NetInfo.isConnected.addEventListener("connectionChange", this.handleNetworkIsConnected);
-
+    
     // get initial network values before mounting the session
     Promise.all([
       NetInfo.getConnectionInfo().then((info) => {
         this.handleConnectionChange(info);
       }),
       NetInfo.isConnected.fetch().then((isConnected) => {
-        alert(`connected: ${isConnected ? 'YES' : 'NO'}`);
         this.updateLocalUserState({device: {hasNetworkConnection: isConnected}});
       })
     ]).finally(() => {
-
       // we use this as the trigger to initially allow the session component, otherwise
       // it may start loading, trigger an error, then remount and result in event listeners
       // being registered twice
@@ -262,14 +260,13 @@ class SessionView extends Component {
   };
 
   handleNetworkIsConnected = (isConnected) => {
-    alert('triggered');
     this.updateLocalUserState({device: {hasNetworkConnection: isConnected}});
     (isConnected) ? this.handleRegainedNetworkConnection() : this.handleLostNetworkConnection();
   };
 
   handleNetworkConnectionTypeChanged (prevState, currentState) {
     recordSessionEvent('handleNetworkConnectionTypeChanged');
-    this.updateLocalUserState({device: {networkConnection: currentState}});
+    this.updateLocalUserState({device: {networkConnection: currentState, hasNetworkConnection: true}});
   }
 
   handleLostNetworkConnection () {

@@ -86,6 +86,7 @@ export class Session extends Component {
     this.receivingHeartbeat = false;
     this.receiveHeartbeatIntervalID = null;
 
+    this.connected = false;
     this.unmounting = false;
 
     // handler invoked by tokbox: https://github.com/opentok/opentok-react-native/blob/master/docs/OTSession.md#events
@@ -114,10 +115,10 @@ export class Session extends Component {
   }
 
   mounted () {
-    return !this.unmounting
-      && this.props.localUserState.device.hasHetworkConnection
+    return (!this.unmounting
+      && this.props.localUserState.device.hasNetworkConnection
       && !this.state.unmounting
-      && this.state.mounted
+      && this.state.mounted);
   }
 
   componentWillUnmount () {
@@ -158,6 +159,13 @@ export class Session extends Component {
       this.sendSignal(SIGNALS.NETWORK_STATE, {type: newS.networkConnection});
     }
 
+    // we track this specifically to prevent calls to `sendSignal` if the OpenTom
+    // session is not actually connected.  Currently this will cause a crash on Android
+    // if it happens.
+    if (oldS.hasNetworkConnection && !newS.hasNetworkConnection) {
+      this.connected = false;
+    }
+
     const oldC = oldP.localUserState.controls;
     const newC = newP.localUserState.controls;
     if (
@@ -179,6 +187,7 @@ export class Session extends Component {
     recordSessionOpentokEvent('session.sessionConnected', {
       sessionID: this.props.session.id
     });
+    this.connected = true;
     this.props.onUserConnected();
 }
 
@@ -186,6 +195,7 @@ export class Session extends Component {
     recordSessionOpentokEvent('session.sessionReconnected', {
       sessionID: this.props.session.id
     });
+    this.connected = true;
     this.props.onUserConnected();
   }
 
@@ -193,6 +203,7 @@ export class Session extends Component {
     recordSessionOpentokEvent('session.sessionDisconnected', {
       sessionID: this.props.session.id
     });
+    this.connected = false;
     this.props.onUserDisconnected();
   }
 
@@ -200,6 +211,7 @@ export class Session extends Component {
     recordSessionOpentokEvent('session.sessionReconnecting', {
       sessionID: this.props.session.id
     });
+    this.connected = false;
     this.props.onUserConnecting();
   }
 
@@ -491,7 +503,12 @@ export class Session extends Component {
   sendSignal (type, payload = null) {
     // make sure we have actually connected, and are not in the process
     // of ending the session
-    if (this.state.unmounting && this.state.localUserState.connectionID != null) {
+    if (
+      this.state.unmounting
+      || !this.connected
+      || this.localUserState.connectionID == null
+      || !this.props.localUserState.device.hasNetworkConnection
+    ) {
       return;
     }
     
@@ -557,7 +574,7 @@ export class Session extends Component {
           device: {
             ...this.props.remoteUserState.device,
             networkConnection: payload.type,
-            hasHetworkConnection: "none" != payload.type,
+            hasHetworkConnection: "none" !== payload.type,
           }
         });
         break;
