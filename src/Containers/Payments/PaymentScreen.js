@@ -33,7 +33,7 @@ class PaymentScreen extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-            <AddCard />
+            <AddCard type={"cardAdd"} />
             <PaymentButtons navigation={navigation} />
           </ScrollView>
         </View>
