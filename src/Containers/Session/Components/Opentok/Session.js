@@ -115,7 +115,7 @@ export class Session extends Component {
 
   mounted () {
     return !this.unmounting
-      && this.props.localUserState.device.networkConnection != "none"
+      && this.props.localUserState.device.hasHetworkConnection
       && !this.state.unmounting
       && this.state.mounted
   }
@@ -607,7 +607,6 @@ export class Session extends Component {
         if (this.state.unmounting) {
           return;
         }
-        console.log("~~~REMOUNTING~~~");
         this.setState({mounted: true});
       }, 1000);
     });

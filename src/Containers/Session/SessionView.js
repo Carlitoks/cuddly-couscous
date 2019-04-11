@@ -56,8 +56,8 @@ const newUserState = (obj = {}) => {
     device: {
       platform: null,           // mobile|web|sip
       appState: '', // background|foreground
-      networkConnection: '',
-      hasNetworkConnection: false,
+      networkConnection: 'unknown',
+      hasNetworkConnection: true,
       // orientation: '' // TODO: portrait|landscape
       // batteryLevel: '', // TODO: track battery level, one day
       // headset: true/false
@@ -79,11 +79,15 @@ class SessionView extends Component {
     // anything referenced in the template and/or passed to child
     // components as props needs to be defined in `state`
     this.state = {
+
+      // the reason we have extra state for tracking loading and ending
+      // is to prevent trying to connect or disconnect from the underlying
+      // Opentok session too early
       loaded: false,
       ending: false,
       endReason: false,
 
-      // local view state for the session display
+      // local view state for the session display (hide/show controls or other UI)
       display: {
         controlsVisible: true,
       },
@@ -105,11 +109,13 @@ class SessionView extends Component {
           cameraFlipEnabled: false,
           micEnabled: true,
           videoEnabled: props.session.avModePreference == "video",
-          speakerEnabled: true, // todo, harder than it seems... do we have headphones, etc...?    
+          speakerEnabled: true,
         }
       }),
     };
 
+    // seems redundant, but these are used to ensure some processes dom't execute twice
+    // related to ending the session
     this.endingCall = false;
     this.unmounting = false;
     this.statusPollIntervalID = null;
@@ -138,10 +144,19 @@ class SessionView extends Component {
   componentDidMount () {
     AppState.addEventListener('change', this.handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.handleConnectionChange);
+    NetInfo.isConnected.addEventListener("connectionChange", this.handleNetworkIsConnected);
 
-    NetInfo.getConnectionInfo().then((info) => {
-      this.handleConnectionChange(info);
-      
+    // get initial network values before mounting the session
+    Promise.all([
+      NetInfo.getConnectionInfo().then((info) => {
+        this.handleConnectionChange(info);
+      }),
+      NetInfo.isConnected.fetch().then((isConnected) => {
+        alert(`connected: ${isConnected ? 'YES' : 'NO'}`);
+        this.updateLocalUserState({device: {hasNetworkConnection: isConnected}});
+      })
+    ]).finally(() => {
+
       // we use this as the trigger to initially allow the session component, otherwise
       // it may start loading, trigger an error, then remount and result in event listeners
       // being registered twice
@@ -185,6 +200,8 @@ class SessionView extends Component {
     recordSessionEvent('cleanup');
     AppState.removeEventListener('change', this.handleAppStateChange);
     NetInfo.removeEventListener("connectionChange", this.handleConnectionChange);
+    NetInfo.isConnected.removeEventListener("connectionChange", this.handleNetworkIsConnected);
+
     this.unmounting = true;
     InCallManager.stop();
     clearInterval(this.statusPollIntervalID);
@@ -194,7 +211,7 @@ class SessionView extends Component {
     }
     if (Platform.OS == "ios") {
       this.iosComponentCleanup();
-    }    
+    }
   }
 
   androidComponentCleanup () {
@@ -244,24 +261,15 @@ class SessionView extends Component {
     this.handleNetworkConnectionTypeChanged(prevState, currentState);
   };
 
+  handleNetworkIsConnected = (isConnected) => {
+    alert('triggered');
+    this.updateLocalUserState({device: {hasNetworkConnection: isConnected}});
+    (isConnected) ? this.handleRegainedNetworkConnection() : this.handleLostNetworkConnection();
+  };
+
   handleNetworkConnectionTypeChanged (prevState, currentState) {
     recordSessionEvent('handleNetworkConnectionTypeChanged');
-    this.updateLocalUserState({device: {
-      networkConnection: currentState,
-      hasNetworkConnection: currentState != "none"
-    }});
-
-    // lost internet connection
-    if (currentState == "none" && prevState != "none") {
-      this.handleLostNetworkConnection();
-      return;
-    }
-
-    // regained connection
-    if (currentState != "none" && prevState == "none") {
-      this.handleRegainedNetworkConnection();
-      return;
-    }
+    this.updateLocalUserState({device: {networkConnection: currentState}});
   }
 
   handleLostNetworkConnection () {
@@ -329,7 +337,7 @@ class SessionView extends Component {
       status.began
       && (!status.ending && !status.ended)
       && (
-        "none" == this.state.localUserState.device.networkConnection
+        !this.state.localUserState.device.hasNetworkConnection
         || !this.state.localUserState.connection.connected
         || !this.state.remoteUserState.connection.connected
       )
@@ -786,7 +794,8 @@ class SessionView extends Component {
             onUserReceivingAVThrottled = {() => { this.handleUserReceivingAVThrottled() }}
             onUserReceivingAVUnthrottled = {() => { this.handleUserReceivingAVUnthrottled() }}
 
-            // audio mode background
+            // audio mode background - needs to be rendered in a specific place relative
+            // to the Opentok publisher/subscriber
             audioModeBackground={this.showAudioMode() ? (<AudioModeBackground user={ this.props.remoteUser } />) : (<React.Fragment />)}
           >
 
@@ -836,7 +845,8 @@ class SessionView extends Component {
           />
           )}
           
-          {(this.props.status.ending || this.props.status.ended) && (
+          {/* TODO: make this more interesting, like fade in or something */}
+          {(this.state.ending || this.props.status.ending || this.props.status.ended) && (
           <SessionEnding />
           )}
           

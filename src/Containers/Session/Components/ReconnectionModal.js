@@ -123,7 +123,7 @@ export class ReconnectionModal extends Component {
   getConnectionMessage () {
     const {localDevice, userConnection, remoteUser, remoteUserConnection} = this.props;
     const {showOptions} = this.state;
-    const localDisconnect = localDevice.networkConnection == "none" || !userConnection.connected;
+    const localDisconnect = !localDevice.hasNetworkConnection || !userConnection.connected;
     const connected = localDevice.hasNetworkConnection && userConnection.connected && remoteUserConnection.connected;
 
     if (this.isEnding()) {
