@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Divider, Icon } from "react-native-elements";
 import styles from "./Styles/LanguagesStyles";
-import { Metrics, Colors } from "../../../Themes";
+import { Metrics, Colors, Fonts } from "../../../Themes";
 import {
   changeLangCode,
   modifyAdditionalDetails,
@@ -75,12 +75,12 @@ class Languages extends Component {
       ...styles.availableLangText,
       color: Colors.pricingViewBlack
     };
-    const currentIcon = this.renderCheck(currentLang);
     if (selection === "primaryLang") {
       if (primaryLangCode === currentLang["3"])
         ButtonStyle = {
           ...styles.availableLangText,
-          color: Colors.gradientColor.top
+          color: Colors.gradientColor.top,
+          fontFamily: Fonts.BoldFont
         };
     }
 
@@ -88,32 +88,54 @@ class Languages extends Component {
       if (secondaryLangCode === currentLang["3"])
         ButtonStyle = {
           ...styles.availableLangText,
-          color: Colors.gradientColor.top
+          color: Colors.gradientColor.top,
+          fontFamily: Fonts.BoldFont
         };
     }
     return (
       <React.Fragment>
         <Text style={ButtonStyle}>{translateLanguage(currentLang["3"], currentLang.name)}</Text>
-        {currentIcon}
       </React.Fragment>
     );
   };
 
   renderAvailableLanguages = () => {
-    const { selection, availableLanguages } = this.props;
+    const { selection, availableLanguages, primaryLangCode, secondaryLangCode } = this.props;
     const renderList =
       selection === "secondaryLang" ? this.getCurrentLangPair() : availableLanguages;
-    return renderList.map((language, current) => (
+    return renderList.map((language, current) => {
+      let selected = false;
+      let containerStyle = styles.LangViewContainer;
+      if (selection === "primaryLang") {
+        if (primaryLangCode === language["3"]) {
+          containerStyle = {
+            ...styles.LangViewContainer,
+            backgroundColor: '#ECE8F1',
+          };
+          selected = true;
+        }
+      }
+
+      if (selection === "secondaryLang") {
+        if (secondaryLangCode === language["3"]){
+          containerStyle = {
+            ...styles.LangViewContainer,
+            backgroundColor: '#ECE8F1',
+          };
+          selected = true;
+        }
+      }
+      return (
       <React.Fragment key={current}>
         <TouchableOpacity
-          style={styles.LangViewContainer}
+          style={containerStyle}
           onPress={() => this.changeLangCode(language["3"])}
         >
           <View style={styles.selectLangButton}>{this.renderButtonContent(language)}</View>
         </TouchableOpacity>
-        <Divider style={styles.dividerStyle} />
+        { !selected ? <Divider style={styles.dividerStyle} /> : <React.Fragment />}
       </React.Fragment>
-    ));
+    )});
   };
 
   renderUnAvailableLanguages = () => {
@@ -146,7 +168,6 @@ class Languages extends Component {
     const { selection } = this.props;
     return (
       <React.Fragment>
-
         <View style={styles.availableLangContainer}>
           <Text style={styles.availableLangContainerText}>
             { selection === "primaryLang"
@@ -156,14 +177,12 @@ class Languages extends Component {
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
           <React.Fragment>
-            <Divider style={styles.dividerStyle} />
             {this.renderAvailableLanguages()}
             <View style={styles.unAvailableLangContainer}>
               <Text style={styles.unAvailableLangContainerText}>
                 {I18n.t("sessionLang.comingSoon")}
               </Text>
             </View>
-            <Divider style={styles.dividerStyle} />
             {this.renderUnAvailableLanguages()}
           </React.Fragment>
         </ScrollView>

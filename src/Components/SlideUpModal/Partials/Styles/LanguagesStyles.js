@@ -1,44 +1,40 @@
 import { StyleSheet } from 'react-native';
-import { moderateScale } from '../../../../Util/Scaling';
+import { moderateScale, moderateScaleViewports } from "../../../../Util/Scaling";
 import { Fonts, Metrics } from '../../../../Themes';
 
 export default StyleSheet.create({
   scrollContainer: {
     backgroundColor: '#fff',
-    left: 4,
-    width: Metrics.width * 0.98,
-    borderRadius: 5
+    left: Metrics.width * 0.05,
+    width: Metrics.width * 0.90,
   },
   availableLangContainer: {
     height: 48,
     justifyContent: 'center',
     backgroundColor: '#fff',
-    borderRadius: 5,
-    left: 4,
-    width: Metrics.width * 0.98,
+    borderRadius: 10,
+    left: Metrics.width * 0.05,
+    width: Metrics.width * 0.90,
     borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0
+    borderBottomRightRadius: 0,
   },
   availableLangContainerText: {
-    paddingLeft: 14,
-    fontWeight: '500',
+    paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(14, 0),
-    color: '#333333'
+    fontSize: moderateScaleViewports(14, 0),
+    color: '#848688'
   },
-  dividerStyle: { backgroundColor: '#CCCCCC', height: 1 },
+  dividerStyle: { backgroundColor: "rgba(90, 90, 90, 0.2)", height: 0.5, width: Metrics.width * 0.80, marginLeft: Metrics.width * 0.05 },
   unAvailableLangContainer: {
     height: 48,
     width: '100%',
     justifyContent: 'center',
-    backgroundColor: 'rgba(185,185,185,0.14)'
   },
   unAvailableLangContainerText: {
-    paddingLeft: 14,
-    fontWeight: '500',
+    paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(14, 0),
-    color: '#757575'
+    fontSize: moderateScaleViewports(14, 0),
+    color: '#848688'
   },
   LangViewContainer: {
     height: 48,
@@ -52,17 +48,16 @@ export default StyleSheet.create({
     alignContent: 'center'
   },
   unAvailableLangText: {
-    paddingLeft: 26,
-    fontWeight: '500',
+    paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(18, 0),
-    color: '#9B9B9B'
+    fontSize: moderateScaleViewports(13),
+    color: "#848688"
   },
   availableLangText: {
-    paddingLeft: 26,
-    fontWeight: '500',
+    paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(18, 0)
+    fontSize: moderateScaleViewports(13),
+    color: "#1C1B1B"
   },
   checkPadding: { paddingRight: 30 },
 });

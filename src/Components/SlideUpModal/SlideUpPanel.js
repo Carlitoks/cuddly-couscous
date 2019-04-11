@@ -16,6 +16,7 @@ class SlideUpPanel extends Component {
           visible={isSlideUpMenuVisible}
           onRequestClose={() => closeSlideMenu()}
           allowDragging={false}
+          height={selection !== "scenarioSelection" ? Metrics.height * 0.60 : Metrics.height}
           draggableRange={{top: selection !== "scenarioSelection" ? Metrics.height * 0.60 : Metrics.height, bottom: 0}}
         >
             {selection === "additionalDetails"
