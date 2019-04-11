@@ -47,9 +47,16 @@ class CallButtons extends Component {
     }
 
     if (availableMinutes === 0 && !stripePaymentToken) {
-      navigation.dispatch({
-        type: "CallPricingView"
-      });
+      Alert.alert(" ", I18n.t("payments.enterPaymentToTalk"), [
+        {
+          text: I18n.t("ok"),
+          onPress: () => {
+            navigation.dispatch({
+              type: "PaymentsView"
+            });
+          }
+        }
+      ]);
     } else {
       updateSettings({
         selectedScenarioId: selectedScenario && selectedScenario[0] ? selectedScenario[0].id : null

@@ -1,7 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
-import {
-  Metrics, ApplicationStyles, Fonts, Colors,
-} from "../../../../Themes";
+import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../../Themes";
 import { moderateScale } from "../../../../Util/Scaling";
 
 const iOS = Platform.OS === "ios";
@@ -9,21 +7,27 @@ const iOS = Platform.OS === "ios";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
-    paddingBottom: Metrics.baseMargin,
+    paddingBottom: Metrics.baseMargin
   },
   logo: {
     marginTop: Metrics.doubleSection,
     height: Metrics.images.logo,
     width: Metrics.images.logo,
-    resizeMode: "contain",
+    resizeMode: "contain"
   },
   centered: {
-    alignItems: "center",
+    alignItems: "center"
   },
   titleTextStyle: {
     color: "#fff",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(18, 0),
+    fontSize: moderateScale(18, 0)
+  },
+  cancelStyle: {
+    marginRight: 12,
+    color: "#fff",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScale(18, 0)
   },
   createAccountTitleTextStyle: {
     color: "#fff",
@@ -31,7 +35,7 @@ export default StyleSheet.create({
     fontSize: moderateScale(18, 0),
     fontWeight: "500",
     textAlign: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   containerMenu: {
     flexDirection: "column",
@@ -39,29 +43,29 @@ export default StyleSheet.create({
     alignItems: "flex-start",
     height: moderateScale(50, 0),
     width: moderateScale(50, 0),
-    marginLeft: 15,
+    marginLeft: 15
   },
   IconMenu: {
     color: Colors.primaryColor,
-    padding: 0,
+    padding: 0
   },
   buttonQR: {
     alignItems: "flex-end",
     justifyContent: "center",
     width: 50,
     height: 50,
-    marginRight: 15,
+    marginRight: 15
   },
-  buttonGoBack: {
-    alignItems: "flex-start",
-    justifyContent: "center",
+  cancelButton: {
+    alignItems: "flex-end",
+    justifyContent: "center"
   },
   headerInner: {
     padding: 5,
     margin: 0,
     paddingBottom: 0,
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   headerInnerHome: {
     padding: 5,
@@ -69,13 +73,13 @@ export default StyleSheet.create({
     paddingBottom: 0,
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#401674",
+    backgroundColor: "#401674"
   },
   headerOuter: {
     marginTop: iOS ? 30 : 20,
     padding: 0,
     borderBottomWidth: 0,
-    height: moderateScale(45, 0),
+    height: moderateScale(45, 0)
   },
-  headerContainer: { flexDirection: "column", justifyContent: "flex-start" },
+  headerContainer: { flexDirection: "column", justifyContent: "flex-start" }
 });

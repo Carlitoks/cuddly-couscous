@@ -76,6 +76,10 @@ import RegisterScreen from "../Containers/Register/RegisterScreen";
 import LocationPermissionView from "../Containers/Permissions/LocationPermissionView";
 import NotificationPermissionView from "../Containers/Permissions/NotificationPermissionView";
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
+import PaymentScreen from "../Containers/Payments/PaymentScreen";
+import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
+import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
+import EditCardScreen from "../Containers/Payments/EditCardScreen";
 
 const Navigation = StackNavigator(
   {
@@ -87,7 +91,25 @@ const Navigation = StackNavigator(
       }
     },
     PaymentsView: {
-      screen: PaymentsView,
+      screen: PaymentScreen,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    PaymentDetailScreen: {
+      screen: PaymentDetailScreen,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    CardInfoScreen: {
+      screen: CardInfoScreen,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    EditCardScreen: {
+      screen: EditCardScreen,
       navigationOptions: {
         gesturesEnabled: false
       }
@@ -485,12 +507,8 @@ const Navigation = StackNavigator(
         // )
         //   return null;
 
-        if (
-          sceneProps.scene.route.routeName === "RateView"
-        ) {
-          return CardStackStyleInterpolator.forFadeFromBottomAndroid(
-            sceneProps
-          );
+        if (sceneProps.scene.route.routeName === "RateView") {
+          return CardStackStyleInterpolator.forFadeFromBottomAndroid(sceneProps);
         } else {
           return CardStackStyleInterpolator.forHorizontal(sceneProps);
         }

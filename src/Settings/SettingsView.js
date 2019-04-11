@@ -67,7 +67,7 @@ class SettingsView extends Component {
                     subtitleStyle={styles.listSubtitle}
                     onPress={() => {
                       navigation.dispatch({
-                        type: "PaymentsView",
+                        type: "PaymentDetailScreen",
                         params: {
                           title: I18n.t("paymentDetails"),
                           messageText: I18n.t("enterPaymentDetails"),
@@ -89,19 +89,15 @@ class SettingsView extends Component {
                   // subtitle={selectedNativeLanguage}
                   subtitleStyle={styles.listSubtitle}
                   onPress={() => {
-                    Alert.alert(
-                      I18n.t("logOut"),
-                      I18n.t("logOutConfirmation"),
-                      [
-                        {
-                          text: I18n.t("no")
-                        },
-                        {
-                          text: I18n.t("yes"),
-                          onPress: logOutAsync
-                        }
-                      ]
-                    );
+                    Alert.alert(I18n.t("logOut"), I18n.t("logOutConfirmation"), [
+                      {
+                        text: I18n.t("no")
+                      },
+                      {
+                        text: I18n.t("yes"),
+                        onPress: logOutAsync
+                      }
+                    ]);
                   }}
                 />
               </List>

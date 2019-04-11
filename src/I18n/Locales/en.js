@@ -37,10 +37,8 @@ export default (ENG = {
   callLinguist: "Call a Linguist",
   calls: "Calls",
   callSettings: "Call Settings",
-  callTimeBoxTextLine1:
-    "Enjoy Jeenie right now for FREE in \n celebration of our launch",
-  callTimeBoxTextLine2:
-    "Pricing is $1/min \n and package discounts will be offered in the future",
+  callTimeBoxTextLine1: "Enjoy Jeenie right now for FREE in \n celebration of our launch",
+  callTimeBoxTextLine2: "Pricing is $1/min \n and package discounts will be offered in the future",
   callTimeButtonText: "minutes for FREE",
   callTimeButtonSubtitle: "Compliments of Jeenie",
   callTimeMinutes: "Call Duration",
@@ -50,8 +48,7 @@ export default (ENG = {
   callWillEnd: "Call will end once time expires",
   cancel: "Cancel",
   cancelCall: "Cancel call",
-  celebrateAndEnjoy:
-    "Celebrate our launch \n and enjoy Jeenie for \n 10 minutes FREE!",
+  celebrateAndEnjoy: "Celebrate our launch \n and enjoy Jeenie for \n 10 minutes FREE!",
   celebrateAndEnjoyAlternative:
     "Celebrate our launch and \nenjoy 10 minutes with Jeenie \nfor FREE!",
   celebrateWithUs: "Celebrate our launch with us!",
@@ -59,8 +56,7 @@ export default (ENG = {
   cancelCallCustomer: "The call isn't available",
   chargeAdvice: "You will be charged per minute for any time over 8 minutes.",
   checkYourConnection: "Please check your connection",
-  checkYourEmail:
-    "We have sent you a link to reset your password. Please check your email.",
+  checkYourEmail: "We have sent you a link to reset your password. Please check your email.",
   checkYourEmailOnBoarding: "Check your email to complete registration.",
   citizenShip: "Citizenship",
   cityFamiliarity: "City Familiarity",
@@ -77,16 +73,14 @@ export default (ENG = {
   connectMeNow: "Connect me now",
   connectNow: "Connect Now",
   connecting: "Connecting",
-  contactingLinguist:
-    "Connecting you to a \nLanguage Jeenie in \napproximately 1 minute",
+  contactingLinguist: "Connecting you to a \nLanguage Jeenie in \napproximately 1 minute",
   continue: "Continue",
   continueUsingJeenie: "Continue Using Jeenie",
   continueForFree: "Continue",
   conversations: "Other",
   compliments: "{{minutes}} compliments of {{organizer}}",
   complimentsOf: "Compliments of {{organizer}}",
-  complimentMinutes:
-    "{{maxMinutesPerUser}} minutes added courtesy of {{organizer}}",
+  complimentMinutes: "{{maxMinutesPerUser}} minutes added courtesy of {{organizer}}",
   minutesAdded: "Minutes added",
   invalidCode: "Invalid Code",
   invalidCodeMsg: "{{message}}",
@@ -104,10 +98,8 @@ export default (ENG = {
   declined: "Declined",
   disableExtraTime: "Disable extra time",
   dining: "Restaurant",
-  discountsOffered:
-    "Discounts will be offered for \npurchasing a higher volume \nof minutes.",
-  discountsOfferedAlternative:
-    "Discounts will be offered \nfor pre-paid minutes ",
+  discountsOffered: "Discounts will be offered for \npurchasing a higher volume \nof minutes.",
+  discountsOfferedAlternative: "Discounts will be offered \nfor pre-paid minutes ",
   duration: "Duration",
   editProfile: "Edit Profile",
   email: "Email",
@@ -139,16 +131,11 @@ export default (ENG = {
   errorPromo: "Promo Code not found",
   estimatedCost: "Estimated cost",
   estimatedDuration: "Estimated Duration",
-  estimatedCostStatic1:
-    "Calls are preset to 8 minutes during the trial period.",
-  estimatedCostStatic2:
-    "If you need more time, you can add it during the call.",
-  expertise_A1:
-    "There are so many different hairstyles for different people and different",
-  expertise_B1:
-    "What is the loop of Creation? How is there something from nothing? In Spite",
-  expertise_C1:
-    "Are we human, because of unique traits and attributes not shared with either",
+  estimatedCostStatic1: "Calls are preset to 8 minutes during the trial period.",
+  estimatedCostStatic2: "If you need more time, you can add it during the call.",
+  expertise_A1: "There are so many different hairstyles for different people and different",
+  expertise_B1: "What is the loop of Creation? How is there something from nothing? In Spite",
+  expertise_C1: "Are we human, because of unique traits and attributes not shared with either",
   extraTime1: "Time is almost up!",
   extraTime2: "Do you need more time?",
   extraTime3: "Your call will end in 2 minutes",
@@ -161,8 +148,7 @@ export default (ENG = {
   female: "Female",
   finish: "Finish",
   finishOnboarding: "Finish onboarding",
-  finishOnboardingMessage:
-    "Please finish your registration in order to use the app",
+  finishOnboardingMessage: "Please finish your registration in order to use the app",
   firstname: "First Name",
   firstnameFormatValidation: "First name must be only letters.",
   fluent: "Fluent",
@@ -185,8 +171,7 @@ export default (ENG = {
   gotIt: "Got it!",
   hasDisconnected: "You have been disconnected",
   help: "Help",
-  helpPeople:
-    "Which cities do you know well enough to help people get around in?",
+  helpPeople: "Which cities do you know well enough to help people get around in?",
   helpUsGet: "Help Us Get to Know You",
   hi: "Hi",
   historyNotFound: "No History found",
@@ -235,8 +220,7 @@ export default (ENG = {
     "Wherever you are in the world, access live, human language speakers in real-time.",
   lauchScreenSwipe3:
     "Currently, Jeenie provides language support in \n Mandarin <> English \n and Japanese <> English.\n\n Additional languages are coming soon.",
-  lauchScreenSwipe4:
-    "The average call lasts 5 to 10 minutes, but speak as long as you like.",
+  lauchScreenSwipe4: "The average call lasts 5 to 10 minutes, but speak as long as you like.",
   lauchScreenSwipe5:
     "In celebration of our launch, your first 10 minutes are FREE …compliment of Jeenie!",
   lastname: "Last name",
@@ -379,8 +363,7 @@ export default (ENG = {
   termsOfUse: "Terms of Use",
   themeSettings: "Theme Settings",
   temporaryError: "A temporary error has occurred, please try again later.",
-  toggleExtraTimeDisable:
-    "This call will end automatically after the time specified above.",
+  toggleExtraTimeDisable: "This call will end automatically after the time specified above.",
   toggleExtraTimeEnable:
     "This call will continue until you end it. You will be charged per minute over the time specified above.",
   toOthersOnPlatform: "to others on the platform",
@@ -456,6 +439,7 @@ export default (ENG = {
     select: "Select",
     choose: "Choose",
     skip: "Skip",
+    edit: "Edit"
   },
 
   menu: {
@@ -546,7 +530,8 @@ export default (ENG = {
     sessionPermissions: {
       heading: "Almost There!",
       title: "Microphone & Camera",
-      description: "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
+      description:
+        "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
       button: "Enabled Microphone & Camera",
       back: "Back"
     }
@@ -558,7 +543,7 @@ export default (ENG = {
     balance: "{{num}}m",
     numLinguists: "{{num}} Jeenies standing by...",
     primaryLang: {
-      label: "I speak",
+      label: "I speak"
     },
     secondaryLang: {
       label: "Translate to"
@@ -592,15 +577,20 @@ export default (ENG = {
   payments: {
     currentRate: "$1/min",
     currentBalance: "{{minutes}} min",
-    enterPaymentToTalk: "Enter payment details to keep talking. Talk as long as you like for $1/min.",
-    currentRateDescription: "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future.",
+    enterPaymentToTalk:
+      "Enter payment details to keep talking. Talk as long as you like for $1/min.",
+    currentRateDescription:
+      "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future.",
     addCard: "Add a Card",
+    editCard: "Edit Card",
+    cardInfo: "Card Info",
     removeCard: "Remove Card",
-    removeCardAlert: "Are you sure you want to delete this credit card?  This action cannot be undone.",
+    removeCardAlert:
+      "Are you sure you want to delete this credit card?  This action cannot be undone.",
     noCardNotice: "You don't have any cards yet.",
     number: {
       title: "Card Number",
-      errInvalid: "Invalid Card Number",
+      errInvalid: "Invalid Card Number"
     },
     expiration: {
       title: "Expiration Date",
@@ -610,14 +600,14 @@ export default (ENG = {
     cvv: {
       title: "CVV",
       errInvalid: "Invalid CVV",
-      description: 'The CVV ("Card Verification Value") on your credit or debit card is a 3 digit number for VISA, MasterCard and Discover cards.  On American Express cards it is a 4 digit number.',
+      description:
+        'The CVV ("Card Verification Value") on your credit or debit card is a 3 digit number for VISA, MasterCard and Discover cards.  On American Express cards it is a 4 digit number.'
     }
   },
 
   operatingHours: {
     title: "Availability: {{lang}}",
-    description:
-      "Language Jeenies are available between {{beginHour}} and {{endHour}}.",
+    description: "Language Jeenies are available between {{beginHour}} and {{endHour}}.",
     ok: "OK"
   },
   lang: {
@@ -661,18 +651,15 @@ export default (ENG = {
         "To avoid being disconnected in the middle of a call, add payment information now.",
       descriptionLowMinutes:
         "Your account balance is low. To avoid being disconnected during your next call, add payment information now.",
-      descriptionNoMinutes:
-        "You must add payment information in order to continue."
+      descriptionNoMinutes: "You must add payment information in order to continue."
     },
     descriptions: {
       hasMinutesAndCard:
         "If you run out of minutes, we will automatically charge your card $1 USD per minute to avoid disconnecting your call.",
       hasMinutesNoCard:
         "To keep talking beyond your remaining minutes, enter payment information now.",
-      noMinutesHasCard:
-        "We will automatically charge your card $1 USD per minute.",
-      noMinutesNoCard:
-        "To connect to a linguist, you must add payment information now."
+      noMinutesHasCard: "We will automatically charge your card $1 USD per minute.",
+      noMinutesNoCard: "To connect to a linguist, you must add payment information now."
     },
     buttons: {
       continue: "Continue",
@@ -685,8 +672,7 @@ export default (ENG = {
   api: {
     errUnexpected: "An unexpected error occured.",
     errTemporary: "A temporary error has occurred.",
-    errTemporaryTryAgain:
-      "A temporary error has occurred. Try again in a few minutes.",
+    errTemporaryTryAgain: "A temporary error has occurred. Try again in a few minutes.",
     errLogin: "There was a problem logging in",
     errDefaultAuth: "Your credentials have expired or are invalid.",
     errNoUser: "No user found for that email address",
@@ -771,29 +757,31 @@ export default (ENG = {
     homeCanIhelpYou: "Can I help you, {{name}}?",
     intro: {
       title: "Travel with Confidence",
-      description: "On demand 24/7 access to live, human translators for language help and cultural advice at the tap of a button.",
+      description:
+        "On demand 24/7 access to live, human translators for language help and cultural advice at the tap of a button.",
       button: "Continue"
     },
     allSet: "You're all set!",
     location: {
       title: "Enable Location",
-      description: "Sharing your location with Jeenie allows us to automatically recommend the right languages and human translators.",
+      description:
+        "Sharing your location with Jeenie allows us to automatically recommend the right languages and human translators.",
       button: "Turn on Location Services",
       skip: "Skip"
     },
     notification: {
       title: "Enable Notifications",
-      description: "Turning on push notifications allows Jeenie to alert you when relevant new services are available in your area.",
+      description:
+        "Turning on push notifications allows Jeenie to alert you when relevant new services are available in your area.",
       button: "Turn on Notifications",
-      skip: "Skip",
+      skip: "Skip"
     },
     login: {
       title: "First, tell us about yourself:",
       provideInformation:
         "Provide your name, email and a password so you can access your account in the future.",
       createAccountTitle: "Create Account",
-      termsAndPrivacyNotice:
-        "By continuing, you agree to our Terms and Privacy Policy.",
+      termsAndPrivacyNotice: "By continuing, you agree to our Terms and Privacy Policy.",
       terms: "Terms",
       privacyPolicy: "Privacy Policy",
       forgotPassword: "Forgot password?"
@@ -808,8 +796,7 @@ export default (ENG = {
       invalidEmail: "Please enter a valid email address",
       takenEmail:
         "An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.",
-      emailAndPassword:
-        "Incorrect email and password combination.\nPlease try again.",
+      emailAndPassword: "Incorrect email and password combination.\nPlease try again.",
       signInto: "Sign in to your account."
     }
   },

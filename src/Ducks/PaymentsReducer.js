@@ -1,5 +1,6 @@
 import User from "../Api/User";
 import { updateView } from "./UserProfileReducer";
+
 // Constants
 
 // Actions
@@ -9,10 +10,12 @@ export const ACTIONS = {
 };
 
 // Action Creator
-export const updatePayments = payload => ({
-  type: ACTIONS.UPDATE,
-  payload
-});
+export const updatePayments = payload => {
+  return {
+    type: ACTIONS.UPDATE,
+    payload
+  };
+};
 
 export const clearPayments = () => ({
   type: ACTIONS.CLEAR
@@ -22,8 +25,12 @@ export const clearPayments = () => ({
 const initialState = {
   displayCardField: false,
   cardInfo: { number: "", expMonth: "", expYear: "", cvc: "" },
+  expDate: "",
   loading: false,
-  errors: []
+  errors: [],
+  isValidCC: false,
+  isValidDate: false,
+  isValidCVV: false
 };
 
 export const setPayment = stripeSourceToken => (dispatch, getState) => {
@@ -32,10 +39,14 @@ export const setPayment = stripeSourceToken => (dispatch, getState) => {
     auth: { token }
   } = getState();
 
-  return User.setPayment(id, token, stripeSourceToken).then(response => {
-    const { stripeCustomerID, stripePaymentToken } = response.data;
-    dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
-  });
+  return User.setPayment(id, token, stripeSourceToken)
+    .then(response => {
+      const { stripeCustomerID, stripePaymentToken } = response.data;
+      dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
+    })
+    .catch(err => {
+      return err;
+    });
 };
 
 export const removePayment = _ => (dispatch, getState) => {
@@ -47,6 +58,24 @@ export const removePayment = _ => (dispatch, getState) => {
   return User.removePayment(id, token).then(response => {
     dispatch(updateView({ stripePaymentToken: null }));
   });
+};
+
+export const changePayment = stripeSourceToken => (dispatch, getState) => {
+  const {
+    userProfile: { id },
+    auth: { token }
+  } = getState();
+
+  return User.removePayment(id, token)
+    .then(response => {
+      dispatch(updateView({ stripePaymentToken: null }));
+    })
+    .then(response => {
+      User.setPayment(id, token, stripeSourceToken).then(response => {
+        const { stripeCustomerID, stripePaymentToken } = response.data;
+        dispatch(updateView({ stripeCustomerID, stripePaymentToken }));
+      });
+    });
 };
 
 // Reducer
