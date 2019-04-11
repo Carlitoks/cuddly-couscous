@@ -50,7 +50,7 @@ export default class LinguistHeader extends Component {
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
       );
     }
-    if (navigation.state.routeName === "LoginView") {
+    if (navigation.state.routeName === "LoginView" || navigation.state.routeName === "RegisterView") {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
@@ -69,15 +69,6 @@ export default class LinguistHeader extends Component {
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
             <Icon name="chevron-left" type="evilicon" color="white" size={50} />
-          </View>
-        </TouchableOpacity>
-      );
-    }
-    if (navigation.state.routeName === "RegisterView") {
-      return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
-          <View style={styles.buttonGoBack}>
-            <Icon name="chevron-left" type="evilicon" color="#401674" size={50}/>
           </View>
         </TouchableOpacity>
       );
