@@ -303,21 +303,36 @@ export class Session extends Component {
       return;
     }
 
+    let hasAudio = null;
+    let hasVideo = null;
+    switch (event.changedProperty) {
+      case "hasAudio": {
+        hasAudio = event.newValue;
+        hasVideo = this.props.localUserState.connection.receivingVideo;
+        break;
+      }
+      case "hasVideo": {
+        hasAudio = this.props.localUserState.connection.receivingAudio;
+        hasVideo = event.newValue;
+        break;
+      }
+    }
+
     // NOTE: we're not updating whether or not the remote user is
     // sending, because that depends on their control state - it could
     // be that they are sending AV, but TB has thottled and disabled
     // the video, so we only update what we're receiving based on the stream
     // properties.
     this.props.onUserReceivingAV({
-      audio: event.stream.hasAudio,
-      video: event.stream.hasVideo
+      audio: hasAudio,
+      video: hasVideo
     });
     
     // event.stream.hasVideo ? this.props.onRemoteUserVideoEnabled() : this.props.onRemoteUserVideoDisabled();
     // event.stream.hasAudio ? this.props.onRemoteUserAudioEnabled() : this.props.onRemoteUserAudioDisabled();
     this.sendSignal(SIGNALS.AV_STATUS, {
-      audio: event.stream.hasAudio,
-      video: event.stream.hasVideo
+      audio: hasAudio,
+      video: hasVideo
     });
   }
 
