@@ -9,8 +9,8 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#64A901",
+    top: -10,
     borderRadius: moderateScaleViewports(10),
-    marginTop: moderateScaleViewports(-130),
     width: metrics.width * 0.90,
   },
   pricingText: {

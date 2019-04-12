@@ -22,6 +22,6 @@ export default StyleSheet.create({
     height: "100%",
   },
   height: { height: "100%" },
-  flexEndCenter: { justifyContent: "flex-end", alignItems: "center" },
+  flexEndCenter: { position: "absolute", bottom: 0, justifyContent: "flex-end", alignItems: "center" },
   mainContainerHome: { backgroundColor: "#F5F5F5", flexGrow: 1 },
 });

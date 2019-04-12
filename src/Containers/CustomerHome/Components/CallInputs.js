@@ -55,7 +55,7 @@ class CallInputs extends Component {
           activeOpacity={stripePaymentToken ? 1 : 0}
           onPress={() => {
             if (!stripePaymentToken) {
-              return navigation.dispatch({ type: "PaymentsView" });
+              return navigation.dispatch({ type: "PaymentDetailScreen" });
             }
             return null;
           }

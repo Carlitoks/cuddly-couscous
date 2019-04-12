@@ -14,26 +14,38 @@ import styles from "./Styles/HeaderMinutesLeft";
 class HeaderMinutesLeft extends Component {
   goToPayments = () => {
     const { navigation } = this.props;
-    navigation.dispatch({ type: "PaymentsView" });
+    navigation.dispatch({ type: "PaymentDetailScreen" });
   };
 
-  render() {
+  renderMinutesLeft = () => {
     const { stripeCustomerID, stripePaymentToken, availableMinutes } = this.props;
     return (
-      <View style={availableMinutes ? styles.minutesLeftContainer : styles.outOfMinutesContainer}>
+      <View style={styles.minutesLeftContainer}>
         {stripePaymentToken ? <React.Fragment/> :
           <TouchableOpacity onPress={() => this.goToPayments()} style={styles.addCardContainer}>
             <Text style={styles.addCardText}>
               {I18n.t("pricingScreen.paymentInfo.linkNoCard", { minutes: availableMinutes })}
             </Text>
           </TouchableOpacity>}
-        <View style={styles.minutesLeftInfoContainer}>
+        <View style={
+          availableMinutes >= 0
+            ? styles.outOfMinutesContainer
+            : styles.minutesLeftInfoContainer}
+        >
           <Icon name="clock" type="evilicon" containerStyle={styles.clockIcon} color="#fff"/>
           <Text
             style={styles.minutesLeftInfoText}>{I18n.t("minutesAbbreviation", { minutes: availableMinutes })}</Text>
         </View>
       </View>
     );
+  }
+
+  render() {
+    const { stripePaymentToken, availableMinutes } = this.props;
+    if (availableMinutes === 0 && stripePaymentToken) {
+      return <React.Fragment />;
+    }
+    return this.renderMinutesLeft();
   }
 }
 
