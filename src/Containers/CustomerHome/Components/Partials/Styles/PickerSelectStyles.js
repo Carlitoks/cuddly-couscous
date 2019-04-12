@@ -67,5 +67,5 @@ export default StyleSheet.create({
     flexDirection: "column",
     width: Metrics.width * 0.85,
   },
-  flexView: { flex: 1 },
+  flexView: {  },
 });

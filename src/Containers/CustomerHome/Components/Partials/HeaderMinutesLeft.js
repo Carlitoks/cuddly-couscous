@@ -28,7 +28,7 @@ class HeaderMinutesLeft extends Component {
             </Text>
           </TouchableOpacity>}
         <View style={
-          availableMinutes >= 0
+          availableMinutes === 0
             ? styles.outOfMinutesContainer
             : styles.minutesLeftInfoContainer}
         >

@@ -16,38 +16,38 @@ class PickerSelectComponent extends Component {
       selectedLabelStyle,
     } = this.props;
     if (type === "primaryLang" && session.primaryLangCode) {
+      const lang = translateLanguage(
+        FilterLangsByCodes([session.primaryLangCode])[0]["3"],
+        FilterLangsByCodes([session.primaryLangCode])[0].name,
+      );
       return (
         <View style={styles.flexView}>
           <Text nunmberOfLines={1} style={selectedLabelStyle || styles.inputValue}>
-            {translateLanguage(
-              FilterLangsByCodes([session.primaryLangCode])[0]["3"],
-              FilterLangsByCodes([session.primaryLangCode])[0].name,
-            )}
+            {`${lang.substr(0, 11)}${lang.length >= 11 ? "..." : ""}`}
           </Text>
         </View>
       );
     }
     if (type === "secondaryLang" && session.secondaryLangCode) {
+      const lang = translateLanguage(
+        FilterLangsByCodes([session.secondaryLangCode])[0]["3"],
+        FilterLangsByCodes([session.secondaryLangCode])[0].name,
+      );
       return (
         <View style={styles.flexView}>
           <Text nunmberOfLines={1} style={selectedLabelStyle || styles.inputValue}>
-            {translateLanguage(
-              FilterLangsByCodes([session.secondaryLangCode])[0]["3"],
-              FilterLangsByCodes([session.secondaryLangCode])[0].name,
-            )}
+            {`${lang.substr(0, 11)}${lang.length >= 11 ? "..." : ""}`}
           </Text>
         </View>
       );
     }
     return (
-      <View style={styles.flexView}>
         <Text
           nunmberOfLines={1}
           style={styles.inputPlaceholderValue}
         >
           {placeholder}
         </Text>
-      </View>
     );
   };
 

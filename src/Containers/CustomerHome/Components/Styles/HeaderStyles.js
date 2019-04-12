@@ -5,7 +5,7 @@ import {
   Fonts,
   Metrics,
 } from "../../../../Themes";
-import { moderateScale } from "../../../../Util/Scaling";
+import { moderateScale, moderateScaleViewports } from "../../../../Util/Scaling";
 import {isIphoneXorAbove} from "../../../../Util/Devices";
 
 const iOS = Platform.OS === "ios";
@@ -77,7 +77,6 @@ export default StyleSheet.create({
   headerInnerHome: {
     padding: 5,
     margin: 0,
-    paddingBottom: 0,
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#401674"
@@ -86,7 +85,7 @@ export default StyleSheet.create({
     marginTop: iOS ? isIphoneXorAbove() ? 35 : 30 : 20,
     padding: 0,
     borderBottomWidth: 0,
-    height: moderateScale(45, 0)
+    height: moderateScaleViewports(65)
   },
   headerContainer: { flexDirection: "column", justifyContent: "flex-start", backgroundColor: Colors.gradientColor.top },
   headerContainerOnboarding: { flexDirection: "column", justifyContent: "flex-start", backgroundColor: "#ffffff" },
