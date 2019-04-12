@@ -187,6 +187,10 @@ class SessionView extends Component {
     .catch((err) => {
       recordSessionEvent('error.InCallManager.getIsWiredHeadsetPluggedIn', {error: err});
     });
+
+    // HACK: https://github.com/globalprofessionalsearch/solo-mobile-app/issues/1932
+    this.updateLocalUserState({device: {hasNetworkConnection: true}});
+    this.setState({loaded: true});
   }
 
   componentWillUnmount () {
