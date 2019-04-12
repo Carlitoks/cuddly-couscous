@@ -89,5 +89,6 @@ export default StyleSheet.create({
     height: moderateScale(45, 0)
   },
   headerContainer: { flexDirection: "column", justifyContent: "flex-start", backgroundColor: Colors.gradientColor.top },
+  headerContainerOnboarding: { flexDirection: "column", justifyContent: "flex-start", backgroundColor: "#ffffff" },
   minutesLeftContainer: { marginRight: 15 }
 });

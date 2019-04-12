@@ -172,10 +172,22 @@ export default class LinguistHeader extends Component {
     return "transparent";
   };
 
+  setIosBackground = () => {
+    const { navigation } = this.props;
+
+    if (
+      navigation.state.routeName === "RegisterView"
+      || navigation.state.routeName === "LoginView"
+    ) {
+      return styles.headerContainerOnboarding;
+    }
+return styles.headerContainer;
+  }
+
   render() {
     const { navigation } = this.props;
     return (
-      <View style={styles.headerContainer}>
+      <View style={this.setIosBackground()}>
         <StatusBar
           hidden={false}
           backgroundColor={this.setBackgroundColor()}
