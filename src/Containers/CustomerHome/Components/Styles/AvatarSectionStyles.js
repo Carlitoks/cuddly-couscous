@@ -29,9 +29,8 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: Colors.gradientColor.top,
-    height: Metrics.height * 0.70,
+    height: Metrics.height * 0.67,
     width: Metrics.width,
-    paddingTop: moderateScaleViewports(21),
   },
   jeeniesStandingBy: {
     fontFamily: Fonts.BaseFont,
