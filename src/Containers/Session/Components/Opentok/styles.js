@@ -35,7 +35,7 @@ export default styles = StyleSheet.create({
     right: 10,
     height: 125,
     width: 75,
-    zIndex: 99999,
+    zIndex: 99998,
   },
   publisherContainerDisabled: {
     display: 'none',

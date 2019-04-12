@@ -521,7 +521,6 @@ export class Session extends Component {
     if (
       this.state.unmounting
       || !this.connected
-      || this.localUserState.connectionID == null
       || !this.props.localUserState.device.hasNetworkConnection
     ) {
       return;

@@ -264,17 +264,27 @@ class SessionView extends Component {
   };
 
   handleNetworkIsConnected = (isConnected) => {
+    recordSessionEvent('handleNetworkIsConnected', {isConnected});
+    const previouslyConnected = this.state.localUserState.device.hasNetworkConnection;
     this.updateLocalUserState({device: {hasNetworkConnection: isConnected}});
-    (isConnected) ? this.handleRegainedNetworkConnection() : this.handleLostNetworkConnection();
+    if (!previouslyConnected && isConnected) {
+      this.handleRegainedNetworkConnection();
+    } else if (!isConnected) {
+      this.handleLostNetworkConnection();
+    }
   };
 
   handleNetworkConnectionTypeChanged (prevState, currentState) {
-    recordSessionEvent('handleNetworkConnectionTypeChanged');
-    this.updateLocalUserState({device: {networkConnection: currentState, hasNetworkConnection: true}});
+    recordSessionEvent('handleNetworkConnectionTypeChanged', prevState, currentState);
+    this.updateLocalUserState({device: {networkConnection: currentState}});
   }
 
+  // we treat both the local and remote users as disconnected, because
+  // the local user will need to reconnect in order to know if the
+  // remote user is still connected
   handleLostNetworkConnection () {
     this.handleUserDisconnected();
+    this.handleRemoteUserDisconnected();
   }
 
   handleRegainedNetworkConnection () {
@@ -436,6 +446,11 @@ class SessionView extends Component {
       ...this.state.localUserState.connection,
       connected: false,
       connecting: false,
+      sendingAudio: false,
+      sendingVideo: false,
+      receivingThrottled: false,
+      receivingAudio: false,
+      receivingVideo: false,
     }});
     this.props.stopTimer();
   }
@@ -501,9 +516,18 @@ class SessionView extends Component {
     recordSessionEvent('handleRemoteUserDisconnected');
     this.updateRemoteUserState({connection: {
       ...this.state.remoteUserState.connection,
-      initiallyConnected: true,
       connected: false,
       connecting: false,
+      sendingAudio: false,
+      sendingVideo: false,
+      receivingThrottled: false,
+      receivingAudio: false,
+      receivingVideo: false,
+    }});
+    this.updateLocalUserState({connection: {
+      receivingThrottled: false,
+      receivingAudio: false,
+      receivingVideo: false,
     }});
     this.props.stopTimer();
   }
