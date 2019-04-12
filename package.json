@@ -13,7 +13,8 @@
     "test": "jest",
     "api:run": "make setup && docker-compose up",
     "api:load-mock-data": "make run-cmd CMD=\"load-fixtures\"",
-    "postinstall": "cp patches/OTScreenCapturer.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTScreenCapturer.java && cp patches/OTSessionManager.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTSessionManager.java && cp patches/InstanceIdService.java node_modules/react-native-fcm/android/src/main/java/com/evollu/react/fcm/InstanceIdService.java"
+    "postinstall": "cp patches/InstanceIdService.java node_modules/react-native-fcm/android/src/main/java/com/evollu/react/fcm/InstanceIdService.java",
+    "XXXX_postinstall": "cp patches/OTScreenCapturer.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTScreenCapturer.java && cp patches/OTSessionManager.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTSessionManager.java"
   },
   "dependencies": {
     "@segment/analytics-react-native": "^0.0.1-beta.3",
@@ -27,7 +28,7 @@
     "instabug-reactnative": "8.0.12",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
-    "opentok-react-native": "0.8.4",
+    "opentok-react-native": "^0.9.8",
     "prop-types": "^15.5.10",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
