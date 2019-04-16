@@ -20,7 +20,6 @@ import profileLinguist from "./ProfileLinguistReducer";
 import promoCode from "./PromoCodeReducer";
 import pushNotification from "./PushNotificationReducer";
 import rateCall from "./RateCallReducer";
-import resetPassword from "./ResetPasswordReducer";
 import sessionInfo from "./SessionInfoReducer";
 import settings from "./SettingsReducer";
 import tokbox from "./tokboxReducer";
@@ -53,7 +52,6 @@ const rootReducer = combineReducers({
   promoCode,
   pushNotification,
   rateCall,
-  resetPassword,
   sessionInfo,
   settings,
   tokbox,
