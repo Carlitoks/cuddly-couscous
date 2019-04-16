@@ -174,12 +174,7 @@ export class Session extends Component {
       oldC.speakerEnabled != newC.speakerEnabled ||
       oldC.cameraFlipEnabled != newC.cameraFlipEnabled
     ) {
-      this.localUserState.publishingAudio = newC.micEnabled;
-      this.localUserState.publishingVideo = newC.videoEnabled;
       this.sendSignal(SIGNALS.CONTROL_STATE, newC);
-
-      // TODO: if legacy version, also update remoteUserReceivingAV - we'll have to assume they are
-      // getting what we are sending, because older apps won't send signals about their state
     }
   }
 
@@ -226,9 +221,10 @@ export class Session extends Component {
     this.remoteUserState.connectionID = event.connectionId;
     this.remoteUserState.meta = JSON.parse(event.data);
     this.props.onRemoteUserConnecting();
-    this.sendSignal(SIGNALS.NOT_LEGACY_VERSION);
-    
+
+    // update the remote user about our local state
     const {localUserState} = this.props;
+    this.sendSignal(SIGNALS.NOT_LEGACY_VERSION);    
     this.sendSignal(SIGNALS.APP_STATE, {state: localUserState.device.appState});
     this.sendSignal(SIGNALS.NETWORK_STATE, {type: localUserState.device.networkConnection});
     this.sendSignal(SIGNALS.CONTROL_STATE, localUserState.controls);
@@ -252,32 +248,25 @@ export class Session extends Component {
     this.props.onRemoteUserDisconnected();
   }
 
+
+  // the remote user has published a stream
   onStreamCreated (event) {
     recordSessionOpentokEvent('session.streamCreated', {
       event,
       sessionID: this.props.session.id
     });
 
+    // we're calling this on purpose, because it is possible that a remote user's stream
+    // could be destroyed and recreated WITHOUT their connection being destroyed and created.
+    // if this has already triggered, then it should be the same as a no-op
+    this.props.onRemoteUserConnected();
+
     // TODO: for 3-way calls, ensure stream info associated to proper connection
     this.remoteUserState = {
       ...this.remoteUserState,
       streamID: event.streamId,
       publishing: true,
-      publishingAudio: event.hasAudio,
-      publishingVideo: event.hasVideo,
     };
-
-    this.props.onRemoteUserConnected();
-    const ops = {
-      audio: event.hasAudio,
-      video: event.hasVideo
-    }
-    this.props.onRemoteUserSendingAV(ops);
-    if (this.localUserState.subscribing) {
-      this.props.onUserReceivingAV(ops);
-      this.notifyIfReceiving();
-    }
-
     // update stream property state, then notify system of
     // remote connection
     this.setState({streamProperties: {
@@ -289,20 +278,21 @@ export class Session extends Component {
           ...styles.subscriber
         }
     }}});
+
+    this.handleReceivingAV(event.hasAudio, event.hasVideo);
+    this.notifyIfReceiving(event.hasAudio, event.hasVideo);
   }
 
+  // update sending/receiving status based on actual stream
+  // properties.  Note that this event can fire for streams
+  // created by the local or remote user
   onStreamPropertyChanged (event) {
     recordSessionOpentokEvent('session.streamPropertyChanged', {
       event,
       sessionID: this.props.session.id
     });
 
-    // only process stream changes for remote participants - we are assuming that
-    // our own stream properties are determined by the local control state
-    if (event.stream.connectionId == this.localUserState.connectionID) {
-      return;
-    }
-
+    // determine if stream has audio and video
     let hasAudio = null;
     let hasVideo = null;
     switch (event.changedProperty) {
@@ -318,22 +308,11 @@ export class Session extends Component {
       }
     }
 
-    // NOTE: we're not updating whether or not the remote user is
-    // sending, because that depends on their control state - it could
-    // be that they are sending AV, but TB has thottled and disabled
-    // the video, so we only update what we're receiving based on the stream
-    // properties.
-    this.props.onUserReceivingAV({
-      audio: hasAudio,
-      video: hasVideo
-    });
-    
-    // event.stream.hasVideo ? this.props.onRemoteUserVideoEnabled() : this.props.onRemoteUserVideoDisabled();
-    // event.stream.hasAudio ? this.props.onRemoteUserAudioEnabled() : this.props.onRemoteUserAudioDisabled();
-    this.sendSignal(SIGNALS.AV_STATUS, {
-      audio: hasAudio,
-      video: hasVideo
-    });
+    if (event.stream.connectionId == this.localUserState.connectionID) {
+      this.handlePublishingAV(hasAudio, hasVideo);
+    } else {
+      this.handleReceivingAV(hasAudio, hasVideo);
+    }
   }
 
   onStreamDestroyed (event) {
@@ -353,8 +332,6 @@ export class Session extends Component {
       ...this.remoteUserState,
       streamID: null,
       publishing: false,
-      publishingAudio: false,
-      publishingVideo: false,
     };
 
     // stop tracking stream internally
@@ -364,6 +341,10 @@ export class Session extends Component {
       this.setState({streamProperties: s});
     }
 
+    this.handleReceivingAV(false, false);
+
+    // even though the user may still technically be connected, we call this anyway, because if
+    // we have no stream from them, they may as well be disconnected from the local users' standpoint.
     this.props.onRemoteUserDisconnected();
   }
 
@@ -424,32 +405,75 @@ export class Session extends Component {
 
   }
 
+  // this is about handling our actual publishing AV status as best as we
+  // can tell from the tokbox signals
+  handlePublishingAV(audio, video) {
+    this.localUserState.publishingAudio = audio;
+    this.localUserState.publishingVideo = video;
 
+    // update our sending state
+    this.props.onUserSendingAV({audio, video});
+
+    // TODO: if our actual stream state does not match our control state, then there's a problem
+    // to diagnose
+    // TODO: forensic event for this
+
+    // if the remote user is connected has a legacy version, we must assume they are subscribing
+    // if we are publishing
+    if (!!this.remoteUserState.connectionID && this.remoteUserState.legacyVersion) {
+      this.remoteUserState.subscribing = true;
+    }
+
+    // if remote user is subscribing, and has a legacy version, we must assume they are receiving
+    // what we are sending
+    if (this.remoteUserState.legacyVersion && this.remoteUserState.subscribing) {
+      this.props.onRemoteUserReceivingAV({audio, video});
+    }
+  }
+
+  // handle the actual receiving state of audio and video
+  // from the remote user - NOTE that this does not mean we have
+  // fully subscribed - it means that we know there is a stream
+  // from the other side
+  handleReceivingAV(audio, video) {
+    this.remoteUserState.publishingAudio = audio;
+    this.remoteUserState.publishingVideo = video;
+
+    this.props.onRemoteUserSendingAV({audio, video});
+
+    // we may know about received AV from the remote side before
+    // our local subscriber has actually set up
+    if (this.localUserState.subscribing) {
+      this.props.onUserReceivingAV({audio, video});
+      this.sendSignal(SIGNALS.AV_STATUS, {audio, video});
+    }
+
+    // if the remote user has a legacy version, we have to assume their sending
+    // control state matches what we are receiving.
+    if (this.remoteUserState.legacyVersion) {
+      
+      // we won't be able to tell if we have video because it's enabled for the front vs back
+      // camera... that requires an actual signal from a modern version about the
+      // local control state
+      this.props.onRemoteUserControlStateChanged({micEnabled: audio, videoEnabled: video});
+    }
+  }
+
+  // the OTPublisher has been set up at this point, and we are actually
+  // sending AV from our side
   publisherStreamCreated (ops) {
     this.localUserState = {
       ...this.localUserState,
       connectionID: ops.connectionId,
       streamID: ops.streamId,
       publishing: true,
-      publishingAudio: ops.hasAudio,
-      publishingVideo: ops.hasVideo,
     };
-    this.props.onUserSendingAV({
-      audio: ops.hasAudio,
-      video: ops.hasVideo,
-    });
 
-    // if the remote user has a legacy version, we have to assume they are receiving
-    // what we are publishing.  Otherwise, we wait to receive a signal from the
-    // other side that they are in successfully subscribed
-    if (this.remoteUserState.legacyVersion) {
-      this.props.onRemoteUserReceivingAV({
-        audio: ops.hasAudio,
-        video: ops.hasVideo,
-      });
-    }
+    this.handlePublishingAV(ops.hasAudio, ops.hasVideo);
   }
 
+  // our published stream has stopped being sent, which means we can make
+  // some assumptions about our local and remote user states.
   publisherStreamDestroyed () {
     this.localUserState = {
       ...this.localUserState,
@@ -458,22 +482,21 @@ export class Session extends Component {
       publishingAudio: false,
       publishingVideo: false,
     };
+    this.handlePublishingAV(false, false);
   }
 
+  // we are INITIALLY receiving AV, meaning the subscriber has actually been setup
   subscriberReceiving () {
     this.localUserState.subscribing = true;
     if (this.remoteUserState.publishing) {
-      this.props.onUserReceivingAV({
-        audio: this.remoteUserState.publishingAudio,
-        video: this.remoteUserState.publishingVideo,
-      });
+      this.handleReceivingAV(this.remoteUserState.publishingAudio, this.remoteUserState.publishingVideo)
     }
-
-    this.notifyIfReceiving();
+    this.notifyIfReceiving(this.remoteUserState.publishingAudio, this.remoteUserState.publishingVideo);
   }
 
   subscriberVideoEnabled (event) {
     this.remoteUserState.publishingVideo = true;
+    // TODO: remove local throttle?
     this.props.onRemoteUserVideoEnabled();
   }
 
@@ -492,9 +515,11 @@ export class Session extends Component {
     this.props.onUserReceivingAVUnthrottled();
   }
 
-  notifyIfReceiving () {
+  // TODO: change this?
+  notifyIfReceiving (audio, video) {
+    // TODO: change this to notifyIfInitiallyReceiving?
     if (this.localUserState.subscribing && this.remoteUserState.publishing) {
-      this.sendSignal(SIGNALS.RECEIVING_AV);
+      this.sendSignal(SIGNALS.RECEIVING_AV, {audio, video});
     }
   }
 
@@ -567,9 +592,7 @@ export class Session extends Component {
         break;
       }
       case SIGNALS.CONTROL_STATE: {
-        this.remoteUserState.publishingAudio = payload.micEnabled;
-        this.remoteUserState.publishingVideo = payload.videoEnabled || payload.cameraFlipEnabled;
-        this.props.onRemoteUserControlStateChanged(payload);
+        this.props.onRemoteUserControlStateChanged(payload);  
         break;
       }
       case SIGNALS.APP_STATE: {
@@ -596,16 +619,18 @@ export class Session extends Component {
       case SIGNALS.RECEIVING_AV: {
         this.remoteUserState.subscribing = true;
         this.props.onRemoteUserReceivingAV({
-          audio: this.localUserState.publishingAudio,
-          video: this.localUserState.publishingVideo,
+          audio: payload.audio,
+          video: payload.video,
         });
         break;
       }
       case SIGNALS.AV_STATUS: {
-        this.props.onRemoteUserReceivingAV({
-          audio: payload.audio,
-          video: payload.video
-        });
+        if (this.remoteUserState.subscribing) {
+          this.props.onRemoteUserReceivingAV({
+            audio: payload.audio,
+            video: payload.video
+          });  
+        }
         break;
       }
       case SIGNALS.VIDEO_THROTTLE: {

@@ -540,6 +540,11 @@ class SessionView extends Component {
       receivingAudio: false,
       receivingVideo: false,
     }});
+
+    // if the remote user has disconnected, we can't be receiving
+    // anything from them - or at the very least should *assume* we're
+    // not receiving anything.  We also can't be throttled, because
+    // there's nothing to throttle.
     this.updateLocalUserState({connection: {
       receivingThrottled: false,
       receivingAudio: false,
@@ -593,13 +598,7 @@ class SessionView extends Component {
   // stream/connection events
   handleRemoteUserControlStateChanged (controls) {
     recordSessionEvent('handleRemoteUserControlStateChanged');
-    this.updateRemoteUserState({
-      controls,
-      connection: {
-        sendingAudio: controls.micEnabled,
-        sendingVideo: controls.videoEnabled || controls.cameraFlipEnabled
-      }
-    });
+    this.updateRemoteUserState({controls});
   }
 
   updateRemoteUserState (data, cb = null) {
