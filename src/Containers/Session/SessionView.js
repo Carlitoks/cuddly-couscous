@@ -284,7 +284,6 @@ class SessionView extends Component {
   // remote user is still connected
   handleLostNetworkConnection () {
     this.handleUserDisconnected();
-    this.handleRemoteUserDisconnected();
   }
 
   handleRegainedNetworkConnection () {
@@ -362,10 +361,15 @@ class SessionView extends Component {
     recordSessionEvent('beginSession');
     this.props.setSessionBegan();
     InCallManager.start({media: 'audio'});
+
+    // extra check to ensure speaker is on at call start, if it should be on.
     if (this.state.localUserState.controls.speakerEnabled) {
       InCallManager.setForceSpeakerphoneOn(true);
     }
 
+    // start basic status poll - this is really a preventative measure
+    // to ensure participants don't get stuck in a session that is ended
+    // unexpectedly
     this.statusPollIntervalID = setInterval(() => {
       this.handleSessionStatusPoll();
     }, 5 * DURATION.SECONDS);
@@ -389,7 +393,7 @@ class SessionView extends Component {
     })
     .catch(() => {
       // NOTE: we don't handle errors here on purpose.  If the user has lost connection, that
-      // is handled by the reconnection modal, and triggered by other things.
+      // is handled by the reconnection modal, and triggered by the underlying session handler.
     });
   }
 
@@ -440,10 +444,22 @@ class SessionView extends Component {
     }});
   }
 
+  // if the user gets disconnected, we treat the remote user as disconnected
+  // as well also, because we have to reconnect in order to know if the
+  // remote user is still connected - basically the state has to be rebuilt
+  // completely in order to be accurate.
   handleUserDisconnected () {
     recordSessionEvent('handleUserDisconnected');
     this.updateLocalUserState({connection: {
-      ...this.state.localUserState.connection,
+      connected: false,
+      connecting: false,
+      sendingAudio: false,
+      sendingVideo: false,
+      receivingThrottled: false,
+      receivingAudio: false,
+      receivingVideo: false,
+    }});
+    this.updateRemoteUserState({connection: {
       connected: false,
       connecting: false,
       sendingAudio: false,
@@ -542,26 +558,39 @@ class SessionView extends Component {
     this.updateRemoteUserState({connection: {receivingThrottled: false}});
   }
 
+  // NOTE: this is about whether or not we are receiving, not whether or not the remote
+  // side is sending
   handleRemoteUserVideoEnabled () {
     recordSessionEvent('handleRemoteUserVideoEnabled');
     this.updateLocalUserState({connection: {receivingVideo: true}});
   }
 
+  // NOTE: this is about whether or not we are receiving, not whether or not the remote
+  // side is sending
   handleRemoteUserVideoDisabled () {
     recordSessionEvent('handleRemoteUserVideoDisabled');
     this.updateLocalUserState({connection: {receivingVideo: false}});
   }
 
+  // NOTE: this is about whether or not we are receiving, not whether or not the remote
+  // side is sending
   handleRemoteUserAudioEnabled () {
     recordSessionEvent('handleRemoteUserAudioEnabled');
     this.updateLocalUserState({connection: {receivingAudio: true}});
   }
 
+  // NOTE: this is about whether or not we are receiving, not whether or not the remote
+  // side is sending
   handleRemoteUserAudioDisabled () {
     recordSessionEvent('handleRemoteUserAudioDisabled');
     this.updateLocalUserState({connection: {receivingAudio: false}});
   }
 
+  // the remote side's control state determines if the remote user
+  // is intentionally sending audio or video.  However, the remote side
+  // sending AV does not mean we are actually receiving AV - that is determined
+  // by the `Session` component, and based on the actual incoming 
+  // stream/connection events
   handleRemoteUserControlStateChanged (controls) {
     recordSessionEvent('handleRemoteUserControlStateChanged');
     this.updateRemoteUserState({
