@@ -244,6 +244,14 @@ export class Session extends Component {
       return;
     }
 
+    // WARNING! In the case of a user losing and regaining connection, multiple connections may be created and destroyed.
+    // The user's state will reflect the most recently created connection  - which is the only one we care
+    // about.  Therefore, if this gets triggered, we must make sure that the particular connection being destroyed
+    // is actually the most recently created one for the remote user.
+    if (event.connectionId != this.remoteUserState.connectionID) {
+      return;
+    }
+
     this.remoteUserState = newUserState();
     this.props.onRemoteUserDisconnected();
   }
