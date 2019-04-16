@@ -6,7 +6,7 @@ import { loadState } from "../Config/LocalStorage";
 import { recordNavigationEvent } from "../Util/Forensics";
 
 const initialState = AppNavigation.router.getStateForAction(
-  AppNavigation.router.getActionForPathAndParams("")
+  AppNavigation.router.getActionForPathAndParams("SelectRoleView")
 );
 
 export default (reducer = (state, action) => {
@@ -24,7 +24,10 @@ export default (reducer = (state, action) => {
     case "back":
       analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
-      newState = AppNavigation.router.getStateForAction(NavigationActions.back(), state);
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.back(),
+        state
+      );
       break;
 
     case "Navigation/NAVIGATE":
@@ -80,7 +83,9 @@ export default (reducer = (state, action) => {
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: "IncomingCallView" })]
+          actions: [
+            NavigationActions.navigate({ routeName: "IncomingCallView" })
+          ]
         })
       );
       break;
@@ -91,7 +96,9 @@ export default (reducer = (state, action) => {
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: "CheckYourEmailView" })]
+          actions: [
+            NavigationActions.navigate({ routeName: "CheckYourEmailView" })
+          ]
         })
       );
       break;
@@ -125,7 +132,9 @@ export default (reducer = (state, action) => {
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: "NameCustomerView" })]
+          actions: [
+            NavigationActions.navigate({ routeName: "NameCustomerView" })
+          ]
         })
       );
       break;
@@ -137,7 +146,7 @@ export default (reducer = (state, action) => {
         NavigationActions.reset({
           index: 1,
           actions: [
-            NavigationActions.navigate({ routeName: "IntroView" }),
+            NavigationActions.navigate({ routeName: 'IntroView' }),
             NavigationActions.navigate({ routeName: "LoginView" })
           ]
         })
@@ -151,7 +160,7 @@ export default (reducer = (state, action) => {
         NavigationActions.reset({
           index: 1,
           actions: [
-            NavigationActions.navigate({ routeName: "IntroView" }),
+            NavigationActions.navigate({ routeName: 'IntroView' }),
             NavigationActions.navigate({ routeName: "RegisterView" })
           ]
         })
@@ -159,10 +168,7 @@ export default (reducer = (state, action) => {
       break;
 
     default:
-      if (
-        !action.payload &&
-        (action.type.indexOf("View") != -1 || action.type.indexOf("Screen") != -1)
-      ) {
+      if (!action.payload && (action.type.indexOf("View") != -1 || action.type.indexOf("Screen") != -1)) {
         recordNavigationEvent(action.type.toString());
         analytics.screen(action.type.toString());
       }
