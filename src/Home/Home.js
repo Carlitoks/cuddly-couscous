@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { View, StatusBar } from "react-native";
 import { amplitudKey } from "../Config/env";
-import HomeCustomer from "./Customer/HomeCustomer";
 import HomeLinguist from "./Linguist/HomeLinguist";
 import LoginView from "../Onboarding/LoginView/LoginView";
 import PushNotifications from "../Util/PushNotification";

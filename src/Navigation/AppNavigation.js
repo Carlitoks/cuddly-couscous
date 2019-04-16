@@ -3,12 +3,8 @@ import CardStackStyleInterpolator from "react-navigation/src/views/CardStack/Car
 import { Animated, Easing } from "react-native";
 import { getS } from "../Config/CreateStore";
 
-import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallHistory from "../Containers/CallHistory/CallHistoryView";
-import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
-import CallPricingView from "../ContactLinguist/CallPricingView/CallPricingView";
 import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
-import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
 import NameCustomerView from "../Onboarding/NameCustomerView/NameCustomerView";
 import PreferredNameCustomerView from "../Onboarding/PreferredNameCustomerView/PreferredNameCustomerView";
 import EmailCustomerView from "../Onboarding/EmailCustomerView/EmailCustomerView";
@@ -58,13 +54,8 @@ import CallSettings from "../CallSettings/CallSettings";
 import SettingsView from "../Settings/SettingsView";
 import InterfaceLanguageView from "../Settings/InterfaceLanguageView";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
-import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
-import FeedbackView from "../Home/Customer/FeedbackView/FeedbackView";
-import SessionLanguageView from "../Call/Customer/SessionLanguageView/SessionLanguageView";
 import StaticView from "../StaticView/StaticView";
 import TextView from "../Components/TextView/TextView";
-import CustomScenarioView from "../Call/Customer/CustomScenario/CustomScenarioView";
-import ScenarioSelectionView from "../Call/Customer/ScenarioSelectionView/ScenarioSelectionView";
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
@@ -83,7 +74,6 @@ import EditCardScreen from "../Containers/Payments/EditCardScreen";
 
 const Navigation = StackNavigator(
   {
-    AssistanceView: { screen: AssistanceView },
     CallHistory: {
       screen: CallHistory,
       navigationOptions: {
@@ -114,18 +104,6 @@ const Navigation = StackNavigator(
         gesturesEnabled: false
       }
     },
-    CallTimeView: {
-      screen: CallTimeView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    CallPricingView: {
-      screen: CallPricingView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
     ContactingLinguist: {
       screen: ContactingLinguist,
       navigationOptions: {
@@ -152,12 +130,6 @@ const Navigation = StackNavigator(
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
-      }
-    },
-    ContactLinguist: {
-      screen: ContactLinguist,
-      navigationOptions: {
-        gesturesEnabled: false
       }
     },
     NameCustomerView: {
@@ -245,21 +217,6 @@ const Navigation = StackNavigator(
     },
     Home: {
       screen: Home
-    },
-    FeedbackView: {
-      screen: FeedbackView
-    },
-    CustomScenarioView: {
-      screen: CustomScenarioView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    ScenarioSelectionView: {
-      screen: ScenarioSelectionView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
     },
     IncomingCallView: {
       screen: IncomingCallView,
@@ -420,18 +377,6 @@ const Navigation = StackNavigator(
     },
     UserProfileView: {
       screen: UserProfileView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    CallConfirmationView: {
-      screen: CallConfirmationView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    SessionLanguageView: {
-      screen: SessionLanguageView,
       navigationOptions: {
         gesturesEnabled: false
       }
