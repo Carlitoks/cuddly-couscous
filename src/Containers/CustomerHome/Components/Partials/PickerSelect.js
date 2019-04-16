@@ -1,96 +1,182 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
-import I18n from "../../../../I18n/I18n";
-// Styles
-import { Icon, Divider } from "react-native-elements";
-import styles from "./Styles/PickerSelectStyles";
+import { Divider, Icon } from "react-native-elements";
 import { FilterLangsByCodes } from "../../../../Config/Languages";
-import { translateLanguage } from "../../../../I18n/I18n";
-import { Scenarios } from "../../../../Api";
+import I18n, { translateLanguage } from "../../../../I18n/I18n";
+// Styles
+import styles from "./Styles/PickerSelectStyles";
 
 class PickerSelectComponent extends Component {
   showCurrentSelectedLang = () => {
-    const { type, session, placeholder } = this.props;
+    const {
+      type,
+      session,
+      placeholder,
+      selectedLabelStyle,
+    } = this.props;
     if (type === "primaryLang" && session.primaryLangCode) {
+      const lang = translateLanguage(
+        FilterLangsByCodes([session.primaryLangCode])[0]["3"],
+        FilterLangsByCodes([session.primaryLangCode])[0].name,
+      );
       return (
-        <Text style={styles.inputValue}>
-          {translateLanguage(
-            FilterLangsByCodes([session.primaryLangCode])[0]["3"],
-            FilterLangsByCodes([session.primaryLangCode])[0].name
-          )}
-        </Text>
+        <View style={styles.flexView}>
+          <Text nunmberOfLines={1} style={selectedLabelStyle || styles.inputValue}>
+            {`${lang.substr(0, 11)}${lang.length >= 11 ? "..." : ""}`}
+          </Text>
+        </View>
       );
     }
     if (type === "secondaryLang" && session.secondaryLangCode) {
+      const lang = translateLanguage(
+        FilterLangsByCodes([session.secondaryLangCode])[0]["3"],
+        FilterLangsByCodes([session.secondaryLangCode])[0].name,
+      );
       return (
-        <Text style={styles.inputValue}>
-          {translateLanguage(
-            FilterLangsByCodes([session.secondaryLangCode])[0]["3"],
-            FilterLangsByCodes([session.secondaryLangCode])[0].name
-          )}
-        </Text>
+        <View style={styles.flexView}>
+          <Text nunmberOfLines={1} style={selectedLabelStyle || styles.inputValue}>
+            {`${lang.substr(0, 11)}${lang.length >= 11 ? "..." : ""}`}
+          </Text>
+        </View>
       );
     }
-    return <Text style={styles.inputPlaceholderValue}>{placeholder}</Text>;
+    return (
+        <Text
+          nunmberOfLines={1}
+          style={styles.inputPlaceholderValue}
+        >
+          {placeholder}
+        </Text>
+    );
   };
 
   showScenarioList = () => {
-    const { scenariosList, session, placeholder } = this.props;
+    const {
+      scenariosList,
+      session,
+      placeholder,
+      selectedLabelStyle,
+    } = this.props;
 
     if (session.scenarioID && session.scenarioID != "custom") {
       const selectedScenario = scenariosList.find(scenario => scenario.id === session.scenarioID);
-      return <Text style={styles.inputValue}>{selectedScenario.title}</Text>;
+      return (
+        <View
+          style={styles.flexView}
+        >
+          <Text
+            nunmberOfLines={1}
+            style={selectedLabelStyle || styles.inputValue}
+          >
+            {selectedScenario.title}
+          </Text>
+        </View>
+      );
     }
     if (session.customScenarioSelected === "custom") {
-      return <Text style={styles.inputValue}>{I18n.t("other")}</Text>;
+      return (
+        <View
+          style={styles.flexView}
+        >
+          <Text
+            nunmberOfLines={1}
+            style={selectedLabelStyle || styles.inputValue}
+          >
+            {I18n.t("other")}
+          </Text>
+        </View>
+      );
     }
-    return <Text style={styles.inputPlaceholderValue}>{placeholder}</Text>;
+    return (
+      <View
+        style={styles.flexView}
+      >
+        <Text
+          nunmberOfLines={1}
+          style={styles.inputPlaceholderValue}
+        >
+          {placeholder}
+        </Text>
+      </View>
+    );
   };
 
   showCurrentCustomScenarioNote = () => {
-    const { session, placeholder } = this.props;
-    if (session.customScenarioNote.length > 0)
+    const {
+      session,
+      placeholder,
+      selectedLabelStyle,
+    } = this.props;
+    if (session.customScenarioNote.length > 0) {
       return (
-        <Text style={styles.inputValue}>{`${session.customScenarioNote.substring(0, 50)}...`}</Text>
+        <View style={styles.flexView}>
+          <Text
+            style={selectedLabelStyle || styles.inputValue}
+            nunmberOfLines={1}
+          >
+            {`${session.customScenarioNote.substring(0, 50)}...`}
+          </Text>
+        </View>
       );
-    return <Text style={styles.inputPlaceholderValue}>{placeholder}</Text>;
+    }
+    return (
+      <View style={styles.flexView}>
+        <Text
+          nunmberOfLines={1}
+          style={selectedLabelStyle || styles.inputPlaceholderValue}
+        >
+          {placeholder}
+        </Text>
+      </View>
+    );
   };
 
   render() {
-    const { navType, openSlideMenu, title, type, isSlideUpMenuVisible, session } = this.props;
+    const {
+      openSlideMenu,
+      title,
+      type,
+      isSlideUpMenuVisible,
+      contentContainerStyle,
+      labelStyle,
+      showDivider,
+      icon,
+      selectorContainer,
+      loading,
+    } = this.props;
     return (
-      <View
+      <TouchableOpacity
+        disabled={loading}
+        onPress={() => {
+          openSlideMenu(type);
+        }}
         style={
-          navType === "onboarding" ? styles.onboardingInputContainer : styles.homeInputContainer
+          contentContainerStyle || styles.homeInputContainer
         }
       >
-        <TouchableOpacity
-          onPress={() => {
-            openSlideMenu(type);
-          }}
-        >
-          <Text style={styles.inputTitle}>{title}</Text>
-          <View style={styles.currentSelectedLangContainer}>
-            {type === "additionalDetails"
-              ? this.showCurrentCustomScenarioNote()
-              : type === "scenarioSelection"
+        <Text style={labelStyle || styles.inputTitle}>{title}</Text>
+        <View style={selectorContainer || styles.currentSelectedLangContainer}>
+          {type === "additionalDetails"
+            ? this.showCurrentCustomScenarioNote()
+            : type === "scenarioSelection"
               ? this.showScenarioList()
               : this.showCurrentSelectedLang()}
-            {type === "additionalDetails" ? (
-              <React.Fragment />
-            ) : (
+          {type === "additionalDetails" ? (
+            <React.Fragment />
+          ) : (
+            icon || (
               <Icon
                 color="#ffffff"
                 name={isSlideUpMenuVisible ? "chevron-up" : "chevron-down"}
                 type="evilicon"
                 size={17}
               />
-            )}
-          </View>
-          <Divider />
-        </TouchableOpacity>
-      </View>
+            )
+          )}
+        </View>
+        {showDivider ? <Divider /> : <React.Fragment />}
+      </TouchableOpacity>
     );
   }
 }
@@ -98,12 +184,13 @@ class PickerSelectComponent extends Component {
 const mS = state => ({
   scenariosList: state.appConfigReducer.scenarios,
   session: state.newSessionReducer.session,
-  isSlideUpMenuVisible: state.newSessionReducer.isSlideUpMenuVisible
+  isSlideUpMenuVisible: state.LogicReducer.isSlideUpMenuVisible,
+  loading: state.LogicReducer.loading,
 });
 
 const mD = {};
 
 export default connect(
   mS,
-  mD
+  mD,
 )(PickerSelectComponent);

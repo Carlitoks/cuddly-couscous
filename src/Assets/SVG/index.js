@@ -27,6 +27,12 @@ import SGWaves from './SGWaves';
 import TranslationSwap from './translationSwap';
 import SwitchLangs from './switchLangs';
 import ClockTime from './clockTime';
+import Bus from './bus';
+import Shopping from './shopping';
+import Dinning from "./dinning";
+import Translator from "./translator";
+import Teamwork from "./teamwork";
+import Layers from "./layers";
 
 export {
   Audio,
@@ -57,5 +63,11 @@ export {
   SGWaves,
   TranslationSwap,
   SwitchLangs,
-  ClockTime
+  ClockTime,
+  Bus,
+  Shopping,
+  Dinning,
+  Translator,
+  Teamwork,
+  Layers
 };

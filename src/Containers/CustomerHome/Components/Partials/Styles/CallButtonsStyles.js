@@ -1,87 +1,79 @@
 import { StyleSheet } from "react-native";
-import { moderateScale } from "../../../../../Util/Scaling";
-import { Metrics, Colors, Fonts } from "../../../../../Themes";
-import { iPhoneXModels, Iphone5, isIphoneXorAbove } from "../../../../../Util/Devices";
+import { moderateScaleViewports } from "../../../../../Util/Scaling";
+import { Fonts } from "../../../../../Themes";
+import { isIphoneXorAbove } from "../../../../../Util/Devices";
+import metrics from "../../../../../Themes/Metrics";
+
+const baseButton = {
+  flexDirection: "row",
+  justifyContent: "center",
+  borderRadius: moderateScaleViewports(10),
+  alignItems: "center",
+  borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
+  borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
+};
 
 export default StyleSheet.create({
+  iconPadding: { paddingLeft: moderateScaleViewports(24), paddingTop: moderateScaleViewports(2) },
   callButtonContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    flexWrap: "wrap",
-    paddingBottom: isIphoneXorAbove() ? 50 : 0
-  },
-  callNowButtonContainer: {
-    flexWrap: "wrap",
-    flexDirection: "column",
-    alignSelf: "center"
-  },
-  callNowButton: {
-    minWidth: Metrics.width * 0.78,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#fff",
-    borderRadius: 27,
+    borderRadius: moderateScaleViewports(10),
+    width: metrics.width * 0.90,
+    bottom: moderateScaleViewports(-5),
+    paddingBottom: isIphoneXorAbove() ? 70 : 0,
+    position: "relative",
+  },
+  audioCallButton: {
+    ...baseButton,
+    backgroundColor: "#3F1674",
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderRightColor: "#fff",
+    borderRightWidth: 1,
+    flex: 1,
+  },
+  audioCallButtonDisable: {
+    ...baseButton,
+    backgroundColor: "#979797",
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderRightColor: "#fff",
+    borderRightWidth: 1,
+    flex: 1,
+  },
+  videoCallButton: {
+    ...baseButton,
     backgroundColor: "#F39100",
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOpacity: 0.38,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 8
+    borderRadius: moderateScaleViewports(10),
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    flex: 1,
   },
-  callNowButtonDisable: {
-    minWidth: Metrics.width * 0.78,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    borderRadius: 27,
-    backgroundColor: Colors.gradientColor.bottom
-  },
-  callNowButtonText: {
-    color: "white",
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "600",
-    fontFamily: Fonts.BaseFont,
-    paddingTop: Metrics.width * 0.05,
-    paddingBottom: Metrics.width * 0.05,
-    paddingLeft: Metrics.width * 0.05,
-    paddingRight: Metrics.width * 0.05
-  },
-  callNowButtonTextDisabled: {
-    color: "#ccc",
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "600",
-    fontFamily: Fonts.BaseFont,
-    paddingTop: Metrics.width * 0.045,
-    paddingBottom: Metrics.width * 0.045,
-    paddingLeft: Metrics.width * 0.05,
-    paddingRight: Metrics.width * 0.05
-  },
-  audioOnlyButtonContainer: { flexDirection: "column" },
-  audioOnlyButton: {
-    minWidth: Metrics.width * 0.78,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: moderateScale(30, 0)
+  videoCallButtonDisable: {
+    ...baseButton,
+    backgroundColor: "#979797",
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    flex: 1,
   },
   audioOnlyButtonText: {
     color: "white",
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "500",
+    fontSize: moderateScaleViewports(16),
     fontFamily: Fonts.BaseFont,
-    paddingBottom: Metrics.width * 0.02
+    paddingTop: moderateScaleViewports(18),
+    paddingBottom: moderateScaleViewports(18),
+    paddingLeft: moderateScaleViewports(10),
+    paddingRight: moderateScaleViewports(30),
   },
-  audioOnlyButtonTextDisabled: {
-    color: "#ccc",
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    fontWeight: "500",
+  callNowButtonText: {
+    color: "white",
+    fontSize: moderateScaleViewports(16),
     fontFamily: Fonts.BaseFont,
-    paddingBottom: Metrics.width * 0.02
+    paddingTop: moderateScaleViewports(18),
+    paddingBottom: moderateScaleViewports(18),
+    paddingLeft: moderateScaleViewports(10),
+    paddingRight: moderateScaleViewports(30),
   },
-  iconPadding: { paddingLeft: Metrics.width * 0.05 }
 });

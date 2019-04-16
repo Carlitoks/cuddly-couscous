@@ -9,7 +9,7 @@ import PushNotifications from "../Util/PushNotification";
 import FCM, { FCMEvent } from "react-native-fcm";
 import { registerFCM } from "../Ducks/PushNotificationReducer";
 import { User } from "../Api";
-import CustomerHomeScreen from '../Containers/CustomerHome/CustomertHomeScreen';
+import CustomerHomeScreenRedesign from '../Containers/CustomerHome/CustomerHomeScreen';
 import { Colors } from "../Themes";
 import { flushEvents } from "../Util/Forensics";
 
@@ -67,7 +67,7 @@ class Home extends Component {
         {this.props.linguistProfile ? (
           <HomeLinguist navigation={this.props.navigation} />
         ) : (
-          <CustomerHomeScreen navigation={this.props.navigation} />
+          <CustomerHomeScreenRedesign navigation={this.props.navigation} />
         )}
       </View>
     );

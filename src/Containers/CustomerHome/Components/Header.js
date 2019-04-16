@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, StatusBar, Keyboard, Text } from "react-native";
+import {
+  Keyboard,
+  StatusBar,
+  TouchableOpacity,
+  View,
+  Text
+} from "react-native";
 import { Header, Icon } from "react-native-elements";
-import { QR, NavMenu, CloseIcon } from "../../../Assets/SVG";
+import { NavMenu } from "../../../Assets/SVG";
 import { Colors } from "../../../Themes";
-
+import HeaderMinutesLeft from "./Partials/HeaderMinutesLeft";
 // Styles
 import styles from "./Styles/HeaderStyles";
 import I18n from "../../../I18n/I18n";
@@ -12,8 +18,9 @@ export default class LinguistHeader extends Component {
   renderTitle = () => {
     const { navigation } = this.props;
     if (
-      navigation.state.routeName === "RegisterView" ||
-      navigation.state.routeName === "LoginView"
+      navigation.state.routeName === "RegisterView"
+      || navigation.state.routeName === "LoginView"
+      || navigation.state.routeName === "Home"
     ) {
       return null;
     }
@@ -43,7 +50,7 @@ export default class LinguistHeader extends Component {
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
       );
     }
-    if (navigation.state.routeName === "LoginView") {
+    if (navigation.state.routeName === "LoginView" || navigation.state.routeName === "RegisterView") {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
@@ -66,22 +73,13 @@ export default class LinguistHeader extends Component {
         </TouchableOpacity>
       );
     }
-    if (navigation.state.routeName === "RegisterView") {
-      return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
-          <View style={styles.buttonGoBack}>
-            <Icon name="chevron-left" type="evilicon" color="#401674" size={50} />
-          </View>
-        </TouchableOpacity>
-      );
-    }
     return (
       <TouchableOpacity
         activeOpacity={1}
         style={styles.containerMenu}
         onPress={() => this.navigate("DrawerOpen")}
       >
-        <NavMenu width={30} height={20} />
+        <NavMenu width={30} height={20}/>
       </TouchableOpacity>
     );
   };
@@ -91,16 +89,16 @@ export default class LinguistHeader extends Component {
 
     if (type === "onboarding") {
       return (
-        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
+        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null}/>
       );
     }
 
     if (
-      navigation.state.routeName === "RegisterView" ||
-      navigation.state.routeName === "LoginView"
+      navigation.state.routeName === "RegisterView"
+      || navigation.state.routeName === "LoginView"
     ) {
       return (
-        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
+        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null}/>
       );
     }
 
@@ -134,35 +132,66 @@ export default class LinguistHeader extends Component {
     }
 
     return (
-      <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("ScanScreenView")}>
-        <View style={styles.buttonQR}>
-          <QR width={20} height={20} />
-        </View>
-      </TouchableOpacity>
+      <View style={styles.minutesLeftContainer}>
+        <TouchableOpacity onPress={() => navigation.dispatch({ type: "PaymentDetailScreen" })}>
+          <HeaderMinutesLeft navigation={navigation}/>
+        </TouchableOpacity>
+      </View>
     );
   };
 
   renderHeaderInnerStyles = () => {
     const { navigation } = this.props;
     if (
-      navigation.state.routeName === "RegisterView" ||
-      navigation.state.routeName === "LoginView"
+      navigation.state.routeName === "RegisterView"
+      || navigation.state.routeName === "LoginView"
     ) {
       return styles.headerInner;
     }
     return styles.headerInnerHome;
   };
 
-  navigate = screenName => {
+  navigate = (screenName) => {
     const { navigation } = this.props;
     Keyboard.dismiss();
     navigation.dispatch({ type: screenName });
   };
 
+  setBackgroundColor = () => {
+    const { navigation } = this.props;
+    if (navigation.state.routeName === "Home") {
+      return Colors.gradientColor.top;
+    }
+    if (
+      navigation.state.routeName === "RegisterView"
+      || navigation.state.routeName === "LoginView"
+    ) {
+      return "#fff";
+    }
+
+    return "transparent";
+  };
+
+  setIosBackground = () => {
+    const { navigation } = this.props;
+
+    if (
+      navigation.state.routeName === "RegisterView"
+      || navigation.state.routeName === "LoginView"
+    ) {
+      return styles.headerContainerOnboarding;
+    }
+return styles.headerContainer;
+  }
+
   render() {
+    const { navigation } = this.props;
     return (
-      <View style={styles.headerContainer}>
-        <StatusBar hidden={false} translucent />
+      <View style={this.setIosBackground()}>
+        <StatusBar
+          hidden={false}
+          backgroundColor={this.setBackgroundColor()}
+        />
         <Header
           backgroundColor={Colors.transparent}
           leftComponent={this.renderLeftComponent()}

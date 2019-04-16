@@ -1,29 +1,27 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
-import Questions from './Partials/Questions';
-import SilhouetteWavesBackground from '../../../Assets/SVG/SilhouetteWavesBackground';
-import FreeMinutesWell from '../../Onboarding/Components/FreeMinutesWell';
+import React, { Component } from "react";
+import { Image, Text, View } from "react-native";
 // Styles
-import styles from './Styles/AvatarSectionStyles';
+import styles from "./Styles/AvatarSectionStyles";
+import I18n from "../../../I18n/I18n";
+
+const Jeenies = require("../../../Assets/Images/Jeenies.png");
 
 export default class AvatarSection extends Component {
-  renderSections = () => {
-    const { firstName, home, pointerEvents, navigation } = this.props;
-
-    return (
-      <View style={[styles.columnView]}>
-        <View style={styles.absolutePosition}>
-          <SilhouetteWavesBackground />
-        </View>
-        <View style={styles.questionsContainer}>
-          <Questions home={home} firstName={firstName} />
-        </View>
-        <FreeMinutesWell pointerEvents={pointerEvents} navigation={navigation} />
-      </View>
-    );
+  getRandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
   render() {
-    return <View style={styles.avatarSectionContainer}>{this.renderSections()}</View>;
+    const {
+      navigation,
+    } = this.props;
+    return (
+      <View style={styles.avatarContainer}>
+        <Text style={styles.jeeniesStandingBy}>{I18n.t("newCustomerHome.numLinguists", { num: this.getRandomInt(40, 60) })}</Text>
+        <Image style={styles.jeeniesImg} source={Jeenies} />
+      </View>
+    );
   }
 }
