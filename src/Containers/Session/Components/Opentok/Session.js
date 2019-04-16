@@ -315,6 +315,9 @@ export class Session extends Component {
     }
   }
 
+  // NOTE: at the moment we are making a fundamental assumption that one user has one stream, and
+  // in some cases that is not technically accurate.  For now, it should still work because
+  // they should only have one stream.
   onStreamDestroyed (event) {
     recordSessionOpentokEvent('session.streamDestroyed', {
       event,
@@ -325,6 +328,14 @@ export class Session extends Component {
     // has disconnected will trigger a reconnection state. But, if we're in the process
     // of ending the sessino we expect the remote user to disconnect.
     if (this.unmounting) {
+      return;
+    }
+
+    // WARNING! In the case of a user losing and regaining connection, multiple streams may be created and destroyed.
+    // The user's state will reflect the most recently created connection and stream - which is the only one we care
+    // about.  Therefore, if this gets triggered, we must make sure that the particular stream being destroyed
+    // is actually the most recently created one for the remote user.
+    if (event.streamId != this.remoteUserState.streamID) {
       return;
     }
     
@@ -479,8 +490,6 @@ export class Session extends Component {
       ...this.localUserState,
       streamID: null,
       publishing: false,
-      publishingAudio: false,
-      publishingVideo: false,
     };
     this.handlePublishingAV(false, false);
   }
