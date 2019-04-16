@@ -626,15 +626,19 @@ export class Session extends Component {
         break;
       }
       case SIGNALS.RECEIVING_AV: {
-        this.remoteUserState.subscribing = true;
-        this.props.onRemoteUserReceivingAV({
-          audio: payload.audio,
-          video: payload.video,
-        });
+        // HACK: prevent case where iOS was receiving this signal without
+        // a payload - not clear why that would happen
+        if (!!payload) {
+          this.remoteUserState.subscribing = true;
+          this.props.onRemoteUserReceivingAV({
+            audio: payload.audio,
+            video: payload.video,
+          });  
+        }
         break;
       }
       case SIGNALS.AV_STATUS: {
-        if (this.remoteUserState.subscribing) {
+        if (!!payload && this.remoteUserState.subscribing) {
           this.props.onRemoteUserReceivingAV({
             audio: payload.audio,
             video: payload.video
