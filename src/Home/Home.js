@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { View, StatusBar } from "react-native";
 import { amplitudKey } from "../Config/env";
 import HomeLinguist from "./Linguist/HomeLinguist";
-import LoginView from "../Onboarding/LoginView/LoginView";
+//import LoginView from "../Onboarding/LoginView/LoginView";
 import PushNotifications from "../Util/PushNotification";
 import FCM, { FCMEvent } from "react-native-fcm";
 import { registerFCM } from "../Ducks/PushNotificationReducer";
 import { User } from "../Api";
-import CustomerHomeScreenRedesign from '../Containers/CustomerHome/CustomerHomeScreen';
+import CustomerHomeScreenRedesign from "../Containers/CustomerHome/CustomerHomeScreen";
 import { Colors } from "../Themes";
 import { flushEvents } from "../Util/Forensics";
 
@@ -36,12 +36,9 @@ class Home extends Component {
   updateFCMToken = () => {
     FCM.getFCMToken().then(token => {
       // save token in sever
-      User.updateDevice(
-        this.props.uuid,
-        this.props.deviceId,
-        this.props.token,
-        { notificationToken: token }
-      )
+      User.updateDevice(this.props.uuid, this.props.deviceId, this.props.token, {
+        notificationToken: token
+      })
         .then(res => {
           this.props.registerFCM({ tokenFCM: token });
         })
