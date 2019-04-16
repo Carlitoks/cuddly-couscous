@@ -269,7 +269,7 @@ class SessionView extends Component {
     this.updateLocalUserState({device: {hasNetworkConnection: isConnected}});
     if (!previouslyConnected && isConnected) {
       this.handleRegainedNetworkConnection();
-    } else if (!isConnected) {
+    } else if (previouslyConnected && !isConnected) {
       this.handleLostNetworkConnection();
     }
   };
