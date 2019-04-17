@@ -634,8 +634,9 @@ export class Session extends Component {
         break;
       }
       case SIGNALS.RECEIVING_AV: {
-        // HACK: prevent case where iOS was receiving this signal without
-        // a payload - not clear why that would happen
+        // prevent case where iOS was receiving this signal without
+        // a payload - but it's not clear how that could happen
+        // https://github.com/globalprofessionalsearch/solo-mobile-app/issues/1946
         if (!!payload) {
           this.remoteUserState.subscribing = true;
           this.props.onRemoteUserReceivingAV({
