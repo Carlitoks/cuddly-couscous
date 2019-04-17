@@ -1,20 +1,19 @@
-import React, {Component} from "react";
-import {View, Text, StyleSheet} from "react-native";
+import React, { Component } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
-import {createNewSession} from "../../Ducks/CurrentSessionReducer";
+import { createNewSession } from "../../Ducks/CurrentSessionReducer";
 import { moderateScale, moderateFontSize } from "../../Util/Scaling";
 import colors from "../../Themes/Colors";
 import TextButton from "../../Components/Widgets/TextButton";
-import I18n, {translateApiError, translateLanguage} from "../../I18n/I18n";
+import I18n, { translateApiError, translateLanguage } from "../../I18n/I18n";
 
-import {LanguagesRollover} from "../../Config/Languages";
+import { LanguagesRollover } from "../../Config/Languages";
 
 import sharedStyles from "./styles";
 import { SESSION } from "../../Util/Constants";
 
 export class CustomerRetryView extends Component {
-
   constructor(props) {
     super(props);
 
@@ -27,12 +26,12 @@ export class CustomerRetryView extends Component {
     this.unmounting = false;
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.unmounting = true;
   }
 
-  getRolloverConfig () {
-    const {session} = this.props;
+  getRolloverConfig() {
+    const { session } = this.props;
 
     // prefer rollover for target language first
     if (session.endReason == SESSION.END.TIMEOUT) {
@@ -41,31 +40,31 @@ export class CustomerRetryView extends Component {
           exists: true,
           code: LanguagesRollover[session.secondaryLangCode],
           name: translateLanguage(LanguagesRollover[session.secondaryLangCode]),
-          field: 'secondary',
+          field: "secondary"
         };
       }
-  
+
       // otherwise check for primary language
       if (!!LanguagesRollover[session.primaryLangCode]) {
         return {
           exists: true,
           code: LanguagesRollover[session.primaryLangCode],
           name: translateLanguage(LanguagesRollover[session.primaryLangCode]),
-          field: 'primary',
+          field: "primary"
         };
       }
     }
 
     return {
       exists: false,
-      code: '',
-      name: '',
-      field: '',
+      code: "",
+      name: "",
+      field: ""
     };
   }
 
-  retryReasonText () {
-    const {session} = this.props;
+  retryReasonText() {
+    const { session } = this.props;
     switch (session.endReason) {
       case SESSION.END.TIMEOUT: {
         return I18n.t("session.retry.busy");
@@ -91,41 +90,49 @@ export class CustomerRetryView extends Component {
     }
   }
 
-  retry () {
-    const {session} = this.props;
-    let startReason = null; ;
+  retry() {
+    const { session } = this.props;
+    let startReason = null;
     switch (session.endReason) {
       case SESSION.END.TIMEOUT: {
-        startReason = SESSION.START.RETRY_TIMEOUT; break;
+        startReason = SESSION.START.RETRY_TIMEOUT;
+        break;
       }
       case SESSION.END.CANCEL: {
-        startReason = SESSION.START.RETRY_CANCEL; break;
+        startReason = SESSION.START.RETRY_CANCEL;
+        break;
       }
       case SESSION.END.FAILURE_LOCAL: {
-        startReason = SESSION.START.RETRY_FAILURE; break;
+        startReason = SESSION.START.RETRY_FAILURE;
+        break;
       }
       case SESSION.END.FAILURE_REMOTE: {
-        startReason = SESSION.START.RETRY_FAILURE; break;
+        startReason = SESSION.START.RETRY_FAILURE;
+        break;
       }
       case SESSION.END.DISCONNECT_LOCAL: {
-        startReason = SESSION.START.RETRY_DISCONNECT; break;
+        startReason = SESSION.START.RETRY_DISCONNECT;
+        break;
       }
       case SESSION.END.DISCONNECT_REMOTE: {
-        startReason = SESSION.START.RETRY_DISCONNECT; break;
+        startReason = SESSION.START.RETRY_DISCONNECT;
+        break;
       }
       default: {
-        startReason = SESSION.START.RETRY_TIMEOUT; break;
+        startReason = SESSION.START.RETRY_TIMEOUT;
+        break;
       }
     }
-    this.createSession({startReason});
+    this.createSession({ startReason });
   }
 
-  retryRollover () {
+  retryRollover() {
     // TODO: check for retry_cancel
-    const {session} = this.props;
-    const {rollover} = this.state;
-    const primaryLangCode = rollover.field == 'primary' ? rollover.code : session.primaryLangCode;
-    const secondaryLangCode = rollover.field == 'secondary' ? rollover.code : session.secondaryLangCode;
+    const { session } = this.props;
+    const { rollover } = this.state;
+    const primaryLangCode = rollover.field == "primary" ? rollover.code : session.primaryLangCode;
+    const secondaryLangCode =
+      rollover.field == "secondary" ? rollover.code : session.secondaryLangCode;
     this.createSession({
       startReason: SESSION.START.RETRY_TIMEOUT,
       primaryLangCode,
@@ -133,7 +140,7 @@ export class CustomerRetryView extends Component {
     });
   }
 
-  createSession (params) {
+  createSession(params) {
     if (this.creating || this.unmounting) {
       return;
     }
@@ -146,70 +153,74 @@ export class CustomerRetryView extends Component {
     };
 
     this.creating = true;
-    this.setState({creating: true}, () => {
-      this.props.createNewSession(newSessionParams).then(() => {
-        this.unmounting = true;
-        this.props.navigation.dispatch({type: "CustomerMatchingView"});
-      }).catch((e) => {
-        Alert.alert(
-          I18n.t("error"),
-          translateApiError(e),
-          [
-            {text: 'OK'},
-          ],
-        );
-      }).finally(() => {
-        this.creating = false;
-        if (!this.unmoumting) {
-          this.setState({creating: false});
-        }
-      });  
+    this.setState({ creating: true }, () => {
+      this.props
+        .createNewSession(newSessionParams)
+        .then(() => {
+          this.unmounting = true;
+          this.props.navigation.dispatch({ type: "CustomerMatchingView" });
+        })
+        .catch(e => {
+          Alert.alert(I18n.t("error"), translateApiError(e), [{ text: "OK" }]);
+        })
+        .finally(() => {
+          this.creating = false;
+          if (!this.unmoumting) {
+            this.setState({ creating: false });
+          }
+        });
     });
   }
 
-  cancel () {
-    this.props.navigation.dispatch({type: "Home"})
+  cancel() {
+    this.props.navigation.dispatch({ type: "Home" });
   }
 
-  render () {
-    const {rollover} = this.state;
+  render() {
+    const { rollover } = this.state;
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <View style={styles.textRow}>
-            <Text style={styles.text}>{ this.retryReasonText() }</Text>
+            <Text style={styles.text}>{this.retryReasonText()}</Text>
           </View>
           <View style={styles.textRow}>
-            <Text style={styles.text}>{ I18n.t("session.retry.tryAgain") }</Text>
+            <Text style={styles.text}>{I18n.t("session.retry.tryAgain")}</Text>
           </View>
         </View>
         <View style={styles.buttonContainer}>
           {rollover.exists && (
-          <TextButton
-            text={I18n.t("session.retry.tryLang", {lang: rollover.name})}
-            style={styles.orangeButton}
-            textStyle={sharedStyles.prominentButtonText}
-            disabled = {this.state.creating}
-            onPress = {() => { this.retryRollover() }}
-          />
+            <TextButton
+              text={I18n.t("session.retry.tryLang", { lang: rollover.name })}
+              style={styles.orangeButton}
+              textStyle={sharedStyles.prominentButtonText}
+              disabled={this.state.creating}
+              onPress={() => {
+                this.retryRollover();
+              }}
+            />
           )}
           <TextButton
             text={I18n.t("session.retry.retry")}
             style={styles.orangeButton}
             textStyle={sharedStyles.prominentButtonText}
-            disabled = {this.state.creating}
-            onPress = {() => { this.retry() }}
+            disabled={this.state.creating}
+            onPress={() => {
+              this.retry();
+            }}
           />
           <TextButton
             text={I18n.t("session.retry.cancel")}
             style={styles.blueButton}
             textStyle={sharedStyles.prominentButtonText}
-            disabled = {this.state.creating}
-            onPress = {() => { this.cancel() }}
+            disabled={this.state.creating}
+            onPress={() => {
+              this.cancel();
+            }}
           />
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -224,9 +235,12 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     paddingLeft: moderateScale(30, 0),
-    paddingRight: moderateScale(30, 0),
+    paddingRight: moderateScale(30, 0)
   },
   textRow: {
+    width: "100%",
+    height: "33%",
+    zIndex: 10000,
     marginBottom: moderateScale(20, 0)
   },
   text: {
@@ -239,26 +253,29 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-end",
-    paddingBottom: moderateScale(30, 0),
+    paddingBottom: moderateScale(30, 0)
   },
   orangeButton: {
     ...sharedStyles.prominentButtonBase,
-    ...sharedStyles.prominentButtonOrange,
+    ...sharedStyles.prominentButtonOrange
   },
   blueButton: {
     ...sharedStyles.prominentButtonBase,
-    ...sharedStyles.prominentButtonBlue,
-  },
+    ...sharedStyles.prominentButtonBlue
+  }
 });
 
-const mS = (state) => {
+const mS = state => {
   return {
     session: state.currentSessionReducer.session
-  }
+  };
 };
 
 const mD = {
   createNewSession
 };
 
-export default connect(mS, mD)(CustomerRetryView)
+export default connect(
+  mS,
+  mD
+)(CustomerRetryView);
