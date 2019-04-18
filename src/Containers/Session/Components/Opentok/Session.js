@@ -8,7 +8,7 @@ import { OTSession } from 'opentok-react-native';
 
 import {TOKBOX_APIKEY} from  "../../../../Config/env";
 
-import { recordSessionOpentokEvent, recordSessionEvent, createRecorder } from "../../../../Util/Forensics";
+import { recordSessionOpentokEvent, createRecorder } from "../../../../Util/Forensics";
 import { VIDEO_WARNING } from "../../../../Util/Constants";
 
 // custom app signals sent/received via tokbox connection
