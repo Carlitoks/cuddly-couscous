@@ -523,12 +523,22 @@ export class Session extends Component {
   }
 
   subscriberVideoThrottled () {
+    if (this.localUserState.legacyVersion) {
+      this.sendSignal(SIGNALS.LEGACY_VIDEO_THROTTLED, VIDEO_WARNING.ENABLED);
+    } else {
+      this.sendSignal(SIGNALS.VIDEO_THROTTLE);
+    }
     this.sendSignal(SIGNALS.VIDEO_THROTTLE);
     this.props.onUserReceivingAVThrottled();
   }
 
   subscriberVideoUnthrottled () {
-    this.sendSignal(SIGNALS.VIDEO_THROTTLE_LIFTED);
+    if (this.remoteUserState.legacyVersion) {
+      this.sendSignal(SIGNALS.LEGACY_VIDEO_THROTTLED, VIDEO_WARNING.DISABLED);
+    } else {
+      this.sendSignal(SIGNALS.VIDEO_THROTTLE_LIFTED);
+    }
+    
     this.props.onUserReceivingAVUnthrottled();
   }
 
