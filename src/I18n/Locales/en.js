@@ -541,6 +541,7 @@ export default (ENG = {
   newCustomerHome: {
     addCard: "Add Card",
     balance: "{{num}}m",
+    linguists: "Our Jeenies are standing by...",
     numLinguists: "{{num}} Jeenies standing by...",
     primaryLang: {
       label: "I speak"
@@ -549,7 +550,7 @@ export default (ENG = {
       label: "Translate to"
     },
     scenario: {
-      label: "What are you doing?",
+      label: "What do you need help with?",
       placeholder: "Select a scenario (Optional)"
     },
     buttons: {
@@ -562,7 +563,7 @@ export default (ENG = {
       noBalanceNoCard: "Rate: US $1 per min. Please add card to continue",
       noBalanceHasCard: "Rate: US $1 per min.",
       noBalanceHasCardPackage: "Rate: US $1 per min. Buy a package for 15% discount.",
-      hasBalance: "Rate: US $1 per min. {{num}}m balance remaining.",
+      hasBalance: "Rate: US $1 per min. Balance remaining: {{num}} mins",
       hasBalanceAutoreload: "Rate: {{num}}m remaining."
     }
   },
@@ -725,12 +726,12 @@ export default (ENG = {
       submit: "Submit",
       resolvedCustomer: "Was your issue resolved?",
       resolvedLinguist: "Was their issue resolved?",
+      scenario: "What did your customer need help with?",
       classification: "Call Classification",
       classifications: {
-        trial: "Trial Call",
+        trial: "Linguist Trial Call",
         demo: "Product Demo Call",
-        support: "Language Practice",
-        langPractice: "Customer Support"
+        help: "Language & Culture Assistance"
       },
       flags: {
         langAbility: "Language Ability",
