@@ -89,7 +89,9 @@ export class Session extends Component {
 
     this.connected = false;
     this.unmounting = false;
-    this.disableListeners = false; // sort of a hack for https://github.com/opentok/opentok-react-native/issues/271
+
+    // sort of a hack for https://github.com/opentok/opentok-react-native/issues/271    
+    this.disableListeners = false;
 
     // handler invoked by tokbox: https://github.com/opentok/opentok-react-native/blob/master/docs/OTSession.md#events
     this.eventHandlers = {

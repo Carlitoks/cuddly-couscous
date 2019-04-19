@@ -14,6 +14,8 @@ export class Subscriber extends Component {
     recordComponentEvent('constructor');
 
     this.mounted = true;
+
+    // sort of a hack for https://github.com/opentok/opentok-react-native/issues/271
     this.disableListeners = false;
 
     this.subscriberProperties = {
