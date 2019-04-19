@@ -28,7 +28,7 @@
     "instabug-reactnative": "8.0.12",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
-    "opentok-react-native": "^0.9.8",
+    "opentok-react-native": "^0.10.1",
     "prop-types": "^15.5.10",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
