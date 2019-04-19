@@ -418,6 +418,11 @@ class SessionView extends Component {
       connected: false,
       connecting: true,
     }});
+
+    // stopping the timer because it means the user isn't actually connected if this triggers
+    if (this.props.status.began) {
+      this.props.stopTimer();
+    }
   }
 
   handleUserConnected () {
@@ -502,6 +507,11 @@ class SessionView extends Component {
       connected: false,
       connecting: true,
     }});
+    
+    // stopping the timer because it means the remote user isn't actually connected if this triggers
+    if (this.props.status.began) {
+      this.props.stopTimer();
+    }
   }
 
   handleRemoteUserConnected () {

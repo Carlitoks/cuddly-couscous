@@ -52,7 +52,7 @@ const initState = () => ({
   // status of the session timer, contains a log of start/stop/reset events
   timer: {
     running: false,
-    // list of events, each item in format of `{action: "start|stop", time: Date().getTime()}`
+    // list of events, each item in format of `{action: "start|stop|reset", time: Date().getTime()}`
     events: [],
   },
 
