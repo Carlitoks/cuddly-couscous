@@ -32,7 +32,7 @@ const newUserState = () => {
     connectionID: null,
     streamID: null,
     meta: null,
-    legacyVersion: true,
+    legacyVersion: true, // specifically this means pre 3.0.0
     publishing: false,
     publishingAudio: false,
     publishingVideo: false,
