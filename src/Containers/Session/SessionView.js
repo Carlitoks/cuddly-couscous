@@ -33,7 +33,6 @@ import {Session as OpentokSession} from "./Components/Opentok/Session";
 import * as tests from './SessionView.tests';
 import { SESSION, DURATION } from '../../Util/Constants';
 import { createRecorder } from '../../Util/Forensics';
-import { SessionManager } from './Components/SessionManager';
 
 // The user state for local and remote users is the same format.  The object describes
 // the users general connection status to the session, app and control states.
@@ -636,7 +635,10 @@ class SessionView extends Component {
   isSessionMounted () {
     const {localUserState, sessionMounted, loaded} = this.state;
     return loaded
-      // && localUserState.device.hasNetworkConnection // NOTE: this is causing some instability, so leaving out for now
+      // NOTE: this is (I THINK) causing some instability, so leaving out for now... but in theory it would be a good idea
+      // to fully unmount Opentok/Session in the case of no network connection.  My concern is the possibility of it triggering
+      // the unmount/remount process too frequently, and the memory in the native layer not getting cleaned up properly.
+      // && localUserState.device.hasNetworkConnection
       && sessionMounted;
   }
 
