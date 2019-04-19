@@ -779,12 +779,12 @@ export default (ENG = {
     // retry screen seen when no matches are available, or initial connection to session fails
     retry: {
       busy: "All of our Language Jeenies are busy helping other customers.",
-      failureLocal: "An issue occurred while connecting to your Language Jeenie.",
+      failureLocal: "The connection with your Jeenie is too weak.",
       failureRemote: "Your Language Jeenie was unable to connect.",
-      disconnectLocal: "You were disconnected from the session.",
-      disconnectRemote: "Your Language Jeenie was disconnected.",
-      cancelRemote: "Your Language Jeenie was unable to accept the call.",
-      tryAgain: "We're searching for another linguist...",
+      disconnectLocal: "The connection with your Jeenie was too weak.",
+      disconnectRemote: "The connection with your Jeenie was too weak.",
+      cancelRemote: "Your Language Jeenie was unable to join the call.",
+      tryAgain: "Please stand by while we connect you to another Jeenie as quickly as possible.",
       retry: "Ok",
       tryLang: "Try {{lang}}",
       cancel: "Cancel Call"

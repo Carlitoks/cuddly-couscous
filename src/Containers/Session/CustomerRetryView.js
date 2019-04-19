@@ -11,7 +11,7 @@ import I18n, { translateApiError, translateLanguage } from "../../I18n/I18n";
 import { LanguagesRollover } from "../../Config/Languages";
 
 import sharedStyles from "./styles";
-import { SESSION } from "../../Util/Constants";
+import { SESSION, DURATION } from "../../Util/Constants";
 
 export class CustomerRetryView extends Component {
   constructor(props) {
@@ -24,6 +24,17 @@ export class CustomerRetryView extends Component {
     };
 
     this.unmounting = false;
+  }
+
+  componentDidMount () {
+
+    // automatically trigger the retry after 7s, in case the user performs no action
+    setTimeout(() => {
+      if (!this.unmounting) {
+        this.retry();
+      }
+    }, 10 * DURATION.SECONDS);
+
   }
 
   componentWillUnmount() {
