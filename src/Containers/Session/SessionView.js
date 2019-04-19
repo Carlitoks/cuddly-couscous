@@ -8,7 +8,17 @@ import InCallManager from "react-native-incall-manager";
 
 import api from "../../Config/AxiosConfig";
 
-import {createNewSession, endSession, handleEndedSession, setRemoteUser, setSessionBegan, startTimer, stopTimer} from '../../Ducks/CurrentSessionReducer';
+import {
+  createNewSession,
+  endSession,
+  handleEndedSession,
+  setRemoteUser,
+  setSessionBegan,
+  startTimer,
+  stopTimer,
+  resetTimer,
+  getElapsedTime
+} from '../../Ducks/CurrentSessionReducer';
 
 import {UserConnecting} from "./Components/UserConnecting";
 import {SessionEnding} from "./Components/SessionEnding";
@@ -23,6 +33,7 @@ import {Session as OpentokSession} from "./Components/Opentok/Session";
 import * as tests from './SessionView.tests';
 import { SESSION, DURATION } from '../../Util/Constants';
 import { createRecorder } from '../../Util/Forensics';
+import { SessionManager } from './Components/SessionManager';
 
 // The user state for local and remote users is the same format.  The object describes
 // the users general connection status to the session, app and control states.
@@ -91,6 +102,10 @@ class SessionView extends Component {
       display: {
         controlsVisible: true,
       },
+
+      // explicit flag to force unmount/remount the session, generally
+      // used in case of errors
+      sessionMounted: true,
 
       // state of multiple participants, would be mapped by their userId ... ?
       // tokbox connection ID
@@ -609,9 +624,29 @@ class SessionView extends Component {
     this.setState({localUserState: merge({}, this.state.localUserState, data)}, cb);
   }
 
+  handleTimerReset(elapsed) {
+    this.props.resetTimer(elapsed, 'remote');
+  }
+
   showAudioMode () {
     const {localUserState} = this.state;
     return !localUserState.device.hasNetworkConnection || !localUserState.connection.receivingVideo;
+  }
+
+  isSessionMounted () {
+    const {localUserState, sessionMounted, loaded} = this.state;
+    return loaded
+      // && localUserState.device.hasNetworkConnection // NOTE: this is causing some instability, so leaving out for now
+      && sessionMounted;
+  }
+
+  remountSession () {
+    recordSessionEvent('remountSession');
+    this.setState({sessionMounted: false}, () => {
+      setTimeout(() => {
+        this.setState({sessionMounted: true});
+      }, 2000);
+    });
   }
 
   // call ended by user locally
@@ -804,7 +839,7 @@ class SessionView extends Component {
 
           <KeepAwake />
 
-          {this.state.loaded && (
+          {this.isSessionMounted() && (
           <OpentokSession
             user = {this.props.user }
             session = { this.props.session }
@@ -818,6 +853,7 @@ class SessionView extends Component {
             localUserState = { localUserState }
 
             onSessionEnded = {(reason) => { this.handleRemoteEnded(reason) }}
+            onError={() => { this.remountSession() }}
 
             // update basic connection status of remote participant
             onRemoteUserConnecting = {() => { this.handleRemoteUserConnecting() }}
@@ -847,11 +883,13 @@ class SessionView extends Component {
             onUserReceivingAVThrottled = {() => { this.handleUserReceivingAVThrottled() }}
             onUserReceivingAVUnthrottled = {() => { this.handleUserReceivingAVUnthrottled() }}
 
+            onTimerReset = {(elapsed) => { this.handleTimerReset(elapsed) }}
+            getElapsedTime = {this.props.getElapsedTime}
+
             // audio mode background - needs to be rendered in a specific place relative
             // to the Opentok publisher/subscriber
             audioModeBackground={this.showAudioMode() ? (<AudioModeBackground user={ this.props.remoteUser } />) : (<React.Fragment />)}
           >
-
             <SessionHeader user={ this.props.remoteUser } />
             
             <View style={ styles.controlContainer }>
@@ -878,7 +916,6 @@ class SessionView extends Component {
                 />
               </View>
             </View>
-
           </OpentokSession>
           )}
 
@@ -953,7 +990,9 @@ const mD = {
   setSessionBegan,
   createNewSession,
   startTimer,
-  stopTimer
+  stopTimer,
+  resetTimer,
+  getElapsedTime
 }
 
 export default connect(mS, mD)(SessionView);

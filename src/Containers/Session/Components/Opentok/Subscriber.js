@@ -14,6 +14,7 @@ export class Subscriber extends Component {
     recordComponentEvent('constructor');
 
     this.mounted = true;
+    this.disableListeners = false;
 
     this.subscriberProperties = {
       subscribeToAudio: false,
@@ -42,6 +43,7 @@ export class Subscriber extends Component {
   componentWillUnmount () {
     recordComponentEvent('componentWillUnmount');
     this.mounted = false;
+    this.disableListeners = true;
   }
 
   onAudioLevel (event) {
@@ -57,6 +59,9 @@ export class Subscriber extends Component {
   }
 
   onConnected () {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('subscriber.connected', {
       sessionID: this.props.session.id
     });
@@ -69,6 +74,9 @@ export class Subscriber extends Component {
   }
 
   onDisconnected () {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('subscriber.disconnected', {
       sessionID: this.props.session.id
     });
@@ -76,6 +84,9 @@ export class Subscriber extends Component {
   }
 
   onError (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('subscriber.error', {
       event,
       sessionID: this.props.session.id
@@ -84,6 +95,9 @@ export class Subscriber extends Component {
   }
 
   onVideoDataReceived () {
+    if (this.disableListeners) {
+      return;
+    }
     // NOTE: not recording forensics for this on every call on purpose, it gets called on every frame
 
     // NOTE: also tried to using this as the trigger for props.onReceiving - that led to major instability
@@ -99,6 +113,9 @@ export class Subscriber extends Component {
   }
 
   onVideoDisabled (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('subscriber.videoDisabled', {
       event,
       sessionID: this.props.session.id
@@ -107,6 +124,9 @@ export class Subscriber extends Component {
   }
 
   onVideoDisableWarning () {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('subscriber.videoDisableWarning', {
       sessionID: this.props.session.id
     });
@@ -114,6 +134,9 @@ export class Subscriber extends Component {
   }
 
   onVideoDisableWarningLifted () {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('subscriber.videoDisableWarningLifted', {
       sessionID: this.props.session.id
     });
@@ -121,6 +144,9 @@ export class Subscriber extends Component {
   }
 
   onVideoEnabled (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('subscriber.videoEnabled', {
       event,
       sessionID: this.props.session.id

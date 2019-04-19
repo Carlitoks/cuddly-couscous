@@ -8,19 +8,11 @@ import { isIphoneXorAbove } from "../../../../Util/Devices";
 export default styles = StyleSheet.create({
 
   sessionContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+    ...StyleSheet.absoluteFill,
     backgroundColor: Color(colors.backgroundBlue).darken(0.2)
   },
   session: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+    ...StyleSheet.absoluteFill
   },
 
 
@@ -61,15 +53,13 @@ export default styles = StyleSheet.create({
 
 
   subscriberContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
+    ...StyleSheet.absoluteFill,
+    backgroundColor: Color(colors.backgroundBlue).darken(0.2)
   },
   subscriber: {
     height: "100%",
-    width: "100%"
+    width: "100%",
+    backgroundColor: Color(colors.backgroundBlue).darken(0.2)
   },
 
   // NOTE: not possible to get this fully functional without updates to the lib:

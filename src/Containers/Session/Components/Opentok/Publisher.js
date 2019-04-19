@@ -14,6 +14,7 @@ export class Publisher extends Component {
     recordComponentEvent('constructor');
 
     this.mounted = true;
+    this.disableListeners = false;
 
     // tokbox event handlers: https://github.com/opentok/opentok-react-native/blob/master/docs/OTPublisher.md#events
     this.eventHandlers = {
@@ -27,6 +28,7 @@ export class Publisher extends Component {
   componentWillUnmount () {
     recordComponentEvent('componentWillUnmount');
     this.mounted = false;
+    this.disableListeners = true;
   }
 
   onAudioLevel (event) {
@@ -35,6 +37,9 @@ export class Publisher extends Component {
   }
 
   onError (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('publisher.error', {
       event,
       sessionID: this.props.session.id
@@ -48,6 +53,9 @@ export class Publisher extends Component {
   }
 
   onStreamCreated (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('publisher.streamCreated', {
       event,
       sessionID: this.props.session.id
@@ -61,6 +69,9 @@ export class Publisher extends Component {
   }
 
   onStreamDestroyed (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('publisher.streamDestroyed', {
       event,
       sessionID: this.props.session.id

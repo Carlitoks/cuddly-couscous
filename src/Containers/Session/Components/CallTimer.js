@@ -49,14 +49,13 @@ export class CallTimer extends Component {
     let elapsed = 0;
     let startedAt = null;
     for (e of this.props.timer.events) {
-      if ('start' == e.action) {
-        startedAt = e.time;
-      }
-      if ('stop' == e.action) {
-        elapsed += e.time - startedAt;
+      switch (e.action) {
+        case 'start': startedAt = e.time; break;
+        case 'stop': elapsed += e.time - startedAt; break;
+        case 'reset': elapsed = e.elapsed; break;
       }
     }
-
+  
     this.previouslyElapsed = elapsed;
     this.startedAt = startedAt;
 

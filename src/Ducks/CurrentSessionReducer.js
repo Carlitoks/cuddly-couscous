@@ -23,9 +23,11 @@ const initState = () => ({
   // session params sent to the server
   sessionID: null,
   session: {},
+
   // related session event data, if relevant
   event: {},
-  // credentials for joining session
+  
+  // credentials for joining session (Opentok)
   credentials: {},
 
   // incoming invite
@@ -34,9 +36,7 @@ const initState = () => ({
 
   // user info of the other person, either the linguist, or customer
   remoteUser: {},
-
-  // One day:
-  // remoteUsers: []
+  // remoteUsers: [] // one day...
 
   // basic existence state
   status: {
@@ -45,14 +45,22 @@ const initState = () => ({
     began: false, // did both sides initially connect?
     ended: false,
     ending: false,
+    endedLocally: false,
+    endedRemotely: false,
   },
 
+  // status of the session timer, contains a log of start/stop/reset events
   timer: {
     running: false,
     // list of events, each item in format of `{action: "start|stop", time: Date().getTime()}`
     events: [],
-    // TODO: time limit restriction
   },
+
+  minuteBalance: null, // TODO: amount of minutes available for this call
+  timeLimit: false, // TODO: set to number if there's a limit
+
+  // TODO: timestamped technical issue reports during session
+  issues: [],
 
   // TODO: initial error handling?
   createError: null,
@@ -268,6 +276,44 @@ export const stopTimer = () => (dispatch, getState) => {
   }}));
 };
 
+// reset the timer
+export const resetTimer = (elapsed, source) => (dispatch, getState) => {
+  const {timer} = getState().currentSessionReducer;
+  let e = timer.events;
+  const now = new Date().getTime();
+  if (timer.running) {
+    e.push({action: "stop", time: now});
+  }
+  e.push({
+    action: "reset",
+    time: new Date().getTime(),
+    source,
+    elapsed
+  });
+  if (timer.running) {
+    e.push({action: "start", time: now});
+  }
+  dispatch(update({timer: {
+    running: timer.running,
+    events: e
+  }}));
+};
+
+export const getElapsedTime = () => (dispatch, getState) => {
+  const {events} = getState().currentSessionReducer.timer;
+  
+  let elapsed = 0;
+  let startedAt = null;
+  for (e of events) {
+    switch (e.action) {
+      case 'start': startedAt = e.time; break;
+      case 'stop': elapsed += e.time - startedAt; break;
+      case 'reset': elapsed = e.elapsed; break;
+    }
+  }
+  return elapsed;
+};
+
 export const canRejoinSession = () => (dispatch, getState) => {
   const {session, status} = getState().currentSessionReducer;
   if (!session.id || status.ending || status.ended) {
@@ -296,7 +342,7 @@ export const endSession = (reason) => (dispatch, getState) => {
     status: {
       ...status,
       ending: true,
-      ended: false
+      ended: false,
     },
     session: {
       ...session,
@@ -317,6 +363,7 @@ export const endSession = (reason) => (dispatch, getState) => {
         status: {
           ...getState().currentSessionReducer.status,
           ending: false,
+          endedLocally: true,
           ended: true
         }
       }));
@@ -351,7 +398,8 @@ export const handleEndedSession = (reason) => (dispatch, getState) => {
     status: {
       ...status,
       ending: false,
-      ended: true
+      ended: true,
+      endedRemotely: true,
     },
     session: {
       ...session,

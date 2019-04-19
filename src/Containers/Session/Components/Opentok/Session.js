@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Text, View} from "react-native";
+import {Text, View, Platform} from "react-native";
 import {Publisher} from "./Publisher";
 import {Subscriber} from "./Subscriber";
 import styles from "./styles";
@@ -24,6 +24,7 @@ const SIGNALS = {
   RECEIVING_AV: 'receivingAV', // signal from other side they are initially receiving audio/video from this side
   AV_STATUS: 'avStatus', // status of remote side, if they are receiving audio or video
   HEARTBEAT: 'heartbeat', // periodic heartbeat from other side to prove connection is still active
+  TIMER_RESET: 'timerReset', // timer should be reset to the specified amount, this happens in the case of certain types of disconnects
 };
 
 const newUserState = () => {
@@ -88,6 +89,7 @@ export class Session extends Component {
 
     this.connected = false;
     this.unmounting = false;
+    this.disableListeners = false; // sort of a hack for https://github.com/opentok/opentok-react-native/issues/271
 
     // handler invoked by tokbox: https://github.com/opentok/opentok-react-native/blob/master/docs/OTSession.md#events
     this.eventHandlers = {
@@ -128,6 +130,10 @@ export class Session extends Component {
 
   // check prop state for changes that should be signaled to other participants
   componentDidUpdate (prevProps) {
+    if (this.disableListeners) {
+      return;
+    }
+
     const oldP = prevProps;
     const newP = this.props;
 
@@ -159,13 +165,6 @@ export class Session extends Component {
       this.sendSignal(SIGNALS.NETWORK_STATE, {type: newS.networkConnection});
     }
 
-    // we track this specifically to prevent calls to `sendSignal` if the OpenTom
-    // session is not actually connected.  Currently this will cause a crash on Android
-    // if it happens.
-    if (oldS.hasNetworkConnection && !newS.hasNetworkConnection) {
-      this.connected = false;
-    }
-
     const oldC = oldP.localUserState.controls;
     const newC = newP.localUserState.controls;
     if (
@@ -175,26 +174,53 @@ export class Session extends Component {
       oldC.cameraFlipEnabled != newC.cameraFlipEnabled
     ) {
       this.sendSignal(SIGNALS.CONTROL_STATE, newC);
+
+      // iOS currently does not fire `streamPropertyChanged`, so we have to assumep
+      // our stream sending state matches our publishing state
+      // https://github.com/opentok/opentok-react-native/issues/269
+      if (Platform.OS == "ios" && this.localUserState.publishing) {
+        this.handlePublishingAV({
+          audio: newC.micEnabled,
+          video: newC.videoEnabled || newC.cameraFlipEnabled
+        });
+      }
     }
   }
 
   onSessionConnected () {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.sessionConnected', {
       sessionID: this.props.session.id
     });
+    const initiallyConnected = this.props.localUserState.connection.initiallyConnected;
     this.connected = true;
     this.props.onUserConnected();
-}
+
+    // TODO: if previously connected and the session had begin, reset the timer
+    if (initiallyConnected) {
+      this.sendSignal(SIGNALS.TIMER_RESET, {elapsed: this.props.getElapsedTime()});
+    }
+  }
 
   onSessionReconnected () {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.sessionReconnected', {
       sessionID: this.props.session.id
     });
     this.connected = true;
     this.props.onUserConnected();
+
+    this.sendSignal(SIGNALS.TIMER_RESET, {elapsed: this.props.getElapsedTime()});
   }
 
   onSessionDisconnected () {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.sessionDisconnected', {
       sessionID: this.props.session.id
     });
@@ -203,6 +229,9 @@ export class Session extends Component {
   }
 
   onSessionReconnecting () {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.sessionReconnecting', {
       sessionID: this.props.session.id
     });
@@ -212,6 +241,9 @@ export class Session extends Component {
 
   // handles connection state for the remote user
   onConnectionCreated (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.connectionCreated', {
       event,
       sessionID: this.props.session.id
@@ -228,10 +260,12 @@ export class Session extends Component {
     this.sendSignal(SIGNALS.APP_STATE, {state: localUserState.device.appState});
     this.sendSignal(SIGNALS.NETWORK_STATE, {type: localUserState.device.networkConnection});
     this.sendSignal(SIGNALS.CONTROL_STATE, localUserState.controls);
-
   }
 
   onConnectionDestroyed (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.connectionDestroyed', {
       event,
       sessionID: this.props.session.id
@@ -259,6 +293,9 @@ export class Session extends Component {
 
   // the remote user has published a stream
   onStreamCreated (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.streamCreated', {
       event,
       sessionID: this.props.session.id
@@ -295,6 +332,9 @@ export class Session extends Component {
   // properties.  Note that this event can fire for streams
   // created by the local or remote user
   onStreamPropertyChanged (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.streamPropertyChanged', {
       event,
       sessionID: this.props.session.id
@@ -316,9 +356,9 @@ export class Session extends Component {
       }
     }
 
-    if (event.stream.connectionId == this.localUserState.connectionID) {
+    if (event.stream.streamId == this.localUserState.streamID) {
       this.handlePublishingAV(hasAudio, hasVideo);
-    } else {
+    } else if (event.stream.streamId == this.remoteUserState.streamID) {
       this.handleReceivingAV(hasAudio, hasVideo);
     }
   }
@@ -327,6 +367,9 @@ export class Session extends Component {
   // in some cases that is not technically accurate.  For now, it should still work because
   // they should only have one stream.
   onStreamDestroyed (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.streamDestroyed', {
       event,
       sessionID: this.props.session.id
@@ -353,6 +396,7 @@ export class Session extends Component {
       publishing: false,
     };
 
+    // TODO: this may not be accurate... may need to remove old stream properties anyway
     // stop tracking stream internally
     if (!!this.state.streamProperties[event.streamId]) {
       let s = this.state.streamProperties;
@@ -368,6 +412,9 @@ export class Session extends Component {
   }
 
   onSignal (event) {
+    if (this.disableListeners) {
+      return;
+    }
     // ensure signal is from remote participant we actually know about
     if (event.connectionId != this.remoteUserState.connectionID) {
       return;
@@ -393,11 +440,14 @@ export class Session extends Component {
   }
 
   onError (event) {
+    if (this.disableListeners) {
+      return;
+    }
     recordSessionOpentokEvent('session.error', {
       event,
       sessionID: this.props.session.id
     });
-    this.remount();
+    this.props.onError();
   }
 
   beginSendingHeartbeat () {
@@ -481,6 +531,9 @@ export class Session extends Component {
   // the OTPublisher has been set up at this point, and we are actually
   // sending AV from our side
   publisherStreamCreated (ops) {
+    if (this.disableListeners) {
+      return;
+    }
     this.localUserState = {
       ...this.localUserState,
       connectionID: ops.connectionId,
@@ -494,6 +547,9 @@ export class Session extends Component {
   // our published stream has stopped being sent, which means we can make
   // some assumptions about our local and remote user states.
   publisherStreamDestroyed () {
+    if (this.disableListeners) {
+      return;
+    }
     this.localUserState = {
       ...this.localUserState,
       streamID: null,
@@ -504,6 +560,9 @@ export class Session extends Component {
 
   // we are INITIALLY receiving AV, meaning the subscriber has actually been setup
   subscriberReceiving () {
+    if (this.disableListeners) {
+      return;
+    }
     this.localUserState.subscribing = true;
     if (this.remoteUserState.publishing) {
       this.handleReceivingAV(this.remoteUserState.publishingAudio, this.remoteUserState.publishingVideo)
@@ -512,17 +571,26 @@ export class Session extends Component {
   }
 
   subscriberVideoEnabled (event) {
+    if (this.disableListeners) {
+      return;
+    }
     this.remoteUserState.publishingVideo = true;
     // TODO: remove local throttle?
     this.props.onRemoteUserVideoEnabled();
   }
 
   subscriberVideoDisabled (event) {
+    if (this.disableListeners) {
+      return;
+    }
     this.remoteUserState.publishingVideo = false;
     this.props.onRemoteUserVideoDisabled();
   }
 
   subscriberVideoThrottled () {
+    if (this.disableListeners) {
+      return;
+    }
     if (this.localUserState.legacyVersion) {
       this.sendSignal(SIGNALS.LEGACY_VIDEO_THROTTLED, VIDEO_WARNING.ENABLED);
     } else {
@@ -533,6 +601,9 @@ export class Session extends Component {
   }
 
   subscriberVideoUnthrottled () {
+    if (this.disableListeners) {
+      return;
+    }
     if (this.remoteUserState.legacyVersion) {
       this.sendSignal(SIGNALS.LEGACY_VIDEO_THROTTLED, VIDEO_WARNING.DISABLED);
     } else {
@@ -542,9 +613,7 @@ export class Session extends Component {
     this.props.onUserReceivingAVUnthrottled();
   }
 
-  // TODO: change this?
   notifyIfReceiving (audio, video) {
-    // TODO: change this to notifyIfInitiallyReceiving?
     if (this.localUserState.subscribing && this.remoteUserState.publishing) {
       this.sendSignal(SIGNALS.RECEIVING_AV, {audio, video});
     }
@@ -558,6 +627,7 @@ export class Session extends Component {
   }
 
   cleanup (cb = null) {
+    this.disableListeners = true;
     recordComponentEvent('cleanup');
     this.setState({unmounting: true, mounted: false}, () => {
       this.unmounting = true;
@@ -568,6 +638,10 @@ export class Session extends Component {
   }
 
   sendSignal (type, payload = null) {
+    if (this.disableListeners) {
+      return;
+    }
+
     // make sure we have actually connected, and are not in the process
     // of ending the session
     if (
@@ -677,6 +751,10 @@ export class Session extends Component {
         this.remoteUserState.lastHeartbeatAt = new Date();
         break;
       }
+      case SIGNALS.TIMER_RESET: {
+        this.props.onTimerReset(payload.elapsed, 'remote');
+        break;
+      }
     }
   }
 
@@ -688,17 +766,17 @@ export class Session extends Component {
     );
   }
 
-  remount () {
-    recordComponentEvent('remount');
-    this.setState({mounted: false}, () => {
-      setTimeout(() => {
-        if (this.state.unmounting) {
-          return;
-        }
-        this.setState({mounted: true});
-      }, 1000);
-    });
-  }
+  // remount () {
+  //   recordComponentEvent('remount');
+  //   this.setState({mounted: false}, () => {
+  //     setTimeout(() => {
+  //       if (this.state.unmounting) {
+  //         return;
+  //       }
+  //       this.setState({mounted: true});
+  //     }, 1000);
+  //   });
+  // }
 
   render () {
     const {session, credentials, localSessionStatus, localUserState, remoteUserState} = this.props;
@@ -725,7 +803,7 @@ export class Session extends Component {
               onVideoEnabled = {(event) => { this.subscriberVideoEnabled(event) }}
               onVideoDisableWarning = {() => { this.subscriberVideoThrottled() }}
               onVideoDisableWarningLifted = {() => { this.subscriberVideoUnthrottled() }}
-              onError = {(event) => { this.remount() }}
+              onError = {(event) => { this.props.onError() }}
             />
 
             { this.props.audioModeBackground }
@@ -737,7 +815,7 @@ export class Session extends Component {
               remoteUserState = {remoteUserState}
               onStreamCreated = {(event) => { this.publisherStreamCreated(event) }}
               onStreamDestroyed = {(event) => { this.publisherStreamDestroyed(event) }}
-              onError = {(event) => { this.remount() }}
+              onError = {(event) => { this.props.onError() }}
             />
           </OTSession>
         )}
