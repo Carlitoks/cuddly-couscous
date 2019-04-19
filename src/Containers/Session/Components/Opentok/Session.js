@@ -108,6 +108,7 @@ export class Session extends Component {
       archiveStarted: (event) => {},
       archiveStopped: (event) => {},
       error: (event) => { this.onError(event); },
+      otrnError: (e) => { this.onOtrnError(e); }
     };
   }
 
@@ -452,6 +453,16 @@ export class Session extends Component {
     this.props.onError();
   }
 
+  onOtrnError (e) {
+    if (this.disableListeners) {
+      return;
+    }
+    recordSessionOpentokEvent('session.otrnError', {
+      error: e,
+      sessionID: this.props.session.id
+    });
+  }
+
   beginSendingHeartbeat () {
 
   }
@@ -793,6 +804,7 @@ export class Session extends Component {
             token = {credentials.tokboxSessionToken}
             eventHandlers = { this.eventHandlers }
             signal = { this.state.signal }
+            options = {{useTextureViews: true}}
           >
             <Subscriber
               session = {session}

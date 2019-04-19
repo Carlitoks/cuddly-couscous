@@ -34,6 +34,7 @@ export class Subscriber extends Component {
       connected: () => { this.onConnected(); },
       disconnected: () => { this.onDisconnected(); },
       error: (event) => { this.onError(event); },
+      otrnError: (e) => { this.onOtrnError(e); },
       videoDataReceived: () => { this.onVideoDataReceived(); },
       videoDisabled: (event) => { this.onVideoDisabled(event); },
       videoDisableWarning: () => { this.onVideoDisableWarning(); },
@@ -95,6 +96,16 @@ export class Subscriber extends Component {
     });
     this.props.onError(event);
   }
+
+  onOtrnError (e) {
+    if (this.disableListeners) {
+      return;
+    }
+    recordSessionOpentokEvent('subscriber.otrnError', {
+      error: e,
+      sessionID: this.props.session.id
+    });
+  }  
 
   onVideoDataReceived () {
     if (this.disableListeners) {

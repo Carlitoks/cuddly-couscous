@@ -22,8 +22,9 @@ export class Publisher extends Component {
     this.eventHandlers = {
       audioLevel: (event) => { this.onAudioLevel(event); },
       error: (event) => { this.onError(event); },
+      otrnError: (e) => { this.onOtrnError(e); },
       streamCreated: (event) => { this.onStreamCreated(event); },
-      streamDestroyed: (event) => { this.onStreamDestroyed(event); },
+      streamDestroyed: (event) => { this.onStreamDestroyed(event); }
     };
   }
 
@@ -52,6 +53,16 @@ export class Publisher extends Component {
     }
 
     this.props.onError(event);
+  }
+
+  onOtrnError (e) {
+    if (this.disableListeners) {
+      return;
+    }
+    recordSessionOpentokEvent('publisher.otrnError', {
+      error: e,
+      sessionID: this.props.session.id
+    });
   }
 
   onStreamCreated (event) {
