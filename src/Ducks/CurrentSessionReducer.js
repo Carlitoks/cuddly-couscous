@@ -56,9 +56,6 @@ const initState = () => ({
     events: [],
   },
 
-  minuteBalance: null, // TODO: amount of minutes available for this call
-  timeLimit: false, // TODO: set to number if there's a limit
-
   // TODO: timestamped technical issue reports during session
   issues: [],
 
