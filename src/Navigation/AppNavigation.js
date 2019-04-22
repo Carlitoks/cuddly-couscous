@@ -8,7 +8,7 @@ import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLi
 import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
 import CustomerView from "../Call/Customer/Call/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
-import CheckYourEmailView from "../Onboarding/ForgotPasswordView/CheckYourEmailView";
+
 import Home from "../Home/Home";
 import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
 import LinguistView from "../Call/Linguist/Call/LinguistView";
@@ -21,7 +21,6 @@ import LanguageSettingsView from "../LinguistForm/LanguageSettingsView/LanguageS
 //List Views
 import NativeLanguageView from "../Lists/NativeLanguageView/NativeLanguageView";
 
-import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
 import RateView from "../RateCall/RateExperience/RateView";
 import NameLinguistView from "../LinguistForm/NameLinguistView/NameLinguistView";
 import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguistView";
@@ -271,13 +270,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    SelectRoleView: {
-      screen: SelectRoleView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
+
     IntroView: {
       screen: OnboardingScreen,
       navigationOptions: {
