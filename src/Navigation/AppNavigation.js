@@ -20,14 +20,11 @@ import CheckYourEmailView from "../Onboarding/ForgotPasswordView/CheckYourEmailV
 import Home from "../Home/Home";
 import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
 import LinguistView from "../Call/Linguist/Call/LinguistView";
-
-import LoginView from "../Onboarding/LoginView/LoginView";
 import MenuView from "../Components/MenuView/MenuView";
 
 // Onboarding - Select Language
 import SelectLanguageView from "../LinguistForm/SelectLanguageView/SelectLanguageView";
 import LanguageSettingsView from "../LinguistForm/LanguageSettingsView/LanguageSettingsView";
-import ResetPasswordView from "../Onboarding/ResetPasswordView/ResetPasswordView";
 
 //List Views
 import NativeLanguageView from "../Lists/NativeLanguageView/NativeLanguageView";
