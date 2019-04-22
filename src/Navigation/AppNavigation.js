@@ -11,7 +11,7 @@ import EmailCustomerView from "../Onboarding/EmailCustomerView/EmailCustomerView
 import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
 import GenderCustomerView from "../Onboarding/GenderCustomerView/GenderCustomerView";
 import WelcomeCustomerView from "../Onboarding/WelcomeCustomerView/WelcomeCustomerView";
-import PhoneCustomerView from "../Onboarding/PhoneCustomerView/PhoneCustomerView";
+
 import LanguageCustomerView from "../Onboarding/LanguageCustomerView/LanguageCustomerView";
 import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
 import CustomerView from "../Call/Customer/Call/CustomerView";
@@ -163,13 +163,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    PhoneCustomerView: {
-      screen: PhoneCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
+
     WelcomeCustomerView: {
       screen: WelcomeCustomerView,
       navigationOptions: {
