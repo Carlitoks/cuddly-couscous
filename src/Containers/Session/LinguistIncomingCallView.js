@@ -287,7 +287,7 @@ export class LinguistIncomingCallView extends Component {
         <View style={styles.contentContainer}>
 
           <View style={styles.userContainer}>
-            <Image style={styles.avatarImage} source={!!remoteUser.avatarURL ? {uri: remoteUser.avatarURL} : images.avatar} />
+            <Image style={styles.avatarImage} source={!!remoteUser.avatarURL ? {uri: remoteUser.avatarURL} : images.avatar} resizeMode="cover" />
             <Text style={styles.userNameText}>{remoteUser.firstName}</Text>
             <Text style={styles.incomingCallText}>{I18n.t('incomingCall')}</Text>
           </View>
@@ -354,8 +354,9 @@ const styles = StyleSheet.create({
     fontSize: moderateFontSize(20),
   },
   userContainer: {
-    marginTop: "15%",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: 30,
+    marginTop: 30
   },
   infoContainer: {
     marginTop: moderateScale(40, 0)
@@ -375,12 +376,11 @@ const styles = StyleSheet.create({
     fontSize: moderateFontSize(15)
   },
   avatarImage: {
-    height: 100,
+    paddingVertical: 30,
     width: 100,
-    borderRadius: 75,
-    borderWidth: 1,
-    borderColor: "gray",
-    marginBottom: 20
+    height: 100,
+    alignSelf: "center",
+    borderRadius: 50
   },
   buttonContainer: {
     flex: 1,
