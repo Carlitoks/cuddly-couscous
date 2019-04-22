@@ -12,6 +12,8 @@ import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordV
 import Home from "../Home/Home";
 import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
 import LinguistView from "../Call/Linguist/Call/LinguistView";
+import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
+
 import MenuView from "../Components/MenuView/MenuView";
 
 // Onboarding - Select Language
@@ -300,6 +302,13 @@ const Navigation = StackNavigator(
       screen: UserProfileView,
       navigationOptions: {
         gesturesEnabled: false
+      }
+    },
+    SessionDetails: {
+      screen: SessionDetails,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
       }
     },
     PromoCodeView: {
