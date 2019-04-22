@@ -5,15 +5,7 @@ import { getS } from "../Config/CreateStore";
 
 import CallHistory from "../Containers/CallHistory/CallHistoryView";
 import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
-import NameCustomerView from "../Onboarding/NameCustomerView/NameCustomerView";
-import PreferredNameCustomerView from "../Onboarding/PreferredNameCustomerView/PreferredNameCustomerView";
-import EmailCustomerView from "../Onboarding/EmailCustomerView/EmailCustomerView";
 import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
-import GenderCustomerView from "../Onboarding/GenderCustomerView/GenderCustomerView";
-import WelcomeCustomerView from "../Onboarding/WelcomeCustomerView/WelcomeCustomerView";
-
-import LanguageCustomerView from "../Onboarding/LanguageCustomerView/LanguageCustomerView";
-import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
 import CustomerView from "../Call/Customer/Call/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
 import CheckYourEmailView from "../Onboarding/ForgotPasswordView/CheckYourEmailView";
@@ -56,7 +48,6 @@ import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
 import ConnectingView from "../Call/Linguist/Connecting/ConnectingView";
-import PaymentsView from "../Payments/PaymentsView";
 import OnboardingScreen from "../Containers/Onboarding/OnboardingScreen";
 import LoginScreen from "../Containers/Login/LoginScreen";
 import RegisterScreen from "../Containers/Register/RegisterScreen";
@@ -128,27 +119,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    NameCustomerView: {
-      screen: NameCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    PreferredNameCustomerView: {
-      screen: PreferredNameCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    EmailCustomerView: {
-      screen: EmailCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
+
     PasswordCustomerView: {
       screen: PasswordCustomerView,
       navigationOptions: {
@@ -156,34 +127,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    GenderCustomerView: {
-      screen: GenderCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
 
-    WelcomeCustomerView: {
-      screen: WelcomeCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    LanguageCustomerView: {
-      screen: LanguageCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    CustomerProfile: {
-      screen: CustomerProfile,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
     CustomerView: {
       screen: CustomerView,
       navigationOptions: {
@@ -198,13 +142,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    CheckYourEmailView: {
-      screen: CheckYourEmailView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
+
     Home: {
       screen: Home
     },
