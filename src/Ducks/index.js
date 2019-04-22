@@ -28,7 +28,7 @@ import newSessionReducer from "./NewSessionReducer";
 import onboardingReducer from "./OnboardingReducer";
 import appConfigReducer from "./AppConfigReducer";
 import LogicReducer from "./LogicReducer";
-
+import registrationCustomer from "./RegistrationCustomerReducer";
 // Combine all the reducers
 const rootReducer = combineReducers({
   activeSessionReducer,
@@ -58,7 +58,8 @@ const rootReducer = combineReducers({
   userProfile,
   newSessionReducer,
   onboardingReducer,
-  LogicReducer
+  LogicReducer,
+  registrationCustomer
 });
 
 export default rootReducer;
