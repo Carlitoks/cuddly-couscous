@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
   userContainer: {
     alignItems: "center",
     marginBottom: 30,
-    marginTop: 30
+    marginTop: "15%"
   },
   infoContainer: {
     marginTop: moderateScale(40, 0)

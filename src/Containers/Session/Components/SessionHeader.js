@@ -8,7 +8,7 @@ export const SessionHeader = ({user}) => {
   return (
     <View style = { styles.container }>
       <View style={styles.avatarImageContainer}>
-        <Image style={styles.avatarImage} source={!!user.avatarURL ? {uri: user.avatarURL} : images.avatar} />
+        <Image style={styles.avatarImage} source={!!user.avatarURL ? {uri: user.avatarURL} : images.avatar} resizeMode="cover"/>
       </View>
       <View style={styles.textContainer}>
         <Text style = { styles.text }>{user.firstName}</Text>
@@ -30,12 +30,13 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   avatarImageContainer: {
-    marginRight: 20
+    marginRight: 20,
+    marginTop: 10
   },
   avatarImage: {
     height: 40,
     width: 40,
-    borderRadius: 75,
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: "gray"
   },
