@@ -1,4 +1,4 @@
-export default (FR = {
+export default (ENG = {
   accept: "Accept",
   acceptAllPermissionsCustomer:
     "You must enable microphone and camera permissions in your settings in order to make a call with Jeenie.",
