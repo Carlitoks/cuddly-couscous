@@ -98,8 +98,11 @@ class RatingScreen extends Component {
       rating,
       thumbsUp,
       thumbsDown,
+      linguistProfile
     } = this.props;
-    return rating && (thumbsUp || thumbsDown);
+    if(linguistProfile)
+      return rating && (thumbsUp || thumbsDown);
+    return rating;
   };
 
   openSlideMenu = (type) => {

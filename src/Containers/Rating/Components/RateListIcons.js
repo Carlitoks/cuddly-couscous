@@ -156,14 +156,8 @@ export const CallClassification = [
   },
   {
     id: 3,
-    label: I18n.t("session.rating.classifications.support"),
-    i18nKey: "session.rating.classifications.support",
-    value: "support",
-  },
-  {
-    id: 4,
-    label: I18n.t("session.rating.classifications.langPractice"),
-    i18nKey: "session.rating.classifications.langPractice",
-    value: "langPractice",
+    label: "Language & Culture Assistance",
+    i18nKey: "Language & Culture Assistance",
+    value: "help",
   },
 ];

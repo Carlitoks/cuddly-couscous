@@ -39,9 +39,9 @@ class AvatarSection extends Component {
       }
       return linguist.firstName;
     }
-    clearOptions();
+    /*clearOptions();
     navigation.dispatch({ type: "Home" });
-    return <React.Fragment />;
+    return <React.Fragment />;*/
   };
 
   render() {

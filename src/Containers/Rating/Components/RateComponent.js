@@ -34,9 +34,37 @@ class RateComponent extends Component {
     }
   }
 
+  renderThumbsComponents = () => {
+    const {
+      linguistProfile, thumbsUp, thumbsDown,
+    } = this.props;
+    return (<React.Fragment>
+      <Text style={styles.baseText}>
+        {
+          linguistProfile ? I18n.t("session.rating.resolvedLinguist") : I18n.t("session.rating.resolvedCustomer")
+        }
+      </Text>
+      <View style={styles.thumbsContainer}>
+        <ThumbsButton
+          IconName="ios-thumbs-up"
+          StateIcon={thumbsUp}
+          onPress={() => this.buttonThumbs(0)}
+          color={Colors.gradientColorButton.middle}
+        />
+        <View style={styles.thumbsPadding} />
+        <ThumbsButton
+          IconName="ios-thumbs-down"
+          StateIcon={thumbsDown}
+          onPress={() => this.buttonThumbs(1)}
+          color={Colors.gradientColorButton.middle}
+        />
+      </View>
+    </React.Fragment>);
+  };
+
   render() {
     const {
-      linguistProfile, rating, updateOptions, thumbsUp, thumbsDown,
+      linguistProfile, rating, updateOptions,
     } = this.props;
     return (
       <ScrollView contentContainerStyle={styles.flexEndCenter}>
@@ -58,26 +86,7 @@ class RateComponent extends Component {
           starColor={Colors.gradientColorButton.top}
           containerStyle={styles.starRatingPadding}
         />
-        <Text style={styles.baseText}>
-          {
-            linguistProfile ? I18n.t("session.rating.resolvedLinguist") : I18n.t("session.rating.resolvedCustomer")
-          }
-        </Text>
-        <View style={styles.thumbsContainer}>
-          <ThumbsButton
-            IconName="ios-thumbs-up"
-            StateIcon={thumbsUp}
-            onPress={() => this.buttonThumbs(0)}
-            color={Colors.gradientColorButton.middle}
-          />
-          <View style={styles.thumbsPadding} />
-          <ThumbsButton
-            IconName="ios-thumbs-down"
-            StateIcon={thumbsDown}
-            onPress={() => this.buttonThumbs(1)}
-            color={Colors.gradientColorButton.middle}
-          />
-        </View>
+        { linguistProfile && this.renderThumbsComponents() }
       </ScrollView>
     );
   }

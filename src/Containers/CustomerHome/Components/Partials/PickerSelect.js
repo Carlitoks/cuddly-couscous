@@ -70,6 +70,22 @@ class PickerSelectComponent extends Component {
   showScenarioList = () => {
     const { scenariosList, session, placeholder, selectedLabelStyle } = this.props;
 
+    if(type === "ratingsScenarioSelection"){
+      const selectedScenario = scenariosList.find(scenario => scenario.id === currentScenarioId);
+      return (
+        <View
+          style={styles.flexView}
+        >
+          <Text
+            nunmberOfLines={1}
+            style={selectedLabelStyle || styles.inputValue}
+          >
+            { selectedScenario ? selectedScenario.title : "not found" }
+          </Text>
+        </View>
+      );
+    }
+
     if (session.scenarioID && session.scenarioID != "custom") {
       const selectedScenario = scenariosList.find(scenario => scenario.id === session.scenarioID);
       return (

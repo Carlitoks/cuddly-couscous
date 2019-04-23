@@ -10,7 +10,8 @@ import I18n, { translateProperty } from "../../../I18n/I18n";
 import { Bus, Shopping, Dinning, Translator, Teamwork, Layers } from "../../../Assets/SVG";
 import Reactotron from "reactotron-react-native";
 import metrics from "../../../Themes/Metrics";
-import { isIphoneXorAbove } from "../../../Util/Devices";
+import {isIphoneXorAbove} from "../../../Util/Devices";
+import { updateOptions } from "../../../Ducks/RateCallReducer";
 
 class Scenario extends Component {
   renderCheck = currentLang => {
@@ -125,9 +126,11 @@ class Scenario extends Component {
   };
 
   changeLangCode = langCode => {
-    const { changeLangCode, selection, updateSelectedScenario, closeSlideMenu } = this.props;
+    const { changeLangCode, selection, updateSelectedScenario, closeSlideMenu, updateOptions } = this.props;
     if (selection === "scenarioSelection") {
       updateSelectedScenario({ scenarioID: langCode });
+    } if(selection === "ratingsScenarioSelection") {
+      updateOptions({ scenarioID: langCode });
     } else {
       changeLangCode({ langCode });
     }
@@ -167,7 +170,8 @@ const mS = state => ({
 const mD = {
   closeSlideMenu,
   changeLangCode,
-  updateSelectedScenario
+  updateSelectedScenario,
+  updateOptions
 };
 
 export default connect(

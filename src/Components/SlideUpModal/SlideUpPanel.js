@@ -23,7 +23,7 @@ class SlideUpPanel extends Component {
           bottom: 0
         }}
       >
-        {selection === "additionalDetails" ? (
+        {selection === "additionalDetails" || selection === "ratingComments" ? (
           <Comments />
         ) : selection === "scenarioSelection" ? (
           <Scenario />
@@ -45,7 +45,7 @@ const mS = state => ({
 });
 
 const mD = {
-  closeSlideMenu
+  closeSlideMenu,
 };
 
 export default connect(

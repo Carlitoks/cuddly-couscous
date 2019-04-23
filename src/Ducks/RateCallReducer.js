@@ -117,6 +117,8 @@ const initialState = {
   // color Tab thumbs
   thumbsUp: false,
   thumbsDown: false,
+  scenarioID: null,
+  scenarioNote: "",
 
   // States for icons that belong to What was Good question
 
