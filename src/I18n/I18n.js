@@ -96,6 +96,7 @@ const apiErrorsI18N = {
   "both email and password required": "api.errDefaultAuth",
   "user not found": "api.errNoUser",
   "Email not found": "api.errNoEmail",
+  "email already in use": "api.errEmailInUse",
   "Password incorrect": "api.errPasswordIncorrect",
   "authentication required": "api.errAuthRequired",
   "failed to validate event": "api.errEventInvalid",
