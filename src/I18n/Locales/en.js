@@ -856,7 +856,7 @@ export default (ENG = {
     location: {
       title: "Enable Location",
       description: "Sharing your location with Jeenie allows us to automatically recommend the right languages and human translators.",
-      button: "Turn on Location Services",
+      button: "Turn on Location",
     },
     notification: {
       title: "Enable Notifications",
