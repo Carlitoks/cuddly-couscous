@@ -95,6 +95,8 @@ export const submitRateCall = (RateInformation, sessionID, token) => (
     positiveFlags: WhatWasGood,
     comment: getState().rateCall.comments,
     callType: getState().rateCall.callType,
+    scenarioID: getState().rateCall.scenarioID,
+    scenarioNote: getState().rateCall.scenarioNote,
   };
   return Sessions.RatingSession(RateInformation, sessionID, token)
     .then(response => {

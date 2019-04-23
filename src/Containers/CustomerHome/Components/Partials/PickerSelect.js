@@ -80,7 +80,7 @@ class PickerSelectComponent extends Component {
             nunmberOfLines={1}
             style={selectedLabelStyle || styles.inputValue}
           >
-            { selectedScenario ? selectedScenario.title : "not found" }
+            { selectedScenario ? selectedScenario.title : placeholder }
           </Text>
         </View>
       );

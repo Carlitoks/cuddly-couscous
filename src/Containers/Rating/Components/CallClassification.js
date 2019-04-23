@@ -63,7 +63,7 @@ class CallClassification extends Component {
         />
 
         { callType === "help" && <View style={styles.bottomDividerContainer}>
-          <Text style={styles.baseText}>What did your customer need help with?</Text>
+          <Text style={styles.baseText}>{I18n.t("session.rating.scenario")}</Text>
           <RenderPicker
             openSlideMenu={this.openSlideMenu}
             title={"none"}
