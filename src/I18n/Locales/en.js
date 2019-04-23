@@ -442,6 +442,12 @@ export default (ENG = {
     edit: "Edit"
   },
 
+  logic: {
+    and: "and",
+    or: "or",
+    not: "not"
+  },
+
   menu: {
     profile: "Profile",
     editProfile: "Edit Profile",
@@ -455,7 +461,8 @@ export default (ENG = {
     settings: "Settings"
   },
 
-  // new customer home screen
+  // DEPRECATED: block should be removed in the future, any strings currently in use
+  // should be moved or refactored
   customerHome: {
     primaryLang: {
       label: "I speak"
@@ -680,6 +687,7 @@ export default (ENG = {
     errNoEmail: "Email not found",
     errPasswordIncorrect: "The password was incorrect",
     errAuthRequired: "You must log in again",
+    errEmailInUse: "An account has already been created with this email address.",
     errEventInvalid: "This code failed to validate.",
     errEventUnavailable: "This code is currently unavailable.",
     errEventInactive: "This code is not active.",
@@ -688,6 +696,37 @@ export default (ENG = {
     errEventTimeExpired: "No time remaining for this code.",
     errEventAlreadyUsed: "This code has already been used.",
     errLocationRestricted: "Jeenie is not currently available in your area."
+  },
+
+  // used when handling user input related to specific fields - these
+  // are often used in more than one place
+  fields: {
+    email: {
+      label: "Email",
+      labelConfirm: "Confirm Email",
+      errInvalid: "Not a valid email address.",
+      errConfirmMatch: "The emails must match."
+    },
+    firstName: {
+      label: "First Name",
+      errInvalid: "Name must contain only letters."
+    },
+    nativeLang: {
+      label: "Native Language",
+    },
+    password: {
+      label: "Password",
+      labelConfirm: "Confirm Password",
+      labelCreate: "Create Password",
+      errLength: "Password must be 7 or more characters.",
+      errConfirmMatch: "The passwords must match."
+    }
+  },
+
+  // seen as a pop up if the user has entered an invalid email address.
+  correctEmailModal: {
+    notice: "Something went wrong with the email you have entered, please enter a new one.",
+    complete: "Your email has been updated! You must use {email} to sign in with Jeenie from now on."
   },
 
   // for use in session-related screens
@@ -750,6 +789,7 @@ export default (ENG = {
     }
   },
 
+  // DEPRECATED: this block will be removed - any strings here currently in use should be refactored or removed
   customerOnboarding: {
     welcome: "Welcome to Jeenie",
     connectToLinguist: "Connect Now",
@@ -799,6 +839,44 @@ export default (ENG = {
         "An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.",
       emailAndPassword: "Incorrect email and password combination.\nPlease try again.",
       signInto: "Sign in to your account."
+    }
+  },
+
+  newCustomerOnboarding: {
+    getStarted: "Get Started",
+    haveAccount: "Already have an account?",
+    signIn: "Sign In",
+    signInto: "Sign in to your account.",
+    createAccount: "Create Account",
+    intro: {
+      title: "Real-time Assistance",
+      description: "24/7 access to live, human translators for language help at the tap of a button.  Rate: US$1 per min.  First 10 mins FREE.",
+      button: "Get Started"
+    },
+    location: {
+      title: "Enable Location",
+      description: "Sharing your location with Jeenie allows us to automatically recommend the right languages and human translators.",
+      button: "Turn on Location",
+    },
+    notification: {
+      title: "Enable Notifications",
+      description:
+        "Turning on push notifications allows Jeenie to alert you when relevant new services are available in your area.",
+      button: "Turn on Notifications"
+    },
+    register: {
+      title: "Tell us about yourself:",
+      termsAndPrivacyNotice: "By continuing, you agree to our Terms and Privacy Policy.",
+      terms: "Terms",
+      privacyPolicy: "Privacy Policy",
+    },
+    login: {
+      forgotPassword: "Forgot password?"
+    },
+    errors: {
+      takenEmail:
+        "An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.",
+      emailAndPassword: "Incorrect email and password combination.\nPlease try again.",
     }
   },
 
