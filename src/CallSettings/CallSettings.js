@@ -5,7 +5,7 @@ import { View } from "react-native";
 
 import CustomerSettingsView from "./Customer/CustomerSettingsView";
 import LinguistSettingsView from "./Linguist/LinguistSettingsView";
-
+import LoginView from "../Onboarding/LoginView/LoginView";
 import { getProfileAsync } from "../Ducks/UserProfileReducer";
 
 class CallSettings extends Component {
@@ -37,7 +37,4 @@ const mD = {
   getProfileAsync
 };
 
-export default connect(
-  mS,
-  mD
-)(CallSettings);
+export default connect(mS, mD)(CallSettings);
