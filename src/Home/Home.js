@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { View, StatusBar } from "react-native";
 import { amplitudKey } from "../Config/env";
 import HomeLinguist from "./Linguist/HomeLinguist";
-//import LoginView from "../Onboarding/LoginView/LoginView";
+
 import PushNotifications from "../Util/PushNotification";
 import FCM, { FCMEvent } from "react-native-fcm";
 import { registerFCM } from "../Ducks/PushNotificationReducer";

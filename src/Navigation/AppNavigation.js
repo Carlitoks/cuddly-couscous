@@ -5,11 +5,14 @@ import { getS } from "../Config/CreateStore";
 
 import CallHistory from "../Containers/CallHistory/CallHistoryView";
 import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
+import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
 import CustomerView from "../Call/Customer/Call/CustomerView";
+import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
 
 import Home from "../Home/Home";
 import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
 import LinguistView from "../Call/Linguist/Call/LinguistView";
+import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 
 import MenuView from "../Components/MenuView/MenuView";
 
@@ -118,6 +121,14 @@ const Navigation = StackNavigator(
       }
     },
 
+    PasswordCustomerView: {
+      screen: PasswordCustomerView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+
     CustomerView: {
       screen: CustomerView,
       navigationOptions: {
@@ -125,6 +136,14 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
+    ForgotPasswordView: {
+      screen: ForgotPasswordView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+
     Home: {
       screen: Home
     },
@@ -283,6 +302,13 @@ const Navigation = StackNavigator(
       screen: UserProfileView,
       navigationOptions: {
         gesturesEnabled: false
+      }
+    },
+    SessionDetails: {
+      screen: SessionDetails,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
       }
     },
     PromoCodeView: {

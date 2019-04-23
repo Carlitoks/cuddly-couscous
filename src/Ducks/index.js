@@ -8,6 +8,7 @@ import callLinguistSettings from "./CallLinguistSettings";
 import contactLinguist from "./ContactLinguistReducer";
 import customerProfile from "./CustomerProfileReducer";
 import events from "./EventsReducer";
+import forgotPassword from "./ForgotPasswordReducer";
 import homeFlow from "./HomeFlowReducer";
 import linguistForm from "./LinguistFormReducer";
 import login from "./LoginReducer";
@@ -20,6 +21,8 @@ import profileLinguist from "./ProfileLinguistReducer";
 import promoCode from "./PromoCodeReducer";
 import pushNotification from "./PushNotificationReducer";
 import rateCall from "./RateCallReducer";
+import registrationCustomer from "./RegistrationCustomerReducer";
+import resetPassword from "./ResetPasswordReducer";
 import sessionInfo from "./SessionInfoReducer";
 import settings from "./SettingsReducer";
 import tokbox from "./tokboxReducer";
@@ -28,7 +31,7 @@ import newSessionReducer from "./NewSessionReducer";
 import onboardingReducer from "./OnboardingReducer";
 import appConfigReducer from "./AppConfigReducer";
 import LogicReducer from "./LogicReducer";
-import registrationCustomer from "./RegistrationCustomerReducer";
+
 // Combine all the reducers
 const rootReducer = combineReducers({
   activeSessionReducer,
@@ -40,6 +43,7 @@ const rootReducer = combineReducers({
   contactLinguist,
   customerProfile,
   events,
+  forgotPassword,
   homeFlow,
   linguistForm,
   login,
@@ -52,6 +56,7 @@ const rootReducer = combineReducers({
   promoCode,
   pushNotification,
   rateCall,
+  resetPassword,
   sessionInfo,
   settings,
   tokbox,
