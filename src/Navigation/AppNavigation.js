@@ -11,6 +11,7 @@ import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLi
 import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
 import CustomerView from "../Call/Customer/Call/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
+import CheckYourEmailView from "../Onboarding/ForgotPasswordView/CheckYourEmailView";
 
 import Home from "../Home/Home";
 import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
@@ -196,6 +197,13 @@ const Navigation = StackNavigator(
     },
     PasswordLinguistView: {
       screen: PasswordLinguistView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    CheckYourEmailView: {
+      screen: CheckYourEmailView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
