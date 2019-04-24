@@ -3,7 +3,10 @@ import CardStackStyleInterpolator from "react-navigation/src/views/CardStack/Car
 import { Animated, Easing } from "react-native";
 import { getS } from "../Config/CreateStore";
 
+import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallHistory from "../Containers/CallHistory/CallHistoryView";
+import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
+
 import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
 import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
 import CustomerView from "../Call/Customer/Call/CustomerView";
@@ -62,6 +65,7 @@ import EditCardScreen from "../Containers/Payments/EditCardScreen";
 
 const Navigation = StackNavigator(
   {
+    AssistanceView: { screen: AssistanceView },
     CallHistory: {
       screen: CallHistory,
       navigationOptions: {
@@ -92,6 +96,13 @@ const Navigation = StackNavigator(
         gesturesEnabled: false
       }
     },
+    CallTimeView: {
+      screen: CallTimeView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+
     ContactingLinguist: {
       screen: ContactingLinguist,
       navigationOptions: {
@@ -147,6 +158,7 @@ const Navigation = StackNavigator(
     Home: {
       screen: Home
     },
+
     IncomingCallView: {
       screen: IncomingCallView,
       navigationOptions: {

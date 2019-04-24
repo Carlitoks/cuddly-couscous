@@ -7,6 +7,7 @@ import callHistory from "./CallHistoryReducer";
 import callLinguistSettings from "./CallLinguistSettings";
 import contactLinguist from "./ContactLinguistReducer";
 import customerProfile from "./CustomerProfileReducer";
+
 import events from "./EventsReducer";
 import forgotPassword from "./ForgotPasswordReducer";
 import homeFlow from "./HomeFlowReducer";
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   callLinguistSettings,
   contactLinguist,
   customerProfile,
+
   events,
   forgotPassword,
   homeFlow,
@@ -56,6 +58,7 @@ const rootReducer = combineReducers({
   promoCode,
   pushNotification,
   rateCall,
+  registrationCustomer,
   resetPassword,
   sessionInfo,
   settings,
