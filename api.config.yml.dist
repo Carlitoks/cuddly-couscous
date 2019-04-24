@@ -7,6 +7,9 @@ APP_LINGUIST_LANGS: ["eng","cmn","yue","jpn"]
 APP_LINGUIST_LANG_PAIRS: ["cmn-eng","eng-yue","eng-jpn"]
 APP_LOCALIZATIONS: ["en","zh-hans","zh-hant","ja","es"] # note that "en" should always be first in the list, as it is the default fallback
 
+SURVEY_MONKEY_CUSTOMER_SURVEY: "protocol://fqdn.url"
+SURVEY_MONKEY_LINGUIST_SURVEY: "protocol://fqdn.url"
+
 MOBILE_APP_CUSTOMER_REQUIRED_VERSION: ""
 MOBILE_APP_CUSTOMER_SUGGESTED_VERSION: ""
 MOBILE_APP_LINGUIST_REQUIRED_VERSION: ""
@@ -30,6 +33,8 @@ GCP_AUTH_FILE: /app/gcp/app-key.json
 GCS_PUBLIC_BUCKET: solo-platform-api-test-storage
 GCS_PUBLIC_BUCKET_URL: https://storage.googleapis.com/solo-platform-api-test-storage
 GCS_PROFILE_PHOTO_PREFIX: profile-photos
+
+GOOGLE_SHEETS_API_AUTH_FILE: /app/gsheets/solo-platform-api-reports.json
 
 JWT_SECRET: this-is-not-secret
 JWT_ISSUER: solo.api.com
@@ -60,6 +65,8 @@ PROBLEM_REPORT_EMAIL: no-reply@example.com
 INVITER_BATCH_SIZE: 1 # num invites to send at once
 INVITER_INTERVAL: 2 # seconds
 INVITER_QUEUE_TIMEOUT: 10 # seconds
+
+SESSION_TIMEOUT_INTERVAL: 60
 
 FCM_ENABLED: false
 FCM_SERVER_KEY: replace-this-with-real-key
@@ -98,3 +105,9 @@ AT_WILL_MISSED_CALL_TIME_THRESHOLD: 30    # time in seconds the linguist should 
 AT_WILL_MISSED_CALL_PERIOD: 7200          # the interval in which the missed calls are counted (number in seconds)
 
 IPSTACK_API_KEY: dfe6c79f51e7e14f5d3cab950525db0d
+
+#GOOGLE SHEETS
+DAILY_ACTIVITY_REPORT: ["Google Sheet ID", "TAB ID"]
+ONVOY_LINGUIST_SIGNUP: ["Google Sheet ID", "TAB ID"]
+DAR_TEST: ["Google Sheet ID","TAB ID"]
+DAILY_CUSTOMER_CALL_REPORT: ["Google Sheet ID", "TAB ID"]
