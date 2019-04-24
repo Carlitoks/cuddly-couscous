@@ -9,7 +9,7 @@ import {
   updateSelectedScenario
 } from "../../../Ducks/NewSessionReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
-import I18n  from "../../../I18n/I18n";
+import I18n, { translateProperty }  from "../../../I18n/I18n";
 import { Bus, Shopping, Dinning, Translator, Teamwork, Layers } from "../../../Assets/SVG";
 import Reactotron from "reactotron-react-native";
 import metrics from "../../../Themes/Metrics";
@@ -30,18 +30,18 @@ class Scenario extends Component {
         return (
           <View style={styles.iconNameContainer}>
             { this.renderIcon(currentLang.id, "#3F1674") }
-            <Text style={{...ButtonStyle, color: "#3F1674", fontFamily: Fonts.BoldFont }}>{currentLang.title}</Text>
+            <Text style={{...ButtonStyle, color: "#3F1674", fontFamily: Fonts.BoldFont }}> {translateProperty(currentLang, 'title')} </Text>
           </View>
         );
       }
       return <View style={styles.iconNameContainer}>
         { this.renderIcon(currentLang.id, "black") }
-        <Text style={ButtonStyle}>{currentLang.title}</Text>
+        <Text style={ButtonStyle}> {translateProperty(currentLang, 'title')}</Text>
       </View>;
     }
     return <View style={styles.iconNameContainer}>
       { this.renderIcon(currentLang.id, "black") }
-      <Text style={ButtonStyle}>{currentLang.title}</Text>
+      <Text style={ButtonStyle}>{translateProperty(currentLang, 'title')}</Text>
     </View>;
   };
 
