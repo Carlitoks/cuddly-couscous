@@ -22,7 +22,7 @@ import { Colors } from "../../Themes";
 import { TroubleshootURI } from "../../Config/StaticViewsURIS";
 
 // For the moment
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiError } from "../../I18n/I18n";
 
 class ForgotPasswordView extends Component {
   validateForm() {
@@ -63,14 +63,14 @@ class ForgotPasswordView extends Component {
     if (this.validateForm()) {
       Auth.resetPassword(this.props.email)
         .then(response => {
-          //console.log("Response ", response); // TODO HANDLE ERRORS
+          this.props.navigation.dispatch({ type: "CheckYourEmailView" });
+          this.props.clearForm();
         })
         .catch(error => {
+          Alert.alert(I18n.t('error'), translateApiError(error));
           //console.log("Error ", error); // TODO HANDLE ERRORS
         });
 
-      this.props.navigation.dispatch({ type: "CheckYourEmailView" });
-      this.props.clearForm();
     }
   }
 
