@@ -913,7 +913,13 @@ class SessionView extends Component {
                   remoteThrottle={remoteUserState.connection.receivingThrottled}
                 />
                 )}
-                <CallTimer timer = { this.props.timer } />
+                <CallTimer
+                  timer={this.props.timer}
+                  session={this.props.session}
+                  isCustomer={this.props.isCustomer}
+                  onBalanceExceeded={() => { this.triggerEndCall(SESSION.END.BALANCE_EXCEEDED, false) }}
+                  onTimeExceeded={() => { this.triggerEndCall(SESSION.END.TIME_EXCEEDED, false) }}
+                />
                 <SessionControls
                   cameraFlipEnabled={ localUserState.controls.cameraFlipEnabled }
                   onCameraFlipPressed= {() => { this.toggleCameraFlip() }}

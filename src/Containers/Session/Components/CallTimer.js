@@ -1,7 +1,9 @@
 import React, {Component} from "react";
-import {Text, StyleSheet, View} from "react-native";
+import {Alert, Text, StyleSheet, View} from "react-native";
 import { formatTimerNumber } from "../../../Util/Format";
 import { moderateScale } from "../../../Util/Scaling";
+import { DURATION } from "../../../Util/Constants";
+import I18n from "../../../I18n/I18n";
 
 export class CallTimer extends Component {
   constructor(props) {
@@ -10,13 +12,42 @@ export class CallTimer extends Component {
     // timer values to render
     this.state = {
       minutes: 0,
-      seconds: 0
+      seconds: 0,
+      timeIsLow: false
     };
+
+    this.warnAfter = null;
+    this.endAfter = null;
+    this.triggerEnd = false;
+    this.triggerEndFunc = null;
+    this.warningShown = false;
+
+    // check for time or balance limits
+    if (!!props.session.durationBalanceLimit || !!props.session.durationTimeLimit) {
+      if (props.isCustomer) {
+        this.triggerEnd = true;
+      }
+      balanceLimit = props.session.durationBalanceLimit || false;
+      timeLimit = props.session.durationTimeLimit || false;
+      if (balanceLimit && timeLimit) {
+        this.endAfter = balanceLimit >= timeLimit ? timeLimit*DURATION.MINUTES : balanceLimit*DURATION.MINUTES;
+        this.triggerEndFunc = balanceLimit >= timeLimit ? props.onTimeExceeded : props.onBalanceExceeded;
+      } else if (balanceLimit) {
+        this.endAfter = balanceLimit * DURATION.MINUTES;
+        this.triggerEndFunc = props.onBalanceExceeded;
+      } else if (timeLimit) {
+        this.endAfter = balanceLimit * DURATION.MINUTES;
+        this.triggerEndFunc = props.onBalanceExceeded;
+      }
+      this.warnAfter = this.endAfter - (2*DURATION.MINUTES);
+    }
 
     // timestamp when the timer last started
     this.startedAt = null;
-    // how much time elapsed from previous timer events
+    // how much time in ms elapsed from previous timer events
     this.previouslyElapsed = 0;
+    // how much time in ms is currently on the clock
+    this.currentlyElapsed = 0;
 
     this.mounted = true;
     this.intervalID = null;
@@ -81,34 +112,67 @@ export class CallTimer extends Component {
     }
 
     const now = new Date().getTime();
-    let total = this.previouslyElapsed + (now - this.startedAt);
-    let seconds = total / 1000;
-    let minutes = parseInt(seconds / 60, 10);
-    let s = parseInt(seconds % 60 , 10);
+    let elapsed = this.previouslyElapsed + (now - this.startedAt);
+    this.currentlyElapsed = elapsed;
+    timeIsLow = !!this.warnAfter && elapsed > this.warnAfter;
+    let minutes = 0;
+    let seconds = 0;
 
+    // if time is low, we count down instead of up so the users know
+    // how much time is remaining
+    if (timeIsLow) {
+      let endAfterSeconds = (this.endAfter - elapsed) / DURATION.SECONDS;
+      minutes = parseInt(endAfterSeconds / 60, 10);
+      seconds = parseInt(endAfterSeconds % 60 , 10);
+    } else {
+      let elapsedSeconds = elapsed / DURATION.SECONDS;
+      minutes = parseInt(elapsedSeconds / 60, 10);
+      seconds = parseInt(elapsedSeconds % 60 , 10);
+    }
+    
     this.setState({
-      minutes: minutes,
-      seconds: s
+      minutes,
+      seconds,
+      timeIsLow
     });
+
+    // show alert?
+    if (timeIsLow && !this.warningShown) {
+      this.warningShown = true;
+      Alert.alert(I18n.t('notification'), I18n.t('session.callEndingSoon'), [{text: I18n.t('actions.ok')}]);
+    }
+
+    // have we exceeded a limit and should end?
+    if (this.triggerEnd && elapsed >= this.endAfter) {
+      this.triggerEndFunc();
+    }
   }
 
   render() {
-    const {minutes, seconds} = this.state;
+    const {minutes, seconds, timeIsLow} = this.state;
     return (
-      <View style = {styles.container}>
+      <View style = {timeIsLow ? styles.containerWarning : styles.container}>
         <Text style = {styles.text}>{formatTimerNumber(minutes)}:{formatTimerNumber(seconds)}</Text>
       </View>
     )
   }
 }
 
+const container = {
+  width: "100%",
+  padding: 10,
+  alignItems: "center",
+  marginBottom: 1
+};
+
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    padding: 10,
+    ...container,
     backgroundColor: "rgba(0, 0, 0, 0.33)",
-    alignItems: "center",
-    marginBottom: 1
+  },
+  containerWarning: {
+    ...container,
+    backgroundColor: "rgba(255, 0, 0, 0.5)",
   },
   text: {
     fontSize: moderateScale(20, 0),

@@ -102,13 +102,22 @@ export const createNewSession = (params) => (dispatch, getState) => {
       status: { creating: true, created: false, began: false, ending: false, ended: false }
     }));
 
-    api.post('/sessions', params).then((res) => {
+    getGeolocationCoords()
+    .then((res) => {
+      params.location = [res.coords.longitude, res.coords.latitude];
+    })
+    .finally(() => {
+      return api.post('/sessions', params)
+    })
+    .then((res) => {
       dispatch(update({
         credentials: res.data,
         sessionID: res.data.sessionID,
         session: {
           ...getState().currentSessionReducer.session,
-          id: res.data.sessionID
+          id: res.data.sessionID,
+          durationBalanceLimit: res.data.durationBalanceLimit || null,
+          durationTimeLimit: res.data.durationTimeLimit || null
         },
         status: { creating: false, created: true, began: false, ending: false, ended: false }
       }));
