@@ -523,8 +523,8 @@
     registrationWelcome: {
       balance: "{{num}}分",
       onboardingTitle: "10分無料",
-      title: "最初の10分は無料です！",
-      description: "最初の10分が経過すると、1分あたり$1（米ドル）の料金がかかります。",
+      title: "最初の{{num}}分は無料です！",
+      description: "最初の{{num}}分が経過すると、1分あたり$1（米ドル）の料金がかかります。",
       buttons: {
         dismiss: "Jeenieの使用を開始する",
         payment: "今すぐお支払い情報を追加"
@@ -557,7 +557,7 @@
       video: "ビデオ通話"
     },
     rateNotices: {
-      beforeFirst: "料金：1分あたり$1（米ドル） | 最初の10分は無料。",
+      beforeFirst: "料金：1分あたり$1（米ドル） | 最初の{{num}}分は無料。",
       afterFirst: "料金：1分あたり$1（米ドル） | 無料通話残り{{num}}分",
       noBalanceNoCard: "料金：1分あたり$1（米ドル） | 続けるにはカードを追加してください",
       noBalanceHasCard: "料金：1分あたり$1（米ドル）",

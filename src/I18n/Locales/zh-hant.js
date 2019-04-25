@@ -523,8 +523,8 @@
     registrationWelcome: {
       balance: "{{num}} 分鐘",
       onboardingTitle: "免費 10 分鐘",
-      title: "前 10 分鐘免費！",
-      description: "10 分鐘過後，每分鐘的價格是 1 美元。",
+      title: "前 {{num}} 分鐘免費！",
+      description: "{{num}} 分鐘過後，每分鐘的價格是 1 美元。",
       buttons: {
         dismiss: "開始使用翻譯精靈",
         payment: "立即新增付款資訊"
@@ -557,7 +557,7 @@
       video: "視訊通話"
     },
     rateNotices: {
-      beforeFirst: "費率：每分鐘 1 美元，前 10 分鐘免費。",
+      beforeFirst: "費率：每分鐘 1 美元，前 {{num}} 分鐘免費。",
       afterFirst: "費率：每分鐘 1 美元，免費時間還剩 {{num}} 分鐘",
       noBalanceNoCard: "費率：每分鐘 1 美元。請新增卡片以利繼續通話",
       noBalanceHasCard: "費率：每分鐘 1 美元。",

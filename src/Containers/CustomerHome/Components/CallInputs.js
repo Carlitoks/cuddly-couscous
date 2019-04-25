@@ -16,6 +16,7 @@ import I18n from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallInputsStyles";
 import { moderateScaleViewports } from "../../../Util/Scaling";
+import { CUSTOMER_FREE_MINUTES } from "../../../Util/Constants";
 
 class CallInputs extends Component {
 
@@ -26,7 +27,7 @@ class CallInputs extends Component {
   paymentNotice = () => {
     const { isNewUser, availableMinutes, stripePaymentToken } = this.props;
     if (isNewUser) {
-      return I18n.t("newCustomerHome.rateNotices.beforeFirst");
+      return I18n.t("newCustomerHome.rateNotices.beforeFirst", {num: CUSTOMER_FREE_MINUTES});
     }
     if (availableMinutes) {
       if (stripePaymentToken) {
