@@ -43,7 +43,6 @@ class SettingsView extends Component {
             <Grid style={styles.summaryContainer}>
               <List containerStyle={styles.listContainer}>
                 {/* Change interface localization */}
-                {isLinguist ? null : (
                   <ListItem
                     containerStyle={styles.listItemContainer}
                     title={I18n.t("interfaceLocalization")}
@@ -56,7 +55,6 @@ class SettingsView extends Component {
                       });
                     }}
                   />
-                )}
                 {/* Payment details */}
                 {isLinguist ? null : (
                   <ListItem
