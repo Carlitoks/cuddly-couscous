@@ -6,38 +6,27 @@ import { getS } from "../Config/CreateStore";
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallHistory from "../Containers/CallHistory/CallHistoryView";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
-import CallPricingView from "../ContactLinguist/CallPricingView/CallPricingView";
+
 import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
-import ContactLinguist from "../ContactLinguist/SelectLanguageView/SelectLanguageView";
-import NameCustomerView from "../Onboarding/NameCustomerView/NameCustomerView";
-import PreferredNameCustomerView from "../Onboarding/PreferredNameCustomerView/PreferredNameCustomerView";
-import EmailCustomerView from "../Onboarding/EmailCustomerView/EmailCustomerView";
 import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
-import GenderCustomerView from "../Onboarding/GenderCustomerView/GenderCustomerView";
-import WelcomeCustomerView from "../Onboarding/WelcomeCustomerView/WelcomeCustomerView";
-import PhoneCustomerView from "../Onboarding/PhoneCustomerView/PhoneCustomerView";
-import LanguageCustomerView from "../Onboarding/LanguageCustomerView/LanguageCustomerView";
-import CustomerProfile from "../Onboarding/CustomerProfileView/CustomerProfileView";
 import CustomerView from "../Call/Customer/Call/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
 import CheckYourEmailView from "../Onboarding/ForgotPasswordView/CheckYourEmailView";
+
 import Home from "../Home/Home";
 import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
 import LinguistView from "../Call/Linguist/Call/LinguistView";
 import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 
-import LoginView from "../Onboarding/LoginView/LoginView";
 import MenuView from "../Components/MenuView/MenuView";
 
 // Onboarding - Select Language
 import SelectLanguageView from "../LinguistForm/SelectLanguageView/SelectLanguageView";
 import LanguageSettingsView from "../LinguistForm/LanguageSettingsView/LanguageSettingsView";
-import ResetPasswordView from "../Onboarding/ResetPasswordView/ResetPasswordView";
 
 //List Views
 import NativeLanguageView from "../Lists/NativeLanguageView/NativeLanguageView";
 
-import SelectRoleView from "../Onboarding/SelectRoleView/SelectRoleView";
 import RateView from "../RateCall/RateExperience/RateView";
 import NameLinguistView from "../LinguistForm/NameLinguistView/NameLinguistView";
 import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguistView";
@@ -58,18 +47,12 @@ import CallSettings from "../CallSettings/CallSettings";
 import SettingsView from "../Settings/SettingsView";
 import InterfaceLanguageView from "../Settings/InterfaceLanguageView";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
-import CallConfirmationView from "../Call/Customer/CallConfirmation/CallConfirmationView";
-import FeedbackView from "../Home/Customer/FeedbackView/FeedbackView";
-import SessionLanguageView from "../Call/Customer/SessionLanguageView/SessionLanguageView";
 import StaticView from "../StaticView/StaticView";
 import TextView from "../Components/TextView/TextView";
-import CustomScenarioView from "../Call/Customer/CustomScenario/CustomScenarioView";
-import ScenarioSelectionView from "../Call/Customer/ScenarioSelectionView/ScenarioSelectionView";
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
 import ConnectingView from "../Call/Linguist/Connecting/ConnectingView";
-import PaymentsView from "../Payments/PaymentsView";
 import OnboardingScreen from "../Containers/Onboarding/OnboardingScreen";
 import LoginScreen from "../Containers/Login/LoginScreen";
 import RegisterScreen from "../Containers/Register/RegisterScreen";
@@ -120,12 +103,7 @@ const Navigation = StackNavigator(
         gesturesEnabled: false
       }
     },
-    CallPricingView: {
-      screen: CallPricingView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
+
     ContactingLinguist: {
       screen: ContactingLinguist,
       navigationOptions: {
@@ -154,33 +132,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    ContactLinguist: {
-      screen: ContactLinguist,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    NameCustomerView: {
-      screen: NameCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    PreferredNameCustomerView: {
-      screen: PreferredNameCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    EmailCustomerView: {
-      screen: EmailCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
+
     PasswordCustomerView: {
       screen: PasswordCustomerView,
       navigationOptions: {
@@ -188,40 +140,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    GenderCustomerView: {
-      screen: GenderCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    PhoneCustomerView: {
-      screen: PhoneCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    WelcomeCustomerView: {
-      screen: WelcomeCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    LanguageCustomerView: {
-      screen: LanguageCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    CustomerProfile: {
-      screen: CustomerProfile,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
+
     CustomerView: {
       screen: CustomerView,
       navigationOptions: {
@@ -236,31 +155,11 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    CheckYourEmailView: {
-      screen: CheckYourEmailView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
+
     Home: {
       screen: Home
     },
-    FeedbackView: {
-      screen: FeedbackView
-    },
-    CustomScenarioView: {
-      screen: CustomScenarioView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    ScenarioSelectionView: {
-      screen: ScenarioSelectionView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
+
     IncomingCallView: {
       screen: IncomingCallView,
       navigationOptions: {
@@ -298,6 +197,13 @@ const Navigation = StackNavigator(
     },
     PasswordLinguistView: {
       screen: PasswordLinguistView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    CheckYourEmailView: {
+      screen: CheckYourEmailView,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
@@ -386,13 +292,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    SelectRoleView: {
-      screen: SelectRoleView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
+
     IntroView: {
       screen: OnboardingScreen,
       navigationOptions: {
@@ -420,18 +320,6 @@ const Navigation = StackNavigator(
     },
     UserProfileView: {
       screen: UserProfileView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    CallConfirmationView: {
-      screen: CallConfirmationView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    SessionLanguageView: {
-      screen: SessionLanguageView,
       navigationOptions: {
         gesturesEnabled: false
       }

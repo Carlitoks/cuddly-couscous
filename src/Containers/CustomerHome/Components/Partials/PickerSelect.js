@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { Divider, Icon } from "react-native-elements";
 import { FilterLangsByCodes } from "../../../../Config/Languages";
-import I18n, { translateLanguage } from "../../../../I18n/I18n";
+import I18n, { translateLanguage, translateProperty } from "../../../../I18n/I18n";
 // Styles
 import styles from "./Styles/PickerSelectStyles";
 
@@ -69,7 +69,7 @@ class PickerSelectComponent extends Component {
             nunmberOfLines={1}
             style={selectedLabelStyle || styles.inputValue}
           >
-            {selectedScenario.title}
+            {translateProperty(selectedScenario, 'title')}
           </Text>
         </View>
       );
