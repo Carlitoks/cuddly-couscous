@@ -1799,8 +1799,8 @@ export const primaryCodes = [
   "spa-es",
   "deu",
   "fra",
-  "fra-ca",
-  "fra-fr",
+  // "fra-ca",
+  // "fra-fr",
   "arb",
   "aao",
   "ara-arz_apd",
@@ -1808,8 +1808,8 @@ export const primaryCodes = [
   "acm",
   "ara-apc_ajp",
   "por",
-  "por-br",
-  "por-pt",
+  // "por-br",
+  // "por-pt",
   "rus",
   "ita",
   "kor",
@@ -1870,7 +1870,6 @@ export const comingSoonCodes = [
   "dan",
   "deu",
   "fin",
-  "fra",
   "hin",
   "ita",
   "kor",
@@ -1887,7 +1886,7 @@ export const comingSoonCodes = [
 
 // languages available for session selection
 // TODO: export this config to replace SUPPORTED_LANGS
-export const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "spa", "por"];
+export const supportedLangCodes = ["eng", "cmn", "yue", "jpn", "spa", "por", "fra"];
 
 // default secondary language for a given primary language
 export const DefaultLanguagePairMap = {
@@ -1896,12 +1895,13 @@ export const DefaultLanguagePairMap = {
   yue: "eng",
   jpn: "eng",
   spa: "eng",
-  por: "eng"
+  por: "eng",
+  fra: "eng"
 };
 
 // allowed secondary language choices for each primary language
 export const AllowedLanguagePairs = {
-  eng: ["cmn", "yue", "jpn", "spa", "por"],
+  eng: ["cmn", "yue", "jpn", "spa", "por", "fra"],
   cmn: ["eng"],
   yue: ["eng"],
   jpn: ["eng"],
@@ -1911,28 +1911,13 @@ export const AllowedLanguagePairs = {
 
 // raw map of which language is the default selection for which countries
 export const LangCountryMap = {
-  eng: [
-    "us",
-    "vi",
-    "gb",
-    "au",
-    "nz",
-    "ie",
-    "in",
-    "mh",
-    "jm",
-    "il",
-    "is",
-    "gl",
-    "ca",
-    "io",
-    "vg"
-  ],
+  eng: ["us","vi","gb","au","nz","ie","in","mh","jm","il","is","gl","ca","io","vg"],
   cmn: ["cn", "tw", "sg"],
   yue: ["hk", "mo"],
   jpn: ["jp"],
   spa: ["ar","bo","cl","co","cr","cu","dr","ec","sv","gq","gt","hn","mx","ni","pa","py","pe","es","uy","ve"],
-  por: ["pt","br"]
+  por: ["pt","br"],
+  fra: ["fr","be","bj","bf","bi","cm","td","km","cg","cd","ci","dj","ga","gn","ht","lu","mg","ml","mc","ne","rw","sn","sc","ch","tg","vu","vn"]
 };
 
 // optimized lookup map of country codes to target default language
@@ -1945,7 +1930,8 @@ export const LocaleLangMap = {
   "zh-hant": "yue",
   es: "spa",
   ja: "jpn",
-  // pt: "por"
+  pt: "por",
+  fr: "fra"
 };
 
 function buildCountryLangMap() {
