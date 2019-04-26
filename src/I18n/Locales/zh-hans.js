@@ -427,6 +427,14 @@
   youWillBeKnown: "您会被称为",
   youCanAddTime: "您可以在通话过程中增加时间",
   youCanChangeThis: "您可以在通话过程中打开/关闭视频",
+
+  appUpdateAlert: {
+    title: "更新可用",
+    description: "您需要更新Jeenie来享受新增的功。",
+    ok: "好的",
+    ignore: "忽略"
+  },
+   
   //new onboarding
   onboardingView: {
     help: "有什么能够帮您的吗？"

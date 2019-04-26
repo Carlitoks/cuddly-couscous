@@ -427,6 +427,14 @@
   youWillBeKnown: "ユーザー名：",
   youCanAddTime: "通話中に時間を延長できます",
   youCanChangeThis: "通話中にビデオのオン/オフを切り替えられます",
+
+  appUpdateAlert: {
+    title: "アップデートあり",
+    description: "新たなフィーチャーをご利用されたい場合ジーニーのアプリのアップデートが必須",
+    ok: "アップデート",
+    ignore: "消し去る"
+  },  
+
   //new onboarding
   onboardingView: {
     help: "必要なサポートをお聞かせください。"

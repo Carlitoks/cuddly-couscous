@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { NetInfo, Text, AppState, Platform } from "react-native";
+import { Alert, Linking, NetInfo, Text, AppState, Platform } from "react-native";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
-import { codePushAndroidKey, codePushiOSKey, analyticsKey } from "./Config/env";
+import { codePushAndroidKey, codePushiOSKey, analyticsKey, promptUpdate } from "./Config/env";
 
 import { delayUpdateInfo } from "./Ducks/NetworkInfoReducer";
 import { updateSettings } from "./Ducks/SettingsReducer";
@@ -130,6 +130,8 @@ class App extends Component {
 
         // Even Listener to Detect Network Change
         NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
+
+        this.updateAvailableAlert();
       });
     // PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
     // PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
@@ -165,6 +167,36 @@ class App extends Component {
       persistEvents();
     }
   };
+
+  updateAvailableAlert() {
+    if (!promptUpdate) {
+      return;
+    }
+    const url = Platform.OS == "ios" ? "itms-apps://itunes.apple.com/app/apple-store/id1341871432?mt=8" : "market://details?id=com.newsolo";
+    Alert.alert(
+      I18n.t("appUpdateAlert.title"),
+      I18n.t("appUpdateAlert.description"),
+      [
+        {
+          text: I18n.t("appUpdateAlert.ok"),
+          onPress: () => {
+            try {
+              Linking.canOpenURL(url).then(supported => {
+                if (!supported) {
+                  console.log("Can't handle url: " + url);
+                } else {
+                  return Linking.openURL(url);
+                }
+              }).catch(err => console.error('An error occurred', err));              
+            } catch (e) {
+              console.log('error from linking', e);
+            }
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  }
 
   render() {
     if (this.state.loadingStore) {

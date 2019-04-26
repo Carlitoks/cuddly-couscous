@@ -400,6 +400,14 @@ export default (ENG = {
   youWillBeKnown: "You'll be known as",
   youCanAddTime: "You can add time during call",
   youCanChangeThis: "You can turn video on/off during call",
+
+  appUpdateAlert: {
+    title: "Update Available",
+    description: "You must update Jeenie in order to take advantage of new features.",
+    ok: "Ok",
+    ignore: "Ignore"
+  },
+
   //new onboarding
   onboardingView: {
     help: "Can I help you?"

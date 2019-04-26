@@ -427,6 +427,14 @@ export default (PT = {
   youWillBeKnown: "Você será conhecido como",
   youCanAddTime: "Você pode adicionar tempo durante a chamada",
   youCanChangeThis: "Você pode ligar ou desligar o vídeo durante a chamada",
+
+  appUpdateAlert: {
+    title: "Atualização Disponível",
+    description: "Você deve atualizar Jeenie para aproveitar seus novos recursos.",
+    ok: "Ok",
+    ignore: "Ignore"
+  },
+  
   //new onboarding
   onboardingView: {
     help: "Posso ajudar?"
