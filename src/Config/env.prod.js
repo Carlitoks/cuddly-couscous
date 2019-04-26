@@ -9,6 +9,8 @@ export const codePushAndroidKey = "WFjG18TuRC9phOCXffSkV8o6B5vWHkurdr21Q";
 export const analyticsKey = "faop9ifj8TTxIWifE2VjHAsOTcV4smnW";
 export const forensicsEnabled = true;
 
+export const promptUpdate = false;
+
 export const CACHE = {
   SCENARIOS: 3 * DURATION.HOURS,
   CONFIG: 3 * DURATION.HOURS,
