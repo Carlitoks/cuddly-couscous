@@ -8,7 +8,11 @@ import Header from "./Components/Header";
 import AvatarSection from "./Components/AvatarSection";
 import CallInputs from "./Components/CallInputs";
 import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
-import { ensureSessionDefaults, updateLocation } from "../../Ducks/NewSessionReducer";
+import {
+  ensureSessionDefaults,
+  updateLocation,
+  guessSecondaryLangCode
+} from "../../Ducks/NewSessionReducer";
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
 import { getProfileAsync } from "../../Ducks/UserProfileReducer";
@@ -33,16 +37,16 @@ class CustomerHomeScreen extends Component {
       clearActiveSession,
       navigation,
       firstName,
-      completedLocation,
+      completedLocation
     } = this.props;
 
     analytics.identify(uuid, {
-      name: firstName,
+      name: firstName
     });
 
     ensureSessionDefaults({
       primaryLangCode: this.setPrimaryLangCode(),
-      secondaryLangCode: secondaryLangCode || "",
+      secondaryLangCode: secondaryLangCode || ""
     });
 
     // Clean call
@@ -63,7 +67,7 @@ class CustomerHomeScreen extends Component {
       uuid,
       token,
       getProfileAsync,
-      loadSessionScenarios,
+      loadSessionScenarios
     } = this.props;
 
     if (uuid !== "" && token !== "") {
@@ -81,8 +85,8 @@ class CustomerHomeScreen extends Component {
         I18n.t("minutesAdded"),
         I18n.t("complimentMinutes", {
           maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
-          organizer: this.props.navigation.state.params.organization,
-        }),
+          organizer: this.props.navigation.state.params.organization
+        })
       );
     }
     loadSessionScenarios(true);
@@ -90,6 +94,7 @@ class CustomerHomeScreen extends Component {
 
   setPrimaryLangCode = () => {
     const { primaryLangCode, nativeLangCode } = this.props;
+    this.props.guessSecondaryLangCode();
     if (primaryLangCode) {
       return primaryLangCode;
     }
@@ -102,7 +107,7 @@ class CustomerHomeScreen extends Component {
     return "eng";
   };
 
-  openSlideMenu = (type) => {
+  openSlideMenu = type => {
     const { openSlideMenu } = this.props;
     return openSlideMenu({ type });
   };
@@ -112,7 +117,7 @@ class CustomerHomeScreen extends Component {
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={styles.mainContainerHome}>
-          <Header navigation={navigation}/>
+          <Header navigation={navigation} />
           <ScrollView
             automaticallyAdjustContentInsets
             alwaysBounceVertical={false}
@@ -120,11 +125,11 @@ class CustomerHomeScreen extends Component {
           >
             <AvatarSection />
             <View style={styles.flexEndCenter}>
-              <CallInputs navigation={navigation} openSlideMenu={this.openSlideMenu}/>
-              <CallButtons navigation={navigation}/>
+              <CallInputs navigation={navigation} openSlideMenu={this.openSlideMenu} />
+              <CallButtons navigation={navigation} />
             </View>
           </ScrollView>
-          <SlideUpPanel/>
+          <SlideUpPanel />
         </View>
       </ViewWrapper>
     );
@@ -138,7 +143,7 @@ const mS = state => ({
   token: state.auth.token,
   uuid: state.auth.uuid,
   firstName: state.userProfile.firstName,
-  completedLocation: state.onboardingReducer.completedLocation,
+  completedLocation: state.onboardingReducer.completedLocation
 });
 
 const mD = {
@@ -149,9 +154,10 @@ const mD = {
   clearActiveSession,
   getProfileAsync,
   loadSessionScenarios,
+  guessSecondaryLangCode
 };
 
 export default connect(
   mS,
-  mD,
+  mD
 )(CustomerHomeScreen);
