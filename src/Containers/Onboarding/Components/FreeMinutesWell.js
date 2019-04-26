@@ -8,6 +8,7 @@ import PaymentModal from "../../../Home/Customer/PaymentModal/PaymentModal";
 // Styles
 import styles from "./Styles/FreeMinutesWellStyles";
 import ClockTime from "../../../Assets/SVG/clockTime";
+import { CUSTOMER_FREE_MINUTES } from "../../../Util/Constants";
 
 class FreeMinutesWell extends Component {
   setPillColor = () => {
@@ -81,7 +82,7 @@ class FreeMinutesWell extends Component {
     const { navigation } = this.props;
     if (navigation.state.routeName === "IntroView") {
       return (
-        <Text style={styles.wellTitle}>{I18n.t("customerHome.registrationWelcome.title")}</Text>
+        <Text style={styles.wellTitle}>{I18n.t("customerHome.registrationWelcome.title", {num: CUSTOMER_FREE_MINUTES})}</Text>
       );
     }
     return <React.Fragment />;
@@ -101,10 +102,10 @@ class FreeMinutesWell extends Component {
         </Text>
       )
     } else {
-      return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
+      return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description", {num: CUSTOMER_FREE_MINUTES})}</Text>
     }
     
-    return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description")}</Text>
+    return <Text style={styles.wellSubtitle}>{I18n.t("customerHome.registrationWelcome.description", {num: CUSTOMER_FREE_MINUTES})}</Text>
   };
 
   onPressAction = () => {

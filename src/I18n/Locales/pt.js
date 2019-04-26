@@ -523,8 +523,8 @@ export default (PT = {
     registrationWelcome: {
       balance: "{{num}} minutos",
       onboardingTitle: "10 minutos GRATUITOS",
-      title: "Seus primeiros 10 minutos são gratuitos!",
-      description: "Após seus primeiros 10 minutos, o preço será US$ 1 por minuto.",
+      title: "Seus primeiros {{num}} minutos são gratuitos!",
+      description: "Após seus primeiros {{num}} minutos, o preço será US$ 1 por minuto.",
       buttons: {
         dismiss: "Comece a usar o Jeenie",
         payment: "Adicione informações de pagamento agora"
@@ -557,7 +557,7 @@ export default (PT = {
       video: "Chamada de vídeo"
     },
     rateNotices: {
-      beforeFirst: "Taxa: US$ 1 por min. Primeiros 10 minutos GRATUITOS.",
+      beforeFirst: "Taxa: US$ 1 por min. Primeiros {{num}} minutos GRATUITOS.",
       afterFirst: "Taxa: US$ 1 por min {{num}} minutos restantes GRATUITOS",
       noBalanceNoCard: "Taxa: US$ 1 por min. Adicione um cartão para continuar",
       noBalanceHasCard: "Taxa: US$ 1 por min.",

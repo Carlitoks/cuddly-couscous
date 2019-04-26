@@ -104,3 +104,5 @@ export const DURATION = {
   HOURS: 1000 * 60 * 60,
   DAYS: 1000 * 60 * 60 * 24
 };
+
+export const CUSTOMER_FREE_MINUTES = 5;

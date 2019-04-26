@@ -523,8 +523,8 @@ export default (ESP = {
     registrationWelcome: {
       balance: "{{num}} minutos",
       onboardingTitle: "10 minutos GRATIS",
-      title: "¡Los primeros 10 minutos son gratuitos!",
-      description: "Después de los primeros 10 minutos, el precio es de $1 USD por minuto.",
+      title: "¡Los primeros {{num}} minutos son gratuitos!",
+      description: "Después de los primeros {{num}} minutos, el precio es de $1 USD por minuto.",
       buttons: {
         dismiss: "Comenzar a usar Jeenie",
         payment: "Agregar información de pago ahora"
@@ -557,7 +557,7 @@ export default (ESP = {
       video: "Videollamada"
     },
     rateNotices: {
-      beforeFirst: "Tarifa: $1 USD por minuto. Los primeros 10 minutos son GRATIS.",
+      beforeFirst: "Tarifa: $1 USD por minuto. Los primeros {{num}} minutos son GRATIS.",
       afterFirst: "Tarifa: $1 USD por minuto. Quedan {{num}} minutos GRATIS",
       noBalanceNoCard: "Tarifa: $1 USD por minuto. Agregue una tarjeta para continuar.",
       noBalanceHasCard: "Tarifa: $1 USD por minuto.",

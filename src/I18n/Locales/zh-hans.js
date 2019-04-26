@@ -523,8 +523,8 @@
     registrationWelcome: {
       balance: "{{num}} 分钟",
       onboardingTitle: "免费 10 分钟",
-      title: "前 10 分钟免费！",
-      description: "10 分钟后，每分钟收费 1 美元。",
+      title: "前 {{num}} 分钟免费！",
+      description: "{{num}} 分钟后，每分钟收费 1 美元。",
       buttons: {
         dismiss: "开始使用翻译精灵",
         payment: "立即添加付款信息"
@@ -557,7 +557,7 @@
       video: "视频通话"
     },
     rateNotices: {
-      beforeFirst: "费率：每分钟 1 美元，前 10 分钟免费。",
+      beforeFirst: "费率：每分钟 1 美元，前 {{num}} 分钟免费。",
       afterFirst: "费率：每分钟 1 美元，免费时间剩余 {{num}} 分钟",
       noBalanceNoCard: "费率：每分钟 1 美元，请添加银行卡后继续通话",
       noBalanceHasCard: "费率：每分钟 1 美元。",

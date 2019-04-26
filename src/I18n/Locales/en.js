@@ -48,9 +48,6 @@ export default (ENG = {
   callWillEnd: "Call will end once time expires",
   cancel: "Cancel",
   cancelCall: "Cancel call",
-  celebrateAndEnjoy: "Celebrate our launch \n and enjoy Jeenie for \n 10 minutes FREE!",
-  celebrateAndEnjoyAlternative:
-    "Celebrate our launch and \nenjoy 10 minutes with Jeenie \nfor FREE!",
   celebrateWithUs: "Celebrate our launch with us!",
   changeSettings: "To change your settings, go to Settings > Jeenie",
   cancelCallCustomer: "The call isn't available",
@@ -220,9 +217,6 @@ export default (ENG = {
     "Wherever you are in the world, access live, human language speakers in real-time.",
   lauchScreenSwipe3:
     "Currently, Jeenie provides language support in \n Mandarin <> English \n and Japanese <> English.\n\n Additional languages are coming soon.",
-  lauchScreenSwipe4: "The average call lasts 5 to 10 minutes, but speak as long as you like.",
-  lauchScreenSwipe5:
-    "In celebration of our launch, your first 10 minutes are FREE …compliment of Jeenie!",
   lastname: "Last name",
   lastnameFormatValidation: "Last name must be only letters.",
   legal: "Legal",
@@ -303,8 +297,6 @@ export default (ENG = {
   progressiveImageComponent: "Progressive Image Component",
   provideFeedback: "Provide Feedback",
   provideFeedbackModalTitle: "Need more time with Jeenie?",
-  provideFeedbackModalText:
-    "Provide feedback about your \nexperience using Jeenie, and \nwe’ll give you an additional \n10 minutes for FREE!",
   provideFeedbackViewPlaceholder: "Add your feedback here",
   provideFeedbackViewTitle: "Tell us how we can improve the Jeenie experience:",
   qr: "QR Code",
@@ -377,8 +369,6 @@ export default (ENG = {
   troubleshoot: "Troubleshoot",
   thankYou: " Thank You",
   thankYouFeedback: " Thank You for your feedback",
-  thankYouFeedbackModalText:
-    "We've added an additional \n10 minutes for you to \ncontinue using Jeenie.",
   theCallWillEnd: "The call will end after {{minutes}} minutes",
   undefined: "Undefined",
   unspecified: "Unspecified",
@@ -526,9 +516,8 @@ export default (ENG = {
     },
     registrationWelcome: {
       balance: "{{num}} minutes",
-      onboardingTitle: "10 FREE Minutes",
-      title: "Your First 10 Minutes Are Free!",
-      description: "After your first 10 minutes, pricing is $1 USD per minute.",
+      title: "Your First {{num}} Minutes Are Free!",
+      description: "After your first {{num}} minutes, pricing is $1 USD per minute.",
       buttons: {
         dismiss: "Start Using Jeenie",
         payment: "Add Payment Information Now"
@@ -565,7 +554,7 @@ export default (ENG = {
       video: "Video Call"
     },
     rateNotices: {
-      beforeFirst: "Rate: US $1 per min. First 10 mins FREE.",
+      beforeFirst: "Rate: US $1 per min. First {{num}} mins FREE.",
       afterFirst: "Rate: US $1 per min. {{num}} FREE mins remaining",
       noBalanceNoCard: "Rate: US $1 per min. Please add card to continue",
       noBalanceHasCard: "Rate: US $1 per min.",
@@ -850,7 +839,7 @@ export default (ENG = {
     createAccount: "Create Account",
     intro: {
       title: "Real-time Assistance",
-      description: "24/7 access to live, human translators for language help at the tap of a button.  Rate: US$1 per min.  First 10 mins FREE.",
+      description: "24/7 access to live, human translators for language help at the tap of a button.  Rate: US$1 per min.  First {{num}} mins FREE.",
       button: "Get Started"
     },
     location: {
