@@ -15,7 +15,7 @@ class PermissionButtons extends Component {
   propmtPermission = async (permission) => {
     const { navigation, updateLocation, updateOnboarding } = this.props;
     const currentState = await Permissions.check(`${permission}`);
-    if (currentState === "undetermined") {
+    if (currentState === "undetermined" || currentState === "denied") {
       await Permissions.request(`${permission}`);
     }
     if (permission === "camera" || permission === "microphone") {
@@ -26,17 +26,23 @@ class PermissionButtons extends Component {
       }
     } else {
       if (permission === "location") {
-        updateOnboarding({ completedLocation: true });
-        if (Platform.OS === "android") {
-          updateOnboarding({ completedNotification: true });
-          navigation.dispatch({ type: "Home" });
-        } else {
-          navigation.dispatch({ type: "Home" });
+        const currentState = await Permissions.check(`${permission}`);
+        if (currentState === "granted") {
+          updateOnboarding({ completedLocation: true });
+          if (Platform.OS === "android") {
+            updateOnboarding({ completedNotification: true });
+            navigation.dispatch({ type: navigation.state.params.redirectTo });
+          } else {
+            navigation.dispatch({ type: navigation.state.params.redirectTo });
+          }
         }
       }
       if (permission === "notification") {
-        updateOnboarding({ completedNotification: true });
-        navigation.dispatch({ type: "Home" });
+        const currentState = await Permissions.check(`${permission}`);
+        if (currentState === "granted") {
+          updateOnboarding({ completedNotification: true });
+          navigation.dispatch({ type: navigation.state.params.redirectTo });
+        }
       }
     }
   };
@@ -50,9 +56,9 @@ class PermissionButtons extends Component {
         updateOnboarding({ completedLocation: true });
         if (Platform.OS === "android") {
           updateOnboarding({ completedNotification: true });
-          navigation.dispatch({ type: "Home" });
+          navigation.dispatch({ type: navigation.state.params.redirectTo });
         } else {
-          navigation.dispatch({ type: "Home" });
+          navigation.dispatch({ type: navigation.state.params.redirectTo });
         }
       }
     }
@@ -62,7 +68,7 @@ class PermissionButtons extends Component {
       const checkPermissions = await Permissions.check("notification");
       if (checkPermissions === "authorized") {
         updateOnboarding({ completedNotification: true });
-        navigation.dispatch({ type: "Home" });
+        navigation.dispatch({ type: navigation.state.params.redirectTo });
       }
     }
 
@@ -83,11 +89,11 @@ class PermissionButtons extends Component {
   renderTitle = () => {
     const { check } = this.props;
     if (check === "Location") {
-      return I18n.t("customerOnboarding.location.button");
+      return I18n.t("newCustomerOnboarding.location.button");
     }
 
     if (check === "Notification") {
-      return I18n.t("customerOnboarding.notification.button");
+      return I18n.t("newCustomerOnboarding.notification.button");
     }
 
     if (check === "CameraMic") {
@@ -99,9 +105,9 @@ class PermissionButtons extends Component {
   renderSubButton = () => {
     const { check } = this.props;
     if (check != "CameraMic") {
-      return I18n.t("customerOnboarding.location.skip");
+      return I18n.t("actions.skip");
     }
-    return I18n.t("customerHome.sessionPermissions.back");
+    return I18n.t("actions.back");
   };
 
   pressReturn = () => {
@@ -109,16 +115,16 @@ class PermissionButtons extends Component {
     if (navigation.state.routeName === "LocationPermissionView") {
       if (Platform.OS === "android") {
         updateOnboarding({ completedLocation: true });
-        return navigation.dispatch({ type: "Home" });
+        return navigation.dispatch({ type: navigation.state.params.redirectTo });
       }
-      return navigation.dispatch({ type: "Home" });
+      return navigation.dispatch({ type: navigation.state.params.redirectTo });
     }
 
     if (navigation.state.routeName === "NotificationPermissionView") {
       updateOnboarding({ completedNotification: true });
-      return navigation.dispatch({ type: "Home" });
+      return navigation.dispatch({ type: navigation.state.params.redirectTo });
     }
-    return navigation.dispatch({ type: "Home" });
+    return navigation.dispatch({ type: navigation.state.params.redirectTo });
   };
 
   render() {

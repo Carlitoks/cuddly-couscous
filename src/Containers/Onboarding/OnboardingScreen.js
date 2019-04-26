@@ -1,22 +1,22 @@
-import React, {Component} from 'react';
-import {Image, Platform, Text, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {connect} from 'react-redux';
-import {Colors} from '../../Themes';
-import {ensureSessionDefaults, updateLocation} from '../../Ducks/NewSessionReducer';
-import ViewWrapper from '../ViewWrapper/ViewWrapper';
-import {clearOnboarding} from '../../Ducks/OnboardingReducer';
-import Permission from 'react-native-permissions';
+import React, { Component } from "react";
+import { Image, Platform, Text, View } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import { connect } from "react-redux";
+import { Colors } from "../../Themes";
+import { ensureSessionDefaults, updateLocation } from "../../Ducks/NewSessionReducer";
+import ViewWrapper from "../ViewWrapper/ViewWrapper";
+import { clearOnboarding } from "../../Ducks/OnboardingReducer";
+import Permission from "react-native-permissions";
 // Styles
-import styles from './Styles/OnboardingScreenStyles';
-import OnboardingButtons from './Components/OnboardingButtons';
-import I18n from '../../I18n/I18n';
+import styles from "./Styles/OnboardingScreenStyles";
+import OnboardingButtons from "./Components/OnboardingButtons";
+import I18n from "../../I18n/I18n";
 
-const JeenieLogo = require('../../Assets/Images/Landing-Jeenie-TM.png');
-const backgroundImage = require('../../Assets/Images/IphonexV1.1.png');
+const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
+const backgroundImage = require("../../Assets/Images/introView.png");
 
 class OnboardingScreen extends Component {
-  componentWillMount = async() => {
+  componentWillMount = async () => {
     const {
       navigation,
       isLoggedIn,
@@ -30,63 +30,51 @@ class OnboardingScreen extends Component {
     } = this.props;
     clearOnboarding();
     ensureSessionDefaults({
-      primaryLangCode: primaryLangCode || 'eng',
-      secondaryLangCode: secondaryLangCode || ''
+      primaryLangCode: primaryLangCode || "eng",
+      secondaryLangCode: secondaryLangCode || ""
     });
 
     if (isLoggedIn && token) {
       if (completedLocation) {
         if (completedNotification) {
-          return navigation.dispatch({type: 'Home'});
+          return navigation.dispatch({ type: "Home" });
         } else {
-          if (Platform.OS === 'android') {
-            return navigation.dispatch({type: 'Home'});
+          if (Platform.OS === "android") {
+            return navigation.dispatch({ type: "Home" });
           } else {
-            const NotificationPermission = await Permission.check('notification');
-            if(NotificationPermission === 'undetermined'){
+            const NotificationPermission = await Permission.check("notification");
+            if (NotificationPermission === "undetermined") {
               return navigation.dispatch({ type: "Home" });
             }
             return navigation.dispatch({ type: "Home" });
           }
         }
       } else {
-        const LocationPermission = await Permission.check('location');
-        if(LocationPermission === 'undetermined'){
+        const LocationPermission = await Permission.check("location");
+        if (LocationPermission === "undetermined") {
           return navigation.dispatch({ type: "LocationPermissionView" });
         }
         return navigation.dispatch({ type: "Home" });
       }
     }
-  }
+  };
 
   render() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
-      <View style={[styles.mainOnboardingContainer]} collapsable={false}>
-
+        <View style={[styles.mainOnboardingContainer]} collapsable={false}>
+          <Image style={styles.backgroundImage} source={backgroundImage} />
           <View style={styles.bodyContainer}>
-
-            <View style={styles.topLogoContainer} collapsable={false}>
-              <Image source={JeenieLogo}/>
-            </View>
-          <LinearGradient colors={[ "rgba(196, 196, 196, 0) 0%" , "rgba(0, 0, 0, 0.22) 42.54%"]} style={styles.gradientContainer} >
-
-              <View style={styles.bottomButtonsContainer} collapsable={false}>
-
-                <Text style={styles.titleText}>{I18n.t('customerOnboarding.intro.title')}</Text>
-                <Text style={styles.subtitleText}>
-                  {I18n.t('customerOnboarding.intro.description')}
+            <View>
+              <Text style={styles.titleText}>{I18n.t("newCustomerOnboarding.intro.title")}</Text>
+              <Text style={styles.subtitleText}>
+                {I18n.t("newCustomerOnboarding.intro.description")}
               </Text>
-                <OnboardingButtons navigation={navigation}/>
-              </View>
-          </LinearGradient>
+            </View>
+            <OnboardingButtons navigation={navigation} />
           </View>
-
-            <View style={styles.backgroundImageContainer} collapsable={false}>
-              <Image style={styles.backgroundImage} source={backgroundImage}/>
-            </View>
-            </View>
+        </View>
       </ViewWrapper>
     );
   }
