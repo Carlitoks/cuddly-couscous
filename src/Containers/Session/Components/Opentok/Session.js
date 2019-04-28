@@ -587,6 +587,15 @@ export class Session extends Component {
     if (this.disableListeners) {
       return;
     }
+
+    // this event can fire even if we're not actually receiving video, because of
+    // local subscriber settings
+    //
+    // see: https://tokbox.com/developer/sdks/js/reference/Subscriber.html#event:videoEnabled
+    if ("subscribeToVideo" == event.reason) {
+      return;
+    }
+
     this.remoteUserState.publishingVideo = true;
     // TODO: remove local throttle?
     this.props.onRemoteUserVideoEnabled();
@@ -596,6 +605,15 @@ export class Session extends Component {
     if (this.disableListeners) {
       return;
     }
+
+    // this event can fire even if we're not actually receiving video, because of
+    // local subscriber settings
+    //
+    // see: https://tokbox.com/developer/sdks/js/reference/Subscriber.html#event:videoDisabled
+    if ("subscribeToVideo" == event.reason) {
+      return;
+    }
+
     this.remoteUserState.publishingVideo = false;
     this.props.onRemoteUserVideoDisabled();
   }
