@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Alert, Text, StyleSheet, View} from "react-native";
 import { formatTimerNumber } from "../../../Util/Format";
 import { moderateScale } from "../../../Util/Scaling";
-import { DURATION } from "../../../Util/Constants";
+import { DURATION, SESSION } from "../../../Util/Constants";
 import I18n from "../../../I18n/I18n";
 
 export class CallTimer extends Component {
@@ -39,7 +39,7 @@ export class CallTimer extends Component {
         this.endAfter = balanceLimit * DURATION.MINUTES;
         this.triggerEndFunc = props.onBalanceExceeded;
       }
-      this.warnAfter = this.endAfter - (2*DURATION.MINUTES);
+      this.warnAfter = this.endAfter - (SESSION.TIME.END_SOON_WARNING);
     }
 
     // timestamp when the timer last started
@@ -131,8 +131,8 @@ export class CallTimer extends Component {
     }
     
     this.setState({
-      minutes,
-      seconds,
+      minutes: minutes >= 0 ? minutes : 0,
+      seconds: seconds >= 0 ? seconds : 0,
       timeIsLow
     });
 

@@ -132,6 +132,6 @@ export const SESSION = {
     MATCH: 70 * DURATION.SECONDS,
     CONNECT: 30 * DURATION.SECONDS,
     RECONNECT: 10 * DURATION.SECONDS,
-    END_SOON_WARNING: 2 * DURATION.MINUTES
+    END_SOON_WARNING: 2 * DURATION.MINUTES // show warning that call is ending soon when this much time is remaining
   }
 };
