@@ -36,7 +36,7 @@ export class CallTimer extends Component {
         this.endAfter = balanceLimit * DURATION.MINUTES;
         this.triggerEndFunc = props.onBalanceExceeded;
       } else if (timeLimit) {
-        this.endAfter = balanceLimit * DURATION.MINUTES;
+        this.endAfter = timeLimit * DURATION.MINUTES;
         this.triggerEndFunc = props.onBalanceExceeded;
       }
       this.warnAfter = this.endAfter - (SESSION.TIME.END_SOON_WARNING);
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   },
   containerWarning: {
     ...container,
-    backgroundColor: "rgba(255, 0, 0, 0.5)",
+    backgroundColor: "rgba(127, 0, 0, 0.5)",
   },
   text: {
     fontSize: moderateScale(20, 0),
