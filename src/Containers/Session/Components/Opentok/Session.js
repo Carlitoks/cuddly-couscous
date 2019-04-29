@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Text, View, Platform} from "react-native";
+import merge from "lodash/merge";
 import {Publisher} from "./Publisher";
 import {Subscriber} from "./Subscriber";
 import styles from "./styles";
@@ -70,6 +71,10 @@ export class Session extends Component {
       // signal to send to other participant
       signal: {type: "", data: ""}
     };
+
+    // this is a safeguard to ensure we don't double process streams and connections from remote users
+    this.streamCounts = {};
+    this.connectionCounts = {};
 
     this.originalSessionID = props.session.id;
     this.endedByRemote = false;
@@ -252,6 +257,12 @@ export class Session extends Component {
       sessionID: this.props.session.id
     });
 
+    // track number of connections because of possible double execution
+    if (!this.connectionCounts[event.connectionId]) {
+      this.connectionCounts[event.connectionId] = 0;
+    }
+    this.connectionCounts[event.connectionId]++;
+
     // a remote user is connecting
     this.remoteUserState.connectionID = event.connectionId;
     this.remoteUserState.meta = JSON.parse(event.data);
@@ -289,8 +300,16 @@ export class Session extends Component {
       return;
     }
 
-    this.remoteUserState = newUserState();
-    this.props.onRemoteUserDisconnected();
+    // check connection counts because of possible double execution
+    if (!this.connectionCounts[event.connectionId]) {
+      recordComponentEvent('error', {msg: "onConnectionDestroyed: unknown connectionId", connectionId: event.connectionId});
+      return;
+    }
+    this.connectionCounts[event.connectionId]--;
+    if (0 == this.connectionCounts[event.connectionId]) {
+      this.remoteUserState = newUserState();
+      this.props.onRemoteUserDisconnected();  
+    }
   }
 
 
@@ -303,6 +322,12 @@ export class Session extends Component {
       event,
       sessionID: this.props.session.id
     });
+
+    // track number of connections because of possible double execution
+    if (!this.streamCounts[event.streamId]) {
+      this.streamCounts[event.streamId] = 0;
+    }
+    this.streamCounts[event.streamId]++;
 
     // we're calling this on purpose, because it is possible that a remote user's stream
     // could be destroyed and recreated WITHOUT their connection being destroyed and created.
@@ -326,6 +351,12 @@ export class Session extends Component {
           ...styles.subscriber
         }
     }}});
+
+    // make sure we're only trying to subscribe to this streams video
+    // if it has video
+    if (event.hasVideo) {
+      this.subscribeToVideoOnlyForStream(event.streamId);
+    }
 
     this.handleReceivingAV(event.hasAudio, event.hasVideo);
     this.notifyIfReceiving(event.hasAudio, event.hasVideo);
@@ -359,9 +390,16 @@ export class Session extends Component {
       }
     }
 
+    // make sure we only process our own most recently created stream
+    // or the remote users most recently create stream
     if (event.stream.streamId == this.localUserState.streamID) {
       this.handlePublishingAV(hasAudio, hasVideo);
     } else if (event.stream.streamId == this.remoteUserState.streamID) {
+      // make sure we're only trying to subscribe to this streams video
+      // if it has video
+      if (hasVideo) {
+        this.subscribeToVideoOnlyForStream(event.stream.streamId);
+      }
       this.handleReceivingAV(hasAudio, hasVideo);
     }
   }
@@ -392,6 +430,17 @@ export class Session extends Component {
     if (event.streamId != this.remoteUserState.streamID) {
       return;
     }
+
+    if (!this.streamCounts[event.streamId]) {
+      recordComponentEvent('error', {msg: "onStreamDestroyed: unknown streamId", streamId: event.streamId});
+      return;
+    }
+    this.streamCounts[event.streamId]--;
+
+    // return early if we could tell that this stream was created more than one time
+    if (this.streamCounts[event.streamId] > 0) {
+      return;
+    }
     
     this.remoteUserState = {
       ...this.remoteUserState,
@@ -402,7 +451,7 @@ export class Session extends Component {
     // TODO: this may not be accurate... may need to remove old stream properties anyway
     // stop tracking stream internally
     if (!!this.state.streamProperties[event.streamId]) {
-      let s = this.state.streamProperties;
+      let s = merge({}, this.state.streamProperties);
       delete s[event.streamId];
       this.setState({streamProperties: s});
     }
@@ -461,6 +510,24 @@ export class Session extends Component {
       error: e,
       sessionID: this.props.session.id
     });
+  }
+
+  // ensure that we are only subscribing to one video stream at a time
+  // in the case where we have a reference for more than one stream
+  subscribeToVideoOnlyForStream (streamID) {
+    let streamProps = merge({}, this.state.streamProperties);
+    
+    // unsubscribe from video for all remote streams
+    Object.keys(streamProps).forEach((streamID) => {
+      streamProps[streamID].subscribeToVideo = false;
+    });
+
+    // now subscribe to the target stream
+    if (!!streamProps[streamID]) {
+      streamProps[streamID].subscribeToVideo = true;
+    }
+
+    this.setState({streamProperties: streamProps});
   }
 
   beginSendingHeartbeat () {
