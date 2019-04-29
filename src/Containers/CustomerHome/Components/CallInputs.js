@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import {
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
 import RenderPicker from "./Partials/PickerSelect";
@@ -19,10 +15,9 @@ import { moderateScaleViewports } from "../../../Util/Scaling";
 import { CUSTOMER_FREE_MINUTES } from "../../../Util/Constants";
 
 class CallInputs extends Component {
-
   componentWillMount() {
     this.props.guessSecondaryLangCode();
-  };
+  }
 
   paymentNotice = () => {
     const { isNewUser, availableMinutes, stripePaymentToken } = this.props;
@@ -59,8 +54,7 @@ class CallInputs extends Component {
               return navigation.dispatch({ type: "PaymentDetailScreen" });
             }
             return null;
-          }
-          }
+          }}
         >
           <Text style={styles.pricingText}>{this.paymentNotice()}</Text>
         </TouchableOpacity>
@@ -76,14 +70,14 @@ class CallInputs extends Component {
               labelStyle={styles.renderPickerLabel}
               showDivider={false}
               selectedLabelStyle={styles.renderPickerSelectedLabel}
-              icon={(
+              icon={
                 <Icon
                   color="rgba(0, 0, 0, 0.18)"
                   name="chevron-right"
                   type="evilicon"
                   size={moderateScaleViewports(17)}
                 />
-              )}
+              }
               selectorContainer={styles.renderPickerSelectorContainer}
             />
 
@@ -111,14 +105,14 @@ class CallInputs extends Component {
               labelStyle={styles.renderPickerLabel}
               showDivider={false}
               selectedLabelStyle={styles.renderPickerSelectedLabel}
-              icon={(
+              icon={
                 <Icon
                   color="rgba(0, 0, 0, 0.18)"
                   name="chevron-right"
                   type="evilicon"
                   size={moderateScaleViewports(17)}
                 />
-              )}
+              }
               selectorContainer={styles.renderPickerSelectorContainer}
             />
           </View>
@@ -134,14 +128,14 @@ class CallInputs extends Component {
               labelStyle={styles.renderPickerLabel}
               showDivider={false}
               selectedLabelStyle={styles.renderPickerSelectedLabel}
-              icon={(
+              icon={
                 <Icon
                   color="rgba(0, 0, 0, 0.18)"
                   name="chevron-right"
                   type="evilicon"
                   size={moderateScaleViewports(17)}
                 />
-              )}
+              }
               selectorContainer={styles.renderPickerSelectorContainer}
             />
           </View>
