@@ -7,17 +7,17 @@ const baseWell = {
   justifyContent: "flex-start",
   alignItems: "center",
   backgroundColor: "#522092",
-  borderRadius: 4,
+  borderRadius: 4
 };
 
 export default StyleSheet.create({
   outOfMinutesContainer: {
     ...baseWell,
-    backgroundColor: "#FF3B30",
+    backgroundColor: "#F39100"
   },
   minutesLeftContainer: {
     ...baseWell,
-    backgroundColor: "#522092",
+    backgroundColor: "#522092"
   },
   addCardContainer: {
     flexDirection: "row",
