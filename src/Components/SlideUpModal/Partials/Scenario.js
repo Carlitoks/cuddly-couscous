@@ -23,7 +23,7 @@ class Scenario extends Component {
     } = this.props;
     let ButtonStyle = {
       ...styles.availableLangText,
-      color: Colors.pricingViewBlack
+      color: "#1C1B1B"
     };
     if (selection !== null && selection === "scenarioSelection") {
       if (scenarioID != null && scenarioID === currentLang.id) {
