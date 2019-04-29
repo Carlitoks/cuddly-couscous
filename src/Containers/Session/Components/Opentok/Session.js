@@ -592,7 +592,12 @@ export class Session extends Component {
     // local subscriber settings
     //
     // see: https://tokbox.com/developer/sdks/js/reference/Subscriber.html#event:videoEnabled
-    if ("subscribeToVideo" == event.reason) {
+    // NOTE: apparently the `event.reason` is different between iOS/Android, and I have not
+    // found a reference to the specific docs for iOS
+    if (
+      "subscribeToVideo" == event.reason // android
+      || "SubscriberPropertyChanged" == event.reason // iOS
+    ) {
       return;
     }
 
@@ -610,7 +615,12 @@ export class Session extends Component {
     // local subscriber settings
     //
     // see: https://tokbox.com/developer/sdks/js/reference/Subscriber.html#event:videoDisabled
-    if ("subscribeToVideo" == event.reason) {
+    // NOTE: apparently the `event.reason` is different between iOS/Android, and I have not
+    // found a reference to the specific docs for iOS
+    if (
+      "subscribeToVideo" == event.reason // android
+      || "SubscriberPropertyChanged" == event.reason // iOS
+    ) {
       return;
     }
 
