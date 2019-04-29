@@ -72,7 +72,7 @@ class CallInputs extends Component {
               selectedLabelStyle={styles.renderPickerSelectedLabel}
               icon={
                 <Icon
-                  color="rgba(0, 0, 0, 0.18)"
+                  color="rgba(0, 0, 0, 0.25)"
                   name="chevron-right"
                   type="evilicon"
                   size={moderateScaleViewports(17)}
@@ -107,7 +107,7 @@ class CallInputs extends Component {
               selectedLabelStyle={styles.renderPickerSelectedLabel}
               icon={
                 <Icon
-                  color="rgba(0, 0, 0, 0.18)"
+                  color="rgba(0, 0, 0, 0.25)"
                   name="chevron-right"
                   type="evilicon"
                   size={moderateScaleViewports(17)}
@@ -130,7 +130,7 @@ class CallInputs extends Component {
               selectedLabelStyle={styles.renderPickerSelectedLabel}
               icon={
                 <Icon
-                  color="rgba(0, 0, 0, 0.18)"
+                  color="rgba(0, 0, 0, 0.25)"
                   name="chevron-right"
                   type="evilicon"
                   size={moderateScaleViewports(17)}
