@@ -65,7 +65,7 @@ class Languages extends Component {
     const { selection, primaryLangCode, secondaryLangCode } = this.props;
     let ButtonStyle = {
       ...styles.availableLangText,
-      color: Colors.pricingViewBlack
+      color: "#1C1B1B"
     };
     if (selection === "primaryLang") {
       if (primaryLangCode === currentLang["3"])
