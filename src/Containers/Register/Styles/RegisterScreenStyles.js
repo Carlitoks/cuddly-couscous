@@ -1,9 +1,11 @@
 import { StyleSheet, Platform } from "react-native";
-import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
+import {
+  Metrics, ApplicationStyles, Fonts, Colors,
+} from "../../../Themes";
 import { moderateScale, moderateScaleViewports } from "../../../Util/Scaling";
 import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
 
-//const { width, height } = Dimensions.get("window");
+// const { width, height } = Dimensions.get("window");
 const android = Platform.OS === "android";
 const defaultInput = {
   flex: 0.9,
@@ -17,11 +19,11 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
     backgroundColor: "white",
-    height: "100%"
+    height: "100%",
   },
   mainRegisterContainer: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   backgroundContainer: {
     width: Metrics.width,
@@ -43,25 +45,25 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    flexGrow: 1
+    flexGrow: 1,
   },
   inputContainer: {
     width: Metrics.width * 0.80,
     backgroundColor: "#FFF",
     borderRadius: 4,
     elevation: 4,
-    marginTop: moderateScaleViewports(-175)
+    marginTop: moderateScaleViewports(-175),
   },
   buttonContainer: {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-end",
-    paddingTop: 20
+    paddingTop: 20,
   },
   buttonWidthContainer: {
     paddingBottom: 30,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   buttonEnabledText: {
     textAlign: "center",
@@ -69,7 +71,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.BoldFont,
     fontSize: moderateScaleViewports(17),
     paddingTop: moderateScaleViewports(10),
-    paddingBottom: moderateScaleViewports(10)
+    paddingBottom: moderateScaleViewports(10),
   },
   transitionButtonText: {
     textAlign: "center",
@@ -77,27 +79,27 @@ export default StyleSheet.create({
     fontFamily: Fonts.BoldFont,
     fontSize: moderateScaleViewports(14),
     paddingTop: moderateScaleViewports(27),
-    paddingBottom: moderateScaleViewports(32)
+    paddingBottom: moderateScaleViewports(32),
   },
   registerAdviseText: {
     textAlign: "center",
     color: "#666666",
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(15),
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   termsAndConditionsText: {
     textAlign: "center",
     color: "rgba(0, 0, 0, 0.54)",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(12)
+    fontSize: moderateScaleViewports(12),
   },
   termsAndConditionsTextLink: {
     textAlign: "center",
     color: "rgba(0, 0, 0, 0.54)",
     fontSize: moderateScaleViewports(12),
     fontFamily: Fonts.BaseFont,
-    textDecorationLine: "underline"
+    textDecorationLine: "underline",
   },
   createAccountPadding: {},
   createAccountButton: {
@@ -118,11 +120,11 @@ export default StyleSheet.create({
   },
   inputViewContainer: {
     flexDirection: "column",
-    paddingTop: moderateScaleViewports(0)
+    paddingTop: moderateScaleViewports(0),
   },
   inputViewContainerValue: {
     flexDirection: "column",
-    paddingTop: moderateScaleViewports(0)
+    paddingTop: moderateScaleViewports(0),
   },
   labelText: {
     fontFamily: Fonts.BaseFont,
@@ -144,7 +146,7 @@ export default StyleSheet.create({
     color: "#FF3B30",
     padding: 0,
     paddingLeft: moderateScaleViewports(20),
-    textAlign: "left"
+    textAlign: "left",
   },
   inputsErrorContainer: {
     flexDirection: "row",
@@ -163,7 +165,7 @@ export default StyleSheet.create({
     width: Metrics.width * 0.06,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: android ? 1 : 30
+    marginBottom: android ? 1 : 30,
   },
   termsAndConditionsViewContainer: {
     paddingTop: moderateScaleViewports(24),
@@ -172,11 +174,11 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
-    paddingBottom: moderateScaleViewports(10)
+    paddingBottom: moderateScaleViewports(10),
   },
   touchableLink: {
     alignItems: "center",
-    justifyContent: "flex-start"
+    justifyContent: "flex-start",
   },
   height: { height: "100%" },
   titleText: {
@@ -185,12 +187,12 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(20),
     textAlign: "center",
     paddingTop: moderateScaleViewports(27),
-    paddingBottom: moderateScaleViewports(24)
+    paddingBottom: moderateScaleViewports(24),
   },
   topLogoContainer: {
     flexDirection: "column",
     justifyContent: "flex-start",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   /**
@@ -199,7 +201,7 @@ export default StyleSheet.create({
   renderPickerContainer: {
     flexDirection: "column",
     paddingTop: moderateScaleViewports(27),
-    flex: 0.9
+    flex: 0.9,
   },
 
   /**
@@ -212,13 +214,13 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "rgba(151, 151, 151, 0.3)",
     paddingTop: moderateScaleViewports(5),
-    paddingBottom: moderateScaleViewports(8)
+    paddingBottom: moderateScaleViewports(8),
 
   },
   renderPickerLabel: {
     color: "#373737",
     fontFamily: Fonts.BoldFont,
-    fontSize: moderateScaleViewports(16)
+    fontSize: moderateScaleViewports(16),
   },
   renderPickerLabelPlaceHolder: {
     color: "#401674",
@@ -230,5 +232,8 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(16),
     color: "rgba(0, 0, 0, 0.54)",
     paddingBottom: moderateScaleViewports(5),
+  },
+  lelelele: {
+
   },
 });

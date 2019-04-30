@@ -169,16 +169,6 @@ class RegisterScreen extends Component {
             isNewUser: true
           });
           this.props.updateOnboarding({ makingRequest: false });
-          const LocationPermission = await Permission.check("location");
-          if (LocationPermission === "undetermined") {
-            return navigation.dispatch({ type: "LocationPermissionView" });
-          }
-          if (Platform.OS !== "android") {
-            const NotificationPermission = await Permission.check("notification");
-            if (NotificationPermission === "undetermined") {
-              navigation.dispatch({ type: "Home" });
-            }
-          }
           return navigation.dispatch({ type: "Home" });
         }
         this.props.updateOnboarding({ makingRequest: false });

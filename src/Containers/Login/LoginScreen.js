@@ -1,28 +1,26 @@
 import React, { Component } from "react";
 import {
   Alert,
-  Image,
-  Keyboard,
+  Image, ImageBackground,
+  Keyboard, ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
-import { Icon } from "react-native-elements";
-import { Colors } from "../../Themes";
+import { Divider, Icon } from "react-native-elements";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
   ensureSessionDefaults,
-  openSlideMenu,
-  updateLocation
+  updateLocation,
 } from "../../Ducks/NewSessionReducer";
 
 import {
   getNativeLang,
   getProfileAsync,
-  updateView as updateUserProfile
+  updateView as updateUserProfile,
 } from "../../Ducks/UserProfileReducer";
 import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
 import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer";
@@ -33,20 +31,22 @@ import I18n, { translateApiErrorString, translateApiError } from "../../I18n/I18
 // Styles
 import styles from "./Styles/LoginScreenStyles";
 import { EMAIL_REGEX } from "../../Util/Constants";
-import FieldError from "../Register/Components/FieldError";
 import { noOnboarding, update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 import Header from "../CustomerHome/Components/Header";
+import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
+import { moderateScaleViewports } from "../../Util/Scaling";
 
-const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM-purple.png");
+const JeenieLogo = require("../../Assets/Images/jeenieLogo.png");
+const BG = require("../../Assets/Images/BG.png");
 
 class LoginScreen extends Component {
-  isValidEmail = text => {
+  isValidEmail = (text) => {
     const { updateOnboarding } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
     if (!reg.test(text)) {
       updateOnboarding({
         isValidEmail: false,
-        errorType: "emailFormat"
+        errorType: "emailFormat",
       });
     } else {
       updateOnboarding({ isValidEmail: true, errorType: null });
@@ -66,7 +66,7 @@ class LoginScreen extends Component {
       updateOnboarding,
       email,
       password,
-      noOnboarding
+      noOnboarding,
     } = this.props;
     try {
       updateOnboarding({ errorType: null, makingRequest: true });
@@ -74,18 +74,18 @@ class LoginScreen extends Component {
       const logInUserResponse = await logInAsync(email, password);
       const getUserProfile = await getProfileAsync(
         logInUserResponse.payload.uuid,
-        logInUserResponse.payload.token
+        logInUserResponse.payload.token,
       );
       await updateUserProfile({
-        selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode)
+        selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode),
       });
       const record = await checkRecord(email);
       if (record) {
         updateCustomer({ userInfo: { id: record.id } });
         Alert.alert(I18n.t("finishOnboarding"), I18n.t("finishOnboardingMessage"), [
           {
-            text: I18n.t("ok")
-          }
+            text: I18n.t("ok"),
+          },
         ]);
 
         updateOnboarding({ makingRequest: false });
@@ -105,7 +105,7 @@ class LoginScreen extends Component {
         Alert.alert(I18n.t('error'), translateApiError(err), 'api.errTemporaryTryAgain');
       }
       updateOnboarding({
-        makingRequest: false
+        makingRequest: false,
       });
     }
   };
@@ -118,133 +118,134 @@ class LoginScreen extends Component {
       errorType,
       email,
       password,
-      updateOnboarding
+      updateOnboarding,
     } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <View style={[styles.mainContainer]}>
-            <LinearGradient
-              colors={["white", "white"]}
-              locations={[0, 1]}
-              style={styles.fullHeight}
-            >
-              <Header navigation={navigation} />
-              <View style={styles.loginContainer}>
+          <View style={[styles.mainRegisterContainer]}>
+            <Header navigation={navigation} />
+            <ScrollView contentContainerStyle={styles.registerContainer}>
                 <View style={styles.topLogoContainer}>
-                  <Image source={JeenieLogo} />
-                  {errorType === "signInError" ||
-                  errorType === "emailFormat" ||
-                  errorType === "emailNotFound" ? (
-                    <FieldError navigation={navigation} />
-                  ) : (
-                    <Text style={styles.titleText}>{I18n.t("signIn")}</Text>
-                  )}
+                  <ImageBackground resizeMode="stretch" source={BG} style={styles.backgroundContainer}>
+                    <Image source={JeenieLogo} />
+                    <Text style={styles.titleText}>
+                      {I18n.t("appName")}
+                    </Text>
+
+                    <Text style={styles.subtitleText}>
+                      {I18n.t("languageCommand")}
+                    </Text>
+                  </ImageBackground>
                   <View style={styles.inputContainer}>
-                    <View style={styles.inputViewContainer}>
-                      {email ? <Text style={styles.labelStyle}>{I18n.t("email")}</Text> : <Text />}
-                      <View style={styles.inputInternalContainer}>
+                    <View style={email ? styles.inputViewContainerValue : styles.inputViewContainer}>
+                      {email ? (
+                        <Text style={styles.labelText}>{I18n.t("fields.email.label")}</Text>
+                      ) : (
+                        <Text style={[styles.labelText, styles.firstInput]} />
+                      )}
+                      <View style={styles.inputsErrorContainer}>
                         <TextInput
                           allowFontScaling={false}
-                          style={styles.inputText}
+                          style={errorType === "signInError" || errorType === "emailFormat" || errorType === "emailNotFound" ? styles.inputTextInvalid : styles.inputTextValid}
                           onChangeText={text => this.isValidEmail(text)}
                           autoCapitalize="none"
                           onBlur={() => this.isValidEmail(email)}
+                          blurOnSubmit={false}
                           value={email}
                           placeholder={I18n.t("email")}
-                          placeholderTextColor="#C4C4C4"
+                          placeholderTextColor="rgba(0, 0, 0, 0.54)"
                           keyboardType="email-address"
                         />
-                        {errorType === "signInError" || errorType === "emailFormat" ? (
-                          <View style={styles.errorIconContainer}>
-                            <Icon name="close" type="material-community" color="#fff" size={15} />
-                          </View>
-                        ) : (
-                          <React.Fragment />
-                        )}
                       </View>
+                      { errorType === "signInError" || errorType === "emailFormat" ? (
+                        <Text style={styles.invalidLabelText}>{I18n.t("fields.email.errInvalid")}</Text>
+                      ) : errorType === "emailNotFound" ? <Text style={styles.invalidLabelText}>{I18n.t("api.errNoEmail")}</Text> : (
+                        <Text style={styles.invalidLabelText} />
+                      )}
                     </View>
 
-                    <View style={styles.inputViewContainer}>
+                    <View style={password ? styles.inputViewContainerValue : styles.inputViewContainer}>
                       {password ? (
-                        <Text style={styles.labelStyle}>{I18n.t("password")}</Text>
+                        <Text style={styles.labelText}>
+                          {I18n.t("fields.password.label")}
+                        </Text>
                       ) : (
-                        <Text />
+                        <Text style={styles.labelText} />
                       )}
-                      <View style={styles.inputInternalContainer}>
+                      <View style={styles.inputsErrorContainer}>
                         <TextInput
                           allowFontScaling={false}
-                          style={styles.inputText}
+                          style={errorType === "passwordLength" ? styles.inputTextInvalid : styles.inputTextValid}
                           onChangeText={text => updateOnboarding({ password: text })}
                           autoCapitalize="none"
                           value={password}
-                          placeholder={I18n.t("password")}
+                          placeholder={I18n.t("fields.password.label")}
                           secureTextEntry
-                          placeholderTextColor="#C4C4C4"
+                          placeholderTextColor="rgba(0, 0, 0, 0.54)"
+                          returnKeyType="done"
                         />
-                        {errorType === "signInError" ? (
-                          <View style={styles.errorIconContainer}>
-                            <Icon name="close" type="material-community" color="#fff" size={15} />
-                          </View>
-                        ) : (
-                          <React.Fragment />
-                        )}
                       </View>
-
-                      <Text
-                        onPress={() =>
-                          navigation.dispatch({
-                            type: "ForgotPasswordView"
-                          })
-                        }
-                        style={styles.forgotPasswordLabel}
-                      >
-                        {I18n.t("customerOnboarding.login.forgotPassword")}
-                      </Text>
+                      {errorType === "passwordLength" ? (
+                        <Text style={styles.invalidLabelText}>{I18n.t("fields.password.errLength")}</Text>
+                      ) : (
+                        <Text style={styles.invalidLabelText} />
+                      )}
                     </View>
-                  </View>
-                </View>
-                <View style={styles.buttonContainer}>
-                  <View style={styles.buttonWidthContainer}>
+
                     <TouchableOpacity
                       onPress={() => this.submit()}
                       disabled={!isValidEmail || makingRequest || (!email || !password)}
                       style={
                         !isValidEmail || makingRequest || (!email || !password)
-                          ? styles.signInButtonDisable
-                          : styles.signInButtonEnabled
+                          ? styles.createAccountButtonDisable
+                          : styles.createAccountButton
                       }
                     >
                       <Text
                         style={[
                           styles.buttonEnabledText,
-                          !isValidEmail || makingRequest || (!email || !password)
-                            ? { color: "#C4C4C4" }
-                            : { color: "white" }
                         ]}
                       >
                         {I18n.t("signIn")}
                       </Text>
                     </TouchableOpacity>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => navigation.dispatch({
+                      type: "ForgotPasswordView",
+                    })
+                    }
+                  >
+                    <Text style={styles.transitionButtonText}>
+                      {I18n.t("newCustomerOnboarding.login.forgotPassword")}
+                    </Text>
+                  </TouchableOpacity>
 
+                  <View styles={{flex: 1, flexDirection: "column", justifyContent: "space-between"}}>
+                    <View style={styles.dividerContainer}>
+                      <Divider style={styles.divider} />
+                      <Text style={styles.dividerText}>Or</Text>
+                      <Divider style={styles.divider} />
+                    </View>
                     <TouchableOpacity
-                      onPress={() =>
-                        navigation.dispatch({
-                          type: "RegisterView"
-                        })
+                      onPress={() => navigation.dispatch({
+                        type: "RegisterView",
+                      })
                       }
-                      style={styles.createAccountPadding}
+                      style={styles.createAccountButtonTransition}
                     >
-                      <Text style={styles.transitionButtonText}>
-                        {I18n.t("customerOnboarding.register.createAnAccount")} »
+                      <Text style={styles.transitionCreateButtonText}>
+                        {I18n.t("customerOnboarding.register.createAnAccount")}
                       </Text>
                     </TouchableOpacity>
                   </View>
+
                 </View>
-              </View>
-            </LinearGradient>
+            </ScrollView>
           </View>
         </TouchableWithoutFeedback>
+        <SlideUpPanel />
       </ViewWrapper>
     );
   }
@@ -263,11 +264,10 @@ const mS = state => ({
   password: state.onboardingReducer.password,
   errorType: state.onboardingReducer.errorType,
   makingRequest: state.onboardingReducer.makingRequest,
-  isValidEmail: state.onboardingReducer.isValidEmail
+  isValidEmail: state.onboardingReducer.isValidEmail,
 });
 
 const mD = {
-  openSlideMenu,
   updateLocation,
   ensureSessionDefaults,
   clearEvents,
@@ -279,10 +279,10 @@ const mD = {
   getNativeLang,
   checkRecord,
   updateOnboarding,
-  noOnboarding
+  noOnboarding,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(LoginScreen);

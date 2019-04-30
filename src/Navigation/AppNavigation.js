@@ -36,6 +36,7 @@ import PaymentScreen from "../Containers/Payments/PaymentScreen";
 import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
+import ForgotPasswordScreen from "../Containers/ForgotPassword/ForgotPasswordScreen";
 
 // new session views
 import SessionView from "../Containers/Session/SessionView";
@@ -100,7 +101,7 @@ const Navigation = StackNavigator(
     },
 
     ForgotPasswordView: {
-      screen: ForgotPasswordView,
+      screen: ForgotPasswordScreen,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
@@ -255,7 +256,7 @@ const Navigation = StackNavigator(
     }
   },
   {
-    initialRouteName: "RegisterView",
+    initialRouteName: "IntroView",
     headerMode: "none",
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {

@@ -21,6 +21,7 @@ export default class LinguistHeader extends Component {
       navigation.state.routeName === "RegisterView"
       || navigation.state.routeName === "LoginView"
       || navigation.state.routeName === "Home"
+      || navigation.state.routeName === "ForgotPasswordView"
     ) {
       return null;
     }
@@ -64,6 +65,7 @@ export default class LinguistHeader extends Component {
       navigation.state.routeName === "PaymentsView" ||
       navigation.state.routeName === "CardInfoScreen" ||
       navigation.state.routeName === "EditCardScreen"
+      || navigation.state.routeName === "ForgotPasswordView"
     ) {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
@@ -96,6 +98,7 @@ export default class LinguistHeader extends Component {
     if (
       navigation.state.routeName === "RegisterView"
       || navigation.state.routeName === "LoginView"
+      || navigation.state.routeName === "ForgotPasswordView"
     ) {
       return (
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null}/>
@@ -154,7 +157,7 @@ export default class LinguistHeader extends Component {
   setBackgroundColor = () => {
     const { navigation } = this.props;
     if (navigation.state.routeName === "Home" || navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView") {
+      || navigation.state.routeName === "LoginView" || navigation.state.routeName === "ForgotPasswordView") {
       return Colors.gradientColor.top;
     }
 

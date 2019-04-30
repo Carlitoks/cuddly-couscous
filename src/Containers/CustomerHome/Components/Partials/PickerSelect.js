@@ -67,7 +67,7 @@ class PickerSelectComponent extends Component {
       return (
         <View style={styles.flexView}>
           <Text nunmberOfLines={1} style={selectedLabelStyle || styles.inputValue}>
-            {`${lang.substr(0, 11)}${lang.length >= 11 ? "..." : ""}`}
+            {`${lang}`}
           </Text>
         </View>
       );
