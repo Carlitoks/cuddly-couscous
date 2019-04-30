@@ -1907,6 +1907,7 @@ export const AllowedLanguagePairs = {
   jpn: ["eng"],
   spa: ["eng"],
   por: ["eng"],
+  fra: ["eng"]
 };
 
 // raw map of which language is the default selection for which countries
