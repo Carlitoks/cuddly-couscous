@@ -15,7 +15,7 @@ export default StyleSheet.create({
   },
   pricingText: {
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(13),
+    fontSize: moderateScaleViewports(16),
     color: "#fff",
     paddingTop: moderateScaleViewports(10),
     paddingBottom: moderateScaleViewports(10),
@@ -54,8 +54,8 @@ export default StyleSheet.create({
   /**
    * RenderPickerStyles
    */
-  renderPickerLabel: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(14), color: "rgba(0, 0, 0, 0.45)" },
-  renderPickerSelectedLabel: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(13), color: "#1C1B1B" },
+  renderPickerLabel: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16), color: "rgba(0, 0, 0, 0.45)" },
+  renderPickerSelectedLabel: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16), color: "#1C1B1B" },
   renderPickerSelectorContainer: {
     backgroundColor: "#fff",
     flexDirection: "row",
