@@ -37,10 +37,8 @@
   callLinguist: "通訳スタッフに電話",
   calls: "着信",
   callSettings: "通話設定",
-  callTimeBoxTextLine1:
-    "サービス開始を記念して今すぐ\n無料でJeenieをご活用ください",
-  callTimeBoxTextLine2:
-    "料金は1分あたり$1です。\n今後パッケージ割引の提供を予定しています",
+  callTimeBoxTextLine1: "サービス開始を記念して今すぐ\n無料でJeenieをご活用ください",
+  callTimeBoxTextLine2: "料金は1分あたり$1です。\n今後パッケージ割引の提供を予定しています",
   callTimeButtonText: "分無料",
   callTimeButtonSubtitle: "Jeenieからのプレゼント",
   callTimeMinutes: "通話時間",
@@ -50,8 +48,7 @@
   callWillEnd: "時間切れになると通話が終了します",
   cancel: "キャンセル",
   cancelCall: "通話をキャンセル",
-  celebrateAndEnjoy:
-    "サービス開始を記念して\nJeenieを\n10分無料でご利用いただけます！",
+  celebrateAndEnjoy: "サービス開始を記念して\nJeenieを\n10分無料でご利用いただけます！",
   celebrateAndEnjoyAlternative:
     "サービス開始を記念して\nJeenieを10分無料でご利用いただけます\n！",
   celebrateWithUs: "サービス開始をお祝いしましょう！",
@@ -59,8 +56,7 @@
   cancelCallCustomer: "通話はご利用いただけません",
   chargeAdvice: "8分経過後、1分ごとに料金がかかります。",
   checkYourConnection: "接続をご確認ください",
-  checkYourEmail:
-    "パスワードをリセットするためのリンクを送信しました。メールをご確認ください。",
+  checkYourEmail: "パスワードをリセットするためのリンクを送信しました。メールをご確認ください。",
   checkYourEmailOnBoarding: "メールを確認し、登録を完了してください。",
   citizenShip: "居住都市",
   cityFamiliarity: "都市に関する知識（精通度）",
@@ -77,16 +73,14 @@
   connectMeNow: "今すぐ接続",
   connectNow: "今すぐ接続",
   connecting: "接続中",
-  contactingLinguist:
-    "\nLanguage Jeenieに\nお繋ぎします - 約1分かかります",
+  contactingLinguist: "\nLanguage Jeenieに\nお繋ぎします - 約1分かかります",
   continue: "続ける",
   continueUsingJeenie: "Jeenieで続ける",
   continueForFree: "続ける",
   conversations: "その他",
   compliments: "{{minutes}}分：{{organizer}}からのお礼",
   complimentsOf: "{{organizer}}からのお礼",
-  complimentMinutes:
-    "{{organizer}}のご厚意で{{maxMinutesPerUser}}分が追加されました",
+  complimentMinutes: "{{organizer}}のご厚意で{{maxMinutesPerUser}}分が追加されました",
   minutesAdded: "：追加された時間（分）",
   invalidCode: "無効なコード",
   invalidCodeMsg: "{{message}}",
@@ -104,10 +98,8 @@
   declined: "拒否",
   disableExtraTime: "延長時間をオフに設定",
   dining: "レストラン",
-  discountsOffered:
-    "\nより長時間購入\nいただくと割引が提供されます。",
-  discountsOfferedAlternative:
-    "前払いした時間（分）に対して\n割引が提供されます。 ",
+  discountsOffered: "\nより長時間購入\nいただくと割引が提供されます。",
+  discountsOfferedAlternative: "前払いした時間（分）に対して\n割引が提供されます。 ",
   duration: "時間",
   editProfile: "プロフィールを編集",
   email: "メールアドレス",
@@ -139,16 +131,11 @@
   errorPromo: "プロモーションコードが見つかりません",
   estimatedCost: "推定料金",
   estimatedDuration: "推定時間",
-  estimatedCostStatic1:
-    "トライアル期間中、通話は8分に事前設定されています。",
-  estimatedCostStatic2:
-    "時間の延長が必要な場合、通話中に追加できます。",
-  expertise_A1:
-    "髪型には色々な種類があり、人によって似合う髪型はそれぞれです。",
-  expertise_B1:
-    "「創造のループ」とは何ですか？何もない所からどうやって何かが創造されるのですか？証明には…",
-  expertise_C1:
-    "私たちは動物や機械にはない独自の特徴や特性があるから人間なのでしょうか？",
+  estimatedCostStatic1: "トライアル期間中、通話は8分に事前設定されています。",
+  estimatedCostStatic2: "時間の延長が必要な場合、通話中に追加できます。",
+  expertise_A1: "髪型には色々な種類があり、人によって似合う髪型はそれぞれです。",
+  expertise_B1: "「創造のループ」とは何ですか？何もない所からどうやって何かが創造されるのですか？証明には…",
+  expertise_C1: "私たちは動物や機械にはない独自の特徴や特性があるから人間なのでしょうか？",
   extraTime1: "もうすぐ時間が終了します！",
   extraTime2: "時間の延長が必要ですか？",
   extraTime3: "2分後に通話が終了します",
@@ -161,8 +148,7 @@
   female: "女性",
   finish: "終了",
   finishOnboarding: "オンボーディングを終了",
-  finishOnboardingMessage:
-    "アプリを使用するには登録を完了してください",
+  finishOnboardingMessage: "アプリを使用するには登録を完了してください",
   firstname: "名前（名）",
   firstnameFormatValidation: "名前（名）には文字のみを使用してください。",
   fluent: "上級",
@@ -185,8 +171,7 @@
   gotIt: "了解です！",
   hasDisconnected: "接続が切断されました",
   help: "ヘルプ",
-  helpPeople:
-    "人をサポートできる十分な知識を持っている都市をお答えください。",
+  helpPeople: "人をサポートできる十分な知識を持っている都市をお答えください。",
   helpUsGet: "ご自身の情報をご提供ください",
   hi: "こんにちは",
   historyNotFound: "履歴が見つかりません",
@@ -235,8 +220,7 @@
     "世界のどこにいても、リアルタイムで、サポートが必要な言語を母国語とする通訳スタッフに連絡を取ることができます。",
   lauchScreenSwipe3:
     "現在Jeenieでは、\n「標準中国語⇔英語」\nと「日本語⇔英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
-  lauchScreenSwipe4:
-    "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
+  lauchScreenSwipe4: "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
   lauchScreenSwipe5:
     "サービス開始を記念して、最初の10分を無料でご提供いたします。Jeenieからのプレゼントです！",
   lastname: "名前（姓）",
@@ -379,8 +363,7 @@
   termsOfUse: "利用規約",
   themeSettings: "テーマの設定",
   temporaryError: "一時的なエラーが発生しました。後でもう一度お試しください。",
-  toggleExtraTimeDisable:
-    "上記で指定した時間が経過すると、この通話は自動的に終了します。",
+  toggleExtraTimeDisable: "上記で指定した時間が経過すると、この通話は自動的に終了します。",
   toggleExtraTimeEnable:
     "この通話はご自身で終了しない限り、終了しません。上記の指定時間経過後、1分ごとに料金がかかります。",
   toOthersOnPlatform: "（プラットフォーム上に表示される名前）",
@@ -455,10 +438,31 @@
     finished: "終了",
     select: "選択",
     choose: "選択",
-    skip: "スキップ"
+    skip: "スキップ",
+    edit: "編集"
   },
 
-  // new customer home screen
+  logic: {
+    and: "＆",
+    or: "または",
+    not: "該当しない："
+  },
+
+  menu: {
+    profile: "プロフィール",
+    editProfile: "プロフィールを編集",
+    home: "ホーム",
+    history: "履歴",
+    promo: "プロモーションコードを入力",
+    qr: "QRコードをスキャン",
+    payment: "お支払いの明細",
+    problem: "問題を報告",
+    becomeLinguist: "通訳スタッフになる",
+    settings: "設定"
+  },
+
+  // DEPRECATED: block should be removed in the future, any strings currently in use
+  // should be moved or refactored
   customerHome: {
     primaryLang: {
       label: "話せる言語："
@@ -533,7 +537,8 @@
     sessionPermissions: {
       heading: "もう少しです！",
       title: "マイク＆カメラ",
-      description: "通訳スタッフに接続するためにJeenieはマイクとカメラへのアクセスを必要としています。",
+      description:
+        "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
       button: "マイク＆カメラへのアクセスを許可",
       back: "戻る"
     }
@@ -541,6 +546,9 @@
 
   // new customer home screen designs
   newCustomerHome: {
+    addCard: "カードを追加",
+    balance: "{{num}}分",
+    linguists: "Jeenieの通訳スタッフが待機しています…",
     numLinguists: "{{num}}人のJeenieの通訳スタッフが待機しています…",
     primaryLang: {
       label: "話せる言語："
@@ -549,7 +557,7 @@
       label: "翻訳 - 翻訳先言語："
     },
     scenario: {
-      label: "何をしていますか？",
+      label: "必要なサポートをお聞かせください。",
       placeholder: "シナリオを選択（オプション）"
     },
     buttons: {
@@ -577,11 +585,16 @@
   payments: {
     currentRate: "$1/分",
     currentBalance: "{{minutes}}分",
-    enterPaymentToTalk: "通話を続けるにはお支払い情報を入力してください。1分あたり$1で好きなだけお話いただけます。",
-    currentRateDescription: "通話は1分あたり$1で、最長60分ご利用いただけます。長時間の通話に適用される割引は今後提供予定です。",
+    enterPaymentToTalk:
+      "通話を続けるにはお支払い情報を入力してください。1分あたり$1で好きなだけお話いただけます。",
+    currentRateDescription:
+      "通話は1分あたり$1で、最長60分ご利用いただけます。長時間の通話に適用される割引は今後提供予定です。",
     addCard: "カードを追加",
+    editCard: "カードを編集",
+    cardInfo: "カード情報",
     removeCard: "カードを削除",
-    removeCardAlert: "このクレジットカードを削除しますか？  この操作は取り消しできません。",
+    removeCardAlert:
+      "このクレジットカードを削除しますか？  この操作は取り消しできません。",
     noCardNotice: "まだカードが登録されていません。",
     number: {
       title: "カード番号",
@@ -595,14 +608,14 @@
     cvv: {
       title: "CVV",
       errInvalid: "CVVが無効です",
-      description: 'クレジットカードまたはデビットカードのCVV（セキュリティコード）は、VISA、マスターカード、ディスカバーカードの場合、3桁のコードとなります。  アメリカン・エキスプレスの場合、4桁のコードとなります。'
+      description:
+        'クレジットカードまたはデビットカードのCVV（セキュリティコード）は、VISA、マスターカード、ディスカバーカードの場合、3桁のコードとなります。  アメリカン・エキスプレスの場合、4桁のコードとなります。'
     }
   },
 
   operatingHours: {
     title: "利用可能：{{lang}}",
-    description:
-      "Language Jeeniesは{{beginHour}}から{{endHour}}までご利用いただけます。",
+    description: "Language Jeeniesは{{beginHour}}から{{endHour}}までご利用いただけます。",
     ok: "OK"
   },
   lang: {
@@ -646,18 +659,15 @@
         "通話中に接続が切断されることを防止するため、今すぐお支払い情報を追加してください。",
       descriptionLowMinutes:
         "残高が残り少なくなっています。次回の通話中に接続が切断されることを防止するため、今すぐお支払い情報を追加してください。",
-      descriptionNoMinutes:
-        "利用を続けるには、お支払い情報を追加していただく必要があります。"
+      descriptionNoMinutes: "利用を続けるには、お支払い情報を追加していただく必要があります。"
     },
     descriptions: {
       hasMinutesAndCard:
         "利用できる時間がなくなった場合、通話中に接続が切断されることを防止するため1分あたり$1（米ドル）をカードに自動請求させていただきます。",
       hasMinutesNoCard:
         "残り時間以上通話を続ける場合は、今すぐお支払い情報を追加してください。",
-      noMinutesHasCard:
-        "1分あたり$1（米ドル）をカードに自動請求させていただきます。",
-      noMinutesNoCard:
-        "通訳スタッフを利用する場合は、今すぐお支払い情報を追加してください。"
+      noMinutesHasCard: "1分あたり$1（米ドル）をカードに自動請求させていただきます。",
+      noMinutesNoCard: "通訳スタッフを利用する場合は、今すぐお支払い情報を追加してください。"
     },
     buttons: {
       continue: "続ける",
@@ -670,14 +680,14 @@
   api: {
     errUnexpected: "予期せぬエラーが発生しました。",
     errTemporary: "一時的なエラーが発生しました。",
-    errTemporaryTryAgain:
-      "A temporary error has occurred. Try again in a few minutes.",
+    errTemporaryTryAgain: "一時的なエラーが発生しました。数分後にもう一度お試しください。",
     errLogin: "ログイン中に問題が発生しました",
     errDefaultAuth: "認証情報が期限切れか無効です。",
     errNoUser: "このメールアドレスのユーザーが見つかりませんでした",
     errNoEmail: "メールアドレスが見つかりません",
     errPasswordIncorrect: "パスワードが誤っています",
     errAuthRequired: "もう一度ログインする必要があります",
+    errEmailInUse: "このメールアドレスを使用してすでにアカウントが作成されています。",
     errEventInvalid: "このコードの認証に失敗しました。",
     errEventUnavailable: "このコードは現在利用できません。",
     errEventInactive: "このコードは使用されていません。",
@@ -686,6 +696,37 @@
     errEventTimeExpired: "このコードには残り時間がありません。",
     errEventAlreadyUsed: "このコードはすでに使用されています。",
     errLocationRestricted: "Jeenieは現在お住まいの地域でご利用いただけません。"
+  },
+
+  // used when handling user input related to specific fields - these
+  // are often used in more than one place
+  fields: {
+    email: {
+      label: "メールアドレス",
+      labelConfirm: "メールアドレスを確認",
+      errInvalid: "有効なメールアドレスではありません",
+      errConfirmMatch: "メールアドレスが一致しなければなりません。"
+    },
+    firstName: {
+      label: "名前（名）",
+      errInvalid: "名前は必ず最低1文字以上で設定してください。"
+    },
+    nativeLang: {
+      label: "母国語"
+    },
+    password: {
+      label: "パスワード",
+      labelConfirm: "パスワードを確認",
+      labelCreate: "パスワードを作成",
+      errLength: "必ず7文字以上のパスワードを設定してください。",
+      errConfirmMatch: "パスワードが一致しなければなりません。"
+    }
+  },
+
+  // seen as a pop up if the user has entered an invalid email address.
+  correctEmailModal: {
+    notice: "入力いただいたメールアドレスに問題があります。新たに別のメールアドレスを入力してください。",
+    complete: "メールアドレスが更新されました！今後Jeenieへのサインインには必ず{email}を使用してください。"
   },
 
   // for use in session-related screens
@@ -724,12 +765,12 @@
       submit: "送信",
       resolvedCustomer: "問題は解決しましたか？",
       resolvedLinguist: "問題は解決しましたか？",
+      scenario: "お客様がどのようなサポートを必要とされていましたか？",
       classification: "通話の分類",
       classifications: {
-        trial: "トライアル通話",
+        trial: "通訳スタッフのトライアル通話",
         demo: "製品デモ通話",
-        support: "言語の練習",
-        langPractice: "カスタマーサポート"
+        help: "言語＆文化に関するサポート"
       },
       flags: {
         langAbility: "語学力",
@@ -748,6 +789,7 @@
     }
   },
 
+  // DEPRECATED: this block will be removed - any strings here currently in use should be refactored or removed
   customerOnboarding: {
     welcome: "Jeenieへようこそ",
     connectToLinguist: "今すぐ接続",
@@ -756,19 +798,22 @@
     homeCanIhelpYou: "{{name}}様、必要なサポートをお聞かせください。",
     intro: {
       title: "安心して旅行を楽しみましょう",
-      description: "必要な時に、ボタンをタップするだけで、24時間リアルタイムで機械ではなく実際の通訳スタッフが言語サポートや文化に関するアドバイスを提供いたします。",
+      description:
+        "必要な時に、ボタンをタップするだけで、24時間リアルタイムで機械ではなく実際の通訳スタッフが言語サポートや文化に関するアドバイスを提供いたします。",
       button: "続ける"
     },
     allSet: "設定は完了です！",
     location: {
       title: "位置情報をオンに設定",
-      description: "位置情報をJeenieと共有することで、Jeenieによって適切な言語と通訳スタッフが自動的に提案されるようになります。",
+      description:
+        "位置情報をJeenieと共有することで、Jeenieによって適切な言語と通訳スタッフが自動的に提案されるようになります。",
       button: "位置情報をオンに設定",
       skip: "スキップ"
     },
     notification: {
       title: "通知をオンに設定",
-      description: "プッシュ通知をオンに設定すると、ユーザーの現在地周辺エリアで新しいサービスが利用できるようになるとJeenieからの通知が表示されるようになります。",
+      description:
+        "プッシュ通知をオンに設定すると、ユーザーの現在地周辺エリアで新しいサービスが利用できるようになるとJeenieからの通知が表示されるようになります。",
       button: "通知をオンに設定",
       skip: "スキップ"
     },
@@ -777,8 +822,7 @@
       provideInformation:
         "今後アカウントにアクセスできるように、お名前、メールアドレス、パスワードを入力してください。",
       createAccountTitle: "アカウントを作成",
-      termsAndPrivacyNotice:
-        "続けることで、当社の利用規約とプライバシーポリシーに同意することになります。",
+      termsAndPrivacyNotice: "続けることで、当社の利用規約とプライバシーポリシーに同意することになります。",
       terms: "利用規約",
       privacyPolicy: "プライバシーポリシー",
       forgotPassword: "パスワードをお忘れですか？"
@@ -793,9 +837,46 @@
       invalidEmail: "有効なメールアドレスを入力してください",
       takenEmail:
         "入力したメールアドレスのアカウントはすでに存在しています。\n別のメールアドレスを入力するか、\nご自身のアカウントにサインインしてください。",
-      emailAndPassword:
-        "メールアドレスとパスワードの組み合わせが誤っています。\nもう一度お試しください。",
-      signInto: "アカウントにサインイン."
+      emailAndPassword: "メールアドレスとパスワードの組み合わせが誤っています。\nもう一度お試しください。",
+      signInto: "アカウントにサインイン"
+    }
+  },
+
+  newCustomerOnboarding: {
+    getStarted: "利用開始",
+    haveAccount: "すでにアカウントをお持ちですか？",
+    signIn: "サインイン",
+    signInto: "アカウントにサインイン",
+    createAccount: "アカウントを作成",
+    intro: {
+      title: "リアルタイムのサポート",
+      description: "ボタンをタップするだけで、24時間リアルタイムで機械ではなく実際の通訳スタッフがサポートを提供いたします。  料金：1分あたり$1（米ドル） | 最初の10分は無料。",
+      button: "利用開始"
+    },
+    location: {
+      title: "位置情報をオンに設定",
+      description: "位置情報をJeenieと共有することで、Jeenieによって適切な言語と通訳スタッフが自動的に提案されるようになります。",
+      button: "位置情報をオンに設定"
+    },
+    notification: {
+      title: "通知をオンに設定",
+      description:
+        "プッシュ通知をオンに設定すると、ユーザーの現在地周辺エリアで新しいサービスが利用できるようになるとJeenieからの通知が表示されるようになります。",
+      button: "通知をオンに設定"
+    },
+    register: {
+      title: "ご自身について情報をご提供ください：",
+      termsAndPrivacyNotice: "続けることで、当社の利用規約とプライバシーポリシーに同意することになります。",
+      terms: "利用規約",
+      privacyPolicy: "プライバシーポリシー"
+    },
+    login: {
+      forgotPassword: "パスワードをお忘れですか？"
+    },
+    errors: {
+      takenEmail:
+        "入力したメールアドレスのアカウントはすでに存在しています。\n別のメールアドレスを入力するか、\nご自身のアカウントにサインインしてください。",
+      emailAndPassword: "メールアドレスとパスワードの組み合わせが誤っています。\nもう一度お試しください。"
     }
   },
 

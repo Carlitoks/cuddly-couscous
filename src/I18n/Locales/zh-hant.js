@@ -37,10 +37,8 @@
   callLinguist: "打電話給語言專員",
   calls: "通話",
   callSettings: "通話設定",
-  callTimeBoxTextLine1:
-    "慶祝翻譯精靈上市，現在體驗翻譯精靈\n完全免費",
-  callTimeBoxTextLine2:
-    "定價每分鐘 1 美元，\n未來將推出包套折扣",
+  callTimeBoxTextLine1: "慶祝翻譯精靈上市，現在體驗翻譯精靈\n完全免費",
+  callTimeBoxTextLine2: "定價每分鐘 1 美元，\n未來將推出包套折扣",
   callTimeButtonText: "免費分鐘數",
   callTimeButtonSubtitle: "翻譯精靈請客",
   callTimeMinutes: "通話時長",
@@ -50,8 +48,7 @@
   callWillEnd: "時間一到會立即結束通話",
   cancel: "取消",
   cancelCall: "取消通話",
-  celebrateAndEnjoy:
-    "歡慶上市\n，免費使用翻譯精靈 \n 10 分鐘！",
+  celebrateAndEnjoy: "歡慶上市\n，免費使用翻譯精靈 \n 10 分鐘！",
   celebrateAndEnjoyAlternative:
     "歡慶上市，\n免費使用翻譯精靈 10 分鐘\n！",
   celebrateWithUs: "和我們一起慶祝上市！",
@@ -59,8 +56,7 @@
   cancelCallCustomer: "無法通話",
   chargeAdvice: "通話超過 8 分鐘後，須按分鐘數付費。",
   checkYourConnection: "請檢查連線",
-  checkYourEmail:
-    "我們已經傳送重設密碼連結給您。請查收電子郵件。",
+  checkYourEmail: "我們已經傳送重設密碼連結給您。請查收電子郵件。",
   checkYourEmailOnBoarding: "請查收電子郵件並完成註冊。",
   citizenShip: "公民資格",
   cityFamiliarity: "城市熟悉程度",
@@ -77,16 +73,14 @@
   connectMeNow: "立即和我連線",
   connectNow: "立即連線",
   connecting: "連線中",
-  contactingLinguist:
-    "大約 1 分鐘後將接通\n語言翻譯精靈\n",
+  contactingLinguist: "大約 1 分鐘後將接通\n語言翻譯精靈\n",
   continue: "繼續",
   continueUsingJeenie: "繼續使用翻譯精靈",
   continueForFree: "繼續",
   conversations: "其他",
   compliments: "{{organizer}} 贈送 {{minutes}} 分鐘",
   complimentsOf: "{{organizer}}請客",
-  complimentMinutes:
-    "{{organizer}} 慷慨餽贈，增加了 {{maxMinutesPerUser}} 分鐘",
+  complimentMinutes: "{{organizer}} 慷慨餽贈，增加了 {{maxMinutesPerUser}} 分鐘",
   minutesAdded: "已增加分鐘數",
   invalidCode: "代碼無效",
   invalidCodeMsg: "{{message}}",
@@ -104,10 +98,8 @@
   declined: "已拒絕",
   disableExtraTime: "不願意延長時間",
   dining: "餐廳",
-  discountsOffered:
-    "購買高通話量分鐘數可享\n\n折扣。",
-  discountsOfferedAlternative:
-    "預購分鐘數可享折扣\n ",
+  discountsOffered: "購買高通話量 \n 分鐘數可享 \n 折扣。",
+  discountsOfferedAlternative: "預購分鐘數可享折扣\n ",
   duration: "時長",
   editProfile: "編輯個人資料",
   email: "電子郵件",
@@ -139,16 +131,11 @@
   errorPromo: "找不到促銷代碼",
   estimatedCost: "預估費用",
   estimatedDuration: "預估時長",
-  estimatedCostStatic1:
-    "試用期間通話預設為 8 分鐘。",
-  estimatedCostStatic2:
-    "若您需要更多時間，可以在通話中增加。",
-  expertise_A1:
-    "有許多不同的髮型適合不同的人和不同的",
-  expertise_B1:
-    "創造的迴圈是什麼？如何從無到有？在 Spite",
-  expertise_C1:
-    "我們之所以為人類，是不是因為我們的特徵和特質不同於",
+  estimatedCostStatic1: "試用期間通話預設為 8 分鐘。",
+  estimatedCostStatic2: "若您需要更多時間，可以在通話中增加。",
+  expertise_A1: "有許多不同的髮型適合不同的人和不同的",
+  expertise_B1: "創造的迴圈是什麼？如何從無到有？在 Spite",
+  expertise_C1: "我們之所以為人類，是不是因為我們的特徵和特質不同於",
   extraTime1: "時間快到了！",
   extraTime2: "您需要更多時間嗎？",
   extraTime3: "您的通話將在 2 分鐘後結束",
@@ -161,8 +148,7 @@
   female: "女性",
   finish: "結束",
   finishOnboarding: "完成註冊",
-  finishOnboardingMessage:
-    "請完成註冊以利使用本應用程式",
+  finishOnboardingMessage: "請完成註冊以利使用本應用程式",
   firstname: "名字",
   firstnameFormatValidation: "名字只能包含字元。",
   fluent: "流利",
@@ -185,8 +171,7 @@
   gotIt: "沒問題！",
   hasDisconnected: "您已斷線",
   help: "協助",
-  helpPeople:
-    "您對哪些城市的熟悉程度足以協助人們遊覽城市？",
+  helpPeople: "您對哪些城市的熟悉程度足以協助人們遊覽城市？",
   helpUsGet: "協助我們更瞭解您",
   hi: "您好",
   historyNotFound: "找不到記錄",
@@ -215,7 +200,7 @@
   languageCommand: "您要求的語言",
   languageHelp: "隨時隨地提供語言協助",
   languageInterpretation: "您曾經做過<lang>翻譯嗎？",
-  LanguagePairs: "語言對」", // not use
+  LanguagePairs: "語言對", // not use
   language: "語言",
   languages: "語言",
   languagesComingSoon: "即將推出各種語言",
@@ -235,8 +220,7 @@
     "無論置身世上何處，都能即時與精通外語的真人通話。",
   lauchScreenSwipe3:
     "翻譯精靈目前支援\n中文（普通話）<> 英文\n以及日本 <> 英文。\n\n即將推出其他語言。",
-  lauchScreenSwipe4:
-    "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
+  lauchScreenSwipe4: "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
   lauchScreenSwipe5:
     "為慶祝上市，前 10 分鐘免費…翻譯精靈請客！",
   lastname: "姓氏",
@@ -379,8 +363,7 @@
   termsOfUse: "使用條款",
   themeSettings: "主題設定",
   temporaryError: "暫時發生錯誤，請稍後再試。",
-  toggleExtraTimeDisable:
-    "這次通話將在上方指定的時間過後自動中斷。",
+  toggleExtraTimeDisable: "這次通話將在上方指定的時間過後自動中斷。",
   toggleExtraTimeEnable:
     "這次通話將持續到您中斷為止。通話超過上方指定的時間後，須按分鐘數付費。",
   toOthersOnPlatform: "平台上的其他人",
@@ -455,10 +438,31 @@
     finished: "結束",
     select: "選取",
     choose: "選擇",
-    skip: "略過"
+    skip: "略過",
+    edit: "編輯"
   },
 
-  // new customer home screen
+  logic: {
+    and: "和",
+    or: "或",
+    not: "否"
+  },
+
+  menu: {
+    profile: "個人資料",
+    editProfile: "編輯個人資料",
+    home: "首頁",
+    history: "記錄",
+    promo: "輸入促銷代碼",
+    qr: "掃描 QR 碼",
+    payment: "付款詳細資料",
+    problem: "通報問題",
+    becomeLinguist: "成為語言專員",
+    settings: "設定"
+  },
+
+  // DEPRECATED: block should be removed in the future, any strings currently in use
+  // should be moved or refactored
   customerHome: {
     primaryLang: {
       label: "我說"
@@ -533,7 +537,8 @@
     sessionPermissions: {
       heading: "快完成了！",
       title: "麥克風和相機",
-      description: "翻譯精靈需存取您的麥克風和相機，才能讓您和語言專員通話。",
+      description:
+        "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
       button: "啟用麥克風和相機",
       back: "返回"
     }
@@ -541,6 +546,9 @@
 
   // new customer home screen designs
   newCustomerHome: {
+    addCard: "新增卡片",
+    balance: "{{num}} 分鐘",
+    linguists: "翻譯精靈待命中...",
     numLinguists: "{{num}} 位翻譯精靈待命中...",
     primaryLang: {
       label: "我說"
@@ -549,7 +557,7 @@
       label: "翻譯成"
     },
     scenario: {
-      label: "您在做什麼？",
+      label: "您需要哪一方面的協助？",
       placeholder: "請選取一種情境 (可選)"
     },
     buttons: {
@@ -562,7 +570,7 @@
       noBalanceNoCard: "費率：每分鐘 1 美元。請新增卡片以利繼續通話",
       noBalanceHasCard: "費率：每分鐘 1 美元。",
       noBalanceHasCardPackage: "費率：每分鐘 1 美元。購買套餐可享 15% 折扣。",
-      hasBalance: "費率：每分鐘 1 美元，還剩 {{num}} 分鐘。",
+      hasBalance: "費率：每分鐘 1 美元。剩餘分鐘數：{{num}} 分鐘",
       hasBalanceAutoreload: "費率：還剩 {{num}} 分鐘。"
     }
   },
@@ -577,11 +585,16 @@
   payments: {
     currentRate: "每分鐘 1 美元",
     currentBalance: "{{minutes}} 分鐘",
-    enterPaymentToTalk: "輸入付款詳細資料即可繼續通話。每分鐘 1 美元就能暢所欲言。",
-    currentRateDescription: "通話費用每分鐘 1 美元，時間不可超過 60 分鐘。日後將推出大量儲值分鐘數可享折扣的服務。",
+    enterPaymentToTalk:
+      "輸入付款詳細資料即可繼續通話。每分鐘 1 美元就能暢所欲言。",
+    currentRateDescription:
+      "通話費用每分鐘 1 美元，時間不可超過 60 分鐘。日後將推出大量儲值分鐘數可享折扣的服務。",
     addCard: "新增卡片",
+    editCard: "編輯卡片",
+    cardInfo: "卡片資訊",
     removeCard: "移除卡片",
-    removeCardAlert: "您確定要刪除這張銀行卡嗎？  這是無法復原的操作。",
+    removeCardAlert:
+      "您確定要刪除這張銀行卡嗎？  這是無法復原的操作。",
     noCardNotice: "您還沒有新增任何卡片。",
     number: {
       title: "卡號",
@@ -595,14 +608,14 @@
     cvv: {
       title: "CVV",
       errInvalid: "CVV 無效",
-      description: 'VISA、MasterCard 和 Discover 等信用卡或簽帳金融卡上的 CVV (「卡片驗證值」) 是 3 位數字。  American Express 卡片上的則是 4 位數字。'
+      description:
+        'VISA、MasterCard 和 Discover 等信用卡或簽帳金融卡上的 CVV (「卡片驗證值」) 是 3 位數字。  American Express 卡片上的則是 4 位數字。'
     }
   },
 
   operatingHours: {
     title: "可用時段：{{lang}}",
-    description:
-      "語言翻譯精靈可用時段是 {{beginHour}} 到 {{endHour}}。",
+    description: "語言翻譯精靈可用時段是 {{beginHour}} 到 {{endHour}}。",
     ok: "確定"
   },
   lang: {
@@ -646,18 +659,15 @@
         "為避免通話中斷線，請立即新增付款資訊。",
       descriptionLowMinutes:
         "您的帳戶餘額不足。為避免下次通話中斷線，請立即新增付款資訊。",
-      descriptionNoMinutes:
-        "您必須新增付款資訊才能繼續使用。"
+      descriptionNoMinutes: "您必須新增付款資訊才能繼續使用。"
     },
     descriptions: {
       hasMinutesAndCard:
-        "為免通話中斷，當您將分鐘數用完後，我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
+        "為免通話中斷，當您將分鐘數用完後，我們會自動使用您的銀行卡扣款，每分鐘收費 1 美元。",
       hasMinutesNoCard:
         "若要在剩餘分鐘數用完後繼續通話，請立即輸入付款資訊。",
-      noMinutesHasCard:
-        "我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
-      noMinutesNoCard:
-        "您必須立即新增付款資訊，才能和語言專員通話。"
+      noMinutesHasCard: "我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
+      noMinutesNoCard: "您必須立即新增付款資訊，才能和語言專員通話。"
     },
     buttons: {
       continue: "繼續",
@@ -670,14 +680,14 @@
   api: {
     errUnexpected: "發生非預期錯誤。",
     errTemporary: "發生暫時性錯誤。",
-    errTemporaryTryAgain:
-      "A temporary error has occurred. Try again in a few minutes.",
+    errTemporaryTryAgain: "發生暫時性錯誤。請稍候幾分鐘再繼續。",
     errLogin: "登入時發生問題",
     errDefaultAuth: "認證過期或無效。",
     errNoUser: "找不到符合該電子郵件地址的用戶",
     errNoEmail: "找不到電子郵件",
     errPasswordIncorrect: "密碼不正確",
     errAuthRequired: "您必須重新登入",
+    errEmailInUse: "已經有人使用這個電子郵件地址建立帳戶了。",
     errEventInvalid: "無法驗證這個代碼。",
     errEventUnavailable: "目前無法使用這個代碼。",
     errEventInactive: "這個代碼尚未生效。",
@@ -686,6 +696,37 @@
     errEventTimeExpired: "這個代碼的時間已經用完了。",
     errEventAlreadyUsed: "這是使用過的代碼。",
     errLocationRestricted: "您所在地區目前不適用翻譯精靈。"
+  },
+
+  // used when handling user input related to specific fields - these
+  // are often used in more than one place
+  fields: {
+    email: {
+      label: "電子郵件",
+      labelConfirm: "確認電子郵件",
+      errInvalid: "無效的電子郵件地址。",
+      errConfirmMatch: "電子郵件必須相符。"
+    },
+    firstName: {
+      label: "名字",
+      errInvalid: "姓名只能包含字母。"
+    },
+    nativeLang: {
+      label: "母語"
+    },
+    password: {
+      label: "密碼",
+      labelConfirm: "確認密碼",
+      labelCreate: "建立密碼",
+      errLength: "密碼至少須包含 7 個字元。",
+      errConfirmMatch: "密碼必須相符。"
+    }
+  },
+
+  // seen as a pop up if the user has entered an invalid email address.
+  correctEmailModal: {
+    notice: "您輸入的電子郵件有誤，請輸入新的電子郵件。",
+    complete: "電子郵件更新完畢！從現在開始，您必須使用 {email} 登入翻譯精靈。"
   },
 
   // for use in session-related screens
@@ -724,12 +765,12 @@
       submit: "送出",
       resolvedCustomer: "您的問題解決了嗎？",
       resolvedLinguist: "他們的問題解決了嗎？",
+      scenario: "您的客戶需要哪一方面的協助？",
       classification: "通話分類",
       classifications: {
-        trial: "試用通話",
+        trial: "試用語言專員通話",
         demo: "產品展示通話",
-        support: "語言練習",
-        langPractice: "客戶支援"
+        help: "語言與文化協助"
       },
       flags: {
         langAbility: "語言能力",
@@ -748,6 +789,7 @@
     }
   },
 
+  // DEPRECATED: this block will be removed - any strings here currently in use should be refactored or removed
   customerOnboarding: {
     welcome: "歡迎使用翻譯精靈",
     connectToLinguist: "立即連線",
@@ -756,19 +798,22 @@
     homeCanIhelpYou: "{{name}}，需要幫忙嗎？",
     intro: {
       title: "放心旅行",
-      description: "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助和文化建議。",
+      description:
+        "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助和文化建議。",
       button: "繼續"
     },
     allSet: "準備好了！",
     location: {
       title: "啟用位置",
-      description: "若您與翻譯精靈分享所在位置，我們就能自動推薦正確的語言和真人譯者。",
+      description:
+        "若您與翻譯精靈分享所在位置，我們就能自動推薦正確的語言和真人譯者。",
       button: "開啟位置服務",
       skip: "略過"
     },
     notification: {
       title: "啟用通知",
-      description: "開啟推播通知後，只要您所在地區出現相關的新服務，翻譯精靈便會提醒您。",
+      description:
+        "開啟推播通知後，只要您所在地區出現相關的新服務，翻譯精靈便會提醒您。",
       button: "開啟通知",
       skip: "略過"
     },
@@ -777,8 +822,7 @@
       provideInformation:
         "請提供您的姓名、電子郵件和密碼，日後您才能使用自己的帳戶。",
       createAccountTitle: "建立帳戶",
-      termsAndPrivacyNotice:
-        "繼續使用即表示您同意我們的條款與隱私權政策。",
+      termsAndPrivacyNotice: "繼續使用即表示您同意我們的條款與隱私權政策。",
       terms: "條款",
       privacyPolicy: "隱私權政策",
       forgotPassword: "忘記密碼？"
@@ -793,9 +837,46 @@
       invalidEmail: "請輸入有效的電子郵件地址",
       takenEmail:
         "已有另一個帳戶使用您所輸入的電子郵件地址。\n請輸入另一個電子郵件或\n登入您的帳戶。",
-      emailAndPassword:
-        "電子郵件和密碼組合不正確。\n請再試一次。",
-      signInto: "登入您的帳戶."
+      emailAndPassword: "電子郵件和密碼組合不正確。\n請再試一次。",
+      signInto: "登入您的帳戶。"
+    }
+  },
+
+  newCustomerOnboarding: {
+    getStarted: "開始使用",
+    haveAccount: "已經有帳戶了？",
+    signIn: "登入",
+    signInto: "登入您的帳戶。",
+    createAccount: "建立帳戶",
+    intro: {
+      title: "即時協助",
+      description: "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助。  費率：每分鐘 1 美元，前 10 分鐘免費。",
+      button: "開始使用"
+    },
+    location: {
+      title: "啟用位置",
+      description: "若您與翻譯精靈分享所在位置，我們就能自動推薦正確的語言和真人譯者。",
+      button: "開啟位置服務"
+    },
+    notification: {
+      title: "啟用通知",
+      description:
+        "開啟推播通知後，只要您所在地區出現相關的新服務，翻譯精靈便會提醒您。",
+      button: "開啟通知"
+    },
+    register: {
+      title: "提供您的相關資訊：",
+      termsAndPrivacyNotice: "繼續使用即表示您同意我們的條款與隱私權政策。",
+      terms: "條款",
+      privacyPolicy: "隱私權政策"
+    },
+    login: {
+      forgotPassword: "忘記密碼？"
+    },
+    errors: {
+      takenEmail:
+        "已有另一個帳戶使用您所輸入的電子郵件地址。\n請輸入另一個電子郵件或\n登入您的帳戶。",
+      emailAndPassword: "電子郵件和密碼組合不正確。\n請再試一次。"
     }
   },
 
