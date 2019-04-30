@@ -7,6 +7,7 @@ import { closeSlideMenu } from "../../Ducks/LogicReducer";
 import Languages from './Partials/Languages';
 import Comments from './Partials/Comments';
 import Scenario from './Partials/Scenario';
+import NativeLang from "./Partials/NativeLang";
 
 class SlideUpPanel extends Component {
   render() {
@@ -23,7 +24,9 @@ class SlideUpPanel extends Component {
               ? <Comments />
               : selection === "scenarioSelection"
                 ? <Scenario />
-                : <Languages /> }
+                : selection === "nativeLang"
+                  ? <NativeLang />
+                  : <Languages /> }
         </SlidingUpPanel>
     );
   }

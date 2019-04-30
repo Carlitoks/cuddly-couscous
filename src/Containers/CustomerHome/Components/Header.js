@@ -54,7 +54,7 @@ export default class LinguistHeader extends Component {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
-            <Icon name="chevron-left" type="evilicon" color="#401674" size={50} />
+            <Icon name="chevron-left" type="evilicon" color="#FFFFFF" size={50} />
           </View>
         </TouchableOpacity>
       );
@@ -142,12 +142,6 @@ export default class LinguistHeader extends Component {
 
   renderHeaderInnerStyles = () => {
     const { navigation } = this.props;
-    if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
-    ) {
-      return styles.headerInner;
-    }
     return styles.headerInnerHome;
   };
 
@@ -159,14 +153,9 @@ export default class LinguistHeader extends Component {
 
   setBackgroundColor = () => {
     const { navigation } = this.props;
-    if (navigation.state.routeName === "Home") {
+    if (navigation.state.routeName === "Home" || navigation.state.routeName === "RegisterView"
+      || navigation.state.routeName === "LoginView") {
       return Colors.gradientColor.top;
-    }
-    if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
-    ) {
-      return "#fff";
     }
 
     return "transparent";
@@ -174,14 +163,7 @@ export default class LinguistHeader extends Component {
 
   setIosBackground = () => {
     const { navigation } = this.props;
-
-    if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
-    ) {
-      return styles.headerContainerOnboarding;
-    }
-return styles.headerContainer;
+    return styles.headerContainer;
   }
 
   render() {

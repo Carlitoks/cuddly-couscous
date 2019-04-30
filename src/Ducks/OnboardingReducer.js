@@ -44,6 +44,7 @@ const initialState = {
   password: null,
   firstName: null,
   errorType: null,
+  nativeLangCode: "",
   makingRequest: false,
   isValidEmail: false,
   isValidFirstName: false,

@@ -255,7 +255,7 @@ const Navigation = StackNavigator(
     }
   },
   {
-    initialRouteName: "IntroView",
+    initialRouteName: "RegisterView",
     headerMode: "none",
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {
