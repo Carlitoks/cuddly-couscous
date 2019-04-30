@@ -54,7 +54,7 @@ export default StyleSheet.create({
   /**
    * RenderPickerStyles
    */
-  renderPickerLabel: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(14), color: "rgba(0, 0, 0, 0.45)" },
+  renderPickerLabel: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(14), color: "#848688" },
   renderPickerSelectedLabel: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(13), color: "#1C1B1B" },
   renderPickerSelectorContainer: {
     backgroundColor: "#fff",

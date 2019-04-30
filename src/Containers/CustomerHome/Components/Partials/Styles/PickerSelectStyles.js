@@ -45,12 +45,12 @@ export default StyleSheet.create({
     color: "#ffffff",
   },
   inputPlaceholderValue: {
-    fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16), color: 'rgba(0, 0, 0, 0.45)',
+    fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(13), color: "#B1B1B1",
   },
   inputTitle: {
-    color: "rgba(0, 0, 0, 0.45)",
+    color: "#ffffff",
     fontFamily: Fonts.ItalicFont,
-    fontSize: Iphone5 ? 16 : moderateScale(16, 0),
+    fontSize: Iphone5 ? 13 : moderateScale(13, 0),
     textAlign: "left",
     fontWeight: "300",
   },
