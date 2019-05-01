@@ -415,8 +415,17 @@ export default (ENG = {
     tagline: "Language at Your Command"
   },
 
-  // generic language often used in navigation, forms, and dialogs
+  status: {
+    available: "Available",
+    cancelled: "Cancelled",
+    error: "Error",
+    unavailable: "Unavailable"
+  },
+
+  // generic language often used in navigation, forms, dialogs, and buttons
   actions: {
+    accept: "Accept",
+    agree: "Agree",
     back: "Back",
     cancel: "Cancel",
     choose: "Choose",
@@ -424,18 +433,28 @@ export default (ENG = {
     close: "Close",
     confirm: "Confirm",
     continue: "Continue",
+    dismiss: "Dismiss",
     done: "Done",
     edit: "Edit",
+    end: "End",
+    exit: "Exit",
     finished: "Finished",
+    ignore: "Ignore",
     next: "Next",
     no: "No",
     ok: "Ok",
     prev: "Previous",
+    quit: "Quit",
+    reject: "Reject",
     remove: "Remove",
     reset: "Reset",
     save: "Save",
     select: "Select",
+<<<<<<< HEAD
     send: "Send",
+=======
+    start: "Start",
+>>>>>>> i18n updates
     skip: "Skip",
     submit: "Submit",
     update: "Update",
@@ -728,9 +747,6 @@ export default (ENG = {
     errFailedToConnect: "Lost connection with Jeenie.  Please try again.",
     confirmEnd: "Are you sure you want to end the call?",
     callTime: "Call Time: {{time}}",
-    callCancel: "This call was canceled by the customer.",
-    callAnswered: "This call has been taken by another linguist.",
-    callFail: "The customer was unable to connect.",
     callFailCustomer: "There was a problem connecting to your Language Jeenie.",
     callEndingSoon: "This call will end soon.",
     alertGeneralCannotSee:
@@ -744,6 +760,32 @@ export default (ENG = {
     alertYouCannotSeeLinguist:
       "To optimize connectivity, your Language Jeenie's video has been temporarily disabled. Video will resume when connectivity improves.",
     createSessionFailed: "Temporarily unable to start call. Please try again.",
+
+    // for incoming call from linguists perspective
+    incoming: {
+      notice: "Incoming call...",
+      noticeVideo: "Incoming video call...",
+      noticeAudio: "Incoming audio call...",
+      assigned: "The call has been taken by another linguist",
+      cancelled: "The call was cancelled by the customer.",
+      failed: "The customer was unable to connect.",
+      unavailable: "The call is no longer available.",
+      lostConnection: "Lost connection to the server.",
+      videoType: "Video",
+      audioType: "Audio only"
+    },
+
+    // alerts to linguists about call being ended
+    ended: {
+      cancel: "The call was cancelled by the customer.",
+      disconnectLocal: "You were disconnected from the call.",
+      disconnectRemote: "Your customer was disconnected from the call.",
+      balanceExceeded: "Your account has run out of time.",
+      timeExceeded: "Call exceeded the time limit.",
+      failureLocal: "We were unable to connect you to the customer.",
+      failureRemote: "The customer was unable to connect.",
+      aborted: "Call has been ended."
+    },
 
     // seen when connecting to a session
     connecting: {
@@ -775,6 +817,7 @@ export default (ENG = {
     // seen while matching custoner to linguist
     matching: {
       description: "Connecting you to a Language Jeenie in approximately 1 minute",
+      remoteCancel: "Call canceled by remote party"
     },
 
     // retry screen seen when no matches are available, or initial connection to session fails

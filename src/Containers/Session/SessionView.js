@@ -731,7 +731,7 @@ class SessionView extends Component {
           if (!endedByLocal) {
             alert = {
               title: I18n.t('notification'),
-              body: "Call was canceled by the customer." //I18n.t()
+              body: I18n.t('session.ended.cancel')
             };
           }
         }
@@ -742,7 +742,7 @@ class SessionView extends Component {
         if (isLinguist) {
           alert = {
             title: I18n.t('notification'),
-            body: "You were disconnected from the call."
+            body: I18n.t("session.ended.disconnectLocal")
           };
         }
         break;
@@ -752,7 +752,7 @@ class SessionView extends Component {
         if (isLinguist) {
           alert = {
             title: I18n.t('notification'),
-            body: "Your customer was disconnected from the call."
+            body: I18n.t("session.ended.disconnectRemote")
           };
         }
         break;
@@ -762,7 +762,7 @@ class SessionView extends Component {
         if (isCustomer) {
           alert = {
             title: I18n.t('notification'),
-            body: "Your account has run out of time." //I18n.t()
+            body: I18n.t("session.ended.balanceExceeded")
           };
         }
         break;
@@ -772,7 +772,7 @@ class SessionView extends Component {
         if (isCustomer) {
           alert = {
             title: I18n.t('notification'),
-            body: "Call exceeded the time limit." //I18n.t()
+            body: I18n.t("session.ended.timeExceeded")
           };
         }
         break
@@ -782,7 +782,7 @@ class SessionView extends Component {
         if (isLinguist) {
           alert = {
             title: I18n.t('error'),
-            body: "We were unable to connect you to the customer." //I18n.t()
+            body: I18n.t("session.ended.failureLocal")
           };
         }
         break;
@@ -792,7 +792,7 @@ class SessionView extends Component {
         if (isLinguist) {
           alert = {
             title: I18n.t('error'),
-            body: "The customer was unable to connect." //I18n.t()
+            body: I18n.t("session.ended.failureRemote")
           };
         }
         break;
@@ -801,7 +801,7 @@ class SessionView extends Component {
         targetView = "Home";
         alert = {
           title: I18n.t('notification'),
-          body: "Call has been ended."
+          body: I18n.t("session.ended.aborted")
         };
         break;
       }

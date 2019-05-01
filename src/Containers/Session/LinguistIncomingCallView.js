@@ -60,7 +60,10 @@ export class LinguistIncomingCallView extends Component {
     // taking 5 seconds off to encourage pickup before call actually times out on customer side.    
     this.callTimeoutAt = moment(session.createdAt).add((SESSION.TIME.MATCH/DURATION.SECONDS) - 5, "s");
     
+
+
     this.state = {
+      noticeText: "video" == props.session.avModePreference ? I18n.t("session.incoming.noticeVideo") : I18n.t("session.incoming.noticeAudio"),
       linguists: null,
       seconds: this.getSecondsRemaining(),
       responding: false,
@@ -234,22 +237,22 @@ export class LinguistIncomingCallView extends Component {
 
   handleUnavailable (reason) {
     let title = I18n.t("notification");
-    let body = "Call no longer available";
+    let body = I18n.t("session.incoming.unavailable");
     switch (reason) {
       case "assigned": {
-        body = I18n.t("api.errSessionAssigned");
+        body = I18n.t("session.incoming.assigned");
         break;
       }
       case "cancelled": {
-        body = I18n.t("session.callCancel");
+        body = I18n.t("session.incoming.cancelled");
         break;
       }
       case "lostConnection": {
         title = I18n.t("error");
-        body = "Lost connection to the server." // I18n.t("err.lostConnection")
+        body = I18n.t("session.incoming.lostConnection")
       }
       case "localTimeout": {
-        body = "Call no longer available.";
+        body = I18n.t("session.incoming.unavailable");
       }
     }
     this.cleanup();
@@ -273,7 +276,7 @@ export class LinguistIncomingCallView extends Component {
 
   render () {
     const {session, remoteUser, invite} = this.props;
-    const {seconds, linguists, primaryLangName, secondaryLangName, scenarioText, customScenarioText} = this.state;
+    const {seconds, linguists, primaryLangName, secondaryLangName, noticeText, scenarioText, customScenarioText} = this.state;
     return (
       <View style = {styles.container}>
         <KeepAwake />
@@ -289,7 +292,7 @@ export class LinguistIncomingCallView extends Component {
           <View style={styles.userContainer}>
             <Image style={styles.avatarImage} source={!!remoteUser.avatarURL ? {uri: remoteUser.avatarURL} : images.avatar} resizeMode="cover" />
             <Text style={styles.userNameText}>{remoteUser.firstName}</Text>
-            <Text style={styles.incomingCallText}>{I18n.t('incomingCall')}</Text>
+            <Text style={styles.incomingCallText}>{noticeText}</Text>
           </View>
 
           <View style={styles.infoContainer}>

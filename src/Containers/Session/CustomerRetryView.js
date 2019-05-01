@@ -172,7 +172,7 @@ export class CustomerRetryView extends Component {
           this.props.navigation.dispatch({ type: "CustomerMatchingView" });
         })
         .catch(e => {
-          Alert.alert(I18n.t("error"), translateApiError(e), [{ text: "OK" }]);
+          Alert.alert(I18n.t("error"), translateApiError(e), [{ text: I18n.t("actions.ok") }]);
         })
         .finally(() => {
           this.creating = false;

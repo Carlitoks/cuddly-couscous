@@ -151,7 +151,7 @@ export class CustomerMatchingView extends Component {
     this.cleanup();
     this.props.endSession(SESSION.END.FAILURE_LOCAL)
     .catch((e) => {
-      Alert.alert("Error", translateApiError(e));
+      Alert.alert(I18n.t("status.error"), translateApiError(e));
     }).finally(() => {
       this.props.navigation.dispatch({type: "Home"});
     });
@@ -160,7 +160,7 @@ export class CustomerMatchingView extends Component {
   remoteCancel () {
     this.cleanup();
     this.props.handleEndedSession().finally(() => {
-      Alert.alert("Canceled", "Call canceled by remote party");
+      Alert.alert(I18n.t("status.cancelled"), I18n.t("session.matching.remoteCancel"));
       this.props.navigation.dispatch({type: "Home"});
     });
   }
@@ -172,7 +172,7 @@ export class CustomerMatchingView extends Component {
     this.cleanup();
     this.props.endSession(SESSION.END.TIMEOUT)
     .catch((e) => {
-      Alert.alert("Error", translateApiError(e));
+      Alert.alert(I18n.t("status.error"), translateApiError(e));
     }).finally(() => {
       this.props.navigation.dispatch({type: "CustomerRetryView"});
     });
@@ -185,7 +185,7 @@ export class CustomerMatchingView extends Component {
     this.cleanup();
     this.props.endSession(SESSION.END.CANCEL)
     .catch((e) => {
-      Alert.alert("Error", translateApiError(e));
+      Alert.alert(I18n.t("status.error"), translateApiError(e));
     }).finally(() => {
       this.props.navigation.dispatch({type: "Home"});
     });
@@ -211,7 +211,7 @@ export class CustomerMatchingView extends Component {
         <View style={styles.buttonContainer}>
           {elapsed >= 2 && (
             <TextButton
-              text = {I18n.t("cancel")}
+              text = {I18n.t("actions.cancel")}
               style = {styles.button}
               textStyle = {sharedStyles.prominentButtonText}
               disabled = {this.props.status.ending }

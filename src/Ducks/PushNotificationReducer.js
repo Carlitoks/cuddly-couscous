@@ -106,15 +106,15 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
           break;
         }
         case "assigned": {
-          Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
+          Alert.alert(I18n.t("notification"), I18n.t("session.incoming.assigned"));
           break;
         }
         case "cancelled": {
-          Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
+          Alert.alert(I18n.t("notification"), I18n.t("session.incoming.cancelled"));
           break;
         }
         default: {
-          Alert.alert(I18n.t("notification"), "Call no longer available.");
+          Alert.alert(I18n.t("notification"), I18n.t("session.incoming.unavailable"));
         }
       }
     })

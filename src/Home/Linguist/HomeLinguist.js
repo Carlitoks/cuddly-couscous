@@ -98,19 +98,19 @@ class Home extends Component {
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertCancelled
     ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
+      Alert.alert(I18n.t("notification"), I18n.t("session.incoming.cancelled"));
     }
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertAssigned
     ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
+      Alert.alert(I18n.t("notification"), I18n.t("session.incoming.assigned"));
     }
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertFail
     ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callFail"));
+      Alert.alert(I18n.t("notification"), I18n.t("session.incoming.failed"));
     }
 
     this.props.getCurrentAvailability();
