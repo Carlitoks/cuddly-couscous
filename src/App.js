@@ -21,7 +21,6 @@ import I18n from "./I18n/I18n";
 import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreen from "./Containers/Onboarding/Components/SplashScreen";
-import LoadingScreen from "./Containers/Onboarding/Components/LoadingScreen";
 import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 
@@ -205,7 +204,7 @@ class App extends Component {
       if (this.state.loadingStore) {
         // TODO: return static loading screen, like the splash screen
         // right now we have a flash of blank white screen
-        return <LoadingScreen />;
+        return null;
       }
 
       return (
