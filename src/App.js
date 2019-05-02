@@ -20,6 +20,7 @@ import analytics from "@segment/analytics-react-native";
 import I18n from "./I18n/I18n";
 import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
+import SplashScreen from "./Containers/Onboarding/Components/SplashScreen";
 import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 
@@ -31,7 +32,8 @@ class App extends Component {
       isLoggedIn: false,
       loadingStore: true,
       store: null,
-      appState: AppState.currentState
+      appState: AppState.currentState,
+      splashScreenTimer: false
     };
 
     // Font doesn't scale
@@ -193,19 +195,26 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.loadingStore) {
-      // TODO: return static loading screen, like the splash screen
-      // right now we have a flash of blank white screen
-      return null;
-    }
+    setTimeout(() => {
+      this.setState({ splashScreenTimer: true });
+    }, 2000);
+    if (!this.state.splashScreenTimer) {
+      return <SplashScreen />;
+    } else {
+      if (this.state.loadingStore) {
+        // TODO: return static loading screen, like the splash screen
+        // right now we have a flash of blank white screen
+        return null;
+      }
 
-    return (
-      <AppErrorBoundary>
-        <Provider store={this.state.store}>
-          <ReduxNavigation />
-        </Provider>
-      </AppErrorBoundary>
-    );
+      return (
+        <AppErrorBoundary>
+          <Provider store={this.state.store}>
+            <ReduxNavigation />
+          </Provider>
+        </AppErrorBoundary>
+      );
+    }
   }
 }
 

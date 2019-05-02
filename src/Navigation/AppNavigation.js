@@ -37,6 +37,7 @@ import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
 import ForgotPasswordScreen from "../Containers/ForgotPassword/ForgotPasswordScreen";
+import SplashScreen from "../Containers/Onboarding/Components/SplashScreen";
 
 // new session views
 import SessionView from "../Containers/Session/SessionView";
