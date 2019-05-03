@@ -21,7 +21,7 @@ export default StyleSheet.create({
   availableLangContainerText: {
     paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(14, 0),
+    fontSize: moderateScaleViewports(15, 0),
     color: '#1C1B1B'
   },
   dividerStyle: { backgroundColor: "rgba(90, 90, 90, 0.2)", height: 0.5, width: Metrics.width * 0.80, marginLeft: Metrics.width * 0.05 },
@@ -34,7 +34,7 @@ export default StyleSheet.create({
   unAvailableLangContainerText: {
     paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(14, 0),
+    fontSize: moderateScaleViewports(15, 0),
     color: '#1C1B1B'
   },
   LangViewContainer: {
@@ -51,13 +51,13 @@ export default StyleSheet.create({
   unAvailableLangText: {
     paddingLeft: 45,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(13),
+    fontSize: moderateScaleViewports(16),
     color: "#848688"
   },
   availableLangText: {
     paddingLeft: 45,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(13),
+    fontSize: moderateScaleViewports(16),
     color: "#1C1B1B"
   },
   checkPadding: { paddingRight: 30 },
