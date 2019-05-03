@@ -346,7 +346,6 @@
   speaker: "母語人士",
   specifyGender: "拒絕指定",
   sport: "運動",
-  status: "您是",
   submitFeedbackForMoreTime: "反映意見，換取更多時間",
   submitFeedback: "反映意見",
   tapRepeat: "點選重複",

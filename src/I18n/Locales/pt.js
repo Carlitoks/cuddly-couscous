@@ -346,7 +346,6 @@ export default (PT = {
   speaker: "Falante",
   specifyGender: "Rejeitar para especificar",
   sport: "Esportes",
-  status: "Você é",
   submitFeedbackForMoreTime: "Enviar feedback por mais tempo",
   submitFeedback: "Enviar feedback",
   tapRepeat: "Toque para repetir",

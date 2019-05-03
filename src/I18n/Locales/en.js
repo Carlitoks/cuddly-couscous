@@ -338,7 +338,6 @@ export default (ENG = {
   speaker: "Speaker",
   specifyGender: "Decline to specify",
   sport: "Sports",
-  status: "You are",
   submitFeedbackForMoreTime: "Submit feedback for more time",
   submitFeedback: "Submit Feedback",
   tapRepeat: "Tap to repeat",

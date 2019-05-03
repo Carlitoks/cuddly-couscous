@@ -346,7 +346,6 @@
   speaker: "スピーカー",
   specifyGender: "指定を拒否",
   sport: "スポーツ",
-  status: "あなたは…",
   submitFeedbackForMoreTime: "さらにご意見を送信",
   submitFeedback: "ご意見の送信",
   tapRepeat: "タップしてリピート",

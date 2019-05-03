@@ -346,7 +346,6 @@ export default (ESP = {
   speaker: "Altavoz",
   specifyGender: "Rechazar para especificar",
   sport: "Deportes",
-  status: "Usted es/está",
   submitFeedbackForMoreTime: "Enviar comentarios para obtener más tiempo",
   submitFeedback: "Enviar comentarios",
   tapRepeat: "Tocar para repetir",

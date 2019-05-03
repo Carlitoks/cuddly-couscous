@@ -346,7 +346,6 @@ export default (FR = {
   speaker: "Locuteur",
   specifyGender: "Rejeter pour préciser",
   sport: "Sport",
-  status: "Vous êtes",
   submitFeedbackForMoreTime: "Donnez votre avis pour recevoir du crédit",
   submitFeedback: "Envoyer les commentaires",
   tapRepeat: "Appuyez pour répéter",
