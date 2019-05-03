@@ -450,11 +450,8 @@ export default (ENG = {
     reset: "Reset",
     save: "Save",
     select: "Select",
-<<<<<<< HEAD
     send: "Send",
-=======
     start: "Start",
->>>>>>> i18n updates
     skip: "Skip",
     submit: "Submit",
     update: "Update",
