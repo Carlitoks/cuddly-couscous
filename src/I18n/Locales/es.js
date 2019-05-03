@@ -413,9 +413,7 @@ export default (ESP = {
 
   appUpdateAlert: {
     title: "Actualización Disponible",
-    description: "Actualice Jeenie para aprovechar las nuevas características.",
-    ok: "Ok",
-    ignore: "Ignorar"
+    description: "Actualice Jeenie para aprovechar las nuevas características."
   },
    
   //new onboarding

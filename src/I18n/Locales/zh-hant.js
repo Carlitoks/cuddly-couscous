@@ -413,9 +413,7 @@
 
   appUpdateAlert: {
     title: "更新可用",
-    description: "您需要更新Jeenie來享受新增的功能。",
-    ok: "好的",
-    ignore: "忽略"
+    description: "您需要更新Jeenie來享受新增的功能。"
   },
    
   //new onboarding

@@ -413,9 +413,7 @@
 
   appUpdateAlert: {
     title: "アップデートあり",
-    description: "新たなフィーチャーをご利用されたい場合ジーニーのアプリのアップデートが必須",
-    ok: "アップデート",
-    ignore: "消し去る"
+    description: "新たなフィーチャーをご利用されたい場合ジーニーのアプリのアップデートが必須"
   },  
 
   //new onboarding
