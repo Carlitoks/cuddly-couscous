@@ -23,6 +23,9 @@ const getStore = () =>
     const initialState = persistedStore || {};
 
     let store = null;
+
+    // it's possible for an error to be thrown because the store includes
+    // old keys that are no longer needed.
     try {
       store = createStore(rootReducer, initialState, getComposeEnhancers());
     } catch (e) {
