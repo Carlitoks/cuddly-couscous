@@ -2,7 +2,6 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { findIndex } from "lodash";
 
-import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { PrimaryLanguages } from "../../Config/Languages";
 
 class NativeLanguageSelection extends Component {
@@ -69,14 +68,7 @@ NativeLanguageSelection.propTypes = {};
 // MAP STATE TO PROPS HERE
 const mS = state => ({
   selectedNativeLanguage: state.userProfile.selectedNativeLanguage,
-  searchQuery: state.linguistForm.searchQuery
 });
 
-// MAP DISPATCH TO PROPS HERE
-const mD = { updateSettings };
-
 // EXPORT DEFAULT HERE AT THE BOTTOM
-export default connect(
-  mS,
-  mD
-)(NativeLanguageSelection);
+export default connect(mS)(NativeLanguageSelection);

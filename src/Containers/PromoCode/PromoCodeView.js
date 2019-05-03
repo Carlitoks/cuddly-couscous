@@ -7,7 +7,6 @@ import {
   clearPromoCode
 } from "../../Ducks/PromoCodeReducer";
 
-import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 
 import { View, Text, ScrollView, Keyboard, Alert } from "react-native";
@@ -33,9 +32,6 @@ class PromoCodeView extends Component {
   submit() {
     this.props.updateHomeFlow({
       categorySelected: ""
-    });
-    this.props.updateSettings({
-      selectedScenarios: []
     });
 
     const { token, promoCode } = this.props;
@@ -164,7 +160,6 @@ const mD = {
   updatePromoCode,
   asyncScanPromoCode,
   clearPromoCode,
-  updateSettings,
   updateHomeFlow,
 };
 

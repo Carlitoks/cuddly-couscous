@@ -7,7 +7,6 @@ import customerProfile from "./CustomerProfileReducer";
 import events from "./EventsReducer";
 import forgotPassword from "./ForgotPasswordReducer";
 import homeFlow from "./HomeFlowReducer";
-import linguistForm from "./LinguistFormReducer";
 import login from "./LoginReducer";
 import nav from "./NavigationReducer";
 import networkErrors from "./NetworkErrorsReducer";
@@ -39,7 +38,6 @@ const rootReducer = combineReducers({
   events,
   forgotPassword,
   homeFlow,
-  linguistForm,
   login,
   nav,
   networkErrors,

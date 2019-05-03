@@ -12,20 +12,7 @@ import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 
 import MenuView from "../Components/MenuView/MenuView";
 
-// Onboarding - Select Language
-import SelectLanguageView from "../LinguistForm/SelectLanguageView/SelectLanguageView";
-import LanguageSettingsView from "../LinguistForm/LanguageSettingsView/LanguageSettingsView";
-
-//List Views
-import NativeLanguageView from "../Lists/NativeLanguageView/NativeLanguageView";
-
 import RateView from "../RateCall/RateExperience/RateView";
-import NameLinguistView from "../LinguistForm/NameLinguistView/NameLinguistView";
-import GenderLinguistView from "../LinguistForm/GenderLinguistView/GenderLinguistView";
-import EmailLinguistView from "../LinguistForm/EmailLinguistView/EmailLinguistView";
-import PasswordLinguistView from "../LinguistForm/PasswordLinguistView/PasswordLinguistView";
-import SelectListView from "../LinguistForm/SelectListView/SelectListView";
-import FamiliarityView from "../LinguistForm/FamiliarityView/FamiliarityView";
 
 // User Profile
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
@@ -33,16 +20,12 @@ import EditNameView from "../Profile/EditName/EditNameView";
 import EditGenderView from "../Profile/EditGender/EditGenderView";
 import EditNativeLanguageView from "../Profile/EditNativeLanguage/EditNativeLanguageView";
 
-import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
-import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
 import SettingsView from "../Settings/SettingsView";
 import InterfaceLanguageView from "../Settings/InterfaceLanguageView";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
 import StaticView from "../StaticView/StaticView";
 import TextView from "../Components/TextView/TextView";
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
-import PromotionView from "../Containers/PromoCode/PromotionView";
-import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
 import OnboardingScreen from "../Containers/Onboarding/OnboardingScreen";
 import LoginScreen from "../Containers/Login/LoginScreen";
 import RegisterScreen from "../Containers/Register/RegisterScreen";
@@ -128,41 +111,6 @@ const Navigation = StackNavigator(
       screen: Home
     },
 
-    NameLinguistView: {
-      screen: NameLinguistView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    GenderLinguistView: {
-      screen: GenderLinguistView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    EmailLinguistView: {
-      screen: EmailLinguistView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    PhoneLinguistView: {
-      screen: PhoneLinguistView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    PasswordLinguistView: {
-      screen: PasswordLinguistView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
     CheckYourEmailView: {
       screen: CheckYourEmailView,
       navigationOptions: {
@@ -170,12 +118,7 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    VerifyPhoneLinguistView: {
-      screen: VerifyPhoneLinguistView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
+
     ScanScreenView: {
       screen: ScanScreenView,
       navigationOptions: {
@@ -201,13 +144,6 @@ const Navigation = StackNavigator(
         gesturesEnabled: false
       }
     },
-    SelectLanguageView: {
-      screen: SelectLanguageView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
     StaticView: {
       screen: StaticView,
       navigationOptions: {
@@ -217,34 +153,6 @@ const Navigation = StackNavigator(
     },
     TextView: {
       screen: TextView
-    },
-    NativeLanguageView: {
-      screen: NativeLanguageView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    SelectListView: {
-      screen: SelectListView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    LanguageSettingsView: {
-      screen: LanguageSettingsView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    FamiliarityView: {
-      screen: FamiliarityView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
     },
 
     IntroView: {
@@ -283,20 +191,6 @@ const Navigation = StackNavigator(
       screen: PromoCodeView,
       navigationOptions: {
         gesturesEnabled: false
-      }
-    },
-    PromotionView: {
-      screen: PromotionView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    PromoCodeListView: {
-      screen: PromoCodeListView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
       }
     },
     RateView: {

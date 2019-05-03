@@ -14,7 +14,6 @@ import I18n, {
   translateApiError
 } from "../../I18n/I18n";
 import { asyncScanQR } from "../../Ducks/EventsReducer";
-import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import styles from "./styles";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
@@ -48,9 +47,6 @@ class ScanScreenView extends Component {
   onSuccess = e => {
     this.props.updateHomeFlow({
       categorySelected: ""
-    });
-    this.props.updateSettings({
-      selectedScenarios: []
     });
     const { navigation } = this.props;
     try {
@@ -179,7 +175,6 @@ const mS = state => ({
 
 const mD = {
   asyncScanQR,
-  updateSettings,
   updateHomeFlow,
 };
 

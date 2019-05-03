@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { updateSettings, clearForm } from "../../Ducks/LinguistFormReducer";
 import {
   clearForm as registrationClearForm,
   updateForm
@@ -36,7 +35,8 @@ class EditNativeLanguageView extends Component {
     this.state = {
       selectedIndex: -1,
       formNativeLanguage: {},
-      loading: true
+      loading: true,
+      searchQuery: ""
     };
   }
   componentWillUnmount() {
@@ -51,7 +51,6 @@ class EditNativeLanguageView extends Component {
   componentWillMount() {
     const selectedNativeLanguage = this.props.selectedNativeLanguage;
 
-    this.props.updateSettings({ selectedNativeLanguage });
     this.setState({
       selectedIndex: findIndex(Languages, { 3: selectedNativeLanguage["3"] }),
       formNativeLanguage: selectedNativeLanguage
@@ -66,7 +65,7 @@ class EditNativeLanguageView extends Component {
   }
 
   changeSearch(queryString) {
-    this.props.updateSettings({ searchQuery: queryString });
+    this.setState({ searchQuery: queryString });
   }
 
   getSupportedLanguagesNames() {
@@ -130,7 +129,7 @@ class EditNativeLanguageView extends Component {
                   }
                 })
                 .then(() => {
-                  this.props.updateSettings({ searchQuery: "" });
+                  this.setState({ searchQuery: "" });
                 });
             }
           }
@@ -158,7 +157,7 @@ class EditNativeLanguageView extends Component {
           }
         })
         .then(() => {
-          this.props.updateSettings({ searchQuery: "" });
+          this.setState({ searchQuery: "" });
         });
     }
   }
@@ -196,7 +195,7 @@ class EditNativeLanguageView extends Component {
             )}
 
             <NativeLanguageSelection
-              searchQuery={this.props.searchQuery}
+              searchQuery={this.state.searchQuery}
               render={({ filterList, indexSelected, changeLanguage }) => {
                 return (
                   <ListComponent
@@ -241,15 +240,12 @@ const mS = state => ({
   token: state.auth.token,
   uuid: state.auth.uuid,
   selectedNativeLanguage: state.userProfile.selectedNativeLanguage,
-  searchQuery: state.linguistForm.searchQuery,
   formSelectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage
 });
 
 // MAP DISPATCH TO PROPS HERE
 const mD = {
-  updateSettings,
   updateProfileAsync,
-  clearForm,
   updateForm,
   registrationClearForm,
   updateView,
