@@ -14,8 +14,10 @@ import {
 } from "../../Ducks/NewSessionReducer";
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
-import { getProfileAsync } from "../../Ducks/UserProfileReducer";
+import { getProfileAsync, updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
+import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
+import { logOutAsync } from "../../Ducks/AuthReducer";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import I18n from "../../I18n/I18n";
@@ -106,7 +108,7 @@ class CustomerHomeScreen extends Component {
   };
 
   render() {
-    const { navigation, secondaryLangCode } = this.props;
+    const { navigation, logOutAsync, emailBounced, closeUpdateEmail, secondaryLangCode } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={styles.mainContainerHome}>
@@ -123,6 +125,9 @@ class CustomerHomeScreen extends Component {
             </View>
           </ScrollView>
           <SlideUpPanel />
+          <View style={{position: "absolute"}}>
+            {( emailBounced && <UpdateEmail />)}
+          </View>
         </View>
       </ViewWrapper>
     );
@@ -136,7 +141,8 @@ const mS = state => ({
   token: state.auth.token,
   uuid: state.auth.uuid,
   firstName: state.userProfile.firstName,
-  completedLocation: state.onboardingReducer.completedLocation
+  completedLocation: state.onboardingReducer.completedLocation,
+  emailBounced: state.userProfile.emailBounced,
 });
 
 const mD = {
@@ -146,6 +152,8 @@ const mD = {
   clearEvents,
   getProfileAsync,
   loadSessionScenarios,
+  logOutAsync,
+  closeUpdateEmail,
   guessSecondaryLangCode
 };
 
