@@ -9,7 +9,6 @@ import {
 
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
-import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 
 import { View, Text, ScrollView, Keyboard, Alert } from "react-native";
 
@@ -26,6 +25,11 @@ import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import { displayFormErrors } from "../../Util/Alerts";
 
 class PromoCodeView extends Component {
+
+  componentWillUnmount () {
+    Keyboard.dismiss();
+  }
+
   submit() {
     this.props.updateHomeFlow({
       categorySelected: ""
@@ -35,8 +39,6 @@ class PromoCodeView extends Component {
     });
 
     const { token, promoCode } = this.props;
-
-    this.props.updateContactLinguist({ customScenarioNote: "" });
 
     Keyboard.dismiss();
     this.props
@@ -57,74 +59,37 @@ class PromoCodeView extends Component {
           organization
         } = response.payload;
         this.props.clearPromoCode();
-        if(initiateCall){
-        if (
-          !response.payload.userCanCreateSession ||
-          !!response.payload.sessionCreateErr
-        ) {
-          Alert.alert("Error", response.payload.sessionCreateErr, [
-            {
-              text: "OK",
-              onPress: () => {
-                this.props.clearPromoCode();
-              }
-            }
-          ]);
-        } else {
-          if (requireScenarioSelection && restrictEventScenarios) {
-            /* Dispatch to SelectListView with the scenarios involveds*/
-            if (scenarios) {
-              let actualCats = this.props.categories;
-              actualCats.includes(scenarios[0].category)
-                ? null
-                : actualCats.push(scenarios[0].category);
-              const catIndex = findIndex(actualCats, scenario => {
-                return scenario === scenarios[0].category;
-              });
-              this.props.updateHomeFlow({
-                categoryIndex: catIndex,
-                categories: actualCats
-              });
-              this.props.updateSettings({
-                selectionItemType: "scenarios",
-                selectionItemName: "scenarios",
-                scenarios
-              });
-              this.props.navigation.dispatch({ type: "PromotionView" });
-            } else {
-              this.props.navigation.dispatch({ type: "CustomScenarioView" });
-            }
-          } else if (requireScenarioSelection && !restrictEventScenarios) {
-            /* Dispatch to Category Selection View (Home) */
 
-            this.props.updateSettings({
-              selectionItemType: "scenarios",
-              selectionItemName: "scenarios",
-              scenarios: scenarios || []
-            });
-            this.props.navigation.dispatch({ type: "PromoCodeListView" });
-          } else if (!requireScenarioSelection) {
-            /* Dispatch to Call Confirmation view */
-            const setLanguage =
-              !this.props.event.allowSecondaryLangSelection &&
-              this.props.event.defaultSecondaryLangCode;
-            if (setLanguage) {
-              this.props.navigation.dispatch({ type: "CallConfirmationView" });
-            } else {
-              this.props.navigation.dispatch({ type: "CallPricingView" });
+        // if an error, handle that first
+        if (usageError) {
+          this.props.navigation.dispatch({
+            type: "Home",
+            params: {
+              usageError: translateApiErrorString(
+                usageError,
+                "api.errEventUnavailable"
+              )
             }
-          }
+          });
+          return;
         }
+
+        // otherwise, for now we only support codes that add
+        // minutes to the user account
+        if (addMinutesToUser) {
+          this.props.navigation.dispatch({
+            type: "Home",
+            params: {
+              minutesGranted: true,
+              maxMinutesPerUser,
+              organization: organization.name
+            }
+          });
+          return;
         }
-        else{
-      if(usageError){
-        this.props.navigation.dispatch({ type: "Home", params: { usageError: translateApiErrorString(usageError, "api.errEventUnavailable") } });
-      }
-      if(addMinutesToUser){
-        this.props.navigation.dispatch({ type: "Home", params: { minutesGranted: true, maxMinutesPerUser, organization:  organization.name } });
-      }
-      this.props.navigation.dispatch({ type: "Home" });
-    }
+        
+        // otherwise... unexpected code
+        this.props.navigation.dispatch({ type: "Home" });
       })
       .catch(err => {
         console.log("Error ", err);
@@ -201,7 +166,6 @@ const mD = {
   clearPromoCode,
   updateSettings,
   updateHomeFlow,
-  updateContactLinguist
 };
 
 export default connect(

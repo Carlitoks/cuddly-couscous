@@ -13,7 +13,6 @@ export default (reducer = (state, action) => {
   let newState;
 
   if (state) {
-    //if(action.type !== 'contactLinguist/incrementCounter')
     const [currentRoute] = state.routes[0].routes[0].routes.slice(-1);
     if (action.type === currentRoute.routeName) {
       return state;
@@ -47,40 +46,6 @@ export default (reducer = (state, action) => {
               params: action.params
             })
           ]
-        })
-      );
-      break;
-
-    case "CustomerView":
-      analytics.screen(action.type.toString());
-      analytics.track("Checkout Started");
-      recordNavigationEvent(action.type.toString());
-      newState = AppNavigation.router.getStateForAction(
-        NavigationActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: "CustomerView" })]
-        })
-      );
-      break;
-
-    case "LinguistView":
-      analytics.screen(action.type.toString());
-      recordNavigationEvent(action.type.toString());
-      newState = AppNavigation.router.getStateForAction(
-        NavigationActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: "LinguistView" })]
-        })
-      );
-      break;
-
-    case "IncomingCallView":
-      analytics.screen(action.type.toString());
-      recordNavigationEvent(action.type.toString());
-      newState = AppNavigation.router.getStateForAction(
-        NavigationActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: "IncomingCallView" })]
         })
       );
       break;

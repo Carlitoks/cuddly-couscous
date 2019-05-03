@@ -1,18 +1,11 @@
-import { Session } from "../Api";
-import { networkError } from "./NetworkErrorsReducer";
 import {
   SupportedLanguages,
   ComingSoonLanguages,
   AllowedLanguagePairs,
-  FilterLangsByCodes, LanguagesRollover, getLangForCity
+  LanguagesRollover,
+  getLangForCity
 } from "../Config/Languages";
-import timer from "react-native-timer";
-import { REASON, SOUNDS } from "../Util/Constants";
-import { resetCounter, updateSettings as updateContactLinguist } from "./ContactLinguistReducer";
-import { BackgroundCleanInterval } from "../Util/Background";
 import { cleanNotifications } from "../Util/PushNotification";
-import { playSound } from "../Util/SoundManager";
-import { closeSlideMenu } from './LogicReducer'
 
 const ACTIONS = {
   CLEAR: "newSession/clear",
@@ -169,15 +162,8 @@ export const swapCurrentSessionLanguages = () => (dispatch, getState) => {
 };
 
 export const switchCallLang = (reason) => (dispatch, getState) => {
-  const { contactLinguist, auth } = getState();
   const { primaryLangCode, secondaryLangCode } = getState().newSessionReducer.session;
   try {
-    dispatch(
-      updateContactLinguist({
-        modalContact: false
-      })
-    );
-    dispatch(resetCounter());
     cleanNotifications();
     const currentSessionState = {
       ...getState().newSessionReducer.session,

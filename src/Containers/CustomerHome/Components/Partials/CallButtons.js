@@ -13,7 +13,6 @@ import { GetInfo } from "../../../../Ducks/SessionInfoReducer";
 import { modifyAVModePreference } from "../../../../Ducks/NewSessionReducer";
 import { cleanSelected } from "../../../../Ducks/HomeFlowReducer";
 import { clearPromoCode } from "../../../../Ducks/PromoCodeReducer";
-import { updateSettings } from "../../../../Ducks/ContactLinguistReducer";
 import {
   setPermission,
   displayOpenSettingsAlert,
@@ -43,10 +42,6 @@ class CallButtons extends Component {
     };
   }
 
-  componentWillMount() {
-    this.setLanguages();
-  }
-
   checkAvailableMinutes = async (type) => {
     const {
       navigation,
@@ -54,8 +49,6 @@ class CallButtons extends Component {
       availableMinutes,
       cleanSelected,
       clearPromoCode,
-      updateSettings,
-      selectedScenario,
       modifyAVModePreference,
       completedMicAndCamera,
     } = this.props;
@@ -75,9 +68,6 @@ class CallButtons extends Component {
         }
       ]);
     } else {
-      updateSettings({
-        selectedScenarioId: selectedScenario && selectedScenario[0] ? selectedScenario[0].id : null,
-      });
 
       Permissions.checkMultiple(["camera", "microphone"]).then(async (response) => {
         if (response.camera !== "authorized" || response.microphone !== "authorized") {
@@ -136,16 +126,6 @@ class CallButtons extends Component {
     });
   }
 
-  setLanguages = () => {
-    const { session, updateSettings } = this.props;
-    updateSettings({
-      primaryLangCode: session.primaryLangCode,
-      secundaryLangCode: session.secondaryLangCode,
-      selectedScenarioId: session.scenarioID === "custom" ? null : session.scenarioID,
-      customScenarioNote: session.customScenarioNote,
-    });
-  };
-
   isDisabled = () => {
     const { session } = this.props;
     return session.primaryLangCode === "" || session.secondaryLangCode === "";
@@ -202,19 +182,14 @@ const mS = state => ({
   customScenario: state.homeFlow.customScenario,
   token: state.auth.token,
   scenario: state.linguistForm.selectedLanguage,
-  scenarioNotes: state.contactLinguist.customScenarioNote,
   selectedScenario: state.linguistForm.selectedScenarios,
   categoryIndex: state.homeFlow.categoryIndex,
   categories: state.homeFlow.categories,
-  selectedLanguageTo: state.contactLinguist.selectedLanguage,
-  secondaryLangCode: state.contactLinguist.secundaryLangCode,
-  selectedLanguageFrom: state.contactLinguist.selectedLanguageFrom,
   fromLanguage: state.userProfile.selectedNativeLanguage,
   promotion: state.promoCode.scanned,
   event: state.events,
   availableMinutes: state.userProfile.availableMinutes,
   nativeLangCode: state.userProfile.nativeLangCode,
-  primaryLangCode: state.contactLinguist.primaryLangCode,
   stripeCustomerID: state.userProfile.stripeCustomerID,
   stripePaymentToken: state.userProfile.stripePaymentToken,
   session: state.newSessionReducer.session,
@@ -223,7 +198,6 @@ const mS = state => ({
 
 const mD = {
   GetInfo,
-  updateSettings,
   cleanSelected,
   clearPromoCode,
   modifyAVModePreference,

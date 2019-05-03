@@ -10,11 +10,11 @@ import { Header } from "react-native-elements";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import I18n, {
   translateLanguage,
-  translateApiErrorString
+  translateApiErrorString,
+  translateApiError
 } from "../../I18n/I18n";
 import { asyncScanQR } from "../../Ducks/EventsReducer";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
-import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import styles from "./styles";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
@@ -26,7 +26,6 @@ class ScanScreenView extends Component {
   };
 
   componentWillMount() {
-    this.props.updateContactLinguist({ customScenarioNote: "" });
 
     setPermission("camera").then(response => {
       if (response == "denied" || response == "restricted") {
@@ -46,41 +45,6 @@ class ScanScreenView extends Component {
     );
   };
 
-  changePrimaryLanguageEnglish(secondaryLangCode) {
-    const languagesMapper = DefaultLanguagePairMap;
-    const primaryLanguage = Languages.find(
-      lang => lang[3] === "eng" //Force to be english, it should be primarylangCode
-    );
-    const primaryLangCode = "eng";
-    let secondaryLanguageCode = secondaryLangCode;
-
-    if (secondaryLangCode) {
-      secondaryLanguageCode = secondaryLangCode;
-    } else {
-      secondaryLanguageCode = languagesMapper[primaryLangCode];
-    }
-    if (!secondaryLanguageCode) {
-      secondaryLanguageCode = primaryLangCode == "eng" ? "cmn" : "eng";
-    }
-
-    const secondaryLanguage = Languages.find(
-      lang => lang[3] === secondaryLanguageCode
-    );
-
-    this.props.updateContactLinguist({
-      primaryLangCode: primaryLangCode,
-      selectedLanguageFrom: translateLanguage(
-        primaryLanguage[3],
-        primaryLanguage["name"]
-      ),
-      secundaryLangCode: secondaryLanguage[3],
-      selectedLanguage: translateLanguage(
-        secondaryLanguage[3],
-        secondaryLanguage["name"]
-      )
-    });
-  }
-
   onSuccess = e => {
     this.props.updateHomeFlow({
       categorySelected: ""
@@ -99,119 +63,48 @@ class ScanScreenView extends Component {
           .asyncScanQR(eventId, this.props.token)
           .then(response => {
             const {
-              requireScenarioSelection,
-              restrictEventScenarios,
-              scenarios,
-              defaultMinutes,
-              allowMinuteSelection,
-              sessionCreateErr,
-              userCanCreateSession,
-              initiateCall,
               addMinutesToUser,
               usageError,
               maxMinutesPerUser,
-              defaultSecondaryLangCode,
               organization
             } = response.payload;
-            if (initiateCall) {
-              if (!sessionCreateErr && userCanCreateSession) {
-                if (this.props.token) {
-                  this.changePrimaryLanguageEnglish(defaultSecondaryLangCode);
-                  if (requireScenarioSelection && restrictEventScenarios) {
-                    /* Dispatch to SelectListView with the scenarios involveds*/
-                    if (scenarios) {
-                      let actualCats = this.props.categories;
-                      actualCats.includes(scenarios[0].category)
-                        ? null
-                        : actualCats.push(scenarios[0].category);
-                      const catIndex = findIndex(actualCats, scenario => {
-                        return scenario === scenarios[0].category;
-                      });
-                      this.props.updateHomeFlow({
-                        categoryIndex: catIndex,
-                        categories: actualCats
-                      });
-                      this.props.updateSettings({
-                        selectionItemType: "scenarios",
-                        selectionItemName: "scenarios",
-                        scenarios
-                      });
 
-                      this.props.navigation.dispatch({ type: "PromotionView" });
-                    } else {
-                      this.props.navigation.dispatch({
-                        type: "CustomScenarioView"
-                      });
-                    }
-                  } else if (
-                    requireScenarioSelection &&
-                    !restrictEventScenarios
-                  ) {
-                    /* Dispatch to Category Selection View (Home) */
-
-                    this.props.updateSettings({
-                      selectionItemType: "scenarios",
-                      selectionItemName: "scenarios",
-                      scenarios: scenarios || []
-                    });
-                    this.props.navigation.dispatch({
-                      type: "PromoCodeListView"
-                    });
-                  } else if (!requireScenarioSelection) {
-                    /* Dispatch to Call Confirmation view */
-                    this.props.navigation.dispatch({
-                      type: "CallConfirmationView"
-                    });
-                  }
-                } else {
-                  this.props.navigation.dispatch({
-                    type: "LoginView"
-                  });
+            // if an error, handle that first
+            if (usageError) {
+              this.props.navigation.dispatch({
+                type: "Home",
+                params: {
+                  usageError: translateApiErrorString(
+                    usageError,
+                    "api.errEventUnavailable"
+                  )
                 }
-              } else {
-                if (navigation.state.routeName === "ScanScreenView") {
-                  this.setState({
-                    reactivate: false
-                  });
-                  Alert.alert("Error", "QR invalid, try again", [
-                    {
-                      text: "OK",
-                      onPress: () => {
-                        this.scanner.reactivate();
-                        this.setState({
-                          reactivate: true
-                        });
-                      }
-                    }
-                  ]);
-                }
-              }
-            } else {
-              if (usageError) {
-                this.props.navigation.dispatch({
-                  type: "Home",
-                  params: {
-                    usageError: translateApiErrorString(
-                      usageError,
-                      "api.errEventUnavailable"
-                    )
-                  }
-                });
-              }
-              if (addMinutesToUser) {
-                this.props.navigation.dispatch({
-                  type: "Home",
-                  params: {
-                    minutesGranted: true,
-                    maxMinutesPerUser,
-                    organization: organization.name
-                  }
-                });
-              }
-              this.props.navigation.dispatch({ type: "Home" });
+              });
+              return;
             }
+
+            // otherwise, for now we only support codes that add
+            // minutes to the user account
+            if (addMinutesToUser) {
+              this.props.navigation.dispatch({
+                type: "Home",
+                params: {
+                  minutesGranted: true,
+                  maxMinutesPerUser,
+                  organization: organization.name
+                }
+              });
+              return;
+            }
+            
+            // otherwise... unexpected code
+            this.props.navigation.dispatch({ type: "Home" });
+
           })
-          .catch(error => console.log(error));
+          .catch(error => {
+            Alert.alert(I18n.t('error'), translateApiError(error))
+            this.props.navigation.dispatch({ type: "Home" });
+          });
 
         this.setState({
           reactivate: false
@@ -288,7 +181,6 @@ const mD = {
   asyncScanQR,
   updateSettings,
   updateHomeFlow,
-  updateContactLinguist
 };
 
 export default connect(

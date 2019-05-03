@@ -3,9 +3,6 @@ import { networkError } from "./NetworkErrorsReducer";
 import { Images } from "../Themes/Images";
 import I18n from "../I18n/I18n";
 
-import store from "../Config/CreateStore";
-import { getAssistanceList } from "./ContactLinguistReducer";
-
 // Constants
 export const LANGUAGE_INTERPRETATION_LIST = [
   { name: I18n.t("frequently"), code: "frequent" },

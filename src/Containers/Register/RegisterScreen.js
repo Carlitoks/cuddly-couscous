@@ -33,7 +33,6 @@ import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
-import { updateSettings } from "../../Ducks/ContactLinguistReducer";
 import I18n from "../../I18n/I18n";
 import Permission from "react-native-permissions";
 // Styles
@@ -477,7 +476,6 @@ const mD = {
   asyncCreateUser,
   asyncUpdateUser,
   updateOnboarding,
-  updateSettings,
   modifyAVModePreference
 };
 
