@@ -415,6 +415,11 @@ export default (FR = {
     help: "Can I help you?"
   },
 
+  appUpdateAlert: {
+    title: "La mise en jour est disponible",
+    description: "Vous devez mettre à jour l’application Jeenie pour bénéficier des nouveautés."
+  },   
+
   loading: {
     tagline: "Language at Your Command"
   },

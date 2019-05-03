@@ -178,7 +178,7 @@ class App extends Component {
       I18n.t("appUpdateAlert.description"),
       [
         {
-          text: I18n.t("appUpdateAlert.ok"),
+          text: I18n.t("actions.ok"),
           onPress: () => {
             try {
               Linking.canOpenURL(url).then(supported => {

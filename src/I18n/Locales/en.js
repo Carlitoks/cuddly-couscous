@@ -403,9 +403,7 @@ export default (ENG = {
 
   appUpdateAlert: {
     title: "Update Available",
-    description: "You must update Jeenie in order to take advantage of new features.",
-    ok: "Ok",
-    ignore: "Ignore"
+    description: "You must update Jeenie in order to take advantage of new features."
   },
 
   //new onboarding

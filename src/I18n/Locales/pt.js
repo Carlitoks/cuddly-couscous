@@ -413,9 +413,7 @@ export default (PT = {
 
   appUpdateAlert: {
     title: "Atualização Disponível",
-    description: "Você deve atualizar Jeenie para aproveitar seus novos recursos.",
-    ok: "Ok",
-    ignore: "Ignore"
+    description: "Você deve atualizar Jeenie para aproveitar seus novos recursos."
   },
   
   //new onboarding
