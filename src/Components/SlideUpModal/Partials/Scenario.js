@@ -4,23 +4,17 @@ import { connect } from "react-redux";
 import { Divider, Icon } from "react-native-elements";
 import styles from "./Styles/ScenarioStyles";
 import { Colors, Fonts } from "../../../Themes";
-import {
-  changeLangCode,
-  updateSelectedScenario
-} from "../../../Ducks/NewSessionReducer";
+import { changeLangCode, updateSelectedScenario } from "../../../Ducks/NewSessionReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
-import I18n, { translateProperty }  from "../../../I18n/I18n";
+import I18n, { translateProperty } from "../../../I18n/I18n";
 import { Bus, Shopping, Dinning, Translator, Teamwork, Layers } from "../../../Assets/SVG";
 import Reactotron from "reactotron-react-native";
 import metrics from "../../../Themes/Metrics";
-import {isIphoneXorAbove} from "../../../Util/Devices";
+import { isIphoneXorAbove } from "../../../Util/Devices";
 
 class Scenario extends Component {
   renderCheck = currentLang => {
-    const {
-      selection,
-      scenarioID,
-    } = this.props;
+    const { selection, scenarioID } = this.props;
     let ButtonStyle = {
       ...styles.availableLangText,
       color: "#1C1B1B"
@@ -29,30 +23,37 @@ class Scenario extends Component {
       if (scenarioID != null && scenarioID === currentLang.id) {
         return (
           <View style={styles.iconNameContainer}>
-            { this.renderIcon(currentLang.id, "#3F1674") }
-            <Text style={{...ButtonStyle, color: "#3F1674", fontFamily: Fonts.BoldFont }}> {translateProperty(currentLang, 'title')} </Text>
+            {this.renderIcon(currentLang.id, "#3F1674")}
+            <Text style={{ ...ButtonStyle, color: "#3F1674", fontFamily: Fonts.BoldFont }}>
+              {" "}
+              {translateProperty(currentLang, "title")}{" "}
+            </Text>
           </View>
         );
       }
-      return <View style={styles.iconNameContainer}>
-        { this.renderIcon(currentLang.id, "black") }
-        <Text style={ButtonStyle}> {translateProperty(currentLang, 'title')}</Text>
-      </View>;
+      return (
+        <View style={styles.iconNameContainer}>
+          {this.renderIcon(currentLang.id, "black")}
+          <Text style={ButtonStyle}> {translateProperty(currentLang, "title")}</Text>
+        </View>
+      );
     }
-    return <View style={styles.iconNameContainer}>
-      { this.renderIcon(currentLang.id, "black") }
-      <Text style={ButtonStyle}>{translateProperty(currentLang, 'title')}</Text>
-    </View>;
+    return (
+      <View style={styles.iconNameContainer}>
+        {this.renderIcon(currentLang.id, "black")}
+        <Text style={ButtonStyle}>{translateProperty(currentLang, "title")}</Text>
+      </View>
+    );
   };
 
   renderIcon = (scenarioId, selected) => {
-    switch(scenarioId){
+    switch (scenarioId) {
       case "00000000-0000-0000-0000-000000000002":
         return <Bus fill={selected} />;
       case "00000000-0000-0000-0000-000000000005":
         return <Dinning fill={selected} />;
       case "00000000-0000-0000-0000-000000000003":
-        return <Shopping fill={selected}/>;
+        return <Shopping fill={selected} />;
       case "00000000-0000-0000-0000-000000000007":
         return <Translator fill={selected} />;
       case "00000000-0000-0000-0000-000000000010":
@@ -66,24 +67,26 @@ class Scenario extends Component {
 
   renderScenarioListButtonContent = scenario => {
     const currentIcon = this.renderCheck(scenario);
-    return (
-      <React.Fragment>
-        {currentIcon}
-      </React.Fragment>
-    );
+    return <React.Fragment>{currentIcon}</React.Fragment>;
   };
 
   renderScenariosList = () => {
-    const { scenariosList } = this.props;
+    const { scenariosList, scenarioID } = this.props;
     return scenariosList.map((scenario, current) => {
       if (scenario.active) {
         return (
-          <View style={{width: metrics.width * 0.90 }} key={current}>
+          <View style={{ width: metrics.width * 0.9 }} key={current}>
             <TouchableOpacity
               style={styles.LangViewContainer}
               onPress={() => this.changeLangCode(scenario.id)}
             >
-              <View style={styles.selectLangButton}>
+              <View
+                style={
+                  scenario.id === scenarioID
+                    ? styles.selectedScenarioButton
+                    : styles.selectLangButton
+                }
+              >
                 {this.renderScenarioListButtonContent(scenario)}
               </View>
             </TouchableOpacity>
@@ -136,10 +139,14 @@ class Scenario extends Component {
             {I18n.t("newCustomerHome.scenario.label")}
           </Text>
         </View>
-        <ScrollView style={styles.fullWidthOnItems} contentContainerStyle={styles.scrollContainer} bounces={false}>
-            {this.renderScenariosList()}
+        <ScrollView
+          style={styles.fullWidthOnItems}
+          contentContainerStyle={styles.scrollContainer}
+          bounces={false}
+        >
+          {this.renderScenariosList()}
         </ScrollView>
-        <TouchableOpacity style={styles.closeScenarioList} onPress={() => closeSlideMenu()} >
+        <TouchableOpacity style={styles.closeScenarioList} onPress={() => closeSlideMenu()}>
           <Text style={styles.cancelButtonText}>Cancel</Text>
         </TouchableOpacity>
       </View>

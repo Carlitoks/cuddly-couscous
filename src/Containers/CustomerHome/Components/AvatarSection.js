@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import styles from "./Styles/AvatarSectionStyles";
 import I18n from "../../../I18n/I18n";
 
-const Jeenies = require("../../../Assets/Images/Jeenies.png");
+const Jeenies = require("../../../Assets/Images/J_middle.png");
 
 class AvatarSection extends Component {
   getRandomInt = (min, max) => {
@@ -16,7 +16,6 @@ class AvatarSection extends Component {
 
   render() {
     const { navigation, secondaryLangCode } = this.props;
-    console.log("secondaryLangCode", secondaryLangCode);
     return (
       <View style={styles.avatarContainer}>
         <Text style={styles.jeeniesStandingBy}>

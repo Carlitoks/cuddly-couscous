@@ -1,10 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
-import {
-  ApplicationStyles,
-  Colors,
-  Fonts,
-  Metrics
-} from "../../../../Themes";
+import { ApplicationStyles, Colors, Fonts, Metrics } from "../../../../Themes";
 import { moderateScaleViewports } from "../../../../Util/Scaling";
 import { isIphoneXorAbove } from "../../../../Util/Devices";
 
@@ -30,12 +25,12 @@ export default StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.gradientColor.top,
     height: Metrics.height * 0.67,
-    width: Metrics.width,
+    width: Metrics.width
   },
   jeeniesStandingBy: {
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(17),
     color: "#fff"
   },
-  jeeniesImg: { marginTop: moderateScaleViewports(27) }
+  jeeniesImg: { marginTop: moderateScaleViewports(20), marginBottom: moderateScaleViewports(10) }
 });
