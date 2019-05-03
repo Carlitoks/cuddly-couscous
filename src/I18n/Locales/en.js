@@ -417,6 +417,7 @@ export default (ENG = {
 
   // generic language often used in navigation or forms
   actions: {
+    send: "Send",
     cancel: "Cancel",
     remove: "Remove",
     close: "Close",
@@ -697,8 +698,8 @@ export default (ENG = {
   // are often used in more than one place
   fields: {
     email: {
-      label: "Email",
-      labelConfirm: "Confirm Email",
+      label: "Email Address",
+      labelConfirm: "Confirm Email Address",
       errInvalid: "Not a valid email address.",
       errConfirmMatch: "The emails must match."
     },
@@ -718,12 +719,7 @@ export default (ENG = {
     }
   },
 
-  // seen as a pop up if the user has entered an invalid email address.
-  correctEmailModal: {
-    notice: "Something went wrong with the email you have entered, please enter a new one.",
-    complete: "Your email has been updated! You must use {email} to sign in with Jeenie from now on."
-  },
-
+  
   // for use in session-related screens
   session: {
     callTime: "Call Time: {{time}}",
@@ -835,6 +831,22 @@ export default (ENG = {
       emailAndPassword: "Incorrect email and password combination.\nPlease try again.",
       signInto: "Sign in to your account."
     }
+  },
+
+  forgotPassword: {
+    title: "Forgot Your Password?",
+    description: "No worries.  We'll send you a link to reset your password at the email address below.",
+    alertSuccessTitle: "Reset Link Sent!",
+    alertSuccessBody: "You will receive an email shortly with the password reset link."
+  },
+
+  correctEmailModal: {
+    title: "Email Failed",
+    description: "We were unable to verify the email address you entered.  Please enter a valid email address.",
+    label: "New Email Address",
+    titleSuccess: "Success",
+    descriptionSuccess: "Your email has been updated! You can sign in to Jeenie with the new email \"{email}\"",
+    descriptionTaken: "The email address \"{email}\" is already registered.  You may log in with that email address, or specify a new email address."
   },
 
   newCustomerOnboarding: {
