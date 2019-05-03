@@ -16,7 +16,6 @@ import { asyncScanQR } from "../../Ducks/EventsReducer";
 import { updateSettings } from "../../Ducks/LinguistFormReducer";
 import { updateSettings as updateContactLinguist } from "../../Ducks/ContactLinguistReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
-import { updateSettings as updateCustomerSettings } from "../../Ducks/CallCustomerSettings";
 import styles from "./styles";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
 import { Languages, DefaultLanguagePairMap } from "../../Config/Languages";
@@ -144,10 +143,6 @@ class ScanScreenView extends Component {
                         type: "CustomScenarioView"
                       });
                     }
-                    this.props.updateCustomerSettings({
-                      selectedTime: defaultMinutes,
-                      allowTimeSelection: allowMinuteSelection
-                    });
                   } else if (
                     requireScenarioSelection &&
                     !restrictEventScenarios
@@ -292,7 +287,6 @@ const mS = state => ({
 const mD = {
   asyncScanQR,
   updateSettings,
-  updateCustomerSettings,
   updateHomeFlow,
   updateContactLinguist
 };

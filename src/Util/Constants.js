@@ -53,11 +53,6 @@ export const TOKBOX_EVENTS = {
   TOGGLE_VIDEO_LINGUIST: "TOGGLE_VIDEO_LINGUIST"
 };
 
-export const SETTINGS = {
-  CUSTOMER: "callCustomerSettings",
-  LINGUIST: "callLinguistSettings"
-};
-
 export const getLocalizedCategories = locale => ({
   airport: I18n.t("airport", { locale: locale }),
   transit: I18n.t("transit", { locale: locale }),

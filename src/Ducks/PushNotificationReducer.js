@@ -1,12 +1,5 @@
 import { Sessions } from "../Api";
 import {Alert} from "react-native";
-import { updateSettings as updateCallLinguistSettings } from "./CallLinguistSettings";
-import { updateConnectingMessage } from "./ContactLinguistReducer";
-import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReducer";
-import { updateSettings } from "./CallLinguistSettings";
-import { updateOptions as updateRate } from "./RateCallReducer";
-import { REASON } from "../Util/Constants";
-import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
 import { networkError } from "./NetworkErrorsReducer";
 import timer from "react-native-timer";
@@ -59,10 +52,8 @@ const getCategory = (session) => {
 export const incomingCallNotification = invitationId => (dispatch, getState) => {
   const {
     nav,
-    contactLinguist,
     auth,
     profileLinguist,
-    callLinguistSettings,
     userProfile
   } = getState();
   const isLinguist = !!userProfile.linguistProfile;

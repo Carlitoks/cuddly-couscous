@@ -1,9 +1,7 @@
 import { combineReducers } from "redux";
 
 import auth from "./AuthReducer";
-import callCustomerSettings from "./CallCustomerSettings";
 import callHistory from "./CallHistoryReducer";
-import callLinguistSettings from "./CallLinguistSettings";
 import contactLinguist from "./ContactLinguistReducer";
 import customerProfile from "./CustomerProfileReducer";
 
@@ -25,7 +23,6 @@ import registrationCustomer from "./RegistrationCustomerReducer";
 import resetPassword from "./ResetPasswordReducer";
 import sessionInfo from "./SessionInfoReducer";
 import settings from "./SettingsReducer";
-import tokbox from "./tokboxReducer";
 import userProfile from "./UserProfileReducer";
 import newSessionReducer from "./NewSessionReducer";
 import onboardingReducer from "./OnboardingReducer";
@@ -37,9 +34,7 @@ import currentSessionReducer from "./CurrentSessionReducer";
 const rootReducer = combineReducers({
   appConfigReducer,
   auth,
-  callCustomerSettings,
   callHistory,
-  callLinguistSettings,
   contactLinguist,
   customerProfile,
 
@@ -61,7 +56,6 @@ const rootReducer = combineReducers({
   resetPassword,
   sessionInfo,
   settings,
-  tokbox,
   userProfile,
   newSessionReducer,
   onboardingReducer,

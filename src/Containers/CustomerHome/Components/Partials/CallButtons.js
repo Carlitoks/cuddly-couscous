@@ -212,7 +212,6 @@ const mS = state => ({
   fromLanguage: state.userProfile.selectedNativeLanguage,
   promotion: state.promoCode.scanned,
   event: state.events,
-  timerCustomer: state.callCustomerSettings.timer,
   availableMinutes: state.userProfile.availableMinutes,
   nativeLangCode: state.userProfile.nativeLangCode,
   primaryLangCode: state.contactLinguist.primaryLangCode,

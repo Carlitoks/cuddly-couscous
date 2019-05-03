@@ -4,11 +4,7 @@ import throttle from "lodash/throttle";
 import { saveState, loadState } from "./LocalStorage";
 import rootReducer from "../Ducks";
 
-import { SETTINGS } from "../Util/Constants";
-
 const middleware = [thunk];
-
-const store = null;
 
 const getComposeEnhancers = () => {
   if (window.__REDUX_DEVTOOLS_EXTENSION__) {
@@ -26,20 +22,20 @@ const getStore = () =>
   loadState().then(persistedStore => {
     const initialState = persistedStore || {};
 
-    let store = createStore(rootReducer, initialState, getComposeEnhancers());
+    let store = null;
+    try {
+      store = createStore(rootReducer, initialState, getComposeEnhancers());
+    } catch (e) {
+      console.log(e);
+    }
 
     // Persisting the store on the asyncStorage
     store.subscribe(
       throttle(() => {
-        const settings = store.getState().userProfile.linguistProfile
-          ? SETTINGS.LINGUIST
-          : SETTINGS.CUSTOMER;
         saveState({
           auth: store.getState().auth,
           userProfile: store.getState().userProfile,
           tokbox: store.getState().tokbox,
-          [settings]: store.getState()[settings],
-          settings: store.getState().settings,
           profileLinguist: store.getState().profileLinguist,
           pushNotification: store.getState().pushNotification,
           onboardingRecord: store.getState().onboardingRecord,

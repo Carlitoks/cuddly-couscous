@@ -23,7 +23,6 @@ import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
-import {asyncGetInvitationDetail} from "../../Ducks/CallLinguistSettings";
 
 import moment from "moment";
 
@@ -262,8 +261,6 @@ const mS = state => ({
   avatarURL: state.userProfile.avatarURL,
   linguistProfile: state.userProfile.linguistProfile,
   rate: state.userProfile.averageStarRating,
-  tokbox: state.tokbox.tokboxID,
-  invitationID: state.callLinguistSettings.invitationID,
   networkInfoType: state.networkInfo.type,
   nav: state.nav
 });
@@ -274,7 +271,6 @@ const mD = {
   updateView,
   getProfileAsync,
   changeStatus,
-  asyncGetInvitationDetail,
   asyncGetAccountInformation,
   getCurrentAvailability,
   incomingCallNotification

@@ -1,5 +1,4 @@
 import { Alert } from "react-native";
-import { updateSettings } from "../Ducks/CallCustomerSettings";
 import I18n from "../I18n/I18n";
 
 /**

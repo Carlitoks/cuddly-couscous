@@ -1,9 +1,7 @@
 import { StackNavigator, DrawerNavigator } from "react-navigation";
 import CardStackStyleInterpolator from "react-navigation/src/views/CardStack/CardStackStyleInterpolator";
 
-import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallHistory from "../Containers/CallHistory/CallHistoryView";
-import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
 
 import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
@@ -37,7 +35,6 @@ import EditNativeLanguageView from "../Profile/EditNativeLanguage/EditNativeLang
 
 import PhoneLinguistView from "../LinguistForm/PhoneLinguistView/PhoneLinguistView";
 import VerifyPhoneLinguistView from "../LinguistForm/VerifyPhoneLinguistView/VerifyPhoneLinguistView";
-import CallSettings from "../CallSettings/CallSettings";
 import SettingsView from "../Settings/SettingsView";
 import InterfaceLanguageView from "../Settings/InterfaceLanguageView";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
@@ -65,7 +62,6 @@ import LinguistIncomingCallView from "../Containers/Session/LinguistIncomingCall
 
 const Navigation = StackNavigator(
   {
-    AssistanceView: { screen: AssistanceView },
     CallHistory: {
       screen: CallHistory,
       navigationOptions: {
@@ -92,12 +88,6 @@ const Navigation = StackNavigator(
     },
     EditCardScreen: {
       screen: EditCardScreen,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    CallTimeView: {
-      screen: CallTimeView,
       navigationOptions: {
         gesturesEnabled: false
       }
@@ -262,12 +252,6 @@ const Navigation = StackNavigator(
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
-      }
-    },
-    CallSettings: {
-      screen: CallSettings,
-      navigationOptions: {
-        gesturesEnabled: false
       }
     },
     SettingsView: {
