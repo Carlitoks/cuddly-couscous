@@ -2,7 +2,6 @@ import { Dimensions, PixelRatio } from "react-native";
 import { getDeviceLocale } from "react-native-device-info";
 import {Metrics} from "../Themes";
 import { isIphoneXorAbove } from "./Devices";
-import { signalEvent } from "../Ducks/ActiveSessionReducer";
 
 const { width, height } = Dimensions.get("window");
 const realWidth = height > width ? width : height;

@@ -1,21 +1,15 @@
 import { StackNavigator, DrawerNavigator } from "react-navigation";
 import CardStackStyleInterpolator from "react-navigation/src/views/CardStack/CardStackStyleInterpolator";
-import { Animated, Easing } from "react-native";
-import { getS } from "../Config/CreateStore";
 
 import AssistanceView from "../ContactLinguist/AssistanceView/AssistanceView";
 import CallHistory from "../Containers/CallHistory/CallHistoryView";
 import CallTimeView from "../ContactLinguist/CallTimeView/CallTimeView";
 
-import ContactingLinguist from "../Call/Customer/ContactingLinguist/ContactingLinguistView";
 import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
-import CustomerView from "../Call/Customer/Call/CustomerView";
 import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
 import CheckYourEmailView from "../Onboarding/ForgotPasswordView/CheckYourEmailView";
 
 import Home from "../Home/Home";
-import IncomingCallView from "../Call/Linguist/IncomingCall/IncomingCallView";
-import LinguistView from "../Call/Linguist/Call/LinguistView";
 import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 
 import MenuView from "../Components/MenuView/MenuView";
@@ -52,7 +46,6 @@ import TextView from "../Components/TextView/TextView";
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import PromotionView from "../Containers/PromoCode/PromotionView";
 import PromoCodeListView from "../Containers/PromoCode/PromoCodeListView";
-import ConnectingView from "../Call/Linguist/Connecting/ConnectingView";
 import OnboardingScreen from "../Containers/Onboarding/OnboardingScreen";
 import LoginScreen from "../Containers/Login/LoginScreen";
 import RegisterScreen from "../Containers/Register/RegisterScreen";
@@ -110,13 +103,6 @@ const Navigation = StackNavigator(
       }
     },
 
-    ContactingLinguist: {
-      screen: ContactingLinguist,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
     LoginView: {
       screen: LoginScreen,
       navigationOptions: {
@@ -131,13 +117,6 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-    ConnectingView: {
-      screen: ConnectingView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
 
     PasswordCustomerView: {
       screen: PasswordCustomerView,
@@ -147,13 +126,6 @@ const Navigation = StackNavigator(
       }
     },
 
-    CustomerView: {
-      screen: CustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
     ForgotPasswordView: {
       screen: ForgotPasswordView,
       navigationOptions: {
@@ -166,13 +138,6 @@ const Navigation = StackNavigator(
       screen: Home
     },
 
-    IncomingCallView: {
-      screen: IncomingCallView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
     NameLinguistView: {
       screen: NameLinguistView,
       navigationOptions: {
@@ -219,13 +184,6 @@ const Navigation = StackNavigator(
       screen: VerifyPhoneLinguistView,
       navigationOptions: {
         gesturesEnabled: false
-      }
-    },
-    LinguistView: {
-      screen: LinguistView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
       }
     },
     ScanScreenView: {

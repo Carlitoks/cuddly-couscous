@@ -17,28 +17,19 @@ import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
 
 import { View, Text, ScrollView, Alert, AppState, NetInfo } from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
-import timer from "react-native-timer";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
-import {
-  clear,
-  update as updateActiveSession
-} from "../../Ducks/ActiveSessionReducer";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
-import {
-  asyncGetInvitationDetail,
-  clearSettings
-} from "../../Ducks/CallLinguistSettings";
+import {asyncGetInvitationDetail} from "../../Ducks/CallLinguistSettings";
 
 import moment from "moment";
 
 import styles from "./styles";
 import { Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
-import { checkForAllPermissions } from "../../Util/Permission";
 import { Sessions } from "../../Api";
 
 class Home extends Component {
@@ -50,9 +41,6 @@ class Home extends Component {
 
   componentWillMount() {
     this.props.updateSettings({ loading: false });
-    timer.clearInterval("timer");
-    timer.clearInterval("counterId");
-    this.props.clear();
     this.props.asyncGetAccountInformation();
     AppState.addEventListener("change", this._handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
@@ -116,9 +104,6 @@ class Home extends Component {
     this.props.getCurrentAvailability();
     this.getCurrentUnansweredCalls();
 
-    checkForAllPermissions(valueToUpdate => {
-      this.props.updateActiveSession(valueToUpdate);
-    });
   }
 
   uploadAvatar(avatar) {
@@ -279,8 +264,6 @@ const mS = state => ({
   rate: state.userProfile.averageStarRating,
   tokbox: state.tokbox.tokboxID,
   invitationID: state.callLinguistSettings.invitationID,
-  timer: state.activeSessionReducer.timer,
-  counterId: state.activeSessionReducer.counterId,
   networkInfoType: state.networkInfo.type,
   nav: state.nav
 });
@@ -293,8 +276,6 @@ const mD = {
   changeStatus,
   asyncGetInvitationDetail,
   asyncGetAccountInformation,
-  clear,
-  updateActiveSession,
   getCurrentAvailability,
   incomingCallNotification
 };

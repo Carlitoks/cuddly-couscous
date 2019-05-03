@@ -29,7 +29,6 @@ import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
-import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
 import I18n, { translateApiErrorString, translateApiError } from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/LoginScreenStyles";
@@ -272,7 +271,6 @@ const mD = {
   updateLocation,
   ensureSessionDefaults,
   clearEvents,
-  clearActiveSession,
   getProfileAsync,
   updateUserProfile,
   logInAsync,

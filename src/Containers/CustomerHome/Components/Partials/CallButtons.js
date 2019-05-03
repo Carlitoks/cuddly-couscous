@@ -11,7 +11,6 @@ import Permissions from "react-native-permissions";
 import I18n, { translateApiError } from "../../../../I18n/I18n";
 import { GetInfo } from "../../../../Ducks/SessionInfoReducer";
 import { modifyAVModePreference } from "../../../../Ducks/NewSessionReducer";
-import { clear as clearSettings, update as customerUpdateSettings } from "../../../../Ducks/ActiveSessionReducer";
 import { cleanSelected } from "../../../../Ducks/HomeFlowReducer";
 import { clearPromoCode } from "../../../../Ducks/PromoCodeReducer";
 import { updateSettings } from "../../../../Ducks/ContactLinguistReducer";
@@ -50,7 +49,6 @@ class CallButtons extends Component {
 
   checkAvailableMinutes = async (type) => {
     const {
-      session,
       navigation,
       stripePaymentToken,
       availableMinutes,
@@ -59,9 +57,6 @@ class CallButtons extends Component {
       updateSettings,
       selectedScenario,
       modifyAVModePreference,
-      customerUpdateSettings,
-      video,
-      mic,
       completedMicAndCamera,
     } = this.props;
     cleanSelected();
@@ -84,7 +79,6 @@ class CallButtons extends Component {
         selectedScenarioId: selectedScenario && selectedScenario[0] ? selectedScenario[0].id : null,
       });
 
-      customerUpdateSettings({ video: type === "video" });
       Permissions.checkMultiple(["camera", "microphone"]).then(async (response) => {
         if (response.camera !== "authorized" || response.microphone !== "authorized") {
           if (
@@ -99,7 +93,6 @@ class CallButtons extends Component {
           }
           if (completedMicAndCamera) {
             await checkCallPermissions((valueToUpdate) => {
-              customerUpdateSettings(valueToUpdate);
               Permissions.checkMultiple(["camera", "microphone"]).then((response) => {
                 if (response.camera == "authorized" && response.microphone == "authorized") {
                   this.createCall();
@@ -207,24 +200,16 @@ class CallButtons extends Component {
 
 const mS = state => ({
   customScenario: state.homeFlow.customScenario,
-  sessionId: state.activeSessionReducer.sessionID,
   token: state.auth.token,
-  video: state.activeSessionReducer.video,
-  mic: state.activeSessionReducer.mic,
-  approxTime: state.activeSessionReducer.selectedTime,
-  timer: state.activeSessionReducer.timer,
-  counterId: state.activeSessionReducer.counterId,
   scenario: state.linguistForm.selectedLanguage,
   scenarioNotes: state.contactLinguist.customScenarioNote,
   selectedScenario: state.linguistForm.selectedScenarios,
   categoryIndex: state.homeFlow.categoryIndex,
   categories: state.homeFlow.categories,
-  estimatedPrice: state.activeSessionReducer.selectedTime * state.contactLinguist.cost,
   selectedLanguageTo: state.contactLinguist.selectedLanguage,
   secondaryLangCode: state.contactLinguist.secundaryLangCode,
   selectedLanguageFrom: state.contactLinguist.selectedLanguageFrom,
   fromLanguage: state.userProfile.selectedNativeLanguage,
-  allowTimeSelection: state.activeSessionReducer.allowTimeSelection,
   promotion: state.promoCode.scanned,
   event: state.events,
   timerCustomer: state.callCustomerSettings.timer,
@@ -240,8 +225,6 @@ const mS = state => ({
 const mD = {
   GetInfo,
   updateSettings,
-  customerUpdateSettings,
-  clearSettings,
   cleanSelected,
   clearPromoCode,
   modifyAVModePreference,

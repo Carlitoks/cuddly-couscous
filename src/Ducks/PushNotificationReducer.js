@@ -3,11 +3,9 @@ import {Alert} from "react-native";
 import { updateSettings as updateCallLinguistSettings } from "./CallLinguistSettings";
 import { updateConnectingMessage } from "./ContactLinguistReducer";
 import { updateSettings as updateProfileLinguist } from "./ProfileLinguistReducer";
-import { update as updateTokbox, clear } from "./ActiveSessionReducer";
 import { updateSettings } from "./CallLinguistSettings";
 import { updateOptions as updateRate } from "./RateCallReducer";
 import { REASON } from "../Util/Constants";
-import { closeCall } from "./ActiveSessionReducer";
 import SoundManager from "../Util/SoundManager";
 import PushNotification from "../Util/PushNotification";
 import { networkError } from "./NetworkErrorsReducer";
@@ -62,7 +60,6 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
   const {
     nav,
     contactLinguist,
-    activeSessionReducer,
     auth,
     profileLinguist,
     callLinguistSettings,

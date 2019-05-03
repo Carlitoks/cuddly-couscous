@@ -12,11 +12,6 @@ import { resetCounter, updateSettings as updateContactLinguist } from "./Contact
 import { BackgroundCleanInterval } from "../Util/Background";
 import { cleanNotifications } from "../Util/PushNotification";
 import { playSound } from "../Util/SoundManager";
-import {
-  HandleEndCall,
-  resetTimerAsync,
-  update as updateActieSessionReducer
-} from "./ActiveSessionReducer";
 import { closeSlideMenu } from './LogicReducer'
 
 const ACTIONS = {
@@ -174,22 +169,16 @@ export const swapCurrentSessionLanguages = () => (dispatch, getState) => {
 };
 
 export const switchCallLang = (reason) => (dispatch, getState) => {
-  const { contactLinguist, activeSessionReducer, auth } = getState();
+  const { contactLinguist, auth } = getState();
   const { primaryLangCode, secondaryLangCode } = getState().newSessionReducer.session;
   try {
-    timer.clearInterval("counterId");
-    timer.clearInterval("timer");
-    timer.clearInterval("verifyCallId");
     dispatch(
       updateContactLinguist({
         modalContact: false
       })
     );
     dispatch(resetCounter());
-    BackgroundCleanInterval(activeSessionReducer.timer);
-    dispatch(resetTimerAsync());
     cleanNotifications();
-    dispatch(updateActieSessionReducer({ modalReconnect: false }));
     const currentSessionState = {
       ...getState().newSessionReducer.session,
       secondaryLangCode: LanguagesRollover[secondaryLangCode] ? LanguagesRollover[secondaryLangCode] : secondaryLangCode,
