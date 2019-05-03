@@ -102,7 +102,8 @@ class Languages extends Component {
         if (primaryLangCode === language["3"]) {
           containerStyle = {
             ...styles.LangViewContainer,
-            backgroundColor: "#ECE8F1"
+            backgroundColor: "#ECE8F1",
+            borderWidth: 0
           };
           selected = true;
         }
@@ -112,7 +113,8 @@ class Languages extends Component {
         if (secondaryLangCode === language["3"]) {
           containerStyle = {
             ...styles.LangViewContainer,
-            backgroundColor: "#ECE8F1"
+            backgroundColor: "#ECE8F1",
+            borderWidth: 0
           };
           selected = true;
         }

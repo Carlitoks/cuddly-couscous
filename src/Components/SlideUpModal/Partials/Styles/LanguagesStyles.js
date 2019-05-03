@@ -21,8 +21,9 @@ export default StyleSheet.create({
   availableLangContainerText: {
     paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
+    borderWidth: 0,
     fontSize: moderateScaleViewports(15, 0),
-    color: '#1C1B1B'
+    color: "#1C1B1B"
   },
   dividerStyle: {
     backgroundColor: "rgba(90, 90, 90, 0.2)",
@@ -41,7 +42,7 @@ export default StyleSheet.create({
     borderWidth: 0,
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(15, 0),
-    color: '#1C1B1B'
+    color: "#1C1B1B"
   },
   LangViewContainer: {
     height: 48,
