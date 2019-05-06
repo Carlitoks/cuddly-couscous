@@ -100,6 +100,12 @@ const User = {
     return AXIOS.post(`${BASE_URI}/${userId}/customer-feedback`, payload, {
       headers: { Authorization: `Bearer ${token}` }
     });
+  },
+  updateEmail: (userId, token, payload) => {
+    console.log(userId, token, payload, `${BASE_URI}/${userId}/email`);
+    return AXIOS.put(`${BASE_URI}/${userId}/email`, payload, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
   }
 };
 

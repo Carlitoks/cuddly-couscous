@@ -139,6 +139,15 @@ export const resetPasswordAsync = email => dispatch => {
     .catch(error => dispatch(networkError(error)));
 };
 
+//Update Email
+export const updateEmailAsync = (uuid, token, payload) => dispatch => {
+  try{
+    return User.updateEmail(uuid, token, payload);
+  }catch(err){
+    return err;
+  }
+};
+
 //Login user
 export const logInAsync = (email, password) => async (dispatch, getState) => {
   // Register device

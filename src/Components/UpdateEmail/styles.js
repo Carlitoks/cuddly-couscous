@@ -82,5 +82,6 @@ export default (styles = StyleSheet.create({
     fontSize: moderateScaleViewports(11),
     color: "#FF3B30",
     paddingBottom: moderateScaleViewports(12),
-  }
+  },
+  closeModal: {justifyContent: "center", alignItems: "center", width: metrics.width * 0.70},
 }));
