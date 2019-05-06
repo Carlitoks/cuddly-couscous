@@ -12,10 +12,10 @@ class UpdateEmailForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "ebruiz+1@teravisiontech.com",
-      confirmEmail: "ebruiz+1@teravisiontech.com",
-      isValidEmail: true,
-      emailMatches: true,
+      email: "",
+      confirmEmail: "",
+      isValidEmail: false,
+      emailMatches: false,
       loading: false,
       error: null,
     };
@@ -93,36 +93,35 @@ class UpdateEmailForm extends Component {
           animationType='fade'
           transparent={true}
           visible={true}
-          onRequestClose={() => console.log("lel")}
+          onRequestClose={() => null}
         >
           <View style={styles.modalContainer}>
             <View style={styles.innerContainer}>
               <View style={styles.topContainer}>
-                <Text style={styles.titleText}>Email Failed</Text>
-                <Text style={styles.subtitleText}>Something went wrong with the email you have
-                  entered, please enter a new emaill address.</Text>
+                <Text style={styles.titleText}>{I18n.t("correctEmailModal.title")}</Text>
+                <Text style={styles.subtitleText}>{I18n.t("correctEmailModal.description")}</Text>
               </View>
               <View style={styles.middleContainer}>
                 <TextInput onChangeText={text => this.isValidEmail(text)}
-                           keyboardType={"email-address"} placeholder={"New Emaill Address"}
+                           keyboardType={"email-address"} placeholder={I18n.t("correctEmailModal.label")}
                            placeholderColor={"#8A8A8F"} style={this.isValidEmailCheck() ? styles.emailInput : styles.emailInputInvalid }/>
                 {(this.isValidEmailCheck() &&
-                  <Text style={styles.invalidText}>Not a valid email.</Text>)}
+                  <Text style={styles.invalidText}>{I18n.t("fields.email.errInvalid")}</Text>)}
                 <TextInput onChangeText={text => this.emailsMatch(text)}
-                           keyboardType={"email-address"} placeholder={"Confirm Email Address"}
+                           keyboardType={"email-address"} placeholder={I18n.t("fields.email.labelConfirm")}
                            placeholderColor={"#8A8A8F"} style={(!this.emailsMatchCheck() && this.state.confirmEmail.length > 0) ? styles.emailInput : styles.emailInputInvalid }/>
                 {((!this.emailsMatchCheck() && this.state.confirmEmail.length > 0) &&
-                  <Text style={styles.invalidText}>Emails don't match.</Text>)}
+                  <Text style={styles.invalidText}>{I18n.t("fields.email.errConfirmMatch")}</Text>)}
                 {(this.state.error &&
                   <Text style={styles.invalidText}>{this.state.error}</Text>)}
               </View>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.cancelButton} onPress={() => handleClose()}>
-                  <Text style={styles.actionButtonText}>Cancel</Text>
+                  <Text style={styles.actionButtonText}>{I18n.t("actions.cancel")}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => this.submitEmail()} style={styles.okButton}
                                   disabled={!this.isButtonEnabled()}>
-                  <Text style={styles.actionButtonText}>Ok</Text>
+                  <Text style={styles.actionButtonText}>{I18n.t("actions.ok")}</Text>
                 </TouchableOpacity>
               </View>
             </View>

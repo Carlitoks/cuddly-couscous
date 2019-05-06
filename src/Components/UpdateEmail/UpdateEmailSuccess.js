@@ -5,6 +5,7 @@ import styles from "./styles";
 import { updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
 import { logOutAsync } from "../../Ducks/AuthReducer";
 import { connect } from "react-redux";
+import I18n from "../../I18n/I18n";
 
 class UpdateEmailSuccess extends Component {
   render() {
@@ -25,12 +26,12 @@ class UpdateEmailSuccess extends Component {
           <View style={styles.modalContainer}>
             <View style={styles.innerContainer}>
               <View style={styles.topContainer}>
-                <Text style={styles.titleText}>Success</Text>
-                <Text style={styles.subtitleText}>Your email has been updated! You can sign in Jeenie with the new email “adominick@jeenie.com”.</Text>
+                <Text style={styles.titleText}>{I18n.t("correctEmailModal.titleSuccess")}</Text>
+                <Text style={styles.subtitleText}>{I18n.t("correctEmailModal.descriptionSuccess", {email: "ebruiz@teravisiontech.com"})}</Text>
               </View>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.closeModal} onPress={() => handleClose()}>
-                  <Text style={styles.actionButtonText}>ok</Text>
+                  <Text style={styles.actionButtonText}>{I18n.t("actions.ok")}</Text>
                 </TouchableOpacity>
               </View>
             </View>
