@@ -1,3 +1,5 @@
+//https://github.com/evollu/react-native-fcm/issues/1111
+
 package com.evollu.react.fcm;
 
 import android.content.Intent;
