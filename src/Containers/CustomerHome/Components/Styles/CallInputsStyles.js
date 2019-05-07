@@ -11,7 +11,7 @@ export default StyleSheet.create({
     backgroundColor: "#64A901",
     top: -10,
     borderRadius: moderateScaleViewports(10),
-    width: metrics.width * 0.90,
+    width: metrics.width * 0.9
   },
   pricingText: {
     fontFamily: Fonts.BaseFont,
@@ -19,7 +19,7 @@ export default StyleSheet.create({
     color: "#fff",
     paddingTop: moderateScaleViewports(10),
     paddingBottom: moderateScaleViewports(10),
-    textAlign: "center",
+    textAlign: "center"
   },
   inputsContainer: {
     backgroundColor: "#ffffff",
@@ -29,7 +29,7 @@ export default StyleSheet.create({
     alignItems: "center",
     paddingTop: moderateScaleViewports(15),
     paddingLeft: moderateScaleViewports(14),
-    paddingRight: moderateScaleViewports(14),
+    paddingRight: moderateScaleViewports(14)
   },
   langInputs: {
     flexDirection: "row",
@@ -39,7 +39,7 @@ export default StyleSheet.create({
   scenarioInputContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center",
+    alignItems: "center"
   },
   swapLangsInput: { marginTop: moderateScaleViewports(26), paddingLeft: 12, paddingRight: 12 },
 
@@ -48,14 +48,22 @@ export default StyleSheet.create({
    */
   renderPickerContainer: {
     flexDirection: "column",
-    flex: 1,
+    flex: 1
   },
 
   /**
    * RenderPickerStyles
    */
-  renderPickerLabel: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16), color: "rgba(0, 0, 0, 0.45)" },
-  renderPickerSelectedLabel: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16), color: "#1C1B1B" },
+  renderPickerLabel: {
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    color: "#3F1674"
+  },
+  renderPickerSelectedLabel: {
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    color: "#1C1B1B"
+  },
   renderPickerSelectorContainer: {
     backgroundColor: "#fff",
     flexDirection: "row",
@@ -70,10 +78,10 @@ export default StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 2
     },
     shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowRadius: 3.84
   },
 
   /**
@@ -83,7 +91,6 @@ export default StyleSheet.create({
     flexDirection: "column",
     marginTop: moderateScaleViewports(10),
     paddingBottom: moderateScaleViewports(15),
-    flex: 1,
-  },
-
+    flex: 1
+  }
 });
