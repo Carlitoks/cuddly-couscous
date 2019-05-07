@@ -23,7 +23,9 @@ class AvatarSection extends Component {
             ? I18n.t("newCustomerHome.numLinguists", { num: this.getRandomInt(40, 60) })
             : I18n.t("newCustomerHome.linguists")}
         </Text>
-        <Image style={styles.jeeniesImg} source={Jeenies} />
+        <View style={styles.jeenieLogoContainer}>
+          <Image style={styles.jeeniesImg} source={Jeenies} />
+        </View>
       </View>
     );
   }
