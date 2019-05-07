@@ -13,7 +13,7 @@
     "test": "jest",
     "api:run": "make setup && docker-compose up",
     "api:load-mock-data": "make run-cmd CMD=\"load-fixtures\"",
-    "postinstall": "cp patches/OTScreenCapturer.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTScreenCapturer.java && cp patches/OTSessionManager.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTSessionManager.java"
+    "postinstall": "cp patches/OTScreenCapturer.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTScreenCapturer.java && cp patches/OTSessionManager.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTSessionManager.java && cp patches/InstanceIdService.java /Users/cmedina/Documents/Dev/solo-mobile-app/node_modules/react-native-fcm/android/src/main/java/com/evollu/react/fcm/InstanceIdService.java"
   },
   "dependencies": {
     "@segment/analytics-react-native": "^0.0.1-beta.3",
