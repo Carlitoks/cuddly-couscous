@@ -6,7 +6,8 @@ import { moderateScaleViewports } from "../../../Util/Scaling";
 import metrics from "../../../Themes/Metrics";
 
 export default StyleSheet.create({
-  emailInput: {width: metrics.width * 0.85, backgroundColor: "#FFFFFF", height: moderateScaleViewports(36) },
+  emailInput: {width: metrics.width * 0.85, backgroundColor: "#FFFFFF", padding: moderateScaleViewports(0), borderRadius: 2, paddingTop: moderateScaleViewports(9), paddingBottom: moderateScaleViewports(9), paddingLeft: moderateScaleViewports(14) },
+  emailInputError: { borderColor: "#FF3B30", borderWidth: 1, },
   resetButton: {
     backgroundColor: "#F39100",
     borderRadius: 4,
@@ -29,14 +30,14 @@ export default StyleSheet.create({
   },
   mainForgotPasswordContainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#DBDBDB",
   },
   forgotPasswordContainer: {
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
     flexGrow: 1,
-    backgroundColor: "#3F1674"
+    backgroundColor: "#DBDBDB"
   },
   topLogoContainer: {
     flexDirection: "column",
@@ -45,7 +46,7 @@ export default StyleSheet.create({
   },
   titleText: {
     fontFamily: Fonts.BoldFont,
-    color: "#FFFFFF",
+    color: "#231F20",
     fontSize: moderateScaleViewports(20),
     textAlign: "center",
     paddingTop: moderateScaleViewports(100),
@@ -53,7 +54,7 @@ export default StyleSheet.create({
   },
   subtitleText: {
     fontFamily: Fonts.BoldFont,
-    color: "#FFFFFF",
+    color: "#231F20",
     fontSize: moderateScaleViewports(18),
     textAlign: "center",
     paddingBottom: moderateScaleViewports(35),

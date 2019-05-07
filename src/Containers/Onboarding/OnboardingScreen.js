@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Image, Platform, Text, View } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
-import { Colors } from "../../Themes";
 import { ensureSessionDefaults, updateLocation } from "../../Ducks/NewSessionReducer";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clearOnboarding } from "../../Ducks/OnboardingReducer";
@@ -11,9 +9,20 @@ import Permission from "react-native-permissions";
 import styles from "./Styles/OnboardingScreenStyles";
 import OnboardingButtons from "./Components/OnboardingButtons";
 import I18n from "../../I18n/I18n";
+import { isIphoneXorAbove } from "../../Util/Devices";
+import { registerDevice } from "../../Ducks/AuthReducer";
 
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
-const backgroundImage = require("../../Assets/Images/introView.png");
+
+const backgroundImage = () => {
+  if (isIphoneXorAbove()) {
+    return require("../../Assets/Images/iPhoneXintroView.png");
+  }
+  if (Platform.OS === "ios") {
+    return require("../../Assets/Images/iPhone8introView.png");
+  }
+  return require("../../Assets/Images/samsunggalaxys8introView.png");
+};
 
 class OnboardingScreen extends Component {
   componentWillMount = async () => {
@@ -26,13 +35,15 @@ class OnboardingScreen extends Component {
       ensureSessionDefaults,
       secondaryLangCode,
       completedLocation,
-      completedNotification
+      completedNotification,
+      registerDevice,
     } = this.props;
     clearOnboarding();
     ensureSessionDefaults({
       primaryLangCode: primaryLangCode || "eng",
-      secondaryLangCode: secondaryLangCode || ""
+      secondaryLangCode: secondaryLangCode || "",
     });
+    registerDevice().then(response => null).catch(err => console.log("error creating the device", err));
 
     if (isLoggedIn && token) {
       if (completedLocation) {
@@ -64,12 +75,12 @@ class OnboardingScreen extends Component {
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainOnboardingContainer]} collapsable={false}>
-          <Image style={styles.backgroundImage} source={backgroundImage} />
+          <Image style={styles.backgroundImage} source={backgroundImage()} />
           <View style={styles.bodyContainer}>
             <View>
               <Text style={styles.titleText}>{I18n.t("newCustomerOnboarding.intro.title")}</Text>
               <Text style={styles.subtitleText}>
-                {I18n.t("newCustomerOnboarding.intro.description")}
+                {I18n.t("newCustomerOnboarding.intro.description", {num: 10})}
               </Text>
             </View>
             <OnboardingButtons navigation={navigation} />
@@ -92,7 +103,8 @@ const mS = state => ({
 const mD = {
   updateLocation,
   ensureSessionDefaults,
-  clearOnboarding
+  clearOnboarding,
+  registerDevice
 };
 
 export default connect(

@@ -2,48 +2,40 @@ import React, { Component } from "react";
 import {
   Alert,
   Image,
+  ImageBackground,
   Keyboard,
   Linking,
+  Platform,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
-  Platform,
-  ScrollView,
-  ImageBackground
+  View
 } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
-import { Colors, Metrics } from "../../Themes";
-import {
-  ensureSessionDefaults,
-  modifyAVModePreference,
-  updateLocation
-} from "../../Ducks/NewSessionReducer";
+import { ensureSessionDefaults, modifyAVModePreference, updateLocation } from "../../Ducks/NewSessionReducer";
 
-import {
-  getNativeLang,
-  getProfileAsync,
-  updateView as updateUserProfile
-} from "../../Ducks/UserProfileReducer";
+import { getNativeLang, getProfileAsync, updateView as updateUserProfile } from "../../Ducks/UserProfileReducer";
 import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
 import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer";
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
+import { clear as clearActiveSession, update as customerUpdateSettings } from "../../Ducks/ActiveSessionReducer";
+import { updateSettings } from "../../Ducks/ContactLinguistReducer";
 import I18n from "../../I18n/I18n";
 import Permission from "react-native-permissions";
 // Styles
 import styles from "./Styles/RegisterScreenStyles";
 import { EMAIL_REGEX, INVALID_NAME_REGEX } from "../../Util/Constants";
 import { asyncCreateUser, asyncUpdateUser } from "../../Ducks/CustomerProfileReducer";
-import FieldError from "./Components/FieldError";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 import { PrivacyPolicyURI, TermsConditionsURI } from "../../Config/StaticViewsURIS";
 import Header from "../CustomerHome/Components/Header";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { moderateScale, moderateScaleViewports } from "../../Util/Scaling";
+import { moderateScaleViewports } from "../../Util/Scaling";
 import analytics from "@segment/analytics-react-native";
 import RenderPicker from "../CustomerHome/Components/Partials/PickerSelect";
 import { openSlideMenu } from "../../Ducks/LogicReducer";
@@ -82,7 +74,7 @@ class RegisterScreen extends Component {
   validateFirstName = text => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(INVALID_NAME_REGEX);
-    if (reg.test(text) || text.trim() == "") {
+    if (reg.test(text)) {
       updateOnboarding({
         isValidFirstName: false,
         errorType: "firstNameFormat"
@@ -96,7 +88,7 @@ class RegisterScreen extends Component {
       }
       updateOnboarding({ isValidFirstName: true });
     }
-    updateOnboarding({ firstName: text.trim() });
+    updateOnboarding({ firstName: text.split('  ').filter(n => n.trim() != "" ? n.trim() : null).join(' ') });
   };
 
   validatePassword = text => {
@@ -132,7 +124,8 @@ class RegisterScreen extends Component {
       isValidPassword,
       isValidFirstName,
       isValidEmail,
-      makingRequest
+      makingRequest,
+      nativeLangCode
     } = this.props;
 
     if (
@@ -161,7 +154,8 @@ class RegisterScreen extends Component {
           await asyncUpdateUser(
             {
               id: registerUserResponse.payload.id,
-              firstName
+              firstName,
+              nativeLangCode,
             },
             logInUserResponse.payload.token
           );
@@ -242,6 +236,21 @@ class RegisterScreen extends Component {
         </TouchableOpacity>
       </View>
     );
+  };
+
+  handleTouch = async (goto) => {
+    const { navigation } = this.props;
+    const LocationPermission = await Permission.check("location");
+    if (LocationPermission === "undetermined" || LocationPermission === "denied") {
+      return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
+    }
+    if (Platform.OS !== "android") {
+      const NotificationPermission = await Permission.check("notification");
+      if (NotificationPermission === "undetermined" || NotificationPermission === "denied") {
+        return navigation.dispatch({ type: "Home", params: { redirectTo: goto } });
+      }
+    }
+    return navigation.dispatch({ type: goto });
   };
 
   render() {
@@ -415,11 +424,7 @@ class RegisterScreen extends Component {
 
                     </View>
                     <TouchableOpacity
-                      onPress={() =>
-                        navigation.dispatch({
-                          type: "LoginView"
-                        })
-                      }
+                      onPress={() => this.handleTouch("LoginView")}
                     >
                       <Text style={styles.transitionButtonText}>
                         {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
@@ -439,7 +444,7 @@ class RegisterScreen extends Component {
 const mS = state => ({
   isSlideUpMenuVisible: state.newSessionReducer.isSlideUpMenuVisible,
   session: state.newSessionReducer.session,
-  nativeLangCode: state.userProfile.nativeLangCode,
+  nativeLangCode: state.onboardingReducer.nativeLangCode,
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   token: state.auth.token,

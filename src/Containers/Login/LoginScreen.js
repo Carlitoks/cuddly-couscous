@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import {
   Alert,
   Image, ImageBackground,
-  Keyboard, ScrollView,
+  Keyboard, Platform, ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from "react-native";
 import { connect } from "react-redux";
 import { Divider, Icon } from "react-native-elements";
@@ -35,6 +35,7 @@ import { noOnboarding, update as updateOnboarding } from "../../Ducks/Onboarding
 import Header from "../CustomerHome/Components/Header";
 import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
 import { moderateScaleViewports } from "../../Util/Scaling";
+import Permission from "react-native-permissions";
 
 const JeenieLogo = require("../../Assets/Images/jeenieLogo.png");
 const BG = require("../../Assets/Images/BG.png");
@@ -108,6 +109,21 @@ class LoginScreen extends Component {
         makingRequest: false,
       });
     }
+  };
+
+  handleTouch = async (goto) => {
+    const { navigation } = this.props;
+    const LocationPermission = await Permission.check("location");
+    if (LocationPermission === "undetermined" || LocationPermission === "denied") {
+      return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
+    }
+    if (Platform.OS !== "android") {
+      const NotificationPermission = await Permission.check("notification");
+      if (NotificationPermission === "undetermined" || NotificationPermission === "denied") {
+        return navigation.dispatch({ type: "Home", params: { redirectTo: goto } });
+      }
+    }
+    return navigation.dispatch({ type: goto });
   };
 
   render() {
@@ -229,10 +245,7 @@ class LoginScreen extends Component {
                       <Divider style={styles.divider} />
                     </View>
                     <TouchableOpacity
-                      onPress={() => navigation.dispatch({
-                        type: "RegisterView",
-                      })
-                      }
+                      onPress={() => this.handleTouch("RegisterView")}
                       style={styles.createAccountButtonTransition}
                     >
                       <Text style={styles.transitionCreateButtonText}>

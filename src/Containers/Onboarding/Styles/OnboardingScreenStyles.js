@@ -7,15 +7,15 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
     backgroundColor: 'white',
-    flex: 1,
+    flexGrow: 1,
 
   },
   mainOnboardingContainer: {
     flexDirection: 'column',
-    flex: 1,
+    flexGrow: 1,
   },
   bodyContainer: {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -53,9 +53,9 @@ export default StyleSheet.create({
   },
   backgroundImage: {
     width: metrics.width,
-    height: metrics.height * 0.57,
+    height: metrics.height * 0.50,
     resizeMode: 'cover',
   },
-  bottomButtonsContainer: { paddingBottom: moderateScale(26, 0) },
+  bottomButtonsContainer: { paddingBottom: moderateScale(0, 0) },
   gradientFullWidth: { width: '100%', zIndex: 10 }
 });

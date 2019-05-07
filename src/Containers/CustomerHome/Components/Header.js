@@ -51,11 +51,11 @@ export default class LinguistHeader extends Component {
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
       );
     }
-    if (navigation.state.routeName === "LoginView" || navigation.state.routeName === "RegisterView") {
+    if (navigation.state.routeName === "ForgotPasswordView") {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
-            <Icon name="chevron-left" type="evilicon" color="#FFFFFF" size={50} />
+            <Icon name="chevron-left" type="evilicon" color="#3F1674" size={50} />
           </View>
         </TouchableOpacity>
       );
@@ -65,7 +65,7 @@ export default class LinguistHeader extends Component {
       navigation.state.routeName === "PaymentsView" ||
       navigation.state.routeName === "CardInfoScreen" ||
       navigation.state.routeName === "EditCardScreen"
-      || navigation.state.routeName === "ForgotPasswordView"
+      || navigation.state.routeName === "LoginView" || navigation.state.routeName === "RegisterView"
     ) {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
@@ -81,20 +81,13 @@ export default class LinguistHeader extends Component {
         style={styles.containerMenu}
         onPress={() => this.navigate("DrawerOpen")}
       >
-        <NavMenu width={30} height={20}/>
+        <NavMenu width={30} height={20} />
       </TouchableOpacity>
     );
   };
 
   renderRightComponent = () => {
     const { type, navigation, safeEditCard } = this.props;
-
-    if (type === "onboarding") {
-      return (
-        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null}/>
-      );
-    }
-
     if (
       navigation.state.routeName === "RegisterView"
       || navigation.state.routeName === "LoginView"
@@ -145,6 +138,9 @@ export default class LinguistHeader extends Component {
 
   renderHeaderInnerStyles = () => {
     const { navigation } = this.props;
+    if(navigation.state.routeName === "ForgotPasswordView"){
+      return styles.headerInnerForgotPassword;
+    }
     return styles.headerInnerHome;
   };
 
@@ -156,8 +152,12 @@ export default class LinguistHeader extends Component {
 
   setBackgroundColor = () => {
     const { navigation } = this.props;
+    if (navigation.state.routeName === "ForgotPasswordView") {
+      return "#DBDBDB";
+    }
+
     if (navigation.state.routeName === "Home" || navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView" || navigation.state.routeName === "ForgotPasswordView") {
+      || navigation.state.routeName === "LoginView") {
       return Colors.gradientColor.top;
     }
 

@@ -59,7 +59,7 @@ export default StyleSheet.create({
   },
   backgroundImage: {
     width: metrics.width,
-    height: metrics.height * 0.57,
+    height: metrics.height * 0.50,
     resizeMode: "cover",
   },
   permissionsMainContainer: {

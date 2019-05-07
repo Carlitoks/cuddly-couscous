@@ -1,47 +1,32 @@
 import React, { Component } from "react";
 import {
   Alert,
-  Image, ImageBackground,
-  Keyboard, ScrollView,
+  Keyboard,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import { Divider, Icon } from "react-native-elements";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {
-  ensureSessionDefaults,
-  updateLocation,
-} from "../../Ducks/NewSessionReducer";
-
-import {
-  getNativeLang,
-  getProfileAsync,
-  updateView as updateUserProfile,
-} from "../../Ducks/UserProfileReducer";
-import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
-import { haveSession, logInAsync, registerDevice, resetPasswordAsync } from "../../Ducks/AuthReducer";
-
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
-import { clear as clearEvents } from "../../Ducks/EventsReducer";
-import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
-import I18n, { translateApiErrorString } from "../../I18n/I18n";
+import { resetPasswordAsync } from "../../Ducks/AuthReducer";
+import I18n from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/ForgotPasswordScreenStyles";
 import { EMAIL_REGEX } from "../../Util/Constants";
-import { noOnboarding, update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 import Header from "../CustomerHome/Components/Header";
-import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
-import { moderateScaleViewports } from "../../Util/Scaling";
-import { displayFormErrors } from "../../Util/Alerts";
 import { Auth } from "../../Api";
 import { clearForm, updateForm } from "../../Ducks/ForgotPasswordReducer";
-import InputRegular from "../../Components/InputRegular/InputRegular";
 
 class ForgotPasswordScreen extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      loading: false,
+      error: null
+    }
+  }
   componentWillMount() {
     this.validateForm();
   }
@@ -81,23 +66,39 @@ class ForgotPasswordScreen extends Component {
   }
 
   submit() {
+    this.setState({loading: true});
     if (this.validateForm()) {
       Auth.resetPassword(this.props.email)
         .then(response => {
-          //console.log("Response ", response); // TODO HANDLE ERRORS
+          console.log(I18n.t("forgotPassword.alertSuccessTitle"), I18n.t("forgotPassword.alertSuccessBody"));
+          Alert.alert(I18n.t("forgotPassword.alertSuccessTitle"), I18n.t("forgotPassword.alertSuccessBody"), [
+            { text: I18n.t("actions.ok"), onPress: () => this.props.navigation.dispatch({ type: "IntroView" }) }
+          ]);
         })
         .catch(error => {
-          //console.log("Error ", error); // TODO HANDLE ERRORS
-        });
-
-      this.props.navigation.dispatch({ type: "CheckYourEmailView" });
-      this.props.clearForm();
+          this.setState({error: I18n.t("temporaryError")});
+        }).
+        finally(() => {
+        this.props.clearForm();
+        this.setState({loading: false});
+      })
     }
   }
 
   validateEmail = () => {
     const patt = new RegExp(EMAIL_REGEX);
     return !patt.test(this.props.email);
+  };
+
+  renderInputStyle = () => {
+    console.log(this.props.formHasErrors, this.state.error);
+    if(this.props.formHasErrors && this.props.email.length>0){
+      return [styles.emailInput, styles.emailInputError];
+    }
+    if(this.state.error !== null){
+      return [styles.emailInput, styles.emailInputError];
+    }
+    return styles.emailInput;
   };
   render() {
     const {
@@ -113,24 +114,25 @@ class ForgotPasswordScreen extends Component {
             <Header navigation={navigation} />
             <ScrollView contentContainerStyle={styles.forgotPasswordContainer}>
               <View style={styles.topLogoContainer}>
-                <Text style={styles.titleText}>Forgot Your Password?</Text>
-                <Text style={styles.subtitleText}>No worries. We’ll send you a link to reset your password at the email address below.</Text>
+                <Text style={styles.titleText}>{I18n.t("forgotPassword.title")}</Text>
+                <Text style={styles.subtitleText}>{I18n.t("forgotPassword.description")}</Text>
                 <TextInput
                   value={email}
                   keyboardType={"email-address"}
                   onChangeText={async text =>  { await updateForm({email: text}); await this.validateForm(); }}
                   placeholderTextColor={"#B6B5BB"}
-                  placeholder={I18n.t("email")}
-                  style={styles.emailInput}
+                  placeholder={I18n.t("fields.email.label")}
+                  style={this.renderInputStyle()}
                 />
                 {( (formHasErrors && email.length) ? <Text style={styles.invalidLabelText}>{emailErrorMessage}</Text> : <React.Fragment />)}
+                {(this.state.error && <Text style={styles.invalidLabelText}>{this.state.error}</Text>)}
                 <TouchableOpacity
                   onPress={() => this.submit()}
-                  disabled={this.validateEmail()}
+                  disabled={this.validateEmail() && this.state.loading}
                   style={formHasErrors ? styles.resetButtonDisable : styles.resetButton }
                 >
                   <Text style={styles.transitionCreateButtonText}>
-                    Send
+                    {I18n.t("actions.send")}
                   </Text>
                 </TouchableOpacity>
               </View>
