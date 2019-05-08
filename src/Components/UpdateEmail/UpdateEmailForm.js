@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import styles from "./styles";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import { updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
 import { logOutAsync, updateEmailAsync } from "../../Ducks/AuthReducer";
 import { connect } from "react-redux";
@@ -53,10 +53,7 @@ class UpdateEmailForm extends Component {
       return false;
     }
     if(this.state.isValidEmail && this.state.emailMatches){
-      if(this.state.email === this.state.confirmEmail){
-        return true;
-      }
-      return false;
+      return this.state.email === this.state.confirmEmail;
     }
     return false;
   };
@@ -74,15 +71,18 @@ class UpdateEmailForm extends Component {
         setSuccessState();
       }
     }catch(err){
-      this.setState({ error: I18n.t("temporaryError")});
-      console.log(err);
+      if(err.data){
+        this.setState({error: translateApiErrorString(err.data.errors[0], "api.errTemporary")});
+      }else{
+        this.setState({error: I18n.t("api.errTemporary")});
+      }
     } finally {
      this.setState({ loading: false });
     }
   };
 
   render() {
-    const { emailBounced, logOutAsync, closeModal } = this.props;
+    const { logOutAsync } = this.props;
     const handleClose = async () => {
       await logOutAsync();
       await closeUpdateEmail({ emailBounced: false });

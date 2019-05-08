@@ -324,5 +324,5 @@ export default StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
   },
-
+  bottomContainer: { flex: 1, flexDirection: "column", justifyContent: "space-between" },
 });

@@ -65,14 +65,6 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  buttonEnabledText: {
-    textAlign: "center",
-    color: "#fff",
-    fontFamily: Fonts.BoldFont,
-    fontSize: moderateScaleViewports(17),
-    paddingTop: moderateScaleViewports(10),
-    paddingBottom: moderateScaleViewports(10),
-  },
   transitionButtonText: {
     textAlign: "center",
     color: "#848688",
@@ -88,36 +80,8 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(15),
     paddingBottom: 20,
   },
-  termsAndConditionsText: {
-    textAlign: "center",
-    color: "rgba(0, 0, 0, 0.54)",
-    fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(12),
-  },
-  termsAndConditionsTextLink: {
-    textAlign: "center",
-    color: "rgba(0, 0, 0, 0.54)",
-    fontSize: moderateScaleViewports(12),
-    fontFamily: Fonts.BaseFont,
-    textDecorationLine: "underline",
-  },
+
   createAccountPadding: {},
-  createAccountButton: {
-    flex: 1,
-    backgroundColor: "#F39100",
-    alignItems: "center",
-    justifyContent: "center",
-    borderBottomLeftRadius: moderateScaleViewports(4),
-    borderBottomRightRadius: moderateScaleViewports(4),
-  },
-  createAccountButtonDisable: {
-    flex: 1,
-    backgroundColor: "#979797",
-    alignItems: "center",
-    justifyContent: "center",
-    borderBottomLeftRadius: moderateScaleViewports(4),
-    borderBottomRightRadius: moderateScaleViewports(4),
-  },
   inputViewContainer: {
     flexDirection: "column",
     paddingTop: moderateScaleViewports(0),
@@ -167,19 +131,8 @@ export default StyleSheet.create({
     alignItems: "center",
     marginBottom: android ? 1 : 30,
   },
-  termsAndConditionsViewContainer: {
-    paddingTop: moderateScaleViewports(24),
-    flexDirection: "row",
-    flex: 0.9,
-    justifyContent: "center",
-    alignItems: "center",
-    flexWrap: "wrap",
-    paddingBottom: moderateScaleViewports(10),
-  },
-  touchableLink: {
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
+
+
   height: { height: "100%" },
   titleText: {
     fontFamily: Fonts.BoldFont,
@@ -232,8 +185,5 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(16),
     color: "rgba(0, 0, 0, 0.54)",
     paddingBottom: moderateScaleViewports(5),
-  },
-  lelelele: {
-
   },
 });

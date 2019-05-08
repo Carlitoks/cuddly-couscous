@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { resetPasswordAsync } from "../../Ducks/AuthReducer";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiErrorString } from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/ForgotPasswordScreenStyles";
 import { EMAIL_REGEX } from "../../Util/Constants";
@@ -66,23 +66,24 @@ class ForgotPasswordScreen extends Component {
   }
 
   submit() {
-    this.setState({loading: true});
-    if (this.validateForm()) {
+      this.setState({loading: true});
       Auth.resetPassword(this.props.email)
         .then(response => {
-          console.log(I18n.t("forgotPassword.alertSuccessTitle"), I18n.t("forgotPassword.alertSuccessBody"));
           Alert.alert(I18n.t("forgotPassword.alertSuccessTitle"), I18n.t("forgotPassword.alertSuccessBody"), [
             { text: I18n.t("actions.ok"), onPress: () => this.props.navigation.dispatch({ type: "IntroView" }) }
           ]);
         })
         .catch(error => {
-          this.setState({error: I18n.t("temporaryError")});
+          if(error.data){
+            this.setState({error: translateApiErrorString(error.data.errors[0], "api.errTemporary")});
+          }else{
+            this.setState({error: I18n.t("api.errTemporary")});
+          }
         }).
         finally(() => {
         this.props.clearForm();
         this.setState({loading: false});
-      })
-    }
+      });
   }
 
   validateEmail = () => {
@@ -91,7 +92,6 @@ class ForgotPasswordScreen extends Component {
   };
 
   renderInputStyle = () => {
-    console.log(this.props.formHasErrors, this.state.error);
     if(this.props.formHasErrors && this.props.email.length>0){
       return [styles.emailInput, styles.emailInputError];
     }
