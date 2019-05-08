@@ -25,7 +25,7 @@ export default StyleSheet.create({
     paddingLeft: 19,
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(15, 0),
-    color: '#1C1B1B'
+    color: "#1C1B1B"
   },
   dividerStyle: {
     backgroundColor: "rgba(90, 90, 90, 0.2)",
@@ -38,6 +38,14 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: "#FFFFFF",
+    paddingBottom: 19,
+    paddingTop: 13
+  },
+  selectedLangViewContainer: {
+    height: 48,
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#ECE8F1",
     paddingBottom: 19,
     paddingTop: 13
   },

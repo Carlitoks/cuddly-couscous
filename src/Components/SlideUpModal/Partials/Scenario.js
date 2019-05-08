@@ -77,7 +77,11 @@ class Scenario extends Component {
         return (
           <View style={{ width: metrics.width * 0.9 }} key={current}>
             <TouchableOpacity
-              style={styles.LangViewContainer}
+              style={
+                scenario.id === scenarioID
+                  ? styles.selectedLangViewContainer
+                  : styles.LangViewContainer
+              }
               onPress={() => this.changeLangCode(scenario.id)}
             >
               <View
