@@ -41,27 +41,6 @@ class Home extends Component {
     appState: AppState.currentState
   };
 
-  componentWillMount() {
-    this.props.updateSettings({ loading: false });
-    this.props.asyncGetAccountInformation();
-    AppState.addEventListener("change", this._handleAppStateChange);
-    NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
-    InCallManager.stop();
-
-    // ensure linguist permissions are set
-    ensurePermissions([PERMISSIONS.CAMERA, PERMISSIONS.MIC]).then((response) => {
-      if (
-        response[PERMISSIONS.CAMERA] !== 'authorized'
-        || response[PERMISSIONS.MIC] !== 'authorized'
-      ) {
-        Alert.alert(
-          I18n.t('notification'),
-          I18n.t('acceptAllPermissionsLinguist'),
-          [{text: I18n.t('actions.ok')}]
-        );
-      }
-    })
-  }
 
   monitorConnectivity = connectionInfo => {
     if (connectionInfo.type !== "none") {
@@ -98,6 +77,27 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.props.updateSettings({ loading: false });
+    this.props.asyncGetAccountInformation();
+    AppState.addEventListener("change", this._handleAppStateChange);
+    NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
+    InCallManager.stop();
+
+    // ensure linguist permissions are set
+    ensurePermissions([PERMISSIONS.CAMERA, PERMISSIONS.MIC]).then((response) => {
+      if (
+        response[PERMISSIONS.CAMERA] !== 'authorized'
+        || response[PERMISSIONS.MIC] !== 'authorized'
+      ) {
+        Alert.alert(
+          I18n.t('notification'),
+          I18n.t('acceptAllPermissionsLinguist'),
+          [{text: I18n.t('actions.ok')}]
+        );
+      }
+    })
+
+    
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertCancelled
