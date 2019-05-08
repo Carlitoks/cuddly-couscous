@@ -80,7 +80,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Jeenie uses your current location to help connect you to linguists familiar with your surroundings.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-    <string>Jeenie uses your current location to help connect you to linguists familiar with your surroundings.</string>
+	<string>Jeenie uses your current location to help connect you to linguists familiar with your surroundings.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Jeenie needs to access your microphone to make calls between customers and linguists</string>
 	<key>NSMotionUsageDescription</key>
