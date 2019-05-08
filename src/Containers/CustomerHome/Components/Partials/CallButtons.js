@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  ActivityIndicator,
   Alert,
   Text,
   TouchableOpacity,
@@ -39,6 +40,7 @@ class CallButtons extends Component {
 
     this.state = {
       createDisabled: false,
+      creating: false
     };
   }
 
@@ -105,13 +107,17 @@ class CallButtons extends Component {
     if (this.state.createDisabled) {
       return;
     }
-    this.setState({createDisabled: true}, () => {
+    this.setState({createDisabled: true, creating: true}, () => {
+      
+setTimeout(() => {
+
       this.props.createNewSession({
         ...this.props.session
       })
       .then(() => {
         this.props.navigation.dispatch({type: "CustomerMatchingView"});
       }).catch((e) => {
+        this.setState({createDisabled: false, creating: false});
         console.log("error", e)
         Alert.alert(
           I18n.t('error'),
@@ -120,59 +126,75 @@ class CallButtons extends Component {
             {text: 'OK'},
           ],
         );
-      }).finally(() => {
-        this.setState({createDisabled: false});
       });
+}, 5000);
+
+
     });
   }
 
   isDisabled = () => {
     const { session } = this.props;
-    return session.primaryLangCode === "" || session.secondaryLangCode === "";
+    const {creating} = this.state;
+    return creating || session.primaryLangCode === "" || session.secondaryLangCode === "";
   };
 
   render() {
+    const {creating} = this.state;
     return (
       <View style={styles.callButtonContainer}>
-        <TouchableOpacity
-          disabled={this.isDisabled()}
-          onPress={() => this.checkAvailableMinutes("audio")}
-          style={this.isDisabled() ? styles.audioCallButtonDisable : styles.audioCallButton}
-        >
-          <Icon
-            name="phone"
-            type="material-community"
-            color="#fff"
-            size={moderateScaleViewports(17)}
-            containerStyle={styles.iconPadding}
-          />
+
+        {creating && (
+          <View style={styles.creatingButtonPlaceholder}>
+            <ActivityIndicator size="large" color="white" />
+          </View>
+        )}
+        
+        {!creating && (
+          <React.Fragment>
+            <TouchableOpacity
+              disabled={this.isDisabled()}
+              onPress={() => this.checkAvailableMinutes("audio")}
+              style={this.isDisabled() ? styles.audioCallButtonDisable : styles.audioCallButton}
+            >
+              <Icon
+                name="phone"
+                type="material-community"
+                color="#fff"
+                size={moderateScaleViewports(17)}
+                containerStyle={styles.iconPadding}
+              />
+              <Text
+                style={styles.audioOnlyButtonText}
+              >
+                {I18n.t("newCustomerHome.buttons.audio")}
+              </Text>
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              disabled={this.isDisabled()}
+              onPress={() => this.checkAvailableMinutes("video")}
+              style={this.isDisabled() ? styles.videoCallButtonDisable : styles.videoCallButton }
+            >
+              <Icon
+                name="ios-videocam"
+                type="ionicon"
+                color="#fff"
+                size={moderateScaleViewports(17)}
+                containerStyle={styles.iconPadding}
+              />
+              <Text
+                style={styles.callNowButtonText}
+              >
+                {I18n.t("newCustomerHome.buttons.video")}
+              </Text>
+            </TouchableOpacity>
+
+          </React.Fragment>
+        )}
 
 
-          <Text
-            style={styles.audioOnlyButtonText}
-          >
-            {I18n.t("newCustomerHome.buttons.audio")}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          disabled={this.isDisabled()}
-          onPress={() => this.checkAvailableMinutes("video")}
-          style={this.isDisabled() ? styles.videoCallButtonDisable : styles.videoCallButton }
-        >
-          <Icon
-            name="ios-videocam"
-            type="ionicon"
-            color="#fff"
-            size={moderateScaleViewports(17)}
-            containerStyle={styles.iconPadding}
-          />
-          <Text
-            style={styles.callNowButtonText}
-          >
-            {I18n.t("newCustomerHome.buttons.video")}
-          </Text>
-        </TouchableOpacity>
       </View>
     );
   }
