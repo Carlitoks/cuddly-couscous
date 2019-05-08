@@ -121,13 +121,13 @@ class Languages extends Component {
       }
       return (
         <React.Fragment key={current}>
+          {!selected ? <Divider style={styles.dividerStyle} /> : <React.Fragment />}
           <TouchableOpacity
             style={containerStyle}
             onPress={() => this.changeLangCode(language["3"])}
           >
             <View style={styles.selectLangButton}>{this.renderButtonContent(language)}</View>
           </TouchableOpacity>
-          {!selected ? <Divider style={styles.dividerStyle} /> : <React.Fragment />}
         </React.Fragment>
       );
     });

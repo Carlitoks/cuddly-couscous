@@ -76,6 +76,7 @@ class Scenario extends Component {
       if (scenario.active) {
         return (
           <View style={{ width: metrics.width * 0.9 }} key={current}>
+            {scenario.id === scenarioID ? null : <Divider style={styles.dividerStyle} />}
             <TouchableOpacity
               style={
                 scenario.id === scenarioID
@@ -94,7 +95,6 @@ class Scenario extends Component {
                 {this.renderScenarioListButtonContent(scenario)}
               </View>
             </TouchableOpacity>
-            <Divider style={styles.dividerStyle} />
           </View>
         );
       }

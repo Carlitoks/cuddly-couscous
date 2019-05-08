@@ -48,7 +48,8 @@ export default StyleSheet.create({
     height: 48,
     width: "100%",
     justifyContent: "center",
-    backgroundColor: "#F4F4F4"
+    backgroundColor: "#F4F4F4",
+    borderWidth: 0
   },
   selectLangButton: {
     flexDirection: "row",
