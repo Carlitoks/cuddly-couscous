@@ -130,3 +130,10 @@ export const SESSION = {
     END_SOON_WARNING: 2 * DURATION.MINUTES // show warning that call is ending soon when this much time is remaining
   }
 };
+
+export const PERMISSIONS = {
+  CAMERA: 'camera',
+  MIC: 'microphone',
+  LOCATION: 'location',
+  PHOTO: "photo"
+};

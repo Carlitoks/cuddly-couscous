@@ -184,3 +184,41 @@ export const checkRegisterCallPermissions = updateSetting => {
       }
     });
 };
+
+export const ensurePermissions = (perms) => {
+  return new Promise((resolve) => {
+    let results = {};
+    let missing = [];
+
+    Permissions.checkMultiple(perms)
+    .then((res) => {
+      Object.keys(perms).forEach((perm) => {
+        results[perm] = res[perm];
+        if (res[perm] !== "authorized") {
+          missing.push(perm);
+        }
+      })
+
+      if (missing.length > 0) {
+        return requestPermissions(perms);
+      }
+    })
+    .then(() => {
+      if (missing.length == 0) {
+        resolve(results);
+      } else {
+        Permissions.checkMultiple(perms).then((res) => {
+          resolve(res);
+        });
+      }
+    })
+  })
+}
+
+export const requestPermissions = async (perms) => {
+  let promises = [];
+  for (const perm of perms) {
+    promises.push(await Permissions.request(perm));
+  }
+  return Promise.all(promises);
+}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InCallManager from "react-native-incall-manager";
+import Permissions from "react-native-permissions";
 import {
   changeStatus,
   updateSettings,
@@ -30,6 +31,8 @@ import styles from "./styles";
 import { Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
 import { Sessions } from "../../Api";
+import { ensurePermissions } from "../../Util/Permission";
+import { PERMISSIONS } from "../../Util/Constants";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -44,6 +47,20 @@ class Home extends Component {
     AppState.addEventListener("change", this._handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
     InCallManager.stop();
+
+    // ensure linguist permissions are set
+    ensurePermissions([PERMISSIONS.CAMERA, PERMISSIONS.MIC]).then((response) => {
+      if (
+        response[PERMISSIONS.CAMERA] !== 'authorized'
+        || response[PERMISSIONS.MIC] !== 'authorized'
+      ) {
+        Alert.alert(
+          I18n.t('notification'),
+          I18n.t('acceptAllPermissionsLinguist'),
+          [{text: I18n.t('actions.ok')}]
+        );
+      }
+    })
   }
 
   monitorConnectivity = connectionInfo => {

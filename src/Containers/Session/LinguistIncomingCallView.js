@@ -60,8 +60,6 @@ export class LinguistIncomingCallView extends Component {
     // taking 5 seconds off to encourage pickup before call actually times out on customer side.    
     this.callTimeoutAt = moment(session.createdAt).add((SESSION.TIME.MATCH/DURATION.SECONDS) - 5, "s");
     
-
-
     this.state = {
       noticeText: "video" == props.session.avModePreference ? I18n.t("session.incoming.noticeVideo") : I18n.t("session.incoming.noticeAudio"),
       linguists: null,
@@ -132,7 +130,7 @@ export class LinguistIncomingCallView extends Component {
     if (!!this.incomingCallSound) {
       this.incomingCallSound.stop();
       this.incomingCallSound.release();
-      Sound.setActive(false);  
+      Sound.setActive(false);
     }
   }
 
@@ -166,7 +164,7 @@ export class LinguistIncomingCallView extends Component {
         // alert and return early if both camera and mic permissions are not set
         if (!allowed) {
           this.cleanup();
-          Alert.alert(I18n.t("error"), I18n.t('permissions'), [
+          Alert.alert(I18n.t("error"), I18n.t('acceptAllPermissionsLinguist'), [
             {text: I18n.t('ok'), onPress: () => { this.props.navigation.dispatch({type: "Home"}) }}
           ]);
           return;
