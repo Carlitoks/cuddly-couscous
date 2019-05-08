@@ -33,7 +33,7 @@ target 'NewSolo' do
   pod "react-native-branch", path: "#{node_modules_path}/react-native-branch"
   pod "Branch-SDK", path: "#{node_modules_path}/react-native-branch/ios"
   
-  pod 'OpenTok'
+  pod 'OpenTok', '2.15.3'
 
   pod 'RNSound', :path => '../node_modules/react-native-sound'
 
