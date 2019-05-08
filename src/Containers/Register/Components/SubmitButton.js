@@ -53,22 +53,30 @@ class SubmitButton extends Component {
         navigation.dispatch({ type: "Home" });
       }
     } catch (err) {
-      if (err.data.errors[0] === "Password incorrect") {
-        updateOnboarding({
-          errorType: "signInError",
-        });
-      }
+      if(err.data){
+        if (err.data.errors[0] === "Password incorrect") {
+          updateOnboarding({
+            errorType: "signInError",
+          });
+        }
 
-      if (err.data.errors[0] === "Email not found") {
-        updateOnboarding({
-          errorType: "emailNotFound",
-        });
-      }
+        if (err.data.errors[0] === "Email not found") {
+          updateOnboarding({
+            errorType: "emailNotFound",
+          });
+        }
 
-      if (err.data.errors[0]) {
+        if (err.data.errors[0]) {
+          Alert.alert(
+            I18n.t("error"),
+            translateApiErrorString(err.data.errors[0], "api.errTemporary"),
+            [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
+          );
+        }
+      }else{
         Alert.alert(
           I18n.t("error"),
-          translateApiErrorString(err.data.errors[0], "api.errTemporary"),
+          translateApiErrorString(err.data, "api.errTemporary"),
           [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
         );
       }
@@ -136,10 +144,18 @@ class SubmitButton extends Component {
         updateOnboarding({ makingRequest: false });
       }
     } catch (err) {
-      if (err.data.errors[0]) {
+      if(err.data){
+        if (err.data.errors[0]) {
+          Alert.alert(
+            I18n.t("error"),
+            translateApiErrorString(err.data.errors[0], "api.errTemporary"),
+            [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
+          );
+        }
+      }else{
         Alert.alert(
           I18n.t("error"),
-          translateApiErrorString(err.data.errors[0], "api.errTemporary"),
+          translateApiErrorString(err.data, "api.errTemporary"),
           [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
         );
       }

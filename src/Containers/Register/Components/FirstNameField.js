@@ -42,9 +42,6 @@ class FirstNameField extends Component {
             allowFontScaling={false}
             style={errorType === "firstNameFormat" ? styles.inputTextInvalid : styles.inputTextValid}
             onChangeText={text => this.validateFirstName(text)}
-            onSubmitEditing={() => {
-              this.secondTextInput.focus();
-            }}
             blurOnSubmit={false}
             value={firstName}
             placeholder={I18n.t("firstname")}

@@ -40,9 +40,6 @@ class EmailField extends Component {
             style={errorType === "emailFormat" ? styles.inputTextInvalid : styles.inputTextValid}
             onChangeText={text => this.isValidEmail(text)}
             onBlur={() => this.isValidEmail(email)}
-            onSubmitEditing={() => {
-              this.ThirdTextInput.focus();
-            }}
             blurOnSubmit={false}
             value={email}
             placeholder={I18n.t("email")}
