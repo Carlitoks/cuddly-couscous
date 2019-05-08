@@ -32,7 +32,7 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(17),
     color: "#fff"
   },
-  jeeniesImg: {},
+  jeeniesImg: { resizeMode: "stretch", width: "95%", height: "95%" },
   jeenieLogoContainer: {
     marginTop: moderateScaleViewports(25),
     marginBottom: moderateScaleViewports(5),
