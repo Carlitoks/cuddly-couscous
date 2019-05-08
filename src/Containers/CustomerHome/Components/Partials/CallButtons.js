@@ -108,9 +108,6 @@ class CallButtons extends Component {
       return;
     }
     this.setState({createDisabled: true, creating: true}, () => {
-      
-setTimeout(() => {
-
       this.props.createNewSession({
         ...this.props.session
       })
@@ -127,9 +124,6 @@ setTimeout(() => {
           ],
         );
       });
-}, 5000);
-
-
     });
   }
 
