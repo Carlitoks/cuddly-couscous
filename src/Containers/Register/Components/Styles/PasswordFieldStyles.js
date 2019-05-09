@@ -51,11 +51,11 @@ export default StyleSheet.create({
   inputTextValid: {
     ...defaultInput,
     borderBottomColor: "rgba(151, 151, 151, 0.3)",
-    paddingTop: Platform.OS === "ios" ? 15 : 0,
+    paddingTop: Platform.OS === "ios" ? 15 : 15,
   },
   inputTextInvalid: {
     ...defaultInput,
     borderBottomColor: "#FF3B30",
-    paddingTop: Platform.OS === "ios" ? 15 : 0,
+    paddingTop: Platform.OS === "ios" ? 15 : 15,
   },
 });
