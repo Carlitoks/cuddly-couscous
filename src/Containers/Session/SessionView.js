@@ -4,6 +4,7 @@ import KeepAwake from "react-native-keep-awake";
 import { connect } from 'react-redux';
 import I18n, {translateApiError} from "../../I18n/I18n";
 import merge from 'lodash/merge';
+import debounce from 'lodash/debounce';
 import InCallManager from "react-native-incall-manager";
 
 import api from "../../Config/AxiosConfig";
@@ -106,6 +107,9 @@ class SessionView extends Component {
       // used in case of errors
       sessionMounted: true,
 
+      // a flag triggered as result of local network disconnect/reconnect
+      networkFluctuating: false,
+
       // state of multiple participants, would be mapped by their userId ... ?
       // tokbox connection ID
       remoteUserStates: {}, // one day...
@@ -133,6 +137,8 @@ class SessionView extends Component {
     this.endingCall = false;
     this.unmounting = false;
     this.statusPollIntervalID = null;
+
+    this.inNetworkFluctuation = false;
 
     // used only on android
     this.wiredHeadsetListener = false;
@@ -298,10 +304,12 @@ class SessionView extends Component {
   // remote user is still connected
   handleLostNetworkConnection () {
     this.handleUserDisconnected();
+    this.networkFluctuationBegan();
   }
 
   handleRegainedNetworkConnection () {
     this.handleUserConnecting();
+    this.networkFluctuationBegan();
   }
 
   // hide/show call controls
@@ -643,14 +651,34 @@ class SessionView extends Component {
   }
 
   isSessionMounted () {
-    const {localUserState, sessionMounted, loaded} = this.state;
+    const {localUserState, sessionMounted, loaded, networkFluctuating} = this.state;
     return loaded
       // NOTE: this is (I THINK) causing some instability, so leaving out for now... but in theory it would be a good idea
       // to fully unmount Opentok/Session in the case of no network connection.  My concern is the possibility of it triggering
       // the unmount/remount process too frequently, and the memory in the native layer not getting cleaned up properly.
-      // && localUserState.device.hasNetworkConnection
+      && !networkFluctuating
+      && localUserState.device.hasNetworkConnection
       && sessionMounted;
   }
+
+  networkFluctuationBegan = debounce(() => {
+    this.inNetworkFluctuation = true;
+    this.setState({networkFluctuating: true}, () => {
+      setTimeout(() => {
+        this.networkFluctuationStopped();
+      }, 1000);
+    })
+  }, 1000);
+
+  // this could get triggered too frequently, so we debounce it
+  // to ensure that the session is unmounted/remounted too frequently
+  networkFluctuationStopped = debounce(() => {
+    if (this.unmounting) {
+      return;
+    }
+    this.inNetworkFluctuation = false;
+    this.setState({networkFluctuating: false});
+  }, 1000);
 
   remountSession () {
     recordSessionEvent('remountSession');
