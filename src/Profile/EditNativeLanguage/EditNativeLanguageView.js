@@ -22,10 +22,9 @@ import ListComponent from "../../Components/ListComponent/ListComponent";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 
 import I18n, { translateLanguage } from "../../I18n/I18n";
-import { Languages } from "../../Config/Languages";
+import { Languages, supportedLangCodes } from "../../Config/Languages";
 import styles from "./styles";
 import { Colors } from "../../Themes";
-import { SUPPORTED_LANGS } from "../../Util/Constants";
 import NativeLanguageSelection from "../../Components/NativeLanguageSelection/NativeLanguageSelection";
 
 class EditNativeLanguageView extends Component {
@@ -69,7 +68,7 @@ class EditNativeLanguageView extends Component {
   }
 
   getSupportedLanguagesNames() {
-    const supportedLanguages = new Set(SUPPORTED_LANGS);
+    const supportedLanguages = new Set(supportedLangCodes);
     return (supportedLanguagesArray = Languages.filter(language => {
       return supportedLanguages.has(language["3"]);
     })
@@ -92,7 +91,7 @@ class EditNativeLanguageView extends Component {
     const data = {
       nativeLangCode: formNativeLanguage["3"]
     };
-    const isSupportedLang = SUPPORTED_LANGS.find(item => {
+    const isSupportedLang = supportedLangCodes.find(item => {
       return formNativeLanguage["3"] === item;
     });
     if (!!isSupportedLang === false) {
