@@ -553,7 +553,7 @@ export default (ENG = {
       label: "Translate to"
     },
     scenario: {
-      label: "What are you doing?",
+      label: "What do you need help with?",
       placeholder: "Select a scenario (Optional)"
     },
     buttons: {

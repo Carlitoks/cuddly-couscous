@@ -99,7 +99,7 @@ class CallInputs extends Component {
               navType={type}
               openSlideMenu={openSlideMenu}
               title={I18n.t("newCustomerHome.secondaryLang.label")}
-              placeholder={I18n.t("customerHome.secondaryLang.placeholder")}
+              placeholder={I18n.t("actions.select")}
               type="secondaryLang"
               contentContainerStyle={styles.renderPickerContainer}
               labelStyle={styles.renderPickerLabel}
