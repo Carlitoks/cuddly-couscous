@@ -113,7 +113,7 @@ class CustomerHomeScreen extends Component {
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, secondaryLangCode } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={styles.mainContainerHome}>
@@ -123,7 +123,7 @@ class CustomerHomeScreen extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-            <AvatarSection />
+            <AvatarSection showNum={!!secondaryLangCode} />
             <View style={styles.flexEndCenter}>
               <CallInputs navigation={navigation} openSlideMenu={this.openSlideMenu} />
               <CallButtons navigation={navigation} />
