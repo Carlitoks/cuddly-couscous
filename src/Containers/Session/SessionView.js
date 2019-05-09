@@ -34,6 +34,7 @@ import {Session as OpentokSession} from "./Components/Opentok/Session";
 import * as tests from './SessionView.tests';
 import { SESSION, DURATION } from '../../Util/Constants';
 import { createRecorder } from '../../Util/Forensics';
+import colors from '../../Themes/Colors';
 
 // The user state for local and remote users is the same format.  The object describes
 // the users general connection status to the session, app and control states.
@@ -690,21 +691,21 @@ class SessionView extends Component {
   }
 
   // call ended by user locally
-  triggerEndCall (reason, confirm = false) {
+  triggerEndCall (reason, confirm = false, target = null) {
     recordSessionEvent('triggerEndCall');
     if (confirm) {
       Alert.alert(I18n.t("actions.confirm"), I18n.t('session.confirmEnd'), [
         {text: I18n.t('actions.yes'), onPress: () => {
-          this._triggerEndCall(reason);
+          this._triggerEndCall(reason, target);
         }},
         {text: I18n.t('actions.no')}
       ]);
     } else {
-      this._triggerEndCall(reason);
+      this._triggerEndCall(reason, target);
     }
   }
 
-  _triggerEndCall (reason) {
+  _triggerEndCall (reason, target = null) {
     if (this.props.status.ending || this.endingCall) {
       return;
     }
@@ -718,7 +719,7 @@ class SessionView extends Component {
         this.props.endSession(reason).finally(() => {
           this.cleanup();
           this.endingCall = false;
-          this.props.navigation.dispatch({type: this.chooseSessionEndedView(true)});
+          this.props.navigation.dispatch({type: (!!target) ? target : this.chooseSessionEndedView(true)});
         });
       }, 1000);
     });
@@ -806,8 +807,8 @@ class SessionView extends Component {
         break
       }
       case SESSION.END.FAILURE_LOCAL: {
-        targetView = (isCustomer) ? "CustomerRetryView" : "Home";
-        if (isLinguist) {
+        targetView = (isCustomer && hasNetworkConnection) ? "CustomerRetryView" : "Home";
+        if (isLinguist || !hasNetworkConnection) {
           alert = {
             title: I18n.t('error'),
             body: I18n.t("session.ended.failureLocal")
@@ -875,7 +876,7 @@ class SessionView extends Component {
 
     return (
       <TouchableWithoutFeedback onPress={ () => this.toggleDisplayControls() }>
-        <View style={{flex: 1}}>
+        <View style={styles.container}>
 
           <KeepAwake />
 
@@ -1010,6 +1011,10 @@ class SessionView extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.backgroundBlue
+  },
   controlContainer: {
     position: 'absolute',
     top: 0,
