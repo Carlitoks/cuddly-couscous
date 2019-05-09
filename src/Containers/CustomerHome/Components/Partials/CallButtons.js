@@ -24,10 +24,7 @@ import {
   Languages,
   DefaultLanguagePairMap
 } from "../../../../Config/Languages";
-import {
-  getLocalizedCategories,
-  SUPPORTED_LANGS
-} from "../../../../Util/Constants";
+import { SESSION } from "../../../../Util/Constants";
 import{createNewSession} from "../../../../Ducks/CurrentSessionReducer";
 
 // Styles
@@ -109,7 +106,8 @@ class CallButtons extends Component {
     }
     this.setState({createDisabled: true, creating: true}, () => {
       this.props.createNewSession({
-        ...this.props.session
+        ...this.props.session,
+        reason: SESSION.START.NORMAL
       })
       .then(() => {
         this.props.navigation.dispatch({type: "CustomerMatchingView"});

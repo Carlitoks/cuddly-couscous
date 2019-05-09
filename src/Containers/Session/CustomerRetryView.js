@@ -134,7 +134,7 @@ export class CustomerRetryView extends Component {
         break;
       }
     }
-    this.createSession({ startReason });
+    this.createSession({ reason: startReason });
   }
 
   retryRollover() {
@@ -145,7 +145,7 @@ export class CustomerRetryView extends Component {
     const secondaryLangCode =
       rollover.field == "secondary" ? rollover.code : session.secondaryLangCode;
     this.createSession({
-      startReason: SESSION.START.RETRY_TIMEOUT,
+      reason: SESSION.START.RETRY_TIMEOUT,
       primaryLangCode,
       secondaryLangCode
     });
