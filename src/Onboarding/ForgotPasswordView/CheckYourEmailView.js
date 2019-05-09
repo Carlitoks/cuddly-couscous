@@ -28,7 +28,7 @@ class CheckYourEmailView extends Component {
     return (
       <ViewWrapper style={styles.scrollContainer}>
         <HeaderView
-          navbarTitle={I18n.t("forgotPassword")}
+          navbarTitle={I18n.t("forgotPasswordTitle")}
           navbarType={"Basic"}
           NoWaves
         >

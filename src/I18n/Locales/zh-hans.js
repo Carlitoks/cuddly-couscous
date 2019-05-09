@@ -152,7 +152,7 @@
   firstname: "名字",
   firstnameFormatValidation: "名字只能由字母组成。",
   fluent: "流利",
-  forgotPassword: "重置您的密码",
+  forgotPasswordTitle: "重置您的密码",
   forSignup: "申请专用！",
   frequently: "频繁",
   freeTrial: "免费试用",

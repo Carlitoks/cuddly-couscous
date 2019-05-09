@@ -152,7 +152,7 @@ export default (ESP = {
   firstname: "Nombre",
   firstnameFormatValidation: "El nombre solo debe contener letras.",
   fluent: "Fluido",
-  forgotPassword: "Restablecer su contraseña",
+  forgotPasswordTitle: "Restablecer su contraseña",
   forSignup: "Para registrarse",
   frequently: "Con frecuencia",
   freeTrial: "Prueba gratuita",

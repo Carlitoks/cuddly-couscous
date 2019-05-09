@@ -152,7 +152,7 @@
   firstname: "名字",
   firstnameFormatValidation: "名字只能包含字元。",
   fluent: "流利",
-  forgotPassword: "重設密碼",
+  forgotPasswordTitle: "重設密碼",
   forSignup: "申請專用！",
   frequently: "經常",
   freeTrial: "免費試用",

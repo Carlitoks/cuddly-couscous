@@ -152,7 +152,7 @@
   firstname: "名前（名）",
   firstnameFormatValidation: "名前（名）には文字のみを使用してください。",
   fluent: "上級",
-  forgotPassword: "パスワードをリセット",
+  forgotPasswordTitle: "パスワードをリセット",
   forSignup: "ご登録完了です！",
   frequently: "頻繁",
   freeTrial: "無料トライアル",
