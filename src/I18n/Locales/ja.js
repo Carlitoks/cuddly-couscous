@@ -48,9 +48,6 @@
   callWillEnd: "時間切れになると通話が終了します",
   cancel: "キャンセル",
   cancelCall: "通話をキャンセル",
-  celebrateAndEnjoy: "サービス開始を記念して\nJeenieを\n10分無料でご利用いただけます！",
-  celebrateAndEnjoyAlternative:
-    "サービス開始を記念して\nJeenieを10分無料でご利用いただけます\n！",
   celebrateWithUs: "サービス開始をお祝いしましょう！",
   changeSettings: "設定を変更するには、[設定] > [Jeenie]の順にアクセスしてください",
   cancelCallCustomer: "通話はご利用いただけません",
@@ -220,9 +217,6 @@
     "世界のどこにいても、リアルタイムで、サポートが必要な言語を母国語とする通訳スタッフに連絡を取ることができます。",
   lauchScreenSwipe3:
     "現在Jeenieでは、\n「標準中国語⇔英語」\nと「日本語⇔英語」の言語ペアでの言語サポートを提供しています。\n\n今後、言語の追加を予定しています。",
-  lauchScreenSwipe4: "平均通話時間は5～10分ですが、好きなだけ通話が可能です。",
-  lauchScreenSwipe5:
-    "サービス開始を記念して、最初の10分を無料でご提供いたします。Jeenieからのプレゼントです！",
   lastname: "名前（姓）",
   lastnameFormatValidation: "名前（姓）には文字のみを使用してください。",
   legal: "法律",
@@ -303,8 +297,6 @@
   progressiveImageComponent: "プログレッシブ画像コンポーネント",
   provideFeedback: "ご意見の送信",
   provideFeedbackModalTitle: "Jeenieをもっと利用したいですか？",
-  provideFeedbackModalText:
-    "Jeenieの利用体験について\nご意見をお聞かせください。\nお礼に無料で10分利用時間を\n追加させていただきます！",
   provideFeedbackViewPlaceholder: "ここにご意見を入力してください",
   provideFeedbackViewTitle: "Jeenieの利用体験で改善してほしい点をお聞かせください：",
   qr: "QRコード",
@@ -376,8 +368,6 @@
   troubleshoot: "トラブルシューティング",
   thankYou: " ありがとうございます",
   thankYouFeedback: " ご意見をお聞かせいただきありがとうございました",
-  thankYouFeedbackModalText:
-    "お礼にJeenieの\n利用時間を10分\n追加させていただきました。",
   theCallWillEnd: "{{minutes}}分後に通話が終了します",
   undefined: "未定義",
   unspecified: "未指定",
@@ -411,9 +401,9 @@
   youCanChangeThis: "通話中にビデオのオン/オフを切り替えられます",
 
   appUpdateAlert: {
-    title: "アップデートあり",
-    description: "新たなフィーチャーをご利用されたい場合ジーニーのアプリのアップデートが必須"
-  },  
+    title: "更新できます",
+    description: "新機能をご利用になるにはJeenieを更新してください。"
+  },
 
   //new onboarding
   onboardingView: {
@@ -424,27 +414,47 @@
     tagline: "必要な時に使える言語サービス"
   },
 
-  // generic language often used in navigation or forms
+  status: {
+    available: "対応可能",
+    cancelled: "キャンセルされました",
+    error: "エラー",
+    unavailable: "対応不可"
+  },
+
+  // generic language often used in navigation, forms, dialogs, and buttons
   actions: {
-    cancel: "キャンセル",
-    remove: "削除",
-    close: "閉じる",
-    save: "保存",
-    update: "更新",
-    submit: "送信",
-    continue: "続ける",
-    next: "次へ",
+    accept: "応答",
+    agree: "同意する",
     back: "戻る",
-    prev: "前へ",
-    reset: "リセット",
-    clear: "クリア",
-    ok: "OK",
-    done: "終了",
-    finished: "終了",
-    select: "選択",
+    cancel: "キャンセル",
     choose: "選択",
+    clear: "クリア",
+    close: "閉じる",
+    confirm: "確認",
+    continue: "続ける",
+    dismiss: "辞退",
+    done: "終了",
+    edit: "編集",
+    end: "終了",
+    exit: "終了",
+    finished: "終了",
+    ignore: "無視",
+    next: "次へ",
+    no: "いいえ",
+    ok: "OK",
+    prev: "前へ",
+    quit: "中止",
+    reject: "拒否",
+    remove: "削除",
+    reset: "リセット",
+    save: "保存",
+    select: "選択",
+    send: "送信",
+    start: "開始",
     skip: "スキップ",
-    edit: "編集"
+    submit: "送信",
+    update: "更新",
+    yes: "はい"
   },
 
   logic: {
@@ -531,7 +541,6 @@
     },
     registrationWelcome: {
       balance: "{{num}}分",
-      onboardingTitle: "10分無料",
       title: "最初の{{num}}分は無料です！",
       description: "最初の{{num}}分が経過すると、1分あたり$1（米ドル）の料金がかかります。",
       buttons: {
@@ -543,7 +552,7 @@
       heading: "もう少しです！",
       title: "マイク＆カメラ",
       description:
-        "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
+        "通訳スタッフに接続するためにJeenieはマイクとカメラへのアクセスを必要としています。",
       button: "マイク＆カメラへのアクセスを許可",
       back: "戻る"
     }
@@ -728,19 +737,14 @@
     }
   },
 
-  // seen as a pop up if the user has entered an invalid email address.
-  correctEmailModal: {
-    notice: "入力いただいたメールアドレスに問題があります。新たに別のメールアドレスを入力してください。",
-    complete: "メールアドレスが更新されました！今後Jeenieへのサインインには必ず{email}を使用してください。"
-  },
-
+  
   // for use in session-related screens
   session: {
+    errFailedToConnect: "Jeenieとの接続が切断されました。  もう一度お試しください。",
+    confirmEnd: "通話を終了しますか？",
     callTime: "通話時間： {{time}}",
-    callCancel: "この通話はお客様によってキャンセルされました",
-    callAnswered: "この通話は他の通話スタッフが対応しています。",
-    callFail: "このお客様は接続できませんでした。",
     callFailCustomer: "Language Jeenieへの接続中に問題が発生しました。",
+    callEndingSoon: "この通話はまもなく終了となります。",
     alertGeneralCannotSee:
       "接続を最適化するため、ビデオが一時的にオフに設定されました。接続が改善されると、ビデオが再びオンになります。",
     alertLinguistCannotSeeYou:
@@ -753,9 +757,77 @@
       "接続を最適化するため、Language Jeenieのビデオが一時的にオフに設定されています。接続が改善されると、ビデオが再びオンになります。",
     createSessionFailed: "一時的に通話を開始できません。もう一度お試しください。",
 
+    // for incoming call from linguists perspective
+    incoming: {
+      notice: "着信中…",
+      noticeVideo: "ビデオ通話着信中…",
+      noticeAudio: "音節通話着信中…",
+      assigned: "この通話は他の通話スタッフが対応しています。",
+      cancelled: "この通話はお客様によってキャンセルされました。",
+      failed: "このお客様は接続できませんでした。",
+      unavailable: "この通話は利用できません。",
+      lostConnection: "サーバーへの接続が切断されました。",
+      videoType: "ビデオ",
+      audioType: "音声のみ"
+    },
+
+    // alerts to linguists about call being ended
+    ended: {
+      cancel: "この通話はお客様によってキャンセルされました。",
+      disconnectLocal: "この通話から切断されました。",
+      disconnectRemote: "お客様がこの通話から切断されました。",
+      balanceExceeded: "アカウントの残り時間がありません。",
+      timeExceeded: "通話が時間制限を超えています。",
+      failureLocal: "お客様に接続できませんでした。",
+      failureRemote: "このお客様は接続できませんでした。",
+      aborted: "通話は終了されています。"
+    },
+
+    // seen when connecting to a session
+    connecting: {
+      user: "{{name}}が接続中…",
+      self: "{{name}}に接続中…",
+      basic: "接続中…"
+    },
+
+    // seen when a user is in a session, but one side has been disconnected
+    reconnection: {
+      notice: "接続が切断されました。",
+      noticeUser: "{{name}}の接続が切断されました。",
+      attempting: "再接続中…",
+      attemptingUser: "{{name}}が再接続中…",
+      waiting: "接続待機中…",
+      waitingUser: "{{name}}の再接続を待機中…",
+      reconnecting: "再接続中…",
+      reconnectingUser: "{{name}}が再接続中…",
+      ending: "終了中…",
+      reconnected: "再接続されました",
+      actions: {
+        reconnect: "再接続",
+        wait: "お待ちください",
+        tryAnother: "別のJeenieをお試しください",
+        end: "通話終了"
+      }
+    },
+
     // seen while matching custoner to linguist
     matching: {
-      description: "LANGUAGE JEENIEに接続中…"
+      description: "Jeenieの通訳スタッフへの接続には約1分かかります",
+      remoteCancel: "リモートユーザーによって通話がキャンセルされました"
+    },
+
+    // retry screen seen when no matches are available, or initial connection to session fails
+    retry: {
+      busy: "すべてのJeenieの通訳スタッフが現在お客様の対応にあたっています。",
+      failureLocal: "Jeenieとの接続が不安定です。",
+      failureRemote: "Jeenieの通訳スタッフが接続できませんでした。",
+      disconnectLocal: "Jeenieとの接続が不安定でした。",
+      disconnectRemote: "Jeenieとの接続が不安定でした。",
+      cancelRemote: "Jeenieの通訳スタッフは通話に参加できませんでした。",
+      tryAgain: "早急に別のJeenieの通訳スタッフにお繋ぎしますので、そのままお待ちください。",
+      retry: "OK",
+      tryLang: "{{lang}}を試す",
+      cancel: "通話をキャンセル"
     },
 
     // used when rating a session
@@ -847,6 +919,22 @@
     }
   },
 
+  forgotPassword: {
+    title: "パスワードをお忘れですか？",
+    description: "心配ありません。  下記メールアドレスにパスワードリセット用のリンクを送信させていただきます。",
+    alertSuccessTitle: "リセット用のリンクが送信されました！",
+    alertSuccessBody: "すぐにパスワードリセット用のリンクが記載されたメールが届きます。"
+  },
+
+  correctEmailModal: {
+    title: "メールアドレスエラー",
+    description: "入力いただいたメールアドレスを確認できませんでした。  有効なメールアドレスを入力してください。",
+    label: "新しいメールアドレス",
+    titleSuccess: "正常に処理されました",
+    descriptionSuccess: "メールアドレスが更新されました！新しいメールアドレス（\"{email}\"）でJeenieにサインインできます",
+    descriptionTaken: "メールアドレス「\"{email}\"」はすでに登録されています。  このメールアドレスでログインするか、新しいメールアドレスを指定してください。"
+  },
+
   newCustomerOnboarding: {
     getStarted: "利用開始",
     haveAccount: "すでにアカウントをお持ちですか？",
@@ -855,7 +943,7 @@
     createAccount: "アカウントを作成",
     intro: {
       title: "リアルタイムのサポート",
-      description: "ボタンをタップするだけで、24時間リアルタイムで機械ではなく実際の通訳スタッフがサポートを提供いたします。  料金：1分あたり$1（米ドル） | 最初の10分は無料。",
+      description: "ボタンをタップするだけで、24時間リアルタイムで機械ではなく実際の通訳スタッフがサポートを提供いたします。  料金：1分あたり$1（米ドル）。最初の{{num}}分は無料です。",
       button: "利用開始"
     },
     location: {
