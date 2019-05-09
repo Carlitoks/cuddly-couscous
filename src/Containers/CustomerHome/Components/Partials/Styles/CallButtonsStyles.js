@@ -24,7 +24,7 @@ export default StyleSheet.create({
     width: metrics.width * 0.90,
     height: moderateScaleViewports(55),
     bottom: moderateScaleViewports(-5),
-    paddingBottom: isIphoneXorAbove() ? 70 : 0,
+    marginBottom: isIphoneXorAbove() ? 44 : 0,
     position: "relative"
   },
   creatingButtonPlaceholder: {
