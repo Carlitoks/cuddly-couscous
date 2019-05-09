@@ -133,7 +133,7 @@ export default (ZH = {
     "Please finish your registration in order to use the app-ZH",
   firstname: "First Name-ZH",
   fluent: "Fluent-ZH",
-  forgotPassword: "Forgot your password?-ZH",
+  forgotPasswordTitle: "Forgot your password?-ZH",
   forSignup: "for Signing Up!-ZH",
   frequently: "Frequently-ZH",
   freeTrial: "Free Trial-ZH",

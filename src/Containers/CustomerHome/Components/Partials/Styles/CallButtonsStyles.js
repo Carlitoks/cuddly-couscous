@@ -10,7 +10,7 @@ const baseButton = {
   borderRadius: moderateScaleViewports(10),
   alignItems: "center",
   borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
-  borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
+  borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0
 };
 
 export default StyleSheet.create({
@@ -20,10 +20,10 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: moderateScaleViewports(10),
-    width: metrics.width * 0.90,
+    width: metrics.width * 0.9,
     bottom: moderateScaleViewports(-5),
     paddingBottom: isIphoneXorAbove() ? 70 : 0,
-    position: "relative",
+    position: "relative"
   },
   audioCallButton: {
     ...baseButton,
@@ -32,7 +32,7 @@ export default StyleSheet.create({
     borderBottomRightRadius: 0,
     borderRightColor: "#fff",
     borderRightWidth: 1,
-    flex: 1,
+    flex: 1
   },
   audioCallButtonDisable: {
     ...baseButton,
@@ -41,7 +41,7 @@ export default StyleSheet.create({
     borderBottomRightRadius: 0,
     borderRightColor: "#fff",
     borderRightWidth: 1,
-    flex: 1,
+    flex: 1
   },
   videoCallButton: {
     ...baseButton,
@@ -49,14 +49,14 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-    flex: 1,
+    flex: 1
   },
   videoCallButtonDisable: {
     ...baseButton,
     backgroundColor: "#979797",
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-    flex: 1,
+    flex: 1
   },
   audioOnlyButtonText: {
     color: "white",
@@ -65,7 +65,7 @@ export default StyleSheet.create({
     paddingTop: moderateScaleViewports(18),
     paddingBottom: moderateScaleViewports(18),
     paddingLeft: moderateScaleViewports(10),
-    paddingRight: moderateScaleViewports(30),
+    paddingRight: moderateScaleViewports(30)
   },
   callNowButtonText: {
     color: "white",
@@ -74,6 +74,6 @@ export default StyleSheet.create({
     paddingTop: moderateScaleViewports(18),
     paddingBottom: moderateScaleViewports(18),
     paddingLeft: moderateScaleViewports(10),
-    paddingRight: moderateScaleViewports(30),
-  },
+    paddingRight: moderateScaleViewports(30)
+  }
 });

@@ -8,7 +8,8 @@ import {
   changeLangCode,
   modifyAdditionalDetails,
   update,
-  updateSelectedScenario
+  updateSelectedScenario,
+  guessSecondaryLangCode
 } from "../../../Ducks/NewSessionReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
 import I18n, { translateLanguage } from "../../../I18n/I18n";
@@ -16,12 +17,7 @@ import { AllowedLanguagePairs, FilterLangsByCodes } from "../../../Config/Langua
 
 class Languages extends Component {
   getCurrentLangPair = () => {
-    const {
-      selection,
-      secondaryLangCode,
-      primaryLangCode,
-      availableLanguages
-    } = this.props;
+    const { selection, secondaryLangCode, primaryLangCode, availableLanguages } = this.props;
     const availableLangPair = AllowedLanguagePairs;
     if (selection !== null && selection === "primaryLang") {
       if (secondaryLangCode !== "") return FilterLangsByCodes(availableLangPair[secondaryLangCode]);
@@ -35,11 +31,7 @@ class Languages extends Component {
   };
 
   renderCheck = currentLang => {
-    const {
-      selection,
-      secondaryLangCode,
-      primaryLangCode,
-    } = this.props;
+    const { selection, secondaryLangCode, primaryLangCode } = this.props;
     if (selection !== null && selection === "primaryLang") {
       if (primaryLangCode === currentLang["3"]) {
         return (
@@ -73,7 +65,7 @@ class Languages extends Component {
     const { selection, primaryLangCode, secondaryLangCode } = this.props;
     let ButtonStyle = {
       ...styles.availableLangText,
-      color: Colors.pricingViewBlack
+      color: "#1C1B1B"
     };
     if (selection === "primaryLang") {
       if (primaryLangCode === currentLang["3"])
@@ -110,32 +102,35 @@ class Languages extends Component {
         if (primaryLangCode === language["3"]) {
           containerStyle = {
             ...styles.LangViewContainer,
-            backgroundColor: '#ECE8F1',
+            backgroundColor: "#ECE8F1",
+            borderWidth: 0
           };
           selected = true;
         }
       }
 
       if (selection === "secondaryLang") {
-        if (secondaryLangCode === language["3"]){
+        if (secondaryLangCode === language["3"]) {
           containerStyle = {
             ...styles.LangViewContainer,
-            backgroundColor: '#ECE8F1',
+            backgroundColor: "#ECE8F1",
+            borderWidth: 0
           };
           selected = true;
         }
       }
       return (
-      <React.Fragment key={current}>
-        <TouchableOpacity
-          style={containerStyle}
-          onPress={() => this.changeLangCode(language["3"])}
-        >
-          <View style={styles.selectLangButton}>{this.renderButtonContent(language)}</View>
-        </TouchableOpacity>
-        { !selected ? <Divider style={styles.dividerStyle} /> : <React.Fragment />}
-      </React.Fragment>
-    )});
+        <React.Fragment key={current}>
+          {!selected ? <Divider style={styles.dividerStyle} /> : <React.Fragment />}
+          <TouchableOpacity
+            style={containerStyle}
+            onPress={() => this.changeLangCode(language["3"])}
+          >
+            <View style={styles.selectLangButton}>{this.renderButtonContent(language)}</View>
+          </TouchableOpacity>
+        </React.Fragment>
+      );
+    });
   };
 
   renderUnAvailableLanguages = () => {
@@ -155,12 +150,19 @@ class Languages extends Component {
   };
 
   changeLangCode = langCode => {
-    const { changeLangCode, selection, updateSelectedScenario, closeSlideMenu } = this.props;
+    const {
+      changeLangCode,
+      selection,
+      updateSelectedScenario,
+      closeSlideMenu,
+      guessSecondaryLangCode
+    } = this.props;
     if (selection === "scenarioSelection") {
       updateSelectedScenario({ scenarioID: langCode });
     } else {
       changeLangCode({ langCode });
     }
+    guessSecondaryLangCode();
     closeSlideMenu();
   };
 
@@ -170,7 +172,7 @@ class Languages extends Component {
       <React.Fragment>
         <View style={styles.availableLangContainer}>
           <Text style={styles.availableLangContainerText}>
-            { selection === "primaryLang"
+            {selection === "primaryLang"
               ? I18n.t("customerHome.primaryLang.label")
               : I18n.t("newCustomerHome.secondaryLang.label")}
           </Text>
@@ -209,7 +211,8 @@ const mD = {
   changeLangCode,
   modifyAdditionalDetails,
   update,
-  updateSelectedScenario
+  updateSelectedScenario,
+  guessSecondaryLangCode
 };
 
 export default connect(

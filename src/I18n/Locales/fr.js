@@ -152,7 +152,7 @@ export default (FR = {
   firstname: "Prénom",
   firstnameFormatValidation: "Le prénom doit contenir uniquement des lettres.",
   fluent: "Courant",
-  forgotPassword: "Réinitialisez votre mot de passe",
+  forgotPasswordTitle: "Réinitialisez votre mot de passe",
   forSignup: "de vous être inscrit !",
   frequently: "Fréquemment",
   freeTrial: "Essai gratuit",

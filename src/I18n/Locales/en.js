@@ -149,7 +149,7 @@ export default (ENG = {
   firstname: "First Name",
   firstnameFormatValidation: "First name must be only letters.",
   fluent: "Fluent",
-  forgotPassword: "Reset Your Password",
+  forgotPasswordTitle: "Reset Your Password",
   forSignup: "For Signing Up!",
   frequently: "Frequently",
   freeTrial: "Free Trial",

@@ -152,7 +152,7 @@ export default (PT = {
   firstname: "Primeiro nome",
   firstnameFormatValidation: "O primeiro nome deve conter apenas letras.",
   fluent: "Fluente",
-  forgotPassword: "Redefina sua senha",
+  forgotPasswordTitle: "Redefina sua senha",
   forSignup: "Por assinar!",
   frequently: "Frequentemente",
   freeTrial: "Teste gratuito",
