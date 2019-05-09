@@ -1,21 +1,6 @@
 import { StyleSheet, Platform } from "react-native";
 import { ApplicationStyles, Colors, Fonts, Metrics } from "../../../../Themes";
 import { moderateScaleViewports } from "../../../../Util/Scaling";
-import { isIphoneXorAbove } from "../../../../Util/Devices";
-
-const setHeaderHeight = () => {
-  if (Metrics.width <= 320) {
-    return Metrics.height * 0.63;
-  }
-  if (isIphoneXorAbove()) {
-    return Metrics.height * 0.65;
-  }
-
-  if (Metrics.width <= 375) {
-    return Metrics.height * 0.71;
-  }
-  return Metrics.height * 0.73;
-};
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -32,13 +17,11 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(17),
     color: "#fff"
   },
-  jeeniesImg: { resizeMode: "contain", width: "95%" },
-  jeenieLogoContainer: {
-    marginTop: moderateScaleViewports(25),
-    marginBottom: moderateScaleViewports(10),
-    alignItems: "center",
-    justifyContent: "center",
-    width: "85%",
-    height: "55%"
+  jeeniesImg: {
+    marginTop: moderateScaleViewports(20),
+    resizeMode: "contain",
+    width: Metrics.width * 0.80,
+    height: Metrics.width * 0.80
   }
+
 });
