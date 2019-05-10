@@ -216,6 +216,10 @@ export class LinguistIncomingCallView extends Component {
       this.setState({linguists: res.data.queue.sent});
       switch (res.data.status) {
         case "assigned": {
+          // make sure we don't process ourself accepting the invite
+          if (res.data.linguist.id == this.props.userID) {
+            return;
+          }
           this.handleUnavailable("assigned");
           break;
         }
@@ -398,7 +402,8 @@ const styles = StyleSheet.create({
 
 const mS = (state) => {
   return {
-    ...state.currentSessionReducer
+    ...state.currentSessionReducer,
+    userID: state.auth.uuid // TODO: replace with state.account.user.id
   }
 };
 
