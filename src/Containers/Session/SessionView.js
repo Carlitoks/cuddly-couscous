@@ -1016,11 +1016,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundBlue
   },
   controlContainer: {
-    position: 'absolute',
-    top: 0,
-    left:0,
-    bottom: 0,
-    right: 0,
+    ...StyleSheet.absoluteFill
   },
   controls: {
     flex: 1,
