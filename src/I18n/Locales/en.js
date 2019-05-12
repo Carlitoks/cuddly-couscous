@@ -584,8 +584,9 @@ export default (ENG = {
       noBalanceNoCard: "Rate: US $1 per min. Please add card to continue",
       noBalanceHasCard: "Rate: US $1 per min.",
       noBalanceHasCardPackage: "Rate: US $1 per min. Buy a package for 15% discount.",
-      hasBalance: "Rate: US $1 per min. Balance remaining: {{num}} mins",
-      hasBalanceAutoreload: "Rate: {{num}}m remaining."
+      hasBalance: "Rate: US $1 per min. Balance: {{num}} mins",
+      hasBalanceAutoreload: "Rate: {{num}}m remaining.",
+      unlimitedUntil: "Unlimited use through {{date}}"
     }
   },
 
