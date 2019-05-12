@@ -33,11 +33,6 @@ import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
-import {
-  clear as clearActiveSession,
-  update as customerUpdateSettings
-} from "../../Ducks/ActiveSessionReducer";
-import { updateSettings } from "../../Ducks/ContactLinguistReducer";
 import I18n from "../../I18n/I18n";
 import Permission from "react-native-permissions";
 // Styles
@@ -471,7 +466,6 @@ const mD = {
   updateLocation,
   ensureSessionDefaults,
   clearEvents,
-  clearActiveSession,
   getProfileAsync,
   updateUserProfile,
   logInAsync,
@@ -482,8 +476,6 @@ const mD = {
   asyncCreateUser,
   asyncUpdateUser,
   updateOnboarding,
-  customerUpdateSettings,
-  updateSettings,
   modifyAVModePreference
 };
 

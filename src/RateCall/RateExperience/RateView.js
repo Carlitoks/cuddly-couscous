@@ -142,7 +142,7 @@ const mS = state => ({
   sessionID: state.rateCall.sessionID,
   token: state.auth.token,
   customerName: state.rateCall.customerName,
-  avatarURL: state.activeSessionReducer.avatarURL,
+  avatarURL: state.rateCall.avatarURL,
   linguistProfile: state.userProfile.linguistProfile,
   linguist: state.sessionInfo.linguist
 });

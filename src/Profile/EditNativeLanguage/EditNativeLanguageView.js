@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { updateSettings, clearForm } from "../../Ducks/LinguistFormReducer";
 import {
   clearForm as registrationClearForm,
   updateForm
@@ -23,10 +22,9 @@ import ListComponent from "../../Components/ListComponent/ListComponent";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 
 import I18n, { translateLanguage } from "../../I18n/I18n";
-import { Languages } from "../../Config/Languages";
+import { Languages, supportedLangCodes } from "../../Config/Languages";
 import styles from "./styles";
 import { Colors } from "../../Themes";
-import { SUPPORTED_LANGS } from "../../Util/Constants";
 import NativeLanguageSelection from "../../Components/NativeLanguageSelection/NativeLanguageSelection";
 
 class EditNativeLanguageView extends Component {
@@ -36,7 +34,8 @@ class EditNativeLanguageView extends Component {
     this.state = {
       selectedIndex: -1,
       formNativeLanguage: {},
-      loading: true
+      loading: true,
+      searchQuery: ""
     };
   }
   componentWillUnmount() {
@@ -51,7 +50,6 @@ class EditNativeLanguageView extends Component {
   componentWillMount() {
     const selectedNativeLanguage = this.props.selectedNativeLanguage;
 
-    this.props.updateSettings({ selectedNativeLanguage });
     this.setState({
       selectedIndex: findIndex(Languages, { 3: selectedNativeLanguage["3"] }),
       formNativeLanguage: selectedNativeLanguage
@@ -66,11 +64,11 @@ class EditNativeLanguageView extends Component {
   }
 
   changeSearch(queryString) {
-    this.props.updateSettings({ searchQuery: queryString });
+    this.setState({ searchQuery: queryString });
   }
 
   getSupportedLanguagesNames() {
-    const supportedLanguages = new Set(SUPPORTED_LANGS);
+    const supportedLanguages = new Set(supportedLangCodes);
     return (supportedLanguagesArray = Languages.filter(language => {
       return supportedLanguages.has(language["3"]);
     })
@@ -93,7 +91,7 @@ class EditNativeLanguageView extends Component {
     const data = {
       nativeLangCode: formNativeLanguage["3"]
     };
-    const isSupportedLang = SUPPORTED_LANGS.find(item => {
+    const isSupportedLang = supportedLangCodes.find(item => {
       return formNativeLanguage["3"] === item;
     });
     if (!!isSupportedLang === false) {
@@ -130,7 +128,7 @@ class EditNativeLanguageView extends Component {
                   }
                 })
                 .then(() => {
-                  this.props.updateSettings({ searchQuery: "" });
+                  this.setState({ searchQuery: "" });
                 });
             }
           }
@@ -158,7 +156,7 @@ class EditNativeLanguageView extends Component {
           }
         })
         .then(() => {
-          this.props.updateSettings({ searchQuery: "" });
+          this.setState({ searchQuery: "" });
         });
     }
   }
@@ -196,7 +194,7 @@ class EditNativeLanguageView extends Component {
             )}
 
             <NativeLanguageSelection
-              searchQuery={this.props.searchQuery}
+              searchQuery={this.state.searchQuery}
               render={({ filterList, indexSelected, changeLanguage }) => {
                 return (
                   <ListComponent
@@ -241,15 +239,12 @@ const mS = state => ({
   token: state.auth.token,
   uuid: state.auth.uuid,
   selectedNativeLanguage: state.userProfile.selectedNativeLanguage,
-  searchQuery: state.linguistForm.searchQuery,
   formSelectedNativeLanguage: state.registrationCustomer.selectedNativeLanguage
 });
 
 // MAP DISPATCH TO PROPS HERE
 const mD = {
-  updateSettings,
   updateProfileAsync,
-  clearForm,
   updateForm,
   registrationClearForm,
   updateView,

@@ -10,7 +10,8 @@ const baseButton = {
   borderRadius: moderateScaleViewports(10),
   alignItems: "center",
   borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
-  borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0
+  borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
+  height: "100%"
 };
 
 export default StyleSheet.create({
@@ -20,10 +21,16 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: moderateScaleViewports(10),
-    width: metrics.width * 0.9,
+    width: metrics.width * 0.90,
+    height: moderateScaleViewports(55),
     bottom: moderateScaleViewports(-5),
-    paddingBottom: isIphoneXorAbove() ? 70 : 0,
+    marginBottom: isIphoneXorAbove() ? 44 : 0,
     position: "relative"
+  },
+  creatingButtonPlaceholder: {
+    ...baseButton,
+    flex: 1,
+    backgroundColor: "#979797"
   },
   audioCallButton: {
     ...baseButton,
@@ -62,18 +69,14 @@ export default StyleSheet.create({
     color: "white",
     fontSize: moderateScaleViewports(16),
     fontFamily: Fonts.BaseFont,
-    paddingTop: moderateScaleViewports(18),
-    paddingBottom: moderateScaleViewports(18),
-    paddingLeft: moderateScaleViewports(10),
-    paddingRight: moderateScaleViewports(30)
+    marginLeft: moderateScaleViewports(10),
+    marginRight: moderateScaleViewports(30),
   },
   callNowButtonText: {
     color: "white",
     fontSize: moderateScaleViewports(16),
     fontFamily: Fonts.BaseFont,
-    paddingTop: moderateScaleViewports(18),
-    paddingBottom: moderateScaleViewports(18),
-    paddingLeft: moderateScaleViewports(10),
-    paddingRight: moderateScaleViewports(30)
-  }
+    marginLeft: moderateScaleViewports(10),
+    marginRight: moderateScaleViewports(30),
+  },
 });

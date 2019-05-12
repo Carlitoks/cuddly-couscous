@@ -27,7 +27,7 @@ import DeviceInfo from "react-native-device-info";
 import analytics from '@segment/analytics-react-native'
 
 import { setAuthToken } from "../Util/Forensics";
-import { setAuthToken as setApiAuthToken} from "../Config/AxiosConfig";
+import {setAuthToken as setApiAuthToken} from "../Config/AxiosConfig";
 
 // Actions
 export const ACTIONS = {

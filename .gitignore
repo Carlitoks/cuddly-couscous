@@ -46,12 +46,20 @@ build/
 .gradle
 local.properties
 *.iml
+android/.settings
+android/app/.classpath
+android/app/.settings
+android/app/gradle/
+android/app/gradlew
+android/app/gradlew.bat
+android/app/src/main/res/drawable-*
 
 # node.js
 #
 node_modules/
 npm-debug.log
 yarn-error.log
+package-lock.json
 
 # BUCK
 buck-out/
@@ -76,6 +84,5 @@ buck-out/
 # Pods 
 # 
 ios/Pods
-yarn.lock
 ios/Podfile.lock
 android/app/src/main/assets/index.android.bundle*

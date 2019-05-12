@@ -338,7 +338,6 @@ export default (ENG = {
   speaker: "Speaker",
   specifyGender: "Decline to specify",
   sport: "Sports",
-  status: "You are",
   submitFeedbackForMoreTime: "Submit feedback for more time",
   submitFeedback: "Submit Feedback",
   tapRepeat: "Tap to repeat",
@@ -415,28 +414,47 @@ export default (ENG = {
     tagline: "Language at Your Command"
   },
 
-  // generic language often used in navigation or forms
+  status: {
+    available: "Available",
+    cancelled: "Cancelled",
+    error: "Error",
+    unavailable: "Unavailable"
+  },
+
+  // generic language often used in navigation, forms, dialogs, and buttons
   actions: {
-    send: "Send",
-    cancel: "Cancel",
-    remove: "Remove",
-    close: "Close",
-    save: "Save",
-    update: "Update",
-    submit: "Submit",
-    continue: "Continue",
-    next: "Next",
+    accept: "Accept",
+    agree: "Agree",
     back: "Back",
-    prev: "Previous",
-    reset: "Reset",
-    clear: "Clear",
-    ok: "Ok",
-    done: "Done",
-    finished: "Finished",
-    select: "Select",
+    cancel: "Cancel",
     choose: "Choose",
+    clear: "Clear",
+    close: "Close",
+    confirm: "Confirm",
+    continue: "Continue",
+    dismiss: "Dismiss",
+    done: "Done",
+    edit: "Edit",
+    end: "End",
+    exit: "Exit",
+    finished: "Finished",
+    ignore: "Ignore",
+    next: "Next",
+    no: "No",
+    ok: "Ok",
+    prev: "Previous",
+    quit: "Quit",
+    reject: "Reject",
+    remove: "Remove",
+    reset: "Reset",
+    save: "Save",
+    select: "Select",
+    send: "Send",
+    start: "Start",
     skip: "Skip",
-    edit: "Edit"
+    submit: "Submit",
+    update: "Update",
+    yes: "Yes"
   },
 
   logic: {
@@ -566,8 +584,9 @@ export default (ENG = {
       noBalanceNoCard: "Rate: US $1 per min. Please add card to continue",
       noBalanceHasCard: "Rate: US $1 per min.",
       noBalanceHasCardPackage: "Rate: US $1 per min. Buy a package for 15% discount.",
-      hasBalance: "Rate: US $1 per min. Balance remaining: {{num}} mins",
-      hasBalanceAutoreload: "Rate: {{num}}m remaining."
+      hasBalance: "Rate: US $1 per min. Balance: {{num}} mins",
+      hasBalanceAutoreload: "Rate: {{num}}m remaining.",
+      unlimitedUntil: "Unlimited use through {{date}}"
     }
   },
 
@@ -722,11 +741,11 @@ export default (ENG = {
   
   // for use in session-related screens
   session: {
+    errFailedToConnect: "Lost connection with Jeenie.  Please try again.",
+    confirmEnd: "Are you sure you want to end the call?",
     callTime: "Call Time: {{time}}",
-    callCancel: "This call was canceled by the customer",
-    callAnswered: "This call has been taken by another linguist.",
-    callFail: "The customer was unable to connect.",
     callFailCustomer: "There was a problem connecting to your Language Jeenie.",
+    callEndingSoon: "This call will end soon.",
     alertGeneralCannotSee:
       "To optimize connectivity, video has been temporarily disabled. Video will resume when connectivity improves.",
     alertLinguistCannotSeeYou:
@@ -739,9 +758,77 @@ export default (ENG = {
       "To optimize connectivity, your Language Jeenie's video has been temporarily disabled. Video will resume when connectivity improves.",
     createSessionFailed: "Temporarily unable to start call. Please try again.",
 
+    // for incoming call from linguists perspective
+    incoming: {
+      notice: "Incoming call...",
+      noticeVideo: "Incoming video call...",
+      noticeAudio: "Incoming audio call...",
+      assigned: "The call has been taken by another linguist",
+      cancelled: "The call was cancelled by the customer.",
+      failed: "The customer was unable to connect.",
+      unavailable: "The call is no longer available.",
+      lostConnection: "Lost connection to the server.",
+      videoType: "Video",
+      audioType: "Audio only"
+    },
+
+    // alerts to linguists about call being ended
+    ended: {
+      cancel: "The call was cancelled by the customer.",
+      disconnectLocal: "You were disconnected from the call.",
+      disconnectRemote: "Your customer was disconnected from the call.",
+      balanceExceeded: "Your account has run out of time.",
+      timeExceeded: "Call exceeded the time limit.",
+      failureLocal: "We were unable to connect you to the customer.",
+      failureRemote: "The customer was unable to connect.",
+      aborted: "Call has been ended."
+    },
+
+    // seen when connecting to a session
+    connecting: {
+      user: "{{name}} is connecting...",
+      self: "Connecting to {{name}}...",
+      basic: "Connecting...",
+    },
+
+    // seen when a user is in a session, but one side has been disconnected
+    reconnection: {
+      notice: "You have been disconnected.",
+      noticeUser: "{{name}} has been disconnected.",
+      attempting: "Trying to reconnect...",
+      attemptingUser: "{{name}} is trying to reconnect...",
+      waiting: "Waiting for connection...",
+      waitingUser: "Waiting for {{name}} to reconnect...",
+      reconnecting: "Reconnecting...",
+      reconnectingUser: "{{name}} is reconnecting...",
+      ending: "Ending...",
+      reconnected: "Reconnected",
+      actions: {
+        reconnect: "Try To Reconnect",
+        wait: "Keep Waiting",
+        tryAnother: "Try Another Jeenie",
+        end: "End Call"
+      },
+    },
+
     // seen while matching custoner to linguist
     matching: {
-      description: "Connecting you to a LANGUAGE JEENIE..."
+      description: "Connecting you to a Language Jeenie in approximately 1 minute",
+      remoteCancel: "Call canceled by remote party"
+    },
+
+    // retry screen seen when no matches are available, or initial connection to session fails
+    retry: {
+      busy: "All of our Language Jeenies are busy helping other customers.",
+      failureLocal: "The connection with your Jeenie is too weak.",
+      failureRemote: "Your Language Jeenie was unable to connect.",
+      disconnectLocal: "The connection with your Jeenie was too weak.",
+      disconnectRemote: "The connection with your Jeenie was too weak.",
+      cancelRemote: "Your Language Jeenie was unable to join the call.",
+      tryAgain: "Please stand by while we connect you to another Jeenie as quickly as possible.",
+      retry: "Ok",
+      tryLang: "Try {{lang}}",
+      cancel: "Cancel Call"
     },
 
     // used when rating a session

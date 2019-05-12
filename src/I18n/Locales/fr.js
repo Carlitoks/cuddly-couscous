@@ -48,9 +48,6 @@ export default (FR = {
   callWillEnd: "L'appel prendra fin une fois le temps écoulé",
   cancel: "Annuler",
   cancelCall: "Annuler l'appel",
-  celebrateAndEnjoy: "Pour fêter le lancement de Jeenie, \n bénéficiez de \n 10 minutes GRATUITES !",
-  celebrateAndEnjoyAlternative:
-    "Fêtez le lancement de Jeenie \nen bénéficiant de 10 minutes \nGRATUITES !",
   celebrateWithUs: "Fêtez le lancement de Jeenie avec nous !",
   changeSettings: "Pour modifier vos paramètres, allez dans Paramètres > Jeenie",
   cancelCallCustomer: "Appel impossible",
@@ -68,7 +65,7 @@ export default (FR = {
   confirmCall: "Confirmez les informations",
   confirmEighteen1: "et vous confirmez être",
   confirmEighteen2: " majeur.",
-  confirmPassword: " Confirmez votre mot de passe",
+  confirmPassword: " Confirmer votre mot de passe",
   confirmAndConnect: "Confirmer et lancer la connexion",
   connectMeNow: "Me connecter",
   connectNow: "Lancer la connexion",
@@ -220,9 +217,6 @@ export default (FR = {
     "Où que vous soyez dans le monde, vous pouvez joindre en temps réel des interlocuteurs humains dans la langue de votre choix.",
   lauchScreenSwipe3:
     "Actuellement, Jeenie propose une aide linguistique en \n mandarin <> anglais \n et en japonais <> anglais.\n\n D'autres langues seront bientôt disponibles.",
-  lauchScreenSwipe4: "Le temps d'appel moyen est de 5 à 10 minutes, mais vous pouvez parler aussi longtemps que vous voulez.",
-  lauchScreenSwipe5:
-    "Pour fêter le lancement de Jeenie, bénéficiez de 10 premières minutes GRATUITES... C'est cadeau !",
   lastname: "Nom",
   lastnameFormatValidation: "Le nom doit contenir uniquement des lettres.",
   legal: "Juridique",
@@ -303,8 +297,6 @@ export default (FR = {
   progressiveImageComponent: "Composant de chargement progressif des images",
   provideFeedback: "Donnez votre avis",
   provideFeedbackModalTitle: "Besoin de plus de temps sur Jeenie ?",
-  provideFeedbackModalText:
-    "Faites-nous part de votre \nexpérience sur Jeenie \npour bénéficier de \n10 minutes GRATUITES supplémentaires !",
   provideFeedbackViewPlaceholder: "Donnez votre avis ici",
   provideFeedbackViewTitle: "Dites-nous en quoi nous pouvons améliorer l'expérience Jeenie :",
   qr: "Code QR",
@@ -346,7 +338,6 @@ export default (FR = {
   speaker: "Locuteur",
   specifyGender: "Rejeter pour préciser",
   sport: "Sport",
-  status: "Vous êtes",
   submitFeedbackForMoreTime: "Donnez votre avis pour recevoir du crédit",
   submitFeedback: "Envoyer les commentaires",
   tapRepeat: "Appuyez pour répéter",
@@ -377,8 +368,6 @@ export default (FR = {
   troubleshoot: "Résoudre",
   thankYou: " Merci",
   thankYouFeedback: " Merci pour vos commentaires",
-  thankYouFeedbackModalText:
-    "Nous avons crédité \n10 minutes supplémentaires sur votre compte pour que vous puissiez \ncontinuer à utiliser Jeenie.",
   theCallWillEnd: "L'appel prendra fin dans {{minutes}} minutes",
   undefined: "Non défini",
   unspecified: "Non précisé",
@@ -410,41 +399,62 @@ export default (FR = {
   youWillBeKnown: "Vous serez connu sous le nom de",
   youCanAddTime: "Vous pouvez ajouter du temps pendant un appel",
   youCanChangeThis: "Vous pouvez activer ou désactiver la vidéo pendant un appel",
+
+  appUpdateAlert: {
+    title: "Mise à jour disponible",
+    description: "Vous devez mettre à jour Jeenie pour profiter des nouvelles fonctionnalités."
+  },
+
   //new onboarding
   onboardingView: {
     help: "Puis-je vous aider ?"
   },
 
-  appUpdateAlert: {
-    title: "La mise en jour est disponible",
-    description: "Vous devez mettre à jour l’application Jeenie pour bénéficier des nouveautés."
-  },   
-
   loading: {
     tagline: "Les langues à votre service"
   },
 
-  // generic language often used in navigation or forms
+  status: {
+    available: "Disponible",
+    cancelled: "Annulé",
+    error: "Erreur",
+    unavailable: "Indisponible"
+  },
+
+  // generic language often used in navigation, forms, dialogs, and buttons
   actions: {
-    cancel: "Annuler",
-    remove: "Supprimer",
-    close: "Fermer",
-    save: "Enregistrer",
-    update: "Mettre à jour",
-    submit: "Soumettre",
-    continue: "Continuer",
-    next: "Suivant",
+    accept: "Accepter",
+    agree: "Accepter",
     back: "Retour",
-    prev: "Précédent",
-    reset: "Réinitialiser",
-    clear: "Effacer",
-    ok: "OK",
-    done: "Terminé",
-    finished: "Terminé",
-    select: "Sélectionner",
+    cancel: "Annuler",
     choose: "Choisir",
+    clear: "Effacer",
+    close: "Fermer",
+    confirm: "Confirmer",
+    continue: "Continuer",
+    dismiss: "Rejeter",
+    done: "Terminé",
+    edit: "Modifier",
+    end: "Terminer",
+    exit: "Quitter",
+    finished: "Terminé",
+    ignore: "Ignorer",
+    next: "Suivant",
+    no: "Non",
+    ok: "OK",
+    prev: "Précédent",
+    quit: "Quitter",
+    reject: "Rejeter",
+    remove: "Supprimer",
+    reset: "Réinitialiser",
+    save: "Enregistrer",
+    select: "Sélectionner",
+    send: "Envoyer",
+    start: "Commencer",
     skip: "Ignorer",
-    edit: "Modifier"
+    submit: "Soumettre",
+    update: "Mettre à jour",
+    yes: "Oui"
   },
 
   logic: {
@@ -531,9 +541,8 @@ export default (FR = {
     },
     registrationWelcome: {
       balance: "{{num}} minutes",
-      onboardingTitle: "10 minutes GRATUITES",
-      title: "Les 10 premières minutes vous sont offertes !",
-      description: "Au-delà de ces 10 minutes, le tarif est de 1 $ USD la minute.",
+      title: "Vos {{num}} premières minutes sont gratuites !",
+      description: "Au-delà de ces {{num}} premières minutes, le tarif est de 1 $ USD la minute.",
       buttons: {
         dismiss: "Commencer à utiliser Jeenie",
         payment: "Ajouter des informations de paiement"
@@ -543,7 +552,7 @@ export default (FR = {
       heading: "Vous êtes bientôt prêt !",
       title: "Micro et appareil photo",
       description:
-        "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
+        "Pour vous mettre en contact avec un linguiste, Jeenie doit pouvoir accéder à votre micro et à votre appareil photo.",
       button: "Activer le micro et l'appareil photo",
       back: "Retour"
     }
@@ -570,12 +579,12 @@ export default (FR = {
       video: "Appel vidéo"
     },
     rateNotices: {
-      beforeFirst: "Tarif : 1 $ USD/min. 10 premières minutes GRATUITES.",
+      beforeFirst: "Tarif : 1 $ USD/min. Les {{num}} premières minutes sont GRATUITES.",
       afterFirst: "Tarif : 1 $ USD/min. {{num}} minutes GRATUITES restantes.",
       noBalanceNoCard: "Tarif : 1 $ USD/min. Ajoutez une carte pour continuer",
       noBalanceHasCard: "Tarif : 1 $ US/min.",
       noBalanceHasCardPackage: "Tarif : 1 $ US/min. Achetez un forfait avec 15 % de remise.",
-      hasBalance: "Tarif : 1 $ USD/min. Solde restant : {{num}} mins",
+      hasBalance: "Tarif : 1 $ USD/min. Solde restant : {{num}} min",
       hasBalanceAutoreload: "Tarif : {{num}} min restantes."
     }
   },
@@ -688,7 +697,7 @@ export default (FR = {
     errTemporaryTryAgain: "Une erreur temporaire est survenue. Réessayez dans quelques minutes.",
     errLogin: "Un problème de connexion est survenu",
     errDefaultAuth: "Vos identifiants ont expiré ou sont incorrects.",
-    errNoUser: "Cet adresse e-mail ne correspond à aucun utilisateur",
+    errNoUser: "Cette adresse e-mail ne correspond à aucun utilisateur",
     errNoEmail: "Adresse e-mail introuvable",
     errPasswordIncorrect: "Le mot de passe est incorrect",
     errAuthRequired: "Vous devez vous reconnecter",
@@ -707,7 +716,7 @@ export default (FR = {
   // are often used in more than one place
   fields: {
     email: {
-      label: "E-mail",
+      label: "Adresse e-mail",
       labelConfirm: "Confirmer l'adresse e-mail",
       errInvalid: "Adresse e-mail non valide.",
       errConfirmMatch: "Les adresses e-mail doivent correspondre."
@@ -728,19 +737,14 @@ export default (FR = {
     }
   },
 
-  // seen as a pop up if the user has entered an invalid email address.
-  correctEmailModal: {
-    notice: "L'adresse e-mail que vous avez saisie présente un problème. Merci d'en saisir une autre.",
-    complete: "Votre adresse e-mail a été mise à jour ! Dorénavant, vous devrez vous connecter sur Jeenie avec l'adresse {email}."
-  },
-
+  
   // for use in session-related screens
   session: {
+    errFailedToConnect: "Vous avez perdu la connexion à Jeenie.  Merci de réessayer.",
+    confirmEnd: "Voulez-vous vraiment mettre fin à l'appel ?",
     callTime: "Temps d'appel : {{time}}",
-    callCancel: "Cet appel a été annulé par le client.",
-    callAnswered: "Un autre linguiste a pris cet appel.",
-    callFail: "Le client n'a pas pu se connecter.",
     callFailCustomer: "Un problème est survenu lors de la connexion avec votre Jeenie des langues.",
+    callEndingSoon: "L'appel va bientôt prendre fin.",
     alertGeneralCannotSee:
       "Afin d'optimiser la connexion, le mode vidéo a été désactivé temporairement. La vidéo reprendra quand la connexion sera meilleure.",
     alertLinguistCannotSeeYou:
@@ -753,9 +757,77 @@ export default (FR = {
       "Afin d'optimiser la connexion, le mode vidéo de votre Jeenie des langues a été désactivé temporairement. La vidéo reprendra quand la connexion sera meilleure.",
     createSessionFailed: "Impossible de lancer l'appel pour l'instant. Merci de réessayer.",
 
+    // for incoming call from linguists perspective
+    incoming: {
+      notice: "Appel entrant...",
+      noticeVideo: "Appel vidéo entrant...",
+      noticeAudio: "Appel audio entrant...",
+      assigned: "Un autre linguiste a pris cet appel.",
+      cancelled: "Cet appel a été annulé par le client.",
+      failed: "Le client n'a pas pu se connecter.",
+      unavailable: "L'appel n'est plus possible.",
+      lostConnection: "Vous avez perdu la connexion au serveur.",
+      videoType: "Vidéo",
+      audioType: "Audio uniquement"
+    },
+
+    // alerts to linguists about call being ended
+    ended: {
+      cancel: "Cet appel a été annulé par le client.",
+      disconnectLocal: "Vous avez été déconnecté de l'appel.",
+      disconnectRemote: "Votre client a été déconnecté de l'appel.",
+      balanceExceeded: "Le temps disponible sur votre compte est écoulé.",
+      timeExceeded: "Vous avez dépassé la limite de temps pour cet appel.",
+      failureLocal: "Nous n'avons pas pu vous mettre en contact avec le client.",
+      failureRemote: "Le client n'a pas pu se connecter.",
+      aborted: "L'appel a été interrompu."
+    },
+
+    // seen when connecting to a session
+    connecting: {
+      user: "{{name}} se reconnecte...",
+      self: "Connexion avec {{name}}...",
+      basic: "Connexion..."
+    },
+
+    // seen when a user is in a session, but one side has been disconnected
+    reconnection: {
+      notice: "Vous avez été déconnecté.",
+      noticeUser: "{{name}} a été déconnecté.",
+      attempting: "Tentative de reconnexion...",
+      attemptingUser: "{{name}} essaye de se reconnecter...",
+      waiting: "En attente de connexion...",
+      waitingUser: "En attente de reconnexion de {{name}}...",
+      reconnecting: "Reconnexion...",
+      reconnectingUser: "{{name}} se reconnecte...",
+      ending: "Interruption...",
+      reconnected: "Reconnecté",
+      actions: {
+        reconnect: "Essayer de se reconnecter",
+        wait: "Merci de patienter",
+        tryAnother: "Essayer un autre Jeenie",
+        end: "Mettre fin à l'appel"
+      }
+    },
+
     // seen while matching custoner to linguist
     matching: {
-      description: "Connexion avec un JEENIE DES LANGUES..."
+      description: "Connexion avec un Jeenie des langues dans environ 1 minute",
+      remoteCancel: "Appel annulé par le correspondant"
+    },
+
+    // retry screen seen when no matches are available, or initial connection to session fails
+    retry: {
+      busy: "Tous nos Jeenies des langues sont occupés à aider d'autres clients.",
+      failureLocal: "La connexion avec votre Jeenie est trop faible.",
+      failureRemote: "Votre Jeenie des langues n'a pas pu se connecter.",
+      disconnectLocal: "La connexion avec votre Jeenie était trop faible.",
+      disconnectRemote: "La connexion avec votre Jeenie était trop faible.",
+      cancelRemote: "Votre Jeenie des langues n'a pas pu rejoindre l'appel.",
+      tryAgain: "Merci de patienter, nous allons vous mettre en contact avec un autre Jeenie dès que possible.",
+      retry: "OK",
+      tryLang: "Essayer en {{lang}}",
+      cancel: "Annuler l'appel"
     },
 
     // used when rating a session
@@ -804,7 +876,7 @@ export default (FR = {
     intro: {
       title: "Voyagez en toute confiance",
       description:
-        "Obtenez, en un clic, l'aide linguistique et les conseils culturels de traducteurs humains en direct, 24h/24 et 7j/7.",
+        "Obtenez, en un clic, l'aide linguistique et les conseils culturels de traducteurs humains en direct, 24 h/24 et 7 j/7.",
       button: "Continuer"
     },
     allSet: "Vous êtes prêt !",
@@ -847,6 +919,22 @@ export default (FR = {
     }
   },
 
+  forgotPassword: {
+    title: "Mot de passe oublié ?",
+    description: "Pas d'inquiétude,  nous allons vous envoyer un lien de réinitialisation à l'adresse e-mail ci-dessous.",
+    alertSuccessTitle: "Lien envoyé !",
+    alertSuccessBody: "Vous allez recevoir un e-mail contenant le lien de réinitialisation de mot de passe."
+  },
+
+  correctEmailModal: {
+    title: "Échec d'envoi de l'e-mail",
+    description: "Nous n'avons pas pu vérifier l'adresse e-mail que vous avez saisie.  Saisissez une adresse e-mail valide.",
+    label: "Nouvelle adresse e-mail",
+    titleSuccess: "Opération effectuée",
+    descriptionSuccess: "Votre adresse e-mail a été mise à jour ! Vous pouvez vous connecter à Jeenie avec votre nouvelle adresse e-mail \"{email}\"",
+    descriptionTaken: "L'adresse e-mail \"{email}\" est déjà enregistrée.  Vous pouvez vous connecter avec cette adresse e-mail ou en renseigner une nouvelle."
+  },
+
   newCustomerOnboarding: {
     getStarted: "Commencer",
     haveAccount: "Vous avez déjà un compte ?",
@@ -855,7 +943,7 @@ export default (FR = {
     createAccount: "Créer un compte",
     intro: {
       title: "Aide en temps réel",
-      description: "Obtenez, en un clic, l'aide linguistique de traducteurs humains en direct, 24h/24 et 7j/7.  Tarif : 1 $ USD/min. Les 10 premières minutes sont GRATUITES.",
+      description: "Obtenez, en un clic, l'aide linguistique de traducteurs humains en direct, 24 h/24 et 7 j/7.  Tarif : 1 $ USD/min. Les {{num}} premières minutes sont GRATUITES.",
       button: "Commencer"
     },
     location: {

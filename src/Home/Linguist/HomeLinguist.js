@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InCallManager from "react-native-incall-manager";
+import Permissions from "react-native-permissions";
 import {
   changeStatus,
   updateSettings,
@@ -17,29 +18,21 @@ import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
 
 import { View, Text, ScrollView, Alert, AppState, NetInfo } from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
-import timer from "react-native-timer";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import HeaderView from "../../Components/HeaderView/HeaderView";
 import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
-import {
-  clear,
-  update as updateActiveSession
-} from "../../Ducks/ActiveSessionReducer";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
-import {
-  asyncGetInvitationDetail,
-  clearSettings
-} from "../../Ducks/CallLinguistSettings";
 
 import moment from "moment";
 
 import styles from "./styles";
 import { Images } from "../../Themes";
 import I18n from "../../I18n/I18n";
-import { checkForAllPermissions } from "../../Util/Permission";
 import { Sessions } from "../../Api";
+import { ensurePermissions } from "../../Util/Permission";
+import { PERMISSIONS } from "../../Util/Constants";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -48,16 +41,6 @@ class Home extends Component {
     appState: AppState.currentState
   };
 
-  componentWillMount() {
-    this.props.updateSettings({ loading: false });
-    timer.clearInterval("timer");
-    timer.clearInterval("counterId");
-    this.props.clear();
-    this.props.asyncGetAccountInformation();
-    AppState.addEventListener("change", this._handleAppStateChange);
-    NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
-    InCallManager.stop();
-  }
 
   monitorConnectivity = connectionInfo => {
     if (connectionInfo.type !== "none") {
@@ -71,9 +54,7 @@ class Home extends Component {
       this.props.token
     );
     if (invitations.data.length > 0) {
-      const filteredCalls = await invitations.data.filter(
-        call => !call.responded
-      );
+      const filteredCalls = await invitations.data.filter(call => !call.responded && !call.viewed);
       try {
         if (filteredCalls.length > 0) {
           const session = await Sessions.GetSessionInfoLinguist(
@@ -96,31 +77,49 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.props.updateSettings({ loading: false });
+    this.props.asyncGetAccountInformation();
+    AppState.addEventListener("change", this._handleAppStateChange);
+    NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
+    InCallManager.stop();
+
+    // ensure linguist permissions are set
+    ensurePermissions([PERMISSIONS.CAMERA, PERMISSIONS.MIC]).then((response) => {
+      if (
+        response[PERMISSIONS.CAMERA] !== 'authorized'
+        || response[PERMISSIONS.MIC] !== 'authorized'
+      ) {
+        Alert.alert(
+          I18n.t('notification'),
+          I18n.t('acceptAllPermissionsLinguist'),
+          [{text: I18n.t('actions.ok')}]
+        );
+      }
+    })
+
+    
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertCancelled
     ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callCancel"));
+      Alert.alert(I18n.t("notification"), I18n.t("session.incoming.cancelled"));
     }
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertAssigned
     ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callAnswered"));
+      Alert.alert(I18n.t("notification"), I18n.t("session.incoming.assigned"));
     }
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertFail
     ) {
-      Alert.alert(I18n.t("notification"), I18n.t("session.callFail"));
+      Alert.alert(I18n.t("notification"), I18n.t("session.incoming.failed"));
     }
 
     this.props.getCurrentAvailability();
     this.getCurrentUnansweredCalls();
 
-    checkForAllPermissions(valueToUpdate => {
-      this.props.updateActiveSession(valueToUpdate);
-    });
   }
 
   uploadAvatar(avatar) {
@@ -279,10 +278,6 @@ const mS = state => ({
   avatarURL: state.userProfile.avatarURL,
   linguistProfile: state.userProfile.linguistProfile,
   rate: state.userProfile.averageStarRating,
-  tokbox: state.tokbox.tokboxID,
-  invitationID: state.callLinguistSettings.invitationID,
-  timer: state.activeSessionReducer.timer,
-  counterId: state.activeSessionReducer.counterId,
   networkInfoType: state.networkInfo.type,
   nav: state.nav
 });
@@ -293,10 +288,7 @@ const mD = {
   updateView,
   getProfileAsync,
   changeStatus,
-  asyncGetInvitationDetail,
   asyncGetAccountInformation,
-  clear,
-  updateActiveSession,
   getCurrentAvailability,
   incomingCallNotification
 };

@@ -4,11 +4,7 @@ import throttle from "lodash/throttle";
 import { saveState, loadState } from "./LocalStorage";
 import rootReducer from "../Ducks";
 
-import { SETTINGS } from "../Util/Constants";
-
 const middleware = [thunk];
-
-const store = null;
 
 const getComposeEnhancers = () => {
   if (window.__REDUX_DEVTOOLS_EXTENSION__) {
@@ -26,29 +22,34 @@ const getStore = () =>
   loadState().then(persistedStore => {
     const initialState = persistedStore || {};
 
-    let store = createStore(rootReducer, initialState, getComposeEnhancers());
+    let store = null;
+
+    // it's possible for an error to be thrown because the store includes
+    // old keys that are no longer needed.
+    try {
+      store = createStore(rootReducer, initialState, getComposeEnhancers());
+    } catch (e) {
+      console.log(e);
+    }
 
     // Persisting the store on the asyncStorage
     store.subscribe(
       throttle(() => {
-        const settings = store.getState().userProfile.linguistProfile
-          ? SETTINGS.LINGUIST
-          : SETTINGS.CUSTOMER;
+        const state = store.getState();
         saveState({
-          auth: store.getState().auth,
-          userProfile: store.getState().userProfile,
-          tokbox: store.getState().tokbox,
-          [settings]: store.getState()[settings],
-          settings: store.getState().settings,
-          profileLinguist: store.getState().profileLinguist,
-          pushNotification: store.getState().pushNotification,
-          onboardingRecord: store.getState().onboardingRecord,
-          homeFlow: store.getState().homeFlow,
-          appConfigReducer: store.getState().appConfigReducer,
+          settings: state.settings,
+          auth: state.auth,
+          userProfile: state.userProfile,
+          tokbox: state.tokbox,
+          profileLinguist: state.profileLinguist,
+          pushNotification: state.pushNotification,
+          onboardingRecord: state.onboardingRecord,
+          homeFlow: state.homeFlow,
+          appConfigReducer: state.appConfigReducer,
           onboardingReducer: {
-            completedLocation: store.getState().onboardingReducer.completedLocation,
-            completedNotification: store.getState().onboardingReducer.completedNotification,
-            completedMicAndCamera: store.getState().onboardingReducer.completedMicAndCamera
+            completedLocation: state.onboardingReducer.completedLocation,
+            completedNotification: state.onboardingReducer.completedNotification,
+            completedMicAndCamera: state.onboardingReducer.completedMicAndCamera
           },
         }).then(() => {
           // console.log("STATE PERSISTED")

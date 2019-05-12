@@ -18,16 +18,10 @@ import branch, { BranchEvent } from "react-native-branch";
 import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
-import {
-  init,
-  setAuthToken,
-  recordAppStateEvent,
-  persistEvents,
-  recordNetworkEvent
-} from "./Util/Forensics";
-import { setAuthToken as setApiAuthToken } from "./Config/AxiosConfig";
+import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
+import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 
 class App extends Component {
   constructor(props) {

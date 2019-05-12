@@ -48,9 +48,6 @@
   callWillEnd: "超时后通过将自动结束",
   cancel: "取消",
   cancelCall: "取消通话",
-  celebrateAndEnjoy: "庆祝翻译精灵发布，\n现可免费使用\n 10 分钟！",
-  celebrateAndEnjoyAlternative:
-    "庆祝翻译精灵发布，\n现可免费\n使用 10 分钟。",
   celebrateWithUs: "与我们一同庆祝翻译精灵的发布！",
   changeSettings: "如需更改您的设置，请转至“设置” > “翻译精灵”",
   cancelCallCustomer: "无法呼叫",
@@ -220,9 +217,6 @@
     "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
     "目前，翻译精灵支持\n中文（普通话）<>英语\n和日语<>英语。\n\n即将推出其他语言。",
-  lauchScreenSwipe4: "平均通话时长为 5 到 10 分钟，但您可以想说多久就说多久。",
-  lauchScreenSwipe5:
-    "为了庆祝翻译精灵的发布，前 10 分钟免费使用……翻译精灵的真情回馈！",
   lastname: "姓氏",
   lastnameFormatValidation: "姓氏只能由字母组成。",
   legal: "法律资讯",
@@ -273,7 +267,7 @@
   occasionally: "偶尔",
   offline: "离线",
   ok: "确定",
-  online: "上线",
+  online: "在线",
   operatingHoursAlertTitle: "请注意我们的服务时间",
   operatingHoursAlertMessage:
     "中文：\n- 东部时间 (EDT) 上午 10 点 - 晚上 7点\n\n日语：\n- 东部时间 (EDT) 晚上 7 点 - 上午 7点\n-日本标准时间上午 8 点 - 晚上 8 点",
@@ -303,8 +297,6 @@
   progressiveImageComponent: "渐进图像组件",
   provideFeedback: "反馈意见",
   provideFeedbackModalTitle: "需要更多翻译精灵使用时间?",
-  provideFeedbackModalText:
-    "只要告知我们您的翻译精灵\n使用体验，\n我们将额外赠送您\n 10 分钟的免费时间。",
   provideFeedbackViewPlaceholder: "在此处填写反馈",
   provideFeedbackViewTitle: "我们尚可改善翻译精灵使用体验的地方：",
   qr: "二维码",
@@ -346,7 +338,6 @@
   speaker: "母语人士",
   specifyGender: "拒绝指定",
   sport: "运动",
-  status: "您是",
   submitFeedbackForMoreTime: "提交反馈，获取更多时间",
   submitFeedback: "提交反馈",
   tapRepeat: "点击重复",
@@ -377,8 +368,6 @@
   troubleshoot: "疑难解答",
   thankYou: " 谢谢",
   thankYouFeedback: " 感谢您的反馈",
-  thankYouFeedbackModalText:
-    "我们已额外为您添加\n 10 分钟时间，您可以\n继续使用翻译精灵。",
   theCallWillEnd: "通话将于 {{minutes}} 分钟后结束",
   undefined: "未定义",
   unspecified: "尚指定",
@@ -412,10 +401,10 @@
   youCanChangeThis: "您可以在通话过程中打开/关闭视频",
 
   appUpdateAlert: {
-    title: "更新可用",
-    description: "您需要更新Jeenie来享受新增的功。"
+    title: "可更新",
+    description: "更新翻译精灵以使用最新推出的功能。"
   },
-   
+
   //new onboarding
   onboardingView: {
     help: "有什么能够帮您的吗？"
@@ -425,27 +414,47 @@
     tagline: "您要求的语言"
   },
 
-  // generic language often used in navigation or forms
+  status: {
+    available: "空闲",
+    cancelled: "已取消",
+    error: "错误",
+    unavailable: "通话中"
+  },
+
+  // generic language often used in navigation, forms, dialogs, and buttons
   actions: {
-    cancel: "取消",
-    remove: "移除",
-    close: "关闭",
-    save: "保存",
-    update: "更新",
-    submit: "提交",
-    continue: "继续",
-    next: "下一步",
+    accept: "接受",
+    agree: "同意",
     back: "返回",
-    prev: "上一步",
-    reset: "重置",
-    clear: "清除",
-    ok: "确定",
-    done: "完成",
-    finished: "结束",
-    select: "选择",
+    cancel: "取消",
     choose: "选择",
+    clear: "清除",
+    close: "关闭",
+    confirm: "确认",
+    continue: "继续",
+    dismiss: "关闭",
+    done: "完成",
+    edit: "编辑",
+    end: "结束",
+    exit: "退出",
+    finished: "结束",
+    ignore: "忽略",
+    next: "下一步",
+    no: "没有",
+    ok: "确定",
+    prev: "上一步",
+    quit: "离开",
+    reject: "拒绝",
+    remove: "移除",
+    reset: "重置",
+    save: "保存",
+    select: "选择",
+    send: "发送",
+    start: "开始",
     skip: "跳过",
-    edit: "编辑"
+    submit: "提交",
+    update: "更新",
+    yes: "是"
   },
 
   logic: {
@@ -532,7 +541,6 @@
     },
     registrationWelcome: {
       balance: "{{num}} 分钟",
-      onboardingTitle: "免费 10 分钟",
       title: "前 {{num}} 分钟免费！",
       description: "{{num}} 分钟后，每分钟收费 1 美元。",
       buttons: {
@@ -544,7 +552,7 @@
       heading: "即将完成！",
       title: "麦克风和相机",
       description:
-        "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
+        "与语言专家建立连接时，翻译精灵需获取您麦克风和相机的使用权限。",
       button: "启用麦克风和相机",
       back: "返回"
     }
@@ -708,8 +716,8 @@
   // are often used in more than one place
   fields: {
     email: {
-      label: "电子邮件",
-      labelConfirm: "确认电子邮件",
+      label: "电子邮件地址",
+      labelConfirm: "确认电子邮件地址",
       errInvalid: "无效的电子邮件地址。",
       errConfirmMatch: "电子邮件必须匹配。"
     },
@@ -729,19 +737,14 @@
     }
   },
 
-  // seen as a pop up if the user has entered an invalid email address.
-  correctEmailModal: {
-    notice: "您输入的电子邮件出错，请重新输入。",
-    complete: "您的电子邮件已更新！今后您需使用 {email} 登录翻译精灵。"
-  },
-
+  
   // for use in session-related screens
   session: {
+    errFailedToConnect: "翻译精灵掉线了。  请重试。",
+    confirmEnd: "确认结束通话？",
     callTime: "通话时间：{{time}}",
-    callCancel: "客户已取消来电",
-    callAnswered: "另外一位语言专家已接听此来电",
-    callFail: "无法建立与客户的连接。",
     callFailCustomer: "与您的语言翻译精灵连接时出错。",
+    callEndingSoon: "本次通话即将结束。",
     alertGeneralCannotSee:
       "为优化连接，已暂时禁用视频功能。连接改善后即可恢复视频使用。",
     alertLinguistCannotSeeYou:
@@ -754,9 +757,77 @@
       "为优化连接，已暂时禁用语言翻译精灵的视频功能。连接改善后即可恢复视频使用。",
     createSessionFailed: "暂时无法拨打电话。请重试。",
 
+    // for incoming call from linguists perspective
+    incoming: {
+      notice: "来电...",
+      noticeVideo: "视频通话来电...",
+      noticeAudio: "音频通话来电...",
+      assigned: "另外一位语言专家已接听此来电",
+      cancelled: "客户已取消来电。",
+      failed: "无法建立与客户的连接。",
+      unavailable: "该通话已失效。",
+      lostConnection: "与服务器失去连接。",
+      videoType: "视频",
+      audioType: "仅音频"
+    },
+
+    // alerts to linguists about call being ended
+    ended: {
+      cancel: "客户已取消来电。",
+      disconnectLocal: "您已断开通话连接。",
+      disconnectRemote: "您的客户已断开通话连接。",
+      balanceExceeded: "您的帐户时间已用完。",
+      timeExceeded: "通话超出时间限制。",
+      failureLocal: "无法与客户建立连接。",
+      failureRemote: "无法建立与客户的连接。",
+      aborted: "通话已结束。"
+    },
+
+    // seen when connecting to a session
+    connecting: {
+      user: "{{name}} 正在连接...",
+      self: "正在连接至 {{name}}...",
+      basic: "正在连接..."
+    },
+
+    // seen when a user is in a session, but one side has been disconnected
+    reconnection: {
+      notice: "您已断开连接。",
+      noticeUser: "{{name}} 已断开连接。",
+      attempting: "正在尝试重新连接...",
+      attemptingUser: "{{name}} 正在尝试重新连接...",
+      waiting: "正在等待连接...",
+      waitingUser: "正在等待 {{name}} 重新连接...",
+      reconnecting: "正在重新连接...",
+      reconnectingUser: "{{name}} 正在重新连接...",
+      ending: "正在结束...",
+      reconnected: "已重新连接",
+      actions: {
+        reconnect: "尝试重新连接",
+        wait: "继续等待",
+        tryAnother: "尝试其他翻译精灵",
+        end: "结束通话"
+      }
+    },
+
     // seen while matching custoner to linguist
     matching: {
-      description: "正在为您连线语言翻译精灵..."
+      description: "约 1 分钟内可为您接通语言翻译精灵",
+      remoteCancel: "对方已取消通话"
+    },
+
+    // retry screen seen when no matches are available, or initial connection to session fails
+    retry: {
+      busy: "当前我们的所有语言翻译精灵正忙。",
+      failureLocal: "与翻译精灵连接不稳定。",
+      failureRemote: "无法连接您的语言翻译精灵。",
+      disconnectLocal: "与翻译精灵连接不稳定。",
+      disconnectRemote: "与翻译精灵连接不稳定。",
+      cancelRemote: "您的语言翻译精灵无法加入通话。",
+      tryAgain: "请稍后，我们正在为您连接另一位翻译精灵。",
+      retry: "确定",
+      tryLang: "试试{{lang}}",
+      cancel: "取消通话"
     },
 
     // used when rating a session
@@ -848,6 +919,22 @@
     }
   },
 
+  forgotPassword: {
+    title: "忘记密码？",
+    description: "不用担心。  我们将向以下电子邮件地址发送密码重置链接。",
+    alertSuccessTitle: "重置链接已发送！",
+    alertSuccessBody: "您将很快收到包含密码重置链接的邮件。"
+  },
+
+  correctEmailModal: {
+    title: "发送邮件失败",
+    description: "我们无法验证您所输入的电子邮件地址。  请输入有效的电子邮件地址。",
+    label: "新电子邮件地址",
+    titleSuccess: "成功",
+    descriptionSuccess: "您的电子邮件已更新！您可使用新的电子邮件 \"{email}\" 登录翻译精灵",
+    descriptionTaken: "电子邮件地址 \"{email}\" 已被注册。  您可使用该电子邮件登录，或重新输入新的电子邮件地址。"
+  },
+
   newCustomerOnboarding: {
     getStarted: "开始使用",
     haveAccount: "已有帐号？",
@@ -856,7 +943,7 @@
     createAccount: "创建帐户",
     intro: {
       title: "实时帮助",
-      description: "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助。  费率：每分钟 1 美元，前 10 分钟免费。",
+      description: "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助。  费率：每分钟 1 美元，前 {{num}} 分钟免费。",
       button: "开始使用"
     },
     location: {

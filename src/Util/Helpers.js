@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import I18n from "../I18n/I18n";
 import moment from "moment";
-import { EMAIL_REGEX, INVALID_NAME_REGEX } from "./Constants";
+import { EMAIL_REGEX, INVALID_NAME_REGEX, DURATION } from "./Constants";
 /**
  * @description Seconds to minutes and seconds String
  *
@@ -27,14 +27,14 @@ export const getGeolocationObject = () => navigator.geolocation;
  *
  * @returns {Promise.<coordsObject>} Geolocation coords object
  */
-export const getGeolocationCoords = () =>
+export const getGeolocationCoords = () => {
   // Turning Callback call into a Promise
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         resolve(position);
       },
-      error => {
+      (error) => {
         reject(error);
       },
       {
@@ -42,13 +42,14 @@ export const getGeolocationCoords = () =>
         enableHighAccuracy: true,
 
         // How long does the API have to return the position before throwing an error?
-        timeout: 2000000,
+        timeout: 3 * DURATION.SECONDS,
 
         // If a location exists in the device cache, how old can it be before it’s no longer valuable to your app?
-        maximumAge: 3600000
+        maximumAge: 1 * DURATION.MINUTES
       }
     );
   });
+}
 
 /**
  * @description Generate valid UUID from deviceId info (only for android)

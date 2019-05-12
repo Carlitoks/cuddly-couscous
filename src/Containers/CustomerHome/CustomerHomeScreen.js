@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Alert, ScrollView, View } from "react-native";
-import timer from "react-native-timer";
 import InCallManager from "react-native-incall-manager";
 import { connect } from "react-redux";
 import analytics from "@segment/analytics-react-native";
@@ -18,7 +17,6 @@ import { openSlideMenu } from "../../Ducks/LogicReducer";
 import { getProfileAsync } from "../../Ducks/UserProfileReducer";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
-import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import I18n from "../../I18n/I18n";
 import { supportedLangCodes } from "../../Config/Languages";
@@ -34,7 +32,6 @@ class CustomerHomeScreen extends Component {
       ensureSessionDefaults,
       secondaryLangCode,
       clearEvents,
-      clearActiveSession,
       navigation,
       firstName,
       completedLocation
@@ -49,11 +46,7 @@ class CustomerHomeScreen extends Component {
       secondaryLangCode: secondaryLangCode || ""
     });
 
-    // Clean call
-    timer.clearInterval("timer");
-    timer.clearInterval("counterId");
     clearEvents();
-    clearActiveSession();
     InCallManager.stop();
     if (navigation.state.params && navigation.state.params.alertFail) {
       Alert.alert(I18n.t("notification"), I18n.t("session.callFailCustomer"));
@@ -151,7 +144,6 @@ const mD = {
   updateLocation,
   ensureSessionDefaults,
   clearEvents,
-  clearActiveSession,
   getProfileAsync,
   loadSessionScenarios,
   guessSecondaryLangCode

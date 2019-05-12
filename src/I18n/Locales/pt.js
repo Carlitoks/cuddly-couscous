@@ -48,9 +48,6 @@ export default (PT = {
   callWillEnd: "A chamada terminará quando o tempo expirar",
   cancel: "Cancelar",
   cancelCall: "Cancelar chamada",
-  celebrateAndEnjoy: "Comemore nosso lançamento \n e aproveite GRATUITAMENTE o Jeenie por \n 10 minutos!",
-  celebrateAndEnjoyAlternative:
-    "Comemore nosso lançamento e \naprecie GRATUITAMENTE o Jeenie por 10 minutos \n!",
   celebrateWithUs: "Comemore nosso lançamento conosco!",
   changeSettings: "Para alterar suas configurações, acesse Configurações > Jeenie",
   cancelCallCustomer: "A chamada não está disponível",
@@ -107,7 +104,7 @@ export default (PT = {
   emailFormatValidation: "O e-mail deve ser um endereço de e-mail válido.",
   emptyEmail: "Limpar e-mail",
   emptyPassword: "Limpar senha",
-  endCall: "Finalizar chamada",
+  endCall: "Encerrar chamada",
   english: "Inglês",
   enterCustomScenario: "Com o que você precisa de ajuda?",
   enterEmailField: "Insira seu e-mail",
@@ -220,10 +217,7 @@ export default (PT = {
     "Seja onde estiver, acesse ao vivo e em tempo real falantes humanos de idiomas.",
   lauchScreenSwipe3:
     "Atualmente, o Jeenie oferece suporte linguístico em \n mandarim <> inglês \n e japonês <> inglês.\n\n Em breve, mais idiomas estarão disponíveis.",
-  lauchScreenSwipe4: "A média de chamada é de 5 a 10 minutos, mas você pode falar o quanto quiser.",
-  lauchScreenSwipe5:
-    "Para comemorar nosso lançamento, seus primeiros 10 minutos são GRATUITOS… cortesia do Jeenie!",
-  lastname: "Primeiro nome",
+  lastname: "Sobrenome",
   lastnameFormatValidation: "O sobrenome deve conter apenas letras.",
   legal: "Jurídico",
   letsGoToKwon: "Queremos conhecer você",
@@ -232,7 +226,7 @@ export default (PT = {
   linguistEmailSubtitle: "Um e-mail de confirmação será enviado",
   linguistEmailTitle: "Crie sua conta",
   linguistLastName: "Primeiro nome",
-  linguistName: "Sobrenome",
+  linguistName: "Nome",
   linguistNumber: "Insira o número de telefone",
   linguistNumberText: "Enviaremos um código para verificação de seu telefone.",
   linguistPassword: "Senha",
@@ -303,8 +297,6 @@ export default (PT = {
   progressiveImageComponent: "Componente de imagem progressiva",
   provideFeedback: "Dar feedback",
   provideFeedbackModalTitle: "Precisa de mais tempo com o Jeenie?",
-  provideFeedbackModalText:
-    "Dê feedback sobre sua \nexperiência de uso do Jeenie e \nreceba \n10 minutos adicionais de GRAÇA!",
   provideFeedbackViewPlaceholder: "Coloque seu feedback aqui",
   provideFeedbackViewTitle: "Diga como podemos aprimorar a experiência Jeenie:",
   qr: "Código QR",
@@ -346,7 +338,6 @@ export default (PT = {
   speaker: "Falante",
   specifyGender: "Rejeitar para especificar",
   sport: "Esportes",
-  status: "Você é",
   submitFeedbackForMoreTime: "Enviar feedback por mais tempo",
   submitFeedback: "Enviar feedback",
   tapRepeat: "Toque para repetir",
@@ -377,8 +368,6 @@ export default (PT = {
   troubleshoot: "Solução de problemas",
   thankYou: " Obrigado",
   thankYouFeedback: " Obrigado por seu feedback",
-  thankYouFeedbackModalText:
-    "Acrescentamos \n10 minutos adicionais para você \ncontinuar usando o Jeenie.",
   theCallWillEnd: "Sua chamada terminará após {{minutes}} minutos",
   undefined: "Indefinido",
   unspecified: "Não especificado",
@@ -412,10 +401,10 @@ export default (PT = {
   youCanChangeThis: "Você pode ligar ou desligar o vídeo durante a chamada",
 
   appUpdateAlert: {
-    title: "Atualização Disponível",
-    description: "Você deve atualizar Jeenie para aproveitar seus novos recursos."
+    title: "Atualização disponível",
+    description: "Você deve atualizar o Jeenie para poder aproveitar os novos recursos."
   },
-  
+
   //new onboarding
   onboardingView: {
     help: "Posso ajudar?"
@@ -425,27 +414,47 @@ export default (PT = {
     tagline: "Idiomas ao seu dispor"
   },
 
-  // generic language often used in navigation or forms
+  status: {
+    available: "Disponível",
+    cancelled: "Cancelado",
+    error: "Erro",
+    unavailable: "Indisponível"
+  },
+
+  // generic language often used in navigation, forms, dialogs, and buttons
   actions: {
-    cancel: "Cancelar",
-    remove: "Remover",
-    close: "Fechar",
-    save: "Salvar",
-    update: "Atualizar",
-    submit: "Enviar",
-    continue: "Continuar",
-    next: "Próximo",
+    accept: "Aceitar",
+    agree: "Concordo",
     back: "Voltar",
-    prev: "Anterior",
-    reset: "Redefinir",
-    clear: "Limpar",
-    ok: "OK",
-    done: "Concluído",
-    finished: "Terminado",
-    select: "Selecionar",
+    cancel: "Cancelar",
     choose: "Escolher",
+    clear: "Limpar",
+    close: "Fechar",
+    confirm: "Confirmar",
+    continue: "Continuar",
+    dismiss: "Dispensar",
+    done: "Concluído",
+    edit: "Editar",
+    end: "Finalizar",
+    exit: "Sair",
+    finished: "Concluído",
+    ignore: "Ignorar",
+    next: "Próximo",
+    no: "Não",
+    ok: "OK",
+    prev: "Anterior",
+    quit: "Sair",
+    reject: "Rejeitar",
+    remove: "Remover",
+    reset: "Redefinir",
+    save: "Salvar",
+    select: "Selecionar",
+    send: "Enviar",
+    start: "Iniciar",
     skip: "Pular",
-    edit: "Editar"
+    submit: "Enviar",
+    update: "Atualizar",
+    yes: "Sim"
   },
 
   logic: {
@@ -532,9 +541,8 @@ export default (PT = {
     },
     registrationWelcome: {
       balance: "{{num}} minutos",
-      onboardingTitle: "10 minutos GRATUITOS",
       title: "Seus primeiros {{num}} minutos são gratuitos!",
-      description: "Após seus primeiros {{num}} minutos, o preço será US$ 1 por minuto.",
+      description: "Após seus primeiros {{num}} minutos, o preço será de US$ 1 por minuto.",
       buttons: {
         dismiss: "Comece a usar o Jeenie",
         payment: "Adicione informações de pagamento agora"
@@ -544,7 +552,7 @@ export default (PT = {
       heading: "Quase pronto!",
       title: "Microfone e câmera",
       description:
-        "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
+        "Para conectar você a um linguista, o Jeenie precisa acessar seu microfone e sua câmera.",
       button: "Habilitar microfone e câmera",
       back: "Voltar"
     }
@@ -628,8 +636,8 @@ export default (PT = {
     en: "Inglês",
     spa: "Espanhol",
     jpn: "Japonês",
-    cmn: "Chinês (Mandarim)",
-    yue: "Chinês (Cantonês)"
+    cmn: "Chinês (mandarim)",
+    yue: "Chinês (cantonês)"
   },
   // triggered on customer home screen to show account balance and
   // pricing explanation
@@ -691,7 +699,7 @@ export default (PT = {
     errDefaultAuth: "Suas credenciais expiraram ou são inválidas.",
     errNoUser: "Nenhum usuário foi encontrado que corresponda a esse endereço de e-mail",
     errNoEmail: "E-mail não encontrado",
-    errPasswordIncorrect: "A senha está incorreta",
+    errPasswordIncorrect: "A senha é incorreta",
     errAuthRequired: "Você deverá fazer login novamente",
     errEmailInUse: "Já foi criada uma conta com esse endereço de e-mail",
     errEventInvalid: "A validação deste código falhou.",
@@ -708,8 +716,8 @@ export default (PT = {
   // are often used in more than one place
   fields: {
     email: {
-      label: "E-mail",
-      labelConfirm: "Confirmar e-mail",
+      label: "Endereço de e-mail",
+      labelConfirm: "Confirmar endereço de e-mail",
       errInvalid: "Não é um  endereço de e-mail válido.",
       errConfirmMatch: "Os e-mails devem ser iguais"
     },
@@ -729,19 +737,14 @@ export default (PT = {
     }
   },
 
-  // seen as a pop up if the user has entered an invalid email address.
-  correctEmailModal: {
-    notice: "Ocorreu um erro com o e-mail informado. Insira outro.",
-    complete: "Seu e-mail foi atualizado! Você deve usar {email} para iniciar a sessão no Jeenie a partir de agora."
-  },
-
+  
   // for use in session-related screens
   session: {
+    errFailedToConnect: "Perdeu a conexão com o Jennie.  Tente novamente.",
+    confirmEnd: "Você tem certeza de que deseja finalizar a chamada?",
     callTime: "Tempo da chamada: {{time}}",
-    callCancel: "Esta chamada foi cancelada pelo cliente",
-    callAnswered: "Esta chamada foi aceita por outro linguista.",
-    callFail: "O cliente não conseguir conectar.",
     callFailCustomer: "Houve um problema ao conectar-se com seu Language Jeenie.",
+    callEndingSoon: "Esta chamada irá terminar em breve.",
     alertGeneralCannotSee:
       "Para otimizar a conectividade, o vídeo foi temporariamente desabilitado. O vídeo será retomado quando a conectividade melhorar.",
     alertLinguistCannotSeeYou:
@@ -754,9 +757,77 @@ export default (PT = {
       "Para otimizar a conectividade, o vídeo de seu Language Jeenie foi temporariamente desabilitado. O vídeo será retomado quando a conectividade melhorar.",
     createSessionFailed: "Temporariamente impossibilitado de iniciar uma chamada. Tente novamente.",
 
+    // for incoming call from linguists perspective
+    incoming: {
+      notice: "Chamada recebida...",
+      noticeVideo: "Chamada de vídeo recebida...",
+      noticeAudio: "Chamada de áudio recebida...",
+      assigned: "A chamada foi aceita por outro linguista",
+      cancelled: "A chamada foi cancelada pelo cliente.",
+      failed: "O cliente não conseguir conectar.",
+      unavailable: "A chamada não está mais disponível.",
+      lostConnection: "Conexão perdida com o servidor.",
+      videoType: "Vídeo",
+      audioType: "Somente áudio"
+    },
+
+    // alerts to linguists about call being ended
+    ended: {
+      cancel: "A chamada foi cancelada pelo cliente.",
+      disconnectLocal: "Você foi desconectado da chamada.",
+      disconnectRemote: "Seu cliente foi desconectado da chamada.",
+      balanceExceeded: "O prazo de sua conta chegou ao fim.",
+      timeExceeded: "Chamada excedeu o limite de tempo.",
+      failureLocal: "Não conseguimos conectar você ao cliente.",
+      failureRemote: "O cliente não conseguir conectar.",
+      aborted: "A chamada foi encerrada."
+    },
+
+    // seen when connecting to a session
+    connecting: {
+      user: "{{name}} está conectando...",
+      self: "Conectando a {{name}}...",
+      basic: "Conectando..."
+    },
+
+    // seen when a user is in a session, but one side has been disconnected
+    reconnection: {
+      notice: "Você foi desconectado.",
+      noticeUser: "{{name}} foi desconectado.",
+      attempting: "Tentando reconectar...",
+      attemptingUser: "{{name}} está tentando reconectar...",
+      waiting: "Aguardando conexão...",
+      waitingUser: "Aguardando {{name}} se reconectar...",
+      reconnecting: "Reconectando...",
+      reconnectingUser: "{{name}} está reconectando...",
+      ending: "Encerrando...",
+      reconnected: "Reconectado",
+      actions: {
+        reconnect: "Tente reconectar",
+        wait: "Continue aguardando",
+        tryAnother: "Tente outro Jeenie",
+        end: "Encerrar chamada"
+      }
+    },
+
     // seen while matching custoner to linguist
     matching: {
-      description: "Conectando-o a um LANGUAGE JEENIE..."
+      description: "Conectando você a um Language Jeenie em aproximadamente 1 minuto",
+      remoteCancel: "Chamada encerrada por interessado à distância"
+    },
+
+    // retry screen seen when no matches are available, or initial connection to session fails
+    retry: {
+      busy: "Todos os nossos Language Jeenies estão ocupados atendendo outros clientes.",
+      failureLocal: "A conexão com seu Jeenie é muito fraca.",
+      failureRemote: "Seu Language Jeenie não pôde se conectar.",
+      disconnectLocal: "A conexão com seu Jeenie estava muito fraca.",
+      disconnectRemote: "A conexão com seu Jeenie estava muito fraca.",
+      cancelRemote: "Seu Language Jeenie não pôde participar da chamada.",
+      tryAgain: "Aguarde enquanto conectamos você a outro Jeenie o mais rápido possível.",
+      retry: "OK",
+      tryLang: "Tente {{lang}}",
+      cancel: "Cancelar chamada"
     },
 
     // used when rating a session
@@ -797,7 +868,7 @@ export default (PT = {
 
   // DEPRECATED: this block will be removed - any strings here currently in use should be refactored or removed
   customerOnboarding: {
-    welcome: "Bem vindo ao Jeenie",
+    welcome: "Bem-vindo ao Jeenie",
     connectToLinguist: "Conectar agora",
     tenFreeMinutes: "{{time}} Minutos GRATUITOS",
     canIHelpYou: "Posso ajudar?",
@@ -848,6 +919,22 @@ export default (PT = {
     }
   },
 
+  forgotPassword: {
+    title: "Esqueceu sua senha?",
+    description: "Sem problemas.  Iremos lhe enviar um link para redefinir sua senha no endereço de e-mail abaixo.",
+    alertSuccessTitle: "Link de redefinição enviado!",
+    alertSuccessBody: "Você irá receber em breve um e-mail com o link de redefinição de senha."
+  },
+
+  correctEmailModal: {
+    title: "Falha de e-mail",
+    description: "Não conseguimos verificar o endereço de e-mail fornecido.  Insira um endereço de e-mail válido.",
+    label: "Novo endereço de e-mail",
+    titleSuccess: "Sucesso",
+    descriptionSuccess: "Seu e-mail foi atualizado! Você pode iniciar sessão no Jeenie com o novo e-mail \"{email}\"",
+    descriptionTaken: "O novo endereço de e-mail \"{email}\" já está registrado.  Você pode fazer login com esse endereço de e-mail ou especificar um novo endereço de e-mail."
+  },
+
   newCustomerOnboarding: {
     getStarted: "Como começar",
     haveAccount: "Já tem uma conta?",
@@ -856,7 +943,7 @@ export default (PT = {
     createAccount: "Criar conta",
     intro: {
       title: "Ajuda em tempo real",
-      description: "Acesso a tradutores humanos em tempo real 24 horas por dia, 7 dias por semana, para ajuda linguística em questão de segundos.  Taxa: US$ 1 por minuto. Primeiros 10 minutos GRATUITOS.",
+      description: "Acesso a tradutores humanos em tempo real 24 horas por dia, 7 dias por semana, para ajuda linguística em questão de segundos.  Taxa: US$ 1 por minuto. Primeiros {{num}} minutos GRATUITOS.",
       button: "Como começar"
     },
     location: {
@@ -889,9 +976,9 @@ export default (PT = {
   // for use during primary language selection
   languagesList: {
     eng: "Inglês",
-    cmn: "Chinês (Mandarim)",
-    yue: "Chinês (Cantonês)",
-    "zho-cn-shang": "Chinês (Shangainês)",
+    cmn: "Chinês (mandarim)",
+    yue: "Chinês (cantonês)",
+    "zho-cn-shang": "Chinês (shangainês)",
     "zho-tw": "Chinês (Taiwanês)",
     jpn: "Japonês",
     spa: "Espanhol",

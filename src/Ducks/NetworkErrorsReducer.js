@@ -1,8 +1,5 @@
 import { clearView as clearUserProfile } from "./UserProfileReducer";
 import { clearCallHistory as clearHistory } from "./CallHistoryReducer";
-import { clearSettings as clearCustomerSettings } from "./CallCustomerSettings";
-import { clearSettings as clearLinguistSettings } from "./CallLinguistSettings";
-import { clear as clearTokbox } from "./tokboxReducer";
 import { displayNetworkAlert } from "./NetworkInfoReducer";
 import { logOut } from "./AuthReducer";
 import I18n from "../I18n/I18n";
@@ -64,7 +61,6 @@ const unauthorizedError = () => dispatch => {
   dispatch(logOut());
   dispatch(clearUserProfile());
   dispatch(clearHistory());
-  dispatch(clearSettings());
   dispatch(clearError());
   dispatch({ type: "SelectRoleView/Reset" });
 };
@@ -73,26 +69,14 @@ const notFoundError = () => dispatch => {
   dispatch(logOut());
   dispatch(clearUserProfile());
   dispatch(clearHistory());
-  dispatch(clearSettings());
   dispatch(clearError());
   dispatch({ type: "SelectRoleView/Reset" });
 };
 
 const serverError = () => (dispatch, getState) => {
-  dispatch(clearSettings());
-  dispatch(clearTokbox());
   dispatch({ type: "Home" });
 };
 
-const clearSettings = () => (dispatch, getState) => {
-  const { userProfile } = getState();
-
-  if (userProfile.linguistProfile) {
-    dispatch(clearLinguistSettings());
-  } else {
-    dispatch(clearCustomerSettings());
-  }
-};
 
 const initialState = {
   errors: null,

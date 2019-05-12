@@ -13,7 +13,8 @@
     "test": "jest",
     "api:run": "make setup && docker-compose up",
     "api:load-mock-data": "make run-cmd CMD=\"load-fixtures\"",
-    "postinstall": "cp patches/OTScreenCapturer.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTScreenCapturer.java && cp patches/OTSessionManager.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTSessionManager.java && cp patches/InstanceIdService.java node_modules/react-native-fcm/android/src/main/java/com/evollu/react/fcm/InstanceIdService.java"
+    "postinstall": "cp patches/InstanceIdService.java node_modules/react-native-fcm/android/src/main/java/com/evollu/react/fcm/InstanceIdService.java",
+    "XXXX_postinstall": "cp patches/OTScreenCapturer.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTScreenCapturer.java && cp patches/OTSessionManager.java node_modules/opentok-react-native/android/src/main/java/com/opentokreactnative/OTSessionManager.java"
   },
   "dependencies": {
     "@segment/analytics-react-native": "^0.0.1-beta.3",
@@ -23,10 +24,11 @@
     "axios": "^0.17.1",
     "bluebird": "^3.5.1",
     "card-validator": "^6.1.0",
+    "color": "^3.1.0",
     "instabug-reactnative": "8.0.12",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
-    "opentok-react-native": "0.8.4",
+    "opentok-react-native": "^0.10.1",
     "prop-types": "^15.5.10",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
@@ -55,6 +57,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-masked-text": "^1.11.1",
+    "react-native-modal": "^7.0.2",
     "react-native-permissions": "^1.1.1",
     "react-native-photo-upload": "^1.2.0",
     "react-native-picker-select": "^5.1.0",

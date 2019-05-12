@@ -29,8 +29,7 @@ import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
-import { clear as clearActiveSession } from "../../Ducks/ActiveSessionReducer";
-import I18n, { translateApiErrorString } from "../../I18n/I18n";
+import I18n, { translateApiErrorString, translateApiError } from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/LoginScreenStyles";
 import { EMAIL_REGEX } from "../../Util/Constants";
@@ -97,16 +96,13 @@ class LoginScreen extends Component {
         navigation.dispatch({ type: "Home" });
       }
     } catch (err) {
-      if (err.data.errors[0] === "Password incorrect") {
-        updateOnboarding({
-          errorType: "signInError"
-        });
-      }
-
-      if (err.data.errors[0] === "Email not found") {
-        updateOnboarding({
-          errorType: "emailNotFound"
-        });
+      if (!!err.data && !!err.data.errors && !!err.data.errors[0]) {
+        switch (err.data.errors[0]) {
+          case "Email not found": updateOnboarding({errorType: "emailNotFound"}); break;
+          case "Password incorrect": updateOnboarding({errorType: "signInError"}); break;
+        }
+      } else {
+        Alert.alert(I18n.t('error'), translateApiError(err), 'api.errTemporaryTryAgain');
       }
       updateOnboarding({
         makingRequest: false
@@ -275,7 +271,6 @@ const mD = {
   updateLocation,
   ensureSessionDefaults,
   clearEvents,
-  clearActiveSession,
   getProfileAsync,
   updateUserProfile,
   logInAsync,

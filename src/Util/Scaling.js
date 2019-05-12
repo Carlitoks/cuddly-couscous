@@ -1,6 +1,7 @@
 import { Dimensions, PixelRatio } from "react-native";
 import { getDeviceLocale } from "react-native-device-info";
 import {Metrics} from "../Themes";
+import { isIphoneXorAbove } from "./Devices";
 
 const { width, height } = Dimensions.get("window");
 const realWidth = height > width ? width : height;
@@ -23,6 +24,14 @@ const moderateScaleViewports = (size, factor = 0.5) => {
   if(width >= 414)
     factor = -0.3;
   return size + (scale(size) - size) * factor;
+};
+
+export const moderateFontSize = (size) => {
+  return isIphoneXorAbove() ? size + 2 : size;
+};
+
+export const scaleFontSize = (size, factor = 0.5) => {
+  return moderateScale(moderateFontSize(size), factor);
 };
 
 const setTextProperties = (color, fontFamily, fontSize, fontWeight) => {

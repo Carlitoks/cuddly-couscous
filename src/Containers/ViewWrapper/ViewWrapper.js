@@ -102,7 +102,7 @@ const mS = state => ({
   linguistProfile: state.userProfile.linguistProfile,
   email: state.userProfile.email,
   deviceId: state.auth.deviceId,
-  sessionId: state.activeSessionReducer.sessionID,
+  sessionId: state.currentSessionReducer.sessionID,
   eventId: state.events.id
 });
 

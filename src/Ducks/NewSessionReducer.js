@@ -1,23 +1,11 @@
-import { Session } from "../Api";
-import { networkError } from "./NetworkErrorsReducer";
 import {
   SupportedLanguages,
   ComingSoonLanguages,
   AllowedLanguagePairs,
-  FilterLangsByCodes, LanguagesRollover, getLangForCity
+  LanguagesRollover,
+  getLangForCity
 } from "../Config/Languages";
-import timer from "react-native-timer";
-import { REASON, SOUNDS } from "../Util/Constants";
-import { resetCounter, updateSettings as updateContactLinguist } from "./ContactLinguistReducer";
-import { BackgroundCleanInterval } from "../Util/Background";
 import { cleanNotifications } from "../Util/PushNotification";
-import { playSound } from "../Util/SoundManager";
-import {
-  HandleEndCall,
-  resetTimerAsync,
-  update as updateActieSessionReducer
-} from "./ActiveSessionReducer";
-import { closeSlideMenu } from './LogicReducer'
 
 const ACTIONS = {
   CLEAR: "newSession/clear",
@@ -114,7 +102,9 @@ export const modifyAVModePreference = payload => (dispatch, getState) => {
 export const ensureSessionDefaults = payload => (dispatch, getState) => {
   currentSessionState = {
     ...getState().newSessionReducer.session,
-    primaryLangCode: payload.primaryLangCode
+    primaryLangCode: payload.primaryLangCode,
+    type: "immediate_virtual",
+    matchMethod: "first_available"
   };
 
   dispatch(changeSessionLangCode(currentSessionState));
@@ -172,22 +162,9 @@ export const swapCurrentSessionLanguages = () => (dispatch, getState) => {
 };
 
 export const switchCallLang = (reason) => (dispatch, getState) => {
-  const { contactLinguist, activeSessionReducer, auth } = getState();
   const { primaryLangCode, secondaryLangCode } = getState().newSessionReducer.session;
   try {
-    timer.clearInterval("counterId");
-    timer.clearInterval("timer");
-    timer.clearInterval("verifyCallId");
-    dispatch(
-      updateContactLinguist({
-        modalContact: false
-      })
-    );
-    dispatch(resetCounter());
-    BackgroundCleanInterval(activeSessionReducer.timer);
-    dispatch(resetTimerAsync());
     cleanNotifications();
-    dispatch(updateActieSessionReducer({ modalReconnect: false }));
     const currentSessionState = {
       ...getState().newSessionReducer.session,
       secondaryLangCode: LanguagesRollover[secondaryLangCode] ? LanguagesRollover[secondaryLangCode] : secondaryLangCode,
@@ -255,8 +232,8 @@ const initialState = {
   session: {
     type: "",
     matchMethod: "",
-    primaryLangCode: "",
-    secondaryLangCode: "",
+    primaryLangCode: "eng",
+    secondaryLangCode: "cmn",
     avModePreference: null,
     eventID: null,
     scenarioID: null,

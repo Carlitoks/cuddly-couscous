@@ -1795,8 +1795,8 @@ export const primaryCodes = [
   "zho-tw",
   "jpn",
   "spa",
-  "spa-r-la",
-  "spa-es",
+  // "spa-r-la",
+  // "spa-es",
   "deu",
   "fra",
   // "fra-ca",
@@ -1883,7 +1883,6 @@ export const comingSoonCodes = [
 ];
 
 // languages available for session selection
-// TODO: export this config to replace SUPPORTED_LANGS
 export const supportedLangCodes = ["eng","cmn","yue","jpn","spa","por","fra","ita","deu"];
 
 // default secondary language for a given primary language

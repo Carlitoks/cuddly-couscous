@@ -294,11 +294,9 @@ const HeaderView = ({
           {switchValue != null && !!switchOnChange && switchValue != null ? (
             <View style={styles.statusContainer}>
               <Text style={styles.statusText}>
-                {`${I18n.t("status")} ${
-                  status
-                    ? I18n.t("online").toUpperCase()
+                { status ? I18n.t("online").toUpperCase()
                     : I18n.t("offline").toUpperCase()
-                }`}
+                }
               </Text>
               {loading ? (
                 <View style={styles.switchContainer}>

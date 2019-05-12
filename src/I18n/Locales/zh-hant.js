@@ -48,9 +48,6 @@
   callWillEnd: "時間一到會立即結束通話",
   cancel: "取消",
   cancelCall: "取消通話",
-  celebrateAndEnjoy: "歡慶上市\n，免費使用翻譯精靈 \n 10 分鐘！",
-  celebrateAndEnjoyAlternative:
-    "歡慶上市，\n免費使用翻譯精靈 10 分鐘\n！",
   celebrateWithUs: "和我們一起慶祝上市！",
   changeSettings: "若要變更設定，請至「設定」>「翻譯精靈」",
   cancelCallCustomer: "無法通話",
@@ -186,8 +183,8 @@
   iAmNotSure: "我不確定",
   igniteGenerated: "點擊產生畫面",
   incomingCall: "來電...",
-  iNeedAssistanceWith: "(可不填) 我需要的協助是...",
-  iNeedSomethingElse: "(可不填) 我需要的協助是...",
+  iNeedAssistanceWith: "(可選) 我需要的協助是...",
+  iNeedSomethingElse: "(可選) 我需要的協助是...",
   interfaceLocalization: "語言",
   intermediate: "中等",
   invalidPromoCode: "促銷代碼無效",
@@ -220,9 +217,6 @@
     "無論置身世上何處，都能即時與精通外語的真人通話。",
   lauchScreenSwipe3:
     "翻譯精靈目前支援\n中文（普通話）<> 英文\n以及日本 <> 英文。\n\n即將推出其他語言。",
-  lauchScreenSwipe4: "平均通話時長是 5 到 10 分鐘，但您想講多久就講多久。",
-  lauchScreenSwipe5:
-    "為慶祝上市，前 10 分鐘免費…翻譯精靈請客！",
   lastname: "姓氏",
   lastnameFormatValidation: "姓氏只能包含字元。",
   legal: "法律資訊",
@@ -264,7 +258,7 @@
   no: "否",
   noAvailableMinutes: "0 分鐘",
   noItems: "沒有項目",
-  none: "無",
+  none: "沒有任何經驗",
   noRecentActivityMessage: "這裡會顯示您最近的活動",
   notLinguistAvailable: "目前有語言專員",
   notification: "通知",
@@ -273,7 +267,7 @@
   occasionally: "偶爾",
   offline: "離線",
   ok: "確定",
-  online: "上線",
+  online: "在線",
   operatingHoursAlertTitle: "請注意我們的開放時間",
   operatingHoursAlertMessage:
     "中文：\n- 東部時間 (EDT) 上午 10 點 - 晚上 7 點\n\n日文：\n- 東部時間 (EDT) 晚上 7 點 - 上午 7 點\n- 日本標準時間上午 8 點 - 晚上 8 點",
@@ -294,7 +288,7 @@
   preferedNameTitle: "欲使用的名稱",
   preferNotToDisclose: "不願意透露",
   preferredLinguistText: "我想用的名稱是...",
-  preferredName: "欲使用的名稱 (可不填)",
+  preferredName: "欲使用的名稱 (可選)",
   pricing: "價格",
   privacyPolicy: "隱私權政策",
   proficiencyLevelOf: "流利程度 ",
@@ -303,8 +297,6 @@
   progressiveImageComponent: "漸進影像元件",
   provideFeedback: "反映意見",
   provideFeedbackModalTitle: "需要更多翻譯精靈使用時間嗎？",
-  provideFeedbackModalText:
-    "只要告訴我們您使用\n翻譯精靈的經驗，\n我們就多送您 \n10 分鐘的使用時間！",
   provideFeedbackViewPlaceholder: "請在這裡註明您要反映的意見",
   provideFeedbackViewTitle: "告訴我們翻譯精靈需要改善的空間：",
   qr: "QR 碼",
@@ -346,7 +338,6 @@
   speaker: "母語人士",
   specifyGender: "拒絕指定",
   sport: "運動",
-  status: "您是",
   submitFeedbackForMoreTime: "反映意見，換取更多時間",
   submitFeedback: "反映意見",
   tapRepeat: "點選重複",
@@ -377,8 +368,6 @@
   troubleshoot: "疑難排解",
   thankYou: " 謝謝",
   thankYouFeedback: " 感謝您反映的意見",
-  thankYouFeedbackModalText:
-    "我們已經為您額外增加了 \n10 分鐘，您可以\n繼續使用翻譯精靈。",
   theCallWillEnd: "{{minutes}} 分鐘後將結束通話",
   undefined: "未定義",
   unspecified: "未指定",
@@ -412,10 +401,10 @@
   youCanChangeThis: "您可以在通話中開啟/關閉視訊",
 
   appUpdateAlert: {
-    title: "更新可用",
-    description: "您需要更新Jeenie來享受新增的功能。"
+    title: "可以更新",
+    description: "您必須更新翻譯精靈才能使用新功能。"
   },
-   
+
   //new onboarding
   onboardingView: {
     help: "需要幫忙嗎？"
@@ -425,27 +414,47 @@
     tagline: "您要求的語言"
   },
 
-  // generic language often used in navigation or forms
+  status: {
+    available: "可通話",
+    cancelled: "已取消",
+    error: "錯誤",
+    unavailable: "忙線中"
+  },
+
+  // generic language often used in navigation, forms, dialogs, and buttons
   actions: {
-    cancel: "取消",
-    remove: "移除",
-    close: "關閉",
-    save: "儲存",
-    update: "更新",
-    submit: "送出",
-    continue: "繼續",
-    next: "下一步",
+    accept: "接受",
+    agree: "同意",
     back: "返回",
-    prev: "上一步",
-    reset: "重設",
-    clear: "清除",
-    ok: "確定",
-    done: "完成",
-    finished: "結束",
-    select: "選取",
+    cancel: "取消",
     choose: "選擇",
+    clear: "清除",
+    close: "關閉",
+    confirm: "確認",
+    continue: "繼續",
+    dismiss: "關閉",
+    done: "完成",
+    edit: "編輯",
+    end: "結束",
+    exit: "退出",
+    finished: "結束",
+    ignore: "忽略",
+    next: "下一步",
+    no: "否",
+    ok: "確定",
+    prev: "上一步",
+    quit: "離開",
+    reject: "拒絕",
+    remove: "移除",
+    reset: "重設",
+    save: "儲存",
+    select: "選取",
+    send: "傳送",
+    start: "開始",
     skip: "略過",
-    edit: "編輯"
+    submit: "送出",
+    update: "更新",
+    yes: "是"
   },
 
   logic: {
@@ -479,12 +488,12 @@
     },
     scenario: {
       label: "情境",
-      placeholder: "非必填",
+      placeholder: "可選",
       description: "通話主旨"
     },
     customNote: {
       label: "其他詳細資料",
-      placeholder: "非必填",
+      placeholder: "可選",
       description: "給語言專員的其他詳細資料："
     },
     buttons: {
@@ -532,7 +541,6 @@
     },
     registrationWelcome: {
       balance: "{{num}} 分鐘",
-      onboardingTitle: "免費 10 分鐘",
       title: "前 {{num}} 分鐘免費！",
       description: "{{num}} 分鐘過後，每分鐘的價格是 1 美元。",
       buttons: {
@@ -544,7 +552,7 @@
       heading: "快完成了！",
       title: "麥克風和相機",
       description:
-        "To connect you to a linguist, Jeenie needs access to your microphone and camera.",
+        "翻譯精靈需存取您的麥克風和相機，才能讓您和語言專員通話。",
       button: "啟用麥克風和相機",
       back: "返回"
     }
@@ -669,7 +677,7 @@
     },
     descriptions: {
       hasMinutesAndCard:
-        "為免通話中斷，當您將分鐘數用完後，我們會自動使用您的銀行卡扣款，每分鐘收費 1 美元。",
+        "為免通話中斷，當您將分鐘數用完後，我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
       hasMinutesNoCard:
         "若要在剩餘分鐘數用完後繼續通話，請立即輸入付款資訊。",
       noMinutesHasCard: "我們會自動使用您的卡片扣款，每分鐘收費 1 美元。",
@@ -708,8 +716,8 @@
   // are often used in more than one place
   fields: {
     email: {
-      label: "電子郵件",
-      labelConfirm: "確認電子郵件",
+      label: "電子郵件地址",
+      labelConfirm: "確認電子郵件地址",
       errInvalid: "無效的電子郵件地址。",
       errConfirmMatch: "電子郵件必須相符。"
     },
@@ -729,19 +737,14 @@
     }
   },
 
-  // seen as a pop up if the user has entered an invalid email address.
-  correctEmailModal: {
-    notice: "您輸入的電子郵件有誤，請輸入新的電子郵件。",
-    complete: "電子郵件更新完畢！從現在開始，您必須使用 {email} 登入翻譯精靈。"
-  },
-
+  
   // for use in session-related screens
   session: {
+    errFailedToConnect: "與翻譯精靈失去連線。  請再試一次。",
+    confirmEnd: "您確定要結束通話嗎？",
     callTime: "通話時間：{{time}}",
-    callCancel: "客戶已取消這次通話",
-    callAnswered: "已有另一位語言專員接聽這通電話。",
-    callFail: "客戶無法連線。",
     callFailCustomer: "與您的語言翻譯精靈連線時發生問題。",
+    callEndingSoon: "即將結束本次通話。",
     alertGeneralCannotSee:
       "為保持最佳連線品質，目前已暫時停用視訊功能。連線品質改善後即可繼續使用視訊。",
     alertLinguistCannotSeeYou:
@@ -754,9 +757,77 @@
       "為保持最佳連線品質，目前已暫時停用翻譯精靈的視訊功能。連線品質改善後即可繼續使用視訊。",
     createSessionFailed: "暫時無法開始通話。請再試一次。",
 
+    // for incoming call from linguists perspective
+    incoming: {
+      notice: "來電...",
+      noticeVideo: "視訊來電...",
+      noticeAudio: "語音來電...",
+      assigned: "已有另一位語言專員接聽這通電話",
+      cancelled: "客戶已取消這次通話。",
+      failed: "客戶無法連線。",
+      unavailable: "無法接聽這通電話。",
+      lostConnection: "伺服器失去連線。",
+      videoType: "視訊",
+      audioType: "純音訊"
+    },
+
+    // alerts to linguists about call being ended
+    ended: {
+      cancel: "客戶已取消這次通話。",
+      disconnectLocal: "通話斷線。",
+      disconnectRemote: "客戶通話斷線。",
+      balanceExceeded: "您的帳戶已經沒有時間了。",
+      timeExceeded: "通話超出時間上限。",
+      failureLocal: "我們無法為您接通客戶。",
+      failureRemote: "客戶無法連線。",
+      aborted: "已結束通話。"
+    },
+
+    // seen when connecting to a session
+    connecting: {
+      user: "{{name}} 正在連線...",
+      self: "正在與 {{name}} 連線...",
+      basic: "連線中..."
+    },
+
+    // seen when a user is in a session, but one side has been disconnected
+    reconnection: {
+      notice: "您已斷線。",
+      noticeUser: "{{name}} 已斷線。",
+      attempting: "嘗試重新連線...",
+      attemptingUser: "{{name}} 正在嘗試重新連線...",
+      waiting: "正在等候連線...",
+      waitingUser: "正在等候 {{name}} 重新連線...",
+      reconnecting: "重新連線中...",
+      reconnectingUser: "{{name}} 正在重新連線...",
+      ending: "結束中...",
+      reconnected: "已重新連線",
+      actions: {
+        reconnect: "嘗試重新連線",
+        wait: "繼續等候",
+        tryAnother: "嘗試其他翻譯精靈",
+        end: "結束通話"
+      }
+    },
+
     // seen while matching custoner to linguist
     matching: {
-      description: "正在為您接通語言翻譯精靈..."
+      description: "大約 1 分鐘後將接通語言翻譯精靈",
+      remoteCancel: "對方取消通話"
+    },
+
+    // retry screen seen when no matches are available, or initial connection to session fails
+    retry: {
+      busy: "我們的所有語言翻譯精靈都在忙著協助其他客戶。",
+      failureLocal: "與您的翻譯精靈的連線太弱。",
+      failureRemote: "您的語言翻譯精靈無法連線。",
+      disconnectLocal: "與您的翻譯精靈的連線太弱。",
+      disconnectRemote: "與您的翻譯精靈的連線太弱。",
+      cancelRemote: "您的語言翻譯精靈無法加入通話。",
+      tryAgain: "我們會盡快為您接通另一位翻譯精靈，請稍候。",
+      retry: "確定",
+      tryLang: "嘗試 {{lang}}",
+      cancel: "取消通話"
     },
 
     // used when rating a session
@@ -848,6 +919,22 @@
     }
   },
 
+  forgotPassword: {
+    title: "忘記密碼？",
+    description: "別擔心。  我們會寄送重設密碼連結到下列電子郵件地址給您。",
+    alertSuccessTitle: "已寄出重設連結！",
+    alertSuccessBody: "您很快就會收到附重設密碼連結的電子郵件。"
+  },
+
+  correctEmailModal: {
+    title: "電子郵件寄送失敗",
+    description: "我們無法驗證您輸入的電子郵件地址。  請輸入有效的電子郵件地址。",
+    label: "新的電子郵件地址",
+    titleSuccess: "成功",
+    descriptionSuccess: "電子郵件更新完畢！您可以使用新的電子郵件 \"{email}\" 登入翻譯精靈",
+    descriptionTaken: "\"{email}\" 這個電子郵件已經註冊過了。  您可以使用該電子郵件地址登入，也可以指定新的電子郵件地址。"
+  },
+
   newCustomerOnboarding: {
     getStarted: "開始使用",
     haveAccount: "已經有帳戶了？",
@@ -856,7 +943,7 @@
     createAccount: "建立帳戶",
     intro: {
       title: "即時協助",
-      description: "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助。  費率：每分鐘 1 美元，前 10 分鐘免費。",
+      description: "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助。  費率：每分鐘 1 美元，前 {{num}} 分鐘免費。",
       button: "開始使用"
     },
     location: {
