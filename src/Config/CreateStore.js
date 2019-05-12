@@ -35,19 +35,21 @@ const getStore = () =>
     // Persisting the store on the asyncStorage
     store.subscribe(
       throttle(() => {
+        const state = store.getState();
         saveState({
-          auth: store.getState().auth,
-          userProfile: store.getState().userProfile,
-          tokbox: store.getState().tokbox,
-          profileLinguist: store.getState().profileLinguist,
-          pushNotification: store.getState().pushNotification,
-          onboardingRecord: store.getState().onboardingRecord,
-          homeFlow: store.getState().homeFlow,
-          appConfigReducer: store.getState().appConfigReducer,
+          settings: state.settings,
+          auth: state.auth,
+          userProfile: state.userProfile,
+          tokbox: state.tokbox,
+          profileLinguist: state.profileLinguist,
+          pushNotification: state.pushNotification,
+          onboardingRecord: state.onboardingRecord,
+          homeFlow: state.homeFlow,
+          appConfigReducer: state.appConfigReducer,
           onboardingReducer: {
-            completedLocation: store.getState().onboardingReducer.completedLocation,
-            completedNotification: store.getState().onboardingReducer.completedNotification,
-            completedMicAndCamera: store.getState().onboardingReducer.completedMicAndCamera
+            completedLocation: state.onboardingReducer.completedLocation,
+            completedNotification: state.onboardingReducer.completedNotification,
+            completedMicAndCamera: state.onboardingReducer.completedMicAndCamera
           },
         }).then(() => {
           // console.log("STATE PERSISTED")
