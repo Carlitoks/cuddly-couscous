@@ -154,6 +154,7 @@ export default (reducer = (state, action) => {
 
     case "CustomerMatchingView":
       analytics.screen(action.type.toString());
+      analytics.track("Checkout Started");
       recordNavigationEvent(action.type.toString());
 
       // the user could arrive at this screen from another session ("try another Jeenie" option) - so if that happens, we
