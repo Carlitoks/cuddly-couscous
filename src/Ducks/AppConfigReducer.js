@@ -1,3 +1,6 @@
+// The purpose of this is to manage configuration for the app that is
+// determined by external sources (the API primarily)
+
 import api from "../Config/AxiosConfig";
 import { CACHE } from "../Config/env";
 
@@ -19,7 +22,8 @@ const initialState = {
   scenariosLoadedAt: null,
   scenarios: [],
   configLoadedAt: null,
-  config: {}
+  config: {},
+  supportedLangPairs: [] // TODO
 };
 
 export const loadSessionScenarios = (useCache = true) => (dispatch, getState) => {
