@@ -5,6 +5,7 @@ import { ensureSessionDefaults, updateLocation } from "../../Ducks/NewSessionRed
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clearOnboarding } from "../../Ducks/OnboardingReducer";
 import Permission from "react-native-permissions";
+import { CUSTOMER_FREE_MINUTES as customer_free_minutes } from "../../Util/Constants";
 // Styles
 import styles from "./Styles/OnboardingScreenStyles";
 import OnboardingButtons from "./Components/OnboardingButtons";
@@ -80,7 +81,7 @@ class OnboardingScreen extends Component {
             <View>
               <Text style={styles.titleText}>{I18n.t("newCustomerOnboarding.intro.title")}</Text>
               <Text style={styles.subtitleText}>
-                {I18n.t("newCustomerOnboarding.intro.description", {num: 10})}
+                {I18n.t("newCustomerOnboarding.intro.description", {num: customer_free_minutes})}
               </Text>
             </View>
             <OnboardingButtons navigation={navigation} />
