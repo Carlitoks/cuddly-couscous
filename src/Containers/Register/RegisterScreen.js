@@ -70,7 +70,7 @@ class RegisterScreen extends Component {
                     <PasswordField />
                     <NativeLangField />
                     <TermsAndConditions />
-                    <SubmitButton />
+                    <SubmitButton navigation={navigation} />
                   </View>
                   <TouchableOpacity
                     onPress={() => this.handleTouch("LoginView")}

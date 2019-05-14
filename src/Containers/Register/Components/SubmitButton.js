@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Alert, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 
-import { updateView as updateUserProfile } from "../../../Ducks/UserProfileReducer";
+import { updateView as updateUserProfile, getProfileAsync, getNativeLang } from "../../../Ducks/UserProfileReducer";
 import { logInAsync, registerDevice } from "../../../Ducks/AuthReducer";
 import I18n, { translateApiErrorString } from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/SubmitButtonStyles";
 import { asyncCreateUser, asyncUpdateUser } from "../../../Ducks/CustomerProfileReducer";
-import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
+import { update as updateOnboarding, noOnboarding } from "../../../Ducks/OnboardingReducer";
 
 class SubmitButton extends Component {
   submitLogin = async () => {
@@ -36,22 +36,9 @@ class SubmitButton extends Component {
       await updateUserProfile({
         selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode),
       });
-      const record = await checkRecord(email);
-      if (record) {
-        updateCustomer({ userInfo: { id: record.id } });
-        Alert.alert(I18n.t("finishOnboarding"), I18n.t("finishOnboardingMessage"), [
-          {
-            text: I18n.t("ok"),
-          },
-        ]);
-
-        updateOnboarding({ makingRequest: false });
-        navigation.dispatch({ type: record.lastStage });
-      } else {
         updateOnboarding({ makingRequest: false });
         noOnboarding();
         navigation.dispatch({ type: "Home" });
-      }
     } catch (err) {
       if(err.data){
         if (err.data.errors[0] === "Password incorrect") {
@@ -76,7 +63,7 @@ class SubmitButton extends Component {
       }else{
         Alert.alert(
           I18n.t("error"),
-          translateApiErrorString(err.data, "api.errTemporary"),
+          translateApiErrorString(err, "api.errTemporary"),
           [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
         );
       }
@@ -155,7 +142,7 @@ class SubmitButton extends Component {
       }else{
         Alert.alert(
           I18n.t("error"),
-          translateApiErrorString(err.data, "api.errTemporary"),
+          translateApiErrorString(err, "api.errTemporary"),
           [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
         );
       }
@@ -252,6 +239,9 @@ const mD = {
   logInAsync,
   asyncUpdateUser,
   updateUserProfile,
+  getProfileAsync,
+  noOnboarding,
+  getNativeLang
 };
 
 export default connect(

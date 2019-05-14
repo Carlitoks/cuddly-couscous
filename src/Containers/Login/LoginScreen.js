@@ -74,7 +74,7 @@ class LoginScreen extends Component {
                 <View style={styles.inputContainer}>
                   <EmailField />
                   <PasswordField onChange={this.changePassword} />
-                  <SubmitButton type="login" />
+                  <SubmitButton type="login" navigation={navigation} />
                 </View>
                 <TouchableOpacity
                   onPress={() => navigation.dispatch({
