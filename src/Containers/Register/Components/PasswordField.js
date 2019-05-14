@@ -10,7 +10,7 @@ import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
 class PasswordField extends Component {
   validatePassword = text => {
     const { updateOnboarding } = this.props;
-    if (text.length < 5) {
+    if (text.length < 7) {
       updateOnboarding({
         isValidPassword: false,
         errorType: "passwordLength",
@@ -22,7 +22,7 @@ class PasswordField extends Component {
   };
 
   render() {
-    const { password, errorType, onChange } = this.props;
+    const { password, errorType, onChange, type } = this.props;
     return (
       <View style={password ? styles.inputViewContainerValue : styles.inputViewContainer}>
         {password ? (
@@ -42,7 +42,7 @@ class PasswordField extends Component {
             onChangeText={text => onChange ? onChange(text) : this.validatePassword(text)}
             autoCapitalize="none"
             value={password}
-            placeholder={I18n.t("customerOnboarding.register.password")}
+            placeholder={type === "login" ? I18n.t("fields.password.label") : I18n.t("fields.password.labelCreate")}
             secureTextEntry
             placeholderTextColor="rgba(0, 0, 0, 0.54)"
             returnKeyType="done"

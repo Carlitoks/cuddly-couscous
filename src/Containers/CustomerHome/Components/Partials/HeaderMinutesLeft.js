@@ -43,7 +43,7 @@ class HeaderMinutesLeft extends Component {
 
   render() {
     const { stripePaymentToken, availableMinutes } = this.props;
-    if (availableMinutes === 0 && stripePaymentToken) {
+    if (availableMinutes && stripePaymentToken) {
       return <React.Fragment />;
     }
     return this.renderMinutesLeft();

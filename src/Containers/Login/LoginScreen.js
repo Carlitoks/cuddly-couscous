@@ -73,7 +73,7 @@ class LoginScreen extends Component {
                 </ImageBackground>
                 <View style={styles.inputContainer}>
                   <EmailField />
-                  <PasswordField onChange={this.changePassword} />
+                  <PasswordField type="login" onChange={this.changePassword} />
                   <SubmitButton type="login" navigation={navigation} />
                 </View>
                 <TouchableOpacity

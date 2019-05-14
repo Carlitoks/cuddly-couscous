@@ -2,24 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>jeenie</string>
-			</array>
-		</dict>
-	</array>
-	<key>branch_key</key>
-	<dict>
-		<key>test</key>
-		<string>key_test_kaJdBqMKOLs63hdlea2rChacBriHFiAA</string>
-		<key>live</key>
-		<string>key_live_chUoEwSGPRE27nbknnNLOiefAsdRwbwh</string>
-	</dict>
-	<key>branch_app_domain</key>
-	<string>jeenie.app.link</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -38,8 +20,19 @@
 	<string>3.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>jeenie</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CodePushDeploymentKey</key>
+	<string>$(CODEPUSH_KEY)</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -54,6 +47,8 @@
 			</dict>
 		</array>
 	</dict>
+	<key>LSApplicationQueriesSchemes</key>
+	<array/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -77,9 +72,9 @@
 	<string>purpose for using calendar</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Please let us use your camera and you will be able to make or receive videocalls and also scan QR promo codes</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Jeenie uses your current location to help connect you to linguists familiar with your surroundings.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Jeenie uses your current location to help connect you to linguists familiar with your surroundings.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Jeenie uses your current location to help connect you to linguists familiar with your surroundings.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Jeenie needs to access your microphone to make calls between customers and linguists</string>
@@ -89,8 +84,6 @@
 	<string>This allows Jeenie to let you choose a profile image that suits you</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>purpose for using</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -132,7 +125,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CodePushDeploymentKey</key>
-	<string>$(CODEPUSH_KEY)</string>
+	<key>branch_app_domain</key>
+	<string>jeenie.app.link</string>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_chUoEwSGPRE27nbknnNLOiefAsdRwbwh</string>
+		<key>test</key>
+		<string>key_test_kaJdBqMKOLs63hdlea2rChacBriHFiAA</string>
+	</dict>
 </dict>
 </plist>

@@ -198,13 +198,10 @@ class App extends Component {
     setTimeout(() => {
       this.setState({ splashScreenTimer: true });
     }, 2000);
-    if (!this.state.splashScreenTimer) {
-      return <SplashScreen />;
-    } else {
-      if (this.state.loadingStore) {
+      if (this.state.loadingStore || !this.state.splashScreenTimer) {
         // TODO: return static loading screen, like the splash screen
         // right now we have a flash of blank white screen
-        return null;
+        return <SplashScreen />;
       }
 
       return (
@@ -214,7 +211,6 @@ class App extends Component {
           </Provider>
         </AppErrorBoundary>
       );
-    }
   }
 }
 
