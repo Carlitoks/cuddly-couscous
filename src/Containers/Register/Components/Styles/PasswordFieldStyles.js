@@ -65,8 +65,8 @@ export default StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     borderRadius: 5,
-    right: -25,
-    top: 50,
+    right: moderateScale(-25, 0),
+    top: moderateScale(50, 0),
     width: moderateScale(180, 0),
     height: moderateScale(60, 0),
     backgroundColor: "#007AFF",
@@ -78,15 +78,26 @@ export default StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3
-
-    //backgroundColor: "red"
   },
   tooltipTextStyle: {
-    /* marginTop: 5,
-    marginLeft: 5,
-    marginRight: 5,*/
     textAlign: "center",
     fontSize: 14,
     color: "white"
+  },
+  triangle: {
+    right: moderateScale(-42, 0),
+    top: moderateScale(-15, 0),
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderStyle: "solid",
+    borderTopWidth: 0,
+    borderRightWidth: 5,
+    borderBottomWidth: 5,
+    borderLeftWidth: 5,
+    borderTopColor: "transparent",
+    borderRightColor: "transparent",
+    borderBottomColor: "#007AFF",
+    borderLeftColor: "transparent"
   }
 });
