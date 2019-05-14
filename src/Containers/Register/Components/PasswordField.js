@@ -74,7 +74,7 @@ class PasswordField extends Component {
           )}
           {type !== "login" && this.state.currentTooltipIcon === RegisterIcons.info_pressed ? (
             <View style={styles.tooltipContainerStyle}>
-              <Text>{I18n.t("payments.cvv.description")}</Text>
+              <Text style={styles.tooltipTextStyle}>{I18n.t("fields.password.tooltip")}</Text>
             </View>
           ) : null}
         </View>
