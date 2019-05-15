@@ -2141,12 +2141,20 @@ export const InterfaceSupportedLanguages = [
     name: "日本語"
   },
   {
+    1: "ko",
+    name: "한국어"
+  },
+  {
     1: "es",
     name: "Español"
   },
   {
     1: "fr",
     name: "Français"
+  },
+  {
+    1: "de",
+    name: "Deutsch"
   },
   {
     1: "pt",
