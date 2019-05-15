@@ -18,10 +18,10 @@ export default StyleSheet.create({
     color: "#fff"
   },
   jeeniesImg: {
-    marginTop: moderateScaleViewports(20),
+    marginTop: moderateScaleViewports(10),
     resizeMode: "contain",
-    width: Metrics.width * 0.80,
-    height: Metrics.width * 0.80
+    width: Metrics.width * 0.63,
+    height: Metrics.width * 0.63,
+    marginBottom: moderateScaleViewports(10)
   }
-
 });
