@@ -205,7 +205,7 @@ class SubmitButton extends Component {
             styles.buttonEnabledText,
           ]}
         >
-          {I18n.t("continue")}
+          {I18n.t("customerOnboarding.login.createAccountTitle")}
         </Text>
       </TouchableOpacity>
     );
