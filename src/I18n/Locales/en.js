@@ -929,15 +929,15 @@ export default (ENG = {
   },
 
   correctEmailModal: {
-    title: "Email Failed",
+    title: "Email Verification Failed",
     description:
-      "We were unable to verify the email address you entered.  Please enter a valid email address.",
+      "Something went wrong with the emaij you provided, please enter a new email address.",
     label: "New Email Address",
     titleSuccess: "Success",
     descriptionSuccess:
       'Your email has been updated! You can sign in to Jeenie with the new email "{email}"',
     descriptionTaken:
-      'The email address "{email}" is already registered.  You may log in with that email address, or specify a new email address.'
+      'The email "{email}" is already registered.  You may log in with that email address, or specify a new email address.'
   },
 
   newCustomerOnboarding: {
