@@ -73,6 +73,15 @@ export default StyleSheet.create({
     paddingTop: moderateScaleViewports(27),
     paddingBottom: moderateScaleViewports(32),
   },
+  transitionButtonSginInText: {
+    textAlign: "center",
+    color: "#3F1674",
+    textDecorationLine: "underline",
+    fontFamily: Fonts.BoldFont,
+    fontSize: moderateScaleViewports(14),
+    paddingTop: moderateScaleViewports(27),
+    paddingBottom: moderateScaleViewports(32),
+  },
   registerAdviseText: {
     textAlign: "center",
     color: "#666666",
@@ -185,5 +194,9 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(16),
     color: "rgba(0, 0, 0, 0.54)",
     paddingBottom: moderateScaleViewports(5),
+  },
+  textContainerRow: {
+    flex: 1, 
+    flexDirection: 'row',
   },
 });

@@ -75,9 +75,14 @@ class RegisterScreen extends Component {
                   <TouchableOpacity
                     onPress={() => this.handleTouch("LoginView")}
                   >
-                    <Text style={styles.transitionButtonText}>
-                      {`${I18n.t("alreadyAccount")} ${I18n.t("signIn")} »`}
-                    </Text>
+                  <View style={styles.textContainerRow}>
+                      <Text style={styles.transitionButtonText}>
+                        {`${I18n.t("alreadyAccount")} `}
+                      </Text>
+                      <Text style={styles.transitionButtonSginInText}>
+                        {`${I18n.t("signIn")} `}
+                      </Text>
+                    </View>
                   </TouchableOpacity>
                 </View>
               </KeyboardAwareScrollView>
