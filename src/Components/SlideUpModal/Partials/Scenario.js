@@ -151,7 +151,7 @@ class Scenario extends Component {
           {this.renderScenariosList()}
         </ScrollView>
         <TouchableOpacity style={styles.closeScenarioList} onPress={() => closeSlideMenu()}>
-          <Text style={styles.cancelButtonText}>Cancel</Text>
+          <Text style={styles.cancelButtonText}>{I18n.t("actions.cancel")}</Text>
         </TouchableOpacity>
       </View>
     );
