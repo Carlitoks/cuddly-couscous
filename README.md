@@ -54,6 +54,15 @@ To start actually developing:
 * hit "R+R" to reload any changes
 * run `yarn android:shake` to connect to the `react-native-debugger`
 
+## iOS Setup ##
+
+Need to install a few things to get the project running in the iOS simulators:
+
+* Make sure you have `pod` installed: `sudo gem install cocoapods`
+* install pods: `cd ios && pod install`
+* open Xcode
+* in Xcode, open file: `ios/NewSolo.xcworkspace`
+
 ## App Center and Code Push ##
 
 To setup the App Center cli:
