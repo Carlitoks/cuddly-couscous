@@ -2157,6 +2157,10 @@ export const InterfaceSupportedLanguages = [
     name: "Deutsch"
   },
   {
+    1: "it",
+    name: "Italiano"
+  },
+  {
     1: "pt",
     name: "Português"
   }

@@ -6,6 +6,7 @@ import ja from "./Locales/ja";
 import pt from "./Locales/pt";
 import fr from "./Locales/fr";
 import de from "./Locales/de";
+import it from "./Locales/it";
 import ko from "./Locales/ko";
 import zh_hans from "./Locales/zh-hans";
 import zh_hant from "./Locales/zh-hant";
@@ -20,6 +21,7 @@ I18n.translations = {
   fr,
   ko,
   de,
+  it,
   "zh-hans": zh_hans,
   "zh-hant": zh_hant
 };
