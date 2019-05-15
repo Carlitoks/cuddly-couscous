@@ -58,10 +58,17 @@ To start actually developing:
 
 Need to install a few things to get the project running in the iOS simulators:
 
-* Make sure you have `pod` installed: `sudo gem install cocoapods`
+* Make sure you have `pod` installed, right now we specifically need version 1.5.3
+  * `sudo gem uninstall cocoapods` (if you have a different version)
+  * `sudo gem install cocoapods -v 1.5.3`
 * install pods: `cd ios && pod install`
 * open Xcode
 * in Xcode, open file: `ios/NewSolo.xcworkspace`
+
+Temporary notes on Xcode:
+
+* need 10.1 for now
+* in build settings, use Swift 3
 
 ## App Center and Code Push ##
 
