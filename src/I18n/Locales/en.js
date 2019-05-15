@@ -727,18 +727,18 @@ export default (ENG = {
       errInvalid: "Name must contain only letters."
     },
     nativeLang: {
-      label: "Native Language",
+      label: "Native Language"
     },
     password: {
       label: "Password",
       labelConfirm: "Confirm Password",
       labelCreate: "Create Password",
+      tooltip: "The password must be at least 7 characters long.",
       errLength: "Password must be 7 or more characters.",
       errConfirmMatch: "The passwords must match."
     }
   },
 
-  
   // for use in session-related screens
   session: {
     errFailedToConnect: "Lost connection with Jeenie.  Please try again.",
@@ -788,7 +788,7 @@ export default (ENG = {
     connecting: {
       user: "{{name}} is connecting...",
       self: "Connecting to {{name}}...",
-      basic: "Connecting...",
+      basic: "Connecting..."
     },
 
     // seen when a user is in a session, but one side has been disconnected
@@ -808,7 +808,7 @@ export default (ENG = {
         wait: "Keep Waiting",
         tryAnother: "Try Another Jeenie",
         end: "End Call"
-      },
+      }
     },
 
     // seen while matching custoner to linguist
@@ -922,18 +922,22 @@ export default (ENG = {
 
   forgotPassword: {
     title: "Forgot Your Password?",
-    description: "No worries.  We'll send you a link to reset your password at the email address below.",
+    description:
+      "No worries.  We'll send you a link to reset your password at the email address below.",
     alertSuccessTitle: "Reset Link Sent!",
     alertSuccessBody: "You will receive an email shortly with the password reset link."
   },
 
   correctEmailModal: {
     title: "Email Failed",
-    description: "We were unable to verify the email address you entered.  Please enter a valid email address.",
+    description:
+      "We were unable to verify the email address you entered.  Please enter a valid email address.",
     label: "New Email Address",
     titleSuccess: "Success",
-    descriptionSuccess: "Your email has been updated! You can sign in to Jeenie with the new email \"{email}\"",
-    descriptionTaken: "The email address \"{email}\" is already registered.  You may log in with that email address, or specify a new email address."
+    descriptionSuccess:
+      'Your email has been updated! You can sign in to Jeenie with the new email "{email}"',
+    descriptionTaken:
+      'The email address "{email}" is already registered.  You may log in with that email address, or specify a new email address.'
   },
 
   newCustomerOnboarding: {
@@ -944,13 +948,15 @@ export default (ENG = {
     createAccount: "Create Account",
     intro: {
       title: "Real-time Assistance",
-      description: "24/7 access to live, human translators for language help at the tap of a button.  Rate: US$1 per min.  First {{num}} mins FREE.",
+      description:
+        "24/7 access to live, human translators for language help at the tap of a button.  Rate: US$1 per min.  First {{num}} mins FREE.",
       button: "Get Started"
     },
     location: {
       title: "Enable Location",
-      description: "Sharing your location with Jeenie allows us to automatically recommend the right languages and human translators.",
-      button: "Turn on Location",
+      description:
+        "Sharing your location with Jeenie allows us to automatically recommend the right languages and human translators.",
+      button: "Turn on Location"
     },
     notification: {
       title: "Enable Notifications",
@@ -962,7 +968,7 @@ export default (ENG = {
       title: "Tell us about yourself:",
       termsAndPrivacyNotice: "By continuing, you agree to our Terms and Privacy Policy.",
       terms: "Terms",
-      privacyPolicy: "Privacy Policy",
+      privacyPolicy: "Privacy Policy"
     },
     login: {
       forgotPassword: "Forgot password?"
@@ -970,7 +976,7 @@ export default (ENG = {
     errors: {
       takenEmail:
         "An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.",
-      emailAndPassword: "Incorrect email and password combination.\nPlease try again.",
+      emailAndPassword: "Incorrect email and password combination.\nPlease try again."
     }
   },
 
