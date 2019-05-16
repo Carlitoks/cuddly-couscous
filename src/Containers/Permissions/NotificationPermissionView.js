@@ -12,6 +12,7 @@ import styles from "./Styles/PermissionViewStyles";
 import PermissionButtons from "./Components/PermissionButtons";
 import I18n from "../../I18n/I18n";
 import Permissions from "react-native-permissions";
+import DotSteps from "../Onboarding/Components/DotSteps";
 
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
@@ -42,7 +43,10 @@ class NotificationPermissionView extends Component {
             <Text style={styles.subtitleTextnewOnboarding}>
               {I18n.t("newCustomerOnboarding.notification.description")}
             </Text>
-            <PermissionButtons navigation={navigation} check={"Notification"} />
+            <View>
+              <DotSteps navigation={navigation} />
+              <PermissionButtons navigation={navigation} check={"Notification"} />
+            </View>
           </View>
         </View>
       </ViewWrapper>

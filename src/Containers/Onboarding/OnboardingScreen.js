@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { Image, Platform, Text, View } from "react-native";
+import {
+  Image, Platform, Text, View,
+} from "react-native";
 import { connect } from "react-redux";
+import Permission from "react-native-permissions";
 import { ensureSessionDefaults, updateLocation } from "../../Ducks/NewSessionReducer";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clearOnboarding } from "../../Ducks/OnboardingReducer";
-import Permission from "react-native-permissions";
 import { CUSTOMER_FREE_MINUTES as customer_free_minutes } from "../../Util/Constants";
 // Styles
 import styles from "./Styles/OnboardingScreenStyles";
@@ -12,6 +14,7 @@ import OnboardingButtons from "./Components/OnboardingButtons";
 import I18n from "../../I18n/I18n";
 import { isIphoneXorAbove } from "../../Util/Devices";
 import { registerDevice } from "../../Ducks/AuthReducer";
+import DotSteps from "./Components/DotSteps";
 
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
@@ -50,24 +53,21 @@ class OnboardingScreen extends Component {
       if (completedLocation) {
         if (completedNotification) {
           return navigation.dispatch({ type: "Home" });
-        } else {
-          if (Platform.OS === "android") {
-            return navigation.dispatch({ type: "Home" });
-          } else {
-            const NotificationPermission = await Permission.check("notification");
-            if (NotificationPermission === "undetermined") {
-              return navigation.dispatch({ type: "Home" });
-            }
-            return navigation.dispatch({ type: "Home" });
-          }
         }
-      } else {
-        const LocationPermission = await Permission.check("location");
-        if (LocationPermission === "undetermined") {
-          return navigation.dispatch({ type: "LocationPermissionView" });
+        if (Platform.OS === "android") {
+          return navigation.dispatch({ type: "Home" });
+        }
+        const NotificationPermission = await Permission.check("notification");
+        if (NotificationPermission === "undetermined") {
+          return navigation.dispatch({ type: "Home" });
         }
         return navigation.dispatch({ type: "Home" });
       }
+      const LocationPermission = await Permission.check("location");
+      if (LocationPermission === "undetermined") {
+        return navigation.dispatch({ type: "LocationPermissionView" });
+      }
+      return navigation.dispatch({ type: "Home" });
     }
   };
 
@@ -81,10 +81,13 @@ class OnboardingScreen extends Component {
             <View>
               <Text style={styles.titleText}>{I18n.t("newCustomerOnboarding.intro.title")}</Text>
               <Text style={styles.subtitleText}>
-                {I18n.t("newCustomerOnboarding.intro.description", {num: customer_free_minutes})}
+                {I18n.t("newCustomerOnboarding.intro.description", { num: customer_free_minutes })}
               </Text>
             </View>
-            <OnboardingButtons navigation={navigation} />
+            <View>
+              <DotSteps navigation={navigation} />
+              <OnboardingButtons navigation={navigation} />
+            </View>
           </View>
         </View>
       </ViewWrapper>
@@ -98,17 +101,17 @@ const mS = state => ({
   token: state.auth.token,
   isLoggedIn: state.auth.isLoggedIn,
   completedLocation: state.onboardingReducer.completedLocation,
-  completedNotification: state.onboardingReducer.completedNotification
+  completedNotification: state.onboardingReducer.completedNotification,
 });
 
 const mD = {
   updateLocation,
   ensureSessionDefaults,
   clearOnboarding,
-  registerDevice
+  registerDevice,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(OnboardingScreen);

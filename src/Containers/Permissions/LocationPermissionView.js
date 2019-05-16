@@ -6,6 +6,7 @@ import { Colors } from "../../Themes";
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 import Permission from "react-native-permissions";
+import DotSteps from "../Onboarding/Components/DotSteps";
 
 // Styles
 import styles from "./Styles/PermissionViewStyles";
@@ -53,7 +54,10 @@ class LocationPermissionView extends Component {
                 {I18n.t("newCustomerOnboarding.location.description")}
               </Text>
             </View>
-            <PermissionButtons navigation={navigation} check={"Location"} />
+            <View>
+              <DotSteps navigation={navigation} />
+              <PermissionButtons navigation={navigation} check={"Location"} />
+            </View>
           </View>
         </View>
       </ViewWrapper>
