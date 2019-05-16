@@ -54,7 +54,6 @@ class App extends Component {
   };
 
   componentWillMount() {
-    SplashScreen.hide();
     this.disableAppCenterCrashes();
     init();
     createStore()
@@ -138,6 +137,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    SplashScreen.hide();
     AppState.addEventListener("change", this._handleAppStateChange);
   }
 

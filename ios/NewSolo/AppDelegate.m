@@ -19,7 +19,7 @@
 #import <React/RCTRootView.h>
 #import "RNFIRMessaging.h"
 #import <react-native-branch/RNBranch.h>
-#import “SplashScreen.h"
+#import <RNSplashScreen.h>
 
 @implementation AppDelegate
 
@@ -58,7 +58,7 @@
 
    [FIRApp configure];
    [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
-   [SplashScreen show];
+   [RNSplashScreen show];
   return YES;
 }
 
