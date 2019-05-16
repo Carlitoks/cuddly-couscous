@@ -19,13 +19,14 @@
 #import <React/RCTRootView.h>
 #import "RNFIRMessaging.h"
 #import <react-native-branch/RNBranch.h>
+#import “SplashScreen.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
-  
+
   [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
   NSURL *jsCodeLocation;
 
@@ -33,9 +34,9 @@
 
   [AppCenterReactNativeAnalytics registerWithInitiallyEnabled:true];  // Initialize AppCenter analytics
 
-  [AppCenterReactNative register];  // Initialize AppCenter 
+  [AppCenterReactNative register];  // Initialize AppCenter
 
-  
+
     #ifdef DEBUG
         jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
     #else
@@ -57,6 +58,7 @@
 
    [FIRApp configure];
    [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
+   [SplashScreen show];
   return YES;
 }
 

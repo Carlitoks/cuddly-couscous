@@ -50,6 +50,8 @@ pod 'AppCenter/Crashes', '~> 1.6.1'
 
   pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
 end
 
 post_install do |installer|

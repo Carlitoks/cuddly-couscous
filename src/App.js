@@ -20,9 +20,11 @@ import analytics from "@segment/analytics-react-native";
 import I18n from "./I18n/I18n";
 import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
-import SplashScreen from "./Containers/Onboarding/Components/SplashScreen";
+import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
 import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
+import SplashScreen from 'react-native-splash-screen';
+
 
 class App extends Component {
   constructor(props) {
@@ -52,6 +54,7 @@ class App extends Component {
   };
 
   componentWillMount() {
+    SplashScreen.hide();
     this.disableAppCenterCrashes();
     init();
     createStore()
@@ -183,7 +186,7 @@ class App extends Component {
                 } else {
                   return Linking.openURL(url);
                 }
-              }).catch(err => console.error('An error occurred', err));              
+              }).catch(err => console.error('An error occurred', err));
             } catch (e) {
               console.log('error from linking', e);
             }
@@ -201,7 +204,7 @@ class App extends Component {
       if (this.state.loadingStore || !this.state.splashScreenTimer) {
         // TODO: return static loading screen, like the splash screen
         // right now we have a flash of blank white screen
-        return <SplashScreen />;
+        return <SplashScreenLogo />;
       }
 
       return (
