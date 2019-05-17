@@ -22,7 +22,7 @@ export default StyleSheet.create({
   },
   scrollContainer: {
     flex:1
-    
+
   },
   availableLangContainer: {
     backgroundColor: "#EFEFF4",
