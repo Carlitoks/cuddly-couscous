@@ -26,12 +26,21 @@ export default StyleSheet.create({
     backgroundColor: "#fff",
   },
   backgroundContainer: {
-    width: Metrics.width,
-    height: moderateScaleViewports(Metrics.height * 0.45),
-    justifyContent: "flex-start",
+    flexGrow: 1,
+    flexDirection: "column",
     alignItems: "center",
-    position: "relative",
-    top: 0,
+    justifyContent: "flex-start",
+    width: Metrics.width,
+  },
+  backgroundImage: {
+    height: moderateScaleViewports(Metrics.height * 0.55),
+    width: Metrics.width,
+  },
+  logoImg: {
+    marginTop: moderateScaleViewports(74),
+  },
+  bottomMarginContainer: {
+    marginBottom: moderateScaleViewports(77),
   },
   inputTextValid: {
     ...defaultInput,
@@ -52,7 +61,6 @@ export default StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 4,
     elevation: 4,
-    marginTop: moderateScaleViewports(-175),
   },
   buttonContainer: {
     flexDirection: "column",
@@ -148,12 +156,12 @@ export default StyleSheet.create({
     color: "#FFFFFF",
     fontSize: moderateScaleViewports(20),
     textAlign: "center",
-    paddingTop: moderateScaleViewports(27),
-    paddingBottom: moderateScaleViewports(24),
+    paddingTop: moderateScaleViewports(45),
+    paddingBottom: moderateScaleViewports(20),
   },
   topLogoContainer: {
     flexDirection: "column",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "center",
   },
 
@@ -196,7 +204,7 @@ export default StyleSheet.create({
     paddingBottom: moderateScaleViewports(5),
   },
   textContainerRow: {
-    flex: 1, 
+    flex: 1,
     flexDirection: 'row',
   },
 });

@@ -85,7 +85,7 @@ class CallButtons extends Component {
               });
             });
           } else {
-            navigation.dispatch({ type: "CameraMicPermissionView" });
+            navigation.dispatch({ type: "CameraMicPermissionView", params: { redirectTo: "Home" } });
           }
         }
         if (response.camera == "authorized" && response.microphone == "authorized") {
@@ -137,7 +137,7 @@ class CallButtons extends Component {
             <ActivityIndicator size="large" color="white" />
           </View>
         )}
-        
+
         {!creating && (
           <React.Fragment>
             <TouchableOpacity
