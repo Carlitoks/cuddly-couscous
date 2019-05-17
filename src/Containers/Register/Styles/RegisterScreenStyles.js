@@ -157,7 +157,7 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(20),
     textAlign: "center",
     paddingTop: moderateScaleViewports(45),
-    paddingBottom: moderateScaleViewports(20),
+    paddingBottom: Metrics.width <= 375 ? moderateScaleViewports(20) : moderateScaleViewports(120),
   },
   topLogoContainer: {
     flexDirection: "column",
