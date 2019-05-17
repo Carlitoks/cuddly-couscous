@@ -23,7 +23,7 @@ class NativeLangField extends Component {
             openSlideMenu={this.openSlideMenu}
             title={I18n.t("nativeLanguageTitle")}
             placeholder={I18n.t("nativeLanguageTitle")}
-            type="nativeLang"
+            type="nativeSupportedLang"
             contentContainerStyle={styles.renderPickerContainer}
             labelStyle={styles.renderPickerLabelPlaceHolder}
             showDivider={false}

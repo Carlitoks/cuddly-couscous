@@ -169,7 +169,7 @@ class PickerSelectComponent extends Component {
     const {
       type, nativeLangCode, labelStyle, title
     } = this.props;
-    if (type === "nativeLang") {
+    if (type === "nativeLang" || "nativeSupportedLang") {
       if (nativeLangCode) {
         return <Text style={labelStyle || styles.inputTitle}>{title}</Text>;
       }
@@ -208,7 +208,7 @@ class PickerSelectComponent extends Component {
             ? this.showCurrentCustomScenarioNote()
             : type === "scenarioSelection"
               ? this.showScenarioList()
-              : type === "nativeLang"
+              : type === "nativeLang" || "nativeSupportedLang"
                 ? this.showCurrentSelectedNativeLang()
                 : this.showCurrentSelectedLang()}
           {type === "additionalDetails" ? (

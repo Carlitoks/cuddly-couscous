@@ -89,7 +89,7 @@ class RegisterScreen extends Component {
             </ScrollView>
           </View>
         </TouchableWithoutFeedback>
-        <SlideUpPanel />
+        <SlideUpPanel navigation={navigation}/>
       </ViewWrapper>
     );
   }

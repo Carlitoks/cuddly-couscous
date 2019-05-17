@@ -13,7 +13,7 @@ import {
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
 import I18n, { translateLanguage } from "../../../I18n/I18n";
-import { Languages } from "../../../Config/Languages";
+import { Languages,supportedLangCodes } from "../../../Config/Languages";
 
 class NativeLang extends Component {
   renderButtonContent = currentLang => {
@@ -34,6 +34,62 @@ class NativeLang extends Component {
         <Text style={ButtonStyle}>{translateLanguage(currentLang["3"], currentLang.name)}</Text>
       </React.Fragment>
     );
+  };
+
+  renderSupportButtonContent = currentLang => {
+    const { nativeLangCode } = this.props;
+    let ButtonStyle = {
+      ...styles.availableLangText,
+      color: Colors.pricingViewBlack
+    };
+
+      if (nativeLangCode === currentLang)
+        ButtonStyle = {
+          ...styles.availableLangText,
+          color: Colors.gradientColor.top,
+          fontFamily: Fonts.BoldFont
+        };
+    return (
+      <React.Fragment>
+        { currentLang == "other"? 
+        <Text style={ButtonStyle}>{I18n.t("conversations")}</Text> 
+        :  <Text style={ButtonStyle}>{translateLanguage(currentLang)}</Text>}
+      </React.Fragment>
+    );
+  };
+
+  renderSupportedLanguages = () => {
+    const { nativeLangCode, navigation, closeSlideMenu } = this.props;
+    let supportedLang = [...supportedLangCodes];
+    supportedLang.push("other");
+    return supportedLang.map((language, current) => {
+      let selected = false;
+      let containerStyle = styles.LangViewContainer;
+        if (nativeLangCode === language) {
+          containerStyle = {
+            ...styles.LangViewContainer,
+            backgroundColor: '#ECE8F1',
+          };
+          selected = true;
+        }
+      return (
+      <React.Fragment key={current}>
+        <TouchableOpacity
+          style={containerStyle}
+          onPress={() => {
+            if ("other" === language){
+              closeSlideMenu();
+              return navigation.dispatch({ type: "LoginView" });              
+            }else{
+              this.changeLangCode(language)}
+            }
+          }
+        >
+          <View style={styles.selectLangButton}>{this.renderSupportButtonContent(language)}</View>
+        </TouchableOpacity>
+        { !selected ? <Divider style={styles.dividerStyle} /> : <React.Fragment />}
+      </React.Fragment>
+    )});
   };
 
   renderAvailableLanguages = () => {
@@ -78,7 +134,10 @@ class NativeLang extends Component {
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
           <React.Fragment>
-            {this.renderAvailableLanguages()}
+          {selection === "nativeLang"
+                  ? this.renderAvailableLanguages()
+                  : this.renderSupportedLanguages()}
+            {}
           </React.Fragment>
         </ScrollView>
       </React.Fragment>

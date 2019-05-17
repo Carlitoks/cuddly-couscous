@@ -11,7 +11,7 @@ import NativeLang from "./Partials/NativeLang";
 
 class SlideUpPanel extends Component {
   render() {
-    const { isSlideUpMenuVisible, closeSlideMenu, selection } = this.props;
+    const { isSlideUpMenuVisible, closeSlideMenu, selection, navigation } = this.props;
     return (
         <SlidingUpPanel
           visible={isSlideUpMenuVisible}
@@ -24,8 +24,10 @@ class SlideUpPanel extends Component {
               ? <Comments />
               : selection === "scenarioSelection"
                 ? <Scenario />
-                : selection === "nativeLang"
-                  ? <NativeLang />
+                : selection === "nativeLang" || "nativeSupportedLang"
+                  ? <NativeLang 
+                  selection= {selection} 
+                  navigation={navigation} />
                   : <Languages /> }
         </SlidingUpPanel>
     );
