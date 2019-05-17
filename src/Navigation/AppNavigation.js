@@ -38,10 +38,10 @@ import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
 import ForgotPasswordScreen from "../Containers/ForgotPassword/ForgotPasswordScreen";
 import SplashScreen from "../Containers/Onboarding/Components/SplashScreen";
-
+import LanguageListScreen from "../Containers/Register/Components/LanguageListScreen";
 // new session views
 import SessionView from "../Containers/Session/SessionView";
-import CustomerMatchingView from "../Containers/Session/CustomerMatchingView"
+import CustomerMatchingView from "../Containers/Session/CustomerMatchingView";
 import CustomerRetryView from "../Containers/Session/CustomerRetryView";
 import LinguistIncomingCallView from "../Containers/Session/LinguistIncomingCallView";
 
@@ -87,6 +87,13 @@ const Navigation = StackNavigator(
     },
     RegisterView: {
       screen: RegisterScreen,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
+    LanguageListScreen: {
+      screen: LanguageListScreen,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"
