@@ -43,12 +43,12 @@ class NativeLang extends Component {
       color: Colors.pricingViewBlack
     };
 
-      if (nativeLangCode === currentLang)
-        ButtonStyle = {
-          ...styles.availableLangText,
-          color: Colors.gradientColor.top,
-          fontFamily: Fonts.BoldFont
-        };
+    if (nativeLangCode === currentLang)
+      ButtonStyle = {
+        ...styles.availableLangText,
+        color: Colors.gradientColor.top,
+        fontFamily: Fonts.BoldFont
+      };
     return (
       <React.Fragment>
         { currentLang == "other"?
@@ -65,13 +65,13 @@ class NativeLang extends Component {
     return supportedLang.map((language, current) => {
       let selected = false;
       let containerStyle = styles.LangViewContainer;
-        if (nativeLangCode === language) {
-          containerStyle = {
-            ...styles.LangViewContainer,
-            backgroundColor: '#ECE8F1',
-          };
-          selected = true;
-        }
+      if (nativeLangCode === language) {
+        containerStyle = {
+          ...styles.LangViewContainer,
+          backgroundColor: "#ECE8F1"
+        };
+        selected = true;
+      }
       return (
       <React.Fragment key={current}>
         <TouchableOpacity
