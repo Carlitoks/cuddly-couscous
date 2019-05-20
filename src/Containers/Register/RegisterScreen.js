@@ -31,7 +31,7 @@ const JeenieLogo = require("../../Assets/Images/jeenieLogo.png");
 const BG = require("../../Assets/Images/BG.png");
 
 class RegisterScreen extends Component {
-  handleTouch = async (goto) => {
+  handleTouch = async goto => {
     const { navigation } = this.props;
     const LocationPermission = await Permission.check("location");
     if (LocationPermission === "undetermined" || LocationPermission === "denied") {
@@ -47,9 +47,7 @@ class RegisterScreen extends Component {
   };
 
   render() {
-    const {
-      navigation,
-    } = this.props;
+    const { navigation } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -91,7 +89,7 @@ class RegisterScreen extends Component {
             </ScrollView>
           </View>
         </TouchableWithoutFeedback>
-        <SlideUpPanel navigation={navigation}/>
+        <SlideUpPanel navigation={navigation} />
       </ViewWrapper>
     );
   }
@@ -103,5 +101,5 @@ const mD = {};
 
 export default connect(
   mS,
-  mD,
+  mD
 )(RegisterScreen);

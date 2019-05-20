@@ -2,14 +2,25 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
+import DeviceInfo from "react-native-device-info";
 import I18n from "../../../I18n/I18n";
 import { openSlideMenu } from "../../../Ducks/LogicReducer";
 import RenderPicker from "../../CustomerHome/Components/Partials/PickerSelect";
 import { moderateScaleViewports } from "../../../Util/Scaling";
+import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
+import { getLangForDeviceLocale } from "../../../Config/Languages";
 // Styles
 import styles from "./Styles/NativeLangFieldStyles";
 
 class NativeLangField extends Component {
+  componentDidMount() {
+    const LocaleLanguage = DeviceInfo.getDeviceLocale();
+    const { updateOnboarding } = this.props;
+    const localeCode = getLangForDeviceLocale(LocaleLanguage);
+    if (localeCode) {
+      updateOnboarding({ nativeLangCode: localeCode });
+    }
+  }
   openSlideMenu = type => {
     const { openSlideMenu } = this.props;
     return openSlideMenu({ type });
@@ -51,7 +62,8 @@ const mS = state => ({
 });
 
 const mD = {
-  openSlideMenu
+  openSlideMenu,
+  updateOnboarding
 };
 
 export default connect(

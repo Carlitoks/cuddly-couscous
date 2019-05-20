@@ -108,7 +108,13 @@ class CustomerHomeScreen extends Component {
   };
 
   render() {
-    const { navigation, logOutAsync, emailBounced, closeUpdateEmail, secondaryLangCode } = this.props;
+    const {
+      navigation,
+      logOutAsync,
+      emailBounced,
+      closeUpdateEmail,
+      secondaryLangCode
+    } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={styles.mainContainerHome}>
@@ -125,9 +131,7 @@ class CustomerHomeScreen extends Component {
             </View>
           </ScrollView>
           <SlideUpPanel />
-          <View style={{position: "absolute"}}>
-            {( emailBounced && <UpdateEmail />)}
-          </View>
+          <View style={{ position: "absolute" }}>{emailBounced && <UpdateEmail />}</View>
         </View>
       </ViewWrapper>
     );
@@ -142,7 +146,7 @@ const mS = state => ({
   uuid: state.auth.uuid,
   firstName: state.userProfile.firstName,
   completedLocation: state.onboardingReducer.completedLocation,
-  emailBounced: state.userProfile.emailBounced,
+  emailBounced: state.userProfile.emailBounced
 });
 
 const mD = {

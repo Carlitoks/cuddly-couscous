@@ -4,32 +4,35 @@ import { connect } from "react-redux";
 import SlidingUpPanel from "rn-sliding-up-panel";
 import { Metrics, Fonts } from "../../Themes";
 import { closeSlideMenu } from "../../Ducks/LogicReducer";
-import Languages from './Partials/Languages';
-import Comments from './Partials/Comments';
-import Scenario from './Partials/Scenario';
+import Languages from "./Partials/Languages";
+import Comments from "./Partials/Comments";
+import Scenario from "./Partials/Scenario";
 import NativeLang from "./Partials/NativeLang";
 
 class SlideUpPanel extends Component {
   render() {
     const { isSlideUpMenuVisible, closeSlideMenu, selection, navigation } = this.props;
     return (
-        <SlidingUpPanel
-          visible={isSlideUpMenuVisible}
-          onRequestClose={() => closeSlideMenu()}
-          allowDragging={false}
-          height={selection !== "scenarioSelection" ? Metrics.height * 0.60 : Metrics.height}
-          draggableRange={{top: selection !== "scenarioSelection" ? Metrics.height * 0.60 : Metrics.height, bottom: 0}}
-        >
-            {selection === "additionalDetails"
-              ? <Comments />
-              : selection === "scenarioSelection"
-                ? <Scenario />
-                : selection === "nativeLang" || "nativeSupportedLang"
-                  ? <NativeLang 
-                  selection= {selection} 
-                  navigation={navigation} />
-                  : <Languages /> }
-        </SlidingUpPanel>
+      <SlidingUpPanel
+        visible={isSlideUpMenuVisible}
+        onRequestClose={() => closeSlideMenu()}
+        allowDragging={false}
+        height={selection !== "scenarioSelection" ? Metrics.height * 0.6 : Metrics.height}
+        draggableRange={{
+          top: selection !== "scenarioSelection" ? Metrics.height * 0.6 : Metrics.height,
+          bottom: 0
+        }}
+      >
+        {selection === "additionalDetails" ? (
+          <Comments />
+        ) : selection === "scenarioSelection" ? (
+          <Scenario />
+        ) : selection === "nativeLang" || selection === "nativeSupportedLang" ? (
+          <NativeLang selection={selection} navigation={navigation} />
+        ) : (
+          <Languages />
+        )}
+      </SlidingUpPanel>
     );
   }
 }
