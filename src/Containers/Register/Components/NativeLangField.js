@@ -22,6 +22,8 @@ class NativeLangField extends Component {
       updateOnboarding({ nativeLangCode: localeCode });
     }
   }
+}
+
   openSlideMenu = type => {
     const { openSlideMenu } = this.props;
     return openSlideMenu({ type });
@@ -55,6 +57,7 @@ class NativeLangField extends Component {
     );
   }
 }
+
 
 const mS = state => ({
   errorType: state.onboardingReducer.errorType,
