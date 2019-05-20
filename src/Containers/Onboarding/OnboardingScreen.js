@@ -29,7 +29,7 @@ const backgroundImage = () => {
 };
 
 class OnboardingScreen extends Component {
-  componentWillMount = async () => {
+  componentWillMount(){
     const {
       navigation,
       isLoggedIn,
@@ -41,13 +41,17 @@ class OnboardingScreen extends Component {
       completedLocation,
       completedNotification,
       registerDevice,
+      deviceToken
     } = this.props;
     clearOnboarding();
     ensureSessionDefaults({
       primaryLangCode: primaryLangCode || "eng",
       secondaryLangCode: secondaryLangCode || "",
     });
-    registerDevice().then(response => null).catch(err => console.log("error creating the device", err));
+    if (!isLoggedIn && !token) {
+      if(!deviceToken)
+        registerDevice().then(response => null).catch(err => console.log("error creating the device", err));
+    };
 
     if (isLoggedIn && token) {
       if (completedLocation) {
@@ -57,19 +61,21 @@ class OnboardingScreen extends Component {
         if (Platform.OS === "android") {
           return navigation.dispatch({ type: "Home" });
         }
-        const NotificationPermission = await Permission.check("notification");
-        if (NotificationPermission === "undetermined") {
+        Permission.check("notification").then((permission) => {
+          if (permission === "undetermined") {
+            return navigation.dispatch({ type: "Home" });
+          }
           return navigation.dispatch({ type: "Home" });
+        });
+      }
+      Permission.check("location").then((permission) => {
+        if (permission === "undetermined") {
+          return navigation.dispatch({ type: "LocationPermissionView" });
         }
         return navigation.dispatch({ type: "Home" });
-      }
-      const LocationPermission = await Permission.check("location");
-      if (LocationPermission === "undetermined") {
-        return navigation.dispatch({ type: "LocationPermissionView" });
-      }
-      return navigation.dispatch({ type: "Home" });
+      });
     }
-  };
+  }
 
   render() {
     const { navigation } = this.props;
@@ -80,10 +86,10 @@ class OnboardingScreen extends Component {
           <View style={styles.bodyContainer}>
             <View>
               <Text style={styles.titleText}>{I18n.t("newCustomerOnboarding.intro.title")}</Text>
-              <Text style={styles.subtitleText}>
-                {I18n.t("newCustomerOnboarding.intro.description", { num: customer_free_minutes })}
-              </Text>
             </View>
+            <Text style={styles.subtitleText}>
+              {I18n.t("newCustomerOnboarding.intro.description", { num: customer_free_minutes })}
+            </Text>
             <View>
               <DotSteps navigation={navigation} />
               <OnboardingButtons navigation={navigation} />
@@ -102,6 +108,7 @@ const mS = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   completedLocation: state.onboardingReducer.completedLocation,
   completedNotification: state.onboardingReducer.completedNotification,
+  deviceToken: state.auth.deviceToken,
 });
 
 const mD = {

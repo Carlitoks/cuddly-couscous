@@ -16,7 +16,7 @@ class HeaderMinutesLeft extends Component {
     const { stripeCustomerID, stripePaymentToken, availableMinutes } = this.props;
     return (
       <View style={styles.minutesLeftContainer}>
-        {stripePaymentToken ? (
+        {stripePaymentToken && availableMinutes === 0 ? (
           <React.Fragment />
         ) : (
           <TouchableOpacity onPress={() => this.goToPayments()} style={styles.addCardContainer}>
@@ -43,7 +43,7 @@ class HeaderMinutesLeft extends Component {
 
   render() {
     const { stripePaymentToken, availableMinutes } = this.props;
-    if (availableMinutes && stripePaymentToken) {
+    if (!availableMinutes && !stripePaymentToken) {
       return <React.Fragment />;
     }
     return this.renderMinutesLeft();

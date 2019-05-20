@@ -50,10 +50,10 @@ class LocationPermissionView extends Component {
           <View style={styles.bodyContainer}>
             <View>
               <Text style={styles.titleTextnewOnboarding}>{I18n.t("newCustomerOnboarding.location.title")}</Text>
-              <Text style={styles.subtitleTextnewOnboarding}>
-                {I18n.t("newCustomerOnboarding.location.description")}
-              </Text>
             </View>
+            <Text style={styles.subtitleTextnewOnboarding}>
+              {I18n.t("newCustomerOnboarding.location.description")}
+            </Text>
             <View>
               <DotSteps navigation={navigation} />
               <PermissionButtons navigation={navigation} check={"Location"} />

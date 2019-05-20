@@ -61,6 +61,10 @@ export default StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 4,
     elevation: 4,
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOpacity: 0.38,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 0 },
   },
   buttonContainer: {
     flexDirection: "column",

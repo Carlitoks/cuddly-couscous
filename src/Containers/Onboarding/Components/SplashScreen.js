@@ -1,9 +1,11 @@
 import React from "react";
 import { View, Image, TextInput, Text, Platform, Animated } from "react-native";
+import Reactotron from 'reactotron-react-native';
 
 //styles
 import styles from "./Styles/SplashScreenStyles";
 import metrics from "../../../Themes/Metrics";
+import {moderateScaleViewports} from "../../../Util/Scaling";
 
 const logo = require("../../../Assets/Images/JeenieLoadingLogo.png");
 
@@ -26,7 +28,7 @@ class SplashScreen extends React.Component {
     let { fadeAnim } = this.state;
     return (
       <View style={styles.splashScreenContainer}>
-        <Animated.Image resizeMethod={"resize"} style={{opacity: fadeAnim, width: metrics.width * 0.70, height: metrics.height * 0.50, resizeMode: "contain"}} source={logo} />
+        <Animated.Image resizeMethod={"resize"} style={{opacity: fadeAnim, width: moderateScaleViewports(270), height: moderateScaleViewports(207), resizeMode: "contain"}} source={logo} />
       </View>);
   }
 };

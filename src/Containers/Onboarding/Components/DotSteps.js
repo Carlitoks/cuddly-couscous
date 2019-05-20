@@ -29,7 +29,7 @@ class DotSteps extends Component {
     }
   }
 
-  render() {
+  renderDotMenu = () => {
     const { navigation } = this.props;
     const { hasLocation, hasNotification } = this.state;
     return (
@@ -38,9 +38,17 @@ class DotSteps extends Component {
           (!hasLocation || !hasNotification)
           && <View style={navigation.state.routeName === "IntroView" ? styles.currentStep : styles.otherStep} />)}
         {(!hasLocation && <View style={navigation.state.routeName === "LocationPermissionView" ? styles.currentStep : styles.otherStep} />)}
-        { !hasNotification && <View style={navigation.state.routeName === "NotificationPermissionView" ? styles.currentStep : styles.otherStep} />}
       </View>
     );
+  };
+
+  render() {
+    const { navigation } = this.props;
+    const { hasLocation, hasNotification } = this.state;
+       if(hasLocation && hasNotification){
+         return <React.Fragment />;
+       }
+       return this.renderDotMenu();
   }
 }
 

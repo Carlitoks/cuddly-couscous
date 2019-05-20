@@ -117,6 +117,10 @@ export default StyleSheet.create({
     borderRadius: 4,
     elevation: 4,
     width: Metrics.width * 0.8,
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOpacity: 0.38,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 0 },
   },
   buttonContainer: {
     alignItems: "center",

@@ -34,7 +34,7 @@ export default StyleSheet.create({
   },
   forgotPasswordContainer: {
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     flexGrow: 1,
     backgroundColor: "#DBDBDB"
@@ -49,7 +49,6 @@ export default StyleSheet.create({
     color: "#231F20",
     fontSize: moderateScaleViewports(20),
     textAlign: "center",
-    paddingTop: moderateScaleViewports(100),
     paddingBottom: moderateScaleViewports(15),
   },
   subtitleText: {
@@ -58,7 +57,7 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(18),
     textAlign: "center",
     paddingBottom: moderateScaleViewports(35),
-    width: Metrics.width * 0.60
+    width: moderateScaleViewports(254)
   },
   invalidLabelText: {
     fontFamily: Fonts.BaseFont,

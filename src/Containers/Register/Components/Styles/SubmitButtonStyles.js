@@ -19,6 +19,14 @@ export default StyleSheet.create({
     borderBottomLeftRadius: moderateScaleViewports(4),
     borderBottomRightRadius: moderateScaleViewports(4),
   },
+  createAccountButtonDisableLogin: {
+    flex: 1,
+    backgroundColor: "#3F1674",
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomLeftRadius: moderateScaleViewports(4),
+    borderBottomRightRadius: moderateScaleViewports(4),
+  },
   buttonEnabledText: {
     textAlign: "center",
     color: "#fff",

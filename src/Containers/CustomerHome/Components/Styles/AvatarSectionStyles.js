@@ -1,27 +1,39 @@
 import { StyleSheet, Platform } from "react-native";
 import { ApplicationStyles, Colors, Fonts, Metrics } from "../../../../Themes";
 import { moderateScaleViewports } from "../../../../Util/Scaling";
+import Reactotron from "reactotron-react-native";
+import {isIphoneXorAbove} from "../../../../Util/Devices";
+
+Reactotron.log(Metrics.width, isIphoneXorAbove());
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   avatarContainer: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
     backgroundColor: Colors.gradientColor.top,
     height: Metrics.height * 0.67,
     width: Metrics.width
+  },
+  contentContainer: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flex: 0.65,
   },
   jeeniesStandingBy: {
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(17),
     color: "#fff"
   },
-  jeeniesImg: {
-    marginTop: moderateScaleViewports(10),
-    resizeMode: "contain",
-    width: Metrics.width * 0.63,
-    height: Metrics.width * 0.63,
-    marginBottom: moderateScaleViewports(10)
-  }
+  imgStyleSmall: {
+    flex: 0.9,
+    resizeMode: "contain"
+  },
+  imgStyleRegular: {
+    top: -25,
+  },
+  imgStyleXandAbove: {
+    width: moderateScaleViewports(Metrics.width * 0.70),
+    height: moderateScaleViewports(Metrics.width * 0.70),
+    resizeMode: "cover",
+  },
 });

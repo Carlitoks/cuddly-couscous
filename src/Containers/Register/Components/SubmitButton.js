@@ -151,6 +151,13 @@ class SubmitButton extends Component {
     }
   };
 
+  disableLoginStyles = () => {
+    const { type } = this.props;
+    if(type === "login")
+      return styles.createAccountButtonDisableLogin;
+    return styles.createAccountButtonDisable;
+  };
+
   renderLogin = () => {
     const {
       isValidEmail, makingRequest, email, password,
@@ -161,7 +168,7 @@ class SubmitButton extends Component {
         disabled={!isValidEmail || makingRequest || (!email || !password)}
         style={
           !isValidEmail || makingRequest || (!email || !password)
-            ? styles.createAccountButtonDisable
+            ? this.disableLoginStyles()
             : styles.createAccountButton
         }
       >

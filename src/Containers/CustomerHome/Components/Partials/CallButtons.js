@@ -85,7 +85,7 @@ class CallButtons extends Component {
               });
             });
           } else {
-            navigation.dispatch({ type: "CameraMicPermissionView", params: { redirectTo: "Home" } });
+            navigation.dispatch({ type: "CameraMicPermissionView" });
           }
         }
         if (response.camera == "authorized" && response.microphone == "authorized") {

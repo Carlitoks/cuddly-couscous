@@ -40,11 +40,6 @@ class CameraMicPermissionView extends Component {
                 {I18n.t('customerHome.sessionPermissions.heading')}
               </Text>
             </View>
-
-            <View style={styles.backgroundImageContainer}>
-              
-            </View>
-
             
               <View style={styles.bottomButtonsContainer}>
               <Text style={styles.titleText}>{I18n.t('customerHome.sessionPermissions.title')}</Text>

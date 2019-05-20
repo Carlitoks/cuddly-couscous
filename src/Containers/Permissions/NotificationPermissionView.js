@@ -40,10 +40,10 @@ class NotificationPermissionView extends Component {
           <Image source={backgroundImage} style={styles.backgroundImage} />
           <View style={styles.bodyContainer}>
             <Text style={styles.titleTextnewOnboarding}>{I18n.t("newCustomerOnboarding.notification.title")}</Text>
-            <Text style={styles.subtitleTextnewOnboarding}>
-              {I18n.t("newCustomerOnboarding.notification.description")}
-            </Text>
             <View>
+              <Text style={styles.subtitleTextnewOnboarding}>
+                {I18n.t("newCustomerOnboarding.notification.description")}
+              </Text>
               <DotSteps navigation={navigation} />
               <PermissionButtons navigation={navigation} check={"Notification"} />
             </View>

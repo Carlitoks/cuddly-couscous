@@ -21,7 +21,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingBottom: isIphoneXorAbove() ? 50 : 0,
+    paddingBottom: isIphoneXorAbove() ? 44 : 25,
   },
   callNowButtonContainer: {
     flexDirection: 'column',
@@ -56,7 +56,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: moderateScaleViewports(23),
-    paddingBottom: moderateScaleViewports(12)
   },
   audioOnlyButtonText: {
     ...setTextProperties('#848688', Fonts.BaseFont, moderateScaleViewports(14)),
