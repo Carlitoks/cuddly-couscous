@@ -15,9 +15,10 @@ import styles from "./Styles/NativeLangFieldStyles";
 class NativeLangField extends Component {
   componentDidMount() {
     const LocaleLanguage = DeviceInfo.getDeviceLocale();
-    const { updateOnboarding } = this.props;
+    const { updateOnboarding, nativeLangCode } = this.props;
     const localeCode = getLangForDeviceLocale(LocaleLanguage);
     if (localeCode) {
+    if (!nativeLangCode && localeCode) {
       updateOnboarding({ nativeLangCode: localeCode });
     }
   }
@@ -58,7 +59,8 @@ class NativeLangField extends Component {
 const mS = state => ({
   errorType: state.onboardingReducer.errorType,
   password: state.onboardingReducer.password,
-  isValidPassword: state.onboardingReducer.isValidPassword
+  isValidPassword: state.onboardingReducer.isValidPassword,
+  nativeLangCode: state.onboardingReducer.nativeLangCode
 });
 
 const mD = {

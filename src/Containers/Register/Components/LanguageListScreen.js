@@ -38,7 +38,7 @@ class LanguageListScreen extends Component {
     const { updateOnboarding, navigation } = this.props;
 
     updateOnboarding({ nativeLangCode: langCode });
-    return navigation.dispatch({ type: "RegisterView" });
+    return navigation.dispatch({ type: "back" });
   };
 
   renderAvailableLanguages = () => {

@@ -25,7 +25,7 @@ export const clearOnboarding = () => ({
     makingRequest: false,
     isValidEmail: false,
     isValidFirstName: false,
-    isValidPassword: false
+    isValidPassword: false,
   }
 });
 
