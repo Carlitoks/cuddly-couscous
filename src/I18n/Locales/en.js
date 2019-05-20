@@ -968,7 +968,9 @@ export default (ENG = {
       title: "Tell us about yourself:",
       termsAndPrivacyNotice: "By continuing, you agree to our Terms and Privacy Policy.",
       terms: "Terms",
-      privacyPolicy: "Privacy Policy"
+      privacyPolicy: "Privacy Policy",
+      otherLanguages: "Other Languages",
+      chooseNativeLang: "Choose Your Native Language"
     },
     login: {
       forgotPassword: "Forgot password?"

@@ -10,7 +10,7 @@ import { moderateScaleViewports } from "../../../Util/Scaling";
 import styles from "./Styles/NativeLangFieldStyles";
 
 class NativeLangField extends Component {
-  openSlideMenu = (type) => {
+  openSlideMenu = type => {
     const { openSlideMenu } = this.props;
     return openSlideMenu({ type });
   };
@@ -28,14 +28,14 @@ class NativeLangField extends Component {
             labelStyle={styles.renderPickerLabelPlaceHolder}
             showDivider={false}
             selectedLabelStyle={styles.renderPickerLabelTop}
-            icon={(
+            icon={
               <Icon
                 color="rgba(0, 0, 0, 0.18)"
                 name="chevron-right"
                 type="evilicon"
                 size={moderateScaleViewports(16)}
               />
-            )}
+            }
             selectorContainer={styles.renderPickerSelectorContainer}
           />
         </View>
@@ -51,10 +51,10 @@ const mS = state => ({
 });
 
 const mD = {
-  openSlideMenu,
+  openSlideMenu
 };
 
 export default connect(
   mS,
-  mD,
+  mD
 )(NativeLangField);

@@ -136,9 +136,9 @@ class NativeLang extends Component {
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
           <React.Fragment>
-            {selection === "nativeLang"
-              ? this.renderAvailableLanguages()
-              : this.renderSupportedLanguages()}
+            {selection === "nativeSupportedLang"
+              ? this.renderSupportedLanguages()
+              : this.renderAvailableLanguages()}
           </React.Fragment>
         </ScrollView>
       </React.Fragment>

@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
+import { moderateScaleViewports, moderateScale } from "../../../../Util/Scaling";
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../../Themes";
 
 export default StyleSheet.create({
@@ -7,22 +8,10 @@ export default StyleSheet.create({
     flex: 1,
     paddingBottom: Metrics.baseMargin
   },
-  logo: {
-    marginTop: Metrics.doubleSection,
-    height: Metrics.images.logo,
-    width: Metrics.images.logo,
-    resizeMode: 'contain'
-  },
-  centered: {
-    alignItems: 'center'
-  },
-  fullWidth: { flex: 1 },
   wrapperContainer: {
-    backgroundColor: 'white',
-    height: '100%'
+    backgroundColor: "white",
+    height: "100%"
   },
-  height: { height: '100%' },
-  flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
   scrollViewFlex: {
     flexGrow: 1,
     flexDirection: "column",
@@ -31,5 +20,44 @@ export default StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: "#fff"
   },
-  noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' }
+  scrollContainer: {
+    width: "100%"
+  },
+  availableLangContainer: {
+    backgroundColor: "#EFEFF4",
+    height: 48,
+    justifyContent: "center",
+    width: "100%"
+  },
+
+  availableLangContainerText: {
+    paddingLeft: 19,
+    fontFamily: Fonts.BaseFont,
+    borderWidth: 0,
+    fontSize: moderateScaleViewports(13, 0),
+    color: "#8e8e91"
+  },
+  LangViewContainer: {
+    height: 48,
+    width: "100%",
+    justifyContent: "center",
+    backgroundColor: "#F4F4F4",
+    borderWidth: 0
+  },
+  selectLangButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignContent: "center"
+  },
+  dividerStyle: {
+    backgroundColor: "rgba(90, 90, 90, 0.2)",
+    height: 0.5,
+    width: Metrics.width * 0.9
+  },
+  availableLangText: {
+    paddingLeft: 5,
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(18),
+    color: "#1C1B1B"
+  }
 });
