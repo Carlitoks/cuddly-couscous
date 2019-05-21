@@ -21,9 +21,9 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   imgStyleRegular: {
-    height: Platform.OS === "android" ? moderateScaleViewports(Metrics.height * 0.40) : (Metrics.width * 0.60),
+    height: (Metrics.width * 0.60),
     resizeMode: "cover",
-    width: Platform.OS === "android" ? moderateScaleViewports(Metrics.height * 0.40) : (Metrics.width * 0.60),
+    width: (Metrics.width * 0.60),
   },
   imgStyleXAndAbove: {
     height: (Metrics.width * 0.70),
