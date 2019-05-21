@@ -14,9 +14,10 @@ class HeaderMinutesLeft extends Component {
 
   renderMinutesLeft = () => {
     const { stripeCustomerID, stripePaymentToken, availableMinutes } = this.props;
+    console.log("this.props");
     return (
       <View style={styles.minutesLeftContainer}>
-        {stripePaymentToken && availableMinutes === 0 ? (
+        {stripePaymentToken ? (
           <React.Fragment />
         ) : (
           <TouchableOpacity onPress={() => this.goToPayments()} style={styles.addCardContainer}>
@@ -25,27 +26,29 @@ class HeaderMinutesLeft extends Component {
             </Text>
           </TouchableOpacity>
         )}
-        <View
-          style={
-            availableMinutes >= 0 && availableMinutes < 6
-              ? styles.outOfMinutesContainer
-              : styles.minutesLeftInfoContainer
-          }
-        >
-          <Icon name="clock" type="evilicon" containerStyle={styles.clockIcon} color="#fff" />
-          <Text style={styles.minutesLeftInfoText}>
-            {I18n.t("minutesAbbreviation", { minutes: availableMinutes })}
-          </Text>
-        </View>
+        {(stripePaymentToken && availableMinutes > 0) || !stripePaymentToken ? (
+          <View
+            style={
+              availableMinutes === 0
+                ? styles.outOfMinutesContainer
+                : availableMinutes > 0 && availableMinutes < 6
+                ? styles.fewMinutesLeftContainer
+                : styles.minutesLeftInfoContainer
+            }
+          >
+            <Icon name="clock" type="evilicon" containerStyle={styles.clockIcon} color="#fff" />
+            <Text style={styles.minutesLeftInfoText}>
+              {I18n.t("minutesAbbreviation", { minutes: availableMinutes })}
+            </Text>
+          </View>
+        ) : (
+          <React.Fragment />
+        )}
       </View>
     );
   };
 
   render() {
-    const { stripePaymentToken, availableMinutes } = this.props;
-    if (!availableMinutes && !stripePaymentToken) {
-      return <React.Fragment />;
-    }
     return this.renderMinutesLeft();
   }
 }
