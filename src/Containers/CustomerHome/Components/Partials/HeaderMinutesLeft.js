@@ -14,7 +14,7 @@ class HeaderMinutesLeft extends Component {
 
   renderMinutesLeft = () => {
     const { stripeCustomerID, stripePaymentToken, availableMinutes } = this.props;
-    console.log("this.props");
+
     return (
       <View style={styles.minutesLeftContainer}>
         {stripePaymentToken ? (
