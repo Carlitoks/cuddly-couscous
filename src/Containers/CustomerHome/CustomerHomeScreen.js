@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  Alert, View, ImageBackground,
+  Alert, View, ImageBackground, Text
 } from "react-native";
 import InCallManager from "react-native-incall-manager";
 import { connect } from "react-redux";

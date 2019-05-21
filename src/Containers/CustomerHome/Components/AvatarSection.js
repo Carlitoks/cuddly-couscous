@@ -18,14 +18,14 @@ export default class AvatarSection extends Component {
   render() {
     const { showNum } = this.props;
     return (
-      <React.Fragment>
+      <View style={styles.contentContainer}>
         <Text style={styles.jeeniesStandingBy}>
           {showNum
             ? I18n.t("newCustomerHome.numLinguists", { num: this.getRandomInt(40, 60) })
             : I18n.t("newCustomerHome.linguists")}
         </Text>
-        <Image style={styles.imgStyleRegular} source={Jeenies} />
-      </React.Fragment>
+        <Image style={isIphoneXorAbove() ? styles.imgStyleXAndAbove : styles.imgStyleRegular} source={Jeenies} />
+      </View>
     );
   }
 }

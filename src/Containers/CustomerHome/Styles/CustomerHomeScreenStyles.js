@@ -16,7 +16,7 @@ export default StyleSheet.create({
   height: { height: "100%" },
   imgBackground: { height: metrics.height * 0.70, resizeMode: "stretch", width: metrics.width },
   imgBackgroundContainer: {
-    alignItems: "center", flexDirection: "column", flexGrow: 1, justifyContent: "flex-start", width: metrics.width,
+    alignItems: "center", flexDirection: "column", flexGrow: 1, justifyContent: "space-between", width: metrics.width,
   },
   logo: {
     height: Metrics.images.logo,
