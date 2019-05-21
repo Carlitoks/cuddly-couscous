@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import {
+  Alert, View, ImageBackground,
+} from "react-native";
 import InCallManager from "react-native-incall-manager";
 import { connect } from "react-redux";
 import analytics from "@segment/analytics-react-native";
@@ -10,7 +12,7 @@ import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
 import {
   ensureSessionDefaults,
   updateLocation,
-  guessSecondaryLangCode
+  guessSecondaryLangCode,
 } from "../../Ducks/NewSessionReducer";
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
@@ -26,6 +28,8 @@ import { supportedLangCodes } from "../../Config/Languages";
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
 
+const imgBackground = require("../../Assets/Images/Background.png");
+
 class CustomerHomeScreen extends Component {
   componentWillMount() {
     const {
@@ -36,16 +40,16 @@ class CustomerHomeScreen extends Component {
       clearEvents,
       navigation,
       firstName,
-      completedLocation
+      completedLocation,
     } = this.props;
 
     analytics.identify(uuid, {
-      name: firstName
+      name: firstName,
     });
 
     ensureSessionDefaults({
       primaryLangCode: this.setPrimaryLangCode(),
-      secondaryLangCode: secondaryLangCode || ""
+      secondaryLangCode: secondaryLangCode || "",
     });
 
     clearEvents();
@@ -62,7 +66,7 @@ class CustomerHomeScreen extends Component {
       uuid,
       token,
       getProfileAsync,
-      loadSessionScenarios
+      loadSessionScenarios,
     } = this.props;
 
     if (uuid !== "" && token !== "") {
@@ -80,8 +84,8 @@ class CustomerHomeScreen extends Component {
         I18n.t("minutesAdded"),
         I18n.t("complimentMinutes", {
           maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
-          organizer: this.props.navigation.state.params.organization
-        })
+          organizer: this.props.navigation.state.params.organization,
+        }),
       );
     }
     loadSessionScenarios(true);
@@ -102,7 +106,7 @@ class CustomerHomeScreen extends Component {
     return "eng";
   };
 
-  openSlideMenu = type => {
+  openSlideMenu = (type) => {
     const { openSlideMenu } = this.props;
     return openSlideMenu({ type });
   };
@@ -113,23 +117,19 @@ class CustomerHomeScreen extends Component {
       logOutAsync,
       emailBounced,
       closeUpdateEmail,
-      secondaryLangCode
+      secondaryLangCode,
     } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={styles.mainContainerHome}>
           <Header navigation={navigation} />
-          <ScrollView
-            automaticallyAdjustContentInsets
-            alwaysBounceVertical={false}
-            contentContainerStyle={styles.scrollViewFlex}
-          >
+          <ImageBackground source={imgBackground} style={styles.imgBackgroundContainer} imageStyle={styles.imgBackground}>
             <AvatarSection showNum={!!secondaryLangCode} />
             <View style={styles.flexEndCenter}>
               <CallInputs navigation={navigation} openSlideMenu={this.openSlideMenu} />
               <CallButtons navigation={navigation} />
             </View>
-          </ScrollView>
+          </ImageBackground>
           <SlideUpPanel />
           <View style={{ position: "absolute" }}>{emailBounced && <UpdateEmail />}</View>
         </View>
@@ -146,7 +146,7 @@ const mS = state => ({
   uuid: state.auth.uuid,
   firstName: state.userProfile.firstName,
   completedLocation: state.onboardingReducer.completedLocation,
-  emailBounced: state.userProfile.emailBounced
+  emailBounced: state.userProfile.emailBounced,
 });
 
 const mD = {
@@ -158,10 +158,10 @@ const mD = {
   loadSessionScenarios,
   logOutAsync,
   closeUpdateEmail,
-  guessSecondaryLangCode
+  guessSecondaryLangCode,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(CustomerHomeScreen);
