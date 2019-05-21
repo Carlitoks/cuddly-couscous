@@ -29,7 +29,8 @@ const backgroundImage = () => {
 };
 
 class OnboardingScreen extends Component {
-  componentWillMount(){
+  constructor(props) {
+    super(props);
     const {
       navigation,
       isLoggedIn,
@@ -41,7 +42,7 @@ class OnboardingScreen extends Component {
       completedLocation,
       completedNotification,
       registerDevice,
-      deviceToken
+      deviceToken,
     } = this.props;
     clearOnboarding();
     ensureSessionDefaults({
@@ -49,30 +50,32 @@ class OnboardingScreen extends Component {
       secondaryLangCode: secondaryLangCode || "",
     });
     if (!isLoggedIn && !token) {
-      if(!deviceToken)
-        registerDevice().then(response => null).catch(err => console.log("error creating the device", err));
-    };
+      if (!deviceToken) registerDevice().then(response => null).catch(err => console.log("error creating the device", err));
+    }
 
     if (isLoggedIn && token) {
       if (completedLocation) {
         if (completedNotification) {
-          return navigation.dispatch({ type: "Home" });
+          navigation.dispatch({ type: "Home" });
         }
         if (Platform.OS === "android") {
-          return navigation.dispatch({ type: "Home" });
+          navigation.dispatch({ type: "Home" });
+        } else {
+          Permission.check("notification").then((permission) => {
+            if (permission === "undetermined") {
+              navigation.dispatch({ type: "Home" });
+            } else {
+              navigation.dispatch({ type: "Home" });
+            }
+          });
         }
-        Permission.check("notification").then((permission) => {
-          if (permission === "undetermined") {
-            return navigation.dispatch({ type: "Home" });
-          }
-          return navigation.dispatch({ type: "Home" });
-        });
       }
       Permission.check("location").then((permission) => {
         if (permission === "undetermined") {
-          return navigation.dispatch({ type: "LocationPermissionView" });
+          navigation.dispatch({ type: "LocationPermissionView" });
+        } else {
+          navigation.dispatch({ type: "Home" });
         }
-        return navigation.dispatch({ type: "Home" });
       });
     }
   }
