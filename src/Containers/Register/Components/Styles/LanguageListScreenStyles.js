@@ -17,7 +17,7 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingBottom: 20,
+    paddingBottom: moderateScale(80, 0),
     backgroundColor: "#fff"
   },
   scrollContainer: {
@@ -41,7 +41,7 @@ export default StyleSheet.create({
   },
   LangViewContainer: {
     height: 48,
-    flex:1,
+    flex: 1,
     justifyContent: "center",
     backgroundColor: "#F4F4F4",
     borderWidth: 0
@@ -49,7 +49,7 @@ export default StyleSheet.create({
   selectLangButton: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignContent: "center",
+    alignContent: "center"
   },
   dividerStyle: {
     backgroundColor: "rgba(90, 90, 90, 0.2)",
