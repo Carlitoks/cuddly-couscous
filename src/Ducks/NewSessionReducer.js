@@ -233,7 +233,7 @@ const initialState = {
     type: "",
     matchMethod: "",
     primaryLangCode: "eng",
-    secondaryLangCode: "cmn",
+    secondaryLangCode: "",
     avModePreference: null,
     eventID: null,
     scenarioID: null,

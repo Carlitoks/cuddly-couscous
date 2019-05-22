@@ -17,7 +17,6 @@ import { asyncScanQR } from "../../Ducks/EventsReducer";
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 import styles from "./styles";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
-import { Languages, DefaultLanguagePairMap } from "../../Config/Languages";
 
 class ScanScreenView extends Component {
   state = {

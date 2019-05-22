@@ -20,10 +20,6 @@ import {
   checkForAllPermissions,
   checkCallPermissions
 } from "../../../../Util/Permission";
-import {
-  Languages,
-  DefaultLanguagePairMap
-} from "../../../../Config/Languages";
 import { SESSION } from "../../../../Util/Constants";
 import{createNewSession} from "../../../../Ducks/CurrentSessionReducer";
 
