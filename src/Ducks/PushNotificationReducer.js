@@ -57,7 +57,8 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
     userProfile
   } = getState();
   const isLinguist = !!userProfile.linguistProfile;
-  const CurrentView = nav.routes[0].routes[0].routes[0].routeName;
+  const CurrentRoutes = nav.routes[0].routes[0].routes;
+  const CurrentView = CurrentRoutes.length > 1 ? CurrentRoutes[1].routeName : CurrentRoutes[0].routeName;
   if (
     auth.isLoggedIn &&
     invitationId &&
@@ -112,7 +113,7 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
       }
 
       Alert.alert(I18n.t("error"), translateApiError(e));
-      
+
       // TODO: record forensics error
       // TODO: nav to home + alert?
     });
