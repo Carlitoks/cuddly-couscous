@@ -10,7 +10,7 @@ export default StyleSheet.create({
   },
   wrapperContainer: {
     backgroundColor: "white",
-    height: "100%"
+    flex: 1
   },
   scrollViewFlex: {
     flexGrow: 1,
