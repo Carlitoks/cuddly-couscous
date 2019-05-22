@@ -1870,7 +1870,6 @@ export const comingSoonCodes = [
   "dan",
   "fin",
   "hin",
-  "kor",
   "nor",
   "nld",
   "pol",
@@ -1883,24 +1882,11 @@ export const comingSoonCodes = [
 ];
 
 // languages available for session selection
-export const supportedLangCodes = ["eng","cmn","yue","jpn","spa","por","fra","ita","deu"];
-
-// default secondary language for a given primary language
-export const DefaultLanguagePairMap = {
-  eng: "cmn",
-  cmn: "eng",
-  yue: "eng",
-  jpn: "eng",
-  spa: "eng",
-  por: "eng",
-  fra: "eng",
-  ita: "eng",
-  deu: "eng"
-};
+export const supportedLangCodes = ["eng","cmn","yue","jpn","spa","por","fra","ita","deu","kor"];
 
 // allowed secondary language choices for each primary language
 export const AllowedLanguagePairs = {
-  eng: ["cmn","yue","jpn","spa","por","fra","ita","deu"],
+  eng: ["cmn","yue","jpn","spa","por","fra","ita","deu", "kor"],
   cmn: ["eng"],
   yue: ["eng"],
   jpn: ["eng"],
@@ -1908,7 +1894,8 @@ export const AllowedLanguagePairs = {
   por: ["eng"],
   fra: ["eng"],
   ita: ["eng"],
-  deu: ["eng"]
+  deu: ["eng"],
+  kor: ["eng"]
 };
 
 // raw map of which language is the default selection for which countries
@@ -1921,7 +1908,8 @@ export const LangCountryMap = {
   por: ["pt","br"],
   fra: ["fr","be","bj","bf","bi","cm","td","km","cg","cd","ci","dj","ga","gn","ht","lu","mg","ml","mc","ne","rw","sn","sc","ch","tg","vu","vn"],
   ita: ["it"],
-  deu: ["de"]
+  deu: ["de"],
+  kor: ["kr","kp"]
 };
 
 // optimized lookup map of country codes to target default language
@@ -1937,7 +1925,8 @@ export const LocaleLangMap = {
   pt: "por",
   fr: "fra",
   it: "ita",
-  de: "deu"
+  de: "deu",
+  ko: "kor"
 };
 
 function buildCountryLangMap() {
