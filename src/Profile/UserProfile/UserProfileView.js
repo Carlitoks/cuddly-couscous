@@ -25,8 +25,7 @@ import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import Close from "../../Components/Close/Close";
 
 class UserProfileView extends Component {
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   getUserProfile = () => {
     const { token, uuid } = this.props;
@@ -79,27 +78,19 @@ class UserProfileView extends Component {
       nativeLangCode: selectedNativeLanguage["3"]
     };
 
-    this.props.updateProfileAsync(uuid, data, token).catch((err) => {
-      Alert.alert(I18n.t('status.error'), translateApiError(err));
+    this.props.updateProfileAsync(uuid, data, token).catch(err => {
+      Alert.alert(I18n.t("status.error"), translateApiError(err));
     });
   };
 
   render() {
     const navigation = this.props.navigation;
-    const {
-      selectedNativeLanguage,
-      firstName,
-      lastName,
-      gender,
-      linguistProfile
-    } = this.props;
+    const { selectedNativeLanguage, firstName, lastName, gender, linguistProfile } = this.props;
 
     return (
       <ViewWrapper style={styles.mainContainer}>
         <HeaderView
-          headerLeftComponent={
-            <ShowMenuButton navigation={this.props.navigation} />
-          }
+          headerLeftComponent={<ShowMenuButton navigation={this.props.navigation} />}
           headerRightComponent={
             <Close
               action={() => {
@@ -145,7 +136,7 @@ class UserProfileView extends Component {
                     subtitleStyle={styles.listSubtitle}
                     onPress={() => {
                       navigation.dispatch({
-                        type: "EditNativeLanguageView"
+                        type: "LanguageListScreen"
                       });
                     }}
                   />
@@ -158,7 +149,7 @@ class UserProfileView extends Component {
                   subtitle={
                     gender === "decline" || gender === ""
                       ? I18n.t("unspecifiedGender")
-                      : _capitalize(gender === 'male' ? I18n.t("male") : I18n.t("female"))
+                      : _capitalize(gender === "male" ? I18n.t("male") : I18n.t("female"))
                   }
                   subtitleStyle={styles.listSubtitle}
                   onPress={() => {
