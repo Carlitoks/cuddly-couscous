@@ -18,11 +18,11 @@ class NativeLangField extends Component {
     const { updateOnboarding, nativeLangCode } = this.props;
     const localeCode = getLangForDeviceLocale(LocaleLanguage);
     if (localeCode) {
-    if (!nativeLangCode && localeCode) {
-      updateOnboarding({ nativeLangCode: localeCode });
+      if (!nativeLangCode && localeCode) {
+        updateOnboarding({ nativeLangCode: localeCode });
+      }
     }
   }
-}
 
   openSlideMenu = type => {
     const { openSlideMenu } = this.props;
@@ -47,7 +47,7 @@ class NativeLangField extends Component {
                 color="rgba(0, 0, 0, 0.18)"
                 name="chevron-right"
                 type="evilicon"
-                size={moderateScaleViewports(16)}
+                size={moderateScaleViewports(20)}
               />
             }
             selectorContainer={styles.renderPickerSelectorContainer}
@@ -57,7 +57,6 @@ class NativeLangField extends Component {
     );
   }
 }
-
 
 const mS = state => ({
   errorType: state.onboardingReducer.errorType,

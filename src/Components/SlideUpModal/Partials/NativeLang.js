@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Divider, Icon } from "react-native-elements";
 import styles from "./Styles/LanguagesStyles";
 import { Metrics, Colors, Fonts } from "../../../Themes";
+import { moderateScaleViewports } from "../../../Util/Scaling";
 import {
   changeLangCode,
   modifyAdditionalDetails,
@@ -108,7 +109,16 @@ class NativeLang extends Component {
     return (
       <React.Fragment>
         {currentLang == "other" ? (
-          <Text style={ButtonStyle}>{I18n.t("conversations")}</Text>
+          <React.Fragment>
+            <Text style={ButtonStyle}>{I18n.t("conversations")}</Text>
+            <Icon
+              color="rgba(0, 0, 0, 0.18)"
+              name="chevron-right"
+              type="evilicon"
+              size={moderateScaleViewports(20)}
+              iconStyle={{ marginRight: "12%" }}
+            />
+          </React.Fragment>
         ) : (
           <Text style={ButtonStyle}>{translateLanguage(currentLang)}</Text>
         )}
