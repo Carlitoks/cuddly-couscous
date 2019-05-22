@@ -18,12 +18,14 @@ export const update = payload => ({
   payload
 });
 
+// TODO: initState()
 const initialState = {
   scenariosLoadedAt: null,
   scenarios: [],
   configLoadedAt: null,
   config: {},
-  supportedLangPairs: [] // TODO
+  supportedLangPairs: [], // TODO
+  jeenieCounts: {} // TODO:
 };
 
 export const loadSessionScenarios = (useCache = true) => (dispatch, getState) => {
