@@ -174,10 +174,7 @@ const mS = state => ({
   preferredName: state.userProfile.preferredName,
   linguistProfile: state.userProfile.linguistProfile,
   gender: state.userProfile.gender,
-  selectedNativeLanguage: translateLanguage(
-    state.userProfile.selectedNativeLanguage[3],
-    state.userProfile.selectedNativeLanguage.name
-  ),
+  selectedNativeLanguage: translateLanguage(state.userProfile.nativeLangCode),
   avatarURL: state.userProfile.avatarURL,
   avatarBase64: state.userProfile.avatarBase64,
   token: state.auth.token,

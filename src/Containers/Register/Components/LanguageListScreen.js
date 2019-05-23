@@ -7,6 +7,7 @@ import Header from "../../CustomerHome/Components/Header";
 import ViewWrapper from "../../ViewWrapper/ViewWrapper";
 import I18n, { translateLanguage } from "../../../I18n/I18n";
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
+import { updateView, updateProfileAsync } from "../../../Ducks/UserProfileReducer";
 import { primaryCodes } from "../../../Config/Languages";
 // Styles
 import styles from "./Styles/LanguageListScreenStyles";
@@ -35,10 +36,40 @@ class LanguageListScreen extends Component {
   };
 
   changeLangCode = langCode => {
-    const { updateOnboarding, navigation } = this.props;
+    const {
+      updateOnboarding,
+      navigation,
+      isLoggedIn,
+      updateView,
+      updateProfileAsync,
+      token,
+      uuid,
+      nativeLanguageCode
+    } = this.props;
+    if (isLoggedIn) {
+      const data = {
+        nativeLangCode: langCode
+      };
+      updateProfileAsync(uuid, data, token).then(response => {
+        const {
+          payload,
+          payload: { nativeLangCode }
+        } = response;
 
-    updateOnboarding({ nativeLangCode: langCode });
-    return navigation.dispatch({ type: "back" });
+        if (response.type !== "networkErrors/error") {
+          updateView({
+            nativeLanguageCode: langCode
+          });
+          return navigation.dispatch({ type: "back" });
+        } else {
+          const errorMessage = response.payload.response.data.errors[0];
+          Alert.alert("error", errorMessage);
+        }
+      });
+    } else {
+      updateOnboarding({ nativeLangCode: langCode });
+      return navigation.dispatch({ type: "back" });
+    }
   };
 
   renderAvailableLanguages = () => {
@@ -82,6 +113,7 @@ class LanguageListScreen extends Component {
 
   render() {
     const { navigation } = this.props;
+
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -106,10 +138,14 @@ const mS = state => ({
   comingSoonLanguages: state.newSessionReducer.comingSoonLanguages,
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
-  nativeLangCode: state.onboardingReducer.nativeLangCode
+  nativeLangCode: state.onboardingReducer.nativeLangCode,
+  nativeLanguageCode: state.userProfile.nativeLangCode,
+  isLoggedIn: state.auth.isLoggedIn,
+  token: state.auth.token,
+  uuid: state.auth.uuid
 });
 
-const mD = { updateOnboarding };
+const mD = { updateOnboarding, updateView, updateProfileAsync };
 
 export default connect(
   mS,
