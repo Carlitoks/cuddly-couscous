@@ -14,7 +14,7 @@ import {
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
 import I18n, { translateLanguage } from "../../../I18n/I18n";
-import { Languages, supportedLangCodes } from "../../../Config/Languages";
+import { Languages, supportedLangCodes, primaryCodes } from "../../../Config/Languages";
 
 class NativeLang extends Component {
   renderButtonContent = currentLang => {
@@ -24,7 +24,7 @@ class NativeLang extends Component {
       color: Colors.pricingViewBlack
     };
 
-    if (nativeLangCode === currentLang["3"])
+    if (nativeLangCode === currentLang)
       ButtonStyle = {
         ...styles.availableLangText,
         color: Colors.gradientColor.top,
@@ -32,7 +32,7 @@ class NativeLang extends Component {
       };
     return (
       <React.Fragment>
-        <Text style={ButtonStyle}>{translateLanguage(currentLang["3"], currentLang.name)}</Text>
+        <Text style={ButtonStyle}>{translateLanguage(currentLang)}</Text>
       </React.Fragment>
     );
   };
@@ -158,10 +158,10 @@ class NativeLang extends Component {
 
   renderAvailableLanguages = () => {
     const { nativeLangCode } = this.props;
-    return Languages.map((language, current) => {
+    return primaryCodes.map(language => {
       let selected = false;
       let containerStyle = styles.LangViewContainer;
-      if (nativeLangCode === language["3"]) {
+      if (nativeLangCode === language) {
         containerStyle = {
           ...styles.LangViewContainer,
           backgroundColor: "#ECE8F1"
@@ -170,10 +170,7 @@ class NativeLang extends Component {
       }
       return (
         <React.Fragment key={current}>
-          <TouchableOpacity
-            style={containerStyle}
-            onPress={() => this.changeLangCode(language["3"])}
-          >
+          <TouchableOpacity style={containerStyle} onPress={() => this.changeLangCode(language)}>
             <View style={styles.selectLangButton}>{this.renderButtonContent(language)}</View>
           </TouchableOpacity>
           {!selected ? <Divider style={styles.dividerStyle} /> : <React.Fragment />}

@@ -7,7 +7,7 @@ import Header from "../../CustomerHome/Components/Header";
 import ViewWrapper from "../../ViewWrapper/ViewWrapper";
 import I18n, { translateLanguage } from "../../../I18n/I18n";
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
-import { Languages, supportedLangCodes } from "../../../Config/Languages";
+import { primaryCodes } from "../../../Config/Languages";
 // Styles
 import styles from "./Styles/LanguageListScreenStyles";
 
@@ -21,7 +21,7 @@ class LanguageListScreen extends Component {
       color: Colors.pricingViewBlack
     };
 
-    if (nativeLangCode === currentLang["3"])
+    if (nativeLangCode === currentLang)
       ButtonStyle = {
         ...styles.availableLangText,
         color: Colors.gradientColor.top,
@@ -29,7 +29,7 @@ class LanguageListScreen extends Component {
       };
     return (
       <React.Fragment>
-        <Text style={ButtonStyle}>{translateLanguage(currentLang["3"], currentLang.name)}</Text>
+        <Text style={ButtonStyle}>{translateLanguage(currentLang)}</Text>
       </React.Fragment>
     );
   };
@@ -43,10 +43,11 @@ class LanguageListScreen extends Component {
 
   renderAvailableLanguages = () => {
     const { nativeLangCode } = this.props;
-    return Languages.map((language, current) => {
+
+    return primaryCodes.map((language, current) => {
       let selected = false;
       let containerStyle = styles.LangViewContainer;
-      if (nativeLangCode === language["3"]) {
+      if (nativeLangCode === language) {
         containerStyle = {
           ...styles.LangViewContainer,
           backgroundColor: "#ECE8F1"
@@ -55,10 +56,7 @@ class LanguageListScreen extends Component {
       }
       return (
         <React.Fragment key={current}>
-          <TouchableOpacity
-            style={containerStyle}
-            onPress={() => this.changeLangCode(language["3"])}
-          >
+          <TouchableOpacity style={containerStyle} onPress={() => this.changeLangCode(language)}>
             <View style={styles.selectLangButton}>{this.renderButtonContent(language)}</View>
           </TouchableOpacity>
           {!selected ? <Divider style={styles.dividerStyle} /> : <React.Fragment />}
