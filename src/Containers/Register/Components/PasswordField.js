@@ -39,7 +39,9 @@ class PasswordField extends Component {
 
     return (
       <View style={password ? styles.inputViewContainerValue : styles.inputViewContainer}>
-        {password ? (
+        {password && type === "login" ? (
+          <Text style={styles.labelText}>{I18n.t("fields.password.label")}</Text>
+        ) : password && type !== "login" ? (
           <Text style={styles.labelText}>{I18n.t("customerOnboarding.register.password")}</Text>
         ) : (
           <Text style={styles.labelText} />
