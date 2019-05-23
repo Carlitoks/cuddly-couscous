@@ -33,7 +33,7 @@ export default class LinguistHeader extends Component {
     }
     if (navigation.state.routeName === "LanguageListScreen") {
       return {
-        text: I18n.t("newCustomerOnboarding.register.otherLanguages"),
+        text: I18n.t("nativeLanguageTitle"),
         style: styles.titleTextStyle
       };
     }
