@@ -40,6 +40,7 @@ class SubmitButton extends Component {
         noOnboarding();
         navigation.dispatch({ type: "Home" });
     } catch (err) {
+      console.log(err);
       if(err.data){
         if (err.data.errors[0] === "Password incorrect") {
           updateOnboarding({

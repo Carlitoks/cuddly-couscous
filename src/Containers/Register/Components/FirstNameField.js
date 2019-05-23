@@ -29,7 +29,7 @@ class FirstNameField extends Component {
   };
 
   render() {
-    const { firstName, errorType } = this.props;
+    const { firstName, errorType, setRef, nextInput } = this.props;
     return (
       <View style={firstName ? styles.inputViewContainerValue : styles.inputViewContainer}>
         {firstName ? (
@@ -39,9 +39,11 @@ class FirstNameField extends Component {
         )}
         <View style={styles.inputsErrorContainer}>
           <TextInput
+            ref={(ref) => { setRef(ref); }}
             allowFontScaling={false}
             style={errorType === "firstNameFormat" ? styles.inputTextInvalid : styles.inputTextValid}
             onChangeText={text => this.validateFirstName(text)}
+            onSubmitEditing={() => nextInput()}
             blurOnSubmit={false}
             value={firstName}
             placeholder={I18n.t("firstname")}

@@ -24,6 +24,7 @@ import EmailField from "../Register/Components/EmailField";
 import PasswordField from "../Register/Components/PasswordField";
 import SubmitButton from "../Register/Components/SubmitButton";
 import metrics from "../../Themes/Metrics";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const JeenieLogo = require("../../Assets/Images/jeenieLogo.png");
 const BG = require("../../Assets/Images/BG.png");
@@ -49,6 +50,19 @@ class LoginScreen extends Component {
     return navigation.dispatch({ type: goto });
   };
 
+  setEmailRef = (ref) => {
+    this.emailInput = ref;
+  };
+
+  setpasswordRef = (ref) => {
+    this.passwordInput = ref;
+  };
+
+
+  gotoPassword = () => {
+    this.passwordInput.focus();
+  }
+
   render() {
     const {
       navigation,
@@ -65,45 +79,49 @@ class LoginScreen extends Component {
                   imageStyle={styles.backgroundImage}
                   style={styles.backgroundContainer}
                 >
-                  {(metrics.width > 320 && <Image style={styles.logoImg} source={JeenieLogo} />)}
-                  <Text style={styles.titleText}>
-                    {I18n.t("appName")}
-                  </Text>
-                  <Text style={styles.subtitleText}>
-                    {I18n.t("languageCommand")}
-                  </Text>
-                  <View style={styles.bottomMarginContainer}>
-                    <View style={styles.inputContainer}>
-                      <EmailField />
-                      <PasswordField type="login" onChange={this.changePassword} />
-                      <SubmitButton type="login" navigation={navigation} />
-                    </View>
-                    <TouchableOpacity
-                      onPress={() => navigation.dispatch({
-                        type: "ForgotPasswordView",
-                      })
-                      }
-                    >
-                      <Text style={styles.transitionButtonText}>
-                        {I18n.t("newCustomerOnboarding.login.forgotPassword")}
+                  <KeyboardAwareScrollView enableOnAndroid={true} enableAutomaticScroll={true} extraScrollHeight={20}>
+                    <View style={styles.backgroundContainer}>
+                      {(metrics.width > 320 && <Image style={styles.logoImg} source={JeenieLogo} />)}
+                      <Text style={styles.titleText}>
+                        {I18n.t("appName")}
                       </Text>
-                    </TouchableOpacity>
-                    <View styles={styles.bottomContainer}>
-                      <View style={styles.dividerContainer}>
-                        <Divider style={styles.divider} />
-                        <Text style={styles.dividerText}>Or</Text>
-                        <Divider style={styles.divider} />
+                      <Text style={styles.subtitleText}>
+                        {I18n.t("languageCommand")}
+                      </Text>
+                      <View style={styles.bottomMarginContainer}>
+                        <View style={styles.inputContainer}>
+                          <EmailField setRef={this.setEmailRef} nextInput={this.gotoPassword} />
+                          <PasswordField setRef={this.setpasswordRef} type="login" onChange={this.changePassword} />
+                          <SubmitButton type="login" navigation={navigation} />
+                        </View>
+                        <TouchableOpacity
+                          onPress={() => navigation.dispatch({
+                            type: "ForgotPasswordView",
+                          })
+                          }
+                        >
+                          <Text style={styles.transitionButtonText}>
+                            {I18n.t("newCustomerOnboarding.login.forgotPassword")}
+                          </Text>
+                        </TouchableOpacity>
+                        <View styles={styles.bottomContainer}>
+                          <View style={styles.dividerContainer}>
+                            <Divider style={styles.divider} />
+                            <Text style={styles.dividerText}>Or</Text>
+                            <Divider style={styles.divider} />
+                          </View>
+                          <TouchableOpacity
+                            onPress={() => this.handleTouch("RegisterView")}
+                            style={styles.createAccountButtonTransition}
+                          >
+                            <Text style={styles.transitionCreateButtonText}>
+                              {I18n.t("customerOnboarding.register.createAnAccount")}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
                       </View>
-                      <TouchableOpacity
-                        onPress={() => this.handleTouch("RegisterView")}
-                        style={styles.createAccountButtonTransition}
-                      >
-                        <Text style={styles.transitionCreateButtonText}>
-                          {I18n.t("customerOnboarding.register.createAnAccount")}
-                        </Text>
-                      </TouchableOpacity>
                     </View>
-                  </View>
+                  </KeyboardAwareScrollView>
                 </ImageBackground>
               </View>
             </ScrollView>

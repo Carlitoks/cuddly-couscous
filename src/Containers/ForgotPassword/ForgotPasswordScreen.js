@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import {
   Alert,
   Keyboard,
-  ScrollView,
+  KeyboardAvoidingView,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
 } from "react-native";
 import { connect } from "react-redux";
 import { resetPasswordAsync } from "../../Ducks/AuthReducer";
@@ -18,15 +18,17 @@ import { EMAIL_REGEX } from "../../Util/Constants";
 import Header from "../CustomerHome/Components/Header";
 import { Auth } from "../../Api";
 import { clearForm, updateForm } from "../../Ducks/ForgotPasswordReducer";
+import { moderateScaleViewports } from "../../Util/Scaling";
 
 class ForgotPasswordScreen extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       loading: false,
-      error: null
-    }
+      error: null,
+    };
   }
+
   componentWillMount() {
     this.validateForm();
   }
@@ -39,7 +41,7 @@ class ForgotPasswordScreen extends Component {
     if (!patt.test(this.props.email)) {
       updates = {
         ...updates,
-        emailErrorMessage: I18n.t("noValidEmail")
+        emailErrorMessage: I18n.t("noValidEmail"),
       };
       valid = false;
     }
@@ -47,18 +49,18 @@ class ForgotPasswordScreen extends Component {
     if (!this.props.email) {
       updates = {
         ...updates,
-        emailErrorMessage: I18n.t("enterEmailField")
+        emailErrorMessage: I18n.t("enterEmailField"),
       };
       valid = false;
     }
 
     updates = {
       ...updates,
-      formHasErrors: !valid
+      formHasErrors: !valid,
     };
 
     if (!valid) {
-      //displayFormErrors(updates.emailErrorMessage);
+      // displayFormErrors(updates.emailErrorMessage);
     }
 
     this.props.updateForm(updates);
@@ -66,23 +68,24 @@ class ForgotPasswordScreen extends Component {
   }
 
   submit() {
-      this.setState({loading: true});
-      Auth.resetPassword(this.props.email)
-        .then(response => {
-          Alert.alert(I18n.t("forgotPassword.alertSuccessTitle"), I18n.t("forgotPassword.alertSuccessBody"), [
-            { text: I18n.t("actions.ok"), onPress: () => this.props.navigation.dispatch({ type: "IntroView" }) }
-          ]);
-        })
-        .catch(error => {
-          if(error.data){
-            this.setState({error: translateApiErrorString(error.data.errors[0], "api.errTemporary")});
-          }else{
-            this.setState({error: I18n.t("api.errTemporary")});
-          }
-        }).
-        finally(() => {
+    this.setState({ loading: true });
+    Auth.resetPassword(this.props.email)
+      .then((response) => {
+        Alert.alert(I18n.t("forgotPassword.alertSuccessTitle"), I18n.t("forgotPassword.alertSuccessBody"), [
+          { text: I18n.t("actions.ok"), onPress: () => this.props.navigation.dispatch({ type: "IntroView" }) },
+        ]);
+      })
+      .catch((error) => {
+        error = error.response;
+        if (error.data) {
+          Alert.alert(I18n.t("error"), translateApiErrorString(error.data.errors[0], "api.errTemporary"));
+        } else {
+          Alert.alert(I18n.t("error"), I18n.t("api.errTemporary"));
+        }
+      })
+      .finally(() => {
         this.props.clearForm();
-        this.setState({loading: false});
+        this.setState({ loading: false });
       });
   }
 
@@ -92,53 +95,56 @@ class ForgotPasswordScreen extends Component {
   };
 
   renderInputStyle = () => {
-    if(this.props.formHasErrors && this.props.email.length>0){
+    if (this.props.formHasErrors && this.props.email.length > 0) {
       return [styles.emailInput, styles.emailInputError];
     }
-    if(this.state.error !== null){
+    if (this.state.error !== null) {
       return [styles.emailInput, styles.emailInputError];
     }
     return styles.emailInput;
   };
+
   render() {
     const {
       updateForm,
       navigation,
       email,
       formHasErrors,
-      emailErrorMessage
+      emailErrorMessage,
     } = this.props;
     return (
+      <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer} keyboardVerticalOffset={moderateScaleViewports(60)} enabled>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={[styles.mainForgotPasswordContainer]}>
             <Header navigation={navigation} />
-            <ScrollView contentContainerStyle={styles.forgotPasswordContainer}>
+            <View style={styles.forgotPasswordContainer}>
               <View style={styles.topLogoContainer}>
                 <Text style={styles.titleText}>{I18n.t("forgotPassword.title")}</Text>
                 <Text style={styles.subtitleText}>{I18n.t("forgotPassword.description")}</Text>
                 <TextInput
                   value={email}
-                  keyboardType={"email-address"}
-                  onChangeText={async text =>  { await updateForm({email: text}); await this.validateForm(); }}
-                  placeholderTextColor={"#B6B5BB"}
+                  keyboardType="email-address"
+                  onChangeText={async (text) => { await updateForm({ email: text }); await this.validateForm(); }}
+                  placeholderTextColor="#B6B5BB"
                   placeholder={I18n.t("fields.email.label")}
                   style={this.renderInputStyle()}
                 />
-                {( (formHasErrors && email.length) ? <Text style={styles.invalidLabelText}>{emailErrorMessage}</Text> : <React.Fragment />)}
+                {((formHasErrors && email.length) ? <Text style={styles.invalidLabelText}>{emailErrorMessage}</Text> : <React.Fragment />)}
                 {(this.state.error && <Text style={styles.invalidLabelText}>{this.state.error}</Text>)}
                 <TouchableOpacity
                   onPress={() => this.submit()}
-                  disabled={this.validateEmail() && this.state.loading}
-                  style={formHasErrors ? styles.resetButtonDisable : styles.resetButton }
+                  disabled={this.validateEmail() || this.state.loading}
+                  style={this.validateEmail() || this.state.loading ? styles.resetButtonDisable : styles.resetButton}
                 >
                   <Text style={styles.transitionCreateButtonText}>
                     {I18n.t("actions.send")}
                   </Text>
                 </TouchableOpacity>
               </View>
-            </ScrollView>
+            </View>
           </View>
         </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -152,7 +158,7 @@ const mS = state => ({
 const mD = {
   clearForm,
   updateForm,
-  resetPasswordAsync
+  resetPasswordAsync,
 };
 
 export default connect(

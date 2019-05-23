@@ -35,7 +35,7 @@ class PasswordField extends Component {
     });
   };
   render() {
-    const { password, errorType, onChange, type } = this.props;
+    const { password, errorType, onChange, type, setRef } = this.props;
 
     return (
       <View style={password ? styles.inputViewContainerValue : styles.inputViewContainer}>
@@ -47,7 +47,7 @@ class PasswordField extends Component {
         <View style={styles.inputsErrorContainer}>
           <TextInput
             ref={input => {
-              this.ThirdTextInput = input;
+              setRef(input);
             }}
             allowFontScaling={false}
             style={errorType === "passwordLength" ? styles.inputTextInvalid : styles.inputTextValid}

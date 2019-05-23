@@ -174,8 +174,7 @@ export default class LinguistHeader extends Component {
     const { navigation } = this.props;
     if (navigation.state.routeName === "ForgotPasswordView") {
       return {
-        height: 180,
-        backgroundColor: "#DBDBDB"
+        backgroundColor: "#DBDBDB",
       };
     }
     return styles.headerContainer;

@@ -8,7 +8,8 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
+  KeyboardAvoidingView
 } from "react-native";
 import { connect } from "react-redux";
 import Permission from "react-native-permissions";
@@ -46,6 +47,26 @@ class RegisterScreen extends Component {
     return navigation.dispatch({ type: goto });
   };
 
+  setFirstNameRef = (ref) => {
+    this.firstNameInput = ref;
+  };
+
+  setEmailRef = (ref) => {
+    this.emailInput = ref;
+  };
+
+  setpasswordRef = (ref) => {
+    this.passwordInput = ref;
+  };
+
+  gotoEmail = () => {
+    this.emailInput.focus();
+  }
+
+  gotoPassword = () => {
+    this.passwordInput.focus();
+  }
+
   render() {
     const { navigation } = this.props;
     return (
@@ -53,39 +74,41 @@ class RegisterScreen extends Component {
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={[styles.mainRegisterContainer]}>
             <ScrollView contentContainerStyle={styles.registerContainer}>
-              <KeyboardAwareScrollView enableOnAndroid>
                 <View style={styles.topLogoContainer}>
                   <ImageBackground resizeMode="stretch" source={BG} imageStyle={styles.backgroundImage} style={styles.backgroundContainer}>
-                    {(metrics.width > 320 && <Image style={styles.logoImg} source={JeenieLogo} />)}
-                    <Text style={styles.titleText}>
-                      {I18n.t("newCustomerOnboarding.register.title")}
-                    </Text>
-                    <View styles={styles.bottomMarginContainer}>
-                      <View style={styles.inputContainer}>
-                        <FirstNameField />
-                        <EmailField />
-                        <PasswordField />
-                        <NativeLangField />
-                        <TermsAndConditions />
-                        <SubmitButton navigation={navigation} />
-                      </View>
-                      <TouchableOpacity
-                        onPress={() => this.handleTouch("LoginView")}
-                        style={{justifyContent: "center", alignItems: "center"}}
-                      >
-                        <View style={styles.textContainerRow}>
-                          <Text style={styles.transitionButtonText}>
-                            {`${I18n.t("alreadyAccount")} `}
-                          </Text>
-                          <Text style={styles.transitionButtonSginInText}>
-                            {`${I18n.t("signIn")} `}
-                          </Text>
+                    <KeyboardAwareScrollView enableOnAndroid={true} enableAutomaticScroll={true} extraScrollHeight={20}>
+                      <View style={styles.backgroundContainer}>
+                        {(metrics.width > 320 && <Image style={styles.logoImg} source={JeenieLogo} />)}
+                        <Text style={styles.titleText}>
+                          {I18n.t("newCustomerOnboarding.register.title")}
+                        </Text>
+                        <View styles={styles.bottomMarginContainer}>
+                          <View style={styles.inputContainer}>
+                            <FirstNameField setRef={this.setFirstNameRef} nextInput={this.gotoEmail} />
+                            <EmailField setRef={this.setEmailRef} nextInput={this.gotoPassword} />
+                            <PasswordField setRef={this.setpasswordRef} />
+                            <NativeLangField />
+                            <TermsAndConditions />
+                            <SubmitButton navigation={navigation} />
+                          </View>
+                          <TouchableOpacity
+                            onPress={() => this.handleTouch("LoginView")}
+                            style={{justifyContent: "center", alignItems: "center"}}
+                          >
+                            <View style={styles.textContainerRow}>
+                              <Text style={styles.transitionButtonText}>
+                                {`${I18n.t("alreadyAccount")} `}
+                              </Text>
+                              <Text style={styles.transitionButtonSginInText}>
+                                {`${I18n.t("signIn")} `}
+                              </Text>
+                            </View>
+                          </TouchableOpacity>
                         </View>
-                      </TouchableOpacity>
-                    </View>
+                      </View>
+                    </KeyboardAwareScrollView>
                   </ImageBackground>
                 </View>
-              </KeyboardAwareScrollView>
             </ScrollView>
           </View>
         </TouchableWithoutFeedback>

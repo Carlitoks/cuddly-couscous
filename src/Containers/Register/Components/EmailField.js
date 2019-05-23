@@ -26,20 +26,21 @@ class EmailField extends Component {
   };
 
   render() {
-    const { email, errorType } = this.props;
+    const { email, errorType, setRef, nextInput } = this.props;
     return (
       <View style={email ? styles.inputViewContainerValue : styles.inputViewContainer}>
         {email ? <Text style={styles.labelText}>{I18n.t("email")}</Text> : <Text style={styles.labelText} />}
         <View style={styles.inputsErrorContainer}>
           <TextInput
             ref={input => {
-              this.secondTextInput = input;
+              setRef(input);
             }}
             allowFontScaling={false}
             autoCapitalize="none"
             style={errorType === "emailFormat" ? styles.inputTextInvalid : styles.inputTextValid}
             onChangeText={text => this.isValidEmail(text)}
             onBlur={() => this.isValidEmail(email)}
+            onSubmitEditing={() => nextInput()}
             blurOnSubmit={false}
             value={email}
             placeholder={I18n.t("email")}
