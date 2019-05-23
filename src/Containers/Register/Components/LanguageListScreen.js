@@ -69,11 +69,13 @@ class LanguageListScreen extends Component {
     return (
       <React.Fragment>
         <View style={styles.availableLangContainer}>
-          <Text style={styles.availableLangContainerText}>{I18n.t("nativeLanguage")}</Text>
+          <View style={styles.availableLangTitleContainer}>
+            <Text style={styles.availableLangContainerText}>{I18n.t("nativeLanguage")}</Text>
+          </View>
+          <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
+            <React.Fragment>{this.renderAvailableLanguages()}</React.Fragment>
+          </ScrollView>
         </View>
-        <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
-          <React.Fragment>{this.renderAvailableLanguages()}</React.Fragment>
-        </ScrollView>
       </React.Fragment>
     );
   };

@@ -6,7 +6,7 @@ export default StyleSheet.create({
   scrollContainer: {
     backgroundColor: "#fff",
     left: Metrics.width * 0.05,
-    paddingBottom: 25,
+    paddingBottom: 30,
     width: Metrics.width * 0.9
   },
   availableLangContainer: {
@@ -49,7 +49,7 @@ export default StyleSheet.create({
     height: 48,
     width: "100%",
     justifyContent: "center",
-    backgroundColor: "#F4F4F4",
+    backgroundColor: "#FFFFFF",
     borderWidth: 0
   },
   selectLangButton: {
