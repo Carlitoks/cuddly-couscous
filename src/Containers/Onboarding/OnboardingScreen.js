@@ -15,6 +15,7 @@ import I18n from "../../I18n/I18n";
 import { isIphoneXorAbove } from "../../Util/Devices";
 import { registerDevice } from "../../Ducks/AuthReducer";
 import DotSteps from "./Components/DotSteps";
+import SplashScreen from "./Components/SplashScreen";
 
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 
@@ -81,7 +82,10 @@ class OnboardingScreen extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, isLoggedIn, token } = this.props;
+    if (isLoggedIn && token) {
+      return <SplashScreen animation={false} />;
+    }
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={[styles.mainOnboardingContainer]} collapsable={false}>
