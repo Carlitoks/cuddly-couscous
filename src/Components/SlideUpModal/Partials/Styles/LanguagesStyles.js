@@ -6,6 +6,7 @@ export default StyleSheet.create({
   scrollContainer: {
     backgroundColor: "#fff",
     left: Metrics.width * 0.05,
+    paddingBottom: 25,
     width: Metrics.width * 0.9
   },
   availableLangContainer: {
