@@ -70,13 +70,13 @@ class RegisterScreen extends Component {
   render() {
     const { navigation } = this.props;
     return (
+      <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer} enabled>
       <ViewWrapper style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={[styles.mainRegisterContainer]}>
-            <ScrollView contentContainerStyle={styles.registerContainer}>
+            <ScrollView bounce={false} contentContainerStyle={styles.registerContainer}>
                 <View style={styles.topLogoContainer}>
                   <ImageBackground resizeMode="stretch" source={BG} imageStyle={styles.backgroundImage} style={styles.backgroundContainer}>
-                    <KeyboardAwareScrollView enableOnAndroid={true} enableAutomaticScroll={true} extraScrollHeight={20}>
                       <View style={styles.backgroundContainer}>
                         {(metrics.width > 320 && <Image style={styles.logoImg} source={JeenieLogo} />)}
                         <Text style={styles.titleText}>
@@ -106,7 +106,6 @@ class RegisterScreen extends Component {
                           </TouchableOpacity>
                         </View>
                       </View>
-                    </KeyboardAwareScrollView>
                   </ImageBackground>
                 </View>
             </ScrollView>
@@ -114,6 +113,7 @@ class RegisterScreen extends Component {
         </TouchableWithoutFeedback>
         <SlideUpPanel navigation={navigation} />
       </ViewWrapper>
+      </KeyboardAvoidingView>
     );
   }
 }

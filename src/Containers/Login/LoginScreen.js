@@ -8,7 +8,8 @@ import {
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
+  KeyboardAvoidingView
 } from "react-native";
 import { connect } from "react-redux";
 import { Divider } from "react-native-elements";
@@ -25,6 +26,7 @@ import PasswordField from "../Register/Components/PasswordField";
 import SubmitButton from "../Register/Components/SubmitButton";
 import metrics from "../../Themes/Metrics";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import {moderateScaleViewports} from "../../Util/Scaling";
 
 const JeenieLogo = require("../../Assets/Images/jeenieLogo.png");
 const BG = require("../../Assets/Images/BG.png");
@@ -68,10 +70,11 @@ class LoginScreen extends Component {
       navigation,
     } = this.props;
     return (
+      <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer} enabled>
       <ViewWrapper style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={[styles.mainRegisterContainer]}>
-            <ScrollView contentContainerStyle={styles.registerContainer}>
+            <ScrollView bounces={false} contentContainerStyle={styles.registerContainer}>
               <View style={styles.topLogoContainer}>
                 <ImageBackground
                   resizeMode="stretch"
@@ -79,8 +82,6 @@ class LoginScreen extends Component {
                   imageStyle={styles.backgroundImage}
                   style={styles.backgroundContainer}
                 >
-                  <KeyboardAwareScrollView enableOnAndroid={true} enableAutomaticScroll={true} extraScrollHeight={20}>
-                    <View style={styles.backgroundContainer}>
                       {(metrics.width > 320 && <Image style={styles.logoImg} source={JeenieLogo} />)}
                       <Text style={styles.titleText}>
                         {I18n.t("appName")}
@@ -120,8 +121,6 @@ class LoginScreen extends Component {
                           </TouchableOpacity>
                         </View>
                       </View>
-                    </View>
-                  </KeyboardAwareScrollView>
                 </ImageBackground>
               </View>
             </ScrollView>
@@ -129,6 +128,7 @@ class LoginScreen extends Component {
         </TouchableWithoutFeedback>
         <SlideUpPanel />
       </ViewWrapper>
+      </KeyboardAvoidingView>
     );
   }
 }

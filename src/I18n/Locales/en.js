@@ -935,7 +935,7 @@ export default (ENG = {
     label: "New Email Address",
     titleSuccess: "Success",
     descriptionSuccess:
-      'Your email has been updated! You can sign in to Jeenie with the new email "{email}"',
+      'Your email has been updated! You can sign in to Jeenie with the new email "{{email}}"',
     descriptionTaken:
       'The email address "{email}" is already registered.  You may log in with that email address, or specify a new email address.'
   },

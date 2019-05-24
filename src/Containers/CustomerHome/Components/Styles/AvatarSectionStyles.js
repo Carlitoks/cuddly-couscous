@@ -21,9 +21,9 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   imgStyleRegular: {
-    height: (Metrics.width * 0.60),
+    height: (Metrics.width * 0.67),
     resizeMode: "cover",
-    width: (Metrics.width * 0.60),
+    width: (Metrics.width * 0.67),
   },
   imgStyleXAndAbove: {
     height: (Metrics.width * 0.70),

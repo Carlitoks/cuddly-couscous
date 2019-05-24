@@ -54,6 +54,12 @@ export default StyleSheet.create({
     flexGrow: 1,
     justifyContent: "space-between",
   },
+  keyboardContainer: {
+    alignItems: "center",
+    backgroundColor: "#DBDBDB",
+    flex: 1,
+    justifyContent: "center",
+  },
   inputContainer: {
     backgroundColor: "#FFF",
     borderRadius: 4,

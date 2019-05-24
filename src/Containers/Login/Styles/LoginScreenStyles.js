@@ -87,6 +87,12 @@ export default StyleSheet.create({
     justifyContent: "space-around",
     width: Metrics.width,
   },
+  keyboardContainer: {
+    alignItems: "center",
+    backgroundColor: "#DBDBDB",
+    flex: 1,
+    justifyContent: "center",
+  },
   backgroundImage: {
     height: moderateScaleViewports(Metrics.height * 0.55),
     width: Metrics.width,

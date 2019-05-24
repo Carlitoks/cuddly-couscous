@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {Alert, Modal, Text, TextInput, TouchableOpacity, View} from "react-native";
 
 import styles from "./styles";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
@@ -7,6 +7,7 @@ import { updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
 import { logOutAsync, updateEmailAsync } from "../../Ducks/AuthReducer";
 import { connect } from "react-redux";
 import { EMAIL_REGEX } from "../../Util/Constants";
+import UpdateEmailSuccess from "./UpdateEmailSuccess";
 
 class UpdateEmailForm extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class UpdateEmailForm extends Component {
       emailMatches: false,
       loading: false,
       error: null,
+      success: false,
     };
   }
 
@@ -59,73 +61,78 @@ class UpdateEmailForm extends Component {
   };
 
   submitEmail = async () => {
-    const { updateEmailAsync, uuid, token, setSuccessState } = this.props;
+    const { updateEmailAsync, uuid, token, closeUpdateEmail } = this.props;
     try {
       this.setState({ loading: true });
       const payload = {
         email: this.state.email,
       };
       const updateProfilePayload = await updateEmailAsync(uuid, token, payload);
-      if(!updateProfilePayload.data.errors){
-        closeUpdateEmail(updateProfilePayload.data);
-        setSuccessState();
-      }
+      await closeUpdateEmail({ ...updateProfilePayload.payload, emailBounced: true, email: this.state.email });
+      this.setState({success: true});
     }catch(err){
-      if(err.data){
-        this.setState({error: translateApiErrorString(err.data.errors[0], "api.errTemporary")});
-      }else{
-        this.setState({error: I18n.t("api.errTemporary")});
-      }
+        Alert.alert(
+          I18n.t("error"),
+          translateApiErrorString(err.data.errors[0], "api.errTemporary"),
+          [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
+        );
     } finally {
      this.setState({ loading: false });
     }
   };
 
-  render() {
-    const { logOutAsync } = this.props;
+  renderUpdateModal = () => {
+    const { logOutAsync, emailBounced, closeUpdateEmail } = this.props;
     const handleClose = async () => {
       await logOutAsync();
       await closeUpdateEmail({ emailBounced: false });
     };
     return (
+      <View style={styles.modalContainer}>
+        <View style={styles.innerContainer}>
+          <View style={styles.topContainer}>
+            <Text style={styles.titleText}>{I18n.t("correctEmailModal.title")}</Text>
+            <Text style={styles.subtitleText}>{I18n.t("correctEmailModal.description")}</Text>
+          </View>
+          <View style={styles.middleContainer}>
+            <TextInput onChangeText={text => this.isValidEmail(text)}
+                       keyboardType={"email-address"} placeholder={I18n.t("correctEmailModal.label")}
+                       placeholderColor={"#8A8A8F"} style={this.isValidEmailCheck() ? styles.emailInput : styles.emailInputInvalid }/>
+            {(this.isValidEmailCheck() &&
+              <Text style={styles.invalidText}>{I18n.t("fields.email.errInvalid")}</Text>)}
+            <TextInput onChangeText={text => this.emailsMatch(text)}
+                       keyboardType={"email-address"} placeholder={I18n.t("fields.email.labelConfirm")}
+                       placeholderColor={"#8A8A8F"} style={(!this.emailsMatchCheck() && this.state.confirmEmail.length > 0) ? styles.emailInput : styles.emailInputInvalid }/>
+            {((!this.emailsMatchCheck() && this.state.confirmEmail.length > 0) &&
+              <Text style={styles.invalidText}>{I18n.t("fields.email.errConfirmMatch")}</Text>)}
+            {(this.state.error &&
+              <Text style={styles.invalidText}>{this.state.error}</Text>)}
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.cancelButton} onPress={() => handleClose()}>
+              <Text style={styles.actionButtonText}>{I18n.t("actions.cancel")}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.submitEmail()} style={styles.okButton}
+                              disabled={!this.isButtonEnabled()}>
+              <Text style={styles.actionButtonText}>{I18n.t("actions.ok")}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  render() {
+    const { logOutAsync, emailBounced, closeUpdateEmail } = this.props;
+    return (
       <View style={styles.mainContainer}>
         <Modal
           animationType='fade'
           transparent={true}
-          visible={true}
+          visible={emailBounced}
           onRequestClose={() => null}
         >
-          <View style={styles.modalContainer}>
-            <View style={styles.innerContainer}>
-              <View style={styles.topContainer}>
-                <Text style={styles.titleText}>{I18n.t("correctEmailModal.title")}</Text>
-                <Text style={styles.subtitleText}>{I18n.t("correctEmailModal.description")}</Text>
-              </View>
-              <View style={styles.middleContainer}>
-                <TextInput onChangeText={text => this.isValidEmail(text)}
-                           keyboardType={"email-address"} placeholder={I18n.t("correctEmailModal.label")}
-                           placeholderColor={"#8A8A8F"} style={this.isValidEmailCheck() ? styles.emailInput : styles.emailInputInvalid }/>
-                {(this.isValidEmailCheck() &&
-                  <Text style={styles.invalidText}>{I18n.t("fields.email.errInvalid")}</Text>)}
-                <TextInput onChangeText={text => this.emailsMatch(text)}
-                           keyboardType={"email-address"} placeholder={I18n.t("fields.email.labelConfirm")}
-                           placeholderColor={"#8A8A8F"} style={(!this.emailsMatchCheck() && this.state.confirmEmail.length > 0) ? styles.emailInput : styles.emailInputInvalid }/>
-                {((!this.emailsMatchCheck() && this.state.confirmEmail.length > 0) &&
-                  <Text style={styles.invalidText}>{I18n.t("fields.email.errConfirmMatch")}</Text>)}
-                {(this.state.error &&
-                  <Text style={styles.invalidText}>{this.state.error}</Text>)}
-              </View>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.cancelButton} onPress={() => handleClose()}>
-                  <Text style={styles.actionButtonText}>{I18n.t("actions.cancel")}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.submitEmail()} style={styles.okButton}
-                                  disabled={!this.isButtonEnabled()}>
-                  <Text style={styles.actionButtonText}>{I18n.t("actions.ok")}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
+          {this.state.success ? <UpdateEmailSuccess /> : this.renderUpdateModal()}
         </Modal>
       </View>
     );
@@ -141,7 +148,7 @@ const mS = state => ({
 const mD = {
   logOutAsync,
   closeUpdateEmail,
-  updateEmailAsync
+  updateEmailAsync,
 };
 
 export default connect(

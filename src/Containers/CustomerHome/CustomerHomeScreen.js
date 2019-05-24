@@ -131,7 +131,7 @@ class CustomerHomeScreen extends Component {
             </View>
           </ImageBackground>
           <SlideUpPanel />
-          <View style={{ position: "absolute" }}>{emailBounced && <UpdateEmail />}</View>
+          { emailBounced && <View style={{ position: "absolute" }}><UpdateEmail emailBounced={emailBounced} /></View>}
         </View>
       </ViewWrapper>
     );
@@ -146,7 +146,7 @@ const mS = state => ({
   uuid: state.auth.uuid,
   firstName: state.userProfile.firstName,
   completedLocation: state.onboardingReducer.completedLocation,
-  emailBounced: state.userProfile.emailBounced,
+  emailBounced: state.userProfile.emailBounced
 });
 
 const mD = {

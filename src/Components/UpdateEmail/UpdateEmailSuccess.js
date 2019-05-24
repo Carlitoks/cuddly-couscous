@@ -6,28 +6,22 @@ import { updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
 import { logOutAsync } from "../../Ducks/AuthReducer";
 import { connect } from "react-redux";
 import I18n from "../../I18n/I18n";
+import {update as updateLogicReducer} from "../../Ducks/LogicReducer";
 
 class UpdateEmailSuccess extends Component {
   render() {
-    const { emailBounced, logOutAsync } = this.props;
+    const { emailBounced, logOutAsync, updateLogicReducer, closeUpdateEmail, email, emailEditSuccess } = this.props;
     const handleClose = async () => {
-      await logOutAsync();
+      await updateLogicReducer({emailEditSuccess: false});
       await closeUpdateEmail({ emailBounced: false });
+      await logOutAsync();
     };
-    console.log(this.props.email);
     return (
-      <View style={styles.mainContainer}>
-        <Modal
-          animationType='fade'
-          transparent={true}
-          visible={true}
-          onRequestClose={() => null}
-        >
           <View style={styles.modalContainer}>
             <View style={styles.innerContainer}>
               <View style={styles.topContainer}>
                 <Text style={styles.titleText}>{I18n.t("correctEmailModal.titleSuccess")}</Text>
-                <Text style={styles.subtitleText}>{I18n.t("correctEmailModal.descriptionSuccess", {email: "ebruiz@teravisiontech.com"})}</Text>
+                <Text style={styles.subtitleText}>{I18n.t("correctEmailModal.descriptionSuccess", {email})}</Text>
               </View>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.closeModal} onPress={() => handleClose()}>
@@ -36,8 +30,6 @@ class UpdateEmailSuccess extends Component {
               </View>
             </View>
           </View>
-        </Modal>
-      </View>
     );
   }
 };
@@ -50,6 +42,7 @@ const mS = state => ({
 const mD = {
   logOutAsync,
   closeUpdateEmail,
+  updateLogicReducer
 };
 
 export default connect(
