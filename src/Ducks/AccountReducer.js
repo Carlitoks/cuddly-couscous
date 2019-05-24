@@ -10,6 +10,8 @@ const initState = () => {
     currentDevice: {},
     userID: null,
     user: {},
+    subscriptionPeriodsLoadedAt: null,
+    subscriptionPeriods: [],
     linguistProfile: {},
     customerCallHistoryLoadedAt: null,
     customerCallHistory: [],
@@ -19,3 +21,4 @@ const initState = () => {
     availableMinutePackages: []
   }
 };
+
