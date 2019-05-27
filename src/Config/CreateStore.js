@@ -46,6 +46,8 @@ const getStore = () =>
           onboardingRecord: state.onboardingRecord,
           homeFlow: state.homeFlow,
           appConfigReducer: state.appConfigReducer,
+          appState: state.appState,
+          account: state.account,
           onboardingReducer: {
             completedLocation: state.onboardingReducer.completedLocation,
             completedNotification: state.onboardingReducer.completedNotification,

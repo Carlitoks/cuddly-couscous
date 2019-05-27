@@ -1,11 +1,13 @@
 // The purpose of this is to manage configuration for the app that is
 // determined by external sources (the API primarily)
 
+import lodashMerge from 'lodash/merge';
 import api from "../Config/AxiosConfig";
 import { CACHE } from "../Config/env";
 
 const ACTIONS = {
   CLEAR: "appConfig/clear",
+  MERGE: "appConfig/merge",
   UPDATE: "appConfig/update"
 };
 
@@ -18,14 +20,20 @@ export const update = payload => ({
   payload
 });
 
-// TODO: initState()
-const initialState = {
-  scenariosLoadedAt: null,
-  scenarios: [],
-  configLoadedAt: null,
-  config: {},
-  supportedLangPairs: [], // TODO
-  jeenieCounts: {} // TODO:
+export const merge = (payload) => ({
+  type: ACTIONS.MERGE,
+  payload
+});
+
+const initState = () => {
+  return {
+    scenariosLoadedAt: null,
+    scenarios: [],
+    configLoadedAt: null,
+    config: {},
+    supportedLangPairs: [], // TODO
+    jeenieCounts: {} // TODO:  
+  }
 };
 
 export const loadSessionScenarios = (useCache = true) => (dispatch, getState) => {
@@ -58,23 +66,27 @@ export const loadConfig = (useCache = true) => (dispatch, getState) => {
   return Promise.reject("not implemented");
 };
 
-const appConfigReducer = (state = initialState, action = {}) => {
+const appConfigReducer = (state = null, action = {}) => {
   const { payload, type } = action;
 
   switch (type) {
     case ACTIONS.CLEAR: {
-      return { ...initialState };
+      return { ...initState() };
+    }
+
+    case ACTIONS.MERGE: {
+      return lodashMerge({}, state || initState(), payload);
     }
 
     case ACTIONS.UPDATE: {
       return {
-        ...state,
+        ...state || initState(),
         ...payload
       };
     }
 
     default: {
-      return state;
+      return state || initState();
     }
   }
 };
