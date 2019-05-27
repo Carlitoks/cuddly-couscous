@@ -71,7 +71,7 @@ export const translateProperty = (obj, fieldName) => {
   if (obj[fieldName]) {
     return obj[fieldName];
   }
-  
+
   return `missing: '${fieldName}'`;
 }
 
@@ -80,7 +80,7 @@ export const translateLanguage = (code, defaultStr) => {
   if (en.languagesList[code]) {
     return I18n.t('languagesList.'+code);
   }
-  
+
   return defaultStr;
 }
 
@@ -99,6 +99,7 @@ const apiErrorsI18N = {
   "user not found": "api.errNoUser",
   "Email not found": "api.errNoEmail",
   "email already in use": "api.errEmailInUse",
+  "user already exists": "api.errEmailInUse",
   "Password incorrect": "api.errPasswordIncorrect",
   "authentication required": "api.errAuthRequired",
   "failed to validate event": "api.errEventInvalid",

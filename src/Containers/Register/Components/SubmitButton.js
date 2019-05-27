@@ -113,7 +113,6 @@ class SubmitButton extends Component {
           },
           registerDeviceResponse.payload.deviceToken,
         );
-        if (registerUserResponse.payload.errorType !== "AlreadyRegistered") {
           const logInUserResponse = await logInAsync(email, password);
           await asyncUpdateUser(
             {
@@ -126,12 +125,10 @@ class SubmitButton extends Component {
           await updateUserProfile({
             isNewUser: true,
           });
-          updateOnboarding({ makingRequest: false });
           return navigation.dispatch({ type: "Home" });
-        }
-        updateOnboarding({ makingRequest: false });
       }
     } catch (err) {
+      err = err.response;
       if(err.data){
         if (err.data.errors[0]) {
           Alert.alert(

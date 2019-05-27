@@ -31,8 +31,6 @@ export const asyncUpdateUser = (payload, token) => dispatch => {
 export const asyncCreateUser = (payload, token) => dispatch => {
   return User.create(payload, token).then(response => {
     return dispatch(userinfoUpdate(response.data));
-  }).catch(err => {
-    return dispatch(updateOnboarding({errorType : 'AlreadyRegistered'}));
   });
 };
 
