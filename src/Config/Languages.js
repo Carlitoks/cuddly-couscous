@@ -1219,12 +1219,12 @@ export const Languages = [
   },
   {
     1: "fa",
-    2: "fas",
-    3: "fas",
+    2: "pes", // modified from `fas` to `pes`
+    3: "pes", // modified to use `pes` instead of `fas` specifically for Iranian Persian
     name: "Persian",
     local: "فارسی",
-    "2T": "fas",
-    "2B": "per"
+    "2T": "fas", // modified from `fas` to `pes`
+    "2B": "pes" // modified from `per` to `pes`
   },
   {
     1: "pl",
