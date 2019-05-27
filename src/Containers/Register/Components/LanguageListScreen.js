@@ -22,12 +22,16 @@ class LanguageListScreen extends Component {
       color: Colors.pricingViewBlack
     };
 
-    if (nativeLangCode === currentLang)
+    if (
+      (nativeLangCode != "" && nativeLangCode === currentLang) ||
+      (userNativeLangCode != "" && userNativeLangCode === currentLang)
+    ) {
       ButtonStyle = {
         ...styles.availableLangText,
         color: Colors.gradientColor.top,
         fontFamily: Fonts.BoldFont
       };
+    }
     return (
       <React.Fragment>
         <Text style={ButtonStyle}>{translateLanguage(currentLang)}</Text>
@@ -74,12 +78,20 @@ class LanguageListScreen extends Component {
 
   renderAvailableLanguages = () => {
     const { nativeLangCode, userNativeLangCode, isLoggedIn } = this.props;
-    console.log("hola soy nativeLangCode", nativeLangCode);
+    console.log(
+      "hola soy nativeLangCode",
+      nativeLangCode,
+      "hola soy userNativeLangCode",
+      userNativeLangCode
+    );
     return primaryCodes.map((language, current) => {
       console.log("language en renderAvailable", language);
       let selected = false;
       let containerStyle = styles.LangViewContainer;
-      if (nativeLangCode === language) {
+      if (
+        (nativeLangCode != "" && nativeLangCode === language) ||
+        (userNativeLangCode != "" && userNativeLangCode === language)
+      ) {
         containerStyle = {
           ...styles.LangViewContainer,
           backgroundColor: "#ECE8F1"
