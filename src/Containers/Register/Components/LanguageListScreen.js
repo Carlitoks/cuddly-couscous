@@ -16,7 +16,7 @@ class LanguageListScreen extends Component {
   componentWillMount() {}
 
   renderButtonContent = currentLang => {
-    const { nativeLangCode, userNativeLangCode, isLoggedIn } = this.props;
+    const { nativeLangCode, userNativeLangCode } = this.props;
     let ButtonStyle = {
       ...styles.availableLangText,
       color: Colors.pricingViewBlack
@@ -77,15 +77,8 @@ class LanguageListScreen extends Component {
   };
 
   renderAvailableLanguages = () => {
-    const { nativeLangCode, userNativeLangCode, isLoggedIn } = this.props;
-    console.log(
-      "hola soy nativeLangCode",
-      nativeLangCode,
-      "hola soy userNativeLangCode",
-      userNativeLangCode
-    );
+    const { nativeLangCode, userNativeLangCode } = this.props;
     return primaryCodes.map((language, current) => {
-      console.log("language en renderAvailable", language);
       let selected = false;
       let containerStyle = styles.LangViewContainer;
       if (
