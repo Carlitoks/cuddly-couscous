@@ -1223,7 +1223,7 @@ export const Languages = [
     3: "pes", // modified to use `pes` instead of `fas` specifically for Iranian Persian
     name: "Persian",
     local: "فارسی",
-    "2T": "fas", // modified from `fas` to `pes`
+    "2T": "pes", // modified from `fas` to `pes`
     "2B": "pes" // modified from `per` to `pes`
   },
   {
