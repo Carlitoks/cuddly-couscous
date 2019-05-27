@@ -16,7 +16,7 @@ class LanguageListScreen extends Component {
   componentWillMount() {}
 
   renderButtonContent = currentLang => {
-    const { nativeLangCode } = this.props;
+    const { nativeLangCode, userNativeLangCode, isLoggedIn } = this.props;
     let ButtonStyle = {
       ...styles.availableLangText,
       color: Colors.pricingViewBlack
@@ -44,7 +44,7 @@ class LanguageListScreen extends Component {
       updateProfileAsync,
       token,
       uuid,
-      nativeLanguageCode
+      userNativeLangCode
     } = this.props;
     if (isLoggedIn) {
       const data = {
@@ -58,7 +58,7 @@ class LanguageListScreen extends Component {
 
         if (response.type !== "networkErrors/error") {
           updateView({
-            nativeLanguageCode: langCode
+            nativeLangCode: langCode
           });
           return navigation.dispatch({ type: "back" });
         } else {
@@ -73,9 +73,10 @@ class LanguageListScreen extends Component {
   };
 
   renderAvailableLanguages = () => {
-    const { nativeLangCode } = this.props;
-
+    const { nativeLangCode, userNativeLangCode, isLoggedIn } = this.props;
+    console.log("hola soy nativeLangCode", nativeLangCode);
     return primaryCodes.map((language, current) => {
+      console.log("language en renderAvailable", language);
       let selected = false;
       let containerStyle = styles.LangViewContainer;
       if (nativeLangCode === language) {
@@ -139,7 +140,7 @@ const mS = state => ({
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   nativeLangCode: state.onboardingReducer.nativeLangCode,
-  nativeLanguageCode: state.userProfile.nativeLangCode,
+  userNativeLangCode: state.userProfile.nativeLangCode,
   isLoggedIn: state.auth.isLoggedIn,
   token: state.auth.token,
   uuid: state.auth.uuid
