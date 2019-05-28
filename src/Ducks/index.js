@@ -25,8 +25,8 @@ import userProfile from "./UserProfileReducer";
 import newSessionReducer from "./NewSessionReducer";
 import onboardingReducer from "./OnboardingReducer";
 import appConfigReducer from "./AppConfigReducer";
-import accountReducer from "./AccountReducer";
-import appStateReducer from "./AppStateReducer";
+import account from "./AccountReducer";
+import appState from "./AppStateReducer";
 import LogicReducer from "./LogicReducer";
 import currentSessionReducer from "./CurrentSessionReducer";
 
@@ -58,8 +58,8 @@ const rootReducer = combineReducers({
   onboardingReducer,
   LogicReducer,
   currentSessionReducer,
-  accountReducer,
-  appStateReducer
+  account,
+  appState,
 });
 
 export default rootReducer;

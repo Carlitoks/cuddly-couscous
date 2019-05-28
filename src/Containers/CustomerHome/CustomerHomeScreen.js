@@ -27,6 +27,7 @@ import { supportedLangCodes } from "../../Config/Languages";
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
+import { loadActiveSubscriptionPeriods } from "../../Ducks/AccountReducer";
 
 const imgBackground = require("../../Assets/Images/Background.png");
 
@@ -67,14 +68,16 @@ class CustomerHomeScreen extends Component {
       token,
       getProfileAsync,
       loadSessionScenarios,
+      loadActiveSubscriptionPeriods,
     } = this.props;
 
     if (uuid !== "" && token !== "") {
-      getProfileAsync(uuid, token);
+      getProfileAsync(uuid, token); // TODO: find a way to replace this
     }
     if (!linguistProfile && isLoggedIn) {
       // checkOperatingHours(true);
     }
+
 
     if (this.props.navigation.state.params && this.props.navigation.state.params.usageError) {
       Alert.alert(I18n.t("invalidCode"), this.props.navigation.state.params.usageError);
@@ -88,7 +91,9 @@ class CustomerHomeScreen extends Component {
         }),
       );
     }
+
     loadSessionScenarios(true);
+    loadActiveSubscriptionPeriods(true);
   }
 
   setPrimaryLangCode = () => {
@@ -159,6 +164,7 @@ const mD = {
   logOutAsync,
   closeUpdateEmail,
   guessSecondaryLangCode,
+  loadActiveSubscriptionPeriods,
 };
 
 export default connect(

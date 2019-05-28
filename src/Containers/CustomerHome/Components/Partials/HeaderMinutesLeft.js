@@ -13,7 +13,11 @@ class HeaderMinutesLeft extends Component {
   };
 
   renderMinutesLeft = () => {
-    const { stripeCustomerID, stripePaymentToken, availableMinutes } = this.props;
+    const { stripeCustomerID, stripePaymentToken, availableMinutes, hasUnlimitedUse } = this.props;
+
+    if (hasUnlimitedUse) {
+      return null;
+    }
 
     return (
       <View style={styles.minutesLeftContainer}>
@@ -56,7 +60,8 @@ class HeaderMinutesLeft extends Component {
 const mS = state => ({
   stripeCustomerID: state.userProfile.stripeCustomerID,
   stripePaymentToken: state.userProfile.stripePaymentToken,
-  availableMinutes: state.userProfile.availableMinutes
+  availableMinutes: state.userProfile.availableMinutes,
+  hasUnlimitedUse: state.account.hasUnlimitedUse,
 });
 
 const mD = {};

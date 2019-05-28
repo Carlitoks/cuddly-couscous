@@ -10,6 +10,7 @@ import { User } from "../Api";
 import CustomerHomeScreenRedesign from "../Containers/CustomerHome/CustomerHomeScreen";
 import { Colors } from "../Themes";
 import { flushEvents } from "../Util/Forensics";
+import { loadUser } from "../Ducks/AccountReducer";
 
 class Home extends Component {
   componentWillMount() {
@@ -50,6 +51,7 @@ class Home extends Component {
   componentDidMount() {
     this.updateFCMToken();
     flushEvents();
+    loadUser(true); // reload user, but let it be cached a bit
     // TODO: check for previously ended session
   }
 
@@ -80,7 +82,8 @@ const mS = state => ({
 });
 
 const mD = {
-  registerFCM
+  registerFCM,
+  loadUser
 };
 
 export default connect(

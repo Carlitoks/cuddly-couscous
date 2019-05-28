@@ -166,6 +166,7 @@ export const logInAsync = (email, password) => async (dispatch, getState) => {
           uuid: response.data.id
         })
       );
+      // TODO: return account.initializeUser
     })
     .catch(error => {
       dispatch(updateForm({ performingRequest: false }));
@@ -187,12 +188,12 @@ const errorLog = (origin, error) => {
 
 // Initial State
 const initialState = {
-  isLoggedIn: false,
-  token: null,
-  uuid: "",
-  email: "",
-  deviceToken: "",
-  deviceId: ""
+  isLoggedIn: false, // if user is logged in
+  token: null, // jwt token including user id
+  uuid: "", // uuid of logged in user
+  email: "", // DEPRECATED: email of logged in user
+  deviceToken: "", // jwt including only device id
+  deviceId: "" // uuid of device
 };
 
 // Reducer

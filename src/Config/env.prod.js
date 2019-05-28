@@ -14,4 +14,6 @@ export const promptUpdate = false;
 export const CACHE = {
   SCENARIOS: 3 * DURATION.HOURS,
   CONFIG: 3 * DURATION.HOURS,
+  USER: 10 * DURATION.MINUTES,
+  SUBSCRIPTIONS: 1 * DURATION.HOUR,
 };
