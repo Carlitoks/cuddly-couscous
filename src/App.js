@@ -21,7 +21,7 @@ import I18n from "./I18n/I18n";
 import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
-import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
+import { updateJeenieCounts } from "./Ducks/AppConfigReducer";
 import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 import SplashScreen from 'react-native-splash-screen';
 import { initializeUser } from "./Ducks/AccountReducer";
@@ -113,6 +113,7 @@ class App extends Component {
           // store.dispatch(loadConfig(true)).catch(console.log),
           
           // fully reload the user's account state if we're logged in
+          store.dispatch(updateJeenieCounts(true)); // reinitialize jeenie counts if app reloads
           return store.dispatch(initializeUser(auth.uuid));
         }
       })

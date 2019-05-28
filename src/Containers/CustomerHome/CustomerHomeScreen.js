@@ -123,13 +123,14 @@ class CustomerHomeScreen extends Component {
       emailBounced,
       closeUpdateEmail,
       secondaryLangCode,
+      jeenieCounts,
     } = this.props;
     return (
       <ViewWrapper style={styles.wrapperContainer}>
         <View style={styles.mainContainerHome}>
           <Header navigation={navigation} />
           <ImageBackground source={imgBackground} style={styles.imgBackgroundContainer} imageStyle={styles.imgBackground}>
-            <AvatarSection showNum={!!secondaryLangCode} />
+            <AvatarSection showNum={!!secondaryLangCode} targetLang={secondaryLangCode} langCounts={jeenieCounts} />
             <View style={styles.flexEndCenter}>
               <CallInputs navigation={navigation} openSlideMenu={this.openSlideMenu} />
               <CallButtons navigation={navigation} />
@@ -151,7 +152,8 @@ const mS = state => ({
   uuid: state.auth.uuid,
   firstName: state.userProfile.firstName,
   completedLocation: state.onboardingReducer.completedLocation,
-  emailBounced: state.userProfile.emailBounced
+  emailBounced: state.userProfile.emailBounced,
+  jeenieCounts: state.appConfigReducer.jeenieCounts,
 });
 
 const mD = {

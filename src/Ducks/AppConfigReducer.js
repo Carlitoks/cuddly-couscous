@@ -4,6 +4,7 @@
 import lodashMerge from 'lodash/merge';
 import api from "../Config/AxiosConfig";
 import { CACHE } from "../Config/env";
+import { supportedLangCodes } from '../Config/Languages';
 
 const ACTIONS = {
   CLEAR: "appConfig/clear",
@@ -32,7 +33,8 @@ const initState = () => {
     configLoadedAt: null,
     config: {},
     supportedLangPairs: [], // TODO
-    jeenieCounts: {} // TODO:  
+    // map of langCode => num jeenies online
+    jeenieCounts: {}
   }
 };
 
@@ -61,6 +63,40 @@ export const loadSessionScenarios = (useCache = true) => (dispatch, getState) =>
       .catch(reject);
   });
 };
+
+// one day these counts will actually come from the server, but for now we 
+// generate them locally
+export const updateJeenieCounts = (initialize = false) => (dispatch, getState) => {
+  // alert("updateJeenieCounts");
+  const randomNum = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+  const jitterNum = (num) => {
+    const delta = randomNum(0, 2);
+    if (randomNum(0, 1) > 0) {
+      return num + delta;
+    }
+    return num - delta;
+  };
+  const {jeenieCounts} = getState().appConfigReducer;
+  for (var code of supportedLangCodes) {
+    if (!!jeenieCounts[code]) {
+      if (initialize) {
+        jeenieCounts[code] = randomNum(30, 60);
+      } else {
+        jeenieCounts[code] = jitterNum(jeenieCounts[code]);
+      }
+    } else {
+      jeenieCounts[code] = randomNum(30, 60);
+    }
+  }
+  return new Promise((resolve, reject) => {
+    dispatch(update({jeenieCounts}));
+    resolve(jeenieCounts);
+  });
+}
 
 export const loadConfig = (useCache = true) => (dispatch, getState) => {
   return Promise.reject("not implemented");

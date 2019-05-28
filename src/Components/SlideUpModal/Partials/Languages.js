@@ -14,6 +14,7 @@ import {
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
 import I18n, { translateLanguage } from "../../../I18n/I18n";
 import { AllowedLanguagePairs, FilterLangsByCodes } from "../../../Config/Languages";
+import { updateJeenieCounts } from "../../../Ducks/AppConfigReducer";
 
 class Languages extends Component {
   getCurrentLangPair = () => {
@@ -155,11 +156,13 @@ class Languages extends Component {
       selection,
       updateSelectedScenario,
       closeSlideMenu,
-      guessSecondaryLangCode
+      guessSecondaryLangCode,
+      updateJeenieCounts,
     } = this.props;
     if (selection === "scenarioSelection") {
       updateSelectedScenario({ scenarioID: langCode });
     } else {
+      updateJeenieCounts();
       changeLangCode({ langCode });
     }
     guessSecondaryLangCode();
@@ -212,7 +215,8 @@ const mD = {
   modifyAdditionalDetails,
   update,
   updateSelectedScenario,
-  guessSecondaryLangCode
+  guessSecondaryLangCode,
+  updateJeenieCounts,
 };
 
 export default connect(
