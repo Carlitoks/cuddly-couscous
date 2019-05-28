@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
+import moment from "moment";
 import RenderPicker from "./Partials/PickerSelect";
 import {
   modifyAdditionalDetails,
@@ -20,7 +21,17 @@ class CallInputs extends Component {
   }
 
   paymentNotice = () => {
-    const { isNewUser, availableMinutes, stripePaymentToken } = this.props;
+    const { isNewUser, availableMinutes, hasUnlimitedUse, hasUnlimitedUseUntil, stripePaymentToken } = this.props;
+    if (hasUnlimitedUse) {
+      let d = null;
+      try {
+        d = hasUnlimitedUseUntil.format("YYYY/M/D")
+      } catch (e) {
+        d = moment().format("YYYY/M/D")
+      }
+      
+      return I18n.t("newCustomerHome.rateNotices.unlimitedUntil", {date: d});
+    }    
     if (isNewUser) {
       return I18n.t("newCustomerHome.rateNotices.beforeFirst", {num: CUSTOMER_FREE_MINUTES});
     }
@@ -150,6 +161,8 @@ const mS = state => ({
   stripeCustomerID: state.userProfile.stripeCustomerID,
   stripePaymentToken: state.userProfile.stripePaymentToken,
   availableMinutes: state.userProfile.availableMinutes,
+  hasUnlimitedUse: state.account.hasUnlimitedUse,
+  hasUnlimitedUseUntil: state.account.hasUnlimitedUseUntil,
   isNewUser: state.userProfile.isNewUser
 });
 

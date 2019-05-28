@@ -24,6 +24,7 @@ import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
 import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 import SplashScreen from 'react-native-splash-screen';
+import { initializeUser } from "./Ducks/AccountReducer";
 
 
 class App extends Component {
@@ -110,6 +111,9 @@ class App extends Component {
 
           // things that should be reloaded periodically
           // store.dispatch(loadConfig(true)).catch(console.log),
+          
+          // fully reload the user's account state if we're logged in
+          return store.dispatch(initializeUser(auth.uuid));
         }
       })
       .then(() => {

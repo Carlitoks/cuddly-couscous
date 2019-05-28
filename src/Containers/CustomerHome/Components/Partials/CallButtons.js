@@ -42,6 +42,7 @@ class CallButtons extends Component {
       navigation,
       stripePaymentToken,
       availableMinutes,
+      hasUnlimitedUse,
       cleanSelected,
       clearPromoCode,
       modifyAVModePreference,
@@ -51,7 +52,7 @@ class CallButtons extends Component {
     clearPromoCode();
     modifyAVModePreference({ avModePreference: type });
 
-    if (availableMinutes === 0 && !stripePaymentToken) {
+    if (!hasUnlimitedUse && availableMinutes === 0 && !stripePaymentToken) {
       Alert.alert(" ", I18n.t("payments.enterPaymentToTalk"), [
         {
           text: I18n.t("ok"),
@@ -197,6 +198,7 @@ const mS = state => ({
   promotion: state.promoCode.scanned,
   event: state.events,
   availableMinutes: state.userProfile.availableMinutes,
+  hasUnlimitedUse: state.account.hasUnlimitedUse,
   nativeLangCode: state.userProfile.nativeLangCode,
   stripeCustomerID: state.userProfile.stripeCustomerID,
   stripePaymentToken: state.userProfile.stripePaymentToken,

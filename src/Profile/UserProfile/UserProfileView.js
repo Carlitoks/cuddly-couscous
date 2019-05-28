@@ -3,7 +3,6 @@ import { Alert, Text, View, ScrollView, Image } from "react-native";
 import { connect } from "react-redux";
 import {
   updateProfileAsync,
-  getProfileAsync,
   updateView,
   asyncUploadAvatar,
   getNativeLang
@@ -26,15 +25,6 @@ import Close from "../../Components/Close/Close";
 
 class UserProfileView extends Component {
   componentWillMount() {}
-
-  getUserProfile = () => {
-    const { token, uuid } = this.props;
-    this.props.getProfileAsync(uuid, token).then(response => {
-      this.props.updateView({
-        linguistProfile: response.payload.linguistProfile
-      });
-    });
-  };
 
   uploadAvatar(avatar) {
     if (avatar) {
@@ -184,7 +174,6 @@ const mS = state => ({
 const mD = {
   updateView,
   updateProfileAsync,
-  getProfileAsync,
   asyncUploadAvatar,
   getNativeLang
 };
