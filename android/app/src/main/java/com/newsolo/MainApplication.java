@@ -3,6 +3,7 @@ package com.newsolo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.segment.analytics.reactnative.core.RNAnalyticsPackage;
 import io.branch.rnbranch.RNBranchPackage;
 import com.microsoft.codepush.react.CodePush;
@@ -56,6 +57,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
             new RNAnalyticsPackage(),
             new RNBranchPackage(),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),

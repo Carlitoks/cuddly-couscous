@@ -935,7 +935,7 @@ export default (ENG = {
     label: "New Email Address",
     titleSuccess: "Success",
     descriptionSuccess:
-      'Your email has been updated! You can sign in to Jeenie with the new email "{email}"',
+      'Your email has been updated! You can sign in to Jeenie with the new email "{{email}}"',
     descriptionTaken:
       'The email "{email}" is already registered.  You may log in with that email address, or specify a new email address.'
   },
@@ -968,7 +968,9 @@ export default (ENG = {
       title: "Tell us about yourself:",
       termsAndPrivacyNotice: "By continuing, you agree to our Terms and Privacy Policy.",
       terms: "Terms",
-      privacyPolicy: "Privacy Policy"
+      privacyPolicy: "Privacy Policy",
+      otherLanguages: "Other Languages",
+      chooseNativeLang: "Choose Your Native Language"
     },
     login: {
       forgotPassword: "Forgot password?"

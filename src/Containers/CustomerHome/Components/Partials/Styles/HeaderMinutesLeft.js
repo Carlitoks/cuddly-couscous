@@ -11,9 +11,13 @@ const baseWell = {
 };
 
 export default StyleSheet.create({
-  outOfMinutesContainer: {
+  fewMinutesLeftContainer: {
     ...baseWell,
     backgroundColor: "#F39100"
+  },
+  outOfMinutesContainer: {
+    ...baseWell,
+    backgroundColor: "#FF3B30"
   },
   minutesLeftContainer: {
     ...baseWell,

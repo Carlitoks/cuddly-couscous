@@ -1,288 +1,145 @@
 import React, { Component } from "react";
 import {
-  Alert,
   Image,
+  ImageBackground,
   Keyboard,
+  Platform,
+  ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
+  KeyboardAvoidingView
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
-import { Icon } from "react-native-elements";
-import { Colors } from "../../Themes";
-import {
-  ensureSessionDefaults,
-  openSlideMenu,
-  updateLocation
-} from "../../Ducks/NewSessionReducer";
-
-import {
-  getNativeLang,
-  getProfileAsync,
-  updateView as updateUserProfile
-} from "../../Ducks/UserProfileReducer";
-import { checkRecord } from "../../Ducks/OnboardingRecordReducer";
-import { haveSession, logInAsync, registerDevice } from "../../Ducks/AuthReducer";
+import { Divider } from "react-native-elements";
+import Permission from "react-native-permissions";
 
 import ViewWrapper from "../ViewWrapper/ViewWrapper";
-import { clear as clearEvents } from "../../Ducks/EventsReducer";
-import I18n, { translateApiErrorString, translateApiError } from "../../I18n/I18n";
+import I18n from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/LoginScreenStyles";
-import { EMAIL_REGEX } from "../../Util/Constants";
-import FieldError from "../Register/Components/FieldError";
-import { noOnboarding, update as updateOnboarding } from "../../Ducks/OnboardingReducer";
-import Header from "../CustomerHome/Components/Header";
+import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
+import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
+import EmailField from "../Register/Components/EmailField";
+import PasswordField from "../Register/Components/PasswordField";
+import SubmitButton from "../Register/Components/SubmitButton";
+import metrics from "../../Themes/Metrics";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import {moderateScaleViewports} from "../../Util/Scaling";
 
-const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM-purple.png");
+const JeenieLogo = require("../../Assets/Images/jeenieLogo.png");
+const BG = require("../../Assets/Images/BG.png");
 
 class LoginScreen extends Component {
-  isValidEmail = text => {
+  changePassword = (text) => {
     const { updateOnboarding } = this.props;
-    const reg = new RegExp(EMAIL_REGEX);
-    if (!reg.test(text)) {
-      updateOnboarding({
-        isValidEmail: false,
-        errorType: "emailFormat"
-      });
-    } else {
-      updateOnboarding({ isValidEmail: true, errorType: null });
-    }
-    updateOnboarding({ email: text });
+    updateOnboarding({ password: text });
   };
 
-  submit = async () => {
-    const {
-      registerDevice,
-      logInAsync,
-      navigation,
-      checkRecord,
-      updateCustomer,
-      getProfileAsync,
-      getNativeLang,
-      updateOnboarding,
-      email,
-      password,
-      noOnboarding
-    } = this.props;
-    try {
-      updateOnboarding({ errorType: null, makingRequest: true });
-      await registerDevice();
-      const logInUserResponse = await logInAsync(email, password);
-      const getUserProfile = await getProfileAsync(
-        logInUserResponse.payload.uuid,
-        logInUserResponse.payload.token
-      );
-      await updateUserProfile({
-        selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode)
-      });
-      const record = await checkRecord(email);
-      if (record) {
-        updateCustomer({ userInfo: { id: record.id } });
-        Alert.alert(I18n.t("finishOnboarding"), I18n.t("finishOnboardingMessage"), [
-          {
-            text: I18n.t("ok")
-          }
-        ]);
-
-        updateOnboarding({ makingRequest: false });
-        navigation.dispatch({ type: record.lastStage });
-      } else {
-        updateOnboarding({ makingRequest: false });
-        noOnboarding();
-        navigation.dispatch({ type: "Home" });
-      }
-    } catch (err) {
-      if (!!err.data && !!err.data.errors && !!err.data.errors[0]) {
-        switch (err.data.errors[0]) {
-          case "Email not found": updateOnboarding({errorType: "emailNotFound"}); break;
-          case "Password incorrect": updateOnboarding({errorType: "signInError"}); break;
-        }
-      } else {
-        Alert.alert(I18n.t('error'), translateApiError(err), 'api.errTemporaryTryAgain');
-      }
-      updateOnboarding({
-        makingRequest: false
-      });
+  handleTouch = async (goto) => {
+    const { navigation } = this.props;
+    const LocationPermission = await Permission.check("location");
+    if (LocationPermission === "undetermined" || LocationPermission === "denied") {
+      return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
     }
+    if (Platform.OS !== "android") {
+      const NotificationPermission = await Permission.check("notification");
+      if (NotificationPermission === "undetermined" || NotificationPermission === "denied") {
+        return navigation.dispatch({ type: "Home", params: { redirectTo: goto } });
+      }
+    }
+    return navigation.dispatch({ type: goto });
   };
+
+  setEmailRef = (ref) => {
+    this.emailInput = ref;
+  };
+
+  setpasswordRef = (ref) => {
+    this.passwordInput = ref;
+  };
+
+
+  gotoPassword = () => {
+    this.passwordInput.focus();
+  }
 
   render() {
     const {
-      makingRequest,
-      isValidEmail,
       navigation,
-      errorType,
-      email,
-      password,
-      updateOnboarding
     } = this.props;
     return (
+      <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer} enabled>
       <ViewWrapper style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <View style={[styles.mainContainer]}>
-            <LinearGradient
-              colors={["white", "white"]}
-              locations={[0, 1]}
-              style={styles.fullHeight}
-            >
-              <Header navigation={navigation} />
-              <View style={styles.loginContainer}>
-                <View style={styles.topLogoContainer}>
-                  <Image source={JeenieLogo} />
-                  {errorType === "signInError" ||
-                  errorType === "emailFormat" ||
-                  errorType === "emailNotFound" ? (
-                    <FieldError navigation={navigation} />
-                  ) : (
-                    <Text style={styles.titleText}>{I18n.t("signIn")}</Text>
-                  )}
-                  <View style={styles.inputContainer}>
-                    <View style={styles.inputViewContainer}>
-                      {email ? <Text style={styles.labelStyle}>{I18n.t("email")}</Text> : <Text />}
-                      <View style={styles.inputInternalContainer}>
-                        <TextInput
-                          allowFontScaling={false}
-                          style={styles.inputText}
-                          onChangeText={text => this.isValidEmail(text)}
-                          autoCapitalize="none"
-                          onBlur={() => this.isValidEmail(email)}
-                          value={email}
-                          placeholder={I18n.t("email")}
-                          placeholderTextColor="#C4C4C4"
-                          keyboardType="email-address"
-                        />
-                        {errorType === "signInError" || errorType === "emailFormat" ? (
-                          <View style={styles.errorIconContainer}>
-                            <Icon name="close" type="material-community" color="#fff" size={15} />
-                          </View>
-                        ) : (
-                          <React.Fragment />
-                        )}
-                      </View>
-                    </View>
-
-                    <View style={styles.inputViewContainer}>
-                      {password ? (
-                        <Text style={styles.labelStyle}>{I18n.t("password")}</Text>
-                      ) : (
-                        <Text />
-                      )}
-                      <View style={styles.inputInternalContainer}>
-                        <TextInput
-                          allowFontScaling={false}
-                          style={styles.inputText}
-                          onChangeText={text => updateOnboarding({ password: text })}
-                          autoCapitalize="none"
-                          value={password}
-                          placeholder={I18n.t("password")}
-                          secureTextEntry
-                          placeholderTextColor="#C4C4C4"
-                        />
-                        {errorType === "signInError" ? (
-                          <View style={styles.errorIconContainer}>
-                            <Icon name="close" type="material-community" color="#fff" size={15} />
-                          </View>
-                        ) : (
-                          <React.Fragment />
-                        )}
-                      </View>
-
-                      <Text
-                        onPress={() =>
-                          navigation.dispatch({
-                            type: "ForgotPasswordView"
+          <View style={[styles.mainRegisterContainer]}>
+            <ScrollView bounces={false} contentContainerStyle={styles.registerContainer}>
+              <View style={styles.topLogoContainer}>
+                <ImageBackground
+                  resizeMode="stretch"
+                  source={BG}
+                  imageStyle={styles.backgroundImage}
+                  style={styles.backgroundContainer}
+                >
+                      {(metrics.width > 320 && <Image style={styles.logoImg} source={JeenieLogo} />)}
+                      <Text style={styles.titleText}>
+                        {I18n.t("appName")}
+                      </Text>
+                      <Text style={styles.subtitleText}>
+                        {I18n.t("languageCommand")}
+                      </Text>
+                      <View style={styles.bottomMarginContainer}>
+                        <View style={styles.inputContainer}>
+                          <EmailField setRef={this.setEmailRef} nextInput={this.gotoPassword} />
+                          <PasswordField setRef={this.setpasswordRef} type="login" onChange={this.changePassword} />
+                          <SubmitButton type="login" navigation={navigation} />
+                        </View>
+                        <TouchableOpacity
+                          onPress={() => navigation.dispatch({
+                            type: "ForgotPasswordView",
                           })
-                        }
-                        style={styles.forgotPasswordLabel}
-                      >
-                        {I18n.t("customerOnboarding.login.forgotPassword")}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.buttonContainer}>
-                  <View style={styles.buttonWidthContainer}>
-                    <TouchableOpacity
-                      onPress={() => this.submit()}
-                      disabled={!isValidEmail || makingRequest || (!email || !password)}
-                      style={
-                        !isValidEmail || makingRequest || (!email || !password)
-                          ? styles.signInButtonDisable
-                          : styles.signInButtonEnabled
-                      }
-                    >
-                      <Text
-                        style={[
-                          styles.buttonEnabledText,
-                          !isValidEmail || makingRequest || (!email || !password)
-                            ? { color: "#C4C4C4" }
-                            : { color: "white" }
-                        ]}
-                      >
-                        {I18n.t("signIn")}
-                      </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.dispatch({
-                          type: "RegisterView"
-                        })
-                      }
-                      style={styles.createAccountPadding}
-                    >
-                      <Text style={styles.transitionButtonText}>
-                        {I18n.t("customerOnboarding.register.createAnAccount")} »
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
+                          }
+                        >
+                          <Text style={styles.transitionButtonText}>
+                            {I18n.t("newCustomerOnboarding.login.forgotPassword")}
+                          </Text>
+                        </TouchableOpacity>
+                        <View styles={styles.bottomContainer}>
+                          <View style={styles.dividerContainer}>
+                            <Divider style={styles.divider} />
+                            <Text style={styles.dividerText}>Or</Text>
+                            <Divider style={styles.divider} />
+                          </View>
+                          <TouchableOpacity
+                            onPress={() => this.handleTouch("RegisterView")}
+                            style={styles.createAccountButtonTransition}
+                          >
+                            <Text style={styles.transitionCreateButtonText}>
+                              {I18n.t("customerOnboarding.register.createAnAccount")}
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                </ImageBackground>
               </View>
-            </LinearGradient>
+            </ScrollView>
           </View>
         </TouchableWithoutFeedback>
+        <SlideUpPanel />
       </ViewWrapper>
+      </KeyboardAvoidingView>
     );
   }
 }
 
-const mS = state => ({
-  isSlideUpMenuVisible: state.newSessionReducer.isSlideUpMenuVisible,
-  session: state.newSessionReducer.session,
-  nativeLangCode: state.userProfile.nativeLangCode,
-  primaryLangCode: state.newSessionReducer.session.primaryLangCode,
-  secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
-  token: state.auth.token,
-  uuid: state.auth.uuid,
-  isNewUser: state.userProfile.isNewUser,
-  email: state.onboardingReducer.email,
-  password: state.onboardingReducer.password,
-  errorType: state.onboardingReducer.errorType,
-  makingRequest: state.onboardingReducer.makingRequest,
-  isValidEmail: state.onboardingReducer.isValidEmail
-});
+const mS = state => ({});
 
 const mD = {
-  openSlideMenu,
-  updateLocation,
-  ensureSessionDefaults,
-  clearEvents,
-  getProfileAsync,
-  updateUserProfile,
-  logInAsync,
-  haveSession,
-  registerDevice,
-  getNativeLang,
-  checkRecord,
   updateOnboarding,
-  noOnboarding
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(LoginScreen);

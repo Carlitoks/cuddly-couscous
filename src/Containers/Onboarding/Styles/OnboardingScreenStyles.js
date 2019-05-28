@@ -1,27 +1,24 @@
 import { StyleSheet } from 'react-native';
 import { ApplicationStyles, Fonts, Metrics, Colors } from '../../../Themes';
-import { moderateScale } from '../../../Util/Scaling';
+import { moderateScale, moderateScaleViewports } from "../../../Util/Scaling";
+import metrics from "../../../Themes/Metrics";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
     backgroundColor: 'white',
-    flex: 1,
+    flexGrow: 1,
 
   },
   mainOnboardingContainer: {
     flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    flex: 1,
+    flexGrow: 1,
   },
   bodyContainer: {
+    flexGrow: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    flex: 1,
-    width: '100%',
-    zIndex: 10
   },
   gradientContainer: {
     flex: 1,
@@ -37,31 +34,28 @@ export default StyleSheet.create({
   },
   titleText: {
     fontFamily: Fonts.BoldFont,
-    color: '#fff',
-    fontSize: moderateScale(20, 0),
+    color: '#3F1674',
+    fontSize: moderateScaleViewports(20),
     textAlign: 'center',
-    paddingTop: moderateScale(20, 0),
-    paddingBottom: moderateScale(20, 0)
+    paddingTop: moderateScaleViewports(31),
+    paddingBottom: moderateScaleViewports(15),
+    lineHeight: moderateScaleViewports(27),
   },
   subtitleText: {
     fontFamily: Fonts.BaseFont,
-    color: '#fff',
-    fontSize: moderateScale(16, 0),
+    color: '#373737',
+    fontSize: moderateScaleViewports(16),
     textAlign: 'center',
-    paddingBottom: moderateScale(40, 0),
-    fontWeight: 'bold',
-    paddingLeft: 23,
-    paddingRight: 23
-  },
-  backgroundImageContainer: {
-    position: 'absolute',
-    bottom: 0,
+    paddingBottom: moderateScaleViewports(46),
+    paddingLeft: moderateScaleViewports(28),
+    paddingRight: moderateScaleViewports(28),
+    lineHeight: moderateScaleViewports(22),
   },
   backgroundImage: {
-    width: moderateScale(Metrics.width ,  0),
-    height: moderateScale(Metrics.height  ,  0),
+    width: metrics.width,
+    height: metrics.height * 0.50,
     resizeMode: 'cover',
   },
-  bottomButtonsContainer: { paddingBottom: moderateScale(26, 0) },
+  bottomButtonsContainer: { paddingBottom: moderateScale(0, 0) },
   gradientFullWidth: { width: '100%', zIndex: 10 }
 });

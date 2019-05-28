@@ -12,7 +12,7 @@ export const CREDIT_CARD_FORMATS = [
 export const ONLY_LETTER_REGEX = "^[a-zA-Z]+$";
 
 // check for special chars and numbers
-export const INVALID_NAME_REGEX = /[!@#\$%\^&\*\(\)'"\+-={}\[\];:\\\/\?\.,<>~`_\|0-9\s]+/gm;
+export const INVALID_NAME_REGEX = /[!@#\$%\^&\*\(\)'"\+-={}\[\];:\\\/\?\.,<>~`_\|0-9]+/gm;
 
 export const VIDEO_WARNING = {
   DISABLED: "DISABLED",

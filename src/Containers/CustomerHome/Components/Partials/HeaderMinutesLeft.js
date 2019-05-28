@@ -13,7 +13,12 @@ class HeaderMinutesLeft extends Component {
   };
 
   renderMinutesLeft = () => {
-    const { stripeCustomerID, stripePaymentToken, availableMinutes } = this.props;
+    const { stripeCustomerID, stripePaymentToken, availableMinutes, hasUnlimitedUse } = this.props;
+
+    if (hasUnlimitedUse) {
+      return null;
+    }
+
     return (
       <View style={styles.minutesLeftContainer}>
         {stripePaymentToken ? (
@@ -25,27 +30,29 @@ class HeaderMinutesLeft extends Component {
             </Text>
           </TouchableOpacity>
         )}
-        <View
-          style={
-            availableMinutes >= 0 && availableMinutes < 6
-              ? styles.outOfMinutesContainer
-              : styles.minutesLeftInfoContainer
-          }
-        >
-          <Icon name="clock" type="evilicon" containerStyle={styles.clockIcon} color="#fff" />
-          <Text style={styles.minutesLeftInfoText}>
-            {I18n.t("minutesAbbreviation", { minutes: availableMinutes })}
-          </Text>
-        </View>
+        {(stripePaymentToken && availableMinutes > 0) || !stripePaymentToken ? (
+          <View
+            style={
+              availableMinutes === 0
+                ? styles.outOfMinutesContainer
+                : availableMinutes > 0 && availableMinutes < 6
+                ? styles.fewMinutesLeftContainer
+                : styles.minutesLeftInfoContainer
+            }
+          >
+            <Icon name="clock" type="evilicon" containerStyle={styles.clockIcon} color="#fff" />
+            <Text style={styles.minutesLeftInfoText}>
+              {I18n.t("minutesAbbreviation", { minutes: availableMinutes })}
+            </Text>
+          </View>
+        ) : (
+          <React.Fragment />
+        )}
       </View>
     );
   };
 
   render() {
-    const { stripePaymentToken, availableMinutes } = this.props;
-    if (availableMinutes === 0 && stripePaymentToken) {
-      return <React.Fragment />;
-    }
     return this.renderMinutesLeft();
   }
 }
@@ -53,7 +60,8 @@ class HeaderMinutesLeft extends Component {
 const mS = state => ({
   stripeCustomerID: state.userProfile.stripeCustomerID,
   stripePaymentToken: state.userProfile.stripePaymentToken,
-  availableMinutes: state.userProfile.availableMinutes
+  availableMinutes: state.userProfile.availableMinutes,
+  hasUnlimitedUse: state.account.hasUnlimitedUse,
 });
 
 const mD = {};

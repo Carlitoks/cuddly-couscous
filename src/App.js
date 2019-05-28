@@ -20,8 +20,12 @@ import analytics from "@segment/analytics-react-native";
 import I18n from "./I18n/I18n";
 import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
+import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
 import { loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
+import SplashScreen from 'react-native-splash-screen';
+import { initializeUser } from "./Ducks/AccountReducer";
+
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +35,8 @@ class App extends Component {
       isLoggedIn: false,
       loadingStore: true,
       store: null,
-      appState: AppState.currentState
+      appState: AppState.currentState,
+      splashScreenTimer: false
     };
 
     // Font doesn't scale
@@ -106,6 +111,9 @@ class App extends Component {
 
           // things that should be reloaded periodically
           // store.dispatch(loadConfig(true)).catch(console.log),
+          
+          // fully reload the user's account state if we're logged in
+          return store.dispatch(initializeUser(auth.uuid));
         }
       })
       .then(() => {
@@ -133,6 +141,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    SplashScreen.hide();
     AppState.addEventListener("change", this._handleAppStateChange);
   }
 
@@ -181,7 +190,7 @@ class App extends Component {
                 } else {
                   return Linking.openURL(url);
                 }
-              }).catch(err => console.error('An error occurred', err));              
+              }).catch(err => console.error('An error occurred', err));
             } catch (e) {
               console.log('error from linking', e);
             }
@@ -193,19 +202,20 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.loadingStore) {
-      // TODO: return static loading screen, like the splash screen
-      // right now we have a flash of blank white screen
-      return null;
-    }
+    setTimeout(() => {
+      this.setState({ splashScreenTimer: true });
+    }, 2000);
+      if (this.state.loadingStore || !this.state.splashScreenTimer) {
+        return <SplashScreenLogo />
+      }
 
-    return (
-      <AppErrorBoundary>
-        <Provider store={this.state.store}>
-          <ReduxNavigation />
-        </Provider>
-      </AppErrorBoundary>
-    );
+      return (
+        <AppErrorBoundary>
+          <Provider store={this.state.store}>
+            <ReduxNavigation />
+          </Provider>
+        </AppErrorBoundary>
+      );
   }
 }
 

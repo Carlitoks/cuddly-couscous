@@ -8,7 +8,8 @@
     "react/prop-types": [0],
     "no-shadow": "off",
     "react/prefer-stateless-function": "off",
-    "quotes": [2, "double", { "avoidEscape": true }]
+    "quotes": [2, "double", { "avoidEscape": true }],
+    "react-native/no-unused-styles": 2
   },
   "parserOptions": {
     "ecmaFeatures": {

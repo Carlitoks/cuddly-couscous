@@ -25,6 +25,8 @@ import { TroubleshootURI } from "../../Config/StaticViewsURIS";
 import I18n, { translateApiError } from "../../I18n/I18n";
 
 class ForgotPasswordView extends Component {
+
+
   validateForm() {
     const patt = new RegExp(EMAIL_REGEX);
     let updates = {};

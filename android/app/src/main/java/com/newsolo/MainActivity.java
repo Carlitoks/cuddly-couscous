@@ -6,6 +6,7 @@ import com.facebook.react.ReactActivity;
 
 import io.branch.rnbranch.*; // <-- add this
 import android.content.Intent; // <-- and this
+import org.devio.rn.splashscreen.SplashScreen; // import this
 
 public class MainActivity extends ReactActivity {
 
@@ -21,6 +22,7 @@ public class MainActivity extends ReactActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this, R.style.SplashScreenTheme);  // here
         super.onCreate(savedInstanceState);
     }
 

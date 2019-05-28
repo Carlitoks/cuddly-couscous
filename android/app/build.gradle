@@ -102,7 +102,7 @@ android {
         applicationId "com.newsolo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName "3.0.0"
+        versionName "3.1.0"
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -140,12 +140,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
+    compile project(':react-native-splash-screen')
     compile project(':@segment_analytics-react-native')
     compile project(':react-native-branch')
     compile 'com.amplitude:android-sdk:2.19.1'

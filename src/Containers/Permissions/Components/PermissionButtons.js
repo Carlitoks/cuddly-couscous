@@ -6,16 +6,22 @@ import { connect } from "react-redux";
 import Permissions from "react-native-permissions";
 import { updateLocation } from "../../../Ducks/NewSessionReducer";
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
+import{createNewSession} from "../../../Ducks/CurrentSessionReducer";
+import { SESSION } from "../../../Util/Constants";
 
 // Styles
 import styles from "./Styles/PermissionButtonsStyles";
-import I18n from "../../../I18n/I18n";
+import I18n, {translateApiError} from "../../../I18n/I18n";
 
 class PermissionButtons extends Component {
+  state = {
+    createDisabled: false,
+    creating: false
+  };
   propmtPermission = async (permission) => {
     const { navigation, updateLocation, updateOnboarding } = this.props;
     const currentState = await Permissions.check(`${permission}`);
-    if (currentState === "undetermined") {
+    if (currentState === "undetermined" || currentState === "denied") {
       await Permissions.request(`${permission}`);
     }
     if (permission === "camera" || permission === "microphone") {
@@ -26,23 +32,30 @@ class PermissionButtons extends Component {
       }
     } else {
       if (permission === "location") {
-        updateOnboarding({ completedLocation: true });
-        if (Platform.OS === "android") {
-          updateOnboarding({ completedNotification: true });
-          navigation.dispatch({ type: "Home" });
-        } else {
-          navigation.dispatch({ type: "Home" });
+        const currentState = await Permissions.check(`${permission}`);
+        if (currentState === "granted") {
+          updateOnboarding({ completedLocation: true });
+          if (Platform.OS === "android") {
+            updateOnboarding({ completedNotification: true });
+            navigation.dispatch({ type: navigation.state.params.redirectTo });
+          } else {
+            navigation.dispatch({ type: navigation.state.params.redirectTo });
+          }
         }
       }
       if (permission === "notification") {
-        updateOnboarding({ completedNotification: true });
-        navigation.dispatch({ type: "Home" });
+        const currentState = await Permissions.check(`${permission}`);
+        if (currentState === "granted") {
+          updateOnboarding({ completedNotification: true });
+          navigation.dispatch({ type: navigation.state.params.redirectTo });
+        }
       }
     }
   };
 
   checkPermission = async () => {
     const { check, navigation, updateOnboarding } = this.props;
+    const redirectTo = navigation.state.params ? navigation.state.params.redirectTo : "Home";
     if (check === "Location") {
       await this.propmtPermission("location");
       const checkPermissions = await Permissions.check("location");
@@ -50,9 +63,9 @@ class PermissionButtons extends Component {
         updateOnboarding({ completedLocation: true });
         if (Platform.OS === "android") {
           updateOnboarding({ completedNotification: true });
-          navigation.dispatch({ type: "Home" });
+          navigation.dispatch({ type: redirectTo });
         } else {
-          navigation.dispatch({ type: "Home" });
+          navigation.dispatch({ type: redirectTo });
         }
       }
     }
@@ -62,7 +75,7 @@ class PermissionButtons extends Component {
       const checkPermissions = await Permissions.check("notification");
       if (checkPermissions === "authorized") {
         updateOnboarding({ completedNotification: true });
-        navigation.dispatch({ type: "Home" });
+        navigation.dispatch({ type: redirectTo });
       }
     }
 
@@ -75,19 +88,44 @@ class PermissionButtons extends Component {
         && checkPermissions.microphone === "authorized"
       ) {
         updateOnboarding({ completedMicAndCamera: true });
-        navigation.dispatch({ type: "CustomerView" });
+        this.createCall();
       }
     }
   };
 
+  createCall () {
+    if (this.state.createDisabled) {
+      return;
+    }
+    this.setState({createDisabled: true, creating: true}, () => {
+      this.props.createNewSession({
+        ...this.props.session,
+        reason: SESSION.START.NORMAL
+      })
+        .then(() => {
+          this.props.navigation.dispatch({type: "CustomerMatchingView"});
+        }).catch((e) => {
+        this.setState({createDisabled: false, creating: false});
+        console.log("error", e)
+        Alert.alert(
+          I18n.t('error'),
+          translateApiError(e, "session.createSessionFailed"),
+          [
+            {text: 'OK'},
+          ],
+        );
+      });
+    });
+  }
+
   renderTitle = () => {
     const { check } = this.props;
     if (check === "Location") {
-      return I18n.t("customerOnboarding.location.button");
+      return I18n.t("newCustomerOnboarding.location.button");
     }
 
     if (check === "Notification") {
-      return I18n.t("customerOnboarding.notification.button");
+      return I18n.t("newCustomerOnboarding.notification.button");
     }
 
     if (check === "CameraMic") {
@@ -99,26 +137,27 @@ class PermissionButtons extends Component {
   renderSubButton = () => {
     const { check } = this.props;
     if (check != "CameraMic") {
-      return I18n.t("customerOnboarding.location.skip");
+      return I18n.t("actions.skip");
     }
-    return I18n.t("customerHome.sessionPermissions.back");
+    return I18n.t("actions.back");
   };
 
   pressReturn = () => {
     const { navigation, updateOnboarding } = this.props;
+    const redirectTo = navigation.state.params ? navigation.state.params.redirectTo : "Home";
     if (navigation.state.routeName === "LocationPermissionView") {
       if (Platform.OS === "android") {
         updateOnboarding({ completedLocation: true });
-        return navigation.dispatch({ type: "Home" });
+        return navigation.dispatch({ type: redirectTo });
       }
-      return navigation.dispatch({ type: "Home" });
+      return navigation.dispatch({ type: redirectTo });
     }
 
     if (navigation.state.routeName === "NotificationPermissionView") {
       updateOnboarding({ completedNotification: true });
-      return navigation.dispatch({ type: "Home" });
+      return navigation.dispatch({ type: redirectTo });
     }
-    return navigation.dispatch({ type: "Home" });
+    return navigation.dispatch({ type: redirectTo });
   };
 
   render() {
@@ -128,14 +167,15 @@ class PermissionButtons extends Component {
         <View style={styles.checkPermissionContainer}>
           <TouchableOpacity
             onPress={() => this.checkPermission()}
-            style={styles.checkPermissionButton}
+            style={check === "CameraMic" ? styles.checkPermissionButtonCamera : styles.checkPermissionButton}
+            disable={this.state.createDisabled || this.state.creating}
           >
-            <Text style={styles.checkPermissionButtonText}>{this.renderTitle()}</Text>
+            <Text style={check === "CameraMic" ? styles.checkPermissionButtonTextCamera : styles.checkPermissionButtonText}>{this.renderTitle()}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.skipButtonContainer}>
           <TouchableOpacity onPress={() => this.pressReturn()} style={styles.skipButton}>
-            <Text style={styles.skipButtonText}>{this.renderSubButton()}</Text>
+            <Text style={check === "CameraMic" ? styles.skipButtonTextCamera : styles.skipButtonText}>{this.renderSubButton()}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -143,11 +183,14 @@ class PermissionButtons extends Component {
   }
 }
 
-const mS = state => ({});
+const mS = state => ({
+  session: state.newSessionReducer.session,
+});
 
 const mD = {
   updateLocation,
   updateOnboarding,
+  createNewSession
 };
 
 export default connect(

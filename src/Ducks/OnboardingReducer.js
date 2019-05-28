@@ -25,7 +25,7 @@ export const clearOnboarding = () => ({
     makingRequest: false,
     isValidEmail: false,
     isValidFirstName: false,
-    isValidPassword: false
+    isValidPassword: false,
   }
 });
 
@@ -44,6 +44,7 @@ const initialState = {
   password: null,
   firstName: null,
   errorType: null,
+  nativeLangCode: "",
   makingRequest: false,
   isValidEmail: false,
   isValidFirstName: false,

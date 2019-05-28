@@ -88,7 +88,8 @@ const initialState = {
   selectedSecondaryLanguages: [],
   selectionItemType: "",
   selectedLanguage: null,
-  isNewUser: false
+  isNewUser: false,
+  emailBounced: false,
 };
 
 const UserProfileReducer = (state = initialState, action = {}) => {

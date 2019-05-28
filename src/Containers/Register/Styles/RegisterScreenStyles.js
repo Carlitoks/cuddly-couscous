@@ -1,165 +1,218 @@
-import { StyleSheet, Platform } from "react-native";
-import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
-import { moderateScale } from "../../../Util/Scaling";
-import { Iphone5, iPhoneXModels } from "../../../Util/Devices";
+import { Platform, StyleSheet } from "react-native";
+import { ApplicationStyles, Fonts, Metrics } from "../../../Themes";
+import { moderateScaleViewports } from "../../../Util/Scaling";
+import { isIphoneXorAbove } from "../../../Util/Devices";
 
-//const { width, height } = Dimensions.get("window");
+// const { width, height } = Dimensions.get("window");
 const android = Platform.OS === "android";
-
+const defaultInput = {
+  flex: 0.9,
+  borderBottomWidth: 1,
+  color: "rgba(0, 0, 0, 0.54)",
+  fontFamily: Fonts.BaseFont,
+  fontSize: moderateScaleViewports(16),
+  paddingBottom: moderateScaleViewports(5),
+};
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   wrapperContainer: {
     backgroundColor: "white",
-    height: "100%"
+    height: "100%",
   },
-  inputText: {
-    width: Metrics.width * 0.85,
-    borderBottomWidth: 1,
-    borderBottomColor: "#C4C4C4",
-    color: "#000000",
-    fontFamily: Fonts.BoldFont,
-    fontSize: moderateScale(18, 0),
-    paddingVertical: Iphone5 ? 4 : moderateScale(7, 0),
-
+  mainRegisterContainer: {
+    backgroundColor: "#fff",
+    flex: 1,
+  },
+  backgroundContainer: {
+    alignItems: "center",
+    flexDirection: "column",
+    flexGrow: 1,
+    justifyContent: "flex-start",
+    width: Metrics.width,
+  },
+  backgroundImage: {
+    height: moderateScaleViewports(Metrics.height * 0.55),
+    width: Metrics.width,
+  },
+  logoImg: {
+    marginTop: moderateScaleViewports(74),
+  },
+  bottomMarginContainer: {
+    // marginBottom: moderateScaleViewports(77),
+  },
+  inputTextValid: {
+    ...defaultInput,
+    borderBottomColor: "rgba(151, 151, 151, 0.3)",
+  },
+  inputTextInvalid: {
+    ...defaultInput,
+    borderBottomColor: "#FF3B30",
   },
   registerContainer: {
+    alignItems: "center",
     flexDirection: "column",
+    flexGrow: 1,
     justifyContent: "space-between",
-    alignItems: "center",
-    flexGrow: 1
   },
-  inputContainer: { width: Metrics.width * 0.85, paddingTop: 20 },
-  buttonContainer: {
-    flexDirection: "column",
+  keyboardContainer: {
     alignItems: "center",
+    backgroundColor: "#DBDBDB",
+    flex: 1,
+    justifyContent: "center",
+  },
+  inputContainer: {
+    backgroundColor: "#FFF",
+    borderRadius: 4,
+    elevation: 4,
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.38,
+    shadowRadius: 8,
+    width: Metrics.width * 0.80,
+  },
+  buttonContainer: {
+    alignItems: "center",
+    flexDirection: "column",
     justifyContent: "flex-end",
-    paddingTop: 20
+    paddingTop: 20,
   },
   buttonWidthContainer: {
-    paddingBottom: 30,
     alignItems: "center",
-    justifyContent: "center"
-  },
-  buttonEnabledText: {
-    textAlign: "center",
-    //color: "#fff",
-    fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    paddingTop: Metrics.width * 0.05,
-    paddingBottom: Metrics.width * 0.05,
-    paddingLeft: Metrics.width * 0.05,
-    paddingRight: Metrics.width * 0.05
+    justifyContent: "center",
+    paddingBottom: 30,
   },
   transitionButtonText: {
-    textAlign: "center",
-    color: "#401674",
+    color: "#848688",
     fontFamily: Fonts.BoldFont,
-    fontSize: Iphone5 ? 14 : moderateScale(17, 0),
-    padding: Metrics.width * 0.02
+    fontSize: moderateScaleViewports(14),
+    paddingBottom: moderateScaleViewports(32),
+    paddingTop: moderateScaleViewports(27),
+    textAlign: "center",
+  },
+  transitionButtonSginInText: {
+    color: "#3F1674",
+    fontFamily: Fonts.BoldFont,
+    fontSize: moderateScaleViewports(14),
+    paddingBottom: moderateScaleViewports(32),
+    paddingTop: moderateScaleViewports(27),
+    textAlign: "center",
+    textDecorationLine: "underline",
   },
   registerAdviseText: {
-    textAlign: "center",
     color: "#666666",
     fontFamily: Fonts.BaseFont,
-    fontSize: Iphone5 ? 14 : moderateScale(15, 0),
-    paddingBottom: 20
-  },
-  termsAndConditionsText: {
+    fontSize: moderateScaleViewports(15),
+    paddingBottom: 20,
     textAlign: "center",
-    color: "#666666",
-    fontFamily: Fonts.BaseFont,
-    fontSize: Metrics.height <= 568 ? 10 : moderateScale(12, 0)
   },
-  termsAndConditionsTextLink: {
-    textAlign: "center",
-    color: "#666666",
-    fontSize: Iphone5 ? 10 : moderateScale(12, 0),
-    fontFamily: Fonts.BoldFont,
-    //textDecorationLine: "underline",
-    lineHeight: 20
-  },
-  createAccountPadding: { paddingTop: 24, width: Metrics.width },
-  registerButton: {
-    minWidth: Metrics.width * 0.78,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#fff",
-    borderRadius: 30,
-    backgroundColor: "#F39100",
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOpacity: 0.38,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 8
-  },
-  signInButtonDisable: {
-    minWidth: Metrics.width * 0.78,
-    backgroundColor: Colors.transparent,
-    borderColor: "#C4C4C4",
-    borderWidth: 1,
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center"
-  },
+
+  createAccountPadding: {},
   inputViewContainer: {
     flexDirection: "column",
-    paddingTop: 10
+    paddingTop: moderateScaleViewports(0),
+  },
+  inputViewContainerValue: {
+    flexDirection: "column",
+    paddingTop: moderateScaleViewports(0),
   },
   labelText: {
-    fontFamily: Fonts.ItalicFont,
-    fontSize: moderateScale(13, 0),
-    fontWeight: "400",
     color: "#401674",
-    paddingLeft: 3
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(13),
+    fontWeight: "400",
+    padding: 0,
+    paddingLeft: moderateScaleViewports(20),
+    paddingTop: moderateScaleViewports(10),
+    textAlign: "left",
+  },
+  firstInput: {
+    paddingTop: moderateScaleViewports(27),
+  },
+  invalidLabelText: {
+    color: "#FF3B30",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(12),
+    fontWeight: "400",
+    padding: 0,
+    paddingLeft: moderateScaleViewports(20),
+    textAlign: "left",
   },
   inputsErrorContainer: {
+    alignItems: "flex-start",
     flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    marginTop: android ? -10 : 0
+    justifyContent: "center",
+    marginTop: android ? -15 : 0,
   },
   errorIconContainer: {
-    position: "relative",
-    left: -30,
+    alignItems: "center",
     backgroundColor: "red",
-    borderWidth: android ? 1 : 1.5,
     borderColor: "#fff",
     borderRadius: 50,
+    borderWidth: android ? 1 : 1.5,
     height: Metrics.width * 0.06,
+    justifyContent: "center",
+    left: -30,
+    marginBottom: android ? 1 : 30,
+    position: "relative",
     width: Metrics.width * 0.06,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: android ? 1 : 30
   },
-  termsAndConditionsViewContainer: {
-    marginTop: Metrics.height <= 568 ? moderateScale(10, 0) : moderateScale(25, 0),
-    flexDirection: "row",
-    width: "95%",
-    zIndex: 1000000000,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
-    flexWrap: "wrap"
-  },
-  touchableLink: {
-    alignItems: "center",
-    justifyContent: "flex-start"
-  },
+
+
   height: { height: "100%" },
   titleText: {
+    color: "#FFFFFF",
     fontFamily: Fonts.BoldFont,
-    color: "#333333",
-    fontSize: moderateScale(20, 0),
+    fontSize: moderateScaleViewports(20),
+    paddingBottom: isIphoneXorAbove() ? moderateScaleViewports(120) : moderateScaleViewports(20),
+    paddingTop: moderateScaleViewports(45),
     textAlign: "center",
-    paddingTop: moderateScale(60, 0),
-    paddingBottom: moderateScale(20, 0)
   },
   topLogoContainer: {
-    marginTop: moderateScale(18),
+    alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center"
-  }
+  },
+
+  /**
+   * RenderPickerLangStyles
+   */
+  renderPickerContainer: {
+    flexDirection: "column",
+    flex: 0.9,
+    paddingTop: moderateScaleViewports(27),
+  },
+
+  /**
+   * RenderPickerStyles
+   */
+  renderPickerSelectorContainer: {
+    alignContent: "flex-start",
+    borderBottomColor: "rgba(151, 151, 151, 0.3)",
+    borderBottomWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: moderateScaleViewports(8),
+    paddingTop: moderateScaleViewports(5),
+
+  },
+  renderPickerLabel: {
+    color: "#373737",
+    fontFamily: Fonts.BoldFont,
+    fontSize: moderateScaleViewports(16),
+  },
+  renderPickerLabelPlaceHolder: {
+    color: "#401674",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(13),
+  },
+  renderPickerLabelTop: {
+    color: "rgba(0, 0, 0, 0.54)",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    paddingBottom: moderateScaleViewports(5),
+  },
+  textContainerRow: {
+    flex: 1,
+    flexDirection: "row",
+  },
 });

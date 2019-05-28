@@ -25,6 +25,8 @@ import userProfile from "./UserProfileReducer";
 import newSessionReducer from "./NewSessionReducer";
 import onboardingReducer from "./OnboardingReducer";
 import appConfigReducer from "./AppConfigReducer";
+import account from "./AccountReducer";
+import appState from "./AppStateReducer";
 import LogicReducer from "./LogicReducer";
 import currentSessionReducer from "./CurrentSessionReducer";
 
@@ -34,7 +36,6 @@ const rootReducer = combineReducers({
   auth,
   callHistory,
   customerProfile,
-
   events,
   forgotPassword,
   homeFlow,
@@ -56,7 +57,9 @@ const rootReducer = combineReducers({
   newSessionReducer,
   onboardingReducer,
   LogicReducer,
-  currentSessionReducer
+  currentSessionReducer,
+  account,
+  appState,
 });
 
 export default rootReducer;

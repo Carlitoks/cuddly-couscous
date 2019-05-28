@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  Keyboard,
-  StatusBar,
-  TouchableOpacity,
-  View,
-  Text
-} from "react-native";
+import { Keyboard, StatusBar, TouchableOpacity, View, Text } from "react-native";
 import { Header, Icon } from "react-native-elements";
 import { NavMenu } from "../../../Assets/SVG";
 import { Colors } from "../../../Themes";
@@ -18,9 +12,10 @@ export default class LinguistHeader extends Component {
   renderTitle = () => {
     const { navigation } = this.props;
     if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
-      || navigation.state.routeName === "Home"
+      navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "LoginView" ||
+      navigation.state.routeName === "Home" ||
+      navigation.state.routeName === "ForgotPasswordView"
     ) {
       return null;
     }
@@ -36,6 +31,12 @@ export default class LinguistHeader extends Component {
     if (navigation.state.routeName === "CardInfoScreen") {
       return { text: I18n.t("payments.cardInfo"), style: styles.titleTextStyle };
     }
+    if (navigation.state.routeName === "LanguageListScreen") {
+      return {
+        text: I18n.t("nativeLanguageTitle"),
+        style: styles.titleTextStyle
+      };
+    }
 
     if (navigation.state.routeName === "EditCardScreen") {
       return { text: I18n.t("payments.editCard"), style: styles.titleTextStyle };
@@ -50,11 +51,11 @@ export default class LinguistHeader extends Component {
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
       );
     }
-    if (navigation.state.routeName === "LoginView" || navigation.state.routeName === "RegisterView") {
+    if (navigation.state.routeName === "ForgotPasswordView") {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
           <View style={styles.buttonGoBack}>
-            <Icon name="chevron-left" type="evilicon" color="#401674" size={50} />
+            <Icon name="chevron-left" type="evilicon" color="#3F1674" size={50} />
           </View>
         </TouchableOpacity>
       );
@@ -63,7 +64,10 @@ export default class LinguistHeader extends Component {
       navigation.state.routeName === "PaymentDetailScreen" ||
       navigation.state.routeName === "PaymentsView" ||
       navigation.state.routeName === "CardInfoScreen" ||
-      navigation.state.routeName === "EditCardScreen"
+      navigation.state.routeName === "EditCardScreen" ||
+      navigation.state.routeName === "LoginView" ||
+      navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "LanguageListScreen"
     ) {
       return (
         <TouchableOpacity activeOpacity={0.8} onPress={() => this.navigate("back")}>
@@ -79,26 +83,21 @@ export default class LinguistHeader extends Component {
         style={styles.containerMenu}
         onPress={() => this.navigate("DrawerOpen")}
       >
-        <NavMenu width={30} height={20}/>
+        <NavMenu width={30} height={20} />
       </TouchableOpacity>
     );
   };
 
   renderRightComponent = () => {
     const { type, navigation, safeEditCard } = this.props;
-
-    if (type === "onboarding") {
-      return (
-        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null}/>
-      );
-    }
-
     if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
+      navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "LoginView" ||
+      navigation.state.routeName === "ForgotPasswordView" ||
+      navigation.state.routeName === "LanguageListScreen"
     ) {
       return (
-        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null}/>
+        <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
       );
     }
 
@@ -134,7 +133,7 @@ export default class LinguistHeader extends Component {
     return (
       <View style={styles.minutesLeftContainer}>
         <TouchableOpacity onPress={() => navigation.dispatch({ type: "PaymentDetailScreen" })}>
-          <HeaderMinutesLeft navigation={navigation}/>
+          <HeaderMinutesLeft navigation={navigation} />
         </TouchableOpacity>
       </View>
     );
@@ -142,16 +141,13 @@ export default class LinguistHeader extends Component {
 
   renderHeaderInnerStyles = () => {
     const { navigation } = this.props;
-    if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
-    ) {
-      return styles.headerInner;
+    if (navigation.state.routeName === "ForgotPasswordView") {
+      return styles.headerInnerForgotPassword;
     }
     return styles.headerInnerHome;
   };
 
-  navigate = (screenName) => {
+  navigate = screenName => {
     const { navigation } = this.props;
     Keyboard.dismiss();
     navigation.dispatch({ type: screenName });
@@ -159,14 +155,16 @@ export default class LinguistHeader extends Component {
 
   setBackgroundColor = () => {
     const { navigation } = this.props;
-    if (navigation.state.routeName === "Home") {
-      return Colors.gradientColor.top;
+    if (navigation.state.routeName === "ForgotPasswordView") {
+      return "#DBDBDB";
     }
+
     if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
+      navigation.state.routeName === "Home" ||
+      navigation.state.routeName === "RegisterView" ||
+      navigation.state.routeName === "LoginView"
     ) {
-      return "#fff";
+      return Colors.gradientColor.top;
     }
 
     return "transparent";
@@ -174,24 +172,19 @@ export default class LinguistHeader extends Component {
 
   setIosBackground = () => {
     const { navigation } = this.props;
-
-    if (
-      navigation.state.routeName === "RegisterView"
-      || navigation.state.routeName === "LoginView"
-    ) {
-      return styles.headerContainerOnboarding;
+    if (navigation.state.routeName === "ForgotPasswordView") {
+      return {
+        backgroundColor: "#DBDBDB",
+      };
     }
-return styles.headerContainer;
-  }
+    return styles.headerContainer;
+  };
 
   render() {
     const { navigation } = this.props;
     return (
       <View style={this.setIosBackground()}>
-        <StatusBar
-          hidden={false}
-          backgroundColor={this.setBackgroundColor()}
-        />
+        <StatusBar hidden={false} backgroundColor={this.setBackgroundColor()} />
         <Header
           backgroundColor={Colors.transparent}
           leftComponent={this.renderLeftComponent()}

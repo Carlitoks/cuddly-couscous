@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { moderateScale, setTextProperties } from '../../../../Util/Scaling';
+import { moderateScale, moderateScaleViewports, setTextProperties } from "../../../../Util/Scaling";
 import Fonts from '../../../../Themes/Fonts';
 import { Metrics } from '../../../../Themes';
 import colors from '../../../../Themes/Colors';
@@ -7,13 +7,13 @@ import { iPhoneXModels, Iphone5, isIphoneXorAbove } from '../../../../Util/Devic
 import metrics from '../../../../Themes/Metrics';
 
 const primaryButton = {
-  minWidth: Metrics.width * 0.78,
+  minWidth: Metrics.width * 0.50,
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
   borderWidth: 1,
-  borderRadius: 30,
-  marginTop: metrics.width < 375 ? 15 : 0
+  borderRadius: 4,
+  marginTop: 20
 };
 
 export default StyleSheet.create({
@@ -21,7 +21,7 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingBottom: isIphoneXorAbove() ? 50 : 0,
+    paddingBottom: isIphoneXorAbove() ? 44 : 25,
   },
   callNowButtonContainer: {
     flexDirection: 'column',
@@ -29,8 +29,7 @@ export default StyleSheet.create({
   },
   callNowButton: {
     ...primaryButton,
-    borderColor: "#fff",
-    backgroundColor: "#F39100",
+    backgroundColor: "#391367",
     shadowColor: "rgba(0,0,0,1)",
     shadowOpacity: 0.38,
     shadowRadius: 20,
@@ -43,11 +42,9 @@ export default StyleSheet.create({
     backgroundColor: colors.gradientColor.bottom
   },
   callNowButtonText: {
-    ...setTextProperties('#fff', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '600'),
-    paddingTop: Metrics.width * 0.05,
-    paddingBottom: Metrics.width * 0.05,
-    paddingLeft: Metrics.width * 0.05,
-    paddingRight: Metrics.width * 0.05
+    ...setTextProperties('#fff', Fonts.BaseFont, moderateScaleViewports(16), '600'),
+    paddingTop: moderateScaleViewports(10),
+    paddingBottom: moderateScaleViewports(10),
   },
   callNowButtonTextDisabled: {
     ...setTextProperties('#ccc', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '600')
@@ -58,10 +55,14 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: moderateScale(30, 0)
+    paddingTop: moderateScaleViewports(23),
   },
   audioOnlyButtonText: {
-    ...setTextProperties('#fff', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '500')
+    ...setTextProperties('#848688', Fonts.BaseFont, moderateScaleViewports(14)),
+  },
+  signInText: {
+    ...setTextProperties('#391367', Fonts.BaseFont, moderateScaleViewports(14)),
+    textDecorationLine: "underline",
   },
   audioOnlyButtonTextDisabled: {
     ...setTextProperties('#ccc', Fonts.BaseFont, Iphone5 ? 14 : moderateScale(17, 0), '500')

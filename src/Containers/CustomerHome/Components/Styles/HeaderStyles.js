@@ -81,6 +81,13 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "#401674"
   },
+  headerInnerForgotPassword: {
+    padding: 5,
+    margin: 0,
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#DBDBDB"
+  },
   headerOuter: {
     marginTop: iOS ? isIphoneXorAbove() ? 35 : 30 : 20,
     padding: 0,
