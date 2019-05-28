@@ -58,8 +58,8 @@ export default StyleSheet.create({
     borderBottomColor: "#FF3B30",
     paddingTop: Platform.OS === "ios" ? 15 : 15
   },
-  CVVIconContainer: { position: "absolute", right: 10, top: 20 },
-  CVVIcon: { width: 25, height: 25 },
+  CVVIconContainer: { position: "absolute", right: 10, top: moderateScale(17) },
+  CVVIcon: { width: 20, height: 20 },
   tooltipContainerStyle: {
     alignItems: "center",
     justifyContent: "center",
