@@ -1,19 +1,19 @@
 import { StyleSheet } from "react-native";
 import { Metrics, ApplicationStyles, Fonts } from "../../../Themes";
 import metrics from "../../../Themes/Metrics";
-import { moderateScale } from "../../../Util/Scaling";
+import { moderateScale, moderateScaleViewports } from "../../../Util/Scaling";
 import {isIphoneXorAbove} from "../../../Util/Devices";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
     flex: 1,
-    paddingBottom: Metrics.baseMargin,
+    paddingBottom: moderateScaleViewports(Metrics.baseMargin),
   },
   logo: {
-    marginTop: Metrics.doubleSection,
-    height: Metrics.images.logo,
-    width: Metrics.images.logo,
+    marginTop: moderateScaleViewports(Metrics.doubleSection),
+    height: moderateScaleViewports(Metrics.images.logo),
+    width: moderateScaleViewports(Metrics.images.logo),
     resizeMode: "contain",
   },
   centered: {
@@ -32,24 +32,24 @@ export default StyleSheet.create({
   },
   paginationStyle: {
     position: "relative",
-    maxHeight: metrics.width * 0.02,
-    marginTop: metrics.height * 0.1,
+    maxHeight: moderateScaleViewports(metrics.width * 0.02),
+    marginTop: moderateScaleViewports(metrics.height * 0.1),
     backgroundColor: "purple",
   },
   bottomButtonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: isIphoneXorAbove() ? 50 : 25,
+    paddingBottom: isIphoneXorAbove() ? moderateScaleViewports(50) : moderateScaleViewports(25),
   },
   reportProblemText: {
     fontFamily: Fonts.ItalicFont,
     fontSize: moderateScale(24, 1),
     textAlign: "center",
     color: "#401674",
-    paddingBottom: metrics.height * 0.02,
+    paddingBottom: moderateScaleViewports(metrics.height * 0.02),
   },
   baseButton: {
-    borderRadius: 53,
+    borderRadius: moderateScaleViewports(53),
     width: metrics.width * 0.70,
     justifyContent: "center",
     alignItems: "center",
@@ -62,10 +62,10 @@ export default StyleSheet.create({
     backgroundColor: "#F39100", borderWidth: 2, borderColor: "#FFF",
   },
   baseButtonText: {
-    paddingTop: Metrics.width * 0.05,
-    paddingBottom: Metrics.width * 0.05,
+    paddingTop: moderateScaleViewports(Metrics.width * 0.05),
+    paddingBottom: moderateScaleViewports(Metrics.width * 0.05),
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(17, 0),
+    fontSize: moderateScaleViewports(17),
   },
   baseButtonTextDisabled: {
     color: "#BCBCBC",
@@ -95,8 +95,8 @@ export default StyleSheet.create({
     marginBottom: 3,
   },
   paginationContainer: {
-    paddingTop: metrics.height * 0.045,
-    paddingBottom: metrics.height * 0.025,
+    paddingTop: moderateScaleViewports(metrics.height * 0.045),
+    paddingBottom: moderateScaleViewports(metrics.height * 0.025),
     flexDirection: "row",
   },
 });

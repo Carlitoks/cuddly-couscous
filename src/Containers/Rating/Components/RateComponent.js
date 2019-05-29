@@ -8,6 +8,7 @@ import { updateOptions } from "../../../Ducks/RateCallReducer";
 import I18n from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/RateComponentStyles";
+import { moderateScaleViewports } from "../../../Util/Scaling";
 
 class RateComponent extends Component {
   togglethumbsUp = () => {
@@ -50,6 +51,7 @@ class RateComponent extends Component {
           StateIcon={thumbsUp}
           onPress={() => this.buttonThumbs(0)}
           color={Colors.gradientColorButton.middle}
+          size={moderateScaleViewports(60)}
         />
         <View style={styles.thumbsPadding} />
         <ThumbsButton
@@ -57,6 +59,7 @@ class RateComponent extends Component {
           StateIcon={thumbsDown}
           onPress={() => this.buttonThumbs(1)}
           color={Colors.gradientColorButton.middle}
+          size={moderateScaleViewports(60)}
         />
       </View>
     </React.Fragment>);
@@ -80,7 +83,7 @@ class RateComponent extends Component {
           rating={rating}
           selectedStar={rating => updateOptions({ rating })}
           maxStars={5}
-          starSize={60}
+          starSize={moderateScaleViewports(60)}
           emptyStarColor={Colors.emptyStarColor}
           fullStarColor={Colors.gradientColorButton.top}
           starColor={Colors.gradientColorButton.top}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { TagSelect } from "react-native-tag-select";
 import { connect } from "react-redux";
 import { CallClassification as CallClassificationIcons } from "./RateListIcons";
@@ -45,7 +45,7 @@ class CallClassification extends Component {
     const { callClassification } = this.state;
     const { callType, scenarioID, scenarioNote } = this.props;
     return (
-      <View style={styles.flexEndCenter}>
+      <ScrollView style={styles.paddingTop} contenContinerStyle={styles.flexEndCenter}>
         <Text style={styles.baseText}>{I18n.t("session.rating.classification")}</Text>
         <TagSelect
           data={callClassification}
@@ -97,7 +97,7 @@ class CallClassification extends Component {
           </TouchableOpacity>
           <Divider style={styles.divider} />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

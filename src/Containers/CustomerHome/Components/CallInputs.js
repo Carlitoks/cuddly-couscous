@@ -29,9 +29,9 @@ class CallInputs extends Component {
       } catch (e) {
         d = moment().format("YYYY/M/D")
       }
-      
+
       return I18n.t("newCustomerHome.rateNotices.unlimitedUntil", {date: d});
-    }    
+    }
     if (isNewUser) {
       return I18n.t("newCustomerHome.rateNotices.beforeFirst", {num: CUSTOMER_FREE_MINUTES});
     }

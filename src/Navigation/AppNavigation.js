@@ -166,7 +166,7 @@ const Navigation = StackNavigator(
       }
     },
     RateView: {
-      screen: RateView,
+      screen: RatingsScreen,
       navigationOptions: {
         navigationOptions: {
           gesturesEnabled: false,

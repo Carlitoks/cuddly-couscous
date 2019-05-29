@@ -1,56 +1,56 @@
 import { StyleSheet } from "react-native";
 import { ApplicationStyles, Fonts } from "../../../../Themes";
 import metrics from "../../../../Themes/Metrics";
-import { moderateScale } from "../../../../Util/Scaling";
+import { moderateScale, moderateScaleViewports } from "../../../../Util/Scaling";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  flexEndCenter: { justifyContent: "center", alignItems: "center" },
-  baseText: {
+  addComments: {
+    color: "#401674",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(20, 0),
-    textAlign: "center",
-    color: "#000",
-    marginBottom: metrics.height * 0.02,
+    fontSize: moderateScaleViewports(24),
+    paddingBottom: 19,
+    paddingRight: 19,
+    paddingTop: 19,
   },
-  thumbsContainer: { flexDirection: "row" },
-  starRatingPadding: { paddingBottom: metrics.height * 0.10 },
-  thumbsPadding: { paddingLeft: 25 },
+  baseTagText: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports( 16) },
+  baseTagTextSelected: { color: "#FFFFFF" },
+  baseTagTextUnselected: { color: "#401674" },
   baseTagsStyle: {
     borderRadius: 10,
-    paddingTop: metrics.width * 0.0080,
     paddingBottom: metrics.width * 0.0080,
     paddingLeft: metrics.width * 0.06,
     paddingRight: metrics.width * 0.06,
+    paddingTop: metrics.width * 0.0080,
+  },
+  baseText: {
+    color: "#000",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(20),
+    marginBottom: metrics.height * 0.02,
+    textAlign: "center",
+  },
+  bottomDividerContainer: {
+    alignItems: "flex-start",
+    justifyContent: "center",
+    marginLeft: 20,
+    paddingTop: metrics.height * 0.03,
+  },
+  divider: { backgroundColor: "#979797", height: 1, width: metrics.width * 0.90 },
+  flexEndCenter: { alignItems: "center", justifyContent: "center" },
+  paddingTop: { marginTop: metrics.height * 0.045 },
+  starRatingPadding: { paddingBottom: metrics.height * 0.10 },
+  tagSelected: {
+    backgroundColor: "#401674",
+    borderColor: "#401674",
+    borderWidth: 1,
   },
   tagUnselected: {
     backgroundColor: "#fff",
-    borderWidth: 1,
     borderColor: "#401674",
-  },
-  tagSelected: {
-    backgroundColor: "#401674",
     borderWidth: 1,
-    borderColor: "#401674",
   },
-  baseTagText: { fontFamily: Fonts.BaseFont, fontSize: 16 },
-  baseTagTextUnselected: { color: "#401674" },
-  baseTagTextSelected: { color: "#FFFFFF" },
-  tagsContainer: { justifyContent: "center", alignItems: "center" },
-  bottomDividerContainer: {
-    paddingTop: metrics.height * 0.03,
-    justifyContent: "center",
-    alignItems: "flex-start",
-    marginLeft: 20,
-  },
-  divider: { backgroundColor: "#979797", width: metrics.width * 0.90, height: 1 },
-  addComments: {
-    paddingBottom: 19,
-    paddingTop: 19,
-    fontFamily: Fonts.BaseFont,
-    fontSize: 24,
-    color: "#401674",
-    paddingRight: 19,
-  },
-  paddingTop: { marginTop: metrics.height * 0.045 },
+  tagsContainer: { alignItems: "center", justifyContent: "center" },
+  thumbsContainer: { flexDirection: "row" },
+  thumbsPadding: { paddingLeft: 25 },
 });

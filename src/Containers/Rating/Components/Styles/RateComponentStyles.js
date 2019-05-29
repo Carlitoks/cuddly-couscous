@@ -1,19 +1,19 @@
 import { StyleSheet } from "react-native";
 import { ApplicationStyles, Fonts } from "../../../../Themes";
 import metrics from "../../../../Themes/Metrics";
-import { moderateScale } from "../../../../Util/Scaling";
+import { moderateScale, moderateScaleViewports } from "../../../../Util/Scaling";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  flexEndCenter: { paddingTop: metrics.height * 0.045, justifyContent: "flex-end", alignItems: "center" },
   baseText: {
-    fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(20, 0),
-    textAlign: "center",
     color: "#000",
-    paddingBottom: metrics.height * 0.02,
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(20),
+    paddingBottom: moderateScaleViewports(metrics.height * 0.02),
+    textAlign: "center",
   },
+  flexEndCenter: { alignItems: "center", justifyContent: "flex-end", paddingTop: moderateScaleViewports(metrics.height * 0.045) },
+  starRatingPadding: { paddingBottom: moderateScaleViewports(metrics.height * 0.10) },
   thumbsContainer: { flexDirection: "row" },
-  starRatingPadding: { paddingBottom: metrics.height * 0.10 },
-  thumbsPadding: { paddingLeft: 25 },
+  thumbsPadding: { paddingLeft: moderateScaleViewports(25) },
 });

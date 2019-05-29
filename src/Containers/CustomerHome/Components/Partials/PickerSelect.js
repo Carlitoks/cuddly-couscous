@@ -9,11 +9,13 @@ import styles from "./Styles/PickerSelectStyles";
 
 class PickerSelectComponent extends Component {
   showCurrentSelectedLang = () => {
-    const { type, session, placeholder, selectedLabelStyle } = this.props;
+    const {
+      type, session, placeholder, selectedLabelStyle,
+    } = this.props;
     if (type === "primaryLang" && session.primaryLangCode) {
       const lang = translateLanguage(
         FilterLangsByCodes([session.primaryLangCode])[0]["3"],
-        FilterLangsByCodes([session.primaryLangCode])[0].name
+        FilterLangsByCodes([session.primaryLangCode])[0].name,
       );
       return (
         <View style={styles.flexView}>
@@ -26,7 +28,7 @@ class PickerSelectComponent extends Component {
     if (type === "secondaryLang" && session.secondaryLangCode) {
       const lang = translateLanguage(
         FilterLangsByCodes([session.secondaryLangCode])[0]["3"],
-        FilterLangsByCodes([session.secondaryLangCode])[0].name
+        FilterLangsByCodes([session.secondaryLangCode])[0].name,
       );
       return (
         <View style={styles.flexView}>
@@ -44,11 +46,13 @@ class PickerSelectComponent extends Component {
   };
 
   showCurrentSelectedNativeLang = () => {
-    const { type, session, placeholder, selectedLabelStyle, nativeLangCode } = this.props;
+    const {
+      type, session, placeholder, selectedLabelStyle, nativeLangCode,
+    } = this.props;
     if (nativeLangCode) {
       const lang = translateLanguage(
         FilterLangsByCodes([nativeLangCode])[0]["3"],
-        FilterLangsByCodes([nativeLangCode])[0].name
+        FilterLangsByCodes([nativeLangCode])[0].name,
       );
       return (
         <View style={styles.flexView}>
@@ -68,9 +72,11 @@ class PickerSelectComponent extends Component {
   };
 
   showScenarioList = () => {
-    const { scenariosList, session, placeholder, selectedLabelStyle } = this.props;
+    const {
+      scenariosList, session, placeholder, selectedLabelStyle, type, currentScenarioId,
+    } = this.props;
 
-    if(type === "ratingsScenarioSelection"){
+    if (type === "ratingsScenarioSelection") {
       const selectedScenario = scenariosList.find(scenario => scenario.id === currentScenarioId);
       return (
         <View
@@ -114,33 +120,18 @@ class PickerSelectComponent extends Component {
     );
   };
 
-  showCurrentCustomScenarioNote = () => {
-    const { session, placeholder, selectedLabelStyle } = this.props;
-    if (session.customScenarioNote.length > 0) {
-      return (
-        <View style={styles.flexView}>
-          <Text style={selectedLabelStyle || styles.inputValue} nunmberOfLines={1}>
-            {`${session.customScenarioNote.substring(0, 50)}...`}
-          </Text>
-        </View>
-      );
-    }
-    return (
-      <View style={styles.flexView}>
-        <Text nunmberOfLines={1} style={selectedLabelStyle || styles.inputPlaceholderValue}>
-          {placeholder}
-        </Text>
-      </View>
-    );
-  };
-
   renderTitle = () => {
-    const { type, nativeLangCode, labelStyle, title } = this.props;
+    const {
+      type, nativeLangCode, labelStyle, title,
+    } = this.props;
     if (type === "nativeLang" || type === "nativeSupportedLang") {
       if (nativeLangCode) {
         return <Text style={labelStyle || styles.inputTitle}>{title}</Text>;
       }
       return <Text style={labelStyle || styles.inputTitle} />;
+    }
+    if(title === "none"){
+      return <React.Fragment />;
     }
     return <Text style={labelStyle || styles.inputTitle}>{title}</Text>;
   };
@@ -156,7 +147,7 @@ class PickerSelectComponent extends Component {
       showDivider,
       icon,
       selectorContainer,
-      loading
+      loading,
     } = this.props;
     return (
       <TouchableOpacity
@@ -168,13 +159,11 @@ class PickerSelectComponent extends Component {
       >
         {this.renderTitle()}
         <View style={selectorContainer || styles.currentSelectedLangContainer}>
-          {type === "additionalDetails"
-            ? this.showCurrentCustomScenarioNote()
-            : type === "scenarioSelection"
+          { type === "scenarioSelection" || type === "ratingsScenarioSelection"
             ? this.showScenarioList()
             : type === "nativeLang" || type === "nativeSupportedLang"
-            ? this.showCurrentSelectedNativeLang()
-            : this.showCurrentSelectedLang()}
+              ? this.showCurrentSelectedNativeLang()
+              : this.showCurrentSelectedLang()}
           {type === "additionalDetails" ? (
             <React.Fragment />
           ) : (
@@ -199,12 +188,12 @@ const mS = state => ({
   session: state.newSessionReducer.session,
   isSlideUpMenuVisible: state.LogicReducer.isSlideUpMenuVisible,
   loading: state.LogicReducer.loading,
-  nativeLangCode: state.onboardingReducer.nativeLangCode
+  nativeLangCode: state.onboardingReducer.nativeLangCode,
 });
 
 const mD = {};
 
 export default connect(
   mS,
-  mD
+  mD,
 )(PickerSelectComponent);

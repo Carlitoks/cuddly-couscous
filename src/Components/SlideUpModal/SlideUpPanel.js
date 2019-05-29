@@ -23,9 +23,9 @@ class SlideUpPanel extends Component {
           bottom: 0
         }}
       >
-        {selection === "additionalDetails" || selection === "ratingComments" ? (
+        {selection === "additionalDetails" || selection === "ratingComments" || selection === "scenarioNote" ? (
           <Comments />
-        ) : selection === "scenarioSelection" ? (
+        ) : selection === "scenarioSelection" || selection === "ratingsScenarioSelection" ? (
           <Scenario />
         ) : selection === "nativeLang" || selection === "nativeSupportedLang" ? (
           <NativeLang selection={selection} navigation={navigation} />
