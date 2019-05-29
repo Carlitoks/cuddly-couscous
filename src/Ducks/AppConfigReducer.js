@@ -67,7 +67,6 @@ export const loadSessionScenarios = (useCache = true) => (dispatch, getState) =>
 // one day these counts will actually come from the server, but for now we 
 // generate them locally
 export const updateJeenieCounts = (initialize = false) => (dispatch, getState) => {
-  // alert("updateJeenieCounts");
   const randomNum = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -80,7 +79,11 @@ export const updateJeenieCounts = (initialize = false) => (dispatch, getState) =
     }
     return num - delta;
   };
-  const {jeenieCounts} = getState().appConfigReducer;
+  let {jeenieCounts} = getState().appConfigReducer;
+  if(!jeenieCounts) {
+    jeenieCounts = {};
+    dispatch(update({jeenieCounts}));
+  }
   for (var code of supportedLangCodes) {
     if (!!jeenieCounts[code]) {
       if (initialize) {
