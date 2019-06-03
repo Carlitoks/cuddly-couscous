@@ -13,7 +13,7 @@ import {
   updateView,
   getProfileAsync
 } from "../../Ducks/UserProfileReducer";
-
+import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
 
 import { View, Text, ScrollView, Alert, AppState, NetInfo } from "react-native";
@@ -78,6 +78,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.updateSettings({ loading: false });
+    this.props.loadSessionScenarios(true);
     this.props.asyncGetAccountInformation();
     AppState.addEventListener("change", this._handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
@@ -290,7 +291,8 @@ const mD = {
   changeStatus,
   asyncGetAccountInformation,
   getCurrentAvailability,
-  incomingCallNotification
+  incomingCallNotification,
+  loadSessionScenarios
 };
 
 export default connect(
