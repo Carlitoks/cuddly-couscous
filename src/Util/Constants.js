@@ -65,9 +65,9 @@ export const SESSION = {
     ABORTED: 'aborted' // call was ended after creation by someone or a process other than the participants
   },
   TIME: {
-    MATCH: 70 * DURATION.SECONDS,
-    CONNECT: 30 * DURATION.SECONDS,
-    RECONNECT: 10 * DURATION.SECONDS,
+    MATCH: 70 * DURATION.SECONDS, // time to wait for a linguist to accept call before considering session a timeout
+    CONNECT: 45 * DURATION.SECONDS, // time to wait before considering initial connction attempt a failure; keep this above 30s, because some OT errors will only fire after 30s
+    RECONNECT: 10 * DURATION.SECONDS, // time to wait before showing reconnection options
     END_SOON_WARNING: 2 * DURATION.MINUTES // show warning that call is ending soon when this much time is remaining
   }
 };
