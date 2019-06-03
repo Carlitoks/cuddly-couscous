@@ -138,7 +138,7 @@ class Scenario extends Component {
   };
 
   render() {
-    const { closeSlideMenu } = this.props;
+    const { closeSlideMenu,selection } = this.props;
     return (
       <View style={styles.scenarioContainer}>
         <View style={styles.availableLangContainer}>
@@ -148,12 +148,15 @@ class Scenario extends Component {
         </View>
         <ScrollView
           style={styles.fullWidthOnItems}
-          contentContainerStyle={styles.scrollContainer}
+          contentContainerStyle={selection === "ratingsScenarioSelection"? styles.ratingScrollContainer : styles.scrollContainer}
           bounces={false}
         >
           {this.renderScenariosList()}
         </ScrollView>
-        <TouchableOpacity style={styles.closeScenarioList} onPress={() => closeSlideMenu()}>
+        <TouchableOpacity 
+          style={selection === "ratingsScenarioSelection" ? styles.ratingScenarioList : styles.closeScenarioList} 
+          onPress={() => closeSlideMenu()}
+        >
           <Text style={styles.cancelButtonText}>{I18n.t("actions.cancel")}</Text>
         </TouchableOpacity>
       </View>
