@@ -1,12 +1,23 @@
+
 // The purpose of this is to manage app UI & config state that is either 
 // determined or modifiable by the user.
 
 const initState = () => {
   return {
-    uiLanguage: '',
+    uiLangCode: '', // the current localization for i18n
     isCustomerMode: true,
     isLinguistMode: false,
   }
+};
+
+// TODO: ensure app state is restored properly
+export const init = () => (dispatch, getState) => {
+  
+};
+
+// TODO: validate, record code, choose default if necessary, configure i18n
+export const setInterfaceLanguage = (code) => (dispatch, getState) => {
+  
 };
 
 const ACTIONS = {
