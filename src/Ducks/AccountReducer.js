@@ -141,6 +141,7 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
         hasUnlimitedUse: unlimitedUseUntil !== false,
         hasUnlimitedUseUntil: unlimitedUseUntil
       }));
+      resolve(res.data);
     })
     .catch(reject);
   });
