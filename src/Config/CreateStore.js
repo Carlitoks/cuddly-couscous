@@ -24,6 +24,8 @@ const getStore = () =>
 
     let store = null;
 
+    // TODO: handle old state from deprecated reducers, like auth => auth2
+
     // it's possible for an error to be thrown because the store includes
     // old keys that are no longer needed.
     try {

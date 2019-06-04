@@ -21,11 +21,12 @@ import I18n from "./I18n/I18n";
 import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
-import { updateJeenieCounts } from "./Ducks/AppConfigReducer";
+import { updateJeenieCounts, loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 import SplashScreen from 'react-native-splash-screen';
-import { initializeUser } from "./Ducks/AccountReducer";
 import { InitInstabug } from "./Settings/InstabugInit";
+import { initializeUser, refreshDevice } from "./Ducks/AccountReducer";
+import { init as initAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
 
 
 class App extends Component {
@@ -59,10 +60,12 @@ class App extends Component {
     this.disableAppCenterCrashes();
     init();
     createStore()
+      // initialize app state: ui language and analytics
       .then(store => {
         const {
           settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
+        this.setState({store});
 
         // ================================
         if (!userLocaleSet) {
@@ -97,28 +100,50 @@ class App extends Component {
         }
         return store;
       })
+      // initialize device
       .then(store => {
-        const { auth } = store.getState();
-        setAuthToken(auth.token);
-        setApiAuthToken(auth.token);
-        this.setState({
-          isLoggedIn: auth.isLoggedIn,
-          loadingStore: false,
-          store
-        });
+        store.dispatch(initAuth()); // restores any auth tokens and sets them in api/forensic services
+        this.setState({isLoggedIn: !!auth.userJwtToken});
+        const auth = getState().auth2;
 
-        if (auth.isLoggedIn) {
-          store.dispatch(addListeners());
-
-          // things that should be reloaded periodically
-          // store.dispatch(loadConfig(true)).catch(console.log),
-
-          // fully reload the user's account state if we're logged in
-          store.dispatch(updateJeenieCounts(true)); // reinitialize jeenie counts if app reloads
-          return store.dispatch(initializeUser(auth.uuid));
+        // attempt to register new device if we don't have one yet
+        if (!auth.deviceJwtToken) {
+          return new Promise((resolve, reject) => {
+            store.dispatch(authorizeNewDevice()).finally(resolve(true));
+          });
         }
+
+        return Promise.resolve(true);
+      })
+      // initialize app/user data & push notifications
+      .then(() => {
+        const {store} = this.state;
+        const {auth} = store.getState().auth2;
+        let promises = [
+          store.dispatch(addListeners()), // register handler for push notifications
+        ];
+
+        // if we have a device, update some items
+        if (!!auth.deviceJwtToken) {
+          promises.push(store.dispatch(updateJeenieCounts(true))) // reinitialize jeenie counts if app reloads
+          promises.push(store.dispatch(refreshDevice())); // refresh device, which will also set PN token
+          promises.push(store.dispatch(loadConfig())); // load basic app config
+        }
+
+        // TODO: register FCM refresh handler if we have a device
+
+        // if user is logged in, load/refresh other items
+        if (!!auth.userJwtToken) {
+          promises.push(store.dispatch(initializeUser(auth.userID))); // reload main user data, not cached
+          promises.push(store.dispatch(loadSessionScenarios(true))); // reload scenarios, but cache is fine
+        }
+
+        return Promise.all(promises);
       })
       .then(() => {
+        this.setState({
+          loadingStore: false,
+        });
         // Even Listener to Detect Network Change
         NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
 

@@ -105,6 +105,8 @@ export const updateDevice = (payload = null) => (dispatch, getState) => {
   payload.deviceOSVersion = Platform.Version.toString();
   payload.mobileAppVersion = DeviceInfo.getReadableVersion();
 
+  // TODO: get push notification token if none set yet
+
   // enforce some values on the device
   return new Promise((resolve, reject) => {
     // always update the current location
