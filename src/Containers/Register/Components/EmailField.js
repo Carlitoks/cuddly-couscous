@@ -26,7 +26,7 @@ class EmailField extends Component {
   };
 
   render() {
-    const { email, errorType, setRef, nextInput } = this.props;
+    const { email, errorType, setRef, nextInput,isValidEmail } = this.props;
     return (
       <View style={email ? styles.inputViewContainerValue : styles.inputViewContainer}>
         {email ? <Text style={styles.labelText}>{I18n.t("email")}</Text> : <Text style={styles.labelText} />}
@@ -49,7 +49,7 @@ class EmailField extends Component {
             returnKeyType="done"
           />
         </View>
-        {errorType === "emailFormat" || errorType === "AlreadyRegistered" ? (
+        {(!isValidEmail || errorType === "AlreadyRegistered" ) && (email && email.length > 6) ? (
           <Text style={styles.invalidLabelText}>{I18n.t("noValidEmail")}</Text>
         ) : (
           <Text style={styles.invalidLabelText} />
