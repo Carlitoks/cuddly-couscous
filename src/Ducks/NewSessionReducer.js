@@ -5,7 +5,6 @@ import {
   LanguagesRollover,
   getLangForCity
 } from "../Config/Languages";
-import { cleanNotifications } from "../Util/PushNotification";
 
 const ACTIONS = {
   CLEAR: "newSession/clear",
@@ -159,22 +158,6 @@ export const swapCurrentSessionLanguages = () => (dispatch, getState) => {
     secondaryLangCode: currentState.primaryLangCode
   };
   dispatch(swapLanguages(currentSessionState));
-};
-
-export const switchCallLang = (reason) => (dispatch, getState) => {
-  const { primaryLangCode, secondaryLangCode } = getState().newSessionReducer.session;
-  try {
-    cleanNotifications();
-    const currentSessionState = {
-      ...getState().newSessionReducer.session,
-      secondaryLangCode: LanguagesRollover[secondaryLangCode] ? LanguagesRollover[secondaryLangCode] : secondaryLangCode,
-      primaryLangCode: LanguagesRollover[primaryLangCode] ? LanguagesRollover[primaryLangCode] : primaryLangCode
-    };
-
-    dispatch(swapLanguages(currentSessionState));
-  } catch (e) {
-    console.log(e);
-  }
 };
 
 // preselect a secondary language for the session based on the primary language, available
