@@ -28,6 +28,7 @@ import account from "./AccountReducer";
 import appState from "./AppStateReducer";
 import LogicReducer from "./LogicReducer";
 import currentSessionReducer from "./CurrentSessionReducer";
+import auth2 from "./AuthReducer2";
 
 // Combine all the reducers
 const rootReducer = combineReducers({
@@ -58,6 +59,7 @@ const rootReducer = combineReducers({
   currentSessionReducer,
   account,
   appState,
+  auth2
 });
 
 export default rootReducer;

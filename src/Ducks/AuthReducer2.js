@@ -27,6 +27,18 @@ const initState = () => ({
   refreshToken: null,
 });
 
+// set any initial state and configuration if relevant
+export const init = () => (dispatch, getState) => {
+  const { userJwtToken, deviceJwtToken } = getState().auth2;
+  // TODO: check state from old auth reducer
+  const jwt = (!!userJwtToken) ? userJwtToken : deviceJwtToken;
+  if (!!jwt) {
+    setApiAuthToken(jwt);
+    setForensicsAuthToken(jwt);
+  }
+  return Promise.resolve(true);
+};
+
 // create a new device record, managing
 export const authorizeNewDevice = () => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
@@ -56,8 +68,8 @@ export const authorizeNewDevice = () => (dispatch, getState) => {
       }));
       dispatch(initializeDevice(deviceID));
 
-      // update the device
-      import { registerFCM, addListeners } from "./PushNotificationReducer";
+      // TODO: init push notification stuff, and update the device
+      // import { registerFCM, addListeners } from "./PushNotificationReducer";
 
 
       resolve(res.data);

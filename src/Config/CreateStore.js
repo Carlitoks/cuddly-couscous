@@ -39,6 +39,7 @@ const getStore = () =>
         saveState({
           settings: state.settings,
           auth: state.auth,
+          auth2: state.auth2,
           userProfile: state.userProfile,
           tokbox: state.tokbox,
           profileLinguist: state.profileLinguist,
