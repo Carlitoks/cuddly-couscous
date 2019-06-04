@@ -74,11 +74,18 @@ export const hasUnlimitedUseUntil = (periods) => {
 
 // load the users device
 export const initializeDevice = (deviceID) => (dispatch, getState) => {
-  dispatch(update({currentDeviceID: deviceID}));
+  dispatch(update({
+    currentDevice: null,
+    currentDeviceID: deviceID,
+    currentDeviceUpdateAt: null
+  }));
   return new Promise((resolve, reject) => {
     api.get(`/user-devices/${deviceID}`)
     .then((res) => {
-      dispatch(update({currentDevice: res.data}));
+      dispatch(update({
+        currentDevice: res.data,
+        currentDeviceUpdateAt: new Date('now').getTime()
+      }));
     })
     .catch(reject)
   });
@@ -110,7 +117,10 @@ export const updateDevice = (payload = null) => (dispatch, getState) => {
       return api.patch(`${apiURL}/devices/${currentDeviceID}`, payload)
     })
     .then((res) => {
-      dispatch(update({currentDevice: res.data}));
+      dispatch(update({
+        currentDevice: res.data,
+        currentDeviceUpdateAt: new Date('now').getTime()
+      }));
     })
     .catch(reject)
   });
