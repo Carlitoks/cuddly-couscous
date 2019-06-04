@@ -18,12 +18,9 @@ import SoundManager, {playSound} from "../../Util/SoundManager";
 import {
   changeStatus
 } from "../../Ducks/ProfileLinguistReducer";
-import Sound from "react-native-sound";
-import {SOUNDS} from "../../Util/Constants";
 
 class RateView extends Component {
   componentWillMount() {
-    playSound(SOUNDS.END_CALL);
     this.props.changeStatus(true);
   }
   
