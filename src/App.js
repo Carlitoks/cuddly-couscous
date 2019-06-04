@@ -158,6 +158,9 @@ class App extends Component {
   async componentDidMount() {
     SplashScreen.hide();
     AppState.addEventListener("change", this._handleAppStateChange);
+    setTimeout(() => {
+      this.setState({ splashScreenTimer: true });
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -217,20 +220,17 @@ class App extends Component {
   }
 
   render() {
-    setTimeout(() => {
-      this.setState({ splashScreenTimer: true });
-    }, 2000);
-      if (this.state.loadingStore || !this.state.splashScreenTimer) {
-        return <SplashScreenLogo />
-      }
+    if (this.state.loadingStore || !this.state.splashScreenTimer) {
+      return <SplashScreenLogo />
+    }
 
-      return (
-        <AppErrorBoundary>
-          <Provider store={this.state.store}>
-            <ReduxNavigation />
-          </Provider>
-        </AppErrorBoundary>
-      );
+    return (
+      <AppErrorBoundary>
+        <Provider store={this.state.store}>
+          <ReduxNavigation />
+        </Provider>
+      </AppErrorBoundary>
+    );
   }
 }
 
