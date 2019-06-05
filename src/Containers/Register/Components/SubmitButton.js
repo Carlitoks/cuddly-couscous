@@ -8,7 +8,7 @@ import I18n, { translateApiErrorString } from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/SubmitButtonStyles";
 import { asyncCreateUser, asyncUpdateUser } from "../../../Ducks/CustomerProfileReducer";
-import { update as updateOnboarding, noOnboarding } from "../../../Ducks/OnboardingReducer";
+import { update as updateOnboarding, noOnboarding, clear as clearOnboarding } from "../../../Ducks/OnboardingReducer";
 
 class SubmitButton extends Component {
   submitLogin = async () => {
@@ -81,6 +81,7 @@ class SubmitButton extends Component {
       asyncUpdateUser,
       registerDevice,
       navigation,
+      clearOnboarding,
       updateOnboarding,
       email,
       password,
@@ -125,6 +126,9 @@ class SubmitButton extends Component {
           await updateUserProfile({
             isNewUser: true,
           });
+          
+          clearOnboarding(); 
+
           return navigation.dispatch({ type: "Home" });
       }
     } catch (err) {
@@ -239,6 +243,7 @@ const mD = {
   updateUserProfile,
   getProfileAsync,
   noOnboarding,
+  clearOnboarding,
   getNativeLang
 };
 
