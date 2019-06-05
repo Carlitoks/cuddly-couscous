@@ -147,7 +147,6 @@ class App extends Component {
           promises.push(store.dispatch(loadSessionScenarios(true))); // reload scenarios, but cache is fine
         }
 
-
         return Promise.all(promises);
       })
       .then(() => {

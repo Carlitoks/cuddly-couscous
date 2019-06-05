@@ -7,6 +7,7 @@ const initState = () => {
     uiLangCode: '', // the current localization for i18n
     isCustomerMode: true,
     isLinguistMode: false,
+    // TODO: connection info, replace NetInfo reducer
   }
 };
 
