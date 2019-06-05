@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
-import { resetPasswordAsync } from "../../Ducks/AuthReducer";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/ForgotPasswordScreenStyles";
@@ -168,7 +167,6 @@ const mS = state => ({
 const mD = {
   clearForm,
   updateForm,
-  resetPasswordAsync,
 };
 
 export default connect(
