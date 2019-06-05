@@ -1,9 +1,4 @@
-import { clearView as clearUserProfile } from "./UserProfileReducer";
-import { clearCallHistory as clearHistory } from "./CallHistoryReducer";
 import { displayNetworkAlert } from "./NetworkInfoReducer";
-import { logOut } from "./AuthReducer";
-import I18n from "../I18n/I18n";
-import { displayAlert } from "../Util/Helpers";
 
 const ACTIONS = {
   CLEAR: "networkErrors/clear",

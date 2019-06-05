@@ -18,16 +18,14 @@ import branch, { BranchEvent } from "react-native-branch";
 import analytics from "@segment/analytics-react-native";
 
 import I18n from "./I18n/I18n";
-import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
+import { init as initForensics, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
 import { updateJeenieCounts, loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
-import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 import SplashScreen from 'react-native-splash-screen';
 import { InitInstabug } from "./Settings/InstabugInit";
 import { initializeUser, refreshDevice } from "./Ducks/AccountReducer";
 import { init as initAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
-
 
 class App extends Component {
   constructor(props) {
@@ -56,9 +54,16 @@ class App extends Component {
     await Crashes.setEnabled(false);
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.disableAppCenterCrashes();
-    init();
+    initForensics();
+    SplashScreen.hide();
+    AppState.addEventListener("change", this._handleAppStateChange);
+    setTimeout(() => {
+      this.setState({ splashScreenTimer: true });
+    }, 2000);
+
+    // load store and initialize all the things
     createStore()
       // initialize app state: ui language and analytics
       .then(store => {
@@ -102,14 +107,17 @@ class App extends Component {
       })
       // initialize device
       .then(store => {
+        console.log("INIT AUTH");
+
         store.dispatch(initAuth()); // restores any auth tokens and sets them in api/forensic services
+        const auth = store.getState().auth2 || {};
+
         this.setState({isLoggedIn: !!auth.userJwtToken});
-        const auth = getState().auth2;
 
         // attempt to register new device if we don't have one yet
         if (!auth.deviceJwtToken) {
           return new Promise((resolve, reject) => {
-            store.dispatch(authorizeNewDevice()).finally(resolve(true));
+            store.dispatch(authorizeNewDevice()).finally(() => resolve(true));
           });
         }
 
@@ -118,10 +126,11 @@ class App extends Component {
       // initialize app/user data & push notifications
       .then(() => {
         const {store} = this.state;
-        const {auth} = store.getState().auth2;
-        let promises = [
-          store.dispatch(addListeners()), // register handler for push notifications
-        ];
+        const auth = store.getState().auth2 || {};
+
+        store.dispatch(addListeners()); // register push notification handlers
+
+        let promises = [];
 
         // if we have a device, update some items
         if (!!auth.deviceJwtToken) {
@@ -138,9 +147,12 @@ class App extends Component {
           promises.push(store.dispatch(loadSessionScenarios(true))); // reload scenarios, but cache is fine
         }
 
+
         return Promise.all(promises);
       })
       .then(() => {
+        alert("hi ?");
+        console.log("finished init");
         this.setState({
           loadingStore: false,
         });
@@ -174,18 +186,14 @@ class App extends Component {
         currentStore.auth.deviceId,
         currentStore.currentSessionReducer.sessionID,
         currentStore.events.id);
-    });
-    // PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
-    // PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
-    // you could check the app state to respond differently to push notifications depending on if the app is running in the background or is currently active.
-  }
-
-  async componentDidMount() {
-    SplashScreen.hide();
-    AppState.addEventListener("change", this._handleAppStateChange);
-    setTimeout(() => {
-      this.setState({ splashScreenTimer: true });
-    }, 2000);
+        console.log("DONE");
+      })
+      .catch((e) => {
+        // in the case of an error, we'll say we're done loading anyway
+        console.log("error during boot");
+        console.log(e);
+        this.setState({loadingStore: false});
+      });
   }
 
   componentWillUnmount() {

@@ -1,8 +1,15 @@
 import { Platform, DeviceInfo } from "react-native";
+import analytics from '@segment/analytics-react-native';
+import lodashMerge from "lodash/merge";
+
 import { setAuthToken as setForensicsAuthToken } from "../Util/Forensics";
 import api, { setAuthToken as setApiAuthToken } from "../Config/AxiosConfig";
 
-import { initializeUser, clear as clearAccount } from "./AccountReducer";
+import {
+  initializeUser,
+  clear as clearAccount,
+  update as updateAccount
+} from "./AccountReducer";
 import { clear as clearCurrentSession } from "./CurrentSessionReducer";
 import { clear as clearNewSession } from "./NewSessionReducer";
 
@@ -14,7 +21,6 @@ import { clear as clearOnboarding } from './OnboardingReducer';
 import { clearSettings as clearLinguistProfile } from "./ProfileLinguistReducer";
 
 import PushNotification from "../Util/PushNotification";
-import analytics from '@segment/analytics-react-native'
 
 // The purpose of this is to manage the core actions of registering a device
 // and logging a user in and out.
@@ -27,19 +33,27 @@ const initState = () => ({
   refreshToken: null,
 });
 
-// set any initial state and configuration if relevant
+// set any initial state and configuration - make sure IDs and
+// auth tokens are set where needed
 export const init = () => (dispatch, getState) => {
-  const { userJwtToken, deviceJwtToken } = getState().auth2;
-  // TODO: check state from old auth reducer
+  const { userJwtToken, deviceJwtToken, userID, deviceID } = getState().auth2;
   const jwt = (!!userJwtToken) ? userJwtToken : deviceJwtToken;
   if (!!jwt) {
     setApiAuthToken(jwt);
     setForensicsAuthToken(jwt);
   }
+  let account = {};
+  if (!!userID) {
+    account.userID = userID;
+  }
+  if (!!deviceID) {
+    account.currentDeviceID = deviceID;
+  };
+  dispatch(updateAccount(account));
   return Promise.resolve(true);
 };
 
-// create a new device record, managing
+// create a new device record
 export const authorizeNewDevice = () => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     let device = {
@@ -52,10 +66,6 @@ export const authorizeNewDevice = () => (dispatch, getState) => {
       notificationToken: null
     };
 
-    // TODO: push notification setup
-    //  * create FCM token
-    //  * if that failed, create Pushy token
-
     api.post("/auth/device", device).then((res) => {
       // set auth tokens
       const deviceID = res.data.id;
@@ -67,11 +77,6 @@ export const authorizeNewDevice = () => (dispatch, getState) => {
         deviceJwtToken: jwt,
       }));
       dispatch(initializeDevice(deviceID));
-
-      // TODO: init push notification stuff, and update the device
-      // import { registerFCM, addListeners } from "./PushNotificationReducer";
-
-
       resolve(res.data);
     })
     .catch(reject);
@@ -81,19 +86,31 @@ export const authorizeNewDevice = () => (dispatch, getState) => {
 // log the user in with their email/password combination
 export const logIn = (email, password) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
-    api.post("/auth/user", {email, password})
-    .then((res) => {
-      const userID = res.data.id;
-      const jwt = res.data.token;
-      setApiAuthToken(jwt);
-      setForensicsAuthToken(jwt);
-      dispatch(update({
-        userID,
-        UserJwtToken: jwt,
-      }));
-      return dispatch(initializeUser(userID));
-    })
-    .catch(reject);
+
+    const login = () => {
+      api.post("/auth/user", {email, password})
+      .then((res) => {
+        const userID = res.data.id;
+        const jwt = res.data.token;
+        setApiAuthToken(jwt);
+        setForensicsAuthToken(jwt);
+        dispatch(update({
+          userID,
+          UserJwtToken: jwt,
+        }));
+        return dispatch(initializeUser(userID));
+      })
+      .then(resolve)
+      .catch(reject);
+    }
+
+    // if there's no device, ensure one is created first
+    const {deviceJwtToken} = getState().auth2;
+    if (!!deviceJwtToken) {
+      dispatch(authorizeNewDevice()).then(() => login())
+    } else {
+      login()
+    }
   });
 };
 
@@ -121,6 +138,7 @@ export const logOut = () => (dispatch, getState) => {
 
       // reconfigure other stuff in the system
       analytics.reset();
+
       // TODO: push notification stuff?  Does it need to stay here?
       PushNotification.cleanListeners();
     });

@@ -13,8 +13,6 @@ import {
 
 import { clearSettings as clearHomeFlow } from "../../Ducks/HomeFlowReducer";
 
-import { logOutAsync } from "../../Ducks/AuthReducer";
-
 import {
   Alert,
   View,
@@ -277,7 +275,6 @@ const mD = {
   clearView,
   updateView,
   getProfileAsync,
-  logOutAsync,
   clearHomeFlow
 };
 

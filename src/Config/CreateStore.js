@@ -24,7 +24,9 @@ const getStore = () =>
 
     let store = null;
 
-    // TODO: handle old state from deprecated reducers, like auth => auth2
+    // handle any state conversions required as the result of updating
+    // from one version to another
+    migrateAuthState(initialState);
 
     // it's possible for an error to be thrown because the store includes
     // old keys that are no longer needed.
@@ -66,3 +68,21 @@ const getStore = () =>
   });
 
 export default getStore;
+
+// convert old auth state to new auth state
+const migrateAuthState = (state) => {
+  state.auth2 = state.auth2 || {};
+  state.auth = state.auth || {};
+  if (!state.auth2.deviceJwtToken) {
+    state.auth2.deviceJwtToken = state.auth.deviceToken;
+  }
+  if (!state.auth2.userJwtToken) {
+    state.auth2.userJwtToken = state.auth.token;
+  }
+  if (!state.auth2.deviceID) {
+    state.auth2.deviceID = state.auth.deviceId;
+  }
+  if (!state.auth2.userID) {
+    state.auth2.userID = state.auth.uuid;
+  }
+};
