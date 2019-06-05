@@ -102,7 +102,7 @@ export const updateJeenieCounts = (initialize = false) => (dispatch, getState) =
 }
 
 export const loadConfig = (useCache = true) => (dispatch, getState) => {
-  return Promise.reject("not implemented");
+  return Promise.resolve("not implemented");
 };
 
 const appConfigReducer = (state = null, action = {}) => {
