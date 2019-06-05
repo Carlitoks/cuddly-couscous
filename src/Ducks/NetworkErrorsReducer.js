@@ -29,52 +29,8 @@ export const networkError = error => (dispatch, getState) => {
   dispatch(displayNetworkAlert());
   dispatch(setError(error));
   if (error && error.response && error.response.status) {
-    //dispatch(handleError(error.response.status));
     console.log(error.response.status);
   }
-};
-
-const handleError = status => dispatch => {
-  switch (status) {
-    case 401:
-      dispatch(unauthorizedError());
-      break;
-
-    case 404:
-      // dispatch(notFoundError());
-      break;
-
-    case 500:
-    case 502:
-    case 504:
-      displayAlert(I18n.t("temporaryError"));
-
-      break;
-
-    // default:
-    //   dispatch(serverError());
-    //   break;
-  }
-};
-
-const unauthorizedError = () => dispatch => {
-  dispatch(logOut());
-  dispatch(clearUserProfile());
-  dispatch(clearHistory());
-  dispatch(clearError());
-  dispatch({ type: "SelectRoleView/Reset" });
-};
-
-const notFoundError = () => dispatch => {
-  dispatch(logOut());
-  dispatch(clearUserProfile());
-  dispatch(clearHistory());
-  dispatch(clearError());
-  dispatch({ type: "SelectRoleView/Reset" });
-};
-
-const serverError = () => (dispatch, getState) => {
-  dispatch({ type: "Home" });
 };
 
 
