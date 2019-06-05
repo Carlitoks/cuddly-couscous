@@ -1,11 +1,7 @@
-import { StackNavigator, DrawerNavigator } from "react-navigation";
+import { DrawerNavigator, StackNavigator } from "react-navigation";
 import CardStackStyleInterpolator from "react-navigation/src/views/CardStack/CardStackStyleInterpolator";
 
 import CallHistory from "../Containers/CallHistory/CallHistoryView";
-
-import PasswordCustomerView from "../Onboarding/PasswordCustomerView/PasswordCustomerView";
-import ForgotPasswordView from "../Onboarding/ForgotPasswordView/ForgotPasswordView";
-import CheckYourEmailView from "../Onboarding/ForgotPasswordView/CheckYourEmailView";
 
 import Home from "../Home/Home";
 import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
@@ -13,7 +9,6 @@ import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 import MenuView from "../Components/MenuView/MenuView";
 
 import RateView from "../RateCall/RateExperience/RateView";
-
 // User Profile
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import EditNameView from "../Profile/EditName/EditNameView";
@@ -23,8 +18,6 @@ import EditNativeLanguageView from "../Profile/EditNativeLanguage/EditNativeLang
 import SettingsView from "../Settings/SettingsView";
 import InterfaceLanguageView from "../Settings/InterfaceLanguageView";
 import ScanScreenView from "../Containers/ScanScreen/ScanScreenView";
-import StaticView from "../StaticView/StaticView";
-import TextView from "../Components/TextView/TextView";
 import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import OnboardingScreen from "../Containers/Onboarding/OnboardingScreen";
 import LoginScreen from "../Containers/Login/LoginScreen";
@@ -37,7 +30,6 @@ import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
 import ForgotPasswordScreen from "../Containers/ForgotPassword/ForgotPasswordScreen";
-import SplashScreen from "../Containers/Onboarding/Components/SplashScreen";
 import LanguageListScreen from "../Containers/Register/Components/LanguageListScreen";
 // new session views
 import SessionView from "../Containers/Session/SessionView";
@@ -99,15 +91,6 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-
-    PasswordCustomerView: {
-      screen: PasswordCustomerView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-
     ForgotPasswordView: {
       screen: ForgotPasswordScreen,
       navigationOptions: {
@@ -115,19 +98,9 @@ const Navigation = StackNavigator(
         drawerLockMode: "locked-closed"
       }
     },
-
     Home: {
       screen: Home
     },
-
-    CheckYourEmailView: {
-      screen: CheckYourEmailView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-
     ScanScreenView: {
       screen: ScanScreenView,
       navigationOptions: {
@@ -153,17 +126,6 @@ const Navigation = StackNavigator(
         gesturesEnabled: false
       }
     },
-    StaticView: {
-      screen: StaticView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    TextView: {
-      screen: TextView
-    },
-
     IntroView: {
       screen: OnboardingScreen,
       navigationOptions: {

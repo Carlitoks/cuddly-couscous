@@ -50,17 +50,6 @@ export default (reducer = (state, action) => {
       );
       break;
 
-    case "CheckYourEmailView":
-      analytics.screen(action.type.toString());
-      recordNavigationEvent(action.type.toString());
-      newState = AppNavigation.router.getStateForAction(
-        NavigationActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: "CheckYourEmailView" })]
-        })
-      );
-      break;
-
     case "RateView":
       analytics.screen(action.type.toString());
       analytics.track("Order Completed");
@@ -122,11 +111,11 @@ export default (reducer = (state, action) => {
         })
       );
       break;
-    
+
     case "SessionView":
       analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
-      // NOTE: setting the stack to 2 actions here (Home -> SessionView) caused instability for both 
+      // NOTE: setting the stack to 2 actions here (Home -> SessionView) caused instability for both
       // the Linguist and Customer side... so don't do that.
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
