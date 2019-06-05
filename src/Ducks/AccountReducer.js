@@ -1,6 +1,7 @@
 // The purpose of this is to manage all state about the user who
 // is logged in and using the app
-import { DeviceInfo, Platform } from "react-native";
+import { Platform } from "react-native";
+import DeviceInfo from "react-native-device-info";
 import lodashMerge from 'lodash/merge';
 import moment from "moment";
 import { CACHE } from '../Config/env';
@@ -57,7 +58,6 @@ export const hasUnlimitedUseUntil = (periods) => {
     return false;
   }
 
-
   const now = moment();
   for (var p of periods) {
     const begin = moment(p.beginAt);
@@ -83,6 +83,7 @@ export const initializeDevice = (deviceID) => (dispatch, getState) => {
     api.get(`/user-devices/${deviceID}`)
     .then((res) => {
       dispatch(update({
+        currentDeviceID: deviceID,
         currentDevice: res.data,
         currentDeviceUpdateAt: new Date('now').getTime()
       }));
@@ -106,6 +107,8 @@ export const updateDevice = (payload = null) => (dispatch, getState) => {
   payload.mobileAppVersion = DeviceInfo.getReadableVersion();
 
   // TODO: get push notification token if none set yet
+    //  * create FCM token
+    //  * if that failed, create Pushy token
 
   // enforce some values on the device
   return new Promise((resolve, reject) => {
