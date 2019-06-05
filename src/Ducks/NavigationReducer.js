@@ -143,9 +143,8 @@ export default (reducer = (state, action) => {
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
-          index: 1,
+          index: 0,
           actions: [
-            NavigationActions.navigate({ routeName: "Home" }),
             NavigationActions.navigate({ routeName: "LinguistIncomingCallView" })
           ]
         })
