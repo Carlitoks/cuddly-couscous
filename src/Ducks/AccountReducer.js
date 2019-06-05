@@ -7,7 +7,7 @@ import { CACHE } from '../Config/env';
 import api from "../Config/AxiosConfig";
 
 // base api url - requires initializing a user in order to be set
-let apiUrl = "";
+let apiURL = "";
 
 const initState = () => {
   return {
