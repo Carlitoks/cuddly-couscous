@@ -79,7 +79,7 @@ const SilhouetteWavesBackground = ({ width, height, viewBox }) => {
       <G
         id="Page-1"
         stroke="none"
-        strokeWidth="1"
+        strokeWidth={1}
         fill="none"
         fill-rule="evenodd"
       >

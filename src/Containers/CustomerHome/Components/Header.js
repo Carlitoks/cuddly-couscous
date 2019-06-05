@@ -7,6 +7,7 @@ import HeaderMinutesLeft from "./Partials/HeaderMinutesLeft";
 // Styles
 import styles from "./Styles/HeaderStyles";
 import I18n from "../../../I18n/I18n";
+import { moderateScaleViewports } from "../../../Util/Scaling";
 
 export default class LinguistHeader extends Component {
   renderTitle = () => {
@@ -83,7 +84,7 @@ export default class LinguistHeader extends Component {
         style={styles.containerMenu}
         onPress={() => this.navigate("DrawerOpen")}
       >
-        <NavMenu width={30} height={20} />
+        <Icon name="navicon" type="evilicon" color="white" size={moderateScaleViewports(30)} />
       </TouchableOpacity>
     );
   };
