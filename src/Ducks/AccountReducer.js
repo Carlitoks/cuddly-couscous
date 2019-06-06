@@ -126,6 +126,7 @@ export const updateDevice = (payload = null) => (dispatch, getState) => {
         currentDevice: res.data,
         currentDeviceUpdateAt: new Date('now').getTime()
       }));
+      resolve(res.data);
     })
     .catch(reject)
   });
