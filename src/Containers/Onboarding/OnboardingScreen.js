@@ -77,6 +77,7 @@ class OnboardingScreen extends Component {
 
   render() {
     const { navigation, isLoggedIn, token } = this.props;
+
     if (isLoggedIn && token) {
       return <SplashScreen animation={false} />;
     }
