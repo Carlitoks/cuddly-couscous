@@ -24,11 +24,11 @@ const initState = () => ({
   // info about the current user, or dericved directly from the current user
   userID: null,
   userLoadedAt: null,
-  user: {}, // exact data structure from api: GET /users/{id}
+  user: null, // exact data structure from api: GET /users/{id}
   isLinguist: false, // meaning, are they at any stage of becoming a linguist?
   isActiveLinguist: false, // meaning, can they actually accept calls?
   isPropspectiveLinguist: false, // are they registered to become a linguist, but not yet active?
-  linguistProfile: {},
+  linguistProfile: null,
 
   // based on subscriptionPeriods
   subscriptionPeriodsLoadedAt: null,

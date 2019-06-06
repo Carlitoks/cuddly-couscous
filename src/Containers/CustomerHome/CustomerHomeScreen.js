@@ -37,13 +37,11 @@ class CustomerHomeScreen extends Component {
   componentWillMount() {
     const {
       uuid,
-      updateLocation,
       ensureSessionDefaults,
       secondaryLangCode,
       clearEvents,
       navigation,
       firstName,
-      completedLocation,
     } = this.props;
 
     analytics.identify(uuid, {
@@ -64,21 +62,9 @@ class CustomerHomeScreen extends Component {
 
   componentDidMount() {
     const {
-      linguistProfile,
-      isLoggedIn,
-      uuid,
-      token,
-      getProfileAsync,
       loadSessionScenarios,
       loadActiveSubscriptionPeriods,
     } = this.props;
-
-    if (uuid !== "" && token !== "") {
-      getProfileAsync(uuid, token); // TODO: find a way to replace this
-    }
-    if (!linguistProfile && isLoggedIn) {
-      // checkOperatingHours(true);
-    }
 
 
     if (this.props.navigation.state.params && this.props.navigation.state.params.usageError) {
@@ -164,6 +150,7 @@ class CustomerHomeScreen extends Component {
 }
 
 const mS = state => ({
+  user: state.account.user,
   nativeLangCode: state.userProfile.nativeLangCode,
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,

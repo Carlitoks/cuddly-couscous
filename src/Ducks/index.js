@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 
-import auth from "./AuthReducer";
 import callHistory from "./CallHistoryReducer";
 import customerProfile from "./CustomerProfileReducer";
 
@@ -33,7 +32,6 @@ import auth2 from "./AuthReducer2";
 // Combine all the reducers
 const rootReducer = combineReducers({
   appConfigReducer,
-  auth,
   callHistory,
   customerProfile,
   events,

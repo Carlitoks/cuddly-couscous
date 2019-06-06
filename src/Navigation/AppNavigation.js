@@ -41,6 +41,9 @@ let initialScreen = "IntroView";
 
 // change the initial screen, this must be called before
 // the router is initialized
+//
+// NOTE: this doesn't actually work because the navigator gets initialized
+// before this can be called.
 export const setInitialScreen = (name) => {
   initialScreen = name;
 };
