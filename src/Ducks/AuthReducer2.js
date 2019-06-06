@@ -88,7 +88,7 @@ export const logIn = (email, password) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
 
     const login = () => {
-      api.post("/auth/user", {email, password})
+      return api.post("/auth/user", {email, password})
       .then((res) => {
         const userID = res.data.id;
         const jwt = res.data.token;
@@ -102,14 +102,36 @@ export const logIn = (email, password) => (dispatch, getState) => {
       })
       .then(resolve)
       .catch(reject);
-    }
+    };
 
     // if there's no device, ensure one is created first
     const {deviceJwtToken} = getState().auth2;
     if (!!deviceJwtToken) {
-      dispatch(authorizeNewDevice()).then(() => login())
+      dispatch(authorizeNewDevice()).then(login)
     } else {
       login()
+    }
+  });
+};
+
+// register a new user and log them in
+export const registerNewUser = (user) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    const register = () => {
+      return api.post("/users", user)
+      .then((res) => {
+        return dispatch(logIn(user.email, user.password))
+      })
+      .then(resolve)
+      .catch(reject)
+    };
+
+    // if there's no device yet, create one before trying to register
+    const {deviceJwtToken} = getState().auth2;
+    if (!!deviceJwtToken) {
+      dispatch(authorizeNewDevice()).then(register)
+    } else {
+      register()
     }
   });
 };
