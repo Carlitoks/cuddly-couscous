@@ -1,4 +1,5 @@
-import { Platform, DeviceInfo } from "react-native";
+import { Platform } from "react-native";
+import DeviceInfo from "react-native-device-info";
 import analytics from '@segment/analytics-react-native';
 import lodashMerge from "lodash/merge";
 
@@ -98,7 +99,7 @@ export const logIn = (email, password) => (dispatch, getState) => {
         setForensicsAuthToken(jwt);
         dispatch(update({
           userID,
-          UserJwtToken: jwt,
+          userJwtToken: jwt,
           isLoggedIn: true
         }));
         return dispatch(initializeUser(userID));
@@ -167,6 +168,12 @@ export const logOut = () => (dispatch, getState) => {
       // TODO: push notification stuff?  Does it need to stay here?
       PushNotification.cleanListeners();
     });
+  });
+};
+
+export const requestPasswordReset = (email) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.get("/auth/")
   });
 };
 

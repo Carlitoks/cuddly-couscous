@@ -9,12 +9,29 @@ import styles from "./styles";
 import I18n from "../I18n/I18n";
 import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
 import Close from "../Components/Close/Close";
-import { logOutAsync } from "../Ducks/AuthReducer";
 import NavBar from "../Components/NavBar/NavBar";
+import { logOut } from "../Ducks/AuthReducer2";
 
 class SettingsView extends Component {
+
+  logout () {
+    Alert.alert(I18n.t("logOut"), I18n.t("logOutConfirmation"), [
+      {
+        text: I18n.t("no")
+      },
+      {
+        text: I18n.t("yes"),
+        onPress: () => {
+          this.props.logOut().finally(() => {
+            this.props.navigation.dispatch({type: "IntroView"});
+          });
+        }
+      }]
+    );
+  }
+
   render() {
-    const { navigation, logOutAsync, interfaceLocale, isLinguist } = this.props;
+    const { navigation, logOut, interfaceLocale, isLinguist } = this.props;
 
     return (
       <View style={styles.scrollContainer}>
@@ -82,17 +99,7 @@ class SettingsView extends Component {
                 titleStyle={[styles.titleStyle, styles.logout]}
                 // subtitle={selectedNativeLanguage}
                 subtitleStyle={styles.listSubtitle}
-                onPress={() => {
-                  Alert.alert(I18n.t("logOut"), I18n.t("logOutConfirmation"), [
-                    {
-                      text: I18n.t("no")
-                    },
-                    {
-                      text: I18n.t("yes"),
-                      onPress: logOutAsync
-                    }
-                  ]);
-                }}
+                onPress={() => { this.logout() }}
               />
             </List>
           </Grid>
@@ -109,7 +116,7 @@ const mS = state => ({
 });
 
 const mD = {
-  logOutAsync
+  logOut
 };
 
 export default connect(

@@ -25,9 +25,10 @@ import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
 import { updateJeenieCounts, loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 import SplashScreen from 'react-native-splash-screen';
 import { InitInstabug } from "./Settings/InstabugInit";
-import { initializeUser, refreshDevice } from "./Ducks/AccountReducer";
-import { init as initAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
+import { clear as clearAccount, initializeUser, refreshDevice } from "./Ducks/AccountReducer";
+import { init as initAuth, clear as clearAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
 import PushNotification from "./Util/PushNotification";
+import { setInitialScreen } from "./Navigation/AppNavigation";
 
 class App extends Component {
   constructor(props) {
@@ -118,12 +119,19 @@ class App extends Component {
     
         // attempt to register new device if we don't have one yet
         if (!auth.deviceJwtToken) {
-          return new Promise((resolve, reject) => {
-            store.dispatch(authorizeNewDevice()).finally(() => resolve(true));
+          return store.dispatch(authorizeNewDevice());
+        } else {
+          // otherwise refresh the existing device
+          return store.dispatch(refreshDevice(true))
+          .catch((e) => {
+            // if device wasn't found, we have old data and should reset
+            if (!!e.response && 404 == e.response.status) {
+              store.dispatch(clearAuth());
+              store.dispatch(clearAccount());
+              return store.dispatch(authorizeNewDevice());
+            }
           });
-        }
-
-        return Promise.resolve(true);
+      }
       })
       // initialize app/user data & push notifications
       .then(() => {
@@ -135,12 +143,13 @@ class App extends Component {
         // if we have a device, update some items
         if (!!auth.deviceJwtToken) {
           promises.push(store.dispatch(updateJeenieCounts(true))); // reinitialize jeenie counts if app reloads
-          promises.push(store.dispatch(refreshDevice(true))); // refresh device, which will also set PN token
           promises.push(store.dispatch(loadConfig())); // load basic app config
         }
 
-        // if user is logged in, load/refresh other items
+        // if user is logged in, load/refresh other items, and change the initial
+        // app screen to be the users home
         if (!!auth.userJwtToken) {
+          setInitialScreen("Home");
           promises.push(store.dispatch(initializeUser(auth.userID))); // reload main user data, not cached
           promises.push(store.dispatch(loadSessionScenarios(true))); // reload scenarios, but cache is fine
         }

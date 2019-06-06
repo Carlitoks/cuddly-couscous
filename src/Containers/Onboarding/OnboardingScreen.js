@@ -12,7 +12,6 @@ import styles from "./Styles/OnboardingScreenStyles";
 import OnboardingButtons from "./Components/OnboardingButtons";
 import I18n from "../../I18n/I18n";
 import { isIphoneXorAbove } from "../../Util/Devices";
-import { registerDevice } from "../../Ducks/AuthReducer";
 import DotSteps from "./Components/DotSteps";
 import SplashScreen from "./Components/SplashScreen";
 
@@ -41,17 +40,13 @@ class OnboardingScreen extends Component {
       secondaryLangCode,
       completedLocation,
       completedNotification,
-      registerDevice,
-      deviceToken,
     } = this.props;
     clearOnboarding();
     ensureSessionDefaults({
       primaryLangCode: primaryLangCode || "eng",
       secondaryLangCode: secondaryLangCode || "",
     });
-    if (!isLoggedIn && !token) {
-      if (!deviceToken) registerDevice().then(response => null).catch(err => console.log("error creating the device", err));
-    }
+
 
     if (isLoggedIn && token) {
       if (completedLocation) {
@@ -82,9 +77,9 @@ class OnboardingScreen extends Component {
 
   render() {
     const { navigation, isLoggedIn, token } = this.props;
-    if (isLoggedIn && token) {
-      return <SplashScreen animation={false} />;
-    }
+    // if (isLoggedIn && token) {
+    //   return <SplashScreen animation={false} />;
+    // }
     return (
       <View style={styles.wrapperContainer}>
         <StatusBar
@@ -120,14 +115,12 @@ const mS = state => ({
   isLoggedIn: state.auth.isLoggedIn,
   completedLocation: state.onboardingReducer.completedLocation,
   completedNotification: state.onboardingReducer.completedNotification,
-  deviceToken: state.auth.deviceToken,
 });
 
 const mD = {
   updateLocation,
   ensureSessionDefaults,
   clearOnboarding,
-  registerDevice,
 };
 
 export default connect(

@@ -4,6 +4,8 @@ import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import lodashMerge from 'lodash/merge';
 import moment from "moment";
+import FCM from "react-native-fcm";
+
 import { CACHE } from '../Config/env';
 import api from "../Config/AxiosConfig";
 import { getGeolocationCoords } from "../Util/Helpers";
@@ -116,7 +118,9 @@ export const refreshDevice = (force = false) => (dispatch, getState) => {
     promises.push(FCM.getFCMToken().then((token) => {
       payload.notificationToken = token;
     }).catch(() => {
-      // TODO: create Pushy token if FCM fails
+      if (!device.pushyNotificationToken) {
+        // TODO: create Pushy token if FCM fails
+      }
     }));
   }
   
@@ -202,6 +206,18 @@ export const updateUser = (payload) = (dispatch, getState) => {
       resolve(res.data);
     })
     .catch(reject);
+  });
+};
+
+export const updateUserEmail = (email) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.put(`${apiURL}/email`, {email}).then(resolve).catch(reject);
+  });
+};
+
+export const updateUserPassword = (oldPassword, newPassword) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.put(`${apiURL}/password`, {oldPassword, newPassword}).then(resolve).catch(reject);
   });
 };
 

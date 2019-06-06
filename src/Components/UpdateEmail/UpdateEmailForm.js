@@ -4,10 +4,11 @@ import {Alert, Modal, Text, TextInput, TouchableOpacity, View} from "react-nativ
 import styles from "./styles";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import { updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
-import { logOutAsync, updateEmailAsync } from "../../Ducks/AuthReducer";
 import { connect } from "react-redux";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import UpdateEmailSuccess from "./UpdateEmailSuccess";
+import { logOut } from "../../Ducks/AuthReducer2";
+import { updateUserEmail } from "../../Ducks/AccountReducer";
 
 class UpdateEmailForm extends Component {
   constructor(props) {
@@ -61,13 +62,10 @@ class UpdateEmailForm extends Component {
   };
 
   submitEmail = async () => {
-    const { updateEmailAsync, uuid, token, closeUpdateEmail } = this.props;
+    const { updateUserEmail, uuid, token, closeUpdateEmail } = this.props;
     try {
       this.setState({ loading: true });
-      const payload = {
-        email: this.state.email,
-      };
-      const updateProfilePayload = await updateEmailAsync(uuid, token, payload);
+      const updateProfilePayload = await updateUserEmail(this.state.email);
       await closeUpdateEmail({ ...updateProfilePayload.payload, emailBounced: true, email: this.state.email });
       this.setState({success: true});
     }catch(err){
@@ -82,9 +80,9 @@ class UpdateEmailForm extends Component {
   };
 
   renderUpdateModal = () => {
-    const { logOutAsync, emailBounced, closeUpdateEmail } = this.props;
+    const { logOut, navigation, closeUpdateEmail } = this.props;
     const handleClose = async () => {
-      await logOutAsync();
+      await logOut().finally(() => {navigation.dispatch({type: "LoginView"})});
       await closeUpdateEmail({ emailBounced: false });
     };
     return (
@@ -123,7 +121,7 @@ class UpdateEmailForm extends Component {
   };
 
   render() {
-    const { logOutAsync, emailBounced, closeUpdateEmail } = this.props;
+    const { emailBounced } = this.props;
     return (
       <View style={styles.mainContainer}>
         <Modal
@@ -146,9 +144,9 @@ const mS = state => ({
 });
 
 const mD = {
-  logOutAsync,
+  logOut,
   closeUpdateEmail,
-  updateEmailAsync,
+  updateUserEmail,
 };
 
 export default connect(

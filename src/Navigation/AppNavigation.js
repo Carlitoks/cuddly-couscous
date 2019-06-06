@@ -35,6 +35,16 @@ import CustomerMatchingView from "../Containers/Session/CustomerMatchingView";
 import CustomerRetryView from "../Containers/Session/CustomerRetryView";
 import LinguistIncomingCallView from "../Containers/Session/LinguistIncomingCallView";
 
+// by default, this is the screen that will
+// be shown first when the app loads
+let initialScreen = "IntroView";
+
+// change the initial screen, this must be called before
+// the router is initialized
+export const setInitialScreen = (name) => {
+  initialScreen = name;
+};
+
 const Navigation = StackNavigator(
   {
     CallHistory: {
@@ -218,7 +228,7 @@ const Navigation = StackNavigator(
     }
   },
   {
-    initialRouteName: "IntroView",
+    initialRouteName: initialScreen,
     headerMode: "none",
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {

@@ -77,6 +77,7 @@ const migrateAuthState = (state) => {
     state.auth2.deviceJwtToken = state.auth.deviceToken;
   }
   if (!state.auth2.userJwtToken) {
+    state.auth2.isLoggedIn = true;
     state.auth2.userJwtToken = state.auth.token;
   }
   if (!state.auth2.deviceID) {
@@ -86,3 +87,24 @@ const migrateAuthState = (state) => {
     state.auth2.userID = state.auth.uuid;
   }
 };
+
+// TODO
+/*
+  if (!!auth.uuid) {
+    auth.userID = auth.uuid;
+    delete auth.uuid;
+  }
+  if (!!auth.token) {
+    auth.userJwtToken = auth.token;
+    delete auth.token;
+  }
+  if (!!auth.deviceId) {
+    auth.deviceID = auth.deviceId;
+    delete auth.deviceId;
+  }
+  if (!!auth.deviceToken) {
+    auth.deviceJwtToken = auth.deviceToken;
+    delete auth.deviceToken;
+  }
+  state.auth = auth;
+*/

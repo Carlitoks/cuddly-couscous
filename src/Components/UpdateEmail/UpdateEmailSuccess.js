@@ -3,18 +3,18 @@ import { Modal, Text, TouchableOpacity, View } from "react-native";
 
 import styles from "./styles";
 import { updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
-import { logOutAsync } from "../../Ducks/AuthReducer";
+import { logOut } from "../../Ducks/AuthReducer2";
 import { connect } from "react-redux";
 import I18n from "../../I18n/I18n";
 import {update as updateLogicReducer} from "../../Ducks/LogicReducer";
 
 class UpdateEmailSuccess extends Component {
   render() {
-    const { emailBounced, logOutAsync, updateLogicReducer, closeUpdateEmail, email, emailEditSuccess } = this.props;
+    const { navigation, logOutAsync, updateLogicReducer, closeUpdateEmail, email, emailEditSuccess } = this.props;
     const handleClose = async () => {
       await updateLogicReducer({emailEditSuccess: false});
       await closeUpdateEmail({ emailBounced: false });
-      await logOutAsync();
+      await logOut().finally(() => {navigation.dispatch({type: "LoginView"})});
     };
     return (
           <View style={styles.modalContainer}>
@@ -40,7 +40,7 @@ const mS = state => ({
 });
 
 const mD = {
-  logOutAsync,
+  logOut,
   closeUpdateEmail,
   updateLogicReducer
 };
