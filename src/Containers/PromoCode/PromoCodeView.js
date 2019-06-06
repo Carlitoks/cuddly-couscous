@@ -141,7 +141,7 @@ class PromoCodeView extends Component {
 
 const mS = state => ({
   promoCode: state.promoCode.code,
-  token: state.auth.token,
+  token: state.auth2.userJwtToken,
   categories: state.homeFlow.categories,
   event: state.events
 });

@@ -191,7 +191,7 @@ class CallButtons extends Component {
 
 const mS = state => ({
   customScenario: state.homeFlow.customScenario,
-  token: state.auth.token,
+  token: state.auth2.userJwtToken,
   categoryIndex: state.homeFlow.categoryIndex,
   categories: state.homeFlow.categories,
   fromLanguage: state.userProfile.selectedNativeLanguage,

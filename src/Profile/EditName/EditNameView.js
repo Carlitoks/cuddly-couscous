@@ -236,8 +236,8 @@ const mS = state => ({
   formLastName: state.registrationCustomer.lastname,
   formHasErrors: state.registrationCustomer.formHasErrors,
   formPreferredName: state.registrationCustomer.preferredName,
-  token: state.auth.token,
-  uuid: state.auth.uuid
+  token: state.auth2.userJwtToken,
+  uuid: state.auth2.userID
 });
 
 const mD = {

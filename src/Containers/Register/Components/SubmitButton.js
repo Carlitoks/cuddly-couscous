@@ -17,20 +17,24 @@ class SubmitButton extends Component {
       email,
       password,
       noOnboarding,
+      logIn,
     } = this.props;
     try {
+      console.log("trying login");
       updateOnboarding({ errorType: null, makingRequest: true });
       await logIn(email, password);
       updateOnboarding({ makingRequest: false });
       noOnboarding();
       navigation.dispatch({ type: "Home" });
     } catch (err) {
+      if (!!err.response.data) {
+        console.log(err.response.data);
+      }
       Alert.alert(
         I18n.t("error"),
         translateApiError(err, "api.errTemporary"),
         [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
       );
-      console.log(err);
     } finally {
       updateOnboarding({ makingRequest: false });
     }
@@ -77,6 +81,9 @@ class SubmitButton extends Component {
       clearOnboarding();
       return navigation.dispatch({ type: "Home" });
     } catch (err) {
+      if (!!err.response.data) {
+        console.log(err.response.data);
+      }
       Alert.alert(
         I18n.t("error"),
         translateApiError(err, "api.errTemporary"),

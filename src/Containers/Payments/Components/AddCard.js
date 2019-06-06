@@ -161,7 +161,7 @@ const mS = state => ({
   isValidDate: state.payments.isValidDate,
   loading: state.payments.loading,
   isValidCC: state.payments.isValidCC,
-  token: state.auth.token,
+  token: state.auth2.userJwtToken,
   cardInfo: state.payments.cardInfo,
   expDate: state.payments.expDate,
   StripePaymentSourceMeta: state.userProfile.StripePaymentSourceMeta

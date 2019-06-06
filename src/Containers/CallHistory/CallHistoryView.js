@@ -206,7 +206,7 @@ class CallHistoryView extends Component {
 
 const mS = state => ({
   linguistProfile: state.userProfile.linguistProfile,
-  token: state.auth.token,
+  token: state.auth2.userJwtToken,
   userId: state.userProfile.id,
   allCustomerCalls: state.callHistory.allCustomerCalls,
   allLinguistCalls: state.callHistory.allLinguistCalls,

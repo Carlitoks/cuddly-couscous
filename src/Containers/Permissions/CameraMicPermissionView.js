@@ -59,8 +59,8 @@ class CameraMicPermissionView extends Component {
 const mS = state => ({
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
-  token: state.auth.token,
-  isLoggedIn: state.auth.isLoggedIn,
+  token: state.auth2.userJwtToken,
+  isLoggedIn: state.auth2.isLoggedIn,
 });
 
 const mD = {

@@ -142,6 +142,7 @@ class App extends Component {
 
         // if we have a device, update some items
         if (!!auth.deviceJwtToken) {
+          console.log("GOT DEVICE");
           promises.push(store.dispatch(updateJeenieCounts(true))); // reinitialize jeenie counts if app reloads
           promises.push(store.dispatch(loadConfig())); // load basic app config
         }
@@ -149,7 +150,9 @@ class App extends Component {
         // if user is logged in, load/refresh other items, and change the initial
         // app screen to be the users home
         if (!!auth.userJwtToken) {
+          console.log("GOT USER");
           setInitialScreen("Home");
+          console.log("SET HOME SCREEN");
           promises.push(store.dispatch(initializeUser(auth.userID))); // reload main user data, not cached
           promises.push(store.dispatch(loadSessionScenarios(true))); // reload scenarios, but cache is fine
         }

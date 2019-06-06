@@ -164,7 +164,7 @@ class ScanScreenView extends Component {
 }
 
 const mS = state => ({
-  token: state.auth.token,
+  token: state.auth2.userJwtToken,
   categories: state.homeFlow.categories
 });
 

@@ -166,8 +166,8 @@ const mS = state => ({
   selectedNativeLanguage: translateLanguage(state.userProfile.nativeLangCode),
   avatarURL: state.userProfile.avatarURL,
   avatarBase64: state.userProfile.avatarBase64,
-  token: state.auth.token,
-  uuid: state.auth.uuid
+  token: state.auth2.userJwtToken,
+  uuid: state.auth2.userID
 });
 
 const mD = {

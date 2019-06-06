@@ -109,8 +109,8 @@ class EditCardScreen extends Component {
 }
 
 const mS = state => ({
-  token: state.auth.token,
-  uuid: state.auth.uuid,
+  token: state.auth2.userJwtToken,
+  uuid: state.auth2.userID,
   stripePaymentToken: state.userProfile.stripePaymentToken,
   cardInfo: state.payments.cardInfo,
   StripePaymentSourceMeta: state.userProfile.StripePaymentSourceMeta

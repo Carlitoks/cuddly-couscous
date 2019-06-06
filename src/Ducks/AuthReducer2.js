@@ -10,7 +10,7 @@ import {
   initializeUser,
   clear as clearAccount,
   update as updateAccount,
-  refreshDevice
+  initializeDevice
 } from "./AccountReducer";
 import { clear as clearCurrentSession } from "./CurrentSessionReducer";
 import { clear as clearNewSession } from "./NewSessionReducer";
@@ -58,6 +58,7 @@ export const init = () => (dispatch, getState) => {
 
 // create a new device record
 export const authorizeNewDevice = () => (dispatch, getState) => {
+  dispatch(clear());
   return new Promise((resolve, reject) => {
     let device = {
       deviceOS: Platform.OS,
@@ -88,9 +89,11 @@ export const authorizeNewDevice = () => (dispatch, getState) => {
 
 // log the user in with their email/password combination
 export const logIn = (email, password) => (dispatch, getState) => {
+  console.log("called logIn");
   return new Promise((resolve, reject) => {
 
     const login = () => {
+      console.log("LOGGING IN");
       api.post("/auth/user", {email, password})
       .then((res) => {
         const userID = res.data.id;

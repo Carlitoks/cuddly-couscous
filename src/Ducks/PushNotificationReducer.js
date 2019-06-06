@@ -48,7 +48,7 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
   const CurrentRoutes = nav.routes[0].routes[0].routes;
   const CurrentView = CurrentRoutes.length > 1 ? CurrentRoutes[1].routeName : CurrentRoutes[0].routeName;
   if (
-    auth.isLoggedIn &&
+    auth2.isLoggedIn &&
     invitationId &&
     isLinguist &&
     profileLinguist.available &&

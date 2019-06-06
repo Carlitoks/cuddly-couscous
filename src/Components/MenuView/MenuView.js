@@ -266,9 +266,9 @@ const mS = state => ({
   linguistProfile: state.userProfile.linguistProfile,
   avatarURL: state.userProfile.avatarURL,
   avatarBase64: state.userProfile.avatarBase64,
-  uuid: state.auth.uuid,
-  token: state.auth.token,
-  isLoggedIn: state.auth.isLoggedIn
+  uuid: state.auth2.userID,
+  token: state.auth2.userJwtToken,
+  isLoggedIn: state.auth2.isLoggedIn
 });
 
 const mD = {

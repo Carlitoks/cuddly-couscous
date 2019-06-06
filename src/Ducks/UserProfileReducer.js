@@ -43,7 +43,7 @@ export const getProfileAsync = (uid, token) => (dispatch, getState) => {
       const { stripePaymentToken } = data;
 
       if (!pushNotification.tokenFCM) {
-        PushNotification.registerDeviceInFCM(data.id, auth.deviceId, token, payload => {
+        PushNotification.registerDeviceInFCM(data.id, auth2.deviceID, token, payload => {
           dispatch(registerFCM(payload));
         });
       }

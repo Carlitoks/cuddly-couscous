@@ -81,17 +81,7 @@ export const initializeDevice = (deviceID) => (dispatch, getState) => {
     currentDeviceID: deviceID,
     currentDeviceUpdateAt: null
   }));
-  return new Promise((resolve, reject) => {
-    api.get(`/user-devices/${deviceID}`)
-    .then((res) => {
-      dispatch(update({
-        currentDeviceID: deviceID,
-        currentDevice: res.data,
-        currentDeviceUpdateAt: new Date('now').getTime()
-      }));
-    })
-    .catch(reject)
-  });
+  return dispatch(refreshDevice(true));
 };
 
 // refresh the users device, only updating fields that

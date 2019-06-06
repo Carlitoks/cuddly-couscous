@@ -152,8 +152,8 @@ class EditGenderView extends Component {
 const mS = state => ({
   gender: state.userProfile.gender,
   formGender: state.registrationCustomer.selectedGender,
-  token: state.auth.token,
-  uuid: state.auth.uuid
+  token: state.auth2.userJwtToken,
+  uuid: state.auth2.userID
 });
 
 const mD = {

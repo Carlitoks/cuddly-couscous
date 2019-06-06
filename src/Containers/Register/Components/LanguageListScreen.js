@@ -153,9 +153,9 @@ const mS = state => ({
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   nativeLangCode: state.onboardingReducer.nativeLangCode,
   userNativeLangCode: state.userProfile.nativeLangCode,
-  isLoggedIn: state.auth.isLoggedIn,
-  token: state.auth.token,
-  uuid: state.auth.uuid,
+  isLoggedIn: state.auth2.isLoggedIn,
+  token: state.auth2.userJwtToken,
+  uuid: state.auth2.userID,
 });
 
 const mD = { updateOnboarding, updateView, updateProfileAsync };

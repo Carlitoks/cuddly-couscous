@@ -61,7 +61,7 @@ export const logOutAsync = () => (dispatch, getState) => {
   // delete device in server
   analytics.reset()
 
-  User.deleteDevice(userProfile.id, auth.deviceId, auth.token)
+  User.deleteDevice(userProfile.id, auth2.deviceID, auth2.userJwtToken)
     .then(() => {
       dispatch(registerFCM({ tokenFCM: null }));
       userProfile.linguistProfile && dispatch(changeStatus(false));
@@ -153,9 +153,9 @@ export const updateEmailAsync = (uuid, token, payload) => dispatch => {
 //Login user
 export const logInAsync = (email, password) => async (dispatch, getState) => {
   // Register device
-  const { auth } = getState();
+  const { auth2 } = getState();
   let loginResponse = null;
-  return Auth.login(email, password, auth.deviceToken)
+  return Auth.login(email, password, auth2.deviceJwtToken)
     .then(response => {
       setAuthToken(response.data.token);
       setApiAuthToken(response.data.token);

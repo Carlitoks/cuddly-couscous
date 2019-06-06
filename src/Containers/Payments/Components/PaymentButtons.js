@@ -112,8 +112,8 @@ const mS = state => ({
   isValidCVV: state.payments.isValidCVV,
   loading: state.payments.loading,
   cardInfo: state.payments.cardInfo,
-  token: state.auth.token,
-  uuid: state.auth.uuid
+  token: state.auth2.userJwtToken,
+  uuid: state.auth2.userID
 });
 
 const mD = {

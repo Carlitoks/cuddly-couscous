@@ -22,7 +22,7 @@ export const updateSettings = payload => ({
 export const getCurrentAvailability = () => (dispatch, getState) => {
   const { auth } = getState();
   dispatch(updateSettings({ loading: true }));
-  return User.get(auth.uuid, auth.token)
+  return User.get(auth2.userID, auth2.userJwtToken)
     .then(({ data }) => {
       let availability = data.linguistProfile.available
         ? data.linguistProfile.available
@@ -49,7 +49,7 @@ export const changeStatus = status => (dispatch, getState) => {
   if (userProfile.linguistProfile) {
     dispatch(updateSettings({ loading: true }));
 
-    Linguist.update(userProfile.id, auth.token, {
+    Linguist.update(userProfile.id, auth2.userJwtToken, {
       available: status
     })
       .then(res => {
@@ -81,7 +81,7 @@ export const clearSettings = () => ({
 export const asyncGetAccountInformation = () => (dispatch, getState) => {
   const { auth, profileLinguist, userProfile } = getState();
 
-  return CallHistory.getAllLinguistCalls(userProfile.id, auth.token)
+  return CallHistory.getAllLinguistCalls(userProfile.id, auth2.userJwtToken)
     .then(response => {
       const { data } = response;
       dispatch(linguistCalls(data));

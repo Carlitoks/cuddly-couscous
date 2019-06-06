@@ -130,7 +130,7 @@ class SessionInfoView extends Component {
 
 // to be used when we have the Endpoint
 const mS = state => ({
-  token: state.auth.token,
+  token: state.auth2.userJwtToken,
   sessionInfo: state.sessionInfo.info,
   linguistProfile: state.userProfile.linguistProfile
 });

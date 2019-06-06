@@ -71,40 +71,24 @@ export default getStore;
 
 // convert old auth state to new auth state
 const migrateAuthState = (state) => {
-  state.auth2 = state.auth2 || {};
-  state.auth = state.auth || {};
-  if (!state.auth2.deviceJwtToken) {
-    state.auth2.deviceJwtToken = state.auth.deviceToken;
-  }
-  if (!state.auth2.userJwtToken) {
-    state.auth2.isLoggedIn = true;
-    state.auth2.userJwtToken = state.auth.token;
-  }
-  if (!state.auth2.deviceID) {
-    state.auth2.deviceID = state.auth.deviceId;
-  }
-  if (!state.auth2.userID) {
-    state.auth2.userID = state.auth.uuid;
-  }
-};
-
-// TODO
-/*
+  auth2 = state.auth2 || {};
+  auth = state.auth || {};
   if (!!auth.uuid) {
-    auth.userID = auth.uuid;
+    auth2.userID = auth.uuid;
     delete auth.uuid;
   }
   if (!!auth.token) {
-    auth.userJwtToken = auth.token;
+    auth2.userJwtToken = auth.token;
     delete auth.token;
   }
   if (!!auth.deviceId) {
-    auth.deviceID = auth.deviceId;
+    auth2.deviceID = auth.deviceId;
     delete auth.deviceId;
   }
   if (!!auth.deviceToken) {
-    auth.deviceJwtToken = auth.deviceToken;
+    auth2.deviceJwtToken = auth.deviceToken;
     delete auth.deviceToken;
   }
-  state.auth = auth;
-*/
+  state.auth2 = auth2;
+  delete state.auth;
+};
