@@ -93,34 +93,42 @@ export const initializeDevice = (deviceID) => (dispatch, getState) => {
 };
 
 // refresh the users device, only updating fields that
-// are determined by the physical device
+// are determined by the physical device, and ensures a push
+// notification token is set
 export const refreshDevice = (force = false) => (dispatch, getState) => {
-  return dispatch(updateDevice());
-};
-
-// update any fields on the users device, some fields are set
-// automatically
-export const updateDevice = (payload = null) => (dispatch, getState) => {
-  payload = payload || {};
-  payload.locale = DeviceInfo.getDeviceLocale();
-  payload.deviceOSVersion = Platform.Version.toString();
-  payload.mobileAppVersion = DeviceInfo.getReadableVersion();
-
-  // TODO: get push notification token if none set yet
-    //  * create FCM token
-    //  * if that failed, create Pushy token
-
+  const device = getState().account.currentDevice;
   // enforce some values on the device
-  return new Promise((resolve, reject) => {
-    // always update the current location
-    getGeolocationCoords()
-    .then((res) => {
+  let payload = {
+    locale: DeviceInfo.getDeviceLocale(),
+    deviceOSVersion: Platform.Version.toString(),
+    mobileAppVersion: DeviceInfo.getReadableVersion()
+  };
+
+  // some device fields must be set async
+  let promises = [
+    getGeolocationCoords().then((res) => {
       payload.lastGeoPoint = [res.coords.longitude, res.coords.latitude];
     })
-    .finally(() => {
-      const {currentDeviceID} = getState().account;
-      return api.patch(`${apiURL}/devices/${currentDeviceID}`, payload)
-    })
+  ];
+
+  // ensure we have a push notification token if not already set
+  if (force || (!device.notificationToken && !device.pushyNotificationToken)) {
+    promises.push(FCM.getFCMToken().then((token) => {
+      payload.notificationToken = token;
+    }).catch(() => {
+      // TODO: create Pushy token if FCM fails
+    }));
+  }
+  
+  // update the device
+  return Promise.all(promises).finally(() => { return dispatch(updateDevice(payload)) });
+};
+
+// update user device with specified fields
+export const updateDevice = (payload = null) => (dispatch, getState) => {
+  const {currentDeviceID} = getState().account;
+  return new Promise((resolve, reject) => {
+    api.patch(`/devices/${currentDeviceID}`, payload)
     .then((res) => {
       dispatch(update({
         currentDevice: res.data,
@@ -187,7 +195,14 @@ export const loadUser = (useCache = true) => (dispatch, getState) => {
 
 // update any fields on the user
 export const updateUser = (payload) = (dispatch, getState) => {
-
+  return new Promise((resolve, reject) => {
+    api.patch(apiURL, payload)
+    .then((res) => {
+      dispatch(setUser(res.data));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
 };
 
 // load users currently active subscription periods

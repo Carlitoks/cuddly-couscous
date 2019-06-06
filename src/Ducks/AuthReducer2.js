@@ -8,7 +8,8 @@ import api, { setAuthToken as setApiAuthToken } from "../Config/AxiosConfig";
 import {
   initializeUser,
   clear as clearAccount,
-  update as updateAccount
+  update as updateAccount,
+  refreshDevice
 } from "./AccountReducer";
 import { clear as clearCurrentSession } from "./CurrentSessionReducer";
 import { clear as clearNewSession } from "./NewSessionReducer";
@@ -26,6 +27,7 @@ import PushNotification from "../Util/PushNotification";
 // and logging a user in and out.
 
 const initState = () => ({
+  isLoggedIn: false,
   deviceJwtToken: null,
   deviceID: null,
   userJwtToken: null,
@@ -88,7 +90,7 @@ export const logIn = (email, password) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
 
     const login = () => {
-      return api.post("/auth/user", {email, password})
+      api.post("/auth/user", {email, password})
       .then((res) => {
         const userID = res.data.id;
         const jwt = res.data.token;
@@ -97,6 +99,7 @@ export const logIn = (email, password) => (dispatch, getState) => {
         dispatch(update({
           userID,
           UserJwtToken: jwt,
+          isLoggedIn: true
         }));
         return dispatch(initializeUser(userID));
       })
@@ -107,9 +110,9 @@ export const logIn = (email, password) => (dispatch, getState) => {
     // if there's no device, ensure one is created first
     const {deviceJwtToken} = getState().auth2;
     if (!!deviceJwtToken) {
-      dispatch(authorizeNewDevice()).then(login)
+      dispatch(authorizeNewDevice()).then(() => { login() });
     } else {
-      login()
+      login();
     }
   });
 };
@@ -118,7 +121,7 @@ export const logIn = (email, password) => (dispatch, getState) => {
 export const registerNewUser = (user) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     const register = () => {
-      return api.post("/users", user)
+      api.post("/users", user)
       .then((res) => {
         return dispatch(logIn(user.email, user.password))
       })
@@ -129,9 +132,9 @@ export const registerNewUser = (user) => (dispatch, getState) => {
     // if there's no device yet, create one before trying to register
     const {deviceJwtToken} = getState().auth2;
     if (!!deviceJwtToken) {
-      dispatch(authorizeNewDevice()).then(register)
+      dispatch(authorizeNewDevice()).then(() => {register()});
     } else {
-      register()
+      register();
     }
   });
 };

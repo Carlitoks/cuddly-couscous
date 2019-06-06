@@ -1,23 +1,24 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { Alert, Linking, NetInfo, Text, AppState, Platform } from "react-native";
+import FCM, { FCMEvent } from "react-native-fcm";
+import Crashes from "appcenter-crashes";
+import codePush from "react-native-code-push";
+import analytics from "@segment/analytics-react-native";
+import deviceinfo from "react-native-device-info";
+import SplashScreen from 'react-native-splash-screen';
+
+import { codePushAndroidKey, codePushiOSKey, analyticsKey, promptUpdate } from "./Config/env";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
-import { codePushAndroidKey, codePushiOSKey, analyticsKey, promptUpdate } from "./Config/env";
 
 import { delayUpdateInfo } from "./Ducks/NetworkInfoReducer";
 import { updateSettings } from "./Ducks/SettingsReducer";
 import { addListeners } from "./Ducks/PushNotificationReducer";
 
-import { switchLanguage } from "./I18n/I18n";
-import deviceinfo from "react-native-device-info";
 import { InterfaceSupportedLanguages } from "./Config/Languages";
-import Crashes from "appcenter-crashes";
-import codePush from "react-native-code-push";
-import branch, { BranchEvent } from "react-native-branch";
-import analytics from "@segment/analytics-react-native";
 
-import I18n from "./I18n/I18n";
+import I18n, { switchLanguage } from "./I18n/I18n";
 import { init as initForensics, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
@@ -26,6 +27,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { InitInstabug } from "./Settings/InstabugInit";
 import { initializeUser, refreshDevice } from "./Ducks/AccountReducer";
 import { init as initAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
+import PushNotification from "./Util/PushNotification";
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +42,8 @@ class App extends Component {
 
     // Font doesn't scale
     Text.allowFontScaling = false;
+
+    this.updateFcmTokenListener = null;
 
     codePush.sync({
       deploymentKey: Platform.OS === "ios" ? codePushiOSKey : codePushAndroidKey
@@ -111,7 +115,7 @@ class App extends Component {
         this.updateAvailableAlert(); // toggle alert to update app if relevant
         store.dispatch(initAuth()); // restores any auth tokens and sets them in api/forensic services
         const auth = store.getState().auth2 || {};
-
+    
         // attempt to register new device if we don't have one yet
         if (!auth.deviceJwtToken) {
           return new Promise((resolve, reject) => {
@@ -123,22 +127,17 @@ class App extends Component {
       })
       // initialize app/user data & push notifications
       .then(() => {
-
         const {store} = this.state;
         const auth = store.getState().auth2 || {};
-
-        store.dispatch(addListeners()); // register push notification handlers
 
         let promises = [];
 
         // if we have a device, update some items
         if (!!auth.deviceJwtToken) {
           promises.push(store.dispatch(updateJeenieCounts(true))); // reinitialize jeenie counts if app reloads
-          promises.push(store.dispatch(refreshDevice())); // refresh device, which will also set PN token
+          promises.push(store.dispatch(refreshDevice(true))); // refresh device, which will also set PN token
           promises.push(store.dispatch(loadConfig())); // load basic app config
         }
-
-        // TODO: register FCM refresh handler if we have a device
 
         // if user is logged in, load/refresh other items
         if (!!auth.userJwtToken) {
@@ -188,7 +187,30 @@ class App extends Component {
         // in the case of an error, we'll say we're done loading anyway
         console.log("error during boot");
         console.log(e);
+      })
+      // even if there were failures, we still want to register
+      // some services
+      .finally(() => {
         this.setState({loadingStore: false});
+        const {store} = this.state;
+        if (!store) {
+          return;
+        }
+
+        // check device, do we start FCM or Pushy background services? Right now only
+        // FCM is supported, so just registering all of those services here
+        store.dispatch(addListeners());  // register handlers for notifications
+        PushNotification.getNotificationsBackground(); // start background services
+        // FCM tokens must be periodically updated
+        this.updateFcmTokenListener = FCM.on(FCMEvent.RefreshToken, (token) => {
+          dispatch(updateDevice({notificationToken: token})).catch(console.log);
+        });
+
+        // connection change monitoring
+        NetInfo.getConnectionInfo().then((connectionInfo) => {
+          store.dispatch(delayUpdateInfo(connectionInfo));
+        });
+        NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
       });
   }
 
@@ -196,6 +218,9 @@ class App extends Component {
     NetInfo.removeEventListener("connectionChange", this.handleFirstConnectivityChange);
     AppState.removeEventListener("change", this._handleAppStateChange);
     persistEvents();
+    if (!!this.updateFcmTokenListener) {
+      this.updateFcmTokenListener.remove();
+    }
   }
 
   handleFirstConnectivityChange = connectionInfo => {

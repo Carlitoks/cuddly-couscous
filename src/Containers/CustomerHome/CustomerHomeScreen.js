@@ -19,7 +19,6 @@ import {
 import { openSlideMenu } from "../../Ducks/LogicReducer";
 import { getProfileAsync, updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
 import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
-import { logOutAsync } from "../../Ducks/AuthReducer";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import I18n from "../../I18n/I18n";
@@ -122,7 +121,6 @@ class CustomerHomeScreen extends Component {
   render() {
     const {
       navigation,
-      logOutAsync,
       emailBounced,
       closeUpdateEmail,
       secondaryLangCode,
@@ -184,7 +182,6 @@ const mD = {
   clearEvents,
   getProfileAsync,
   loadSessionScenarios,
-  logOutAsync,
   closeUpdateEmail,
   guessSecondaryLangCode,
   loadActiveSubscriptionPeriods,
