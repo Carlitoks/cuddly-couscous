@@ -48,6 +48,7 @@ export const init = () => (dispatch, getState) => {
   let account = {};
   if (!!userID) {
     account.userID = userID;
+    analytics.identify(userID);
   }
   if (!!deviceID) {
     account.currentDeviceID = deviceID;
@@ -89,11 +90,9 @@ export const authorizeNewDevice = () => (dispatch, getState) => {
 
 // log the user in with their email/password combination
 export const logIn = (email, password) => (dispatch, getState) => {
-  console.log("called logIn");
   return new Promise((resolve, reject) => {
 
     const login = () => {
-      console.log("LOGGING IN");
       api.post("/auth/user", {email, password})
       .then((res) => {
         const userID = res.data.id;
@@ -167,16 +166,16 @@ export const logOut = () => (dispatch, getState) => {
 
       // reconfigure other stuff in the system
       analytics.reset();
-
-      // TODO: push notification stuff?  Does it need to stay here?
-      PushNotification.cleanListeners();
+      
+      // attempt to register a new device
+      return dispatch(authorizeNewDevice());
     });
   });
 };
 
-export const requestPasswordReset = (email) => (dispatch, getState) => {
+export const requestPasswordReset = (email) => () => {
   return new Promise((resolve, reject) => {
-    api.get("/auth/")
+    api.get(`/auth/password-reset/${email}`).then(resolve).catch(reject);
   });
 };
 

@@ -18,7 +18,7 @@ const initState = () => ({
   // from the users device
   currentDeviceUpdateAt: null,
   currentDeviceID: null,
-  currentDevice: {},
+  currentDevice: null,
   isTravelling: false,
 
   // info about the current user, or dericved directly from the current user

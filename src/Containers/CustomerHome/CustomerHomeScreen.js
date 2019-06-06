@@ -44,10 +44,6 @@ class CustomerHomeScreen extends Component {
       firstName,
     } = this.props;
 
-    analytics.identify(uuid, {
-      name: firstName,
-    });
-
     ensureSessionDefaults({
       primaryLangCode: this.setPrimaryLangCode(),
       secondaryLangCode: secondaryLangCode || "",

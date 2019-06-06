@@ -215,7 +215,10 @@ class App extends Component {
         PushNotification.getNotificationsBackground(); // start background services
         // FCM tokens must be periodically updated
         this.updateFcmTokenListener = FCM.on(FCMEvent.RefreshToken, (token) => {
-          dispatch(updateDevice({notificationToken: token})).catch(console.log);
+          const device = store.getState().account.currentDevice;
+          if (!!device) {
+            dispatch(updateDevice({notificationToken: token})).catch(console.log);
+          }
         });
 
         // connection change monitoring
@@ -229,6 +232,7 @@ class App extends Component {
   componentWillUnmount() {
     NetInfo.removeEventListener("connectionChange", this.handleFirstConnectivityChange);
     AppState.removeEventListener("change", this._handleAppStateChange);
+    PushNotification.cleanListeners();
     persistEvents();
     if (!!this.updateFcmTokenListener) {
       this.updateFcmTokenListener.remove();
