@@ -11,7 +11,6 @@ import MenuView from "../Components/MenuView/MenuView";
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import EditNameView from "../Profile/EditName/EditNameView";
 import EditGenderView from "../Profile/EditGender/EditGenderView";
-import EditNativeLanguageView from "../Profile/EditNativeLanguage/EditNativeLanguageView";
 
 import SettingsView from "../Settings/SettingsView";
 import InterfaceLanguageView from "../Settings/InterfaceLanguageView";
@@ -115,12 +114,6 @@ const Navigation = StackNavigator(
     },
     EditGenderView: {
       screen: EditGenderView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    EditNativeLanguageView: {
-      screen: EditNativeLanguageView,
       navigationOptions: {
         gesturesEnabled: false
       }

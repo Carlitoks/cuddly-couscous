@@ -5,21 +5,19 @@ import { updateProfileAsync } from "../../Ducks/UserProfileReducer";
 
 import { clearForm, updateForm } from "../../Ducks/RegistrationCustomerReducer";
 
-import { View, Text, ScrollView, Alert } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { Button } from "react-native-elements";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
 import { displayFormErrors } from "../../Util/Alerts";
 
 import I18n from "../../I18n/I18n";
 import { onlyLetters } from "../../Util/Helpers";
+import NavBar from "../../Containers/CustomerHome/Components/Header";
 
 class EditNameView extends Component {
   navigate = this.props.navigation.navigate;
@@ -27,9 +25,11 @@ class EditNameView extends Component {
   componentWillUnmount() {
     this.props.clearForm();
   }
+
   isDisabled() {
     return !this.props.formFirstName > 0 || !this.props.formLastName > 0;
   }
+
   async componentWillMount() {
     await this.props.updateForm({
       firstname: this.props.firstName,
@@ -128,7 +128,7 @@ class EditNameView extends Component {
     if (this.props.firstName && this.props.lastName) {
       subtitle = `${I18n.t("youWillBeKnown")} ${
         this.props.firstName
-      } ${this.props.lastName.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
+        } ${this.props.lastName.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
       return subtitle;
     } else {
       return subtitle;
@@ -141,94 +141,91 @@ class EditNameView extends Component {
     const initialLastName = `${this.props.lastName.charAt(0)}.`;
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
-            <GoBackButton navigation={this.props.navigation} />
+      <View style={styles.scrollContainer}>
+        <NavBar
+          navigation={this.props.navigation}
+          leftComponent={
+            <GoBackButton navigation={this.props.navigation}/>
           }
           navbarTitle={
-            <Text style={styles.mainTitle}>
-              {formPreferredName
-                ? `${formPreferredName}`
-                : formFirstName || formLastName
-                ? `${formFirstName} ${formLastName}`
-                : I18n.t("mainTitle")}
-            </Text>
+            formPreferredName
+              ? `${formPreferredName}`
+              : formFirstName || formLastName
+              ? `${formFirstName} ${formLastName}`
+              : I18n.t("mainTitle")
           }
-          navbarType={"Basic"}
-          NoWaves
+          rightComponent={<React.Fragment/>}
+        />
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+          alwaysBounceVertical={false}
         >
-          <ScrollView
-            keyboardShouldPersistTaps="handled"
-            automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-            alwaysBounceVertical={false}
-          >
-            <Grid>
-              <Col>
-                <View>
-                  {/* Name */}
-                  <InputRegular
-                    containerStyle={styles.containerInput}
-                    placeholder={I18n.t("linguistName")}
-                    onChangeText={text => {
-                      if (!onlyLetters(text) || text == "") {
-                        this.props.updateForm({
-                          firstname: text
-                        });
-                      }
-                    }}
-                    maxLength={20}
-                    value={formFirstName}
-                    autoFocus={true}
-                  />
-                </View>
-                {/* Last Name */}
+          <Grid>
+            <Col>
+              <View>
+                {/* Name */}
                 <InputRegular
                   containerStyle={styles.containerInput}
-                  placeholder={I18n.t("linguistLastName")}
+                  placeholder={I18n.t("linguistName")}
                   onChangeText={text => {
                     if (!onlyLetters(text) || text == "") {
                       this.props.updateForm({
-                        lastname: text
+                        firstname: text
                       });
                     }
                   }}
                   maxLength={20}
-                  value={formLastName}
-                  sec
+                  value={formFirstName}
+                  autoFocus={true}
                 />
+              </View>
+              {/* Last Name */}
+              <InputRegular
+                containerStyle={styles.containerInput}
+                placeholder={I18n.t("linguistLastName")}
+                onChangeText={text => {
+                  if (!onlyLetters(text) || text == "") {
+                    this.props.updateForm({
+                      lastname: text
+                    });
+                  }
+                }}
+                maxLength={20}
+                value={formLastName}
+                sec
+              />
 
-                {/* Prefered Name */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("preferredName")}
-                  value={formPreferredName}
-                  onChangeText={text => {
-                    if (!onlyLetters(text) || text == "") {
-                      this.props.updateForm({
-                        preferredName: text
-                      });
-                    }
-                  }}
-                  maxLength={20}
-                  sec
-                />
-              </Col>
-            </Grid>
-          </ScrollView>
-          {/* Save Button */}
-          <BottomButton
-            title={I18n.t("save")}
-            onPress={() => {
-              this.submit();
-            }}
-            bold={false}
-            disabled={this.isDisabled()}
-            fill={!this.isDisabled()}
-          />
-        </HeaderView>
-      </ViewWrapper>
+              {/* Prefered Name */}
+              <InputRegular
+                containerStyle={styles.containerInput}
+                placeholder={I18n.t("preferredName")}
+                value={formPreferredName}
+                onChangeText={text => {
+                  if (!onlyLetters(text) || text == "") {
+                    this.props.updateForm({
+                      preferredName: text
+                    });
+                  }
+                }}
+                maxLength={20}
+                sec
+              />
+            </Col>
+          </Grid>
+        </ScrollView>
+        {/* Save Button */}
+        <BottomButton
+          title={I18n.t("save")}
+          onPress={() => {
+            this.submit();
+          }}
+          bold={false}
+          disabled={this.isDisabled()}
+          fill={!this.isDisabled()}
+        />
+      </View>
     );
   }
 }

@@ -63,5 +63,13 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     backgroundColor: Colors.transparent,
     fontWeight: "500"
-  }
+  },
+  containerMenu: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    height: moderateScale(50, 0),
+    width: moderateScale(50, 0),
+    marginLeft: 15
+  },
 });

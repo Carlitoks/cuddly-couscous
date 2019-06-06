@@ -11,7 +11,10 @@ import { moderateScaleViewports } from "../../../Util/Scaling";
 
 export default class LinguistHeader extends Component {
   renderTitle = () => {
-    const { navigation } = this.props;
+    const { navigation, navbarTitle } = this.props;
+    if(navbarTitle){
+      return { text: navbarTitle, style: styles.titleTextStyle };
+    }
     if (
       navigation.state.routeName === "RegisterView" ||
       navigation.state.routeName === "LoginView" ||
@@ -46,7 +49,10 @@ export default class LinguistHeader extends Component {
   };
 
   renderLeftComponent = () => {
-    const { type, navigation } = this.props;
+    const { type, navigation, leftComponent } = this.props;
+    if(leftComponent){
+      return leftComponent;
+    }
     if (type === "onboarding") {
       return (
         <TouchableOpacity activeOpacity={1} style={styles.containerMenu} onPress={() => null} />
@@ -90,7 +96,10 @@ export default class LinguistHeader extends Component {
   };
 
   renderRightComponent = () => {
-    const { type, navigation, safeEditCard } = this.props;
+    const { type, navigation, safeEditCard, rightComponent } = this.props;
+    if(rightComponent){
+      return rightComponent;
+    }
     if (
       navigation.state.routeName === "RegisterView" ||
       navigation.state.routeName === "LoginView" ||
@@ -155,7 +164,10 @@ export default class LinguistHeader extends Component {
   };
 
   setBackgroundColor = () => {
-    const { navigation } = this.props;
+    const { navigation, statusBarBackground } = this.props;
+    if (statusBarBackground) {
+      return statusBarBackground;
+    }
     if (navigation.state.routeName === "ForgotPasswordView") {
       return "#DBDBDB";
     }
@@ -172,7 +184,10 @@ export default class LinguistHeader extends Component {
   };
 
   setIosBackground = () => {
-    const { navigation } = this.props;
+    const { navigation, viewBackground } = this.props;
+    if(viewBackground){
+      return viewBackground;
+    }
     if (navigation.state.routeName === "ForgotPasswordView") {
       return {
         backgroundColor: "#DBDBDB",

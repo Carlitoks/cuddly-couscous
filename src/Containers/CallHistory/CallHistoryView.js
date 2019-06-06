@@ -2,24 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
+  customerCalls,
   getAllCustomerCalls,
   getAllLinguistCalls,
   getMissedLinguistCalls,
-  customerCalls,
+  indexOnChange,
   linguistCalls,
-  linguistMissedCalls,
-  indexOnChange
+  linguistMissedCalls
 } from "../../Ducks/CallHistoryReducer";
 
-import { View, Text, ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
-import HeaderView from "../../Components/HeaderView/HeaderView";
 import Close from "../../Components/Close/Close";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import NavBar from "../CustomerHome/Components/Header";
 
 import moment from "moment";
 
@@ -166,12 +165,13 @@ class CallHistoryView extends Component {
       : [];
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
-            <ShowMenuButton navigation={this.props.navigation} />
+      <View style={styles.scrollContainer}>
+        <NavBar
+          navigation={this.props.navigation}
+          leftComponent={
+            <ShowMenuButton navigation={this.props.navigation}/>
           }
-          headerRightComponent={
+          rightComponent={
             <Close
               action={() => {
                 this.props.navigation.dispatch({ type: "Home" });
@@ -179,33 +179,27 @@ class CallHistoryView extends Component {
             />
           }
           navbarTitle={I18n.t("callHistory")}
-          navbarType={"Complete"}
-          tabValues={tabValues}
-          tabSelectedIndex={this.props.selectedIndex}
-          onTabPress={this.handleIndexChange}
-          NoWaves
+        />
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+          bounces={false}
+          alwaysBounceVertical={false}
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-            bounces={false}
-            alwaysBounceVertical={false}
-          >
-            <Grid>
-              <Col>
-                <View style={styles.container}>
-                  <CallHistoryComponent
-                    data={
-                      this.props.selectedIndex === 0 ? allCalls : missedCalls
-                    }
-                    navigation={this.props.navigation}
-                  />
-                </View>
-              </Col>
-            </Grid>
-          </ScrollView>
-        </HeaderView>
-      </ViewWrapper>
+          <Grid>
+            <Col>
+              <View style={styles.container}>
+                <CallHistoryComponent
+                  data={
+                    this.props.selectedIndex === 0 ? allCalls : missedCalls
+                  }
+                  navigation={this.props.navigation}
+                />
+              </View>
+            </Col>
+          </Grid>
+        </ScrollView>
+      </View>
     );
   }
 }

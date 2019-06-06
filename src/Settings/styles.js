@@ -42,5 +42,13 @@ export default StyleSheet.create({
   listSubtitle: {
     fontSize: moderateScale(19),
     fontWeight: "normal"
-  }
+  },
+  containerMenu: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    height: moderateScale(50, 0),
+    width: moderateScale(50, 0),
+    marginLeft: 15
+  },
 });

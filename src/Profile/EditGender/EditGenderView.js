@@ -1,34 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  GetOptions,
-  updateForm,
-  clearForm
-} from "../../Ducks/RegistrationCustomerReducer";
+import { clearForm, GetOptions, updateForm } from "../../Ducks/RegistrationCustomerReducer";
 import { updateProfileAsync } from "../../Ducks/UserProfileReducer";
 
-import {
-  View,
-  Text,
-  ScrollView,
-  Alert,
-  TouchableWithoutFeedback
-} from "react-native";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import LinearGradient from "react-native-linear-gradient";
-import { Button, Header, List, ListItem } from "react-native-elements";
+import { Alert, ScrollView, Text, TouchableWithoutFeedback, View } from "react-native";
 import ListComponent from "../../Components/ListComponent/ListComponent";
 import { findIndex } from "lodash";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import HeaderView from "../../Components/HeaderView/HeaderView";
 
 import styles from "./styles";
 import { displayFormErrors } from "../../Util/Alerts";
 import I18n from "../../I18n/I18n";
+import NavBar from "../../Containers/CustomerHome/Components/Header";
 
 class EditGenderView extends Component {
   constructor(props) {
@@ -114,46 +100,45 @@ class EditGenderView extends Component {
     const { formGender } = this.props;
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
-            <GoBackButton navigation={this.props.navigation} />
+      <View style={styles.scrollContainer}>
+        <NavBar
+          navigation={this.props.navigation}
+          leftComponent={
+            <GoBackButton navigation={this.props.navigation}/>
           }
+          rightComponent={<View style={style.containerMenu}/>}
           navbarTitle={I18n.t("genderName")}
-          navbarType={"Basic"}
-          NoWaves
+        />
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+          alwaysBounceVertical={false}
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-            alwaysBounceVertical={false}
+          <ListComponent
+            data={genders}
+            selected={this.state.genderIndex}
+            onPress={index => {
+              this.updateGender(genders[index]);
+            }}
+            titleProperty={"label"}
+            changeSelected={index => {
+              this.changeSelected(index);
+            }}
+            leftText
+            noFlex
+          />
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Alert.alert("", I18n.t("genderAlert"));
+            }}
           >
-            <ListComponent
-              data={genders}
-              selected={this.state.genderIndex}
-              onPress={index => {
-                this.updateGender(genders[index]);
-              }}
-              titleProperty={"label"}
-              changeSelected={index => {
-                this.changeSelected(index);
-              }}
-              leftText
-              noFlex
-            />
-            <TouchableWithoutFeedback
-              onPress={() => {
-                Alert.alert("", I18n.t("genderAlert"));
-              }}
-            >
-              <View style={styles.mainContainterText}>
-                <Text style={[styles.textCenter, styles.spaceBetween]}>
-                  {I18n.t("genderNotice")}
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
-        </HeaderView>
+            <View style={styles.mainContainterText}>
+              <Text style={[styles.textCenter, styles.spaceBetween]}>
+                {I18n.t("genderNotice")}
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
         {/* Save Button */}
         <BottomButton
           bold={false}
@@ -161,7 +146,7 @@ class EditGenderView extends Component {
           onPress={() => this.submit()}
           fill
         />
-      </ViewWrapper>
+      </View>
     );
   }
 }

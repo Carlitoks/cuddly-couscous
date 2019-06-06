@@ -1,27 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { findIndex } from "lodash";
-import {
-  updatePromoCode,
-  asyncScanPromoCode,
-  clearPromoCode
-} from "../../Ducks/PromoCodeReducer";
+import { asyncScanPromoCode, clearPromoCode, updatePromoCode } from "../../Ducks/PromoCodeReducer";
 
 import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 
-import { View, Text, ScrollView, Keyboard, Alert } from "react-native";
+import { Keyboard, ScrollView, View } from "react-native";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import BottomButton from "../../Components/BottomButton/BottomButton";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import HeaderView from "../../Components/HeaderView/HeaderView";
 import Close from "../../Components/Close/Close";
-
 // import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import { displayFormErrors } from "../../Util/Alerts";
+import Header from "../../Containers/CustomerHome/Components/Header";
 
 class PromoCodeView extends Component {
 
@@ -83,7 +76,7 @@ class PromoCodeView extends Component {
           });
           return;
         }
-        
+
         // otherwise... unexpected code
         this.props.navigation.dispatch({ type: "Home" });
       })
@@ -99,12 +92,13 @@ class PromoCodeView extends Component {
 
   render() {
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
+      <View style={styles.scrollContainer}>
+        <Header
+          navigation={this.props.navigation}
+          leftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          headerRightComponent={
+          rightComponent={
             <Close
               action={() => {
                 this.props.navigation.dispatch({ type: "Home" });
@@ -112,9 +106,7 @@ class PromoCodeView extends Component {
             />
           }
           navbarTitle={I18n.t("promoCodeTitle")}
-          navbarType={"Basic"}
-          NoWaves
-        >
+        />
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
@@ -135,7 +127,6 @@ class PromoCodeView extends Component {
               />
             </View>
           </ScrollView>
-        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("next")}
@@ -144,7 +135,7 @@ class PromoCodeView extends Component {
           disabled={this.isDisabled()}
           fill={!this.isDisabled()}
         />
-      </ViewWrapper>
+      </View>
     );
   }
 }
