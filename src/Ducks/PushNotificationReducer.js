@@ -37,18 +37,6 @@ export const remoteNotificationReceived = notification => dispatch => {
   }
 };
 
-const getCategory = (session) => {
-  if(session && session.scenario){
-    if(session.scenario.category && session.scenario.category.length > 0){
-      return `${session.scenario.category[0].toUpperCase()}${session.scenario.category.slice(
-        1
-      )} - ${session.scenario.title}`} else {
-      return session.scenario.title;
-    }
-    }
-  return null;
-  };
-
 export const incomingCallNotification = invitationId => (dispatch, getState) => {
   const {
     nav,
