@@ -32,7 +32,6 @@ class App extends Component {
     super(props);
 
     this.state = {
-      isLoggedIn: false,
       loadingStore: true,
       store: null,
       appState: AppState.currentState,
@@ -55,22 +54,23 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.disableAppCenterCrashes();
-    initForensics();
-    SplashScreen.hide();
-    AppState.addEventListener("change", this._handleAppStateChange);
     setTimeout(() => {
       this.setState({ splashScreenTimer: true });
     }, 2000);
+    this.disableAppCenterCrashes();
+    SplashScreen.hide();
+    initForensics();
+    AppState.addEventListener("change", this._handleAppStateChange);
 
     // load store and initialize all the things
     createStore()
       // initialize app state: ui language and analytics
       .then(store => {
+        this.setState({store});
+
         const {
           settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
-        this.setState({store});
 
         // ================================
         if (!userLocaleSet) {
@@ -107,12 +107,10 @@ class App extends Component {
       })
       // initialize device
       .then(store => {
-        console.log("INIT AUTH");
 
+        this.updateAvailableAlert(); // toggle alert to update app if relevant
         store.dispatch(initAuth()); // restores any auth tokens and sets them in api/forensic services
         const auth = store.getState().auth2 || {};
-
-        this.setState({isLoggedIn: !!auth.userJwtToken});
 
         // attempt to register new device if we don't have one yet
         if (!auth.deviceJwtToken) {
@@ -125,6 +123,7 @@ class App extends Component {
       })
       // initialize app/user data & push notifications
       .then(() => {
+
         const {store} = this.state;
         const auth = store.getState().auth2 || {};
 
@@ -134,7 +133,7 @@ class App extends Component {
 
         // if we have a device, update some items
         if (!!auth.deviceJwtToken) {
-          promises.push(store.dispatch(updateJeenieCounts(true))) // reinitialize jeenie counts if app reloads
+          promises.push(store.dispatch(updateJeenieCounts(true))); // reinitialize jeenie counts if app reloads
           promises.push(store.dispatch(refreshDevice())); // refresh device, which will also set PN token
           promises.push(store.dispatch(loadConfig())); // load basic app config
         }
@@ -150,8 +149,6 @@ class App extends Component {
         return Promise.all(promises);
       })
       .then(() => {
-        alert("hi ?");
-        console.log("finished init");
         this.setState({
           loadingStore: false,
         });
