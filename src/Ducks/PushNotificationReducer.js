@@ -24,7 +24,7 @@ export const remoteNotificationReceived = notification => dispatch => {
 
     case "session:linguist-accepted":
       recordPushNotificationEvent("session:linguist-accepted", notification);
-      dispatch(linguistAcceptedNotification(notifications));
+      dispatch(linguistAcceptedNotification(notification));
       break;
 
     case "session:end":
