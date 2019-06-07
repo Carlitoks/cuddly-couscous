@@ -22,8 +22,6 @@ import { clearCallHistory } from "./CallHistoryReducer";
 import { clear as clearOnboarding } from './OnboardingReducer';
 import { clearSettings as clearLinguistProfile } from "./ProfileLinguistReducer";
 
-import PushNotification from "../Util/PushNotification";
-
 // The purpose of this is to manage the core actions of registering a device
 // and logging a user in and out.
 
@@ -59,7 +57,13 @@ export const init = () => (dispatch, getState) => {
 
 // create a new device record
 export const authorizeNewDevice = () => (dispatch, getState) => {
+
+  // clear all auth state and api keys, because if we're authorizing a new
+  // device, any other JWT we have will be invalid
   dispatch(clear());
+  setApiAuthToken(null);
+  setForensicsAuthToken(null);
+
   return new Promise((resolve, reject) => {
     let device = {
       deviceOS: Platform.OS,
@@ -145,12 +149,15 @@ export const registerNewUser = (user) => (dispatch, getState) => {
 // log out, and clear relevant internal app state
 export const logOut = () => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
+
+    // we still clear internal state even if this request
+    // fails, so not checking the error here on purpose
     api.get("/auth/logout")
-    .then(() => {
-      resolve(true);
-    })
-    .catch(reject)
     .finally(() => {
+      // clear api auth tokens
+      setApiAuthToken(null);
+      setForensicsAuthToken(null);
+
       // clear local app state, regardless of success of logout request
       dispatch(clear()); // clear own auth state
       dispatch(clearAccount()); // clear account reducer
@@ -168,7 +175,7 @@ export const logOut = () => (dispatch, getState) => {
       analytics.reset();
       
       // attempt to register a new device
-      return dispatch(authorizeNewDevice());
+      return dispatch(authorizeNewDevice()).finally(resolve).catch(reject);
     });
   });
 };
