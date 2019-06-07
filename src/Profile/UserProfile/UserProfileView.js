@@ -52,11 +52,9 @@ class UserProfileView extends Component {
       firstName,
       lastName,
       preferredName,
-      nativeLangCode,
       selectedNativeLanguage,
       token,
       uuid,
-      avatarBase64
     } = this.props;
     const data = {
       firstName,

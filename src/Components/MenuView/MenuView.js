@@ -39,12 +39,6 @@ class MenuView extends Component {
     state = { appState: AppState.currentState };
   }
 
-  componentWillMount() {
-    const { firstName, lastName, isLoggedIn } = this.props;
-    if (!firstName && !lastName && isLoggedIn) {
-      this.props.getProfileAsync(this.props.uuid, this.props.token);
-    }
-  }
   componentWillReceiveProps(nextProps) {
     this.forceUpdate();
   }
@@ -61,7 +55,7 @@ class MenuView extends Component {
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, user } = this.props;
     const Version = DeviceInfo.getVersion();
     return (
       <View style={styles.container}>
@@ -78,20 +72,15 @@ class MenuView extends Component {
                 avatarStyle={styles.center}
                 rounded
                 xlarge
-                key={this.props.avatarBase64}
                 source={
                   this.props.avatarURL
-                    ? {
-                        uri: `${
-                          this.props.avatarURL
-                        }?time=${new Date().getUTCMilliseconds()}`
-                      }
+                    ? { uri: this.props.avatarURL }
                     : Images.avatar
                 }
                 activeOpacity={0.7}
               />
               <Text style={styles.textName}>
-                {this.props.firstName} {this.props.lastName}
+                {user.firstName} {user.lastName}
               </Text>
               <Text style={styles.textEditProfile}>
                 {I18n.t("editProfile")}
@@ -259,16 +248,9 @@ class MenuView extends Component {
 }
 
 const mS = state => ({
-  firstName: state.userProfile.firstName,
-  lastName: state.userProfile.lastName,
-  location: state.userProfile.location,
-  rate: state.userProfile.averageStarRating,
-  linguistProfile: state.userProfile.linguistProfile,
-  avatarURL: state.userProfile.avatarURL,
-  avatarBase64: state.userProfile.avatarBase64,
-  uuid: state.auth2.userID,
-  token: state.auth2.userJwtToken,
-  isLoggedIn: state.auth2.isLoggedIn
+  user: state.account.user,
+  linguistProfile: state.account.linguistProfile,
+  avatarURL: state.account.userAvatarURL,
 });
 
 const mD = {

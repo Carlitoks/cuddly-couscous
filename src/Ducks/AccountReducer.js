@@ -23,8 +23,9 @@ const initState = () => ({
 
   // info about the current user, or dericved directly from the current user
   userID: null,
-  userLoadedAt: null,
   user: null, // exact data structure from api: GET /users/{id}
+  userLoadedAt: null, // last time user was reloaded from server
+  userAvatarURL: null, // processed URL with cache control already set
   isLinguist: false, // meaning, are they at any stage of becoming a linguist?
   isActiveLinguist: false, // meaning, can they actually accept calls?
   isPropspectiveLinguist: false, // are they registered to become a linguist, but not yet active?
@@ -146,13 +147,16 @@ export const initializeUser = (userID) => (dispatch, getState) => {
 // set the user object, and recalculate any fields derived
 // from the user
 export const setUser = (user) => (dispatch, getState) => {
+  apiURL = `/users/${user.id}`;
   const now = new Date();
   let d = {user};
   d.userID = user.id;
   d.userLoadedAt = now.getTime();
-  apiURL = `/users/${user.id}`;
   d.linguistProfile = !!user.linguistProfile ? user.linguistProfile : null;
   d.isLinguist = !!d.linguistProfile;
+  if (!!user.avatarURL) {
+    d.userAvatarURL = user.avatarURL+"?"+(new Date('now')).getTime();
+  }
   if (!!user.subscriptionPeriods && user.subscriptionPeriods.length > 0) {
     d.subscriptionPeriods = user.subscriptionPeriods;
     d.subscriptionPeriodsLoadedAt = now.getTime();
@@ -199,6 +203,14 @@ export const updateUser = (payload) = (dispatch, getState) => {
   });
 };
 
+export const updateUserProfilePhoto = () => (dispatch, getState) => {
+  return Promise.reject("not implemented");
+};
+
+export const deleteUserProfilePhoto = () => (dispatch, getState) => {
+  return Promise.reject("not implemented");
+};
+
 export const updateUserEmail = (email) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     api.put(`${apiURL}/email`, {email}).then(resolve).catch(reject);
@@ -232,6 +244,10 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
     })
     .catch(reject);
   });
+};
+
+export const updateLinguistProfile = (payload) => (dispatch, getState) => {
+  return Promise.reject("not implemented");
 };
 
 const ACTIONS = {
