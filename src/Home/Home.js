@@ -18,7 +18,7 @@ class Home extends Component {
 
   componentDidMount() {
     flushEvents();
-    loadUser(true); // reload user, but let it be cached a bit
+    loadUser(true); // reload user, but let it be cached a bit: TODO, move this, customer home can cache, linguist home cannot
     // TODO: check for previously ended session
   }
 
@@ -37,7 +37,7 @@ class Home extends Component {
 
 const mS = state => ({
   isLoggedIn: state.auth2.isLoggedIn,
-  linguistProfile: state.userProfile.linguistProfile,
+  linguistProfile: state.account.linguistProfile,
 });
 
 const mD = {
