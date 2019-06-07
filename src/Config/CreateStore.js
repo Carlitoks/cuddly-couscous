@@ -27,6 +27,7 @@ const getStore = () =>
     // handle any state conversions required as the result of updating
     // from one version to another
     migrateAuthState(initialState);
+    // sanitizeInitialState(initialState);
 
     // it's possible for an error to be thrown because the store includes
     // old keys that are no longer needed.
@@ -45,9 +46,7 @@ const getStore = () =>
           auth: state.auth,
           auth2: state.auth2,
           userProfile: state.userProfile,
-          tokbox: state.tokbox,
           profileLinguist: state.profileLinguist,
-          pushNotification: state.pushNotification,
           onboardingRecord: state.onboardingRecord,
           homeFlow: state.homeFlow,
           appConfigReducer: state.appConfigReducer,
@@ -69,8 +68,35 @@ const getStore = () =>
 
 export default getStore;
 
+// Any keys not explicitly defined here will be deleted
+// from the initial state object before the store
+// is initialized.  This is to prevent errors during creating
+// the store that could happen when updating to a new version
+// that no longer uses state stored in previous versions.
+const sanitizeInitialState = (state = {}) => {
+  const allowedKeys = [
+    'settings',
+    'auth2',
+    'userProfile',
+    'tokbox',
+    'profileLinguist',
+    'onboardingRecord',
+    'homeFlow',
+    'appConfigReducer',
+    'appState',
+    'account',
+    'onboardingReducer'
+  ];
+
+  Object.keys(state).forEach((item) => {
+    if (!allowedKeys.contains(item)) {
+      delete state[item];
+    }
+  });
+};
+
 // convert old auth state to new auth state
-const migrateAuthState = (state) => {
+const migrateAuthState = (state = {}) => {
   auth2 = state.auth2 || {};
   auth = state.auth || {};
   if (!!auth.uuid) {

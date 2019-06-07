@@ -1,8 +1,6 @@
 import { User } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
-import PushNotification from "../Util/PushNotification";
 import { Languages } from "../Config/Languages";
-import { registerFCM } from "./PushNotificationReducer";
 
 // Actions
 const ACTIONS = {
@@ -41,12 +39,6 @@ export const getProfileAsync = (uid, token) => (dispatch, getState) => {
   return User.get(uid, token)
     .then(({ data }) => {
       const { stripePaymentToken } = data;
-
-      if (!pushNotification.tokenFCM) {
-        PushNotification.registerDeviceInFCM(data.id, auth2.deviceID, token, payload => {
-          dispatch(registerFCM(payload));
-        });
-      }
 
       return dispatch(updateView({ ...data, stripePaymentToken }));
     })

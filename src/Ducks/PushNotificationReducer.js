@@ -1,19 +1,9 @@
-import { Sessions } from "../Api";
 import {Alert} from "react-native";
 import PushNotification from "../Util/PushNotification";
-import { networkError } from "./NetworkErrorsReducer";
-import timer from "react-native-timer";
-import I18n, { translateLanguage, translateApiError } from "../I18n/I18n";
-import {recordPushNotificationEvent, recordAppError} from "../Util/Forensics";
+import I18n, { translateApiError } from "../I18n/I18n";
+import {recordPushNotificationEvent } from "../Util/Forensics";
 import { receiveSessionInvite, setRemoteUser, handleEndedSession } from "./CurrentSessionReducer";
 import api from "../Config/AxiosConfig";
-import { displayTimeAlert } from "../Util/Alerts";
-import { NotificationActionOption } from "react-native-fcm";
-
-// Actions
-export const ACTIONS = {
-  REGISTER: "pushnotification/register"
-};
 
 export const remoteNotificationReceived = notification => dispatch => {
   switch (notification.type) {
@@ -143,31 +133,3 @@ export const addListeners = () => dispatch => {
     }
   });
 };
-
-export const registerFCM = payload => ({
-  type: ACTIONS.REGISTER,
-  payload
-});
-
-// Initial State
-const initialState = {
-  tokenFCM: null
-};
-
-// Reducer
-const PushNotificationReducer = (state = initialState, action) => {
-  const { payload, type } = action;
-
-  switch (type) {
-    case ACTIONS.REGISTER: {
-      return {
-        ...state,
-        ...payload
-      };
-    }
-    default:
-      return state;
-  }
-};
-
-export default PushNotificationReducer;
