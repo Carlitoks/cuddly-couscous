@@ -10,7 +10,7 @@ import {update as updateLogicReducer} from "../../Ducks/LogicReducer";
 
 class UpdateEmailSuccess extends Component {
   render() {
-    const { navigation, logOutAsync, updateLogicReducer, closeUpdateEmail, email, emailEditSuccess } = this.props;
+    const { navigation, logOut, updateLogicReducer, closeUpdateEmail, email } = this.props;
     const handleClose = async () => {
       await updateLogicReducer({emailEditSuccess: false});
       await closeUpdateEmail({ emailBounced: false });
