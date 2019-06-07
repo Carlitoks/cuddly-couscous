@@ -18,7 +18,7 @@ import _isUndefined from "lodash/isUndefined";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import Close from "../../Components/Close/Close";
-import NavBar from "../CustomerHome/Components/Header";
+import NavBar from "../../Components/NavBar/NavBar";
 
 import moment from "moment";
 

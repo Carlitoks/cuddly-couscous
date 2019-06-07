@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import { ScrollView, View, Alert, Image, Text } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
-import Header from "../CustomerHome/Components/Header";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
+import NavBar from "../../Components/NavBar/NavBar";
 import RemoveCardButton from "./Components/RemoveCardButton";
 import AddCardButton from "./Components/AddCardButton";
 import CardItem from "./Components/CardItem";
 import NoCardImage from "./Components/NoCardImage";
 // Styles
 import styles from "./Styles/PaymentScreenStyles";
-import metrics from "../../Themes/Metrics";
 import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
 import { getProfileAsync } from "../../Ducks/UserProfileReducer";
+import { Icon } from "react-native-elements";
+import I18n from "../../I18n/I18n";
+
 class PaymentDetailScreen extends Component {
   componentWillMount() {
     const { uuid, token, getProfileAsync } = this.props;
@@ -28,9 +29,18 @@ class PaymentDetailScreen extends Component {
   render() {
     const { navigation, stripePaymentToken } = this.props;
     return (
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
-          <Header navigation={navigation} />
+          <NavBar
+            leftComponent={
+              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+                <View>
+                  <Icon name="chevron-left" type="evilicon" color="white" size={50} />
+                </View>
+              </TouchableOpacity>
+            }
+            navbarTitle={I18n.t("paymentDetails")}
+          />
           <ScrollView
             automaticallyAdjustContentInsets
             alwaysBounceVertical={false}
@@ -41,7 +51,7 @@ class PaymentDetailScreen extends Component {
             {stripePaymentToken ? <RemoveCardButton /> : <AddCardButton navigation={navigation} />}
           </ScrollView>
         </View>
-      </ViewWrapper>
+      </View>
     );
   }
 }

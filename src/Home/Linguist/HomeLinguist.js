@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InCallManager from "react-native-incall-manager";
-import Permissions from "react-native-permissions";
 import {
-  changeStatus,
-  updateSettings,
   asyncGetAccountInformation,
-  getCurrentAvailability
+  changeStatus,
+  getCurrentAvailability,
+  updateSettings
 } from "../../Ducks/ProfileLinguistReducer";
 import {
   asyncUploadAvatar,
@@ -16,11 +15,9 @@ import {
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
 
-import { View, Text, ScrollView, Alert, AppState, NetInfo } from "react-native";
-import { Row, Grid } from "react-native-easy-grid";
+import { Alert, AppState, NetInfo, ScrollView, Text, View } from "react-native";
+import { Grid, Row } from "react-native-easy-grid";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
-import HeaderView from "../../Components/HeaderView/HeaderView";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
@@ -33,6 +30,11 @@ import I18n from "../../I18n/I18n";
 import { Sessions } from "../../Api";
 import { ensurePermissions } from "../../Util/Permission";
 import { PERMISSIONS } from "../../Util/Constants";
+import NavBar from "../../Components/NavBar/NavBar";
+import UserAvatar from "../../Components/UserAvatar/UserAvatar";
+import LinguistStatus from "../../Components/UserAvatar/LinguistStatus";
+import CallNumber from "../../Components/UserAvatar/CallNumber";
+import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 
 class Home extends Component {
   navigate = this.props.navigation.navigate;
@@ -98,7 +100,7 @@ class Home extends Component {
       }
     })
 
-    
+
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertCancelled
@@ -223,26 +225,32 @@ class Home extends Component {
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
+      <View style={styles.scrollContainer}>
+        <NavBar
+          leftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
           navbarTitle={firstName + " " + lastName}
-          navbarType={"Basic"}
-          photoSelect={avatar => this.uploadAvatar(avatar)}
-          avatarSource={this.selectImage()}
-          avatarHeight={150}
-          bigAvatar={true}
-          badge={false}
-          stars={rate ? rate : 0}
-          status={available}
-          switchOnChange={status => this.props.changeStatus(status)}
-          switchValue={this.props.available}
+        />
+        <WavesBackground>
+          <UserAvatar
+            photoSelect={avatar => this.uploadAvatar(avatar)}
+            avatarSource={this.selectImage()}
+            avatarHeight={150}
+            bigAvatar={true}
+            stars={rate ? rate : 0}
+          />
+          <LinguistStatus
+            status={available}
+            switchOnChange={status => this.props.changeStatus(status)}
+            switchValue={this.props.available}
+            loading={this.props.loading}
+          />
+        </WavesBackground>
+        <CallNumber
           calls={numberOfCalls}
           amount={amount}
-          loading={this.props.loading}
-        >
+        />
           <Text style={styles.recentCallsTitle}>{I18n.t("recentCalls")}</Text>
           <Grid>
             <Row>
@@ -259,8 +267,7 @@ class Home extends Component {
               </ScrollView>
             </Row>
           </Grid>
-        </HeaderView>
-      </ViewWrapper>
+      </View>
     );
   }
 }

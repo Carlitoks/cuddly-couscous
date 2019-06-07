@@ -15,7 +15,6 @@ import { connect } from "react-redux";
 import { Divider } from "react-native-elements";
 import Permission from "react-native-permissions";
 
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import I18n from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/LoginScreenStyles";
@@ -71,7 +70,7 @@ class LoginScreen extends Component {
     } = this.props;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer} enabled>
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={[styles.mainRegisterContainer]}>
             <ScrollView bounces={false} contentContainerStyle={styles.registerContainer}>
@@ -127,7 +126,7 @@ class LoginScreen extends Component {
           </View>
         </TouchableWithoutFeedback>
         <SlideUpPanel />
-      </ViewWrapper>
+      </View>
       </KeyboardAvoidingView>
     );
   }

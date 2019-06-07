@@ -1,27 +1,24 @@
 import React, { Component } from "react";
-import { Alert, Text, View, ScrollView, Image } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { connect } from "react-redux";
 import {
-  updateProfileAsync,
-  updateView,
   asyncUploadAvatar,
-  getNativeLang
+  getNativeLang,
+  updateProfileAsync,
+  updateView
 } from "../../Ducks/UserProfileReducer";
-import { List, ListItem, Avatar } from "react-native-elements";
-import { Row, Grid } from "react-native-easy-grid";
-import { Languages } from "../../Config/Languages";
+import { List, ListItem } from "react-native-elements";
+import { Grid } from "react-native-easy-grid";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import BottomButton from "../../Components/BottomButton/BottomButton";
-import InputRegular from "../../Components/InputRegular/InputRegular";
-import HeaderView from "../../Components/HeaderView/HeaderView";
+import UserAvatar from "../../Components/UserAvatar/UserAvatar";
+import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 
 import styles from "./styles";
 import _capitalize from "lodash/capitalize";
-import I18n, { translateLanguage, translateApiError } from "../../I18n/I18n";
+import I18n, { translateApiError, translateLanguage } from "../../I18n/I18n";
 import { Images } from "../../Themes";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import Close from "../../Components/Close/Close";
+import NavBar from "../../Components/NavBar/NavBar";
 
 class UserProfileView extends Component {
   componentWillMount() {}
@@ -78,23 +75,26 @@ class UserProfileView extends Component {
     const { selectedNativeLanguage, firstName, lastName, gender, linguistProfile } = this.props;
 
     return (
-      <ViewWrapper style={styles.mainContainer}>
-        <HeaderView
-          headerLeftComponent={<ShowMenuButton navigation={this.props.navigation} />}
-          headerRightComponent={
+      <View style={styles.mainContainer}>
+        <NavBar
+          leftComponent={<ShowMenuButton navigation={navigation} />}
+          navbarTitle={I18n.t("userProfile")}
+          rightComponent={
             <Close
               action={() => {
                 this.props.navigation.dispatch({ type: "Home" });
               }}
             />
           }
-          navbarTitle={I18n.t("userProfile")}
-          navbarType={"Complete"}
-          photoSelect={avatar => this.uploadAvatar(avatar)}
-          avatarSource={this.selectImage()}
-          avatarHeight={150}
-          bigAvatar={true}
-        >
+        />
+        <WavesBackground>
+          <UserAvatar
+            photoSelect={avatar => this.uploadAvatar(avatar)}
+            avatarSource={this.selectImage()}
+            avatarHeight={150}
+            bigAvatar={true}
+          />
+        </WavesBackground>
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
@@ -151,8 +151,7 @@ class UserProfileView extends Component {
               </List>
             </Grid>
           </ScrollView>
-        </HeaderView>
-      </ViewWrapper>
+      </View>
     );
   }
 }

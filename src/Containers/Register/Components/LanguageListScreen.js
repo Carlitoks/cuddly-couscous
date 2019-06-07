@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { ScrollView, View, Alert, Text, TouchableOpacity } from "react-native";
-import { Metrics, Colors, Fonts } from "../../../Themes";
+import {
+  ScrollView, View, Alert, Text, TouchableOpacity,
+} from "react-native";
 import { Divider, Icon } from "react-native-elements";
 import { connect } from "react-redux";
-import Header from "../../CustomerHome/Components/Header";
-import ViewWrapper from "../../ViewWrapper/ViewWrapper";
+import { Colors, Fonts } from "../../../Themes";
+import NavBar from "../../../Components/NavBar/NavBar";
 import I18n, { translateLanguage } from "../../../I18n/I18n";
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
 import { updateView, updateProfileAsync } from "../../../Ducks/UserProfileReducer";
@@ -15,21 +16,21 @@ import styles from "./Styles/LanguageListScreenStyles";
 class LanguageListScreen extends Component {
   componentWillMount() {}
 
-  renderButtonContent = currentLang => {
+  renderButtonContent = (currentLang) => {
     const { nativeLangCode, userNativeLangCode } = this.props;
     let ButtonStyle = {
       ...styles.availableLangText,
-      color: Colors.pricingViewBlack
+      color: Colors.pricingViewBlack,
     };
 
     if (
-      (nativeLangCode != "" && nativeLangCode === currentLang) ||
-      (userNativeLangCode != "" && userNativeLangCode === currentLang)
+      (nativeLangCode != "" && nativeLangCode === currentLang)
+      || (userNativeLangCode != "" && userNativeLangCode === currentLang)
     ) {
       ButtonStyle = {
         ...styles.availableLangText,
         color: Colors.gradientColor.top,
-        fontFamily: Fonts.BoldFont
+        fontFamily: Fonts.BoldFont,
       };
     }
     return (
@@ -39,7 +40,7 @@ class LanguageListScreen extends Component {
     );
   };
 
-  changeLangCode = langCode => {
+  changeLangCode = (langCode) => {
     const {
       updateOnboarding,
       navigation,
@@ -48,27 +49,26 @@ class LanguageListScreen extends Component {
       updateProfileAsync,
       token,
       uuid,
-      userNativeLangCode
+      userNativeLangCode,
     } = this.props;
     if (isLoggedIn) {
       const data = {
-        nativeLangCode: langCode
+        nativeLangCode: langCode,
       };
-      updateProfileAsync(uuid, data, token).then(response => {
+      updateProfileAsync(uuid, data, token).then((response) => {
         const {
           payload,
-          payload: { nativeLangCode }
+          payload: { nativeLangCode },
         } = response;
 
         if (response.type !== "networkErrors/error") {
           updateView({
-            nativeLangCode: langCode
+            nativeLangCode: langCode,
           });
           return navigation.dispatch({ type: "back" });
-        } else {
-          const errorMessage = response.payload.response.data.errors[0];
-          Alert.alert("error", errorMessage);
         }
+        const errorMessage = response.payload.response.data.errors[0];
+        Alert.alert("error", errorMessage);
       });
     } else {
       updateOnboarding({ nativeLangCode: langCode });
@@ -82,12 +82,12 @@ class LanguageListScreen extends Component {
       let selected = false;
       let containerStyle = styles.LangViewContainer;
       if (
-        (nativeLangCode != "" && nativeLangCode === language) ||
-        (userNativeLangCode != "" && userNativeLangCode === language)
+        (nativeLangCode != "" && nativeLangCode === language)
+        || (userNativeLangCode != "" && userNativeLangCode === language)
       ) {
         containerStyle = {
           ...styles.LangViewContainer,
-          backgroundColor: "#ECE8F1"
+          backgroundColor: "#ECE8F1",
         };
         selected = true;
       }
@@ -102,28 +102,35 @@ class LanguageListScreen extends Component {
     });
   };
 
-  renderList = () => {
-    return (
-      <React.Fragment>
-        <View style={styles.availableLangContainer}>
-          <View style={styles.availableLangTitleContainer}>
-            <Text style={styles.availableLangContainerText}>{I18n.t("nativeLanguage")}</Text>
-          </View>
-          <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
-            <React.Fragment>{this.renderAvailableLanguages()}</React.Fragment>
-          </ScrollView>
+  renderList = () => (
+    <React.Fragment>
+      <View style={styles.availableLangContainer}>
+        <View style={styles.availableLangTitleContainer}>
+          <Text style={styles.availableLangContainerText}>{I18n.t("nativeLanguage")}</Text>
         </View>
-      </React.Fragment>
-    );
-  };
+        <ScrollView contentContainerStyle={styles.scrollContainer} bounces={false}>
+          <React.Fragment>{this.renderAvailableLanguages()}</React.Fragment>
+        </ScrollView>
+      </View>
+    </React.Fragment>
+  );
 
   render() {
     const { navigation } = this.props;
 
     return (
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
-          <Header navigation={navigation} />
+          <NavBar
+            leftComponent={(
+              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({ type: "back" })}>
+                <View>
+                  <Icon name="chevron-left" type="evilicon" color="white" size={50} />
+                </View>
+              </TouchableOpacity>
+)}
+            navbarTitle={I18n.t("nativeLanguageTitle")}
+          />
           <ScrollView
             automaticallyAdjustContentInsets
             alwaysBounceVertical={false}
@@ -132,7 +139,7 @@ class LanguageListScreen extends Component {
             {this.renderList()}
           </ScrollView>
         </View>
-      </ViewWrapper>
+      </View>
     );
   }
 }
@@ -148,12 +155,12 @@ const mS = state => ({
   userNativeLangCode: state.userProfile.nativeLangCode,
   isLoggedIn: state.auth.isLoggedIn,
   token: state.auth.token,
-  uuid: state.auth.uuid
+  uuid: state.auth.uuid,
 });
 
 const mD = { updateOnboarding, updateView, updateProfileAsync };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(LanguageListScreen);

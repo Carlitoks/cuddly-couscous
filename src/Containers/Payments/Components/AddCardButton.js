@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
-import Reactotron from "reactotron-react-native";
-
 // Styles
 import styles from "./Styles/PaymentButtons";
-import stripe from "tipsi-stripe";
 import {
   clearPayments,
   removePayment,

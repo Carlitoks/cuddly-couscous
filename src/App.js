@@ -25,6 +25,7 @@ import { updateJeenieCounts } from "./Ducks/AppConfigReducer";
 import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
 import SplashScreen from 'react-native-splash-screen';
 import { initializeUser } from "./Ducks/AccountReducer";
+import { InitInstabug } from "./Settings/InstabugInit";
 
 
 class App extends Component {
@@ -111,7 +112,7 @@ class App extends Component {
 
           // things that should be reloaded periodically
           // store.dispatch(loadConfig(true)).catch(console.log),
-          
+
           // fully reload the user's account state if we're logged in
           store.dispatch(updateJeenieCounts(true)); // reinitialize jeenie counts if app reloads
           return store.dispatch(initializeUser(auth.uuid));
@@ -135,7 +136,20 @@ class App extends Component {
         NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
 
         this.updateAvailableAlert();
-      });
+      }).then(() => {
+        //Initializing instabug
+      const { store } = this.state;
+      const currentStore = store.getState();
+      InitInstabug(
+        currentStore.userProfile.firstName,
+        currentStore.userProfile.lastName,
+        currentStore.userProfile.preferredName,
+        currentStore.userProfile.linguistProfile,
+        currentStore.userProfile.email,
+        currentStore.auth.deviceId,
+        currentStore.currentSessionReducer.sessionID,
+        currentStore.events.id);
+    });
     // PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
     // PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
     // you could check the app state to respond differently to push notifications depending on if the app is running in the background or is currently active.

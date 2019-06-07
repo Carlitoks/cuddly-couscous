@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import {
-  Alert, View, ImageBackground, Text
+  Alert, ImageBackground, TouchableOpacity, View,
 } from "react-native";
 import InCallManager from "react-native-incall-manager";
 import { connect } from "react-redux";
 import analytics from "@segment/analytics-react-native";
-import Header from "./Components/Header";
+import { Icon } from "react-native-elements";
+import NavBar from "../../Components/NavBar/NavBar";
 import AvatarSection from "./Components/AvatarSection";
 import CallInputs from "./Components/CallInputs";
 import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
 import {
   ensureSessionDefaults,
-  updateLocation,
   guessSecondaryLangCode,
+  updateLocation,
 } from "../../Ducks/NewSessionReducer";
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
 import { getProfileAsync, updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
 import { logOutAsync } from "../../Ducks/AuthReducer";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
@@ -28,6 +28,9 @@ import { supportedLangCodes } from "../../Config/Languages";
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
 import { loadActiveSubscriptionPeriods } from "../../Ducks/AccountReducer";
+import { moderateScaleViewports } from "../../Util/Scaling";
+import HeaderMinutesLeft from "./Components/Partials/HeaderMinutesLeft";
+import { Colors } from "../../Themes";
 
 const imgBackground = require("../../Assets/Images/Background.png");
 
@@ -126,9 +129,27 @@ class CustomerHomeScreen extends Component {
       jeenieCounts,
     } = this.props;
     return (
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
         <View style={styles.mainContainerHome}>
-          <Header navigation={navigation} />
+          <NavBar
+            leftComponent={(
+              <TouchableOpacity
+                activeOpacity={1}
+                style={styles.containerMenu}
+                onPress={() => navigation.dispatch({ type: "DrawerOpen" })}
+              >
+                <Icon name="navicon" type="evilicon" color="white" size={moderateScaleViewports(30)} />
+              </TouchableOpacity>
+)}
+            rightComponent={(
+              <View style={styles.minutesLeftContainer}>
+                <TouchableOpacity onPress={() => navigation.dispatch({ type: "PaymentDetailScreen" })}>
+                  <HeaderMinutesLeft navigation={navigation} />
+                </TouchableOpacity>
+              </View>
+)}
+            statusBarBackground={Colors.gradientColor.top}
+          />
           <ImageBackground source={imgBackground} style={styles.imgBackgroundContainer} imageStyle={styles.imgBackground}>
             <AvatarSection showNum={!!secondaryLangCode} targetLang={secondaryLangCode} langCounts={jeenieCounts} />
             <View style={styles.flexEndCenter}>
@@ -139,7 +160,7 @@ class CustomerHomeScreen extends Component {
           <SlideUpPanel />
           { emailBounced && <View style={{ position: "absolute" }}><UpdateEmail emailBounced={emailBounced} /></View>}
         </View>
-      </ViewWrapper>
+      </View>
     );
   }
 }

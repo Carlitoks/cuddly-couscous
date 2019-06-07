@@ -10,7 +10,7 @@ import I18n from "../I18n/I18n";
 import ShowMenuButton from "../Components/ShowMenuButton/ShowMenuButton";
 import Close from "../Components/Close/Close";
 import { logOutAsync } from "../Ducks/AuthReducer";
-import NavBar from "../Containers/CustomerHome/Components/Header";
+import NavBar from "../Components/NavBar/NavBar";
 
 class SettingsView extends Component {
   render() {

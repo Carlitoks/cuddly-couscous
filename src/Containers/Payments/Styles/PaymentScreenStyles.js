@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
+import { moderateScale } from "../../../Util/Scaling";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -31,5 +32,15 @@ export default StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: "#fff"
   },
-  noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' }
+  noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
+  cancelButton: {
+    alignItems: "flex-end",
+    justifyContent: "center"
+  },
+  cancelStyle: {
+    marginRight: 12,
+    color: "#fff",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScale(18, 0)
+  },
 });

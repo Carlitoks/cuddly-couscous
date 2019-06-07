@@ -11,7 +11,7 @@ import I18n, { switchLanguage } from "../I18n/I18n";
 import styles from "./styles";
 import InterfaceLanguagesList from "./InterfaceLanguagesList";
 import { InterfaceSupportedLanguages } from "../Config/Languages";
-import NavBar from "../Containers/CustomerHome/Components/Header";
+import NavBar from "../Components/NavBar/NavBar";
 
 class InterfaceLanguageView extends Component {
   state = {

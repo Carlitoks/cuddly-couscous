@@ -1,7 +1,6 @@
 import React from "react";
 import { TextInputMask } from "react-native-masked-text";
-import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
-import { moderateScale } from "../../../../Util/Scaling";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import I18n from "../../../../I18n/I18n";
 import Icons from "../../Icons";
 //styles

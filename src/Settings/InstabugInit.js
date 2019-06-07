@@ -1,16 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
-import { View, Text, Modal, StatusBar, processColor, TouchableWithoutFeedback, Keyboard } from "react-native";
-import Instabug, { BugReporting, Surveys, FeatureRequests } from 'instabug-reactnative';
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
-import I18n from "react-native-i18n";
-import { instabugToken } from "../../Config/env";
+import Instabug from "instabug-reactnative";
+import { instabugToken } from "../Config/env";
+import I18n from "../I18n/I18n";
+import { processColor } from "react-native";
 
-import { Colors } from "../../Themes";
-
-import styles from "./styles";
-
-const locale = I18n.currentLocale().toLocaleLowerCase();
+const locale = I18n.currentLocale()
+  .toLocaleLowerCase();
 
 const processLocale = locale => {
   let shortLocale = locale.substring(0, 2);
@@ -42,19 +36,16 @@ const getInstaBugLanguage = locale => {
 
 const instaBugLanguage = getInstaBugLanguage(locale);
 
-const ViewWrapper = ({
-  children,
-  status,
-  style,
-  firstName,
-  lastName,
-  preferredName,
-  linguistProfile,
-  email,
-  deviceId,
-  sessionId,
-  eventId
-}) => {
+
+const InitInstabug = (firstName,
+                        lastName,
+                        preferredName,
+                        linguistProfile,
+                        email,
+                        deviceId,
+                        sessionId,
+                        eventId) => {
+
   const name = preferredName ? preferredName : firstName;
   const role = !!linguistProfile ? "Linguist" : "Customer";
   const device = !!deviceId ? ` DeviceID: ${deviceId} ` : "";
@@ -78,32 +69,8 @@ const ViewWrapper = ({
   } catch (e) {
     console.log("Error on Instabug");
   }
-
-  return (
-    <View style={style}>
-      {/* No Connection Modal*/}
-      <StatusBar
-        barStyle="light-content"
-        hidden={false}
-        backgroundColor={Colors.transparent}
-        translucent={true}
-      />
-      {/* Render Child Components */}
-      {children}
-    </View>
-  );
 };
 
-const mS = state => ({
-  status: state.networkInfo.type,
-  firstName: state.userProfile.firstName,
-  lastName: state.userProfile.lastName,
-  preferredName: state.userProfile.preferredName,
-  linguistProfile: state.userProfile.linguistProfile,
-  email: state.userProfile.email,
-  deviceId: state.auth.deviceId,
-  sessionId: state.currentSessionReducer.sessionID,
-  eventId: state.events.id
-});
-
-export default connect(mS)(ViewWrapper);
+export {
+  InitInstabug,
+};

@@ -17,7 +17,7 @@ import { displayFormErrors } from "../../Util/Alerts";
 
 import I18n from "../../I18n/I18n";
 import { onlyLetters } from "../../Util/Helpers";
-import NavBar from "../../Containers/CustomerHome/Components/Header";
+import NavBar from "../../Components/NavBar/NavBar";
 
 class EditNameView extends Component {
   navigate = this.props.navigation.navigate;
@@ -143,7 +143,6 @@ class EditNameView extends Component {
     return (
       <View style={styles.scrollContainer}>
         <NavBar
-          navigation={this.props.navigation}
           leftComponent={
             <GoBackButton navigation={this.props.navigation}/>
           }
@@ -154,7 +153,6 @@ class EditNameView extends Component {
               ? `${formFirstName} ${formLastName}`
               : I18n.t("mainTitle")
           }
-          rightComponent={<React.Fragment/>}
         />
         <ScrollView
           keyboardShouldPersistTaps="handled"

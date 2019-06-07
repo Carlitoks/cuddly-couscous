@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
-import { number as validCC } from "card-validator";
 import Icons from "../Icons";
-import Reactotron from "reactotron-react-native";
 
 import { updatePayments } from "../../../Ducks/PaymentsReducer";
 // Styles

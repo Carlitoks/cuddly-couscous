@@ -14,7 +14,7 @@ import Close from "../../Components/Close/Close";
 import styles from "./styles";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import { displayFormErrors } from "../../Util/Alerts";
-import Header from "../../Containers/CustomerHome/Components/Header";
+import NavBar from "../../Components/NavBar/NavBar";
 
 class PromoCodeView extends Component {
 
@@ -93,8 +93,7 @@ class PromoCodeView extends Component {
   render() {
     return (
       <View style={styles.scrollContainer}>
-        <Header
-          navigation={this.props.navigation}
+        <NavBar
           leftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }

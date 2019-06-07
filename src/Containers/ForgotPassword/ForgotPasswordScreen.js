@@ -10,12 +10,13 @@ import {
   View,
 } from "react-native";
 import { connect } from "react-redux";
+import { Icon } from "react-native-elements";
 import { resetPasswordAsync } from "../../Ducks/AuthReducer";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/ForgotPasswordScreenStyles";
 import { EMAIL_REGEX } from "../../Util/Constants";
-import Header from "../CustomerHome/Components/Header";
+import NavBar from "../../Components/NavBar/NavBar";
 import { Auth } from "../../Api";
 import { clearForm, updateForm } from "../../Ducks/ForgotPasswordReducer";
 import { moderateScaleViewports } from "../../Util/Scaling";
@@ -116,7 +117,16 @@ class ForgotPasswordScreen extends Component {
       <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer} keyboardVerticalOffset={moderateScaleViewports(60)} enabled>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={[styles.mainForgotPasswordContainer]}>
-            <Header navigation={navigation} />
+            <NavBar
+              leftComponent={(
+                <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({ type: "back" })}>
+                  <View>
+                    <Icon name="chevron-left" type="evilicon" color="#3F1674" size={50} />
+                  </View>
+                </TouchableOpacity>
+              )}
+              statusBarBackground="#DBDBDB"
+            />
             <View style={styles.forgotPasswordContainer}>
               <View style={styles.topLogoContainer}>
                 <Text style={styles.titleText}>{I18n.t("forgotPassword.title")}</Text>

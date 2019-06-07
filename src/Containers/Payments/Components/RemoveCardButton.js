@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Alert } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
-import Reactotron from "reactotron-react-native";
 
 // Styles
 import styles from "./Styles/PaymentButtons";
@@ -18,7 +17,6 @@ import { updateView } from "../../../Ducks/UserProfileReducer";
 class PaymentButtons extends Component {
   isDisabled = () => {
     const { isValidCC, isValidDate, isValidCVV, loading } = this.props;
-    Reactotron.log(isValidCC && isValidDate && isValidCVV);
     return (isValidCC && isValidDate && isValidCVV) || loading;
   };
 

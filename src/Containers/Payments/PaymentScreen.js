@@ -1,17 +1,16 @@
 import React, { Component } from "react";
-import { ScrollView, View, Alert, Image, Text } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
-import Header from "../CustomerHome/Components/Header";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
+import NavBar from "../../Components/NavBar/NavBar";
 import PaymentButtons from "./Components/PaymentButtons";
-import NoCardImage from "./Components/NoCardImage";
 import AddCard from "./Components/AddCard";
 import { getProfileAsync } from "../../Ducks/UserProfileReducer";
 // Styles
 import styles from "./Styles/PaymentScreenStyles";
-import metrics from "../../Themes/Metrics";
 import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
+import { Icon } from "react-native-elements";
+import I18n from "../../I18n/I18n";
 
 class PaymentScreen extends Component {
   componentWillMount() {
@@ -25,9 +24,25 @@ class PaymentScreen extends Component {
     const { navigation } = this.props;
 
     return (
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
-          <Header navigation={navigation} />
+          <NavBar
+            leftComponent={
+              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+                <View>
+                  <Icon name="chevron-left" type="evilicon" color="white" size={50} />
+                </View>
+              </TouchableOpacity>
+            }
+            rightComponent={
+              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+                <View style={styles.cancelButton}>
+                  <Text style={styles.cancelStyle}>{I18n.t("cancel")}</Text>
+                </View>
+              </TouchableOpacity>
+            }
+            navbarTitle={I18n.t("payments.addCard")}
+          />
           <ScrollView
             automaticallyAdjustContentInsets
             alwaysBounceVertical={false}
@@ -37,7 +52,7 @@ class PaymentScreen extends Component {
             <PaymentButtons navigation={navigation} />
           </ScrollView>
         </View>
-      </ViewWrapper>
+      </View>
     );
   }
 }

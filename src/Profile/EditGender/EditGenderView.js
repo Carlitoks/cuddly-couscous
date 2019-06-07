@@ -14,7 +14,7 @@ import BottomButton from "../../Components/BottomButton/BottomButton";
 import styles from "./styles";
 import { displayFormErrors } from "../../Util/Alerts";
 import I18n from "../../I18n/I18n";
-import NavBar from "../../Containers/CustomerHome/Components/Header";
+import NavBar from "../../Components/NavBar/NavBar";
 
 class EditGenderView extends Component {
   constructor(props) {
@@ -102,11 +102,9 @@ class EditGenderView extends Component {
     return (
       <View style={styles.scrollContainer}>
         <NavBar
-          navigation={this.props.navigation}
           leftComponent={
             <GoBackButton navigation={this.props.navigation}/>
           }
-          rightComponent={<View style={style.containerMenu}/>}
           navbarTitle={I18n.t("genderName")}
         />
         <ScrollView

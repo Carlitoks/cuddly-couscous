@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import {
-  Image, Platform, Text, View,
+  Image, Platform, Text, View, StatusBar
 } from "react-native";
 import { connect } from "react-redux";
 import Permission from "react-native-permissions";
 import { ensureSessionDefaults, updateLocation } from "../../Ducks/NewSessionReducer";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clearOnboarding } from "../../Ducks/OnboardingReducer";
 import { CUSTOMER_FREE_MINUTES as customer_free_minutes } from "../../Util/Constants";
 // Styles
@@ -87,7 +86,13 @@ class OnboardingScreen extends Component {
       return <SplashScreen animation={false} />;
     }
     return (
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
+        <StatusBar
+          barStyle="light-content"
+          translucent={true}
+          hidden={false}
+          backgroundColor={"transparent"}
+        />
         <View style={[styles.mainOnboardingContainer]} collapsable={false}>
           <Image style={styles.backgroundImage} source={backgroundImage()} />
           <View style={styles.bodyContainer}>
@@ -103,7 +108,7 @@ class OnboardingScreen extends Component {
             </View>
           </View>
         </View>
-      </ViewWrapper>
+      </View>
     );
   }
 }
