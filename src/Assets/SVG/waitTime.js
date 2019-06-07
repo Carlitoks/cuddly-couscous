@@ -6,7 +6,7 @@ const WaitTime = ({ width, height, viewBox, active }) => {
     <Svg
       width={width}
       height={height}
-      viewBox={viewBox ? viewBox : "#0 0 69.2 74.5"}>
+      viewBox={viewBox ? viewBox : "0 0 69.2 74.5"}>
       <G id="Layer_1">
         <G>
           <G>
