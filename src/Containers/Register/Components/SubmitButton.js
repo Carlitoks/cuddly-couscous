@@ -20,7 +20,6 @@ class SubmitButton extends Component {
       logIn,
     } = this.props;
     try {
-      console.log("trying login");
       updateOnboarding({ errorType: null, makingRequest: true });
       await logIn(email, password);
       updateOnboarding({ makingRequest: false });

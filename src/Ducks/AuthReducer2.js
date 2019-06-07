@@ -148,33 +148,30 @@ export const registerNewUser = (user) => (dispatch, getState) => {
 
 // log out, and clear relevant internal app state
 export const logOut = () => (dispatch, getState) => {
-  return new Promise((resolve, reject) => {
+  // clear local app state immediately
+  dispatch(clear()); // clear own auth state
+  dispatch(clearAccount()); // clear account reducer
+  dispatch(clearCurrentSession()); // clear current session reducer
+  dispatch(clearNewSession()); // clear new session reducer
 
-    // we still clear internal state even if this request
-    // fails, so not checking the error here on purpose
+  // clear depreacted reducers, TODO: remove this once feasible
+  dispatch(clearUserProfile());
+  dispatch(clearHomeFlow());
+  dispatch(clearCallHistory());
+  dispatch(clearLinguistProfile());
+  dispatch(clearOnboarding());
+
+  // reconfigure other stuff in the system
+  analytics.reset();
+
+  // make the actual logout request to the server
+  return new Promise((resolve, reject) => {
     api.get("/auth/logout")
     .finally(() => {
       // clear api auth tokens
-      setApiAuthToken(null);
       setForensicsAuthToken(null);
-
-      // clear local app state, regardless of success of logout request
-      dispatch(clear()); // clear own auth state
-      dispatch(clearAccount()); // clear account reducer
-      dispatch(clearCurrentSession()); // clear current session reducer
-      dispatch(clearNewSession()); // clear new session reducer
-
-      // clear depreacted reducers, TODO: remove this once feasible
-      dispatch(clearUserProfile());
-      dispatch(clearHomeFlow());
-      dispatch(clearCallHistory());
-      dispatch(clearLinguistProfile());
-      dispatch(clearOnboarding());
-
-      // reconfigure other stuff in the system
-      analytics.reset();
-      
-      // attempt to register a new device
+      setApiAuthToken(null);      
+      // attempt to register a new device immediately
       return dispatch(authorizeNewDevice()).finally(resolve).catch(reject);
     });
   });
