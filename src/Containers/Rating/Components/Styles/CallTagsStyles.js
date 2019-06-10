@@ -8,10 +8,17 @@ export default StyleSheet.create({
   addComments: {
     color: "#401674",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(24),
+    fontSize: moderateScaleViewports(17),
     paddingBottom: 19,
     paddingRight: 19,
     paddingTop: 19,
+  },
+  comments: {
+    color: "#000000",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    paddingBottom: 19,
+    paddingRight: 19,
   },
   baseTagText: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports( 16) },
   baseTagTextSelected: { color: "#FFFFFF" },
