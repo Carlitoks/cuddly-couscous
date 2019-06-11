@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import InCallManager from "react-native-incall-manager";
 import {
-  asyncGetAccountInformation,
   changeStatus,
-  getCurrentAvailability,
-  updateSettings
+  updateSettings,
+  getCurrentAvailability
 } from "../../Ducks/ProfileLinguistReducer";
 import {
   asyncUploadAvatar,
@@ -14,6 +13,7 @@ import {
 } from "../../Ducks/UserProfileReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
+import { loadLinguistCallHistory } from "../../Ducks/AccountReducer";
 
 import { Alert, AppState, NetInfo, ScrollView, Text, View } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -80,8 +80,7 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.updateSettings({ loading: false });
-    this.props.loadSessionScenarios(true);
-    this.props.asyncGetAccountInformation();
+    this.props.loadLinguistCallHistory(true);
     AppState.addEventListener("change", this._handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
     InCallManager.stop();
@@ -275,7 +274,7 @@ class Home extends Component {
 const mS = state => ({
   available: state.profileLinguist.available,
   numberOfCalls: state.profileLinguist.numberOfCalls,
-  linguistCalls: state.callHistory.allLinguistCalls,
+  linguistCalls: state.account.linguistCallHistory,
   amount: state.profileLinguist.amount,
   status: state.profileLinguist.status,
   loading: state.profileLinguist.loading,
@@ -296,7 +295,7 @@ const mD = {
   updateView,
   getProfileAsync,
   changeStatus,
-  asyncGetAccountInformation,
+  loadLinguistCallHistory,
   getCurrentAvailability,
   incomingCallNotification,
   loadSessionScenarios

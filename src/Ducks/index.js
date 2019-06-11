@@ -1,7 +1,5 @@
 import { combineReducers } from "redux";
 
-import callHistory from "./CallHistoryReducer";
-
 import events from "./EventsReducer";
 import forgotPassword from "./ForgotPasswordReducer";
 import homeFlow from "./HomeFlowReducer";
@@ -31,7 +29,6 @@ import auth2 from "./AuthReducer2";
 // Combine all the reducers
 const rootReducer = combineReducers({
   appConfigReducer,
-  callHistory,
   events,
   forgotPassword,
   homeFlow,

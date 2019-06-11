@@ -1,6 +1,5 @@
 import { Linguist, CallHistory } from "../Api";
 import { networkError } from "./NetworkErrorsReducer";
-import { linguistCalls } from "./CallHistoryReducer";
 import { User } from "../Api";
 
 import moment from "moment";
@@ -77,23 +76,6 @@ export const changeStatus = status => (dispatch, getState) => {
 export const clearSettings = () => ({
   type: ACTIONS.CLEAR
 });
-
-export const asyncGetAccountInformation = () => (dispatch, getState) => {
-  const { auth, profileLinguist, userProfile } = getState();
-
-  return CallHistory.getAllLinguistCalls(userProfile.id, auth2.userJwtToken)
-    .then(response => {
-      const { data } = response;
-      dispatch(linguistCalls(data));
-      dispatch(
-        updateSettings({
-          numberOfCalls: data.length,
-          amount: data.length > 0 ? getTotalDuration(data) : "00:00"
-        })
-      );
-    })
-    .catch(error => dispatch(networkError(error)));
-};
 
 export const getTotalDuration = callHistory => {
   const amountDuration = callHistory
