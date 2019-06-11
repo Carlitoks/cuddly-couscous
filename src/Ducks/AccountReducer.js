@@ -45,6 +45,10 @@ const initState = () => ({
   linguistCallHistoryLoadedAt: null,
   linguistCallHistory: [],
 
+  // calls received, but missed by the linguist
+  linguistMissedCallHistoryLoadedAt: null,
+  linguistMissedCallHistory: [],
+
   // minute packages available for purchase by the user
   availableMinutePackagesLoadedAt: null,
   availableMinutePackages: []
@@ -241,6 +245,66 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
         subscriptionPeriodsLoadedAt: new Date().getTime(),
         hasUnlimitedUse: unlimitedUseUntil !== false,
         hasUnlimitedUseUntil: unlimitedUseUntil
+      }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// load calls placed as a customer
+export const loadCustomerCallHistory = (useCache = true) => (dispatch, getState) => {
+  const {customerCallHistory, customerCallHistoryLoadedAt} = getState().account;
+  return new Promise((resolve, reject) => {
+    if (useCache && !!customerCallHistory && new Date().getTime() < customerCallHistoryLoadedAt + CACHE.CALL_HISTORY) {
+      resolve(customerCallHistory);
+      return;
+    }
+    api.get(apiURL+"/sessions")
+    .then((res) => {
+      dispatch(merge({
+        customerCallHistory: res.data,
+        customerCallHistoryLoadedAt: new Date().getTime(),
+      }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// load calls accepted as a linguist
+export const loadLinguistCallHistory = (useCache = true) => (dispatch, getState) => {
+  const {linguistCallHistory, linguistCallHistoryLoadedAt} = getState().account;
+  return new Promise((resolve, reject) => {
+    if (useCache && !!linguistCallHistory && new Date().getTime() < linguistCallHistoryLoadedAt + CACHE.CALL_HISTORY) {
+      resolve(linguistCallHistory);
+      return;
+    }
+    api.get(apiURL+"/linguist-profile/sessions")
+    .then((res) => {
+      dispatch(merge({
+        linguistCallHistory: res.data,
+        linguistCallHistoryLoadedAt: new Date().getTime(),
+      }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// load invites for calls missed by the linguist
+export const loadLinguistMissedCallHistory = (useCache = true) => (dispatch, getState) => {
+  const {linguistMissedCallHistory, linguistMissedCallHistoryLoadedAt} = getState().account;
+  return new Promise((resolve, reject) => {
+    if (useCache && !!linguistMissedCallHistory && new Date().getTime() < linguistMissedCallHistoryLoadedAt + CACHE.CALL_HISTORY) {
+      resolve(linguistMissedCallHistory);
+      return;
+    }
+    api.get(apiURL+"/linguist-profile/session-invitations?status=missed")
+    .then((res) => {
+      dispatch(merge({
+        linguistMissedCallHistory: res.data,
+        linguistMissedCallHistoryLoadedAt: new Date().getTime(),
       }));
       resolve(res.data);
     })
