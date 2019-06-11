@@ -211,6 +211,8 @@ export const deleteUserProfilePhoto = () => (dispatch, getState) => {
   return Promise.reject("not implemented");
 };
 
+// Change the users email address.  The user should be re-authenticated after this, because any
+// JWT tokens may become invalid after this operation.
 export const updateUserEmail = (email) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     api.put(`${apiURL}/email`, {email}).then(resolve).catch(reject);

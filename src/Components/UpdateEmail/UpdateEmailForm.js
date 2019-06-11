@@ -3,7 +3,6 @@ import {Alert, Modal, Text, TextInput, TouchableOpacity, View} from "react-nativ
 
 import styles from "./styles";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
-import { updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
 import { connect } from "react-redux";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import UpdateEmailSuccess from "./UpdateEmailSuccess";
@@ -62,11 +61,10 @@ class UpdateEmailForm extends Component {
   };
 
   submitEmail = async () => {
-    const { updateUserEmail, uuid, token, closeUpdateEmail } = this.props;
+    const { updateUserEmail } = this.props;
     try {
       this.setState({ loading: true });
-      const updateProfilePayload = await updateUserEmail(this.state.email);
-      await closeUpdateEmail({ ...updateProfilePayload.payload, emailBounced: true, email: this.state.email });
+      await updateUserEmail(this.state.email);
       this.setState({success: true});
     }catch(err){
         Alert.alert(
@@ -80,10 +78,9 @@ class UpdateEmailForm extends Component {
   };
 
   renderUpdateModal = () => {
-    const { logOut, navigation, closeUpdateEmail } = this.props;
+    const { logOut, navigation } = this.props;
     const handleClose = async () => {
       await logOut().finally(() => {navigation.dispatch({type: "LoginView"})});
-      await closeUpdateEmail({ emailBounced: false });
     };
     return (
       <View style={styles.modalContainer}>
@@ -121,13 +118,13 @@ class UpdateEmailForm extends Component {
   };
 
   render() {
-    const { emailBounced } = this.props;
+    const { user } = this.props;
     return (
       <View style={styles.mainContainer}>
         <Modal
           animationType='fade'
           transparent={true}
-          visible={emailBounced}
+          visible={user.emailBounced == true}
           onRequestClose={() => null}
         >
           {this.state.success ? <UpdateEmailSuccess /> : this.renderUpdateModal()}
@@ -138,14 +135,11 @@ class UpdateEmailForm extends Component {
 };
 
 const mS = state => ({
-  token: state.auth2.userJwtToken,
-  uuid: state.auth2.userID,
-  emailBounced: state.userProfile.emailBounced
+  user: stat.account.user,
 });
 
 const mD = {
   logOut,
-  closeUpdateEmail,
   updateUserEmail,
 };
 
