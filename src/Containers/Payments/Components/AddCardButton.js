@@ -1,16 +1,10 @@
 import React, { Component } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
+
 // Styles
 import styles from "./Styles/PaymentButtons";
-import {
-  clearPayments,
-  removePayment,
-  setPayment,
-  updatePayments
-} from "../../../Ducks/PaymentsReducer";
-import { updateView } from "../../../Ducks/UserProfileReducer";
 
 class PaymentButtons extends Component {
   render() {
@@ -31,16 +25,9 @@ class PaymentButtons extends Component {
 }
 
 const mS = state => ({
-  loading: state.payments.loading,
-  cardInfo: state.payments.cardInfo
 });
 
 const mD = {
-  updatePayments,
-  clearPayments,
-  setPayment,
-  removePayment,
-  updateView
 };
 
 export default connect(

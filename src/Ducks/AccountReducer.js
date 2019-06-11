@@ -9,6 +9,7 @@ import FCM from "react-native-fcm";
 import { CACHE } from '../Config/env';
 import api from "../Config/AxiosConfig";
 import { getGeolocationCoords } from "../Util/Helpers";
+import es from "../I18n/Locales/es";
 
 // base api url - requires initializing a user in order to be set
 let apiURL = "";
@@ -226,6 +227,28 @@ export const updateUserEmail = (email) => (dispatch, getState) => {
 export const updateUserPassword = (oldPassword, newPassword) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     api.put(`${apiURL}/password`, {oldPassword, newPassword}).then(resolve).catch(reject);
+  });
+};
+
+export const updateUserPaymentDetails = (payload) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.put(`${apiURL}/payment-details`, payload)
+    .then((res) => {
+      dispatch(setUser(res.data));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+export const removeUserPaymentDetails = () => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.delete(`${apiURL}/payment-details`)
+    .then((res) => {
+      dispatch(setUser(res.data));
+      resolve(res.data);
+    })
+    .catch(reject);
   });
 };
 

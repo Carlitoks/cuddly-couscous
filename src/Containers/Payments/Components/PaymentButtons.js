@@ -7,11 +7,12 @@ import styles from "./Styles/PaymentButtons";
 import stripe from "tipsi-stripe";
 import {
   clearPayments,
-  removePayment,
-  setPayment,
   updatePayments
 } from "../../../Ducks/PaymentsReducer";
-import { getProfileAsync, updateView } from "../../../Ducks/UserProfileReducer";
+
+import {
+  updateUserPaymentDetails,
+} from "../../../Ducks/AccountReducer";
 
 class PaymentButtons extends Component {
   renderButtonStyles = type => {
@@ -30,13 +31,9 @@ class PaymentButtons extends Component {
     const {
       cardInfo,
       updatePayments,
-      updateView,
-      setPayment,
       clearPayments,
       navigation,
-      uuid,
-      token,
-      getProfileAsync
+      updateUserPaymentDetails
     } = this.props;
 
     const params = {
@@ -47,43 +44,29 @@ class PaymentButtons extends Component {
     };
 
     updatePayments({ loading: true });
+    Reactotron.log(params);
+    console.log("CALLING STRIPE");
     const stripeResponse = await stripe
       .createTokenWithCard(params)
       .then(response => {
+        console.log("STRIPE RES");
         let tokenId = response.tokenId;
-        updateView({ stripePaymentToken: tokenId });
-        setPayment(tokenId).then(res => {
-          if (res) {
-            updatePayments({ loading: false });
-            Alert.alert(I18n.t("error"), translateApiError(res), [
-              {
-                text: I18n.t("ok")
-              }
-            ]);
-          } else {
-            clearPayments();
-            updatePayments({ errors: [] });
-            updatePayments({ loading: false });
-            navigation.dispatch({ type: "Home" });
-          }
-        });
+        Reactotron.log(tokenId);
+        console.log("got stuff", tokenId);
+        return updateUserPaymentDetails({stripePaymentToken: tokenId});
+      })
+      .then(() => {
+        clearPayments();
+        updatePayments({ errors: [] });
+        navigation.dispatch({ type: "Home" });
       })
       .catch(err => {
-        Alert.alert(I18n.t("error"), translateApiError(err), [
-          {
-            text: I18n.t("ok")
-          }
-        ]);
-        /*Alert.alert(I18n.t("api.errTemporaryTryAgain"), "", [
-          {
-            text: I18n.t("ok"),
-            onPress: () => {
-              navigation.dispatch({
-                type: "Home"
-              });
-            }
-          }
-        ]);*/
+        console.log("ERR");
+        Reactotron.log(err);
+        Alert.alert(I18n.t("error"), translateApiError(err));
+      })
+      .finally(() => {
+        updatePayments({ loading: false });
       });
   };
 
@@ -112,17 +95,12 @@ const mS = state => ({
   isValidCVV: state.payments.isValidCVV,
   loading: state.payments.loading,
   cardInfo: state.payments.cardInfo,
-  token: state.auth2.userJwtToken,
-  uuid: state.auth2.userID
 });
 
 const mD = {
   updatePayments,
   clearPayments,
-  setPayment,
-  removePayment,
-  updateView,
-  getProfileAsync
+  updateUserPaymentDetails,
 };
 
 export default connect(

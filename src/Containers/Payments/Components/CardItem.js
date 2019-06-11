@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import Icons from "../Icons";
-
-import { updatePayments } from "../../../Ducks/PaymentsReducer";
 // Styles
 import styles from "./Styles/PaymentDetailStyles";
 
@@ -52,7 +50,6 @@ const mS = state => ({
 });
 
 const mD = {
-  updatePayments
 };
 
 export default connect(
