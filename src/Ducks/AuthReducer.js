@@ -28,6 +28,7 @@ import analytics from '@segment/analytics-react-native'
 
 import { setAuthToken } from "../Util/Forensics";
 import {setAuthToken as setApiAuthToken} from "../Config/AxiosConfig";
+import { initializeUser, clear as clearAccount } from "./AccountReducer";
 
 // Actions
 export const ACTIONS = {
@@ -69,6 +70,7 @@ export const logOutAsync = () => (dispatch, getState) => {
     .finally(res => {
       // cleaning localstorage
       dispatch(logOut());
+      dispatch(clearAccount());
       dispatch(clearUserProfile());
       dispatch(clearHome());
       dispatch(clearHistory());
@@ -152,21 +154,24 @@ export const updateEmailAsync = (uuid, token, payload) => dispatch => {
 export const logInAsync = (email, password) => async (dispatch, getState) => {
   // Register device
   const { auth } = getState();
-
+  let loginResponse = null;
   return Auth.login(email, password, auth.deviceToken)
     .then(response => {
       setAuthToken(response.data.token);
       setApiAuthToken(response.data.token);
       dispatch(updateForm({ performingRequest: false }));
       dispatch(addListeners());
-      return dispatch(
+      loginResponse = dispatch(
         logIn({
           email,
           token: response.data.token,
           uuid: response.data.id
         })
       );
-      // TODO: return account.initializeUser
+      return dispatch(initializeUser(response.data.id));
+    })
+    .then(() => {
+      return loginResponse;
     })
     .catch(error => {
       dispatch(updateForm({ performingRequest: false }));
