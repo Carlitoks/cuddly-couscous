@@ -142,10 +142,10 @@ export const updateDevice = (payload = null) => (dispatch, getState) => {
 // clear and reload user data from server
 export const initializeUser = (userID) => (dispatch, getState) => {
   const {currentDevice, currentDeviceID} = getState().account;
+  apiURL = `/users/${userID}`;
   dispatch(clear());
   dispatch(update({userID, currentDevice, currentDeviceID}));
-  apiURL = `/users/${userID}`;
-  dispatch(loadUser(false)); // force reload the user
+  return dispatch(loadUser(false)); // force reload the user
 }
 
 // set the user object, and recalculate any fields derived

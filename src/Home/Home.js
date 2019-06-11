@@ -7,7 +7,9 @@ import { flushEvents } from "../Util/Forensics";
 import { loadUser } from "../Ducks/AccountReducer";
 
 class Home extends Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+
     const { isLoggedIn, navigation } = this.props;
 
     if (!isLoggedIn) {
@@ -18,8 +20,9 @@ class Home extends Component {
 
   componentDidMount() {
     flushEvents();
-    loadUser(true); // reload user, but let it be cached a bit: TODO, move this, customer home can cache, linguist home cannot
-    // TODO: check for previously ended session
+
+    const useCache = !!this.props.linguistProfile ? false : true;
+    this.props.loadUser(useCache);
   }
 
   render() {
