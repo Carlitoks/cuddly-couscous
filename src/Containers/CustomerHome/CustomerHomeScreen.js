@@ -17,7 +17,6 @@ import {
 } from "../../Ducks/NewSessionReducer";
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
-import { getProfileAsync, updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
 import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
 import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
@@ -36,17 +35,15 @@ const imgBackground = require("../../Assets/Images/Background.png");
 class CustomerHomeScreen extends Component {
   componentWillMount() {
     const {
-      uuid,
       ensureSessionDefaults,
-      secondaryLangCode,
+      newSession,
       clearEvents,
       navigation,
-      firstName,
     } = this.props;
 
     ensureSessionDefaults({
       primaryLangCode: this.setPrimaryLangCode(),
-      secondaryLangCode: secondaryLangCode || "",
+      secondaryLangCode: newSession.secondaryLangCode || "",
     });
 
     clearEvents();
@@ -81,15 +78,15 @@ class CustomerHomeScreen extends Component {
   }
 
   setPrimaryLangCode = () => {
-    const { primaryLangCode, nativeLangCode } = this.props;
+    const { newSession, user } = this.props;
     this.props.guessSecondaryLangCode();
-    if (primaryLangCode) {
-      return primaryLangCode;
+    if (newSession.primaryLangCode) {
+      return newSession.primaryLangCode;
     }
-    if (nativeLangCode) {
-      return supportedLangCodes.includes(nativeLangCode);
+    if (user.nativeLangCode) {
+      return supportedLangCodes.includes(user.nativeLangCode);
     }
-    if (nativeLangCode === "eng") {
+    if (user.nativeLangCode === "eng") {
       return "eng";
     }
     return "eng";
@@ -103,9 +100,8 @@ class CustomerHomeScreen extends Component {
   render() {
     const {
       navigation,
-      emailBounced,
-      closeUpdateEmail,
-      secondaryLangCode,
+      user,
+      newSession,
       jeenieCounts,
     } = this.props;
     return (
@@ -131,14 +127,14 @@ class CustomerHomeScreen extends Component {
             statusBarBackground={Colors.gradientColor.top}
           />
           <ImageBackground source={imgBackground} style={styles.imgBackgroundContainer} imageStyle={styles.imgBackground}>
-            <AvatarSection showNum={!!secondaryLangCode} targetLang={secondaryLangCode} langCounts={jeenieCounts} />
+            <AvatarSection showNum={!!newSession.secondaryLangCode} targetLang={newSession.secondaryLangCode} langCounts={jeenieCounts} />
             <View style={styles.flexEndCenter}>
               <CallInputs navigation={navigation} openSlideMenu={this.openSlideMenu} />
               <CallButtons navigation={navigation} />
             </View>
           </ImageBackground>
           <SlideUpPanel />
-          { emailBounced && <View style={{ position: "absolute" }}><UpdateEmail emailBounced={emailBounced} /></View>}
+          { user.emailBounced && <View style={{ position: "absolute" }}><UpdateEmail emailBounced={user.emailBounced} /></View>}
         </View>
       </View>
     );
@@ -147,14 +143,8 @@ class CustomerHomeScreen extends Component {
 
 const mS = state => ({
   user: state.account.user,
-  nativeLangCode: state.userProfile.nativeLangCode,
-  primaryLangCode: state.newSessionReducer.session.primaryLangCode,
-  secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
-  token: state.auth2.userJwtToken,
-  uuid: state.auth2.userID,
-  firstName: state.userProfile.firstName,
+  newSession: state.newSessionReducer.session,
   completedLocation: state.onboardingReducer.completedLocation,
-  emailBounced: state.userProfile.emailBounced,
   jeenieCounts: state.appConfigReducer.jeenieCounts,
 });
 
@@ -163,9 +153,7 @@ const mD = {
   updateLocation,
   ensureSessionDefaults,
   clearEvents,
-  getProfileAsync,
   loadSessionScenarios,
-  closeUpdateEmail,
   guessSecondaryLangCode,
   loadActiveSubscriptionPeriods,
 };
