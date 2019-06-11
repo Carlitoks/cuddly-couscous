@@ -5,21 +5,11 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import MaterialCIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Instabug from "instabug-reactnative";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
-import {
-  getProfileAsync,
-  clearView,
-  updateView
-} from "../../Ducks/UserProfileReducer";
-
-import { clearSettings as clearHomeFlow } from "../../Ducks/HomeFlowReducer";
 
 import {
-  Alert,
   View,
   ScrollView,
   Text,
-  Image,
-  TouchableWithoutFeedback,
   TouchableOpacity
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -66,6 +56,7 @@ class MenuView extends Component {
               this.checkCurrentPage(navigation, "UserProfileView");
             }}
           >
+            {!!user && (
             <View>
               <Avatar
                 containerStyle={{ alignSelf: "center", marginTop: 30 }}
@@ -86,6 +77,7 @@ class MenuView extends Component {
                 {I18n.t("editProfile")}
               </Text>
             </View>
+          )}
           </TouchableOpacity>
 
           {/* Home */}
@@ -254,10 +246,6 @@ const mS = state => ({
 });
 
 const mD = {
-  clearView,
-  updateView,
-  getProfileAsync,
-  clearHomeFlow
 };
 
 export default connect(
