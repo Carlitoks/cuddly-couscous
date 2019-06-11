@@ -164,7 +164,7 @@ const mS = state => ({
   token: state.auth2.userJwtToken,
   cardInfo: state.payments.cardInfo,
   expDate: state.payments.expDate,
-  StripePaymentSourceMeta: state.userProfile.StripePaymentSourceMeta
+  StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta
 });
 
 const mD = {

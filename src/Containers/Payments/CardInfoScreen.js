@@ -57,9 +57,6 @@ class CardInfoScreen extends Component {
 }
 
 const mS = state => ({
-  token: state.auth2.userJwtToken,
-  uuid: state.auth2.userID,
-  stripePaymentToken: state.userProfile.stripePaymentToken
 });
 
 const mD = {};
