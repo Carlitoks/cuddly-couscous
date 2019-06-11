@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Alert, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 
-import { updateView as updateUserProfile, getProfileAsync, } from "../../../Ducks/UserProfileReducer";
 import I18n, { translateApiError } from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/SubmitButtonStyles";
@@ -41,7 +40,6 @@ class SubmitButton extends Component {
 
   submitRegister = async () => {
     const {
-      updateUserProfile,
       navigation,
       clearOnboarding,
       updateOnboarding,
@@ -73,9 +71,6 @@ class SubmitButton extends Component {
         email,
         password,
         nativeLangCode,
-      });
-      await updateUserProfile({
-        isNewUser: true,
       });
       clearOnboarding();
       return navigation.dispatch({ type: "Home" });
@@ -178,8 +173,6 @@ const mD = {
   registerNewUser,
   logIn,
   updateOnboarding,
-  updateUserProfile,
-  getProfileAsync,
   noOnboarding,
   clearOnboarding,
 };
