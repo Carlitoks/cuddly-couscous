@@ -83,7 +83,7 @@ export const initializeUser = (userID) => (dispatch, getState) => {
 // set the user object, and recalculate any fields derived
 // from the user
 export const setUser = (user) => (dispatch, getState) => {
-  const now = new Date('now');
+  const now = new Date();
   let d = {user};
   d.userID = user.id;
   d.userLoadedAt = now.getTime();
@@ -134,10 +134,10 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
     }
     api.get(apiURL+"/billing/subscription-periods?active=true")
     .then((res) => {
-      unlimitedUseUntil = hasUnlimitedUseUntil(res.data);
+      const unlimitedUseUntil = hasUnlimitedUseUntil(res.data);
       dispatch(merge({
-        subscriptionPeriods: res.data,
-        subscriptionPeriodsLoadedAt: new Date('now').getTime(),
+        subscriptionPeriods: res.data || [],
+        subscriptionPeriodsLoadedAt: new Date().getTime(),
         hasUnlimitedUse: unlimitedUseUntil !== false,
         hasUnlimitedUseUntil: unlimitedUseUntil
       }));
