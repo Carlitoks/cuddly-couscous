@@ -143,7 +143,7 @@ class Scenario extends Component {
       <View style={styles.scenarioContainer}>
         <View style={styles.availableLangContainer}>
           <Text style={styles.availableLangContainerText}>
-          {selection == "ratingsScenarioSelection" && I18n.t("session.rating.classifications.help")}
+          {selection == "ratingsScenarioSelection" && I18n.t("session.rating.scenario")}
             {selection == "scenarioSelection" && I18n.t("newCustomerHome.scenario.label")}
           </Text>
         </View>
@@ -154,8 +154,8 @@ class Scenario extends Component {
         >
           {this.renderScenariosList()}
         </ScrollView>
-        <TouchableOpacity 
-          style={selection === "ratingsScenarioSelection" ? styles.ratingScenarioList : styles.closeScenarioList} 
+        <TouchableOpacity
+          style={selection === "ratingsScenarioSelection" ? styles.ratingScenarioList : styles.closeScenarioList}
           onPress={() => closeSlideMenu()}
         >
           <Text style={styles.cancelButtonText}>{I18n.t("actions.cancel")}</Text>

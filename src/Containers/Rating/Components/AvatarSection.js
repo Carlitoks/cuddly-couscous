@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Image, Text, View } from "react-native";
 import { connect } from "react-redux";
-import { SGWaves } from "../../../Assets/SVG";
+import { Waves } from "../../../Assets/SVG";
 import metrics from "../../../Themes/Metrics";
 import { Images } from "../../../Themes";
 import { clearOptions, submitRateCall } from "../../../Ducks/RateCallReducer";
@@ -52,7 +52,11 @@ class AvatarSection extends Component {
           <Text style={styles.firstName}>{this.handleSessionInfoName()}</Text>
         </View>
         <View style={styles.waves}>
-          <SGWaves height={41} width={metrics.width} />
+          <Waves
+            width={metrics.width}
+            height={(metrics.width * 129) / 1175.7}
+            viewBox={"0 0 1175.7 129"}
+          />
         </View>
       </View>
     );

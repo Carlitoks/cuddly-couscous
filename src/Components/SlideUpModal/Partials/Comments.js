@@ -39,7 +39,7 @@ class Comments extends Component {
   };
 
   render() {
-    const { selection } = this.props;
+    const { selection, closeSlideMenu } = this.props;
     return (
       <View style={styles.aditionalInfoContainer}>
         <View style={styles.availableLangContainer}>
