@@ -7,7 +7,7 @@ import moment from "moment";
 import FCM from "react-native-fcm";
 
 import { CACHE } from '../Config/env';
-import api, { uploadFile } from "../Config/AxiosConfig";
+import api, { uploadFormData, uploadBase64File } from "../Config/AxiosConfig";
 import { getGeolocationCoords } from "../Util/Helpers";
 
 // base api url - requires initializing a user in order to be set
@@ -207,14 +207,43 @@ export const updateUser = (payload) => (dispatch, getState) => {
   });
 };
 
-export const updateUserProfilePhoto = (image) => (dispatch, getState) => {
-  return uploadFile(
-    "put",
-    `${apiURL}/profile-photo`,
-    image,
-    "avatar.jpg",
-    "image/jpeg"
-  );
+export const updateUserProfilePhoto = (image, progressCB = null) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+
+    // form data via axios
+    /*
+    let fd = new FormData();
+    fd.append('file', image, 'file');
+    uploadFormData(
+      "put",
+      `${apiURL}/profile-photo`,
+      fd,
+      progressCB,
+    )
+    .then((res) => {
+      console.log("res:");
+      console.log(res.data);
+      resolve(true);
+    })
+    .catch(reject);
+    */
+
+    // base64 via RNFetchBlob
+    uploadBase64File(
+      "put",
+      `${apiURL}/profile-photo`,
+      image,
+      "avatar.jpg",
+      "image/jpg"
+    )
+    .then((res) => {
+      console.log("GOT RES");
+      console.log(res.text());
+      resolve(true);
+    })
+    .catch(reject);
+
+  });
 };
 
 export const deleteUserProfilePhoto = () => (dispatch, getState) => {

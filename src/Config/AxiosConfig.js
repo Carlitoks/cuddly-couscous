@@ -46,11 +46,30 @@ export const setAuthToken = (str) => {
   }
 };
 
-export const uploadFile = (method, path, fileData, fileName, mime) => {
-  let token = client.defaults.headers.common['Authorization'];
+export const uploadFormData = (method, path, formData, progressCB = null) => {
+  let cb = function () {}
+  if (!!progressCB) {
+    cb = function (e) {
+      let percent = parseInt( Math.round( ( e.loaded * 100 ) / e.total ) );
+      if (progressCB != null) {
+        progressCB(percent);
+      }
+    }
+  }
+
+  return getClient()[method.toLowerCase()](path, formData, {
+    headers: {'Content-Type': 'multipart/form-data'},
+    onUploadProgress: cb
+  });
+
+};
+  
+export const uploadBase64File = (method, path, fileData, fileName, mime) => {
+  let token = getClient().defaults.headers.common['Authorization'];
+
   return RNFetchBlob.fetch(
-    method,
-    path,
+    method.toUpperCase(),
+    URL+path,
     {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data"
