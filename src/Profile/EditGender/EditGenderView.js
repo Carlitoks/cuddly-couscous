@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { clearForm, GetOptions, updateForm } from "../../Ducks/RegistrationCustomerReducer";
-import { updateProfileAsync } from "../../Ducks/UserProfileReducer";
+import {
+  GetOptions,
+  updateForm,
+  clearForm
+} from "../../Ducks/RegistrationCustomerReducer";
 
 import { Alert, ScrollView, Text, TouchableWithoutFeedback, View } from "react-native";
 import ListComponent from "../../Components/ListComponent/ListComponent";
@@ -13,15 +16,30 @@ import BottomButton from "../../Components/BottomButton/BottomButton";
 
 import styles from "./styles";
 import { displayFormErrors } from "../../Util/Alerts";
-import I18n from "../../I18n/I18n";
 import NavBar from "../../Components/NavBar/NavBar";
+import I18n, { translateApiError } from "../../I18n/I18n";
 
 class EditGenderView extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      genderIndex: -1
+      genderIndex: -1,
+      selectedGender: props.user.gender,
+      options: [
+        {
+          label: I18n.t("male"),
+          value: "male"
+        },
+        {
+          label: I18n.t("female"),
+          value: "female"
+        },
+        {
+          label: I18n.t("preferNotToDisclose"),
+          value: "decline"
+        }
+      ]
     };
   }
 
@@ -77,27 +95,23 @@ class EditGenderView extends Component {
   }
 
   submit() {
-    const { formGender, token, uuid } = this.props;
+    const { formGender } = this.props;
     const data = {
       gender: formGender
     };
     if (this.validateForm()) {
-      this.props.updateProfileAsync(uuid, data, token).then(response => {
-        if (response.type !== "networkErrors/error") {
-          this.props.navigation.dispatch({
-            type: "back"
-          });
-        } else {
-          const errorMessage = response.payload.response.data.errors[0];
-          Alert.alert("error", errorMessage);
-        }
+      this.props.updateUser(data)
+      .then(() => {
+        this.props.navigation.dispatch({type: "back"});
+      })
+      .catch((e) => {
+        Alert.alert(I18n.t("error"), translateApiError(e));
       });
     }
   }
 
   render() {
     const genders = this.props.GetOptions();
-    const { formGender } = this.props;
 
     return (
       <View style={styles.scrollContainer}>
@@ -150,17 +164,15 @@ class EditGenderView extends Component {
 }
 
 const mS = state => ({
-  gender: state.userProfile.gender,
+  gender: state.account.user.gender,
   formGender: state.registrationCustomer.selectedGender,
-  token: state.auth2.userJwtToken,
-  uuid: state.auth2.userID
 });
 
 const mD = {
   GetOptions,
   updateForm,
   clearForm,
-  updateProfileAsync
+  updateUser,
 };
 
 export default connect(

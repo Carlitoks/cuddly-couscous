@@ -9,7 +9,6 @@ import FCM from "react-native-fcm";
 import { CACHE } from '../Config/env';
 import api from "../Config/AxiosConfig";
 import { getGeolocationCoords } from "../Util/Helpers";
-import es from "../I18n/Locales/es";
 
 // base api url - requires initializing a user in order to be set
 let apiURL = "";
