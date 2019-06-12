@@ -67,7 +67,7 @@ class CallClassification extends Component {
           <RenderPicker
             openSlideMenu={this.openSlideMenu}
             title={"none"}
-            placeholder={I18n.t("newCustomerHome.scenario.placeholder")}
+            placeholder={I18n.t("actions.select")}
             currentScenarioId={scenarioID}
             type="ratingsScenarioSelection"
             labelStyle={styles.renderPickerLabel}

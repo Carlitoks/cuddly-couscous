@@ -138,12 +138,13 @@ class Scenario extends Component {
   };
 
   render() {
-    const { closeSlideMenu,selection } = this.props;
+    const { closeSlideMenu, selection } = this.props;
     return (
       <View style={styles.scenarioContainer}>
         <View style={styles.availableLangContainer}>
           <Text style={styles.availableLangContainerText}>
-            {I18n.t("newCustomerHome.scenario.label")}
+          {selection == "ratingsScenarioSelection" && I18n.t("session.rating.classifications.help")}
+            {selection == "scenarioSelection" && I18n.t("newCustomerHome.scenario.label")}
           </Text>
         </View>
         <ScrollView
