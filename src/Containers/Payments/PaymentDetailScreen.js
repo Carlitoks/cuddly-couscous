@@ -10,20 +10,16 @@ import NoCardImage from "./Components/NoCardImage";
 import styles from "./Styles/PaymentScreenStyles";
 import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
-import { getProfileAsync } from "../../Ducks/UserProfileReducer";
 import { Icon } from "react-native-elements";
 import I18n from "../../I18n/I18n";
 
 class PaymentDetailScreen extends Component {
-  componentWillMount() {
-    const { uuid, token, getProfileAsync } = this.props;
+  constructor(props) {
+    super(props);
     stripe.setOptions({
       publishableKey: stripePublishableKey
       //androidPayMode: "test" // Android only
     });
-    if (uuid !== "" && token !== "") {
-      getProfileAsync(uuid, token);
-    }
   }
 
   render() {
@@ -57,12 +53,10 @@ class PaymentDetailScreen extends Component {
 }
 
 const mS = state => ({
-  token: state.auth2.userJwtToken,
-  uuid: state.auth2.userID,
-  stripePaymentToken: state.userProfile.stripePaymentToken
+  stripePaymentToken: state.account.user.stripePaymentToken
 });
 
-const mD = { getProfileAsync };
+const mD = { };
 
 export default connect(
   mS,

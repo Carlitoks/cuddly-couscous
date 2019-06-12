@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import PaymentButtons from "./Components/PaymentButtons";
 import AddCard from "./Components/AddCard";
-import { getProfileAsync } from "../../Ducks/UserProfileReducer";
 // Styles
 import styles from "./Styles/PaymentScreenStyles";
 import stripe from "tipsi-stripe";
@@ -58,12 +57,10 @@ class PaymentScreen extends Component {
 }
 
 const mS = state => ({
-  token: state.auth2.userJwtToken,
-  uuid: state.auth2.userID,
-  stripePaymentToken: state.userProfile.stripePaymentToken
+  stripePaymentToken: state.account.user.stripePaymentToken
 });
 
-const mD = { getProfileAsync };
+const mD = { };
 
 export default connect(
   mS,

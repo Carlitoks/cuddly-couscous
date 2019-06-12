@@ -5,14 +5,7 @@ import I18n from "../../../I18n/I18n";
 
 // Styles
 import styles from "./Styles/PaymentButtons";
-import stripe from "tipsi-stripe";
-import {
-  clearPayments,
-  removePayment,
-  setPayment,
-  updatePayments
-} from "../../../Ducks/PaymentsReducer";
-import { updateView } from "../../../Ducks/UserProfileReducer";
+import { removeUserPaymentDetails } from "../../../Ducks/AccountReducer";
 
 class PaymentButtons extends Component {
   isDisabled = () => {
@@ -61,11 +54,7 @@ const mS = state => ({
 });
 
 const mD = {
-  updatePayments,
-  clearPayments,
-  setPayment,
-  removePayment,
-  updateView
+  removeUserPaymentDetails,
 };
 
 export default connect(

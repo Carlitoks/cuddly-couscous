@@ -3,6 +3,7 @@ const Icons = {
   cvc_amex: require("./../../Assets/Images/ccIcons/stp_card_cvc_amex.png"),
   "american-express": require("./../../Assets/Images/ccIcons/stp_card_amex.png"),
   "diners-club": require("./../../Assets/Images/ccIcons/stp_card_diners.png"),
+  amex: require("./../../Assets/Images/ccIcons/stp_card_amex.png"),
   mastercard: require("./../../Assets/Images/ccIcons/stp_card_mastercard.png"),
   discover: require("./../../Assets/Images/ccIcons/stp_card_discover.png"),
   jcb: require("./../../Assets/Images/ccIcons/stp_card_jcb.png"),
