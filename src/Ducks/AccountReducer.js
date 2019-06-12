@@ -196,7 +196,7 @@ export const loadUser = (useCache = true) => (dispatch, getState) => {
 };
 
 // update any fields on the user
-export const updateUser = (payload) = (dispatch, getState) => {
+export const updateUser = (payload) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     api.patch(apiURL, payload)
     .then((res) => {

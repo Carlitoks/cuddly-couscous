@@ -2,21 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import {
-  GetOptions,
-  updateForm,
-  clearForm
-} from "../../Ducks/RegistrationCustomerReducer";
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  TouchableWithoutFeedback
+} from "react-native";
 
-import { Alert, ScrollView, Text, TouchableWithoutFeedback, View } from "react-native";
 import ListComponent from "../../Components/ListComponent/ListComponent";
-import { findIndex } from "lodash";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
-
 import styles from "./styles";
-import { displayFormErrors } from "../../Util/Alerts";
 import NavBar from "../../Components/NavBar/NavBar";
+import {updateUser} from "../../Ducks/AccountReducer";
 import I18n, { translateApiError } from "../../I18n/I18n";
 
 class EditGenderView extends Component {
@@ -25,7 +24,7 @@ class EditGenderView extends Component {
 
     this.state = {
       genderIndex: -1,
-      selectedGender: props.user.gender,
+      selectedGender: props.gender,
       options: [
         {
           label: I18n.t("male"),
@@ -41,77 +40,44 @@ class EditGenderView extends Component {
         }
       ]
     };
-  }
 
-  navigate = this.props.navigation.navigate;
-
-  componentWillMount() {
-    const genders = this.props.GetOptions();
-    this.props.updateForm({ selectedGender: this.props.gender });
-
-    const genderIndex =
-      this.props.gender.length === 0
-        ? 2
-        : findIndex(genders, { value: this.props.gender });
-
-    this.setState({ genderIndex });
-  }
-
-  componentWillUnmount() {
-    this.props.clearForm();
-  }
-
-  validateForm() {
-    let updates = {};
-    let valid = true;
-
-    if (!this.props.formGender) {
-      updates = {
-        ...updates,
-        GenderErrorMessage: I18n.t("selectGender")
-      };
-      valid = false;
+    if (!props.gender) {
+      this.state.genderIndex = 2;
+      this.state.selectedGender = 'decline';
+    } else {
+      for (let i in this.state.options) {
+        if (this.state.options[i].value == this.state.selectedGender) {
+          this.state.genderIndex = i;
+        }
+      }
     }
-
-    updates = {
-      ...updates,
-      formHasErrors: !valid
-    };
-
-    if (!valid) {
-      displayFormErrors(updates.GenderErrorMessage);
-    }
-
-    this.props.updateForm(updates);
-    return valid;
   }
 
   changeSelected(index) {
     this.setState({ genderIndex: index });
   }
 
-  updateGender(gender) {
-    this.props.updateForm({ selectedGender: gender.value });
+  updateGender(item) {
+    this.setState({selectedGender: item.value});
   }
 
   submit() {
-    const { formGender } = this.props;
-    const data = {
-      gender: formGender
-    };
-    if (this.validateForm()) {
-      this.props.updateUser(data)
+    const { selectedGender } = this.state;
+    if (!!selectedGender) {
+      this.props.updateUser({ gender: selectedGender })
       .then(() => {
         this.props.navigation.dispatch({type: "back"});
       })
       .catch((e) => {
         Alert.alert(I18n.t("error"), translateApiError(e));
       });
+    } else {
+      // TODO: what to do in this case?  It shouldn't actually be possible...
     }
   }
 
   render() {
-    const genders = this.props.GetOptions();
+    const genders = this.state.options;
 
     return (
       <View style={styles.scrollContainer}>
@@ -165,13 +131,9 @@ class EditGenderView extends Component {
 
 const mS = state => ({
   gender: state.account.user.gender,
-  formGender: state.registrationCustomer.selectedGender,
 });
 
 const mD = {
-  GetOptions,
-  updateForm,
-  clearForm,
   updateUser,
 };
 
