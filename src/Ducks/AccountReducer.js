@@ -7,7 +7,7 @@ import moment from "moment";
 import FCM from "react-native-fcm";
 
 import { CACHE } from '../Config/env';
-import api from "../Config/AxiosConfig";
+import api, { uploadFile } from "../Config/AxiosConfig";
 import { getGeolocationCoords } from "../Util/Helpers";
 
 // base api url - requires initializing a user in order to be set
@@ -207,8 +207,14 @@ export const updateUser = (payload) => (dispatch, getState) => {
   });
 };
 
-export const updateUserProfilePhoto = () => (dispatch, getState) => {
-  return Promise.reject("not implemented");
+export const updateUserProfilePhoto = (image) => (dispatch, getState) => {
+  return uploadFile(
+    "put",
+    `${apiURL}/profile-photo`,
+    image,
+    "avatar.jpg",
+    "image/jpeg"
+  );
 };
 
 export const deleteUserProfilePhoto = () => (dispatch, getState) => {

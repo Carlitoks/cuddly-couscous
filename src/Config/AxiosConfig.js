@@ -2,6 +2,7 @@ import axios from "axios";
 import { URL } from "./env";
 import DeviceInfo from "react-native-device-info";
 import { recordApiCall } from "../Util/Forensics";
+import RNFetchBlob from "react-native-fetch-blob";
 
 const createClient = () => {
   // create instance
@@ -45,70 +46,24 @@ export const setAuthToken = (str) => {
   }
 };
 
-export const MOCK_DATA = {
-  USERS: [],
-  CALL_HISTORY: {
-    AllCalls: [
+export const uploadFile = (method, path, fileData, fileName, mime) => {
+  let token = client.defaults.headers.common['Authorization'];
+  return RNFetchBlob.fetch(
+    method,
+    path,
+    {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data"
+    },
+    [
       {
-        key: 1,
-        title: "Name",
-        subtitle: "Duration",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/9.jpg"
-      },
-      {
-        key: 2,
-        title: "Name",
-        subtitle: "Duration",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/64.jpg"
-      },
-      {
-        key: 3,
-        title: "Name",
-        subtitle: "Duration",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/47.jpg"
-      }
-    ],
-    Missed: [
-      {
-        key: 1,
-        title: "Name",
-        subtitle: "Duration",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/47.jpg"
-      },
-      {
-        key: 2,
-        title: "Name",
-        subtitle: "Duration",
-        avatar: "https://randomuser.me/api/portraits/thumb/women/37.jpg"
-      },
-      {
-        key: 3,
-        title: "Name",
-        subtitle: "Duration",
-        avatar: "https://randomuser.me/api/portraits/thumb/women/55.jpg"
-      }
-    ],
-    Recents: [
-      {
-        key: 1,
-        title: "Name",
-        subtitle: "Duration",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/9.jpg"
-      },
-      {
-        key: 2,
-        title: "Name",
-        subtitle: "Duration",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/64.jpg"
-      },
-      {
-        key: 3,
-        title: "Name",
-        subtitle: "Duration",
-        avatar: "https://randomuser.me/api/portraits/thumb/men/47.jpg"
+        name: "file",
+        filename: fileName,
+        data: fileData,
+        type: mime
       }
     ]
-  }
+  );
 };
 
 export default client;
