@@ -7,11 +7,13 @@ import I18n from "../../../I18n/I18n";
 import { EMAIL_REGEX } from "../../../Util/Constants";
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
 
+
 class EmailField extends Component {
   isValidEmail = text => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
-    if (!reg.test(text)) {
+    console.log(text.length)
+    if (!reg.test(text)&& text.length > 6) {
       updateOnboarding({
         isValidEmail: false,
         errorType: "emailFormat",
