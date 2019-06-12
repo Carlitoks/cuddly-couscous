@@ -27,13 +27,14 @@ class RateComponent extends Component {
     });
   };
 
-  buttonThumbs(selectedIndex) {
+  buttonThumbs = async (selectedIndex) => {
     if (selectedIndex === 0) {
-      this.togglethumbsUp();
+      await this.togglethumbsUp();
     } else {
-      this.togglethumbsDown();
+      await this.togglethumbsDown();
     }
-  }
+    this.goToNextSlide();
+  };
 
   renderThumbsComponents = () => {
     const {
@@ -65,6 +66,20 @@ class RateComponent extends Component {
     </React.Fragment>);
   };
 
+  goToNextSlide = () => {
+    const { linguistProfile, thumbsUp, thumbsDown, nextSlide, rating } = this.props;
+    if (linguistProfile) {
+      if (rating > 0 && (thumbsDown || thumbsUp)) {
+        return nextSlide();
+      }
+    } else {
+      if (rating > 0) {
+        return nextSlide();
+      }
+    }
+    return null;
+  };
+
   render() {
     const {
       linguistProfile, rating, updateOptions,
@@ -81,7 +96,7 @@ class RateComponent extends Component {
           iconSet="Ionicons"
           disabled={false}
           rating={rating}
-          selectedStar={rating => updateOptions({ rating })}
+          selectedStar={async (rating) => { await updateOptions({ rating }); this.goToNextSlide(); }}
           maxStars={5}
           starSize={moderateScaleViewports(60)}
           emptyStarColor={Colors.emptyStarColor}
@@ -99,7 +114,6 @@ const mS = state => ({
   thumbsUp: state.rateCall.thumbsUp,
   thumbsDown: state.rateCall.thumbsDown,
   rating: state.rateCall.rating,
-  linguistProfile: state.userProfile.linguistProfile,
 });
 
 const mD = { updateOptions };

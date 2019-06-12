@@ -74,10 +74,8 @@ class RatingScreen extends Component {
       linguistProfile,
     } = this.props;
     if (index === 0) {
-      if (this.canContinue()) {
-        this.swiperRef.scrollBy(1);
-        this.setState({ enableScroll: true});
-      }
+      this.swiperRef.scrollBy(1);
+      this.setState({ enableScroll: true});
     }
 
     if (index === 1) {
@@ -98,11 +96,16 @@ class RatingScreen extends Component {
       rating,
       thumbsUp,
       thumbsDown,
-      linguistProfile
+      linguistProfile,
+      callType,
+      scenarioID,
     } = this.props;
-    if(linguistProfile)
-      return rating && (thumbsUp || thumbsDown);
-    return rating;
+
+    if (linguistProfile) {
+      if (callType === "help") return !isNaN(rating) && callType && scenarioID && (thumbsUp || thumbsDown);
+      return !isNaN(rating) && callType && (thumbsUp || thumbsDown);
+    }
+    return !isNaN(rating);
   };
 
   openSlideMenu = (type) => {
@@ -125,9 +128,9 @@ class RatingScreen extends Component {
           showsPagination={false}
           showsButtons={false}
         >
-          <RateComponent />
-          <CallClassification />
-          <CallTags openSlideMenu={this.openSlideMenu} />
+          <RateComponent linguistProfile={linguistProfile} nextSlide={this.nextSlide} />
+          <CallClassification linguistProfile={linguistProfile} />
+          <CallTags linguistProfile={linguistProfile} openSlideMenu={this.openSlideMenu} />
         </Swiper>
       );
     }
@@ -142,8 +145,8 @@ class RatingScreen extends Component {
         showsPagination={false}
         showsButtons={false}
       >
-        <RateComponent />
-        <CallTags openSlideMenu={this.openSlideMenu} />
+        <RateComponent linguistProfile={linguistProfile} nextSlide={this.nextSlide} />
+        <CallTags linguistProfile={linguistProfile} openSlideMenu={this.openSlideMenu} />
       </Swiper>
     );
   };
@@ -163,6 +166,23 @@ class RatingScreen extends Component {
     return pagination;
   };
 
+  isLastSection = () => {
+    const { linguistProfile } = this.props;
+    const {
+      index,
+    } = this.state;
+
+    if(!linguistProfile && index === 1){
+      return true;
+    }
+
+    if(index === 2) {
+      return true;
+    }
+
+    return false;
+  };
+
   render() {
     const { navigation } = this.props;
     return (
@@ -179,6 +199,7 @@ class RatingScreen extends Component {
             style={[
               styles.baseButton,
               this.canContinue() ? styles.enabledButton : styles.disabledButton]}
+            disabled={!this.canContinue()}
             onPress={() => this.nextSlide()}
           >
             <Text
@@ -186,7 +207,7 @@ class RatingScreen extends Component {
                 styles.baseButtonText,
                 this.canContinue() ? styles.baseButtonTextEnabled : styles.baseButtonTextDisabled]}
             >
-              {I18n.t("session.rating.submit")}
+              {this.isLastSection() ? I18n.t("actions.submit") : I18n.t("actions.next") }
             </Text>
           </TouchableOpacity>
         </View>
@@ -202,6 +223,8 @@ const mS = state => ({
   rating: state.rateCall.rating,
   linguistProfile: state.userProfile.linguistProfile,
   sessionID: state.rateCall.sessionID,
+  callType: state.rateCall.callType,
+  scenarioID: state.rateCall.scenarioID,
   token: state.auth.token,
 });
 

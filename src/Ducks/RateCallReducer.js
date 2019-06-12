@@ -144,7 +144,7 @@ const initialState = {
   iconDistractionsSecondList: false,
 
   //call classification
-  callType: "",
+  callType: null,
 };
 
 // Reducer
