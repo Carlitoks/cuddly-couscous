@@ -10,7 +10,6 @@ import {
 } from "react-native";
 
 import ListComponent from "../../Components/ListComponent/ListComponent";
-
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import styles from "./styles";

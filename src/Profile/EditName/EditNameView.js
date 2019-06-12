@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { updateProfileAsync } from "../../Ducks/UserProfileReducer";
-
-import { clearForm, updateForm } from "../../Ducks/RegistrationCustomerReducer";
-
-import { Alert, ScrollView, View } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
+import {updateUser} from "../../Ducks/AccountReducer";
 
 import styles from "./styles";
 import { displayFormErrors } from "../../Util/Alerts";
@@ -20,29 +17,28 @@ import { onlyLetters } from "../../Util/Helpers";
 import NavBar from "../../Components/NavBar/NavBar";
 
 class EditNameView extends Component {
-  navigate = this.props.navigation.navigate;
 
-  componentWillUnmount() {
-    this.props.clearForm();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      formFirstName: props.user.firstName,
+      formLastName: props.user.lastName,
+      formPreferredName: props.user.preferredName,
+      saving: false
+    };
+
   }
 
   isDisabled() {
-    return !this.props.formFirstName > 0 || !this.props.formLastName > 0;
-  }
-
-  async componentWillMount() {
-    await this.props.updateForm({
-      firstname: this.props.firstName,
-      lastname: this.props.lastName,
-      preferredName: this.props.preferredName
-    });
+    return !this.state.formFirstName > 0 || !this.state.formLastName > 0;
   }
 
   validateForm() {
     let updates = {};
     let valid = true;
 
-    if (!this.props.formFirstName) {
+    if (!this.state.formFirstName) {
       updates = {
         ...updates,
         FirstnameErrorMessage: I18n.t("enterNameField")
@@ -50,7 +46,7 @@ class EditNameView extends Component {
       valid = false;
     }
 
-    if (!this.props.formLastName) {
+    if (!this.state.formLastName) {
       updates = {
         ...updates,
         LastnameErrorMessage: I18n.t("enterLastNameField")
@@ -90,7 +86,7 @@ class EditNameView extends Component {
       }
     }
 
-    this.props.updateForm(updates);
+    // this.props.updateForm(updates);
     return valid;
   }
 
@@ -99,24 +95,21 @@ class EditNameView extends Component {
       formFirstName,
       formLastName,
       formPreferredName,
-      uuid,
-      token
-    } = this.props;
+    } = this.state;
     const data = {
       firstName: formFirstName,
       lastName: formLastName,
       preferredName: formPreferredName
     };
     if (this.validateForm()) {
-      this.props.updateProfileAsync(uuid, data, token).then(response => {
-        if (response.type !== "networkErrors/error") {
-          this.props.navigation.dispatch({
-            type: "back"
-          });
-        } else {
-          const errorMessage = response.payload.response.data.errors[0];
-          Alert.alert("error", errorMessage);
-        }
+      this.setState({saving: true});
+      this.props.updateUser(data)
+      .then((response) => {
+        this.props.navigation.dispatch({ type: "back" });
+      })
+      .catch((e) => {
+        this.setState({saving: false});
+        Alert.alert(I18n.t('error'), translateApiError(e));
       });
     }
   }
@@ -136,9 +129,7 @@ class EditNameView extends Component {
   };
 
   render() {
-    const navigation = this.props.navigation;
-    const { formFirstName, formLastName, formPreferredName } = this.props;
-    const initialLastName = `${this.props.lastName.charAt(0)}.`;
+    const { formFirstName, formLastName, formPreferredName } = this.state;
 
     return (
       <View style={styles.scrollContainer}>
@@ -169,8 +160,8 @@ class EditNameView extends Component {
                   placeholder={I18n.t("linguistName")}
                   onChangeText={text => {
                     if (!onlyLetters(text) || text == "") {
-                      this.props.updateForm({
-                        firstname: text
+                      this.setState({
+                        formFirstName: text
                       });
                     }
                   }}
@@ -185,8 +176,8 @@ class EditNameView extends Component {
                 placeholder={I18n.t("linguistLastName")}
                 onChangeText={text => {
                   if (!onlyLetters(text) || text == "") {
-                    this.props.updateForm({
-                      lastname: text
+                    this.setState({
+                      formLastName: text
                     });
                   }
                 }}
@@ -202,8 +193,8 @@ class EditNameView extends Component {
                 value={formPreferredName}
                 onChangeText={text => {
                   if (!onlyLetters(text) || text == "") {
-                    this.props.updateForm({
-                      preferredName: text
+                    this.setState({
+                      formPreferredName: text
                     });
                   }
                 }}
@@ -229,21 +220,11 @@ class EditNameView extends Component {
 }
 
 const mS = state => ({
-  firstName: state.userProfile.firstName,
-  lastName: state.userProfile.lastName,
-  preferredName: state.userProfile.preferredName,
-  formFirstName: state.registrationCustomer.firstname,
-  formLastName: state.registrationCustomer.lastname,
-  formHasErrors: state.registrationCustomer.formHasErrors,
-  formPreferredName: state.registrationCustomer.preferredName,
-  token: state.auth2.userJwtToken,
-  uuid: state.auth2.userID
+  user: state.account.user,
 });
 
 const mD = {
-  updateForm,
-  clearForm,
-  updateProfileAsync
+  updateUser,
 };
 
 export default connect(
