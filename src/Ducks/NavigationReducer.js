@@ -57,7 +57,7 @@ export default (reducer = (state, action) => {
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: "RateView" })]
+          actions: [NavigationActions.navigate({ routeName: "RateView", params: action.params })]
         })
       );
       break;
@@ -80,18 +80,6 @@ export default (reducer = (state, action) => {
         NavigationActions.reset({
           index: 0,
           actions: [NavigationActions.navigate({ routeName: "NameCustomerView" })]
-        })
-      );
-      break;
-
-      case "RatingsView":
-      analytics.screen(action.type.toString());
-      analytics.track("Order Completed");
-      recordNavigationEvent(action.type.toString());
-      newState = AppNavigation.router.getStateForAction(
-        NavigationActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: "RatingsView" })]
         })
       );
       break;

@@ -1,14 +1,14 @@
 import { StyleSheet } from "react-native";
 import { ApplicationStyles, Fonts } from "../../../../Themes";
 import metrics from "../../../../Themes/Metrics";
-import { moderateScale, moderateScaleViewports } from "../../../../Util/Scaling";
+import { moderateScaleViewports } from "../../../../Util/Scaling";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   flexEndCenter: { alignItems: "center", justifyContent: "center" },
   paddingTop: {
+    paddingBottom: moderateScaleViewports(metrics.height * 0.045),
     paddingTop: moderateScaleViewports(metrics.height * 0.045),
-    paddingBottom: moderateScaleViewports(metrics.height * 0.045)
   },
   baseText: {
     color: "#000",

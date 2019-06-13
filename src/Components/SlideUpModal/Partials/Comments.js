@@ -6,22 +6,19 @@ import {
   modifyAdditionalDetails,
 } from "../../../Ducks/NewSessionReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
-import {
-  updateOptions
-} from "../../../Ducks/RateCallReducer";
 import I18n  from "../../../I18n/I18n";
 
 class Comments extends Component {
   update = text => {
-    const { modifyAdditionalDetails, selection, updateOptions } = this.props;
+    const { modifyAdditionalDetails, selection, setScenarioNote, setRatingComments } = this.props;
     if(selection === "additionalDetails"){
       return modifyAdditionalDetails({ customScenarioNote: text });
     }
     if(selection === "ratingComments"){
-      return updateOptions({ comments: text });
+      return setRatingComments(text);
     }
     if(selection === "scenarioNote"){
-      return updateOptions({ scenarioNote: text });
+      return setScenarioNote(text);
     }
   };
 
@@ -69,15 +66,12 @@ class Comments extends Component {
 const mS = state => ({
   isSlideUpMenuVisible: state.LogicReducer.isSlideUpMenuVisible,
   selection: state.LogicReducer.selection,
-  ratingComments: state.rateCall.comments,
-  scenarioNote: state.rateCall.scenarioNote,
   customScenarioNote: state.newSessionReducer.session.customScenarioNote,
 });
 
 const mD = {
   modifyAdditionalDetails,
-  closeSlideMenu,
-  updateOptions
+  closeSlideMenu
 };
 
 export default connect(

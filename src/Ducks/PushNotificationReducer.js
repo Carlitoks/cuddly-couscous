@@ -66,7 +66,7 @@ export const incomingCallNotification = invitationId => (dispatch, getState) => 
     profileLinguist.available &&
     CurrentView != "LinguistIncomingCallView" &&
     CurrentView != "SessionView" &&
-    CurrentView != "RatingsView"
+    CurrentView != "RateView"
   ) {
     if (!invitationId) {
       return;

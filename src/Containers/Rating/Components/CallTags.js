@@ -4,12 +4,11 @@ import {
 } from "react-native";
 import { TagSelect } from "react-native-tag-select";
 import { Divider } from "react-native-elements";
-import { connect } from "react-redux";
 import { BadIcons, GoodIcons } from "./RateListIcons";
-import { UpdateFlags } from "../../../Ducks/RateCallReducer";
 import I18n from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallTagsStyles";
+
 
 class CallTags extends Component {
   constructor(props) {
@@ -95,10 +94,10 @@ class CallTags extends Component {
           <Text style={[styles.baseText, styles.paddingTop]}>{I18n.t("session.rating.questionGood")}</Text>
           <TagSelect
             data={whatWasGood}
-            max={1}
             ref={(tag) => {
               this.tag = tag;
             }}
+            max={10}
             onItemPress={item => this.TagsHandle(item, "positiveFlags")}
             itemStyle={[styles.baseTagsStyle, styles.tagUnselected]}
             itemLabelStyle={[styles.baseTagText, styles.baseTagTextUnselected]}
@@ -121,10 +120,10 @@ class CallTags extends Component {
           <Text style={[styles.baseText, styles.paddingTop]}>{I18n.t("session.rating.questionBetter")}</Text>
           <TagSelect
             data={couldBeBetter}
-            max={1}
             ref={(tag) => {
               this.tag = tag;
             }}
+            max={10}
             onItemPress={item => this.TagsHandle(item, "negativeFlags")}
             itemStyle={[styles.baseTagsStyle, styles.tagUnselected]}
             itemLabelStyle={[styles.baseTagText, styles.baseTagTextUnselected]}
@@ -139,7 +138,6 @@ class CallTags extends Component {
   };
 
   render() {
-    const { whatWasGood, couldBeBetter } = this.state;
     const { openSlideMenu, ratingComments } = this.props;
     return (
       <ScrollView contenContinerStyle={styles.flexEndCenter}>
@@ -154,13 +152,15 @@ class CallTags extends Component {
             >
               { ratingComments ? I18n.t("session.rating.comment") : `+ ${I18n.t("session.rating.addComment")}`}
             </Text>
-              {ratingComments ? 
-              <Text
-              style={styles.comments}
-            >
-            {ratingComments}
-            </Text> : null}
-            
+            {ratingComments
+              ? (
+                <Text
+                  style={styles.comments}
+                >
+                  {ratingComments}
+                </Text>
+              ) : null}
+
           </TouchableOpacity>
           <Divider style={styles.divider} />
         </View>
@@ -169,31 +169,4 @@ class CallTags extends Component {
   }
 }
 
-const mS = state => ({
-  ratingComments: state.rateCall.comments,
-  iconWaitTimeFirstList: state.rateCall.iconWaitTimeFirstList,
-  iconProfessionalismFirstList: state.rateCall.iconProfessionalismFirstList,
-  iconFriendlinessFirstList: state.rateCall.iconFriendlinessFirstList,
-  iconLanguageAbilityFirstList: state.rateCall.iconLanguageAbilityFirstList,
-  iconUnderstandFirstList: state.rateCall.iconUnderstandFirstList,
-  iconAudioQualityFirstList: state.rateCall.iconAudioQualityFirstList,
-  iconWaitTimeSecondList: state.rateCall.iconWaitTimeSecondList,
-  iconProfessionalismSecondList: state.rateCall.iconProfessionalismSecondList,
-  iconFriendlinessSecondList: state.rateCall.iconFriendlinessSecondList,
-  iconLanguageAbilitySecondList: state.rateCall.iconLanguageAbilitySecondList,
-  iconUnderstandSecondList: state.rateCall.iconUnderstandSecondList,
-  iconConnectionSecondList: state.rateCall.iconConnectionSecondList,
-  iconBackgroundNoiseSecondList: state.rateCall.iconBackgroundNoiseSecondList,
-  iconVoiceClaritySecondList: state.rateCall.iconVoiceClaritySecondList,
-  iconDistractionsSecondList: state.rateCall.iconDistractionsSecondList,
-  rating: state.rateCall.rating,
-});
-
-const mD = {
-  UpdateFlags,
-};
-
-export default connect(
-  mS,
-  mD,
-)(CallTags);
+export default CallTags;

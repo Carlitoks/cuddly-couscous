@@ -7,8 +7,6 @@ import Home from "../Home/Home";
 import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 
 import MenuView from "../Components/MenuView/MenuView";
-
-import RateView from "../RateCall/RateExperience/RateView";
 // User Profile
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import EditNameView from "../Profile/EditName/EditNameView";
@@ -190,13 +188,6 @@ const Navigation = StackNavigator(
     },
     CameraMicPermissionView: {
       screen: CameraMicPermissionView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
-    RatingsView: {
-      screen: RatingsScreen,
       navigationOptions: {
         gesturesEnabled: false,
         drawerLockMode: "locked-closed"

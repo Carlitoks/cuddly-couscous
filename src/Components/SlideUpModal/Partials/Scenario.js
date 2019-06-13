@@ -1,17 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
-import { Divider, Icon } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import styles from "./Styles/ScenarioStyles";
-import { Colors, Fonts } from "../../../Themes";
+import { Fonts } from "../../../Themes";
 import { changeLangCode, updateSelectedScenario } from "../../../Ducks/NewSessionReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
 import I18n, { translateProperty } from "../../../I18n/I18n";
-import { Bus, Shopping, Dinning, Translator, Teamwork, Layers } from "../../../Assets/SVG";
-import Reactotron from "reactotron-react-native";
+import { Bus, Dinning, Layers, Shopping, Teamwork, Translator } from "../../../Assets/SVG";
 import metrics from "../../../Themes/Metrics";
-import {isIphoneXorAbove} from "../../../Util/Devices";
-import { updateOptions } from "../../../Ducks/RateCallReducer";
 
 class Scenario extends Component {
   renderCheck = currentLang => {
@@ -126,11 +123,11 @@ class Scenario extends Component {
   };
 
   changeLangCode = langCode => {
-    const { changeLangCode, selection, updateSelectedScenario, closeSlideMenu, updateOptions } = this.props;
+    const { changeLangCode, selection, updateSelectedScenario, closeSlideMenu, setScenarioID } = this.props;
     if (selection === "scenarioSelection") {
       updateSelectedScenario({ scenarioID: langCode });
     } if(selection === "ratingsScenarioSelection") {
-      updateOptions({ scenarioID: langCode });
+      setScenarioID(langCode);
     } else {
       changeLangCode({ langCode });
     }
@@ -175,7 +172,6 @@ const mD = {
   closeSlideMenu,
   changeLangCode,
   updateSelectedScenario,
-  updateOptions
 };
 
 export default connect(

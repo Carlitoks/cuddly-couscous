@@ -1,23 +1,15 @@
 import React, { Component } from "react";
 import { Image, Text, View } from "react-native";
-import { connect } from "react-redux";
 import { Waves } from "../../../Assets/SVG";
 import metrics from "../../../Themes/Metrics";
 import { Images } from "../../../Themes";
-import { clearOptions, submitRateCall } from "../../../Ducks/RateCallReducer";
-import { changeStatus } from "../../../Ducks/ProfileLinguistReducer";
 // Styles
 import styles from "./Styles/AvatarSectionStyles";
 
 class AvatarSection extends Component {
   selectImage = () => {
-    const { avatarURL, linguist } = this.props;
-
-    if (linguist && linguist.avatarURL) {
-      return {
-        uri: linguist.avatarURL,
-      };
-    } if (avatarURL) {
+    const { avatarURL } = this.props;
+    if (avatarURL) {
       return {
         uri: avatarURL,
       };
@@ -27,19 +19,11 @@ class AvatarSection extends Component {
 
   handleSessionInfoName = () => {
     const {
-      customerName, linguist, clearOptions, navigation,
+      customerName, navigation,
     } = this.props;
     if (customerName) {
-      return customerName.split("undefined")[0];
-    } if (linguist) {
-      if (linguist.lastInitial) {
-        return `${linguist.firstName} ${
-          linguist.lastInitial
-        }`;
-      }
-      return linguist.firstName;
+      return customerName;
     }
-    clearOptions();
     navigation.dispatch({ type: "Home" });
     return <React.Fragment />;
   };
@@ -55,7 +39,7 @@ class AvatarSection extends Component {
           <Waves
             width={metrics.width}
             height={(metrics.width * 129) / 1175.7}
-            viewBox={"0 0 1175.7 129"}
+            viewBox="0 0 1175.7 129"
           />
         </View>
       </View>
@@ -63,23 +47,5 @@ class AvatarSection extends Component {
   }
 }
 
-const mS = state => ({
-  rating: state.rateCall.rating,
-  thumbsUp: state.rateCall.thumbsUp,
-  thumbsDown: state.rateCall.thumbsDown,
-  sessionID: state.rateCall.sessionID,
-  token: state.auth.token,
-  customerName: state.rateCall.customerName,
-  avatarURL: state.currentSessionReducer.avatarURL,
-  linguistProfile: state.userProfile.linguistProfile,
-  linguist: state.sessionInfo.linguist,
-});
-const mD = {
-  submitRateCall,
-  clearOptions,
-  changeStatus,
-};
-export default connect(
-  mS,
-  mD,
-)(AvatarSection);
+
+export default (AvatarSection);

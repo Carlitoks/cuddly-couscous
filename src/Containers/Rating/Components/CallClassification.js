@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Text, View, TouchableOpacity, ScrollView,
+} from "react-native";
 import { TagSelect } from "react-native-tag-select";
-import { connect } from "react-redux";
+import { Divider, Icon } from "react-native-elements";
 import { CallClassification as CallClassificationIcons } from "./RateListIcons";
 import I18n from "../../../I18n/I18n";
-import { UpdateFlags, updateOptions } from "../../../Ducks/RateCallReducer";
 // Styles
 import styles from "./Styles/CallClassificationStyles";
-import { Divider, Icon } from "react-native-elements";
-import {moderateScaleViewports} from "../../../Util/Scaling";
+import { moderateScaleViewports } from "../../../Util/Scaling";
 import RenderPicker from "../../CustomerHome/Components/Partials/PickerSelect";
-import { openSlideMenu } from "../../../Ducks/LogicReducer";
 
 
 class CallClassification extends Component {
@@ -28,12 +27,8 @@ class CallClassification extends Component {
   }
 
   TagsHandle = (item) => {
-    const { updateOptions } = this.props;
-    if(item.value !== "help"){
-      updateOptions({ callType: item.value, scenarioID: null });
-    } else {
-      updateOptions({ callType: item.value });
-    }
+    const { setCallType } = this.props;
+    setCallType(item.value);
   };
 
   openSlideMenu = (type) => {
@@ -53,7 +48,7 @@ class CallClassification extends Component {
           ref={(tag) => {
             this.tag = tag;
           }}
-          onMaxError={(error) => console.log(error)}
+          onMaxError={error => console.log(error)}
           onItemPress={item => this.TagsHandle(item)}
           itemStyle={[styles.baseTagsStyle, styles.tagUnselected]}
           itemLabelStyle={[styles.baseTagText, styles.baseTagTextUnselected]}
@@ -62,11 +57,12 @@ class CallClassification extends Component {
           containerStyle={styles.tagsContainer}
         />
 
-        { callType === "help" && <View style={styles.bottomDividerContainer}>
+        { callType === "help" && (
+        <View style={styles.bottomDividerContainer}>
           <Text style={styles.baseText}>{I18n.t("session.rating.scenario")}</Text>
           <RenderPicker
             openSlideMenu={this.openSlideMenu}
-            title={"none"}
+            title="none"
             placeholder={I18n.t("actions.select")}
             currentScenarioId={scenarioID}
             type="ratingsScenarioSelection"
@@ -83,7 +79,8 @@ class CallClassification extends Component {
             )}
             selectorContainer={styles.renderPickerSelectorContainer}
           />
-        </View> }
+        </View>
+        ) }
 
         <View style={styles.bottomDividerContainer}>
           <Divider style={styles.divider} />
@@ -102,17 +99,4 @@ class CallClassification extends Component {
   }
 }
 
-const mS = state => ({
-  callType: state.rateCall.callType,
-  scenarioID: state.rateCall.scenarioID,
-  scenarioNote: state.rateCall.scenarioNote,
-});
-
-const mD = {
-  UpdateFlags, updateOptions, openSlideMenu
-};
-
-export default connect(
-  mS,
-  mD,
-)(CallClassification);
+export default (CallClassification);

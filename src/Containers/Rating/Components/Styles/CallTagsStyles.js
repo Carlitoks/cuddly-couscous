@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { ApplicationStyles, Fonts } from "../../../../Themes";
 import metrics from "../../../../Themes/Metrics";
-import { moderateScale, moderateScaleViewports } from "../../../../Util/Scaling";
+import { moderateScaleViewports } from "../../../../Util/Scaling";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -13,14 +13,7 @@ export default StyleSheet.create({
     paddingRight: 19,
     paddingTop: 19,
   },
-  comments: {
-    color: "#000000",
-    fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(16),
-    paddingBottom: 19,
-    paddingRight: 19,
-  },
-  baseTagText: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports( 16) },
+  baseTagText: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16) },
   baseTagTextSelected: { color: "#FFFFFF" },
   baseTagTextUnselected: { color: "#401674" },
   baseTagsStyle: {
@@ -42,6 +35,13 @@ export default StyleSheet.create({
     justifyContent: "center",
     marginLeft: 20,
     paddingTop: metrics.height * 0.03,
+  },
+  comments: {
+    color: "#000000",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    paddingBottom: 19,
+    paddingRight: 19,
   },
   divider: { backgroundColor: "#979797", height: 1, width: metrics.width * 0.90 },
   flexEndCenter: { alignItems: "center", justifyContent: "center" },

@@ -8,25 +8,93 @@ import RateComponent from "./Components/RateComponent";
 import CallClassification from "./Components/CallClassification";
 import CallTags from "./Components/CallTags";
 import { openSlideMenu } from "../../Ducks/LogicReducer";
-import { clearOptions, submitRateCall } from "../../Ducks/RateCallReducer";
 import I18n from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/RatingsScreenStyles";
+import { Sessions } from "../../Api";
+
+const WhatWasGood = [];
+const WhatCouldBetter = [];
 
 class RatingScreen extends Component {
-
   constructor(props) {
     super(props);
+    const { session, user, token } = props.navigation.state.params;
     this.state = {
       index: 0,
       enableScroll: false,
+      rating: 0,
+      session,
+      user,
+      token,
+      linguistProfile: user.linguistProfile || null,
+      customerName: `${user.firstName} ${user.lastName}`,
+      avatarURL: user.avatarURL,
+      comment: "",
+      thumbsUp: false,
+      thumbsDown: false,
+      scenarioID: null,
+      scenarioNote: "",
+      callType: "",
+
+      // States for icons that belong to What was Good question
+      iconWaitTimeFirstList: false,
+      iconProfessionalismFirstList: false,
+      iconFriendlinessFirstList: false,
+      iconLanguageAbilityFirstList: false,
+      iconUnderstandFirstList: false,
+      iconAudioQualityFirstList: false,
+
+      // States for icons that belong to What could be better
+      iconWaitTimeSecondList: false,
+      iconProfessionalismSecondList: false,
+      iconFriendlinessSecondList: false,
+      iconLanguageAbilitySecondList: false,
+      iconUnderstandSecondList: false,
+      iconConnectionSecondList: false,
+      iconBackgroundNoiseSecondList: false,
+      iconVoiceClaritySecondList: false,
+      iconDistractionsSecondList: false,
     };
   }
 
-  submit = () => {
+  submitRateCall = async (RateInformationData) => {
     const {
-      rating, thumbsUp, sessionID, submitRateCall, token, clearOptions, navigation,
-    } = this.props;
+      comment,
+      callType,
+      scenarioID,
+      scenarioNote,
+      token,
+      session,
+    } = this.state;
+    const RateInformation = {
+      ...RateInformationData,
+      negativeFlags: WhatCouldBetter,
+      positiveFlags: WhatWasGood,
+      comment,
+      callType,
+      scenarioID,
+      scenarioNote,
+    };
+
+    try {
+      return await Sessions.RatingSession(
+        RateInformation,
+        session.id,
+        token,
+      );
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  };
+
+  submit = () => {
+    const { navigation } = this.props;
+
+    const {
+      rating, thumbsUp,
+    } = this.state;
 
     let rateInformation;
 
@@ -48,19 +116,15 @@ class RatingScreen extends Component {
         stars: rating,
       };
     }
-    if (sessionID) {
-      submitRateCall(rateInformation, sessionID, token)
+    if (this.state.session) {
+      this.submitRateCall(rateInformation)
         .then((response) => {
-          clearOptions();
           navigation.dispatch({ type: "Home" });
         })
         .catch((err) => {
-          console.log(err);
-          clearOptions();
           navigation.dispatch({ type: "Home" });
         });
     } else {
-      clearOptions();
       navigation.dispatch({ type: "Home" });
     }
   };
@@ -72,10 +136,10 @@ class RatingScreen extends Component {
 
     const {
       linguistProfile,
-    } = this.props;
+    } = this.state;
     if (index === 0) {
       this.swiperRef.scrollBy(1);
-      this.setState({ enableScroll: true});
+      this.setState({ enableScroll: true });
     }
 
     if (index === 1) {
@@ -96,10 +160,10 @@ class RatingScreen extends Component {
       rating,
       thumbsUp,
       thumbsDown,
-      linguistProfile,
       callType,
       scenarioID,
-    } = this.props;
+      linguistProfile,
+    } = this.state;
 
     if (linguistProfile) {
       if (callType === "help") return !isNaN(rating) && callType && scenarioID && (thumbsUp || thumbsDown);
@@ -113,9 +177,113 @@ class RatingScreen extends Component {
     openSlideMenu({ type });
   };
 
+  setRating = (rating) => {
+    this.setState({ rating });
+  };
+
+  setThumbs = (Thumbs) => {
+    if (Thumbs === "up") {
+      this.setState({ thumbsUp: true, thumbsDown: false });
+    } else {
+      this.setState({ thumbsUp: false, thumbsDown: true });
+    }
+  };
+
+  setCallType = (callType) => {
+    if (callType === "help") return this.setState({ callType, scenarioID: null });
+    return this.setState({ callType });
+  };
+
+  setScenarioID = (scenarioID) => {
+    this.setState({ scenarioID });
+  };
+
+  setScenarioNote = (scenarioNote) => {
+    this.setState({ scenarioNote });
+  };
+
+  setRatingComments = (ratingComments) => {
+    this.setState({ comment: ratingComments });
+  };
+
+  UpdateFlags = (
+    IconName,
+    IconState,
+    action,
+    selected,
+    OffState,
+    Key,
+  ) => {
+    switch (action) {
+      case "positiveFlags": {
+        if (selected) {
+          WhatWasGood.push(Key);
+          const index = WhatCouldBetter.indexOf(Key);
+          if (index !== -1) {
+            WhatCouldBetter.splice(index, 1);
+          }
+          this.setState(OffState);
+          this.setState(IconState);
+        } else {
+          const index = WhatWasGood.indexOf(Key);
+          if (index !== -1) {
+            WhatWasGood.splice(index, 1);
+          }
+          this.setState(IconState);
+        }
+        break;
+      }
+
+      case "negativeFlags": {
+        if (selected) {
+          WhatCouldBetter.push(Key);
+          this.setState(IconState);
+          this.setState(OffState);
+          const index = WhatWasGood.indexOf(Key);
+          if (index !== -1) {
+            WhatWasGood.splice(index, 1);
+          }
+        } else {
+          const index = WhatCouldBetter.indexOf(Key);
+          if (index !== -1) {
+            WhatCouldBetter.splice(index, 1);
+          }
+          this.setState(IconState);
+        }
+        break;
+      }
+    }
+  };
+
   renderSwiper = () => {
-    const { linguistProfile } = this.props;
-    const { index, enableScroll } = this.state;
+    const {
+      index,
+      enableScroll,
+      linguistProfile,
+      rating,
+      thumbsUp,
+      thumbsDown,
+      scenarioNote,
+      callType,
+      scenarioID,
+      iconWaitTimeFirstList,
+      iconProfessionalismFirstList,
+      iconFriendlinessFirstList,
+      iconLanguageAbilityFirstList,
+      iconUnderstandFirstList,
+      iconAudioQualityFirstList,
+      iconWaitTimeSecondList,
+      iconProfessionalismSecondList,
+      iconFriendlinessSecondList,
+      iconLanguageAbilitySecondList,
+      iconUnderstandSecondList,
+      iconConnectionSecondList,
+      iconBackgroundNoiseSecondList,
+      iconVoiceClaritySecondList,
+      iconDistractionsSecondList,
+      comment,
+    } = this.state;
+    const { openSlideMenu } = this.props;
     if (linguistProfile) {
       return (
         <Swiper
@@ -128,9 +296,45 @@ class RatingScreen extends Component {
           showsPagination={false}
           showsButtons={false}
         >
-          <RateComponent linguistProfile={linguistProfile} nextSlide={this.nextSlide} />
-          <CallClassification linguistProfile={linguistProfile} />
-          <CallTags linguistProfile={linguistProfile} openSlideMenu={this.openSlideMenu} />
+          <RateComponent
+            rating={rating}
+            thumbsUp={thumbsUp}
+            thumbsDown={thumbsDown}
+            setRating={this.setRating}
+            setThumbs={this.setThumbs}
+            linguistProfile={linguistProfile}
+            nextSlide={this.nextSlide}
+          />
+          <CallClassification
+            setCallType={this.setCallType}
+            openSlideMenu={openSlideMenu}
+            scenarioNote={scenarioNote}
+            callType={callType}
+            scenarioID={scenarioID}
+            linguistProfile={linguistProfile}
+          />
+          <CallTags
+            linguistProfile={linguistProfile}
+            openSlideMenu={this.openSlideMenu}
+            iconWaitTimeFirstList={iconWaitTimeFirstList}
+            iconProfessionalismFirstList={iconProfessionalismFirstList}
+            iconFriendlinessFirstList={iconFriendlinessFirstList}
+            iconLanguageAbilityFirstList={iconLanguageAbilityFirstList}
+            iconUnderstandFirstList={iconUnderstandFirstList}
+            iconAudioQualityFirstList={iconAudioQualityFirstList}
+            iconWaitTimeSecondList={iconWaitTimeSecondList}
+            iconProfessionalismSecondList={iconProfessionalismSecondList}
+            iconFriendlinessSecondList={iconFriendlinessSecondList}
+            iconLanguageAbilitySecondList={iconLanguageAbilitySecondList}
+            iconUnderstandSecondList={iconUnderstandSecondList}
+            iconConnectionSecondList={iconConnectionSecondList}
+            iconBackgroundNoiseSecondList={iconBackgroundNoiseSecondList}
+            iconVoiceClaritySecondList={iconVoiceClaritySecondList}
+            iconDistractionsSecondList={iconDistractionsSecondList}
+            UpdateFlags={this.UpdateFlags}
+            ratingComments={comment}
+            rating={rating}
+          />
         </Swiper>
       );
     }
@@ -145,14 +349,43 @@ class RatingScreen extends Component {
         showsPagination={false}
         showsButtons={false}
       >
-        <RateComponent linguistProfile={linguistProfile} nextSlide={this.nextSlide} />
-        <CallTags linguistProfile={linguistProfile} openSlideMenu={this.openSlideMenu} />
+        <RateComponent
+          rating={rating}
+          thumbsUp={thumbsUp}
+          thumbsDown={thumbsDown}
+          setRating={this.setRating}
+          setThumbs={this.setThumbs}
+          nextSlide={this.nextSlide}
+          linguistProfile={linguistProfile}
+        />
+        <CallTags
+          linguistProfile={linguistProfile}
+          openSlideMenu={this.openSlideMenu}
+          iconWaitTimeFirstList={iconWaitTimeFirstList}
+          iconProfessionalismFirstList={iconProfessionalismFirstList}
+          iconFriendlinessFirstList={iconFriendlinessFirstList}
+          iconLanguageAbilityFirstList={iconLanguageAbilityFirstList}
+          iconUnderstandFirstList={iconUnderstandFirstList}
+          iconAudioQualityFirstList={iconAudioQualityFirstList}
+          iconWaitTimeSecondList={iconWaitTimeSecondList}
+          iconProfessionalismSecondList={iconProfessionalismSecondList}
+          iconFriendlinessSecondList={iconFriendlinessSecondList}
+          iconLanguageAbilitySecondList={iconLanguageAbilitySecondList}
+          iconUnderstandSecondList={iconUnderstandSecondList}
+          iconConnectionSecondList={iconConnectionSecondList}
+          iconBackgroundNoiseSecondList={iconBackgroundNoiseSecondList}
+          iconVoiceClaritySecondList={iconVoiceClaritySecondList}
+          iconDistractionsSecondList={iconDistractionsSecondList}
+          UpdateFlags={this.UpdateFlags}
+          ratingComments={comment}
+          rating={rating}
+        />
       </Swiper>
     );
   };
 
   renderPagination = () => {
-    const { linguistProfile } = this.props;
+    const { linguistProfile } = this.state;
     const { index } = this.state;
     const screenNumber = linguistProfile ? 3 : 2;
     const pagination = [];
@@ -167,27 +400,31 @@ class RatingScreen extends Component {
   };
 
   isLastSection = () => {
-    const { linguistProfile } = this.props;
+    const { linguistProfile } = this.state;
     const {
       index,
     } = this.state;
-
-    if(!linguistProfile && index === 1){
+    if (!linguistProfile && index === 1) {
       return true;
     }
-
-    if(index === 2) {
+    if (index === 2) {
       return true;
     }
-
     return false;
   };
 
   render() {
     const { navigation } = this.props;
+    const {
+      customerName, avatarURL, comment, scenarioNote,
+    } = this.state;
     return (
       <View style={styles.ratingScreenContainer}>
-        <AvatarSection navigation={navigation} />
+        <AvatarSection
+          avatarURL={avatarURL}
+          customerName={customerName}
+          navigation={navigation}
+        />
         {this.renderSwiper()}
         <View style={styles.bottomButtonContainer}>
           <View
@@ -211,27 +448,22 @@ class RatingScreen extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-        <SlideUpPanel />
+        <SlideUpPanel
+          scenarioNote={scenarioNote}
+          setScenarioNote={this.setScenarioNote}
+          setScenarioID={this.setScenarioID}
+          ratingComments={comment}
+          setRatingComments={this.setRatingComments}
+        />
       </View>
     );
   }
 }
 
-const mS = state => ({
-  thumbsUp: state.rateCall.thumbsUp,
-  thumbsDown: state.rateCall.thumbsDown,
-  rating: state.rateCall.rating,
-  linguistProfile: state.userProfile.linguistProfile,
-  sessionID: state.rateCall.sessionID,
-  callType: state.rateCall.callType,
-  scenarioID: state.rateCall.scenarioID,
-  token: state.auth.token,
-});
+const mS = state => ({});
 
 const mD = {
   openSlideMenu,
-  submitRateCall,
-  clearOptions,
 };
 
 export default connect(

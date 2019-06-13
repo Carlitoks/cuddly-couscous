@@ -81,7 +81,7 @@ const newUserState = (obj = {}) => {
 let recordSessionEvent = () => {};
 
 class SessionView extends Component {
-  
+
   constructor (props) {
     super(props);
     // set up forensics logger
@@ -166,7 +166,7 @@ class SessionView extends Component {
     AppState.addEventListener('change', this.handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.handleConnectionChange);
     NetInfo.isConnected.addEventListener("connectionChange", this.handleNetworkIsConnected);
-    
+
     // get initial network values before mounting the session
     Promise.all([
       NetInfo.getConnectionInfo().then((info) => {
@@ -265,7 +265,7 @@ class SessionView extends Component {
       case 'inactive': this.appWillBeSuspended(); break;
     }
   };
-  
+
   appWillEnterBackground () {
 
   }
@@ -354,7 +354,7 @@ class SessionView extends Component {
       controls: {cameraFlipEnabled: enabled},
       connection: {sendingVideo: enabled || controls.videoEnabled}
     });
-    
+
     // TODO: only update this in case of legacy version - move this to Session
     this.updateRemoteUserState({connection: {receivingVideo: enabled || controls.videoEnabled}});
   }
@@ -363,7 +363,7 @@ class SessionView extends Component {
     const {localUserState, remoteUserState} = this.state;
     return localUserState.connection.receivingThrottled || remoteUserState.connection.receivingThrottled;
   }
-  
+
   shouldShowReconnectionState () {
     const {status} = this.props;
     return (
@@ -627,7 +627,7 @@ class SessionView extends Component {
   // the remote side's control state determines if the remote user
   // is intentionally sending audio or video.  However, the remote side
   // sending AV does not mean we are actually receiving AV - that is determined
-  // by the `Session` component, and based on the actual incoming 
+  // by the `Session` component, and based on the actual incoming
   // stream/connection events
   handleRemoteUserControlStateChanged (controls) {
     recordSessionEvent('handleRemoteUserControlStateChanged');
@@ -719,7 +719,11 @@ class SessionView extends Component {
         this.props.endSession(reason).finally(() => {
           this.cleanup();
           this.endingCall = false;
-          this.props.navigation.dispatch({type: (!!target) ? target : this.chooseSessionEndedView(true)});
+          this.props.navigation.dispatch({type: (!!target) ? target : this.chooseSessionEndedView(true), params: {
+              session: this.props.session,
+              user: this.props.user,
+              token: this.props.token
+            }});
         });
       }, 1000);
     });
@@ -734,11 +738,15 @@ class SessionView extends Component {
     // of this client
     this.props.handleEndedSession(reason).finally(() => {
       this.cleanup();
-      this.props.navigation.dispatch({type: this.chooseSessionEndedView(false)});
+      this.props.navigation.dispatch({type: this.chooseSessionEndedView(false), params: {
+        session: this.props.session,
+        user: this.props.user,
+        token: this.props.token
+        }});
     });
   }
 
-  // figure out the proper state to navigate the user to once the session has ended, 
+  // figure out the proper state to navigate the user to once the session has ended,
   // and also display an alert in cases where that is needed
   chooseSessionEndedView(endedByLocal) {
     const {session, isCustomer, isLinguist} = this.props;
@@ -889,7 +897,7 @@ class SessionView extends Component {
             localSessionStatus = { this.props.status }
             ending = { this.state.ending }
             endReason = { this.state.endReason }
-            
+
             remoteUserState = { remoteUserState }
             localUserState = { localUserState }
 
@@ -932,7 +940,7 @@ class SessionView extends Component {
             audioModeBackground={this.showAudioMode() ? (<AudioModeBackground user={ this.props.remoteUser } />) : (<React.Fragment />)}
           >
             <SessionHeader user={ this.props.remoteUser } />
-            
+
             <View style={ styles.controlContainer }>
               <View style={ styles.controls }>
                 { this.poorConnectionAlertVisible() && (
@@ -981,12 +989,12 @@ class SessionView extends Component {
             onCancel = {() => { this.triggerEndCall(SESSION.END.CANCEL, false) }}
           />
           )}
-          
+
           {/* TODO: make this more interesting, like fade in or something */}
           {(this.state.ending || this.props.status.ending || this.props.status.ended) && (
           <SessionEnding />
           )}
-          
+
           {/* If the initial connection was established, but one party has been disconnected... */}
           {!this.isTransitioning() && (
           <ReconnectionModal
@@ -1027,6 +1035,7 @@ const styles = StyleSheet.create({
 const mS = (state) => ({
   user: state.userProfile, // TODO: replace with state.activeUser.user
   newSessionParams: state.newSessionReducer.session,
+  token: state.auth.token,
   ...state.currentSessionReducer
 });
 
