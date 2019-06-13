@@ -6,26 +6,25 @@ import { Divider, Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import { Colors, Fonts } from "../../../Themes";
 import NavBar from "../../../Components/NavBar/NavBar";
-import I18n, { translateLanguage } from "../../../I18n/I18n";
+import I18n, { translateLanguage, translateApiError } from "../../../I18n/I18n";
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
-import { updateView, updateProfileAsync } from "../../../Ducks/UserProfileReducer";
 import { primaryCodes } from "../../../Config/Languages";
 // Styles
 import styles from "./Styles/LanguageListScreenStyles";
+import { updateUser } from "../../../Ducks/AccountReducer";
 
 class LanguageListScreen extends Component {
-  componentWillMount() {}
 
   renderButtonContent = (currentLang) => {
-    const { nativeLangCode, userNativeLangCode } = this.props;
+    const { nativeLangCode, user } = this.props;
     let ButtonStyle = {
       ...styles.availableLangText,
       color: Colors.pricingViewBlack,
     };
 
     if (
-      (nativeLangCode != "" && nativeLangCode === currentLang)
-      || (userNativeLangCode != "" && userNativeLangCode === currentLang)
+      (nativeLangCode != "" && nativeLangCode === currentLang) ||
+      (!!user && user.nativeLangCode != "" && user.nativeLangCode === currentLang)
     ) {
       ButtonStyle = {
         ...styles.availableLangText,
@@ -45,31 +44,16 @@ class LanguageListScreen extends Component {
       updateOnboarding,
       navigation,
       isLoggedIn,
-      updateView,
-      updateProfileAsync,
-      token,
-      uuid,
-      userNativeLangCode,
+      updateUser,
     } = this.props;
     if (isLoggedIn) {
-      const data = {
-        nativeLangCode: langCode,
-      };
-      updateProfileAsync(uuid, data, token).then((response) => {
-        const {
-          payload,
-          payload: { nativeLangCode },
-        } = response;
-
-        if (response.type !== "networkErrors/error") {
-          updateView({
-            nativeLangCode: langCode,
-          });
+      const data = { nativeLangCode: langCode };
+      updateUser(data)
+        .then((res) => {
           return navigation.dispatch({ type: "back" });
-        }
-        const errorMessage = response.payload.response.data.errors[0];
-        Alert.alert("error", errorMessage);
-      });
+        }).catch((e) => {
+          Alert.alert(I18n.t("error"), translateApiError(e));
+        });
     } else {
       updateOnboarding({ nativeLangCode: langCode });
       return navigation.dispatch({ type: "back" });
@@ -77,13 +61,13 @@ class LanguageListScreen extends Component {
   };
 
   renderAvailableLanguages = () => {
-    const { nativeLangCode, userNativeLangCode } = this.props;
+    const { nativeLangCode, user } = this.props;
     return primaryCodes.map((language, current) => {
       let selected = false;
       let containerStyle = styles.LangViewContainer;
       if (
-        (nativeLangCode != "" && nativeLangCode === language)
-        || (userNativeLangCode != "" && userNativeLangCode === language)
+        (nativeLangCode != "" && nativeLangCode === language) ||
+        (!!user && user.nativeLangCode != "" && user.nativeLangCode === language)
       ) {
         containerStyle = {
           ...styles.LangViewContainer,
@@ -145,22 +129,14 @@ class LanguageListScreen extends Component {
 }
 
 const mS = state => ({
-  isSlideUpMenuVisible: state.LogicReducer.isSlideUpMenuVisible,
-  selection: state.LogicReducer.selection,
-  availableLanguages: state.newSessionReducer.availableLanguages,
-  comingSoonLanguages: state.newSessionReducer.comingSoonLanguages,
-  primaryLangCode: state.newSessionReducer.session.primaryLangCode,
-  secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   nativeLangCode: state.onboardingReducer.nativeLangCode,
-  userNativeLangCode: state.userProfile.nativeLangCode,
+  user: state.account.user,
   isLoggedIn: state.auth2.isLoggedIn,
-  token: state.auth2.userJwtToken,
-  uuid: state.auth2.userID,
 });
 
-const mD = { updateOnboarding, updateView, updateProfileAsync };
+const mD = {
+  updateOnboarding,
+  updateUser,
+};
 
-export default connect(
-  mS,
-  mD,
-)(LanguageListScreen);
+export default connect(mS, mD)(LanguageListScreen);
