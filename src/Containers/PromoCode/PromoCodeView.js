@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { asyncScanPromoCode, clearPromoCode, updatePromoCode } from "../../Ducks/PromoCodeReducer";
 
-import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
-
-import { Keyboard, ScrollView, View } from "react-native";
+import { View, Text, ScrollView, Keyboard, Alert } from "react-native";
 
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
@@ -23,10 +21,6 @@ class PromoCodeView extends Component {
   }
 
   submit() {
-    this.props.updateHomeFlow({
-      categorySelected: ""
-    });
-
     const { token, promoCode } = this.props;
 
     Keyboard.dismiss();
@@ -38,10 +32,6 @@ class PromoCodeView extends Component {
           throw new Error(I18n.t("errorPromo"));
         }
         const {
-          requireScenarioSelection,
-          restrictEventScenarios,
-          scenarios,
-          initiateCall,
           usageError,
           addMinutesToUser,
           maxMinutesPerUser,
@@ -150,7 +140,6 @@ const mD = {
   updatePromoCode,
   asyncScanPromoCode,
   clearPromoCode,
-  updateHomeFlow,
 };
 
 export default connect(
