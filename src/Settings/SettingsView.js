@@ -112,7 +112,7 @@ class SettingsView extends Component {
 const mS = state => ({
   routes: state.nav.routes[0].routes[0].routes,
   interfaceLocale: state.settings.interfaceLocale,
-  isLinguist: !!state.userProfile.linguistProfile
+  isLinguist: !!state.account.linguistProfile
 });
 
 const mD = {
