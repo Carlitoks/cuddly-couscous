@@ -21,6 +21,7 @@ class UserProfileView extends Component {
   uploadAvatar(avatar) {
     if (!!avatar) {
       this.props.updateUserProfilePhoto(avatar).catch((e) => {
+        console.log(e);
         Alert.alert(I18n.t("error"), translateApiError(e));
       });
     }

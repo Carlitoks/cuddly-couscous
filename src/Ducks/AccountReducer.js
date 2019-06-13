@@ -207,42 +207,22 @@ export const updateUser = (payload) => (dispatch, getState) => {
   });
 };
 
-export const updateUserProfilePhoto = (image, progressCB = null) => (dispatch, getState) => {
+export const updateUserProfilePhoto = (base64Data, progressCB = null) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
-
-    // form data via axios
-    /*
-    let fd = new FormData();
-    fd.append('file', image, 'file');
-    uploadFormData(
-      "put",
-      `${apiURL}/profile-photo`,
-      fd,
-      progressCB,
-    )
-    .then((res) => {
-      console.log("res:");
-      console.log(res.data);
-      resolve(true);
-    })
-    .catch(reject);
-    */
-
-    // base64 via RNFetchBlob
     uploadBase64File(
       "put",
       `${apiURL}/profile-photo`,
-      image,
+      base64Data,
       "avatar.jpg",
       "image/jpg"
     )
-    .then((res) => {
-      console.log("GOT RES");
-      console.log(res.text());
-      resolve(true);
+    .then(() => {
+      // force refresh the user after uploading the photo to ensure
+      // the URL is reset
+      return dispatch(loadUser(false));
     })
+    .then(resolve)
     .catch(reject);
-
   });
 };
 

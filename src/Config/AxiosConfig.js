@@ -63,7 +63,10 @@ export const uploadFormData = (method, path, formData, progressCB = null) => {
   });
 
 };
-  
+
+// having to rely on RNFetchBlob because I couldn't find a way to actually
+// send base64 strings via axios... always resulted in network error, or the
+// server not being able to see the file.
 export const uploadBase64File = (method, path, fileData, fileName, mime) => {
   let token = getClient().defaults.headers.common['Authorization'];
 
@@ -84,5 +87,34 @@ export const uploadBase64File = (method, path, fileData, fileName, mime) => {
     ]
   );
 };
+
+/*
+// an attempt to convert a base64 data uri to a Blob so it can be
+// sent via FormData() with Axios.  It didn't work, but it might be 
+// close to working with some tweaks.  Leaving it for now, and may
+// remove it at a later date.
+const dataURItoBlob = (dataurl) => {
+  const arr = dataurl.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1]
+  const sliceSize = 1024;
+  const byteChars = window.atob(arr[1]);
+  const byteArrays = [];
+
+  for (let offset = 0, len = byteChars.length; offset < len; offset += sliceSize) {
+    let slice = byteChars.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+
+    byteArrays.push(byteArray);
+  }
+
+  return new Blob(byteArrays, {type: mime});
+};
+*/
 
 export default client;
