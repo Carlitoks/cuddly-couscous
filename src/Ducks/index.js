@@ -7,7 +7,6 @@ import login from "./LoginReducer";
 import nav from "./NavigationReducer";
 import networkErrors from "./NetworkErrorsReducer";
 import networkInfo from "./NetworkInfoReducer";
-import onboardingRecord from "./OnboardingRecordReducer";
 import payments from "./PaymentsReducer";
 import profileLinguist from "./ProfileLinguistReducer";
 import promoCode from "./PromoCodeReducer";
@@ -36,7 +35,6 @@ const rootReducer = combineReducers({
   nav,
   networkErrors,
   networkInfo,
-  onboardingRecord,
   payments,
   profileLinguist,
   promoCode,
