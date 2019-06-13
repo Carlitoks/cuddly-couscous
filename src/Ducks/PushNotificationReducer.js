@@ -30,18 +30,17 @@ export const remoteNotificationReceived = notification => dispatch => {
 export const incomingCallNotification = invitationId => (dispatch, getState) => {
   const {
     nav,
-    auth,
-    profileLinguist,
-    userProfile
+    auth2,
+    account,
   } = getState();
-  const isLinguist = !!userProfile.linguistProfile;
+  const isLinguist = !!account.linguistProfile;
   const CurrentRoutes = nav.routes[0].routes[0].routes;
   const CurrentView = CurrentRoutes.length > 1 ? CurrentRoutes[1].routeName : CurrentRoutes[0].routeName;
   if (
     auth2.isLoggedIn &&
     invitationId &&
     isLinguist &&
-    profileLinguist.available &&
+    account.linguistProfile.available &&
     CurrentView != "LinguistIncomingCallView" &&
     CurrentView != "SessionView" &&
     CurrentView != "RateView"
