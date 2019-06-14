@@ -27,7 +27,7 @@ const getStore = () =>
     // handle any state conversions required as the result of updating
     // from one version to another
     migrateAuthState(initialState);
-    // sanitizeInitialState(initialState);
+    sanitizeInitialState(initialState);
 
     // it's possible for an error to be thrown because the store includes
     // old keys that are no longer needed.
@@ -43,7 +43,6 @@ const getStore = () =>
         const state = store.getState();
         saveState({
           settings: state.settings,
-          auth: state.auth,
           auth2: state.auth2,
           userProfile: state.userProfile,
           profileLinguist: state.profileLinguist,
@@ -84,7 +83,7 @@ const sanitizeInitialState = (state = {}) => {
   ];
 
   Object.keys(state).forEach((item) => {
-    if (!allowedKeys.contains(item)) {
+    if (allowedKeys.indexOf(item) == -1) {
       delete state[item];
     }
   });
