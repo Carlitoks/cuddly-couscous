@@ -166,10 +166,10 @@ class RatingScreen extends Component {
     } = this.state;
 
     if (linguistProfile) {
-      if (callType === "help") return !isNaN(rating) && callType && scenarioID && (thumbsUp || thumbsDown);
-      return !isNaN(rating) && callType && (thumbsUp || thumbsDown);
+      if (callType === "help") return rating > 0 && callType && scenarioID && (thumbsUp || thumbsDown);
+      return rating > 0 && callType && (thumbsUp || thumbsDown);
     }
-    return !isNaN(rating);
+    return rating > 0;
   };
 
   openSlideMenu = (type) => {

@@ -12,8 +12,7 @@ class EmailField extends Component {
   isValidEmail = text => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
-    console.log(text.length)
-    if (!reg.test(text)&& text.length > 6) {
+    if (!reg.test(text) && text.length > 4) {
       updateOnboarding({
         isValidEmail: false,
         errorType: "emailFormat",
