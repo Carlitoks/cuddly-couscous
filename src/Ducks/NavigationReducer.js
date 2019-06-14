@@ -57,7 +57,7 @@ export default (reducer = (state, action) => {
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: "RateView" })]
+          actions: [NavigationActions.navigate({ routeName: "RateView", params: action.params })]
         })
       );
       break;

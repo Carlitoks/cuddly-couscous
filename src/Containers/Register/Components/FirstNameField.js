@@ -29,7 +29,7 @@ class FirstNameField extends Component {
   };
 
   render() {
-    const { firstName, errorType, setRef, nextInput } = this.props;
+    const { firstName, errorType, setRef, nextInput,isValidFirstName } = this.props;
     return (
       <View style={firstName ? styles.inputViewContainerValue : styles.inputViewContainer}>
         {firstName ? (
@@ -51,7 +51,7 @@ class FirstNameField extends Component {
             returnKeyType="done"
           />
         </View>
-        {errorType === "firstNameFormat" ? (
+        { (!isValidFirstName || errorType === "firstNameFormat" ) && (firstName && firstName.length > 0 )? (
           <Text style={styles.invalidLabelText}>{I18n.t("fields.firstName.errInvalid")}</Text>
         ) : (
           <Text style={styles.invalidLabelText} />

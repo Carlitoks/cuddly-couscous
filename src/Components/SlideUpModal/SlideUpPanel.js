@@ -23,10 +23,14 @@ class SlideUpPanel extends Component {
           bottom: 0
         }}
       >
-        {selection === "additionalDetails" ? (
-          <Comments />
-        ) : selection === "scenarioSelection" ? (
-          <Scenario />
+        {selection === "additionalDetails" || selection === "ratingComments" || selection === "scenarioNote" ? (
+          <Comments ratingComments={this.props.ratingComments}
+                    setRatingComments={this.props.setRatingComments}
+                    scenarioNote={this.props.scenarioNote}
+                    setScenarioNote={this.props.setScenarioNote}
+          />
+        ) : selection === "scenarioSelection" || selection === "ratingsScenarioSelection" ? (
+          <Scenario setScenarioID={this.props.setScenarioID} />
         ) : selection === "nativeLang" || selection === "nativeSupportedLang" ? (
           <NativeLang selection={selection} navigation={navigation} />
         ) : (
@@ -45,7 +49,7 @@ const mS = state => ({
 });
 
 const mD = {
-  closeSlideMenu
+  closeSlideMenu,
 };
 
 export default connect(

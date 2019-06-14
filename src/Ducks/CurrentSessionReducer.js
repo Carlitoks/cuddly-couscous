@@ -1,5 +1,4 @@
 import api from '../Config/AxiosConfig';
-import { updateOptions as updateRatingsView } from './RateCallReducer';
 import lodashMerge from 'lodash/merge';
 import { getGeolocationCoords } from '../Util/Helpers';
 import {SESSION} from "../Util/Constants";
@@ -26,7 +25,7 @@ const initState = () => ({
 
   // related session event data, if relevant
   event: {},
-  
+
   // credentials for joining session (Opentok)
   credentials: {},
 
@@ -134,13 +133,6 @@ export const createNewSession = (params) => (dispatch, getState) => {
 // sets the remote user, generally set when a linguist accepts an incoming call
 export const setRemoteUser = (user) => (dispatch, getState) => {
   dispatch(update({remoteUser: user}));
-
-  // TEMPORARY: also update rate view reducer
-  dispatch(updateRatingsView({
-    sessionID: getState().currentSessionReducer.sessionID,
-    customerName: !!user.preferredName ? user.preferredName : user.firstName,
-    avatarURL: !!user.avatarURL ? user.avatarURL : ""
-  }));
 };
 
 // as a linguist, receive a session invite - it is assumed tkat the invite
@@ -160,14 +152,6 @@ export const receiveSessionInvite = (invite) => (dispatch, getState) => {
       event: invite.event,
       status: { creating: false, created: true, began: false, ending: false, ended: false }
     }));
-
-    // TEMPORARY: update rate view
-    dispatch(updateRatingsView({
-      sessionID: getState().currentSessionReducer.sessionID,
-      customerName: !!invite.createdBy.preferredName ? invite.createdBy.preferredName : invite.createdBy.firstName,
-      avatarURL: !!invite.createdBy.avatarURL ? invite.createdBy.avatarURL : ""
-    }));
-
     resolve();
   });
 };
@@ -307,7 +291,7 @@ export const resetTimer = (elapsed, source) => (dispatch, getState) => {
 
 export const getElapsedTime = () => (dispatch, getState) => {
   const {events} = getState().currentSessionReducer.timer;
-  
+
   let elapsed = 0;
   let startedAt = null;
   for (e of events) {

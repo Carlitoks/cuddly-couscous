@@ -5,14 +5,14 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 import styles from "./styles";
 
-const TextButton = ({ IconName, StateIcon, onPress, title, color }) => {
+const TextButton = ({ IconName, StateIcon, onPress, title, color, size }) => {
   return (
     <TouchableOpacity style={styles.buttonText} onPress={onPress}>
       {/* Icon component with text used in rate experience  */}
       <Icon
         style={StateIcon ? { color: color } : { color: "#cdcdcd" }}
         name={IconName}
-        size={40}
+        size={ size || 60 }
       />
       <Text
         style={

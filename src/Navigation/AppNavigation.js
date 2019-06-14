@@ -7,8 +7,6 @@ import Home from "../Home/Home";
 import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 
 import MenuView from "../Components/MenuView/MenuView";
-
-import RateView from "../RateCall/RateExperience/RateView";
 // User Profile
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import EditNameView from "../Profile/EditName/EditNameView";
@@ -29,6 +27,7 @@ import PaymentScreen from "../Containers/Payments/PaymentScreen";
 import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
+import RatingsScreen from "../Containers/Rating/RatingScreen";
 import ForgotPasswordScreen from "../Containers/ForgotPassword/ForgotPasswordScreen";
 import LanguageListScreen from "../Containers/Register/Components/LanguageListScreen";
 // new session views
@@ -165,7 +164,7 @@ const Navigation = StackNavigator(
       }
     },
     RateView: {
-      screen: RateView,
+      screen: RatingsScreen,
       navigationOptions: {
         navigationOptions: {
           gesturesEnabled: false,

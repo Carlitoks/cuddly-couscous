@@ -7,11 +7,12 @@ import I18n from "../../../I18n/I18n";
 import { EMAIL_REGEX } from "../../../Util/Constants";
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
 
+
 class EmailField extends Component {
   isValidEmail = text => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
-    if (!reg.test(text)) {
+    if (!reg.test(text) && text.length > 4) {
       updateOnboarding({
         isValidEmail: false,
         errorType: "emailFormat",
@@ -26,7 +27,7 @@ class EmailField extends Component {
   };
 
   render() {
-    const { email, errorType, setRef, nextInput } = this.props;
+    const { email, errorType, setRef, nextInput,isValidEmail } = this.props;
     return (
       <View style={email ? styles.inputViewContainerValue : styles.inputViewContainer}>
         {email ? <Text style={styles.labelText}>{I18n.t("email")}</Text> : <Text style={styles.labelText} />}
@@ -49,7 +50,7 @@ class EmailField extends Component {
             returnKeyType="done"
           />
         </View>
-        {errorType === "emailFormat" || errorType === "AlreadyRegistered" ? (
+        {(!isValidEmail || errorType === "AlreadyRegistered" ) && (email && email.length > 6) ? (
           <Text style={styles.invalidLabelText}>{I18n.t("noValidEmail")}</Text>
         ) : (
           <Text style={styles.invalidLabelText} />

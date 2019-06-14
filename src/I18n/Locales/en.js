@@ -833,7 +833,7 @@ export default (ENG = {
 
     // used when rating a session
     rating: {
-      submit: "Submit",
+      comment: "Comment",
       addComment: "Add Comments",
       questionGood: "What was good?",
       questionBetter: "What could be better?",

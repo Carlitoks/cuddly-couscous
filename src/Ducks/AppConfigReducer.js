@@ -64,7 +64,7 @@ export const loadSessionScenarios = (useCache = true) => (dispatch, getState) =>
   });
 };
 
-// one day these counts will actually come from the server, but for now we 
+// one day these counts will actually come from the server, but for now we
 // generate them locally
 export const updateJeenieCounts = (initialize = false) => (dispatch, getState) => {
   const randomNum = (min, max) => {

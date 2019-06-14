@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
-import { Divider, Icon } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import styles from "./Styles/ScenarioStyles";
-import { Colors, Fonts } from "../../../Themes";
+import { Fonts } from "../../../Themes";
 import { changeLangCode, updateSelectedScenario } from "../../../Ducks/NewSessionReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
 import I18n, { translateProperty } from "../../../I18n/I18n";
-import { Bus, Shopping, Dinning, Translator, Teamwork, Layers } from "../../../Assets/SVG";
-import Reactotron from "reactotron-react-native";
+import { Bus, Dinning, Layers, Shopping, Teamwork, Translator } from "../../../Assets/SVG";
 import metrics from "../../../Themes/Metrics";
-import { isIphoneXorAbove } from "../../../Util/Devices";
 
 class Scenario extends Component {
   renderCheck = currentLang => {
@@ -125,9 +123,11 @@ class Scenario extends Component {
   };
 
   changeLangCode = langCode => {
-    const { changeLangCode, selection, updateSelectedScenario, closeSlideMenu } = this.props;
+    const { changeLangCode, selection, updateSelectedScenario, closeSlideMenu, setScenarioID } = this.props;
     if (selection === "scenarioSelection") {
       updateSelectedScenario({ scenarioID: langCode });
+    } if(selection === "ratingsScenarioSelection") {
+      setScenarioID(langCode);
     } else {
       changeLangCode({ langCode });
     }
@@ -135,22 +135,26 @@ class Scenario extends Component {
   };
 
   render() {
-    const { closeSlideMenu } = this.props;
+    const { closeSlideMenu, selection } = this.props;
     return (
       <View style={styles.scenarioContainer}>
         <View style={styles.availableLangContainer}>
           <Text style={styles.availableLangContainerText}>
-            {I18n.t("newCustomerHome.scenario.label")}
+          {selection == "ratingsScenarioSelection" && I18n.t("session.rating.scenario")}
+            {selection == "scenarioSelection" && I18n.t("newCustomerHome.scenario.label")}
           </Text>
         </View>
         <ScrollView
           style={styles.fullWidthOnItems}
-          contentContainerStyle={styles.scrollContainer}
+          contentContainerStyle={selection === "ratingsScenarioSelection"? styles.ratingScrollContainer : styles.scrollContainer}
           bounces={false}
         >
           {this.renderScenariosList()}
         </ScrollView>
-        <TouchableOpacity style={styles.closeScenarioList} onPress={() => closeSlideMenu()}>
+        <TouchableOpacity
+          style={selection === "ratingsScenarioSelection" ? styles.ratingScenarioList : styles.closeScenarioList}
+          onPress={() => closeSlideMenu()}
+        >
           <Text style={styles.cancelButtonText}>{I18n.t("actions.cancel")}</Text>
         </TouchableOpacity>
       </View>
@@ -167,7 +171,7 @@ const mS = state => ({
 const mD = {
   closeSlideMenu,
   changeLangCode,
-  updateSelectedScenario
+  updateSelectedScenario,
 };
 
 export default connect(

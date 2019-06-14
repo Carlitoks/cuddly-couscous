@@ -7409,12 +7409,26 @@ react-native-svg@^9.4.0:
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.4.0.tgz#e428e0eae55aebd2355f1ff4f22675dad4611960"
   integrity sha512-IVJlVbS2dAPerPr927fEi4uXzrPXzlra5ddgyJXZZ2IKA2ZygyYWFZDM+vsQs+Vj20CfL8nOWszQQV57vdQgFg==
 
+react-native-swiper@^1.5.14:
+  version "1.5.14"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.14.tgz#1c6f949ca377186300f972bb0f30d24062c899aa"
+  integrity sha512-Kn0fxKooN7Shwu1qJYHB+Y8ssXXnvrIwReHXU5jCdyYNfz2QbBv0Cv3sa2Mqzr+XgzORCFFIokc8uCCUITDrVA==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-tab-view@^0.0.70:
   version "0.0.70"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-0.0.70.tgz#1dd2ded32acd0cb6bfef38d26e53675db733b37b"
   integrity sha512-VOTZs2UCamYrTyBtcxpn4Ko9RkWrq6rZGOY7AagHF/gcCUQBMSWADoplsBopSc5vXnHHeCSR458BkceEuSEaQA==
   dependencies:
     prop-types "^15.5.10"
+
+react-native-tag-select@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-tag-select/-/react-native-tag-select-2.0.0.tgz#b02766526a5b2663a3392478dc500616f019cbf1"
+  integrity sha512-ys0A2MKZ8CLQ6QYBnnuyg1/MIsNVmRSSJpPFD3E+tTR4FTaLYNRiTIaBy1Wy77feBaYeDfN7UG2K5jr31+Iq0A==
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-text@0.0.8:
   version "0.0.8"

@@ -11,6 +11,12 @@ export default StyleSheet.create({
     left: Metrics.width * 0.05,
     width: Metrics.width * 0.9
   },
+  ratingScrollContainer: {
+    backgroundColor: "#fff",
+    left: Metrics.width * 0.05,
+    width: Metrics.width * 0.9,
+    marginBottom:30,
+  },
   availableLangContainer: {
     height: 48,
     justifyContent: "center",
@@ -67,6 +73,15 @@ export default StyleSheet.create({
     color: "#1C1B1B"
   },
   checkPadding: { paddingRight: 30 },
+  ratingScenarioList: {
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    position: "absolute",
+    bottom: -40,
+    width: Metrics.width * 0.9,
+    left: Metrics.width * 0.05,
+    alignItems: "center"
+  },
   closeScenarioList: {
     borderRadius: 10,
     backgroundColor: "#fff",

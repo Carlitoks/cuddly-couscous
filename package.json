@@ -13,7 +13,7 @@
     "test": "jest",
     "api:run": "make setup && docker-compose up",
     "api:load-mock-data": "make run-cmd CMD=\"load-fixtures\"",
-    "postinstall": "cp patches/InstanceIdService.java node_modules/react-native-fcm/android/src/main/java/com/evollu/react/fcm/InstanceIdService.java"
+    "postinstall": "cp patches/InstanceIdService.java node_modules/react-native-fcm/android/src/main/java/com/evollu/react/fcm/InstanceIdService.java && cp patches/TagSelect.js node_modules/react-native-tag-select/src/TagSelect.js"
   },
   "dependencies": {
     "@segment/analytics-react-native": "^0.0.1-beta.3",
@@ -68,6 +68,8 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-star-rating": "^1.0.8",
     "react-native-svg": "^9.4.0",
+    "react-native-swiper": "^1.5.14",
+    "react-native-tag-select": "2.0.0",
     "react-native-text": "0.0.8",
     "react-native-timer": "^1.3.4",
     "react-native-vector-icons": "^4.4.2",
