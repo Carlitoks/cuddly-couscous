@@ -12,8 +12,13 @@ import {
   getProfileAsync
 } from "../../Ducks/UserProfileReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
+
+import {
+  updateUserProfilePhoto,
+  loadLinguistCallHistory,
+} from "../../Ducks/AccountReducer";
+
 import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
-import { loadLinguistCallHistory } from "../../Ducks/AccountReducer";
 
 import { Alert, AppState, NetInfo, ScrollView, Text, View } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -26,7 +31,7 @@ import moment from "moment";
 
 import styles from "./styles";
 import { Images } from "../../Themes";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiError } from "../../I18n/I18n";
 import { Sessions } from "../../Api";
 import { ensurePermissions } from "../../Util/Permission";
 import { PERMISSIONS } from "../../Util/Constants";
@@ -37,12 +42,14 @@ import CallNumber from "../../Components/UserAvatar/CallNumber";
 import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 
 class Home extends Component {
-  navigate = this.props.navigation.navigate;
 
-  state = {
-    appState: AppState.currentState
-  };
-
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      appState: AppState.currentState
+    }
+  }
 
   monitorConnectivity = connectionInfo => {
     if (connectionInfo.type !== "none") {
@@ -98,8 +105,7 @@ class Home extends Component {
         );
       }
     })
-
-
+    
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertCancelled
@@ -127,14 +133,17 @@ class Home extends Component {
   uploadAvatar(avatar) {
     if (avatar) {
       const { token, uuid } = this.props;
-      this.props.asyncUploadAvatar(uuid, avatar, token).then(response => {
-        this.props.getProfileAsync(uuid, token).then(response => {
-          this.props.updateView({
-            avatarBase64: avatar,
-            avatarURL: response.payload.avatarURL
-          });
-        });
+      this.props.updateUserProfilePhoto(avatar).catch((e) => {
+        Alert.alert(I18n.t("error"), translateApiError(e));
       });
+      // this.props.asyncUploadAvatar(uuid, avatar, token).then(response => {
+      //   this.props.getProfileAsync(uuid, token).then(response => {
+      //     this.props.updateView({
+      //       avatarBase64: avatar,
+      //       avatarURL: response.payload.avatarURL
+      //     });
+      //   });
+      // });
     }
   }
 
@@ -272,6 +281,9 @@ class Home extends Component {
 }
 
 const mS = state => ({
+  user: state.account.user,
+  linguistProfile: state.account.linguistProfile,
+
   available: state.profileLinguist.available,
   numberOfCalls: state.profileLinguist.numberOfCalls,
   linguistCalls: state.account.linguistCallHistory,
@@ -290,6 +302,8 @@ const mS = state => ({
 });
 
 const mD = {
+  updateUserProfilePhoto,
+
   updateSettings,
   asyncUploadAvatar,
   updateView,
