@@ -34,6 +34,25 @@ export default (reducer = (state, action) => {
       );
       break;
 
+    // This is here to reset the stack because you can log out from SettingsView.
+    // When that happens the app state is cleared, so if the Home screen is loaded
+    // in the background it will re-render with null references to the user
+    case "SettingsView": 
+      analytics.screen(action.type.toString());
+      recordNavigationEvent(action.type.toString());
+      newState = AppNavigation.router.getStateForAction(
+        NavigationActions.reset({
+          index: 0,
+          actions: [
+            NavigationActions.navigate({
+              routeName: "SettingsView",
+              params: action.params
+            })
+          ]
+        })
+      );
+      break;
+
     case "Home":
       analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
