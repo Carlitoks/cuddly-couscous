@@ -4,7 +4,6 @@ import { View } from "react-native";
 import HomeLinguist from "./Linguist/HomeLinguist";
 import CustomerHomeScreenRedesign from "../Containers/CustomerHome/CustomerHomeScreen";
 import { flushEvents } from "../Util/Forensics";
-import { loadUser } from "../Ducks/AccountReducer";
 
 class Home extends Component {
   constructor(props) {
@@ -20,9 +19,6 @@ class Home extends Component {
 
   componentDidMount() {
     flushEvents();
-
-    const useCache = !!this.props.linguistProfile ? false : true;
-    this.props.loadUser(useCache);
   }
 
   render() {
@@ -44,7 +40,6 @@ const mS = state => ({
 });
 
 const mD = {
-  loadUser
 };
 
 export default connect(

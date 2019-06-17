@@ -25,21 +25,26 @@ import { supportedLangCodes } from "../../Config/Languages";
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
-import { loadActiveSubscriptionPeriods } from "../../Ducks/AccountReducer";
 import { moderateScaleViewports } from "../../Util/Scaling";
 import HeaderMinutesLeft from "./Components/Partials/HeaderMinutesLeft";
 import { Colors } from "../../Themes";
+import { loadUser, loadActiveSubscriptionPeriods } from "../../Ducks/AccountReducer";
 
 const imgBackground = require("../../Assets/Images/Background.png");
 
 class CustomerHomeScreen extends Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     const {
       ensureSessionDefaults,
       newSession,
       clearEvents,
       navigation,
     } = this.props;
+
+    this.state = {
+      loading: false,
+    };
 
     ensureSessionDefaults({
       primaryLangCode: this.setPrimaryLangCode(),
@@ -55,6 +60,7 @@ class CustomerHomeScreen extends Component {
 
   componentDidMount() {
     const {
+      loadUser,
       loadSessionScenarios,
       loadActiveSubscriptionPeriods,
     } = this.props;
@@ -73,8 +79,14 @@ class CustomerHomeScreen extends Component {
       );
     }
 
-    loadSessionScenarios(true);
-    loadActiveSubscriptionPeriods(true);
+    this.setState({loading: true});
+    Promise.all([
+      loadSessionScenarios(true),
+      loadActiveSubscriptionPeriods(true),
+      loadUser(true),
+    ]).finally(() => {
+      this.setState({loading: false});
+    });
   }
 
   setPrimaryLangCode = () => {
@@ -155,6 +167,7 @@ const mD = {
   clearEvents,
   loadSessionScenarios,
   guessSecondaryLangCode,
+  loadUser,
   loadActiveSubscriptionPeriods,
 };
 

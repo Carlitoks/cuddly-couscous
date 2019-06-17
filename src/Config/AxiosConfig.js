@@ -36,8 +36,7 @@ export const getClient = () => {
   return client;
 }
 
-// NOTE: this does not work as expected for some reason - but it's exactly the same approach
-// I took in the web app, which works as expected
+// set the JWT token the API client should use on future requests
 export const setAuthToken = (str) => {
   if (str == null) {
     delete client.defaults.headers.common['Authorization'];
@@ -71,7 +70,7 @@ export const uploadBase64File = (method, path, fileData, fileName, mime) => {
   let token = getClient().defaults.headers.common['Authorization'];
 
   return RNFetchBlob.fetch(
-    method.toUpperCase(),
+    method.toLowerCase(),
     URL+path,
     {
       Authorization: `Bearer ${token}`,

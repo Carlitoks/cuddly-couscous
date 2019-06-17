@@ -350,7 +350,14 @@ export const loadLinguistMissedCallHistory = (useCache = true) => (dispatch, get
 };
 
 export const updateLinguistProfile = (payload) => (dispatch, getState) => {
-  return Promise.reject("not implemented");
+  return new Promise((resolve, reject) => {
+    api.patch(`${apiURL}/linguist-profile`, payload)
+    .then((res) => {
+      dispatch(setUser(res.data));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
 };
 
 const ACTIONS = {
