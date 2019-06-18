@@ -170,6 +170,11 @@ export const setUser = (user) => (dispatch, getState) => {
       d.hasUnlimitedUseUntil = unlimitedUseUntil;
     }
   }
+
+  // ensure linguist profile availability is actually set
+  if (!!d.linguistProfile) {
+    d.linguistProfile.available = !!d.linguistProfile.available;
+  }
   
   // TODO: process feature flags for active/prospective linguist
 

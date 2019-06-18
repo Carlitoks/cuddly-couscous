@@ -131,6 +131,13 @@ class Home extends Component {
     });
   }
 
+  changeStatus (status) {
+    this.setState({loading: true})
+    this.props.updateLinguistProfile({available: status}).finally(() => {
+      this.setState({loading: false});
+    });
+  }
+
   uploadAvatar(avatar) {
     if (avatar) {
       this.props.updateUserProfilePhoto(avatar).catch((e) => {
@@ -234,9 +241,9 @@ class Home extends Component {
           />
           <LinguistStatus
             status={available}
-            switchOnChange={status => this.props.changeStatus(status)}
-            switchValue={this.props.available}
-            loading={this.props.loading}
+            switchOnChange={status => this.changeStatus(status)}
+            switchValue={linguistProfile.available}
+            loading={this.state.loading}
           />
         </WavesBackground>
         <CallNumber
@@ -282,7 +289,6 @@ const mD = {
   updateUserProfilePhoto,
   updateLinguistProfile,
 
-  changeStatus,
   loadLinguistCallHistory,
   incomingCallNotification
 };
