@@ -237,10 +237,10 @@ class Home extends Component {
             avatarSource={this.selectImage()}
             avatarHeight={150}
             bigAvatar={true}
-            stars={rate ? rate : 0}
+            stars={user.averageStarRating ? user.averageStarRating : 0}
           />
           <LinguistStatus
-            status={available}
+            status={linguistProfile.available}
             switchOnChange={status => this.changeStatus(status)}
             switchValue={linguistProfile.available}
             loading={this.state.loading}

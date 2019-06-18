@@ -9,7 +9,6 @@ import networkInfo from "./NetworkInfoReducer";
 import payments from "./PaymentsReducer";
 import profileLinguist from "./ProfileLinguistReducer";
 import promoCode from "./PromoCodeReducer";
-import pushNotification from "./PushNotificationReducer";
 import registrationCustomer from "./RegistrationCustomerReducer";
 import resetPassword from "./ResetPasswordReducer";
 import sessionInfo from "./SessionInfoReducer";
@@ -36,7 +35,6 @@ const rootReducer = combineReducers({
   payments,
   profileLinguist,
   promoCode,
-  pushNotification,
   registrationCustomer,
   resetPassword,
   sessionInfo,

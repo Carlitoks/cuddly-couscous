@@ -23,7 +23,6 @@ import { init as initForensics, recordAppStateEvent, persistEvents, recordNetwor
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
 import { updateJeenieCounts, loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
-import SplashScreen from 'react-native-splash-screen';
 import { InitInstabug } from "./Settings/InstabugInit";
 import { clear as clearAccount, initializeUser, refreshDevice } from "./Ducks/AccountReducer";
 import { init as initAuth, clear as clearAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
@@ -155,41 +154,21 @@ class App extends Component {
         }
 
         return Promise.all(promises);
-      })
-      .then(() => {
-        this.setState({
-          loadingStore: false,
-        });
-        // Even Listener to Detect Network Change
-        NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
-
-        // We Get The Initial Network Information
-        return NetInfo.getConnectionInfo();
-      })
-      .then(connectionInfo => {
-        const { store } = this.state;
-
-        NetInfo.getConnectionInfo().then(connectionInfo => {
-          store.dispatch(delayUpdateInfo(connectionInfo));
-        });
-
-        // Even Listener to Detect Network Change
-        NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
-
-        this.updateAvailableAlert();
       }).then(() => {
         //Initializing instabug
-      const { store } = this.state;
-      const currentStore = store.getState();
-      InitInstabug(
-        currentStore.userProfile.firstName,
-        currentStore.userProfile.lastName,
-        currentStore.userProfile.preferredName,
-        currentStore.userProfile.linguistProfile,
-        currentStore.userProfile.email,
-        currentStore.auth.deviceId,
-        currentStore.currentSessionReducer.sessionID,
-        currentStore.events.id);
+        const { store } = this.state;
+        const currentStore = store.getState();
+        const user = !!currentStore.account && !!currentStore.account.user ? currentStore.account.user : {};
+        InitInstabug(
+          user.firstName,
+          user.lastName,
+          user.preferredName,
+          user.linguistProfile,
+          user.email,
+          currentStore.auth2.deviceID,
+          currentStore.currentSessionReducer.sessionID,
+          currentStore.events.id
+        );
         console.log("DONE");
       })
       .catch((e) => {
@@ -201,6 +180,7 @@ class App extends Component {
       // some services
       .finally(() => {
         this.setState({loadingStore: false});
+        this.updateAvailableAlert();
         const {store} = this.state;
         if (!store) {
           return;
