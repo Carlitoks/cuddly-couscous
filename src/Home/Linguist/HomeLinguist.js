@@ -229,7 +229,7 @@ class Home extends Component {
           leftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          navbarTitle={firstName + " " + lastName}
+          navbarTitle={user.firstName + " " + user.lastName}
         />
         <WavesBackground>
           <UserAvatar
