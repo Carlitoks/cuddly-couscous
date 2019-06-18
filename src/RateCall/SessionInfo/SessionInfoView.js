@@ -13,7 +13,6 @@ import moment from "moment";
 import I18n, { translateLanguage } from "../../I18n/I18n";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
-import { Languages } from "../../Config/Languages";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NavBar from "../../Components/NavBar/NavBar";
 import UserAvatar from "../../Components/UserAvatar/UserAvatar";
@@ -22,12 +21,6 @@ import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 class SessionInfoView extends Component {
   componentWillMount() {
     this.props.updateSessionInfo(this.props.navigation.state.params);
-  }
-
-  filterList(langCode) {
-    return Languages.filter(lang => {
-      return lang["3"] === langCode;
-    });
   }
 
   render() {
@@ -105,7 +98,7 @@ class SessionInfoView extends Component {
                     />
 
                     {/* Cost */}
-                    {!this.props.linguistProfile ? (
+                    {/* {!this.props.linguistProfile ? (
                       <ListItem
                         containerStyle={styles.listItemContainer}
                         hideChevron
@@ -117,7 +110,8 @@ class SessionInfoView extends Component {
                         }
                         rightTitleStyle={styles.listRightTitle}
                       />
-                    ) : null}
+                    ) : null} */}
+
                   </List>
                 </Grid>
               </Col>
@@ -132,7 +126,7 @@ class SessionInfoView extends Component {
 const mS = state => ({
   token: state.auth2.userJwtToken,
   sessionInfo: state.sessionInfo.info,
-  linguistProfile: state.userProfile.linguistProfile
+  linguistProfile: state.account.linguistProfile
 });
 
 const mD = {
