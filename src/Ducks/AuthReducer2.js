@@ -16,7 +16,6 @@ import { clear as clearCurrentSession } from "./CurrentSessionReducer";
 import { clear as clearNewSession } from "./NewSessionReducer";
 
 // deprecated reducers
-import { clearView as clearUserProfile } from "./UserProfileReducer";
 import { clear as clearOnboarding } from './OnboardingReducer';
 import { clearSettings as clearLinguistProfile } from "./ProfileLinguistReducer";
 
@@ -153,7 +152,6 @@ export const logOut = () => (dispatch, getState) => {
   dispatch(clearNewSession()); // clear new session reducer
 
   // clear depreacted reducers, TODO: remove this once feasible
-  dispatch(clearUserProfile());
   dispatch(clearLinguistProfile());
   dispatch(clearOnboarding());
 
