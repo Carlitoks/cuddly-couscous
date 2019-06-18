@@ -163,7 +163,7 @@ export const swapCurrentSessionLanguages = () => (dispatch, getState) => {
 // preselect a secondary language for the session based on the primary language, available
 // language config, and the users location, if available
 export const guessSecondaryLangCode = () => (dispatch, getState) => {
-  const {user} = getState().userProfile;
+  const {user} = getState().account;
   const {session} = getState().newSessionReducer;
   const {primaryLangCode} = session;
   let secondaryLangCode = false;
