@@ -95,7 +95,7 @@ class OnboardingScreen extends Component {
               <Text style={styles.titleText}>{I18n.t("newCustomerOnboarding.intro.title")}</Text>
             </View>
             <Text style={styles.subtitleText}>
-              {I18n.t("newCustomerOnboarding.intro.description", { num: customer_free_minutes })}
+              {I18n.t("newCustomerOnboarding.intro.description")}
             </Text>
             <View>
               <DotSteps navigation={navigation} />

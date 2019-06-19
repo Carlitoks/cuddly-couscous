@@ -943,7 +943,7 @@ export default (FR = {
     createAccount: "Créer un compte",
     intro: {
       title: "Aide en temps réel",
-      description: "Obtenez, en un clic, l'aide linguistique de traducteurs humains en direct, 24 h/24 et 7 j/7.  Tarif : 1 $ USD/min. Les {{num}} premières minutes sont GRATUITES.",
+      description: "Obtenez, en un clic, l'aide linguistique de traducteurs humains en direct, 24 h/24 et 7 j/7.  Tarif : 1 $ USD/min.",
       button: "Commencer"
     },
     location: {

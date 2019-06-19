@@ -943,7 +943,7 @@
     createAccount: "建立帳戶",
     intro: {
       title: "即時協助",
-      description: "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助。  費率：每分鐘 1 美元，前 {{num}} 分鐘免費。",
+      description: "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助。  費率：每分鐘 1 美元，",
       button: "開始使用"
     },
     location: {

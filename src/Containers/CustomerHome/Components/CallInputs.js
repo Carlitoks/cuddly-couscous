@@ -32,9 +32,6 @@ class CallInputs extends Component {
 
       return I18n.t("newCustomerHome.rateNotices.unlimitedUntil", {date: d});
     }
-    if (isNewUser) {
-      return I18n.t("newCustomerHome.rateNotices.beforeFirst", {num: CUSTOMER_FREE_MINUTES});
-    }
     if (availableMinutes) {
       if (stripePaymentToken) {
         return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: availableMinutes });

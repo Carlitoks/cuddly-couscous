@@ -943,7 +943,7 @@ export default (ESP = {
     createAccount: "Crear cuenta",
     intro: {
       title: "Asistencia en tiempo real",
-      description: "Acceda las 24 horas del día, los 7 días de la semana, a traductores en vivo para obtener ayuda con idiomas con solo tocar un botón.  Tarifa: $1 USD por minuto. Los primeros {{num}} minutos son GRATIS.",
+      description: "Acceda las 24 horas del día, los 7 días de la semana, a traductores en vivo para obtener ayuda con idiomas con solo tocar un botón.  Tarifa: $1 USD por minuto.",
       button: "Empezar"
     },
     location: {
