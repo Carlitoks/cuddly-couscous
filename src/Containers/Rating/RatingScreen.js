@@ -19,7 +19,7 @@ const WhatCouldBetter = [];
 class RatingScreen extends Component {
   constructor(props) {
     super(props);
-    const { session, user, token } = props.navigation.state.params;
+    const { session, user, isLinguist, token } = props.navigation.state.params;
     this.state = {
       index: 0,
       enableScroll: false,
@@ -27,8 +27,8 @@ class RatingScreen extends Component {
       session,
       user,
       token,
-      linguistProfile: user.linguistProfile || null,
-      customerName: `${user.firstName} ${user.lastName}`,
+      linguistProfile: isLinguist ,
+      customerName: isLinguist? `${user.firstName} `:`${user.firstName} ${user.lastInitial}` ,
       avatarURL: user.avatarURL,
       comment: "",
       thumbsUp: false,
