@@ -1979,7 +1979,7 @@ export const getLangForDeviceLocale = locale => {
 
 // city is an object returned in several places from the API
 export const getLangForCity = city => {
-  if (!!city.countryCode) {
+  if (!!city && !!city.countryCode) {
     return getLangForCountryCode(city.countryCode);
   }
   return false;
