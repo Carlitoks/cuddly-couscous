@@ -943,7 +943,7 @@ export default (DE = {
     createAccount: "Konto erstellen",
     intro: {
       title: "Echtzeit-Unterstützung",
-      description: "Per Knopfdruck rund um die Uhr Zugang zu menschlichen Übersetzern für Sprachhilfe in Echtzeit.  Tarif: 1 US-Dollar pro Minute. Erste {{num}} Min. KOSTENFREI.",
+      description: "Per Knopfdruck rund um die Uhr Zugang zu menschlichen Übersetzern für Sprachhilfe in Echtzeit.  Tarif: 1 US-Dollar pro Minute.",
       button: "Erste Schritte"
     },
     location: {

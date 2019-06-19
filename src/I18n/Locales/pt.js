@@ -943,7 +943,7 @@ export default (PT = {
     createAccount: "Criar conta",
     intro: {
       title: "Ajuda em tempo real",
-      description: "Acesso a tradutores humanos em tempo real 24 horas por dia, 7 dias por semana, para ajuda linguística em questão de segundos.  Taxa: US$ 1 por minuto. Primeiros {{num}} minutos GRATUITOS.",
+      description: "Acesso a tradutores humanos em tempo real 24 horas por dia, 7 dias por semana, para ajuda linguística em questão de segundos.  Taxa: US$ 1 por minuto.",
       button: "Como começar"
     },
     location: {

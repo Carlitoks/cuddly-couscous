@@ -915,7 +915,7 @@ export default (ENG = {
     intro: {
       title: "Real-time Assistance",
       description:
-        "24/7 access to live, human translators for language help at the tap of a button.  Rate: US$1 per min.  First {{num}} mins FREE.",
+        "24/7 access to live, human translators for language help at the tap of a button.  Rate: US$1 per min.",
       button: "Get Started"
     },
     location: {

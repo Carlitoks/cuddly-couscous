@@ -949,7 +949,7 @@ export default (IT = {
     intro: {
       title: "Assistenza in tempo reale",
       description:
-        "Accesso 24/7 a traduttori umani in tempo reale per assistenza linguistica semplicemente un pulsante.  Tariffa: US $1 al minuto. Primi {{num}} minuti GRATIS.",
+        "Accesso 24/7 a traduttori umani in tempo reale per assistenza linguistica semplicemente un pulsante.  Tariffa: US $1 al minuto.",
       button: "Inizia"
     },
     location: {

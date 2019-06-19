@@ -943,7 +943,7 @@ export default (KO = {
     createAccount: "계정 만들기",
     intro: {
       title: "실시간 지원",
-      description: "버튼 하나만 누르면 하루 24시간 액세스 가능한 실제 통역사가 언어 관련하여 도와드립니다.  요금: 분당 US$1. 처음 {{num}}분은 무료입니다.",
+      description: "버튼 하나만 누르면 하루 24시간 액세스 가능한 실제 통역사가 언어 관련하여 도와드립니다.  요금: 분당 US$1.",
       button: "시작하기"
     },
     location: {

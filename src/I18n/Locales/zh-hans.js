@@ -943,7 +943,7 @@
     createAccount: "创建帐户",
     intro: {
       title: "实时帮助",
-      description: "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助。  费率：每分钟 1 美元，前 {{num}} 分钟免费。",
+      description: "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助。  费率：每分钟 1 美元，",
       button: "开始使用"
     },
     location: {
