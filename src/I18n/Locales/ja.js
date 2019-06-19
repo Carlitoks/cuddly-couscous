@@ -579,12 +579,10 @@
       video: "ビデオ通話"
     },
     rateNotices: {
-      beforeFirst: "料金：1分あたり$1（米ドル） | 最初の{{num}}分は無料。",
-      afterFirst: "料金：1分あたり$1（米ドル） | 無料通話残り{{num}}分",
-      noBalanceNoCard: "料金：1分あたり$1（米ドル） | 続けるにはカードを追加してください",
-      noBalanceHasCard: "料金：1分あたり$1（米ドル）",
-      noBalanceHasCardPackage: "料金：1分あたり$1（米ドル） | 15%割引でパッケージをご購入ください。",
-      hasBalance: "料金：1分あたり$1（米ドル） | 残り時間：{{num}}分",
+      noBalanceNoCard: "料金：1分あたり¥120 | 続けるにはカードを追加してください",
+      noBalanceHasCard: "料金：1分あたり¥120",
+      noBalanceHasCardPackage: "料金：1分あたり¥120 | 15%割引でパッケージをご購入ください。",
+      hasBalance: "料金：1分あたり¥120 | 残り時間：{{num}}分",
       hasBalanceAutoreload: "料金：残り時間：{{num}}分"
     }
   },
@@ -600,7 +598,7 @@
     currentRate: "$1/分",
     currentBalance: "{{minutes}}分",
     enterPaymentToTalk:
-      "通話を続けるにはお支払い情報を入力してください。1分あたり$1で好きなだけお話いただけます。",
+      "通話を続けるにはお支払い情報を入力してください。1分あたり¥120で好きなだけお話いただけます。",
     currentRateDescription:
       "通話は1分あたり$1で、最長60分ご利用いただけます。長時間の通話に適用される割引は今後提供予定です。",
     addCard: "カードを追加",
@@ -943,7 +941,7 @@
     createAccount: "アカウントを作成",
     intro: {
       title: "リアルタイムのサポート",
-      description: "ボタンをタップするだけで、24時間リアルタイムで機械ではなく実際の通訳スタッフがサポートを提供いたします。  料金：1分あたり$1（米ドル）。",
+      description: "ボタンをタップするだけで、24時間リアルタイムで機械ではなく実際の通訳スタッフがサポートを提供いたします。  料金：1分あたり¥120。",
       button: "利用開始"
     },
     location: {
