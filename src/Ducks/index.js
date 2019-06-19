@@ -36,7 +36,6 @@ const rootReducer = combineReducers({
   resetPassword,
   sessionInfo,
   settings,
-  userProfile,
   newSessionReducer,
   onboardingReducer,
   LogicReducer,
