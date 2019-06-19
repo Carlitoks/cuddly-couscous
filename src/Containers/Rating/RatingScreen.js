@@ -28,7 +28,7 @@ class RatingScreen extends Component {
       user,
       token,
       linguistProfile: isLinguist ,
-      customerName: isLinguist? `${user.firstName} `:`${user.firstName} ${user.lastInitial}` ,
+      customerName: `${user.firstName}` ,
       avatarURL: user.avatarURL,
       comment: "",
       thumbsUp: false,
