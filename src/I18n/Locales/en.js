@@ -37,10 +37,6 @@ export default (ENG = {
   callLinguist: "Call a Linguist",
   calls: "Calls",
   callSettings: "Call Settings",
-  callTimeBoxTextLine1: "Enjoy Jeenie right now for FREE in \n celebration of our launch",
-  callTimeBoxTextLine2: "Pricing is $1/min \n and package discounts will be offered in the future",
-  callTimeButtonText: "minutes for FREE",
-  callTimeButtonSubtitle: "Compliments of Jeenie",
   callTimeMinutes: "Call Duration",
   callTimeMinutesSub: "Recommended for this situation",
   callTimeTitle: "Currently available in Mandarin and English.",
@@ -85,9 +81,7 @@ export default (ENG = {
   couldBetter: "What could be better?",
   countryFamiliarity: "Country Familiarity",
   cost: "Cost",
-  costPerMinute: "$1/min",
   create: "Create",
-  currency: "US$",
   customer: "Customer",
   customerSatisfied: "Was your customer satisfied?",
   describeAssistance: "How can we help you?",
@@ -138,10 +132,6 @@ export default (ENG = {
   extraTime3: "Your call will end in 2 minutes",
   extraTimeA1: "Yes, add 5 minutes",
   extraTimeA2: "No, end call when time is up",
-  fallPromotion:
-    " Fall Promotion: Receive  5 FREE minutes in your account when you  make a call with Jeenie.",
-  fallPromotionModal:
-    " Fall Promotion: Receive 5 FREE \nminutes in your account when \nyou make a call with Jeenie.",
   female: "Female",
   finish: "Finish",
   finishOnboarding: "Finish onboarding",
@@ -280,9 +270,6 @@ export default (ENG = {
   permissionDenied: "App Permission Denied",
   passwordMatch: "The passwords do not match.",
   passwordLengthValidation: "Password must be 8 or more characters.",
-  payAsYouGo: "Pay as you go",
-  payAsYouGoPricing: "Pay-as-you-go =",
-  payAsYouGoPricingUnder: " $1 per minute",
   paymentDetails: "Payment Details",
   paymentDetailsCreated: "Your payment information was successfully updated.",
   preferedNameTitle: "Preferred name",
@@ -343,7 +330,6 @@ export default (ENG = {
   tapRepeat: "Tap to repeat",
   thereNoInternetConnection: "There is no internet connection",
   time: "Time",
-  timeWithCost: "$1/min for additional time",
   timeStatic1: "Calls are preset to 8 minutes during the trial period.",
   timeCompliments: "Compliments of Jeenie",
   timeAddMore: "Each call has a maximum time of 60 mins.",
@@ -502,7 +488,6 @@ export default (ENG = {
     },
     account: {
       pricing: "pricing",
-      rate: "$1/min",
       unit: "minutes",
       add: "Add payment to make a call"
     },
@@ -541,8 +526,6 @@ export default (ENG = {
     },
     registrationWelcome: {
       balance: "{{num}} minutes",
-      title: "Your First {{num}} Minutes Are Free!",
-      description: "After your first {{num}} minutes, pricing is $1 USD per minute.",
       buttons: {
         dismiss: "Start Using Jeenie",
         payment: "Add Payment Information Now"
@@ -579,11 +562,8 @@ export default (ENG = {
       video: "Video Call"
     },
     rateNotices: {
-      beforeFirst: "Rate: US $1 per min. First {{num}} mins FREE.",
-      afterFirst: "Rate: US $1 per min. {{num}} FREE mins remaining",
       noBalanceNoCard: "Rate: US $1 per min. Please add card to continue",
       noBalanceHasCard: "Rate: US $1 per min.",
-      noBalanceHasCardPackage: "Rate: US $1 per min. Buy a package for 15% discount.",
       hasBalance: "Rate: US $1 per min. Balance: {{num}} mins",
       hasBalanceAutoreload: "Rate: {{num}}m remaining.",
       unlimitedUntil: "Unlimited use through {{date}}"
@@ -598,12 +578,9 @@ export default (ENG = {
 
   // text for customer related to payments and rates
   payments: {
-    currentRate: "$1/min",
     currentBalance: "{{minutes}} min",
     enterPaymentToTalk:
       "Enter payment details to keep talking. Talk as long as you like for $1/min.",
-    currentRateDescription:
-      "Calls are $1/min, and you can talk up to 60 minutes. Discounts for bulk minutes will be offered in the future.",
     addCard: "Add a Card",
     editCard: "Edit Card",
     cardInfo: "Card Info",
@@ -645,7 +622,6 @@ export default (ENG = {
   pricingModal: {
     title: "Pricing and Account Balance",
     titleNoMinutesNoCard: "Need more time with Jeenie?",
-    currentRate: "$1/min",
     currentBalance: "{{minutes}} minutes",
     buttons: {
       gotIt: "Got It!",
@@ -659,7 +635,6 @@ export default (ENG = {
     screenTitle: "Pricing & Account Balance",
     pricing: {
       title: "Pricing:",
-      rate: "$1 USD / Minute"
     },
     balance: {
       title: "Account Balance:",
@@ -675,14 +650,6 @@ export default (ENG = {
       descriptionLowMinutes:
         "Your account balance is low. To avoid being disconnected during your next call, add payment information now.",
       descriptionNoMinutes: "You must add payment information in order to continue."
-    },
-    descriptions: {
-      hasMinutesAndCard:
-        "If you run out of minutes, we will automatically charge your card $1 USD per minute to avoid disconnecting your call.",
-      hasMinutesNoCard:
-        "To keep talking beyond your remaining minutes, enter payment information now.",
-      noMinutesHasCard: "We will automatically charge your card $1 USD per minute.",
-      noMinutesNoCard: "To connect to a linguist, you must add payment information now."
     },
     buttons: {
       continue: "Continue",
@@ -871,7 +838,6 @@ export default (ENG = {
   customerOnboarding: {
     welcome: "Welcome to Jeenie",
     connectToLinguist: "Connect Now",
-    tenFreeMinutes: "{{time}} FREE Minutes",
     canIHelpYou: "Can I help you?",
     homeCanIhelpYou: "Can I help you, {{name}}?",
     intro: {
