@@ -46,7 +46,7 @@ class CallTags extends Component {
           return whatWasGood.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
         }
       }
-      return whatWasGood.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
+      return whatWasGood.push({...item, id: i + 1, label: I18n.t(item.i18nKey) });
     });
     this.setState({ whatWasGood, couldBeBetter });
   }
