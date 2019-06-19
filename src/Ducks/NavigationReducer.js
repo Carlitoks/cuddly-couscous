@@ -100,6 +100,7 @@ export default (reducer = (state, action) => {
 
     case "RegisterView":
       analytics.screen(action.type.toString());
+      analytics.track("Product Added");
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
