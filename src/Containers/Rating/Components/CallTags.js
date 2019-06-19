@@ -33,7 +33,7 @@ class CallTags extends Component {
           return couldBeBetter.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
         }
       }
-      return couldBeBetter.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
+      return couldBeBetter.push({ ...item , id: i + 1, label: I18n.t(item.i18nKey)});
     });
 
     GoodIcons.map((item, i) => {
