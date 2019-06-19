@@ -721,7 +721,8 @@ class SessionView extends Component {
           this.endingCall = false;
           this.props.navigation.dispatch({type: (!!target) ? target : this.chooseSessionEndedView(true), params: {
               session: this.props.session,
-              user: this.props.user,
+              user: this.props.remoteUser,
+              isLinguist: this.props.isLinguist,
               token: this.props.token
             }});
         });
@@ -740,7 +741,8 @@ class SessionView extends Component {
       this.cleanup();
       this.props.navigation.dispatch({type: this.chooseSessionEndedView(false), params: {
         session: this.props.session,
-        user: this.props.user,
+        user: this.props.remoteUser,
+        isLinguist: this.props.isLinguist,
         token: this.props.token
         }});
     });
