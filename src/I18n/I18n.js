@@ -157,3 +157,56 @@ export const translateApiError = (e, i18nDefaultKey) => {
 
   return I18n.t('api.errUnexpected');
 }
+
+// Localize Currency
+// all price objects have the following format:
+//
+// let price = {
+//   amount: 120,
+//   currency: "jpy" - lowerCase()
+// };
+
+// converts a price IF POSSIBLE, otherwise original is returned.  Returns an object because
+// both amount and currencyCode need to be returned
+export const convertPrice = (price, targetCurrencyCode, conversionMap = null, exchangeRates = null) => {
+  // is there an explicit mapping to the cost in another currency?
+
+  //sanitize object
+  price.currency = price.currency.toLowerCase();
+
+  if (!!conversionMap && !!conversionMap[targetCurrencyCode]) {
+      return {
+          currency: targetCurrencyCode,
+          amount: conversionMap[targetCurrencyCode]
+      };
+  }
+
+  // otherwise do we have an exchange rate we should convert with?
+  if (!!exchangeRates && !!exchangeRates[price.currency] && !!exchangeRates[price.currency][targetCurrencyCode]) {
+      return {
+          currency: targetCurrencyCode,
+          amount: price.amount * exchangeRates[price.currency][targetCurrencyCode]
+      };
+  }
+
+  // otherwise we couldn't convert it, so return the original
+  return price;
+};
+
+// convert and translate a price to an actual display string
+export const localizePrice = (price) => {
+  //sanitize object
+  price.currency = price.currency.toLowerCase();
+
+  // some currencies have to be converted for display
+  const displayOps = {
+      usd: (amount) => amount/100,
+      jpy: (amount) => amount,
+  };
+
+  let num = price.amount
+  if (!!displayOps[price.currency]) {
+    num = Number(displayOps[price.currency](num)).toLocaleString(price.currency);
+  }
+  return i18n.t(`cost.${price.currency}`, {num});
+};

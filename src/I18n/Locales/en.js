@@ -949,6 +949,13 @@ export default (ENG = {
     }
   },
 
+  // for localizing currency
+  cost: {
+    usd: "US${num}",
+    jpy: "¥{num}",
+    eur: "€{num}"
+  },
+
   // for use during primary language selection
   languagesList: {
     eng: "English",
