@@ -86,7 +86,7 @@ class PickerSelectComponent extends Component {
             nunmberOfLines={1}
             style={selectedLabelStyle || styles.inputValue}
           >
-            { selectedScenario ? selectedScenario.title : placeholder }
+            {selectedScenario ? translateProperty(selectedScenario, "title") : placeholder }
           </Text>
         </View>
       );
