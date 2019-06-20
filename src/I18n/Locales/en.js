@@ -675,7 +675,8 @@ export default (ENG = {
     balance: "{{}} min",
     balanceUnlimited: "Unlimited Usage",
     validBetween: "Valid: {{date1}} - {{date2}}",
-    validThrough: "Valid through: {{date}}"
+    validThrough: "Valid through: {{date}}",
+    special: "Special"
   },
 
   operatingHours: {
