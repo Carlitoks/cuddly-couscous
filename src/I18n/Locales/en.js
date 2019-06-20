@@ -565,7 +565,9 @@ export default (ENG = {
       noBalanceNoCard: "Rate: US $1 per min. Please add card to continue",
       noBalanceHasCard: "Rate: US $1 per min.",
       hasBalance: "Rate: US $1 per min. Balance: {{num}} mins",
-      hasBalanceAutoreload: "Rate: {{num}}m remaining.",
+      noBalanceNoCardRate: "Rate: {{rate}} per min. Please add card to continue",
+      noBalanceHasCardRate: "Rate: {{rate}} per min.",
+      hasBalanceRate: "Rate: {{rate}} per min. Balance: {{num}} mins",
       unlimitedUntil: "Unlimited use through {{date}}"
     }
   },
@@ -581,6 +583,8 @@ export default (ENG = {
     currentBalance: "{{minutes}} min",
     enterPaymentToTalk:
       "Enter payment details to keep talking. Talk as long as you like for $1/min.",
+    enterPaymentToTalkRate:
+      "Enter payment details to keep talking. Talk as long as you like for {{rate}}/min.",
     addCard: "Add a Card",
     editCard: "Edit Card",
     cardInfo: "Card Info",
@@ -917,6 +921,8 @@ export default (ENG = {
       title: "Real-time Assistance",
       description:
         "24/7 access to live, human translators for language help at the tap of a button.  Rate: US$1 per min.",
+      descriptionRate:
+        "24/7 access to live, human translators for language help at the tap of a button.  Rate: {{rate}} per min.",
       button: "Get Started"
     },
     location: {
