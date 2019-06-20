@@ -50,9 +50,16 @@ const initState = () => ({
   linguistMissedCallHistoryLoadedAt: null,
   linguistMissedCallHistory: [],
 
-  // minute packages available for purchase by the user
-  availableMinutePackagesLoadedAt: null,
-  availableMinutePackages: []
+  // minute packages available for purchase by the user. if
+  // a promo code was used to load them, it may contain packages
+  // only visible because of the promo code, or have applied discounts
+  // to specific packages
+  minutePackagesLoadedAt: null,
+  minutePackages: [],
+
+  // a promocode for minute packages, it may apply discounts
+  // to existing packages, or make new packages available to see
+  minutePackagePromoCode: null
 });
 
 // given a user, do they have unlimited use right now based on
@@ -331,6 +338,43 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
         hasUnlimitedUseUntil: unlimitedUseUntil
       }));
       resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// load minute package promo code, or return error if it was invalid or failed to load
+export const loadMinutePackages = (useCache = true, code = null) => (dispatch, getState) => {
+
+  if (useCache && !code && new Date().getTime() < minutePackagesLoadedAt + CACHE.MINUTE_PACKAGES) {
+    return Promise.resolve(getState().account.minutePackages);
+  }
+
+  return new Promise((resolve, reject) => {
+    api.get(`/minute-packages?promoCode=${code}`)
+    .then((res) => {
+      dispatch(merge({
+        minutePackagesLoadedAt: new Date().getTime(),
+        minutePackages: res.data,
+        minutePackagePromoCode: !!code ? code : null,
+      }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// just clears any promo-code and 
+export const clearMinutePackagePromoCode = () => (dispatch, getState) => {
+  return dispatch(loadMinutePackages(false));
+};
+
+// purchase a minute package, optionally using a promocode
+export const purchaseMinutePackage = (payload) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.post(apiURL+"/billing/minute-packages", payload)
+    .then((res) => {
+      return dispatch(loadUser(false));
     })
     .catch(reject);
   });
