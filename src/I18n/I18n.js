@@ -202,6 +202,9 @@ export const localizePrice = (price) => {
   const displayOps = {
       usd: (amount) => amount/100,
       jpy: (amount) => amount,
+      gbp: (amount) =>  amount/100,
+      eur: (amount) =>  amount/100,
+      cny: (amount) =>  amount/100,
   };
 
   let num = price.amount

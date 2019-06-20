@@ -411,6 +411,7 @@ export default (ENG = {
   actions: {
     accept: "Accept",
     agree: "Agree",
+    apply: "Apply",
     back: "Back",
     cancel: "Cancel",
     choose: "Choose",
@@ -609,6 +610,74 @@ export default (ENG = {
     }
   },
 
+  // displayed in account details section
+  account: {
+    title: "Account Details",
+    balance: "Balance",
+    balanceNum: "{{num}} min",
+    balanceUnlimited: "Unlimited",
+    descriptions: {
+      noCardNoPackage: "Enter payment details to avoid call interruption.",
+      hasCardNoPackage: "Purchase a package to talk for less. Minutes never expire.",
+      hasCardHasPackage: "Your account will automatically reload when your balance is {{num}} min",
+      hasPackageUnlimitedUse: "Your package grants you unlimited use through {{date}}",
+      hasUnlimitedUse: "You have unlimited use through {{date}}",
+      hasSubscription: "Your subscription renews on {{date}}"
+    },
+    card: {
+      title: "Credit Card",
+      add: "Add Card",
+      edit: "Edit",
+      description: "Enter your card to talk as long as you like, or purchase a package.  Standard per-minute rate: {{rate}}"
+    },
+    package: {
+      title: "Package",
+      add: "Add Package",
+      remove: "Remove",
+      more: "View More Packages",
+      description: "Purchase more minutes for less.  With autoreload, you won't ever run out of time."
+    },
+  },
+
+  // shown on checkout screen when purchasing a package
+  packages: {
+    noExpire: "Your minutes never expire.",
+    browse: {
+      title: "Package",
+      promo: "Have a Promo Code?",
+      promoPlaceholder: "Enter Code Here",
+      promoApplied: "Code applied"
+    },
+    checkout: {
+      title: "Checkout",
+      reload: "Automatically reload my account when my balance is {{num}} min",
+      needCard: "You must add your card to proceed with payment.",
+      summary: "Order Summary",
+      total: "Total",
+      purchase: "Purchase Package",
+      processing: "Processing Payment..."
+    },
+    success: {
+      title: "Payment Successful",
+      description: "The package has been added to your account",
+      withReload: "with autoreload",
+      withoutReload: "without autoreload",
+      balance: "Balance:"
+    },
+    failure: {
+      title: "Payment Failed",
+      description: "Oops! We couldn't process your payment.  Please verify your card information and try again."
+    }
+  },
+
+  // related to the display of a specific minute package
+  minutePackage: {
+    balance: "{{}} min",
+    balanceUnlimited: "Unlimited Usage",
+    validBetween: "Valid: {{date1}} - {{date2}}",
+    validThrough: "Valid through: {{date}}"
+  },
+
   operatingHours: {
     title: "Availability: {{lang}}",
     description: "Language Jeenies are available between {{beginHour}} and {{endHour}}.",
@@ -682,7 +751,8 @@ export default (ENG = {
     errPaymentDetailsRequired: "Payment details are required to proceed.",
     errEventTimeExpired: "No time remaining for this code.",
     errEventAlreadyUsed: "This code has already been used.",
-    errLocationRestricted: "Jeenie is not currently available in your area."
+    errLocationRestricted: "Jeenie is not currently available in your area.",
+    errInvalidPromoCode: "Invalid promo code"
   },
 
   // used when handling user input related to specific fields - these
@@ -957,9 +1027,11 @@ export default (ENG = {
 
   // for localizing currency
   cost: {
-    usd: "US${num}",
-    jpy: "¥{num}",
-    eur: "€{num}"
+    usd: "US${{num}}",
+    jpy: "JP¥{{num}}",
+    eur: "€{{num}}",
+    gbp: "£{{num}}",
+    cny: "CN¥{{num}}"
   },
 
   // for use during primary language selection

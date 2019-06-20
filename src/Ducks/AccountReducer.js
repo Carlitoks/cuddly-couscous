@@ -38,6 +38,11 @@ const initState = () => ({
   hasUnlimitedUse: false,
   hasUnlimitedUseUntil: false,
 
+  // user may have a minute package that reloads, or
+  // a recurring subscription
+  autoreloadMinutePackage: null,
+  subscribedMinutePackage: null,
+
   // calls the user made as a customer
   customerCallHistoryLoadedAt: null,
   customerCallHistory: [],
@@ -190,6 +195,8 @@ export const setUser = (user) => (dispatch, getState) => {
       d.hasUnlimitedUseUntil = unlimitedUseUntil;
     }
   }
+  d.autoreloadMinutePackage = user.autoreloadMinutePackage;
+  d.subscribedMinutePackage = user.subscribedMinutePackage;
 
   // ensure linguist profile availability is actually set
   if (!!d.linguistProfile) {
