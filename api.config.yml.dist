@@ -7,13 +7,14 @@ APP_LINGUIST_LANGS: ["eng","cmn","yue","jpn"]
 APP_LINGUIST_LANG_PAIRS: ["cmn-eng","eng-yue","eng-jpn"]
 APP_LOCALIZATIONS: ["en","zh-hans","zh-hant","ja","es"] # note that "en" should always be first in the list, as it is the default fallback
 
+#CURRENCY
+CURRENCY_SUPPORTED: ["jpy", "usd"]
+CURRENCY_COUNTRY_DEFAULTS: {"jp": "jpy","us": "usd"}
+CURRENCY_EXCHANGE_RATES: {"jpy":{"usd": 0.0092},"usd":{"jpy": 120.000}}
+CURRENCY_PAY_AS_YOU_GO_RATE: {"jpy": 120, "usd": 100}
+
 SURVEY_MONKEY_CUSTOMER_SURVEY: "protocol://fqdn.url"
 SURVEY_MONKEY_LINGUIST_SURVEY: "protocol://fqdn.url"
-
-MOBILE_APP_CUSTOMER_REQUIRED_VERSION: ""
-MOBILE_APP_CUSTOMER_SUGGESTED_VERSION: ""
-MOBILE_APP_LINGUIST_REQUIRED_VERSION: ""
-MOBILE_APP_LINGUIST_SUGGESTED_VERSION: ""
 
 CLUSTER_LOADBALANCER_SOURCE_IP_ADDRESSES: [] #leave this alone for dev
 COUNTRY_CODE_BLACKLIST: []
@@ -52,6 +53,7 @@ WEBAPP_URL_RESET_PASSWORD: http://localhost:3003/#/password/reset
 
 EMAIL_ENABLED: false
 EMAIL_FROM_ADDRESS: no-reply@example.com
+EMAIL_FROM_SURVEY: info@example.com
 EMAIL_USER: user@example.com
 EMAIL_PASS: user-email-password
 EMAIL_PORT: "587"
@@ -111,3 +113,5 @@ DAILY_ACTIVITY_REPORT: ["Google Sheet ID", "TAB ID"]
 ONVOY_LINGUIST_SIGNUP: ["Google Sheet ID", "TAB ID"]
 DAR_TEST: ["Google Sheet ID","TAB ID"]
 DAILY_CUSTOMER_CALL_REPORT: ["Google Sheet ID", "TAB ID"]
+LINGUIST_HOURLY_REPORT: ["Google Sheet ID","TAB ID"]
+USER_EMAIL_CAMPAIGNS_REPORT: ["Google Sheet ID","TAB ID"]
