@@ -2,7 +2,6 @@ import { combineReducers } from "redux";
 
 import events from "./EventsReducer";
 import forgotPassword from "./ForgotPasswordReducer";
-import login from "./LoginReducer";
 import nav from "./NavigationReducer";
 import networkErrors from "./NetworkErrorsReducer";
 import networkInfo from "./NetworkInfoReducer";
@@ -25,7 +24,6 @@ const rootReducer = combineReducers({
   appConfigReducer,
   events,
   forgotPassword,
-  login,
   nav,
   networkErrors,
   networkInfo,
