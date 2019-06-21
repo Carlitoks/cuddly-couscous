@@ -17,7 +17,6 @@ import { clear as clearNewSession } from "./NewSessionReducer";
 
 // deprecated reducers
 import { clear as clearOnboarding } from './OnboardingReducer';
-import { clearSettings as clearLinguistProfile } from "./ProfileLinguistReducer";
 
 // The purpose of this is to manage the core actions of registering a device
 // and logging a user in and out.
@@ -152,7 +151,6 @@ export const logOut = () => (dispatch, getState) => {
   dispatch(clearNewSession()); // clear new session reducer
 
   // clear depreacted reducers, TODO: remove this once feasible
-  dispatch(clearLinguistProfile());
   dispatch(clearOnboarding());
 
   // reconfigure other stuff in the system

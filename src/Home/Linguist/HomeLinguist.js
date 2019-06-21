@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InCallManager from "react-native-incall-manager";
-import {
-  changeStatus,
-} from "../../Ducks/ProfileLinguistReducer";
+import moment from "moment";
 
 import {
   loadUser,
@@ -21,7 +19,6 @@ import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 
-import moment from "moment";
 
 import styles from "./styles";
 import { Images } from "../../Themes";
@@ -34,6 +31,7 @@ import UserAvatar from "../../Components/UserAvatar/UserAvatar";
 import LinguistStatus from "../../Components/UserAvatar/LinguistStatus";
 import CallNumber from "../../Components/UserAvatar/CallNumber";
 import WavesBackground from "../../Components/UserAvatar/WavesBackground";
+import { formatTimerSeconds } from "../../Util/Format";
 
 class Home extends Component {
 
@@ -52,6 +50,7 @@ class Home extends Component {
     }
   };
 
+  // TODO: refactor to use api directly
   getCurrentUnansweredCalls = async () => {
     const invitations = await Sessions.GetInvitations(
       this.props.uuid,
@@ -211,17 +210,23 @@ class Home extends Component {
     }
   };
 
+  calculateAmount (calls = []) {
+    let seconds = 0;
+    calls.forEach((call) => {
+      seconds += call.duration;
+    });
+    return formatTimerSeconds(seconds);
+  }
+
   render() {
     const {
       user,
       linguistProfile,
-
-      amount,
-      numberOfCalls,
       linguistCalls
     } = this.props;
 
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
+    const amount = this.calculateAmount(allCalls);
 
     return (
       <View style={styles.scrollContainer}>
@@ -247,7 +252,7 @@ class Home extends Component {
           />
         </WavesBackground>
         <CallNumber
-          calls={numberOfCalls}
+          calls={allCalls.length}
           amount={amount}
         />
           <Text style={styles.recentCallsTitle}>{I18n.t("recentCalls")}</Text>
@@ -275,11 +280,7 @@ const mS = state => ({
   user: state.account.user,
   linguistProfile: state.account.linguistProfile,
   avatarURL: state.account.userAvatarURL,
-
-  numberOfCalls: state.profileLinguist.numberOfCalls,
   linguistCalls: state.account.linguistCallHistory,
-  amount: state.profileLinguist.amount,
-  status: state.profileLinguist.status,
   uuid: state.auth2.userID,
   token: state.auth2.userJwtToken,
 });

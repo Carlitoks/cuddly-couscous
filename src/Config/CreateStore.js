@@ -44,7 +44,6 @@ const getStore = () =>
         saveState({
           settings: state.settings,
           auth2: state.auth2,
-          profileLinguist: state.profileLinguist,
           appConfigReducer: state.appConfigReducer,
           appState: state.appState,
           account: state.account,
@@ -73,7 +72,6 @@ const sanitizeInitialState = (state = {}) => {
   const allowedKeys = [
     'settings',
     'auth2',
-    'profileLinguist',
     'appConfigReducer',
     'appState',
     'account',
