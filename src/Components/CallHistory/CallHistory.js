@@ -83,7 +83,7 @@ export default class CallHistoryComponent extends Component {
                     if (!item.chevron)
                       navigation.dispatch({
                         type: "SessionDetails",
-                        params: item
+                        params: {call: item}
                       });
                   }}
                 />

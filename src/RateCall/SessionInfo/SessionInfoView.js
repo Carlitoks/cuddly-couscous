@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { GetInfo, updateSessionInfo } from "../../Ducks/SessionInfoReducer";
-
 import { ScrollView, Text, View } from "react-native";
 
 import { List, ListItem } from "react-native-elements";
@@ -19,12 +17,9 @@ import UserAvatar from "../../Components/UserAvatar/UserAvatar";
 import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 
 class SessionInfoView extends Component {
-  componentWillMount() {
-    this.props.updateSessionInfo(this.props.navigation.state.params);
-  }
 
   render() {
-    const { sessionInfo } = this.props;
+    const { sessionInfo } = this.navigation.state.params.call;
     let primaryLang = translateLanguage(sessionInfo.primaryLangCode);
     let secondLang = translateLanguage(sessionInfo.secondaryLangCode);
 
@@ -97,21 +92,6 @@ class SessionInfoView extends Component {
                       rightTitleStyle={styles.listRightTitle}
                     />
 
-                    {/* Cost */}
-                    {/* {!this.props.linguistProfile ? (
-                      <ListItem
-                        containerStyle={styles.listItemContainer}
-                        hideChevron
-                        subtitle={I18n.t("cost").toUpperCase()}
-                        subtitleStyle={styles.titleStyle}
-                        rightTitle={"$ 0.00"}
-                        rightTitleContainerStyle={
-                          styles.listRightTitleContainer
-                        }
-                        rightTitleStyle={styles.listRightTitle}
-                      />
-                    ) : null} */}
-
                   </List>
                 </Grid>
               </Col>
@@ -124,14 +104,9 @@ class SessionInfoView extends Component {
 
 // to be used when we have the Endpoint
 const mS = state => ({
-  token: state.auth2.userJwtToken,
-  sessionInfo: state.sessionInfo.info,
-  linguistProfile: state.account.linguistProfile
 });
 
 const mD = {
-  GetInfo,
-  updateSessionInfo
 };
 
 export default connect(
