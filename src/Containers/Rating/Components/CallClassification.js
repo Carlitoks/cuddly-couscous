@@ -22,7 +22,8 @@ class CallClassification extends Component {
 
   componentWillMount() {
     const callClassification = [];
-    CallClassificationIcons.map(item => callClassification.push({ ...item }));
+    CallClassificationIcons.map((item, i) =>
+      callClassification.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) }));
     this.setState({ callClassification });
   }
 

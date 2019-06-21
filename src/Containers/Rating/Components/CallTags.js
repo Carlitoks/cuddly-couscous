@@ -30,10 +30,10 @@ class CallTags extends Component {
           && item.IconName !== "professionalism"
           && item.IconName !== "language"
         ) {
-          return couldBeBetter.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
+          return couldBeBetter.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) });
         }
       }
-      return couldBeBetter.push({ ...item , id: i + 1, label: I18n.t(item.i18nKey)});
+      return couldBeBetter.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey)});
     });
 
     GoodIcons.map((item, i) => {
@@ -43,10 +43,10 @@ class CallTags extends Component {
           && item.IconName !== "professionalism"
           && item.IconName !== "language"
         ) {
-          return whatWasGood.push({ id: i + 1, label: I18n.t(item.i18nKey), ...item });
+          return whatWasGood.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) });
         }
       }
-      return whatWasGood.push({...item, id: i + 1, label: I18n.t(item.i18nKey) });
+      return whatWasGood.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) });
     });
     this.setState({ whatWasGood, couldBeBetter });
   }
