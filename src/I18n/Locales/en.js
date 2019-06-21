@@ -639,6 +639,16 @@ export default (ENG = {
     },
   },
 
+  // there may be more than one way we refer to promo codes the user can
+  // scan or enter, here is some alternate terminology
+  codes: {
+    promo: "Promo Code",
+    discount: "Discount Code",
+    event: "Event Code",
+    action: "Action Code",
+    universal: "Universal Code",
+  },
+
   // shown on checkout screen when purchasing a package
   packages: {
     noExpire: "Your minutes never expire.",
