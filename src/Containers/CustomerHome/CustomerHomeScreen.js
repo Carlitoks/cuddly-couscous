@@ -65,20 +65,6 @@ class CustomerHomeScreen extends Component {
       loadActiveSubscriptionPeriods,
     } = this.props;
 
-
-    if (this.props.navigation.state.params && this.props.navigation.state.params.usageError) {
-      Alert.alert(I18n.t("invalidCode"), this.props.navigation.state.params.usageError);
-    }
-    if (this.props.navigation.state.params && this.props.navigation.state.params.minutesGranted) {
-      Alert.alert(
-        I18n.t("minutesAdded"),
-        I18n.t("complimentMinutes", {
-          maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
-          organizer: this.props.navigation.state.params.organization,
-        }),
-      );
-    }
-
     this.setState({loading: true});
     Promise.all([
       loadSessionScenarios(true),

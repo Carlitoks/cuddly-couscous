@@ -59,10 +59,6 @@ class ForgotPasswordScreen extends Component {
       formHasErrors: !valid,
     };
 
-    if (!valid) {
-      // displayFormErrors(updates.emailErrorMessage);
-    }
-
     this.props.updateForm(updates);
     return valid;
   }
