@@ -36,7 +36,6 @@ class PromoCodeView extends Component {
     .then((res) => {
       this.setState({loading: false});
 
-      console.log(res.data);
       const data = res.data;
 
       // handle potential usage error first
