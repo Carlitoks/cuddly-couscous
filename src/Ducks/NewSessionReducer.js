@@ -106,7 +106,7 @@ const guessPrimaryLangCode = (primaryLangCode, nativeLangCode, settings) => {
     if(settings.userLocaleSet)
       return LocaleLangMap[settings.interfaceLocale["1"]] || "eng";
   if (nativeLangCode) {
-    return supportedLangCodes.includes(nativeLangCode);
+    return LocaleLangMap[nativeLangCode] || "eng";
   }
   return "eng";
 };
