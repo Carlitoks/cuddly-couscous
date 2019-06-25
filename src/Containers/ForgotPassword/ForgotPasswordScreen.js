@@ -16,8 +16,7 @@ import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import styles from "./Styles/ForgotPasswordScreenStyles";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import NavBar from "../../Components/NavBar/NavBar";
-import { Auth } from "../../Api";
-import { clearForm, updateForm } from "../../Ducks/ForgotPasswordReducer";
+import api from "../../Config/AxiosConfig";
 import { moderateScaleViewports } from "../../Util/Scaling";
 
 class ForgotPasswordScreen extends Component {
@@ -26,11 +25,18 @@ class ForgotPasswordScreen extends Component {
     this.state = {
       loading: false,
       error: null,
+      email: "",
+      emailErrorMessage: "",
+      formHasErrors: false,
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.validateForm();
+  }
+
+  reset () {
+    this.setState({email: "", emailErrorMessage: "", formHasErrors: false});
   }
 
   validateForm() {
@@ -38,7 +44,7 @@ class ForgotPasswordScreen extends Component {
     let updates = {};
     let valid = true;
 
-    if (!patt.test(this.props.email)) {
+    if (!patt.test(this.state.email)) {
       updates = {
         ...updates,
         emailErrorMessage: I18n.t("noValidEmail"),
@@ -46,7 +52,7 @@ class ForgotPasswordScreen extends Component {
       valid = false;
     }
 
-    if (!this.props.email) {
+    if (!this.state.email) {
       updates = {
         ...updates,
         emailErrorMessage: I18n.t("enterEmailField"),
@@ -59,13 +65,13 @@ class ForgotPasswordScreen extends Component {
       formHasErrors: !valid,
     };
 
-    this.props.updateForm(updates);
+    this.setState(updates);
     return valid;
   }
 
   submit() {
     this.setState({ loading: true });
-    Auth.resetPassword(this.props.email)
+    api.get(`/auth/password-reset/${this.state.email}`)
       .then((response) => {
         Alert.alert(I18n.t("forgotPassword.alertSuccessTitle"), I18n.t("forgotPassword.alertSuccessBody"), [
           { text: I18n.t("actions.ok"), onPress: () => this.props.navigation.dispatch({ type: "IntroView" }) },
@@ -80,18 +86,18 @@ class ForgotPasswordScreen extends Component {
         }
       })
       .finally(() => {
-        this.props.clearForm();
+        this.reset();
         this.setState({ loading: false });
       });
   }
 
   validateEmail = () => {
     const patt = new RegExp(EMAIL_REGEX);
-    return !patt.test(this.props.email);
+    return !patt.test(this.state.email);
   };
 
   renderInputStyle = () => {
-    if (this.props.formHasErrors && this.props.email.length > 0) {
+    if (this.state.formHasErrors && this.state.email.length > 0) {
       return [styles.emailInput, styles.emailInputError];
     }
     if (this.state.error !== null) {
@@ -102,12 +108,13 @@ class ForgotPasswordScreen extends Component {
 
   render() {
     const {
-      updateForm,
       navigation,
+    } = this.props;
+    const {
       email,
       formHasErrors,
       emailErrorMessage,
-    } = this.props;
+    } = this.state;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer} keyboardVerticalOffset={moderateScaleViewports(60)} enabled>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -129,7 +136,7 @@ class ForgotPasswordScreen extends Component {
                 <TextInput
                   value={email}
                   keyboardType="email-address"
-                  onChangeText={async (text) => { await updateForm({ email: text }); await this.validateForm(); }}
+                  onChangeText={(text) => { this.setState({ email: text }, () => { this.validateForm(); }) }}
                   placeholderTextColor="#B6B5BB"
                   placeholder={I18n.t("fields.email.label")}
                   style={this.renderInputStyle()}
@@ -155,14 +162,9 @@ class ForgotPasswordScreen extends Component {
 }
 
 const mS = state => ({
-  email: state.forgotPassword.email,
-  formHasErrors: state.forgotPassword.formHasErrors,
-  emailErrorMessage: state.forgotPassword.emailErrorMessage,
 });
 
 const mD = {
-  clearForm,
-  updateForm,
 };
 
 export default connect(

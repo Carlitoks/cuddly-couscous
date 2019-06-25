@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 
-import forgotPassword from "./ForgotPasswordReducer";
 import nav from "./NavigationReducer";
 import payments from "./PaymentsReducer";
 import settings from "./SettingsReducer";
