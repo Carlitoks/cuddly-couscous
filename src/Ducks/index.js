@@ -6,7 +6,6 @@ import nav from "./NavigationReducer";
 import networkErrors from "./NetworkErrorsReducer";
 import networkInfo from "./NetworkInfoReducer";
 import payments from "./PaymentsReducer";
-import promoCode from "./PromoCodeReducer";
 import resetPassword from "./ResetPasswordReducer";
 import settings from "./SettingsReducer";
 import newSessionReducer from "./NewSessionReducer";
@@ -27,7 +26,6 @@ const rootReducer = combineReducers({
   networkErrors,
   networkInfo,
   payments,
-  promoCode,
   resetPassword,
   settings,
   newSessionReducer,

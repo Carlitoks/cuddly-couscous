@@ -124,8 +124,6 @@ class ScanScreenView extends Component {
   };
 
   render() {
-    const navigation = this.props.navigation;
-
     return (
       <View style={styles.mainContainer}>
         <View style={styles.headerContainer}>
