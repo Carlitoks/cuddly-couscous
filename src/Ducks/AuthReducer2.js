@@ -9,7 +9,7 @@ import api, { setAuthToken as setApiAuthToken } from "../Config/AxiosConfig";
 import {
   initializeUser,
   clear as clearAccount,
-  update as updateAccount,
+  init as initAccount,
   initializeDevice
 } from "./AccountReducer";
 import { clear as clearCurrentSession } from "./CurrentSessionReducer";
@@ -47,7 +47,7 @@ export const init = () => (dispatch, getState) => {
   if (!!deviceID) {
     account.currentDeviceID = deviceID;
   };
-  dispatch(updateAccount(account));
+  dispatch(initAccount(account));
   return Promise.resolve(true);
 };
 

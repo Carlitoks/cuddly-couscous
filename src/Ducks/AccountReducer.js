@@ -80,6 +80,14 @@ export const hasUnlimitedUseUntil = (periods) => {
   return false;
 }
 
+// init key fields and set the api url if necessary
+export const init = (payload) => (dispatch, getState) => {
+  dispatch(update(payload));
+  if (!!payload.userID) {
+    apiURL = `/users/${payload.userID}`;
+  }
+};
+
 // load the users device
 export const initializeDevice = (deviceID) => (dispatch, getState) => {
   dispatch(update({
