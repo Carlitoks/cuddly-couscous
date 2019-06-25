@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Alert, View } from "react-native";
 
-import I18n from "../I18n/I18n";
 import HomeLinguist from "./Linguist/HomeLinguist";
 import CustomerHomeScreenRedesign from "../Containers/CustomerHome/CustomerHomeScreen";
 import { flushEvents } from "../Util/Forensics";
+import { displayNoNetworkConnectionAlert } from "../Util/Alerts";
 
 class Home extends Component {
   constructor(props) {
@@ -24,10 +24,7 @@ class Home extends Component {
 
     // check for network connection, alert if no connection
     if (!this.props.hasNetworkConnection) {
-      Alert.alert(
-        I18n.t("thereNoInternetConnection"),
-        I18n.t("checkYourConnection")
-      );
+      displayNoNetworkConnectionAlert();
     }
   }
 

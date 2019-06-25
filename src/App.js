@@ -28,6 +28,7 @@ import { init as initAuth, clear as clearAuth, authorizeNewDevice } from "./Duck
 import PushNotification from "./Util/PushNotification";
 import { setInitialScreen } from "./Navigation/AppNavigation";
 import { detectNetworkStatus } from "./Ducks/AppStateReducer";
+import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
 
 class App extends Component {
   constructor(props) {
@@ -76,7 +77,7 @@ class App extends Component {
           settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
 
-        // ================================
+        // set app UI language
         if (!userLocaleSet) {
           const deviceLocale = deviceinfo.getDeviceLocale();
           const shortDeviceLocale = deviceLocale.substring(0, 2);
@@ -100,13 +101,19 @@ class App extends Component {
         } else {
           switchLanguage(storeInterfaceLocale[1], this);
         }
-        // ================================
+
+        // set connection data in app state, and track any connection status changes
+        store.dispatch(detectNetworkStatus());
+        NetInfo.addEventListener("connectionChange", this.handleConnectivityChange);
+
+        // initialize analytics
         if (!segmentSettings) {
           analytics
             .setup(analyticsKey, { trackAppLifecycleEvents: true })
             .then(() => store.dispatch(updateSettings({ segmentSettings: true })))
             .catch(error => console.log(error));
         }
+
         return store;
       })
       // initialize device
@@ -178,10 +185,20 @@ class App extends Component {
       // some services
       .finally(() => {
         this.setState({loadingStore: false});
-        this.updateAvailableAlert();
+        
+        // should user update?
+        if (promptUpdate) {
+          displayUpdateAvailableAlert();
+        }
+
         const {store} = this.state;
         if (!store) {
           return;
+        }
+
+        // if there's no internet connection, then the user can't do much...
+        if (!store.getState().appState.hasNetworkConnection) {
+          displayNoNetworkConnectionAlert();
         }
 
         // check device, do we start FCM or Pushy background services? Right now only
@@ -195,10 +212,6 @@ class App extends Component {
             dispatch(updateDevice({notificationToken: token})).catch(console.log);
           }
         });
-
-        // set connection data in app state, and track any connection status changes
-        store.dispatch(detectNetworkStatus());
-        NetInfo.addEventListener("connectionChange", this.handleConnectivityChange);
       });
   }
 
@@ -230,36 +243,6 @@ class App extends Component {
       persistEvents();
     }
   };
-
-  updateAvailableAlert() {
-    if (!promptUpdate) {
-      return;
-    }
-    const url = Platform.OS == "ios" ? "itms-apps://itunes.apple.com/app/apple-store/id1341871432?mt=8" : "market://details?id=com.newsolo";
-    Alert.alert(
-      I18n.t("appUpdateAlert.title"),
-      I18n.t("appUpdateAlert.description"),
-      [
-        {
-          text: I18n.t("actions.ok"),
-          onPress: () => {
-            try {
-              Linking.canOpenURL(url).then(supported => {
-                if (!supported) {
-                  console.log("Can't handle url: " + url);
-                } else {
-                  return Linking.openURL(url);
-                }
-              }).catch(err => console.error('An error occurred', err));
-            } catch (e) {
-              console.log('error from linking', e);
-            }
-          }
-        }
-      ],
-      { cancelable: false }
-    );
-  }
 
   render() {
     if (this.state.loadingStore || !this.state.splashScreenTimer) {
