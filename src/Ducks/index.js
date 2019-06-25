@@ -15,7 +15,6 @@ import auth2 from "./AuthReducer2";
 // Combine all the reducers
 const rootReducer = combineReducers({
   appConfigReducer,
-  forgotPassword,
   nav,
   payments,
   settings,
