@@ -18,7 +18,6 @@ import {
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
 import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
-import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import I18n from "../../I18n/I18n";
 import { supportedLangCodes } from "../../Config/Languages";
@@ -38,12 +37,11 @@ class CustomerHomeScreen extends Component {
     const {
       ensureSessionDefaults,
       newSession,
-      clearEvents,
       navigation,
     } = this.props;
 
     this.state = {
-      loading: false,
+      loading: true,
     };
 
     ensureSessionDefaults({
@@ -51,7 +49,6 @@ class CustomerHomeScreen extends Component {
       secondaryLangCode: newSession.secondaryLangCode || "",
     });
 
-    clearEvents();
     InCallManager.stop();
     if (navigation.state.params && navigation.state.params.alertFail) {
       Alert.alert(I18n.t("notification"), I18n.t("session.callFailCustomer"));
@@ -65,7 +62,6 @@ class CustomerHomeScreen extends Component {
       loadActiveSubscriptionPeriods,
     } = this.props;
 
-    this.setState({loading: true});
     Promise.all([
       loadSessionScenarios(true),
       loadActiveSubscriptionPeriods(true),
@@ -150,7 +146,6 @@ const mD = {
   openSlideMenu,
   updateLocation,
   ensureSessionDefaults,
-  clearEvents,
   loadSessionScenarios,
   guessSecondaryLangCode,
   loadUser,
