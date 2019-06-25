@@ -5,6 +5,7 @@ import DeviceInfo from "react-native-device-info";
 import lodashMerge from 'lodash/merge';
 import moment from "moment";
 import FCM from "react-native-fcm";
+import isEmpty from "lodash/isEmpty";
 
 import { CACHE } from '../Config/env';
 import api, { uploadFormData, uploadBase64File } from "../Config/AxiosConfig";
@@ -118,7 +119,7 @@ export const refreshDevice = (force = false) => (dispatch, getState) => {
       }
     }));
   }
-  
+
   // update the device
   return Promise.all(promises).finally(() => { return dispatch(updateDevice(payload)) });
 };
@@ -156,6 +157,10 @@ export const setUser = (user) => (dispatch, getState) => {
   let d = {user};
   d.userID = user.id;
   d.userLoadedAt = now.getTime();
+  if(!d.user.stripePaymentToken){
+    d.user.stripePaymentToken = null;
+    d.user.StripePaymentSourceMeta = isEmpty(d.user.StripePaymentSourceMeta) ? null : d.user.StripePaymentSourceMeta;
+  }
   d.linguistProfile = !!user.linguistProfile ? user.linguistProfile : null;
   d.isLinguist = !!d.linguistProfile;
   if (!!user.avatarURL) {
@@ -175,11 +180,11 @@ export const setUser = (user) => (dispatch, getState) => {
   if (!!d.linguistProfile) {
     d.linguistProfile.available = !!d.linguistProfile.available;
   }
-  
+
   // TODO: process feature flags for active/prospective linguist
 
   // TEMPORARY: TODO: set user state in deprecated userProfile reducer
-
+  console.tron.log(d);
   dispatch(merge(d));
 }
 
@@ -251,7 +256,7 @@ export const updateUserPassword = (oldPassword, newPassword) => (dispatch, getSt
 
 export const updateUserPaymentDetails = (payload) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
-    api.put(`${apiURL}/payment-details`, payload)
+    api.put(`${apiURL}/billing/payment-details`, payload)
     .then((res) => {
       dispatch(setUser(res.data));
       resolve(res.data);
@@ -262,7 +267,7 @@ export const updateUserPaymentDetails = (payload) => (dispatch, getState) => {
 
 export const removeUserPaymentDetails = () => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
-    api.delete(`${apiURL}/payment-details`)
+    api.delete(`${apiURL}/billing/payment-details`)
     .then((res) => {
       dispatch(setUser(res.data));
       resolve(res.data);

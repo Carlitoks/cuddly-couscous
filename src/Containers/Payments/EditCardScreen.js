@@ -45,7 +45,7 @@ class EditCardScreen extends Component {
     const stripeResponse = await stripe
       .createTokenWithCard(params)
       .then(({ tokenId }) => {
-        return updateUserPaymentDetails({ stripePaymentToken: tokenId });
+        return updateUserPaymentDetails({ stripeSourceToken: tokenId });
       })
       .then(() => {
         clearPayments();

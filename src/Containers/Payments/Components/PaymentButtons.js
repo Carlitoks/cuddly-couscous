@@ -47,7 +47,7 @@ class PaymentButtons extends Component {
     try {
       const stripeResponse = await stripe.createTokenWithCard(params);
       let tokenId = stripeResponse.tokenId;
-      updateUserPaymentDetails({stripePaymentToken: tokenId});
+      updateUserPaymentDetails({stripeSourceToken: tokenId});
       clearPayments();
       updatePayments({ errors: [] });
       navigation.dispatch({ type: "Home" });

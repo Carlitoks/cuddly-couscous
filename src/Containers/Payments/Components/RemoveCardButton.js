@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Alert } from "react-native";
 import { connect } from "react-redux";
-import I18n from "../../../I18n/I18n";
+import I18n, { translateApiError } from "../../../I18n/I18n";
 
 // Styles
 import styles from "./Styles/PaymentButtons";
-import { removeUserPaymentDetails } from "../../../Ducks/AccountReducer";
 
 class PaymentButtons extends Component {
   isDisabled = () => {
@@ -14,7 +13,7 @@ class PaymentButtons extends Component {
   };
 
   removePaymentCard = () => {
-    const { removePayment } = this.props;
+    const { removeCard } = this.props;
     Alert.alert(
       I18n.t("payments.removeCard"),
       I18n.t("payments.removeCardAlert"),
@@ -22,7 +21,7 @@ class PaymentButtons extends Component {
         {
           text: I18n.t("actions.remove"),
           onPress: () => {
-            removePayment();
+            removeCard();
           }
         },
         {
@@ -54,7 +53,7 @@ const mS = state => ({
 });
 
 const mD = {
-  removeUserPaymentDetails,
+
 };
 
 export default connect(

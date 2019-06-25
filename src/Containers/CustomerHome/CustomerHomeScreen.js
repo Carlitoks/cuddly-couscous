@@ -4,7 +4,6 @@ import {
 } from "react-native";
 import InCallManager from "react-native-incall-manager";
 import { connect } from "react-redux";
-import analytics from "@segment/analytics-react-native";
 import { Icon } from "react-native-elements";
 import NavBar from "../../Components/NavBar/NavBar";
 import AvatarSection from "./Components/AvatarSection";
@@ -16,10 +15,7 @@ import {
 } from "../../Ducks/NewSessionReducer";
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
-import { getProfileAsync } from "../../Ducks/UserProfileReducer";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
-import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import I18n from "../../I18n/I18n";
 // Styles
