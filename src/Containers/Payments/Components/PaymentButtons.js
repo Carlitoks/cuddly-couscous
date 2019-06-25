@@ -44,27 +44,23 @@ class PaymentButtons extends Component {
     };
 
     updatePayments({ loading: true });
-    Reactotron.log(params);
-    const stripeResponse = await stripe
-      .createTokenWithCard(params)
-      .then(response => {
-        let tokenId = response.tokenId;
-        Reactotron.log(tokenId);
-        return updateUserPaymentDetails({stripePaymentToken: tokenId});
-      })
-      .then(() => {
-        clearPayments();
-        updatePayments({ errors: [] });
-        navigation.dispatch({ type: "Home" });
-      })
-      .catch(err => {
-        console.log("ERR");
-        Reactotron.log(err);
-        Alert.alert(I18n.t("error"), translateApiError(err));
-      })
-      .finally(() => {
-        updatePayments({ loading: false });
-      });
+    try {
+      const stripeResponse = await stripe.createTokenWithCard(params);
+      let tokenId = stripeResponse.tokenId;
+      updateUserPaymentDetails({stripePaymentToken: tokenId});
+      clearPayments();
+      updatePayments({ errors: [] });
+      navigation.dispatch({ type: "Home" });
+    }catch(err){
+      Reactotron.log(err);
+      Alert.alert(I18n.t("error"), translateApiError(err, "api.errTemporaryTryAgain"), [
+        {
+          text: I18n.t("ok")
+        }
+      ]);
+    }finally {
+      updatePayments({ loading: false });
+    }
   };
 
   render() {

@@ -1,12 +1,8 @@
-import { StyleSheet, Platform } from "react-native";
-import Reactotron from "reactotron-react-native";
+import { StyleSheet } from "react-native";
 import {
   ApplicationStyles, Colors, Fonts, Metrics,
 } from "../../../../Themes";
 import { moderateScaleViewports } from "../../../../Util/Scaling";
-import { isIphoneXorAbove } from "../../../../Util/Devices";
-
-Reactotron.log(Metrics.width, isIphoneXorAbove());
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,

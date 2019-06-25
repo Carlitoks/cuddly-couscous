@@ -39,29 +39,23 @@ class EditCardScreen extends Component {
       expYear: cardInfo.expYear,
       cvc: cardInfo.cvc
     };
-    console.log("safeEdition");
 
     updatePayments({ loading: true });
-    Reactotron.log(params);
+    removePayment();
     const stripeResponse = await stripe
       .createTokenWithCard(params)
       .then(({ tokenId }) => {
-        console.log(tokenId);
-
-        Reactotron.log(tokenId);
         return updateUserPaymentDetails({ stripePaymentToken: tokenId });
       })
       .then(() => {
-        console.log("end of edition");
         clearPayments();
         updatePayments({ errors: [] });
-        updatePayments({ loading: false });
         navigation.dispatch({ type: "Home" });
       })
       .catch((err) => {
         Alert.alert(I18n.t("error"), translateApiError(err));
-        Reactotron.log(err);
-      });
+      })
+      .finally(() => updatePayments({ loading: false }));
   };
 
   render() {
