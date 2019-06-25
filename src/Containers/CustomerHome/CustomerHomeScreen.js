@@ -12,15 +12,16 @@ import CallInputs from "./Components/CallInputs";
 import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
 import {
   ensureSessionDefaults,
-  guessSecondaryLangCode,
   updateLocation,
 } from "../../Ducks/NewSessionReducer";
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
+import { getProfileAsync } from "../../Ducks/UserProfileReducer";
+import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
+import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import I18n from "../../I18n/I18n";
-import { supportedLangCodes } from "../../Config/Languages";
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
@@ -44,10 +45,7 @@ class CustomerHomeScreen extends Component {
       loading: true,
     };
 
-    ensureSessionDefaults({
-      primaryLangCode: this.setPrimaryLangCode(),
-      secondaryLangCode: newSession.secondaryLangCode || "",
-    });
+    ensureSessionDefaults();
 
     InCallManager.stop();
     if (navigation.state.params && navigation.state.params.alertFail) {
@@ -70,21 +68,6 @@ class CustomerHomeScreen extends Component {
       this.setState({loading: false});
     });
   }
-
-  setPrimaryLangCode = () => {
-    const { newSession, user } = this.props;
-    this.props.guessSecondaryLangCode();
-    if (newSession.primaryLangCode) {
-      return newSession.primaryLangCode;
-    }
-    if (user.nativeLangCode) {
-      return supportedLangCodes.includes(user.nativeLangCode);
-    }
-    if (user.nativeLangCode === "eng") {
-      return "eng";
-    }
-    return "eng";
-  };
 
   openSlideMenu = (type) => {
     const { openSlideMenu } = this.props;
@@ -147,7 +130,6 @@ const mD = {
   updateLocation,
   ensureSessionDefaults,
   loadSessionScenarios,
-  guessSecondaryLangCode,
   loadUser,
   loadActiveSubscriptionPeriods,
 };

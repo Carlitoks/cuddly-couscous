@@ -4,7 +4,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import Permission from "react-native-permissions";
-import { ensureSessionDefaults, updateLocation } from "../../Ducks/NewSessionReducer";
+import { updateLocation } from "../../Ducks/NewSessionReducer";
 import { clearOnboarding } from "../../Ducks/OnboardingReducer";
 import { CUSTOMER_FREE_MINUTES as customer_free_minutes } from "../../Util/Constants";
 // Styles
@@ -35,18 +35,12 @@ class OnboardingScreen extends Component {
       isLoggedIn,
       token,
       clearOnboarding,
-      primaryLangCode,
-      ensureSessionDefaults,
-      secondaryLangCode,
       completedLocation,
       completedNotification,
+      registerDevice,
+      deviceToken,
     } = this.props;
     clearOnboarding();
-    ensureSessionDefaults({
-      primaryLangCode: primaryLangCode || "eng",
-      secondaryLangCode: secondaryLangCode || "",
-    });
-
 
     if (isLoggedIn && token) {
       if (completedLocation) {
@@ -120,7 +114,6 @@ const mS = state => ({
 
 const mD = {
   updateLocation,
-  ensureSessionDefaults,
   clearOnboarding,
 };
 

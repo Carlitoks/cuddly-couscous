@@ -3,7 +3,7 @@ import {
   ComingSoonLanguages,
   AllowedLanguagePairs,
   LanguagesRollover,
-  getLangForCity
+  getLangForCity, supportedLangCodes, LocaleLangMap
 } from "../Config/Languages";
 
 const ACTIONS = {
@@ -98,14 +98,30 @@ export const modifyAVModePreference = payload => (dispatch, getState) => {
   dispatch(update(currentState));
 };
 
+const guessPrimaryLangCode = (primaryLangCode, nativeLangCode, settings) => {
+  if (primaryLangCode) {
+    return primaryLangCode;
+  }
+  if(settings)
+    if(settings.userLocaleSet)
+      return LocaleLangMap[settings.interfaceLocale["1"]] || "eng";
+  if (nativeLangCode) {
+    return supportedLangCodes.includes(nativeLangCode);
+  }
+  return "eng";
+};
+
 export const ensureSessionDefaults = payload => (dispatch, getState) => {
-  currentSessionState = {
+  const currentSession = getState().newSessionReducer.session;
+  const settings = getState().settings;
+  const currentSessionState = {
     ...getState().newSessionReducer.session,
-    primaryLangCode: payload.primaryLangCode,
+    primaryLangCode: guessPrimaryLangCode(currentSession.primaryLangCode, currentSession.nativeLangCode, settings),
     type: "immediate_virtual",
     matchMethod: "first_available"
   };
 
+  dispatch(guessSecondaryLangCode());
   dispatch(changeSessionLangCode(currentSessionState));
 };
 
@@ -215,7 +231,7 @@ const initialState = {
   session: {
     type: "",
     matchMethod: "",
-    primaryLangCode: "eng",
+    primaryLangCode: "",
     secondaryLangCode: "",
     avModePreference: null,
     eventID: null,
