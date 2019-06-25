@@ -19,6 +19,12 @@ class Home extends Component {
 
   }
 
+  componentDidUpdate(prevProps) {
+    if (!this.props.hasNetworkConnection && prevProps.hasNetworkConnection) {
+      displayNoNetworkConnectionAlert();
+    }
+  }
+
   componentDidMount() {
     flushEvents();
 
