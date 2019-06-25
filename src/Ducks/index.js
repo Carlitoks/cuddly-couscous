@@ -3,7 +3,6 @@ import { combineReducers } from "redux";
 import forgotPassword from "./ForgotPasswordReducer";
 import nav from "./NavigationReducer";
 import networkErrors from "./NetworkErrorsReducer";
-import networkInfo from "./NetworkInfoReducer";
 import payments from "./PaymentsReducer";
 import resetPassword from "./ResetPasswordReducer";
 import settings from "./SettingsReducer";
@@ -22,7 +21,6 @@ const rootReducer = combineReducers({
   forgotPassword,
   nav,
   networkErrors,
-  networkInfo,
   payments,
   resetPassword,
   settings,

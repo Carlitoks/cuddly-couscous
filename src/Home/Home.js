@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
+
+import I18n from "../I18n/I18n";
 import HomeLinguist from "./Linguist/HomeLinguist";
 import CustomerHomeScreenRedesign from "../Containers/CustomerHome/CustomerHomeScreen";
 import { flushEvents } from "../Util/Forensics";
@@ -19,6 +21,14 @@ class Home extends Component {
 
   componentDidMount() {
     flushEvents();
+
+    // check for network connection, alert if no connection
+    if (!this.props.hasNetworkConnection) {
+      Alert.alert(
+        I18n.t("thereNoInternetConnection"),
+        I18n.t("checkYourConnection")
+      );
+    }
   }
 
   render() {
@@ -37,6 +47,7 @@ class Home extends Component {
 const mS = state => ({
   isLoggedIn: state.auth2.isLoggedIn,
   linguistProfile: state.account.linguistProfile,
+  hasNetworkConnection: state.appState.hasNetworkConnection
 });
 
 const mD = {

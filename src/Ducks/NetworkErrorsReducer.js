@@ -1,4 +1,3 @@
-import { displayNetworkAlert } from "./NetworkInfoReducer";
 
 const ACTIONS = {
   CLEAR: "networkErrors/clear",
@@ -21,7 +20,6 @@ export const update = payload => ({
 });
 
 export const networkError = error => (dispatch, getState) => {
-  dispatch(displayNetworkAlert());
   dispatch(setError(error));
   if (error && error.response && error.response.status) {
     console.log(error.response.status);

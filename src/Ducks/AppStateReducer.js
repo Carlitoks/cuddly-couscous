@@ -1,13 +1,19 @@
+import {NetInfo} from "react-native";
+import _merge from "lodash/merge";
+import _debounce from "lodash/debounce";
 
 // The purpose of this is to manage app UI & config state that is either 
 // determined or modifiable by the user.
 
 const initState = () => {
   return {
-    uiLangCode: '', // the current localization for i18n
+    uiLangCode: 'en', // the current localization for i18n, replace SettingsReducer
     isCustomerMode: true,
     isLinguistMode: false,
-    // TODO: connection info, replace NetInfo reducer
+    hasNetworkConnection: true,
+    connectionInfo: null, // the raw connection info response from NetInfo
+
+    // TODO: app state (background/foreground, etc)
   }
 };
 
@@ -21,6 +27,19 @@ export const setInterfaceLanguage = (code) => (dispatch, getState) => {
   
 };
 
+// TODO: debounce trigger to check for active network connection
+export const detectNetworkStatus = () => (dispatch, getState) => {
+  // check is connected
+  NetInfo.isConnected.fetch().then((isConnected) => {
+    dispatch(update({hasNetworkConnection: isConnected}));
+  });
+
+  // get connection info
+  NetInfo.getConnectionInfo().then((info) => {
+    dispatch(update({connectionInfo: info}));
+  });
+};
+
 const ACTIONS = {
   CLEAR: "appState/clear",
   MERGE: "appState/merge",
@@ -28,11 +47,14 @@ const ACTIONS = {
 };
 
 // action creators
+// update state
 export const update = (payload) => ({type: ACTIONS.UPDATE, payload});
+// merge in nested state updates
 export const merge = (payload) => ({type: ACTIONS.MERGE, payload});
+// reset to initial state
 export const clear = () => ({type: ACTIONS.CLEAR});
 
-const appStateReducer = (state = null, action = {}) => {
+const reducer = (state = null, action = {}) => {
   const { payload, type } = action;
 
   switch (type) {
@@ -41,7 +63,7 @@ const appStateReducer = (state = null, action = {}) => {
     }
 
     case ACTIONS.MERGE: {
-      return lodashMerge({}, state || initState(), payload);
+      return _merge({}, state || initState(), payload);
     }
 
     case ACTIONS.UPDATE: {
@@ -57,4 +79,4 @@ const appStateReducer = (state = null, action = {}) => {
   }
 };
 
-export default appStateReducer;
+export default reducer;

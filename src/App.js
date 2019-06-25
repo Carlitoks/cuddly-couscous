@@ -12,7 +12,6 @@ import { codePushAndroidKey, codePushiOSKey, analyticsKey, promptUpdate } from "
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 
-import { delayUpdateInfo } from "./Ducks/NetworkInfoReducer";
 import { updateSettings } from "./Ducks/SettingsReducer";
 import { addListeners } from "./Ducks/PushNotificationReducer";
 
@@ -28,6 +27,7 @@ import { clear as clearAccount, initializeUser, refreshDevice } from "./Ducks/Ac
 import { init as initAuth, clear as clearAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
 import PushNotification from "./Util/PushNotification";
 import { setInitialScreen } from "./Navigation/AppNavigation";
+import { detectNetworkStatus } from "./Ducks/AppStateReducer";
 
 class App extends Component {
   constructor(props) {
@@ -167,9 +167,7 @@ class App extends Component {
           user.email,
           currentStore.auth2.deviceID,
           currentStore.currentSessionReducer.sessionID,
-          currentStore.events.id
         );
-        console.log("DONE");
       })
       .catch((e) => {
         // in the case of an error, we'll say we're done loading anyway
@@ -198,16 +196,14 @@ class App extends Component {
           }
         });
 
-        // connection change monitoring
-        NetInfo.getConnectionInfo().then((connectionInfo) => {
-          store.dispatch(delayUpdateInfo(connectionInfo));
-        });
-        NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
+        // set connection data in app state, and track any connection status changes
+        store.dispatch(detectNetworkStatus());
+        NetInfo.addEventListener("connectionChange", this.handleConnectivityChange);
       });
   }
 
   componentWillUnmount() {
-    NetInfo.removeEventListener("connectionChange", this.handleFirstConnectivityChange);
+    NetInfo.removeEventListener("connectionChange", this.handleConnectivityChange);
     AppState.removeEventListener("change", this._handleAppStateChange);
     PushNotification.cleanListeners();
     persistEvents();
@@ -216,12 +212,11 @@ class App extends Component {
     }
   }
 
-  handleFirstConnectivityChange = connectionInfo => {
+  handleConnectivityChange = (connectionInfo) => {
     recordNetworkEvent(connectionInfo);
     const { store } = this.state;
-
     if (store) {
-      store.dispatch(delayUpdateInfo(connectionInfo));
+      store.dispatch(detectNetworkStatus());
     }
   };
 
