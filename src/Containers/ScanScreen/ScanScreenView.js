@@ -27,6 +27,7 @@ class ScanScreenView extends Component {
 
     setPermission("camera").then(response => {
       if (response == "denied" || response == "restricted") {
+        this.props.navigation.dispatch({ type: "Home" });
         displayOpenSettingsAlert();
       }
     });
@@ -91,7 +92,7 @@ class ScanScreenView extends Component {
               });
               return;
             }
-            
+
             // otherwise... unexpected code
             this.props.navigation.dispatch({ type: "Home" });
 
@@ -106,18 +107,13 @@ class ScanScreenView extends Component {
         });
       } else {
         if (navigation.state.routeName === "ScanScreenView") {
+          this.props.navigation.dispatch({ type: "Home" });
           this.setState({
             reactivate: false
           });
           Alert.alert("Error", "QR invalid, try again", [
             {
-              text: "OK",
-              onPress: () => {
-                this.scanner.reactivate();
-                this.setState({
-                  reactivate: true
-                });
-              }
+              text: "OK"
             }
           ]);
         }
