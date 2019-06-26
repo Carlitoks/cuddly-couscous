@@ -67,13 +67,13 @@ export const uploadFormData = (method, path, formData, progressCB = null) => {
 // send base64 strings via axios... always resulted in network error, or the
 // server not being able to see the file.
 export const uploadBase64File = (method, path, fileData, fileName, mime) => {
-  let token = getClient().defaults.headers.common['Authorization'];
+  let authHeader = getClient().defaults.headers.common['Authorization'];
 
   return RNFetchBlob.fetch(
     method.toLowerCase(),
     URL+path,
     {
-      Authorization: `Bearer ${token}`,
+      Authorization: authHeader,
       "Content-Type": "multipart/form-data"
     },
     [
