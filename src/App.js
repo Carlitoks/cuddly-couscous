@@ -119,7 +119,6 @@ class App extends Component {
       // initialize device
       .then(store => {
 
-        this.updateAvailableAlert(); // toggle alert to update app if relevant
         store.dispatch(initAuth()); // restores any auth tokens and sets them in api/forensic services
         const auth = store.getState().auth2 || {};
     
@@ -137,7 +136,7 @@ class App extends Component {
               return store.dispatch(authorizeNewDevice());
             }
           });
-      }
+        }
       })
       // initialize app/user data & push notifications
       .then(() => {
