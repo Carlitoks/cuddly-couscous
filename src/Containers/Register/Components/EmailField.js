@@ -12,18 +12,20 @@ class EmailField extends Component {
   isValidEmail = text => {
     const { updateOnboarding, errorType } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
-    if (!reg.test(text) && text.length > 4) {
-      updateOnboarding({
-        isValidEmail: false,
-        errorType: "emailFormat",
-      });
-    } else {
-      if (errorType === "emailFormat") {
-        updateOnboarding({ isValidEmail: true, errorType: null });
+    if (text) {
+      if (!reg.test(text) && text.length > 4) {
+        updateOnboarding({
+          isValidEmail: false,
+          errorType: "emailFormat",
+        });
+      } else {
+        if (errorType === "emailFormat") {
+          updateOnboarding({ isValidEmail: true, errorType: null });
+        }
+        updateOnboarding({ isValidEmail: true });
       }
-      updateOnboarding({ isValidEmail: true });
+      updateOnboarding({ email: text });
     }
-    updateOnboarding({ email: text });
   };
 
   render() {
