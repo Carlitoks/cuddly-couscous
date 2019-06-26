@@ -77,7 +77,7 @@
   conversations: "その他",
   compliments: "{{minutes}}分：{{organizer}}からのお礼",
   complimentsOf: "{{organizer}}からのお礼",
-  complimentMinutes: "{{organizer}}のご厚意で{{maxMinutesPerUser}}分が追加されました",
+  complimentMinutes: "{{organizer}}特典　{{maxMinutesPerUser}}分が追加されました",
   minutesAdded: "：追加された時間（分）",
   invalidCode: "無効なコード",
   invalidCodeMsg: "{{message}}",
