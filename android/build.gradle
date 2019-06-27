@@ -41,6 +41,9 @@ allprojects {
         maven {
             url "http://tokbox.bintray.com/maven"
         }
+        maven {
+            url "https://sdks.instabug.com/nexus/repository/instabug-cp"
+        }
     }
 }
 
@@ -60,4 +63,9 @@ subprojects { project ->
       }
     }
   }
+}
+
+task upload_sourcemap(type: Exec) {
+    environment "INSTABUG_APP_TOKEN", "1ef778fa18d0379f12f7ebaed42eba02"
+    commandLine 'sh', './upload_sourcemap.sh'
 }
