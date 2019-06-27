@@ -19,7 +19,7 @@ import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 class SessionInfoView extends Component {
 
   render() {
-    const { sessionInfo } = this.navigation.state.params.call;
+    const sessionInfo = this.props.navigation.state.params.call;
     let primaryLang = translateLanguage(sessionInfo.primaryLangCode);
     let secondLang = translateLanguage(sessionInfo.secondaryLangCode);
 
