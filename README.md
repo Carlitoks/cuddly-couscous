@@ -54,6 +54,10 @@ To start actually developing:
 * hit "R+R" to reload any changes
 * run `yarn android:shake` to connect to the `react-native-debugger`
 
+To clean and install a new version (if native deps changed)
+
+* `rm -rf node_modules/ && yarn install`
+
 ## iOS Setup ##
 
 Need to install a few things to get the project running in the iOS simulators:
@@ -65,10 +69,16 @@ Need to install a few things to get the project running in the iOS simulators:
 * open Xcode
 * in Xcode, open file: `ios/NewSolo.xcworkspace`
 
-Temporary notes on Xcode:
+Notes on Xcode:
 
-* need 10.1 for now
-* in build settings, use Swift 3
+* need 10.2+ for now
+* in build settings, use Swift 5
+
+To clean and install a new version:
+
+* `rm -rf node_modules/ && yarn install`
+* `cd ios/`
+* `rm -rf Pods/ && pod install`
 
 ## App Center and Code Push ##
 
