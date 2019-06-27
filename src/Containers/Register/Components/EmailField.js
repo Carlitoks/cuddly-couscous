@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Text, TextInput, View } from "react-native";
 import { connect } from "react-redux";
 import debounce from "lodash/debounce";
-import throttle from "lodash/throttle";
+
 // Styles
 import styles from "./Styles/EmailFieldStyles";
 import I18n from "../../../I18n/I18n";
