@@ -2,26 +2,29 @@ import React, { Component } from "react";
 import { Text, TextInput, View } from "react-native";
 import { connect } from "react-redux";
 import debounce from "lodash/debounce";
+import throttle from "lodash/throttle";
 // Styles
 import styles from "./Styles/EmailFieldStyles";
 import I18n from "../../../I18n/I18n";
 import { EMAIL_REGEX } from "../../../Util/Constants";
 import { update as updateOnboarding } from "../../../Ducks/OnboardingReducer";
 
-
 class EmailField extends Component {
-  isValidEmail = (text) => {
-    const { updateOnboarding, errorType } = this.props;
+
+  componentDidMount () {
+    // hide error on load until user enters something
+    if (!this.props.email) {
+      this.props.updateOnboarding({isValidEmail: true});
+    }
+  }
+
+  validateEmail = () => {
+    const { email, errorType, updateOnboarding } = this.props;
     const reg = new RegExp(EMAIL_REGEX);
 
-    // debounce to not show error message while user is typing
-    const debounced = debounce((e) => {
-      updateOnboarding(e);
-    }, 2000);
-
-    if (text) {
-      if (!reg.test(text) && text.length > 4) {
-        debounced({
+    if (!!email && email.length > 0) {
+      if (!reg.test(email)) {
+        updateOnboarding({
           isValidEmail: false,
           errorType: "emailFormat",
         });
@@ -31,8 +34,16 @@ class EmailField extends Component {
         }
         updateOnboarding({ isValidEmail: true });
       }
-      updateOnboarding({ email: text });
+    } else {
+      updateOnboarding({ isValidEmail: true, errorType: null });
     }
+  };
+
+  debouncedValidateEmail = debounce(this.validateEmail, 500);
+
+  updateEmail = (text) => {
+    this.props.updateOnboarding({email: text.trim()});
+    this.debouncedValidateEmail();
   };
 
   render() {
@@ -48,8 +59,8 @@ class EmailField extends Component {
             allowFontScaling={false}
             autoCapitalize="none"
             style={errorType === "emailFormat" ? styles.inputTextInvalid : styles.inputTextValid}
-            onChangeText={text => this.isValidEmail(text)}
-            onBlur={() => this.isValidEmail(email)}
+            onChangeText={text => this.updateEmail(text)}
+            onBlur={() => this.validateEmail()}
             onSubmitEditing={() => nextInput()}
             blurOnSubmit={false}
             value={email}
@@ -59,7 +70,7 @@ class EmailField extends Component {
             returnKeyType="done"
           />
         </View>
-        {(!isValidEmail || errorType === "AlreadyRegistered") && (email && email.length > 6) ? (
+        {(!isValidEmail || errorType === "AlreadyRegistered") && (email && email.length > 0) ? (
           <Text style={styles.invalidLabelText}>{I18n.t("noValidEmail")}</Text>
         ) : (
           <Text style={styles.invalidLabelText} />
