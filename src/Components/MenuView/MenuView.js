@@ -74,7 +74,7 @@ class MenuView extends Component {
                 {user.firstName} {user.lastName}
               </Text>
               <Text style={styles.textEditProfile}>
-                {I18n.t("editProfile")}
+                {user.email}
               </Text>
             </View>
           )}
