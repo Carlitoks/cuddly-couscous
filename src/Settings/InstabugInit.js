@@ -1,4 +1,4 @@
-import Instabug, { BugReporting } from "instabug-reactnative";
+import Instabug from "instabug-reactnative";
 import { instabugToken } from "../Config/env";
 import I18n from "../I18n/I18n";
 import { processColor } from "react-native";
