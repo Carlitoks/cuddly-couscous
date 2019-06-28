@@ -27,7 +27,7 @@ export default (reducer = (state, action) => {
       break;
 
     case "Navigation/NAVIGATE":
-      Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
+      Instabug.setEnabledAttachmentTypes(true, true, true, true, true);
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.navigate({ routeName: action.routeName }),
         state
