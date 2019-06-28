@@ -93,7 +93,7 @@ export const logIn = (email, password) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
 
     const login = () => {
-      return api.post("/auth/user", {email, password})
+      api.post("/auth/user", {email, password})
       .then((res) => {
         const userID = res.data.id;
         const jwt = res.data.token;
@@ -113,9 +113,9 @@ export const logIn = (email, password) => (dispatch, getState) => {
     // if there's no device, ensure one is created first
     const {deviceJwtToken} = getState().auth2;
     if (!!deviceJwtToken) {
-      dispatch(authorizeNewDevice()).then(() => { return login() });
+      dispatch(authorizeNewDevice()).then(() => { login() });
     } else {
-      return login();
+      login();
     }
   });
 };
