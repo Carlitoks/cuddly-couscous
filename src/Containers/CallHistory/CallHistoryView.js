@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import SegmentedControlTab from "react-native-segmented-control-tab";
 
 import { Alert, View, Text, ScrollView } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -9,10 +10,12 @@ import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import Close from "../../Components/Close/Close";
 import NavBar from "../../Components/NavBar/NavBar";
+import { Iphone6, Iphone5 } from "../../Util/Devices";
 
 import moment from "moment";
 
 import styles from "./style";
+import Colors from "../../Themes/Colors";
 import I18n, { translateApiError } from "../../I18n/I18n";
 import {
   loadCustomerCallHistory,
@@ -172,6 +175,23 @@ class CallHistoryView extends Component {
           }
           navbarTitle={I18n.t("callHistory")}
         />
+        {!!linguistProfile && (
+          <View style={styles.tabBackgroundContainer}>
+            <SegmentedControlTab
+              tabsContainerStyle={styles.tabsContainerStyle}
+              values={tabValues}
+              tabStyle={
+                Iphone6 || Iphone5 ? styles.tabStyleNoBorder : styles.tabStyle
+              }
+              tabTextStyle={styles.tabTextStyle}
+              selectedIndex={this.state.selectedIndex}
+              onTabPress={this.handleIndexChange}
+              activeTabStyle={{
+                backgroundColor: Colors.primarySelectedTabColor
+              }}
+            />
+          </View>
+        )}
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={styles.scrollContainer}
@@ -183,7 +203,7 @@ class CallHistoryView extends Component {
               <View style={styles.container}>
                 <CallHistoryComponent
                   data={
-                    this.props.selectedIndex === 0 ? allCalls : missedCalls
+                    this.state.selectedIndex === 0 ? allCalls : missedCalls
                   }
                   navigation={this.props.navigation}
                 />
