@@ -191,6 +191,7 @@ export const setUser = (user) => (dispatch, getState) => {
 
   // TODO: process feature flags for active/prospective linguist
 
+  // TEMPORARY: TODO: set user state in deprecated userProfile reducer
   console.tron.log(d);
   dispatch(merge(d));
 }
