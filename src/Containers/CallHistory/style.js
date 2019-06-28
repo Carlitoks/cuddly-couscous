@@ -7,7 +7,8 @@ const width = Dimensions.get("window").width;
 export default StyleSheet.create({
   container: {
     flex: 1,
-    width: width
+    width: width,
+    paddingTop: 16,
   },
   mainTitle: {
     fontFamily: Fonts.LightFont,
@@ -21,6 +22,11 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     color: Colors.primaryLightFillColor,
     fontSize: 12
+  },
+  tabBackgroundContainer: {
+    width: "100%",
+    paddingBottom: 8,
+    backgroundColor: Colors.gradientColor.top
   },
   tabStyle: {
     backgroundColor: Colors.transparent,
@@ -38,7 +44,7 @@ export default StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   linearGradient: {
     position: "absolute",
