@@ -56,7 +56,7 @@ const InitInstabug = (firstName,
     Instabug.setLocale(instaBugLanguage);
     Instabug.setViewHierarchyEnabled(false);
     Instabug.setPromptOptionsEnabled(false, true, true);
-    Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
+    Instabug.setEnabledAttachmentTypes(true, true, true, true, true);
     Instabug.setPrimaryColor(processColor("#52389d"));
     if (email) {
       Instabug.setUserData(

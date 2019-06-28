@@ -34,7 +34,7 @@ class MenuView extends Component {
   }
 
   componentWillUnmount() {
-    Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
+    Instabug.setEnabledAttachmentTypes(true, true, true, true, true);
   }
   isACustomer = () => !this.props.linguistProfile;
 
@@ -185,7 +185,7 @@ class MenuView extends Component {
             backgroundColor={Colors.background}
             iconStyle={styles.optionMenu}
             onPress={() => {
-              Instabug.setAttachmentTypesEnabled(false, true, true, true, true);
+              Instabug.setEnabledAttachmentTypes(false, true, true, true, true);
               Instabug.invoke();
             }}
           >
