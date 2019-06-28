@@ -1,4 +1,4 @@
-import Instabug from "instabug-reactnative";
+import Instabug, { BugReporting } from "instabug-reactnative";
 import { instabugToken } from "../Config/env";
 import I18n from "../I18n/I18n";
 import { processColor } from "react-native";
@@ -56,7 +56,7 @@ const InitInstabug = (firstName,
     Instabug.setLocale(instaBugLanguage);
     Instabug.setViewHierarchyEnabled(false);
     Instabug.setPromptOptionsEnabled(false, true, true);
-    Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
+    Instabug.setEnabledAttachmentTypes(true, true, true, true, true);
     Instabug.setPrimaryColor(processColor("#52389d"));
     if (email) {
       Instabug.setUserData(
