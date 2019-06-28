@@ -26,7 +26,9 @@ const getStore = () =>
 
     // handle any state conversions required as the result of updating
     // from one version to another
-    migrateAuthState(initialState);
+    migrateInitialState(initialState);
+
+    // ensure old top-level state keys are removed
     sanitizeInitialState(initialState);
 
     // it's possible for an error to be thrown because the store includes
@@ -68,6 +70,9 @@ export default getStore;
 // is initialized.  This is to prevent errors during creating
 // the store that could happen when updating to a new version
 // that no longer uses state stored in previous versions.
+//
+// This takes care of removing old invalid top-level state, so
+// migrations don't need to worry about that.
 const sanitizeInitialState = (state = {}) => {
   const allowedKeys = [
     'settings',
@@ -85,26 +90,27 @@ const sanitizeInitialState = (state = {}) => {
   });
 };
 
+// if any old state is detected and needs to be converted to new 
+// state, handle that here
+const migrateInitialState = (state ={}) => {
+  migrateOldAuthState(state);
+};
+
 // convert old auth state to new auth state
-const migrateAuthState = (state = {}) => {
+const migrateOldAuthState = (state = {}) => {
   auth2 = state.auth2 || {};
   auth = state.auth || {};
   if (!!auth.uuid) {
     auth2.userID = auth.uuid;
-    delete auth.uuid;
   }
   if (!!auth.token) {
     auth2.userJwtToken = auth.token;
-    delete auth.token;
   }
   if (!!auth.deviceId) {
     auth2.deviceID = auth.deviceId;
-    delete auth.deviceId;
   }
   if (!!auth.deviceToken) {
     auth2.deviceJwtToken = auth.deviceToken;
-    delete auth.deviceToken;
   }
   state.auth2 = auth2;
-  delete state.auth;
 };

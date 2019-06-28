@@ -102,7 +102,7 @@ export const initializeDevice = (deviceID) => (dispatch, getState) => {
 // are determined by the physical device, and ensures a push
 // notification token is set
 export const refreshDevice = (force = false) => (dispatch, getState) => {
-  const device = getState().account.currentDevice;
+  const device = getState().account.currentDevice || {};
   // enforce some values on the device
   let payload = {
     locale: DeviceInfo.getDeviceLocale(),
