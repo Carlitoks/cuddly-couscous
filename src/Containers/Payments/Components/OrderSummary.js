@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Text, View } from "react-native";
 import Icons from "../Icons";
+import CardItem from "./CardItem";
 // Styles
 //import styles from "./Styles/AddCardStyles";
 
@@ -21,16 +22,48 @@ class OrderSummary extends Component {
 
   };
   render() {
-    const { loading, styles } = this.props;
+    const { loading, styles, navigation } = this.props;
     let cardInfo = { creditCardNumber: "", creditCardIcon: "", expDate: "" };
     return (
       <View style={styles.billContainer}>
-          <View style={styles.row}>
+          <View style={styles.rowTitle}>
             <Text style={styles.itemTextLeftTitle}>
             {"Credit Card"}
           </Text>
           <Text style={styles.itemText}>
             {"Edit"}
+          </Text>
+          </View>
+          <CardItem navigation={navigation} />
+          <View style={styles.rowBill}>
+          <Text style={styles.itemTextLeftTitle}>
+            {"Order Summary"}
+          </Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.itemTextLeft}>
+            {"Jeenie Value Package"}
+          </Text>
+          <Text style={styles.itemText}>
+            {"$50"}
+          </Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.itemTextLeft}>
+            {"JEENIE20"}
+          </Text>
+          <Text style={styles.itemText}>
+            {"- $10"}
+          </Text>
+          </View>
+          <View style={styles.rowLine}>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.itemTextLeftTitle}>
+            {"Total"}
+          </Text>
+          <Text style={styles.itemTextTitle}>
+            {"$41.45"}
           </Text>
           </View>
         </View>
