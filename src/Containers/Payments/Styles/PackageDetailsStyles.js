@@ -17,11 +17,19 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     height: '100%'
   },
-  itemTextLeftTitle: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute", left:0 },
-  itemText: { fontSize: moderateScale(15, 0), color: "rgba(0, 0, 0, 0.541327)", position:"absolute", right:0},
+  itemTextLeftTitle: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute",  fontWeight:"bold" },
+  itemTextLeft: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute"},
+  itemText: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0},
+  itemTextTitle: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0, fontWeight:"bold"},
 
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
+  rowLine:{
+    paddingTop: 10,
+    borderBottomColor:"rgba(0, 0, 0, 0.2)",
+    borderBottomWidth:1,
+    width:"90%",
+  },
   scrollViewFlex: {
     flexGrow: 1,
     flexDirection: "column",
@@ -52,6 +60,21 @@ export default StyleSheet.create({
     height: 21,
     width:"90%",
     marginTop:10,
+    flexDirection: "row"
+  },
+  rowBill: {
+    flex:1,
+    height: 21,
+    width:"90%",
+    marginTop:25,
+    flexDirection: "row"
+  },
+  rowTitle: {
+    flex:1,
+    height: 21,
+    width:"90%",
+    marginTop:30,
+    marginBottom:-30,
     flexDirection: "row"
   },
   cancelStyle: {
