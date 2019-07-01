@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
+import OrderSummary from "./Components/OrderSummary";
 // Styles
 import styles from "./Styles/PackageDetailsStyles";
 import stripe from "tipsi-stripe";
@@ -9,7 +10,7 @@ import { stripePublishableKey } from "../../Config/env";
 import { Icon } from "react-native-elements";
 import I18n from "../../I18n/I18n";
 
-class PaymentPackageDetails extends Component {
+class PackageCheckoutView extends Component {
   componentWillMount() {
     stripe.setOptions({
       publishableKey: stripePublishableKey
@@ -46,14 +47,10 @@ class PaymentPackageDetails extends Component {
             contentContainerStyle={styles.scrollViewFlex}
           >
             <View style={styles.billView}>
-            <View style={styles.row}>
-                <Text style={styles.itemText}>
-                {"XXXX"}
-              </Text>
-              <Text style={styles.itemText}>
-                {"yyyy"}
-              </Text>
-              </View>
+            <OrderSummary
+              styles = {styles} // main container style
+              textStyle = {styles.textBill} // optional text styles, component should provide defaults
+              />
             </View>
           </ScrollView>
         </View>
@@ -71,4 +68,4 @@ const mD = { };
 export default connect(
   mS,
   mD
-)(PaymentPackageDetails);
+)(PackageCheckoutView);

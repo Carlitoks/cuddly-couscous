@@ -17,8 +17,8 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     height: '100%'
   },
-  itemTextLeftTitle: { left:0, fontSize: moderateScale(15, 0), color: "#272833" },
-  itemText: { fontSize: moderateScale(15, 0), color: "rgba(0, 0, 0, 0.541327)" },
+  itemTextLeftTitle: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute", left:0 },
+  itemText: { fontSize: moderateScale(15, 0), color: "rgba(0, 0, 0, 0.541327)", position:"absolute", right:0},
 
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
@@ -28,20 +28,30 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingBottom: 20,
+    height:"100%",
+    width:"100%",
+    position:"relative",
     backgroundColor: "#F2F2F2"
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
   billView: {
-    top:"50%",
-    alignItems: "center",
-    justifyContent: "center",
-    height:"50%",
+    bottom:0,
+    position: "absolute",
+    height:"65%",
     width:"100%",
     backgroundColor:"#FFFFFF"
+  },
+  billContainer:{
+    alignItems: "center",
+    position:"absolute",
+    width:"100%",
+    flexDirection:"column"
   },
   row: {
     flex:1,
     height: 21,
+    width:"90%",
+    marginTop:10,
     flexDirection: "row"
   },
   cancelStyle: {
