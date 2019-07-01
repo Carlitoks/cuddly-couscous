@@ -7,6 +7,7 @@ import I18n, { translateApiError } from "../../../I18n/I18n";
 import styles from "./Styles/SubmitButtonStyles";
 import { update as updateOnboarding, noOnboarding, clear as clearOnboarding } from "../../../Ducks/OnboardingReducer";
 import { registerNewUser, logIn } from "../../../Ducks/AuthReducer2";
+import { displayNoNetworkConnectionAlert } from "../../../Util/Alerts";
 
 class SubmitButton extends Component {
   submitLogin = async () => {
@@ -17,7 +18,14 @@ class SubmitButton extends Component {
       password,
       noOnboarding,
       logIn,
+      hasNetworkConnection,
     } = this.props;
+
+    if (!hasNetworkConnection) {
+      displayNoNetworkConnectionAlert();
+      return;
+    }
+
     try {
       updateOnboarding({ errorType: null, makingRequest: true });
       await logIn(email, password);
@@ -25,9 +33,7 @@ class SubmitButton extends Component {
       noOnboarding();
       navigation.dispatch({ type: "Home" });
     } catch (err) {
-      if (!!err.response.data) {
-        console.log(err.response.data);
-      }
+      console.log(err);
       Alert.alert(
         I18n.t("error"),
         translateApiError(err, "api.errTemporary"),
@@ -52,7 +58,13 @@ class SubmitButton extends Component {
       makingRequest,
       nativeLangCode,
       registerNewUser,
+      hasNetworkConnection,
     } = this.props;
+
+    if (!hasNetworkConnection) {
+      displayNoNetworkConnectionAlert();
+      return;
+    }
 
     if (
       !isValidPassword
@@ -71,13 +83,18 @@ class SubmitButton extends Component {
         email,
         password,
         nativeLangCode,
+      }).catch((err) => {
+        Alert.alert(
+          I18n.t("error"),
+          translateApiError(err, "api.errTemporary"),
+          [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
+        );
       });
+
       clearOnboarding();
       return navigation.dispatch({ type: "Home" });
     } catch (err) {
-      if (!!err.response.data) {
-        console.log(err.response.data);
-      }
+      console.log(err);
       Alert.alert(
         I18n.t("error"),
         translateApiError(err, "api.errTemporary"),
@@ -167,6 +184,7 @@ const mS = state => ({
   isValidEmail: state.onboardingReducer.isValidEmail,
   isValidFirstName: state.onboardingReducer.isValidFirstName,
   isValidPassword: state.onboardingReducer.isValidPassword,
+  hasNetworkConnection: state.appState.hasNetworkConnection,
 });
 
 const mD = {
