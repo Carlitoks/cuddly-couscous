@@ -39,10 +39,20 @@ class OnboardingScreen extends Component {
       completedNotification,
       registerDevice,
       deviceToken,
+      user,
     } = this.props;
     clearOnboarding();
 
+    // TODO: after the navigation refactor, we shouldn't need logic for redircting
+    // views.  That should be determined during app startup.
     if (isLoggedIn && token) {
+      // extra check to ensure we have a user, because if not
+      // we should just stay on this screen
+      if (!user) {
+        console.log("no user, staying on IntroView");
+        return;
+      }
+
       if (completedLocation) {
         if (completedNotification) {
           navigation.dispatch({ type: "Home" });
@@ -104,6 +114,7 @@ class OnboardingScreen extends Component {
 }
 
 const mS = state => ({
+  user: state.account.user,
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
   token: state.auth2.userJwtToken,

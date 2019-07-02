@@ -11,12 +11,18 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    const { isLoggedIn, navigation } = this.props;
+    const { isLoggedIn, navigation, user } = this.props;
 
-    if (!isLoggedIn) {
-      navigation.dispatch({ type: "LoginView" });
+    this.state = {
+      load: true
+    };
+
+    // TODO: after the navigation refactor, we shouldn't need logic for
+    // redirecting views
+    if (!isLoggedIn || !user) {
+      navigation.dispatch({ type: "IntroView" });
+      this.state.load = false;
     }
-
   }
 
   componentDidUpdate(prevProps) {
@@ -35,7 +41,7 @@ class Home extends Component {
   }
 
   render() {
-    return (
+    return this.state.load && (
       <View style={{ flex: 1 }}>
         {this.props.linguistProfile ? (
           <HomeLinguist navigation={this.props.navigation} />
@@ -49,6 +55,7 @@ class Home extends Component {
 
 const mS = state => ({
   isLoggedIn: state.auth2.isLoggedIn,
+  user: state.account.user,
   linguistProfile: state.account.linguistProfile,
   hasNetworkConnection: state.appState.hasNetworkConnection
 });
