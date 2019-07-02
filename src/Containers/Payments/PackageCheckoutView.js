@@ -9,13 +9,13 @@ import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
 import { Icon } from "react-native-elements";
 import I18n from "../../I18n/I18n";
-
+import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 class PackageCheckoutView extends Component {
   componentWillMount() {
-    stripe.setOptions({
+    /*stripe.setOptions({
       publishableKey: stripePublishableKey
       //androidPayMode: "test" // Android only
-    });
+    });*/
   }
 
   render() {
@@ -51,6 +51,15 @@ class PackageCheckoutView extends Component {
               styles = {styles} // main container style
               textStyle = {styles.textBill} // optional text styles, component should provide defaults
               />
+            <TextBlockButton
+                text = "fooo" // the text in the button
+                disabled = {false} // boolean if disabled, prevents taps and show disabled button styles
+                loading = {false} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
+                style = {""} // main container style, component should provide some defaults, like width at 100%
+                disabledStyle = {""} // container style object when disabled, component should provide defaults
+                textStyle = {""} // optional text styles, component should provide defaults
+                onPress = {() => {}} // function to call when pressed
+            />
             </View>
           </ScrollView>
         </View>
@@ -60,7 +69,6 @@ class PackageCheckoutView extends Component {
 }
 
 const mS = state => ({
-  stripePaymentToken: state.account.user.stripePaymentToken
 });
 
 const mD = { };
