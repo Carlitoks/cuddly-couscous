@@ -30,6 +30,8 @@ import { setInitialScreen } from "./Navigation/AppNavigation";
 import { detectNetworkStatus } from "./Ducks/AppStateReducer";
 import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
 
+let CurrentConnectivity = "none";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -46,12 +48,17 @@ class App extends Component {
 
     this.updateFcmTokenListener = null;
 
-    codePush.sync({
-      deploymentKey: Platform.OS === "ios" ? codePushiOSKey : codePushAndroidKey
-    });
     if (__DEV__) {
       import("./Config/ReactotronConfig").then(() => console.log("Reactotron Configured"));
     }
+    NetInfo.getConnectionInfo().then((connectionInfo) => {
+      if(connectionInfo.type !== "none"){
+        codePush.sync({
+          deploymentKey: Platform.OS === "ios" ? codePushiOSKey : codePushAndroidKey
+        });
+      }
+      CurrentConnectivity = connectionInfo.type;
+    });
   }
 
   disableAppCenterCrashes = async () => {
@@ -125,7 +132,7 @@ class App extends Component {
 
         store.dispatch(initAuth()); // restores any auth tokens and sets them in api/forensic services
         const auth = store.getState().auth2 || {};
-    
+
         // attempt to register new device if we don't have one yet
         if (!auth.deviceJwtToken) {
           return store.dispatch(authorizeNewDevice());
@@ -188,7 +195,7 @@ class App extends Component {
       // some services
       .finally(() => {
         this.setState({loadingStore: false});
-        
+
         // should user update?
         if (promptUpdate) {
           displayUpdateAvailableAlert();
@@ -230,6 +237,7 @@ class App extends Component {
 
   handleConnectivityChange = (connectionInfo) => {
     recordNetworkEvent(connectionInfo);
+    CurrentConnectivity = connectionInfo.type;
     const { store } = this.state;
     if (store) {
       store.dispatch(detectNetworkStatus());
@@ -262,4 +270,4 @@ class App extends Component {
   }
 }
 
-export default codePush(App);
+export default CurrentConnectivity === "none" ? App : codePush(App);
