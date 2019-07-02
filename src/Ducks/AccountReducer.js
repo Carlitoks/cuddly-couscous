@@ -246,7 +246,7 @@ export const updateUserProfilePhoto = (base64Data, progressCB = null) => (dispat
   return new Promise((resolve, reject) => {
     uploadBase64File(
       "put",
-      `${apiURL}/profile-photo`,
+      `${apiURL}/profile-photo`.slice(1),
       base64Data,
       "avatar.jpg",
       "image/jpg"
