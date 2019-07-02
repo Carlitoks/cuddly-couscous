@@ -31,7 +31,7 @@ class PromoCodeView extends Component {
   submit() {
     Keyboard.dismiss();
 
-    this.setState({laoding: true});
+    this.setState({loading: true});
     api.get(`/event-codes/${this.state.code.trim()}`)
     .then((res) => {
       this.setState({loading: false});
@@ -76,7 +76,7 @@ class PromoCodeView extends Component {
   }
 
   isDisabled() {
-    return !this.state.code.trim();
+    return !this.state.code.trim() || this.state.loading;
   }
 
   render() {
@@ -120,6 +120,7 @@ class PromoCodeView extends Component {
           title={I18n.t("next")}
           onPress={() => this.submit()}
           bold={false}
+          loading={this.state.loading}
           disabled={this.isDisabled()}
           fill={!this.isDisabled()}
         />
