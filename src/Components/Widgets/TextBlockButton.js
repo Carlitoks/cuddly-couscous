@@ -25,24 +25,26 @@ class TextBlockButton extends Component {
 
 
   isDisabled = () => {
+    
     return false
   };
 
   render() {
-    return (
-      <View style={styles.callButtonContainer}>
+    const { text, textStyle, style } = this.props;
 
+    return (
+      <View style={style}>
             <TouchableOpacity
               disabled={this.isDisabled()}
-              style={this.isDisabled() ? styles.videoCallButtonDisable : styles.videoCallButton }
+              style={this.isDisabled() ? styles.buttonDisable : styles.button }
+              onPress={this.props.onPress}
             >
               <Text
-                style={styles.callNowButtonText}
+                style={styles.buttonText}
               >
-                {I18n.t("newCustomerHome.buttons.video")}
+                {I18n.t(text)}
               </Text>
             </TouchableOpacity>
-
       </View>
     );
   }

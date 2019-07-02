@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Text, View } from "react-native";
 import Icons from "../Icons";
 import CardItem from "./CardItem";
+import I18n from "../../../I18n/I18n";
 // Styles
 //import styles from "./Styles/AddCardStyles";
 
@@ -22,7 +23,7 @@ class OrderSummary extends Component {
 
   };
   render() {
-    const { loading, styles, navigation } = this.props;
+    const { loading, styles, navigation, haveCard } = this.props;
     let cardInfo = { creditCardNumber: "", creditCardIcon: "", expDate: "" };
     return (
       <View style={styles.billContainer}>
@@ -30,11 +31,21 @@ class OrderSummary extends Component {
             <Text style={styles.itemTextLeftTitle}>
             {"Credit Card"}
           </Text>
-          <Text style={styles.itemText}>
+
+          {haveCard && <Text style={styles.itemText}>
             {"Edit"}
-          </Text>
+          </Text>}
           </View>
-          <CardItem navigation={navigation} />
+
+          {haveCard ? <CardItem navigation={navigation} /> :
+          <View style={styles.rowAddCard}>
+            <Text style={styles.itemTextLeft}>
+                {I18n.t("packages.checkout.needCard")}
+          </Text>
+
+          </View>
+        }
+
           <View style={styles.rowBill}>
           <Text style={styles.itemTextLeftTitle}>
             {"Order Summary"}

@@ -2,6 +2,19 @@ import { StyleSheet } from 'react-native';
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale } from "../../../Util/Scaling";
 import { red } from 'ansi-colors';
+import { moderateScaleViewports } from "../../../Util/Scaling";
+import { isIphoneXorAbove } from "../../../Util/Devices";
+
+const baseButton = {
+  flexDirection: "row",
+  justifyContent: "center",
+  borderRadius: moderateScaleViewports(10),
+  alignItems: "center",
+  borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
+  borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
+  height: "100%",
+  bottom: 0,
+};
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -21,6 +34,7 @@ export default StyleSheet.create({
   itemTextLeft: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute"},
   itemText: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0},
   itemTextTitle: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0, fontWeight:"bold"},
+  textAddCard: {fontSize: moderateScale(15, 0), color: "#272833", position:"absolute", flexWrap: 'wrap', flex:1},
 
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
@@ -39,7 +53,8 @@ export default StyleSheet.create({
     height:"100%",
     width:"100%",
     position:"relative",
-    backgroundColor: "#F2F2F2"
+    backgroundColor: "#F2F2F2",
+
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
   billView: {
@@ -48,6 +63,33 @@ export default StyleSheet.create({
     height:"65%",
     width:"100%",
     backgroundColor:"#FFFFFF"
+  },
+  whiteView: {
+    left:0,
+    top:0,
+    height:"100%",
+    width:"100%",
+    opacity: 0.5,
+    backgroundColor:"#FFFFFF",
+    position:"absolute",
+  },
+  transparentView: {
+
+  },
+  processingView:{
+    backgroundColor:"#64A901",
+    height:40,
+    width:"100%",
+    position:"absolute",
+    top:0,
+    alignItems:"center"
+  },
+  processingText:{
+    color: "white",
+    fontSize: moderateScaleViewports(15),
+    fontFamily: Fonts.BaseFont,
+    marginLeft: moderateScaleViewports(10),
+    marginRight: moderateScaleViewports(30),
   },
   billContainer:{
     alignItems: "center",
@@ -82,5 +124,44 @@ export default StyleSheet.create({
     color: "#fff",
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(18, 0)
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(10),
+    width: Metrics.width * 0.90,
+    height: moderateScaleViewports(55),
+    right: "5%",
+    marginBottom: isIphoneXorAbove() ? 44 : 0,
+    position: "absolute",
+    bottom:"13%"
+  },
+  rowAddCard: {
+    marginTop:50,
+    marginBottom:10,
+    marginLeft:0,
+    flex:1,
+    height: 21,
+    width:"80%"
+  },
+
+  button: {
+    ...baseButton,
+    backgroundColor: "#F39100",
+    borderRadius: moderateScaleViewports(10),
+    flex: 1
+  },
+  buttonDisable: {
+    ...baseButton,
+    backgroundColor: "#979797",
+    flex: 1
+  },
+  buttonText: {
+    color: "white",
+    fontSize: moderateScaleViewports(16),
+    fontFamily: Fonts.BaseFont,
+    marginLeft: moderateScaleViewports(10),
+    marginRight: moderateScaleViewports(30),
   },
 });
