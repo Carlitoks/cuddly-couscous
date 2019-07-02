@@ -186,7 +186,7 @@ class MenuView extends Component {
             iconStyle={styles.optionMenu}
             onPress={() => {
               Instabug.setEnabledAttachmentTypes(false, true, true, true, true);
-              Instabug.invoke();
+              Instabug.show();
             }}
           >
             <Text style={styles.colorText}>{I18n.t("reportProblemMenu")}</Text>
