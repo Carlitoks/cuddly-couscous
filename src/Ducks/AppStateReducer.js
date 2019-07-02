@@ -29,15 +29,16 @@ export const setInterfaceLanguage = (code) => (dispatch, getState) => {
 
 // TODO: debounce trigger to check for active network connection
 export const detectNetworkStatus = () => (dispatch, getState) => {
-  // check is connected
-  NetInfo.isConnected.fetch().then((isConnected) => {
-    dispatch(update({hasNetworkConnection: isConnected}));
-  });
-
-  // get connection info
-  NetInfo.getConnectionInfo().then((info) => {
-    dispatch(update({connectionInfo: info}));
-  });
+  return Promise.all([
+    // check is connected
+    NetInfo.isConnected.fetch().then((isConnected) => {
+      dispatch(update({hasNetworkConnection: isConnected}));
+    }),
+    // get connection info
+    NetInfo.getConnectionInfo().then((info) => {
+      dispatch(update({connectionInfo: info}));
+    }),
+  ]);
 };
 
 const ACTIONS = {

@@ -103,7 +103,6 @@ class App extends Component {
         }
 
         // set connection data in app state, and track any connection status changes
-        store.dispatch(detectNetworkStatus());
         NetInfo.addEventListener("connectionChange", this.handleConnectivityChange);
 
         // initialize analytics
@@ -114,10 +113,15 @@ class App extends Component {
             .catch(error => console.log(error));
         }
 
-        return store;
+        // ensure we have detected the proper network status before continuing
+        return store.dispatch(detectNetworkStatus());
       })
       // initialize device
-      .then(store => {
+      .then(() => {
+        const {store} = this.state;
+        if (!store) {
+          return;
+        }
 
         store.dispatch(initAuth()); // restores any auth tokens and sets them in api/forensic services
         const auth = store.getState().auth2 || {};

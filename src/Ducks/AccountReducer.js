@@ -162,10 +162,14 @@ export const updateDevice = (payload = null) => (dispatch, getState) => {
 
 // clear and reload user data from server
 export const initializeUser = (userID) => (dispatch, getState) => {
-  const {currentDevice, currentDeviceID} = getState().account;
+  const {currentDevice, currentDeviceID, user} = getState().account;
   apiURL = `/users/${userID}`;
-  dispatch(clear());
-  dispatch(update({userID, currentDevice, currentDeviceID}));
+  // clear all account data
+  dispatch(clear()); 
+  // restore some items, because we can't let the user ref be null if has
+  // been recovered from storage - it gets referenced in too many places
+  // currently, and this will cause other errors.
+  dispatch(update({userID, user, currentDevice, currentDeviceID}));
   return dispatch(loadUser(false)); // force reload the user
 }
 
