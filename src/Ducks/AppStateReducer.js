@@ -31,7 +31,7 @@ export const setInterfaceLanguage = (code) => (dispatch, getState) => {
 export const detectNetworkStatus = () => (dispatch, getState) => {
   return Promise.all([
     // check is connected
-    NetInfo.isConnected.fetch().then((isConnected) => {
+    NetInfo.isConnected.fetch().done((isConnected) => {
       dispatch(update({hasNetworkConnection: isConnected}));
     }),
     // get connection info
