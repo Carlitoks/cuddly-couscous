@@ -11,11 +11,12 @@ import { Icon } from "react-native-elements";
 import I18n from "../../I18n/I18n";
 import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 class PackageCheckoutView extends Component {
-  componentWillMount() {
-    /*stripe.setOptions({
-      publishableKey: stripePublishableKey
-      //androidPayMode: "test" // Android only
-    });*/
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: false,
+    };
   }
 
   render() {
@@ -41,27 +42,33 @@ class PackageCheckoutView extends Component {
             }
             navbarTitle={I18n.t("packages.checkout.title")}
           />
+
           <ScrollView
             automaticallyAdjustContentInsets
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-            <View style={styles.billView}>
+          <View style={styles.billView}>
             <OrderSummary
+              navigation={navigation}
+              haveCard={false} //
               styles = {styles} // main container style
               textStyle = {styles.textBill} // optional text styles, component should provide defaults
               />
-            <TextBlockButton
-                text = "fooo" // the text in the button
-                disabled = {false} // boolean if disabled, prevents taps and show disabled button styles
-                loading = {false} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
-                style = {""} // main container style, component should provide some defaults, like width at 100%
-                disabledStyle = {""} // container style object when disabled, component should provide defaults
-                textStyle = {""} // optional text styles, component should provide defaults
-                onPress = {() => {}} // function to call when pressed
-            />
             </View>
+            <View style={this.state.loading?  styles.whiteView : styles.transparentView}>
+              </View>
           </ScrollView>
+
+            <TextBlockButton
+                text = "packages.checkout.purchase" // the text in the button
+                disabled = {false} // boolean if disabled, prevents taps and show disabled button styles
+                loading = {this.state.loading} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
+                style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
+                disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
+                textStyle = {styles.buttonText} // optional text styles, component should provide defaults
+                onPress = {() => {this.setState({loading:true})}} // function to call when pressed
+            />
         </View>
       </View>
     );

@@ -17,7 +17,7 @@ const baseButton = {
 
 export default StyleSheet.create({
   iconPadding: { paddingLeft: moderateScaleViewports(24), paddingTop: moderateScaleViewports(2) },
-  callButtonContainer: {
+  buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -34,36 +34,19 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "#979797"
   },
-  audioCallButtonDisable: {
-    ...baseButton,
-    backgroundColor: "#979797",
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    borderRightColor: "#fff",
-    borderRightWidth: 1,
-    flex: 1
-  },
-  videoCallButton: {
+
+  button: {
     ...baseButton,
     backgroundColor: "#F39100",
     borderRadius: moderateScaleViewports(10),
     flex: 1
   },
-  videoCallButtonDisable: {
+  buttonDisable: {
     ...baseButton,
     backgroundColor: "#979797",
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
     flex: 1
   },
-  audioOnlyButtonText: {
-    color: "white",
-    fontSize: moderateScaleViewports(16),
-    fontFamily: Fonts.BaseFont,
-    marginLeft: moderateScaleViewports(10),
-    marginRight: moderateScaleViewports(30),
-  },
-  callNowButtonText: {
+  buttonText: {
     color: "white",
     fontSize: moderateScaleViewports(16),
     fontFamily: Fonts.BaseFont,
