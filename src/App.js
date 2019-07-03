@@ -27,7 +27,7 @@ import { clear as clearAccount, initializeUser, refreshDevice } from "./Ducks/Ac
 import { init as initAuth, clear as clearAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
 import PushNotification from "./Util/PushNotification";
 import { setInitialScreen } from "./Navigation/AppNavigation";
-import { detectNetworkStatus } from "./Ducks/AppStateReducer";
+import { update as updateAppState } from "./Ducks/AppStateReducer";
 import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
 
 let CurrentConnectivity = "none";
@@ -108,10 +108,7 @@ class App extends Component {
         } else {
           switchLanguage(storeInterfaceLocale[1], this);
         }
-
-        // set connection data in app state, and track any connection status changes
-        NetInfo.addEventListener("connectionChange", this.handleConnectivityChange);
-
+    
         // initialize analytics
         if (!segmentSettings) {
           analytics
@@ -120,8 +117,24 @@ class App extends Component {
             .catch(error => console.log(error));
         }
 
-        // ensure we have detected the proper network status before continuing
-        return store.dispatch(detectNetworkStatus());
+        // trigger network status checks, and work around iOS NetInfo bug
+        // set connection data in app state, and track any connection status changes
+        NetInfo.addEventListener("connectionChange", this.handleConnectivityChange);
+        NetInfo.isConnected.addEventListener("connectionChange", this.handleIsConnectedChange);
+        return NetInfo.getConnectionInfo().then((info) => {
+          this.handleConnectivityChange(info);
+
+          // HACK for iOS: https://github.com/globalprofessionalsearch/solo-mobile-app/issues/1932
+          if (Platform.OS == "ios") {
+            if (store.getState().appState.connectionInfo.type != "none") {
+              this.handleIsConnectedChange(true);
+            }
+          } else {
+            NetInfo.isConnected.fetch().then((isConnected) => {
+              this.handleIsConnectedChange(isConnected);
+            });  
+          }
+        });
       })
       // initialize device
       .then(() => {
@@ -227,6 +240,7 @@ class App extends Component {
 
   componentWillUnmount() {
     NetInfo.removeEventListener("connectionChange", this.handleConnectivityChange);
+    NetInfo.isConnected.removeEventListener("connectionChange", this.handleIsConnectedChange);
     AppState.removeEventListener("change", this._handleAppStateChange);
     PushNotification.cleanListeners();
     persistEvents();
@@ -240,7 +254,14 @@ class App extends Component {
     CurrentConnectivity = connectionInfo.type;
     const { store } = this.state;
     if (store) {
-      store.dispatch(detectNetworkStatus());
+      store.dispatch(updateAppState({connectionInfo}));
+    }
+  };
+
+  handleIsConnectedChange = (isConnected) => {
+    const { store } = this.state;
+    if (store) {
+      store.dispatch(updateAppState({hasNetworkConnection: isConnected}));
     }
   };
 
