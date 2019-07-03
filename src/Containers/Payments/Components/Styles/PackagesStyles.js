@@ -40,7 +40,7 @@ export default StyleSheet.create({
     height: moderateScaleViewports(31),
     alignItems: 'center',
   },
-  grandient2: {
+  grandient: {
     width: "100%",
     zIndex: -10,
     backgroundColor: '#F39100',
@@ -59,7 +59,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  specialText2: {
+  specialText: {
     color:  '#FFF',
     fontFamily: Fonts.BaseFont, 
     fontSize: 17,

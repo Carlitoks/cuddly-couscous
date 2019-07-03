@@ -10,10 +10,40 @@ import { Icon } from "react-native-elements";
 import I18n from "../../I18n/I18n";
 import MinutePackageCard from "./Components/MinutePackageCard";
 
+import { loadMinutePackages, minutePackages } from "../../Ducks/AccountReducer";
+
+
 class AvailablePackagesView extends Component {
   constructor(props) {
     super(props);
-    console.log(styles.wrapperContainer)
+
+    console.log(props);
+
+    this.state = {
+      minutePackages: [],
+      loading: false
+    }
+  }
+  
+  componentDidMount(){
+    //this.setState({loading: true});
+    this.props.loadMinutePackages(false).then((minutePackages ) => {
+      this.setState({loading: false, minutePackages});
+    }).re; 
+  }
+
+  packageRender(){
+    return this.state.minutePackages.map( minutePackage => 
+      <MinutePackageCard
+        key={minutePackage.id}  
+        minutePackage = {minutePackage}
+        selectable={true} // show the select button
+        onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
+        displayReloadNotice={false} // display the reload notice or not
+        reloadNoticeValue={false} // whether or not the checkbox is selected
+        onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
+        promoCodeActive={false}
+      />);
   }
 
   render() {
@@ -56,45 +86,7 @@ class AvailablePackagesView extends Component {
         alwaysBounceVertical={false}
         contentContainerStyle={styles.scrollViewFlex}
       >
-        <MinutePackageCard 
-          minutePackage = {dummyList[0]}
-          selectable={true} // show the select button
-          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-          displayReloadNotice={false} // display the reload notice or not
-          reloadNoticeValue={false} // whether or not the checkbox is selected
-          onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
-          promoCodeActive={true}
-          discountedPrice={40}
-          special={I18n.t("minutePackage.special")}
-          specialColors={["#F39100", "#FCB753"]}
-        />
-        <MinutePackageCard 
-          minutePackage = {dummyList[0]}
-          selectable={false} // show the select button
-          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-          displayReloadNotice={true} // display the reload notice or not
-          reloadNoticeValue={false} // whether or not the checkbox is selected
-          onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-        />
-        <MinutePackageCard 
-          minutePackage = {dummyList[0]}
-          selectable={true} // show the select button
-          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-          displayReloadNotice={false} // display the reload notice or not
-          reloadNoticeValue={false} // whether or not the checkbox is selected
-          onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-        />
-        <MinutePackageCard 
-          minutePackage = {dummyList[0]}
-          selectable={false} // show the select button
-          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-          displayReloadNotice={true} // display the reload notice or not
-          reloadNoticeValue={false} // whether or not the checkbox is selected
-          onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-          
-        />
-        
-        
+       {this.packageRender()}
       </ScrollView>
         
       </View>
@@ -103,9 +95,14 @@ class AvailablePackagesView extends Component {
 }
 
 const mS = state => ({
+  publicMinutePackages: state.account.publicMinutePackages,
+  restrictedMinutePackages: state.account.restrictedMinutePackages
 });
 
-const mD = {};
+const mD = {
+  loadMinutePackages,
+  minutePackages
+};
 
 export default connect(
   mS,
@@ -113,53 +110,40 @@ export default connect(
 )(AvailablePackagesView);
 
 /*
+<MinutePackageCard 
+minutePackage = {dummyList[0]}
+selectable={true} // show the select button
+onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
+displayReloadNotice={false} // display the reload notice or not
+reloadNoticeValue={false} // whether or not the checkbox is selected
+onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
+promoCodeActive={true}
+discountedPrice={40}
+special={I18n.t("minutePackage.special")}
+specialColors={["#F39100", "#FCB753"]}
+/>
+<MinutePackageCard 
+minutePackage = {dummyList[0]}
+selectable={false} // show the select button
+onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
+displayReloadNotice={true} // display the reload notice or not
+reloadNoticeValue={false} // whether or not the checkbox is selected
+onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
+/>
+<MinutePackageCard 
+minutePackage = {dummyList[0]}
+selectable={true} // show the select button
+onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
+displayReloadNotice={false} // display the reload notice or not
+reloadNoticeValue={false} // whether or not the checkbox is selected
+onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
+/>
+<MinutePackageCard 
+minutePackage = {dummyList[0]}
+selectable={false} // show the select button
+onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
+displayReloadNotice={true} // display the reload notice or not
+reloadNoticeValue={false} // whether or not the checkbox is selected
+onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
 
-
-
-<ScrollView
-        automaticallyAdjustContentInsets
-        alwaysBounceVertical={false}
-        contentContainerStyle={styles.scrollViewFlex}
-      >
-        <MinutePackageCard 
-          minutePackage = {dummyList[0]}
-          selectable={true} // show the select button
-          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-          displayReloadNotice={false} // display the reload notice or not
-          reloadNoticeValue={false} // whether or not the checkbox is selected
-          onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
-          promoCodeActive={true}
-          discountedPrice={40}
-          special={I18n.t("minutePackage.special")}
-          specialColors={["#F39100", "#FCB753"]}
-        />
-        <MinutePackageCard 
-          minutePackage = {dummyList[0]}
-          selectable={false} // show the select button
-          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-          displayReloadNotice={true} // display the reload notice or not
-          reloadNoticeValue={false} // whether or not the checkbox is selected
-          onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-        />
-        <MinutePackageCard 
-          minutePackage = {dummyList[0]}
-          selectable={true} // show the select button
-          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-          displayReloadNotice={false} // display the reload notice or not
-          reloadNoticeValue={false} // whether or not the checkbox is selected
-          onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-        />
-        <MinutePackageCard 
-          minutePackage = {dummyList[0]}
-          selectable={false} // show the select button
-          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-          displayReloadNotice={true} // display the reload notice or not
-          reloadNoticeValue={false} // whether or not the checkbox is selected
-          onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-          
-        />
-        
-        
-      </ScrollView>
-
-      */
+/> */

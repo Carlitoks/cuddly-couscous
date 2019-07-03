@@ -9,10 +9,8 @@ import metrics from "../../../Themes/Metrics";
 import { CheckBox } from 'react-native-elements'
 import LinearGradient from "react-native-linear-gradient";
 
-
-
 // Styles
-import styles from "./Styles/PackagesStyles";
+import defaultStyles from "./Styles/PackagesStyles";
 
 class MinutePackageCard extends Component {
   constructor(props) {
@@ -30,20 +28,19 @@ class MinutePackageCard extends Component {
       promoCodeActive,
       discountedPrice,
       special,
-      specialColors} = this.props;
+      specialColors,
+      style
+    } = this.props;
+
+    const styles = {...defaultStyles, ...style}
+
     
     return (
-      <View 
-        style={styles.mainBorderContainer}
-        key={minutePackage.id} 
-      >        
+      <View style={styles.mainBorderContainer}>
         <View style={styles.borderContainer}>
         { special ? 
-          <View style={styles.specialContainer2}>
-
-            <Text
-              style={styles.specialText2}
-            >
+          <View style={styles.specialContainer}>
+            <Text style={styles.specialText}>
               {I18n.t("minutePackage.special")}
             </Text>
           </View>
@@ -56,38 +53,31 @@ class MinutePackageCard extends Component {
             locations={[0, 1]}
           />
         </View> 
-        
-
-
         <View style={styles.mainContainer}>
           <View style={styles.headerContainer}>
             <Text style={styles.title}>
               {minutePackage.name}
             </Text> 
-            <Text 
-              style={ promoCodeActive ? styles.pricePromoCode : styles.price}
-            >
-              {minutePackage.coin} {minutePackage.price}
+            <Text style={ promoCodeActive ? styles.pricePromoCode : styles.price}>
+              $ {minutePackage.cost}
             </Text>
           </View>
           <View>
             <View style={styles.headerContainer}>
               <Text>
-                {minutePackage.time} 
+                {minutePackage.minutes} Mins
               </Text>
               { promoCodeActive ? 
-                <Text 
-                  style={styles.discountedPrice}
-                >
-                  {minutePackage.coin} {discountedPrice}
+                <Text style={styles.discountedPrice}>
+                  $ {discountedPrice}
                 </Text>
               : 
                 null 
               }
             </View>
-            { minutePackage.valid ? 
+            { minutePackage.subscriptionPeriod ? 
               <Text>
-                {minutePackage.valid}
+                {minutePackage.subscriptionPeriodBeginAt} {minutePackage.subscriptionPeriodEndAt}
               </Text> : 
               null
             }
@@ -100,7 +90,6 @@ class MinutePackageCard extends Component {
             <CheckBox
               title={I18n.t("packages.checkout.reload", { num: 10 })}
               textStyle={styles.checkBox}
-              
             />
           </View>
           :
@@ -113,9 +102,7 @@ class MinutePackageCard extends Component {
               activeOpacity={0.8} 
               onPress={onSelect}
             >
-              <Text
-                style={styles.select}
-              >
+              <Text style={styles.select}>
                 {I18n.t("actions.select")}
               </Text>
             </TouchableOpacity>
