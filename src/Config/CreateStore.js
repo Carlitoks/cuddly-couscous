@@ -90,7 +90,7 @@ const sanitizeInitialState = (state = {}) => {
   });
 };
 
-// if any old state is detected and needs to be converted to new 
+// if any old state is detected and needs to be converted to new
 // state, handle that here
 const migrateInitialState = (state ={}) => {
   migrateOldAuthState(state);
@@ -105,6 +105,7 @@ const migrateOldAuthState = (state = {}) => {
   }
   if (!!auth.token) {
     auth2.userJwtToken = auth.token;
+    auth2.isLoggedIn = true;
   }
   if (!!auth.deviceId) {
     auth2.deviceID = auth.deviceId;
