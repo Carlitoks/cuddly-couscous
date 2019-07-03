@@ -14,6 +14,7 @@ import I18n, {
 import {loadUser} from "../../Ducks/AccountReducer";
 import styles from "./styles";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
+import api from "../../Config/AxiosConfig";
 
 class ScanScreenView extends Component {
   
