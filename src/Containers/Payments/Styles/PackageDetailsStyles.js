@@ -35,6 +35,8 @@ export default StyleSheet.create({
   itemText: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0},
   itemTextTitle: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0, fontWeight:"bold"},
   textAddCard: {fontSize: moderateScale(15, 0), color: "#272833", position:"absolute", flexWrap: 'wrap', flex:1},
+  itemTextLeftSale: { left:0, fontSize: moderateScale(15, 0), color: "#FF3B30", position:"absolute"},
+  itemTextSale: { fontSize: moderateScale(15, 0), color:"#FF3B30", position:"absolute", right:0},
 
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },

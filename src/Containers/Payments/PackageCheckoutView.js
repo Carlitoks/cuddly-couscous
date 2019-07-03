@@ -3,6 +3,8 @@ import {ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import OrderSummary from "./Components/OrderSummary";
+import MinutePackageCard from "./Components/MinutePackageCard";
+
 // Styles
 import styles from "./Styles/PackageDetailsStyles";
 import stripe from "tipsi-stripe";
@@ -21,7 +23,24 @@ class PackageCheckoutView extends Component {
 
   render() {
     const { navigation } = this.props;
-
+    const dummyList = [{
+      id: 1, 
+      name: 'Jeenie Value Package',
+      price: 50,
+      coin: '$',
+      time: '75 Mins',
+      description: 'At vero eos et accus et iusto odio dignissis praes At vero eos et accus et iusto odio dignissis praes '
+      },
+      { 
+        id: 2,
+        name: 'Conference unlimited Package',
+        price: 50,
+        coin: '$',
+        time: 'Unlimited Usage',
+        valid: 'July 1, 2019 - July 31, 2019' ,
+        description: 'At vero eos et accus et iusto odio dignissis praes At vero eos et accus et iusto odio dignissis praes '
+      }
+    ];
     return (
       <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -48,6 +67,18 @@ class PackageCheckoutView extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
+        <MinutePackageCard 
+          minutePackage = {dummyList[0]}
+          selectable={true} // show the select button
+          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
+          displayReloadNotice={false} // display the reload notice or not
+          reloadNoticeValue={false} // whether or not the checkbox is selected
+          onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
+          promoCodeActive={true}
+          discountedPrice={40}
+          special={I18n.t("minutePackage.special")}
+          specialColors={["#F39100", "#FCB753"]}
+        />
           <View style={styles.billView}>
             <OrderSummary
               navigation={navigation}
