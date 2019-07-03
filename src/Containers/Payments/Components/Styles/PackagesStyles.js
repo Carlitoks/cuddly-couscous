@@ -8,31 +8,6 @@ export default StyleSheet.create({
   mainBorderContainer: {
     width: metrics.width * 0.9,
   },
-  grandient: {
-    backgroundColor: '#F39100',
-    borderTopLeftRadius: moderateScaleViewports(10),
-    borderTopRightRadius: moderateScaleViewports(10),
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: "100%",
-    height: moderateScaleViewports(17)
-  },
-  specialContainer:{
-    height: 100,
-    width: 100,
-    backgroundColor: '#F39100',
-    
-    overflow: 'visible',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  specialText: {
-    color:  '#FFF',
-    fontFamily: Fonts.BaseFont, 
-    fontSize: 17,
-    alignItems: 'center',
-    textAlign: 'center',
-  },
   borderContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -48,7 +23,7 @@ export default StyleSheet.create({
     borderTopRightRadius: moderateScaleViewports(10),
     height: moderateScaleViewports(17)
   },
-  specialContainer2:{
+  specialContainer:{
     zIndex: 10,
     borderRadius: moderateScaleViewports(4),
     height: moderateScaleViewports(31),
