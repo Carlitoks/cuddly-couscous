@@ -23,7 +23,7 @@ class PromoCode extends Component {
         </Text>
         <View styles={styles.inputContainer}>
           <TextInput
-            style={ styles.input }
+            style={ styles.inputError }
             onChangeText={(text) => this.setState({text})}
             value={this.state.text}
             placeholder={I18n.t("packages.browse.promoPlaceholder")}
@@ -38,11 +38,18 @@ class PromoCode extends Component {
               {I18n.t("actions.apply")}
             </Text>
           </TouchableOpacity>
-        </View>
 
-        
-        
-        
+        </View>
+          <TouchableOpacity
+            style={styles.infoContainer }
+          >
+        <Text style={styles.messageError}>
+          {I18n.t("packages.browse.promoApplied")}
+        </Text>
+          <Text style={styles.remove}>
+          {I18n.t("actions.remove")}
+        </Text>
+        </TouchableOpacity>
       </View>
     );
   }

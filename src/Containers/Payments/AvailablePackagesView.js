@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import Promocode from "./Components/PromoCode"
 // Styles
-import styles from "./Styles/PaymentScreenStyles";
+import styles from "./Styles/AvailablePackagesStyles";
 
 import { Icon } from "react-native-elements";
 import I18n from "../../I18n/I18n";
