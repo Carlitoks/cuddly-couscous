@@ -42,7 +42,10 @@ class AvailablePackagesView extends Component {
         displayReloadNotice={false} // display the reload notice or not
         reloadNoticeValue={false} // whether or not the checkbox is selected
         onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-        promoCodeActive={false}
+        promoCodeActive={true}
+discountedPrice={40}
+special={I18n.t("minutePackage.special")}
+specialColors={["#F39100", "#FCB753"]}
       />);
   }
 
