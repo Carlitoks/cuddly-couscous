@@ -352,13 +352,13 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
 
 // load minute package promo code, or return error if it was invalid or failed to load
 export const loadMinutePackages = (useCache = true, code = null) => (dispatch, getState) => {
-
+  const {minutePackagesLoadedAt} = getState().account;
   if (useCache && !code && new Date().getTime() < minutePackagesLoadedAt + CACHE.MINUTE_PACKAGES) {
     return Promise.resolve(getState().account.minutePackages);
   }
-
+  const url = (!!code) ? `/minute-packages?promoCode=${code}` : `/minute-packages`;
   return new Promise((resolve, reject) => {
-    api.get(`/minute-packages?promoCode=${code}`)
+    api.get(url)
     .then((res) => {
       dispatch(merge({
         minutePackagesLoadedAt: new Date().getTime(),
