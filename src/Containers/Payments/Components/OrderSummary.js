@@ -60,10 +60,10 @@ class OrderSummary extends Component {
           </Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.itemTextLeft}>
+            <Text style={styles.itemTextLeftSale}>
             {"JEENIE20"}
           </Text>
-          <Text style={styles.itemText}>
+          <Text style={styles.itemTextSale}>
             {"- $10"}
           </Text>
           </View>
