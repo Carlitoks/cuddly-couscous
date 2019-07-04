@@ -83,6 +83,15 @@ export default StyleSheet.create({
     position:"absolute",
     backgroundColor:"rgba(255, 59, 48, 0.9);",
   },
+  unlimited:{
+    color:"#FFFFFF",
+    top: 25,
+    fontSize: 26,
+    fontFamily: Fonts.BaseFont,
+    position:"absolute",
+    fontWeight: "bold"
+
+  },
   balanceDescription:{
     top:60,
     position:"absolute",

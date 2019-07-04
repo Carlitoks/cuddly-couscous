@@ -22,7 +22,7 @@ class PackageSection extends Component {
     return (
       <View style={styles.packageContainer}>  
       <View style={styles.row}>  
-      <Text style={styles.creditCardTitle}>{I18n.t("account.card.title")}</Text>
+      <Text style={styles.creditCardTitle}>{I18n.t("account.package.title")}</Text>
       <View style={styles.buttonContainer}>  
       <TouchableOpacity
         onPress={() => {}}
@@ -31,7 +31,7 @@ class PackageSection extends Component {
         <Text
           style={styles.addCarduttonText}
         >
-          {I18n.t("newCustomerHome.addCard")}
+          {I18n.t("account.package.add")}
         </Text>
       </TouchableOpacity>
       </View>
@@ -42,7 +42,7 @@ class PackageSection extends Component {
         <Text
           style={styles.description}
         >
-          {I18n.t("account.card.description", { rate: "US$1" })}
+          {I18n.t("account.package.description", { rate: "US$1" })}
         </Text>
       </View>
     </View>
