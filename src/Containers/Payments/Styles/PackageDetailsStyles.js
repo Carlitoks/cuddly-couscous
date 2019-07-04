@@ -145,7 +145,8 @@ export default StyleSheet.create({
     marginLeft:0,
     flex:1,
     height: 21,
-    width:"80%"
+    width:"80%",
+    flexDirection: "row",
   },
 
   button: {
