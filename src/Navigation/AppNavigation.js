@@ -24,6 +24,7 @@ import NotificationPermissionView from "../Containers/Permissions/NotificationPe
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
 import PackageCheckoutView from "../Containers/Payments/PackageCheckoutView";
 import PaymentScreen from "../Containers/Payments/PaymentScreen";
+import AccountDetailsView from "../Containers/Payments/AccountDetailsView";
 import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 import AvailablePackagesView from "../Containers/Payments/AvailablePackagesView";
 import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
@@ -66,6 +67,12 @@ const Navigation = StackNavigator(
     },
     PackageCheckoutView: {
       screen: PackageCheckoutView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    AccountDetailsView: {
+      screen: AccountDetailsView,
       navigationOptions: {
         gesturesEnabled: false
       }
