@@ -53,10 +53,10 @@ class OrderSummary extends Component {
           </View>
           <View style={styles.row}>
             <Text style={styles.itemTextLeft}>
-            {"Jeenie Value Package"}
+            {navigation.state.params.minutePackage.name}
           </Text>
           <Text style={styles.itemText}>
-            {"$50"}
+            $ {navigation.state.params.minutePackage.cost}
           </Text>
           </View>
           <View style={styles.row}>
@@ -74,7 +74,7 @@ class OrderSummary extends Component {
             {"Total"}
           </Text>
           <Text style={styles.itemTextTitle}>
-            {"$41.45"}
+            $ {navigation.state.params.minutePackage.cost - 10}
           </Text>
           </View>
         </View>

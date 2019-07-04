@@ -6,6 +6,7 @@ import metrics from "../../../../Themes/Metrics";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   mainBorderContainer: {
+    marginTop: moderateScaleViewports(10),
     width: metrics.width * 0.9,
   },
   borderContainer: {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import Promocode from "./Components/PromoCode"
@@ -12,7 +12,6 @@ import MinutePackageCard from "./Components/MinutePackageCard";
 
 import { loadMinutePackages, minutePackages } from "../../Ducks/AccountReducer";
 
-
 class AvailablePackagesView extends Component {
   constructor(props) {
     super(props);
@@ -21,55 +20,38 @@ class AvailablePackagesView extends Component {
 
     this.state = {
       minutePackages: [],
-      loading: false
+      loading: true
     }
   }
   
   componentDidMount(){
     //this.setState({loading: true});
-    this.props.loadMinutePackages(false).then((minutePackages ) => {
-      this.setState({loading: false, minutePackages});
-    }).re; 
+    this.props.loadMinutePackages(false)
+    .then(minutePackages  => this.setState({loading: false, minutePackages})); 
   }
 
   packageRender(){
+
+    const { navigation } = this.props;
+
     return this.state.minutePackages.map( minutePackage => 
       <MinutePackageCard
         key={minutePackage.id}  
         minutePackage = {minutePackage}
         selectable={true} // show the select button
-        onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
+        onSelect={ () => navigation.dispatch({type: "PackageCheckoutView", params: {minutePackage}}) } // func to call if select button pressed
         displayReloadNotice={false} // display the reload notice or not
         reloadNoticeValue={false} // whether or not the checkbox is selected
         onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
         promoCodeActive={true}
-discountedPrice={40}
-special={I18n.t("minutePackage.special")}
-specialColors={["#F39100", "#FCB753"]}
+        discountedPrice={4000}
+        special={I18n.t("minutePackage.special")}
+        specialColors={["#F39100", "#FCB753"]}
       />);
   }
 
   render() {
     const { navigation } = this.props;
-
-    const dummyList = [{
-      id: 1, 
-      name: 'Jeenie Value Package',
-      price: 50,
-      coin: '$',
-      time: '75 Mins',
-      description: 'At vero eos et accus et iusto odio dignissis praes At vero eos et accus et iusto odio dignissis praes '
-      },
-      { 
-        id: 2,
-        name: 'Conference unlimited Package',
-        price: 50,
-        coin: '$',
-        time: 'Unlimited Usage',
-        valid: 'July 1, 2019 - July 31, 2019' ,
-        description: 'At vero eos et accus et iusto odio dignissis praes At vero eos et accus et iusto odio dignissis praes '
-      }
-    ];
 
     return (
       <View style={styles.wrapperContainer}>
@@ -82,15 +64,19 @@ specialColors={["#F39100", "#FCB753"]}
             </TouchableOpacity>
           }
           navbarTitle={I18n.t("packages.browse.title")}
-        /> 
+        />
         <Promocode navigation={navigation} />
-        <ScrollView
-        automaticallyAdjustContentInsets
-        alwaysBounceVertical={false}
-        contentContainerStyle={styles.scrollViewFlex}
-      >
-       {this.packageRender()}
-      </ScrollView>
+        {this.state.loading ? 
+          <ActivityIndicator size="large" color="purple" style={{ zIndex: 100000, top: 150 }} />  
+        :
+          <ScrollView
+            automaticallyAdjustContentInsets
+            alwaysBounceVertical={false}
+            contentContainerStyle={styles.scrollViewFlex}
+          >
+            {this.packageRender()}
+          </ScrollView>
+       }
         
       </View>
     );

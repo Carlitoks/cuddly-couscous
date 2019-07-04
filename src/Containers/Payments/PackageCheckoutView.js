@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {ScrollView, Text, TouchableOpacity, View, Alert } from "react-native";
 import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import OrderSummary from "./Components/OrderSummary";
@@ -21,26 +21,18 @@ class PackageCheckoutView extends Component {
     };
   }
 
+  purchase(){
+    //this.setState({loading:true});
+    Alert.alert(
+      I18n.t("error"),
+      " msj msj msj msj msj msj msj",
+      [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
+    );
+  }
+
   render() {
-    const { navigation } = this.props;
-    const dummyList = [{
-      id: 1, 
-      name: 'Jeenie Value Package',
-      price: 50,
-      coin: '$',
-      time: '75 Mins',
-      description: 'At vero eos et accus et iusto odio dignissis praes At vero eos et accus et iusto odio dignissis praes '
-      },
-      { 
-        id: 2,
-        name: 'Conference unlimited Package',
-        price: 50,
-        coin: '$',
-        time: 'Unlimited Usage',
-        valid: 'July 1, 2019 - July 31, 2019' ,
-        description: 'At vero eos et accus et iusto odio dignissis praes At vero eos et accus et iusto odio dignissis praes '
-      }
-    ];
+    const { StripePaymentSourceMeta, user, navigation } = this.props;
+    console.log(StripePaymentSourceMeta, user);
     return (
       <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -68,13 +60,13 @@ class PackageCheckoutView extends Component {
             contentContainerStyle={styles.scrollViewFlex}
           >
         <MinutePackageCard 
-          minutePackage = {dummyList[0]}
-          selectable={true} // show the select button
-          onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-          displayReloadNotice={false} // display the reload notice or not
+          minutePackage = {navigation.state.params.minutePackage}
+          selectable={false} // show the select button
+          onSelect={ () => {} } // func to call if select button pressed
+          displayReloadNotice={true} // display the reload notice or not
           reloadNoticeValue={false} // whether or not the checkbox is selected
           onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
-          promoCodeActive={true}
+          promoCodeActive={false}
           discountedPrice={40}
           special={I18n.t("minutePackage.special")}
           specialColors={["#F39100", "#FCB753"]}
@@ -82,7 +74,7 @@ class PackageCheckoutView extends Component {
           <View style={styles.billView}>
             <OrderSummary
               navigation={navigation}
-              haveCard={false} //
+              haveCard={!!user.stripePaymentToken} //
               styles = {styles} // main container style
               textStyle = {styles.textBill} // optional text styles, component should provide defaults
               />
@@ -98,7 +90,7 @@ class PackageCheckoutView extends Component {
                 style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
                 disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
                 textStyle = {styles.buttonText} // optional text styles, component should provide defaults
-                onPress = {() => {this.setState({loading:true})}} // function to call when pressed
+                onPress = {this.purchase} // function to call when pressed
             />
         </View>
       </View>
@@ -107,6 +99,8 @@ class PackageCheckoutView extends Component {
 }
 
 const mS = state => ({
+  StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta,
+  user: state.account.user,
 });
 
 const mD = { };
