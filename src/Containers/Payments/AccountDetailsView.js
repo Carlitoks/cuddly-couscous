@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Text, ScrollView, TouchableOpacity, View, Image } from "react-native";
 import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
+import CreditCardSection from "./Components/CreditCardSection";
+import PackageSection from "./Components/PackageSection";
+
 // Styles
 import styles from "./Styles/AccountDetailsStyles";
 import stripe from "tipsi-stripe";
@@ -46,60 +49,9 @@ class AccountDetailsView extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-          <View style={styles.creditCardContainer}>  
-            <View style={styles.row}>  
-            <Text style={styles.creditCardTitle}>{I18n.t("account.card.title")}</Text>
-            <View style={styles.buttonContainer}>  
-            <TouchableOpacity
-              onPress={() => {}}
-              style={styles.addCardButton }
-            >
-              <Text
-                style={styles.addCarduttonText}
-              >
-                {I18n.t("newCustomerHome.addCard")}
-              </Text>
-            </TouchableOpacity>
-            </View>
-
-            </View>
-            <View style={styles.rowDescription}>  
-              <Image style={styles.backgroundImage} source={creditCardImage} />
-              <Text
-                style={styles.description}
-              >
-                {I18n.t("account.card.description", { rate: "US$1" })}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.packageContainer}>  
-            <View style={styles.row}>  
-            <Text style={styles.creditCardTitle}>{I18n.t("account.package.title")}</Text>
-            <View style={styles.buttonContainer}>  
-            <TouchableOpacity
-              onPress={() => {}}
-              style={styles.addCardButton }
-            >
-              <Text
-                style={styles.addCarduttonText}
-              >
-                {I18n.t("account.package.add")}
-              </Text>
-            </TouchableOpacity>
-            </View>
-
-            </View>
-            <View style={styles.rowDescription}>  
-              <Image style={styles.backgroundImage} source={packageImage} />
-              <Text
-                style={styles.description}
-              >
-                {I18n.t("account.package.description")}
-              </Text>
-            </View>
-          </View>
-
+          <CreditCardSection/> 
+          <PackageSection/> 
+          
 
           </ScrollView>
         </View>
