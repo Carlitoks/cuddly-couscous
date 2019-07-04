@@ -22,6 +22,7 @@ import { Colors, Images } from "../../Themes";
 import styles from "./styles";
 import { HelpURI } from "../../Config/StaticViewsURIS";
 import I18n from "../../I18n/I18n";
+import { displayOpenSettingsAlert, setPermission } from "../../Util/Permission";
 
 class MenuView extends Component {
   constructor(props) {
@@ -152,7 +153,16 @@ class MenuView extends Component {
                   ? styles.selectedOptionMenu
                   : styles.optionMenu
               }
-              onPress={() => this.checkCurrentPage(navigation, "ScanScreenView")}
+              onPress={() => {
+                setPermission("camera").then(response => {
+                  if (response == "denied" || response == "restricted") {
+                    displayOpenSettingsAlert();
+                  } else {
+                    this.checkCurrentPage(navigation, "ScanScreenView")
+                  }
+                });
+              }
+              }
             >
               <Text style={styles.colorText}>{I18n.t("scanQRCode")}</Text>
             </MaterialCIcons.Button>
