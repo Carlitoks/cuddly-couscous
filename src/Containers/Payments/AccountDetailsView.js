@@ -11,6 +11,7 @@ import I18n, { translateApiError } from "../../I18n/I18n";
 import { removeUserPaymentDetails } from "../../Ducks/AccountReducer";
 
 const creditCardImage = require("../../Assets/Images/creditCardLeft.png");
+const packageImage = require("../../Assets/Images/packageImage.png");
 
 class AccountDetailsView extends Component {
   constructor(props) {
@@ -39,9 +40,6 @@ class AccountDetailsView extends Component {
           <Text style={styles.balanceDescription}>{I18n.t("account.descriptions.noCardNoPackage")}</Text>      
           </View>
           </View>
-        
-
-
 
           <ScrollView
             automaticallyAdjustContentInsets
@@ -51,10 +49,54 @@ class AccountDetailsView extends Component {
           <View style={styles.creditCardContainer}>  
             <View style={styles.row}>  
             <Text style={styles.creditCardTitle}>{I18n.t("account.card.title")}</Text>
+            <View style={styles.buttonContainer}>  
+            <TouchableOpacity
+              onPress={() => {}}
+              style={styles.addCardButton }
+            >
+              <Text
+                style={styles.addCarduttonText}
+              >
+                {I18n.t("newCustomerHome.addCard")}
+              </Text>
+            </TouchableOpacity>
             </View>
-            <View style={styles.row}>  
-              <Image style={styles.backgroundImage} source={creditCardImage} />
 
+            </View>
+            <View style={styles.rowDescription}>  
+              <Image style={styles.backgroundImage} source={creditCardImage} />
+              <Text
+                style={styles.description}
+              >
+                {I18n.t("account.card.description", { rate: "US$1" })}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.packageContainer}>  
+            <View style={styles.row}>  
+            <Text style={styles.creditCardTitle}>{I18n.t("account.package.title")}</Text>
+            <View style={styles.buttonContainer}>  
+            <TouchableOpacity
+              onPress={() => {}}
+              style={styles.addCardButton }
+            >
+              <Text
+                style={styles.addCarduttonText}
+              >
+                {I18n.t("account.package.add")}
+              </Text>
+            </TouchableOpacity>
+            </View>
+
+            </View>
+            <View style={styles.rowDescription}>  
+              <Image style={styles.backgroundImage} source={packageImage} />
+              <Text
+                style={styles.description}
+              >
+                {I18n.t("account.package.description")}
+              </Text>
             </View>
           </View>
 
