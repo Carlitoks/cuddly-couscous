@@ -24,7 +24,7 @@ class CreditCardSection extends Component {
       <View style={styles.creditCardContainer}>  
       <View style={styles.row}>  
       <Text style={styles.creditCardTitle}>{I18n.t("account.card.title")}</Text>
-      <View style={styles.buttonContainer}>  
+      {!haveCard && <View style={styles.buttonContainer}>  
       <TouchableOpacity
         onPress={() => {this.props.addCard()}}
         style={styles.addCardButton }
@@ -35,8 +35,13 @@ class CreditCardSection extends Component {
           {I18n.t("newCustomerHome.addCard")}
         </Text>
       </TouchableOpacity>
-      </View>
-
+      </View>}
+      {haveCard && 
+      <Text
+          style={styles.editText}
+        >
+          {I18n.t("account.card.edit")}
+        </Text>}
       </View>
       <View style={styles.rowDescription}>  
       {haveCard ?  

@@ -166,6 +166,13 @@ export default StyleSheet.create({
     height:"35%",
     backgroundColor:"#FFF",
     position:"absolute",
-
+  },
+  editText:{
+      color:"#007AFF",
+      fontSize: 14,
+      fontFamily: Fonts.BaseFont,
+      position:"absolute",
+      right:0,
+      marginTop:moderateScale(20, 0),
   }
 });
