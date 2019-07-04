@@ -37,10 +37,6 @@ export default (FR = {
   callLinguist: "Appeler un linguiste",
   calls: "Appels",
   callSettings: "Paramètres d'appel",
-  callTimeBoxTextLine1: "Utilisez Jeenie GRATUITEMENT dès maintenant pour \n fêter son lancement",
-  callTimeBoxTextLine2: "Le tarif est de 1 $/min \n et nous proposerons prochainement des remises sur les forfaits",
-  callTimeButtonText: "minutes GRATUITES",
-  callTimeButtonSubtitle: "Offertes par Jeenie",
   callTimeMinutes: "Durée de l'appel",
   callTimeMinutesSub: "Recommandé dans cette situation",
   callTimeTitle: "Actuellement disponible en mandarin et en anglais.",
@@ -85,9 +81,7 @@ export default (FR = {
   couldBetter: "Que pouvons-nous améliorer ?",
   countryFamiliarity: "Degré de connaissance du pays",
   cost: "Coût",
-  costPerMinute: "1 $/min",
   create: "Créer",
-  currency: "$ US",
   customer: "Client",
   customerSatisfied: "Votre client était-il satisfait ?",
   describeAssistance: "Que pouvons-nous faire pour vous ?",
@@ -138,10 +132,6 @@ export default (FR = {
   extraTime3: "Votre appel prendra fin dans 2 minutes",
   extraTimeA1: "Oui, ajouter 5 minutes",
   extraTimeA2: "Non, mettre fin à l'appel une fois le temps écoulé",
-  fallPromotion:
-    " Promotion d'automne : Recevez 5 minutes GRATUITES sur votre compte en passant un appel avec Jeenie.",
-  fallPromotionModal:
-    " Promotion d'automne : Recevez 5 minutes GRATUITES \nsur votre compte \nen passant un appel avec Jeenie.",
   female: "Femme",
   finish: "Terminer",
   finishOnboarding: "Finaliser l'inscription",
@@ -280,9 +270,6 @@ export default (FR = {
   permissionDenied: "Accès application refusé",
   passwordMatch: "Les mots de passe ne correspondent pas",
   passwordLengthValidation: "Le mot de passe doit contenir 8 caractères minimum.",
-  payAsYouGo: "Crédit prépayé",
-  payAsYouGoPricing: "Crédit prépayé =",
-  payAsYouGoPricingUnder: " 1 $ la minute",
   paymentDetails: "Informations de paiement",
   paymentDetailsCreated: "Vos informations de paiement ont été mises à jour.",
   preferedNameTitle: "Nom d'usage",
@@ -343,7 +330,6 @@ export default (FR = {
   tapRepeat: "Appuyez pour répéter",
   thereNoInternetConnection: "Aucune connexion Internet disponible",
   time: "Heure",
-  timeWithCost: "Temps supplémentaire : 1 $/min",
   timeStatic1: "Le temps d'appel est fixé à 8 minutes pendant la période d'essai.",
   timeCompliments: "Offertes par Jeenie",
   timeAddMore: "Le temps d'appel maximal est de 60 minutes.",
@@ -425,6 +411,7 @@ export default (FR = {
   actions: {
     accept: "Accepter",
     agree: "Accepter",
+    apply: "Appliquer",
     back: "Retour",
     cancel: "Annuler",
     choose: "Choisir",
@@ -502,7 +489,6 @@ export default (FR = {
     },
     account: {
       pricing: "tarification",
-      rate: "1 $/min",
       unit: "minutes",
       add: "Ajoutez des informations de paiement pour passer un appel"
     },
@@ -541,8 +527,6 @@ export default (FR = {
     },
     registrationWelcome: {
       balance: "{{num}} minutes",
-      title: "Vos {{num}} premières minutes sont gratuites !",
-      description: "Au-delà de ces {{num}} premières minutes, le tarif est de 1 $ USD la minute.",
       buttons: {
         dismiss: "Commencer à utiliser Jeenie",
         payment: "Ajouter des informations de paiement"
@@ -579,13 +563,13 @@ export default (FR = {
       video: "Appel vidéo"
     },
     rateNotices: {
-      beforeFirst: "Tarif : 1 $ USD/min. Les {{num}} premières minutes sont GRATUITES.",
-      afterFirst: "Tarif : 1 $ USD/min. {{num}} minutes GRATUITES restantes.",
       noBalanceNoCard: "Tarif : 1 $ USD/min. Ajoutez une carte pour continuer",
       noBalanceHasCard: "Tarif : 1 $ US/min.",
-      noBalanceHasCardPackage: "Tarif : 1 $ US/min. Achetez un forfait avec 15 % de remise.",
-      hasBalance: "Tarif : 1 $ USD/min. Solde restant : {{num}} min",
-      hasBalanceAutoreload: "Tarif : {{num}} min restantes."
+      hasBalance: "Tarif : 1 $ US/min. Solde : {{num}} min",
+      noBalanceNoCardRate: "Tarif : {{rate}}/min. Ajoutez une carte pour continuer",
+      noBalanceHasCardRate: "Tarif : {{rate}}/min.",
+      hasBalanceRate: "Tarif : {{rate}}/min. Solde : {{num}} min",
+      unlimitedUntil: "Utilisation illimitée jusqu'au {{date}}"
     }
   },
 
@@ -597,12 +581,11 @@ export default (FR = {
 
   // text for customer related to payments and rates
   payments: {
-    currentRate: "1 $/min",
     currentBalance: "{{minutes}} min",
     enterPaymentToTalk:
       "Saisissez vos informations de paiement pour poursuivre la conversation. Discutez aussi longtemps que vous voulez au tarif de 1 $/min.",
-    currentRateDescription:
-      "Les appels coûtent 1 $/min et peuvent durer jusqu'à 60 minutes. Nous proposerons prochainement des remises sur des crédits plus importants.",
+    enterPaymentToTalkRate:
+      "Saisissez vos informations de paiement pour poursuivre la conversation. Discutez aussi longtemps que vous voulez au tarif de {{rate}}/min.",
     addCard: "Ajouter une carte",
     editCard: "Modifier la carte",
     cardInfo: "Informations de carte",
@@ -627,6 +610,85 @@ export default (FR = {
     }
   },
 
+  // displayed in account details section
+  account: {
+    title: "Détails du compte",
+    balance: "Solde",
+    balanceNum: "{{num}} min",
+    balanceUnlimited: "Illimité",
+    descriptions: {
+      noCardNoPackage: "Saisissez vos informations de paiement pour éviter une interruption d´appel.",
+      hasCardNoPackage: "Achetez un forfait pour parler plus en payant moins. Les minutes n'expirent jamais.",
+      hasCardHasPackage: "Votre compte se rechargera automatiquement lorsque votre solde sera de {{num}} min",
+      hasPackageUnlimitedUse: "Votre forfait vous assure une utilisation illimitée jusqu'au {{date}}",
+      hasUnlimitedUse: "Vous disposez d'une utilisation illimitée jusqu'au {{date}}",
+      hasSubscription: "Votre abonnement se renouvellera le {{date}}"
+    },
+    card: {
+      title: "Carte bancaire",
+      add: "Ajouter une carte",
+      edit: "Modifier",
+      description: "Saisissez vos informations de carte pour parler aussi longtemps que vous voulez, ou achetez un forfait.  Tarif standard par minute : {{rate}}"
+    },
+    package: {
+      title: "Forfait",
+      add: "Ajouter un forfait",
+      remove: "Supprimer",
+      more: "Afficher plus de forfaits",
+      description: "Achetez plus de minutes et payez moins.  Avec le rechargement automatique, votre crédit n'est jamais épuisé."
+    },
+  },
+
+  // there may be more than one way we refer to promo codes the user can
+  // scan or enter, here is some alternate terminology
+  codes: {
+    promo: "Code promo",
+    discount: "Code remise",
+    event: "Code événement",
+    action: "Code action",
+    universal: "Code universel",
+  },
+
+  // shown on checkout screen when purchasing a package
+  packages: {
+    noExpire: "Votre crédit n´est jamais épuisé.",
+    browse: {
+      title: "Forfait",
+      promo: "Vous avez un code promo ?",
+      promoPlaceholder: "Saisissez votre code ici",
+      promoApplied: "Code appliqué"
+    },
+    checkout: {
+      title: "Paiement",
+      reload: "Recharger automatiquement mon compte lorsque mon solde est de {{num}} min",
+      needCard: "Vous devez ajouter votre carte pour effectuer le paiement.",
+      summary: "Résumé de la commande",
+      total: "Total",
+      purchase: "Acheter un forfait",
+      processing: "Traitement du paiement..."
+    },
+    success: {
+      title: "Paiement effectué",
+      description: "Le forfait a bien été ajouté à votre compte",
+      withReload: "avec rechargement automatique",
+      withoutReload: "sans rechargement automatique",
+      balance: "Solde :"
+    },
+    failure: {
+      title: "Échec du paiement",
+      description: "Oups ! Nous n´avons pas pu traiter votre paiement.  Vérifiez vos informations de carte et réessayez."
+    }
+  },
+
+  // related to the display of a specific minute package
+  minutePackage: {
+    balance: "{{}} min",
+    balanceUnlimited: "Utilisation illimitée",
+    validBetween: "Valide : {{date1}} - {{date2}}",
+    validThrough: "Valide jusqu´au : {{date}}",
+    special: "Spécial"
+  },
+
   operatingHours: {
     title: "Disponibilité : {{lang}}",
     description: "Les Jeenies des langues sont disponibles de {{beginHour}} à {{endHour}}.",
@@ -644,7 +706,6 @@ export default (FR = {
   pricingModal: {
     title: "Tarification et solde du compte",
     titleNoMinutesNoCard: "Besoin de plus de temps sur Jeenie ?",
-    currentRate: "1 $/min",
     currentBalance: "{{minutes}} minutes",
     buttons: {
       gotIt: "OK !",
@@ -658,7 +719,6 @@ export default (FR = {
     screenTitle: "Tarification et solde du compte",
     pricing: {
       title: "Tarification :",
-      rate: "1 $ USD/minute"
     },
     balance: {
       title: "Solde du compte :",
@@ -674,14 +734,6 @@ export default (FR = {
       descriptionLowMinutes:
         "Votre solde de compte est bientôt épuisé. Pour éviter l'interruption de votre prochain appel, ajoutez des informations de paiement dès maintenant.",
       descriptionNoMinutes: "Vous devez ajouter des informations de paiement pour continuer."
-    },
-    descriptions: {
-      hasMinutesAndCard:
-        "En cas de crédit épuisé, nous débiterons automatiquement votre carte de 1 $ USD par minute pour éviter l'interruption de votre appel.",
-      hasMinutesNoCard:
-        "Pour poursuivre la conversation en cas de crédit épuisé, saisissez vos informations de paiement dès maintenant.",
-      noMinutesHasCard: "Nous débiterons automatiquement votre carte de 1 $ USD par minute.",
-      noMinutesNoCard: "Pour contacter un linguiste, vous devez ajouter des informations de paiement dès maintenant."
     },
     buttons: {
       continue: "Continuer",
@@ -704,12 +756,14 @@ export default (FR = {
     errEmailInUse: "Un compte a déjà été créé avec cette adresse e-mail.",
     errEventInvalid: "Ce code n'a pas pu être validé.",
     errEventUnavailable: "Ce code n'est pas disponible pour l'instant.",
+    errEventInvalid: "Ce code n'est pas valide.",
     errEventInactive: "Ce code n'est pas actif.",
     errEventScenarioMissing: "Veuillez préciser un scénario.",
     errPaymentDetailsRequired: "Des informations de paiement sont nécessaires pour continuer.",
     errEventTimeExpired: "Ce code n'est plus valable.",
     errEventAlreadyUsed: "Ce code a déjà été utilisé.",
-    errLocationRestricted: "Jeenie n'est pas encore disponible dans votre région."
+    errLocationRestricted: "Jeenie n'est pas encore disponible dans votre région.",
+    errInvalidPromoCode: "Code promo non valide"
   },
 
   // used when handling user input related to specific fields - these
@@ -732,12 +786,12 @@ export default (FR = {
       label: "Mot de passe",
       labelConfirm: "Confirmez le mot de passe",
       labelCreate: "Créez un mot de passe",
+      tooltip: "Le mot de passe doit contenir au moins 7 caractères.",
       errLength: "Le mot de passe doit contenir 7 caractères minimum.",
       errConfirmMatch: "Les mots de passe doivent correspondre."
     }
   },
 
-  
   // for use in session-related screens
   session: {
     errFailedToConnect: "Vous avez perdu la connexion à Jeenie.  Merci de réessayer.",
@@ -832,7 +886,7 @@ export default (FR = {
 
     // used when rating a session
     rating: {
-      submit: "Soumettre",
+      comment: "Commentaire",
       addComment: "Ajouter des commentaires",
       questionGood: "Ça s'est bien passé ?",
       questionBetter: "Que pouvons-nous améliorer ?",
@@ -870,7 +924,6 @@ export default (FR = {
   customerOnboarding: {
     welcome: "Bienvenue sur Jeenie",
     connectToLinguist: "Lancer la connexion",
-    tenFreeMinutes: "{{time}} minutes GRATUITES",
     canIHelpYou: "Puis-je vous aider ?",
     homeCanIhelpYou: "Puis-je vous aider, {{name}} ?",
     intro: {
@@ -921,18 +974,22 @@ export default (FR = {
 
   forgotPassword: {
     title: "Mot de passe oublié ?",
-    description: "Pas d'inquiétude,  nous allons vous envoyer un lien de réinitialisation à l'adresse e-mail ci-dessous.",
+    description:
+      "Pas d'inquiétude,  nous allons vous envoyer un lien de réinitialisation à l'adresse e-mail ci-dessous.",
     alertSuccessTitle: "Lien envoyé !",
     alertSuccessBody: "Vous allez recevoir un e-mail contenant le lien de réinitialisation de mot de passe."
   },
 
   correctEmailModal: {
-    title: "Échec d'envoi de l'e-mail",
-    description: "Nous n'avons pas pu vérifier l'adresse e-mail que vous avez saisie.  Saisissez une adresse e-mail valide.",
+    title: "Échec de vérification de l'adresse e-mail",
+    description:
+      "L'adresse e-mail que vous avez saisie présente un problème. Merci d'en saisir une autre.",
     label: "Nouvelle adresse e-mail",
     titleSuccess: "Opération effectuée",
-    descriptionSuccess: "Votre adresse e-mail a été mise à jour ! Vous pouvez vous connecter à Jeenie avec votre nouvelle adresse e-mail \"{email}\"",
-    descriptionTaken: "L'adresse e-mail \"{email}\" est déjà enregistrée.  Vous pouvez vous connecter avec cette adresse e-mail ou en renseigner une nouvelle."
+    descriptionSuccess:
+      'Votre adresse e-mail a été mise à jour ! Vous pouvez vous connecter à Jeenie avec votre nouvelle adresse e-mail « {{email}} »',
+    descriptionTaken:
+      'L\'adresse e-mail « {email} » est déjà enregistrée.  Vous pouvez vous connecter avec cette adresse e-mail ou en renseigner une nouvelle.'
   },
 
   newCustomerOnboarding: {
@@ -943,12 +1000,16 @@ export default (FR = {
     createAccount: "Créer un compte",
     intro: {
       title: "Aide en temps réel",
-      description: "Obtenez, en un clic, l'aide linguistique de traducteurs humains en direct, 24 h/24 et 7 j/7.  Tarif : 1 $ USD/min.",
+      description:
+        "Obtenez, en un clic, l'aide linguistique de traducteurs humains en direct, 24 h/24 et 7 j/7.  Tarif : 1 $ US/min.",
+      descriptionRate:
+        "Obtenez, en un clic, l'aide linguistique de traducteurs humains en direct, 24 h/24 et 7 j/7.  Tarif : {{rate}}/min.",
       button: "Commencer"
     },
     location: {
       title: "Partager votre position",
-      description: "Lorsque vous partagez votre position sur Jeenie, nous pouvons vous recommander automatiquement des langues et des traducteurs humains qui vous conviennent.",
+      description:
+        "Lorsque vous partagez votre position sur Jeenie, nous pouvons vous recommander automatiquement des langues et des traducteurs humains qui vous conviennent.",
       button: "Activer le service de localisation"
     },
     notification: {
@@ -961,7 +1022,9 @@ export default (FR = {
       title: "Parlez-nous de vous :",
       termsAndPrivacyNotice: "En continuant, vous acceptez nos Conditions et notre Politique de Confidentialité.",
       terms: "Conditions",
-      privacyPolicy: "Politique de confidentialité"
+      privacyPolicy: "Politique de confidentialité",
+      otherLanguages: "Autres langues",
+      chooseNativeLang: "Choisissez votre langue natale"
     },
     login: {
       forgotPassword: "Mot de passe oublié ?"
@@ -971,6 +1034,15 @@ export default (FR = {
         "Un compte a déjà été créé avec l'adresse e-mail que vous avez saisie.\nSaisissez une autre adresse e-mail ou\nconnectez-vous à votre compte.",
       emailAndPassword: "L'adresse e-mail et le mot de passe ne correspondent pas.\nMerci de réessayer."
     }
+  },
+
+  // for localizing currency
+  cost: {
+    usd: "$ US{{num}}",
+    jpy: "JP¥{{num}}",
+    eur: "€{{num}}",
+    gbp: "£{{num}}",
+    cny: "CN¥{{num}}"
   },
 
   // for use during primary language selection

@@ -37,10 +37,6 @@
   callLinguist: "致电一位语言专家",
   calls: "通话",
   callSettings: "通话设置",
-  callTimeBoxTextLine1: "为庆祝翻译精灵的发布，\n现开放免费使用",
-  callTimeBoxTextLine2: "定价为每分钟 1 美元，\n今后将推出套餐折扣。",
-  callTimeButtonText: "免费分钟数",
-  callTimeButtonSubtitle: "翻译精灵真情回馈",
   callTimeMinutes: "通话时长",
   callTimeMinutesSub: "此类情况时推荐使用",
   callTimeTitle: "目前支持中文（普通话）和英语。",
@@ -85,9 +81,7 @@
   couldBetter: "哪些方面还有改善空间？",
   countryFamiliarity: "国家/地区熟悉度",
   cost: "费用",
-  costPerMinute: "1 美元每分钟",
   create: "创建",
-  currency: "美元",
   customer: "顾客",
   customerSatisfied: "您的顾客满意吗？",
   describeAssistance: "我们如何为您提供帮助？",
@@ -138,10 +132,6 @@
   extraTime3: "通话将于 2 分钟后结束",
   extraTimeA1: "需要，增加 5 分钟",
   extraTimeA2: "不需要，时间到了就结束通话",
-  fallPromotion:
-    " 秋季促销：使用翻译精灵拨打电话，您的帐户即可获得 5 分钟免费通话时间。",
-  fallPromotionModal:
-    " 秋季促销：使用翻译精灵拨打电话\n，您的帐户即可获得\n 5 分钟免费通话时间。",
   female: "女性",
   finish: "完成",
   finishOnboarding: "完成注册",
@@ -216,7 +206,7 @@
   lauchScreenSwipe2:
     "无论您身处何方，都可以得到实时帮助的真人翻译。",
   lauchScreenSwipe3:
-    "目前，翻译精灵支持\n中文（普通话）<>英语\n和日语<>英语。\n\n即将推出其他语言。",
+    "目前，翻译精灵支持\n中文（普通话） <> 英语\n和日语 <> 英语。\n\n即将推出其他语言。",
   lastname: "姓氏",
   lastnameFormatValidation: "姓氏只能由字母组成。",
   legal: "法律资讯",
@@ -280,9 +270,6 @@
   permissionDenied: "App 权限被拒绝",
   passwordMatch: "密码不匹配。",
   passwordLengthValidation: "密码必须是 8 个或 8 个以上字符。",
-  payAsYouGo: "随用随付",
-  payAsYouGoPricing: "按需付费 =",
-  payAsYouGoPricingUnder: " 每分钟 1 美元",
   paymentDetails: "付款详情",
   paymentDetailsCreated: "您的付款信息已成功更新。",
   preferedNameTitle: "首选昵称",
@@ -343,7 +330,6 @@
   tapRepeat: "点击重复",
   thereNoInternetConnection: "无网络连接",
   time: "时间",
-  timeWithCost: "超出时间后每分钟 1 美元",
   timeStatic1: "试用期间，预设通话时间为 8 分钟。",
   timeCompliments: "翻译精灵真情回馈",
   timeAddMore: "每次通话时间最长为 60 分钟。",
@@ -425,6 +411,7 @@
   actions: {
     accept: "接受",
     agree: "同意",
+    apply: "应用",
     back: "返回",
     cancel: "取消",
     choose: "选择",
@@ -502,7 +489,6 @@
     },
     account: {
       pricing: "价格",
-      rate: "1 美元每分钟",
       unit: "分钟",
       add: "付款后即可开始通话"
     },
@@ -541,8 +527,6 @@
     },
     registrationWelcome: {
       balance: "{{num}} 分钟",
-      title: "前 {{num}} 分钟免费！",
-      description: "{{num}} 分钟后，每分钟收费 1 美元。",
       buttons: {
         dismiss: "开始使用翻译精灵",
         payment: "立即添加付款信息"
@@ -579,13 +563,13 @@
       video: "视频通话"
     },
     rateNotices: {
-      beforeFirst: "费率：每分钟 1 美元，前 {{num}} 分钟免费。",
-      afterFirst: "费率：每分钟 1 美元，免费时间剩余 {{num}} 分钟",
       noBalanceNoCard: "费率：每分钟 1 美元，请添加银行卡后继续通话",
       noBalanceHasCard: "费率：每分钟 1 美元。",
-      noBalanceHasCardPackage: "费率：每分钟 1 美元，购买套餐可享八五折优惠。",
       hasBalance: "费率：每分钟 1 美元，剩余分钟数：{{num}} 分钟",
-      hasBalanceAutoreload: "费率：剩余 {{num}} 分钟。"
+      noBalanceNoCardRate: "费率：每分钟 {{rate}}，请添加银行卡后继续通话",
+      noBalanceHasCardRate: "费率：每分钟 {{rate}}。",
+      hasBalanceRate: "费率：每分钟 {{rate}}，剩余分钟数：{{num}} 分钟",
+      unlimitedUntil: "{{date}} 前不限时使用"
     }
   },
 
@@ -597,12 +581,11 @@
 
   // text for customer related to payments and rates
   payments: {
-    currentRate: "1 美元每分钟",
     currentBalance: "{{minutes}} 分钟",
     enterPaymentToTalk:
       "输入付款详情后可继续通话。每分钟 1 美元便可畅聊无阻。",
-    currentRateDescription:
-      "通话每分钟 1 美元，最多可通话 60 分钟。今后批量购买分钟数可享折扣。",
+    enterPaymentToTalkRate:
+      "输入付款详情后可继续通话。每分钟 {{rate}}，随心畅所欲言。",
     addCard: "添加新卡",
     editCard: "编辑银行卡",
     cardInfo: "银行卡信息",
@@ -627,6 +610,85 @@
     }
   },
 
+  // displayed in account details section
+  account: {
+    title: "帐户详情",
+    balance: "剩余分钟数",
+    balanceNum: "{{num}} 分钟",
+    balanceUnlimited: "不限时",
+    descriptions: {
+      noCardNoPackage: "为免通话中断，请输入付款详情。",
+      hasCardNoPackage: "购买套餐，乐享优惠。分钟数永不过期。",
+      hasCardHasPackage: "当您帐户剩余 {{num}} 分钟时，将为您自动充值",
+      hasPackageUnlimitedUse: "您所购买的套餐可在 {{date}} 前不限时使用",
+      hasUnlimitedUse: "您可在 {{date}} 前不限时使用",
+      hasSubscription: "您订阅的内容于 {{date}} 续期"
+    },
+    card: {
+      title: "银行卡",
+      add: "添加新卡",
+      edit: "编辑",
+      description: "输入银行卡号即可畅聊无阻，也可选择购买套餐，乐享超值优惠。  每分钟标准费率：{{rate}}"
+    },
+    package: {
+      title: "套餐",
+      add: "添加套餐",
+      remove: "移除",
+      more: "查看更多套餐",
+      description: "以超值价购买更多分钟数。  启用自动充值功能，通话时间永无限制。"
+    },
+  },
+
+  // there may be more than one way we refer to promo codes the user can
+  // scan or enter, here is some alternate terminology
+  codes: {
+    promo: "促销代码",
+    discount: "折扣码",
+    event: "活动码",
+    action: "操作码",
+    universal: "通用码",
+  },
+
+  // shown on checkout screen when purchasing a package
+  packages: {
+    noExpire: "您的分钟数永不过期。",
+    browse: {
+      title: "套餐",
+      promo: "有促销代码？",
+      promoPlaceholder: "请在此输入",
+      promoApplied: "代码已应用"
+    },
+    checkout: {
+      title: "划入帐户",
+      reload: "当帐户剩余分钟数为 {{num}} 时自动为我充值。",
+      needCard: "您必须添加银行卡方能完成付款。",
+      summary: "订单汇总",
+      total: "总计",
+      purchase: "订购套餐",
+      processing: "付款处理中..."
+    },
+    success: {
+      title: "付款成功",
+      description: "套餐分钟数已添加至您的帐户",
+      withReload: "自动充值",
+      withoutReload: "手动充值",
+      balance: "剩余分钟数："
+    },
+    failure: {
+      title: "付款失败",
+      description: "糟糕！系统无法处理您的付款。  请核实银行卡信息后重试。"
+    }
+  },
+
+  // related to the display of a specific minute package
+  minutePackage: {
+    balance: "{{}} 分钟",
+    balanceUnlimited: "不限时使用",
+    validBetween: "有效期：{{date1}} - {{date2}}",
+    validThrough: "有效期至：{{date}}",
+    special: "专用"
+  },
+
   operatingHours: {
     title: "可用时段：{{lang}}",
     description: "语言翻译精灵在 {{beginHour}} 到 {{endHour}} 可用。",
@@ -644,7 +706,6 @@
   pricingModal: {
     title: "价格及帐户余额",
     titleNoMinutesNoCard: "需要更多翻译精灵使用时间?",
-    currentRate: "1 美元每分钟",
     currentBalance: "{{minutes}} 分钟",
     buttons: {
       gotIt: "了解！",
@@ -658,7 +719,6 @@
     screenTitle: "价格及帐户余额",
     pricing: {
       title: "价格：",
-      rate: "每分钟 1 美元"
     },
     balance: {
       title: "帐户余额：",
@@ -674,14 +734,6 @@
       descriptionLowMinutes:
         "您的帐户余额很低。为避免下次通话过程中断开连接，请立即添加付款信息。",
       descriptionNoMinutes: "您必须添加付款信息才能继续使用。"
-    },
-    descriptions: {
-      hasMinutesAndCard:
-        "您用尽分钟数后，我们将自动向您的银行卡扣款，收费为每分钟 1 美元，以免您在通话过程中断开连接。",
-      hasMinutesNoCard:
-        "若要在剩余的分钟数用尽后继续通话，请立即输入付款信息。",
-      noMinutesHasCard: "我们将自动向您的银行卡扣款，收费为每分钟 1 美元。",
-      noMinutesNoCard: "您必须立即添加付款信息，才能连接至语言专家。"
     },
     buttons: {
       continue: "继续",
@@ -704,12 +756,14 @@
     errEmailInUse: "已有帐户使用此电子邮件地址注册。",
     errEventInvalid: "无法验证此代码。",
     errEventUnavailable: "此代码尚不可使用。",
+    errEventInvalid: "无效代码。",
     errEventInactive: "此代码未激活。",
     errEventScenarioMissing: "必须指定情境。",
     errPaymentDetailsRequired: "请填写付款详情以继续下一步。",
     errEventTimeExpired: "此代码已无剩余时间。",
     errEventAlreadyUsed: "此代码已被使用。",
-    errLocationRestricted: "您目前所在的地区尚无法使用翻译精灵。"
+    errLocationRestricted: "您目前所在的地区尚无法使用翻译精灵。",
+    errInvalidPromoCode: "无效的代码促销"
   },
 
   // used when handling user input related to specific fields - these
@@ -732,12 +786,12 @@
       label: "密码",
       labelConfirm: "确认密码",
       labelCreate: "创建密码",
+      tooltip: "密码须至少包含 7 个字符。",
       errLength: "密码必须是 7 个或 8 个以上字符。",
       errConfirmMatch: "密码必须匹配。"
     }
   },
 
-  
   // for use in session-related screens
   session: {
     errFailedToConnect: "翻译精灵掉线了。  请重试。",
@@ -832,7 +886,7 @@
 
     // used when rating a session
     rating: {
-      submit: "提交",
+      comment: "留言",
       addComment: "留言",
       questionGood: "有哪些不错的方面？",
       questionBetter: "哪些方面还有改善空间？",
@@ -870,7 +924,6 @@
   customerOnboarding: {
     welcome: "欢迎来到翻译精灵",
     connectToLinguist: "立即连接",
-    tenFreeMinutes: "免费 {{time}} 分钟",
     canIHelpYou: "有什么能够帮您的吗？",
     homeCanIhelpYou: "{{name}}，有什么能够帮您的吗？",
     intro: {
@@ -921,18 +974,22 @@
 
   forgotPassword: {
     title: "忘记密码？",
-    description: "不用担心。  我们将向以下电子邮件地址发送密码重置链接。",
+    description:
+      "不用担心。  我们将向以下电子邮件地址发送密码重置链接。",
     alertSuccessTitle: "重置链接已发送！",
     alertSuccessBody: "您将很快收到包含密码重置链接的邮件。"
   },
 
   correctEmailModal: {
-    title: "发送邮件失败",
-    description: "我们无法验证您所输入的电子邮件地址。  请输入有效的电子邮件地址。",
+    title: "电子邮件验证失败",
+    description:
+      "您提供的电子邮件出错，请重新输入。",
     label: "新电子邮件地址",
     titleSuccess: "成功",
-    descriptionSuccess: "您的电子邮件已更新！您可使用新的电子邮件 \"{email}\" 登录翻译精灵",
-    descriptionTaken: "电子邮件地址 \"{email}\" 已被注册。  您可使用该电子邮件登录，或重新输入新的电子邮件地址。"
+    descriptionSuccess:
+      '您的电子邮件已更新！您可使用新的电子邮件“{{email}}”登录翻译精灵',
+    descriptionTaken:
+      '电子邮件帐号“{email}”已被注册。  您可使用该电子邮件登录，或重新输入新的电子邮件地址。'
   },
 
   newCustomerOnboarding: {
@@ -943,12 +1000,16 @@
     createAccount: "创建帐户",
     intro: {
       title: "实时帮助",
-      description: "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助。  费率：每分钟 1 美元，",
+      description:
+        "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助。  费率：每分钟 1 美元。",
+      descriptionRate:
+        "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助。  费率：每分钟 {{rate}}。",
       button: "开始使用"
     },
     location: {
       title: "启用定位",
-      description: "允许翻译精灵访问您的位置可使我们能够为您自动推荐合适的真人译员。",
+      description:
+        "允许翻译精灵访问您的位置可使我们能够为您自动推荐合适的真人译员。",
       button: "打开定位"
     },
     notification: {
@@ -961,7 +1022,9 @@
       title: "介绍自己：",
       termsAndPrivacyNotice: "继续即表示，您同意我们的“条款与隐私政策”。",
       terms: "条款",
-      privacyPolicy: "隐私政策"
+      privacyPolicy: "隐私政策",
+      otherLanguages: "其他语言",
+      chooseNativeLang: "选择您的母语"
     },
     login: {
       forgotPassword: "忘记密码？"
@@ -971,6 +1034,15 @@
         "您输入的电子邮件地址已被注册。\n请输入其他电子邮件或\n登录您的帐户。",
       emailAndPassword: "电子邮件或密码错误。\n请重试。"
     }
+  },
+
+  // for localizing currency
+  cost: {
+    usd: "{{num}} 美元",
+    jpy: "{{num}} 日元",
+    eur: "{{num}} 欧元",
+    gbp: "{{num}} 英镑",
+    cny: "{{num}} 元人民币"
   },
 
   // for use during primary language selection

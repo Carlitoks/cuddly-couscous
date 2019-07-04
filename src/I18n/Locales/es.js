@@ -37,10 +37,6 @@ export default (ESP = {
   callLinguist: "Llamar a un lingüista",
   calls: "Llamadas",
   callSettings: "Configuración de la llamada",
-  callTimeBoxTextLine1: "Disfrute de la aplicación Jeenie ahora mismo SIN CARGO a modo de \n celebración por nuestro lanzamiento",
-  callTimeBoxTextLine2: "El precio es de $1 USD/min \n y se ofrecerán paquetes de descuentos en el futuro",
-  callTimeButtonText: "minutos GRATIS",
-  callTimeButtonSubtitle: "Cumplidos de Jeenie",
   callTimeMinutes: "Duración de la llamada",
   callTimeMinutesSub: "Recomendado para esta situación",
   callTimeTitle: "Actualmente disponible en mandarín e inglés",
@@ -85,9 +81,7 @@ export default (ESP = {
   couldBetter: "¿Qué podría ser mejor?",
   countryFamiliarity: "Familiaridad con el país",
   cost: "Costo",
-  costPerMinute: "$1 USD/min",
   create: "Crear",
-  currency: "USD",
   customer: "Cliente",
   customerSatisfied: "¿Su cliente quedó satisfecho?",
   describeAssistance: "¿Cómo podemos ayudarlo?",
@@ -138,10 +132,6 @@ export default (ESP = {
   extraTime3: "Su llamada terminará en 2 minutos",
   extraTimeA1: "Sí, agregar 5 minutos",
   extraTimeA2: "No, terminar llamada cuando se termine el tiempo",
-  fallPromotion:
-    " Promoción de otoño: Reciba 5 minutos GRATIS en su cuenta cuando realice una llamada con Jeenie.",
-  fallPromotionModal:
-    " Promoción de otoño: Reciba 5 minutos GRATIS \nen su cuenta cuando \nhaga una llamada con Jeenie.",
   female: "Femenino",
   finish: "Finalizar",
   finishOnboarding: "Finalizar la incorporación",
@@ -258,7 +248,7 @@ export default (ESP = {
   no: "No",
   noAvailableMinutes: "0 min",
   noItems: "No hay elementos",
-  none: "Ninguno",
+  none: "Ninguna",
   noRecentActivityMessage: "Su actividad reciente se mostrará aquí",
   notLinguistAvailable: "No hay ningún lingüista disponible en este momento",
   notification: "Notificación",
@@ -280,9 +270,6 @@ export default (ESP = {
   permissionDenied: "Permiso de aplicación denegado",
   passwordMatch: "Las contraseñas no coinciden.",
   passwordLengthValidation: "La contraseña debe tener 8 o más caracteres.",
-  payAsYouGo: "Pague sobre la marcha",
-  payAsYouGoPricing: "Pague sobre la marcha =",
-  payAsYouGoPricingUnder: " $1 USD por minuto",
   paymentDetails: "Información del pago",
   paymentDetailsCreated: "Su información de pago se actualizó con éxito.",
   preferedNameTitle: "Nombre preferido",
@@ -343,7 +330,6 @@ export default (ESP = {
   tapRepeat: "Tocar para repetir",
   thereNoInternetConnection: "No hay conexión a internet",
   time: "Hora",
-  timeWithCost: "$1 USD/min por tiempo adicional",
   timeStatic1: "Las llamadas tienen una duración preestablecida de 8 minutos durante el período de prueba.",
   timeCompliments: "Cumplidos de Jeenie",
   timeAddMore: "Cada llamada tiene un tiempo máximo de 60 minutos.",
@@ -425,6 +411,7 @@ export default (ESP = {
   actions: {
     accept: "Aceptar",
     agree: "De acuerdo",
+    apply: "Aplicar",
     back: "Volver",
     cancel: "Cancelar",
     choose: "Elegir",
@@ -441,7 +428,7 @@ export default (ESP = {
     ignore: "Ignorar",
     next: "Siguiente",
     no: "No",
-    ok: "Aceptar",
+    ok: "ACEPTAR",
     prev: "Anterior",
     quit: "Abandonar",
     reject: "Rechazar",
@@ -502,7 +489,6 @@ export default (ESP = {
     },
     account: {
       pricing: "precios",
-      rate: "$1 USD/min",
       unit: "minutos",
       add: "Agregar pago para hacer una llamada"
     },
@@ -541,8 +527,6 @@ export default (ESP = {
     },
     registrationWelcome: {
       balance: "{{num}} minutos",
-      title: "¡Los primeros {{num}} minutos son gratuitos!",
-      description: "Después de los primeros {{num}} minutos, el precio es de $1 USD por minuto.",
       buttons: {
         dismiss: "Comenzar a usar Jeenie",
         payment: "Agregar información de pago ahora"
@@ -579,13 +563,13 @@ export default (ESP = {
       video: "Videollamada"
     },
     rateNotices: {
-      beforeFirst: "Tarifa: $1 USD por minuto. Los primeros {{num}} minutos son GRATIS.",
-      afterFirst: "Tarifa: $1 USD por minuto. Quedan {{num}} minutos GRATIS",
       noBalanceNoCard: "Tarifa: $1 USD por minuto. Agregue una tarjeta para continuar.",
       noBalanceHasCard: "Tarifa: $1 USD por minuto.",
-      noBalanceHasCardPackage: "Tarifa: $1 USD por minuto. Compre un paquete con un descuento del 15 %.",
-      hasBalance: "Tarifa: $1 USD por minuto. Saldo restante: {{num}} min",
-      hasBalanceAutoreload: "Tarifa: Quedan {{num}} minutos."
+      hasBalance: "Tarifa: $1 USD por minuto. Saldo: {{num}} min",
+      noBalanceNoCardRate: "Tarifa: {{rate}} por minuto. Agregue una tarjeta para continuar.",
+      noBalanceHasCardRate: "Tarifa: {{rate}} por minuto.",
+      hasBalanceRate: "Tarifa: {{rate}} por minuto. Saldo: {{num}} min",
+      unlimitedUntil: "Uso ilimitado hasta el {{date}}"
     }
   },
 
@@ -597,12 +581,11 @@ export default (ESP = {
 
   // text for customer related to payments and rates
   payments: {
-    currentRate: "$1 USD/min",
     currentBalance: "{{minutes}} min",
     enterPaymentToTalk:
       "Ingrese la información de pago para seguir hablando. Hable todo lo que quiera por $1 USD/min.",
-    currentRateDescription:
-      "Las llamadas cuestan $1 USD/min, y puede hablar hasta 60 minutos. En el futuro, se ofrecerán descuentos por paquetes de minutos.",
+    enterPaymentToTalkRate:
+      "Ingrese la información de pago para seguir hablando. Hable todo lo que quiera por {{rate}}/min.",
     addCard: "Agregar una tarjeta",
     editCard: "Editar tarjeta",
     cardInfo: "Información de la tarjeta",
@@ -627,6 +610,85 @@ export default (ESP = {
     }
   },
 
+  // displayed in account details section
+  account: {
+    title: "Detalles de la cuenta",
+    balance: "Saldo",
+    balanceNum: "{{num}} min",
+    balanceUnlimited: "Ilimitado",
+    descriptions: {
+      noCardNoPackage: "Ingrese la información de pago para evitar la interrupción de la llamada.",
+      hasCardNoPackage: "Compre un paquete para hablar por menos. Los minutos no vencen nunca.",
+      hasCardHasPackage: "Su cuenta se recargará automáticamente cuando su saldo sea de {{num}} minutos.",
+      hasPackageUnlimitedUse: "Su paquete le otorga un uso ilimitado hasta el {{date}}.",
+      hasUnlimitedUse: "Tiene uso ilimitado hasta el {{date}}",
+      hasSubscription: "Su suscripción se renueva el {{date}}"
+    },
+    card: {
+      title: "Tarjeta de crédito",
+      add: "Agregar tarjeta",
+      edit: "Editar",
+      description: "Ingrese su tarjeta para hablar el tiempo que desee, o compre un paquete.  Tarifa estándar por minuto: {{rate}}"
+    },
+    package: {
+      title: "Paquete",
+      add: "Agregar paquete",
+      remove: "Eliminar",
+      more: "Ver más paquetes",
+      description: "Compre más minutos por menos.  Con la recarga automática, nunca se quedará sin tiempo."
+    },
+  },
+
+  // there may be more than one way we refer to promo codes the user can
+  // scan or enter, here is some alternate terminology
+  codes: {
+    promo: "Código de promoción",
+    discount: "Código de descuento",
+    event: "Código de evento",
+    action: "Código de acción",
+    universal: "Código universal",
+  },
+
+  // shown on checkout screen when purchasing a package
+  packages: {
+    noExpire: "Sus minutos no vencen nunca.",
+    browse: {
+      title: "Paquete",
+      promo: "¿Tiene un Código de promoción?",
+      promoPlaceholder: "Ingrese el código aquí",
+      promoApplied: "Código aplicado"
+    },
+    checkout: {
+      title: "Pago",
+      reload: "Recargar automáticamente mi cuenta cuando mi saldo sea de {{num}} minutos.",
+      needCard: "Debe agregar su tarjeta para proceder con el pago.",
+      summary: "Resumen del pedido",
+      total: "Total",
+      purchase: "Comprar paquete",
+      processing: "Procesando el pago..."
+    },
+    success: {
+      title: "Pago exitoso",
+      description: "El paquete se agregó a su cuenta",
+      withReload: "con recarga automática",
+      withoutReload: "sin recarga automática",
+      balance: "Saldo:"
+    },
+    failure: {
+      title: "Error de pago",
+      description: "¡Uy! No pudimos procesar su pago.  Verifique la información de su tarjeta y vuelva a intentarlo."
+    }
+  },
+
+  // related to the display of a specific minute package
+  minutePackage: {
+    balance: "{{}} min",
+    balanceUnlimited: "Uso ilimitado",
+    validBetween: "Validez: {{date1}} - {{date2}}",
+    validThrough: "Válido hasta el: {{date}}",
+    special: "Especial"
+  },
+
   operatingHours: {
     title: "Disponibilidad: {{lang}}",
     description: "Language Jeenies están disponibles de {{beginHour}} a {{endHour}}.",
@@ -644,7 +706,6 @@ export default (ESP = {
   pricingModal: {
     title: "Precios y saldo de la cuenta",
     titleNoMinutesNoCard: "¿Necesita más tiempo con Jeenie?",
-    currentRate: "$1 USD/min",
     currentBalance: "{{minutes}} minutos",
     buttons: {
       gotIt: "¡Entendido!",
@@ -658,7 +719,6 @@ export default (ESP = {
     screenTitle: "Precios y saldo de la cuenta",
     pricing: {
       title: "Precios:",
-      rate: "1 USD/minuto"
     },
     balance: {
       title: "Saldo de la cuenta:",
@@ -674,14 +734,6 @@ export default (ESP = {
       descriptionLowMinutes:
         "El saldo de su cuenta es bajo. Para evitar ser desconectado durante su próxima llamada, agregue la información de pago ahora.",
       descriptionNoMinutes: "Debe agregar la información de pago para poder continuar."
-    },
-    descriptions: {
-      hasMinutesAndCard:
-        "Si se queda sin minutos, le cobraremos automáticamente $1 USD por minuto a su tarjeta para evitar desconectar la llamada.",
-      hasMinutesNoCard:
-        "Para seguir hablando cuando finalicen sus minutos restantes, ingrese ahora la información de pago.",
-      noMinutesHasCard: "Automáticamente le cobraremos $1 USD por minuto a su tarjeta.",
-      noMinutesNoCard: "Para comunicarse con un lingüista, debe agregar la información de pago ahora."
     },
     buttons: {
       continue: "Continuar",
@@ -704,12 +756,14 @@ export default (ESP = {
     errEmailInUse: "Ya se ha creado una cuenta con esta dirección de correo electrónico.",
     errEventInvalid: "No se pudo validar este código.",
     errEventUnavailable: "Este código no está disponible actualmente.",
+    errEventInvalid: "Este código no es válido.",
     errEventInactive: "Este código no está activo.",
     errEventScenarioMissing: "Se debe especificar un escenario.",
     errPaymentDetailsRequired: "Debe ingresar la información de pago para continuar.",
     errEventTimeExpired: "No queda tiempo disponible para este código.",
     errEventAlreadyUsed: "Este código ya ha sido usado.",
-    errLocationRestricted: "Jeenie no está disponible actualmente en su área."
+    errLocationRestricted: "Jeenie no está disponible actualmente en su área.",
+    errInvalidPromoCode: "Código de promoción no válido"
   },
 
   // used when handling user input related to specific fields - these
@@ -732,12 +786,12 @@ export default (ESP = {
       label: "Contraseña",
       labelConfirm: "Confirmar contraseña",
       labelCreate: "Crear contraseña",
+      tooltip: "La contraseña debe tener al menos 7 caracteres.",
       errLength: "La contraseña debe tener 7 o más caracteres.",
       errConfirmMatch: "Las contraseñas deben coincidir."
     }
   },
 
-  
   // for use in session-related screens
   session: {
     errFailedToConnect: "Se perdió la conexión con Jeenie.  Vuelva a intentarlo.",
@@ -832,7 +886,7 @@ export default (ESP = {
 
     // used when rating a session
     rating: {
-      submit: "Enviar",
+      comment: "Comentario",
       addComment: "Agregar comentarios",
       questionGood: "¿Qué le gustó?",
       questionBetter: "¿Qué podría ser mejor?",
@@ -870,7 +924,6 @@ export default (ESP = {
   customerOnboarding: {
     welcome: "Bienvenido a Jeenie",
     connectToLinguist: "Conectarse ahora",
-    tenFreeMinutes: "{{time}} minutos GRATIS",
     canIHelpYou: "¿Puedo ayudarlo?",
     homeCanIhelpYou: "¿Puedo ayudarlo, {{name}}?",
     intro: {
@@ -921,18 +974,22 @@ export default (ESP = {
 
   forgotPassword: {
     title: "¿Olvidó su contraseña?",
-    description: "No se preocupe.  Le enviaremos un enlace para restablecer su contraseña a la dirección de correo electrónico que figura a continuación.",
+    description:
+      "No se preocupe.  Le enviaremos un enlace para restablecer su contraseña a la dirección de correo electrónico que figura a continuación.",
     alertSuccessTitle: "Enlace para restablecer contraseña enviado.",
     alertSuccessBody: "Recibirá un correo electrónico en breve con el enlace para restablecer su contraseña."
   },
 
   correctEmailModal: {
-    title: "Error de correo electrónico.",
-    description: "No pudimos verificar la dirección de correo electrónico que ingresó.  Ingrese una dirección de correo electrónico válida.",
+    title: "Error de verificación de correo electrónico",
+    description:
+      "Ocurrió un error con el correo electrónico que proporcionó; ingrese uno nuevo.",
     label: "Nueva dirección de correo electrónico",
     titleSuccess: "Correcto",
-    descriptionSuccess: "Se actualizó su correo electrónico. Puede iniciar sesión en Jeenie con el nuevo correo electrónico \"{email}\"",
-    descriptionTaken: "La dirección de correo electrónico \"{email}\" ya está registrada.  Puede iniciar sesión con esa dirección, o especificar una nueva dirección de correo electrónico."
+    descriptionSuccess:
+      'Se actualizó su correo electrónico. Puede iniciar sesión en Jeenie con el nuevo correo electrónico "{{email}}"',
+    descriptionTaken:
+      'La dirección de correo electrónico "{email}" ya está registrada.  Puede iniciar sesión con esa dirección, o especificar una nueva dirección de correo electrónico.'
   },
 
   newCustomerOnboarding: {
@@ -943,12 +1000,16 @@ export default (ESP = {
     createAccount: "Crear cuenta",
     intro: {
       title: "Asistencia en tiempo real",
-      description: "Acceda las 24 horas del día, los 7 días de la semana, a traductores en vivo para obtener ayuda con idiomas con solo tocar un botón.  Tarifa: $1 USD por minuto.",
+      description:
+        "Acceda las 24 horas del día, los 7 días de la semana, a traductores en vivo para obtener ayuda con idiomas con solo tocar un botón.  Tarifa: $1 USD por minuto.",
+      descriptionRate:
+        "Acceda las 24 horas del día, los 7 días de la semana, a traductores en vivo para obtener ayuda con idiomas con solo tocar un botón.  Tarifa: {{rate}} por minuto.",
       button: "Empezar"
     },
     location: {
       title: "Habilitar la ubicación",
-      description: "Compartir su ubicación con Jeenie nos permitirá recomendarle automáticamente los idiomas y traductores en vivo adecuados para usted.",
+      description:
+        "Compartir su ubicación con Jeenie nos permitirá recomendarle automáticamente los idiomas y traductores en vivo adecuados para usted.",
       button: "Activar ubicación"
     },
     notification: {
@@ -961,7 +1022,9 @@ export default (ESP = {
       title: "Cuéntenos acerca de usted:",
       termsAndPrivacyNotice: "Si continúa, usted acepta nuestros Términos y Política de privacidad.",
       terms: "Términos",
-      privacyPolicy: "Política de privacidad"
+      privacyPolicy: "Política de privacidad",
+      otherLanguages: "Otros idiomas",
+      chooseNativeLang: "Elija su lengua materna"
     },
     login: {
       forgotPassword: "¿Olvidó su contraseña?"
@@ -971,6 +1034,15 @@ export default (ESP = {
         "Ya existe una cuenta con la dirección de correo electrónico que ingreso.\nIngrese un correo electrónico diferente o\n inicie sesión en su cuenta.",
       emailAndPassword: "Combinación incorrecta de correo electrónico y contraseña.\nVuelva a intentarlo."
     }
+  },
+
+  // for localizing currency
+  cost: {
+    usd: "{{num}} USD",
+    jpy: "{{num}} JPY",
+    eur: "{{num}} EUR",
+    gbp: "{{num}} GBP",
+    cny: "{{num}} CNY"
   },
 
   // for use during primary language selection
