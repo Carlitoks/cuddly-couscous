@@ -1,6 +1,16 @@
 import { StyleSheet } from 'react-native';
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
-import { moderateScale } from "../../../Util/Scaling";
+import { moderateScale, moderateScaleViewports } from "../../../Util/Scaling";
+import { isIphoneXorAbove } from "../../../Util/Devices";
+
+
+const baseButton = {
+  flexDirection: "row",
+  justifyContent: "center",
+  borderRadius: moderateScaleViewports(10),
+  alignItems: "center",
+  height: "100%"
+};
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -30,6 +40,7 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingBottom: 20,
+    position:"relative",
     backgroundColor: "#F2F2F2"
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
@@ -82,14 +93,15 @@ export default StyleSheet.create({
     marginTop:30,
     width:"100%",
     height:"35%",
-    backgroundColor:"#FFF"
+    backgroundColor:"#FFF",
+    position:"absolute"
   },
   row:{
     flexDirection:"row",
     width:"90%",
     paddingTop:20,
     marginLeft:20,
-    fontWeight: "bold",
+    position:"relative"    
   },
   creditCardTitle:{
     color: "#272833",
@@ -101,4 +113,49 @@ export default StyleSheet.create({
     height: 100,
     resizeMode: 'cover',
   },
+  addCardButton: {
+    ...baseButton,
+    backgroundColor: "#F39100",
+    borderRadius: moderateScaleViewports(5),
+    height: moderateScaleViewports(20),
+    width:moderateScaleViewports(100),
+    flex: 1
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: moderateScaleViewports(30),
+    position: "absolute",
+    right:0,
+    marginTop: 20,
+  },
+  addCarduttonText:{
+    color: "#FFF",
+    fontSize: 14,
+    fontFamily: Fonts.BaseFont,
+  },
+  description:{
+    color: "#272833",
+    fontSize: moderateScale(14, 0),
+    fontFamily: Fonts.BaseFont,
+    flexWrap:"wrap",
+    flex:1
+  },
+  rowDescription:{
+    flexDirection:"row",
+    width:"95%",
+    paddingTop:30,
+    marginLeft:15,
+    position:"relative"    
+  },
+  packageContainer:{
+    top:"45%",
+    marginTop:0,
+    paddingTop:-30,
+    width:"100%",
+    height:"35%",
+    backgroundColor:"#FFF",
+    position:"absolute",
+
+  }
 });
