@@ -356,7 +356,7 @@ export const loadMinutePackages = (useCache = true, code = null) => (dispatch, g
   if (useCache && !code && new Date().getTime() < minutePackagesLoadedAt + CACHE.MINUTE_PACKAGES) {
     return Promise.resolve(getState().account.minutePackages);
   }
-  const url = (!!code) ? `/minute-packages?promoCode=${code}` : `/minute-packages`;
+  const url = (!!code) ? `/minute-packages?promocode=${code}` : `/minute-packages`;
   return new Promise((resolve, reject) => {
     api.get(url)
     .then((res) => {
