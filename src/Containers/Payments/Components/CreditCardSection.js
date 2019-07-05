@@ -30,18 +30,21 @@ class CreditCardSection extends Component {
         style={styles.addCardButton }
       >
         <Text
-          style={styles.addCarduttonText}
+          style={styles.addCardButtonText}
         >
           {I18n.t("newCustomerHome.addCard")}
         </Text>
       </TouchableOpacity>
       </View>}
-      {haveCard && 
+    {haveCard &&
+
       <Text
           style={styles.editText}
+          onPress={() => {navigation.dispatch({ type: "EditCardScreen" });}}
         >
           {I18n.t("account.card.edit")}
-        </Text>}
+        </Text>
+        }
       </View>
       <View style={styles.rowDescription}>  
       {haveCard ?  

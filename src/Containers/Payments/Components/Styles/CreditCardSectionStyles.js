@@ -139,7 +139,7 @@ export default StyleSheet.create({
     right:0,
     marginTop: 20,
   },
-  addCarduttonText:{
+  addCardButtonText:{
     color: "#FFF",
     fontSize: 14,
     fontFamily: Fonts.BaseFont,
