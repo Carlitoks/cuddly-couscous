@@ -22,8 +22,13 @@ class AccountDetailsView extends Component {
     navigation.dispatch({ type: "PaymentDetailScreen" });
   };
 
+  goToPackages = () => {
+    const { navigation } = this.props;
+    navigation.dispatch({ type: "AvailablePackagesView" });
+  };
+
   render() {
-    const { navigation, stripePaymentToken, StripePaymentSourceMeta, user } = this.props;
+    const { navigation, stripePaymentToken, StripePaymentSourceMeta, user, autoreloadMinutePackage, subscribedMinutePackage } = this.props;
     console.log("stripe en AccountDetails", stripePaymentToken, StripePaymentSourceMeta);
     return (
       <View style={styles.wrapperContainer}>
@@ -45,8 +50,8 @@ class AccountDetailsView extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-          <CreditCardSection addCard={()=> {this.goToPayments()}} haveCard={StripePaymentSourceMeta && StripePaymentSourceMeta.last4 ? true : false}/> 
-          <PackageSection/> 
+          <CreditCardSection addCard={()=> {this.goToPayments()}} navigation={navigation} haveCard={StripePaymentSourceMeta && StripePaymentSourceMeta.last4 ? true : false}/> 
+          <PackageSection addPackage={()=> {this.goToPackages()}} navigation={navigation} userPackage={autoreloadMinutePackage? autoreloadMinutePackage: subscribedMinutePackage ? subscribedMinutePackage : null} /> 
           
 
           </ScrollView>
@@ -60,6 +65,8 @@ const mS = state => ({
   stripePaymentToken: state.account.user.stripePaymentToken,
   StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta,
   user: state.account.user,
+  autoreloadMinutePackage: state.account.autoreloadMinutePackage,
+  subscribedMinutePackage:state.account.subscribedMinutePackage
 
 });
 
