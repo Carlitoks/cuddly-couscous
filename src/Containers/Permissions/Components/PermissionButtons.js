@@ -12,6 +12,7 @@ import { SESSION } from "../../../Util/Constants";
 // Styles
 import styles from "./Styles/PermissionButtonsStyles";
 import I18n, {translateApiError} from "../../../I18n/I18n";
+import { displayOpenSettingsAlert } from "../../../Util/Permission";
 
 class PermissionButtons extends Component {
   state = {
@@ -33,6 +34,7 @@ class PermissionButtons extends Component {
     } else {
       if (permission === "location") {
         const currentState = await Permissions.check(`${permission}`);
+        console.tron.log(currentState);
         if (currentState === "granted") {
           updateOnboarding({ completedLocation: true });
           if (Platform.OS === "android") {
@@ -42,12 +44,18 @@ class PermissionButtons extends Component {
             navigation.dispatch({ type: navigation.state.params.redirectTo });
           }
         }
+        if (currentState === "restricted" || currentState === "denied") {
+          displayOpenSettingsAlert();
+        }
       }
       if (permission === "notification") {
         const currentState = await Permissions.check(`${permission}`);
         if (currentState === "granted") {
           updateOnboarding({ completedNotification: true });
           navigation.dispatch({ type: navigation.state.params.redirectTo });
+        }
+        if (currentState === "restricted" || currentState === "denied") {
+          displayOpenSettingsAlert();
         }
       }
     }
