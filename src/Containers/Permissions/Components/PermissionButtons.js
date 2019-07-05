@@ -40,7 +40,6 @@ class PermissionButtons extends Component {
     } else {
       if (permission === "location") {
         const currentState = await Permissions.check(`${permission}`);
-        console.tron.log(currentState);
         if (currentState === "granted") {
           updateOnboarding({ completedLocation: true });
           if (Platform.OS === "android") {
