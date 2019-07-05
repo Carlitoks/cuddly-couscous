@@ -37,10 +37,6 @@ export default (KO = {
   callLinguist: "링귀스트와 통화",
   calls: "통화",
   callSettings: "통화 설정",
-  callTimeBoxTextLine1: "출시를 기념하여 \n 지금 Jeenie를 무료로 즐기세요.",
-  callTimeBoxTextLine2: "요금은 분당 $1이며 \n 패키지 할인은 향후 지원될 예정입니다.",
-  callTimeButtonText: "분 무료",
-  callTimeButtonSubtitle: "Jeenie 증정",
   callTimeMinutes: "통화 기간",
   callTimeMinutesSub: "이 상황에 맞게 추천됨",
   callTimeTitle: "현재 표준 중국어와 영어로 사용 가능합니다.",
@@ -57,7 +53,7 @@ export default (KO = {
   checkYourEmailOnBoarding: "등록을 완료하려면 이메일을 확인하세요.",
   citizenShip: "시민권",
   cityFamiliarity: "도시 친숙도",
-  cantReachCustomer: "사용자의 연결이 끊어진 것 같습니다.",
+  cantReachCustomer: "사용자의 연결이 끊어진 것같습니다.",
   cantReachLinguist: "지금은 링귀스트와 연결할 수 없습니다.",
   card: "카드",
   componentExamples: "컴포넌트 예",
@@ -85,9 +81,7 @@ export default (KO = {
   couldBetter: "개선할 점은?",
   countryFamiliarity: "국가 친숙도",
   cost: "요금",
-  costPerMinute: "$1/분",
   create: "만들기",
-  currency: "US$",
   customer: "고객",
   customerSatisfied: "고객이 만족했습니까?",
   describeAssistance: "어떻게 도와드릴까요?",
@@ -138,10 +132,6 @@ export default (KO = {
   extraTime3: "2분 후 통화가 종료됩니다.",
   extraTimeA1: "예, 5분 추가합니다.",
   extraTimeA2: "아니요, 시간이 다 되면 통화를 종료합니다.",
-  fallPromotion:
-    " 가을 프로모션: Jeenie로 통화하고 계정에 5분 무료 통화를 적립하세요.",
-  fallPromotionModal:
-    " 가을 프로모션: Jeenie로 통화하고 \n계정에 5분 무료 \n통화를 적립하세요.",
   female: "여성",
   finish: "마침",
   finishOnboarding: "등록 마침",
@@ -149,7 +139,7 @@ export default (KO = {
   firstname: "이름",
   firstnameFormatValidation: "이름에는 문자만 사용해야 합니다.",
   fluent: "유창",
-  forgotPassword: "암호 재설정",
+  forgotPasswordTitle: "암호 재설정",
   forSignup: "가입!",
   frequently: "자주",
   freeTrial: "무료 체험",
@@ -200,7 +190,7 @@ export default (KO = {
   LanguagePairs: "언어 쌍", // not use
   language: "언어",
   languages: "언어",
-  languagesComingSoon: "더 많은 언어가 지원될 예정입니다.",
+  languagesComingSoon: "지원 예정 언어",
   languageNotice1:
     "감사합니다! 현재 귀하의 기본 언어로는 Jeenie를 사용할 수 없지만 지원되는 언어로 계속 통화할 수 있습니다.",
   languageNotice2: "더 많은 언어가 지원될 예정입니다.",
@@ -236,7 +226,7 @@ export default (KO = {
   loginLogoutExampleTitle: "Redux + Sagas 로그인/로그아웃 예제",
   loginWithFacebook: "Facebook에서 로그인",
   logOut: "로그아웃",
-  logOutConfirmation: "확인하세요.",
+  logOutConfirmation: "확인해 주세요.",
   mainTitle: "이름 입력",
   male: "남성",
   maxTimeLimit: "최대 시간 제한",
@@ -280,9 +270,6 @@ export default (KO = {
   permissionDenied: "앱 사용 권한 거부됨",
   passwordMatch: "암호가 일치하지 않습니다.",
   passwordLengthValidation: "암호는 8자 이상이어야 합니다.",
-  payAsYouGo: "용량제 요금",
-  payAsYouGoPricing: "용량제 요금 =",
-  payAsYouGoPricingUnder: " 분당 $1",
   paymentDetails: "결제 상세정보",
   paymentDetailsCreated: "결제 정보가 성공적으로 업데이트되었습니다.",
   preferedNameTitle: "기본 설정 이름",
@@ -301,7 +288,7 @@ export default (KO = {
   provideFeedbackViewTitle: "Jeenie 경험을 개선할 수 있는 방법을 알려주세요.",
   qr: "QR 코드",
   quicklyContact: "신속하게 링귀스트 연결",
-  rateYour: "평가",
+  rateYour: "평가:",
   recent: "최근",
   recentActivity: "최근 활동",
   recentCalls: "최근 통화",
@@ -343,7 +330,6 @@ export default (KO = {
   tapRepeat: "반복하려면 탭하세요.",
   thereNoInternetConnection: "인터넷에 연결되어 있지 않습니다.",
   time: "시간",
-  timeWithCost: "추가 시간의 경우 분당 $1",
   timeStatic1: "체험 기간 동안에는 통화가 8분으로 사전 설정됩니다.",
   timeCompliments: "Jeenie 증정",
   timeAddMore: "각 통화의 최대 시간은 60분입니다.",
@@ -425,6 +411,7 @@ export default (KO = {
   actions: {
     accept: "수락",
     agree: "동의",
+    apply: "적용",
     back: "뒤로",
     cancel: "취소",
     choose: "선택",
@@ -480,7 +467,7 @@ export default (KO = {
   // should be moved or refactored
   customerHome: {
     primaryLang: {
-      label: "내가 말합니다."
+      label: "사용자 언어"
     },
     secondaryLang: {
       label: "도움이 필요합니다.",
@@ -502,7 +489,6 @@ export default (KO = {
     },
     account: {
       pricing: "가격",
-      rate: "$1/분",
       unit: "분",
       add: "통화하려면 결제 정보를 추가하세요."
     },
@@ -541,8 +527,6 @@ export default (KO = {
     },
     registrationWelcome: {
       balance: "{{num}}분",
-      title: "처음 {{num}}분은 무료입니다!",
-      description: "처음 {{num}}분 후의 요금은 분당 $1 USD입니다.",
       buttons: {
         dismiss: "Jeenie 사용 시작",
         payment: "지금 결제 정보 추가"
@@ -565,10 +549,10 @@ export default (KO = {
     linguists: "Jeenie가 대기 중입니다...",
     numLinguists: "{{num}} Jeenie가 대기 중입니다...",
     primaryLang: {
-      label: "내가 말합니다."
+      label: "사용자 언어"
     },
     secondaryLang: {
-      label: "번역"
+      label: "번역 언어"
     },
     scenario: {
       label: "어떤 도움이 필요하세요?",
@@ -579,30 +563,29 @@ export default (KO = {
       video: "영상 통화"
     },
     rateNotices: {
-      beforeFirst: "요금: 분당 US $1. 처음 {{num}}분은 무료입니다.",
-      afterFirst: "요금: 분당 US $1. 남은 무료 통화 시간은 {{num}}분입니다.",
       noBalanceNoCard: "요금: 분당 US $1. 계속하려면 카드를 추가하세요.",
       noBalanceHasCard: "요금: 분당 US $1.",
-      noBalanceHasCardPackage: "요금: 분당 US $1. 패키지를 구입하면 15% 할인 혜택을 드립니다.",
-      hasBalance: "요금: 분당 US $1. 남은 잔고: {{num}}분",
-      hasBalanceAutoreload: "요금: {{num}}분 남음."
+      hasBalance: "요금: 분당 US $1. 남은 시간: {{num}}분",
+      noBalanceNoCardRate: "요금: 분당 {{rate}}. 계속하려면 카드를 추가하세요.",
+      noBalanceHasCardRate: "요금: 분당 {{rate}}.",
+      hasBalanceRate: "요금: 분당 {{rate}}. 남은 시간: {{num}}분",
+      unlimitedUntil: "{{date}}까지 무제한 사용"
     }
   },
 
   // for use in session language selection
   sessionLang: {
     selections: "도움 필요:",
-    comingSoon: "더 많은 언어가 지원될 예정입니다."
+    comingSoon: "지원 예정 언어"
   },
 
   // text for customer related to payments and rates
   payments: {
-    currentRate: "$1/분",
     currentBalance: "{{minutes}}분",
     enterPaymentToTalk:
       "계속 대화하려면 결제 상세정보를 입력하세요. 분당 $1에 원하는 만큼 대화하세요.",
-    currentRateDescription:
-      "통화는 분당 $1이며 최대 60분까지 대화할 수 있습니다. 긴 통화시간에 대한 할인은 향후 제공될 예정입니다.",
+    enterPaymentToTalkRate:
+      "계속 대화하려면 결제 상세정보를 입력하세요. 분당 {{rate}}에 원하는 만큼 대화하세요.",
     addCard: "카드 추가",
     editCard: "카드 편집",
     cardInfo: "카드 정보",
@@ -627,6 +610,85 @@ export default (KO = {
     }
   },
 
+  // displayed in account details section
+  account: {
+    title: "계정 상세정보",
+    balance: "남은 시간",
+    balanceNum: "{{num}}분",
+    balanceUnlimited: "무제한",
+    descriptions: {
+      noCardNoPackage: "통화가 중단되지 않도록 결제 상세정보를 입력하세요.",
+      hasCardNoPackage: "더 낮은 요금으로 통화하려면 패키지를 구입하세요. 통화시간은 소멸되지 않습니다.",
+      hasCardHasPackage: "남은 시간이 {{num}}분이면 계정이 자동으로 다시 로드됩니다.",
+      hasPackageUnlimitedUse: "해당 패키지는 {{date}}까지 무제한 사용할 수 있습니다.",
+      hasUnlimitedUse: "{{date}}까지 무제한 사용 가능합니다.",
+      hasSubscription: "구독이 {{date}}에 갱신됩니다."
+    },
+    card: {
+      title: "신용카드",
+      add: "카드 추가",
+      edit: "편집",
+      description: "카드 정보를 입력하고 원하는 만큼 통화하거나 패키지를 구입하세요.  분당 표준 요금: {{rate}}"
+    },
+    package: {
+      title: "패키지",
+      add: "패키지 추가",
+      remove: "제거",
+      more: "패키지 더 보기",
+      description: "적은 요금에 더 많은 통화시간을 구입하세요.  자동 다시 로드 기능을 사용하면 통화시간이 소진되지 않습니다."
+    },
+  },
+
+  // there may be more than one way we refer to promo codes the user can
+  // scan or enter, here is some alternate terminology
+  codes: {
+    promo: "프로모션 코드",
+    discount: "할인 코드",
+    event: "이벤트 코드",
+    action: "작업 코드",
+    universal: "범용 코드",
+  },
+
+  // shown on checkout screen when purchasing a package
+  packages: {
+    noExpire: "통화시간이 만료되지 않습니다.",
+    browse: {
+      title: "패키지",
+      promo: "프로모션 코드가 있으세요?",
+      promoPlaceholder: "여기에 코드를 입력하세요.",
+      promoApplied: "적용된 코드"
+    },
+    checkout: {
+      title: "체크아웃",
+      reload: "남은 시간이 {{num}}분이 되면 계정을 자동으로 다시 로드",
+      needCard: "결제를 진행하려면 카드를 추가해야 합니다.",
+      summary: "주문 요약",
+      total: "합계",
+      purchase: "패키지 구입",
+      processing: "결제 처리 중..."
+    },
+    success: {
+      title: "결제 성공",
+      description: "패키지가 계정에 추가되었습니다.",
+      withReload: "자동 다시 로드 사용",
+      withoutReload: "자동 다시 로드 사용 안 함",
+      balance: "남은 시간:"
+    },
+    failure: {
+      title: "결제 실패",
+      description: "문제가 있습니다! 결제를 처리할 수 없습니다.  카드 정보를 확인하고 다시 시도하세요."
+    }
+  },
+
+  // related to the display of a specific minute package
+  minutePackage: {
+    balance: "{{}}분",
+    balanceUnlimited: "무제한 사용",
+    validBetween: "유효 기간: {{date1}} - {{date2}}",
+    validThrough: "다음 날짜까지 유효: {{date}}",
+    special: "특별"
+  },
+
   operatingHours: {
     title: "사용 가능: {{lang}}",
     description: "Language Jeenie는 {{beginHour}} 및 {{endHour}} 사이에 이용할 수 있습니다.",
@@ -644,7 +706,6 @@ export default (KO = {
   pricingModal: {
     title: "가격 및 계정 잔고",
     titleNoMinutesNoCard: "Jeenie에서 시간이 더 필요하세요?",
-    currentRate: "$1/분",
     currentBalance: "{{minutes}}분",
     buttons: {
       gotIt: "알겠습니다!",
@@ -658,7 +719,6 @@ export default (KO = {
     screenTitle: "가격 및 계정 잔고",
     pricing: {
       title: "가격:",
-      rate: "$1 USD/분"
     },
     balance: {
       title: "계정 잔고:",
@@ -674,14 +734,6 @@ export default (KO = {
       descriptionLowMinutes:
         "계정 잔고가 낮습니다. 다음 통화 중에 끊기지 않도록 하려면 지금 결제 정보를 추가하세요.",
       descriptionNoMinutes: "계속하려면 결제 상세정보를 추가해야 합니다."
-    },
-    descriptions: {
-      hasMinutesAndCard:
-        "통화시간이 소진되면 통화가 끊어지지 않도록 사용자 카드에 분당 $1 USD가 자동으로 부과됩니다.",
-      hasMinutesNoCard:
-        "남은 통화시간을 지나서 계속 대화하려면 지금 결제 정보를 입력하세요.",
-      noMinutesHasCard: "분당 $1 USD가 귀하의 카드에 자동으로 부과됩니다.",
-      noMinutesNoCard: "링귀스트와 연결하려면 지금 결제 정보를 추가해야 합니다."
     },
     buttons: {
       continue: "계속",
@@ -704,12 +756,14 @@ export default (KO = {
     errEmailInUse: "이 이메일 주소를 가진 계정이 이미 있습니다.",
     errEventInvalid: "이 코드는 검증에 실패했습니다.",
     errEventUnavailable: "이 코드는 현재 사용할 수 없습니다.",
+    errEventInvalid: "이 코드는 유효하지 않습니다.",
     errEventInactive: "이 코드는 활성 상태가 아닙니다.",
     errEventScenarioMissing: "시나리오를 지정해야 합니다.",
     errPaymentDetailsRequired: "계속 진행하려면 결제 상세정보가 필요합니다.",
     errEventTimeExpired: "이 코드에는 남은 시간이 없습니다.",
     errEventAlreadyUsed: "이 코드는 이미 사용되었습니다.",
-    errLocationRestricted: "현재 귀하의 지역에서는 Jeenie를 사용할 수 없습니다."
+    errLocationRestricted: "현재 귀하의 지역에서는 Jeenie를 사용할 수 없습니다.",
+    errInvalidPromoCode: "잘못된 프로모션 코드"
   },
 
   // used when handling user input related to specific fields - these
@@ -726,18 +780,18 @@ export default (KO = {
       errInvalid: "이름에는 문자만 포함되어야 합니다."
     },
     nativeLang: {
-      label: "기본 언어",
+      label: "기본 언어"
     },
     password: {
       label: "암호",
       labelConfirm: "암호 확인",
       labelCreate: "암호 만들기",
+      tooltip: "암호는 7자 이상이어야 합니다.",
       errLength: "암호는 7자 이상이어야 합니다.",
       errConfirmMatch: "암호가 일치해야 합니다."
     }
   },
 
-  
   // for use in session-related screens
   session: {
     errFailedToConnect: "Jeenie와의 연결이 끊어졌습니다.  다시 시도하세요.",
@@ -787,7 +841,7 @@ export default (KO = {
     connecting: {
       user: "{{name}}님이 연결 중입니다...",
       self: "{{name}}님과 연결 중...",
-      basic: "연결 중...",
+      basic: "연결 중..."
     },
 
     // seen when a user is in a session, but one side has been disconnected
@@ -807,7 +861,7 @@ export default (KO = {
         wait: "대기 중",
         tryAnother: "다른 Jeenie 사용",
         end: "통화 종료"
-      },
+      }
     },
 
     // seen while matching custoner to linguist
@@ -832,7 +886,7 @@ export default (KO = {
 
     // used when rating a session
     rating: {
-      submit: "제출",
+      comment: "코멘트",
       addComment: "코멘트 추가",
       questionGood: "좋았던 점은 무엇입니까?",
       questionBetter: "개선할 점은?",
@@ -870,7 +924,6 @@ export default (KO = {
   customerOnboarding: {
     welcome: "Jeenie에 오신 것을 환영합니다.",
     connectToLinguist: "지금 연결",
-    tenFreeMinutes: "{{time}}분 무료",
     canIHelpYou: "도움이 필요하십니까?",
     homeCanIhelpYou: "{{name}}님, 도움이 필요하십니까?",
     intro: {
@@ -921,18 +974,22 @@ export default (KO = {
 
   forgotPassword: {
     title: "암호를 잊으셨습니까?",
-    description: "걱정하지 마세요.  아래 이메일 주소로 암호를 재설정할 수 있는 링크를 보내드립니다.",
+    description:
+      "걱정하지 마세요.  아래 이메일 주소로 암호를 재설정할 수 있는 링크를 보내드립니다.",
     alertSuccessTitle: "재설정 링크가 전송되었습니다!",
     alertSuccessBody: "암호 재설정 링크가 포함된 이메일이 곧 전송됩니다."
   },
 
   correctEmailModal: {
-    title: "이메일 실패",
-    description: "입력된 이메일 주소를 확인할 수 없습니다.  유효한 이메일 주소를 입력하세요.",
+    title: "이메일 확인 실패",
+    description:
+      "제공된 이메일에 문제가 있습니다. 새 이메일 주소를 입력하세요.",
     label: "새 이메일 주소",
     titleSuccess: "성공",
-    descriptionSuccess: "이메일이 업데이트되었습니다. 새 이메일(\"{email}\")로 Jeenie에 로그인할 수 있습니다.",
-    descriptionTaken: "이메일 주소(\"{email}\")가 이미 등록되어 있습니다.  해당 이메일 주소로 로그인하거나 새 이메일 주소를 지정할 수 있습니다."
+    descriptionSuccess:
+      '이메일이 업데이트되었습니다. 새 이메일("{{email}}")로 Jeenie에 로그인할 수 있습니다.',
+    descriptionTaken:
+      '이메일("{email}")이 이미 등록되어 있습니다.  해당 이메일 주소로 로그인하거나 새 이메일 주소를 지정할 수 있습니다.'
   },
 
   newCustomerOnboarding: {
@@ -943,13 +1000,17 @@ export default (KO = {
     createAccount: "계정 만들기",
     intro: {
       title: "실시간 지원",
-      description: "버튼 하나만 누르면 하루 24시간 액세스 가능한 실제 통역사가 언어 관련하여 도와드립니다.  요금: 분당 US$1.",
+      description:
+        "버튼 하나만 누르면 하루 24시간 액세스 가능한 실제 통역사가 언어 관련하여 도와드립니다.  요금: 분당 US$1.",
+      descriptionRate:
+        "버튼 하나만 누르면 하루 24시간 액세스 가능한 실제 통역사가 언어 관련하여 도와드립니다.  요금: 분당 {{rate}}.",
       button: "시작하기"
     },
     location: {
       title: "위치 사용",
-      description: "Jeenie와 위치를 공유하면 적합한 언어와 실제 통역사를 자동으로 추천할 수 있습니다.",
-      button: "위치 켜기",
+      description:
+        "Jeenie와 위치를 공유하면 적합한 언어와 실제 통역사를 자동으로 추천할 수 있습니다.",
+      button: "위치 켜기"
     },
     notification: {
       title: "알림 사용",
@@ -962,6 +1023,8 @@ export default (KO = {
       termsAndPrivacyNotice: "계속하면 이용 약관 및 개인정보 보호 정책에 동의하는 것입니다.",
       terms: "이용 약관",
       privacyPolicy: "개인정보 보호 정책",
+      otherLanguages: "다른 언어",
+      chooseNativeLang: "기본 언어 선택"
     },
     login: {
       forgotPassword: "암호를 잊으셨습니까?"
@@ -969,8 +1032,17 @@ export default (KO = {
     errors: {
       takenEmail:
         "입력된 이메일 주소를 사용하는 계정이 이미 있습니다.\n다른 이메일을 입력하거나\n해당 계정에 로그인하세요.",
-      emailAndPassword: "이메일 및 암호 조합이 올바르지 않습니다.\n다시 시도하세요.",
+      emailAndPassword: "이메일 및 암호 조합이 올바르지 않습니다.\n다시 시도하세요."
     }
+  },
+
+  // for localizing currency
+  cost: {
+    usd: "US${{num}}",
+    jpy: "JP¥{{num}}",
+    eur: "€{{num}}",
+    gbp: "£{{num}}",
+    cny: "CN¥{{num}}"
   },
 
   // for use during primary language selection
