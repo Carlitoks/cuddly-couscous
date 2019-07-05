@@ -2,6 +2,7 @@ import { Alert } from "react-native";
 import I18n from "../I18n/I18n";
 import moment from "moment";
 import { EMAIL_REGEX, INVALID_NAME_REGEX, DURATION } from "./Constants";
+import Permissions from "react-native-permissions";
 /**
  * @description Seconds to minutes and seconds String
  *
@@ -30,24 +31,30 @@ export const getGeolocationObject = () => navigator.geolocation;
 export const getGeolocationCoords = () => {
   // Turning Callback call into a Promise
   return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        resolve(position);
-      },
-      (error) => {
-        reject(error);
-      },
-      {
-        // Allows you to get the most accurate location. Due to how it gets the location (via GPS) it may be slower to return a result but it will be more accurate when enabled.
-        enableHighAccuracy: true,
+    Permissions.check("location").then((status) => {
+      if(status === "authorized"){
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            resolve(position);
+          },
+          (error) => {
+            reject(error);
+          },
+          {
+            // Allows you to get the most accurate location. Due to how it gets the location (via GPS) it may be slower to return a result but it will be more accurate when enabled.
+            enableHighAccuracy: true,
 
-        // How long does the API have to return the position before throwing an error?
-        timeout: 3 * DURATION.SECONDS,
+            // How long does the API have to return the position before throwing an error?
+            timeout: 3 * DURATION.SECONDS,
 
-        // If a location exists in the device cache, how old can it be before it’s no longer valuable to your app?
-        maximumAge: 1 * DURATION.MINUTES
+            // If a location exists in the device cache, how old can it be before it’s no longer valuable to your app?
+            maximumAge: 1 * DURATION.MINUTES
+          }
+        );
+      } else {
+        reject("No Permissions");
       }
-    );
+    });
   });
 }
 
