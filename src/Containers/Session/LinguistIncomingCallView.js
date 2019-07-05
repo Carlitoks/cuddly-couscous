@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
 const mS = (state) => {
   return {
     ...state.currentSessionReducer,
-    userID: state.auth.uuid // TODO: replace with state.account.user.id
+    userID: state.auth2.userID // TODO: replace with state.account.user.id
   }
 };
 

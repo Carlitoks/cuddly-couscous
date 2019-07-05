@@ -1,19 +1,18 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import I18n, { translateApiError } from "../../../I18n/I18n";
-import Reactotron from "reactotron-react-native";
-
 // Styles
 import styles from "./Styles/PaymentButtons";
 import stripe from "tipsi-stripe";
 import {
   clearPayments,
-  removePayment,
-  setPayment,
   updatePayments
 } from "../../../Ducks/PaymentsReducer";
-import { updateView, getProfileAsync } from "../../../Ducks/UserProfileReducer";
+
+import {
+  updateUserPaymentDetails,
+} from "../../../Ducks/AccountReducer";
 
 class PaymentButtons extends Component {
   renderButtonStyles = type => {
@@ -25,7 +24,6 @@ class PaymentButtons extends Component {
 
   isDisabled = () => {
     const { isValidCC, isValidDate, isValidCVV, loading } = this.props;
-    Reactotron.log(isValidCC && isValidDate && isValidCVV);
     return (isValidCC && isValidDate && isValidCVV) || loading;
   };
 
@@ -33,13 +31,9 @@ class PaymentButtons extends Component {
     const {
       cardInfo,
       updatePayments,
-      updateView,
-      setPayment,
       clearPayments,
       navigation,
-      uuid,
-      token,
-      getProfileAsync
+      updateUserPaymentDetails
     } = this.props;
 
     const params = {
@@ -50,48 +44,23 @@ class PaymentButtons extends Component {
     };
 
     updatePayments({ loading: true });
-    Reactotron.log(params);
-    const stripeResponse = await stripe
-      .createTokenWithCard(params)
-      .then(response => {
-        let tokenId = response.tokenId;
-        Reactotron.log(tokenId);
-        updateView({ stripePaymentToken: tokenId });
-        setPayment(tokenId).then(res => {
-          if (res) {
-            updatePayments({ loading: false });
-            Reactotron.log(res);
-            Alert.alert(I18n.t("error"), translateApiError(res), [
-              {
-                text: I18n.t("ok")
-              }
-            ]);
-          } else {
-            clearPayments();
-            updatePayments({ errors: [] });
-            updatePayments({ loading: false });
-            navigation.dispatch({ type: "Home" });
-          }
-        });
-      })
-      .catch(err => {
-        Reactotron.log(err);
-        Alert.alert(I18n.t("error"), translateApiError(err), [
-          {
-            text: I18n.t("ok")
-          }
-        ]);
-        /*Alert.alert(I18n.t("api.errTemporaryTryAgain"), "", [
-          {
-            text: I18n.t("ok"),
-            onPress: () => {
-              navigation.dispatch({
-                type: "Home"
-              });
-            }
-          }
-        ]);*/
-      });
+    try {
+      const stripeResponse = await stripe.createTokenWithCard(params);
+      let tokenId = stripeResponse.tokenId;
+      updateUserPaymentDetails({stripeSourceToken: tokenId});
+      clearPayments();
+      updatePayments({ errors: [] });
+      navigation.dispatch({ type: "Home" });
+    }catch(err){
+      Reactotron.log(err);
+      Alert.alert(I18n.t("error"), translateApiError(err, "api.errTemporaryTryAgain"), [
+        {
+          text: I18n.t("ok")
+        }
+      ]);
+    }finally {
+      updatePayments({ loading: false });
+    }
   };
 
   render() {
@@ -119,17 +88,12 @@ const mS = state => ({
   isValidCVV: state.payments.isValidCVV,
   loading: state.payments.loading,
   cardInfo: state.payments.cardInfo,
-  token: state.auth.token,
-  uuid: state.auth.uuid
 });
 
 const mD = {
   updatePayments,
   clearPayments,
-  setPayment,
-  removePayment,
-  updateView,
-  getProfileAsync
+  updateUserPaymentDetails,
 };
 
 export default connect(

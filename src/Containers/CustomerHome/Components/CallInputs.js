@@ -21,7 +21,7 @@ class CallInputs extends Component {
   }
 
   paymentNotice = () => {
-    const { isNewUser, availableMinutes, hasUnlimitedUse, hasUnlimitedUseUntil, stripePaymentToken } = this.props;
+    const { user, hasUnlimitedUse, hasUnlimitedUseUntil } = this.props;
     if (hasUnlimitedUse) {
       let d = null;
       try {
@@ -32,33 +32,48 @@ class CallInputs extends Component {
 
       return I18n.t("newCustomerHome.rateNotices.unlimitedUntil", {date: d});
     }
-    if (availableMinutes) {
-      if (stripePaymentToken) {
-        return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: availableMinutes });
+    if (this.hasMadeFirstCall()) {
+      return I18n.t("newCustomerHome.rateNotices.beforeFirst", {num: CUSTOMER_FREE_MINUTES});
+    }
+    if (user.availableMinutes) {
+      if (user.stripePaymentToken) {
+        return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: user.availableMinutes });
       }
     } else {
-      if (!stripePaymentToken) {
+      if (!user.stripePaymentToken) {
         return I18n.t("newCustomerHome.rateNotices.noBalanceNoCard");
       }
       return I18n.t("newCustomerHome.rateNotices.noBalanceHasCard");
     }
-    return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: availableMinutes });
+    return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: user.availableMinutes });
   };
+
+  hasMadeFirstCall () {
+    const history = this.props.customerCallHistory;
+    if (!!history && history.length > 0) {
+      for (let call of history) {
+        if (call.duration > 0) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
   render() {
     const {
       type,
       openSlideMenu,
       swapCurrentSessionLanguages,
-      stripePaymentToken,
+      user,
       navigation
     } = this.props;
     return (
       <View style={styles.mainInputsContainer}>
         <TouchableOpacity
-          activeOpacity={stripePaymentToken ? 1 : 0}
+          activeOpacity={user.stripePaymentToken ? 1 : 0}
           onPress={() => {
-            if (!stripePaymentToken) {
+            if (!user.stripePaymentToken) {
               return navigation.dispatch({ type: "PaymentDetailScreen" });
             }
             return null;
@@ -155,12 +170,10 @@ class CallInputs extends Component {
 
 const mS = state => ({
   session: state.newSessionReducer.session,
-  stripeCustomerID: state.userProfile.stripeCustomerID,
-  stripePaymentToken: state.userProfile.stripePaymentToken,
-  availableMinutes: state.userProfile.availableMinutes,
+  user: state.account.user,
   hasUnlimitedUse: state.account.hasUnlimitedUse,
   hasUnlimitedUseUntil: state.account.hasUnlimitedUseUntil,
-  isNewUser: state.userProfile.isNewUser
+  customerCallHistory: state.account.customerCallHistory,
 });
 
 const mD = {

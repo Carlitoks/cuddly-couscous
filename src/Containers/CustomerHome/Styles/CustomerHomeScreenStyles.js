@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Metrics, ApplicationStyles, Colors } from "../../../Themes";
 import metrics from "../../../Themes/Metrics";
+import { moderateScale } from "../../../Util/Scaling";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -28,5 +29,13 @@ export default StyleSheet.create({
   wrapperContainer: {
     backgroundColor: "white",
     height: "100%",
+  },
+  containerMenu: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    height: moderateScale(50, 0),
+    width: moderateScale(50, 0),
+    marginLeft: 15
   },
 });

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import {
-  Image, Platform, Text, View,
+  Image, Platform, Text, View, StatusBar
 } from "react-native";
 import { connect } from "react-redux";
 import Permission from "react-native-permissions";
-import { ensureSessionDefaults, updateLocation } from "../../Ducks/NewSessionReducer";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
+import { updateLocation } from "../../Ducks/NewSessionReducer";
 import { clearOnboarding } from "../../Ducks/OnboardingReducer";
 import { CUSTOMER_FREE_MINUTES as customer_free_minutes } from "../../Util/Constants";
 // Styles
@@ -13,7 +12,6 @@ import styles from "./Styles/OnboardingScreenStyles";
 import OnboardingButtons from "./Components/OnboardingButtons";
 import I18n from "../../I18n/I18n";
 import { isIphoneXorAbove } from "../../Util/Devices";
-import { registerDevice } from "../../Ducks/AuthReducer";
 import DotSteps from "./Components/DotSteps";
 import SplashScreen from "./Components/SplashScreen";
 
@@ -37,24 +35,24 @@ class OnboardingScreen extends Component {
       isLoggedIn,
       token,
       clearOnboarding,
-      primaryLangCode,
-      ensureSessionDefaults,
-      secondaryLangCode,
       completedLocation,
       completedNotification,
       registerDevice,
       deviceToken,
+      user,
     } = this.props;
     clearOnboarding();
-    ensureSessionDefaults({
-      primaryLangCode: primaryLangCode || "eng",
-      secondaryLangCode: secondaryLangCode || "",
-    });
-    if (!isLoggedIn && !token) {
-      if (!deviceToken) registerDevice().then(response => null).catch(err => console.log("error creating the device", err));
-    }
 
+    // TODO: after the navigation refactor, we shouldn't need logic for redircting
+    // views.  That should be determined during app startup.
     if (isLoggedIn && token) {
+      // extra check to ensure we have a user, because if not
+      // we should just stay on this screen
+      if (!user) {
+        console.log("no user, staying on IntroView");
+        return;
+      }
+
       if (completedLocation) {
         if (completedNotification) {
           navigation.dispatch({ type: "Home" });
@@ -83,11 +81,18 @@ class OnboardingScreen extends Component {
 
   render() {
     const { navigation, isLoggedIn, token } = this.props;
+
     if (isLoggedIn && token) {
       return <SplashScreen animation={false} />;
     }
     return (
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
+        <StatusBar
+          barStyle="light-content"
+          translucent={true}
+          hidden={false}
+          backgroundColor={"transparent"}
+        />
         <View style={[styles.mainOnboardingContainer]} collapsable={false}>
           <Image style={styles.backgroundImage} source={backgroundImage()} />
           <View style={styles.bodyContainer}>
@@ -103,26 +108,24 @@ class OnboardingScreen extends Component {
             </View>
           </View>
         </View>
-      </ViewWrapper>
+      </View>
     );
   }
 }
 
 const mS = state => ({
+  user: state.account.user,
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
-  token: state.auth.token,
-  isLoggedIn: state.auth.isLoggedIn,
+  token: state.auth2.userJwtToken,
+  isLoggedIn: state.auth2.isLoggedIn,
   completedLocation: state.onboardingReducer.completedLocation,
   completedNotification: state.onboardingReducer.completedNotification,
-  deviceToken: state.auth.deviceToken,
 });
 
 const mD = {
   updateLocation,
-  ensureSessionDefaults,
   clearOnboarding,
-  registerDevice,
 };
 
 export default connect(

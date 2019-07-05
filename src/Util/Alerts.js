@@ -1,4 +1,4 @@
-import { Alert } from "react-native";
+import { Alert, Platform, Linking } from "react-native";
 import I18n from "../I18n/I18n";
 
 /**
@@ -20,59 +20,36 @@ export const displayFormErrors = (...errors) => {
   ]);
 };
 
-/**
- * @description Generic function to display time alerts
- *
- * @param {Number} time actual extra time
- */
-export const displayTimeAlert = (time, timeEvent) => {
+export const displayNoNetworkConnectionAlert = () => {
   Alert.alert(
-    I18n.t("extraTime3"),
-    "",
+    I18n.t("thereNoInternetConnection"),
+    I18n.t("checkYourConnection")
+  );
+};
+
+export const displayUpdateAvailableAlert = () => {
+  const url = Platform.OS == "ios" ? "itms-apps://itunes.apple.com/app/apple-store/id1341871432?mt=8" : "market://details?id=com.newsolo";
+  Alert.alert(
+    I18n.t("appUpdateAlert.title"),
+    I18n.t("appUpdateAlert.description"),
     [
-      /* {
-        text: I18n.t("extraTimeA1"),
-        onPress: () => {
-          timeEvent({
-            red: false,
-            showAlert: false,
-            extraTime: time + 5 * 60
-          });
-        }
-      },*/
       {
-        text: I18n.t("ok"),
+        text: I18n.t("actions.ok"),
         onPress: () => {
-          timeEvent({
-            timeBtn: true
-          });
+          try {
+            Linking.canOpenURL(url).then(supported => {
+              if (!supported) {
+                console.log("Can't handle url: " + url);
+              } else {
+                return Linking.openURL(url);
+              }
+            }).catch(err => console.error('An error occurred', err));
+          } catch (e) {
+            console.log('error from linking', e);
+          }
         }
       }
     ],
     { cancelable: false }
-  );
-};
-
-/**
- * @description Generic function to display alert before end the call
- *
- * @param {Function} cancelCall action to invoke
- */
-export const displayEndCall = cancelCall => {
-  Alert.alert(
-    I18n.t("endCall"),
-    I18n.t("logOutConfirmation"),
-    [
-      {
-        text: I18n.t("cancel"),
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
-      },
-      {
-        text: I18n.t("endCall"),
-        onPress: async () => cancelCall()
-      }
-    ],
-    { cancelable: true }
   );
 };

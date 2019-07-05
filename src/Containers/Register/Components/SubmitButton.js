@@ -2,72 +2,43 @@ import React, { Component } from "react";
 import { Alert, Text, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 
-import { updateView as updateUserProfile, getProfileAsync, getNativeLang } from "../../../Ducks/UserProfileReducer";
-import { logInAsync, registerDevice } from "../../../Ducks/AuthReducer";
-import I18n, { translateApiErrorString } from "../../../I18n/I18n";
+import I18n, { translateApiError } from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/SubmitButtonStyles";
-import { asyncCreateUser, asyncUpdateUser } from "../../../Ducks/CustomerProfileReducer";
 import { update as updateOnboarding, noOnboarding, clear as clearOnboarding } from "../../../Ducks/OnboardingReducer";
+import { registerNewUser, logIn } from "../../../Ducks/AuthReducer2";
+import { displayNoNetworkConnectionAlert } from "../../../Util/Alerts";
 
 class SubmitButton extends Component {
   submitLogin = async () => {
     const {
-      registerDevice,
-      logInAsync,
       navigation,
-      checkRecord,
-      updateCustomer,
-      getProfileAsync,
-      getNativeLang,
       updateOnboarding,
       email,
       password,
       noOnboarding,
+      logIn,
+      hasNetworkConnection,
     } = this.props;
+
+    if (!hasNetworkConnection) {
+      displayNoNetworkConnectionAlert();
+      return;
+    }
+
     try {
       updateOnboarding({ errorType: null, makingRequest: true });
-      await registerDevice();
-      const logInUserResponse = await logInAsync(email, password);
-      const getUserProfile = await getProfileAsync(
-        logInUserResponse.payload.uuid,
-        logInUserResponse.payload.token,
-      );
-      await updateUserProfile({
-        selectedNativeLanguage: getNativeLang(getUserProfile.payload.nativeLangCode),
-      });
-        updateOnboarding({ makingRequest: false });
-        noOnboarding();
-        navigation.dispatch({ type: "Home" });
+      await logIn(email, password);
+      updateOnboarding({ makingRequest: false });
+      noOnboarding();
+      navigation.dispatch({ type: "Home" });
     } catch (err) {
       console.log(err);
-      if(err.data){
-        if (err.data.errors[0] === "Password incorrect") {
-          updateOnboarding({
-            errorType: "signInError",
-          });
-        }
-
-        if (err.data.errors[0] === "Email not found") {
-          updateOnboarding({
-            errorType: "emailNotFound",
-          });
-        }
-
-        if (err.data.errors[0]) {
-          Alert.alert(
-            I18n.t("error"),
-            translateApiErrorString(err.data.errors[0], "api.errTemporary"),
-            [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
-          );
-        }
-      }else{
-        Alert.alert(
-          I18n.t("error"),
-          translateApiErrorString(err, "api.errTemporary"),
-          [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
-        );
-      }
+      Alert.alert(
+        I18n.t("error"),
+        translateApiError(err, "api.errTemporary"),
+        [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
+      );
     } finally {
       updateOnboarding({ makingRequest: false });
     }
@@ -75,11 +46,6 @@ class SubmitButton extends Component {
 
   submitRegister = async () => {
     const {
-      asyncCreateUser,
-      logInAsync,
-      updateUserProfile,
-      asyncUpdateUser,
-      registerDevice,
       navigation,
       clearOnboarding,
       updateOnboarding,
@@ -91,7 +57,14 @@ class SubmitButton extends Component {
       isValidEmail,
       makingRequest,
       nativeLangCode,
+      registerNewUser,
+      hasNetworkConnection,
     } = this.props;
+
+    if (!hasNetworkConnection) {
+      displayNoNetworkConnectionAlert();
+      return;
+    }
 
     if (
       !isValidPassword
@@ -105,49 +78,28 @@ class SubmitButton extends Component {
 
     try {
       updateOnboarding({ errorType: null, makingRequest: true });
-      const registerDeviceResponse = await registerDevice();
-      if (registerDeviceResponse.type !== "networkErrors/error") {
-        const registerUserResponse = await asyncCreateUser(
-          {
-            email,
-            password,
-          },
-          registerDeviceResponse.payload.deviceToken,
-        );
-          const logInUserResponse = await logInAsync(email, password);
-          await asyncUpdateUser(
-            {
-              id: registerUserResponse.payload.id,
-              firstName,
-              nativeLangCode,
-            },
-            logInUserResponse.payload.token,
-          );
-          await updateUserProfile({
-            isNewUser: true,
-          });
-          
-          clearOnboarding(); 
-
-          return navigation.dispatch({ type: "Home" });
-      }
-    } catch (err) {
-      err = err.response;
-      if(err.data){
-        if (err.data.errors[0]) {
-          Alert.alert(
-            I18n.t("error"),
-            translateApiErrorString(err.data.errors[0], "api.errTemporary"),
-            [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
-          );
-        }
-      }else{
+      await registerNewUser({
+        firstName,
+        email,
+        password,
+        nativeLangCode,
+      }).catch((err) => {
         Alert.alert(
           I18n.t("error"),
-          translateApiErrorString(err, "api.errTemporary"),
+          translateApiError(err, "api.errTemporary"),
           [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
         );
-      }
+      });
+
+      clearOnboarding();
+      return navigation.dispatch({ type: "Home" });
+    } catch (err) {
+      console.log(err);
+      Alert.alert(
+        I18n.t("error"),
+        translateApiError(err, "api.errTemporary"),
+        [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
+      );
     } finally {
       updateOnboarding({ makingRequest: false });
     }
@@ -232,19 +184,15 @@ const mS = state => ({
   isValidEmail: state.onboardingReducer.isValidEmail,
   isValidFirstName: state.onboardingReducer.isValidFirstName,
   isValidPassword: state.onboardingReducer.isValidPassword,
+  hasNetworkConnection: state.appState.hasNetworkConnection,
 });
 
 const mD = {
+  registerNewUser,
+  logIn,
   updateOnboarding,
-  asyncCreateUser,
-  registerDevice,
-  logInAsync,
-  asyncUpdateUser,
-  updateUserProfile,
-  getProfileAsync,
   noOnboarding,
   clearOnboarding,
-  getNativeLang
 };
 
 export default connect(

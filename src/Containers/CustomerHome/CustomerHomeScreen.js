@@ -1,59 +1,48 @@
 import React, { Component } from "react";
 import {
-  Alert, View, ImageBackground, Text
+  Alert, ImageBackground, TouchableOpacity, View,
 } from "react-native";
 import InCallManager from "react-native-incall-manager";
 import { connect } from "react-redux";
-import analytics from "@segment/analytics-react-native";
-import Header from "./Components/Header";
+import { Icon } from "react-native-elements";
+import NavBar from "../../Components/NavBar/NavBar";
 import AvatarSection from "./Components/AvatarSection";
 import CallInputs from "./Components/CallInputs";
 import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
 import {
   ensureSessionDefaults,
   updateLocation,
-  guessSecondaryLangCode,
 } from "../../Ducks/NewSessionReducer";
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
-import { getProfileAsync, updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
-import { logOutAsync } from "../../Ducks/AuthReducer";
-import { clear as clearEvents } from "../../Ducks/EventsReducer";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
 import I18n from "../../I18n/I18n";
-import { supportedLangCodes } from "../../Config/Languages";
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
-import { loadActiveSubscriptionPeriods } from "../../Ducks/AccountReducer";
+import { moderateScaleViewports } from "../../Util/Scaling";
+import HeaderMinutesLeft from "./Components/Partials/HeaderMinutesLeft";
+import { Colors } from "../../Themes";
+import { loadUser, loadActiveSubscriptionPeriods } from "../../Ducks/AccountReducer";
 
 const imgBackground = require("../../Assets/Images/Background.png");
 
 class CustomerHomeScreen extends Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     const {
-      uuid,
-      updateLocation,
       ensureSessionDefaults,
-      secondaryLangCode,
-      clearEvents,
+      newSession,
       navigation,
-      firstName,
-      completedLocation,
     } = this.props;
 
-    analytics.identify(uuid, {
-      name: firstName,
-    });
+    this.state = {
+      loading: true,
+    };
 
-    ensureSessionDefaults({
-      primaryLangCode: this.setPrimaryLangCode(),
-      secondaryLangCode: secondaryLangCode || "",
-    });
+    ensureSessionDefaults();
 
-    clearEvents();
     InCallManager.stop();
     if (navigation.state.params && navigation.state.params.alertFail) {
       Alert.alert(I18n.t("notification"), I18n.t("session.callFailCustomer"));
@@ -62,54 +51,19 @@ class CustomerHomeScreen extends Component {
 
   componentDidMount() {
     const {
-      linguistProfile,
-      isLoggedIn,
-      uuid,
-      token,
-      getProfileAsync,
+      loadUser,
       loadSessionScenarios,
       loadActiveSubscriptionPeriods,
     } = this.props;
 
-    if (uuid !== "" && token !== "") {
-      getProfileAsync(uuid, token); // TODO: find a way to replace this
-    }
-    if (!linguistProfile && isLoggedIn) {
-      // checkOperatingHours(true);
-    }
-
-
-    if (this.props.navigation.state.params && this.props.navigation.state.params.usageError) {
-      Alert.alert(I18n.t("invalidCode"), this.props.navigation.state.params.usageError);
-    }
-    if (this.props.navigation.state.params && this.props.navigation.state.params.minutesGranted) {
-      Alert.alert(
-        I18n.t("minutesAdded"),
-        I18n.t("complimentMinutes", {
-          maxMinutesPerUser: this.props.navigation.state.params.maxMinutesPerUser,
-          organizer: this.props.navigation.state.params.organization,
-        }),
-      );
-    }
-
-    loadSessionScenarios(true);
-    loadActiveSubscriptionPeriods(true);
+    Promise.all([
+      loadSessionScenarios(true),
+      loadActiveSubscriptionPeriods(true),
+      loadUser(true),
+    ]).finally(() => {
+      this.setState({loading: false});
+    });
   }
-
-  setPrimaryLangCode = () => {
-    const { primaryLangCode, nativeLangCode } = this.props;
-    this.props.guessSecondaryLangCode();
-    if (primaryLangCode) {
-      return primaryLangCode;
-    }
-    if (nativeLangCode) {
-      return supportedLangCodes.includes(nativeLangCode);
-    }
-    if (nativeLangCode === "eng") {
-      return "eng";
-    }
-    return "eng";
-  };
 
   openSlideMenu = (type) => {
     const { openSlideMenu } = this.props;
@@ -119,40 +73,51 @@ class CustomerHomeScreen extends Component {
   render() {
     const {
       navigation,
-      logOutAsync,
-      emailBounced,
-      closeUpdateEmail,
-      secondaryLangCode,
+      user,
+      newSession,
       jeenieCounts,
     } = this.props;
     return (
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
         <View style={styles.mainContainerHome}>
-          <Header navigation={navigation} />
+          <NavBar
+            leftComponent={(
+              <TouchableOpacity
+                activeOpacity={1}
+                style={styles.containerMenu}
+                onPress={() => navigation.dispatch({ type: "DrawerOpen" })}
+              >
+                <Icon name="navicon" type="evilicon" color="white" size={moderateScaleViewports(30)} />
+              </TouchableOpacity>
+)}
+            rightComponent={(
+              <View style={styles.minutesLeftContainer}>
+                <TouchableOpacity onPress={() => navigation.dispatch({ type: "PaymentDetailScreen" })}>
+                  <HeaderMinutesLeft navigation={navigation} />
+                </TouchableOpacity>
+              </View>
+)}
+            statusBarBackground={Colors.gradientColor.top}
+          />
           <ImageBackground source={imgBackground} style={styles.imgBackgroundContainer} imageStyle={styles.imgBackground}>
-            <AvatarSection showNum={!!secondaryLangCode} targetLang={secondaryLangCode} langCounts={jeenieCounts} />
+            <AvatarSection showNum={!!newSession.secondaryLangCode} targetLang={newSession.secondaryLangCode} langCounts={jeenieCounts} />
             <View style={styles.flexEndCenter}>
               <CallInputs navigation={navigation} openSlideMenu={this.openSlideMenu} />
               <CallButtons navigation={navigation} />
             </View>
           </ImageBackground>
           <SlideUpPanel />
-          { emailBounced && <View style={{ position: "absolute" }}><UpdateEmail emailBounced={emailBounced} /></View>}
+          { user.emailBounced && <View style={{ position: "absolute" }}><UpdateEmail emailBounced={user.emailBounced} /></View>}
         </View>
-      </ViewWrapper>
+      </View>
     );
   }
 }
 
 const mS = state => ({
-  nativeLangCode: state.userProfile.nativeLangCode,
-  primaryLangCode: state.newSessionReducer.session.primaryLangCode,
-  secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
-  token: state.auth.token,
-  uuid: state.auth.uuid,
-  firstName: state.userProfile.firstName,
+  user: state.account.user,
+  newSession: state.newSessionReducer.session,
   completedLocation: state.onboardingReducer.completedLocation,
-  emailBounced: state.userProfile.emailBounced,
   jeenieCounts: state.appConfigReducer.jeenieCounts,
 });
 
@@ -160,12 +125,8 @@ const mD = {
   openSlideMenu,
   updateLocation,
   ensureSessionDefaults,
-  clearEvents,
-  getProfileAsync,
   loadSessionScenarios,
-  logOutAsync,
-  closeUpdateEmail,
-  guessSecondaryLangCode,
+  loadUser,
   loadActiveSubscriptionPeriods,
 };
 

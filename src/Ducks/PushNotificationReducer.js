@@ -1,19 +1,9 @@
-import { Sessions } from "../Api";
 import {Alert} from "react-native";
 import PushNotification from "../Util/PushNotification";
-import { networkError } from "./NetworkErrorsReducer";
-import timer from "react-native-timer";
-import I18n, { translateLanguage, translateApiError } from "../I18n/I18n";
-import {recordPushNotificationEvent, recordAppError} from "../Util/Forensics";
+import I18n, { translateApiError } from "../I18n/I18n";
+import {recordPushNotificationEvent } from "../Util/Forensics";
 import { receiveSessionInvite, setRemoteUser, handleEndedSession } from "./CurrentSessionReducer";
 import api from "../Config/AxiosConfig";
-import { displayTimeAlert } from "../Util/Alerts";
-import { NotificationActionOption } from "react-native-fcm";
-
-// Actions
-export const ACTIONS = {
-  REGISTER: "pushnotification/register"
-};
 
 export const remoteNotificationReceived = notification => dispatch => {
   switch (notification.type) {
@@ -37,33 +27,20 @@ export const remoteNotificationReceived = notification => dispatch => {
   }
 };
 
-const getCategory = (session) => {
-  if(session && session.scenario){
-    if(session.scenario.category && session.scenario.category.length > 0){
-      return `${session.scenario.category[0].toUpperCase()}${session.scenario.category.slice(
-        1
-      )} - ${session.scenario.title}`} else {
-      return session.scenario.title;
-    }
-    }
-  return null;
-  };
-
 export const incomingCallNotification = invitationId => (dispatch, getState) => {
   const {
     nav,
-    auth,
-    profileLinguist,
-    userProfile
+    auth2,
+    account,
   } = getState();
-  const isLinguist = !!userProfile.linguistProfile;
+  const isLinguist = !!account.linguistProfile;
   const CurrentRoutes = nav.routes[0].routes[0].routes;
   const CurrentView = CurrentRoutes.length > 1 ? CurrentRoutes[1].routeName : CurrentRoutes[0].routeName;
   if (
-    auth.isLoggedIn &&
+    auth2.isLoggedIn &&
     invitationId &&
     isLinguist &&
-    profileLinguist.available &&
+    account.linguistProfile.available &&
     CurrentView != "LinguistIncomingCallView" &&
     CurrentView != "SessionView" &&
     CurrentView != "RateView"
@@ -155,31 +132,3 @@ export const addListeners = () => dispatch => {
     }
   });
 };
-
-export const registerFCM = payload => ({
-  type: ACTIONS.REGISTER,
-  payload
-});
-
-// Initial State
-const initialState = {
-  tokenFCM: null
-};
-
-// Reducer
-const PushNotificationReducer = (state = initialState, action) => {
-  const { payload, type } = action;
-
-  switch (type) {
-    case ACTIONS.REGISTER: {
-      return {
-        ...state,
-        ...payload
-      };
-    }
-    default:
-      return state;
-  }
-};
-
-export default PushNotificationReducer;

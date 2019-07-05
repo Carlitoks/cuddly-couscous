@@ -145,6 +145,6 @@ export default StyleSheet.create({
   },
   scrollContainer: {
     backgroundColor: "white",
-    height: "100%"
+    flex: 1,
   }
 });

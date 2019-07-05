@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { View, ActivityIndicator } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { connect } from "react-redux";
 import { number as validCC } from "card-validator";
 import CreditCardNumber from "./Partials/CreditCardNumber";
 import ExpirationDate from "./Partials/ExpirationDate";
 import CVV from "./Partials/CVV";
 import Icons from "../Icons";
-import Reactotron from "reactotron-react-native";
 import moment from "moment";
 import { updatePayments } from "../../../Ducks/PaymentsReducer";
 // Styles
@@ -162,10 +161,9 @@ const mS = state => ({
   isValidDate: state.payments.isValidDate,
   loading: state.payments.loading,
   isValidCC: state.payments.isValidCC,
-  token: state.auth.token,
   cardInfo: state.payments.cardInfo,
   expDate: state.payments.expDate,
-  StripePaymentSourceMeta: state.userProfile.StripePaymentSourceMeta
+  StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta
 });
 
 const mD = {

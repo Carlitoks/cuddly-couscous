@@ -1,39 +1,55 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import SegmentedControlTab from "react-native-segmented-control-tab";
 
-import {
-  getAllCustomerCalls,
-  getAllLinguistCalls,
-  getMissedLinguistCalls,
-  customerCalls,
-  linguistCalls,
-  linguistMissedCalls,
-  indexOnChange
-} from "../../Ducks/CallHistoryReducer";
-
-import { View, Text, ScrollView } from "react-native";
+import { Alert, View, Text, ScrollView } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
-import HeaderView from "../../Components/HeaderView/HeaderView";
 import Close from "../../Components/Close/Close";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
+import NavBar from "../../Components/NavBar/NavBar";
+import { Iphone6, Iphone5 } from "../../Util/Devices";
 
 import moment from "moment";
 
 import styles from "./style";
-import I18n from "../../I18n/I18n";
+import Colors from "../../Themes/Colors";
+import I18n, { translateApiError } from "../../I18n/I18n";
+import {
+  loadCustomerCallHistory,
+  loadLinguistCallHistory,
+  loadLinguistMissedCallHistory,
+} from "../../Ducks/AccountReducer";
 
 class CallHistoryView extends Component {
-  componentWillMount() {
-    if (this.props.linguistProfile) {
-      this.getAllLinguistCalls(this.props.userId, this.props.token);
-      this.getMissedLinguistCalls(this.props.userId, this.props.token);
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loaded: false,
+      selectedIndex: 0,
+    };
+  }
+
+  componentDidMount() {
+    let promise = null;
+    if (!!this.props.linguistProfile) {
+      promise = Promise.all([
+        this.props.loadLinguistCallHistory(true),
+        this.props.loadLinguistMissedCallHistory(true),
+      ]);
     } else {
-      this.getAllCustomerCalls(this.props.userId, this.props.token);
+      promise = this.props.loadCustomerCallHistory(true);
     }
+
+    promise.catch((e) => {
+      Alert.alert(I18n.t('error'), translateApiError(e, 'api.errUnexpected'));
+    })
+    .finally(() => {
+      this.setState({loaded: true});
+    });
   }
 
   filterAllCalls = (allCalls, userType) => {
@@ -119,39 +135,17 @@ class CallHistoryView extends Component {
     }
   };
 
-  getAllCustomerCalls = (userId, token) => {
-    this.props.getAllCustomerCalls(userId, token).then(response => {
-      this.props.customerCalls(response);
-    });
-  };
-
-  getAllLinguistCalls = (userId, token) => {
-    this.props.getAllLinguistCalls(userId, token).then(response => {
-      this.props.linguistCalls(response);
-    });
-  };
-
-  getMissedLinguistCalls = (userId, token) => {
-    this.props.getMissedLinguistCalls(userId, token).then(response => {
-      this.props.linguistMissedCalls(response);
-    });
-  };
-
   handleIndexChange = index => {
-    this.props.indexOnChange(index);
+    this.setState({selectedIndex: index});
   };
 
   render() {
     const {
       linguistProfile,
-      userId,
-      token,
       allCustomerCalls,
       allLinguistCalls,
       missedCallsLinguist
     } = this.props;
-
-    const navigate = this.props.navigation;
 
     const tabValues = linguistProfile ? [I18n.t("all"), I18n.t("missed")] : [];
 
@@ -166,12 +160,13 @@ class CallHistoryView extends Component {
       : [];
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
-            <ShowMenuButton navigation={this.props.navigation} />
+      <View style={styles.scrollContainer}>
+        <NavBar
+          navigation={this.props.navigation}
+          leftComponent={
+            <ShowMenuButton navigation={this.props.navigation}/>
           }
-          headerRightComponent={
+          rightComponent={
             <Close
               action={() => {
                 this.props.navigation.dispatch({ type: "Home" });
@@ -179,55 +174,59 @@ class CallHistoryView extends Component {
             />
           }
           navbarTitle={I18n.t("callHistory")}
-          navbarType={"Complete"}
-          tabValues={tabValues}
-          tabSelectedIndex={this.props.selectedIndex}
-          onTabPress={this.handleIndexChange}
-          NoWaves
+        />
+        {!!linguistProfile && (
+          <View style={styles.tabBackgroundContainer}>
+            <SegmentedControlTab
+              tabsContainerStyle={styles.tabsContainerStyle}
+              values={tabValues}
+              tabStyle={
+                Iphone6 || Iphone5 ? styles.tabStyleNoBorder : styles.tabStyle
+              }
+              tabTextStyle={styles.tabTextStyle}
+              selectedIndex={this.state.selectedIndex}
+              onTabPress={this.handleIndexChange}
+              activeTabStyle={{
+                backgroundColor: Colors.primarySelectedTabColor
+              }}
+            />
+          </View>
+        )}
+        <ScrollView
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+          bounces={false}
+          alwaysBounceVertical={false}
         >
-          <ScrollView
-            automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-            bounces={false}
-            alwaysBounceVertical={false}
-          >
-            <Grid>
-              <Col>
-                <View style={styles.container}>
-                  <CallHistoryComponent
-                    data={
-                      this.props.selectedIndex === 0 ? allCalls : missedCalls
-                    }
-                    navigation={this.props.navigation}
-                  />
-                </View>
-              </Col>
-            </Grid>
-          </ScrollView>
-        </HeaderView>
-      </ViewWrapper>
+          <Grid>
+            <Col>
+              <View style={styles.container}>
+                <CallHistoryComponent
+                  data={
+                    this.state.selectedIndex === 0 ? allCalls : missedCalls
+                  }
+                  navigation={this.props.navigation}
+                />
+              </View>
+            </Col>
+          </Grid>
+        </ScrollView>
+      </View>
     );
   }
 }
 
 const mS = state => ({
-  linguistProfile: state.userProfile.linguistProfile,
-  token: state.auth.token,
-  userId: state.userProfile.id,
-  allCustomerCalls: state.callHistory.allCustomerCalls,
-  allLinguistCalls: state.callHistory.allLinguistCalls,
-  missedCallsLinguist: state.callHistory.linguistMissedCalls,
-  selectedIndex: state.callHistory.selectedIndex
+  linguistProfile: state.account.linguistProfile,
+  allCustomerCalls: state.account.customerCallHistory,
+  allLinguistCalls: state.account.linguistCallHistory,
+  missedCallsLinguist: state.account.linguistMissedCallHistory,
 });
 
 const mD = {
-  getAllCustomerCalls,
-  getAllLinguistCalls,
-  getMissedLinguistCalls,
-  customerCalls,
-  linguistCalls,
-  linguistMissedCalls,
-  indexOnChange
+  loadCustomerCallHistory,
+  loadLinguistCallHistory,
+  loadLinguistMissedCallHistory,
 };
 
 export default connect(

@@ -110,6 +110,7 @@ const apiErrorsI18N = {
   "authentication required": "api.errAuthRequired",
   "failed to validate event": "api.errEventInvalid",
   "event is not currently available": "api.errEventUnavailable",
+  "promo code not found": "api.errEventUnavailable",
   "event is not active": "api.errEventInactive",
   "event requires a scenario to be specified": "api.errEventScenarioMissing",
   "payment details required": "api.errPaymentDetailsRequired",

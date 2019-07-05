@@ -15,7 +15,6 @@ import { connect } from "react-redux";
 import { Divider } from "react-native-elements";
 import Permission from "react-native-permissions";
 
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import I18n from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/LoginScreenStyles";
@@ -40,13 +39,18 @@ class LoginScreen extends Component {
   handleTouch = async (goto) => {
     const { navigation } = this.props;
     const LocationPermission = await Permission.check("location");
-    if (LocationPermission === "undetermined" || LocationPermission === "denied") {
-      return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
+    if (Platform.OS === "android"){
+      if (LocationPermission === "undetermined" || LocationPermission === "denied")
+        return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
+    }else {
+      if (LocationPermission === "undetermined") {
+        return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
+      }
     }
     if (Platform.OS !== "android") {
       const NotificationPermission = await Permission.check("notification");
-      if (NotificationPermission === "undetermined" || NotificationPermission === "denied") {
-        return navigation.dispatch({ type: "Home", params: { redirectTo: goto } });
+      if (NotificationPermission === "undetermined") {
+        return navigation.dispatch({ type: "NotificationPermissionView", params: { redirectTo: goto } });
       }
     }
     return navigation.dispatch({ type: goto });
@@ -71,7 +75,7 @@ class LoginScreen extends Component {
     } = this.props;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer} enabled>
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <View style={[styles.mainRegisterContainer]}>
             <ScrollView bounces={false} contentContainerStyle={styles.registerContainer}>
@@ -127,7 +131,7 @@ class LoginScreen extends Component {
           </View>
         </TouchableWithoutFeedback>
         <SlideUpPanel />
-      </ViewWrapper>
+      </View>
       </KeyboardAvoidingView>
     );
   }

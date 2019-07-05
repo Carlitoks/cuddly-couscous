@@ -4,9 +4,9 @@ import {
   Colors,
   Fonts,
   Metrics,
-} from "../../../../Themes";
-import { moderateScale, moderateScaleViewports } from "../../../../Util/Scaling";
-import {isIphoneXorAbove} from "../../../../Util/Devices";
+} from "../../../Themes";
+import { moderateScale, moderateScaleViewports } from "../../../Util/Scaling";
+import {isIphoneXorAbove} from "../../../Util/Devices";
 
 const iOS = Platform.OS === "ios";
 
@@ -26,6 +26,7 @@ export default StyleSheet.create({
   },
   titleTextStyle: {
     color: "#fff",
+    textAlign: "center",
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(18, 0)
   },

@@ -5,23 +5,11 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import MaterialCIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Instabug from "instabug-reactnative";
 import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
-import {
-  getProfileAsync,
-  clearView,
-  updateView
-} from "../../Ducks/UserProfileReducer";
-
-import { clearSettings as clearHomeFlow } from "../../Ducks/HomeFlowReducer";
-
-import { logOutAsync } from "../../Ducks/AuthReducer";
 
 import {
-  Alert,
   View,
   ScrollView,
   Text,
-  Image,
-  TouchableWithoutFeedback,
   TouchableOpacity
 } from "react-native";
 import { Col, Row, Grid } from "react-native-easy-grid";
@@ -34,6 +22,7 @@ import { Colors, Images } from "../../Themes";
 import styles from "./styles";
 import { HelpURI } from "../../Config/StaticViewsURIS";
 import I18n from "../../I18n/I18n";
+import { displayOpenSettingsAlert, setPermission } from "../../Util/Permission";
 
 class MenuView extends Component {
   constructor(props) {
@@ -41,18 +30,12 @@ class MenuView extends Component {
     state = { appState: AppState.currentState };
   }
 
-  componentWillMount() {
-    const { firstName, lastName, isLoggedIn } = this.props;
-    if (!firstName && !lastName && isLoggedIn) {
-      this.props.getProfileAsync(this.props.uuid, this.props.token);
-    }
-  }
   componentWillReceiveProps(nextProps) {
     this.forceUpdate();
   }
 
   componentWillUnmount() {
-    Instabug.setAttachmentTypesEnabled(true, true, true, true, true);
+    Instabug.setEnabledAttachmentTypes(true, true, true, true, true);
   }
   isACustomer = () => !this.props.linguistProfile;
 
@@ -63,7 +46,7 @@ class MenuView extends Component {
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, user } = this.props;
     const Version = DeviceInfo.getVersion();
     return (
       <View style={styles.container}>
@@ -74,31 +57,28 @@ class MenuView extends Component {
               this.checkCurrentPage(navigation, "UserProfileView");
             }}
           >
+            {!!user && (
             <View>
               <Avatar
                 containerStyle={{ alignSelf: "center", marginTop: 30 }}
                 avatarStyle={styles.center}
                 rounded
                 xlarge
-                key={this.props.avatarBase64}
                 source={
                   this.props.avatarURL
-                    ? {
-                        uri: `${
-                          this.props.avatarURL
-                        }?time=${new Date().getUTCMilliseconds()}`
-                      }
+                    ? { uri: this.props.avatarURL }
                     : Images.avatar
                 }
                 activeOpacity={0.7}
               />
               <Text style={styles.textName}>
-                {this.props.firstName} {this.props.lastName}
+                {user.firstName} {user.lastName}
               </Text>
               <Text style={styles.textEditProfile}>
-                {I18n.t("editProfile")}
+                {user.email}
               </Text>
             </View>
+          )}
           </TouchableOpacity>
 
           {/* Home */}
@@ -173,7 +153,16 @@ class MenuView extends Component {
                   ? styles.selectedOptionMenu
                   : styles.optionMenu
               }
-              onPress={() => this.checkCurrentPage(navigation, "ScanScreenView")}
+              onPress={() => {
+                setPermission("camera").then(response => {
+                  if (response == "denied" || response == "restricted") {
+                    displayOpenSettingsAlert();
+                  } else {
+                    this.checkCurrentPage(navigation, "ScanScreenView")
+                  }
+                });
+              }
+              }
             >
               <Text style={styles.colorText}>{I18n.t("scanQRCode")}</Text>
             </MaterialCIcons.Button>
@@ -206,8 +195,8 @@ class MenuView extends Component {
             backgroundColor={Colors.background}
             iconStyle={styles.optionMenu}
             onPress={() => {
-              Instabug.setAttachmentTypesEnabled(false, true, true, true, true);
-              Instabug.invoke();
+              Instabug.setEnabledAttachmentTypes(false, true, true, true, true);
+              Instabug.show();
             }}
           >
             <Text style={styles.colorText}>{I18n.t("reportProblemMenu")}</Text>
@@ -261,24 +250,12 @@ class MenuView extends Component {
 }
 
 const mS = state => ({
-  firstName: state.userProfile.firstName,
-  lastName: state.userProfile.lastName,
-  location: state.userProfile.location,
-  rate: state.userProfile.averageStarRating,
-  linguistProfile: state.userProfile.linguistProfile,
-  avatarURL: state.userProfile.avatarURL,
-  avatarBase64: state.userProfile.avatarBase64,
-  uuid: state.auth.uuid,
-  token: state.auth.token,
-  isLoggedIn: state.auth.isLoggedIn
+  user: state.account.user,
+  linguistProfile: state.account.linguistProfile,
+  avatarURL: state.account.userAvatarURL,
 });
 
 const mD = {
-  clearView,
-  updateView,
-  getProfileAsync,
-  logOutAsync,
-  clearHomeFlow
 };
 
 export default connect(

@@ -1,48 +1,44 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { updateProfileAsync } from "../../Ducks/UserProfileReducer";
-
-import { clearForm, updateForm } from "../../Ducks/RegistrationCustomerReducer";
-
 import { View, Text, ScrollView, Alert } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { Button } from "react-native-elements";
 
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import BottomButton from "../../Components/BottomButton/BottomButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import HeaderView from "../../Components/HeaderView/HeaderView";
+import {updateUser} from "../../Ducks/AccountReducer";
 
 import styles from "./styles";
 import { displayFormErrors } from "../../Util/Alerts";
 
 import I18n from "../../I18n/I18n";
 import { onlyLetters } from "../../Util/Helpers";
+import NavBar from "../../Components/NavBar/NavBar";
 
 class EditNameView extends Component {
-  navigate = this.props.navigation.navigate;
 
-  componentWillUnmount() {
-    this.props.clearForm();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      formFirstName: props.user.firstName,
+      formLastName: props.user.lastName,
+      formPreferredName: props.user.preferredName,
+      saving: false
+    };
+
   }
+
   isDisabled() {
-    return !this.props.formFirstName > 0 || !this.props.formLastName > 0;
-  }
-  async componentWillMount() {
-    await this.props.updateForm({
-      firstname: this.props.firstName,
-      lastname: this.props.lastName,
-      preferredName: this.props.preferredName
-    });
+    return !this.state.formFirstName > 0 || !this.state.formLastName > 0;
   }
 
   validateForm() {
     let updates = {};
     let valid = true;
 
-    if (!this.props.formFirstName) {
+    if (!this.state.formFirstName) {
       updates = {
         ...updates,
         FirstnameErrorMessage: I18n.t("enterNameField")
@@ -50,7 +46,7 @@ class EditNameView extends Component {
       valid = false;
     }
 
-    if (!this.props.formLastName) {
+    if (!this.state.formLastName) {
       updates = {
         ...updates,
         LastnameErrorMessage: I18n.t("enterLastNameField")
@@ -90,7 +86,7 @@ class EditNameView extends Component {
       }
     }
 
-    this.props.updateForm(updates);
+    // this.props.updateForm(updates);
     return valid;
   }
 
@@ -99,24 +95,21 @@ class EditNameView extends Component {
       formFirstName,
       formLastName,
       formPreferredName,
-      uuid,
-      token
-    } = this.props;
+    } = this.state;
     const data = {
       firstName: formFirstName,
       lastName: formLastName,
       preferredName: formPreferredName
     };
     if (this.validateForm()) {
-      this.props.updateProfileAsync(uuid, data, token).then(response => {
-        if (response.type !== "networkErrors/error") {
-          this.props.navigation.dispatch({
-            type: "back"
-          });
-        } else {
-          const errorMessage = response.payload.response.data.errors[0];
-          Alert.alert("error", errorMessage);
-        }
+      this.setState({saving: true});
+      this.props.updateUser(data)
+      .then((response) => {
+        this.props.navigation.dispatch({ type: "back" });
+      })
+      .catch((e) => {
+        this.setState({saving: false});
+        Alert.alert(I18n.t('error'), translateApiError(e));
       });
     }
   }
@@ -128,7 +121,7 @@ class EditNameView extends Component {
     if (this.props.firstName && this.props.lastName) {
       subtitle = `${I18n.t("youWillBeKnown")} ${
         this.props.firstName
-      } ${this.props.lastName.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
+        } ${this.props.lastName.charAt(0)}. ${I18n.t("toOthersOnPlatform")}`;
       return subtitle;
     } else {
       return subtitle;
@@ -136,119 +129,102 @@ class EditNameView extends Component {
   };
 
   render() {
-    const navigation = this.props.navigation;
-    const { formFirstName, formLastName, formPreferredName } = this.props;
-    const initialLastName = `${this.props.lastName.charAt(0)}.`;
+    const { formFirstName, formLastName, formPreferredName } = this.state;
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
-            <GoBackButton navigation={this.props.navigation} />
+      <View style={styles.scrollContainer}>
+        <NavBar
+          leftComponent={
+            <GoBackButton navigation={this.props.navigation}/>
           }
           navbarTitle={
-            <Text style={styles.mainTitle}>
-              {formPreferredName
-                ? `${formPreferredName}`
-                : formFirstName || formLastName
-                ? `${formFirstName} ${formLastName}`
-                : I18n.t("mainTitle")}
-            </Text>
+            formPreferredName
+              ? `${formPreferredName}`
+              : formFirstName || formLastName
+              ? `${formFirstName} ${formLastName}`
+              : I18n.t("mainTitle")
           }
-          navbarType={"Basic"}
-          NoWaves
+        />
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          automaticallyAdjustContentInsets={true}
+          style={styles.scrollContainer}
+          alwaysBounceVertical={false}
         >
-          <ScrollView
-            keyboardShouldPersistTaps="handled"
-            automaticallyAdjustContentInsets={true}
-            style={styles.scrollContainer}
-            alwaysBounceVertical={false}
-          >
-            <Grid>
-              <Col>
-                <View>
-                  {/* Name */}
-                  <InputRegular
-                    containerStyle={styles.containerInput}
-                    placeholder={I18n.t("linguistName")}
-                    onChangeText={text => {
-                      if (!onlyLetters(text) || text == "") {
-                        this.props.updateForm({
-                          firstname: text
-                        });
-                      }
-                    }}
-                    maxLength={20}
-                    value={formFirstName}
-                    autoFocus={true}
-                  />
-                </View>
-                {/* Last Name */}
+          <Grid>
+            <Col>
+              <View>
+                {/* Name */}
                 <InputRegular
                   containerStyle={styles.containerInput}
-                  placeholder={I18n.t("linguistLastName")}
+                  placeholder={I18n.t("linguistName")}
                   onChangeText={text => {
                     if (!onlyLetters(text) || text == "") {
-                      this.props.updateForm({
-                        lastname: text
+                      this.setState({
+                        formFirstName: text
                       });
                     }
                   }}
                   maxLength={20}
-                  value={formLastName}
-                  sec
+                  value={formFirstName}
+                  autoFocus={true}
                 />
+              </View>
+              {/* Last Name */}
+              <InputRegular
+                containerStyle={styles.containerInput}
+                placeholder={I18n.t("linguistLastName")}
+                onChangeText={text => {
+                  if (!onlyLetters(text) || text == "") {
+                    this.setState({
+                      formLastName: text
+                    });
+                  }
+                }}
+                maxLength={20}
+                value={formLastName}
+                sec
+              />
 
-                {/* Prefered Name */}
-                <InputRegular
-                  containerStyle={styles.containerInput}
-                  placeholder={I18n.t("preferredName")}
-                  value={formPreferredName}
-                  onChangeText={text => {
-                    if (!onlyLetters(text) || text == "") {
-                      this.props.updateForm({
-                        preferredName: text
-                      });
-                    }
-                  }}
-                  maxLength={20}
-                  sec
-                />
-              </Col>
-            </Grid>
-          </ScrollView>
-          {/* Save Button */}
-          <BottomButton
-            title={I18n.t("save")}
-            onPress={() => {
-              this.submit();
-            }}
-            bold={false}
-            disabled={this.isDisabled()}
-            fill={!this.isDisabled()}
-          />
-        </HeaderView>
-      </ViewWrapper>
+              {/* Prefered Name */}
+              <InputRegular
+                containerStyle={styles.containerInput}
+                placeholder={I18n.t("preferredName")}
+                value={formPreferredName}
+                onChangeText={text => {
+                  if (!onlyLetters(text) || text == "") {
+                    this.setState({
+                      formPreferredName: text
+                    });
+                  }
+                }}
+                maxLength={20}
+                sec
+              />
+            </Col>
+          </Grid>
+        </ScrollView>
+        {/* Save Button */}
+        <BottomButton
+          title={I18n.t("save")}
+          onPress={() => {
+            this.submit();
+          }}
+          bold={false}
+          disabled={this.isDisabled()}
+          fill={!this.isDisabled()}
+        />
+      </View>
     );
   }
 }
 
 const mS = state => ({
-  firstName: state.userProfile.firstName,
-  lastName: state.userProfile.lastName,
-  preferredName: state.userProfile.preferredName,
-  formFirstName: state.registrationCustomer.firstname,
-  formLastName: state.registrationCustomer.lastname,
-  formHasErrors: state.registrationCustomer.formHasErrors,
-  formPreferredName: state.registrationCustomer.preferredName,
-  token: state.auth.token,
-  uuid: state.auth.uuid
+  user: state.account.user,
 });
 
 const mD = {
-  updateForm,
-  clearForm,
-  updateProfileAsync
+  updateUser,
 };
 
 export default connect(

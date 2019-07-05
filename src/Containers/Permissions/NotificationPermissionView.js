@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, Image, Platform, ImageBackground } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
-import { Colors } from "../../Themes";
 import { updateLocation, ensureSessionDefaults } from "../../Ducks/NewSessionReducer";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { clear as clearOnboarding, update as updateOnboarding } from "../../Ducks/OnboardingReducer";
 
 // Styles
@@ -35,7 +32,7 @@ class NotificationPermissionView extends Component {
   render() {
     const { navigation } = this.props;
     return (
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
         <View style={[styles.permissionsMainContainer]}>
           <Image source={backgroundImage} style={styles.backgroundImage} />
           <View style={styles.bodyContainer}>
@@ -49,7 +46,7 @@ class NotificationPermissionView extends Component {
             </View>
           </View>
         </View>
-      </ViewWrapper>
+      </View>
     );
   }
 }
@@ -57,8 +54,8 @@ class NotificationPermissionView extends Component {
 const mS = state => ({
   primaryLangCode: state.newSessionReducer.session.primaryLangCode,
   secondaryLangCode: state.newSessionReducer.session.secondaryLangCode,
-  token: state.auth.token,
-  isLoggedIn: state.auth.isLoggedIn
+  token: state.auth2.userJwtToken,
+  isLoggedIn: state.auth2.isLoggedIn
 });
 
 const mD = {

@@ -1035,9 +1035,9 @@ const styles = StyleSheet.create({
 });
 
 const mS = (state) => ({
-  user: state.userProfile, // TODO: replace with state.activeUser.user
+  user: state.account.user,
   newSessionParams: state.newSessionReducer.session,
-  token: state.auth.token,
+  token: state.auth2.userJwtToken,
   ...state.currentSessionReducer
 });
 

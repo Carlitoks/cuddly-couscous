@@ -10,14 +10,8 @@ import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import Permissions from "react-native-permissions";
 import I18n, { translateApiError } from "../../../../I18n/I18n";
-import { GetInfo } from "../../../../Ducks/SessionInfoReducer";
 import { modifyAVModePreference } from "../../../../Ducks/NewSessionReducer";
-import { cleanSelected } from "../../../../Ducks/HomeFlowReducer";
-import { clearPromoCode } from "../../../../Ducks/PromoCodeReducer";
 import {
-  setPermission,
-  displayOpenSettingsAlert,
-  checkForAllPermissions,
   checkCallPermissions
 } from "../../../../Util/Permission";
 import { SESSION } from "../../../../Util/Constants";
@@ -40,19 +34,14 @@ class CallButtons extends Component {
   checkAvailableMinutes = async (type) => {
     const {
       navigation,
-      stripePaymentToken,
-      availableMinutes,
+      user,
       hasUnlimitedUse,
-      cleanSelected,
-      clearPromoCode,
       modifyAVModePreference,
       completedMicAndCamera,
     } = this.props;
-    cleanSelected();
-    clearPromoCode();
     modifyAVModePreference({ avModePreference: type });
 
-    if (!hasUnlimitedUse && availableMinutes === 0 && !stripePaymentToken) {
+    if (!hasUnlimitedUse && user.availableMinutes === 0 && !user.stripePaymentToken) {
       Alert.alert(" ", I18n.t("payments.enterPaymentToTalk"), [
         {
           text: I18n.t("ok"),
@@ -190,29 +179,14 @@ class CallButtons extends Component {
 }
 
 const mS = state => ({
-  customScenario: state.homeFlow.customScenario,
-  token: state.auth.token,
-  categoryIndex: state.homeFlow.categoryIndex,
-  categories: state.homeFlow.categories,
-  fromLanguage: state.userProfile.selectedNativeLanguage,
-  promotion: state.promoCode.scanned,
-  event: state.events,
-  availableMinutes: state.userProfile.availableMinutes,
+  user: state.account.user,
   hasUnlimitedUse: state.account.hasUnlimitedUse,
-  nativeLangCode: state.userProfile.nativeLangCode,
-  stripeCustomerID: state.userProfile.stripeCustomerID,
-  stripePaymentToken: state.userProfile.stripePaymentToken,
   session: state.newSessionReducer.session,
   completedMicAndCamera: state.onboardingReducer.completedMicAndCamera,
 });
 
 const mD = {
-  GetInfo,
-  cleanSelected,
-  clearPromoCode,
   modifyAVModePreference,
-
-  // from refactor
   createNewSession,
 };
 

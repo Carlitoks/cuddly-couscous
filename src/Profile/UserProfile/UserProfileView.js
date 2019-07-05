@@ -1,100 +1,63 @@
 import React, { Component } from "react";
-import { Alert, Text, View, ScrollView, Image } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { connect } from "react-redux";
-import {
-  updateProfileAsync,
-  updateView,
-  asyncUploadAvatar,
-  getNativeLang
-} from "../../Ducks/UserProfileReducer";
 import { List, ListItem, Avatar } from "react-native-elements";
 import { Row, Grid } from "react-native-easy-grid";
 import { Languages } from "../../Config/Languages";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import BottomButton from "../../Components/BottomButton/BottomButton";
-import InputRegular from "../../Components/InputRegular/InputRegular";
-import HeaderView from "../../Components/HeaderView/HeaderView";
+import UserAvatar from "../../Components/UserAvatar/UserAvatar";
+import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 
 import styles from "./styles";
 import _capitalize from "lodash/capitalize";
-import I18n, { translateLanguage, translateApiError } from "../../I18n/I18n";
+import I18n, { translateApiError, translateLanguage } from "../../I18n/I18n";
 import { Images } from "../../Themes";
-import TopViewIOS from "../../Components/TopViewIOS/TopViewIOS";
 import Close from "../../Components/Close/Close";
+import NavBar from "../../Components/NavBar/NavBar";
+import {updateUserProfilePhoto} from "../../Ducks/AccountReducer";
 
 class UserProfileView extends Component {
-  componentWillMount() {}
 
   uploadAvatar(avatar) {
-    if (avatar) {
-      const { token, uuid } = this.props;
-      this.props.asyncUploadAvatar(uuid, avatar, token).then(response => {
-        /*this.props.navigation.dispatch({
-          type: "back"
-        });*/
+    if (!!avatar) {
+      this.props.updateUserProfilePhoto(avatar).catch((e) => {
+        console.log(e);
+        Alert.alert(I18n.t("error"), translateApiError(e));
       });
-    } else {
-      //this.props.navigation.dispatch({ type: "back" });
     }
   }
 
   selectImage = () => {
-    let image = this.props.avatarBase64
-      ? { uri: `data:image/jpg;base64,${this.props.avatarBase64}` }
+    return !!this.props.userAvatarURL
+      ? { uri: this.props.userAvatarURL }
       : Images.avatar;
-    return this.props.avatarURL
-      ? {
-          uri: `${this.props.avatarURL}?time=${new Date().getUTCMilliseconds()}`
-        }
-      : image;
-  };
-
-  submit = () => {
-    const {
-      firstName,
-      lastName,
-      preferredName,
-      nativeLangCode,
-      selectedNativeLanguage,
-      token,
-      uuid,
-      avatarBase64
-    } = this.props;
-    const data = {
-      firstName,
-      lastName,
-      preferredName,
-      nativeLangCode: selectedNativeLanguage["3"]
-    };
-
-    this.props.updateProfileAsync(uuid, data, token).catch(err => {
-      Alert.alert(I18n.t("status.error"), translateApiError(err));
-    });
   };
 
   render() {
     const navigation = this.props.navigation;
-    const { selectedNativeLanguage, firstName, lastName, gender, linguistProfile } = this.props;
+    const { user, linguistProfile } = this.props;
 
     return (
-      <ViewWrapper style={styles.mainContainer}>
-        <HeaderView
-          headerLeftComponent={<ShowMenuButton navigation={this.props.navigation} />}
-          headerRightComponent={
+      <View style={styles.mainContainer}>
+        <NavBar
+          leftComponent={<ShowMenuButton navigation={navigation} />}
+          navbarTitle={I18n.t("userProfile")}
+          rightComponent={
             <Close
               action={() => {
                 this.props.navigation.dispatch({ type: "Home" });
               }}
             />
           }
-          navbarTitle={I18n.t("userProfile")}
-          navbarType={"Complete"}
-          photoSelect={avatar => this.uploadAvatar(avatar)}
-          avatarSource={this.selectImage()}
-          avatarHeight={150}
-          bigAvatar={true}
-        >
+        />
+        <WavesBackground>
+          <UserAvatar
+            photoSelect={avatar => this.uploadAvatar(avatar)}
+            avatarSource={this.selectImage()}
+            avatarHeight={150}
+            bigAvatar={true}
+          />
+        </WavesBackground>
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
@@ -108,7 +71,7 @@ class UserProfileView extends Component {
                   containerStyle={styles.listItemContainer}
                   title={I18n.t("name").toUpperCase()}
                   titleStyle={styles.titleStyle}
-                  subtitle={`${firstName} ${lastName}`}
+                  subtitle={`${user.firstName} ${user.lastName}`}
                   subtitleStyle={styles.listSubtitle}
                   onPress={() => {
                     navigation.dispatch({
@@ -122,7 +85,7 @@ class UserProfileView extends Component {
                     containerStyle={styles.listItemContainer}
                     title={I18n.t("nativeLanguageTitle").toUpperCase()}
                     titleStyle={styles.titleStyle}
-                    subtitle={selectedNativeLanguage}
+                    subtitle={translateLanguage(user.nativeLangCode)}
                     subtitleStyle={styles.listSubtitle}
                     onPress={() => {
                       navigation.dispatch({
@@ -137,9 +100,9 @@ class UserProfileView extends Component {
                   title={I18n.t("gender").toUpperCase()}
                   titleStyle={styles.titleStyle}
                   subtitle={
-                    gender === "decline" || gender === ""
+                    user.gender === "decline" || user.gender === ""
                       ? I18n.t("unspecifiedGender")
-                      : _capitalize(gender === "male" ? I18n.t("male") : I18n.t("female"))
+                      : _capitalize(user.gender === "male" ? I18n.t("male") : I18n.t("female"))
                   }
                   subtitleStyle={styles.listSubtitle}
                   onPress={() => {
@@ -151,31 +114,19 @@ class UserProfileView extends Component {
               </List>
             </Grid>
           </ScrollView>
-        </HeaderView>
-      </ViewWrapper>
+      </View>
     );
   }
 }
 
 const mS = state => ({
-  firstName: state.userProfile.firstName,
-  lastName: state.userProfile.lastName,
-  nativeLangCode: state.userProfile.nativeLangCode,
-  preferredName: state.userProfile.preferredName,
-  linguistProfile: state.userProfile.linguistProfile,
-  gender: state.userProfile.gender,
-  selectedNativeLanguage: translateLanguage(state.userProfile.nativeLangCode),
-  avatarURL: state.userProfile.avatarURL,
-  avatarBase64: state.userProfile.avatarBase64,
-  token: state.auth.token,
-  uuid: state.auth.uuid
+  user: state.account.user,
+  linguistProfile: state.account.linguistProfile,
+  userAvatarURL: state.account.userAvatarURL,
 });
 
 const mD = {
-  updateView,
-  updateProfileAsync,
-  asyncUploadAvatar,
-  getNativeLang
+  updateUserProfilePhoto,
 };
 
 export default connect(

@@ -102,7 +102,7 @@ android {
         applicationId "com.newsolo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName "3.2.3"
+        versionName "3.2.5"
         multiDexEnabled true
         dexOptions {
             jumboMode true
@@ -148,7 +148,7 @@ dependencies {
     compile project(':react-native-branch')
     compile 'com.amplitude:android-sdk:2.19.1'
     compile project(':react-native-code-push')
-    compile project(':instabug-reactnative')
+    implementation project(':instabug-reactnative')
     compile project(':tipsi-stripe')
     compile project(':opentok-react-native')
     compile project(':react-native-sound')

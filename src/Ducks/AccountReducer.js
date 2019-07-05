@@ -1,50 +1,59 @@
 // The purpose of this is to manage all state about the user who
 // is logged in and using the app
-
+import { Platform } from "react-native";
+import DeviceInfo from "react-native-device-info";
 import lodashMerge from 'lodash/merge';
 import moment from "moment";
+import FCM from "react-native-fcm";
+import isEmpty from "lodash/isEmpty";
+
 import { CACHE } from '../Config/env';
-import api from "../Config/AxiosConfig";
+import api, { uploadFormData, uploadBase64File } from "../Config/AxiosConfig";
+import { getGeolocationCoords } from "../Util/Helpers";
 
 // base api url - requires initializing a user in order to be set
 let apiURL = "";
 
-const initState = () => {
-  return {
-    // info about users active device, or info derived
-    // from the users device
-    currentDeviceID: null,
-    currentDevice: {},
-    isTravelling: false,
+const initState = () => ({
+  // info about users active device, or info derived
+  // from the users device
+  currentDeviceUpdateAt: null,
+  currentDeviceID: null,
+  currentDevice: null,
+  isTravelling: false,
 
-    // info about the current user, or dericved directly from the current user
-    userID: null,
-    userLoadedAt: null,
-    user: {}, // exact data structure from api: GET /users/{id}
-    isLinguist: false, // meaning, are they at any stage of becoming a linguist?
-    isActiveLinguist: false, // meaning, can they actually accept calls?
-    isPropspectiveLinguist: false, // are they registered to become a linguist, but not yet active?
-    linguistProfile: {},
+  // info about the current user, or dericved directly from the current user
+  userID: null,
+  user: null, // exact data structure from api: GET /users/{id}
+  userLoadedAt: null, // last time user was reloaded from server
+  userAvatarURL: null, // processed URL with cache control already set
+  isLinguist: false, // meaning, are they at any stage of becoming a linguist?
+  isActiveLinguist: false, // meaning, can they actually accept calls?
+  isPropspectiveLinguist: false, // are they registered to become a linguist, but not yet active?
+  linguistProfile: null,
 
-    // based on subscriptionPeriods
-    subscriptionPeriodsLoadedAt: null,
-    subscriptionPeriods: [],
-    hasUnlimitedUse: false,
-    hasUnlimitedUseUntil: false,
+  // based on subscriptionPeriods
+  subscriptionPeriodsLoadedAt: null,
+  subscriptionPeriods: [],
+  hasUnlimitedUse: false,
+  hasUnlimitedUseUntil: false,
 
-    // calls the user made as a customer
-    customerCallHistoryLoadedAt: null,
-    customerCallHistory: [],
+  // calls the user made as a customer
+  customerCallHistoryLoadedAt: null,
+  customerCallHistory: [],
 
-    // calls the user received as a linguist
-    linguistCallHistoryLoadedAt: null,
-    linguistCallHistory: [],
+  // calls the user received as a linguist
+  linguistCallHistoryLoadedAt: null,
+  linguistCallHistory: [],
 
-    // minute packages available for purchase by the user
-    availableMinutePackagesLoadedAt: null,
-    availableMinutePackages: []
-  }
-};
+  // calls received, but missed by the linguist
+  linguistMissedCallHistoryLoadedAt: null,
+  linguistMissedCallHistory: [],
+
+  // minute packages available for purchase by the user
+  availableMinutePackagesLoadedAt: null,
+  availableMinutePackages: []
+});
 
 // given a user, do they have unlimited use right now based on
 // any active subscription periods?
@@ -56,7 +65,6 @@ export const hasUnlimitedUseUntil = (periods) => {
   if (periods.length == 0) {
     return false;
   }
-
 
   const now = moment();
   for (var p of periods) {
@@ -72,24 +80,130 @@ export const hasUnlimitedUseUntil = (periods) => {
   return false;
 }
 
+// init key fields and set the api url if necessary
+export const init = (payload) => (dispatch, getState) => {
+  dispatch(update(payload));
+  if (!!payload.userID) {
+    apiURL = `/users/${payload.userID}`;
+  }
+};
+
+// load the users device
+export const initializeDevice = (deviceID) => (dispatch, getState) => {
+  dispatch(update({
+    currentDevice: null,
+    currentDeviceID: deviceID,
+    currentDeviceUpdateAt: null
+  }));
+  return dispatch(refreshDevice(true));
+};
+
+// refresh the users device, only updating fields that
+// are determined by the physical device, and ensures a push
+// notification token is set
+export const refreshDevice = (force = false) => (dispatch, getState) => {
+  const device = getState().account.currentDevice || {};
+  // enforce some values on the device
+  let payload = {
+    locale: DeviceInfo.getDeviceLocale(),
+    deviceOSVersion: Platform.Version.toString(),
+    mobileAppVersion: DeviceInfo.getReadableVersion()
+  };
+
+  // some device fields must be set async
+  let promises = [
+    getGeolocationCoords().then((res) => {
+      payload.lastGeoPoint = [res.coords.longitude, res.coords.latitude];
+    })
+  ];
+
+  // ensure we have a push notification token if not already set
+  if (force || (!device.notificationToken && !device.pushyNotificationToken)) {
+    promises.push(FCM.getFCMToken().then((token) => {
+      payload.notificationToken = token;
+    }).catch(() => {
+      if (!device.pushyNotificationToken) {
+        // TODO: create Pushy token if FCM fails
+      }
+    }));
+  }
+
+  // update the device
+  return Promise.all(promises).finally(() => { return dispatch(updateDevice(payload)) });
+};
+
+// update user device with specified fields
+export const updateDevice = (payload = null) => (dispatch, getState) => {
+  const {currentDeviceID} = getState().account;
+  return new Promise((resolve, reject) => {
+    api.patch(`/devices/${currentDeviceID}`, payload)
+    .then((res) => {
+      dispatch(update({
+        currentDevice: res.data,
+        currentDeviceUpdateAt: new Date('now').getTime()
+      }));
+      resolve(res.data);
+    })
+    .catch(reject)
+  });
+};
+
 // clear and reload user data from server
 export const initializeUser = (userID) => (dispatch, getState) => {
-  dispatch(clear());
-  dispatch(update({userID}));
+  const {
+    currentDevice,
+    currentDeviceID,
+    user,
+    userLoadedAt,
+    userAvatarURL,
+    isLinguist,
+    isActiveLinguist,
+    isPropspectiveLinguist,
+    linguistProfile,
+  } = getState().account;
   apiURL = `/users/${userID}`;
-  dispatch(loadUser(false)); // force reload the user
+
+  // clear all account data
+  dispatch(clear()); 
+
+  // restore some items, because we can't let the user ref be null if has
+  // been recovered from storage - it gets referenced in too many places
+  // currently, and this will cause other errors.
+  //
+  // this is primarily the data that's set via `setUser`
+  dispatch(update({
+    currentDevice,
+    currentDeviceID,
+    userID,
+    user, 
+    userLoadedAt,
+    userAvatarURL,
+    isLinguist,
+    isActiveLinguist,
+    isPropspectiveLinguist,
+    linguistProfile,
+  }));
+  
+  return dispatch(loadUser(false)); // force reload the user
 }
 
 // set the user object, and recalculate any fields derived
 // from the user
 export const setUser = (user) => (dispatch, getState) => {
+  apiURL = `/users/${user.id}`;
   const now = new Date();
   let d = {user};
   d.userID = user.id;
   d.userLoadedAt = now.getTime();
-  apiURL = `/users/${user.id}`;
+  if(!d.user.stripePaymentToken){
+    d.user.stripePaymentToken = null;
+    d.user.StripePaymentSourceMeta = isEmpty(d.user.StripePaymentSourceMeta) ? null : d.user.StripePaymentSourceMeta;
+  }
   d.linguistProfile = !!user.linguistProfile ? user.linguistProfile : null;
   d.isLinguist = !!d.linguistProfile;
+  if (!!user.avatarURL) {
+    d.userAvatarURL = user.avatarURL+"?"+(new Date('now')).getTime();
+  }
   if (!!user.subscriptionPeriods && user.subscriptionPeriods.length > 0) {
     d.subscriptionPeriods = user.subscriptionPeriods;
     d.subscriptionPeriodsLoadedAt = now.getTime();
@@ -99,11 +213,15 @@ export const setUser = (user) => (dispatch, getState) => {
       d.hasUnlimitedUseUntil = unlimitedUseUntil;
     }
   }
-  
+
+  // ensure linguist profile availability is actually set
+  if (!!d.linguistProfile) {
+    d.linguistProfile.available = !!d.linguistProfile.available;
+  }
+
   // TODO: process feature flags for active/prospective linguist
 
-  // TEMPORARY: set user state in deprecated userProfile reducer
-
+  // TEMPORARY: TODO: set user state in deprecated userProfile reducer
   dispatch(merge(d));
 }
 
@@ -116,6 +234,77 @@ export const loadUser = (useCache = true) => (dispatch, getState) => {
       return;
     }
     api.get(apiURL)
+    .then((res) => {
+      dispatch(setUser(res.data));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// update any fields on the user
+export const updateUser = (payload) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.patch(apiURL, payload)
+    .then((res) => {
+      dispatch(setUser(res.data));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+export const updateUserProfilePhoto = (base64Data, progressCB = null) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    uploadBase64File(
+      "put",
+      `${apiURL}/profile-photo`.slice(1),
+      base64Data,
+      "avatar.jpg",
+      "image/jpg"
+    )
+    .then(() => {
+      // force refresh the user after uploading the photo to ensure
+      // the URL is reset
+      return dispatch(loadUser(false));
+    })
+    .then(resolve)
+    .catch(reject);
+  });
+};
+
+export const deleteUserProfilePhoto = () => (dispatch, getState) => {
+  return Promise.reject("not implemented");
+};
+
+// Change the users email address.  The user should be re-authenticated after this, because any
+// JWT tokens may become invalid after this operation.
+export const updateUserEmail = (email) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.put(`${apiURL}/email`, {email}).then(resolve).catch(reject);
+  });
+};
+
+export const updateUserPassword = (oldPassword, newPassword) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.put(`${apiURL}/password`, {oldPassword, newPassword}).then(resolve).catch(reject);
+  });
+};
+
+export const updateUserPaymentDetails = (payload) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.put(`${apiURL}/billing/payment-details`, payload)
+    .then((res) => {
+      dispatch(setUser(res.data));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+export const removeUserPaymentDetails = () => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.delete(`${apiURL}/billing/payment-details`)
     .then((res) => {
       dispatch(setUser(res.data));
       resolve(res.data);
@@ -141,6 +330,77 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
         hasUnlimitedUse: unlimitedUseUntil !== false,
         hasUnlimitedUseUntil: unlimitedUseUntil
       }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// load calls placed as a customer
+export const loadCustomerCallHistory = (useCache = true) => (dispatch, getState) => {
+  const {customerCallHistory, customerCallHistoryLoadedAt} = getState().account;
+  return new Promise((resolve, reject) => {
+    if (useCache && !!customerCallHistory && new Date().getTime() < customerCallHistoryLoadedAt + CACHE.CALL_HISTORY) {
+      resolve(customerCallHistory);
+      return;
+    }
+    api.get(apiURL+"/sessions")
+    .then((res) => {
+      dispatch(merge({
+        customerCallHistory: res.data,
+        customerCallHistoryLoadedAt: new Date().getTime(),
+      }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// load calls accepted as a linguist
+export const loadLinguistCallHistory = (useCache = true) => (dispatch, getState) => {
+  const {linguistCallHistory, linguistCallHistoryLoadedAt} = getState().account;
+  return new Promise((resolve, reject) => {
+    if (useCache && !!linguistCallHistory && new Date().getTime() < linguistCallHistoryLoadedAt + CACHE.CALL_HISTORY) {
+      resolve(linguistCallHistory);
+      return;
+    }
+    api.get(apiURL+"/linguist-profile/sessions")
+    .then((res) => {
+      dispatch(merge({
+        linguistCallHistory: res.data,
+        linguistCallHistoryLoadedAt: new Date().getTime(),
+      }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// load invites for calls missed by the linguist
+export const loadLinguistMissedCallHistory = (useCache = true) => (dispatch, getState) => {
+  const {linguistMissedCallHistory, linguistMissedCallHistoryLoadedAt} = getState().account;
+  return new Promise((resolve, reject) => {
+    if (useCache && !!linguistMissedCallHistory && new Date().getTime() < linguistMissedCallHistoryLoadedAt + CACHE.CALL_HISTORY) {
+      resolve(linguistMissedCallHistory);
+      return;
+    }
+    api.get(apiURL+"/linguist-profile/session-invitations?status=missed")
+    .then((res) => {
+      dispatch(merge({
+        linguistMissedCallHistory: res.data,
+        linguistMissedCallHistoryLoadedAt: new Date().getTime(),
+      }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+export const updateLinguistProfile = (payload) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.patch(`${apiURL}/linguist-profile`, payload)
+    .then((res) => {
+      dispatch(setUser(res.data));
       resolve(res.data);
     })
     .catch(reject);

@@ -1,58 +1,47 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { GetInfo, updateSessionInfo } from "../../Ducks/SessionInfoReducer";
+import { ScrollView, Text, View } from "react-native";
 
-import { Text, View, ScrollView } from "react-native";
-
-import { Avatar, List, ListItem } from "react-native-elements";
+import { List, ListItem } from "react-native-elements";
 import { Col, Grid } from "react-native-easy-grid";
-import StarRating from "react-native-star-rating";
 
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import _isUndefined from "lodash/isUndefined";
 import moment from "moment";
 
-import I18n, {translateLanguage} from "../../I18n/I18n";
+import I18n, { translateLanguage } from "../../I18n/I18n";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
-import { Languages } from "../../Config/Languages";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
-import HeaderView from "../../Components/HeaderView/HeaderView";
+import NavBar from "../../Components/NavBar/NavBar";
+import UserAvatar from "../../Components/UserAvatar/UserAvatar";
+import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 
 class SessionInfoView extends Component {
-  componentWillMount() {
-    this.props.updateSessionInfo(this.props.navigation.state.params);
-  }
-
-  filterList(langCode) {
-    return Languages.filter(lang => {
-      return lang["3"] === langCode;
-    });
-  }
 
   render() {
-    const { sessionInfo } = this.props;
+    const sessionInfo = this.props.navigation.state.params.call;
     let primaryLang = translateLanguage(sessionInfo.primaryLangCode);
     let secondLang = translateLanguage(sessionInfo.secondaryLangCode);
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
-            <GoBackButton navigation={this.props.navigation} />
-          }
-          avatarSource={
-            sessionInfo.avatarURL
-              ? {
+      <View style={styles.scrollContainer}>
+        <NavBar
+          leftComponent={<GoBackButton navigation={this.props.navigation} />}
+        />
+        <WavesBackground>
+          <UserAvatar
+            avatarSource={
+              sessionInfo.avatarURL
+                ? {
                   uri: sessionInfo.avatarURL
                 }
-              : Images.avatar
-          }
-          avatarHeight={150}
-          avatarTitle={sessionInfo.firstName + " " + (sessionInfo.lastInitial ? sessionInfo.lastInitial : '')}
-          stars={sessionInfo.rating ? sessionInfo.rating : 0}
-        >
+                : Images.avatar
+            }
+            avatarHeight={150}
+            avatarTitle={sessionInfo.firstName + " " + (sessionInfo.lastInitial ? sessionInfo.lastInitial : '')}
+            stars={sessionInfo.rating ? sessionInfo.rating : 0}
+          />
+        </WavesBackground>
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={{ flex: 1 }}
@@ -103,41 +92,21 @@ class SessionInfoView extends Component {
                       rightTitleStyle={styles.listRightTitle}
                     />
 
-                    {/* Cost */}
-                    {!this.props.linguistProfile ? (
-                      <ListItem
-                        containerStyle={styles.listItemContainer}
-                        hideChevron
-                        subtitle={I18n.t("cost").toUpperCase()}
-                        subtitleStyle={styles.titleStyle}
-                        rightTitle={"$ 0.00"}
-                        rightTitleContainerStyle={
-                          styles.listRightTitleContainer
-                        }
-                        rightTitleStyle={styles.listRightTitle}
-                      />
-                    ) : null}
                   </List>
                 </Grid>
               </Col>
             </Grid>
           </ScrollView>
-        </HeaderView>
-      </ViewWrapper>
+      </View>
     );
   }
 }
 
 // to be used when we have the Endpoint
 const mS = state => ({
-  token: state.auth.token,
-  sessionInfo: state.sessionInfo.info,
-  linguistProfile: state.userProfile.linguistProfile
 });
 
 const mD = {
-  GetInfo,
-  updateSessionInfo
 };
 
 export default connect(

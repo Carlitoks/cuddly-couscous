@@ -1,24 +1,23 @@
 import React, { Component } from "react";
-import { View, Text, Image, Platform, ImageBackground } from "react-native";
+import {
+  View, Text, Image, Platform, ImageBackground,
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
+import Permissions from "react-native-permissions";
 import { Colors } from "../../Themes";
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import { update as updateOnboarding } from "../../Ducks/OnboardingReducer";
-import Permission from "react-native-permissions";
 import DotSteps from "../Onboarding/Components/DotSteps";
 
 // Styles
 import styles from "./Styles/PermissionViewStyles";
 import PermissionButtons from "./Components/PermissionButtons";
 import I18n from "../../I18n/I18n";
-import Permissions from "react-native-permissions";
 
 const JeenieLogo = require("../../Assets/Images/Landing-Jeenie-TM.png");
 const backgroundImage = require("../../Assets/Images/locationView.png");
 
 class LocationPermissionView extends Component {
-
   componentWillMount() {
     this.checkCurrentPermissions();
   }
@@ -31,20 +30,19 @@ class LocationPermissionView extends Component {
       if (Platform.OS === "android") {
         updateOnboarding({ completedNotification: true });
         return navigation.dispatch({ type: "Home" });
-      } else {
-        const notificationPermission = await Permission.check("notification");
-        if (notificationPermission === "undetermined") {
-          return navigation.dispatch({ type: "Home" });
-        }
-        return navigation.dispatch({ type: "Home" });
       }
+      const notificationPermission = await Permission.check("notification");
+      if (notificationPermission === "undetermined") {
+        return navigation.dispatch({ type: "NotificationPermissionView" });
+      }
+      return navigation.dispatch({ type: "Home" });
     }
   };
 
   render() {
     const { navigation } = this.props;
     return (
-      <ViewWrapper style={styles.wrapperContainer}>
+      <View style={styles.wrapperContainer}>
         <View style={[styles.permissionsMainContainer]}>
           <Image style={styles.backgroundImage} source={backgroundImage} />
           <View style={styles.bodyContainer}>
@@ -56,11 +54,11 @@ class LocationPermissionView extends Component {
             </Text>
             <View>
               <DotSteps navigation={navigation} />
-              <PermissionButtons navigation={navigation} check={"Location"} />
+              <PermissionButtons navigation={navigation} check="Location" />
             </View>
           </View>
         </View>
-      </ViewWrapper>
+      </View>
     );
   }
 }
@@ -68,10 +66,10 @@ class LocationPermissionView extends Component {
 const mS = state => ({});
 
 const mD = {
-  updateOnboarding
+  updateOnboarding,
 };
 
 export default connect(
   mS,
-  mD
+  mD,
 )(LocationPermissionView);

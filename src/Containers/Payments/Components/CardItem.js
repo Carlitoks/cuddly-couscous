@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
-import { number as validCC } from "card-validator";
 import Icons from "../Icons";
-import Reactotron from "reactotron-react-native";
-
-import { updatePayments } from "../../../Ducks/PaymentsReducer";
 // Styles
 import styles from "./Styles/PaymentDetailStyles";
 
@@ -50,13 +46,10 @@ class CardItem extends Component {
 }
 
 const mS = state => ({
-  token: state.auth.token,
-  cardInfo: state.payments.cardInfo,
-  StripePaymentSourceMeta: state.userProfile.StripePaymentSourceMeta
+  StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta
 });
 
 const mD = {
-  updatePayments
 };
 
 export default connect(

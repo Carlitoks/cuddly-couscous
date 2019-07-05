@@ -1,38 +1,42 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { Alert, Linking, NetInfo, Text, AppState, Platform } from "react-native";
+import FCM, { FCMEvent } from "react-native-fcm";
+import Crashes from "appcenter-crashes";
+import codePush from "react-native-code-push";
+import analytics from "@segment/analytics-react-native";
+import deviceinfo from "react-native-device-info";
+import SplashScreen from 'react-native-splash-screen';
+
+import { codePushAndroidKey, codePushiOSKey, analyticsKey, promptUpdate } from "./Config/env";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
-import { codePushAndroidKey, codePushiOSKey, analyticsKey, promptUpdate } from "./Config/env";
 
-import { delayUpdateInfo } from "./Ducks/NetworkInfoReducer";
 import { updateSettings } from "./Ducks/SettingsReducer";
 import { addListeners } from "./Ducks/PushNotificationReducer";
 
-import { switchLanguage } from "./I18n/I18n";
-import deviceinfo from "react-native-device-info";
 import { InterfaceSupportedLanguages } from "./Config/Languages";
-import Crashes from "appcenter-crashes";
-import codePush from "react-native-code-push";
-import branch, { BranchEvent } from "react-native-branch";
-import analytics from "@segment/analytics-react-native";
 
-import I18n from "./I18n/I18n";
-import { init, setAuthToken, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
+import I18n, { switchLanguage } from "./I18n/I18n";
+import { init as initForensics, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
-import { updateJeenieCounts } from "./Ducks/AppConfigReducer";
-import {setAuthToken as setApiAuthToken} from "./Config/AxiosConfig";
-import SplashScreen from 'react-native-splash-screen';
-import { initializeUser } from "./Ducks/AccountReducer";
+import { updateJeenieCounts, loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
+import { InitInstabug } from "./Settings/InstabugInit";
+import { clear as clearAccount, initializeUser, refreshDevice } from "./Ducks/AccountReducer";
+import { init as initAuth, clear as clearAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
+import PushNotification from "./Util/PushNotification";
+import { setInitialScreen } from "./Navigation/AppNavigation";
+import { update as updateAppState } from "./Ducks/AppStateReducer";
+import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
 
+let CurrentConnectivity = "none";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isLoggedIn: false,
       loadingStore: true,
       store: null,
       appState: AppState.currentState,
@@ -42,28 +46,45 @@ class App extends Component {
     // Font doesn't scale
     Text.allowFontScaling = false;
 
-    codePush.sync({
-      deploymentKey: Platform.OS === "ios" ? codePushiOSKey : codePushAndroidKey
-    });
+    this.updateFcmTokenListener = null;
+
     if (__DEV__) {
       import("./Config/ReactotronConfig").then(() => console.log("Reactotron Configured"));
     }
+    NetInfo.getConnectionInfo().then((connectionInfo) => {
+      if(connectionInfo.type !== "none"){
+        codePush.sync({
+          deploymentKey: Platform.OS === "ios" ? codePushiOSKey : codePushAndroidKey
+        });
+      }
+      CurrentConnectivity = connectionInfo.type;
+    });
   }
 
   disableAppCenterCrashes = async () => {
     await Crashes.setEnabled(false);
   };
 
-  componentWillMount() {
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ splashScreenTimer: true });
+    }, 2000);
     this.disableAppCenterCrashes();
-    init();
+    SplashScreen.hide();
+    initForensics();
+    AppState.addEventListener("change", this._handleAppStateChange);
+
+    // load store and initialize all the things
     createStore()
+      // initialize app state: ui language and analytics
       .then(store => {
+        this.setState({store});
+
         const {
           settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
 
-        // ================================
+        // set app UI language
         if (!userLocaleSet) {
           const deviceLocale = deviceinfo.getDeviceLocale();
           const shortDeviceLocale = deviceLocale.substring(0, 2);
@@ -87,77 +108,160 @@ class App extends Component {
         } else {
           switchLanguage(storeInterfaceLocale[1], this);
         }
-        // ================================
+    
+        // initialize analytics
         if (!segmentSettings) {
           analytics
             .setup(analyticsKey, { trackAppLifecycleEvents: true })
             .then(() => store.dispatch(updateSettings({ segmentSettings: true })))
             .catch(error => console.log(error));
         }
-        return store;
-      })
-      .then(store => {
-        const { auth } = store.getState();
-        setAuthToken(auth.token);
-        setApiAuthToken(auth.token);
-        this.setState({
-          isLoggedIn: auth.isLoggedIn,
-          loadingStore: false,
-          store
+
+        // trigger network status checks, and work around iOS NetInfo bug
+        // set connection data in app state, and track any connection status changes
+        NetInfo.addEventListener("connectionChange", this.handleConnectivityChange);
+        NetInfo.isConnected.addEventListener("connectionChange", this.handleIsConnectedChange);
+        return NetInfo.getConnectionInfo().then((info) => {
+          this.handleConnectivityChange(info);
+
+          // HACK for iOS: https://github.com/globalprofessionalsearch/solo-mobile-app/issues/1932
+          if (Platform.OS == "ios") {
+            if (store.getState().appState.connectionInfo.type != "none") {
+              this.handleIsConnectedChange(true);
+            }
+          } else {
+            NetInfo.isConnected.fetch().then((isConnected) => {
+              this.handleIsConnectedChange(isConnected);
+            });  
+          }
         });
+      })
+      // initialize device
+      .then(() => {
+        const {store} = this.state;
+        if (!store) {
+          return;
+        }
 
-        if (auth.isLoggedIn) {
-          store.dispatch(addListeners());
+        store.dispatch(initAuth()); // restores any auth tokens and sets them in api/forensic services
+        const auth = store.getState().auth2 || {};
 
-          // things that should be reloaded periodically
-          // store.dispatch(loadConfig(true)).catch(console.log),
-          
-          // fully reload the user's account state if we're logged in
-          store.dispatch(updateJeenieCounts(true)); // reinitialize jeenie counts if app reloads
-          return store.dispatch(initializeUser(auth.uuid));
+        // attempt to register new device if we don't have one yet
+        if (!auth.deviceJwtToken) {
+          return store.dispatch(authorizeNewDevice());
+        } else {
+          // otherwise refresh the existing device
+          return store.dispatch(refreshDevice(true))
+          .catch((e) => {
+            // if device wasn't found, we have old data and should reset
+            if (!!e.response && 404 == e.response.status) {
+              store.dispatch(clearAuth());
+              store.dispatch(clearAccount());
+              return store.dispatch(authorizeNewDevice());
+            }
+          });
         }
       })
+      // initialize app/user data & push notifications
       .then(() => {
-        // Even Listener to Detect Network Change
-        NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
+        const {store} = this.state;
+        const auth = store.getState().auth2 || {};
 
-        // We Get The Initial Network Information
-        return NetInfo.getConnectionInfo();
-      })
-      .then(connectionInfo => {
+        let promises = [];
+
+        // if we have a device, update some items
+        if (!!auth.deviceJwtToken) {
+          promises.push(store.dispatch(updateJeenieCounts(true))); // reinitialize jeenie counts if app reloads
+          promises.push(store.dispatch(loadConfig())); // load basic app config
+        }
+
+        // if user is logged in, load/refresh other items, and change the initial
+        // app screen to be the users home
+        if (!!auth.userJwtToken) {
+          setInitialScreen("Home");
+          promises.push(store.dispatch(initializeUser(auth.userID))); // reload main user data, not cached
+          promises.push(store.dispatch(loadSessionScenarios(true))); // reload scenarios, but cache is fine
+        }
+
+        return Promise.all(promises);
+      }).then(() => {
+        //Initializing instabug
         const { store } = this.state;
+        const currentStore = store.getState();
+        const user = !!currentStore.account && !!currentStore.account.user ? currentStore.account.user : {};
+        InitInstabug(
+          user.firstName,
+          user.lastName,
+          user.preferredName,
+          user.linguistProfile,
+          user.email,
+          currentStore.auth2.deviceID,
+          currentStore.currentSessionReducer.sessionID,
+        );
+      })
+      .catch((e) => {
+        // in the case of an error, we'll say we're done loading anyway
+        console.log("error during boot");
+        console.log(e);
+      })
+      // even if there were failures, we still want to register
+      // some services
+      .finally(() => {
+        this.setState({loadingStore: false});
 
-        NetInfo.getConnectionInfo().then(connectionInfo => {
-          store.dispatch(delayUpdateInfo(connectionInfo));
+        // should user update?
+        if (promptUpdate) {
+          displayUpdateAvailableAlert();
+        }
+
+        const {store} = this.state;
+        if (!store) {
+          return;
+        }
+
+        // if there's no internet connection, then the user can't do much...
+        if (!store.getState().appState.hasNetworkConnection) {
+          displayNoNetworkConnectionAlert();
+        }
+
+        // check device, do we start FCM or Pushy background services? Right now only
+        // FCM is supported, so just registering all of those services here
+        store.dispatch(addListeners());  // register handlers for notifications
+        PushNotification.getNotificationsBackground(); // start background services
+        // FCM tokens must be periodically updated
+        this.updateFcmTokenListener = FCM.on(FCMEvent.RefreshToken, (token) => {
+          const device = store.getState().account.currentDevice;
+          if (!!device) {
+            dispatch(updateDevice({notificationToken: token})).catch(console.log);
+          }
         });
-
-        // Even Listener to Detect Network Change
-        NetInfo.addEventListener("connectionChange", this.handleFirstConnectivityChange);
-
-        this.updateAvailableAlert();
       });
-    // PushNotificationIOS.addEventListener('register', (token) => console.log('TOKEN', token))
-    // PushNotificationIOS.addEventListener('notification', (notification) => console.log('Notification', notification, "APP state", AppStateIOS.currentState))
-    // you could check the app state to respond differently to push notifications depending on if the app is running in the background or is currently active.
-  }
-
-  async componentDidMount() {
-    SplashScreen.hide();
-    AppState.addEventListener("change", this._handleAppStateChange);
   }
 
   componentWillUnmount() {
-    NetInfo.removeEventListener("connectionChange", this.handleFirstConnectivityChange);
+    NetInfo.removeEventListener("connectionChange", this.handleConnectivityChange);
+    NetInfo.isConnected.removeEventListener("connectionChange", this.handleIsConnectedChange);
     AppState.removeEventListener("change", this._handleAppStateChange);
+    PushNotification.cleanListeners();
     persistEvents();
+    if (!!this.updateFcmTokenListener) {
+      this.updateFcmTokenListener.remove();
+    }
   }
 
-  handleFirstConnectivityChange = connectionInfo => {
+  handleConnectivityChange = (connectionInfo) => {
     recordNetworkEvent(connectionInfo);
+    CurrentConnectivity = connectionInfo.type;
     const { store } = this.state;
-
     if (store) {
-      store.dispatch(delayUpdateInfo(connectionInfo));
+      store.dispatch(updateAppState({connectionInfo}));
+    }
+  };
+
+  handleIsConnectedChange = (isConnected) => {
+    const { store } = this.state;
+    if (store) {
+      store.dispatch(updateAppState({hasNetworkConnection: isConnected}));
     }
   };
 
@@ -172,52 +276,19 @@ class App extends Component {
     }
   };
 
-  updateAvailableAlert() {
-    if (!promptUpdate) {
-      return;
-    }
-    const url = Platform.OS == "ios" ? "itms-apps://itunes.apple.com/app/apple-store/id1341871432?mt=8" : "market://details?id=com.newsolo";
-    Alert.alert(
-      I18n.t("appUpdateAlert.title"),
-      I18n.t("appUpdateAlert.description"),
-      [
-        {
-          text: I18n.t("actions.ok"),
-          onPress: () => {
-            try {
-              Linking.canOpenURL(url).then(supported => {
-                if (!supported) {
-                  console.log("Can't handle url: " + url);
-                } else {
-                  return Linking.openURL(url);
-                }
-              }).catch(err => console.error('An error occurred', err));
-            } catch (e) {
-              console.log('error from linking', e);
-            }
-          }
-        }
-      ],
-      { cancelable: false }
-    );
-  }
-
   render() {
-    setTimeout(() => {
-      this.setState({ splashScreenTimer: true });
-    }, 2000);
-      if (this.state.loadingStore || !this.state.splashScreenTimer) {
-        return <SplashScreenLogo />
-      }
+    if (this.state.loadingStore || !this.state.splashScreenTimer) {
+      return <SplashScreenLogo />
+    }
 
-      return (
-        <AppErrorBoundary>
-          <Provider store={this.state.store}>
-            <ReduxNavigation />
-          </Provider>
-        </AppErrorBoundary>
-      );
+    return (
+      <AppErrorBoundary>
+        <Provider store={this.state.store}>
+          <ReduxNavigation />
+        </Provider>
+      </AppErrorBoundary>
+    );
   }
 }
 
-export default codePush(App);
+export default CurrentConnectivity === "none" ? App : codePush(App);

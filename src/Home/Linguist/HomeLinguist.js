@@ -1,53 +1,56 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import InCallManager from "react-native-incall-manager";
-import Permissions from "react-native-permissions";
+import moment from "moment";
+
 import {
-  changeStatus,
-  updateSettings,
-  asyncGetAccountInformation,
-  getCurrentAvailability
-} from "../../Ducks/ProfileLinguistReducer";
-import {
-  asyncUploadAvatar,
-  updateView,
-  getProfileAsync
-} from "../../Ducks/UserProfileReducer";
-import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
+  loadUser,
+  updateUserProfilePhoto,
+  loadLinguistCallHistory,
+  updateLinguistProfile,
+} from "../../Ducks/AccountReducer";
+
 import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
 
-import { View, Text, ScrollView, Alert, AppState, NetInfo } from "react-native";
-import { Row, Grid } from "react-native-easy-grid";
+import { Alert, AppState, NetInfo, ScrollView, Text, View } from "react-native";
+import { Grid, Row } from "react-native-easy-grid";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
-import HeaderView from "../../Components/HeaderView/HeaderView";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 
-import moment from "moment";
 
 import styles from "./styles";
 import { Images } from "../../Themes";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiError } from "../../I18n/I18n";
 import { Sessions } from "../../Api";
 import { ensurePermissions } from "../../Util/Permission";
 import { PERMISSIONS } from "../../Util/Constants";
+import NavBar from "../../Components/NavBar/NavBar";
+import UserAvatar from "../../Components/UserAvatar/UserAvatar";
+import LinguistStatus from "../../Components/UserAvatar/LinguistStatus";
+import CallNumber from "../../Components/UserAvatar/CallNumber";
+import WavesBackground from "../../Components/UserAvatar/WavesBackground";
+import { formatTimerSeconds } from "../../Util/Format";
 
 class Home extends Component {
-  navigate = this.props.navigation.navigate;
 
-  state = {
-    appState: AppState.currentState
-  };
-
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      appState: AppState.currentState,
+      loading: false
+    }
+  }
 
   monitorConnectivity = connectionInfo => {
     if (connectionInfo.type !== "none") {
-      this.props.getCurrentAvailability();
+      this.reloadUser();
     }
   };
 
+  // TODO: refactor to use api directly
   getCurrentUnansweredCalls = async () => {
     const invitations = await Sessions.GetInvitations(
       this.props.uuid,
@@ -77,12 +80,12 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.updateSettings({ loading: false });
-    this.props.loadSessionScenarios(true);
-    this.props.asyncGetAccountInformation();
+    this.props.loadLinguistCallHistory(true);
     AppState.addEventListener("change", this._handleAppStateChange);
     NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
     InCallManager.stop();
+
+    this.reloadUser();
 
     // ensure linguist permissions are set
     ensurePermissions([PERMISSIONS.CAMERA, PERMISSIONS.MIC]).then((response) => {
@@ -97,7 +100,6 @@ class Home extends Component {
         );
       }
     })
-
     
     if (
       this.props.navigation.state.params &&
@@ -118,27 +120,33 @@ class Home extends Component {
       Alert.alert(I18n.t("notification"), I18n.t("session.incoming.failed"));
     }
 
-    this.props.getCurrentAvailability();
     this.getCurrentUnansweredCalls();
+  }
 
+  reloadUser () {
+    this.setState({loading: true})
+    this.props.loadUser(false).finally(() => {
+      this.setState({loading: false});
+    });
+  }
+
+  changeStatus (status) {
+    this.setState({loading: true})
+    this.props.updateLinguistProfile({available: status}).finally(() => {
+      this.setState({loading: false});
+    });
   }
 
   uploadAvatar(avatar) {
     if (avatar) {
-      const { token, uuid } = this.props;
-      this.props.asyncUploadAvatar(uuid, avatar, token).then(response => {
-        this.props.getProfileAsync(uuid, token).then(response => {
-          this.props.updateView({
-            avatarBase64: avatar,
-            avatarURL: response.payload.avatarURL
-          });
-        });
+      this.props.updateUserProfilePhoto(avatar).catch((e) => {
+        Alert.alert(I18n.t("error"), translateApiError(e));
       });
     }
   }
 
   _handleAppStateChange = nextAppState => {
-    this.props.getCurrentAvailability();
+    this.reloadUser();
     if (
       this.state.appState.match(/inactive|background/) &&
       nextAppState === "active"
@@ -149,16 +157,11 @@ class Home extends Component {
   };
 
   selectImage = () => {
-    let image = this.props.avatarURL
-      ? {
-          uri: `${this.props.avatarURL}?time=${new Date().getUTCMilliseconds()}`
-        }
-      : Images.avatar;
     return this.props.avatarURL
       ? {
-          uri: `${this.props.avatarURL}?time=${new Date().getMilliseconds()}`
+          uri: this.props.avatarURL
         }
-      : image;
+      : Images.avatar;
   };
 
   componentWillReceiveProps(nextProps) {}
@@ -207,42 +210,51 @@ class Home extends Component {
     }
   };
 
+  calculateAmount (calls = []) {
+    let seconds = 0;
+    calls.forEach((call) => {
+      seconds += call.duration;
+    });
+    return formatTimerSeconds(seconds);
+  }
+
   render() {
     const {
-      amount,
-      numberOfCalls,
-      status,
-      firstName,
-      lastName,
-      avatarURL,
-      available,
-      rate,
+      user,
+      linguistProfile,
       linguistCalls
     } = this.props;
 
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
+    const amount = this.calculateAmount(allCalls);
 
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
+      <View style={styles.scrollContainer}>
+        <NavBar
+          leftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          navbarTitle={firstName + " " + lastName}
-          navbarType={"Basic"}
-          photoSelect={avatar => this.uploadAvatar(avatar)}
-          avatarSource={this.selectImage()}
-          avatarHeight={150}
-          bigAvatar={true}
-          badge={false}
-          stars={rate ? rate : 0}
-          status={available}
-          switchOnChange={status => this.props.changeStatus(status)}
-          switchValue={this.props.available}
-          calls={numberOfCalls}
+          navbarTitle={user.firstName + " " + user.lastName}
+        />
+        <WavesBackground>
+          <UserAvatar
+            photoSelect={avatar => this.uploadAvatar(avatar)}
+            avatarSource={this.selectImage()}
+            avatarHeight={150}
+            bigAvatar={true}
+            stars={user.averageStarRating ? user.averageStarRating : 0}
+          />
+          <LinguistStatus
+            status={linguistProfile.available}
+            switchOnChange={status => this.changeStatus(status)}
+            switchValue={linguistProfile.available}
+            loading={this.state.loading}
+          />
+        </WavesBackground>
+        <CallNumber
+          calls={allCalls.length}
           amount={amount}
-          loading={this.props.loading}
-        >
+        />
           <Text style={styles.recentCallsTitle}>{I18n.t("recentCalls")}</Text>
           <Grid>
             <Row>
@@ -259,40 +271,27 @@ class Home extends Component {
               </ScrollView>
             </Row>
           </Grid>
-        </HeaderView>
-      </ViewWrapper>
+      </View>
     );
   }
 }
 
 const mS = state => ({
-  available: state.profileLinguist.available,
-  numberOfCalls: state.profileLinguist.numberOfCalls,
-  linguistCalls: state.callHistory.allLinguistCalls,
-  amount: state.profileLinguist.amount,
-  status: state.profileLinguist.status,
-  loading: state.profileLinguist.loading,
-  uuid: state.auth.uuid,
-  token: state.auth.token,
-  firstName: state.userProfile.firstName,
-  lastName: state.userProfile.lastName,
-  avatarURL: state.userProfile.avatarURL,
-  linguistProfile: state.userProfile.linguistProfile,
-  rate: state.userProfile.averageStarRating,
-  networkInfoType: state.networkInfo.type,
-  nav: state.nav
+  user: state.account.user,
+  linguistProfile: state.account.linguistProfile,
+  avatarURL: state.account.userAvatarURL,
+  linguistCalls: state.account.linguistCallHistory,
+  uuid: state.auth2.userID,
+  token: state.auth2.userJwtToken,
 });
 
 const mD = {
-  updateSettings,
-  asyncUploadAvatar,
-  updateView,
-  getProfileAsync,
-  changeStatus,
-  asyncGetAccountInformation,
-  getCurrentAvailability,
-  incomingCallNotification,
-  loadSessionScenarios
+  loadUser,
+  updateUserProfilePhoto,
+  updateLinguistProfile,
+
+  loadLinguistCallHistory,
+  incomingCallNotification
 };
 
 export default connect(

@@ -7,13 +7,12 @@ const { width, height } = Dimensions.get("window");
 export default StyleSheet.create({
   outerView: {
     zIndex: 2,
-    paddingTop: 5,
   },
   outerViewBackground: {
     backgroundColor: Colors.gradientColor.top
   },
   container: {
-    flex: 1
+
   },
   linearGradient: {
     position: "absolute",
@@ -72,7 +71,7 @@ export default StyleSheet.create({
   containerAvatar: {
     alignItems: "center",
     marginBottom: 30,
-    marginTop: 30
+    marginTop: 20
   },
   containerAvatarRate: {
     justifyContent: "center"

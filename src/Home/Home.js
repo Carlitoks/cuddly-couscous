@@ -1,66 +1,47 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { View, StatusBar } from "react-native";
-import { amplitudKey } from "../Config/env";
+import { Alert, View } from "react-native";
+
 import HomeLinguist from "./Linguist/HomeLinguist";
-import PushNotifications from "../Util/PushNotification";
-import FCM, { FCMEvent } from "react-native-fcm";
-import { registerFCM } from "../Ducks/PushNotificationReducer";
-import { User } from "../Api";
 import CustomerHomeScreenRedesign from "../Containers/CustomerHome/CustomerHomeScreen";
-import { Colors } from "../Themes";
 import { flushEvents } from "../Util/Forensics";
-import { loadUser } from "../Ducks/AccountReducer";
+import { displayNoNetworkConnectionAlert } from "../Util/Alerts";
 
 class Home extends Component {
-  componentWillMount() {
-    const { isLoggedIn, navigation, uuid, token, nativeLangCode } = this.props;
+  constructor(props) {
+    super(props);
 
-    PushNotifications.getNotificationsBackground();
+    const { isLoggedIn, navigation, user } = this.props;
 
-    if (!isLoggedIn) {
-      navigation.dispatch({ type: "LoginView" });
+    this.state = {
+      load: true
+    };
+
+    // TODO: after the navigation refactor, we shouldn't need logic for
+    // redirecting views
+    if (!isLoggedIn || !user) {
+      navigation.dispatch({ type: "IntroView" });
+      this.state.load = false;
     }
-
-    this.updateTokenListener = FCM.on(FCMEvent.RefreshToken, FCMtoken => {
-      User.updateDevice(uuid, this.props.deviceId, token, {
-        notificationToken: FCMtoken
-      })
-        .then(res => {
-          this.props.registerFCM({ tokenFCM: FCMtoken });
-        })
-        .catch(error => console.log(error));
-    });
   }
 
-  updateFCMToken = () => {
-    FCM.getFCMToken().then(token => {
-      // save token in sever
-      User.updateDevice(this.props.uuid, this.props.deviceId, this.props.token, {
-        notificationToken: token
-      })
-        .then(res => {
-          this.props.registerFCM({ tokenFCM: token });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    });
-  };
+  componentDidUpdate(prevProps) {
+    if (!this.props.hasNetworkConnection && prevProps.hasNetworkConnection) {
+      displayNoNetworkConnectionAlert();
+    }
+  }
 
   componentDidMount() {
-    this.updateFCMToken();
     flushEvents();
-    loadUser(true); // reload user, but let it be cached a bit
-    // TODO: check for previously ended session
-  }
 
-  componentWillUnmount() {
-    this.updateTokenListener.remove();
+    // check for network connection, alert if no connection
+    if (!this.props.hasNetworkConnection) {
+      displayNoNetworkConnectionAlert();
+    }
   }
 
   render() {
-    return (
+    return this.state.load && (
       <View style={{ flex: 1 }}>
         {this.props.linguistProfile ? (
           <HomeLinguist navigation={this.props.navigation} />
@@ -73,17 +54,13 @@ class Home extends Component {
 }
 
 const mS = state => ({
-  isLoggedIn: state.auth.isLoggedIn,
-  token: state.auth.token,
-  uuid: state.auth.uuid,
-  deviceId: state.auth.deviceId,
-  linguistProfile: state.userProfile.linguistProfile,
-  nativeLangCode: state.userProfile.nativeLangCode
+  isLoggedIn: state.auth2.isLoggedIn,
+  user: state.account.user,
+  linguistProfile: state.account.linguistProfile,
+  hasNetworkConnection: state.appState.hasNetworkConnection
 });
 
 const mD = {
-  registerFCM,
-  loadUser
 };
 
 export default connect(

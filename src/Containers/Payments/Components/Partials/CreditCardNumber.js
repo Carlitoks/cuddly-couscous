@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Image, TextInput, Text, Platform } from "react-native";
+import { Image, Text, TextInput, View } from "react-native";
 import I18n from "../../../../I18n/I18n";
-
 //styles
 import styles from "./Styles/CreditCardNumberStyles";
 import { TextInputMask } from "react-native-masked-text";

@@ -11,7 +11,6 @@ import MenuView from "../Components/MenuView/MenuView";
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import EditNameView from "../Profile/EditName/EditNameView";
 import EditGenderView from "../Profile/EditGender/EditGenderView";
-import EditNativeLanguageView from "../Profile/EditNativeLanguage/EditNativeLanguageView";
 
 import SettingsView from "../Settings/SettingsView";
 import InterfaceLanguageView from "../Settings/InterfaceLanguageView";
@@ -35,6 +34,19 @@ import SessionView from "../Containers/Session/SessionView";
 import CustomerMatchingView from "../Containers/Session/CustomerMatchingView";
 import CustomerRetryView from "../Containers/Session/CustomerRetryView";
 import LinguistIncomingCallView from "../Containers/Session/LinguistIncomingCallView";
+
+// by default, this is the screen that will
+// be shown first when the app loads
+let initialScreen = "IntroView";
+
+// change the initial screen, this must be called before
+// the router is initialized
+//
+// NOTE: this doesn't actually work because the navigator gets initialized
+// before this can be called.
+export const setInitialScreen = (name) => {
+  initialScreen = name;
+};
 
 const Navigation = StackNavigator(
   {
@@ -115,12 +127,6 @@ const Navigation = StackNavigator(
     },
     EditGenderView: {
       screen: EditGenderView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    EditNativeLanguageView: {
-      screen: EditNativeLanguageView,
       navigationOptions: {
         gesturesEnabled: false
       }
@@ -225,7 +231,7 @@ const Navigation = StackNavigator(
     }
   },
   {
-    initialRouteName: "IntroView",
+    initialRouteName: initialScreen,
     headerMode: "none",
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {

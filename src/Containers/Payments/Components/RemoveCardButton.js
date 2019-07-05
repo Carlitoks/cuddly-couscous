@@ -1,29 +1,19 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Alert } from "react-native";
 import { connect } from "react-redux";
-import I18n from "../../../I18n/I18n";
-import Reactotron from "reactotron-react-native";
+import I18n, { translateApiError } from "../../../I18n/I18n";
 
 // Styles
 import styles from "./Styles/PaymentButtons";
-import stripe from "tipsi-stripe";
-import {
-  clearPayments,
-  removePayment,
-  setPayment,
-  updatePayments
-} from "../../../Ducks/PaymentsReducer";
-import { updateView } from "../../../Ducks/UserProfileReducer";
 
 class PaymentButtons extends Component {
   isDisabled = () => {
     const { isValidCC, isValidDate, isValidCVV, loading } = this.props;
-    Reactotron.log(isValidCC && isValidDate && isValidCVV);
     return (isValidCC && isValidDate && isValidCVV) || loading;
   };
 
   removePaymentCard = () => {
-    const { removePayment } = this.props;
+    const { removeCard } = this.props;
     Alert.alert(
       I18n.t("payments.removeCard"),
       I18n.t("payments.removeCardAlert"),
@@ -31,7 +21,7 @@ class PaymentButtons extends Component {
         {
           text: I18n.t("actions.remove"),
           onPress: () => {
-            removePayment();
+            removeCard();
           }
         },
         {
@@ -63,11 +53,7 @@ const mS = state => ({
 });
 
 const mD = {
-  updatePayments,
-  clearPayments,
-  setPayment,
-  removePayment,
-  updateView
+
 };
 
 export default connect(

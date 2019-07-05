@@ -1,110 +1,92 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { findIndex } from "lodash";
-import {
-  updatePromoCode,
-  asyncScanPromoCode,
-  clearPromoCode
-} from "../../Ducks/PromoCodeReducer";
-
-import { updateSettings as updateHomeFlow } from "../../Ducks/HomeFlowReducer";
 
 import { View, Text, ScrollView, Keyboard, Alert } from "react-native";
 
+import api from "../../Config/AxiosConfig";
+import {loadUser} from "../../Ducks/AccountReducer";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import BottomButton from "../../Components/BottomButton/BottomButton";
-import ViewWrapper from "../../Containers/ViewWrapper/ViewWrapper";
-import HeaderView from "../../Components/HeaderView/HeaderView";
 import Close from "../../Components/Close/Close";
-
-// import { EMAIL_REGEX } from "../../Util/Constants";
 import styles from "./styles";
-import I18n, { translateApiErrorString } from "../../I18n/I18n";
-import { displayFormErrors } from "../../Util/Alerts";
+import I18n, { translateApiErrorString, translateApiError } from "../../I18n/I18n";
+import NavBar from "../../Components/NavBar/NavBar";
 
 class PromoCodeView extends Component {
+
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      loading: false,
+      code: ""
+    };
+  }
 
   componentWillUnmount () {
     Keyboard.dismiss();
   }
 
   submit() {
-    this.props.updateHomeFlow({
-      categorySelected: ""
+    Keyboard.dismiss();
+
+    this.setState({loading: true});
+    api.get(`/event-codes/${this.state.code.trim()}`)
+    .then((res) => {
+      this.setState({loading: false});
+
+      const data = res.data;
+
+      // handle potential usage error first
+      if (data.usageError) {
+        Alert.alert(I18n.t("invalidCode"), translateApiErrorString(data.usageError, "api.errEventUnavailable"), [{text: I18n.t("actions.ok")}]);
+        return;
+      }
+
+      // otherwise, for now we only support codes that add
+      // minutes to the user account
+      if (data.addMinutesToUser && data.maxMinutesPerUser > 0) {
+        // reload user so the new minutes are visible
+        this.props.loadUser(false);
+        Alert.alert(
+          I18n.t("minutesAdded"),
+          I18n.t("complimentMinutes", {
+            maxMinutesPerUser: data.maxMinutesPerUser,
+            organizer: data.organization.name,
+          }),
+          [{
+            text: I18n.t("actions.ok"),
+            onPress: () => {
+              this.props.navigation.dispatch({type: "Home"});
+            }
+          }]
+        );
+        return;
+      }
+
+      // otherwise... unexpected code
+      this.props.navigation.dispatch({ type: "Home" });
+    })
+    .catch((e) => {
+      this.setState({loading: false});
+      Alert.alert(I18n.t("error"), translateApiError(e));
     });
 
-    const { token, promoCode } = this.props;
-
-    Keyboard.dismiss();
-    this.props
-      .asyncScanPromoCode(promoCode, token)
-      .then(response => {
-        this.props.clearPromoCode();
-        if (response.type === "networkErrors/error") {
-          throw new Error(I18n.t("errorPromo"));
-        }
-        const {
-          requireScenarioSelection,
-          restrictEventScenarios,
-          scenarios,
-          initiateCall,
-          usageError,
-          addMinutesToUser,
-          maxMinutesPerUser,
-          organization
-        } = response.payload;
-        this.props.clearPromoCode();
-
-        // if an error, handle that first
-        if (usageError) {
-          this.props.navigation.dispatch({
-            type: "Home",
-            params: {
-              usageError: translateApiErrorString(
-                usageError,
-                "api.errEventUnavailable"
-              )
-            }
-          });
-          return;
-        }
-
-        // otherwise, for now we only support codes that add
-        // minutes to the user account
-        if (addMinutesToUser) {
-          this.props.navigation.dispatch({
-            type: "Home",
-            params: {
-              minutesGranted: true,
-              maxMinutesPerUser,
-              organization: organization.name
-            }
-          });
-          return;
-        }
-        
-        // otherwise... unexpected code
-        this.props.navigation.dispatch({ type: "Home" });
-      })
-      .catch(err => {
-        console.log("Error ", err);
-        displayFormErrors(I18n.t("errorPromo"));
-      });
   }
 
   isDisabled() {
-    return !this.props.promoCode;
+    return !this.state.code.trim() || this.state.loading;
   }
 
   render() {
     return (
-      <ViewWrapper style={styles.scrollContainer}>
-        <HeaderView
-          headerLeftComponent={
+      <View style={styles.scrollContainer}>
+        <NavBar
+          leftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          headerRightComponent={
+          rightComponent={
             <Close
               action={() => {
                 this.props.navigation.dispatch({ type: "Home" });
@@ -112,9 +94,7 @@ class PromoCodeView extends Component {
             />
           }
           navbarTitle={I18n.t("promoCodeTitle")}
-          navbarType={"Basic"}
-          NoWaves
-        >
+        />
           <ScrollView
             automaticallyAdjustContentInsets={true}
             style={styles.scrollContainer}
@@ -125,42 +105,35 @@ class PromoCodeView extends Component {
                 containerStyle={styles.containerInput}
                 placeholder={I18n.t("promoCodeInput")}
                 autoCorrect={false}
-                onChangeText={text =>
-                  this.props.updatePromoCode({ code: text })
+                onChangeText={code =>
+                  this.setState({ code })
                 }
-                value={this.props.promoCode}
+                value={this.state.code}
                 keyboardType={"email-address"}
                 maxLength={64}
                 autoFocus={true}
               />
             </View>
           </ScrollView>
-        </HeaderView>
         {/* Next Button */}
         <BottomButton
           title={I18n.t("next")}
           onPress={() => this.submit()}
           bold={false}
+          loading={this.state.loading}
           disabled={this.isDisabled()}
           fill={!this.isDisabled()}
         />
-      </ViewWrapper>
+      </View>
     );
   }
 }
 
 const mS = state => ({
-  promoCode: state.promoCode.code,
-  token: state.auth.token,
-  categories: state.homeFlow.categories,
-  event: state.events
 });
 
 const mD = {
-  updatePromoCode,
-  asyncScanPromoCode,
-  clearPromoCode,
-  updateHomeFlow,
+  loadUser
 };
 
 export default connect(

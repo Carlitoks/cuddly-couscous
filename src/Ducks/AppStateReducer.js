@@ -1,13 +1,32 @@
+import {NetInfo} from "react-native";
+import _merge from "lodash/merge";
+import _debounce from "lodash/debounce";
+
 // The purpose of this is to manage app UI & config state that is either 
 // determined or modifiable by the user.
 
 const initState = () => {
   return {
-    uiLanguage: '',
+    uiLangCode: 'en', // the current localization for i18n, replace SettingsReducer
     isCustomerMode: true,
     isLinguistMode: false,
+    hasNetworkConnection: true,
+    connectionInfo: null, // the raw connection info response from NetInfo
+
+    // TODO: app state (background/foreground, etc)
   }
 };
+
+// TODO: ensure app state is restored properly
+export const init = () => (dispatch, getState) => {
+  
+};
+
+// TODO: validate, record code, choose default if necessary, configure i18n
+export const setInterfaceLanguage = (code) => (dispatch, getState) => {
+  
+};
+
 
 const ACTIONS = {
   CLEAR: "appState/clear",
@@ -16,11 +35,14 @@ const ACTIONS = {
 };
 
 // action creators
+// update state
 export const update = (payload) => ({type: ACTIONS.UPDATE, payload});
+// merge in nested state updates
 export const merge = (payload) => ({type: ACTIONS.MERGE, payload});
+// reset to initial state
 export const clear = () => ({type: ACTIONS.CLEAR});
 
-const appStateReducer = (state = null, action = {}) => {
+const reducer = (state = null, action = {}) => {
   const { payload, type } = action;
 
   switch (type) {
@@ -29,7 +51,7 @@ const appStateReducer = (state = null, action = {}) => {
     }
 
     case ACTIONS.MERGE: {
-      return lodashMerge({}, state || initState(), payload);
+      return _merge({}, state || initState(), payload);
     }
 
     case ACTIONS.UPDATE: {
@@ -45,4 +67,4 @@ const appStateReducer = (state = null, action = {}) => {
   }
 };
 
-export default appStateReducer;
+export default reducer;

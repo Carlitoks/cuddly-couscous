@@ -9,13 +9,12 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 import { connect } from "react-redux";
 import Permission from "react-native-permissions";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import ViewWrapper from "../ViewWrapper/ViewWrapper";
 import I18n from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/RegisterScreenStyles";
@@ -32,16 +31,23 @@ const JeenieLogo = require("../../Assets/Images/jeenieLogo.png");
 const BG = require("../../Assets/Images/BG.png");
 
 class RegisterScreen extends Component {
-  handleTouch = async goto => {
+  handleTouch = async (goto) => {
     const { navigation } = this.props;
     const LocationPermission = await Permission.check("location");
-    if (LocationPermission === "undetermined" || LocationPermission === "denied") {
-      return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
+
+    if (Platform.OS === "android"){
+      if (LocationPermission === "undetermined" || LocationPermission === "denied")
+        return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
+    }else {
+      if (LocationPermission === "undetermined") {
+        return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
+      }
     }
+
     if (Platform.OS !== "android") {
       const NotificationPermission = await Permission.check("notification");
-      if (NotificationPermission === "undetermined" || NotificationPermission === "denied") {
-        return navigation.dispatch({ type: "Home", params: { redirectTo: goto } });
+      if (NotificationPermission === "undetermined") {
+        return navigation.dispatch({ type: "NotificationPermissionView", params: { redirectTo: goto } });
       }
     }
     return navigation.dispatch({ type: goto });
@@ -71,48 +77,48 @@ class RegisterScreen extends Component {
     const { navigation } = this.props;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.keyboardContainer} enabled>
-      <ViewWrapper style={styles.wrapperContainer}>
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <View style={[styles.mainRegisterContainer]}>
-            <ScrollView bounce={false} contentContainerStyle={styles.registerContainer}>
+        <View style={styles.wrapperContainer}>
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style={[styles.mainRegisterContainer]}>
+              <ScrollView bounce={false} contentContainerStyle={styles.registerContainer}>
                 <View style={styles.topLogoContainer}>
                   <ImageBackground resizeMode="stretch" source={BG} imageStyle={styles.backgroundImage} style={styles.backgroundContainer}>
-                      <View style={styles.backgroundContainer}>
-                        {(metrics.width > 320 && <Image style={styles.logoImg} source={JeenieLogo} />)}
-                        <Text style={styles.titleText}>
-                          {I18n.t("newCustomerOnboarding.register.title")}
-                        </Text>
-                        <View styles={styles.bottomMarginContainer}>
-                          <View style={styles.inputContainer}>
-                            <FirstNameField setRef={this.setFirstNameRef} nextInput={this.gotoEmail} />
-                            <EmailField setRef={this.setEmailRef} nextInput={this.gotoPassword} />
-                            <PasswordField setRef={this.setpasswordRef} />
-                            <NativeLangField />
-                            <TermsAndConditions />
-                            <SubmitButton navigation={navigation} />
-                          </View>
-                          <TouchableOpacity
-                            onPress={() => this.handleTouch("LoginView")}
-                            style={{justifyContent: "center", alignItems: "center"}}
-                          >
-                            <View style={styles.textContainerRow}>
-                              <Text style={styles.transitionButtonText}>
-                                {`${I18n.t("alreadyAccount")} `}
-                              </Text>
-                              <Text style={styles.transitionButtonSginInText}>
-                                {`${I18n.t("signIn")} `}
-                              </Text>
-                            </View>
-                          </TouchableOpacity>
+                    <View style={styles.backgroundContainer}>
+                      {(metrics.width > 320 && <Image style={styles.logoImg} source={JeenieLogo} />)}
+                      <Text style={styles.titleText}>
+                        {I18n.t("newCustomerOnboarding.register.title")}
+                      </Text>
+                      <View styles={styles.bottomMarginContainer}>
+                        <View style={styles.inputContainer}>
+                          <FirstNameField setRef={this.setFirstNameRef} nextInput={this.gotoEmail} />
+                          <EmailField setRef={this.setEmailRef} nextInput={this.gotoPassword} />
+                          <PasswordField setRef={this.setpasswordRef} />
+                          <NativeLangField />
+                          <TermsAndConditions />
+                          <SubmitButton navigation={navigation} />
                         </View>
+                        <TouchableOpacity
+                          onPress={() => this.handleTouch("LoginView")}
+                          style={{ justifyContent: "center", alignItems: "center" }}
+                        >
+                          <View style={styles.textContainerRow}>
+                          <Text style={styles.transitionButtonText}>
+                            {`${I18n.t("alreadyAccount")} `}
+                          </Text>
+                          <Text style={styles.transitionButtonSginInText}>
+                            {`${I18n.t("signIn")} `}
+                          </Text>
+                        </View>
+                        </TouchableOpacity>
                       </View>
+                    </View>
                   </ImageBackground>
                 </View>
-            </ScrollView>
-          </View>
-        </TouchableWithoutFeedback>
-        <SlideUpPanel navigation={navigation} />
-      </ViewWrapper>
+              </ScrollView>
+            </View>
+          </TouchableWithoutFeedback>
+          <SlideUpPanel navigation={navigation} />
+        </View>
       </KeyboardAvoidingView>
     );
   }
@@ -124,5 +130,5 @@ const mD = {};
 
 export default connect(
   mS,
-  mD
+  mD,
 )(RegisterScreen);

@@ -12,6 +12,7 @@ import { SESSION } from "../../../Util/Constants";
 // Styles
 import styles from "./Styles/PermissionButtonsStyles";
 import I18n, {translateApiError} from "../../../I18n/I18n";
+import { displayOpenSettingsAlert } from "../../../Util/Permission";
 
 class PermissionButtons extends Component {
   state = {
@@ -21,9 +22,15 @@ class PermissionButtons extends Component {
   propmtPermission = async (permission) => {
     const { navigation, updateLocation, updateOnboarding } = this.props;
     const currentState = await Permissions.check(`${permission}`);
-    if (currentState === "undetermined" || currentState === "denied") {
-      await Permissions.request(`${permission}`);
+    if (Platform.OS === "android"){
+      if (currentState === "undetermined" || currentState === "denied")
+        return await Permissions.request(`${permission}`);
+    }else {
+      if (currentState === "undetermined") {
+        return await Permissions.request(`${permission}`);
+      }
     }
+
     if (permission === "camera" || permission === "microphone") {
       if (currentState === "restricted" || currentState === "denied") {
         Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
@@ -42,12 +49,18 @@ class PermissionButtons extends Component {
             navigation.dispatch({ type: navigation.state.params.redirectTo });
           }
         }
+        if (currentState === "restricted" || currentState === "denied") {
+          displayOpenSettingsAlert();
+        }
       }
       if (permission === "notification") {
         const currentState = await Permissions.check(`${permission}`);
         if (currentState === "granted") {
           updateOnboarding({ completedNotification: true });
           navigation.dispatch({ type: navigation.state.params.redirectTo });
+        }
+        if (currentState === "restricted" || currentState === "denied") {
+          displayOpenSettingsAlert();
         }
       }
     }

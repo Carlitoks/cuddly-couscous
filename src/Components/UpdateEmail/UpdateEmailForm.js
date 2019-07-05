@@ -3,11 +3,11 @@ import {Alert, Modal, Text, TextInput, TouchableOpacity, View} from "react-nativ
 
 import styles from "./styles";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
-import { updateView as closeUpdateEmail } from "../../Ducks/UserProfileReducer";
-import { logOutAsync, updateEmailAsync } from "../../Ducks/AuthReducer";
 import { connect } from "react-redux";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import UpdateEmailSuccess from "./UpdateEmailSuccess";
+import { logOut } from "../../Ducks/AuthReducer2";
+import { updateUserEmail } from "../../Ducks/AccountReducer";
 
 class UpdateEmailForm extends Component {
   constructor(props) {
@@ -61,14 +61,10 @@ class UpdateEmailForm extends Component {
   };
 
   submitEmail = async () => {
-    const { updateEmailAsync, uuid, token, closeUpdateEmail } = this.props;
+    const { updateUserEmail } = this.props;
     try {
       this.setState({ loading: true });
-      const payload = {
-        email: this.state.email,
-      };
-      const updateProfilePayload = await updateEmailAsync(uuid, token, payload);
-      await closeUpdateEmail({ ...updateProfilePayload.payload, emailBounced: true, email: this.state.email });
+      await updateUserEmail(this.state.email);
       this.setState({success: true});
     }catch(err){
         Alert.alert(
@@ -82,10 +78,9 @@ class UpdateEmailForm extends Component {
   };
 
   renderUpdateModal = () => {
-    const { logOutAsync, emailBounced, closeUpdateEmail } = this.props;
+    const { logOut, navigation } = this.props;
     const handleClose = async () => {
-      await logOutAsync();
-      await closeUpdateEmail({ emailBounced: false });
+      await logOut().finally(() => {navigation.dispatch({type: "LoginView"})});
     };
     return (
       <View style={styles.modalContainer}>
@@ -123,13 +118,13 @@ class UpdateEmailForm extends Component {
   };
 
   render() {
-    const { logOutAsync, emailBounced, closeUpdateEmail } = this.props;
+    const { user } = this.props;
     return (
       <View style={styles.mainContainer}>
         <Modal
           animationType='fade'
           transparent={true}
-          visible={emailBounced}
+          visible={user.emailBounced == true}
           onRequestClose={() => null}
         >
           {this.state.success ? <UpdateEmailSuccess /> : this.renderUpdateModal()}
@@ -140,15 +135,12 @@ class UpdateEmailForm extends Component {
 };
 
 const mS = state => ({
-  token: state.auth.token,
-  uuid: state.auth.uuid,
-  emailBounced: state.userProfile.emailBounced
+  user: stat.account.user,
 });
 
 const mD = {
-  logOutAsync,
-  closeUpdateEmail,
-  updateEmailAsync,
+  logOut,
+  updateUserEmail,
 };
 
 export default connect(
