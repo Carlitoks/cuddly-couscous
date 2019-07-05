@@ -28,14 +28,24 @@ class AccountDetailsView extends Component {
   };
 
   render() {
-    const { navigation, stripePaymentToken, StripePaymentSourceMeta, user, autoreloadMinutePackage, subscribedMinutePackage } = this.props;
+    const {
+      navigation,
+      stripePaymentToken,
+      StripePaymentSourceMeta,
+      user,
+      autoreloadMinutePackage,
+      subscribedMinutePackage
+    } = this.props;
     console.log("stripe en AccountDetails", stripePaymentToken, StripePaymentSourceMeta);
     return (
       <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
           <NavBar
             leftComponent={
-              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => navigation.dispatch({ type: "back" })}
+              >
                 <View>
                   <Icon name="chevron-left" type="evilicon" color="white" size={50} />
                 </View>
@@ -43,17 +53,30 @@ class AccountDetailsView extends Component {
             }
             navbarTitle={I18n.t("account.title")}
           />
-          <BalanceHeader havePaymentDetails={stripePaymentToken? true : false } minutes={user.availableMinutes}/>
+          <BalanceHeader
+            havePaymentDetails={stripePaymentToken ? true : false}
+            minutes={user.availableMinutes}
+          />
 
           <ScrollView
             automaticallyAdjustContentInsets
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-          <CreditCardSection addCard={()=> {this.goToPayments()}} navigation={navigation} haveCard={StripePaymentSourceMeta && StripePaymentSourceMeta.last4 ? true : false}/> 
-          <PackageSection addPackage={()=> {this.goToPackages()}} navigation={navigation} userPackage={autoreloadMinutePackage? autoreloadMinutePackage: subscribedMinutePackage ? subscribedMinutePackage : null} /> 
-          
-
+            <CreditCardSection
+              addCard={() => {
+                this.goToPayments();
+              }}
+              navigation={navigation}
+              haveCard={StripePaymentSourceMeta && StripePaymentSourceMeta.last4 ? true : false}
+            />
+            <PackageSection
+              addPackage={() => {
+                this.goToPackages();
+              }}
+              navigation={navigation}
+              userPackage={false}
+            />
           </ScrollView>
         </View>
       </View>
@@ -66,8 +89,7 @@ const mS = state => ({
   StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta,
   user: state.account.user,
   autoreloadMinutePackage: state.account.autoreloadMinutePackage,
-  subscribedMinutePackage:state.account.subscribedMinutePackage
-
+  subscribedMinutePackage: state.account.subscribedMinutePackage
 });
 
 const mD = { removeUserPaymentDetails };
