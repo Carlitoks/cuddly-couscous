@@ -49,7 +49,6 @@ class LoginScreen extends Component {
     }
     if (Platform.OS !== "android") {
       const NotificationPermission = await Permission.check("notification");
-      console.tron.log(NotificationPermission);
       if (NotificationPermission === "undetermined") {
         return navigation.dispatch({ type: "NotificationPermissionView", params: { redirectTo: goto } });
       }
