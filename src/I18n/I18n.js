@@ -112,6 +112,8 @@ const apiErrorsI18N = {
   "event is not currently available": "api.errEventUnavailable",
   "promo code not found": "api.errEventUnavailable",
   "event is not active": "api.errEventInactive",
+  "code is not active": "api.errEventInactive",
+  "code expired": "api.errEventUnavailable",
   "event requires a scenario to be specified": "api.errEventScenarioMissing",
   "payment details required": "api.errPaymentDetailsRequired",
   "no time remaining": "api.errEventTimeExpired",
