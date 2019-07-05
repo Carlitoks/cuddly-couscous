@@ -353,6 +353,7 @@ export const purchaseMinutePackage = (payload) => (dispatch, getState) => {
     .then((res) => {
       return dispatch(loadUser(false));
     })
+    .then(resolve)
     .catch(reject);
   });
 };
