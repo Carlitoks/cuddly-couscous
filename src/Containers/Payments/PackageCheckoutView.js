@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import OrderSummary from "./Components/OrderSummary";
 import MinutePackageCard from "./Components/MinutePackageCard";
+import purchaseMinutePackage from "../../Ducks/AccountReducer"
 
 // Styles
 import styles from "./Styles/PackageDetailsStyles";
@@ -12,6 +13,8 @@ import { stripePublishableKey } from "../../Config/env";
 import { Icon } from "react-native-elements";
 import I18n from "../../I18n/I18n";
 import TextBlockButton from "../../Components/Widgets/TextBlockButton";
+
+
 class PackageCheckoutView extends Component {
   constructor(props) {
     super(props);
@@ -21,18 +24,35 @@ class PackageCheckoutView extends Component {
     };
   }
 
-  purchase(){
-    //this.setState({loading:true});
-    Alert.alert(
-      I18n.t("error"),
-      " msj msj msj msj msj msj msj",
-      [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
-    );
+  purchase() {
+    this.setState({loading:true});
+    const { navigation } = this.props;
+    
+    const payload = {
+      postUserMinutePackageReq:{
+        minutePackageID: navigation.state.params.minutePackage.id,
+        type: "string"
+      },
+      type: "object",
+    }
+    const payload2 = {
+      minutePackageID: navigation.state.params.minutePackage.id,
+      type: "string"
+    }
+    
+    console.log('props purchase', this.props);
+
+
+    let val = this.props.purchaseMinutePackage(payload)
+    //.then(asd => console.log('purchase', asd));
+    console.log(val);
+    
+
   }
 
   render() {
     const { StripePaymentSourceMeta, user, navigation } = this.props;
-    console.log(StripePaymentSourceMeta, user);
+    console.log(user);
     return (
       <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -90,7 +110,7 @@ class PackageCheckoutView extends Component {
                 style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
                 disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
                 textStyle = {styles.buttonText} // optional text styles, component should provide defaults
-                onPress = {this.purchase} // function to call when pressed
+                onPress = {() => this.purchase()} // function to call when pressed
             />
         </View>
       </View>
@@ -103,7 +123,9 @@ const mS = state => ({
   user: state.account.user,
 });
 
-const mD = { };
+const mD = {
+  purchaseMinutePackage
+ };
 
 export default connect(
   mS,

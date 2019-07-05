@@ -58,7 +58,7 @@ class MinutePackageCard extends Component {
             <Text style={styles.title}>
               {minutePackage.name}
             </Text> 
-            <Text style={ promoCodeActive ? styles.pricePromoCode : styles.price}>
+            <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
               $ {minutePackage.cost}
             </Text>
           </View>
@@ -67,7 +67,7 @@ class MinutePackageCard extends Component {
               <Text>
                 {minutePackage.minutes} Mins
               </Text>
-              { promoCodeActive ? 
+              { discountedPrice ? 
                 <Text style={styles.discountedPrice}>
                   $ {discountedPrice}
                 </Text>

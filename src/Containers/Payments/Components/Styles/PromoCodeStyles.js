@@ -52,7 +52,9 @@ export default StyleSheet.create({
   },
   input:{
     paddingLeft: moderateScaleViewports(5),
-    height: 40, 
+    height: moderateScaleViewports(40),
+    borderTopLeftRadius: moderateScaleViewports(10),
+    borderBottomLeftRadius: moderateScaleViewports(10),
     borderColor: 'gray', 
     borderWidth: 1,
     width: '80%',
@@ -89,7 +91,7 @@ export default StyleSheet.create({
   },
   inputError:{
     paddingLeft: moderateScaleViewports(5),
-    height: 40, 
+    height: moderateScaleViewports(40), 
     borderColor: '#FF3B30', 
     borderWidth: 1,
     width: '80%',
@@ -97,12 +99,23 @@ export default StyleSheet.create({
     backgroundColor: "#F5F5F5",
     left:0
   },
-  button:{
+  buttonError:{
     flexDirection: 'column',
     justifyContent: 'center',
     width: moderateScaleViewports(73),
     height: moderateScaleViewports(40),
     backgroundColor: '#FF3B30',
+    borderTopRightRadius: moderateScaleViewports(10),
+    borderBottomRightRadius: moderateScaleViewports(10),
+    position:"absolute",
+    right:0,
+  },
+  buttonError:{
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: moderateScaleViewports(73),
+    height: moderateScaleViewports(40),
+    backgroundColor: '#401674',
     borderTopRightRadius: moderateScaleViewports(10),
     borderBottomRightRadius: moderateScaleViewports(10),
     position:"absolute",

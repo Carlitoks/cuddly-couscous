@@ -27,7 +27,7 @@ export default StyleSheet.create({
   scrollViewFlex: {
     flexGrow: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingBottom: 20,
     backgroundColor: "#F2F2F2"

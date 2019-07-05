@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, TouchableOpacity, View, ActivityIndicator } from "react-native";
+import { ScrollView, TouchableOpacity, View, ActivityIndicator, Alert } from "react-native";
 import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import Promocode from "./Components/PromoCode"
@@ -7,34 +7,30 @@ import Promocode from "./Components/PromoCode"
 import styles from "./Styles/AvailablePackagesStyles";
 
 import { Icon } from "react-native-elements";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import MinutePackageCard from "./Components/MinutePackageCard";
 
-import { loadMinutePackages, minutePackages } from "../../Ducks/AccountReducer";
+import { loadMinutePackages, minutePackages, minutePackagePromoCode } from "../../Ducks/AccountReducer";
 
 class AvailablePackagesView extends Component {
   constructor(props) {
     super(props);
 
-    console.log(props);
-
     this.state = {
-      minutePackages: [],
-      loading: true
+      loading: true,
+      promoCodeError: false,
     }
   }
   
   componentDidMount(){
-    //this.setState({loading: true});
     this.props.loadMinutePackages(false)
-    .then(minutePackages  => this.setState({loading: false, minutePackages})); 
+    .then(()  => this.loading()); 
   }
 
   packageRender(){
-
     const { navigation } = this.props;
 
-    return this.state.minutePackages.map( minutePackage => 
+    return this.props.minutePackages.map( minutePackage => 
       <MinutePackageCard
         key={minutePackage.id}  
         minutePackage = {minutePackage}
@@ -43,11 +39,32 @@ class AvailablePackagesView extends Component {
         displayReloadNotice={false} // display the reload notice or not
         reloadNoticeValue={false} // whether or not the checkbox is selected
         onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-        promoCodeActive={true}
-        discountedPrice={4000}
-        special={I18n.t("minutePackage.special")}
+        promoCodeActive={!!this.props.minutePackagePromoCode}
+        discountedPrice={minutePackage.adjustedCost != minutePackage.cost ? minutePackage.adjustedCost : false}
+        special={minutePackage.public ? false : I18n.t("minutePackage.special")}
         specialColors={["#F39100", "#FCB753"]}
       />);
+  }
+
+  loading(){
+    this.setState({loading: !this.state.loading})
+  }
+
+  applyPromocode(promocode){
+  //  this.setState({loading: true})
+    this.props.loadMinutePackages(false,promocode)
+    .then(()  => {
+    //  this.setState({loading: false})
+      console.log(this.props)
+    })
+    .catch(err => {
+      console.log(err);
+      Alert.alert(
+        I18n.t("error"),
+        translateApiErrorString(err, "api.errTemporary"),
+        [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
+      );
+    }); 
   }
 
   render() {
@@ -65,7 +82,14 @@ class AvailablePackagesView extends Component {
           }
           navbarTitle={I18n.t("packages.browse.title")}
         />
-        <Promocode navigation={navigation} />
+        <Promocode 
+          navigation={navigation} 
+          loading={() => this.loading()}
+          promoCode={this.props.minutePackagePromoCode ? this.props.minutePackagePromoCode : ''}
+          error={this.state.promoCodeError}
+          applaied={!!this.props.minutePackagePromoCode}
+          apply={(promoCode) => this.applyPromocode(promoCode)}
+        />
         {this.state.loading ? 
           <ActivityIndicator size="large" color="purple" style={{ zIndex: 100000, top: 150 }} />  
         :
@@ -74,7 +98,7 @@ class AvailablePackagesView extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-            {this.packageRender()}
+            {this.props.minutePackages ? this.packageRender() : null}
           </ScrollView>
        }
         
@@ -84,13 +108,12 @@ class AvailablePackagesView extends Component {
 }
 
 const mS = state => ({
-  publicMinutePackages: state.account.publicMinutePackages,
-  restrictedMinutePackages: state.account.restrictedMinutePackages
+  minutePackages: state.account.minutePackages,
+  minutePackagePromoCode: state.account.minutePackagePromoCode
 });
 
 const mD = {
   loadMinutePackages,
-  minutePackages
 };
 
 export default connect(

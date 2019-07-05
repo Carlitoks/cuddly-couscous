@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Text, View } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import Icons from "../Icons";
 import CardItem from "./CardItem";
 import I18n from "../../../I18n/I18n";
