@@ -9,7 +9,7 @@ import styles from "./Styles/HeaderMinutesLeft";
 class HeaderMinutesLeft extends Component {
   goToPayments = () => {
     const { navigation } = this.props;
-    navigation.dispatch({ type: "AvailablePackagesView" });
+    navigation.dispatch({ type: "AccountDetailsView" });
   };
 
   renderMinutesLeft = () => {
