@@ -10,7 +10,16 @@ const baseButton = {
   justifyContent: "center",
   borderRadius: moderateScaleViewports(10),
   alignItems: "center",
-  height: "100%"
+  height:"100%"
+};
+
+const baseWell = {
+  flexDirection: "row",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  backgroundColor: "#522092",
+  borderRadius: 4,
+  paddingLeft: 4,
 };
 
 export default StyleSheet.create({
@@ -19,6 +28,7 @@ export default StyleSheet.create({
     flex: 1,
     paddingBottom: Metrics.baseMargin
   },
+  
   logo: {
     marginTop: Metrics.doubleSection,
     height: Metrics.images.logo,
@@ -60,8 +70,10 @@ export default StyleSheet.create({
     width:"100%",
     backgroundColor:"#3F1674"
   },
+  balanceContainer:{
+    width:"25%",
+  },
   balanceMinutesContainer:{
-    flex:1,
     width:"80%",
     height:85,
     marginLeft:"10%",
@@ -70,31 +82,20 @@ export default StyleSheet.create({
   balanceTitle:{
     color:"rgba(255, 255, 255, 0.8)",
     fontSize: 18,
-    position:"absolute",
-    top:0,
-    marginBottom:100,
     fontFamily: Fonts.BaseFont,
   },
   balanceMinutes:{
     color:"#FFFFFF",
-    top: 25,
     fontSize: 26,
     fontFamily: Fonts.BaseFont,
-    position:"absolute",
-    backgroundColor:"rgba(255, 59, 48, 0.9);",
   },
   unlimited:{
     color:"#FFFFFF",
-    top: 25,
     fontSize: 26,
     fontFamily: Fonts.BaseFont,
-    position:"absolute",
     fontWeight: "bold"
-
   },
   balanceDescription:{
-    top:60,
-    position:"absolute",
     color: "rgba(255, 255, 255, 0.8)",
     fontSize: 14,
     fontFamily: Fonts.BaseFont,
@@ -119,9 +120,9 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
   },
   backgroundImage: {
-    width: 160,
-    height: 100,
-    resizeMode: 'cover',
+    width: moderateScaleViewports(120),
+    height: moderateScaleViewports(80),
+    resizeMode: "stretch",
   },
   addCardButton: {
     ...baseButton,
@@ -149,13 +150,16 @@ export default StyleSheet.create({
     fontSize: moderateScale(14, 0),
     fontFamily: Fonts.BaseFont,
     flexWrap:"wrap",
-    flex:1
+    paddingLeft: 10,
+    flex:1,
   },
   rowDescription:{
     flexDirection:"row",
     width:"95%",
-    paddingTop:30,
+    height:"100%",
+    marginTop:20,
     marginLeft:15,
+    marginRight: 15,
     position:"relative"    
   },
   packageContainer:{
@@ -174,5 +178,17 @@ export default StyleSheet.create({
       position:"absolute",
       right:0,
       marginTop:moderateScale(20, 0),
-  }
+  },
+  fewMinutesLeftContainer: {
+    ...baseWell,
+    backgroundColor: "#F39100"
+  },
+  outOfMinutesContainer: {
+    ...baseWell,
+    backgroundColor: "#FF3B30"
+  },
+  minutesLeftContainer: {
+    ...baseWell,
+    backgroundColor: "#522092"
+  },
 });
