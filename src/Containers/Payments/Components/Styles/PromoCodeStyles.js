@@ -109,17 +109,5 @@ export default StyleSheet.create({
     borderBottomRightRadius: moderateScaleViewports(10),
     position:"absolute",
     right:0,
-  },
-  buttonError:{
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: moderateScaleViewports(73),
-    height: moderateScaleViewports(40),
-    backgroundColor: '#401674',
-    borderTopRightRadius: moderateScaleViewports(10),
-    borderBottomRightRadius: moderateScaleViewports(10),
-    position:"absolute",
-    right:0,
-  },
-
+  }
 });

@@ -11,13 +11,9 @@ export default class PromoCode extends Component {
     this.state = { text: props.promoCode };
   }
 
-  apply(){
-    this.props.loadPromocode(this.state.text);
-  }
-
   remove () {
+    this.props.apply();
     this.setState({text: ""});
-    this.props.remove();
   }
 
   render() {

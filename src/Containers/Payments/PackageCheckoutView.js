@@ -86,9 +86,9 @@ class PackageCheckoutView extends Component {
           displayReloadNotice={true} // display the reload notice or not
           reloadNoticeValue={false} // whether or not the checkbox is selected
           onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
-          promoCodeActive={false}
-          discountedPrice={40}
-          special={I18n.t("minutePackage.special")}
+          promoCodeActive={!!this.props.minutePackagePromoCode}
+          discountedPrice={navigation.state.params.minutePackage.adjustedCost != navigation.state.params.minutePackage.cost ? navigation.state.params.minutePackage.adjustedCost : false}
+          special={navigation.state.params.minutePackage.public ? false : I18n.t("minutePackage.special")}
           specialColors={["#F39100", "#FCB753"]}
         />
           <View style={styles.billView}>
@@ -97,6 +97,8 @@ class PackageCheckoutView extends Component {
               haveCard={!!user.stripePaymentToken} //
               styles = {styles} // main container style
               textStyle = {styles.textBill} // optional text styles, component should provide defaults
+              minutePackage={navigation.state.params.minutePackage}
+              promoCode={this.props.minutePackagePromoCode}
               />
             </View>
             <View style={this.state.loading?  styles.whiteView : styles.transparentView}>
@@ -121,6 +123,7 @@ class PackageCheckoutView extends Component {
 const mS = state => ({
   StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta,
   user: state.account.user,
+  minutePackagePromoCode: state.account.minutePackagePromoCode
 });
 
 const mD = {
