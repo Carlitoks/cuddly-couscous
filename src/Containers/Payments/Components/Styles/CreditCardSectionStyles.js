@@ -46,12 +46,9 @@ export default StyleSheet.create({
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
   scrollViewFlex: {
-    flexGrow: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
+    flexDirection: "row",
     alignItems: "center",
     paddingBottom: 20,
-    position:"relative",
     backgroundColor: "#F2F2F2"
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
@@ -103,9 +100,8 @@ export default StyleSheet.create({
   creditCardContainer:{
     marginTop:30,
     width:"100%",
-    height:"35%",
+    height:"30%",
     backgroundColor:"#FFF",
-    position:"absolute"
   },
   row:{
     flexDirection:"row",
@@ -163,13 +159,10 @@ export default StyleSheet.create({
     position:"relative"    
   },
   packageContainer:{
-    top:"45%",
-    marginTop:0,
-    paddingTop:-30,
+    marginTop:30,
     width:"100%",
     height:"35%",
     backgroundColor:"#FFF",
-    position:"absolute",
   },
   editText:{
       color:"#007AFF",
