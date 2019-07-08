@@ -10,7 +10,7 @@ import { Icon } from "react-native-elements";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import MinutePackageCard from "./Components/MinutePackageCard";
 
-import { loadMinutePackages, minutePackages, minutePackagePromoCode } from "../../Ducks/AccountReducer";
+import { loadMinutePackages } from "../../Ducks/AccountReducer";
 
 class AvailablePackagesView extends Component {
   constructor(props) {
@@ -63,6 +63,7 @@ class AvailablePackagesView extends Component {
     .finally(() => {
       this.setState({loading: false});
     })
+    
   }
 
   render() {

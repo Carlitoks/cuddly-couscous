@@ -7,7 +7,7 @@ import I18n from "../../../I18n/I18n";
 // Styles
 //import styles from "./Styles/AddCardStyles";
 
-class OrderSummary extends Component {
+export default class OrderSummary extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,72 +23,58 @@ class OrderSummary extends Component {
 
   };
   render() {
-    const { loading, styles, navigation, haveCard } = this.props;
+    const { styles, navigation, haveCard, minutePackage, promoCode } = this.props;
     let cardInfo = { creditCardNumber: "", creditCardIcon: "", expDate: "" };
     return (
       <View style={styles.billContainer}>
-          <View style={styles.rowTitle}>
-            <Text style={styles.itemTextLeftTitle}>
-            {"Credit Card"}
+        <View style={styles.rowTitle}>
+          <Text style={styles.itemTextLeftTitle}>
+          {"Credit Card"}
           </Text>
-
           {haveCard && <Text style={styles.itemText}>
             {"Edit"}
           </Text>}
-          </View>
-
-          {haveCard ? <CardItem navigation={navigation} /> :
+        </View>
+        {haveCard ? <CardItem navigation={navigation} /> :
           <View style={styles.rowAddCard}>
             <Text style={styles.itemTextLeft}>
                 {I18n.t("packages.checkout.needCard")}
-          </Text>
-
+            </Text>
           </View>
         }
-
-          <View style={styles.rowBill}>
+        <View style={styles.rowBill}>
           <Text style={styles.itemTextLeftTitle}>
             {"Order Summary"}
           </Text>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.itemTextLeft}>
-            {navigation.state.params.minutePackage.name}
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.itemTextLeft}>
+            {minutePackage.name}
           </Text>
           <Text style={styles.itemText}>
-            $ {navigation.state.params.minutePackage.cost}
+            $ {minutePackage.cost}
           </Text>
-          </View>
+        </View>
+        { !!minutePackage.adjustedCost && minutePackage.adjustedCost < minutePackage.cost &&
           <View style={styles.row}>
             <Text style={styles.itemTextLeftSale}>
-            {"JEENIE20"}
-          </Text>
-          <Text style={styles.itemTextSale}>
-            {"- $10"}
-          </Text>
+              {promoCode}
+            </Text>
+            <Text style={styles.itemTextSale}>
+              $ {minutePackage.cost - minutePackage.adjustedCost}
+            </Text>
           </View>
-          <View style={styles.rowLine}>
-          </View>
-          <View style={styles.row}>
-            <Text style={styles.itemTextLeftTitle}>
-            {"Total"}
+        }
+        <View style={styles.rowLine}/>
+        <View style={styles.row}>
+          <Text style={styles.itemTextLeftTitle}>
+          {"Total"}
           </Text>
           <Text style={styles.itemTextTitle}>
-            $ {navigation.state.params.minutePackage.cost - 10}
+            $ {minutePackage.adjustedCost}
           </Text>
-          </View>
         </View>
+      </View>
     );
   }
 }
-
-const mS = state => ({
-});
-
-const mD = {
-};
-
-export default connect(
-  mS,
-  mD
-)(OrderSummary);
