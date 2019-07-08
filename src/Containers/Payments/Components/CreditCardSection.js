@@ -40,7 +40,7 @@ class CreditCardSection extends Component {
 
       <Text
           style={styles.editText}
-          onPress={() => {navigation.dispatch({ type: "EditCardScreen" });}}
+          onPress={() => navigation.dispatch({ type: "CardInfoScreen" })}
         >
           {I18n.t("account.card.edit")}
         </Text>

@@ -78,7 +78,7 @@ class SettingsView extends Component {
                   subtitleStyle={styles.listSubtitle}
                   onPress={() => {
                     navigation.dispatch({
-                      type: "PaymentDetailScreen",
+                      type: "AccountDetailsView",
                       params: {
                         title: I18n.t("paymentDetails"),
                         messageText: I18n.t("enterPaymentDetails"),
