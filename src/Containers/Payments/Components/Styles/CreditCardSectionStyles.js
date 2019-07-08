@@ -103,7 +103,7 @@ export default StyleSheet.create({
   creditCardContainer:{
     marginTop:30,
     width:"100%",
-    height:"35%",
+    height:"30%",
     backgroundColor:"#FFF",
   },
   row:{
