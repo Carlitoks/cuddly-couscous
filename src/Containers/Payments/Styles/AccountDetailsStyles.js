@@ -37,7 +37,6 @@ export default StyleSheet.create({
   scrollViewFlex: {
     flexGrow: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
     alignItems: "center",
     paddingBottom: 20,
     position:"relative",
