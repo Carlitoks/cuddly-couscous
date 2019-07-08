@@ -16,10 +16,10 @@ class CardItem extends Component {
   }
 
   render() {
-    const { StripePaymentSourceMeta, navigation } = this.props;
+    const { StripePaymentSourceMeta, navigation, stylesContainer } = this.props;
 
     return (
-      <View style={styles.flexEndCenter}>
+      <View style={stylesContainer ? stylesContainer.flexEndCenter : styles.flexEndCenter}>
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={() => navigation.dispatch({ type: "CardInfoScreen" })}

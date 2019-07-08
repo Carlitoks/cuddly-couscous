@@ -7,8 +7,7 @@ import Icons from "../Icons";
 // Styles
 import styles from "./Styles/CreditCardSectionStyles";
 const creditCardImage = require("../../../Assets/Images/creditCardLeft.png");
-const packageImage = require("../../../Assets/Images/packageImage.png");
-class CreditCardSection extends Component {
+export default class CreditCardSection extends Component {
   constructor(props) {
     super(props);
     /* this.state = {
@@ -18,7 +17,7 @@ class CreditCardSection extends Component {
     };*/
   }
   render() {
-    const { StripePaymentSourceMeta, navigation, haveCard } = this.props;
+    const { navigation, haveCard } = this.props;
 
     return (
       <View style={styles.creditCardContainer}>  
@@ -48,7 +47,7 @@ class CreditCardSection extends Component {
       </View>
       <View style={styles.rowDescription}>  
       {haveCard ?  
-      <CardItem navigation={navigation} />
+      <CardItem stylesContainer ={ {flexEndCenter: { marginTop: 0 }}}navigation={navigation} />
       : 
       <React.Fragment>
 
@@ -65,15 +64,3 @@ class CreditCardSection extends Component {
     );
   }
 }
-
-const mS = state => ({
-  StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta
-});
-
-const mD = {
-};
-
-export default connect(
-  mS,
-  mD
-)(CreditCardSection);
