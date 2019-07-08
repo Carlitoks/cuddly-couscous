@@ -19,7 +19,7 @@ class AccountDetailsView extends Component {
 
   goToPayments = () => {
     const { navigation } = this.props;
-    navigation.dispatch({ type: "PaymentDetailScreen" });
+    navigation.dispatch({ type: "PaymentsView" });
   };
 
   goToPackages = () => {

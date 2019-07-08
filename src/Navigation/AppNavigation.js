@@ -25,7 +25,6 @@ import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissi
 import PackageCheckoutView from "../Containers/Payments/PackageCheckoutView";
 import PaymentScreen from "../Containers/Payments/PaymentScreen";
 import AccountDetailsView from "../Containers/Payments/AccountDetailsView";
-import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
 import AvailablePackagesView from "../Containers/Payments/AvailablePackagesView";
 import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
@@ -73,12 +72,6 @@ const Navigation = StackNavigator(
     },
     AccountDetailsView: {
       screen: AccountDetailsView,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    PaymentDetailScreen: {
-      screen: PaymentDetailScreen,
       navigationOptions: {
         gesturesEnabled: false
       }

@@ -50,7 +50,7 @@ class PaymentButtons extends Component {
       updateUserPaymentDetails({stripeSourceToken: tokenId});
       clearPayments();
       updatePayments({ errors: [] });
-      navigation.dispatch({ type: "Home" });
+      navigation.dispatch({ type: "AccountDetailsView" });
     }catch(err){
       Reactotron.log(err);
       Alert.alert(I18n.t("error"), translateApiError(err, "api.errTemporaryTryAgain"), [
