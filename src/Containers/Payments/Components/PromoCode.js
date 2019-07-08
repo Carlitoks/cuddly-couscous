@@ -19,6 +19,11 @@ class PromoCode extends Component {
     this.props.loadPromocode(this.state.text);
   }
 
+  remove () {
+    this.setState({text: ""});
+    this.props.remove();
+  }
+
   render() {
     return (
       <View style={styles.promoCodeContainer}>
@@ -43,7 +48,7 @@ class PromoCode extends Component {
           </TouchableOpacity>
         </View>
         {this.props.applaied ? 
-          <TouchableOpacity style={styles.infoContainer }>
+          <TouchableOpacity style={styles.infoContainer } onPress={() => {this.remove()}}>
             <Text style={styles.messageError}>
               {I18n.t("packages.browse.promoApplied")} 
             </Text>
