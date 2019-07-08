@@ -7,13 +7,13 @@ import Icons from "../Icons";
 // Styles
 import styles from "./Styles/CreditCardSectionStyles";
 const packageImage = require("../../../Assets/Images/packageImage.png");
-class PackageSection extends Component {
+export default class PackageSection extends Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { StripePaymentSourceMeta, navigation, userPackage } = this.props;
+    const {  navigation, userPackage } = this.props;
 
     return (
       <View style={styles.packageContainer}>
@@ -59,14 +59,3 @@ class PackageSection extends Component {
     );
   }
 }
-
-const mS = state => ({
-  StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta
-});
-
-const mD = {};
-
-export default connect(
-  mS,
-  mD
-)(PackageSection);
