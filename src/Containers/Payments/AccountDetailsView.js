@@ -27,16 +27,21 @@ class AccountDetailsView extends Component {
     navigation.dispatch({ type: "AvailablePackagesView" });
   };
 
+  getPackage () {
+    const {autoreloadMinutePackage, subscribedMinutePackage} = this.props;
+    if (autoreloadMinutePackage) {
+      return autoreloadMinutePackage;
+    }
+    return subscribedMinutePackage || false;
+  }
+
   render() {
     const {
       navigation,
-      stripePaymentToken,
-      StripePaymentSourceMeta,
       user,
-      autoreloadMinutePackage,
-      subscribedMinutePackage
+      hasUnlimitedUse,
     } = this.props;
-    console.log("stripe en AccountDetails", stripePaymentToken, StripePaymentSourceMeta);
+    console.log("stripe en AccountDetails", user.stripePaymentToken, user.StripePaymentSourceMeta);
     return (
       <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -54,8 +59,10 @@ class AccountDetailsView extends Component {
             navbarTitle={I18n.t("account.title")}
           />
           <BalanceHeader
-            havePaymentDetails={stripePaymentToken ? true : false}
+            havePaymentDetails={user.stripePaymentToken ? true : false}
+            hasUnlimitedUse={hasUnlimitedUse}
             minutes={user.availableMinutes}
+            minutePackage={this.getPackage()}
           />
 
           <ScrollView
@@ -68,14 +75,14 @@ class AccountDetailsView extends Component {
                 this.goToPayments();
               }}
               navigation={navigation}
-              haveCard={StripePaymentSourceMeta && StripePaymentSourceMeta.last4 ? true : false}
+              haveCard={user.StripePaymentSourceMeta && user.StripePaymentSourceMeta.last4 ? true : false}
             />
             <PackageSection
               addPackage={() => {
                 this.goToPackages();
               }}
               navigation={navigation}
-              userPackage={false}
+              userPackage={this.getPackage()}
             />
           </ScrollView>
         </View>
@@ -85,9 +92,8 @@ class AccountDetailsView extends Component {
 }
 
 const mS = state => ({
-  stripePaymentToken: state.account.user.stripePaymentToken,
-  StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta,
   user: state.account.user,
+  hasUnlimitedUse: state.account.hasUnlimitedUse,
   autoreloadMinutePackage: state.account.autoreloadMinutePackage,
   subscribedMinutePackage: state.account.subscribedMinutePackage
 });
