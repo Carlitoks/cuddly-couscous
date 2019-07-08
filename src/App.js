@@ -73,6 +73,13 @@ class App extends Component {
     SplashScreen.hide();
     initForensics();
     AppState.addEventListener("change", this._handleAppStateChange);
+    Linking.addEventListener('url', this._handleDeepLink);
+
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        console.tron.log('Initial url is: ' + url);
+      }
+    }).catch(err => console.error('An error occurred', err));
 
     // load store and initialize all the things
     createStore()
@@ -242,11 +249,16 @@ class App extends Component {
     NetInfo.removeEventListener("connectionChange", this.handleConnectivityChange);
     NetInfo.isConnected.removeEventListener("connectionChange", this.handleIsConnectedChange);
     AppState.removeEventListener("change", this._handleAppStateChange);
+    Linking.removeEventListener('url', this._handleDeepLink);
     PushNotification.cleanListeners();
     persistEvents();
     if (!!this.updateFcmTokenListener) {
       this.updateFcmTokenListener.remove();
     }
+  }
+
+  _handleDeepLink(event) {
+    console.tron.log(event.url);
   }
 
   handleConnectivityChange = (connectionInfo) => {
