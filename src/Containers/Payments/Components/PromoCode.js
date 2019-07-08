@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
-import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
-import InputRegular from "../../../Components/InputRegular/InputRegular";
-import { loadMinutePackages, minutePackages } from "../../../Ducks/AccountReducer";
-
 
 // Styles
 import styles from "./Styles/PromoCodeStyles";
 
-class PromoCode extends Component {
+export default class PromoCode extends Component {
   constructor(props) {
     super(props);
     this.state = { text: props.promoCode };
@@ -17,6 +13,11 @@ class PromoCode extends Component {
 
   apply(){
     this.props.loadPromocode(this.state.text);
+  }
+
+  remove () {
+    this.setState({text: ""});
+    this.props.remove();
   }
 
   render() {
@@ -43,7 +44,7 @@ class PromoCode extends Component {
           </TouchableOpacity>
         </View>
         {this.props.applaied ? 
-          <TouchableOpacity style={styles.infoContainer }>
+          <TouchableOpacity style={styles.infoContainer } onPress={() => {this.remove()}}>
             <Text style={styles.messageError}>
               {I18n.t("packages.browse.promoApplied")} 
             </Text>
@@ -65,15 +66,3 @@ class PromoCode extends Component {
     );
   }
 }
-
-const mS = state => ({
-});
-
-const mD = {
-  loadMinutePackages
-};
-
-export default connect(
-  mS,
-  mD
-)(PromoCode);

@@ -50,21 +50,19 @@ class AvailablePackagesView extends Component {
     this.setState({loading: !this.state.loading})
   }
 
-  applyPromocode(promocode){
-  //  this.setState({loading: true})
-    this.props.loadMinutePackages(false,promocode)
+  applyPromocode(promocode = null){
+    this.setState({loading: true, promoCodeError: false});
+    this.props.loadMinutePackages(false, promocode)
     .then(()  => {
-    //  this.setState({loading: false})
       console.log(this.props)
     })
     .catch(err => {
       console.log(err);
-      Alert.alert(
-        I18n.t("error"),
-        translateApiErrorString(err, "api.errTemporary"),
-        [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
-      );
-    }); 
+      this.setState({promoCodeError: translateApiErrorString(err, "api.errTemporary")});
+    })
+    .finally(() => {
+      this.setState({loading: false});
+    })
   }
 
   render() {
@@ -89,6 +87,7 @@ class AvailablePackagesView extends Component {
           error={this.state.promoCodeError}
           applaied={!!this.props.minutePackagePromoCode}
           apply={(promoCode) => this.applyPromocode(promoCode)}
+          remove={() => {this.applyPromocode(null)}}
         />
         {this.state.loading ? 
           <ActivityIndicator size="large" color="purple" style={{ zIndex: 100000, top: 150 }} />  
