@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
-import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
-import InputRegular from "../../../Components/InputRegular/InputRegular";
-import { loadMinutePackages, minutePackages } from "../../../Ducks/AccountReducer";
-
 
 // Styles
 import styles from "./Styles/PromoCodeStyles";
 
-class PromoCode extends Component {
+export default class PromoCode extends Component {
   constructor(props) {
     super(props);
     this.state = { text: props.promoCode };
@@ -70,15 +66,3 @@ class PromoCode extends Component {
     );
   }
 }
-
-const mS = state => ({
-});
-
-const mD = {
-  loadMinutePackages
-};
-
-export default connect(
-  mS,
-  mD
-)(PromoCode);
