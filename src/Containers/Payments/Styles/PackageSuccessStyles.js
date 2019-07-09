@@ -185,24 +185,52 @@ export default StyleSheet.create({
     width:"80%",
     height:85,
     marginLeft:"10%",
-    position:"absolute",
   },
   balanceTitle:{
-    color:"rgba(255, 255, 255, 0.8)",
-    fontSize: 18,
-    position:"absolute",
-    top:0,
-    marginBottom:100,
+    color:"#000000",
+    fontSize: moderateScaleViewports(20),
     fontFamily: Fonts.BaseFont,
   },
-
+  balanceTitleBold:{
+    color:"#000000",
+    fontSize: 20,
+    marginTop:10,
+    marginBottom:15,
+    fontFamily: Fonts.BaseFont,
+  },
+  balanceTitleMin:{
+    color:"#000000",
+    fontSize: 20,
+    marginTop:10,
+    marginBottom:15,
+    fontFamily: Fonts.BaseFont,
+  },
+  balanceTitleValue:{
+    color:"#000000",
+    fontSize: moderateScaleViewports(22),
+    fontFamily: Fonts.BaseFont,
+  },
+  noExpire:{
+    color:"#000000",
+    fontSize: moderateScale(14, 0),
+    fontFamily: Fonts.BaseFont,
+  },
   balanceMinutes:{
     color:"#FFFFFF",
-    fontSize: 26,
+    fontSize: moderateScale(15, 0),
     fontFamily: Fonts.BaseFont,
   },
   minutesLeftContainer: {
     ...baseWell,
-    backgroundColor: "#522092"
+    backgroundColor: "#64A901"
+  },
+  packageContainer:{
+    marginTop: 5,
+    width:"38%",
+  },
+  balanceContainer:{
+    marginTop: 20,
+    width:"80%",
+    height:85,
   },
 });
