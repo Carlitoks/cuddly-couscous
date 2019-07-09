@@ -39,7 +39,7 @@ class PackageCheckoutView extends Component {
     }
 
     purchaseMinutePackage(payload)
-    .then(asd => console.log('purchase', asd))
+    .then(asd => navigation.dispatch({type: 'PackagePurchaseSuccessView'}))
     .catch((e) => {
       console.log(e);
       Alert.alert(I18n.t('error'), translateApiError(e, 'api.errUnexpected'));
