@@ -13,9 +13,10 @@ const DoneImage = require("../../Assets/Images/Done.png");
 
 class PackagePurchaseSuccessView extends Component {
   purchase() {
+    const { navigation } = this.props;
 
     console.log("val de valeria");
-
+    navigation.dispatch({type: "Home"})
   }
 
   render() {
@@ -42,6 +43,20 @@ class PackagePurchaseSuccessView extends Component {
           >
           <Image style={styles.backgroundImage} source={DoneImage} />
           <View style={styles.rowLine}>
+          </View>
+          <View style={styles.balanceMinutesContainer}>
+            <Text style={styles.balanceTitleValue}>{"Jeenie Value Package Added"}</Text>
+            <View style={styles.packageContainer } >
+              <View style={styles.minutesLeftContainer}>
+                <Text style={styles.balanceMinutes}>{I18n.t("packages.success.withReload")}</Text>
+              </View>
+            </View>
+            <View style={styles.balanceContainer } >
+                <Text style={styles.balanceTitle}>{I18n.t("packages.success.balance")}</Text>
+                <Text style={styles.balanceTitleMin}>{I18n.t("account.balanceNum", {num: 75})}</Text>
+                <Text style={styles.noExpire}>{I18n.t("packages.noExpire")}</Text>
+
+            </View>
           </View>
           </ScrollView>
 
