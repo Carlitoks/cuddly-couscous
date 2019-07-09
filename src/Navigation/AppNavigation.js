@@ -23,6 +23,7 @@ import LocationPermissionView from "../Containers/Permissions/LocationPermission
 import NotificationPermissionView from "../Containers/Permissions/NotificationPermissionView";
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
 import PackageCheckoutView from "../Containers/Payments/PackageCheckoutView";
+import PackagePurchaseSuccessView from "../Containers/Payments/PackagePurchaseSuccessView";
 import PaymentScreen from "../Containers/Payments/PaymentScreen";
 import AccountDetailsView from "../Containers/Payments/AccountDetailsView";
 import AvailablePackagesView from "../Containers/Payments/AvailablePackagesView";
@@ -66,6 +67,12 @@ const Navigation = StackNavigator(
     },
     PackageCheckoutView: {
       screen: PackageCheckoutView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    PackagePurchaseSuccessView: {
+      screen: PackagePurchaseSuccessView,
       navigationOptions: {
         gesturesEnabled: false
       }
