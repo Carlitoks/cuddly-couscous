@@ -31,7 +31,6 @@ target 'NewSolo' do
   pod 'RNSVG', :path => "#{node_modules_path}/react-native-svg"
   
   pod "react-native-branch", path: "#{node_modules_path}/react-native-branch"
-  pod "Branch-SDK", path: "#{node_modules_path}/react-native-branch/ios"
   
   pod 'OpenTok', '2.15.3'
 

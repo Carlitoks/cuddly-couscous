@@ -134,5 +134,12 @@
 		<key>test</key>
 		<string>key_test_kaJdBqMKOLs63hdlea2rChacBriHFiAA</string>
 	</dict>
+	<key>URL Types</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string></string>
+		</dict>
+	</array>
 </dict>
 </plist>
