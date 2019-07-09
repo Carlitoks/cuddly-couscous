@@ -26,7 +26,7 @@ export default class PackageSection extends Component {
                   }}
                   style={styles.addCardButton}
                 >
-                  <Text style={styles.addPackageButtonText}>{I18n.t("account.package.add")}</Text>
+                  <Text style={styles.addCardButtonText}>{I18n.t("account.package.add")}</Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -39,17 +39,17 @@ export default class PackageSection extends Component {
             </Text>
           </View>
         ) : (
-          <View style={styles.rowPackageDescription}>
+          <View style={styles.rowDescription}>
             <MinutePackageCard 
               minutePackage = {userPackage}
               selectable={false} // show the select button
               onSelect={ () => {} } // func to call if select button pressed
-              displayReloadNotice={false} // display the reload notice or not
+              displayReloadNotice={true} // display the reload notice or not
               reloadNoticeValue={false} // whether or not the checkbox is selected
               onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
               promoCodeActive={!!this.props.minutePackagePromoCode}
-              discountedPrice={userPackage.adjustedCost != userPackage.cost ? userPackage.adjustedCost : false}
-              special={userPackage.public ? false : I18n.t("minutePackage.special")}
+              discountedPrice={navigation.state.params.minutePackage.adjustedCost != navigation.state.params.minutePackage.cost ? navigation.state.params.minutePackage.adjustedCost : false}
+              special={navigation.state.params.minutePackage.public ? false : I18n.t("minutePackage.special")}
               specialColors={["#F39100", "#FCB753"]}
             />
           </View>
