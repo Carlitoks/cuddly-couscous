@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import OrderSummary from "./Components/OrderSummary";
 import MinutePackageCard from "./Components/MinutePackageCard";
-import purchaseMinutePackage from "../../Ducks/AccountReducer"
+import {purchaseMinutePackage} from "../../Ducks/AccountReducer";
 
 // Styles
 import styles from "./Styles/PackageDetailsStyles";
 import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
 import { Icon } from "react-native-elements";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiError } from "../../I18n/I18n";
 import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 
 
@@ -26,26 +26,29 @@ class PackageCheckoutView extends Component {
 
   purchase() {
     this.setState({loading:true});
-    const { navigation } = this.props;
+    const { navigation, purchaseMinutePackage } = this.props;
     
-    const payload = {
+    let payload2 = {
       postUserMinutePackageReq:{
         minutePackageID: navigation.state.params.minutePackage.id,
-        type: "string"
       },
-      type: "object",
     }
-    const payload2 = {
+    const payload = {
       minutePackageID: navigation.state.params.minutePackage.id,
-      type: "string"
+      minutePackagePromoCodeID: ''
     }
+
+    purchaseMinutePackage(payload)
+    .then(asd => console.log('purchase', asd))
+    .catch((e) => {
+      console.log(e);
+      Alert.alert(I18n.t('error'), translateApiError(e, 'api.errUnexpected'));
+    })
+    .finally(() => {
+      this.setState({loading: false});
+    });
     
-    console.log('props purchase', this.props);
-
-
-    let val = this.props.purchaseMinutePackage(payload)
-    //.then(asd => console.log('purchase', asd));
-    console.log(val);
+    
     
 
   }
@@ -127,7 +130,7 @@ const mS = state => ({
 });
 
 const mD = {
-  purchaseMinutePackage
+  purchaseMinutePackage,
  };
 
 export default connect(
