@@ -57,7 +57,7 @@ export default class BalanceHeader extends Component {
               ? styles.outOfMinutesContainer
               : minutes > 0 && minutes < 6
               ? styles.fewMinutesLeftContainer
-              : styles.minutesLeftInfoContainer
+              : styles.minutesLeftContainer
           }
         >
           <Text style={styles.balanceMinutes}>{I18n.t("account.balanceNum", {num: minutes})}</Text>
