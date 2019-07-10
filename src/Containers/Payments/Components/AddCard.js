@@ -50,6 +50,10 @@ class AddCard extends Component {
       } else {
         this.setState({ date: "" });
       }
+    }else{
+      this.props.updatePayments({
+        isValidDate: false,
+      });
     }
   };
 
@@ -58,6 +62,9 @@ class AddCard extends Component {
     this.props.updatePayments({ cardInfo: updatedCard });
     if (cvv.length >= 3) {
       this.props.updatePayments({ isValidCVV: true });
+    }else{
+      this.props.updatePayments({ isValidCVV: false });
+
     }
   };
 
