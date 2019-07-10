@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View, Alert } from "react-native";
 import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import AddCard from "./Components/AddCard";
@@ -15,7 +15,7 @@ import { stripePublishableKey } from "../../Config/env";
 import Reactotron from "reactotron-react-native";
 import PaymentButtons from "./Components/PaymentButtons";
 import { Icon } from "react-native-elements";
-import { updateUserPaymentDetails } from "../../Ducks/AccountReducer";
+import { updateUserPaymentDetails, removeUserPaymentDetails } from "../../Ducks/AccountReducer";
 import I18n, { translateApiError } from "../../I18n/I18n";
 class EditCardScreen extends Component {
   componentWillMount() {
@@ -24,6 +24,37 @@ class EditCardScreen extends Component {
       //androidPayMode: "test" // Android only
     });
   }
+
+  removePaymentCard = () => {
+    const { removeUserPaymentDetails, navigation } = this.props;
+    Alert.alert(
+      I18n.t("payments.removeCard"),
+      I18n.t("payments.removeCardAlert"),
+      [
+        {
+          text: I18n.t("actions.remove"),
+          onPress: () => {
+            removeUserPaymentDetails()
+            .then(() => {
+              navigation.dispatch({ type: "AccountDetailsView" });
+            })
+            .catch(err => {
+            Alert.alert(I18n.t("error"), translateApiError(err, "api.errTemporaryTryAgain"),[
+              {
+                text:I18n.t("ok")
+              }
+            ])
+            });
+          }
+        },
+        {
+          text: I18n.t("actions.cancel"),
+          onPress: () => {}
+        }
+      ],
+      { cancelable: false }
+    );
+  };
 
   safeEditCard = async () => {
     const {
@@ -73,9 +104,9 @@ class EditCardScreen extends Component {
               </TouchableOpacity>
             }
             rightComponent={
-              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+              <TouchableOpacity activeOpacity={0.8} onPress={() => this.removePaymentCard()}>
                 <View style={styles.cancelButton}>
-                  <Text style={styles.cancelStyle}>{I18n.t("cancel")}</Text>
+                  <Text style={styles.cancelStyle}>{I18n.t("package.remove")}</Text>
                 </View>
               </TouchableOpacity>
             }
@@ -103,6 +134,7 @@ const mD = {
   updatePayments,
   clearPayments,
   updateUserPaymentDetails,
+  removeUserPaymentDetails,
 };
 
 export default connect(

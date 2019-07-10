@@ -39,7 +39,7 @@ export default class CreditCardSection extends Component {
 
       <Text
           style={styles.editText}
-          onPress={() => navigation.dispatch({ type: "CardInfoScreen" })}
+          onPress={() => navigation.dispatch({ type: "EditCardScreen" })}
         >
           {I18n.t("account.card.edit")}
         </Text>
