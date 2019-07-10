@@ -102,7 +102,13 @@ export default StyleSheet.create({
   },
   checkBox: {
     fontFamily: Fonts.BaseFont, 
-    fontSize: 17,
+    fontSize: 12,
+    fontWeight:"normal",
+  },
+  checkboxContainer:{
+    backgroundColor: "#FFFFFF",
+    borderWidth: 0,
+
   },
 
 });

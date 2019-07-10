@@ -15,6 +15,9 @@ import defaultStyles from "./Styles/PackagesStyles";
 class MinutePackageCard extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      checked: false,
+    };
   }
 
   render() {
@@ -90,6 +93,9 @@ class MinutePackageCard extends Component {
             <CheckBox
               title={I18n.t("packages.checkout.reload", { num: 10 })}
               textStyle={styles.checkBox}
+              checked={this.state.checked}
+              containerStyle={styles.checkboxContainer}
+              onPress={() => this.setState({checked: !this.state.checked})}
             />
           </View>
           :
