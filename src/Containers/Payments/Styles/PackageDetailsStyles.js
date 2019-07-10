@@ -37,6 +37,7 @@ export default StyleSheet.create({
   textAddCard: {fontSize: moderateScale(15, 0), color: "#272833", position:"absolute", flexWrap: 'wrap', flex:1},
   itemTextLeftSale: { left:0, fontSize: moderateScale(15, 0), color: "#FF3B30", position:"absolute"},
   itemTextSale: { fontSize: moderateScale(15, 0), color:"#FF3B30", position:"absolute", right:0},
+  editText: { fontSize: moderateScale(15, 0), color:"#007AFF", position:"absolute", right:0},
 
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
@@ -62,7 +63,7 @@ export default StyleSheet.create({
   billView: {
     bottom:0,
     position: "absolute",
-    height:"65%",
+    height:"70%",
     width:"100%",
     backgroundColor:"#FFFFFF"
   },
@@ -117,7 +118,7 @@ export default StyleSheet.create({
     flex:1,
     height: 21,
     width:"90%",
-    marginTop:30,
+    marginTop:20,
     marginBottom:-30,
     flexDirection: "row"
   },
@@ -162,7 +163,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: moderateScaleViewports(16),
+    fontSize: moderateScaleViewports(10),
     fontFamily: Fonts.BaseFont,
     marginLeft: moderateScaleViewports(10),
     marginRight: moderateScaleViewports(30),
