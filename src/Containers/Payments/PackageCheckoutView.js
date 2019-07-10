@@ -47,10 +47,6 @@ class PackageCheckoutView extends Component {
     .finally(() => {
       this.setState({loading: false});
     });
-    
-    
-    
-
   }
 
   render() {
