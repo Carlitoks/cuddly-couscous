@@ -97,6 +97,7 @@ class PackageCheckoutView extends Component {
           discountedPrice={navigation.state.params.minutePackage.adjustedCost != navigation.state.params.minutePackage.cost ? navigation.state.params.minutePackage.adjustedCost : false}
           special={navigation.state.params.minutePackage.public ? false : I18n.t("minutePackage.special")}
           specialColors={["#F39100", "#FCB753"]}
+          reloadNoticeValue={true}
         />
           <View style={styles.billView}>
             <OrderSummary
