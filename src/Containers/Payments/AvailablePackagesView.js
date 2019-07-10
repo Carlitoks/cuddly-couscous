@@ -81,26 +81,27 @@ class AvailablePackagesView extends Component {
           }
           navbarTitle={I18n.t("packages.browse.title")}
         />
-        <Promocode 
-          navigation={navigation} 
-          loading={() => this.loading()}
-          promoCode={this.props.minutePackagePromoCode ? this.props.minutePackagePromoCode : ''}
-          error={this.state.promoCodeError}
-          applaied={!!this.props.minutePackagePromoCode}
-          apply={(promoCode) => this.applyPromocode(promoCode)}
-          remove={() => {this.applyPromocode(null)}}
-        />
-        {this.state.loading ? 
-          <ActivityIndicator size="large" color="purple" style={{ zIndex: 100000, top: 150 }} />  
-        :
+        
           <ScrollView
             automaticallyAdjustContentInsets
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
-          >
-            {this.props.minutePackages ? this.packageRender() : null}
+            >
+            <Promocode 
+              navigation={navigation} 
+              loading={() => this.loading()}
+              promoCode={this.props.minutePackagePromoCode ? this.props.minutePackagePromoCode : ''}
+              error={this.state.promoCodeError}
+              applaied={!!this.props.minutePackagePromoCode}
+              apply={(promoCode) => this.applyPromocode(promoCode)}
+              remove={() => {this.applyPromocode(null)}}
+            />
+            {this.state.loading ? 
+              <ActivityIndicator size="large" color="purple" style={{ zIndex: 100000, top: 150 }} />  
+            :
+              this.props.minutePackages ? this.packageRender() : null
+            }
           </ScrollView>
-       }
         
       </View>
     );
