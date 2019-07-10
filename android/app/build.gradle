@@ -98,6 +98,9 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    packagingOptions {
+        exclude 'META-INF/-no-jdk.kotlin_module'
+    }
     defaultConfig {
         applicationId "com.newsolo"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -143,6 +146,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@segment_analytics-react-native-branch')
     compile project(':react-native-splash-screen')
     compile project(':@segment_analytics-react-native')
     compile project(':react-native-branch')

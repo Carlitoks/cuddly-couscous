@@ -16,7 +16,8 @@
     "postinstall": "cp patches/InstanceIdService.java node_modules/react-native-fcm/android/src/main/java/com/evollu/react/fcm/InstanceIdService.java && cp patches/TagSelect.js node_modules/react-native-tag-select/src/TagSelect.js"
   },
   "dependencies": {
-    "@segment/analytics-react-native": "^0.0.1-beta.3",
+    "@segment/analytics-react-native": "^1.1.0-beta.0",
+    "@segment/analytics-react-native-branch": "1.1.0-beta.0",
     "appcenter": "1.5.1",
     "appcenter-analytics": "1.5.1",
     "appcenter-crashes": "1.5.1",
@@ -84,11 +85,8 @@
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/runtime": "^7.4.4",
-    "babel-jest": "^24.8.0",
-    "jest": "^24.8.0",
-    "metro-react-native-babel-preset": "^0.54.0",
-    "react-test-renderer": "16.8.3",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.8.0",
     "babel-preset-react-native": "4.0.0",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
@@ -100,7 +98,10 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.3",
     "eslint-plugin-react-native": "^3.6.0",
+    "jest": "^24.8.0",
+    "metro-react-native-babel-preset": "^0.54.0",
     "prettier": "^1.15.3",
+    "react-test-renderer": "16.8.3",
     "reactotron-react-native": "^2.1.4"
   },
   "jest": {

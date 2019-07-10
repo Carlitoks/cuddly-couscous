@@ -49,6 +49,8 @@ pod 'AppCenter/Crashes', '~> 1.6.1'
 
   pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
 
+  pod 'RNAnalyticsIntegration-Branch', :path => '../node_modules/@segment/analytics-react-native-branch'
+
 end
 
 post_install do |installer|

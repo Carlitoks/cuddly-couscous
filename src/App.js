@@ -29,9 +29,11 @@ import PushNotification from "./Util/PushNotification";
 import { setInitialScreen } from "./Navigation/AppNavigation";
 import { update as updateAppState } from "./Ducks/AppStateReducer";
 import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
+import Branch from "@segment/analytics-react-native-branch";
+import BranchLib from "react-native-branch";
 
 let CurrentConnectivity = "none";
-
+let branchInstance = null;
 class App extends Component {
   constructor(props) {
     super(props);
@@ -69,17 +71,23 @@ class App extends Component {
     setTimeout(() => {
       this.setState({ splashScreenTimer: true });
     }, 2000);
+
+    branchInstance = BranchLib.subscribe(({ error, params }) => {
+      if (error) {
+        console.error('Error from Branch: ' + error);
+        return
+      }
+
+      console.tron.log(params);
+
+      // A Branch link was opened.
+      // Route link based on data in params.
+    });
+
     this.disableAppCenterCrashes();
     SplashScreen.hide();
     initForensics();
     AppState.addEventListener("change", this._handleAppStateChange);
-    Linking.addEventListener('url', this._handleDeepLink);
-
-    Linking.getInitialURL().then((url) => {
-      if (url) {
-        console.tron.log('Initial url is: ' + url);
-      }
-    }).catch(err => console.error('An error occurred', err));
 
     // load store and initialize all the things
     createStore()
@@ -115,14 +123,12 @@ class App extends Component {
         } else {
           switchLanguage(storeInterfaceLocale[1], this);
         }
-    
+
         // initialize analytics
-        if (!segmentSettings) {
           analytics
-            .setup(analyticsKey, { trackAppLifecycleEvents: true })
+            .setup(analyticsKey, { trackAppLifecycleEvents: true, debug: true, using: [Branch] })
             .then(() => store.dispatch(updateSettings({ segmentSettings: true })))
             .catch(error => console.log(error));
-        }
 
         // trigger network status checks, and work around iOS NetInfo bug
         // set connection data in app state, and track any connection status changes
@@ -139,7 +145,7 @@ class App extends Component {
           } else {
             NetInfo.isConnected.fetch().then((isConnected) => {
               this.handleIsConnectedChange(isConnected);
-            });  
+            });
           }
         });
       })
@@ -249,16 +255,15 @@ class App extends Component {
     NetInfo.removeEventListener("connectionChange", this.handleConnectivityChange);
     NetInfo.isConnected.removeEventListener("connectionChange", this.handleIsConnectedChange);
     AppState.removeEventListener("change", this._handleAppStateChange);
-    Linking.removeEventListener('url', this._handleDeepLink);
     PushNotification.cleanListeners();
     persistEvents();
     if (!!this.updateFcmTokenListener) {
       this.updateFcmTokenListener.remove();
     }
-  }
-
-  _handleDeepLink(event) {
-    console.tron.log(event.url);
+    if (branchInstance) {
+      branchInstance();
+      branchInstance = null
+    }
   }
 
   handleConnectivityChange = (connectionInfo) => {

@@ -3,6 +3,7 @@ package com.newsolo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.segment.analytics.reactnative.integration.branch.RNAnalyticsIntegration_BranchPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.segment.analytics.reactnative.core.RNAnalyticsPackage;
 import io.branch.rnbranch.RNBranchPackage;
@@ -38,6 +39,7 @@ import java.util.Arrays;
 import java.util.List;
 // import Branch and RNBranch
 import io.branch.rnbranch.RNBranchPackage;
+import io.branch.referral.Branch;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -57,6 +59,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNAnalyticsIntegration_BranchPackage(),
             new SplashScreenReactPackage(),
             new RNAnalyticsPackage(),
             new RNBranchPackage(),
@@ -106,5 +109,6 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    Branch.getAutoInstance(this);
   }
 }

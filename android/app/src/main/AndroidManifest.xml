@@ -62,7 +62,7 @@
         </intent-filter>
         <!-- Branch URI Scheme -->
         <intent-filter>
-            <data android:scheme="jeenie://" />
+            <data android:scheme="jeenie" android:host="open" />
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
@@ -83,7 +83,7 @@
       <!-- Branch init -->
         <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_chUoEwSGPRE27nbknnNLOiefAsdRwbwh" />
         <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_kaJdBqMKOLs63hdlea2rChacBriHFiAA" />
-        <meta-data android:name="io.branch.sdk.TestMode" android:value="false" />
+        <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />
 
       <!-- Branch install referrer tracking (optional) -->
       <receiver android:name="io.branch.referral.InstallListener" android:exported="true">

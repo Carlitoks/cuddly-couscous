@@ -933,10 +933,15 @@
     xcode "^2.0.0"
     xmldoc "^0.4.0"
 
-"@segment/analytics-react-native@^0.0.1-beta.3":
-  version "0.0.1-test-publish-ci.1"
-  resolved "https://registry.yarnpkg.com/@segment/analytics-react-native/-/analytics-react-native-0.0.1-test-publish-ci.1.tgz#4862ed5d1417e77f60643b29e5104b35fba8830d"
-  integrity sha512-+6BhHpB6Z+dPtfAR+QJYtGr5pGcYoodY/OBIeFuk7cHERQsiyVcVy+644wSltQYf/Fy5htG8RAO2UvDc1z3gcw==
+"@segment/analytics-react-native-branch@1.1.0-beta.0":
+  version "1.1.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@segment/analytics-react-native-branch/-/analytics-react-native-branch-1.1.0-beta.0.tgz#325e248a1893eca575937fba9a8afca6fd9b436a"
+  integrity sha512-lN9XYU81v/ZvlcdHfbuAzB1C3edpKGrXM4H2QC1946pR4nFI+lyFQwJY5KL9ymKLNisxUk95/dHDxnHSTleVWQ==
+
+"@segment/analytics-react-native@^1.1.0-beta.0":
+  version "1.1.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@segment/analytics-react-native/-/analytics-react-native-1.1.0-beta.0.tgz#7a4d4222986661e5c7a43f960f5334613ff62aec"
+  integrity sha512-JGvs7Q+CaY8lih7NBxeUDkbDzTkNv1YPFm4gZ+FePDcZnKlWZ+JvKBebr87hM57yxuKO641ibZJyXT1zfZ/eiQ==
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"
