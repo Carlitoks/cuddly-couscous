@@ -5,24 +5,45 @@ import metrics from "../../../../Themes/Metrics";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  mainBorderContainer: {
+  topContainer: {
     marginTop: moderateScaleViewports(10),
-    width: metrics.width * 0.9,
+    alignItems: 'center',
+    width: '100%',
+    
+  },
+  mainBorderContainer: {
+    alignItems: 'center',
+    marginTop: moderateScaleViewports(10),
+    
+    backgroundColor: 'white',
+
   },
   borderContainer: {
+    width: "100%",
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
-    width: "100%",
-    height: moderateScaleViewports(31),
-    alignItems: 'center',
+    paddingTop: moderateScaleViewports(7),
+    paddingLeft: moderateScaleViewports(11),
+    paddingRight: moderateScaleViewports(11)
+    
   },
   grandient: {
     width: "100%",
-    zIndex: -10,
+    zIndex: -100000,
     backgroundColor: '#F39100',
     borderTopLeftRadius: moderateScaleViewports(10),
     borderTopRightRadius: moderateScaleViewports(10),
     height: moderateScaleViewports(17)
+  },
+  rowContainer:{
+    zIndex: 10,
+    height: moderateScaleViewports(31),
+    width: '100%',
+    position: 'absolute',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   specialContainer:{
     zIndex: 10,
