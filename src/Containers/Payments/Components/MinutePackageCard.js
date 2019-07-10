@@ -16,7 +16,7 @@ class MinutePackageCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: false,
+      checked: props.reloadNoticeValue,
     };
   }
 
