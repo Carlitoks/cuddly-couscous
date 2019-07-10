@@ -35,6 +35,8 @@ class PackageCheckoutView extends Component {
       autoreload: this.state.reloadable
     }
 
+    console.log(navigation.state.params.minutePackage);
+
     purchaseMinutePackage(payload)
     .then(asd => navigation.dispatch({
       type: 'PackagePurchaseSuccessView', 
