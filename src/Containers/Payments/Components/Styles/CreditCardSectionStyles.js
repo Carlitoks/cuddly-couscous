@@ -68,7 +68,7 @@ export default StyleSheet.create({
     backgroundColor:"#3F1674"
   },
   balanceContainer:{
-    width:"25%",
+    width:"33%",
   },
   balanceMinutesContainer:{
     width:"80%",
@@ -100,7 +100,7 @@ export default StyleSheet.create({
   creditCardContainer:{
     marginTop:30,
     width:"100%",
-    height:"30%",
+    height:"35%",
     backgroundColor:"#FFF",
   },
   row:{
@@ -138,7 +138,12 @@ export default StyleSheet.create({
   },
   addCardButtonText:{
     color: "#FFF",
-    fontSize: 14,
+    fontSize: moderateScale(13, 0),
+    fontFamily: Fonts.BaseFont,
+  },
+  addPackageButtonText:{
+    color: "#FFF",
+    fontSize: moderateScale(12, 0),
     fontFamily: Fonts.BaseFont,
   },
   description:{

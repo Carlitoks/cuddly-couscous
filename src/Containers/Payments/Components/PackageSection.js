@@ -27,7 +27,7 @@ export default class PackageSection extends Component {
                   }}
                   style={styles.addCardButton}
                 >
-                  <Text style={styles.addCardButtonText}>{I18n.t("account.package.add")}</Text>
+                  <Text style={styles.addPackageButtonText}>{I18n.t("account.package.add")}</Text>
                 </TouchableOpacity>
               )}
             </View>

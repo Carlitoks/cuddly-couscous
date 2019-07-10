@@ -106,7 +106,7 @@ class EditCardScreen extends Component {
             rightComponent={
               <TouchableOpacity activeOpacity={0.8} onPress={() => this.removePaymentCard()}>
                 <View style={styles.cancelButton}>
-                  <Text style={styles.cancelStyle}>{I18n.t("package.remove")}</Text>
+                  <Text style={styles.cancelStyle}>{I18n.t("account.package.remove")}</Text>
                 </View>
               </TouchableOpacity>
             }
