@@ -53,9 +53,9 @@ export default class BalanceHeader extends Component {
         >
           <View
           style={
-            minutes === 0
+            minutes < 6 
               ? styles.outOfMinutesContainer
-              : minutes > 0 && minutes < 6
+              : minutes > 5 && minutes < 11
               ? styles.fewMinutesLeftContainer
               : styles.minutesLeftContainer
           }

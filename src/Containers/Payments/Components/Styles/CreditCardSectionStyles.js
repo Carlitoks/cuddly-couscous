@@ -187,6 +187,6 @@ export default StyleSheet.create({
   },
   minutesLeftContainer: {
     ...baseWell,
-    backgroundColor: "#522092"
+    backgroundColor: "transparent"
   },
 });
