@@ -31,7 +31,10 @@ export default class OrderSummary extends Component {
           <Text style={styles.itemTextLeftTitle}>
           {"Credit Card"}
           </Text>
-          {haveCard && <Text style={styles.itemText}>
+          {haveCard && 
+          <Text 
+            style={styles.editText} 
+            onPress={() => navigation.dispatch({ type: "EditCardScreen" })}>
             {"Edit"}
           </Text>}
         </View>
