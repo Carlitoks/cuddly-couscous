@@ -28,15 +28,13 @@ class PackageCheckoutView extends Component {
     this.setState({loading:true});
     const { navigation, purchaseMinutePackage } = this.props;
     
-    let payload2 = {
-      postUserMinutePackageReq:{
-        minutePackageID: navigation.state.params.minutePackage.id,
-      },
-    }
     const payload = {
       minutePackageID: navigation.state.params.minutePackage.id,
-      minutePackagePromoCodeID: ''
+      minutePackagePromoCodeID: '',
+      autoreload: true
     }
+
+    console.log(navigation.state.params.minutePackage);
 
     purchaseMinutePackage(payload)
     .then(asd => navigation.dispatch({type: 'PackagePurchaseSuccessView'}))

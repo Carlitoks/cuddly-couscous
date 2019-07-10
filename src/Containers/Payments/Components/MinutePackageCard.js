@@ -39,16 +39,18 @@ class MinutePackageCard extends Component {
 
     
     return (
-      <View style={styles.mainBorderContainer}>
-        <View style={styles.borderContainer}>
-        { special ? 
-          <View style={styles.specialContainer}>
-            <Text style={styles.specialText}>
-              {I18n.t("minutePackage.special")}
-            </Text>
+      <View style={styles.topContainer}>
+        { special ?
+          <View style={styles.rowContainer}>
+            <View style={styles.specialContainer}>
+              <Text style={styles.specialText}>
+                {I18n.t("minutePackage.special")}
+              </Text>
+            </View>
           </View>
           : null
         }
+        <View style={styles.borderContainer}>
           <LinearGradient
             start={{x: 0, y: 0}} end={{x: 1, y: 0}}
             colors={special ? specialColors : ["#81B831", "#93C848"]}
@@ -68,7 +70,7 @@ class MinutePackageCard extends Component {
           <View>
             <View style={styles.headerContainer}>
               <Text>
-                {minutePackage.minutes} Mins
+                {I18n.t("minutesAbbreviation",{minutes: minutePackage.minutes})}
               </Text>
               { discountedPrice ? 
                 <Text style={styles.discountedPrice}>
@@ -90,6 +92,7 @@ class MinutePackageCard extends Component {
           </View>
         {displayReloadNotice ?
           <View>
+            
             <CheckBox
               title={I18n.t("packages.checkout.reload", { num: 10 })}
               textStyle={styles.checkBox}
