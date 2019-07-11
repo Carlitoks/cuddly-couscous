@@ -29,7 +29,6 @@ import PushNotification from "./Util/PushNotification";
 import { setInitialScreen } from "./Navigation/AppNavigation";
 import { update as updateAppState } from "./Ducks/AppStateReducer";
 import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
-import Branch from "@segment/analytics-react-native-branch";
 import BranchLib from "react-native-branch";
 
 let CurrentConnectivity = "none";
@@ -95,18 +94,18 @@ class App extends Component {
 
           // A Branch link was opened.
           // Route link based on data in params.
-          console.log(params);
+          console.tron.log(params);
         });
 
         BranchLib.getLatestReferringParams().then((lastParams) => {
           // params from last open
-          console.log('branch lastParams: ', lastParams);
+          console.tron.log('branch lastParams: ', lastParams);
           store.dispatch(updateAppState({ openUrlParams : lastParams }));
         });
 
         BranchLib.getFirstReferringParams().then((installParams) => {
           // params from original install
-          console.log('branch installParams: ', installParams);
+          console.tron.log('branch installParams: ', installParams);
           store.dispatch(updateAppState({ installUrlParams: installParams }));
         });
 
@@ -137,7 +136,7 @@ class App extends Component {
 
         // initialize analytics
           analytics
-            .setup(analyticsKey, { trackAppLifecycleEvents: true, debug: true, using: [Branch] })
+            .setup(analyticsKey, { trackAppLifecycleEvents: true, debug: true })
             .then(() => store.dispatch(updateSettings({ segmentSettings: true })))
             .catch(error => console.log(error));
 

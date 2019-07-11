@@ -146,7 +146,6 @@ android {
 }
 
 dependencies {
-    implementation project(':@segment_analytics-react-native-branch')
     compile project(':react-native-splash-screen')
     compile project(':@segment_analytics-react-native')
     compile project(':react-native-branch')

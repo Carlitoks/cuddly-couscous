@@ -29,8 +29,9 @@ target 'NewSolo' do
   pod 'Firebase/Messaging'
 
   pod 'RNSVG', :path => "#{node_modules_path}/react-native-svg"
-  
-  pod "react-native-branch", path: "#{node_modules_path}/react-native-branch"
+
+  pod "react-native-branch", path: "../node_modules/react-native-branch"
+  pod "Branch-SDK", path: "../node_modules/react-native-branch/ios"
   
   pod 'OpenTok', '2.15.3'
 
@@ -48,8 +49,6 @@ pod 'AppCenter/Crashes', '~> 1.6.1'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
   pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
-
-  pod 'RNAnalyticsIntegration-Branch', :path => '../node_modules/@segment/analytics-react-native-branch'
 
 end
 
