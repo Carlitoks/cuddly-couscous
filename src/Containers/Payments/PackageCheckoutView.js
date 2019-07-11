@@ -21,6 +21,7 @@ class PackageCheckoutView extends Component {
 
     this.state = {
       loading: false,
+      reloadable: props.navigation.state.params.minutePackage.reloadable
     };
   }
 
@@ -31,13 +32,16 @@ class PackageCheckoutView extends Component {
     const payload = {
       minutePackageID: navigation.state.params.minutePackage.id,
       minutePackagePromoCodeID: minutePackagePromoCode,
-      autoreload: true
+      autoreload: this.state.reloadable
     }
 
-    console.log(navigation.state.params.minutePackage);
-
     purchaseMinutePackage(payload)
-    .then(asd => navigation.dispatch({type: 'PackagePurchaseSuccessView'}))
+    .then(asd => navigation.dispatch({
+      type: 'PackagePurchaseSuccessView', 
+      params: {
+        minutePackage: navigation.state.params.minutePackage, 
+        reloadable: this.state.reloadable}, 
+      }))
     .catch((e) => {
       console.log(e);
       Alert.alert(I18n.t('error'), translateApiError(e, 'api.errUnexpected'));
@@ -45,6 +49,10 @@ class PackageCheckoutView extends Component {
     .finally(() => {
       this.setState({loading: false});
     });
+  }
+
+  checkboxChange(){
+    this.setState({reloadable: !this.state.reloadable})
   }
 
   render() {
@@ -81,13 +89,12 @@ class PackageCheckoutView extends Component {
           selectable={false} // show the select button
           onSelect={ () => {} } // func to call if select button pressed
           displayReloadNotice={true} // display the reload notice or not
-          reloadNoticeValue={false} // whether or not the checkbox is selected
-          onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
+          reloadNoticeValue={this.state.reloadable} // whether or not the checkbox is selected
+          onReloadNoticeSelect={() => this.checkboxChange()} // func called when reload notice is selected, or unselected, `val` is a boolean
           promoCodeActive={!!this.props.minutePackagePromoCode}
           discountedPrice={navigation.state.params.minutePackage.adjustedCost != navigation.state.params.minutePackage.cost ? navigation.state.params.minutePackage.adjustedCost : false}
           special={navigation.state.params.minutePackage.public ? false : I18n.t("minutePackage.special")}
           specialColors={["#F39100", "#FCB753"]}
-          reloadNoticeValue={true}
         />
           <View style={styles.billView}>
             <OrderSummary

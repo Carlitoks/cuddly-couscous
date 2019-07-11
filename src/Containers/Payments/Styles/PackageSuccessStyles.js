@@ -215,14 +215,23 @@ export default StyleSheet.create({
     fontSize: moderateScale(14, 0),
     fontFamily: Fonts.BaseFont,
   },
-  balanceMinutes:{
+  reload:{
     color:"#FFFFFF",
     fontSize: moderateScale(15, 0),
     fontFamily: Fonts.BaseFont,
   },
-  minutesLeftContainer: {
+  noReload:{
+    color:"#000",
+    fontSize: moderateScale(15, 0),
+    fontFamily: Fonts.BaseFont,
+  },
+  reloadContainer: {
     ...baseWell,
     backgroundColor: "#64A901"
+  },
+  noReloadContainer: {
+    ...baseWell,
+    backgroundColor: "#FFF"
   },
   packageContainer:{
     marginTop: 5,

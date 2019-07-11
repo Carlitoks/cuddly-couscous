@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import I18n from "../../../I18n/I18n";
 import TextBlockButton from "../../../Components/Widgets/TextBlockButton";
 import Icons from "../Icons";
+import MinutePackageCard from "./MinutePackageCard";
+
 // Styles
 import styles from "./Styles/CreditCardSectionStyles";
 const packageImage = require("../../../Assets/Images/packageImage.png");
@@ -45,13 +47,22 @@ export default class PackageSection extends Component {
               minutePackage = {userPackage}
               selectable={false} // show the select button
               onSelect={ () => {} } // func to call if select button pressed
-              displayReloadNotice={true} // display the reload notice or not
+              displayReloadNotice={false} // display the reload notice or not
               reloadNoticeValue={false} // whether or not the checkbox is selected
               onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
               promoCodeActive={!!this.props.minutePackagePromoCode}
-              discountedPrice={navigation.state.params.minutePackage.adjustedCost != navigation.state.params.minutePackage.cost ? navigation.state.params.minutePackage.adjustedCost : false}
-              special={navigation.state.params.minutePackage.public ? false : I18n.t("minutePackage.special")}
+              discountedPrice={userPackage.adjustedCost != userPackage.cost ? userPackage.adjustedCost : false}
+              special={userPackage.public ? false : I18n.t("minutePackage.special")}
               specialColors={["#F39100", "#FCB753"]}
+            />
+            <TextBlockButton
+                text = "account.package.more" // the text in the button
+                disabled = {false} // boolean if disabled, prevents taps and show disabled button styles
+                loading = {{}} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
+                style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
+                disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
+                textStyle = {styles.buttonText} // optional text styles, component should provide defaults
+                onPress = {() => confirm.log('asd')} // function to call when pressed
             />
           </View>
         )}
