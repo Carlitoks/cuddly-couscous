@@ -72,18 +72,6 @@ class App extends Component {
       this.setState({ splashScreenTimer: true });
     }, 2000);
 
-    branchInstance = BranchLib.subscribe(({ error, params }) => {
-      if (error) {
-        console.error('Error from Branch: ' + error);
-        return
-      }
-
-      console.tron.log(params);
-
-      // A Branch link was opened.
-      // Route link based on data in params.
-    });
-
     this.disableAppCenterCrashes();
     SplashScreen.hide();
     initForensics();
@@ -98,6 +86,29 @@ class App extends Component {
         const {
           settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
+
+        branchInstance = BranchLib.subscribe(({ error, params }) => {
+          if (error) {
+            console.error('Error from Branch: ' + error);
+            return
+          }
+
+          // A Branch link was opened.
+          // Route link based on data in params.
+          console.log(params);
+        });
+
+        BranchLib.getLatestReferringParams().then((lastParams) => {
+          // params from last open
+          console.log('branch lastParams: ', lastParams);
+          store.dispatch(updateAppState({ openUrlParams : lastParams }));
+        });
+
+        BranchLib.getFirstReferringParams().then((installParams) => {
+          // params from original install
+          console.log('branch installParams: ', installParams);
+          store.dispatch(updateAppState({ installUrlParams: installParams }));
+        });
 
         // set app UI language
         if (!userLocaleSet) {
