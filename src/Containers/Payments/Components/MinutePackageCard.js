@@ -96,9 +96,9 @@ class MinutePackageCard extends Component {
             <CheckBox
               title={I18n.t("packages.checkout.reload", { num: 10 })}
               textStyle={styles.checkBox}
-              checked={this.state.checked}
+              checked={reloadNoticeValue}
               containerStyle={styles.checkboxContainer}
-              onPress={() => this.setState({checked: !this.state.checked})}
+              onPress={() => onReloadNoticeSelect()}
             />
           </View>
           :

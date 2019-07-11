@@ -12,10 +12,12 @@ import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 const DoneImage = require("../../Assets/Images/Done.png");
 
 class PackagePurchaseSuccessView extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   purchase() {
     const { navigation } = this.props;
-
-    console.log("val de valeria");
     navigation.dispatch({type: "Home"})
   }
 
@@ -45,15 +47,19 @@ class PackagePurchaseSuccessView extends Component {
           <View style={styles.rowLine}>
           </View>
           <View style={styles.balanceMinutesContainer}>
-            <Text style={styles.balanceTitleValue}>{"Jeenie Value Package Added"}</Text>
+            <Text style={styles.balanceTitleValue}>{navigation.state.params.minutePackage.name}</Text>
             <View style={styles.packageContainer } >
-              <View style={styles.minutesLeftContainer}>
-                <Text style={styles.balanceMinutes}>{I18n.t("packages.success.withReload")}</Text>
+              <View style={navigation.state.params.relodable ? styles.reloadContainer : styles.noReloadContainer}>
+                <Text style={navigation.state.params.relodable ? styles.reload : styles.noReload}>
+                  {navigation.state.params.relodable ? 
+                    I18n.t("packages.success.withReload"):I18n.t("packages.success.withoutReload")
+                  }
+                </Text>
               </View>
             </View>
             <View style={styles.balanceContainer } >
                 <Text style={styles.balanceTitle}>{I18n.t("packages.success.balance")}</Text>
-                <Text style={styles.balanceTitleMin}>{I18n.t("account.balanceNum", {num: 75})}</Text>
+                <Text style={styles.balanceTitleMin}>{I18n.t("account.balanceNum", {num: user.availableMinutes})}</Text>
                 <Text style={styles.noExpire}>{I18n.t("packages.noExpire")}</Text>
 
             </View>
