@@ -33,6 +33,7 @@ export default class PromoCode extends Component {
           <TouchableOpacity 
             style={this.props.error ? styles.buttonError : styles.button} 
             onPress={() => this.props.apply(this.state.text)}
+            activeOpacity={0.8}
           >
             <Text style={styles.applyText}>
               {I18n.t("actions.apply")}
@@ -40,7 +41,11 @@ export default class PromoCode extends Component {
           </TouchableOpacity>
         </View>
         {this.props.applaied ? 
-          <TouchableOpacity style={styles.infoContainer } onPress={() => {this.remove()}}>
+          <TouchableOpacity 
+            style={styles.infoContainer } 
+            onPress={() => {this.remove()}}
+            activeOpacity={0.9}
+          >
             <Text style={styles.messageError}>
               {I18n.t("packages.browse.promoApplied")} 
             </Text>
