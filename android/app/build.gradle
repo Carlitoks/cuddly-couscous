@@ -175,6 +175,7 @@ dependencies {
     compile project(':react-native-image-picker')
     compile project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    compile 'io.branch.sdk.android:library:2.+'
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
     compile "com.android.support:support-v4:23.0.1"

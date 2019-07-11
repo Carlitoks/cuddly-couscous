@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@segment/analytics-react-native": "^1.1.0-beta.0",
-    "@segment/analytics-react-native-branch": "1.1.0-beta.0",
     "appcenter": "1.5.1",
     "appcenter-analytics": "1.5.1",
     "appcenter-crashes": "1.5.1",

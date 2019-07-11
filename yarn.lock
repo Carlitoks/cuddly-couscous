@@ -933,11 +933,6 @@
     xcode "^2.0.0"
     xmldoc "^0.4.0"
 
-"@segment/analytics-react-native-branch@1.1.0-beta.0":
-  version "1.1.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@segment/analytics-react-native-branch/-/analytics-react-native-branch-1.1.0-beta.0.tgz#325e248a1893eca575937fba9a8afca6fd9b436a"
-  integrity sha512-lN9XYU81v/ZvlcdHfbuAzB1C3edpKGrXM4H2QC1946pR4nFI+lyFQwJY5KL9ymKLNisxUk95/dHDxnHSTleVWQ==
-
 "@segment/analytics-react-native@^1.1.0-beta.0":
   version "1.1.0-beta.0"
   resolved "https://registry.yarnpkg.com/@segment/analytics-react-native/-/analytics-react-native-1.1.0-beta.0.tgz#7a4d4222986661e5c7a43f960f5334613ff62aec"
