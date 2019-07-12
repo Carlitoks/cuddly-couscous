@@ -63,12 +63,15 @@ export default StyleSheet.create({
     fontSize: moderateScale(18, 0)
   },
   balanceHeader:{
-    height:"15%",
+    height:"17%",
     width:"100%",
     backgroundColor:"#3F1674"
   },
   balanceContainer:{
-    width:"33%",
+    width:"30%",
+  },
+  balanceContainerWhite:{
+    width:"60%",
   },
   balanceMinutesContainer:{
     width:"80%",
@@ -94,7 +97,7 @@ export default StyleSheet.create({
   },
   balanceDescription:{
     color: "rgba(255, 255, 255, 0.8)",
-    fontSize: 14,
+    fontSize: moderateScale(12, 0),
     fontFamily: Fonts.BaseFont,
   },
   creditCardContainer:{
