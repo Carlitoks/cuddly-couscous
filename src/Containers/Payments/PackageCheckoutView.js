@@ -88,7 +88,7 @@ class PackageCheckoutView extends Component {
           minutePackage = {navigation.state.params.minutePackage}
           selectable={false} // show the select button
           onSelect={ () => {} } // func to call if select button pressed
-          displayReloadNotice={true} // display the reload notice or not
+          displayReloadNotice={navigation.state.params.minutePackage.reloadable} // display the reload notice or not
           reloadNoticeValue={this.state.reloadable} // whether or not the checkbox is selected
           onReloadNoticeSelect={() => this.checkboxChange()} // func called when reload notice is selected, or unselected, `val` is a boolean
           promoCodeActive={!!this.props.minutePackagePromoCode}

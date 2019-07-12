@@ -88,8 +88,8 @@ export default StyleSheet.create({
   },
   backgroundImage: {
     marginTop: 31,
-    width: "75%",
-    height: "32%",
+    width: "70%",
+    height: "20%",
     resizeMode: "cover",
   },
   processingView:{
@@ -241,5 +241,23 @@ export default StyleSheet.create({
     marginTop: 20,
     width:"80%",
     height:85,
+  },
+  successContainer:{
+    marginTop: 20,
+    width:"70%",
+    alignItems:"center",
+    marginBottom: moderateScaleViewports(20)
+  },
+  successTitle:{
+    color:"#000000",
+    fontSize: moderateScaleViewports(20),
+    fontFamily: Fonts.BaseFont,
+  },
+  successDescription:{
+    color:"#000000",
+    fontSize: moderateScaleViewports(16),
+    textAlign: 'center',
+    fontFamily: Fonts.BaseFont,
+    marginTop: 14,
   },
 });
