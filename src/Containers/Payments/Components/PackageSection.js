@@ -39,7 +39,7 @@ export default class PackageSection extends Component {
             </Text>
           </View>
         ) : (
-          <View style={styles.rowDescription}>
+          <View style={styles.rowPackageDescription}>
             <MinutePackageCard 
               minutePackage = {userPackage}
               selectable={false} // show the select button
@@ -51,15 +51,6 @@ export default class PackageSection extends Component {
               discountedPrice={userPackage.adjustedCost != userPackage.cost ? userPackage.adjustedCost : false}
               special={userPackage.public ? false : I18n.t("minutePackage.special")}
               specialColors={["#F39100", "#FCB753"]}
-            />
-            <TextBlockButton
-                text = "account.package.more" // the text in the button
-                disabled = {false} // boolean if disabled, prevents taps and show disabled button styles
-                loading = {{}} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
-                style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
-                disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
-                textStyle = {styles.buttonText} // optional text styles, component should provide defaults
-                onPress = {() => confirm.log('asd')} // function to call when pressed
             />
           </View>
         )}
