@@ -16,21 +16,21 @@ export default class PackageSection extends Component {
 
     return (
       <View style={styles.packageContainer}>
-          <View style={styles.row}>
-            <Text style={styles.creditCardTitle}>{I18n.t("account.package.title")}</Text>
-            <View style={styles.buttonContainer}>
-              {!userPackage && (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.addPackage();
-                  }}
-                  style={styles.addCardButton}
-                >
-                  <Text style={styles.addPackageButtonText}>{I18n.t("account.package.add")}</Text>
-                </TouchableOpacity>
-              )}
-            </View>
+        <View style={styles.row}>
+          <Text style={styles.creditCardTitle}>{I18n.t("account.package.title")}</Text>
+          <View style={styles.buttonContainer}>
+            {!userPackage && (
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.addPackage();
+                }}
+                style={styles.addCardButton}
+              >
+                <Text style={styles.addPackageButtonText}>{I18n.t("account.package.add")}</Text>
+              </TouchableOpacity>
+            )}
           </View>
+        </View>
         {!userPackage ? (
           <View style={styles.rowDescription}>
             <Image style={styles.backgroundImage} source={packageImage} />

@@ -9,14 +9,6 @@ export default StyleSheet.create({
     marginTop: moderateScaleViewports(10),
     alignItems: 'center',
     width: metrics.width * 0.9,
-    
-  },
-  mainBorderContainer: {
-    alignItems: 'center',
-    marginTop: moderateScaleViewports(10),
-    
-    backgroundColor: 'white',
-
   },
   borderContainer: {
     width: "100%",
@@ -24,7 +16,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     paddingTop: moderateScaleViewports(7),
-    
   },
   grandient: {
     width: "100%",
@@ -61,6 +52,7 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   mainContainer: {
+    width: "100%",
     backgroundColor: '#FFF',
     flexDirection: 'column',
     justifyContent: 'flex-start',
