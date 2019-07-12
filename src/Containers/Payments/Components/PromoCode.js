@@ -46,7 +46,7 @@ export default class PromoCode extends Component {
             onPress={() => {this.remove()}}
             activeOpacity={0.9}
           >
-            <Text style={styles.messageError}>
+            <Text style={styles.message}>
               {I18n.t("packages.browse.promoApplied")} 
             </Text>
             <Text style={styles.remove}>
