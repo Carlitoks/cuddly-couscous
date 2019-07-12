@@ -31,6 +31,16 @@ export default class OrderSummary extends Component {
           <Text style={styles.itemTextLeftTitle}>
           {"Credit Card"}
           </Text>
+        {!haveCard && 
+        <View style={styles.buttonAddContainer}>
+          <TouchableOpacity
+                    onPress={() => navigation.dispatch({ type: "PaymentsView" })}
+                    style={styles.addCardButton}
+                  >
+                    <Text style={styles.addPackageButtonText}>{I18n.t("account.package.add")}</Text>
+            </TouchableOpacity>
+        </View>
+          }
           {haveCard && 
           <Text 
             style={styles.editText} 
@@ -40,7 +50,7 @@ export default class OrderSummary extends Component {
         </View>
         {haveCard ? <CardItem navigation={navigation} /> :
           <View style={styles.rowAddCard}>
-            <Text style={styles.itemTextLeft}>
+            <Text style={styles.descriptionAddCard}>
                 {I18n.t("packages.checkout.needCard")}
             </Text>
           </View>
@@ -64,7 +74,7 @@ export default class OrderSummary extends Component {
               {promoCode}
             </Text>
             <Text style={styles.itemTextSale}>
-              $ {minutePackage.cost - minutePackage.adjustedCost}
+             - $ {minutePackage.cost - minutePackage.adjustedCost}
             </Text>
           </View>
         }

@@ -24,19 +24,14 @@ class TextBlockButton extends Component {
   }
 
 
-  isDisabled = () => {
-    
-    return false
-  };
-
   render() {
-    const { text, textStyle, style } = this.props;
+    const { text, textStyle, style, disabled } = this.props;
 
     return (
       <View style={style}>
             <TouchableOpacity
-              disabled={this.isDisabled()}
-              style={this.isDisabled() ? styles.buttonDisable : styles.button }
+              disabled={disabled}
+              style={disabled ? styles.buttonDisable : styles.button }
               onPress={this.props.onPress}
             >
               <Text

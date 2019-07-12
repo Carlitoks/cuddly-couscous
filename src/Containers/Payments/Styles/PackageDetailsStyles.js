@@ -38,6 +38,7 @@ export default StyleSheet.create({
   itemTextLeftSale: { left:0, fontSize: moderateScale(15, 0), color: "#FF3B30", position:"absolute"},
   itemTextSale: { fontSize: moderateScale(15, 0), color:"#FF3B30", position:"absolute", right:0},
   editText: { fontSize: moderateScale(15, 0), color:"#007AFF", position:"absolute", right:0},
+  descriptionAddCard: { flex:1, flexWrap:"wrap", fontSize: moderateScale(15, 0), color: "#272833"},
 
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
@@ -115,7 +116,6 @@ export default StyleSheet.create({
     flexDirection: "row"
   },
   rowTitle: {
-    flex:1,
     height: 21,
     width:"90%",
     marginTop:20,
@@ -144,10 +144,9 @@ export default StyleSheet.create({
     marginTop:50,
     marginBottom:10,
     marginLeft:0,
-    flex:1,
-    height: 21,
     width:"80%",
     flexDirection: "row",
+    position: "relative",
   },
 
   button: {
@@ -167,5 +166,25 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     marginLeft: moderateScaleViewports(10),
     marginRight: moderateScaleViewports(30),
+  },
+  addCardButton: {
+    ...baseButton,
+    backgroundColor: "#F39100",
+    borderRadius: moderateScaleViewports(5),
+    borderBottomLeftRadius: moderateScaleViewports(5),
+    borderBottomRightRadius: moderateScaleViewports(5),
+    height: moderateScaleViewports(20),
+    width:moderateScaleViewports(100),
+    flex: 1
+  },
+  addPackageButtonText:{
+    color: "#FFF",
+    fontSize: moderateScale(12, 0),
+    fontFamily: Fonts.BaseFont,
+  },
+  buttonAddContainer: {
+    height: moderateScaleViewports(30),
+    position: "absolute",
+    right:0,
   },
 });

@@ -159,6 +159,7 @@ export default StyleSheet.create({
   },
   rowDescription:{
     flexDirection:"row",
+    paddingLeft:"2.5%",
     width:"95%",
     height:"100%",
     marginTop:20,

@@ -112,7 +112,7 @@ class PackageCheckoutView extends Component {
 
             <TextBlockButton
                 text = "packages.checkout.purchase" // the text in the button
-                disabled = {false} // boolean if disabled, prevents taps and show disabled button styles
+                disabled = {!user.stripePaymentToken} // boolean if disabled, prevents taps and show disabled button styles
                 loading = {this.state.loading} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
                 style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
                 disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
