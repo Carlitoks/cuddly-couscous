@@ -128,6 +128,18 @@ export default StyleSheet.create({
     right:0,
     marginTop: 20,
   },
+  buttonViewPackagesContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(10),
+    width: Metrics.width * 0.90,
+    height: moderateScaleViewports(55),
+    right: "5%",
+    marginBottom: isIphoneXorAbove() ? 44 : 0,
+    position: "absolute",
+    bottom:"1%"
+  },
   addCarduttonText:{
     color: "#FFF",
     fontSize: 14,

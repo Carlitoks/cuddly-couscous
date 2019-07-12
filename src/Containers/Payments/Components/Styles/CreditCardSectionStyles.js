@@ -68,7 +68,7 @@ export default StyleSheet.create({
     backgroundColor:"#3F1674"
   },
   balanceContainer:{
-    width:"30%",
+    width:"27%",
   },
   balanceContainerWhite:{
     width:"60%",
@@ -114,6 +114,7 @@ export default StyleSheet.create({
     position:"relative"    
   },
   creditCardTitle:{
+    fontWeight:"bold",
     color: "#272833",
     fontSize: 18,
     fontFamily: Fonts.BaseFont,
@@ -163,6 +164,16 @@ export default StyleSheet.create({
     width:"95%",
     height:"100%",
     marginTop:20,
+    marginLeft:15,
+    marginRight: 15,
+    position:"relative"    
+  },
+  rowPackageDescription:{
+    flexDirection:"row",
+    paddingLeft:"2.5%",
+    width:"95%",
+    height:"100%",
+    marginTop:5,
     marginLeft:15,
     marginRight: 15,
     position:"relative"    
