@@ -13,6 +13,7 @@ export default StyleSheet.create({
     paddingTop: 10,
     paddingLeft:20,
     paddingBottom: 20,
+    marginBottom: 20,
   },
   promoCodeLabel: {
     fontFamily: Fonts.BaseFont,
