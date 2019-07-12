@@ -22,7 +22,7 @@ class CardItem extends Component {
       <View style={stylesContainer ? stylesContainer.flexEndCenter : styles.flexEndCenter}>
         <TouchableOpacity
           style={styles.itemContainer}
-          onPress={() => navigation.dispatch({ type: "CardInfoScreen" })}
+          onPress={() => navigation.dispatch({ type: "EditCardScreen" })}
         >
           <Text style={styles.itemText}>
             XXXX XXXX XXXX{" "}
