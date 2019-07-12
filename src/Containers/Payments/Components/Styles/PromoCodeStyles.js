@@ -6,12 +6,11 @@ import metrics from "../../../../Themes/Metrics";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   promoCodeContainer: {
-    width: metrics.width * 0.9,
+    width: metrics.width * 0.95,
     backgroundColor:"#FFFFFF",
     flexDirection:"column",
     height:"15%",
     paddingTop: 10,
-    paddingLeft:20,
     paddingBottom: 20,
     marginBottom: 20,
   },
