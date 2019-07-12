@@ -49,7 +49,7 @@ export default class BalanceHeader extends Component {
           <Text style={styles.unlimited}>{I18n.t("account.balanceUnlimited")}</Text>
           :
           <View
-          style={styles.balanceContainer }
+          style={ minutes< 10 ? styles.balanceContainer  : styles.balanceContainerWhite  }
         >
           <View
           style={
