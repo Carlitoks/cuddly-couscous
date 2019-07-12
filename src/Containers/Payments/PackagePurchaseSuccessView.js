@@ -53,13 +53,15 @@ class PackagePurchaseSuccessView extends Component {
           <View style={styles.balanceMinutesContainer}>
             <Text style={styles.balanceTitleValue}>{navigation.state.params.minutePackage.name}</Text>
             <View style={styles.packageContainer } >
-              <View style={navigation.state.params.relodable ? styles.reloadContainer : styles.noReloadContainer}>
-                <Text style={navigation.state.params.relodable ? styles.reload : styles.noReload}>
-                  {navigation.state.params.relodable ? 
-                    I18n.t("packages.success.withReload"):I18n.t("packages.success.withoutReload")
-                  }
-                </Text>
-              </View>
+              {navigation.state.params.reloadable ? 
+                <View style={styles.reloadContainer}>
+                  <Text style={styles.reload}> {I18n.t("packages.success.withReload")} </Text>
+                </View> 
+              :
+                <View style={styles.noReloadContainer}>
+                  <Text style={styles.noReload}> {I18n.t("packages.success.withoutReload")} </Text>
+                </View>
+              }
             </View>
             <View style={styles.balanceContainer } >
                 <Text style={styles.balanceTitle}>{I18n.t("packages.success.balance")}</Text>
