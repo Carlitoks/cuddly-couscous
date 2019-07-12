@@ -44,6 +44,10 @@ class PackagePurchaseSuccessView extends Component {
             contentContainerStyle={styles.scrollViewFlex}
           >
           <Image style={styles.backgroundImage} source={DoneImage} />
+          <View style={styles.successContainer } >
+                <Text style={styles.successTitle}>{I18n.t("packages.success.title")}!</Text>
+                <Text style={styles.successDescription}>{I18n.t("packages.success.description")}</Text>
+          </View>
           <View style={styles.rowLine}>
           </View>
           <View style={styles.balanceMinutesContainer}>
@@ -61,7 +65,6 @@ class PackagePurchaseSuccessView extends Component {
                 <Text style={styles.balanceTitle}>{I18n.t("packages.success.balance")}</Text>
                 <Text style={styles.balanceTitleMin}>{I18n.t("account.balanceNum", {num: user.availableMinutes})}</Text>
                 <Text style={styles.noExpire}>{I18n.t("packages.noExpire")}</Text>
-
             </View>
           </View>
           </ScrollView>
