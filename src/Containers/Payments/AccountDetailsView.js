@@ -83,7 +83,7 @@ class AccountDetailsView extends Component {
                 this.goToPackages();
               }}
               navigation={navigation}
-              userPackage={this.getPackage()}
+              userPackage={false}
             />
           {this.getPackage() && 
             <TextBlockButton
