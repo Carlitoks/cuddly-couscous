@@ -37,7 +37,7 @@ export default class OrderSummary extends Component {
                     onPress={() => navigation.dispatch({ type: "PaymentsView" })}
                     style={styles.addCardButton}
                   >
-                    <Text style={styles.addPackageButtonText}>{I18n.t("account.package.add")}</Text>
+                    <Text style={styles.addPackageButtonText}>{I18n.t("account.card.add")}</Text>
             </TouchableOpacity>
         </View>
           }
