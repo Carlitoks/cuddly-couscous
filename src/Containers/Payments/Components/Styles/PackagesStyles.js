@@ -8,7 +8,7 @@ export default StyleSheet.create({
   topContainer: {
     marginTop: moderateScaleViewports(10),
     alignItems: 'center',
-    width: '100%',
+    width: metrics.width * 0.9,
     
   },
   mainBorderContainer: {
@@ -24,8 +24,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     paddingTop: moderateScaleViewports(7),
-    paddingLeft: moderateScaleViewports(11),
-    paddingRight: moderateScaleViewports(11)
     
   },
   grandient: {
