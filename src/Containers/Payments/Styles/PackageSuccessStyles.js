@@ -88,7 +88,7 @@ export default StyleSheet.create({
   },
   backgroundImage: {
     marginTop: 31,
-    width: "60%",
+    width: "70%",
     height: "20%",
     resizeMode: "cover",
   },
