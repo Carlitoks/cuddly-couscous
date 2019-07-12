@@ -170,7 +170,6 @@ export default StyleSheet.create({
   },
   rowPackageDescription:{
     flexDirection:"row",
-    paddingLeft:"2.5%",
     width:"95%",
     height:"100%",
     marginTop:5,
@@ -181,7 +180,7 @@ export default StyleSheet.create({
   packageContainer:{
     marginTop:30,
     width:"100%",
-    height:"35%",
+    
     backgroundColor:"#FFF",
   },
   editText:{
