@@ -6,13 +6,12 @@ import metrics from "../../../../Themes/Metrics";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   promoCodeContainer: {
-    width: metrics.width * 0.95,
+    width: '100%',
     backgroundColor:"#FFFFFF",
     flexDirection:"column",
-    height:"15%",
+    
+    padding:20,
     paddingTop: 10,
-    paddingBottom: 20,
-    marginBottom: 20,
   },
   promoCodeLabel: {
     fontFamily: Fonts.BaseFont,
@@ -29,10 +28,12 @@ export default StyleSheet.create({
   },
   inputContainer:{
     backgroundColor: 'blue',
-    height:40,
-    width:"90%",
-    flex:1,
-    paddingTop:10,
+    height: 40,
+    width: "90%",
+    flex: 1,
+    paddingTop: 10,
+    paddingRight: 10,
+    marginRight: 10,
   },
   button:{
     flexDirection: 'column',
