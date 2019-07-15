@@ -235,7 +235,7 @@ export default StyleSheet.create({
   },
   packageContainer:{
     marginTop: 5,
-    width:"38%",
+    width:"45%",
   },
   balanceContainer:{
     marginTop: 20,

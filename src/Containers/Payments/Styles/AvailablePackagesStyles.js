@@ -19,7 +19,7 @@ export default StyleSheet.create({
   },
   fullWidth: { flex: 1 },
   wrapperContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#F2F2F2',
     height: '100%'
   },
   height: { height: '100%' },
