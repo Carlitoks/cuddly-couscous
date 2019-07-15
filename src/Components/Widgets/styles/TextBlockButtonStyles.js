@@ -50,7 +50,5 @@ export default StyleSheet.create({
     color: "white",
     fontSize: moderateScaleViewports(16),
     fontFamily: Fonts.BaseFont,
-    marginLeft: moderateScaleViewports(10),
-    marginRight: moderateScaleViewports(30),
   },
 });
