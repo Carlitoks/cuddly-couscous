@@ -47,7 +47,7 @@ class CallButtons extends Component {
           text: I18n.t("ok"),
           onPress: () => {
             navigation.dispatch({
-              type: "PaymentsView"
+              type: "EditCardScreen"
             });
           }
         }

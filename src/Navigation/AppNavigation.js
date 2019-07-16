@@ -24,7 +24,6 @@ import NotificationPermissionView from "../Containers/Permissions/NotificationPe
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
 import PackageCheckoutView from "../Containers/Payments/PackageCheckoutView";
 import PackagePurchaseSuccessView from "../Containers/Payments/PackagePurchaseSuccessView";
-import PaymentScreen from "../Containers/Payments/PaymentScreen";
 import AccountDetailsView from "../Containers/Payments/AccountDetailsView";
 import AvailablePackagesView from "../Containers/Payments/AvailablePackagesView";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
@@ -54,12 +53,6 @@ const Navigation = StackNavigator(
   {
     CallHistory: {
       screen: CallHistory,
-      navigationOptions: {
-        gesturesEnabled: false
-      }
-    },
-    PaymentsView: {
-      screen: PaymentScreen,
       navigationOptions: {
         gesturesEnabled: false
       }
