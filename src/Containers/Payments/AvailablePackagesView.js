@@ -25,7 +25,7 @@ class AvailablePackagesView extends Component {
   
   componentDidMount(){
     this.props.loadMinutePackages(false)
-    .then(()  => this.loading()); 
+    .then(()  => this.setState({loading: false})); 
   }
 
   packageRender(){
@@ -45,10 +45,6 @@ class AvailablePackagesView extends Component {
         special={minutePackage.public ? false : I18n.t("minutePackage.special")}
         specialColors={["#F39100", "#FCB753"]}
       />);
-  }
-
-  loading(){
-    this.setState({loading: !this.state.loading})
   }
 
   applyPromocode(promocode = null){
@@ -97,7 +93,7 @@ class AvailablePackagesView extends Component {
             >
             <Promocode 
               navigation={navigation} 
-              loading={() => this.loading()}
+              loading={this.state.loading}
               promoCode={this.props.minutePackagePromoCode ? this.props.minutePackagePromoCode : ''}
               error={this.state.promoCodeError}
               applaied={!!this.props.minutePackagePromoCode}
