@@ -94,18 +94,18 @@ class App extends Component {
 
           // A Branch link was opened.
           // Route link based on data in params.
-          console.tron.log(params);
+          console.log("current Branch Params: ", params);
         });
 
         BranchLib.getLatestReferringParams().then((lastParams) => {
           // params from last open
-          console.tron.log('branch lastParams: ', lastParams);
+          console.log('branch lastParams: ', lastParams);
           store.dispatch(updateAppState({ openUrlParams : lastParams }));
         });
 
         BranchLib.getFirstReferringParams().then((installParams) => {
           // params from original install
-          console.tron.log('branch installParams: ', installParams);
+          console.log('branch installParams: ', installParams);
           store.dispatch(updateAppState({ installUrlParams: installParams }));
         });
 
