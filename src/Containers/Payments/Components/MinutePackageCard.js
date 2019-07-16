@@ -1,23 +1,22 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, ScrollView } from "react-native";
-import { connect } from "react-redux";
-import I18n from "../../../I18n/I18n";
-import InputRegular from "../../../Components/InputRegular/InputRegular";
-import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
-import { moderateScaleViewports } from "../../../Util/Scaling";
-import metrics from "../../../Themes/Metrics";
+import I18n, { localizePrice } from "../../../I18n/I18n";
 import { CheckBox } from 'react-native-elements'
 import LinearGradient from "react-native-linear-gradient";
 
 // Styles
 import defaultStyles from "./Styles/PackagesStyles";
 
-class MinutePackageCard extends Component {
+export default class MinutePackageCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       checked: props.reloadNoticeValue,
     };
+  }
+
+  renderPrice(amount, currency) {
+    return localizePrice({amount, currency});
   }
 
   render() {
@@ -64,7 +63,7 @@ class MinutePackageCard extends Component {
               {minutePackage.name}
             </Text> 
             <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
-              $ {minutePackage.cost}
+              {this.renderPrice(minutePackage.cost, minutePackage.currency)}
             </Text>
           </View>
           <View>
@@ -74,7 +73,7 @@ class MinutePackageCard extends Component {
               </Text>
               { discountedPrice ? 
                 <Text style={styles.discountedPrice}>
-                  $ {discountedPrice}
+                {this.renderPrice(minutePackage.adjustedCost, minutePackage.currency)}
                 </Text>
               : 
                 null 
@@ -125,13 +124,3 @@ class MinutePackageCard extends Component {
   }
 }
 
-const mS = state => ({
-});
-
-const mD = {
-};
-
-export default connect(
-  mS,
-  mD
-)(MinutePackageCard);
