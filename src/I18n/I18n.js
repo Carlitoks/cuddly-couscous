@@ -202,16 +202,16 @@ export const localizePrice = (price) => {
 
   // some currencies have to be converted for display
   const displayOps = {
-      usd: (amount) => amount/100,
+      usd: (amount) => (amount/100).toFixed(2),
       jpy: (amount) => amount,
-      gbp: (amount) =>  amount/100,
-      eur: (amount) =>  amount/100,
-      cny: (amount) =>  amount/100,
+      gbp: (amount) =>  (amount/100).toFixed(2),
+      eur: (amount) =>  (amount/100).toFixed(2),
+      cny: (amount) =>  (amount/100).toFixed(2),
   };
 
   let num = price.amount
   if (!!displayOps[price.currency]) {
-    num = Number(displayOps[price.currency](num)).toLocaleString(price.currency);
+    num = displayOps[price.currency](num);
   }
-  return i18n.t(`cost.${price.currency}`, {num});
+  return I18n.t(`cost.${price.currency}`, {num});
 };
