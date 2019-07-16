@@ -185,7 +185,13 @@ export default StyleSheet.create({
   packageContainer:{
     marginTop:30,
     width:"100%",
-    
+    height:"35%",
+    backgroundColor:"#FFF",
+  },
+  havePackageContainer:{
+    marginTop:30,
+    width:"100%",
+    height:"55%",
     backgroundColor:"#FFF",
   },
   editText:{

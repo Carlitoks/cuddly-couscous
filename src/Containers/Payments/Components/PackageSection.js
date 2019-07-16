@@ -15,7 +15,7 @@ export default class PackageSection extends Component {
     const {  navigation, userPackage } = this.props;
 
     return (
-      <View style={styles.packageContainer}>
+      <View style={userPackage? styles.havePackageContainer : styles.packageContainer}>
         <View style={styles.row}>
           <Text style={styles.creditCardTitle}>{I18n.t("account.package.title")}</Text>
           <View style={styles.buttonContainer}>
