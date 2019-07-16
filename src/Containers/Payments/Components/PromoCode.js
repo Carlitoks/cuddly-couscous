@@ -31,9 +31,17 @@ export default class PromoCode extends Component {
             placeholderTextColor={"rgba(0, 0, 0, 0.65)"}
           />
           <TouchableOpacity 
-            style={this.props.error ? styles.buttonError : styles.button} 
+            style={
+              this.props.error ? 
+                (styles.buttonError) : 
+                (this.state.text === "" ? 
+                  styles.disabledbutton : 
+                  styles.button
+                )
+            } 
             onPress={() => this.props.apply(this.state.text)}
             activeOpacity={0.8}
+            disabled={this.state.text === ""}
           >
             <Text style={styles.applyText}>
               {I18n.t("actions.apply")}
