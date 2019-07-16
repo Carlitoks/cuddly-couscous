@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Text, View, TouchableOpacity } from "react-native";
 import Icons from "../Icons";
 import CardItem from "./CardItem";
-import I18n from "../../../I18n/I18n";
+import I18n, {localizePrice} from "../../../I18n/I18n";
 // Styles
 //import styles from "./Styles/AddCardStyles";
 
@@ -22,6 +22,11 @@ export default class OrderSummary extends Component {
     this.setState({ date });
 
   };
+
+  renderPrice(amount, currency) {
+    return localizePrice({amount, currency});
+  }
+
   render() {
     const { styles, navigation, haveCard, minutePackage, promoCode } = this.props;
     let cardInfo = { creditCardNumber: "", creditCardIcon: "", expDate: "" };
@@ -65,7 +70,7 @@ export default class OrderSummary extends Component {
             {minutePackage.name}
           </Text>
           <Text style={styles.itemText}>
-            $ {minutePackage.cost}
+            {this.renderPrice(minutePackage.cost, minutePackage.currency)}
           </Text>
         </View>
         { !!minutePackage.adjustedCost && minutePackage.adjustedCost < minutePackage.cost &&
@@ -74,7 +79,7 @@ export default class OrderSummary extends Component {
               {promoCode}
             </Text>
             <Text style={styles.itemTextSale}>
-             - $ {minutePackage.cost - minutePackage.adjustedCost}
+             - {this.renderPrice(minutePackage.cost - minutePackage.adjustedCost, minutePackage.currency)}
             </Text>
           </View>
         }
@@ -84,7 +89,7 @@ export default class OrderSummary extends Component {
           {"Total"}
           </Text>
           <Text style={styles.itemTextTitle}>
-            $ {minutePackage.adjustedCost}
+            {this.renderPrice(!!minutePackage.adjustedCost ? minutePackage.adjustedCost : minutePackage.cost, minutePackage.currency)}
           </Text>
         </View>
       </View>
