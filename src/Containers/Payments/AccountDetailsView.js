@@ -50,7 +50,7 @@ class AccountDetailsView extends Component {
             leftComponent={
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.dispatch({ type: "back" })}
+                onPress={() => navigation.dispatch({ type: "Home" })}
               >
                 <View>
                   <Icon name="chevron-left" type="evilicon" color="white" size={50} />
