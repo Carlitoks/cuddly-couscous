@@ -34,7 +34,7 @@ export default class OrderSummary extends Component {
       <View style={styles.billContainer}>
         <View style={styles.rowTitle}>
           <Text style={styles.itemTextLeftTitle}>
-          {"Credit Card"}
+          {I18n.t("account.card.title")}
           </Text>
         {!haveCard && 
         <View style={styles.buttonAddContainer}>
@@ -50,7 +50,8 @@ export default class OrderSummary extends Component {
           <Text 
             style={styles.editText} 
             onPress={() => navigation.dispatch({ type: "EditCardScreen" })}>
-            {"Edit"}
+            {I18n.t("account.card.edit")}
+            
           </Text>}
         </View>
         {haveCard ? <CardItem navigation={navigation} /> :
@@ -62,7 +63,7 @@ export default class OrderSummary extends Component {
         }
         <View style={styles.rowBill}>
           <Text style={styles.itemTextLeftTitle}>
-            {"Order Summary"}
+            {I18n.t("packages.checkout.summary")}
           </Text>
         </View>
         <View style={styles.row}>
@@ -86,7 +87,7 @@ export default class OrderSummary extends Component {
         <View style={styles.rowLine}/>
         <View style={styles.row}>
           <Text style={styles.itemTextLeftTitle}>
-          {"Total"}
+          {I18n.t("packages.checkout.total")}
           </Text>
           <Text style={styles.itemTextTitle}>
             {this.renderPrice(!!minutePackage.adjustedCost ? minutePackage.adjustedCost : minutePackage.cost, minutePackage.currency)}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, TextInput } from "react-native";
 import I18n from "../../../I18n/I18n";
+import { Icon } from "react-native-elements";
 
 // Styles
 import styles from "./Styles/PromoCodeStyles";
@@ -31,9 +32,17 @@ export default class PromoCode extends Component {
             placeholderTextColor={"rgba(0, 0, 0, 0.65)"}
           />
           <TouchableOpacity 
-            style={this.props.error ? styles.buttonError : styles.button} 
+            style={
+              this.props.error ? 
+                (styles.buttonError) : 
+                (this.state.text === "" ? 
+                  styles.disabledbutton : 
+                  styles.button
+                )
+            } 
             onPress={() => this.props.apply(this.state.text)}
             activeOpacity={0.8}
+            disabled={this.state.text === ""}
           >
             <Text style={styles.applyText}>
               {I18n.t("actions.apply")}
@@ -46,6 +55,7 @@ export default class PromoCode extends Component {
             onPress={() => {this.remove()}}
             activeOpacity={0.9}
           >
+            <Icon name="check" type="material" color="black" size={20} />
             <Text style={styles.message}>
               {I18n.t("packages.browse.promoApplied")} 
             </Text>

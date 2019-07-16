@@ -91,7 +91,6 @@ export default class MinutePackageCard extends Component {
           </View>
         {displayReloadNotice ?
           <View>
-            
             <CheckBox
               title={I18n.t("packages.checkout.reload", { num: 10 })}
               textStyle={styles.checkBox}
@@ -117,6 +116,10 @@ export default class MinutePackageCard extends Component {
           </View>
         :
           null
+        }
+        {!selectable && !displayReloadNotice ?
+          <View style={styles.space}></View>
+          : null
         }
       </View>
     </View>

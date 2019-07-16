@@ -119,7 +119,9 @@ export default StyleSheet.create({
   checkboxContainer:{
     backgroundColor: "#FFFFFF",
     borderWidth: 0,
-
   },
-
+  space:{
+    height: moderateScaleViewports(30),
+    width: '100%',
+  },
 });
