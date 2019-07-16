@@ -13,6 +13,9 @@ import { stripePublishableKey } from "../../Config/env";
 import { Icon } from "react-native-elements";
 import I18n, { translateApiError } from "../../I18n/I18n";
 import { removeUserPaymentDetails } from "../../Ducks/AccountReducer";
+
+import Close from "../../Components/Close/Close";
+
 class AccountDetailsView extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +23,7 @@ class AccountDetailsView extends Component {
 
   goToPayments = () => {
     const { navigation } = this.props;
-    navigation.dispatch({ type: "PaymentsView" });
+    navigation.dispatch({ type: "EditCardScreen" });
   };
 
   goToPackages = () => {
@@ -57,6 +60,13 @@ class AccountDetailsView extends Component {
                 </View>
               </TouchableOpacity>
             }
+            rightComponent={
+              <Close
+                action={() => {
+                  this.props.navigation.dispatch({ type: "Home" });
+                }}
+              />
+            }              
             navbarTitle={I18n.t("account.title")}
           />
           <BalanceHeader
