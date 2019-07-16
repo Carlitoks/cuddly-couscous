@@ -18,7 +18,7 @@ export default class BalanceHeader extends Component {
 
   getSubtitleText () {
     const {havePaymentDetails, hasUnlimitedUse, minutePackage, minutes} = this.props;
-    if (!havePaymentDetails && !hasUnlimitedUse && minutes <= 0) {
+    if (!havePaymentDetails && !hasUnlimitedUse) {
       return I18n.t("account.descriptions.noCardNoPackage");
     }
     if (hasUnlimitedUse && !!minutePackage) {
