@@ -63,9 +63,14 @@ export default StyleSheet.create({
     fontSize: moderateScale(18, 0)
   },
   balanceHeader:{
-    height:"17%",
+    height:"15%",
     width:"100%",
-    backgroundColor:"#3F1674"
+    backgroundColor:"#3F1674",
+    flexDirection:"column",
+    justifyContent:"space-between",
+    paddingBottom:"2%",
+    paddingTop:"2%",
+    paddingLeft:20,
   },
   balanceContainer:{
     width:"27%",

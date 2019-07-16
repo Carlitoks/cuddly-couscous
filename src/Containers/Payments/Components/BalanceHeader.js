@@ -42,7 +42,6 @@ export default class BalanceHeader extends Component {
 
     return (
       <View style={styles.balanceHeader}>  
-      <View style={styles.balanceMinutesContainer}>
         <Text style={styles.balanceTitle}>{I18n.t("packages.success.balance")}</Text>
 
         {hasUnlimitedUse? 
@@ -67,7 +66,6 @@ export default class BalanceHeader extends Component {
           
           }
         <Text style={styles.balanceDescription}>{this.getSubtitleText()}</Text>
-      </View>
     </View>
     );
   }
