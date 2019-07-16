@@ -173,12 +173,12 @@ class MenuView extends Component {
               name="credit-card"
               size={25}
               backgroundColor={
-                isCurrentView(navigation, "PaymentsView")
+                isCurrentView(navigation, "AccountDetailsView")
                   ? Colors.selectedBackground
                   : Colors.background
               }
               iconStyle={
-                isCurrentView(navigation, "PaymentsView")
+                isCurrentView(navigation, "AccountDetailsView")
                   ? styles.selectedOptionMenu
                   : styles.optionMenu
               }

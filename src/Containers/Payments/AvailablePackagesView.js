@@ -9,6 +9,7 @@ import styles from "./Styles/AvailablePackagesStyles";
 import { Icon } from "react-native-elements";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import MinutePackageCard from "./Components/MinutePackageCard";
+import Close from "../../Components/Close/Close";
 
 import { loadMinutePackages } from "../../Ducks/AccountReducer";
 
@@ -78,6 +79,13 @@ class AvailablePackagesView extends Component {
                 <Icon name="chevron-left" type="evilicon" color="white" size={50} />
               </View>
             </TouchableOpacity>
+          }
+          rightComponent={
+            <Close
+              action={() => {
+                this.props.navigation.dispatch({ type: "Home" });
+              }}
+            />
           }
           navbarTitle={I18n.t("packages.browse.title")}
         />

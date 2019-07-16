@@ -34,7 +34,7 @@ export default class OrderSummary extends Component {
         {!haveCard && 
         <View style={styles.buttonAddContainer}>
           <TouchableOpacity
-                    onPress={() => navigation.dispatch({ type: "PaymentsView" })}
+                    onPress={() => navigation.dispatch({ type: "EditCardScreen" })}
                     style={styles.addCardButton}
                   >
                     <Text style={styles.addPackageButtonText}>{I18n.t("account.card.add")}</Text>
