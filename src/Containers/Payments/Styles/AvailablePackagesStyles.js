@@ -19,7 +19,7 @@ export default StyleSheet.create({
   },
   fullWidth: { flex: 1 },
   wrapperContainer: {
-    backgroundColor: '#F2F2F2',
+    backgroundColor: 'red',
     height: '100%'
   },
   height: { height: '100%' },
@@ -30,7 +30,6 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingBottom: 20,
-    backgroundColor: "#F2F2F2"
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
   cancelButton: {
