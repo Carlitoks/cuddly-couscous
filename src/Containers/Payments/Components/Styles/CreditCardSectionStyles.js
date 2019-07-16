@@ -63,9 +63,14 @@ export default StyleSheet.create({
     fontSize: moderateScale(18, 0)
   },
   balanceHeader:{
-    height:"17%",
+    height:"15%",
     width:"100%",
-    backgroundColor:"#3F1674"
+    backgroundColor:"#3F1674",
+    flexDirection:"column",
+    justifyContent:"space-between",
+    paddingBottom:"2%",
+    paddingTop:"2%",
+    paddingLeft:20,
   },
   balanceContainer:{
     width:"27%",
@@ -180,7 +185,13 @@ export default StyleSheet.create({
   packageContainer:{
     marginTop:30,
     width:"100%",
-    
+    height:"35%",
+    backgroundColor:"#FFF",
+  },
+  havePackageContainer:{
+    marginTop:30,
+    width:"100%",
+    height:"55%",
     backgroundColor:"#FFF",
   },
   editText:{

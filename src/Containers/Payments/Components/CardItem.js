@@ -35,7 +35,7 @@ class CardItem extends Component {
             style={styles.cardIcon}
             source={
               StripePaymentSourceMeta && StripePaymentSourceMeta.brand
-                ? Icons[StripePaymentSourceMeta.brand.toLowerCase()]
+                ? Icons[StripePaymentSourceMeta.brand.toLowerCase().replace(/\s/g, "-")]
                 : null
             }
           />

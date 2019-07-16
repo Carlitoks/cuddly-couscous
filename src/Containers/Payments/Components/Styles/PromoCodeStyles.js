@@ -45,6 +45,17 @@ export default StyleSheet.create({
     position:"absolute",
     right:0,
   },
+  disabledbutton:{
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: moderateScaleViewports(73),
+    height: moderateScaleViewports(40),
+    backgroundColor: '#979797',
+    borderTopRightRadius: moderateScaleViewports(10),
+    borderBottomRightRadius: moderateScaleViewports(10),
+    position:"absolute",
+    right:0,
+  },
   applyText:{
     color: '#FFF',
     textAlign: 'center',
