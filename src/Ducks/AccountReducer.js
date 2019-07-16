@@ -360,7 +360,7 @@ export const loadMinutePackages = (useCache = true, code = null) => (dispatch, g
   return new Promise((resolve, reject) => {
     api.get(url)
     .then((res) => {
-      dispatch(merge({
+      dispatch(update({
         minutePackagesLoadedAt: new Date().getTime(),
         minutePackages: res.data,
         minutePackagePromoCode: !!code ? code : null,
