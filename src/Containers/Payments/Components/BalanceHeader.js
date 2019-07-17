@@ -30,8 +30,8 @@ export default class BalanceHeader extends Component {
     if (havePaymentDetails && !minutePackage) {
       return I18n.t("account.descriptions.hasCardNoPackage");
     }
-    if (havePaymentDetails && !!minutePackage && !!minutePackage.reloadAtAmount) {
-      return I18n.t("account.descriptions.hasCardHasPackage", {num: minutePackage.reloadAtAmount});
+    if (havePaymentDetails && !!minutePackage && minutePackage.reloadable) {
+      return I18n.t("account.descriptions.hasCardHasPackage", {num: minutePackage.reloadAtAmount || 0});
     }
 
     return null;
