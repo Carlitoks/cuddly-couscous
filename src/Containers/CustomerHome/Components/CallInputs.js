@@ -25,9 +25,9 @@ class CallInputs extends Component {
     if (hasUnlimitedUse) {
       let d = null;
       try {
-        d = hasUnlimitedUseUntil.format("YYYY/M/D")
+        d = hasUnlimitedUseUntil.format("ll");
       } catch (e) {
-        d = moment().format("YYYY/M/D")
+        d = moment().format("ll");
       }
 
       return I18n.t("newCustomerHome.rateNotices.unlimitedUntil", {date: d});

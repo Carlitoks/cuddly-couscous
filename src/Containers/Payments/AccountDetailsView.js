@@ -44,6 +44,7 @@ class AccountDetailsView extends Component {
       navigation,
       user,
       hasUnlimitedUse,
+      hasUnlimitedUseUntil,
     } = this.props;
     console.log("stripe en AccountDetails", user.stripePaymentToken, user.StripePaymentSourceMeta);
     return (
@@ -72,6 +73,7 @@ class AccountDetailsView extends Component {
           <BalanceHeader
             havePaymentDetails={user.stripePaymentToken ? true : false}
             hasUnlimitedUse={hasUnlimitedUse}
+            hasUnlimitedUseUntil={hasUnlimitedUseUntil}
             minutes={user.availableMinutes}
             minutePackage={this.getPackage()}
           />
@@ -114,6 +116,7 @@ class AccountDetailsView extends Component {
 const mS = state => ({
   user: state.account.user,
   hasUnlimitedUse: state.account.hasUnlimitedUse,
+  hasUnlimitedUseUntil: state.account.hasUnlimitedUseUntil,
   autoreloadMinutePackage: state.account.autoreloadMinutePackage,
   subscribedMinutePackage: state.account.subscribedMinutePackage
 });
