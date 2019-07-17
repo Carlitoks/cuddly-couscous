@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, ScrollView, TouchableOpacity, View, Image } from "react-native";
+import { Text, ScrollView, TouchableOpacity, View, ActivityIndicator, Alert } from "react-native";
 import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import CreditCardSection from "./Components/CreditCardSection";
@@ -12,13 +12,17 @@ import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
 import { Icon } from "react-native-elements";
 import I18n, { translateApiError } from "../../I18n/I18n";
-import { removeUserPaymentDetails } from "../../Ducks/AccountReducer";
+import { removeAutoreloadMinutePackage, removeUserPaymentDetails } from "../../Ducks/AccountReducer";
 
 import Close from "../../Components/Close/Close";
 
 class AccountDetailsView extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      loading: false,
+    }
   }
 
   goToPayments = () => {
@@ -38,6 +42,36 @@ class AccountDetailsView extends Component {
     }
     return subscribedMinutePackage || false;
   }
+  remove(){
+    Alert.alert(
+      I18n.t("removePayment"),
+      I18n.t("logOutConfirmation"),
+      [
+        {
+          text: I18n.t("actions.confirm"),
+          onPress: () => {
+            this.setState({loading: true});
+            this.props.removeAutoreloadMinutePackage()
+            .then(() => {
+              this.setState({loading: false});
+            })
+            .catch(err => {
+              Alert.alert(I18n.t("error"), translateApiError(err, "api.errTemporaryTryAgain"),[
+                {
+                  text:I18n.t("ok")
+                }
+              ])
+            });
+          }
+        },
+        {
+          text: I18n.t("actions.cancel"),
+          onPress: () => {}
+        }
+      ],
+      { cancelable: false }
+    );
+  }
 
   render() {
     const {
@@ -45,7 +79,7 @@ class AccountDetailsView extends Component {
       user,
       hasUnlimitedUse,
     } = this.props;
-    console.log("stripe en AccountDetails", user.stripePaymentToken, user.StripePaymentSourceMeta);
+    console.log("autoreloadMinutePackage en AccountDetails", this.props.autoreloadMinutePackage);
     return (
       <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
@@ -88,13 +122,18 @@ class AccountDetailsView extends Component {
               navigation={navigation}
               haveCard={user.StripePaymentSourceMeta && user.StripePaymentSourceMeta.last4 ? true : false}
             />
-            <PackageSection
-              addPackage={() => {
-                this.goToPackages();
-              }}
-              navigation={navigation}
-              userPackage={this.getPackage()}
-            />
+            {this.state.loading ? 
+              <ActivityIndicator size="large" color="purple" style={{ zIndex: 100000, top: 150 }} />  
+            :
+              <PackageSection
+                addPackage={() => {
+                  this.goToPackages();
+                }}
+                navigation={navigation}
+                userPackage={this.getPackage()}
+                remove={() => this.remove()}
+              />
+            }
           {this.getPackage() && 
             <TextBlockButton
                 text = "account.package.more" // the text in the button
@@ -118,7 +157,10 @@ const mS = state => ({
   subscribedMinutePackage: state.account.subscribedMinutePackage
 });
 
-const mD = { removeUserPaymentDetails };
+const mD = { 
+  removeUserPaymentDetails,
+  removeAutoreloadMinutePackage,
+ };
 
 export default connect(
   mS,
