@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View, Alert } from "react-native";
 import I18n from "../../../I18n/I18n";
 import MinutePackageCard from "./MinutePackageCard";
 
@@ -19,7 +19,7 @@ export default class PackageSection extends Component {
         <View style={styles.row}>
           <Text style={styles.creditCardTitle}>{I18n.t("account.package.title")}</Text>
           <View style={styles.buttonContainer}>
-            {!userPackage && (
+            {!userPackage ? (
               <TouchableOpacity
                 onPress={() => {
                   this.props.addPackage();
@@ -28,7 +28,14 @@ export default class PackageSection extends Component {
               >
                 <Text style={styles.addPackageButtonText}>{I18n.t("account.package.add")}</Text>
               </TouchableOpacity>
-            )}
+            ) : 
+              <Text
+                style={styles.editText}
+                onPress={() => this.props.remove()}
+              >
+                {I18n.t("actions.remove")}
+              </Text>
+            }
           </View>
         </View>
         {!userPackage ? (
