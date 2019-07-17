@@ -9,19 +9,43 @@ import {
   swapCurrentSessionLanguages,
   guessSecondaryLangCode
 } from "../../../Ducks/NewSessionReducer";
-import I18n from "../../../I18n/I18n";
+import I18n, { localizePrice } from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallInputsStyles";
 import { moderateScaleViewports } from "../../../Util/Scaling";
 import { CUSTOMER_FREE_MINUTES } from "../../../Util/Constants";
 
 class CallInputs extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      rate: "wat",
+    };
+
+    // localize the pay-as-you-go rate
+    const { appConfig, user } = this.props;
+    let price = {amount: 100, currency: "usd"};
+    if (!!appConfig && !!appConfig.config && !!appConfig.config.payAsYouGoRate) {
+      const rates = appConfig.config.payAsYouGoRate;
+      if (!!user.currencyPreference && !!rates[user.currencyPreference]) {
+        price = {amount: rates[user.currencyPreference], currency: user.currencyPreference};
+      } else if (!!rates["usd"]) {
+        price = {amount: rates["usd"], currency: "usd"};
+      }
+    }
+    this.state.rate = localizePrice(price);
+  }
+
   componentWillMount() {
     this.props.guessSecondaryLangCode();
   }
 
   paymentNotice = () => {
     const { user, hasUnlimitedUse, hasUnlimitedUseUntil } = this.props;
+    const { rate } = this.state;
+
     if (hasUnlimitedUse) {
       let d = null;
       try {
@@ -37,7 +61,7 @@ class CallInputs extends Component {
     }
     if (user.availableMinutes) {
       if (user.stripePaymentToken) {
-        return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: user.availableMinutes });
+        return I18n.t("newCustomerHome.rateNotices.hasBalanceRate", { rate, num: user.availableMinutes });
       }
     } else {
       if (!user.stripePaymentToken) {
@@ -174,6 +198,7 @@ const mS = state => ({
   hasUnlimitedUse: state.account.hasUnlimitedUse,
   hasUnlimitedUseUntil: state.account.hasUnlimitedUseUntil,
   customerCallHistory: state.account.customerCallHistory,
+  appConfig: state.appConfigReducer
 });
 
 const mD = {
