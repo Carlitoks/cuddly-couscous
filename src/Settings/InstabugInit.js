@@ -21,16 +21,16 @@ const processLocale = locale => {
 const getInstaBugLanguage = locale => {
   const shortLocale = processLocale(locale);
   switch (shortLocale) {
-    case "zh-hant":
-      return Instabug.locale.chineseTraditional;
-    case "zh-hans":
-      return Instabug.locale.chineseSimplified;
-    case "ja":
-      return Instabug.locale.japanese;
-    case "es":
-      return Instabug.locale.spanish;
-    default:
-      return Instabug.locale.english;
+    case "zh-hant": return Instabug.locale.chineseTraditional;
+    case "zh-hans": return Instabug.locale.chineseSimplified;
+    case "ja": return Instabug.locale.japanese;
+    case "es": return Instabug.locale.spanish;
+    case "pt": return Instabug.locale.portugueseBrazil;
+    case "ko": return Instabug.locale.korean;
+    case "fr": return Instabug.locale.french;
+    case "it": return Instabug.locale.italian;
+    case "de": return Instabug.locale.german;
+    default: return Instabug.locale.english;
   }
 };
 
