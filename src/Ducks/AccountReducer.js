@@ -388,6 +388,18 @@ export const purchaseMinutePackage = (payload) => (dispatch, getState) => {
   });
 };
 
+// if user has an autoreload minute package, remove it
+export const removeAutoreloadMinutePackage = () => {
+  return new Promise((resolve, reject) => {
+    api.delete(`${apiURL}/billing/minute-package-autoreload`)
+    .then((res) => {
+      dispatch(setUser(res.data));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
 // load calls placed as a customer
 export const loadCustomerCallHistory = (useCache = true) => (dispatch, getState) => {
   const {customerCallHistory, customerCallHistoryLoadedAt} = getState().account;
