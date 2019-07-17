@@ -1,10 +1,6 @@
 import Instabug from "instabug-reactnative";
 import { instabugToken } from "../Config/env";
-import I18n from "../I18n/I18n";
 import { processColor } from "react-native";
-
-const locale = I18n.currentLocale()
-  .toLocaleLowerCase();
 
 const processLocale = locale => {
   let shortLocale = locale.substring(0, 2);
@@ -34,8 +30,9 @@ const getInstaBugLanguage = locale => {
   }
 };
 
-const instaBugLanguage = getInstaBugLanguage(locale);
-
+export const setInstabugLanguage = (locale) => {
+  Instabug.setLocale(getInstaBugLanguage(locale.toLocaleLowerCase()));
+};
 
 const InitInstabug = (firstName,
                         lastName,
@@ -53,7 +50,6 @@ const InitInstabug = (firstName,
   const event = !!eventId ? ` EventID: ${eventId} ` : "";
   try {
     Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.shake]);
-    Instabug.setLocale(instaBugLanguage);
     Instabug.setViewHierarchyEnabled(false);
     Instabug.setPromptOptionsEnabled(false, true, true);
     Instabug.setEnabledAttachmentTypes(true, true, true, true, true);
