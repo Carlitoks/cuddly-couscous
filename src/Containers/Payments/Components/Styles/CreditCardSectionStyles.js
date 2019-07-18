@@ -175,12 +175,9 @@ export default StyleSheet.create({
   },
   rowPackageDescription:{
     flexDirection:"row",
-    width:"95%",
+    justifyContent: 'center',
     height:"100%",
     marginTop:5,
-    marginLeft:15,
-    marginRight: 15,
-    position:"relative"    
   },
   packageContainer:{
     marginTop:30,
