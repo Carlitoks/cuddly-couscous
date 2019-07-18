@@ -27,28 +27,33 @@ class PackageCheckoutView extends Component {
   }
 
   purchase() {
-    this.setState({loading:true});
-    const { navigation, purchaseMinutePackage, minutePackagePromoCode } = this.props;
-    
-    const payload = {
-      minutePackageID: navigation.state.params.minutePackage.id,
-      minutePackagePromoCodeID: minutePackagePromoCode,
-      autoreload: this.state.reloadable
+    if (this.loading) {
+      return;
     }
-
-    purchaseMinutePackage(payload)
-    .then(asd => navigation.dispatch({
-      type: 'PackagePurchaseSuccessView', 
-      params: {
-        minutePackage: navigation.state.params.minutePackage, 
-        reloadable: this.state.reloadable}, 
-      }))
-    .catch((e) => {
-      console.log(e);
-      Alert.alert(I18n.t('error'), translateApiError(e, 'api.errUnexpected'));
-    })
-    .finally(() => {
-      this.setState({loading: false});
+    this.loading = true;
+    
+    this.setState({loading:true}, () => {
+      const { navigation, purchaseMinutePackage, minutePackagePromoCode } = this.props;
+    
+      const payload = {
+        minutePackageID: navigation.state.params.minutePackage.id,
+        minutePackagePromoCodeID: minutePackagePromoCode,
+        autoreload: this.state.reloadable
+      }
+  
+      purchaseMinutePackage(payload)
+      .then(asd => navigation.dispatch({
+        type: 'PackagePurchaseSuccessView', 
+        params: {
+          minutePackage: navigation.state.params.minutePackage, 
+          reloadable: this.state.reloadable},
+        }))
+      .catch((e) => {
+        console.log(e);
+        Alert.alert(I18n.t('error'), translateApiError(e, 'api.errUnexpected'));
+        this.loading = false;
+        this.setState({loading: false});
+      });
     });
   }
 
