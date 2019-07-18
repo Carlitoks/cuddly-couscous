@@ -93,6 +93,7 @@ class App extends Component {
           }
 
           // A Branch link was opened.
+          analytics.track("Branch Link openen", params);
           // Route link based on data in params.
           console.log("current Branch Params: ", params);
         });
@@ -100,12 +101,14 @@ class App extends Component {
         BranchLib.getLatestReferringParams().then((lastParams) => {
           // params from last open
           console.log('branch lastParams: ', lastParams);
+          analytics.track("Branch lastParams", lastParams);
           store.dispatch(updateAppState({ openUrlParams : lastParams }));
         });
 
         BranchLib.getFirstReferringParams().then((installParams) => {
           // params from original install
           console.log('branch installParams: ', installParams);
+          analytics.track("Branch Install", installParams);
           store.dispatch(updateAppState({ installUrlParams: installParams }));
         });
 

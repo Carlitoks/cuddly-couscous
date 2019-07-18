@@ -46,6 +46,7 @@ export const init = () => (dispatch, getState) => {
   }
   if (!!deviceID) {
     account.currentDeviceID = deviceID;
+    analytics.identify(userID, {deviceID});
   };
   dispatch(initAccount(account));
   return Promise.resolve(true);
@@ -162,7 +163,7 @@ export const logOut = () => (dispatch, getState) => {
     .finally(() => {
       // clear api auth tokens
       setForensicsAuthToken(null);
-      setApiAuthToken(null);      
+      setApiAuthToken(null);
       // attempt to register a new device immediately
       return dispatch(authorizeNewDevice()).finally(resolve).catch(reject);
     });

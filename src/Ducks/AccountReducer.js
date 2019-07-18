@@ -10,6 +10,7 @@ import isEmpty from "lodash/isEmpty";
 import { CACHE } from '../Config/env';
 import api, { uploadFormData, uploadBase64File } from "../Config/AxiosConfig";
 import { getGeolocationCoords } from "../Util/Helpers";
+import analytics from "@segment/analytics-react-native";
 
 // base api url - requires initializing a user in order to be set
 let apiURL = "";
@@ -176,7 +177,7 @@ export const initializeUser = (userID) => (dispatch, getState) => {
   apiURL = `/users/${userID}`;
 
   // clear all account data
-  dispatch(clear()); 
+  dispatch(clear());
 
   // restore some items, because we can't let the user ref be null if has
   // been recovered from storage - it gets referenced in too many places
@@ -187,7 +188,7 @@ export const initializeUser = (userID) => (dispatch, getState) => {
     currentDevice,
     currentDeviceID,
     userID,
-    user, 
+    user,
     userLoadedAt,
     userAvatarURL,
     isLinguist,
@@ -195,9 +196,11 @@ export const initializeUser = (userID) => (dispatch, getState) => {
     isPropspectiveLinguist,
     linguistProfile,
   }));
-  
+
+  analytics.identify(userID, {deviceID: currentDeviceID});
+
   return dispatch(loadUser(false)); // force reload the user
-}
+};
 
 // set the user object, and recalculate any fields derived
 // from the user
