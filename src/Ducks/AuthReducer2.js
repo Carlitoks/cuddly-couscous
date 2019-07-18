@@ -17,6 +17,7 @@ import { clear as clearNewSession } from "./NewSessionReducer";
 
 // deprecated reducers
 import { clear as clearOnboarding } from './OnboardingReducer';
+import branch from "react-native-branch";
 
 // The purpose of this is to manage the core actions of registering a device
 // and logging a user in and out.
@@ -43,10 +44,13 @@ export const init = () => (dispatch, getState) => {
   if (!!userID) {
     account.userID = userID;
     analytics.identify(userID);
+    branch.setIdentity(userID);
   }
   if (!!deviceID) {
     account.currentDeviceID = deviceID;
-    analytics.identify(userID, {deviceID});
+    if(!!userID){
+      analytics.identify( userID, {deviceID});
+    }
   };
   dispatch(initAccount(account));
   return Promise.resolve(true);

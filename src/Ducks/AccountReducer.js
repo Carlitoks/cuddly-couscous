@@ -11,6 +11,7 @@ import { CACHE } from '../Config/env';
 import api, { uploadFormData, uploadBase64File } from "../Config/AxiosConfig";
 import { getGeolocationCoords } from "../Util/Helpers";
 import analytics from "@segment/analytics-react-native";
+import branch from "react-native-branch";
 
 // base api url - requires initializing a user in order to be set
 let apiURL = "";
@@ -197,7 +198,10 @@ export const initializeUser = (userID) => (dispatch, getState) => {
     linguistProfile,
   }));
 
-  analytics.identify(userID, {deviceID: currentDeviceID});
+  if(userID && currentDeviceID){
+    analytics.identify(userID, {deviceID: currentDeviceID});
+    branch.setIdentity(userID);
+  }
 
   return dispatch(loadUser(false)); // force reload the user
 };

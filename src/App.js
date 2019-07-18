@@ -75,7 +75,6 @@ class App extends Component {
     SplashScreen.hide();
     initForensics();
     AppState.addEventListener("change", this._handleAppStateChange);
-
     // load store and initialize all the things
     createStore()
       // initialize app state: ui language and analytics
@@ -85,32 +84,50 @@ class App extends Component {
         const {
           settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
-
         branchInstance = BranchLib.subscribe(({ error, params }) => {
           if (error) {
             console.error('Error from Branch: ' + error);
             return
           }
-
-          // A Branch link was opened.
-          analytics.track("Branch Link openen", params);
+          console.tron.log(!!params["+non_branch_link"]);
+          if(!!!params["cached_initial_event"]){
+            if(!!params["+non_branch_link"]){
+              // A Direct deep link was opened
+              var obj = {};
+              if(params["+non_branch_link"].split("?").length > 1){
+                params["+non_branch_link"].split("?")[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+                  obj[decodeURIComponent(key)] = decodeURIComponent(value);
+                });
+                console.tron.log('solo.link-open', params);
+                analytics.track("solo.link-open", obj);
+                store.dispatch(updateAppState({ openUrlParams : obj }));
+              }
+            } else {
+              // A Branch link was opened.
+              if(params["+is_first_session"]){
+                console.tron.log('solo.branch-install', params);
+                store.dispatch(updateAppState({ installUrlParams: params }));
+                analytics.track("solo.branch-install", params);
+              } else {
+                analytics.track("solo.branch-open", params);
+                store.dispatch(updateAppState({ openUrlParams : params }));
+              }
+            }
+          }
           // Route link based on data in params.
-          console.log("current Branch Params: ", params);
+          console.tron.log("current deep link Params: ", params);
         });
 
+/*       // params from last open
+        // TODO: How to handle this? Should we use an Event?
         BranchLib.getLatestReferringParams().then((lastParams) => {
           // params from last open
-          console.log('branch lastParams: ', lastParams);
-          analytics.track("Branch lastParams", lastParams);
-          store.dispatch(updateAppState({ openUrlParams : lastParams }));
-        });
+        });*/
 
-        BranchLib.getFirstReferringParams().then((installParams) => {
+        //Used to retrieve on demand the install information
+/*        BranchLib.getFirstReferringParams().then((installParams) => {
           // params from original install
-          console.log('branch installParams: ', installParams);
-          analytics.track("Branch Install", installParams);
-          store.dispatch(updateAppState({ installUrlParams: installParams }));
-        });
+        });*/
 
         // set app UI language
         if (!userLocaleSet) {
