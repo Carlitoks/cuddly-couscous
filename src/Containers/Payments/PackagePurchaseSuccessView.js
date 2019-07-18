@@ -72,9 +72,9 @@ class PackagePurchaseSuccessView extends Component {
           </ScrollView>
 
             <TextBlockButton
-                text = "operatingHours.ok" // the text in the button
+                text = {I18n.t("actions.ok")} // the text in the button
                 disabled = {false} // boolean if disabled, prevents taps and show disabled button styles
-                loading = {{}} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
+                loading = {false} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
                 style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
                 disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
                 textStyle = {styles.buttonText} // optional text styles, component should provide defaults

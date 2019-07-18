@@ -23,31 +23,37 @@ class PackageCheckoutView extends Component {
       loading: false,
       reloadable: props.navigation.state.params.minutePackage.reloadable
     };
+    this.loading = false;
   }
 
   purchase() {
-    this.setState({loading:true});
-    const { navigation, purchaseMinutePackage, minutePackagePromoCode } = this.props;
-    
-    const payload = {
-      minutePackageID: navigation.state.params.minutePackage.id,
-      minutePackagePromoCodeID: minutePackagePromoCode,
-      autoreload: this.state.reloadable
+    if (this.loading) {
+      return;
     }
-
-    purchaseMinutePackage(payload)
-    .then(asd => navigation.dispatch({
-      type: 'PackagePurchaseSuccessView', 
-      params: {
-        minutePackage: navigation.state.params.minutePackage, 
-        reloadable: this.state.reloadable}, 
-      }))
-    .catch((e) => {
-      console.log(e);
-      Alert.alert(I18n.t('error'), translateApiError(e, 'api.errUnexpected'));
-    })
-    .finally(() => {
-      this.setState({loading: false});
+    this.loading = true;
+    
+    this.setState({loading:true}, () => {
+      const { navigation, purchaseMinutePackage, minutePackagePromoCode } = this.props;
+    
+      const payload = {
+        minutePackageID: navigation.state.params.minutePackage.id,
+        minutePackagePromoCodeID: minutePackagePromoCode,
+        autoreload: this.state.reloadable
+      }
+  
+      purchaseMinutePackage(payload)
+      .then(asd => navigation.dispatch({
+        type: 'PackagePurchaseSuccessView', 
+        params: {
+          minutePackage: navigation.state.params.minutePackage, 
+          reloadable: this.state.reloadable},
+        }))
+      .catch((e) => {
+        console.log(e);
+        Alert.alert(I18n.t('error'), translateApiError(e, 'api.errUnexpected'));
+        this.loading = false;
+        this.setState({loading: false});
+      });
     });
   }
 
@@ -111,7 +117,7 @@ class PackageCheckoutView extends Component {
           </ScrollView>
 
             <TextBlockButton
-                text = "packages.checkout.purchase" // the text in the button
+                text = {I18n.t("packages.checkout.purchase")} // the text in the button
                 disabled = {!user.stripePaymentToken || this.state.loading} // boolean if disabled, prevents taps and show disabled button styles
                 loading = {this.state.loading} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
                 style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
