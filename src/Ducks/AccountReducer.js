@@ -225,8 +225,8 @@ export const setUser = (user) => (dispatch, getState) => {
       d.hasUnlimitedUseUntil = unlimitedUseUntil;
     }
   }
-  d.autoreloadMinutePackage = user.autoreloadMinutePackage;
-  d.subscribedMinutePackage = user.subscribedMinutePackage;
+  d.autoreloadMinutePackage = user.autoreloadMinutePackage || null;
+  d.subscribedMinutePackage = user.subscribedMinutePackage || null;
 
   // ensure linguist profile availability is actually set
   if (!!d.linguistProfile) {

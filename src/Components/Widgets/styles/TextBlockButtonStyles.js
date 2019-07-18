@@ -9,8 +9,6 @@ const baseButton = {
   justifyContent: "center",
   borderRadius: moderateScaleViewports(10),
   alignItems: "center",
-  borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
-  borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
   height: "100%",
   bottom: 0,
 };
