@@ -160,6 +160,7 @@ export const logOut = () => (dispatch, getState) => {
 
   // reconfigure other stuff in the system
   analytics.reset();
+  branch.logout();
 
   // make the actual logout request to the server
   return new Promise((resolve, reject) => {
