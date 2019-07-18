@@ -89,7 +89,7 @@ class App extends Component {
             console.error('Error from Branch: ' + error);
             return
           }
-          console.tron.log(!!params["+non_branch_link"]);
+          console.log(!!params["+non_branch_link"]);
           if(!!!params["cached_initial_event"]){
             if(!!params["+non_branch_link"]){
               // A Direct deep link was opened
@@ -98,14 +98,14 @@ class App extends Component {
                 params["+non_branch_link"].split("?")[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
                   obj[decodeURIComponent(key)] = decodeURIComponent(value);
                 });
-                console.tron.log('solo.link-open', params);
+                console.log('solo.link-open', params);
                 analytics.track("solo.link-open", obj);
                 store.dispatch(updateAppState({ openUrlParams : obj }));
               }
             } else {
               // A Branch link was opened.
               if(params["+is_first_session"]){
-                console.tron.log('solo.branch-install', params);
+                console.log('solo.branch-install', params);
                 store.dispatch(updateAppState({ installUrlParams: params }));
                 analytics.track("solo.branch-install", params);
               } else {
@@ -115,7 +115,7 @@ class App extends Component {
             }
           }
           // Route link based on data in params.
-          console.tron.log("current deep link Params: ", params);
+          console.log("current deep link Params: ", params);
         });
 
 /*       // params from last open
