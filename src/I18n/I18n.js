@@ -11,6 +11,28 @@ import ko from "./Locales/ko";
 import zh_hans from "./Locales/zh-hans";
 import zh_hant from "./Locales/zh-hant";
 
+// importing moment locales
+import moment from "moment";
+import "moment/locale/es";
+import "moment/locale/ja";
+import "moment/locale/pt-br";
+import "moment/locale/fr";
+import "moment/locale/de";
+import "moment/locale/it";
+import "moment/locale/ko";
+import "moment/locale/zh-cn";
+import "moment/locale/zh-tw";
+
+// util for setting instabug localization
+import { setInstabugLanguage } from "../Settings/InstabugInit";
+
+// explicit map of moment.js locale codes
+const momentLocaleMap = {
+  "zh-hans": "zh-cn",
+  "zh-hant": "zh-tw",
+  "pt": "pt-br",
+};
+
 I18n.fallbacks = true;
 
 I18n.translations = {
@@ -58,6 +80,16 @@ export const switchLanguage = (lang, component) => {
   targetLocale = lang;
   component.forceUpdate();
   redetectLocales();
+
+  // set moment locale
+  if (!!momentLocaleMap[lang]) {
+    moment.locale(momentLocaleMap[lang]);
+  } else {
+    moment.locale(lang);
+  }
+
+  // set instabug lang
+  setInstabugLanguage(lang);
 };
 
 export const translateProperty = (obj, fieldName) => {

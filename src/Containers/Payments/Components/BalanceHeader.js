@@ -4,6 +4,7 @@ import I18n from "../../../I18n/I18n";
 import Icons from "../Icons";
 // Styles
 import styles from "./Styles/CreditCardSectionStyles";
+
 const packageImage = require("../../../Assets/Images/packageImage.png");
 
 export default class BalanceHeader extends Component {
@@ -17,21 +18,27 @@ export default class BalanceHeader extends Component {
   }
 
   getSubtitleText () {
-    const {havePaymentDetails, hasUnlimitedUse, minutePackage, minutes} = this.props;
+    const {
+      havePaymentDetails,
+      hasUnlimitedUse,
+      hasUnlimitedUseUntil,
+      minutePackage,
+    } = this.props;
+
     if (!havePaymentDetails && !hasUnlimitedUse) {
       return I18n.t("account.descriptions.noCardNoPackage");
     }
     if (hasUnlimitedUse && !!minutePackage) {
       // return I18n.t("account.descriptions.hasPackageUnlimitedUse", {date: ""});
     }
-    if (hasUnlimitedUse) {
-      // return I18n.t("account.descriptions.hasUnlimitedUse", {date: ""});
+    if (hasUnlimitedUse && !!hasUnlimitedUseUntil) {
+      return I18n.t("account.descriptions.hasUnlimitedUse", {date: hasUnlimitedUseUntil.format("ll")});
     }
     if (havePaymentDetails && !minutePackage) {
       return I18n.t("account.descriptions.hasCardNoPackage");
     }
-    if (havePaymentDetails && !!minutePackage && !!minutePackage.reloadAtAmount) {
-      return I18n.t("account.descriptions.hasCardHasPackage", {num: minutePackage.reloadAtAmount});
+    if (havePaymentDetails && !!minutePackage && minutePackage.reloadable) {
+      return I18n.t("account.descriptions.hasCardHasPackage", {num: minutePackage.reloadAtAmount || 0});
     }
 
     return null;
