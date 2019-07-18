@@ -23,6 +23,7 @@ class PackageCheckoutView extends Component {
       loading: false,
       reloadable: props.navigation.state.params.minutePackage.reloadable
     };
+    this.loading = false;
   }
 
   purchase() {
@@ -111,7 +112,7 @@ class PackageCheckoutView extends Component {
           </ScrollView>
 
             <TextBlockButton
-                text = "packages.checkout.purchase" // the text in the button
+                text = {I18n.t("packages.checkout.purchase")} // the text in the button
                 disabled = {!user.stripePaymentToken || this.state.loading} // boolean if disabled, prevents taps and show disabled button styles
                 loading = {this.state.loading} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
                 style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
