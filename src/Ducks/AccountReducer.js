@@ -225,8 +225,8 @@ export const setUser = (user) => (dispatch, getState) => {
       d.hasUnlimitedUseUntil = unlimitedUseUntil;
     }
   }
-  d.autoreloadMinutePackage = user.autoreloadMinutePackage;
-  d.subscribedMinutePackage = user.subscribedMinutePackage;
+  d.autoreloadMinutePackage = user.autoreloadMinutePackage || null;
+  d.subscribedMinutePackage = user.subscribedMinutePackage || null;
 
   // ensure linguist profile availability is actually set
   if (!!d.linguistProfile) {
@@ -389,16 +389,16 @@ export const purchaseMinutePackage = (payload) => (dispatch, getState) => {
 };
 
 // if user has an autoreload minute package, remove it
-export const removeAutoreloadMinutePackage = () => {
+export const removeAutoreloadMinutePackage = () => (dispatch, getState) =>  {
   return new Promise((resolve, reject) => {
     api.delete(`${apiURL}/billing/minute-package-autoreload`)
     .then((res) => {
-      dispatch(setUser(res.data));
-      resolve(res.data);
+      return dispatch(loadUser(false));
     })
+    .then(resolve)
     .catch(reject);
   });
-};
+}; 
 
 // load calls placed as a customer
 export const loadCustomerCallHistory = (useCache = true) => (dispatch, getState) => {
