@@ -106,8 +106,6 @@ export default StyleSheet.create({
     borderColor: '#FF3B30', 
     borderWidth: 1,
     width: '80%',
-    color:"#FF3B30",
-    backgroundColor: "#F5F5F5",
     left:0
   },
   buttonError:{
