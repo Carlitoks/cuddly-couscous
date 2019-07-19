@@ -35,11 +35,12 @@ export default StyleSheet.create({
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
   scrollViewFlex: {
+    height:"125%",
     flexGrow: 1,
     flexDirection: "column",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingBottom: 20,
-    position:"relative",
     backgroundColor: "#F2F2F2"
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
@@ -135,10 +136,8 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     width: Metrics.width * 0.90,
     height: moderateScaleViewports(55),
-    right: "5%",
-    marginBottom: isIphoneXorAbove() ? 44 : 0,
-    position: "absolute",
-    bottom:"1%"
+    marginBottom: 20,
+    marginTop:10,
   },
   addCarduttonText:{
     color: "#FFF",

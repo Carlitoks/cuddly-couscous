@@ -83,7 +83,6 @@ class AccountDetailsView extends Component {
     console.log("autoreloadMinutePackage en AccountDetails", this.props.autoreloadMinutePackage);
     return (
       <View style={styles.wrapperContainer}>
-        <View style={[styles.mainContainer]}>
           <NavBar
             leftComponent={
               <TouchableOpacity
@@ -146,7 +145,6 @@ class AccountDetailsView extends Component {
                 onPress = {() => navigation.dispatch({ type: "AvailablePackagesView" })} // function to call when pressed
             />}
           </ScrollView>
-        </View>
       </View>
     );
   }
