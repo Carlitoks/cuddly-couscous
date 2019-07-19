@@ -28,7 +28,7 @@ export default class PromoCode extends Component {
         <View styles={styles.inputContainer}>
           <TextInput
             style={ error ? styles.inputError : styles.input }
-            onChangeText={(text) => this.setState({text})}
+            onChangeText={(text) => this.setState({text: text.trim()})}
             value={this.state.text}
             placeholder={I18n.t("packages.browse.promoPlaceholder")}
             placeholderTextColor={"rgba(0, 0, 0, 0.65)"}
