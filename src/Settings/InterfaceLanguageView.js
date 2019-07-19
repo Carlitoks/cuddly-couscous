@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { ScrollView, View } from "react-native";
 
 import { updateSettings } from "../Ducks/SettingsReducer";
-
 import GoBackButton from "../Components/GoBackButton/GoBackButton";
 import BottomButton from "../Components/BottomButton/BottomButton";
 import ListComponent from "../Components/ListComponent/ListComponent";
@@ -12,6 +11,7 @@ import styles from "./styles";
 import InterfaceLanguagesList from "./InterfaceLanguagesList";
 import { InterfaceSupportedLanguages } from "../Config/Languages";
 import NavBar from "../Components/NavBar/NavBar";
+import DeviceInfo from "react-native-device-info";
 
 class InterfaceLanguageView extends Component {
   state = {
@@ -40,9 +40,10 @@ class InterfaceLanguageView extends Component {
 
   render() {
     const { navigation } = this.props;
+    const Android = DeviceInfo.getSystemName() == "Android";
 
     return (
-      <View style={styles.scrollContainer}>
+      <View style={Android ? styles.scrollContainer1 : styles.scrollContainer}>
         <NavBar
           navigation={this.props.navigation}
           leftComponent={
@@ -53,7 +54,7 @@ class InterfaceLanguageView extends Component {
           }
           navbarTitle={I18n.t("interfaceLocalization")}
         />
-        <ScrollView style={styles.scrollContainer}>
+        <ScrollView style={Android ? styles.scrollContainer1 : styles.scrollContainer}>
           <InterfaceLanguagesList
             updateIndex={indexSelected => {
               this.setState({ indexSelected });

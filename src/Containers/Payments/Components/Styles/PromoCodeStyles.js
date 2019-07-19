@@ -72,12 +72,12 @@ export default StyleSheet.create({
     backgroundColor: "#F5F5F5",
     left:0
   },
-  infoContainer:{
+   infoContainer:{
     flexDirection: "row",
-    height:20,
+    height:18,
     width:"95%",
-    marginTop: 13,
-    position:"relative"
+    marginTop: 7,
+    position:"relative",
     
   },
   remove: {
@@ -106,8 +106,6 @@ export default StyleSheet.create({
     borderColor: '#FF3B30', 
     borderWidth: 1,
     width: '80%',
-    color:"#FF3B30",
-    backgroundColor: "#F5F5F5",
     left:0
   },
   buttonError:{

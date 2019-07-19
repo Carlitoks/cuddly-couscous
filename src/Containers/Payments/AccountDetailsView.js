@@ -140,7 +140,7 @@ class AccountDetailsView extends Component {
             <TextBlockButton
                 text = {I18n.t("account.package.more")} // the text in the button
                 disabled = {false} // boolean if disabled, prevents taps and show disabled button styles
-                loading = {{}} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
+                loading = {""} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
                 style = {styles.buttonViewPackagesContainer} // main container style, component should provide some defaults, like width at 100%
                 textStyle = {styles.buttonText} // optional text styles, component should provide defaults
                 onPress = {() => navigation.dispatch({ type: "AvailablePackagesView" })} // function to call when pressed

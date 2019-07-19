@@ -18,6 +18,8 @@ export default class PromoCode extends Component {
   }
 
   render() {
+    const { error } = this.props;
+
     return (
       <View style={styles.promoCodeContainer}>
         <Text style={styles.promoCodeLabel}>
@@ -25,7 +27,7 @@ export default class PromoCode extends Component {
         </Text>
         <View styles={styles.inputContainer}>
           <TextInput
-            style={ this.props.error ? styles.inputError : styles.input }
+            style={ error ? styles.inputError : styles.input }
             onChangeText={(text) => this.setState({text})}
             value={this.state.text}
             placeholder={I18n.t("packages.browse.promoPlaceholder")}
@@ -33,7 +35,7 @@ export default class PromoCode extends Component {
           />
           <TouchableOpacity 
             style={
-              this.props.error ? 
+              error ? 
                 (styles.buttonError) : 
                 (this.state.text === "" ? 
                   styles.disabledbutton : 

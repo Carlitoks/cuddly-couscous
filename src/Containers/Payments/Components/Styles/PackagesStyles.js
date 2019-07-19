@@ -58,7 +58,15 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     paddingTop: moderateScaleViewports(15),
     paddingLeft: moderateScaleViewports(14),
-    paddingRight: moderateScaleViewports(14)
+    paddingRight: moderateScaleViewports(14),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 2
   },
   headerContainer: {
     paddingTop: moderateScaleViewports(5),
