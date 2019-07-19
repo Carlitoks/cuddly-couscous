@@ -28,13 +28,6 @@ class PackagePurchaseSuccessView extends Component {
       <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
           <NavBar
-            leftComponent={
-              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
-                <View>
-                  <Icon name="chevron-left" type="evilicon" color="white" size={50} />
-                </View>
-              </TouchableOpacity>
-            }
             navbarTitle={I18n.t("packages.success.title")}
           />
 
