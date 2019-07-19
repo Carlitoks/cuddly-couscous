@@ -11,6 +11,7 @@ export default StyleSheet.create({
     flexDirection:"column",
     padding:moderateScaleViewports(30),
     paddingTop: 10,
+    marginBottom: 10,
   },
   promoCodeLabel: {
     fontFamily: Fonts.BaseFont,
