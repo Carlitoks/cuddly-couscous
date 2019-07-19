@@ -168,10 +168,9 @@ export default StyleSheet.create({
     paddingLeft:"2.5%",
     width:"95%",
     height:"100%",
-    marginTop:20,
-    marginLeft:15,
-    marginRight: 15,
-    position:"relative"    
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center' 
   },
   rowPackageDescription:{
     flexDirection:"row",
