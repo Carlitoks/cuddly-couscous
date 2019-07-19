@@ -563,9 +563,6 @@ export default (ENG = {
       video: "Video Call"
     },
     rateNotices: {
-      noBalanceNoCard: "Rate: US $1 per min. Please add card to continue",
-      noBalanceHasCard: "Rate: US $1 per min.",
-      hasBalance: "Rate: US $1 per min. Balance: {{num}} mins",
       noBalanceNoCardRate: "Rate: {{rate}} per min. Please add card to continue",
       noBalanceHasCardRate: "Rate: {{rate}} per min.",
       hasBalanceRate: "Rate: {{rate}} per min. Balance: {{num}} mins",
@@ -582,8 +579,6 @@ export default (ENG = {
   // text for customer related to payments and rates
   payments: {
     currentBalance: "{{minutes}} min",
-    enterPaymentToTalk:
-      "Enter payment details to keep talking. Talk as long as you like for $1/min.",
     enterPaymentToTalkRate:
       "Enter payment details to keep talking. Talk as long as you like for {{rate}}/min.",
     addCard: "Add a Card",
@@ -1000,8 +995,6 @@ export default (ENG = {
     createAccount: "Create Account",
     intro: {
       title: "Real-time Assistance",
-      description:
-        "24/7 access to live, human translators for language help at the tap of a button.  Rate: US$1 per min.",
       descriptionRate:
         "24/7 access to live, human translators for language help at the tap of a button.  Rate: {{rate}} per min.",
       button: "Get Started"

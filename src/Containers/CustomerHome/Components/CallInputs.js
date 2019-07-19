@@ -13,7 +13,6 @@ import I18n, { localizePrice } from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallInputsStyles";
 import { moderateScaleViewports } from "../../../Util/Scaling";
-import { CUSTOMER_FREE_MINUTES } from "../../../Util/Constants";
 
 class CallInputs extends Component {
 
@@ -21,21 +20,8 @@ class CallInputs extends Component {
     super(props);
 
     this.state = {
-      rate: "wat",
+      rate: localizePrice(props.rate),
     };
-
-    // localize the pay-as-you-go rate
-    const { appConfig, user } = this.props;
-    let price = {amount: 100, currency: "usd"};
-    if (!!appConfig && !!appConfig.config && !!appConfig.config.payAsYouGoRate) {
-      const rates = appConfig.config.payAsYouGoRate;
-      if (!!user.currencyPreference && !!rates[user.currencyPreference]) {
-        price = {amount: rates[user.currencyPreference], currency: user.currencyPreference};
-      } else if (!!rates["usd"]) {
-        price = {amount: rates["usd"], currency: "usd"};
-      }
-    }
-    this.state.rate = localizePrice(price);
   }
 
   componentWillMount() {
@@ -54,10 +40,7 @@ class CallInputs extends Component {
         d = moment().format("ll");
       }
 
-      return I18n.t("newCustomerHome.rateNotices.unlimitedUntil", {date: d});
-    }
-    if (this.hasMadeFirstCall()) {
-      return I18n.t("newCustomerHome.rateNotices.beforeFirst", {num: CUSTOMER_FREE_MINUTES});
+      return I18n.t("newCustomerHome.rateNotices.unlimitedUntil", { date: d });
     }
     if (user.availableMinutes) {
       if (user.stripePaymentToken) {
@@ -65,24 +48,12 @@ class CallInputs extends Component {
       }
     } else {
       if (!user.stripePaymentToken) {
-        return I18n.t("newCustomerHome.rateNotices.noBalanceNoCard");
+        return I18n.t("newCustomerHome.rateNotices.noBalanceNoCardRate", { rate });
       }
-      return I18n.t("newCustomerHome.rateNotices.noBalanceHasCard");
+      return I18n.t("newCustomerHome.rateNotices.noBalanceHasCardRate", { rate });
     }
-    return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: user.availableMinutes });
+    return I18n.t("newCustomerHome.rateNotices.hasBalanceRate", { rate, num: user.availableMinutes });
   };
-
-  hasMadeFirstCall () {
-    const history = this.props.customerCallHistory;
-    if (!!history && history.length > 0) {
-      for (let call of history) {
-        if (call.duration > 0) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
 
   render() {
     const {
@@ -198,7 +169,7 @@ const mS = state => ({
   hasUnlimitedUse: state.account.hasUnlimitedUse,
   hasUnlimitedUseUntil: state.account.hasUnlimitedUseUntil,
   customerCallHistory: state.account.customerCallHistory,
-  appConfig: state.appConfigReducer
+  rate: state.appConfigReducer.payAsYouGoRate,
 });
 
 const mD = {

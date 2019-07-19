@@ -12,6 +12,9 @@ import {
   init as initAccount,
   initializeDevice
 } from "./AccountReducer";
+import {
+  computePayAsYouGoRate,
+} from "./AppConfigReducer";
 import { clear as clearCurrentSession } from "./CurrentSessionReducer";
 import { clear as clearNewSession } from "./NewSessionReducer";
 
@@ -82,6 +85,7 @@ export const authorizeNewDevice = () => (dispatch, getState) => {
         deviceJwtToken: jwt,
       }));
       dispatch(initializeDevice(deviceID));
+      dispatch(computePayAsYouGoRate());
       resolve(res.data);
     })
     .catch(reject);
@@ -104,6 +108,7 @@ export const logIn = (email, password) => (dispatch, getState) => {
           userJwtToken: jwt,
           isLoggedIn: true
         }));
+        dispatch(computePayAsYouGoRate());
         return dispatch(initializeUser(userID));
       })
       .then(resolve)
@@ -149,6 +154,7 @@ export const logOut = () => (dispatch, getState) => {
   dispatch(clearAccount()); // clear account reducer
   dispatch(clearCurrentSession()); // clear current session reducer
   dispatch(clearNewSession()); // clear new session reducer
+  dispatch(computePayAsYouGoRate());
 
   // clear depreacted reducers, TODO: remove this once feasible
   dispatch(clearOnboarding());

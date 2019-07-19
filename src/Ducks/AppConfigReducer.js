@@ -1,10 +1,13 @@
 // The purpose of this is to manage configuration for the app that is
 // determined by external sources (the API primarily)
 
+import DeviceInfo from "react-native-device-info";
+
 import lodashMerge from 'lodash/merge';
 import api from "../Config/AxiosConfig";
 import { CACHE } from "../Config/env";
 import { supportedLangCodes } from '../Config/Languages';
+import { getCountryCodeFromLocale } from '../Util/Helpers';
 
 const ACTIONS = {
   CLEAR: "appConfig/clear",
@@ -48,14 +51,17 @@ const initState = () => {
 };
 
 // initialize app config and set any state
-export const init () => (dispatch, getState) => {
+export const init = () => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
-    dispatch(loadConfig(false))
-    .then((res) => {
+    Promise.all([
+      dispatch(loadConfig(false)),
+      dispatch(updateJeenieCounts(true)),
+    ])
+    .then(resolve)
+    .catch(reject)
+    .finally(() => {
       dispatch(computePayAsYouGoRate());
-      resolve();
-    })
-    .catch(reject);
+    });    
   });
 };
 
@@ -147,16 +153,21 @@ export const computePayAsYouGoRate = () => (dispatch, getState) => {
   const user = getState().account.user;
   const device = getState().account.device;
   const c = getState().appConfigReducer.config;
-  const rates = !!c && !!c.config && !!c.config.payAsYouGoRate ? c.config.payAsYouGoRate : null;
+  const rates = (!!c && !!c.payAsYouGoRate) ? c.payAsYouGoRate : null;
+  const countryCurrencyMap = (!!c && !!c.defaultCountryCurrencies) ? c.defaultCountryCurrencies : null;
   
   // set the default price in case we don't have any other config
   let price = {amount: 100, currency: "usd"};
 
   // now figure out the dynamic localized price based given available data
   if (!!rates) {
-    // first check if there's a device
-    if (!!device && !!device.locale) {
-      // TODO: get country code from device and check currency mapping
+    // check for device locale to try and determine correct currency first
+    if (!!countryCurrencyMap) {
+      const l = (!!device && !!device.locale) ? device.locale.toLowerCase() : DeviceInfo.getDeviceLocale();
+      code = getCountryCodeFromLocale(l);
+      if (!!code && !!countryCurrencyMap[code] && !!rates[countryCurrencyMap[code]]) {
+        price = {amount: rates[countryCurrencyMap[code]], currency: countryCurrencyMap[code]};
+      }
     }
 
     // now check user, user pref overrides device preference
@@ -167,7 +178,7 @@ export const computePayAsYouGoRate = () => (dispatch, getState) => {
     }
   }
 
-  dispatch(update(payAsYouGoRate: price));
+  dispatch(update({payAsYouGoRate: price}));
 };
 
 const appConfigReducer = (state = null, action = {}) => {

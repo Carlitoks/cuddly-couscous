@@ -234,16 +234,17 @@ export const localizePrice = (price) => {
 
   // some currencies have to be converted for display
   const displayOps = {
-      usd: (amount) => (amount/100).toFixed(2),
+      usd: (amount) => (amount/100),
       jpy: (amount) => amount,
-      gbp: (amount) =>  (amount/100).toFixed(2),
-      eur: (amount) =>  (amount/100).toFixed(2),
-      cny: (amount) =>  (amount/100).toFixed(2),
+      gbp: (amount) =>  (amount/100),
+      eur: (amount) =>  (amount/100),
+      cny: (amount) =>  (amount/100),
   };
 
   let num = price.amount
   if (!!displayOps[price.currency]) {
     num = displayOps[price.currency](num);
   }
+  num = (num % 1 == 0) ? num : num.toFixed(2);
   return I18n.t(`cost.${price.currency}`, {num});
 };
