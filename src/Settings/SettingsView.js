@@ -31,7 +31,7 @@ class SettingsView extends Component {
   }
 
   render() {
-    const { navigation, logOut, interfaceLocale, isLinguist } = this.props;
+    const { navigation, user, interfaceLocale, isLinguist } = this.props;
 
     return (
       <View style={styles.scrollContainer}>
@@ -69,7 +69,7 @@ class SettingsView extends Component {
                 }}
               />
               {/* Payment details */}
-              {isLinguist ? null : (
+              {!!user && !isLinguist && (
                 <ListItem
                   containerStyle={styles.listItemContainer}
                   title={I18n.t("paymentDetails")}
@@ -77,6 +77,9 @@ class SettingsView extends Component {
                   // subtitle={selectedNativeLanguage}
                   subtitleStyle={styles.listSubtitle}
                   onPress={() => {
+                    if (!user) {
+                      return;
+                    }
                     navigation.dispatch({
                       type: "AccountDetailsView",
                       params: {
@@ -110,6 +113,7 @@ class SettingsView extends Component {
 }
 
 const mS = state => ({
+  user: state.account.user,
   routes: state.nav.routes[0].routes[0].routes,
   interfaceLocale: state.settings.interfaceLocale,
   isLinguist: !!state.account.linguistProfile
