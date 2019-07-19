@@ -114,7 +114,7 @@ export const loadConfig = (useCache = true) => (dispatch, getState) => {
     api.get("/config")
     .then((res) => {
       // TODO: calcluate any extra state values derived from the server config
-      dispatch(merge({
+      dispatch(update({
         configLoadedAt: new Date().getTime(),
         config: res.data,
       }));

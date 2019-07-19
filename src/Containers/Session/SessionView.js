@@ -64,7 +64,6 @@ const newUserState = (obj = {}) => {
       speakerEnabled: null,
       cameraFlipEnabled: null,
     },
-    // TODO: rename to `device`
     device: {
       platform: null,           // mobile|web|sip
       appState: '', // background|foreground
