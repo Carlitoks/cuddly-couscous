@@ -39,7 +39,6 @@ export default class MinutePackageCard extends Component {
     
     return (
       <View style={styles.topContainer}>
-      <View style={styles.shadowContainer}>
         { special ?
           <View style={styles.rowContainer}>
             <View style={styles.specialContainer}>
@@ -123,7 +122,6 @@ export default class MinutePackageCard extends Component {
           : null
         }
       </View>
-    </View>
     </View>
     );
   }
