@@ -35,7 +35,6 @@ export default StyleSheet.create({
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
   scrollViewFlex: {
-    height:"125%",
     flexGrow: 1,
     flexDirection: "column",
     justifyContent: "flex-start",

@@ -106,15 +106,16 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
   },
   creditCardContainer:{
+    paddingTop:10,
     marginTop:30,
+    paddingBottom:20,
     width:"100%",
-    height:"35%",
     backgroundColor:"#FFF",
   },
   row:{
     flexDirection:"row",
     width:"90%",
-    paddingTop:20,
+    marginBottom:20,
     marginLeft:20,
     position:"relative"    
   },
@@ -143,7 +144,6 @@ export default StyleSheet.create({
     height: moderateScaleViewports(30),
     position: "absolute",
     right:0,
-    marginTop: 20,
   },
   addCardButtonText:{
     color: "#FFF",
@@ -175,19 +175,20 @@ export default StyleSheet.create({
   rowPackageDescription:{
     flexDirection:"row",
     justifyContent: 'center',
-    height:"100%",
     marginTop:5,
   },
   packageContainer:{
     marginTop:30,
+    paddingTop:20,
+    paddingBottom:20,
     width:"100%",
-    height:"35%",
     backgroundColor:"#FFF",
   },
   havePackageContainer:{
     marginTop:30,
+    paddingTop:20,
+    paddingBottom:20,
     width:"100%",
-    height:"55%",
     backgroundColor:"#FFF",
   },
   editText:{
@@ -196,7 +197,6 @@ export default StyleSheet.create({
       fontFamily: Fonts.BaseFont,
       position:"absolute",
       right:0,
-      marginTop:moderateScale(20, 0),
   },
   fewMinutesLeftContainer: {
     ...baseWell,
