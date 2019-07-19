@@ -236,7 +236,7 @@ export const setUser = (user) => (dispatch, getState) => {
   // TODO: process feature flags for active/prospective linguist
 
   // TEMPORARY: TODO: set user state in deprecated userProfile reducer
-  dispatch(merge(d));
+  dispatch(update(d));
 }
 
 // fetch user from server, use cache object by default
@@ -338,7 +338,7 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
     api.get(apiURL+"/billing/subscription-periods?active=true")
     .then((res) => {
       const unlimitedUseUntil = hasUnlimitedUseUntil(res.data);
-      dispatch(merge({
+      dispatch(update({
         subscriptionPeriods: res.data || [],
         subscriptionPeriodsLoadedAt: new Date().getTime(),
         hasUnlimitedUse: unlimitedUseUntil !== false,
@@ -410,7 +410,7 @@ export const loadCustomerCallHistory = (useCache = true) => (dispatch, getState)
     }
     api.get(apiURL+"/sessions")
     .then((res) => {
-      dispatch(merge({
+      dispatch(update({
         customerCallHistory: res.data,
         customerCallHistoryLoadedAt: new Date().getTime(),
       }));
@@ -430,7 +430,7 @@ export const loadLinguistCallHistory = (useCache = true) => (dispatch, getState)
     }
     api.get(apiURL+"/linguist-profile/sessions")
     .then((res) => {
-      dispatch(merge({
+      dispatch(update({
         linguistCallHistory: res.data,
         linguistCallHistoryLoadedAt: new Date().getTime(),
       }));
@@ -450,7 +450,7 @@ export const loadLinguistMissedCallHistory = (useCache = true) => (dispatch, get
     }
     api.get(apiURL+"/linguist-profile/session-invitations?status=missed")
     .then((res) => {
-      dispatch(merge({
+      dispatch(update({
         linguistMissedCallHistory: res.data,
         linguistMissedCallHistoryLoadedAt: new Date().getTime(),
       }));
