@@ -26,6 +26,7 @@ export default StyleSheet.create({
   },
   rowContainer:{
     elevation:100,
+    zIndex: 50,
     height: moderateScaleViewports(31),
     width: '100%',
     position: 'absolute',
@@ -34,6 +35,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   specialContainer:{
+    zIndex: 50,
     elevation:100,
     borderRadius: moderateScaleViewports(4),
     height: moderateScaleViewports(31),
