@@ -31,11 +31,20 @@ class AvailablePackagesView extends Component {
   packageRender(){
     const { navigation } = this.props;
 
+    const styleMinutePackageCard = {
+      topContainer: {
+        marginTop: 0, 
+        marginBottom: 10, 
+        alignItems: 'center',
+        width: metrics.width * 0.9,
+      }
+    }
+
     return this.props.minutePackages.map( minutePackage => 
       <MinutePackageCard
         key={minutePackage.id}  
         minutePackage = {minutePackage}
-        style={{topContainer: {marginTop: 0,    alignItems: 'center',width: metrics.width * 0.9}}}
+        style={styleMinutePackageCard}
         selectable={true} // show the select button
         onSelect={ () => navigation.dispatch({type: "PackageCheckoutView", params: {minutePackage}}) } // func to call if select button pressed
         displayReloadNotice={false} // display the reload notice or not

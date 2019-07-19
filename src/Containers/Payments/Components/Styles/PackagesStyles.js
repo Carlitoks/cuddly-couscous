@@ -9,8 +9,21 @@ export default StyleSheet.create({
     marginTop: moderateScaleViewports(10),
     alignItems: 'center',
     width: metrics.width * 0.9,
+    
+  },
+  shadowContainer:{
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 2,
+    width: "100%",
   },
   borderContainer: {
+    zIndex: 10,
     width: "100%",
     alignItems: 'center',
     flexDirection: 'row',
@@ -20,13 +33,12 @@ export default StyleSheet.create({
   grandient: {
     width: "100%",
     zIndex: -100000,
-    backgroundColor: '#F39100',
     borderTopLeftRadius: moderateScaleViewports(10),
     borderTopRightRadius: moderateScaleViewports(10),
     height: moderateScaleViewports(17)
   },
   rowContainer:{
-    zIndex: 10,
+    zIndex: 100,
     height: moderateScaleViewports(31),
     width: '100%',
     position: 'absolute',
@@ -35,7 +47,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   specialContainer:{
-    zIndex: 10,
+    zIndex: 10000,
     borderRadius: moderateScaleViewports(4),
     height: moderateScaleViewports(31),
     width: moderateScaleViewports(102),
@@ -59,14 +71,8 @@ export default StyleSheet.create({
     paddingTop: moderateScaleViewports(15),
     paddingLeft: moderateScaleViewports(14),
     paddingRight: moderateScaleViewports(14),
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 2
+    
+
   },
   headerContainer: {
     paddingTop: moderateScaleViewports(5),
