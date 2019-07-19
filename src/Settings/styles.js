@@ -6,10 +6,17 @@ const { width, height } = Dimensions.get("window");
 
 export default StyleSheet.create({
   scrollContainer: {
-    flex: 1,
+    height: "100%",
+    backgroundColor: Colors.white,
+  },
+  scrollContainer1: {
     height: "100%",
     backgroundColor: Colors.white,
     paddingBottom: 100,
+  },
+  containerButton:{
+    position:"absolute",
+    bottom:0,
   },
   listItemContainer: {
     minHeight: 60,
