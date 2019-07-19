@@ -5,7 +5,7 @@ import NavBar from "../../Components/NavBar/NavBar";
 import Promocode from "./Components/PromoCode"
 // Styles
 import styles from "./Styles/AvailablePackagesStyles";
-
+import metrics from "../../Themes/Metrics";
 import { Icon } from "react-native-elements";
 import I18n, { translateApiErrorString } from "../../I18n/I18n";
 import MinutePackageCard from "./Components/MinutePackageCard";
@@ -35,6 +35,7 @@ class AvailablePackagesView extends Component {
       <MinutePackageCard
         key={minutePackage.id}  
         minutePackage = {minutePackage}
+        style={{topContainer: {marginTop: 0,    alignItems: 'center',width: metrics.width * 0.9}}}
         selectable={true} // show the select button
         onSelect={ () => navigation.dispatch({type: "PackageCheckoutView", params: {minutePackage}}) } // func to call if select button pressed
         displayReloadNotice={false} // display the reload notice or not
