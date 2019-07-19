@@ -35,10 +35,28 @@ const initState = () => {
     // properties here may be calculated from it
     configLoadedAt: null,
     config: {},
+
+    // object in the form {amount: number, currency: string}, meant to be passed to
+    // I18n utilities to be localized in UIs.  This value is determined by config
+    // that comes from the server, but also by user/device information, if available.
+    payAsYouGoRate: null,
+
     supportedLangPairs: [], // TODO
     // map of langCode => num jeenies online
     jeenieCounts: {}
   }
+};
+
+// initialize app config and set any state
+export const init () => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    dispatch(loadConfig(false))
+    .then((res) => {
+      dispatch(computePayAsYouGoRate());
+      resolve();
+    })
+    .catch(reject);
+  });
 };
 
 export const loadSessionScenarios = (useCache = true) => (dispatch, getState) => {
@@ -122,6 +140,34 @@ export const loadConfig = (useCache = true) => (dispatch, getState) => {
     })
     .catch(reject);
   });
+};
+
+// the pay-as-you-go price is dynamically set via
+export const computePayAsYouGoRate = () => (dispatch, getState) => {
+  const user = getState().account.user;
+  const device = getState().account.device;
+  const c = getState().appConfigReducer.config;
+  const rates = !!c && !!c.config && !!c.config.payAsYouGoRate ? c.config.payAsYouGoRate : null;
+  
+  // set the default price in case we don't have any other config
+  let price = {amount: 100, currency: "usd"};
+
+  // now figure out the dynamic localized price based given available data
+  if (!!rates) {
+    // first check if there's a device
+    if (!!device && !!device.locale) {
+      // TODO: get country code from device and check currency mapping
+    }
+
+    // now check user, user pref overrides device preference
+    if (!!user && !!user.currencyPreference && !!rates[user.currencyPreference]) {
+      price = {amount: rates[user.currencyPreference], currency: user.currencyPreference};
+    } else if (!!rates["usd"]) {
+      price = {amount: rates["usd"], currency: "usd"};
+    }
+  }
+
+  dispatch(update(payAsYouGoRate: price));
 };
 
 const appConfigReducer = (state = null, action = {}) => {
