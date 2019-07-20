@@ -92,7 +92,7 @@ class CustomerHomeScreen extends Component {
 )}
             rightComponent={(
               <View style={styles.minutesLeftContainer}>
-                <TouchableOpacity onPress={() => navigation.dispatch({ type: "PaymentDetailScreen" })}>
+                <TouchableOpacity onPress={() => navigation.dispatch({ type: "AccountDetailsView" })}>
                   <HeaderMinutesLeft navigation={navigation} />
                 </TouchableOpacity>
               </View>

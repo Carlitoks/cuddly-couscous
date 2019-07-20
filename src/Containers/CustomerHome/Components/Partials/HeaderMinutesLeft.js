@@ -9,7 +9,7 @@ import styles from "./Styles/HeaderMinutesLeft";
 class HeaderMinutesLeft extends Component {
   goToPayments = () => {
     const { navigation } = this.props;
-    navigation.dispatch({ type: "PaymentDetailScreen" });
+    navigation.dispatch({ type: "AccountDetailsView" });
   };
 
   renderMinutesLeft = () => {
@@ -33,9 +33,9 @@ class HeaderMinutesLeft extends Component {
         {(user.stripePaymentToken && user.availableMinutes > 0) || !user.stripePaymentToken ? (
           <View
             style={
-              user.availableMinutes === 0
+                user.availableMinutes < 6
                 ? styles.outOfMinutesContainer
-                : user.availableMinutes > 0 && user.availableMinutes < 6
+                : user.availableMinutes > 5 && user.availableMinutes < 11
                 ? styles.fewMinutesLeftContainer
                 : styles.minutesLeftInfoContainer
             }

@@ -30,6 +30,9 @@ const initState = () => {
   return {
     scenariosLoadedAt: null,
     scenarios: [],
+
+    // config from the server, unmodified.  some other state
+    // properties here may be calculated from it
     configLoadedAt: null,
     config: {},
     supportedLangPairs: [], // TODO
@@ -101,8 +104,24 @@ export const updateJeenieCounts = (initialize = false) => (dispatch, getState) =
   });
 }
 
+// reload server config
 export const loadConfig = (useCache = true) => (dispatch, getState) => {
-  return Promise.resolve("not implemented");
+  const {config, configLoadedAt} = getState().appConfigReducer;
+  if (useCache && !!configLoadedAt && new Date().getTime() < configLoadedAt + CACHE.CONFIG) {
+    return Promise.resolve(config);
+  }
+  return new Promise((resolve, reject) => {
+    api.get("/config")
+    .then((res) => {
+      // TODO: calcluate any extra state values derived from the server config
+      dispatch(update({
+        configLoadedAt: new Date().getTime(),
+        config: res.data,
+      }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
 };
 
 const appConfigReducer = (state = null, action = {}) => {

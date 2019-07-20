@@ -22,9 +22,10 @@ import RegisterScreen from "../Containers/Register/RegisterScreen";
 import LocationPermissionView from "../Containers/Permissions/LocationPermissionView";
 import NotificationPermissionView from "../Containers/Permissions/NotificationPermissionView";
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
-import PaymentScreen from "../Containers/Payments/PaymentScreen";
-import PaymentDetailScreen from "../Containers/Payments/PaymentDetailScreen";
-import CardInfoScreen from "../Containers/Payments/CardInfoScreen";
+import PackageCheckoutView from "../Containers/Payments/PackageCheckoutView";
+import PackagePurchaseSuccessView from "../Containers/Payments/PackagePurchaseSuccessView";
+import AccountDetailsView from "../Containers/Payments/AccountDetailsView";
+import AvailablePackagesView from "../Containers/Payments/AvailablePackagesView";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
 import RatingsScreen from "../Containers/Rating/RatingScreen";
 import ForgotPasswordScreen from "../Containers/ForgotPassword/ForgotPasswordScreen";
@@ -56,20 +57,26 @@ const Navigation = StackNavigator(
         gesturesEnabled: false
       }
     },
-    PaymentsView: {
-      screen: PaymentScreen,
+    PackageCheckoutView: {
+      screen: PackageCheckoutView,
       navigationOptions: {
         gesturesEnabled: false
       }
     },
-    PaymentDetailScreen: {
-      screen: PaymentDetailScreen,
+    PackagePurchaseSuccessView: {
+      screen: PackagePurchaseSuccessView,
       navigationOptions: {
         gesturesEnabled: false
       }
     },
-    CardInfoScreen: {
-      screen: CardInfoScreen,
+    AccountDetailsView: {
+      screen: AccountDetailsView,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    AvailablePackagesView: {
+      screen: AvailablePackagesView,
       navigationOptions: {
         gesturesEnabled: false
       }

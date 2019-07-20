@@ -37,10 +37,6 @@ export default (IT = {
   callLinguist: "Chiama un linguista",
   calls: "Chiamate",
   callSettings: "Impostazioni chiamate",
-  callTimeBoxTextLine1: "Utilizza Jeenie subito GRATIS per \n festeggiare il nostro lancio",
-  callTimeBoxTextLine2: "Il costo è $1/min. \n e in futuro saranno offerti pacchetti scontati",
-  callTimeButtonText: "minuti GRATIS",
-  callTimeButtonSubtitle: "Offerti da Jeenie",
   callTimeMinutes: "Durata della chiamata",
   callTimeMinutesSub: "Consigliata per questa situazione",
   callTimeTitle: "Attualmente disponibile in mandarino e inglese.",
@@ -85,9 +81,7 @@ export default (IT = {
   couldBetter: "Cosa potremmo migliorare?",
   countryFamiliarity: "Familiarità con il Paese",
   cost: "Costo",
-  costPerMinute: "$1/min.",
   create: "Crea",
-  currency: "US$",
   customer: "Cliente",
   customerSatisfied: "Il cliente è stato soddisfatto?",
   describeAssistance: "Come possiamo aiutarti?",
@@ -100,7 +94,7 @@ export default (IT = {
   duration: "Durata",
   editProfile: "Modifica profilo",
   email: "E-mail",
-  emailCustomerText: "Continuando, accetti i nostri  ",
+  emailCustomerText: "Continuando, accetti i nostri ",
   emailFormatValidation: "L'indirizzo e-mail deve essere un indirizzo e-mail valido.",
   emptyEmail: "Campo E-mail vuoto",
   emptyPassword: "Campo Password vuoto",
@@ -138,10 +132,6 @@ export default (IT = {
   extraTime3: "La tua chiamata terminerà tra 2 minuti",
   extraTimeA1: "Sì, aggiungi 5 minuti",
   extraTimeA2: "No, termina la chiamata allo scadere del tempo",
-  fallPromotion:
-    " Promozione autunnale Ricevi 5 minuti GRATIS sul tuo account quando effettui una chiamata con Jeenie.",
-  fallPromotionModal:
-    " Promozione autunnale Ricevi 5 minuti \nGRATIS sul tuo account quando \neffettui una chiamata con Jeenie.",
   female: "Donna",
   finish: "Termina",
   finishOnboarding: "Termina la registrazione",
@@ -280,9 +270,6 @@ export default (IT = {
   permissionDenied: "Autorizzazioni app negate",
   passwordMatch: "Le password non corrispondono.",
   passwordLengthValidation: "La password deve contenere almeno 8 caratteri.",
-  payAsYouGo: "Paghi al consumo",
-  payAsYouGoPricing: "Paghi al consumo = ",
-  payAsYouGoPricingUnder: " $1 al minuto",
   paymentDetails: "Dettagli di pagamento",
   paymentDetailsCreated: "Le informazioni di pagamento sono state aggiornate.",
   preferedNameTitle: "Nome preferito",
@@ -343,7 +330,6 @@ export default (IT = {
   tapRepeat: "Tocca per ripetere",
   thereNoInternetConnection: "Nessuna connessione a Internet",
   time: "Tempo",
-  timeWithCost: "$1/Min. per tempo aggiuntivo",
   timeStatic1: "Durante il periodo di prova, le chiamate sono preimpostate su 8 minuti.",
   timeCompliments: "Offerti da Jeenie",
   timeAddMore: "Ogni chiamata può durare massimo 60 minuti.",
@@ -425,6 +411,7 @@ export default (IT = {
   actions: {
     accept: "Accetta",
     agree: "Accetto",
+    apply: "Applica",
     back: "Indietro",
     cancel: "Annulla",
     choose: "Scegli",
@@ -445,7 +432,7 @@ export default (IT = {
     prev: "Precedente",
     quit: "Esci",
     reject: "Rifiuta",
-    remove: "Rimuovi ",
+    remove: "Rimuovi",
     reset: "Ripristina",
     save: "Salva",
     select: "Seleziona",
@@ -502,7 +489,6 @@ export default (IT = {
     },
     account: {
       pricing: "costo",
-      rate: "$1/min.",
       unit: "minuti",
       add: "Aggiungi pagamento per effettuare una chiamata"
     },
@@ -541,8 +527,6 @@ export default (IT = {
     },
     registrationWelcome: {
       balance: "{{num}} minuti",
-      title: "Il tuoi primi {{num}} minuti sono gratuiti!",
-      description: "Dopo i primi {{num}} minuti, ti verrà addebitato $1 USD al minuto.",
       buttons: {
         dismiss: "Inizia a utilizzare Jeenie",
         payment: "Aggiungi ora le informazioni di pagamento"
@@ -579,13 +563,12 @@ export default (IT = {
       video: "Videochiamata"
     },
     rateNotices: {
-      beforeFirst: "Tariffa: US $1 al minuto. Primi {{num}} minuti GRATIS.",
-      afterFirst: "Tariffa: US $1 al minuto. {{num}} minuti GRATIS rimasti",
       noBalanceNoCard: "Tariffa: US $1 al minuto. Aggiungi carta per continuare",
       noBalanceHasCard: "Tariffa: US $1 al minuto.",
-      noBalanceHasCardPackage: "Tariffa: US $1 al minuto. Acquista un pacchetto con uno sconto del 15%.",
       hasBalance: "Tariffa: US $1 al minuto. Saldo: {{num}} min.",
-      hasBalanceAutoreload: "Tariffa: {{num}}m rimasti.",
+      noBalanceNoCardRate: "Tariffa: {{rate}} al minuto. Aggiungi carta per continuare",
+      noBalanceHasCardRate: "Tariffa: {{rate}} al minuto",
+      hasBalanceRate: "Tariffa: {{rate}} al minuto. Saldo: {{num}} min.",
       unlimitedUntil: "Utilizzo illimitato fino a {{date}}"
     }
   },
@@ -598,12 +581,11 @@ export default (IT = {
 
   // text for customer related to payments and rates
   payments: {
-    currentRate: "$1/min.",
     currentBalance: "{{minutes}} min.",
     enterPaymentToTalk:
       "Inserisci i dettagli di pagamento per continuare a parlare. Parla per tutto il tempo che vuoi a $1/min.",
-    currentRateDescription:
-      "Le chiamate costano $1/min. e puoi parlare fino a 60 minuti. In futuro verranno offerti sconti per gruppi di minuti.",
+    enterPaymentToTalkRate:
+      "Inserisci i dettagli di pagamento per continuare a parlare. Parla per tutto il tempo che vuoi a {{rate}}/min.",
     addCard: "Aggiungi una carta",
     editCard: "Modifica carta",
     cardInfo: "Informazioni carta",
@@ -628,6 +610,85 @@ export default (IT = {
     }
   },
 
+  // displayed in account details section
+  account: {
+    title: "Dettagli account",
+    balance: "Saldo",
+    balanceNum: "{{num}} min.",
+    balanceUnlimited: "Illimitato",
+    descriptions: {
+      noCardNoPackage: "Inserisci i dettagli di pagamento per evitare che la chiamata sia interrotta.",
+      hasCardNoPackage: "Acquista un pacchetto per parlare a meno. I minuti non scadono mai.",
+      hasCardHasPackage: "Il tuo account verrà ricaricato automaticamente quando il tuo saldo è {{num}} min.",
+      hasPackageUnlimitedUse: "Il pacchetto ti consente un utilizzo illimitato fino a {{date}}",
+      hasUnlimitedUse: "Hai un utilizzo illimitato fino a {{date}}",
+      hasSubscription: "Il tuo abbonamento si rinnova il {{date}}"
+    },
+    card: {
+      title: "Carta di credito",
+      add: "Aggiungi carta",
+      edit: "Modifica",
+      description: "Inserisci la tua carta per parlare quanto vuoi o acquista un pacchetto.  Tariffa al minuto standard: {{rate}}"
+    },
+    package: {
+      title: "Pacchetto",
+      add: "Aggiungi pacchetto",
+      remove: "Rimuovi",
+      more: "Visualizza altri pacchetti",
+      description: "Acquista altri minuti a meno.  Con la ricarica automatica, non rimarrai mai a corto di minuti."
+    },
+  },
+
+  // there may be more than one way we refer to promo codes the user can
+  // scan or enter, here is some alternate terminology
+  codes: {
+    promo: "Codice promozionale",
+    discount: "Codice sconto",
+    event: "Codice evento",
+    action: "Codice azione",
+    universal: "Codice universale",
+  },
+
+  // shown on checkout screen when purchasing a package
+  packages: {
+    noExpire: "I tuoi minuti non scadono mai.",
+    browse: {
+      title: "Pacchetto",
+      promo: "Hai un codice promozionale?",
+      promoPlaceholder: "Inseriscilo qui",
+      promoApplied: "Codice applicato"
+    },
+    checkout: {
+      title: "Checkout",
+      reload: "Ricarica automaticamente il mio account quando il saldo è {{num}} min.",
+      needCard: "Devi aggiungere la tua carta per procedere con il pagamento.",
+      summary: "Riepilogo ordine",
+      total: "Totale",
+      purchase: "Acquista pacchetto",
+      processing: "Elaborazione del pagamento..."
+    },
+    success: {
+      title: "Pagamento effettuato",
+      description: "Il pacchetto è stato aggiunto al tuo account.",
+      withReload: "con ricarica automatica",
+      withoutReload: "senza ricarica automatica",
+      balance: "Saldo:"
+    },
+    failure: {
+      title: "Pagamento non riuscito",
+      description: "Ops! Impossibile elaborare il pagamento.  Verifica le informazioni della tua carta e riprova."
+    }
+  },
+
+  // related to the display of a specific minute package
+  minutePackage: {
+    balance: "{{}} min.",
+    balanceUnlimited: "Utilizzo illimitato",
+    validBetween: "Validità: {{date1}} - {{date2}}",
+    validThrough: "Valido fino a: {{date}}",
+    special: "Speciale"
+  },
+
   operatingHours: {
     title: "Disponibilità: {{lang}}",
     description: "I linguisti Jeenie sono disponibili tra le {{beginHour}} e le {{endHour}}.",
@@ -645,7 +706,6 @@ export default (IT = {
   pricingModal: {
     title: "Costo e saldo account",
     titleNoMinutesNoCard: "Hai bisogno di più tempo con Jeenie?",
-    currentRate: "$1/min.",
     currentBalance: "{{minutes}} minuti",
     buttons: {
       gotIt: "Ho capito!",
@@ -659,7 +719,6 @@ export default (IT = {
     screenTitle: "Costo e saldo account",
     pricing: {
       title: "Costo:",
-      rate: "$1 USD/minuto"
     },
     balance: {
       title: "Saldo account:",
@@ -675,14 +734,6 @@ export default (IT = {
       descriptionLowMinutes:
         "Il saldo del tuo account è minimo. Per evitare di essere disconnesso durante la prossima chiamata, aggiungi ora le informazioni di pagamento.",
       descriptionNoMinutes: "Per poter continuare devi aggiungere le informazioni di pagamento."
-    },
-    descriptions: {
-      hasMinutesAndCard:
-        "Se termini i minuti a disposizione, addebiteremo automaticamente sulla tua carta $1 USD al minuto per evitare di interrompere la chiamata.",
-      hasMinutesNoCard:
-        "Per continuare a parlare quando hai terminato i minuti, inserisci ora le informazioni di pagamento.",
-      noMinutesHasCard: "Addebiteremo automaticamente sulla tua carta $1 USD al minuto.",
-      noMinutesNoCard: "Per connetterti a un linguista devi aggiungere le informazioni di pagamento ora."
     },
     buttons: {
       continue: "Continua",
@@ -705,12 +756,14 @@ export default (IT = {
     errEmailInUse: "È già stato creato un account con questo indirizzo e-mail.",
     errEventInvalid: "Impossibile convalidare questo codice.",
     errEventUnavailable: "Questo codice non è attualmente disponibile.",
+    errEventInvalid: "Questo codice non è valido.",
     errEventInactive: "Questo codice non è attivo.",
     errEventScenarioMissing: "È necessario specificare uno scenario.",
     errPaymentDetailsRequired: "Per procedere sono necessari i dettagli di pagamento.",
     errEventTimeExpired: "Non sono rimasti minuti per questo codice.",
     errEventAlreadyUsed: "Questo codice è già stato utilizzato.",
-    errLocationRestricted: "Jeenie non è attualmente disponibile nella tua zona."
+    errLocationRestricted: "Jeenie non è attualmente disponibile nella tua zona.",
+    errInvalidPromoCode: "Codice promozionale non valido"
   },
 
   // used when handling user input related to specific fields - these
@@ -786,7 +839,7 @@ export default (IT = {
 
     // seen when connecting to a session
     connecting: {
-      user: " {{name}} si sta connettendo...",
+      user: "{{name}} si sta connettendo...",
       self: "Connessione a {{name}}...",
       basic: "Connessione in corso..."
     },
@@ -833,7 +886,7 @@ export default (IT = {
 
     // used when rating a session
     rating: {
-      submit: "Invia",
+      comment: "Commento",
       addComment: "Aggiungi commenti",
       questionGood: "Cosa ti è piaciuto?",
       questionBetter: "Cosa potremmo migliorare?",
@@ -871,7 +924,6 @@ export default (IT = {
   customerOnboarding: {
     welcome: "Benvenuto in Jeenie",
     connectToLinguist: "Connetti ora",
-    tenFreeMinutes: "{{time}} minuti GRATIS",
     canIHelpYou: "Posso aiutarti?",
     homeCanIhelpYou: "Posso aiutarti {{name}}?",
     intro: {
@@ -935,9 +987,9 @@ export default (IT = {
     label: "Nuovo indirizzo e-mail",
     titleSuccess: "Riuscito",
     descriptionSuccess:
-      'Il tuo indirizzo e-mail è stato aggiornato. Puoi accedere a Jeenie con il nuovo indirizzo e-mail "{email}"',
+      'Il tuo indirizzo e-mail è stato aggiornato. Puoi accedere a Jeenie con il nuovo indirizzo e-mail "{{email}}"',
     descriptionTaken:
-      'L \'indirizzo e-mail \"{email}\" è già registrato.  Puoi accedere con questo indirizzo e-mail oppure specificare un nuovo indirizzo e-mail.'
+      'L\'indirizzo e-mail \"{email}\" è già registrato.  Puoi accedere con questo indirizzo e-mail oppure specificare un nuovo indirizzo e-mail.'
   },
 
   newCustomerOnboarding: {
@@ -949,7 +1001,9 @@ export default (IT = {
     intro: {
       title: "Assistenza in tempo reale",
       description:
-        "Accesso 24/7 a traduttori umani in tempo reale per assistenza linguistica semplicemente un pulsante.  Tariffa: US $1 al minuto.",
+        "Accesso 24/7 a traduttori umani in tempo reale per assistenza linguistica semplicemente un pulsante.  Tariffa: US $1 al minuto",
+      descriptionRate:
+        "Accesso 24/7 a traduttori umani in tempo reale per assistenza linguistica semplicemente un pulsante.  Tariffa: {{rate}} al minuto",
       button: "Inizia"
     },
     location: {
@@ -968,7 +1022,9 @@ export default (IT = {
       title: "Dicci qualcosa di te:",
       termsAndPrivacyNotice: "Continuando, accetti i nostri Termini e l'Informativa sulla privacy.",
       terms: "Termini",
-      privacyPolicy: "Informativa sulla privacy"
+      privacyPolicy: "Informativa sulla privacy",
+      otherLanguages: "Altre lingue",
+      chooseNativeLang: "Scegli la tua lingua madre"
     },
     login: {
       forgotPassword: "Hai dimenticato la password?"
@@ -978,6 +1034,15 @@ export default (IT = {
         "Esiste già un account con l'indirizzo e-mail inserito.\nInserisci un indirizzo e-mail differente o\naccedi al tuo account.",
       emailAndPassword: "L'indirizzo e-mail o la password non sono corretti.\nRiprova."
     }
+  },
+
+  // for localizing currency
+  cost: {
+    usd: "US${{num}}",
+    jpy: "JP¥{{num}}",
+    eur: "€{{num}}",
+    gbp: "£{{num}}",
+    cny: "CN¥{{num}}"
   },
 
   // for use during primary language selection

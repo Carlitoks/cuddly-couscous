@@ -12,7 +12,7 @@ export default (PT = {
   all: "Todos",
   allCalls: "Todas as chamadas",
   allLinguistsAreBusy:
-    "Todos os nossos Language Jeenies \nestão ocupados no momento.\n\n\nGostaria de tentar novamente? ",
+    "Todos os nossos Language Jeenies™ \nestão ocupados no momento.\n\n\nGostaria de tentar novamente? ",
   allowExtraTime: "Permitir mais tempo",
   alreadyAccount: "Já tem uma conta?",
   amount: "Quantia",
@@ -20,7 +20,7 @@ export default (PT = {
   any: "Qualquer",
   api: "API",
   apiTesting: "Teste de API",
-  appPermissions: "Permissões do app",
+  appPermissions: "Permissões do aplicativo",
   appName: "Jeenie",
   areasExpertise: "Áreas de especialização",
   audio: "Áudio",
@@ -29,7 +29,7 @@ export default (PT = {
 
   basic: "Básico",
   becomeLinguist: "Torne-se um linguista",
-  becomeOnVoy: "Torne-se um linguista Jeenie",
+  becomeOnVoy: "Torne-se um linguista Jeenie™",
   call: "Chamar",
   callAnotherLinguist: "Chamar outro linguista",
   callHistory: "Histórico",
@@ -37,10 +37,6 @@ export default (PT = {
   callLinguist: "Chamar um linguista",
   calls: "Chamadas",
   callSettings: "Configurações de chamada",
-  callTimeBoxTextLine1: "Aproveite o Jeenie agora mesmo, GRATUITAMENTE, para \n comemorar nosso lançamento",
-  callTimeBoxTextLine2: "O preço é US$ 1/min \n e descontos de pacote serão oferecidos no futuro",
-  callTimeButtonText: "minutos de GRAÇA",
-  callTimeButtonSubtitle: "Cortesia do Jeenie",
   callTimeMinutes: "Duração da chamada",
   callTimeMinutesSub: "Recomendado para essa situação",
   callTimeTitle: "Atualmente disponível em mandarim e inglês.",
@@ -70,7 +66,7 @@ export default (PT = {
   connectMeNow: "Conecte-me agora",
   connectNow: "Conectar agora",
   connecting: "Conectando",
-  contactingLinguist: "Conectando você a um \nLanguage Jeenie em \naproximadamente 1 minuto",
+  contactingLinguist: "Conectando você a um \nLanguage Jeenie™ em \naproximadamente 1 minuto",
   continue: "Continuar",
   continueUsingJeenie: "Continue usando o Jeenie",
   continueForFree: "Continuar",
@@ -85,9 +81,7 @@ export default (PT = {
   couldBetter: "O que pode melhorar?",
   countryFamiliarity: "Familiaridade de país",
   cost: "Custo",
-  costPerMinute: "US$ 1/min",
   create: "Criar",
-  currency: "US$",
   customer: "Cliente",
   customerSatisfied: "O seu cliente ficou satisfeito?",
   describeAssistance: "Como podemos ajudá-lo?",
@@ -99,12 +93,12 @@ export default (PT = {
   discountsOfferedAlternative: "Descontos serão oferecidos \npara minutos pré-pagos ",
   duration: "Duração",
   editProfile: "Editar perfil",
-  email: "E-mail",
+  email: "E-maill",
   emailCustomerText: "Ao continuar, você concorda com nosso ",
   emailFormatValidation: "O e-mail deve ser um endereço de e-mail válido.",
   emptyEmail: "Limpar e-mail",
   emptyPassword: "Limpar senha",
-  endCall: "Encerrar chamada",
+  endCall: "Finalizar chamada",
   english: "Inglês",
   enterCustomScenario: "Com o que você precisa de ajuda?",
   enterEmailField: "Insira seu e-mail",
@@ -118,9 +112,9 @@ export default (PT = {
   enterPaymentDetails3:
     "Você deve inserir suas informações de pagamento para continuar; você será cobrado pela duração de sua chamada",
   enterPaymentDetails4:
-    "Insira suas informações de pagamento para falar o quanto quiser. Do contrário, sua chamada terminará quando seu saldo de conta atingir 0 minuto.",
+    "Insira suas informações de pagamento para falar o quanto quiser. Do contrário, sua chamada terminará quando seu saldo de conta atingir 0 minutos.",
   enterPaymentOnboarding:
-    "Insira suas informações de pagamento a fim de falar o quanto desejar. Quando seu saldo de conta atingir 0 minuto, você será cobrado pelo tempo adicional utilizado.",
+    "Insira suas informações de pagamento a fim de falar o quanto desejar. Quando seu saldo de conta atingir 0 minutos, você será cobrado pelo tempo adicional utilizado.",
   enterPhoneField: "Insira seu número de telefone",
   enterYourPassword: "Crie uma nova senha",
   error: "Erro",
@@ -138,10 +132,6 @@ export default (PT = {
   extraTime3: "Sua chamada terminará em 2 minutos",
   extraTimeA1: "Sim, adicione 5 minutos",
   extraTimeA2: "Não, finalize a chamada quando o tempo terminar",
-  fallPromotion:
-    " Promoção de outono: Receba 5 minutos GRATUITOS em sua conta quando realizar uma chamada com o Jeenie.",
-  fallPromotionModal:
-    " Promoção de outono: Receba 5 minutos GRATUITOS \nem sua conta quando \nrealizar uma chamada com o Jeenie.",
   female: "Mulher",
   finish: "Concluir",
   finishOnboarding: "Concluir integração",
@@ -162,14 +152,14 @@ export default (PT = {
   genderPreferenceCustomer: "Prefiro clientes com o seguinte sexo:",
   genderPreferenceLinguist: "Prefiro um linguista com o seguinte sexo:",
   generalAssistance: "Assistência geral",
-  general: "Generalidades",
+  general: "Geral",
   getStarted: "Como começar",
   getLanguageHelp: "Ajuda linguística",
   gotIt: "Entendi!",
   hasDisconnected: "Você foi desconectado",
   help: "Ajuda",
   helpPeople: "Quais cidades você conhece bem para orientar pessoas que as estão visitando?",
-  helpUsGet: "Ajude-nos a conhecê-lo",
+  helpUsGet: "Ajude-nos a conhecer você",
   hi: "Olá",
   historyNotFound: "Nenhum histórico encontrado",
   holdToScan: "Posicione a câmera do dispositivo até o código QR",
@@ -217,7 +207,7 @@ export default (PT = {
     "Seja onde estiver, acesse ao vivo e em tempo real falantes humanos de idiomas.",
   lauchScreenSwipe3:
     "Atualmente, o Jeenie oferece suporte linguístico em \n mandarim <> inglês \n e japonês <> inglês.\n\n Em breve, mais idiomas estarão disponíveis.",
-  lastname: "Sobrenome",
+  lastname: "Primeiro nome",
   lastnameFormatValidation: "O sobrenome deve conter apenas letras.",
   legal: "Jurídico",
   letsGoToKwon: "Queremos conhecer você",
@@ -226,7 +216,7 @@ export default (PT = {
   linguistEmailSubtitle: "Um e-mail de confirmação será enviado",
   linguistEmailTitle: "Crie sua conta",
   linguistLastName: "Primeiro nome",
-  linguistName: "Nome",
+  linguistName: "Sobrenome",
   linguistNumber: "Insira o número de telefone",
   linguistNumberText: "Enviaremos um código para verificação de seu telefone.",
   linguistPassword: "Senha",
@@ -240,7 +230,7 @@ export default (PT = {
   mainTitle: "Insira seu nome",
   male: "Homem",
   maxTimeLimit: "Limite de tempo máx.",
-  minutesAbbreviation: "{{minutes}} mín",
+  minutesAbbreviation: "{{minutes}} min",
   minutes: "minutos",
   seconds: "segundos",
   missed: "Perdida",
@@ -267,7 +257,7 @@ export default (PT = {
   occasionally: "Eventualmente",
   offline: "Offline",
   ok: "OK",
-  online: "On-line",
+  online: "Online",
   operatingHoursAlertTitle: "Esteja atento às nossas horas de atendimento",
   operatingHoursAlertMessage:
     "Chinês:\n- 10h - 19h Costa Leste (EDT)\n\nJaponês:\n- 19h - 7h Costa Leste (EDT)\n- 8h - 20h Hora Oficial do Japão (JST)",
@@ -276,21 +266,18 @@ export default (PT = {
   password: "Senha",
   passwordAnd: "e",
   passwordLength: "Sua senha deve ter no mínimo 5 caracteres.",
-  passwordLinguistText: "Ao tocar em Próximo, você concorda com nosso (a)",
+  passwordLinguistText: "Ao tocar em Próximo, você concorda com nosso(a)",
   permissionDenied: "Permissão de aplicativo negada",
   passwordMatch: "As senhas não conferem.",
   passwordLengthValidation: "A senha deve ter no mínimo 8 caracteres.",
-  payAsYouGo: "Pague conforme usar",
-  payAsYouGoPricing: "Pay-as-you-go =",
-  payAsYouGoPricingUnder: " US$ 1 por minuto",
   paymentDetails: "Informações de pagamento",
   paymentDetailsCreated: "Suas informações de pagamento foram atualizadas com sucesso.",
   preferedNameTitle: "Nome de preferência",
-  preferNotToDisclose: "Prefiro não divulgar",
+  preferNotToDisclose: "Prefere não divulgar",
   preferredLinguistText: "Prefiro ser chamado como...",
   preferredName: "Nome de preferência (opcional)",
   pricing: "Preço",
-  privacyPolicy: "Política de privacidade",
+  privacyPolicy: "Política de Privacidade",
   proficiencyLevelOf: "Nível de proficiência de ",
   promoCodeTitle: "Insira um código promocional",
   promoCodeInput: "Código promocional",
@@ -343,10 +330,9 @@ export default (PT = {
   tapRepeat: "Toque para repetir",
   thereNoInternetConnection: "Não há conexão de internet",
   time: "Tempo",
-  timeWithCost: "US$ 1/min por tempo adicional",
   timeStatic1: "As chamadas são pré-definidas para 8 minutos durante o período de teste.",
   timeCompliments: "Saudações do Jeenie",
-  timeAddMore: "Cada chamada leva no máximo 60 minutos.",
+  timeAddMore: "Cada chamada tem tempo máximo de 60 minutos.",
   timeStatic2: "Se você precisa de mais tempo, pode adicioná-lo durante a chamada.",
   technology: "Tecnologia",
   tempIndicator: "F",
@@ -385,7 +371,7 @@ export default (PT = {
   version: "versão",
   video: "Vídeo",
   videoHasBeenTurnedOff:
-    "O vídeo foi desligado para otimizar esta chamada. Ele voltará quando os dois participantes tiverem melhor conectividade.",
+    "O vídeo foi desligado para otimizar esta chamada. Ele voltará quando os dois participantes tiverem conectividade aprimorada.",
   videoMode: "Modo de vídeo",
   videoAssistance: "Assistência de vídeo",
   waitingYourConnection: "Aguardando por sua conexão",
@@ -424,7 +410,8 @@ export default (PT = {
   // generic language often used in navigation, forms, dialogs, and buttons
   actions: {
     accept: "Aceitar",
-    agree: "Concordo",
+    agree: "Concordar",
+    apply: "Aplicar",
     back: "Voltar",
     cancel: "Cancelar",
     choose: "Escolher",
@@ -502,7 +489,6 @@ export default (PT = {
     },
     account: {
       pricing: "preço",
-      rate: "US$ 1/min",
       unit: "minutos",
       add: "Adicionar pagamento para fazer uma chamada"
     },
@@ -519,7 +505,7 @@ export default (PT = {
       s9: "Peça orientações a alguma pessoa próxima",
       s10: "Fale com o concierge do hotel",
       s11: "Faça check-in ou check-out no hotel",
-      s12: "Pratique falando um idioma",
+      s12: "Pratique falar um idioma",
       s13: "Responda às perguntas da lição de idiomas",
       s14: "Aprenda as principais frases para sua próxima viagem",
       s15: "Entenda melhor a cultura local",
@@ -527,7 +513,7 @@ export default (PT = {
       s17: "Interpreta para você em sua reunião de negócios",
       s18: "Aprimore sua pronúncia de idiomas",
       s19: "Explore a estação de trem",
-      s20: "Converse com uma pessoa da região",
+      s20: "Tenha um diálogo com uma pessoa da região",
       s21: "Fale com o farmacêutico local",
       s22: "Faça compras",
       s23: "Solicite seu produto em tamanho ou cor diferente",
@@ -541,8 +527,6 @@ export default (PT = {
     },
     registrationWelcome: {
       balance: "{{num}} minutos",
-      title: "Seus primeiros {{num}} minutos são gratuitos!",
-      description: "Após seus primeiros {{num}} minutos, o preço será de US$ 1 por minuto.",
       buttons: {
         dismiss: "Comece a usar o Jeenie",
         payment: "Adicione informações de pagamento agora"
@@ -579,13 +563,13 @@ export default (PT = {
       video: "Chamada de vídeo"
     },
     rateNotices: {
-      beforeFirst: "Taxa: US$ 1 por min. Primeiros {{num}} minutos GRATUITOS.",
-      afterFirst: "Taxa: US$ 1 por min {{num}} minutos restantes GRATUITOS",
       noBalanceNoCard: "Taxa: US$ 1 por min. Adicione um cartão para continuar",
       noBalanceHasCard: "Taxa: US$ 1 por min.",
-      noBalanceHasCardPackage: "Taxa: US$ 1 por min. Compre um pacote com 15% de desconto.",
-      hasBalance: "Taxa: US$ 1 por minuto. Saldo restante: {{num}} minutos",
-      hasBalanceAutoreload: "Taxa: {{num}}m restante."
+      hasBalance: "Taxa: US$ 1 por minuto. Saldo: {{num}} minutos",
+      noBalanceNoCardRate: "Taxa: {{rate}} por minuto. Adicione um cartão para continuar",
+      noBalanceHasCardRate: "Taxa: {{rate}} por minuto.",
+      hasBalanceRate: "Taxa: {{rate}} por minuto. Saldo: {{num}} minutos",
+      unlimitedUntil: "Uso ilimitado por meio de {{date}}"
     }
   },
 
@@ -597,12 +581,11 @@ export default (PT = {
 
   // text for customer related to payments and rates
   payments: {
-    currentRate: "US$ 1/min",
     currentBalance: "{{minutes}} min",
     enterPaymentToTalk:
       "Insira suas informações de pagamento para continuar falando. Fale o quanto quiser por US$ 1/min.",
-    currentRateDescription:
-      "As chamadas custam US$ 1/min e você pode falar por até 60 minutos. Descontos por grande volume de minutos serão oferecidos futuramente.",
+    enterPaymentToTalkRate:
+      "Insira suas informações de pagamento para continuar falando. Fale o quanto quiser por {{rate}}/min.",
     addCard: "Adicionar um cartão",
     editCard: "Editar cartão",
     cardInfo: "Informações do cartão",
@@ -623,13 +606,92 @@ export default (PT = {
       title: "CVV",
       errInvalid: "CVV inválido",
       description:
-        'O CVV ("Card Verification Value " - valor de verificação do cartão) em seu cartão de crédito ou débito é um número de 3 dígitos para cartões VISA, MasterCard e Discover.  Nos cartões American Express, ele corresponde a um número de 4 dígitos.'
+        'O CVV (valor de verificação do cartão) em seu cartão de crédito ou débito é um número de 3 dígitos para cartões VISA, MasterCard e Discover.  Nos cartões American Express, ele corresponde a um número de 4 dígitos.'
     }
+  },
+
+  // displayed in account details section
+  account: {
+    title: "Informações de conta",
+    balance: "Saldo",
+    balanceNum: "{{num}} min",
+    balanceUnlimited: "Ilimitado",
+    descriptions: {
+      noCardNoPackage: "Insira as informações de pagamento para evitar a interrupção de chamadas.",
+      hasCardNoPackage: "Compre um pacote para falar mais barato. Os minutos nunca expiram.",
+      hasCardHasPackage: "Sua conta irá recarregar automaticamente quando seu saldo for de {{num}} min",
+      hasPackageUnlimitedUse: "Seu pacote oferece uso ilimitado por meio de {{date}}",
+      hasUnlimitedUse: "Você tem uso ilimitado por meio de {{date}}",
+      hasSubscription: "A renovação de sua assinatura ocorre em {{date}}"
+    },
+    card: {
+      title: "Cartão de crédito",
+      add: "Adicionar cartão",
+      edit: "Editar",
+      description: "Insira seu cartão para falar o quanto desejar ou compre um pacote.  Taxa geral por minuto: {{rate}}"
+    },
+    package: {
+      title: "Pacote",
+      add: "Adicionar pacote",
+      remove: "Remover",
+      more: "Visualizar mais pacotes",
+      description: "Compre mais minutos por menos.  Com a autorrecarga, você nunca ficará sem tempo."
+    },
+  },
+
+  // there may be more than one way we refer to promo codes the user can
+  // scan or enter, here is some alternate terminology
+  codes: {
+    promo: "Código promocional",
+    discount: "Código de desconto",
+    event: "Código de evento",
+    action: "Código de ação",
+    universal: "Código universal",
+  },
+
+  // shown on checkout screen when purchasing a package
+  packages: {
+    noExpire: "Seus minutos nunca acabam.",
+    browse: {
+      title: "Pacote",
+      promo: "Tem um código promocional?",
+      promoPlaceholder: "Insira o código aqui",
+      promoApplied: "Código aplicado"
+    },
+    checkout: {
+      title: "Checkout",
+      reload: "Recarregar automaticamente minha conta quando meu saldo for de {{num}} min",
+      needCard: "Você deve adicionar seu cartão para prosseguir com o pagamento.",
+      summary: "Resumo do pedido",
+      total: "Total",
+      purchase: "Comprar pacote",
+      processing: "Processando pagamento..."
+    },
+    success: {
+      title: "Pagamento bem-sucedido",
+      description: "O pacote foi adicionado à sua conta",
+      withReload: "com a autorrecarga",
+      withoutReload: "sem a autorrecarga",
+      balance: "Saldo:"
+    },
+    failure: {
+      title: "Falha no pagamento ",
+      description: "Ops! Não conseguimos processar seu pagamento.  Verifique as informações de seu cartão e tente novamente."
+    }
+  },
+
+  // related to the display of a specific minute package
+  minutePackage: {
+    balance: "{{}} min",
+    balanceUnlimited: "Uso ilimitado",
+    validBetween: "Validade: {{date1}} - {{date2}}",
+    validThrough: "Válido até: {{date}}",
+    special: "Especial"
   },
 
   operatingHours: {
     title: "Disponibilidade: {{lang}}",
-    description: "Os Language Jeenies estão disponíveis das {{beginHour}} às {{endHour}}.",
+    description: "Os Language Jeenies™ estão disponíveis das {{beginHour}} às {{endHour}}.",
     ok: "OK"
   },
   lang: {
@@ -644,7 +706,6 @@ export default (PT = {
   pricingModal: {
     title: "Preços e saldo em conta",
     titleNoMinutesNoCard: "Precisa de mais tempo com o Jeenie?",
-    currentRate: "US$ 1/min",
     currentBalance: "{{minutes}} minutos",
     buttons: {
       gotIt: "Entendi!",
@@ -658,7 +719,6 @@ export default (PT = {
     screenTitle: "Preços e saldo em conta",
     pricing: {
       title: "Preço:",
-      rate: "US$ 1 / minuto"
     },
     balance: {
       title: "Saldo em conta:",
@@ -674,14 +734,6 @@ export default (PT = {
       descriptionLowMinutes:
         "Seu saldo em conta está baixo. Para evitar ser desconectado durante sua próxima chamada, adicione as informações de pagamento agora.",
       descriptionNoMinutes: "Você deve fornecer informações de pagamento para continuar."
-    },
-    descriptions: {
-      hasMinutesAndCard:
-        "Se você ficar sem minutos, cobraremos automaticamente do seu cartão USD $1, por minuto, para evitar desconectar a chamada.",
-      hasMinutesNoCard:
-        "Para continuar falando além dos seus minutos restantes, insira as informações de pagamento agora.",
-      noMinutesHasCard: "Cobraremos automaticamente do seu cartão US$1, por minuto.",
-      noMinutesNoCard: "Para se conectar a um linguista, você deverá adicionar informações de pagamento agora."
     },
     buttons: {
       continue: "Continuar",
@@ -704,12 +756,14 @@ export default (PT = {
     errEmailInUse: "Já foi criada uma conta com esse endereço de e-mail",
     errEventInvalid: "A validação deste código falhou.",
     errEventUnavailable: "Este código está atualmente indisponível.",
+    errEventInvalid: "Este código é inválido.",
     errEventInactive: "Este código não está ativo.",
     errEventScenarioMissing: "Deve-se especificar um cenário.",
-    errPaymentDetailsRequired: "Exigem-se informações de pagamento para prosseguir.",
+    errPaymentDetailsRequired: "Exige-se informações de pagamento para prosseguir.",
     errEventTimeExpired: "Não há tempo restante para este código.",
     errEventAlreadyUsed: "Este código já foi utilizado.",
-    errLocationRestricted: "O Jeenie não está disponível em sua região."
+    errLocationRestricted: "O Jeenie não está atualmente disponível em sua região.",
+    errInvalidPromoCode: "Código promocional inválido"
   },
 
   // used when handling user input related to specific fields - these
@@ -732,12 +786,12 @@ export default (PT = {
       label: "Senha",
       labelConfirm: "Confirmar senha",
       labelCreate: "Criar senha",
+      tooltip: "A senha deve ter no mínimo 7 caracteres.",
       errLength: "A senha deve ter no mínimo 7 caracteres.",
       errConfirmMatch: "As senhas devem ser iguais"
     }
   },
 
-  
   // for use in session-related screens
   session: {
     errFailedToConnect: "Perdeu a conexão com o Jennie.  Tente novamente.",
@@ -746,15 +800,15 @@ export default (PT = {
     callFailCustomer: "Houve um problema ao conectar-se com seu Language Jeenie.",
     callEndingSoon: "Esta chamada irá terminar em breve.",
     alertGeneralCannotSee:
-      "Para otimizar a conectividade, o vídeo foi temporariamente desabilitado. O vídeo será retomado quando a conectividade melhorar.",
+      "Para otimizar a conectividade, o vídeo foi temporariamente desabilitado. O vídeo será retomado quando a conectividade for aprimorada.",
     alertLinguistCannotSeeYou:
-      "Seu Language Jeenie não pode vê-lo no momento. Para otimizar a conectividade, seu vídeo foi temporariamente desabilitado. O vídeo será retomado quando a conectividade melhorar.",
+      "Seu Language Jeenie™ não pode vê-lo no momento. Para otimizar a conectividade, seu vídeo foi temporariamente desabilitado. O vídeo será retomado quando a conectividade for aprimorada.",
     alertCustomerCannotSeeYou:
-      "Seu cliente não pode vê-lo no momento. Para otimizar a conectividade, seu vídeo foi temporariamente desabilitado. O vídeo será retomado quando a conectividade melhorar.",
+      "Seu cliente não pode vê-lo no momento. Para otimizar a conectividade, seu vídeo foi temporariamente desabilitado. O vídeo será retomado quando a conectividade for aprimorada.",
     alertYouCannotSeeCustomer:
-      "Para otimizar a conectividade, o vídeo de seu cliente vídeo foi temporariamente desabilitado. O vídeo será retomado quando a conectividade melhorar.",
+      "Para otimizar a conectividade, o vídeo de seu cliente vídeo foi temporariamente desabilitado. O vídeo será retomado quando a conectividade for aprimorada.",
     alertYouCannotSeeLinguist:
-      "Para otimizar a conectividade, o vídeo de seu Language Jeenie foi temporariamente desabilitado. O vídeo será retomado quando a conectividade melhorar.",
+      "Para otimizar a conectividade, o vídeo de seu Language Jeenie™ foi temporariamente desabilitado. O vídeo será retomado quando a conectividade melhorar.",
     createSessionFailed: "Temporariamente impossibilitado de iniciar uma chamada. Tente novamente.",
 
     // for incoming call from linguists perspective
@@ -832,7 +886,7 @@ export default (PT = {
 
     // used when rating a session
     rating: {
-      submit: "Enviar",
+      comment: "Comentário",
       addComment: "Adicionar comentários",
       questionGood: "O que foi positivo?",
       questionBetter: "O que pode melhorar?",
@@ -870,13 +924,12 @@ export default (PT = {
   customerOnboarding: {
     welcome: "Bem-vindo ao Jeenie",
     connectToLinguist: "Conectar agora",
-    tenFreeMinutes: "{{time}} Minutos GRATUITOS",
     canIHelpYou: "Posso ajudar?",
     homeCanIhelpYou: "Posso ajudar {{name}}?",
     intro: {
       title: "Viaje com confiança",
       description:
-        "Acesso a tradutores humanos, a pedido e a qualquer momento, para ajuda linguística e dicas culturais em questão de segundos.",
+        "Acesso a tradutores humanos, sob demanda e a qualquer momento, para ajuda linguística e dicas culturais em questão de segundos.",
       button: "Continuar"
     },
     allSet: "Tudo pronto!",
@@ -890,7 +943,7 @@ export default (PT = {
     notification: {
       title: "Habilitar notificações",
       description:
-        "Ligar as notificações push permite que o Jeenie alerte você quando novos serviços relevantes estiverem disponíveis em sua região.",
+        "Ligar as notificações de push permite que o Jeenie alerte você quando novos serviços relevantes estiverem disponíveis em sua região.",
       button: "Ligar notificações",
       skip: "Pular"
     },
@@ -921,18 +974,22 @@ export default (PT = {
 
   forgotPassword: {
     title: "Esqueceu sua senha?",
-    description: "Sem problemas.  Iremos lhe enviar um link para redefinir sua senha no endereço de e-mail abaixo.",
+    description:
+      "Sem problemas.  Iremos lhe enviar um link para redefinir sua senha no endereço de e-mail abaixo.",
     alertSuccessTitle: "Link de redefinição enviado!",
     alertSuccessBody: "Você irá receber em breve um e-mail com o link de redefinição de senha."
   },
 
   correctEmailModal: {
-    title: "Falha de e-mail",
-    description: "Não conseguimos verificar o endereço de e-mail fornecido.  Insira um endereço de e-mail válido.",
+    title: "Falha de verificação de e-mail",
+    description:
+      "Ocorreu um erro com o e-mail fornecido. Insira um novo endereço de e-mail.",
     label: "Novo endereço de e-mail",
     titleSuccess: "Sucesso",
-    descriptionSuccess: "Seu e-mail foi atualizado! Você pode iniciar sessão no Jeenie com o novo e-mail \"{email}\"",
-    descriptionTaken: "O novo endereço de e-mail \"{email}\" já está registrado.  Você pode fazer login com esse endereço de e-mail ou especificar um novo endereço de e-mail."
+    descriptionSuccess:
+      'Seu e-mail foi atualizado! Você pode iniciar sessão no Jeenie com o novo e-mail “{{email}}”',
+    descriptionTaken:
+      'O e-mail “{email}” já está registrado.  Você pode fazer login com esse endereço de e-mail ou especificar um novo endereço de e-mail.'
   },
 
   newCustomerOnboarding: {
@@ -943,25 +1000,31 @@ export default (PT = {
     createAccount: "Criar conta",
     intro: {
       title: "Ajuda em tempo real",
-      description: "Acesso a tradutores humanos em tempo real 24 horas por dia, 7 dias por semana, para ajuda linguística em questão de segundos.  Taxa: US$ 1 por minuto.",
+      description:
+        "Acesso a tradutores humanos em tempo real 24 horas por dia, 7 dias por semana, para ajuda linguística em questão de segundos.  Taxa: US$ 1 por minuto.",
+      descriptionRate:
+        "Acesso a tradutores humanos em tempo real 24 horas por dia, 7 dias por semana, para ajuda linguística em questão de segundos.  Taxa: {{rate}} por minuto.",
       button: "Como começar"
     },
     location: {
       title: "Habilitar localização",
-      description: "Compartilhar sua localização com o Jeenie nos permite recomendar automaticamente os idiomas e os tradutores certos.",
+      description:
+        "Compartilhar sua localização com o Jeenie nos permite recomendar automaticamente os idiomas e os tradutores certos.",
       button: "Ative a localização"
     },
     notification: {
       title: "Habilitar notificações",
       description:
-        "Ligar as notificações push permite que o Jeenie alerte você quando novos serviços relevantes estiverem disponíveis em sua região.",
+        "Ligar as notificações de push permite que o Jeenie alerte você quando novos serviços relevantes estiverem disponíveis em sua região.",
       button: "Ligar notificações"
     },
     register: {
       title: "Fale-nos sobre você:",
       termsAndPrivacyNotice: "Ao continuar, você concorda com nossos Termos e Política de Privacidade.",
       terms: "Termos",
-      privacyPolicy: "Política de Privacidade"
+      privacyPolicy: "Política de Privacidade",
+      otherLanguages: "Outros idiomas",
+      chooseNativeLang: "Escolha seu idioma materno"
     },
     login: {
       forgotPassword: "Esqueceu a senha?"
@@ -973,13 +1036,22 @@ export default (PT = {
     }
   },
 
+  // for localizing currency
+  cost: {
+    usd: "US${{num}}",
+    jpy: "JP¥{{num}}",
+    eur: "€{{num}}",
+    gbp: "£{{num}}",
+    cny: "CN¥{{num}}"
+  },
+
   // for use during primary language selection
   languagesList: {
     eng: "Inglês",
     cmn: "Chinês (mandarim)",
     yue: "Chinês (cantonês)",
-    "zho-cn-shang": "Chinês (shangainês)",
-    "zho-tw": "Chinês (Taiwanês)",
+    "zho-cn-shang": "Chinês (xangainês)",
+    "zho-tw": "Chinês (taiwanês)",
     jpn: "Japonês",
     spa: "Espanhol",
     "spa-r-la": "Espanhol (América Latina)",
@@ -989,13 +1061,13 @@ export default (PT = {
     "fra-ca": "Francês (Canadá)",
     "fra-fr": "Francês (França)",
     arb: "Árabe (padrão moderno)",
-    aao: "Árabe (argelino, marroquino e tunisiano)",
+    aao: "Árabe (argelino, marroquino e tunisino)",
     "ara-arz_apd": "Árabe (egípcio ou sudanês)",
     afb: "Árabe (Golfo)",
-    acm: "Árabe (iraquiano)",
+    acm: "Árabe (Iraque)",
     "ara-apc_ajp": "Árabe (levantino)",
-    azj: "Azeri (norte)",
-    azb: "Azeri (sul)",
+    azj: "Azeri (Norte)",
+    azb: "Azeri (Sul)",
     por: "Português",
     "por-br": "Português (Brasil)",
     "por-pt": "Português (Portugal)",
@@ -1028,24 +1100,24 @@ export default (PT = {
     kaz: "Cazaque",
     ltz: "Luxemburguês",
     kur: "Curdo",
-    azj: "Azeri (norte)",
-    azb: "Azeri (sul)",
+    azj: "Azeri (Norte)",
+    azb: "Azeri (Sul)",
     ukr: "Ucraniano",
     afr: "Africâner",
     hrv: "Croata",
     glg: "Galego",
     slv: "Esloveno",
     lit: "Lituano",
-    ckb: "Sorani",
+    ckb: "Sorâni",
     jav: "Javanês",
     urd: "Urdu",
     sqi: "Albanês",
-    tel: "Télugo",
+    tel: "Telugu",
     srp: "Sérvio",
-    yor: "Ioruba",
+    yor: "Iorubá",
     hau: "Hauçá",
     bul: "Búlgaro",
-    uzb: "Uzbeque",
+    uzb: "Usbeque",
     swa: "Suaíli",
     eus: "Basco",
     bel: "Bielorrusso",

@@ -112,7 +112,7 @@ class LoginScreen extends Component {
                         <View styles={styles.bottomContainer}>
                           <View style={styles.dividerContainer}>
                             <Divider style={styles.divider} />
-                            <Text style={styles.dividerText}>Or</Text>
+                            <Text style={styles.dividerText}>{I18n.t("logic.or")}</Text>
                             <Divider style={styles.divider} />
                           </View>
                           <TouchableOpacity

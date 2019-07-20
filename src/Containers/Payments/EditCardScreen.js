@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View, Alert } from "react-native";
 import { connect } from "react-redux";
 import NavBar from "../../Components/NavBar/NavBar";
 import AddCard from "./Components/AddCard";
@@ -15,8 +15,9 @@ import { stripePublishableKey } from "../../Config/env";
 import Reactotron from "reactotron-react-native";
 import PaymentButtons from "./Components/PaymentButtons";
 import { Icon } from "react-native-elements";
-import { updateUserPaymentDetails } from "../../Ducks/AccountReducer";
+import { updateUserPaymentDetails, removeUserPaymentDetails } from "../../Ducks/AccountReducer";
 import I18n, { translateApiError } from "../../I18n/I18n";
+
 class EditCardScreen extends Component {
   componentWillMount() {
     stripe.setOptions({
@@ -25,12 +26,51 @@ class EditCardScreen extends Component {
     });
   }
 
-  safeEditCard = async () => {
+  removePaymentCard = () => {
+    const { removeUserPaymentDetails, navigation } = this.props;
+    Alert.alert(
+      I18n.t("payments.removeCard"),
+      I18n.t("payments.removeCardAlert"),
+      [
+        {
+          text: I18n.t("actions.remove"),
+          onPress: () => {
+            removeUserPaymentDetails()
+            .then(() => {
+              navigation.dispatch({ type: "back" });
+            })
+            .catch(err => {
+            Alert.alert(I18n.t("error"), translateApiError(err, "api.errTemporaryTryAgain"),[
+              {
+                text:I18n.t("ok")
+              }
+            ])
+            });
+          }
+        },
+        {
+          text: I18n.t("actions.cancel"),
+          onPress: () => {}
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  getTitle () {
+    if (!!this.props.user.stripePaymentToken) {
+      return I18n.t('payments.editCard');
+    }
+    return I18n.t('payments.addCard');
+  }
+
+  updateCard = async () => {
     const {
       cardInfo,
       updatePayments,
       clearPayments,
       navigation,
+      updateUserPaymentDetails,
     } = this.props;
 
     const params = {
@@ -41,7 +81,6 @@ class EditCardScreen extends Component {
     };
 
     updatePayments({ loading: true });
-    removePayment();
     const stripeResponse = await stripe
       .createTokenWithCard(params)
       .then(({ tokenId }) => {
@@ -50,7 +89,7 @@ class EditCardScreen extends Component {
       .then(() => {
         clearPayments();
         updatePayments({ errors: [] });
-        navigation.dispatch({ type: "Home" });
+        navigation.dispatch({ type: "back" });
       })
       .catch((err) => {
         Alert.alert(I18n.t("error"), translateApiError(err));
@@ -59,7 +98,7 @@ class EditCardScreen extends Component {
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, user } = this.props;
 
     return (
       <View style={styles.wrapperContainer}>
@@ -72,14 +111,14 @@ class EditCardScreen extends Component {
                 </View>
               </TouchableOpacity>
             }
-            rightComponent={
-              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+            rightComponent={!!user.stripePaymentToken && (
+              <TouchableOpacity activeOpacity={0.8} onPress={() => this.removePaymentCard()}>
                 <View style={styles.cancelButton}>
-                  <Text style={styles.cancelStyle}>{I18n.t("cancel")}</Text>
+                  <Text style={styles.cancelStyle}>{I18n.t("account.package.remove")}</Text>
                 </View>
               </TouchableOpacity>
-            }
-            navbarTitle={I18n.t("payments.editCard")}
+            )}
+            navbarTitle={this.getTitle()}
           />
           <ScrollView
             automaticallyAdjustContentInsets
@@ -87,7 +126,7 @@ class EditCardScreen extends Component {
             contentContainerStyle={styles.scrollViewFlex}
           >
             <AddCard type={"cardEdit"} />
-            <PaymentButtons navigation={navigation} safeEditCard={this.safeEditCard} />
+            <PaymentButtons navigation={navigation} onPress={() => {this.updateCard()}} />
           </ScrollView>
         </View>
       </View>
@@ -97,12 +136,14 @@ class EditCardScreen extends Component {
 
 const mS = state => ({
   cardInfo: state.payments.cardInfo,
+  user: state.account.user,
 });
 
 const mD = {
   updatePayments,
   clearPayments,
   updateUserPaymentDetails,
+  removeUserPaymentDetails,
 };
 
 export default connect(

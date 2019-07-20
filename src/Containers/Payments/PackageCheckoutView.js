@@ -1,0 +1,147 @@
+import React, { Component } from "react";
+import {ScrollView, Text, TouchableOpacity, View, Alert } from "react-native";
+import { connect } from "react-redux";
+import NavBar from "../../Components/NavBar/NavBar";
+import OrderSummary from "./Components/OrderSummary";
+import MinutePackageCard from "./Components/MinutePackageCard";
+import {purchaseMinutePackage} from "../../Ducks/AccountReducer";
+
+// Styles
+import styles from "./Styles/PackageDetailsStyles";
+import stripe from "tipsi-stripe";
+import { stripePublishableKey } from "../../Config/env";
+import { Icon } from "react-native-elements";
+import I18n, { translateApiError } from "../../I18n/I18n";
+import TextBlockButton from "../../Components/Widgets/TextBlockButton";
+
+
+class PackageCheckoutView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: false,
+      reloadable: props.navigation.state.params.minutePackage.reloadable
+    };
+    this.loading = false;
+  }
+
+  purchase() {
+    if (this.loading) {
+      return;
+    }
+    this.loading = true;
+    
+    this.setState({loading:true}, () => {
+      const { navigation, purchaseMinutePackage, minutePackagePromoCode } = this.props;
+    
+      const payload = {
+        minutePackageID: navigation.state.params.minutePackage.id,
+        minutePackagePromoCodeID: minutePackagePromoCode,
+        autoreload: this.state.reloadable
+      }
+  
+      purchaseMinutePackage(payload)
+      .then(asd => navigation.dispatch({
+        type: 'PackagePurchaseSuccessView', 
+        params: {
+          minutePackage: navigation.state.params.minutePackage, 
+          reloadable: this.state.reloadable},
+        }))
+      .catch((e) => {
+        console.log(e);
+        Alert.alert(I18n.t('error'), translateApiError(e, 'api.errUnexpected'));
+        this.loading = false;
+        this.setState({loading: false});
+      });
+    });
+  }
+
+  checkboxChange(){
+    this.setState({reloadable: !this.state.reloadable})
+  }
+
+  render() {
+    const { StripePaymentSourceMeta, user, navigation } = this.props;
+    console.log(user);
+    return (
+      <View style={styles.wrapperContainer}>
+        <View style={[styles.mainContainer]}>
+          <NavBar
+            leftComponent={
+              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+                <View>
+                  <Icon name="chevron-left" type="evilicon" color="white" size={50} />
+                </View>
+              </TouchableOpacity>
+            }
+            rightComponent={
+              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+                <View style={styles.cancelButton}>
+                  <Text style={styles.cancelStyle}>{I18n.t("cancel")}</Text>
+                </View>
+              </TouchableOpacity>
+            }
+            navbarTitle={I18n.t("packages.checkout.title")}
+          />
+
+          <ScrollView
+            automaticallyAdjustContentInsets
+            alwaysBounceVertical={false}
+            contentContainerStyle={styles.scrollViewFlex}
+          >
+        <MinutePackageCard 
+          minutePackage = {navigation.state.params.minutePackage}
+          selectable={false} // show the select button
+          onSelect={ () => {} } // func to call if select button pressed
+          displayReloadNotice={navigation.state.params.minutePackage.reloadable} // display the reload notice or not
+          reloadNoticeValue={this.state.reloadable} // whether or not the checkbox is selected
+          onReloadNoticeSelect={() => this.checkboxChange()} // func called when reload notice is selected, or unselected, `val` is a boolean
+          promoCodeActive={!!this.props.minutePackagePromoCode}
+          discountedPrice={navigation.state.params.minutePackage.adjustedCost != navigation.state.params.minutePackage.cost ? navigation.state.params.minutePackage.adjustedCost : false}
+          special={navigation.state.params.minutePackage.public ? false : I18n.t("minutePackage.special")}
+          specialColors={["#F39100", "#FCB753"]}
+        />
+          <View style={styles.billView}>
+            <OrderSummary
+              navigation={navigation}
+              haveCard={!!user.stripePaymentToken} //
+              styles = {styles} // main container style
+              textStyle = {styles.textBill} // optional text styles, component should provide defaults
+              minutePackage={navigation.state.params.minutePackage}
+              promoCode={this.props.minutePackagePromoCode}
+              />
+            </View>
+            <View style={this.state.loading?  styles.whiteView : styles.transparentView}>
+              </View>
+          </ScrollView>
+
+            <TextBlockButton
+                text = {I18n.t("packages.checkout.purchase")} // the text in the button
+                disabled = {!user.stripePaymentToken || this.state.loading} // boolean if disabled, prevents taps and show disabled button styles
+                loading = {this.state.loading} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
+                style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
+                disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
+                textStyle = {styles.buttonText} // optional text styles, component should provide defaults
+                onPress = {() => this.purchase()} // function to call when pressed
+            />
+        </View>
+      </View>
+    );
+  }
+}
+
+const mS = state => ({
+  StripePaymentSourceMeta: state.account.user.StripePaymentSourceMeta,
+  user: state.account.user,
+  minutePackagePromoCode: state.account.minutePackagePromoCode
+});
+
+const mD = {
+  purchaseMinutePackage,
+ };
+
+export default connect(
+  mS,
+  mD
+)(PackageCheckoutView);

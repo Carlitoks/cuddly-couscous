@@ -16,13 +16,13 @@ class CardItem extends Component {
   }
 
   render() {
-    const { StripePaymentSourceMeta, navigation } = this.props;
+    const { StripePaymentSourceMeta, navigation, stylesContainer } = this.props;
 
     return (
-      <View style={styles.flexEndCenter}>
+      <View style={stylesContainer ? stylesContainer.flexEndCenter : styles.flexEndCenter}>
         <TouchableOpacity
           style={styles.itemContainer}
-          onPress={() => navigation.dispatch({ type: "CardInfoScreen" })}
+          onPress={() => navigation.dispatch({ type: "EditCardScreen" })}
         >
           <Text style={styles.itemText}>
             XXXX XXXX XXXX{" "}
@@ -35,7 +35,7 @@ class CardItem extends Component {
             style={styles.cardIcon}
             source={
               StripePaymentSourceMeta && StripePaymentSourceMeta.brand
-                ? Icons[StripePaymentSourceMeta.brand.toLowerCase()]
+                ? Icons[StripePaymentSourceMeta.brand.toLowerCase().replace(/\s/g, "-")]
                 : null
             }
           />

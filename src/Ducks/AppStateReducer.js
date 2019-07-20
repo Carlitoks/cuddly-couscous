@@ -1,6 +1,4 @@
-import {NetInfo} from "react-native";
 import _merge from "lodash/merge";
-import _debounce from "lodash/debounce";
 
 // The purpose of this is to manage app UI & config state that is either 
 // determined or modifiable by the user.
@@ -19,12 +17,15 @@ const initState = () => {
 
 // TODO: ensure app state is restored properly
 export const init = () => (dispatch, getState) => {
-  
+  // TODO: init app locale stuff
 };
 
 // TODO: validate, record code, choose default if necessary, configure i18n
 export const setInterfaceLanguage = (code) => (dispatch, getState) => {
-  
+  // TODO: set locale in all the places needed:
+  //  * i18n
+  //  * instabug
+  //  * moment.js
 };
 
 

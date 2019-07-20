@@ -50,14 +50,29 @@ class AddCard extends Component {
       } else {
         this.setState({ date: "" });
       }
+    }else{
+      this.props.updatePayments({
+        isValidDate: false,
+      });
     }
   };
 
   onChangeCVV = cvv => {
     const updatedCard = { ...this.props.cardInfo, cvc: cvv };
     this.props.updatePayments({ cardInfo: updatedCard });
-    if (cvv.length >= 3) {
-      this.props.updatePayments({ isValidCVV: true });
+    const card = validCC(updatedCard.number);
+    if(card && card.card.type == 'american-express'){
+      if(cvv.length >=4){
+        this.props.updatePayments({ isValidCVV: true });
+      }else{
+        this.props.updatePayments({ isValidCVV: false });
+      }
+    } else {
+      if (cvv.length >= 3) {
+        this.props.updatePayments({ isValidCVV: true });
+      }else{
+        this.props.updatePayments({ isValidCVV: false });
+      }
     }
   };
 

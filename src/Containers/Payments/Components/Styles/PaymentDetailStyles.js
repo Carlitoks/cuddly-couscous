@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Metrics, Colors, Fonts } from "../../../../Themes";
-import { moderateScale } from "../../../../Util/Scaling";
+import { moderateScale, moderateScaleViewports } from "../../../../Util/Scaling";
 
 export default StyleSheet.create({
   cardIcon: { width: 42, height: 42, marginRight: 20 },
@@ -11,7 +11,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: moderateScale(339, 0),
+    width: moderateScaleViewports(339),
     height: moderateScale(64, 0),
     shadowColor: "#000",
     shadowOffset: {

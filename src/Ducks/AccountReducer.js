@@ -38,6 +38,11 @@ const initState = () => ({
   hasUnlimitedUse: false,
   hasUnlimitedUseUntil: false,
 
+  // user may have a minute package that reloads, or
+  // a recurring subscription
+  autoreloadMinutePackage: null,
+  subscribedMinutePackage: null,
+
   // calls the user made as a customer
   customerCallHistoryLoadedAt: null,
   customerCallHistory: [],
@@ -50,9 +55,16 @@ const initState = () => ({
   linguistMissedCallHistoryLoadedAt: null,
   linguistMissedCallHistory: [],
 
-  // minute packages available for purchase by the user
-  availableMinutePackagesLoadedAt: null,
-  availableMinutePackages: []
+  // minute packages available for purchase by the user. if
+  // a promo code was used to load them, it may contain packages
+  // only visible because of the promo code, or have applied discounts
+  // to specific packages
+  minutePackagesLoadedAt: null,
+  minutePackages: [],
+
+  // a promocode for minute packages, it may apply discounts
+  // to existing packages, or make new packages available to see
+  minutePackagePromoCode: null
 });
 
 // given a user, do they have unlimited use right now based on
@@ -213,6 +225,8 @@ export const setUser = (user) => (dispatch, getState) => {
       d.hasUnlimitedUseUntil = unlimitedUseUntil;
     }
   }
+  d.autoreloadMinutePackage = user.autoreloadMinutePackage || null;
+  d.subscribedMinutePackage = user.subscribedMinutePackage || null;
 
   // ensure linguist profile availability is actually set
   if (!!d.linguistProfile) {
@@ -222,7 +236,7 @@ export const setUser = (user) => (dispatch, getState) => {
   // TODO: process feature flags for active/prospective linguist
 
   // TEMPORARY: TODO: set user state in deprecated userProfile reducer
-  dispatch(merge(d));
+  dispatch(update(d));
 }
 
 // fetch user from server, use cache object by default
@@ -324,7 +338,7 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
     api.get(apiURL+"/billing/subscription-periods?active=true")
     .then((res) => {
       const unlimitedUseUntil = hasUnlimitedUseUntil(res.data);
-      dispatch(merge({
+      dispatch(update({
         subscriptionPeriods: res.data || [],
         subscriptionPeriodsLoadedAt: new Date().getTime(),
         hasUnlimitedUse: unlimitedUseUntil !== false,
@@ -336,6 +350,56 @@ export const loadActiveSubscriptionPeriods = (useCache = true) => (dispatch, get
   });
 };
 
+// load minute package promo code, or return error if it was invalid or failed to load
+export const loadMinutePackages = (useCache = true, code = null) => (dispatch, getState) => {
+  const {minutePackagesLoadedAt} = getState().account;
+  if (useCache && !code && new Date().getTime() < minutePackagesLoadedAt + CACHE.MINUTE_PACKAGES) {
+    return Promise.resolve(getState().account.minutePackages);
+  }
+  const url = (!!code) ? `/minute-packages?promocode=${code}` : `/minute-packages`;
+  return new Promise((resolve, reject) => {
+    api.get(url)
+    .then((res) => {
+      dispatch(update({
+        minutePackagesLoadedAt: new Date().getTime(),
+        minutePackages: res.data,
+        minutePackagePromoCode: !!code ? code : null,
+      }));
+      resolve(res.data);
+    })
+    .catch(reject);
+  });
+};
+
+// just clears any promo-code and 
+export const clearMinutePackagePromoCode = () => (dispatch, getState) => {
+  return dispatch(loadMinutePackages(false));
+};
+
+// purchase a minute package, optionally using a promocode
+export const purchaseMinutePackage = (payload) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    api.post(apiURL+"/billing/minute-packages", payload)
+    .then((res) => {
+      return dispatch(loadUser(false));
+    })
+    .then(resolve)
+    .catch(reject);
+  });
+};
+
+// if user has an autoreload minute package, remove it
+export const removeAutoreloadMinutePackage = () => (dispatch, getState) =>  {
+  return new Promise((resolve, reject) => {
+    api.delete(`${apiURL}/billing/minute-package-autoreload`)
+    .then((res) => {
+      return dispatch(loadUser(false));
+    })
+    .then(resolve)
+    .catch(reject);
+  });
+}; 
+
 // load calls placed as a customer
 export const loadCustomerCallHistory = (useCache = true) => (dispatch, getState) => {
   const {customerCallHistory, customerCallHistoryLoadedAt} = getState().account;
@@ -346,7 +410,7 @@ export const loadCustomerCallHistory = (useCache = true) => (dispatch, getState)
     }
     api.get(apiURL+"/sessions")
     .then((res) => {
-      dispatch(merge({
+      dispatch(update({
         customerCallHistory: res.data,
         customerCallHistoryLoadedAt: new Date().getTime(),
       }));
@@ -366,7 +430,7 @@ export const loadLinguistCallHistory = (useCache = true) => (dispatch, getState)
     }
     api.get(apiURL+"/linguist-profile/sessions")
     .then((res) => {
-      dispatch(merge({
+      dispatch(update({
         linguistCallHistory: res.data,
         linguistCallHistoryLoadedAt: new Date().getTime(),
       }));
@@ -386,7 +450,7 @@ export const loadLinguistMissedCallHistory = (useCache = true) => (dispatch, get
     }
     api.get(apiURL+"/linguist-profile/session-invitations?status=missed")
     .then((res) => {
-      dispatch(merge({
+      dispatch(update({
         linguistMissedCallHistory: res.data,
         linguistMissedCallHistoryLoadedAt: new Date().getTime(),
       }));
