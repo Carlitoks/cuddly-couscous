@@ -118,11 +118,27 @@ class App extends Component {
           console.log("current deep link Params: ", params);
         });
 
-/*       // params from last open
-        // TODO: How to handle this? Should we use an Event?
-        BranchLib.getLatestReferringParams().then((lastParams) => {
-          // params from last open
-        });*/
+
+        BranchLib.getLatestReferringParams().then((params) => {
+          if(!!!params["cached_initial_event"]){
+            if(!!params["+non_branch_link"]){
+              // A Direct deep link was opened
+              var obj = {};
+              if(params["+non_branch_link"].split("?").length > 1){
+                params["+non_branch_link"].split("?")[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+                  obj[decodeURIComponent(key)] = decodeURIComponent(value);
+                });
+                console.log('solo.link-open', params);
+                analytics.track("solo.link-open", obj);
+                store.dispatch(updateAppState({ openUrlParams : obj }));
+              }
+            } else {
+              console.log('solo.branch-open', params);
+              analytics.track("solo.branch-open", params);
+              store.dispatch(updateAppState({ openUrlParams : params }));
+            }
+          }
+        });
 
         //Used to retrieve on demand the install information
 /*        BranchLib.getFirstReferringParams().then((installParams) => {
