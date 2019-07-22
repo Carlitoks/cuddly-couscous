@@ -10,7 +10,7 @@ export default StyleSheet.create({
   CVVInput: {
     color: "#000",
     borderBottomWidth: 2,
-    borderBottomColor: "#3F1674",
+    borderBottomColor: "rgba(0, 0, 0, 0.42)",
     width: metrics.width * 0.35,
     padding: 1
   },
