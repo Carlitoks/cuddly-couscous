@@ -12,13 +12,6 @@ export default StyleSheet.create({
     width: Metrics.width * 0.79,
     padding: 3
   },
-  CCNInputActive: {
-    color: "#000",
-    borderBottomWidth: 2,
-    borderBottomColor: "#3F1674",
-    width: Metrics.width * 0.79,
-    padding: 3
-  },
   CCIconContainer: {
     position: "absolute",
     right: Platform.OS === "ios" ? -2 : -5,
