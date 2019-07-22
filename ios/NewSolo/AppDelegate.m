@@ -35,7 +35,7 @@
 
   [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
 
-  [RNBranch useTestInstance];
+  // [RNBranch useTestInstance];
   [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
 
   [AppCenterReactNativeCrashes registerWithAutomaticProcessing];  // Initialize AppCenter crashes
