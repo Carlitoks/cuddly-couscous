@@ -21,16 +21,11 @@ class CardItem extends Component {
     let last4 = StripePaymentSourceMeta && StripePaymentSourceMeta.last4
     ? StripePaymentSourceMeta.last4 : "XXXX";
 
-    let patter = "XXXX XXXX XXXX ";
-    
-    if(StripePaymentSourceMeta && StripePaymentSourceMeta.brand == 'Diners Club'){
-      patter = "XXXX XXXX XX";
-      last4 = [last4.slice(0, 2), ' ', last4.slice(2)].join('');
-    }    
+    const patter = StripePaymentSourceMeta && StripePaymentSourceMeta.brand == 'Diners Club'
+    ? "XXXX XXXX XX" : "XXXX XXXX XXXX ";
 
-    if(StripePaymentSourceMeta && StripePaymentSourceMeta.brand == 'American Express' ){
-      patter = "XXXX XXXXXX X"
-    }
+    if(StripePaymentSourceMeta && StripePaymentSourceMeta.brand == 'Diners Club' )
+      last4 = [last4.slice(0, 2), ' ', last4.slice(2)].join('');
 
     return `${patter}${last4}`
     
