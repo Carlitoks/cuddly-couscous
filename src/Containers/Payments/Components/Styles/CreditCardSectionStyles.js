@@ -85,6 +85,8 @@ export default StyleSheet.create({
   },
   balanceContainer:{
     width:"27%",
+    alignItems: "center",
+    justifyContent: "center"
   },
   balanceContainerWhite:{
     width:"60%",
