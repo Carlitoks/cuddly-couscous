@@ -21,7 +21,7 @@ import I18n, { switchLanguage } from "./I18n/I18n";
 import { init as initForensics, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
-import { updateJeenieCounts, loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
+import { init as initAppConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 import { InitInstabug } from "./Settings/InstabugInit";
 import { clear as clearAccount, initializeUser, refreshDevice } from "./Ducks/AccountReducer";
 import { init as initAuth, clear as clearAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
@@ -230,8 +230,7 @@ class App extends Component {
 
         // if we have a device, update some items
         if (!!auth.deviceJwtToken) {
-          promises.push(store.dispatch(updateJeenieCounts(true))); // reinitialize jeenie counts if app reloads
-          promises.push(store.dispatch(loadConfig())); // load basic app config
+          promises.push(store.dispatch(initAppConfig()));
         }
 
         // if user is logged in, load/refresh other items, and change the initial

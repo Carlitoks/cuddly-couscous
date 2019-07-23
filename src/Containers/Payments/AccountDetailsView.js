@@ -79,6 +79,7 @@ class AccountDetailsView extends Component {
       user,
       hasUnlimitedUse,
       hasUnlimitedUseUntil,
+      rate
     } = this.props;
     console.log("autoreloadMinutePackage en AccountDetails", this.props.autoreloadMinutePackage);
     return (
@@ -122,6 +123,7 @@ class AccountDetailsView extends Component {
               }}
               navigation={navigation}
               haveCard={user.StripePaymentSourceMeta && user.StripePaymentSourceMeta.last4 ? true : false}
+              rate={rate}
             />
             {this.state.loading ? 
               <ActivityIndicator size="large" color="purple" style={{ zIndex: 100000, top: 150 }} />  
@@ -155,7 +157,8 @@ const mS = state => ({
   hasUnlimitedUse: state.account.hasUnlimitedUse,
   hasUnlimitedUseUntil: state.account.hasUnlimitedUseUntil,
   autoreloadMinutePackage: state.account.autoreloadMinutePackage,
-  subscribedMinutePackage: state.account.subscribedMinutePackage
+  subscribedMinutePackage: state.account.subscribedMinutePackage,
+  rate: state.appConfigReducer.payAsYouGoRate,
 });
 
 const mD = { 

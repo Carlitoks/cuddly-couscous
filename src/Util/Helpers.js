@@ -294,3 +294,23 @@ export const checkOperatingHours = (
     );
   }
 };
+
+// returns false if country code could not be determined
+export const getCountryCodeFromLocale = (locale) => {
+  const parts = locale.toLowerCase().split("-");
+  let countryCode;
+  let localeCode;
+
+  // "zh"
+  if (parts.length == 1) {
+    localeCode = parts[0];
+  }
+
+  // "zh-cn", or "zh-hans-cn"
+  if (parts.length >= 2) {
+    countryCode = parts[parts.length - 1];
+    localeCode = parts.slice(0, -1).join("-");
+  }
+
+  return countryCode || false;
+};

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
-import I18n from "../../../I18n/I18n";
+import I18n, { localizePrice } from "../../../I18n/I18n";
 import CardItem from "./CardItem";
 import Icons from "../Icons";
 // Styles
@@ -10,11 +10,10 @@ const creditCardImage = require("../../../Assets/Images/creditCardLeft.png");
 export default class CreditCardSection extends Component {
   constructor(props) {
     super(props);
-    /* this.state = {
-      creditCardIcon: Icons.placeholder,
-      date: "",
-      currentTooltipIcon: Icons.info_cvv
-    };*/
+
+    this.state = {
+      rate: localizePrice(props.rate)
+    };
   }
   render() {
     const { navigation, haveCard } = this.props;
@@ -55,7 +54,7 @@ export default class CreditCardSection extends Component {
         <Text
           style={styles.description}
         >
-          {I18n.t("account.card.description", { rate: "US$1" })}
+          {I18n.t("account.card.description", { rate: this.state.rate })}
         </Text>
       </React.Fragment>}
 
