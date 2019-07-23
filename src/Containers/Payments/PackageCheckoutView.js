@@ -111,7 +111,6 @@ class PackageCheckoutView extends Component {
             <View style={this.state.loading?  styles.whiteView : styles.transparentView}>
               </View>
           </ScrollView>
-        </View>
       </View>
     );
   }
