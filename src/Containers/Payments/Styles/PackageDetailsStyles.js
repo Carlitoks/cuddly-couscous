@@ -50,7 +50,6 @@ export default StyleSheet.create({
   scrollViewFlex: {
     flexGrow: 1,
     flexDirection: "column",
-    justifyContent: "flex-start",
     alignItems: "center",
     paddingBottom: 20,
     backgroundColor: "#F2F2F2"
@@ -90,12 +89,13 @@ export default StyleSheet.create({
   },
   billContainer:{
     alignItems: "center",
-    marginTop:30,
-    paddingTop:20,
-    paddingBottom:20,
     width:"100%",
-    height:"100%",
-    backgroundColor:"#FFF",
+    backgroundColor:"#FFFFFF",
+    marginTop: 20,
+    marginBottom:20,
+    paddingTop: 10,
+    paddingBottom:10,
+    flexDirection:"column"
   },
   row: {
     height: 21,
@@ -127,11 +127,10 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     width: Metrics.width * 0.90,
     height: moderateScaleViewports(55),
-    marginTop: 15,
+    marginBottom: 44,
   },
   rowAddCard: {
-    marginTop:14,
-    marginBottom:5,
+    marginBottom:10,
     marginLeft:0,
     width:"80%",
     flexDirection: "row",
