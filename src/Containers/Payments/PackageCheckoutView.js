@@ -8,8 +8,6 @@ import {purchaseMinutePackage} from "../../Ducks/AccountReducer";
 
 // Styles
 import styles from "./Styles/PackageDetailsStyles";
-import stripe from "tipsi-stripe";
-import { stripePublishableKey } from "../../Config/env";
 import { Icon } from "react-native-elements";
 import I18n, { translateApiError } from "../../I18n/I18n";
 
@@ -61,11 +59,10 @@ class PackageCheckoutView extends Component {
   }
 
   render() {
-    const { StripePaymentSourceMeta, user, navigation } = this.props;
+    const { user, navigation } = this.props;
     console.log(user);
     return (
       <View style={styles.wrapperContainer}>
-        <View style={[styles.mainContainer]}>
           <NavBar
             leftComponent={
               <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
@@ -114,7 +111,6 @@ class PackageCheckoutView extends Component {
             <View style={this.state.loading?  styles.whiteView : styles.transparentView}>
               </View>
           </ScrollView>
-        </View>
       </View>
     );
   }

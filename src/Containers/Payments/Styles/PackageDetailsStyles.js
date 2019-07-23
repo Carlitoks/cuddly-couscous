@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale } from "../../../Util/Scaling";
-import { red } from 'ansi-colors';
 import { moderateScaleViewports } from "../../../Util/Scaling";
 import { isIphoneXorAbove } from "../../../Util/Devices";
 
@@ -51,12 +50,10 @@ export default StyleSheet.create({
   scrollViewFlex: {
     flexGrow: 1,
     flexDirection: "column",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingBottom: 20,
-    height:"100%",
-    width:"100%",
-    position:"relative",
-    backgroundColor: "#F2F2F2",
+    backgroundColor: "#F2F2F2"
 
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
@@ -93,13 +90,12 @@ export default StyleSheet.create({
   },
   billContainer:{
     alignItems: "center",
+    marginTop:30,
+    paddingTop:20,
+    paddingBottom:20,
     width:"100%",
-    backgroundColor:"#FFFFFF",
-    marginTop: 20,
-    marginBottom:20,
-    paddingTop: 10,
-    paddingBottom:10,
-    flexDirection:"column"
+    height:"100%",
+    backgroundColor:"#FFF",
   },
   row: {
     height: 21,
@@ -131,7 +127,7 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     width: Metrics.width * 0.90,
     height: moderateScaleViewports(55),
-    marginBottom: 44,
+    marginTop: 15,
   },
   rowAddCard: {
     marginBottom:10,
