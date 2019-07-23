@@ -12,7 +12,6 @@ import stripe from "tipsi-stripe";
 import { stripePublishableKey } from "../../Config/env";
 import { Icon } from "react-native-elements";
 import I18n, { translateApiError } from "../../I18n/I18n";
-import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 
 
 class PackageCheckoutView extends Component {
@@ -102,7 +101,6 @@ class PackageCheckoutView extends Component {
           special={navigation.state.params.minutePackage.public ? false : I18n.t("minutePackage.special")}
           specialColors={["#F39100", "#FCB753"]}
         />
-          <View style={styles.billView}>
             <OrderSummary
               navigation={navigation}
               haveCard={!!user.stripePaymentToken} //
@@ -110,21 +108,12 @@ class PackageCheckoutView extends Component {
               textStyle = {styles.textBill} // optional text styles, component should provide defaults
               minutePackage={navigation.state.params.minutePackage}
               promoCode={this.props.minutePackagePromoCode}
+              loading={this.state.loading}
+              purchase={() => this.purchase()}
               />
-            </View>
             <View style={this.state.loading?  styles.whiteView : styles.transparentView}>
               </View>
           </ScrollView>
-
-            <TextBlockButton
-                text = {I18n.t("packages.checkout.purchase")} // the text in the button
-                disabled = {!user.stripePaymentToken || this.state.loading} // boolean if disabled, prevents taps and show disabled button styles
-                loading = {this.state.loading} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
-                style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
-                disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
-                textStyle = {styles.buttonText} // optional text styles, component should provide defaults
-                onPress = {() => this.purchase()} // function to call when pressed
-            />
         </View>
       </View>
     );

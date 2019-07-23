@@ -8,8 +8,8 @@ import { isIphoneXorAbove } from "../../../Util/Devices";
 const baseButton = {
   flexDirection: "row",
   justifyContent: "center",
-  borderRadius: moderateScaleViewports(10),
   alignItems: "center",
+  borderRadius: moderateScaleViewports(10),
   borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
   borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
   height: "100%",
@@ -51,7 +51,6 @@ export default StyleSheet.create({
   scrollViewFlex: {
     flexGrow: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
     alignItems: "center",
     paddingBottom: 20,
     height:"100%",
@@ -62,9 +61,6 @@ export default StyleSheet.create({
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
   billView: {
-    bottom:0,
-    position: "absolute",
-    height:"70%",
     width:"100%",
     backgroundColor:"#FFFFFF"
   },
@@ -97,19 +93,21 @@ export default StyleSheet.create({
   },
   billContainer:{
     alignItems: "center",
-    position:"absolute",
     width:"100%",
+    backgroundColor:"#FFFFFF",
+    marginTop: 20,
+    marginBottom:20,
+    paddingTop: 10,
+    paddingBottom:10,
     flexDirection:"column"
   },
   row: {
-    flex:1,
     height: 21,
     width:"90%",
     marginTop:10,
     flexDirection: "row"
   },
   rowBill: {
-    flex:1,
     height: 21,
     width:"90%",
     marginTop:25,
@@ -118,8 +116,6 @@ export default StyleSheet.create({
   rowTitle: {
     height: 21,
     width:"90%",
-    marginTop:20,
-    marginBottom:-30,
     flexDirection: "row"
   },
   cancelStyle: {
@@ -135,18 +131,13 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     width: Metrics.width * 0.90,
     height: moderateScaleViewports(55),
-    right: "5%",
-    marginBottom: isIphoneXorAbove() ? 44 : 0,
-    position: "absolute",
-    bottom:"13%"
+    marginBottom: 44,
   },
   rowAddCard: {
-    marginTop:50,
     marginBottom:10,
     marginLeft:0,
     width:"80%",
     flexDirection: "row",
-    position: "relative",
   },
 
   button: {
@@ -158,7 +149,6 @@ export default StyleSheet.create({
   buttonDisable: {
     ...baseButton,
     backgroundColor: "#979797",
-    flex: 1
   },
   buttonText: {
     color: "white",

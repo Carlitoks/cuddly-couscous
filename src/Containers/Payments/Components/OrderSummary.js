@@ -4,6 +4,7 @@ import { Text, View, TouchableOpacity } from "react-native";
 import Icons from "../Icons";
 import CardItem from "./CardItem";
 import I18n, {localizePrice} from "../../../I18n/I18n";
+import TextBlockButton from "../../../Components/Widgets/TextBlockButton";
 // Styles
 //import styles from "./Styles/AddCardStyles";
 
@@ -93,6 +94,15 @@ export default class OrderSummary extends Component {
             {this.renderPrice(!!minutePackage.adjustedCost ? minutePackage.adjustedCost : minutePackage.cost, minutePackage.currency)}
           </Text>
         </View>
+        <TextBlockButton
+                text = {I18n.t("packages.checkout.purchase")} // the text in the button
+                disabled = {!haveCard || this.props.loading} // boolean if disabled, prevents taps and show disabled button styles
+                loading = {this.state.loading} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
+                style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
+                disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
+                textStyle = {styles.buttonText} // optional text styles, component should provide defaults
+                onPress = {this.props.purchase} // function to call when pressed
+            />
       </View>
     );
   }
