@@ -28,21 +28,21 @@ class PackageCheckoutView extends Component {
       return;
     }
     this.loading = true;
-    
+
     this.setState({loading:true}, () => {
       const { navigation, purchaseMinutePackage, minutePackagePromoCode } = this.props;
-    
+
       const payload = {
         minutePackageID: navigation.state.params.minutePackage.id,
         minutePackagePromoCodeID: minutePackagePromoCode,
         autoreload: this.state.reloadable
       }
-  
+
       purchaseMinutePackage(payload)
       .then(asd => navigation.dispatch({
-        type: 'PackagePurchaseSuccessView', 
+        type: 'PackagePurchaseSuccessView',
         params: {
-          minutePackage: navigation.state.params.minutePackage, 
+          minutePackage: navigation.state.params.minutePackage,
           reloadable: this.state.reloadable},
         }))
       .catch((e) => {
@@ -86,7 +86,7 @@ class PackageCheckoutView extends Component {
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
           >
-        <MinutePackageCard 
+        <MinutePackageCard
           minutePackage = {navigation.state.params.minutePackage}
           selectable={false} // show the select button
           onSelect={ () => {} } // func to call if select button pressed
@@ -111,6 +111,7 @@ class PackageCheckoutView extends Component {
             <View style={this.state.loading?  styles.whiteView : styles.transparentView}>
               </View>
           </ScrollView>
+        </View>
       </View>
     );
   }
