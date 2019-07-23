@@ -15,13 +15,13 @@ target 'NewSolo' do
   pod 'BVLinearGradient', :path => "#{node_modules_path}/react-native-linear-gradient"
   pod 'RNDeviceInfo', :path => "#{node_modules_path}/react-native-device-info"
   pod 'react-native-camera', path: "#{node_modules_path}/react-native-camera"
-  pod 'react-native-fetch-blob', :path => "#{node_modules_path}/react-native-fetch-blob" 
-  pod 'React', :path => "#{node_modules_path}/react-native", :subspecs => [ 
-     
-    'RCTImage' 
-] 
-  pod 'react-native-image-resizer', :path => "#{node_modules_path}/react-native-image-resizer" 
-  pod 'RNFS', :path => "#{node_modules_path}/react-native-fs" 
+  pod 'react-native-fetch-blob', :path => "#{node_modules_path}/react-native-fetch-blob"
+  pod 'React', :path => "#{node_modules_path}/react-native", :subspecs => [
+
+    'RCTImage'
+]
+  pod 'react-native-image-resizer', :path => "#{node_modules_path}/react-native-image-resizer"
+  pod 'RNFS', :path => "#{node_modules_path}/react-native-fs"
   pod 'RNI18n', :path => "#{node_modules_path}/react-native-i18n"
   pod 'react-native-keep-awake', :path => "#{node_modules_path}/react-native-keep-awake"
   pod 'react-native-background-timer', :path => "#{node_modules_path}/react-native-background-timer"
@@ -31,15 +31,15 @@ target 'NewSolo' do
   pod 'RNSVG', :path => "#{node_modules_path}/react-native-svg"
 
   pod "react-native-branch", path: "../node_modules/react-native-branch"
-  pod "Branch-SDK", path: "../node_modules/react-native-branch/ios"
-  
+  pod 'Branch', '0.26.0'
+
   pod 'OpenTok', '2.15.3'
 
   pod 'RNSound', :path => '../node_modules/react-native-sound'
 
 # Pods for AppCenter
   pod 'AppCenterReactNativeShared', '~> 1.5.1'
-  
+
 
 pod 'AppCenter/Analytics', '~> 1.6.1'
 pod 'AppCenter/Crashes', '~> 1.6.1'
