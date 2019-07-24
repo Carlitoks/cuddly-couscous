@@ -411,7 +411,7 @@ export default currentSessionReducer = (state = null, action) => {
   switch (type) {
     case ACTIONS.UPDATE: {
       return {
-        ...state,
+        ...(state || initState()),
         ...payload
       }
     }

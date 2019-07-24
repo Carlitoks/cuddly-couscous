@@ -8,7 +8,7 @@ import analytics from "@segment/analytics-react-native";
 import deviceinfo from "react-native-device-info";
 import SplashScreen from 'react-native-splash-screen';
 
-import { codePushAndroidKey, codePushiOSKey, analyticsKey, promptUpdate } from "./Config/env";
+import { codePushAndroidKey, codePushiOSKey, segmentKey, promptUpdate } from "./Config/env";
 import createStore from "./Config/CreateStore";
 import ReduxNavigation from "./Navigation/ReduxNavigation";
 
@@ -82,7 +82,7 @@ class App extends Component {
         this.setState({store});
 
         const {
-          settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
+          settings: { userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
 
         branchInstance = BranchLib.subscribe(({ error, params }) => {
@@ -146,8 +146,7 @@ class App extends Component {
 
         // initialize analytics
           analytics
-            .setup(analyticsKey, { trackAppLifecycleEvents: true, debug: true })
-            .then(() => store.dispatch(updateSettings({ segmentSettings: true })))
+            .setup(segmentKey, { trackAppLifecycleEvents: true, debug: true })
             .catch(error => console.log(error));
 
         // trigger network status checks, and work around iOS NetInfo bug

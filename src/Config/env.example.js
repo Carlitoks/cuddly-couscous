@@ -6,7 +6,7 @@ export const stripePublishableKey = "";
 export const instabugToken = "";
 export const codePushiOSKey = "";
 export const codePushAndroidKey = "";
-export const analyticsKey = "";
+export const segmentKey = "";
 export const forensicsEnabled = false;
 
 export const promptUpdate = false;

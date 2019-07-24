@@ -494,7 +494,7 @@ const reducer = (state = null, action = {}) => {
   switch (type) {
     case ACTIONS.UPDATE: {
       return {
-        ...state || initState(),
+        ...(state || initState()),
         ...payload
       }
     }

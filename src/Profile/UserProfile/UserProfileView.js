@@ -33,6 +33,14 @@ class UserProfileView extends Component {
       : Images.avatar;
   };
 
+  renderName() {
+    const {user} = this.props;
+    if (!!user.firstName && !!user.lastName) {
+      return `${user.firstName} ${user.lastName}`     
+    }
+    return user.firstName;
+  }
+
   render() {
     const navigation = this.props.navigation;
     const { user, linguistProfile } = this.props;
@@ -71,7 +79,7 @@ class UserProfileView extends Component {
                   containerStyle={styles.listItemContainer}
                   title={I18n.t("name").toUpperCase()}
                   titleStyle={styles.titleStyle}
-                  subtitle={`${user.firstName} ${user.lastName}`}
+                  subtitle={this.renderName()}
                   subtitleStyle={styles.listSubtitle}
                   onPress={() => {
                     navigation.dispatch({
