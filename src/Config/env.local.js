@@ -6,7 +6,7 @@ export const stripePublishableKey = "pk_test_VJ3Qq3KbSrkFGIjughMh88Hv";
 export const instabugToken = "";
 export const codePushiOSKey = "";
 export const codePushAndroidKey = "";
-export const analyticsKey = "5CzcqoWWNLzu6F9XjIUMIV2gQXryOxdk";
+export const segmentKey = "5CzcqoWWNLzu6F9XjIUMIV2gQXryOxdk";
 export const forensicsEnabled = true;
 
 export const promptUpdate = false;
