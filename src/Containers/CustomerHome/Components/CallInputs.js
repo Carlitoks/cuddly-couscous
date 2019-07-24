@@ -9,19 +9,29 @@ import {
   swapCurrentSessionLanguages,
   guessSecondaryLangCode
 } from "../../../Ducks/NewSessionReducer";
-import I18n from "../../../I18n/I18n";
+import I18n, { localizePrice } from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallInputsStyles";
 import { moderateScaleViewports } from "../../../Util/Scaling";
-import { CUSTOMER_FREE_MINUTES } from "../../../Util/Constants";
 
 class CallInputs extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      rate: localizePrice(props.rate),
+    };
+  }
+
   componentWillMount() {
     this.props.guessSecondaryLangCode();
   }
 
   paymentNotice = () => {
     const { user, hasUnlimitedUse, hasUnlimitedUseUntil } = this.props;
+    const { rate } = this.state;
+
     if (hasUnlimitedUse) {
       let d = null;
       try {
@@ -30,35 +40,20 @@ class CallInputs extends Component {
         d = moment().format("ll");
       }
 
-      return I18n.t("newCustomerHome.rateNotices.unlimitedUntil", {date: d});
-    }
-    if (this.hasMadeFirstCall()) {
-      return I18n.t("newCustomerHome.rateNotices.beforeFirst", {num: CUSTOMER_FREE_MINUTES});
+      return I18n.t("newCustomerHome.rateNotices.unlimitedUntil", { date: d });
     }
     if (user.availableMinutes) {
       if (user.stripePaymentToken) {
-        return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: user.availableMinutes });
+        return I18n.t("newCustomerHome.rateNotices.hasBalanceRate", { rate, num: user.availableMinutes });
       }
     } else {
       if (!user.stripePaymentToken) {
-        return I18n.t("newCustomerHome.rateNotices.noBalanceNoCard");
+        return I18n.t("newCustomerHome.rateNotices.noBalanceNoCardRate", { rate });
       }
-      return I18n.t("newCustomerHome.rateNotices.noBalanceHasCard");
+      return I18n.t("newCustomerHome.rateNotices.noBalanceHasCardRate", { rate });
     }
-    return I18n.t("newCustomerHome.rateNotices.hasBalance", { num: user.availableMinutes });
+    return I18n.t("newCustomerHome.rateNotices.hasBalanceRate", { rate, num: user.availableMinutes });
   };
-
-  hasMadeFirstCall () {
-    const history = this.props.customerCallHistory;
-    if (!!history && history.length > 0) {
-      for (let call of history) {
-        if (call.duration > 0) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
 
   render() {
     const {
@@ -174,6 +169,7 @@ const mS = state => ({
   hasUnlimitedUse: state.account.hasUnlimitedUse,
   hasUnlimitedUseUntil: state.account.hasUnlimitedUseUntil,
   customerCallHistory: state.account.customerCallHistory,
+  rate: state.appConfigReducer.payAsYouGoRate,
 });
 
 const mD = {

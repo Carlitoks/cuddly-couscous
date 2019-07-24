@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.newsolo"
-    android:versionCode="120"
-    android:versionName="3.3.0">
+    android:versionCode="125"
+    android:versionName="3.3.5">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -62,7 +62,7 @@
         </intent-filter>
         <!-- Branch URI Scheme -->
         <intent-filter>
-            <data android:scheme="jeenie://" />
+            <data android:scheme="jeenie" />
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />

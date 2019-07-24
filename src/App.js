@@ -21,7 +21,7 @@ import I18n, { switchLanguage } from "./I18n/I18n";
 import { init as initForensics, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
-import { updateJeenieCounts, loadConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
+import { init as initAppConfig, loadSessionScenarios } from "./Ducks/AppConfigReducer";
 import { InitInstabug } from "./Settings/InstabugInit";
 import { clear as clearAccount, initializeUser, refreshDevice } from "./Ducks/AccountReducer";
 import { init as initAuth, clear as clearAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
@@ -29,9 +29,10 @@ import PushNotification from "./Util/PushNotification";
 import { setInitialScreen } from "./Navigation/AppNavigation";
 import { update as updateAppState } from "./Ducks/AppStateReducer";
 import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
+import BranchLib from "react-native-branch";
 
 let CurrentConnectivity = "none";
-
+let branchInstance = null;
 class App extends Component {
   constructor(props) {
     super(props);
@@ -69,11 +70,11 @@ class App extends Component {
     setTimeout(() => {
       this.setState({ splashScreenTimer: true });
     }, 2000);
+
     this.disableAppCenterCrashes();
     SplashScreen.hide();
     initForensics();
     AppState.addEventListener("change", this._handleAppStateChange);
-
     // load store and initialize all the things
     createStore()
       // initialize app state: ui language and analytics
@@ -83,6 +84,40 @@ class App extends Component {
         const {
           settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
+
+        branchInstance = BranchLib.subscribe(({ error, params }) => {
+          if (error) {
+            console.error('Error from Branch: ' + error);
+            return
+          }
+
+          if(params["+is_first_session"]){
+            console.log('solo.branch-install', params);
+            store.dispatch(updateAppState({ installUrlParams: params }));
+            analytics.track("solo.branch-install", params);
+          }
+
+          if(!!!params["cached_initial_event"]){
+            if(!!params["+non_branch_link"]){
+              // A Direct deep link was opened
+              var obj = {};
+              if(params["+non_branch_link"].split("?").length > 1){
+                params["+non_branch_link"].split("?")[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+                  obj[decodeURIComponent(key)] = decodeURIComponent(value);
+                });
+                console.log('solo.link-open', params);
+                analytics.track("solo.link-open", obj);
+                store.dispatch(updateAppState({ openUrlParams : obj }));
+              }
+            } else {
+              console.log('solo.branch-open', params);
+              analytics.track("solo.branch-open", params);
+              store.dispatch(updateAppState({ openUrlParams : params }));
+            }
+          }
+          // Route link based on data in params.
+          console.log("current deep link Params: ", params);
+        });
 
         // set app UI language
         if (!userLocaleSet) {
@@ -108,14 +143,12 @@ class App extends Component {
         } else {
           switchLanguage(storeInterfaceLocale[1], this);
         }
-    
+
         // initialize analytics
-        if (!segmentSettings) {
           analytics
-            .setup(analyticsKey, { trackAppLifecycleEvents: true })
+            .setup(analyticsKey, { trackAppLifecycleEvents: true, debug: true })
             .then(() => store.dispatch(updateSettings({ segmentSettings: true })))
             .catch(error => console.log(error));
-        }
 
         // trigger network status checks, and work around iOS NetInfo bug
         // set connection data in app state, and track any connection status changes
@@ -132,7 +165,7 @@ class App extends Component {
           } else {
             NetInfo.isConnected.fetch().then((isConnected) => {
               this.handleIsConnectedChange(isConnected);
-            });  
+            });
           }
         });
       })
@@ -171,8 +204,7 @@ class App extends Component {
 
         // if we have a device, update some items
         if (!!auth.deviceJwtToken) {
-          promises.push(store.dispatch(updateJeenieCounts(true))); // reinitialize jeenie counts if app reloads
-          promises.push(store.dispatch(loadConfig())); // load basic app config
+          promises.push(store.dispatch(initAppConfig()));
         }
 
         // if user is logged in, load/refresh other items, and change the initial
@@ -246,6 +278,10 @@ class App extends Component {
     persistEvents();
     if (!!this.updateFcmTokenListener) {
       this.updateFcmTokenListener.remove();
+    }
+    if (branchInstance) {
+      branchInstance();
+      branchInstance = null
     }
   }
 

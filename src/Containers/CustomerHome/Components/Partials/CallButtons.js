@@ -9,7 +9,7 @@ import {
 import { Icon } from "react-native-elements";
 import { connect } from "react-redux";
 import Permissions from "react-native-permissions";
-import I18n, { translateApiError } from "../../../../I18n/I18n";
+import I18n, { translateApiError, localizePrice } from "../../../../I18n/I18n";
 import { modifyAVModePreference } from "../../../../Ducks/NewSessionReducer";
 import {
   checkCallPermissions
@@ -27,7 +27,8 @@ class CallButtons extends Component {
 
     this.state = {
       createDisabled: false,
-      creating: false
+      creating: false,
+      rate: localizePrice(props.rate)
     };
   }
 
@@ -39,21 +40,20 @@ class CallButtons extends Component {
       modifyAVModePreference,
       completedMicAndCamera,
     } = this.props;
+    const { rate } = this.state;
+
     modifyAVModePreference({ avModePreference: type });
 
     if (!hasUnlimitedUse && user.availableMinutes === 0 && !user.stripePaymentToken) {
-      Alert.alert(" ", I18n.t("payments.enterPaymentToTalk"), [
+      Alert.alert(" ", I18n.t("payments.enterPaymentToTalkRate", { rate }), [
         {
-          text: I18n.t("ok"),
+          text: I18n.t("actions.ok"),
           onPress: () => {
-            navigation.dispatch({
-              type: "EditCardScreen"
-            });
+            navigation.dispatch({ type: "EditCardScreen" });
           }
         }
       ]);
     } else {
-
       Permissions.checkMultiple(["camera", "microphone"]).then(async (response) => {
         if (response.camera !== "authorized" || response.microphone !== "authorized") {
           if (
@@ -183,6 +183,7 @@ const mS = state => ({
   hasUnlimitedUse: state.account.hasUnlimitedUse,
   session: state.newSessionReducer.session,
   completedMicAndCamera: state.onboardingReducer.completedMicAndCamera,
+  rate: state.appConfigReducer.payAsYouGoRate,
 });
 
 const mD = {

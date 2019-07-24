@@ -10,7 +10,7 @@ import { CUSTOMER_FREE_MINUTES as customer_free_minutes } from "../../Util/Const
 // Styles
 import styles from "./Styles/OnboardingScreenStyles";
 import OnboardingButtons from "./Components/OnboardingButtons";
-import I18n from "../../I18n/I18n";
+import I18n, { localizePrice } from "../../I18n/I18n";
 import { isIphoneXorAbove } from "../../Util/Devices";
 import DotSteps from "./Components/DotSteps";
 import SplashScreen from "./Components/SplashScreen";
@@ -41,6 +41,11 @@ class OnboardingScreen extends Component {
       deviceToken,
       user,
     } = this.props;
+
+    this.state = {
+      rate: localizePrice(props.rate)
+    };
+    
     clearOnboarding();
 
     // TODO: after the navigation refactor, we shouldn't need logic for redircting
@@ -81,6 +86,7 @@ class OnboardingScreen extends Component {
 
   render() {
     const { navigation, isLoggedIn, token } = this.props;
+    const { rate } = this.state;
 
     if (isLoggedIn && token) {
       return <SplashScreen animation={false} />;
@@ -100,7 +106,7 @@ class OnboardingScreen extends Component {
               <Text style={styles.titleText}>{I18n.t("newCustomerOnboarding.intro.title")}</Text>
             </View>
             <Text style={styles.subtitleText}>
-              {I18n.t("newCustomerOnboarding.intro.description")}
+              {I18n.t("newCustomerOnboarding.intro.descriptionRate", { rate })}
             </Text>
             <View>
               <DotSteps navigation={navigation} />
@@ -121,6 +127,7 @@ const mS = state => ({
   isLoggedIn: state.auth2.isLoggedIn,
   completedLocation: state.onboardingReducer.completedLocation,
   completedNotification: state.onboardingReducer.completedNotification,
+  rate: state.appConfigReducer.payAsYouGoRate,
 });
 
 const mD = {

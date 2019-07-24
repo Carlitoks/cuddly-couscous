@@ -12,11 +12,15 @@ import {
   init as initAccount,
   initializeDevice
 } from "./AccountReducer";
+import {
+  computePayAsYouGoRate,
+} from "./AppConfigReducer";
 import { clear as clearCurrentSession } from "./CurrentSessionReducer";
 import { clear as clearNewSession } from "./NewSessionReducer";
 
 // deprecated reducers
 import { clear as clearOnboarding } from './OnboardingReducer';
+import branch from "react-native-branch";
 
 // The purpose of this is to manage the core actions of registering a device
 // and logging a user in and out.
@@ -43,9 +47,13 @@ export const init = () => (dispatch, getState) => {
   if (!!userID) {
     account.userID = userID;
     analytics.identify(userID);
+    branch.setIdentity(userID);
   }
   if (!!deviceID) {
     account.currentDeviceID = deviceID;
+    if(!!userID){
+      analytics.identify( userID, {deviceID});
+    }
   };
   dispatch(initAccount(account));
   return Promise.resolve(true);
@@ -82,6 +90,7 @@ export const authorizeNewDevice = () => (dispatch, getState) => {
         deviceJwtToken: jwt,
       }));
       dispatch(initializeDevice(deviceID));
+      dispatch(computePayAsYouGoRate());
       resolve(res.data);
     })
     .catch(reject);
@@ -104,6 +113,7 @@ export const logIn = (email, password) => (dispatch, getState) => {
           userJwtToken: jwt,
           isLoggedIn: true
         }));
+        dispatch(computePayAsYouGoRate());
         return dispatch(initializeUser(userID));
       })
       .then(resolve)
@@ -149,12 +159,14 @@ export const logOut = () => (dispatch, getState) => {
   dispatch(clearAccount()); // clear account reducer
   dispatch(clearCurrentSession()); // clear current session reducer
   dispatch(clearNewSession()); // clear new session reducer
+  dispatch(computePayAsYouGoRate());
 
   // clear depreacted reducers, TODO: remove this once feasible
   dispatch(clearOnboarding());
 
   // reconfigure other stuff in the system
   analytics.reset();
+  branch.logout();
 
   // make the actual logout request to the server
   return new Promise((resolve, reject) => {
@@ -162,7 +174,7 @@ export const logOut = () => (dispatch, getState) => {
     .finally(() => {
       // clear api auth tokens
       setForensicsAuthToken(null);
-      setApiAuthToken(null);      
+      setApiAuthToken(null);
       // attempt to register a new device immediately
       return dispatch(authorizeNewDevice()).finally(resolve).catch(reject);
     });

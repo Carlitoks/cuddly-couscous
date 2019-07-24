@@ -59,6 +59,8 @@ class SubmitButton extends Component {
       nativeLangCode,
       registerNewUser,
       hasNetworkConnection,
+      installUrlParams,
+      openUrlParams,
     } = this.props;
 
     if (!hasNetworkConnection) {
@@ -77,12 +79,20 @@ class SubmitButton extends Component {
     }
 
     try {
+      let referralID = null;
+      if (installUrlParams && installUrlParams.referralID) {
+        referralID = installUrlParams.referralID;
+      }
+      if (openUrlParams && openUrlParams.referralID) {
+        referralID = openUrlParams.referralID;
+      }
       updateOnboarding({ errorType: null, makingRequest: true });
       await registerNewUser({
         firstName,
         email,
         password,
         nativeLangCode,
+        referralID,
       }).catch((err) => {
         Alert.alert(
           I18n.t("error"),
@@ -185,6 +195,8 @@ const mS = state => ({
   isValidFirstName: state.onboardingReducer.isValidFirstName,
   isValidPassword: state.onboardingReducer.isValidPassword,
   hasNetworkConnection: state.appState.hasNetworkConnection,
+  installUrlParams: state.appState.installUrlParams,
+  openUrlParams: state.appState.openUrlParams,
 });
 
 const mD = {
