@@ -82,7 +82,7 @@ class App extends Component {
         this.setState({store});
 
         const {
-          settings: { segmentSettings, userLocaleSet, interfaceLocale: storeInterfaceLocale }
+          settings: { userLocaleSet, interfaceLocale: storeInterfaceLocale }
         } = store.getState();
 
         branchInstance = BranchLib.subscribe(({ error, params }) => {
@@ -147,7 +147,6 @@ class App extends Component {
         // initialize analytics
           analytics
             .setup(segmentKey, { trackAppLifecycleEvents: true, debug: true })
-            .then(() => store.dispatch(updateSettings({ segmentSettings: true })))
             .catch(error => console.log(error));
 
         // trigger network status checks, and work around iOS NetInfo bug

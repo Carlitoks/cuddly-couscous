@@ -28,7 +28,6 @@ const initialState = {
     language => language[1] === "en"
   ),
   userLocaleSet: false,
-  segmentSettings: false
 };
 
 // Reducer
