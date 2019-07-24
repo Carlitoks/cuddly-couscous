@@ -128,6 +128,18 @@ class EditNameView extends Component {
     }
   };
 
+  renderName() {
+    const { user } = this.props;
+    const { formFirstName, formLastName } =  this.state;
+    if (!!formFirstName && !!formLastName) {
+      return `${formFirstName} ${formLastName}`;
+    }
+    if (!!user.firstName && !!user.lastName) {
+      return `${user.firstName} ${user.lastName}`     
+    }
+    return user.firstName;
+  }
+  
   render() {
     const { formFirstName, formLastName, formPreferredName } = this.state;
 
@@ -137,13 +149,7 @@ class EditNameView extends Component {
           leftComponent={
             <GoBackButton navigation={this.props.navigation}/>
           }
-          navbarTitle={
-            formPreferredName
-              ? `${formPreferredName}`
-              : formFirstName || formLastName
-              ? `${formFirstName} ${formLastName}`
-              : I18n.t("mainTitle")
-          }
+          navbarTitle={this.renderName()}
         />
         <ScrollView
           keyboardShouldPersistTaps="handled"
