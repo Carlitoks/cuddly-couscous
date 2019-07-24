@@ -195,7 +195,7 @@ const appConfigReducer = (state = null, action = {}) => {
 
     case ACTIONS.UPDATE: {
       return {
-        ...state || initState(),
+        ...(state || initState()),
         ...payload
       };
     }
