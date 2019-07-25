@@ -64,12 +64,12 @@ export const cleanAndKeep = payload => ({
 export const cleanReducerAndKeepLangConfig = payload => (dispatch, getState) => {
   const currentSession = getState().newSessionReducer.session;
   newSession = {
-    ...initialState.session,
+    ...initState().session,
     primaryLangCode: currentSession.primaryLangCode,
     secondaryLangCode: currentSession.secondaryLangCode
   };
   newState = {
-    ...initialState,
+    ...initState(),
     session: newSession
   };
   dispatch(cleanAndKeep(newState));
@@ -221,7 +221,41 @@ export const guessSecondaryLangCode = () => (dispatch, getState) => {
   }
 };
 
-const initialState = {
+// set the event for the session and enforce any session
+// properties defined by the event
+export const setEvent = (evt) => (dispatch, getState) => {
+  const {session, options} = getState().newSessionReducer;
+  let ns = {
+    session: { ...session },
+    options: { ...options },
+    event: evt,
+  };
+
+  ns.session.eventID = evt.id;
+  if (!!evt.primaryLangCode) {
+    ns.session.primaryLangCode = evt.primaryLangCode;
+  }
+  if (!!evt.secondaryLangCode) {
+    ns.session.secondaryLangCode = evt.secondaryLangCode;
+  }
+  if (!!evt.defaultSecondaryLangCode) {
+    ns.session.secondaryLangCode = evt.defaultSecondaryLangCode;
+  }
+  if (!!evt.defaultScenarioID) {
+    ns.session.scenarioID = evt.defaultScenarioID;
+  }
+
+  dispatch(update(ns));
+};
+
+// remove the event, which is basically a reset to the default 
+// new session properties
+export const clearEvent = () => (dispatch, getState) => {
+  dispatch(clear());
+  dispatch(ensureSessionDefaults());
+};
+
+const initState = () => ({
   // this should map exactly to the data structure for `POST /sessions`
   // this is the object you pass to `ActiveSessionReducer.createAndJoinSession()` when the session
   // gets created
@@ -256,19 +290,22 @@ const initialState = {
     // payment and time settings
     requirePaymentDetails: false,
     maxCallTime: 0
-  }
+  },
+
+  // the event object from the API as is
+  event: null
 
   /* etc... */
-};
+});
 
-const newSessionReducer = (state = initialState, action = {}) => {
+const newSessionReducer = (state = null, action = {}) => {
   const { payload, type } = action;
   switch (type) {
     case ACTIONS.CLEAR: {
-      return { ...initialState };
+      return { ...initState() };
     }
     case ACTIONS.UPDATE: {
-      return { ...state, ...payload };
+      return { ...(state || initState()), ...payload };
     }
     case ACTIONS.CHANGE_SESSION_LANG_CODE: {
       return {
@@ -295,7 +332,7 @@ const newSessionReducer = (state = initialState, action = {}) => {
       };
     }
     case ACTIONS.CLEAN_AND_KEEP_LANG: {
-      return { ...initialState, ...payload };
+      return { ...initState(), ...payload };
     }
     case ACTIONS.UPDATE_SCENARIO_ID: {
       return {
@@ -305,7 +342,7 @@ const newSessionReducer = (state = initialState, action = {}) => {
       };
     }
     default: {
-      return state;
+      return state || initState();
     }
   }
 };
