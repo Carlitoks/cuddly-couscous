@@ -26,7 +26,6 @@ class PackagePurchaseSuccessView extends Component {
     console.log(user);
     return (
       <View style={styles.wrapperContainer}>
-        <View style={[styles.mainContainer]}>
           <NavBar
             navbarTitle={I18n.t("packages.success.title")}
           />
@@ -73,7 +72,6 @@ class PackagePurchaseSuccessView extends Component {
                 textStyle = {styles.buttonText} // optional text styles, component should provide defaults
                 onPress = {() => this.purchase()} // function to call when pressed
             />
-        </View>
       </View>
     );
   }

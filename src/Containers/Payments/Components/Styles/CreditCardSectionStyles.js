@@ -174,6 +174,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     flexWrap:"wrap",
     paddingLeft: 10,
+    marginTop:10,
     flex:1,
   },
   rowDescription:{

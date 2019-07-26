@@ -217,7 +217,7 @@ export default StyleSheet.create({
   },
   reload:{
     color:"#FFFFFF",
-    fontSize: moderateScale(15, 0),
+    fontSize: moderateScaleViewports(16),
     fontFamily: Fonts.BaseFont,
   },
   noReload:{
@@ -235,7 +235,7 @@ export default StyleSheet.create({
   },
   packageContainer:{
     marginTop: 5,
-    width:"45%",
+    width:moderateScaleViewports(125),
   },
   balanceContainer:{
     marginTop: 20,
