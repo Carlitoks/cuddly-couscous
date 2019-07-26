@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  Image, Platform, Text, View, StatusBar
+  Image, Platform, Text, View, StatusBar, ScrollView
 } from "react-native";
 import { connect } from "react-redux";
 import Permission from "react-native-permissions";
@@ -93,6 +93,7 @@ class OnboardingScreen extends Component {
     }
     return (
       <View style={styles.wrapperContainer}>
+        <ScrollView alwaysBounceVertical={false} style={styles.scroll}>
         <StatusBar
           barStyle="light-content"
           translucent={true}
@@ -114,6 +115,7 @@ class OnboardingScreen extends Component {
             </View>
           </View>
         </View>
+        </ScrollView>
       </View>
     );
   }

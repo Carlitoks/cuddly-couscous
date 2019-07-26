@@ -10,6 +10,11 @@ export default StyleSheet.create({
     flexGrow: 1,
 
   },
+  scroll: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+  },
   mainOnboardingContainer: {
     flexDirection: 'column',
     flexGrow: 1,
