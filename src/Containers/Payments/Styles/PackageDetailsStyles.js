@@ -130,7 +130,8 @@ export default StyleSheet.create({
     marginTop: 15,
   },
   rowAddCard: {
-    marginBottom:10,
+    marginTop:14,
+    marginBottom:5,
     marginLeft:0,
     width:"80%",
     flexDirection: "row",
