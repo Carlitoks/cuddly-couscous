@@ -5,6 +5,10 @@ import {
   LanguagesRollover,
   getLangForCity, supportedLangCodes, LocaleLangMap
 } from "../Config/Languages";
+import { Alert } from "react-native";
+import I18n, { translateApiErrorString } from "../I18n/I18n";
+import { createNewSession } from "./CurrentSessionReducer";
+import navReducer from "./NavigationReducer";
 
 const ACTIONS = {
   CLEAR: "newSession/clear",
@@ -246,9 +250,11 @@ export const setEvent = (evt) => (dispatch, getState) => {
   }
 
   dispatch(update(ns));
+
+  return ns;
 };
 
-// remove the event, which is basically a reset to the default 
+// remove the event, which is basically a reset to the default
 // new session properties
 export const clearEvent = () => (dispatch, getState) => {
   dispatch(clear());

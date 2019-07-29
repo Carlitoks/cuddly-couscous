@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BackHandler } from "react-native";
 import * as ReactNavigation from "react-navigation";
 import { connect } from "react-redux";
+import NavigationService from './../Util/NavigationService';
 
 import AppNavigation from "./AppNavigation";
 
@@ -34,7 +35,9 @@ class ReduxNavigation extends Component {
       state: nav
     });
 
-    return <AppNavigation navigation={navigation} />;
+    return <AppNavigation ref={navigatorRef => {
+      NavigationService.setTopLevelNavigator(navigatorRef);
+    }} navigation={navigation} />;
   }
 }
 
