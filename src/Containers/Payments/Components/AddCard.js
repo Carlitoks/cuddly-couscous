@@ -19,38 +19,39 @@ class AddCard extends Component {
       date: "",
       currentTooltipIcon: Icons.info_cvv,
       cvvFocus: false,
-      expirationDateFocus: false, 
+      expirationDateFocus: false,
       cardNumberFocus: false,
     };
   }
 
   onFocusChange = (type) => {
+    console.log("some change", type);
     let state = {...this.state};
     switch (type) {
       case 'cvvFocus':
         state = {
           cvvFocus: true,
-          expirationDateFocus: false, 
+          expirationDateFocus: false,
           cardNumberFocus: false,
         };
         break;
       case 'expirationDateFocus':
         state = {
             cvvFocus: false,
-            expirationDateFocus: true, 
+            expirationDateFocus: true,
             cardNumberFocus: false,
           };
         break;
       case 'cardNumberFocus':
         state = {
             cvvFocus: false,
-            expirationDateFocus: false, 
+            expirationDateFocus: false,
             cardNumberFocus: true,
           };        break;
       default:
           state = {
             cvvFocus: false,
-            expirationDateFocus: false, 
+            expirationDateFocus: false,
             cardNumberFocus: false,
           };
     }
