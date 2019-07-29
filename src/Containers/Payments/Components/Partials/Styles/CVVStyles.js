@@ -14,6 +14,13 @@ export default StyleSheet.create({
     width: metrics.width * 0.35,
     padding: 1
   },
+  CVVInputActive: {
+    color: "#000",
+    borderBottomWidth: 2,
+    borderBottomColor: "#3F1674",
+    width: metrics.width * 0.35,
+    padding: 3
+  },
   CVVIconContainer: { position: "absolute", right: 0, top: 5 },
   tooltipContainerStyle: {
     position: "absolute",
