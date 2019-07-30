@@ -25,7 +25,6 @@ class AddCard extends Component {
   }
 
   onFocusChange = (type) => {
-    console.log("some change", type);
     let state = {...this.state};
     switch (type) {
       case 'cvvFocus':
