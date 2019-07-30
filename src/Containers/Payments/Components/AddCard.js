@@ -99,7 +99,7 @@ class AddCard extends Component {
     const updatedCard = { ...this.props.cardInfo, cvc: cvv };
     this.props.updatePayments({ cardInfo: updatedCard });
     const card = validCC(updatedCard.number);
-    if(card && card.card.type == 'american-express'){
+    if(card && card.card && card.card.type == 'american-express'){
       if(cvv.length >=4){
         this.props.updatePayments({ isValidCVV: true });
       }else{
