@@ -34,10 +34,9 @@ class ReduxNavigation extends Component {
       dispatch,
       state: nav
     });
+    NavigationService.setTopLevelNavigator(navigation);
 
-    return <AppNavigation ref={navigatorRef => {
-      NavigationService.setTopLevelNavigator(navigatorRef);
-    }} navigation={navigation} />;
+    return <AppNavigation navigation={navigation} />;
   }
 }
 

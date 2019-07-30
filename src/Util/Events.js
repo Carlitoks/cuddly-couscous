@@ -3,12 +3,24 @@ import I18n, { translateApiError, translateApiErrorString } from "../I18n/I18n";
 import { createNewSession } from "../Ducks/CurrentSessionReducer";
 import { ensureSessionDefaults, setEvent } from "../Ducks/NewSessionReducer";
 import NavigationService from '../Util/NavigationService';
+import Permissions from "react-native-permissions";
 
 const navigate = (navigation, type, screenName, params) => {
   if(type === "SERVICE"){
     return navigation.dispatch(screenName);
   }
   return navigation.dispatch({type: screenName, params});
+};
+
+const createCall = async (store, evt, navigation, type) => {
+  await store.dispatch(ensureSessionDefaults());
+  // should the call automatically be started?
+  // otherwise, it's an event for a session
+  const sessionObj = await store.dispatch(setEvent(evt)); // from NewSessionReducer
+  if (evt.initiateCall) {
+    await store.dispatch(createNewSession(sessionObj.session)); // from CurrentSessionReducer
+    return navigate(navigation, type, "CustomerMatchingView", null);
+  }
 };
 
 export const handleEvent = async (evt, store) => {
@@ -48,13 +60,15 @@ export const handleEvent = async (evt, store) => {
   }
 
   try {
-    await store.dispatch(ensureSessionDefaults());
-    // should the call automatically be started?
-    // otherwise, it's an event for a session
-    const sessionObj = await store.dispatch(setEvent(evt)); // from NewSessionReducer
-    if (evt.initiateCall) {
-      await store.dispatch(createNewSession(sessionObj.session)); // from CurrentSessionReducer
-      return navigate(navigation, type, "CustomerMatchingView", null);
+    const cameraPermission = await Permissions.request('camera');
+    const micPermission = await Permissions.request('microphone');
+    if (cameraPermission === "authorized" && micPermission === "authorized") {
+      return createCall(store, evt, navigation, type);
+    } else {
+      Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
+        { text: I18n.t("ok") },
+      ]);
+      return navigate(navigation, type, "Home", null);
     }
   }catch (e) {
     Alert.alert(I18n.t("error"), translateApiError(e));

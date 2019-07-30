@@ -271,11 +271,11 @@ class App extends Component {
         params["+non_branch_link"].split("?")[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
           obj[decodeURIComponent(key)] = decodeURIComponent(value);
         });
-        if(!isEqual(params, appState.openUrlParams)){
+        if(!isEqual(obj, appState.openUrlParams)){
           analytics.track("solo.link-open", obj);
           store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
-          if(params.eventID){
-            this.handleDeepLinkEvent(auth2, params.eventID, store.dispatch, "OPEN");
+          if(obj.eventID){
+            this.handleDeepLinkEvent(auth2, obj.eventID, store.dispatch, "OPEN");
           }
         }
       }
