@@ -17,7 +17,7 @@ import { addListeners } from "./Ducks/PushNotificationReducer";
 
 import { InterfaceSupportedLanguages } from "./Config/Languages";
 
-import I18n, { switchLanguage } from "./I18n/I18n";
+import I18n, { switchLanguage, translateApiError } from "./I18n/I18n";
 import { init as initForensics, recordAppStateEvent, persistEvents, recordNetworkEvent } from "./Util/Forensics";
 import AppErrorBoundary from "./AppErrorBoundary/AppErrorBoundary";
 import SplashScreenLogo from "./Containers/Onboarding/Components/SplashScreen";
@@ -77,6 +77,12 @@ class App extends Component {
           await dispatch(updateAppState({ openUrlParamsHandled: true }));
         }
         await handleEvent(evt.data, { dispatch });
+      }).catch((e) => {
+        if (e.response.status === 404) {
+          Alert.alert(I18n.t("error"), I18n.t("api.errEventUnavailable"));
+        } else {
+          Alert.alert(I18n.t("error"), translateApiError(e));
+        }
       });
     }
   };

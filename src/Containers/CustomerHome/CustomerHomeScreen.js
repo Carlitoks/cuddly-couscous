@@ -18,7 +18,7 @@ import {
 import { openSlideMenu } from "../../Ducks/LogicReducer";
 import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
 import { loadSessionScenarios } from "../../Ducks/AppConfigReducer";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiError } from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/CustomerHomeScreenStyles";
 import CallButtons from "./Components/Partials/CallButtons";
@@ -100,6 +100,12 @@ class CustomerHomeScreen extends Component {
           await dispatch(updateAppState({ openUrlParamsHandled: true }));
         }
         await handleEvent(evt.data, { dispatch, navigation });
+      }).catch((e) => {
+        if (e.response.status === 404) {
+          Alert.alert(I18n.t("error"), I18n.t("api.errEventUnavailable"));
+        } else {
+          Alert.alert(I18n.t("error"), translateApiError(e));
+        }
       });
     }
   };
