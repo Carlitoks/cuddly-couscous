@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  Image, Platform, Text, View, StatusBar,
+  Image, Platform, Text, View, StatusBar, ScrollView
 } from "react-native";
 import { connect } from "react-redux";
 import { clearOnboarding } from "../../Ducks/OnboardingReducer";
@@ -39,6 +39,7 @@ class OnboardingScreen extends Component {
     const { rate } = this.state;
     return (
       <View style={styles.wrapperContainer}>
+        <ScrollView alwaysBounceVertical={false} style={styles.scroll}>
         <StatusBar
           barStyle="light-content"
           translucent
@@ -60,6 +61,7 @@ class OnboardingScreen extends Component {
             </View>
           </View>
         </View>
+        </ScrollView>
       </View>
     );
   }
