@@ -42,7 +42,10 @@ const initState = () => {
     // object in the form {amount: number, currency: string}, meant to be passed to
     // I18n utilities to be localized in UIs.  This value is determined by config
     // that comes from the server, but also by user/device information, if available.
-    payAsYouGoRate: null,
+    //
+    // the default is enforced here in case of a network error during initial startup that
+    // could prevent the current rates being loaded
+    payAsYouGoRate: { amount: 100, currency: "usd"},
 
     supportedLangPairs: [], // TODO
     // map of langCode => num jeenies online
