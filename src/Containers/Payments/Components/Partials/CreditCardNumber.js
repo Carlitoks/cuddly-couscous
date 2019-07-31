@@ -24,6 +24,8 @@ const CreditCardNumber = props => {
             value={props.creditCard}
             onChangeText={props.onChange}
             style={styles.CCNInput}
+            style={ props.cardNumberFocus ? styles.CCNInputActive :  styles.CCNInput}
+            onFocus={() => props.onFocus("cardNumberFocus")} 
           />
         )}
         {props.creditCard ? (

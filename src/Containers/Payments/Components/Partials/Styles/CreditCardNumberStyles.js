@@ -8,6 +8,13 @@ export default StyleSheet.create({
   CCNInput: {
     color: "#000",
     borderBottomWidth: 2,
+    borderBottomColor: "rgba(0, 0, 0, 0.42)",
+    width: Metrics.width * 0.79,
+    padding: 3
+  },
+  CCNInputActive: {
+    color: "#000",
+    borderBottomWidth: 2,
     borderBottomColor: "#3F1674",
     width: Metrics.width * 0.79,
     padding: 3

@@ -38,6 +38,17 @@ export default StyleSheet.create({
   centered: {
     alignItems: 'center'
   },
+  buttonViewPackagesContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(10),
+    width: Metrics.width * 0.90,
+    height: moderateScaleViewports(55),
+    marginBottom: 20,
+    marginLeft: "5%",
+    marginTop:10,
+  },
   fullWidth: { flex: 1 },
   wrapperContainer: {
     backgroundColor: 'white',
@@ -74,6 +85,8 @@ export default StyleSheet.create({
   },
   balanceContainer:{
     width:"27%",
+    alignItems: "center",
+    justifyContent: "center"
   },
   balanceContainerWhite:{
     width:"60%",
@@ -161,6 +174,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     flexWrap:"wrap",
     paddingLeft: 10,
+    marginTop:10,
     flex:1,
   },
   rowDescription:{

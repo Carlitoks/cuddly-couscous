@@ -15,6 +15,27 @@ class CardItem extends Component {
     };*/
   }
 
+  mask(){
+    const { StripePaymentSourceMeta } = this.props;
+
+    let last4 = StripePaymentSourceMeta && StripePaymentSourceMeta.last4
+    ? StripePaymentSourceMeta.last4 : "XXXX";
+
+    let patter = "XXXX XXXX XXXX ";
+    
+    if(StripePaymentSourceMeta && StripePaymentSourceMeta.brand == 'Diners Club'){
+      patter = "XXXX XXXX XX";
+      last4 = [last4.slice(0, 2), ' ', last4.slice(2)].join('');
+    }    
+
+    if(StripePaymentSourceMeta && StripePaymentSourceMeta.brand == 'American Express' ){
+      patter = "XXXX XXXXXX X"
+    }
+
+    return `${patter}${last4}`
+
+  }
+
   render() {
     const { StripePaymentSourceMeta, navigation, stylesContainer } = this.props;
 
@@ -25,10 +46,7 @@ class CardItem extends Component {
           onPress={() => navigation.dispatch({ type: "EditCardScreen" })}
         >
           <Text style={styles.itemText}>
-            XXXX XXXX XXXX{" "}
-            {StripePaymentSourceMeta && StripePaymentSourceMeta.last4
-              ? StripePaymentSourceMeta.last4
-              : "XXXX"}
+            {this.mask()}
           </Text>
           <Image
             resizeMode="contain"

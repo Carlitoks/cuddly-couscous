@@ -1,15 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale } from "../../../Util/Scaling";
-import { red } from 'ansi-colors';
 import { moderateScaleViewports } from "../../../Util/Scaling";
 import { isIphoneXorAbove } from "../../../Util/Devices";
 
 const baseButton = {
   flexDirection: "row",
   justifyContent: "center",
-  borderRadius: moderateScaleViewports(10),
   alignItems: "center",
+  borderRadius: moderateScaleViewports(10),
   borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
   borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
   height: "100%",
@@ -51,20 +50,14 @@ export default StyleSheet.create({
   scrollViewFlex: {
     flexGrow: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingBottom: 20,
-    height:"100%",
-    width:"100%",
-    position:"relative",
-    backgroundColor: "#F2F2F2",
+    backgroundColor: "#F2F2F2"
 
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
   billView: {
-    bottom:0,
-    position: "absolute",
-    height:"70%",
     width:"100%",
     backgroundColor:"#FFFFFF"
   },
@@ -97,19 +90,20 @@ export default StyleSheet.create({
   },
   billContainer:{
     alignItems: "center",
-    position:"absolute",
+    marginTop:30,
+    paddingTop:20,
+    paddingBottom:20,
     width:"100%",
-    flexDirection:"column"
+    height:"100%",
+    backgroundColor:"#FFF",
   },
   row: {
-    flex:1,
     height: 21,
     width:"90%",
     marginTop:10,
     flexDirection: "row"
   },
   rowBill: {
-    flex:1,
     height: 21,
     width:"90%",
     marginTop:25,
@@ -118,8 +112,6 @@ export default StyleSheet.create({
   rowTitle: {
     height: 21,
     width:"90%",
-    marginTop:20,
-    marginBottom:-30,
     flexDirection: "row"
   },
   cancelStyle: {
@@ -135,18 +127,14 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     width: Metrics.width * 0.90,
     height: moderateScaleViewports(55),
-    right: "5%",
-    marginBottom: isIphoneXorAbove() ? 44 : 0,
-    position: "absolute",
-    bottom:"13%"
+    marginTop: 15,
   },
   rowAddCard: {
-    marginTop:50,
-    marginBottom:10,
+    marginTop:14,
+    marginBottom:5,
     marginLeft:0,
     width:"80%",
     flexDirection: "row",
-    position: "relative",
   },
 
   button: {
@@ -158,7 +146,6 @@ export default StyleSheet.create({
   buttonDisable: {
     ...baseButton,
     backgroundColor: "#979797",
-    flex: 1
   },
   buttonText: {
     color: "white",

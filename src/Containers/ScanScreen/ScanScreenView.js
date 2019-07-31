@@ -15,9 +15,11 @@ import {loadUser} from "../../Ducks/AccountReducer";
 import styles from "./styles";
 import { setPermission, displayOpenSettingsAlert } from "../../Util/Permission";
 import api from "../../Config/AxiosConfig";
+import { handleEvent } from "../../Util/Events";
+import { bindActionCreators } from "redux";
 
 class ScanScreenView extends Component {
-  
+
   constructor (props) {
     super(props);
     this.state = {
@@ -51,6 +53,7 @@ class ScanScreenView extends Component {
   };
 
   onScan = (e) => {
+    const { dispatch, navigation } = this.props;
     try {
       // get event ID from the scan
       const eventId = this.getEventID(e.data);
@@ -65,7 +68,7 @@ class ScanScreenView extends Component {
               this.props.navigation.dispatch({type: "Home"});
             }
           }
-        ]);        
+        ]);
       }
 
       // otherwise fetch the event
@@ -73,44 +76,12 @@ class ScanScreenView extends Component {
       api.get(`/events/${eventId}/scan`)
       .then((res) => {
         this.setState({loading: false});
-
-        const data = res.data;
-
-        // handle potential usage error first
-        if (data.usageError) {
-          Alert.alert(I18n.t("invalidCode"), translateApiErrorString(data.usageError, "api.errEventUnavailable"), [{text: I18n.t("actions.ok")}]);
-          this.props.navigation.dispatch({type: "Home"});
-          return;
-        }
-  
-        // otherwise, for now we only support codes that add
-        // minutes to the user account
-        if (data.addMinutesToUser && data.maxMinutesPerUser > 0) {
-          // reload user so the new minutes are visible
-          this.props.loadUser(false);
-          Alert.alert(
-            I18n.t("minutesAdded"),
-            I18n.t("complimentMinutes", {
-              maxMinutesPerUser: data.maxMinutesPerUser,
-              organizer: data.organization.name,
-            }),
-            [{
-              text: I18n.t("actions.ok"),
-              onPress: () => {
-                this.props.navigation.dispatch({type: "Home"});
-              }
-            }]
-          );
-          return;
-        }
-  
-        // otherwise... unexpected code
-        this.props.navigation.dispatch({ type: "Home" });
+        return handleEvent(res.data, {dispatch, navigation});
       })
       .catch((e) => {
         this.setState({loading: false});
         Alert.alert(I18n.t("error"), translateApiError(e));
-        this.props.navigation.dispatch({ type: "Home" });
+        navigation.dispatch({ type: "Home" });
       });
 
     } catch (e) {
@@ -118,7 +89,7 @@ class ScanScreenView extends Component {
       Alert.alert(I18n.t("error"), I18n.t("api.errEventInvalid"), [{
         text: I18n.t("actions.ok"),
         onPress: () => {
-          this.props.navigation.dispatch({ type: "Home" });
+          navigation.dispatch({ type: "Home" });
         }
       }]);
     }
@@ -163,9 +134,14 @@ class ScanScreenView extends Component {
 const mS = state => ({
 });
 
-const mD = {
-  loadUser,
-};
+function mD(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({
+      loadUser,
+    }, dispatch),
+  };
+}
 
 export default connect(
   mS,

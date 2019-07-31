@@ -23,9 +23,10 @@ const CvvInput = props => {
           keyboardType={"number-pad"}
           value={props.CVV}
           onChangeText={text => props.onChangeCVV(text)}
-          style={styles.CVVInput}
+          style={ props.cvvFocus ? styles.CVVInputActive :  styles.CVVInput}
+          onFocus={() => props.onFocus("cvvFocus")} 
         />
-      )}
+      )} 
       <TouchableOpacity style={styles.CVVIconContainer} onPress={props.onTooltipPress}>
         <Image resizeMode="contain" style={styles.CVVIcon} source={props.currentTooltipIcon} />
       </TouchableOpacity>

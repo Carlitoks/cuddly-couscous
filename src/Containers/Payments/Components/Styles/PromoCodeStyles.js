@@ -9,8 +9,9 @@ export default StyleSheet.create({
     width: '100%',
     backgroundColor:"#FFFFFF",
     flexDirection:"column",
-    padding:moderateScaleViewports(30),
+    padding: moderateScaleViewports(30),
     paddingTop: 10,
+    paddingBottom: moderateScaleViewports(15),
     marginBottom: 10,
   },
   promoCodeLabel: {
