@@ -9,9 +9,18 @@ const initState = () => {
     isCustomerMode: true,
     isLinguistMode: false,
     hasNetworkConnection: true,
-    connectionInfo: null, // the raw connection info response from NetInfo
+    // the raw connection info response from NetInfo
+    connectionInfo: null,
+
+    // was the last opened link processed?
     openUrlParamsHandled: false,
-    installUrlParamsHandled: false
+    // key/value data sent via the last opened link
+    openUrlParams: {},
+
+    // was the install link processed?
+    installUrlParamsHandled: false,
+    // key/value data sent via initial link when app was installed
+    installUrlParams: {},
 
     // TODO: app state (background/foreground, etc)
   }
