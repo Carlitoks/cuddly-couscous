@@ -1887,9 +1887,9 @@ export const supportedLangCodes = ["eng","cmn","yue","jpn","spa","por","fra","it
 // allowed secondary language choices for each primary language
 export const AllowedLanguagePairs = {
   eng: ["cmn","yue","jpn","spa","por","fra","ita","deu", "kor"],
-  cmn: ["eng"],
+  cmn: ["eng","jpn"],
   yue: ["eng"],
-  jpn: ["eng"],
+  jpn: ["eng","cmn"],
   spa: ["eng"],
   por: ["eng"],
   fra: ["eng"],

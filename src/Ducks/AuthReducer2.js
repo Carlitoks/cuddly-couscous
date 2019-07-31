@@ -123,9 +123,9 @@ export const logIn = (email, password) => (dispatch, getState) => {
     // if there's no device, ensure one is created first
     const {deviceJwtToken} = getState().auth2;
     if (!!deviceJwtToken) {
-      dispatch(authorizeNewDevice()).then(() => { login() });
-    } else {
       login();
+    } else {
+      dispatch(authorizeNewDevice()).then(() => { login() });
     }
   });
 };
@@ -145,9 +145,9 @@ export const registerNewUser = (user) => (dispatch, getState) => {
     // if there's no device yet, create one before trying to register
     const {deviceJwtToken} = getState().auth2;
     if (!!deviceJwtToken) {
-      dispatch(authorizeNewDevice()).then(() => {register()});
-    } else {
       register();
+    } else {
+      dispatch(authorizeNewDevice()).then(() => {register()});
     }
   });
 };
