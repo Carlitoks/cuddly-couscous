@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-swiper";
 import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
@@ -8,7 +8,7 @@ import RateComponent from "./Components/RateComponent";
 import CallClassification from "./Components/CallClassification";
 import CallTags from "./Components/CallTags";
 import { openSlideMenu } from "../../Ducks/LogicReducer";
-import I18n from "../../I18n/I18n";
+import I18n, { translateApiError } from "../../I18n/I18n";
 // Styles
 import styles from "./Styles/RatingsScreenStyles";
 import { Sessions } from "../../Api";
@@ -55,7 +55,13 @@ class RatingScreen extends Component {
       iconBackgroundNoiseSecondList: false,
       iconVoiceClaritySecondList: false,
       iconDistractionsSecondList: false,
+
+      // loading status for button
+      submitting: false,
     };
+
+    // double tap prevention
+    this.submitting = false;
   }
 
   submitRateCall = async (RateInformationData) => {
@@ -69,8 +75,8 @@ class RatingScreen extends Component {
     } = this.state;
     const RateInformation = {
       ...RateInformationData,
-      negativeFlags: WhatCouldBetter,
-      positiveFlags: WhatWasGood,
+      negativeFlags: WhatCouldBetter.filter((item, i, ar) => ar.indexOf(item) === i),
+      positiveFlags: WhatWasGood.filter((item, i, ar) => ar.indexOf(item) === i),
       comment,
       callType,
       scenarioID,
@@ -85,7 +91,7 @@ class RatingScreen extends Component {
       );
     } catch (err) {
       console.log(err);
-      return null;
+      return Promise.reject(err);
     }
   };
 
@@ -116,17 +122,35 @@ class RatingScreen extends Component {
         stars: rating,
       };
     }
-    if (this.state.session) {
-      this.submitRateCall(rateInformation)
-        .then((response) => {
-          navigation.dispatch({ type: "Home" });
-        })
-        .catch((err) => {
+
+    // return early if no session for whatever reason
+    if (!this.state.session) {
+      navigation.dispatch({ type: "Home" });
+      return;
+    }
+
+
+    // prevent double taps
+    if (this.submitting) {
+      return;
+    }
+    this.submitting = true;
+    this.setState({submitting: true});
+    this.submitRateCall(rateInformation)
+      .then((response) => {
+        navigation.dispatch({ type: "Home" });
+      })
+      .catch((err) => {
+        this.submitting = false;
+        this.setState({submitting: false}, () => {
+          // TODO: once the app is updated to allow setting ratings
+          // from other places, actually alert the error here
+          // to let them retry the submission, or continue to home.
+          //
+          // ignoring the error here is a temporary solution
           navigation.dispatch({ type: "Home" });
         });
-    } else {
-      navigation.dispatch({ type: "Home" });
-    }
+      });
   };
 
   nextSlide = () => {
@@ -416,7 +440,7 @@ class RatingScreen extends Component {
   render() {
     const { navigation } = this.props;
     const {
-      customerName, avatarURL, comment, scenarioNote,
+      customerName, avatarURL, comment, scenarioNote, submitting,
     } = this.state;
     return (
       <View style={styles.ratingScreenContainer}>
@@ -436,9 +460,11 @@ class RatingScreen extends Component {
             style={[
               styles.baseButton,
               this.canContinue() ? styles.enabledButton : styles.disabledButton]}
-            disabled={!this.canContinue()}
+            disabled={submitting || !this.canContinue()}
             onPress={() => this.nextSlide()}
           >
+            {submitting && (<ActivityIndicator color="#ffffff" />)}
+            {!submitting && (
             <Text
               style={[
                 styles.baseButtonText,
@@ -446,6 +472,7 @@ class RatingScreen extends Component {
             >
               {this.isLastSection() ? I18n.t("actions.submit") : I18n.t("actions.next") }
             </Text>
+            )}
           </TouchableOpacity>
         </View>
         <SlideUpPanel
