@@ -94,17 +94,18 @@ class CustomerHomeScreen extends Component {
     const { navigation } = this.props;
     if (user.isLoggedIn && user.userJwtToken) {
       Events.getScan(`${eventID.trim()}`, user.userJwtToken).then(async (evt) => {
-        if (type === "INSTALL") {
-          await dispatch(updateAppState({ installUrlParamsHandled: true }));
-        } else {
-          await dispatch(updateAppState({ openUrlParamsHandled: true }));
-        }
         await handleEvent(evt.data, { dispatch, navigation });
       }).catch((e) => {
         if (e.response.status === 404) {
           Alert.alert(I18n.t("error"), I18n.t("api.errEventUnavailable"));
         } else {
           Alert.alert(I18n.t("error"), translateApiError(e));
+        }
+      }).finally(async () => {
+        if (type === "INSTALL") {
+          await dispatch(updateAppState({ installUrlParamsHandled: true }));
+        } else {
+          await dispatch(updateAppState({ openUrlParamsHandled: true }));
         }
       });
     }
