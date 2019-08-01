@@ -43,7 +43,8 @@ class App extends Component {
     this.state = {
       loadingStore: true,
       store: null,
-      appState: AppState.currentState
+      appState: AppState.currentState,
+      splashScreenTimer: false
     };
 
     // Font doesn't scale
@@ -89,6 +90,10 @@ class App extends Component {
   };
 
   componentDidMount() {
+    setTimeout(() => {
+      this.setState({ splashScreenTimer: true });
+    }, 2000);
+
     this.disableAppCenterCrashes();
     SplashScreen.hide();
     initForensics();
@@ -343,7 +348,7 @@ class App extends Component {
   };
 
   render() {
-    if (this.state.loadingStore) {
+    if (this.state.loadingStore || !this.state.splashScreenTimer) {
       return <SplashScreenLogo />
     }
 
