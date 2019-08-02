@@ -30,7 +30,6 @@ import { setInitialScreen } from "./Navigation/AppNavigation";
 import { update as updateAppState } from "./Ducks/AppStateReducer";
 import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
 import BranchLib from "react-native-branch";
-import { isEqual } from "lodash"
 import { Events } from "./Api";
 import { handleEvent } from "./Util/Events";
 
@@ -283,22 +282,18 @@ class App extends Component {
         params["+non_branch_link"].split("?")[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
           obj[decodeURIComponent(key)] = decodeURIComponent(value);
         });
-        if(!isEqual(obj, appState.openUrlParams)){
           analytics.track("solo.link-open", obj);
           store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
           if(obj.eventID){
             this.handleDeepLinkEvent(auth2, obj.eventID, store.dispatch, "OPEN");
           }
-        }
       }
     } else {
-      if(!isEqual(params, appState.openUrlParams)){
         analytics.track("solo.branch-open", params);
         store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : params }));
         if(params.eventID){
           this.handleDeepLinkEvent(auth2, params.eventID, store.dispatch, "OPEN-BRANCH");
         }
-      }
     }
 
     // Route link based on data in params.
