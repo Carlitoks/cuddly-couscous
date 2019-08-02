@@ -54,7 +54,7 @@ export default class BalanceHeader extends Component {
         {hasUnlimitedUse? 
           <Text style={styles.unlimited}>{I18n.t("account.balanceUnlimited")}</Text>
           :
-          <View style={{flexDirection:'row',flexWrap: 'wrap', overflow:"hidden"        }}>
+          <View style={styles.packageContainerHeader}>
 
           <Text style={minutes > 10  ? styles.balanceHaveMinutes : 11 > minutes && minutes > 5 ? styles.balanceFewMinutes : styles.balanceMinutes}>{I18n.t("account.balanceNum", {num: minutes})}</Text>
     </View>

@@ -177,6 +177,11 @@ export default StyleSheet.create({
     width:moderateScaleViewports(100),
     flex: 1
   },
+  packageContainerHeader:{
+    flexDirection:'row',
+    flexWrap: 'wrap', 
+    overflow:"hidden"  
+  },
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
