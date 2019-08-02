@@ -3,6 +3,12 @@ import lodashMerge from 'lodash/merge';
 import { getGeolocationCoords } from '../Util/Helpers';
 import {SESSION} from "../Util/Constants";
 
+import {
+  loadUser,
+  loadCustomerCallHistory,
+  loadLinguistCallHistory,
+} from "./AccountReducer";
+
 // The purpose of this reducer is to manage the status of an active Jeenie session.
 // Note that this does NOT include anything related to connection handling with
 // Tokbox.
@@ -326,7 +332,7 @@ export const canRejoinSession = () => (dispatch, getState) => {
 
 // initiate ending the session
 export const endSession = (reason) => (dispatch, getState) => {
-  const {sessionID, status, session, timer} = getState().currentSessionReducer;
+  const {sessionID, status, session, timer, isCustomer} = getState().currentSessionReducer;
 
   dispatch(update({
     status: {
@@ -346,7 +352,21 @@ export const endSession = (reason) => (dispatch, getState) => {
       reason,
       timer: timer.events
     })
-    .then(resolve)
+    .then((res) => {
+
+      // reload the users data, but we're not going to
+      // wait for it to succeed or fail - just need to
+      // ensure that cached data is reloaded
+      dispatch(loadUser(false));
+      if (isCustomer) {
+        dispatch(loadCustomerCallHistory(false));
+      } else {
+        dispatch(loadLinguistCallHistory(false));
+      }
+
+      // resolve the result of ending the session
+      resolve(res);
+    })
     .catch(reject)
     .finally(() => {
       dispatch(update({
@@ -368,7 +388,7 @@ export const endSession = (reason) => (dispatch, getState) => {
 // Example: if the remote user ends the call because of "failure_local" on THEIR client,
 // that implies that on this client the end reason is "failure_remote".
 export const handleEndedSession = (reason) => (dispatch, getState) => {
-  const {status, session} = getState().currentSessionReducer;
+  const {status, session, isCustomer} = getState().currentSessionReducer;
   let endReason = reason;
   switch (reason) {
     case SESSION.END.FAILURE_LOCAL: {
@@ -396,6 +416,17 @@ export const handleEndedSession = (reason) => (dispatch, getState) => {
       endReason
     }
   }));
+
+  // reload the users data, but we're not going to
+  // wait for it to succeed or fail - just need to
+  // ensure that cached data is reloaded
+  dispatch(loadUser(false));
+  if (isCustomer) {
+    dispatch(loadCustomerCallHistory(false));
+  } else {
+    dispatch(loadLinguistCallHistory(false));
+  }
+
   return Promise.resolve(true);
 };
 
