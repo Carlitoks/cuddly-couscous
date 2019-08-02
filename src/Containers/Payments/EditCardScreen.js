@@ -98,7 +98,7 @@ class EditCardScreen extends Component {
   };
 
   render() {
-    const { navigation, user } = this.props;
+    const { navigation, user,loading } = this.props;
 
     return (
       <View style={styles.wrapperContainer}>
@@ -126,7 +126,10 @@ class EditCardScreen extends Component {
             contentContainerStyle={styles.scrollViewFlex}
           >
             <AddCard type={"cardEdit"} />
-            <PaymentButtons navigation={navigation} onPress={() => {this.updateCard()}} />
+            <PaymentButtons navigation={navigation} loading={loading} onPress={() => {
+              updatePayments({ loading: true });
+              this.updateCard()
+              }} />
           </ScrollView>
         </View>
       </View>
@@ -137,6 +140,8 @@ class EditCardScreen extends Component {
 const mS = state => ({
   cardInfo: state.payments.cardInfo,
   user: state.account.user,
+  loading: state.payments.loading,
+
 });
 
 const mD = {
