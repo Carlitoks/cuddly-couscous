@@ -98,14 +98,17 @@ class EditCardScreen extends Component {
   };
 
   render() {
-    const { navigation, user,loading } = this.props;
+    const { navigation, user,loading, clearPayments } = this.props;
 
     return (
       <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
           <NavBar
             leftComponent={
-              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+              <TouchableOpacity activeOpacity={0.8} onPress={() => {
+                clearPayments();
+                navigation.dispatch({type: "back"})
+              }}>
                 <View>
                   <Icon name="chevron-left" type="evilicon" color="white" size={50} />
                 </View>
