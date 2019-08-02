@@ -19,7 +19,7 @@ export default StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: "#3F1674",
     width: metrics.width * 0.35,
-    padding: 3
+    padding: 1
   },
   CVVIconContainer: { position: "absolute", right: 0, top: 5 },
   tooltipContainerStyle: {

@@ -54,23 +54,11 @@ export default class BalanceHeader extends Component {
         {hasUnlimitedUse? 
           <Text style={styles.unlimited}>{I18n.t("account.balanceUnlimited")}</Text>
           :
-          <View
-          style={ minutes< 11 ? styles.balanceContainer  : styles.balanceContainerWhite  }
-        >
-          <View
-          style={
-            minutes < 6 
-              ? styles.outOfMinutesContainer
-              : minutes > 5 && minutes < 11
-              ? styles.fewMinutesLeftContainer
-              : styles.minutesLeftContainer
-          }
-        >
-          <Text style={styles.balanceMinutes}>{I18n.t("account.balanceNum", {num: minutes})}</Text>
-      </View>
-      </View>
+          <View style={styles.packageContainerHeader}>
 
-          
+          <Text style={minutes > 10  ? styles.balanceHaveMinutes : 11 > minutes && minutes > 5 ? styles.balanceFewMinutes : styles.balanceMinutes}>{I18n.t("account.balanceNum", {num: minutes})}</Text>
+    </View>
+         
           }
         <Text style={styles.balanceDescription}>{this.getSubtitleText()}</Text>
     </View>

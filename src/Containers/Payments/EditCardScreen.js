@@ -98,14 +98,17 @@ class EditCardScreen extends Component {
   };
 
   render() {
-    const { navigation, user } = this.props;
+    const { navigation, user,loading, clearPayments } = this.props;
 
     return (
       <View style={styles.wrapperContainer}>
         <View style={[styles.mainContainer]}>
           <NavBar
             leftComponent={
-              <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.dispatch({type: "back"})}>
+              <TouchableOpacity activeOpacity={0.8} onPress={() => {
+                clearPayments();
+                navigation.dispatch({type: "back"})
+              }}>
                 <View>
                   <Icon name="chevron-left" type="evilicon" color="white" size={50} />
                 </View>
@@ -126,7 +129,10 @@ class EditCardScreen extends Component {
             contentContainerStyle={styles.scrollViewFlex}
           >
             <AddCard type={"cardEdit"} />
-            <PaymentButtons navigation={navigation} onPress={() => {this.updateCard()}} />
+            <PaymentButtons navigation={navigation} loading={loading} onPress={() => {
+              updatePayments({ loading: true });
+              this.updateCard()
+              }} />
           </ScrollView>
         </View>
       </View>
@@ -137,6 +143,8 @@ class EditCardScreen extends Component {
 const mS = state => ({
   cardInfo: state.payments.cardInfo,
   user: state.account.user,
+  loading: state.payments.loading,
+
 });
 
 const mD = {
