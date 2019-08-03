@@ -26,7 +26,6 @@ class PackagePurchaseSuccessView extends Component {
     console.log(user);
     return (
       <View style={styles.wrapperContainer}>
-        <View style={[styles.mainContainer]}>
           <NavBar
             navbarTitle={I18n.t("packages.success.title")}
           />
@@ -47,13 +46,9 @@ class PackagePurchaseSuccessView extends Component {
             <Text style={styles.balanceTitleValue}>{navigation.state.params.minutePackage.name}</Text>
             <View style={styles.packageContainer } >
               {navigation.state.params.reloadable ? 
-                <View style={styles.reloadContainer}>
                   <Text style={styles.reload}> {I18n.t("packages.success.withReload")} </Text>
-                </View> 
               :
-                <View style={styles.noReloadContainer}>
                   <Text style={styles.noReload}> {I18n.t("packages.success.withoutReload")} </Text>
-                </View>
               }
             </View>
             <View style={styles.balanceContainer } >
@@ -73,7 +68,6 @@ class PackagePurchaseSuccessView extends Component {
                 textStyle = {styles.buttonText} // optional text styles, component should provide defaults
                 onPress = {() => this.purchase()} // function to call when pressed
             />
-        </View>
       </View>
     );
   }

@@ -17,9 +17,46 @@ class AddCard extends Component {
     this.state = {
       creditCardIcon: Icons.placeholder,
       date: "",
-      currentTooltipIcon: Icons.info_cvv
+      currentTooltipIcon: Icons.info_cvv,
+      cvvFocus: false,
+      expirationDateFocus: false,
+      cardNumberFocus: false,
     };
   }
+
+  onFocusChange = (type) => {
+    let state = {...this.state};
+    switch (type) {
+      case 'cvvFocus':
+        state = {
+          cvvFocus: true,
+          expirationDateFocus: false,
+          cardNumberFocus: false,
+        };
+        break;
+      case 'expirationDateFocus':
+        state = {
+            cvvFocus: false,
+            expirationDateFocus: true,
+            cardNumberFocus: false,
+          };
+        break;
+      case 'cardNumberFocus':
+        state = {
+            cvvFocus: false,
+            expirationDateFocus: false,
+            cardNumberFocus: true,
+          };        break;
+      default:
+          state = {
+            cvvFocus: false,
+            expirationDateFocus: false,
+            cardNumberFocus: false,
+          };
+    }
+    this.setState(state);
+}
+
   onTooltipPress = () => {
     this.setState({
       currentTooltipIcon:
@@ -61,7 +98,7 @@ class AddCard extends Component {
     const updatedCard = { ...this.props.cardInfo, cvc: cvv };
     this.props.updatePayments({ cardInfo: updatedCard });
     const card = validCC(updatedCard.number);
-    if(card && card.card.type == 'american-express'){
+    if(card && card.card && card.card.type == 'american-express'){
       if(cvv.length >=4){
         this.props.updatePayments({ isValidCVV: true });
       }else{
@@ -140,6 +177,8 @@ class AddCard extends Component {
               : this.state.creditCardIcon
           }
           isValidCC={this.props.isValidCC}
+          onFocus ={this.onFocusChange}
+          cardNumberFocus={this.state.cardNumberFocus}
         />
         <View style={styles.addCardBottomInputs}>
           <ExpirationDate
@@ -153,6 +192,8 @@ class AddCard extends Component {
             }
             onDateChange={this.onDateChange}
             isValidDate={this.props.isValidDate}
+            onFocus ={this.onFocusChange}
+            expirationDateFocus={this.state.expirationDateFocus}
           />
           <CVV
             type={type}
@@ -165,6 +206,8 @@ class AddCard extends Component {
             onChangeCVV={this.onChangeCVV}
             onTooltipPress={this.onTooltipPress}
             currentTooltipIcon={this.state.currentTooltipIcon}
+            onFocus ={this.onFocusChange}
+            cvvFocus={this.state.cvvFocus}
           />
         </View>
       </View>

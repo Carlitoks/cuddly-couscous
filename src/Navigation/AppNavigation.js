@@ -7,6 +7,7 @@ import Home from "../Home/Home";
 import SessionDetails from "../RateCall/SessionInfo/SessionInfoView";
 
 import MenuView from "../Components/MenuView/MenuView";
+import LoadingView from "../Containers/LoadingView";
 // User Profile
 import UserProfileView from "../Profile/UserProfile/UserProfileView";
 import EditNameView from "../Profile/EditName/EditNameView";
@@ -38,7 +39,7 @@ import LinguistIncomingCallView from "../Containers/Session/LinguistIncomingCall
 
 // by default, this is the screen that will
 // be shown first when the app loads
-let initialScreen = "IntroView";
+let initialScreen = "LoadingView";
 
 // change the initial screen, this must be called before
 // the router is initialized
@@ -51,6 +52,13 @@ export const setInitialScreen = (name) => {
 
 const Navigation = StackNavigator(
   {
+    LoadingView: {
+      screen: LoadingView,
+      navigationOptions: {
+        gesturesEnabled: false,
+        drawerLockMode: "locked-closed"
+      }
+    },
     CallHistory: {
       screen: CallHistory,
       navigationOptions: {

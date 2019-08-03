@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  View, Text, Image, Platform, ImageBackground,
+  View, Text, Image, Platform, ImageBackground, ScrollView
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
@@ -43,6 +43,7 @@ class LocationPermissionView extends Component {
     const { navigation } = this.props;
     return (
       <View style={styles.wrapperContainer}>
+        <ScrollView alwaysBounceVertical={false} style={styles.scroll}>
         <View style={[styles.permissionsMainContainer]}>
           <Image style={styles.backgroundImage} source={backgroundImage} />
           <View style={styles.bodyContainer}>
@@ -58,6 +59,7 @@ class LocationPermissionView extends Component {
             </View>
           </View>
         </View>
+        </ScrollView>
       </View>
     );
   }

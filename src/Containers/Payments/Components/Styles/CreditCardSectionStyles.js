@@ -38,6 +38,17 @@ export default StyleSheet.create({
   centered: {
     alignItems: 'center'
   },
+  buttonViewPackagesContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(10),
+    width: Metrics.width * 0.90,
+    height: moderateScaleViewports(55),
+    marginBottom: 20,
+    marginLeft: "5%",
+    marginTop:10,
+  },
   fullWidth: { flex: 1 },
   wrapperContainer: {
     backgroundColor: 'white',
@@ -74,6 +85,8 @@ export default StyleSheet.create({
   },
   balanceContainer:{
     width:"27%",
+    alignItems: "center",
+    justifyContent: "center"
   },
   balanceContainerWhite:{
     width:"60%",
@@ -91,8 +104,34 @@ export default StyleSheet.create({
   },
   balanceMinutes:{
     color:"#FFFFFF",
+    backgroundColor:"#FF3B30",
     fontSize: 26,
     fontFamily: Fonts.BaseFont,
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderWidth: 1, 
+    overflow: 'hidden',
+    borderColor: "#FF3B30", 
+    borderRadius: 4,
+  },
+  balanceFewMinutes:{
+    color:"#FFFFFF",
+    backgroundColor: "#F39100",
+    fontSize: 26,
+    fontFamily: Fonts.BaseFont,
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderWidth: 1, 
+    overflow: 'hidden',
+    borderColor: "#F39100", 
+    borderRadius: 4,
+  },
+  balanceHaveMinutes:{
+    color:"#FFFFFF",
+    fontSize: 26,
+    fontFamily: Fonts.BaseFont,
+    paddingLeft: 5,
+    paddingRight: 5,
   },
   unlimited:{
     color:"#FFFFFF",
@@ -138,6 +177,11 @@ export default StyleSheet.create({
     width:moderateScaleViewports(100),
     flex: 1
   },
+  packageContainerHeader:{
+    flexDirection:'row',
+    flexWrap: 'wrap', 
+    overflow:"hidden"  
+  },
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -161,6 +205,7 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     flexWrap:"wrap",
     paddingLeft: 10,
+    marginTop:10,
     flex:1,
   },
   rowDescription:{

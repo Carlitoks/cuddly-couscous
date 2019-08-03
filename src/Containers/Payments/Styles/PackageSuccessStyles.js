@@ -217,8 +217,13 @@ export default StyleSheet.create({
   },
   reload:{
     color:"#FFFFFF",
-    fontSize: moderateScale(15, 0),
+    fontSize: moderateScaleViewports(16),
     fontFamily: Fonts.BaseFont,
+    backgroundColor: "#64A901",
+    borderWidth: 1, 
+    overflow: 'hidden',
+    borderColor: "#64A901", 
+    borderRadius: 4,
   },
   noReload:{
     color:"#000",
@@ -235,7 +240,9 @@ export default StyleSheet.create({
   },
   packageContainer:{
     marginTop: 5,
-    width:"45%",
+    flexDirection:'row',
+    flexWrap: 'wrap', 
+    overflow:"hidden"  
   },
   balanceContainer:{
     marginTop: 20,

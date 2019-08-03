@@ -8,27 +8,30 @@ import styles from "./Styles/PaymentButtons";
 class PaymentButtons extends Component {
 
   renderButtonStyles = type => {
-    if (!this.isDisabled()) {
+    if (this.props.loading || !this.isDisabled() ) {
       return { ...styles.addCardButtonDisable };
     }
     return styles.addCardButton;
   };
 
   isDisabled = () => {
-    const { isValidCC, isValidDate, isValidCVV, loading } = this.props;
-    return (isValidCC && isValidDate && isValidCVV) || loading;
+    const { isValidCC, isValidDate, isValidCVV } = this.props;
+    return (isValidCC && isValidDate && isValidCVV) ;
   };
 
   render() {
+    const {loading } = this.props;
     return (
       <View style={styles.paymentButtonsContainer}>
         <TouchableOpacity
-          disabled={!this.isDisabled()}
-          onPress={() => { this.props.onPress() }}
+          disabled={loading || !this.isDisabled()}
+          onPress={() =>{ 
+              this.props.onPress();
+          }}
           style={this.renderButtonStyles()}
         >
           <Text
-            style={!this.isDisabled() ? styles.addCardButtonDisabled : styles.addCardButtonText}
+            style={loading || !this.isDisabled() ? styles.addCardButtonDisabled : styles.addCardButtonText}
           >
             {I18n.t("save")}
           </Text>
@@ -42,7 +45,6 @@ const mS = state => ({
   isValidCC: state.payments.isValidCC,
   isValidDate: state.payments.isValidDate,
   isValidCVV: state.payments.isValidCVV,
-  loading: state.payments.loading,
   cardInfo: state.payments.cardInfo,
 });
 

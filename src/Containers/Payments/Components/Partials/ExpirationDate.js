@@ -24,6 +24,8 @@ const ExpirationDate = props => {
           value={props.date}
           onChangeText={text => props.onDateChange(text)}
           style={styles.EDInput}
+          style={ props.expirationDateFocus ? styles.EDInputActive :  styles.EDInput}
+          onFocus={() => props.onFocus("expirationDateFocus")} 
         />
       )}
       {!props.isValidDate && props.date && props.date.length >= 4 && props.type != "cardInfo" ? (

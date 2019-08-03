@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { View, Text, ScrollView, Keyboard, Alert } from "react-native";
 
 import api from "../../Config/AxiosConfig";
-import {loadUser} from "../../Ducks/AccountReducer";
+import { loadUser } from "../../Ducks/AccountReducer";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import InputRegular from "../../Components/InputRegular/InputRegular";
 import BottomButton from "../../Components/BottomButton/BottomButton";
@@ -12,6 +12,8 @@ import Close from "../../Components/Close/Close";
 import styles from "./styles";
 import I18n, { translateApiErrorString, translateApiError } from "../../I18n/I18n";
 import NavBar from "../../Components/NavBar/NavBar";
+import { bindActionCreators } from "redux";
+import { handleEvent } from "../../Util/Events";
 
 class PromoCodeView extends Component {
 
@@ -29,44 +31,14 @@ class PromoCodeView extends Component {
   }
 
   submit() {
+    const { dispatch, navigation } = this.props;
     Keyboard.dismiss();
 
     this.setState({loading: true});
     api.get(`/event-codes/${this.state.code.trim()}`)
-    .then((res) => {
+    .then(async (res) => {
       this.setState({loading: false});
-
-      const data = res.data;
-
-      // handle potential usage error first
-      if (data.usageError) {
-        Alert.alert(I18n.t("invalidCode"), translateApiErrorString(data.usageError, "api.errEventUnavailable"), [{text: I18n.t("actions.ok")}]);
-        return;
-      }
-
-      // otherwise, for now we only support codes that add
-      // minutes to the user account
-      if (data.addMinutesToUser && data.maxMinutesPerUser > 0) {
-        // reload user so the new minutes are visible
-        this.props.loadUser(false);
-        Alert.alert(
-          I18n.t("minutesAdded"),
-          I18n.t("complimentMinutes", {
-            maxMinutesPerUser: data.maxMinutesPerUser,
-            organizer: data.organization.name,
-          }),
-          [{
-            text: I18n.t("actions.ok"),
-            onPress: () => {
-              this.props.navigation.dispatch({type: "Home"});
-            }
-          }]
-        );
-        return;
-      }
-
-      // otherwise... unexpected code
-      this.props.navigation.dispatch({ type: "Home" });
+      return handleEvent(res.data, { dispatch, navigation });
     })
     .catch((e) => {
       this.setState({loading: false});
@@ -132,9 +104,15 @@ class PromoCodeView extends Component {
 const mS = state => ({
 });
 
-const mD = {
-  loadUser
-};
+
+function mD(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({
+      loadUser,
+    }, dispatch),
+  };
+}
 
 export default connect(
   mS,

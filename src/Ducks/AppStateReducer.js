@@ -1,6 +1,6 @@
 import _merge from "lodash/merge";
 
-// The purpose of this is to manage app UI & config state that is either 
+// The purpose of this is to manage app UI & config state that is either
 // determined or modifiable by the user.
 
 const initState = () => {
@@ -9,7 +9,18 @@ const initState = () => {
     isCustomerMode: true,
     isLinguistMode: false,
     hasNetworkConnection: true,
-    connectionInfo: null, // the raw connection info response from NetInfo
+    // the raw connection info response from NetInfo
+    connectionInfo: null,
+
+    // was the last opened link processed?
+    openUrlParamsHandled: false,
+    // key/value data sent via the last opened link
+    openUrlParams: {},
+
+    // was the install link processed?
+    installUrlParamsHandled: false,
+    // key/value data sent via initial link when app was installed
+    installUrlParams: {},
 
     // TODO: app state (background/foreground, etc)
   }
@@ -45,7 +56,8 @@ export const clear = () => ({type: ACTIONS.CLEAR});
 
 const reducer = (state = null, action = {}) => {
   const { payload, type } = action;
-
+  console.log(type, payload);
+  //debugger
   switch (type) {
     case ACTIONS.CLEAR: {
       return { ...initState() };
@@ -59,11 +71,11 @@ const reducer = (state = null, action = {}) => {
       return {
         ...(state || initState()),
         ...payload
-      };
+    };
     }
 
     default: {
-      return state || initState();
+      return { ...state };
     }
   }
 };
