@@ -898,7 +898,7 @@ export default (ENG = {
 
     // used when rating a session
     rating: {
-      report: "Report",
+      reportButton: "Report",
       comment: "Comment",
       addComment: "Add Comments",
       questionGood: "What was good?",
