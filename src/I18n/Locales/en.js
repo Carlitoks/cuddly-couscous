@@ -463,6 +463,23 @@ export default (ENG = {
     settings: "Settings"
   },
 
+  // used when viewing call history
+  history: {
+    all: "All",
+    missed: "Missed",
+    none: "No history available",
+    listTitle: "Call History",
+    callTitle: "Call Details",
+    languages: "Languages",
+    duration: "Duration",
+    durationTime: "{{num}} mins",
+    scenario: "Scenario",
+    scenarioNote: "Optional Note",
+    missedCall: "Missed Call",
+    notRated: "Not Rated",
+    addRating: "Add Rating"
+  },
+
   // DEPRECATED: block should be removed in the future, any strings currently in use
   // should be moved or refactored
   customerHome: {
@@ -881,18 +898,31 @@ export default (ENG = {
 
     // used when rating a session
     rating: {
+      report: "Report",
       comment: "Comment",
       addComment: "Add Comments",
       questionGood: "What was good?",
       questionBetter: "What could be better?",
+      customer: "Customer",
       rateCustomer: "Rate Your Customer",
+      linguist: "Linguist",
       rateLinguist: "Rate Your Linguist",
       report: "Report a problem by gently shaking your device",
       submit: "Submit",
       resolvedCustomer: "Was your issue resolved?",
       resolvedLinguist: "Was their issue resolved?",
       scenario: "What did your customer need help with?",
-      classification: "Call Classification",
+      abuse: {
+        label: "Report",
+        title: "Report Abuse",
+        alert: "You are about to report abusive or harassing behavior, which may result in the suspension or removal of the customer's account. Do you want to proceed?",
+        placeholder: "Please provide specific details as evidence of the issue."
+      },
+      about: {
+        label: "Call Details",
+        placeholder: "In 2 sentences, please describe what the call was about. For example: The call was about purchasing a ticket for the train. The customer wanted to go from Tokyo to Osaka and needed help using the ticket machine."
+      },
+      classification: "Type of Call",
       classifications: {
         trial: "Linguist Trial Call",
         demo: "Product Demo Call",
@@ -911,6 +941,17 @@ export default (ENG = {
         surroundings: "Surroundings",
         appearance: "Appearance",
         noise: "Background Noise"
+      },
+      technical: {
+        label: "Technical Issues (optional)",
+        placeholder: "If relevant, please describe in more detail any technical issues that occured during the call."
+      },
+      technicalFlags: {
+        noAudio: "No audio from other party",
+        noVideo: "No video from other party",
+        poorAudio: "Poor audio from other party",
+        poorVideo: "Poor video from other party",
+        callDropped: "Call dropped part way through"
       }
     }
   },
@@ -1036,6 +1077,16 @@ export default (ENG = {
     eur: "€{{num}}",
     gbp: "£{{num}}",
     cny: "CN¥{{num}}"
+  },
+
+  // for localizing the names of currencies, translate
+  // the names, but do not translate the currency codes
+  currency: {
+    usd: "US Dollar (USD)",
+    jpy: "Japanese Yen (JPY)",
+    eur: "Euro (EUR)",
+    gbp: "British Pound (GBP)",
+    cny: "Chinese Yuan (CNY)"
   },
 
   // for use during primary language selection
