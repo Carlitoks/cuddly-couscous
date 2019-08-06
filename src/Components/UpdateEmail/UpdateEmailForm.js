@@ -135,7 +135,7 @@ class UpdateEmailForm extends Component {
 };
 
 const mS = state => ({
-  user: stat.account.user,
+  user: state.account.user,
 });
 
 const mD = {
