@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {Alert, Modal, Text, TextInput, TouchableOpacity, View} from "react-native";
 
 import styles from "./styles";
-import I18n, { translateApiErrorString } from "../../I18n/I18n";
+import I18n, { translateApiError } from "../../I18n/I18n";
 import { connect } from "react-redux";
 import { EMAIL_REGEX } from "../../Util/Constants";
 import UpdateEmailSuccess from "./UpdateEmailSuccess";
@@ -69,7 +69,7 @@ class UpdateEmailForm extends Component {
     }catch(err){
         Alert.alert(
           I18n.t("error"),
-          translateApiErrorString(err.response.data.errors[0], "api.errTemporary"),
+          translateApiError(err, "api.errTemporary"),
           [{ text: I18n.t("ok"), onPress: () => console.log("OK Pressed") }],
         );
     } finally {

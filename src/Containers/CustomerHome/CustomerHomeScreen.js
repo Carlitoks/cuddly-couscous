@@ -29,7 +29,6 @@ import { loadUser, loadActiveSubscriptionPeriods } from "../../Ducks/AccountRedu
 import { Events } from "../../Api";
 import { update as updateAppState } from "../../Ducks/AppStateReducer";
 import { handleEvent } from "../../Util/Events";
-import LoadingView from "../LoadingView";
 
 const imgBackground = require("../../Assets/Images/Background.png");
 
