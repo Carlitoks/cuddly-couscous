@@ -26,7 +26,7 @@ class HeaderMinutesLeft extends Component {
         ) : (
           <TouchableOpacity onPress={() => this.goToPayments()} style={styles.addCardContainer}>
             <Text style={styles.addCardText}>
-              {I18n.t("pricingScreen.paymentInfo.linkNoCard", { minutes: user.availableMinutes })}
+              {I18n.t("pricingScreen.paymentInfo.linkNoCard", { minutes: user.availableMinutes || 0 })}
             </Text>
           </TouchableOpacity>
         )}
@@ -42,7 +42,7 @@ class HeaderMinutesLeft extends Component {
           >
             <Icon name="clock" type="evilicon" containerStyle={styles.clockIcon} color="#fff" />
             <Text style={styles.minutesLeftInfoText}>
-              {I18n.t("minutesAbbreviation", { minutes: user.availableMinutes })}
+              {I18n.t("minutesAbbreviation", { minutes: user.availableMinutes || 0 })}
             </Text>
           </View>
         ) : (
@@ -59,7 +59,7 @@ class HeaderMinutesLeft extends Component {
 
 const mS = state => ({
   hasUnlimitedUse: state.account.hasUnlimitedUse,
-  user: state.account.user,
+  user: state.account.user || {},
 });
 
 const mD = {};

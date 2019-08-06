@@ -29,6 +29,7 @@ import { loadUser, loadActiveSubscriptionPeriods } from "../../Ducks/AccountRedu
 import { Events } from "../../Api";
 import { update as updateAppState } from "../../Ducks/AppStateReducer";
 import { handleEvent } from "../../Util/Events";
+import LoadingView from "../LoadingView";
 
 const imgBackground = require("../../Assets/Images/Background.png");
 
@@ -123,6 +124,7 @@ class CustomerHomeScreen extends Component {
       newSession,
       jeenieCounts,
     } = this.props;
+
     return (
       <View style={styles.wrapperContainer}>
         <View style={styles.mainContainerHome}>
@@ -153,7 +155,7 @@ class CustomerHomeScreen extends Component {
             </View>
           </ImageBackground>
           <SlideUpPanel />
-          { user.emailBounced && <View style={{ position: "absolute" }}><UpdateEmail emailBounced={user.emailBounced} /></View>}
+          { user.emailBounced && <View style={{ position: "absolute" }}><UpdateEmail navigation={navigation} emailBounced={user.emailBounced} /></View>}
         </View>
       </View>
     );
@@ -161,7 +163,7 @@ class CustomerHomeScreen extends Component {
 }
 
 const mS = state => ({
-  user: state.account.user,
+  user: state.account.user || {},
   auth2: state.auth2,
   newSession: state.newSessionReducer.session,
   completedLocation: state.onboardingReducer.completedLocation,

@@ -179,7 +179,7 @@ class CallButtons extends Component {
 }
 
 const mS = state => ({
-  user: state.account.user,
+  user: state.account.user || {},
   hasUnlimitedUse: state.account.hasUnlimitedUse,
   session: state.newSessionReducer.session,
   completedMicAndCamera: state.onboardingReducer.completedMicAndCamera,
