@@ -78,16 +78,20 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont, 
     fontSize: 18,
     fontWeight: 'bold',
+    width:'70%'
   },
   price: {
     fontFamily: Fonts.BaseFont, 
     fontSize: 20,
     fontWeight: 'bold',
+    width:'30%'
+
   },
   discountedPrice:{
     fontFamily: Fonts.BaseFont, 
     fontSize: 20,
     fontWeight: 'bold',
+    width:'30%',
     color: 'red'
   },
   pricePromoCode:{
