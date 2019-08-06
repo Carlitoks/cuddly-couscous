@@ -30,8 +30,8 @@ export default StyleSheet.create({
     height: '100%'
   },
   itemTextLeftTitle: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute",  fontWeight:"bold" },
-  itemTextLeft: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute"},
-  itemText: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0},
+  itemTextLeft: {width:'75%', left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute", backgroundColor:'red'},
+  itemText: { flex:1, fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0},
   itemTextTitle: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0, fontWeight:"bold"},
   textAddCard: {fontSize: moderateScale(15, 0), color: "#272833", position:"absolute", flexWrap: 'wrap', flex:1},
   itemTextLeftSale: { left:0, fontSize: moderateScale(15, 0), color: "#FF3B30", position:"absolute"},
