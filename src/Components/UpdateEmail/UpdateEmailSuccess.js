@@ -9,7 +9,7 @@ import {update as updateLogicReducer} from "../../Ducks/LogicReducer";
 
 class UpdateEmailSuccess extends Component {
   render() {
-    const { navigation, logOut, updateLogicReducer, user } = this.props;
+    const { navigation, logOut, updateLogicReducer, user, email } = this.props;
     const handleClose = async () => {
       await updateLogicReducer({emailEditSuccess: false});
       await logOut().finally(() => {navigation.dispatch({type: "LoginView"})});
@@ -19,7 +19,7 @@ class UpdateEmailSuccess extends Component {
             <View style={styles.innerContainer}>
               <View style={styles.topContainer}>
                 <Text style={styles.titleText}>{I18n.t("correctEmailModal.titleSuccess")}</Text>
-                <Text style={styles.subtitleText}>{I18n.t("correctEmailModal.descriptionSuccess", {email: user.email})}</Text>
+                <Text style={styles.subtitleText}>{I18n.t("correctEmailModal.descriptionSuccess", {email})}</Text>
               </View>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.closeModal} onPress={() => handleClose()}>
@@ -33,7 +33,7 @@ class UpdateEmailSuccess extends Component {
 };
 
 const mS = state => ({
-  user: state.account.user,
+  user: state.account.user || {},
 });
 
 const mD = {

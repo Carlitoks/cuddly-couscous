@@ -165,7 +165,7 @@ class CallInputs extends Component {
 
 const mS = state => ({
   session: state.newSessionReducer.session,
-  user: state.account.user,
+  user: state.account.user || {},
   hasUnlimitedUse: state.account.hasUnlimitedUse,
   hasUnlimitedUseUntil: state.account.hasUnlimitedUseUntil,
   customerCallHistory: state.account.customerCallHistory,

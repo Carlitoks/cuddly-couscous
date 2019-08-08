@@ -4,7 +4,8 @@ import UpdateEmailForm from "./UpdateEmailForm";
 
 class UpdateEmail extends Component {
   render() {
-      return <UpdateEmailForm emailBounced={this.props.emailBounced}/>;
+      const { navigation } = this.props;
+      return <UpdateEmailForm navigation={navigation} emailBounced={this.props.emailBounced}/>;
   }
 };
 
