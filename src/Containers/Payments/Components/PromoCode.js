@@ -32,6 +32,7 @@ export default class PromoCode extends Component {
             value={this.state.text}
             placeholder={I18n.t("packages.browse.promoPlaceholder")}
             placeholderTextColor={"rgba(0, 0, 0, 0.65)"}
+            allowFontScaling={false}
           />
           <TouchableOpacity 
             style={
