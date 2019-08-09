@@ -4,7 +4,7 @@ import { moderateScale } from "../../../../../Util/Scaling";
 import metrics from "../../../../../Themes/Metrics";
 
 export default StyleSheet.create({
-  CVVContainer: { flexDirection: "column" },
+  CVVContainer: { flexDirection: "column"},
   CVVText: { color: "rgba(0, 0, 0, 0.541327)", fontFamily: Fonts.BaseFont, fontSize: 12 },
   CVVInputContainer: { flexDirection: "row" },
   CVVInput: {
@@ -27,7 +27,6 @@ export default StyleSheet.create({
     right: 0,
     top: 50,
     width: moderateScale(278, 0),
-    height: moderateScale(70, 0),
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -35,7 +34,8 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    elevation: 3
+    elevation: 300,
+    zIndex:50
     //backgroundColor: "red"
   },
   tooltipText: { fontSize: moderateScale(10, 0) },

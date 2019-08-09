@@ -100,7 +100,8 @@ export default StyleSheet.create({
     textAlign: 'right',
     textDecorationLine: 'line-through',
     textDecorationStyle: 'solid',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    width:'30%',
   },
   select: {
     color:  '#64A901',
