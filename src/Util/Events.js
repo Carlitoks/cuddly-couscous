@@ -4,6 +4,7 @@ import { createNewSession } from "../Ducks/CurrentSessionReducer";
 import { ensureSessionDefaults, setEvent } from "../Ducks/NewSessionReducer";
 import NavigationService from '../Util/NavigationService';
 import Permissions from "react-native-permissions";
+import { loadUser } from "../Ducks/AccountReducer";
 
 const navigate = (navigation, type, screenName, params) => {
   if(type === "SERVICE"){
@@ -56,6 +57,7 @@ export const handleEvent = async (evt, store) => {
         text: I18n.t("actions.ok")
       }]
     );
+    await store.dispatch(loadUser(false));
     return navigate(navigation, type, "Home", null);
   }
 
