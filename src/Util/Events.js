@@ -13,7 +13,7 @@ const navigate = (navigation, type, screenName, params) => {
   return navigation.dispatch({type: screenName, params});
 };
 
-const createCall = async (store, evt, navigation, type) => {
+export const createCall = async (store, evt, navigation, type) => {
   await store.dispatch(ensureSessionDefaults());
   // should the call automatically be started?
   // otherwise, it's an event for a session
@@ -21,6 +21,32 @@ const createCall = async (store, evt, navigation, type) => {
   if (evt.initiateCall) {
     await store.dispatch(createNewSession(sessionObj.session)); // from CurrentSessionReducer
     return navigate(navigation, type, "CustomerMatchingView", null);
+  }
+};
+
+export const handleCallEvent = async (evt, store) => {
+  let navigation = store.navigation;
+  let type = "STORE";
+  if(!navigation){
+    navigation = NavigationService;
+    type = "SERVICE";
+  }
+
+  try {
+    const cameraPermission = await Permissions.request('camera');
+    const micPermission = await Permissions.request('microphone');
+    if (cameraPermission === "authorized" && micPermission === "authorized") {
+      evt = { ...evt, initiateCall: true };
+      return createCall(store, evt, navigation, type);
+    } else {
+      Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
+        { text: I18n.t("ok") },
+      ]);
+      return navigate(navigation, type, "Home", null);
+    }
+  }catch (e) {
+    Alert.alert(I18n.t("error"), translateApiError(e));
+    return navigate(navigation, type, "Home", null);
   }
 };
 

@@ -246,7 +246,16 @@ export const setEvent = (evt) => (dispatch, getState) => {
     ns.session.secondaryLangCode = evt.defaultSecondaryLangCode;
   }
   if (!!evt.defaultScenarioID) {
-    ns.session.scenarioID = evt.defaultScenarioID;
+    ns.session.scenarioID = evt.defaultScenarioID || evt.scenarioID;
+  }
+  if (!!evt.note) {
+    ns.session.customScenarioNote = evt.note;
+  }
+  if(!!evt.eventID){
+    ns.session.eventID = evt.eventID;
+  }
+  if(!!evt.avModePreference){
+    ns.session.avModePreference = evt.avModePreference;
   }
 
   dispatch(update(ns));

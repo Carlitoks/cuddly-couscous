@@ -3,8 +3,8 @@ import {
   Alert, ImageBackground, TouchableOpacity, View,
 } from "react-native";
 import InCallManager from "react-native-incall-manager";
-import { connect,  } from "react-redux";
-import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { Icon } from "react-native-elements";
 import NavBar from "../../Components/NavBar/NavBar";
 import AvatarSection from "./Components/AvatarSection";
@@ -28,7 +28,7 @@ import { Colors } from "../../Themes";
 import { loadUser, loadActiveSubscriptionPeriods } from "../../Ducks/AccountReducer";
 import { Events } from "../../Api";
 import { update as updateAppState } from "../../Ducks/AppStateReducer";
-import { handleEvent } from "../../Util/Events";
+import { handleCallEvent, handleEvent } from "../../Util/Events";
 
 const imgBackground = require("../../Assets/Images/Background.png");
 
@@ -67,7 +67,7 @@ class CustomerHomeScreen extends Component {
       loadActiveSubscriptionPeriods(true),
       loadUser(true),
     ]).finally(() => {
-      this.setState({loading: false});
+      this.setState({ loading: false });
     });
   }
 
@@ -78,23 +78,63 @@ class CustomerHomeScreen extends Component {
       appState,
     } = this.props;
 
+    console.tron.log(appState.openUrlParams);
+
     if (appState.openUrlParams
       && appState.openUrlParams.eventID
       && !appState.openUrlParamsHandled) {
-      this.handleDeepLinkEvent(auth2, appState.openUrlParams.eventID, dispatch, "OPEN");
+      this.handleDeepLinkEvent(auth2, appState.openUrlParams, dispatch, "OPEN");
     }
     if (appState.installUrlParams
       && appState.installUrlParams.eventID
       && !appState.installUrlParamsHandled) {
-      this.handleDeepLinkEvent(auth2, appState.openUrlParams.eventID, dispatch, "INSTALL");
+      this.handleDeepLinkEvent(auth2, appState.openUrlParams, dispatch, "INSTALL");
     }
   };
 
-  handleDeepLinkEvent = (user, eventID, dispatch, type) => {
-    const { navigation } = this.props;
+    handleDeepLinkEvent = (user, params, dispatch, type) => {
+      let urlType = null;
+      if (params.$deeplink_path) {
+        urlType = params.$deeplink_path.split("/")[1];
+      } else if (params["+non_branch_link"]) {
+        urlType = params["+non_branch_link"].split("//")[1].split("?")[0];
+      } else {
+        urlType = "open";
+      }
+      switch (urlType) {
+        case "call":
+          this.handleDeepLinkCall(user, params, dispatch, type);
+          break;
+
+        case "open":
+          if (params.eventID) {
+            this.handleDeepLinkOpen(user, params.eventID, dispatch, type);
+          }
+          break;
+
+        default:
+          if (params.eventID) {
+            this.handleDeepLinkOpen(user, params.eventID, dispatch, type);
+          }
+          break;
+      }
+    };
+
+  handleDeepLinkCall = async (user, params, dispatch, type) => {
+    if (user.isLoggedIn && user.userJwtToken) {
+      await handleCallEvent(params, { dispatch });
+      if (type === "INSTALL") {
+        await dispatch(updateAppState({ installUrlParamsHandled: true }));
+      } else {
+        await dispatch(updateAppState({ openUrlParamsHandled: true }));
+      }
+    }
+  };
+
+  handleDeepLinkOpen = (user, eventID, dispatch, type) => {
     if (user.isLoggedIn && user.userJwtToken) {
       Events.getScan(`${eventID.trim()}`, user.userJwtToken).then(async (evt) => {
-        await handleEvent(evt.data, { dispatch, navigation });
+        await handleEvent(evt.data, { dispatch });
       }).catch((e) => {
         if (e.response.status === 404) {
           Alert.alert(I18n.t("error"), I18n.t("api.errEventUnavailable"));
@@ -167,7 +207,7 @@ const mS = state => ({
   newSession: state.newSessionReducer.session,
   completedLocation: state.onboardingReducer.completedLocation,
   jeenieCounts: state.appConfigReducer.jeenieCounts,
-  appState: state.appState
+  appState: state.appState,
 });
 
 function mD(dispatch) {
