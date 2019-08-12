@@ -12,6 +12,14 @@ export default StyleSheet.create({
     justifyContent: "center",
     width: metrics.width * 0.70,
   },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(53),
+    width: metrics.width * 0.90,
+    height: moderateScaleViewports(55),
+  },
   baseButtonText: {
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(17),
@@ -51,6 +59,11 @@ export default StyleSheet.create({
     borderWidth: 2,
   },
   enabledButton: {
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(53),
+    justifyContent: "center",
+    width: metrics.width * 0.70,
+    height: moderateScaleViewports(55),
     backgroundColor: "#F39100", borderColor: "#FFF", borderWidth: 2,
   },
   flexEndCenter: { alignItems: "center", justifyContent: "flex-end" },

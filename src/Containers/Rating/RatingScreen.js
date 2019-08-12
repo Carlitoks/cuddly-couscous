@@ -9,6 +9,7 @@ import CallClassification from "./Components/CallClassification";
 import CallTags from "./Components/CallTags";
 import { openSlideMenu } from "../../Ducks/LogicReducer";
 import I18n, { translateApiError } from "../../I18n/I18n";
+import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 // Styles
 import styles from "./Styles/RatingsScreenStyles";
 import { Sessions } from "../../Api";
@@ -456,24 +457,18 @@ class RatingScreen extends Component {
           >
             {this.renderPagination()}
           </View>
-          <TouchableOpacity
-            style={[
-              styles.baseButton,
-              this.canContinue() ? styles.enabledButton : styles.disabledButton]}
-            disabled={submitting || !this.canContinue()}
-            onPress={() => this.nextSlide()}
-          >
-            {submitting && (<ActivityIndicator color="#ffffff" />)}
-            {!submitting && (
-            <Text
-              style={[
-                styles.baseButtonText,
-                this.canContinue() ? styles.baseButtonTextEnabled : styles.baseButtonTextDisabled]}
-            >
-              {this.isLastSection() ? I18n.t("actions.submit") : I18n.t("actions.next") }
-            </Text>
-            )}
-          </TouchableOpacity>
+          <TextBlockButton
+                text = {this.isLastSection() ? I18n.t("actions.submit") : I18n.t("actions.next")} // the text in the button
+                disabled = {submitting || !this.canContinue()} // boolean if disabled, prevents taps and show disabled button styles
+                loading = {submitting} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
+                style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
+                disabledStyle = { styles.disabledButton} // container style object when disabled, component should provide defaults
+                buttonStyle={ styles.enabledButton }
+                textStyle = {[
+                  styles.baseButtonText,
+                  this.canContinue() ? styles.baseButtonTextEnabled : styles.baseButtonTextDisabled]} // optional text styles, component should provide defaults
+                  onPress={() => this.nextSlide()} // function to call when pressed
+            />
         </View>
         <SlideUpPanel
           scenarioNote={scenarioNote}
