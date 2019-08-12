@@ -19,12 +19,13 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 18,
     textAlign: "left",
-    alignContent: "flex-start",
     width: "100%",
     marginLeft: 0,
     paddingLeft: 0,
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
+    marginRight: 30,
+    paddingRight: 30
   },
   center: {
     alignSelf: "center"
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    marginBottom: 50
+    marginBottom: 50,
+    paddingRight: 5,
   },
   container: {
     flex: 1

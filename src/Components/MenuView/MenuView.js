@@ -219,7 +219,7 @@ class MenuView extends Component {
               }
               onPress={() => Linking.openURL("https://jeenie.com")}
             >
-              <Text style={styles.colorText} icon>
+              <Text style={styles.colorText}>
                 {I18n.t("becomeLinguist")}
               </Text>
             </Icon.Button>
