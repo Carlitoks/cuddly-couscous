@@ -28,6 +28,23 @@ class AvailablePackagesView extends Component {
     .then(()  => this.setState({loading: false})); 
   }
 
+  sort(a, b) {
+    if (a.public == b.public){
+      if (a.unlimitedUse == b.unlimitedUse)
+        return a.cost - b.cost
+      if (!a.unlimitedUse && b.unlimitedUse)
+        return -1;
+      if (a.unlimitedUse && !b.unlimitedUse)
+        return 1;
+    }
+    if (!a.public && b.public)
+      return -1;
+    if (a.public && !b.public)
+      return 1;
+
+    return 0;
+}
+
   packageRender(){
     const { navigation } = this.props;
 
@@ -40,7 +57,7 @@ class AvailablePackagesView extends Component {
       }
     }
 
-    return this.props.minutePackages.map( minutePackage => 
+    return this.props.minutePackages.sort(this.sort).map( minutePackage => 
       <MinutePackageCard
         key={minutePackage.id}  
         minutePackage = {minutePackage}
