@@ -109,7 +109,7 @@ export default class MinutePackageCard extends Component {
               activeOpacity={0.8} 
               onPress={onSelect}
             >
-              <Text style={styles.select}>
+              <Text allowFontScaling={false} style={styles.select}>
                 {I18n.t("actions.select")}
               </Text>
             </TouchableOpacity>
