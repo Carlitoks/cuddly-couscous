@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale } from "../../../Util/Scaling";
 import { red } from 'ansi-colors';
-import { moderateScaleViewports } from "../../../Util/Scaling";
+import { moderateScaleViewports, verticalScale } from "../../../Util/Scaling";
 import { isIphoneXorAbove } from "../../../Util/Devices";
 
 const baseButton = {
@@ -80,10 +80,10 @@ export default StyleSheet.create({
   transparentView: {
   },
   backgroundImage: {
-    marginTop: 31,
-    width: "70%",
-    height: "20%",
-    resizeMode: "cover",
+    marginTop: isIphoneXorAbove() ? 31 : 15,
+    width: moderateScaleViewports(300),
+    height: moderateScaleViewports(200),
+    resizeMode: "center",
   },
   processingView:{
     backgroundColor:"#64A901",
@@ -140,6 +140,7 @@ export default StyleSheet.create({
     width: Metrics.width * 0.90,
     height: moderateScaleViewports(55),
     marginBottom: isIphoneXorAbove() ? 44 : 20,
+    marginTop: isIphoneXorAbove() ? 44 : 10,
   },
   rowAddCard: {
     marginTop:50,
