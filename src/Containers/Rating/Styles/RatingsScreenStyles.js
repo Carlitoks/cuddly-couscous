@@ -55,7 +55,13 @@ export default StyleSheet.create({
     paddingBottom: moderateScaleViewports(Metrics.baseMargin),
   },
   disabledButton: {
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(53),
+    justifyContent: "center",
+    width: metrics.width * 0.70,
+    height: moderateScaleViewports(55),
     borderColor: "#BCBCBC",
+    backgroundColor: "#979797",
     borderWidth: 2,
   },
   enabledButton: {
