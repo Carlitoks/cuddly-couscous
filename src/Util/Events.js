@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import I18n, { translateApiError, translateApiErrorString } from "../I18n/I18n";
 import { createNewSession } from "../Ducks/CurrentSessionReducer";
-import { ensureSessionDefaults, setEvent } from "../Ducks/NewSessionReducer";
+import { ensureSessionDefaults, setEvent, update as updateNewSessionReducer, sessionSelector } from "../Ducks/NewSessionReducer";
 import NavigationService from '../Util/NavigationService';
 import Permissions from "react-native-permissions";
 import { loadUser } from "../Ducks/AccountReducer";
@@ -38,17 +38,40 @@ export const handleCallEvent = async (evt, store) => {
     const cameraPermission = await Permissions.request('camera');
     const micPermission = await Permissions.request('microphone');
     if (cameraPermission === "authorized" && micPermission === "authorized") {
-      evt = { ...evt, initiateCall: true };
-      return createCall(store, evt, navigation, type);
+      await store.dispatch(ensureSessionDefaults());
+      let session = await store.dispatch(sessionSelector());
+
+      if (!!evt.primaryLangCode) {
+        session.primaryLangCode = evt.primaryLangCode;
+      }
+      if (!!evt.secondaryLangCode) {
+        session.secondaryLangCode = evt.secondaryLangCode;
+      }
+      if (!!evt.avModePreference) {
+        session.avModePreference = evt.avModePreference;
+      }
+      if (!!evt.scenarioID) {
+        session.scenarioID = evt.scenarioID;
+      }
+      if (!!evt.note) {
+        session.note = evt.note;
+      }
+      if (!!evt.eventID) {
+        session.eventID = evt.eventID;
+      }
+      await store.dispatch(updateNewSessionReducer({ session }));
+      const currentSessionState = await store.dispatch(sessionSelector());
+      if(evt.start != "false") {
+        await store.dispatch(createNewSession(currentSessionState));
+        return navigate(navigation, type, "CustomerMatchingView", null);
+      }
     } else {
       Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
         { text: I18n.t("ok") },
       ]);
-      return navigate(navigation, type, "Home", null);
     }
   }catch (e) {
     Alert.alert(I18n.t("error"), translateApiError(e));
-    return navigate(navigation, type, "Home", null);
   }
 };
 
@@ -69,7 +92,6 @@ export const handleEvent = async (evt, store) => {
         text: I18n.t("actions.ok")
       }]
     );
-    return navigate(navigation, type, "Home", null);
   }
 
   // minutes added to user?
@@ -86,7 +108,6 @@ export const handleEvent = async (evt, store) => {
       }]
     );
     await store.dispatch(loadUser(false));
-    return navigate(navigation, type, "Home", null);
   }
 
   try {
@@ -98,11 +119,9 @@ export const handleEvent = async (evt, store) => {
       Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
         { text: I18n.t("ok") },
       ]);
-      return navigate(navigation, type, "Home", null);
     }
   }catch (e) {
     Alert.alert(I18n.t("error"), translateApiError(e));
-    return navigate(navigation, type, "Home", null);
   }
 };
 
