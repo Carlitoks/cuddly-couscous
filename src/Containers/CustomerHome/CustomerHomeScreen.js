@@ -78,8 +78,6 @@ class CustomerHomeScreen extends Component {
       appState,
     } = this.props;
 
-    console.tron.log(appState.openUrlParams);
-
     if (appState.openUrlParams
       && appState.openUrlParams.eventID
       && !appState.openUrlParamsHandled) {
@@ -88,7 +86,7 @@ class CustomerHomeScreen extends Component {
     if (appState.installUrlParams
       && appState.installUrlParams.eventID
       && !appState.installUrlParamsHandled) {
-      this.handleDeepLinkEvent(auth2, appState.openUrlParams, dispatch, "INSTALL");
+      this.handleDeepLinkEvent(auth2, appState.installUrlParams, dispatch, "INSTALL");
     }
   };
 
