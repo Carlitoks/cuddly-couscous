@@ -6,6 +6,13 @@ import HomeLinguist from "./Linguist/HomeLinguist";
 import CustomerHomeScreenRedesign from "../Containers/CustomerHome/CustomerHomeScreen";
 import { flushEvents } from "../Util/Forensics";
 import { displayNoNetworkConnectionAlert } from "../Util/Alerts";
+import { bindActionCreators } from "redux";
+import { openSlideMenu } from "../Ducks/LogicReducer";
+import { ensureSessionDefaults, updateLocation } from "../Ducks/NewSessionReducer";
+import { loadSessionScenarios } from "../Ducks/AppConfigReducer";
+import { loadActiveSubscriptionPeriods, loadUser } from "../Ducks/AccountReducer";
+import { update as updateAppState } from "../Ducks/AppStateReducer";
+import { handleDeepLinkEvent } from "../Util/Events";
 
 class Home extends Component {
   constructor(props) {
@@ -22,6 +29,8 @@ class Home extends Component {
     if (!isLoggedIn || !user) {
       navigation.dispatch({ type: "IntroView" });
       this.state.load = false;
+    } else {
+      this.checkDeepLinkEvents();
     }
   }
 
@@ -40,6 +49,25 @@ class Home extends Component {
     }
   }
 
+  checkDeepLinkEvents = () => {
+    const {
+      auth2,
+      dispatch,
+      appState,
+    } = this.props;
+
+    if (appState.openUrlParams
+      && appState.openUrlParams.eventID
+      && !appState.openUrlParamsHandled) {
+      handleDeepLinkEvent(auth2, appState.openUrlParams, dispatch, "OPEN");
+    }
+    if (appState.installUrlParams
+      && appState.installUrlParams.eventID
+      && !appState.installUrlParamsHandled) {
+      handleDeepLinkEvent(auth2, appState.installUrlParams, dispatch, "INSTALL");
+    }
+  };
+
   render() {
     return this.state.load && (
       <View style={{ flex: 1 }}>
@@ -57,11 +85,26 @@ const mS = state => ({
   isLoggedIn: state.auth2.isLoggedIn,
   user: state.account.user,
   linguistProfile: state.account.linguistProfile,
-  hasNetworkConnection: state.appState.hasNetworkConnection
+  hasNetworkConnection: state.appState.hasNetworkConnection,
+  auth2: state.auth2,
+  appState: state.appState,
 });
 
-const mD = {
-};
+
+function mD(dispatch) {
+  return {
+    dispatch,
+    ...bindActionCreators({
+      openSlideMenu,
+      updateLocation,
+      ensureSessionDefaults,
+      loadSessionScenarios,
+      loadUser,
+      loadActiveSubscriptionPeriods,
+      updateAppState,
+    }, dispatch),
+  };
+}
 
 export default connect(
   mS,

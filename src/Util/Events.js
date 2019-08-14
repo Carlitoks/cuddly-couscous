@@ -5,6 +5,8 @@ import { ensureSessionDefaults, setEvent } from "../Ducks/NewSessionReducer";
 import NavigationService from '../Util/NavigationService';
 import Permissions from "react-native-permissions";
 import { loadUser } from "../Ducks/AccountReducer";
+import { update as updateAppState } from "../Ducks/AppStateReducer";
+import { Events } from "../Api";
 
 const navigate = (navigation, type, screenName, params) => {
   if(type === "SERVICE"){
@@ -101,5 +103,64 @@ export const handleEvent = async (evt, store) => {
   }catch (e) {
     Alert.alert(I18n.t("error"), translateApiError(e));
     return navigate(navigation, type, "Home", null);
+  }
+};
+
+export const handleDeepLinkEvent = (user, params, dispatch, type) => {
+  let urlType = null;
+  if (params.$deeplink_path) {
+    urlType = params.$deeplink_path.split("/")[1];
+  } else if (params["+non_branch_link"]) {
+    urlType = params["+non_branch_link"].split("//")[1].split("?")[0];
+  } else {
+    urlType = "open";
+  }
+  switch (urlType) {
+    case "call":
+      handleDeepLinkCall(user, params, dispatch, type);
+      break;
+
+    case "open":
+      if (params.eventID) {
+        handleDeepLinkOpen(user, params.eventID, dispatch, type);
+      }
+      break;
+
+    default:
+      if (params.eventID) {
+        handleDeepLinkOpen(user, params.eventID, dispatch, type);
+      }
+      break;
+  }
+};
+
+export const handleDeepLinkCall = async (user, params, dispatch, type) => {
+  if (user.isLoggedIn && user.userJwtToken) {
+    await handleCallEvent(params, { dispatch });
+    if (type === "INSTALL") {
+      await dispatch(updateAppState({ installUrlParamsHandled: true }));
+    } else {
+      await dispatch(updateAppState({ openUrlParamsHandled: true }));
+    }
+  }
+};
+
+export const handleDeepLinkOpen = (user, eventID, dispatch, type) => {
+  if (user.isLoggedIn && user.userJwtToken) {
+    Events.getScan(`${eventID.trim()}`, user.userJwtToken).then(async (evt) => {
+      await handleEvent(evt.data, { dispatch });
+    }).catch((e) => {
+      if (e.response.status === 404) {
+        Alert.alert(I18n.t("error"), I18n.t("api.errEventUnavailable"));
+      } else {
+        Alert.alert(I18n.t("error"), translateApiError(e));
+      }
+    }).finally(async () => {
+      if (type === "INSTALL") {
+        await dispatch(updateAppState({ installUrlParamsHandled: true }));
+      } else {
+        await dispatch(updateAppState({ openUrlParamsHandled: true }));
+      }
+    });
   }
 };
