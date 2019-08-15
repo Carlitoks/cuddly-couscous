@@ -54,7 +54,7 @@ export const handleCallEvent = async (evt, store) => {
         session.scenarioID = evt.scenarioID;
       }
       if (!!evt.note) {
-        session.note = evt.note;
+        session.customScenario = evt.note;
       }
       if (!!evt.eventID) {
         session.eventID = evt.eventID;

@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 
 import HomeLinguist from "./Linguist/HomeLinguist";
 import CustomerHomeScreenRedesign from "../Containers/CustomerHome/CustomerHomeScreen";
 import { flushEvents } from "../Util/Forensics";
 import { displayNoNetworkConnectionAlert } from "../Util/Alerts";
-import { bindActionCreators } from "redux";
-import { openSlideMenu } from "../Ducks/LogicReducer";
-import { ensureSessionDefaults, updateLocation } from "../Ducks/NewSessionReducer";
-import { loadSessionScenarios } from "../Ducks/AppConfigReducer";
-import { loadActiveSubscriptionPeriods, loadUser } from "../Ducks/AccountReducer";
-import { update as updateAppState } from "../Ducks/AppStateReducer";
 import { handleDeepLinkEvent } from "../Util/Events";
 
 class Home extends Component {
@@ -94,15 +88,6 @@ const mS = state => ({
 function mD(dispatch) {
   return {
     dispatch,
-    ...bindActionCreators({
-      openSlideMenu,
-      updateLocation,
-      ensureSessionDefaults,
-      loadSessionScenarios,
-      loadUser,
-      loadActiveSubscriptionPeriods,
-      updateAppState,
-    }, dispatch),
   };
 }
 
