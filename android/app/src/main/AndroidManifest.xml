@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.newsolo"
-    android:versionCode="133"
+    android:versionCode="134"
     android:versionName="3.3.14">
 
     <uses-permission android:name="android.permission.INTERNET" />
