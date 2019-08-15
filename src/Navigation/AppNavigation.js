@@ -27,6 +27,7 @@ import PackageCheckoutView from "../Containers/Payments/PackageCheckoutView";
 import PackagePurchaseSuccessView from "../Containers/Payments/PackagePurchaseSuccessView";
 import AccountDetailsView from "../Containers/Payments/AccountDetailsView";
 import AvailablePackagesView from "../Containers/Payments/AvailablePackagesView";
+import ReportProblemScreen from "../Containers/Rating/ReportProblemScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
 import RatingsScreen from "../Containers/Rating/RatingScreen";
 import ForgotPasswordScreen from "../Containers/ForgotPassword/ForgotPasswordScreen";
@@ -95,7 +96,12 @@ const Navigation = StackNavigator(
         gesturesEnabled: false
       }
     },
-
+    ReportProblemScreen: {
+      screen: ReportProblemScreen,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
     LoginView: {
       screen: LoginScreen,
       navigationOptions: {
