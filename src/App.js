@@ -30,11 +30,9 @@ import { setInitialScreen } from "./Navigation/AppNavigation";
 import { update as updateAppState } from "./Ducks/AppStateReducer";
 import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
 import BranchLib from "react-native-branch";
-import { Events } from "./Api";
-import { handleEvent } from "./Util/Events";
+import { handleDeepLinkEvent } from "./Util/Events";
 
 let CurrentConnectivity = "none";
-let branchInstance = null;
 class App extends Component {
   constructor(props) {
     super(props);
@@ -64,28 +62,10 @@ class App extends Component {
     });
   }
 
+  branchInstance = null;
+
   disableAppCenterCrashes = async () => {
     await Crashes.setEnabled(false);
-  };
-
-  handleDeepLinkEvent = (user, eventID, dispatch, type) => {
-    if (user.isLoggedIn && user.userJwtToken) {
-      Events.getScan(`${eventID.trim()}`, user.userJwtToken).then(async (evt) => {
-        await handleEvent(evt.data, { dispatch });
-      }).catch((e) => {
-        if (e.response.status === 404) {
-          Alert.alert(I18n.t("error"), I18n.t("api.errEventUnavailable"));
-        } else {
-          Alert.alert(I18n.t("error"), translateApiError(e));
-        }
-      }).finally(async () => {
-        if (type === "INSTALL") {
-          await dispatch(updateAppState({ installUrlParamsHandled: true }));
-        } else {
-          await dispatch(updateAppState({ openUrlParamsHandled: true }));
-        }
-      });
-    }
   };
 
   componentDidMount() {
@@ -108,8 +88,10 @@ class App extends Component {
           appState, auth2
         } = store.getState();
 
-        branchInstance = BranchLib.subscribe(({ error, params }) =>
+        this.branchInstance = BranchLib.subscribe(({ error, params }) =>
           this.handleBranchLink(error, params, store, appState, auth2));
+
+        Linking.addEventListener('url', (event) => this._handleOpenURL(event, {store, appState, auth2}));
 
         // set app UI language
         if (!userLocaleSet) {
@@ -261,44 +243,32 @@ class App extends Component {
       });
   }
 
+  /**
+   * Used to handle branch deep links
+   * @param error
+   * @param params
+   * @param store
+   * @param appState
+   * @param auth2
+   */
   handleBranchLink = (error, params, store, appState, auth2) => {
     if (error) {
       console.error('Error from Branch: ' + error);
       return
     }
-
     if(params["+is_first_session"]){
       console.log('solo.branch-install', params);
       store.dispatch(updateAppState({ installUrlParamsHandled: false, installUrlParams: params }));
       analytics.track("solo.branch-install", params);
-      if(params.eventID){
-        this.handleDeepLinkEvent(auth2, params.eventID, store.dispatch, "INSTALL");
-      }
+      handleDeepLinkEvent(auth2, params, store.dispatch, "INSTALL");
+    } else if (params["+clicked_branch_link"]) {
+      analytics.track("solo.branch-open", params);
+      store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : params }));
+      handleDeepLinkEvent(auth2, params, store.dispatch);
     }
-    if(!!params["+non_branch_link"]){
-      // A Direct deep link was opened
-      var obj = {};
-      if(params["+non_branch_link"].split("?").length > 1){
-        params["+non_branch_link"].split("?")[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
-          obj[decodeURIComponent(key)] = decodeURIComponent(value);
-        });
-          analytics.track("solo.link-open", obj);
-          store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
-          if(obj.eventID){
-            this.handleDeepLinkEvent(auth2, obj.eventID, store.dispatch, "OPEN");
-          }
-      }
-    } else {
-        analytics.track("solo.branch-open", params);
-        store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : params }));
-        if(params.eventID){
-          this.handleDeepLinkEvent(auth2, params.eventID, store.dispatch, "OPEN-BRANCH");
-        }
-    }
-
     // Route link based on data in params.
     console.log("current deep link Params: ", params);
-  }
+  };
 
   componentWillUnmount() {
     NetInfo.removeEventListener("connectionChange", this.handleConnectivityChange);
@@ -309,9 +279,31 @@ class App extends Component {
     if (!!this.updateFcmTokenListener) {
       this.updateFcmTokenListener.remove();
     }
-    if (branchInstance) {
-      branchInstance();
-      branchInstance = null
+    if (this.branchInstance) {
+      this.branchInstance();
+      this.branchInstance = null
+    }
+    Linking.removeEventListener('url', this._handleOpenURL);
+  }
+
+  /**
+   * Used to handle non branch deep links
+   * @param event
+   * @param params
+   * @private
+   */
+  _handleOpenURL(event, params) {
+    console.log("Non Branch Event");
+    let obj = { "+non_branch_link": event.url };
+
+    if(event.url.split("?").length > 1){
+      event.url.split("?")[1].replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
+        obj[decodeURIComponent(key)] = decodeURIComponent(value);
+      });
+
+      analytics.track("solo.link-open", obj);
+      params.store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
+      handleDeepLinkEvent(params.auth2, obj, params.store.dispatch);
     }
   }
 

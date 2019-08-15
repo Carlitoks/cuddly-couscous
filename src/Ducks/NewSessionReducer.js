@@ -254,6 +254,8 @@ export const setEvent = (evt) => (dispatch, getState) => {
   return ns;
 };
 
+export const sessionSelector = () => (dispatch, getState) => getState().newSessionReducer.session;
+
 // remove the event, which is basically a reset to the default
 // new session properties
 export const clearEvent = () => (dispatch, getState) => {

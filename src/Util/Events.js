@@ -1,10 +1,12 @@
 import { Alert } from "react-native";
 import I18n, { translateApiError, translateApiErrorString } from "../I18n/I18n";
 import { createNewSession } from "../Ducks/CurrentSessionReducer";
-import { ensureSessionDefaults, setEvent } from "../Ducks/NewSessionReducer";
+import { ensureSessionDefaults, setEvent, update as updateNewSessionReducer, sessionSelector } from "../Ducks/NewSessionReducer";
 import NavigationService from '../Util/NavigationService';
 import Permissions from "react-native-permissions";
 import { loadUser } from "../Ducks/AccountReducer";
+import { update as updateAppState } from "../Ducks/AppStateReducer";
+import { Events } from "../Api";
 
 const navigate = (navigation, type, screenName, params) => {
   if(type === "SERVICE"){
@@ -13,7 +15,7 @@ const navigate = (navigation, type, screenName, params) => {
   return navigation.dispatch({type: screenName, params});
 };
 
-const createCall = async (store, evt, navigation, type) => {
+export const createCall = async (store, evt, navigation, type) => {
   await store.dispatch(ensureSessionDefaults());
   // should the call automatically be started?
   // otherwise, it's an event for a session
@@ -21,6 +23,55 @@ const createCall = async (store, evt, navigation, type) => {
   if (evt.initiateCall) {
     await store.dispatch(createNewSession(sessionObj.session)); // from CurrentSessionReducer
     return navigate(navigation, type, "CustomerMatchingView", null);
+  }
+};
+
+export const handleCallEvent = async (evt, store) => {
+  let navigation = store.navigation;
+  let type = "STORE";
+  if(!navigation){
+    navigation = NavigationService;
+    type = "SERVICE";
+  }
+
+  try {
+    const cameraPermission = await Permissions.request('camera');
+    const micPermission = await Permissions.request('microphone');
+    if (cameraPermission === "authorized" && micPermission === "authorized") {
+      await store.dispatch(ensureSessionDefaults());
+      let session = await store.dispatch(sessionSelector());
+
+      if (!!evt.primaryLangCode) {
+        session.primaryLangCode = evt.primaryLangCode;
+      }
+      if (!!evt.secondaryLangCode) {
+        session.secondaryLangCode = evt.secondaryLangCode;
+      }
+      if (!!evt.avModePreference) {
+        session.avModePreference = evt.avModePreference;
+      }
+      if (!!evt.scenarioID) {
+        session.scenarioID = evt.scenarioID;
+      }
+      if (!!evt.note) {
+        session.customScenario = evt.note;
+      }
+      if (!!evt.eventID) {
+        session.eventID = evt.eventID;
+      }
+      await store.dispatch(updateNewSessionReducer({ session }));
+      const currentSessionState = await store.dispatch(sessionSelector());
+      if(evt.start != "false") {
+        await store.dispatch(createNewSession(currentSessionState));
+        return navigate(navigation, type, "CustomerMatchingView", null);
+      }
+    } else {
+      Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
+        { text: I18n.t("ok") },
+      ]);
+    }
+  }catch (e) {
+    Alert.alert(I18n.t("error"), translateApiError(e));
   }
 };
 
@@ -41,7 +92,6 @@ export const handleEvent = async (evt, store) => {
         text: I18n.t("actions.ok")
       }]
     );
-    return navigate(navigation, type, "Home", null);
   }
 
   // minutes added to user?
@@ -58,7 +108,6 @@ export const handleEvent = async (evt, store) => {
       }]
     );
     await store.dispatch(loadUser(false));
-    return navigate(navigation, type, "Home", null);
   }
 
   try {
@@ -70,10 +119,67 @@ export const handleEvent = async (evt, store) => {
       Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
         { text: I18n.t("ok") },
       ]);
-      return navigate(navigation, type, "Home", null);
     }
   }catch (e) {
     Alert.alert(I18n.t("error"), translateApiError(e));
-    return navigate(navigation, type, "Home", null);
+  }
+};
+
+export const handleDeepLinkEvent = (user, params, dispatch, type) => {
+  let urlType = null;
+  if (params.$deeplink_path) {
+    urlType = params.$deeplink_path.split("/")[1];
+  } else if (params["+non_branch_link"]) {
+    urlType = params["+non_branch_link"].split("//")[1].split("?")[0];
+  } else {
+    urlType = "open";
+  }
+  switch (urlType) {
+    case "call":
+      handleDeepLinkCall(user, params, dispatch, type);
+      break;
+
+    case "open":
+      if (params.eventID) {
+        handleDeepLinkOpen(user, params.eventID, dispatch, type);
+      }
+      break;
+
+    default:
+      if (params.eventID) {
+        handleDeepLinkOpen(user, params.eventID, dispatch, type);
+      }
+      break;
+  }
+};
+
+export const handleDeepLinkCall = async (user, params, dispatch, type) => {
+  if (user.isLoggedIn && user.userJwtToken) {
+    await handleCallEvent(params, { dispatch });
+    if (type === "INSTALL") {
+      await dispatch(updateAppState({ installUrlParamsHandled: true }));
+    } else {
+      await dispatch(updateAppState({ openUrlParamsHandled: true }));
+    }
+  }
+};
+
+export const handleDeepLinkOpen = (user, eventID, dispatch, type) => {
+  if (user.isLoggedIn && user.userJwtToken) {
+    Events.getScan(`${eventID.trim()}`, user.userJwtToken).then(async (evt) => {
+      await handleEvent(evt.data, { dispatch });
+    }).catch((e) => {
+      if (e.response.status === 404) {
+        Alert.alert(I18n.t("error"), I18n.t("api.errEventUnavailable"));
+      } else {
+        Alert.alert(I18n.t("error"), translateApiError(e));
+      }
+    }).finally(async () => {
+      if (type === "INSTALL") {
+        await dispatch(updateAppState({ installUrlParamsHandled: true }));
+      } else {
+        await dispatch(updateAppState({ openUrlParamsHandled: true }));
+      }
+    });
   }
 };
