@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-swiper";
 import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
 import AvatarSection from "./Components/AvatarSection";
 import RateComponent from "./Components/RateComponent";
 import CallClassification from "./Components/CallClassification";
+import NavBar from "../../Components/NavBar/NavBar";
 import CallTags from "./Components/CallTags";
 import { openSlideMenu } from "../../Ducks/LogicReducer";
 import I18n, { translateApiError } from "../../I18n/I18n";
@@ -28,7 +29,7 @@ class RatingScreen extends Component {
       session,
       user,
       token,
-      linguistProfile: isLinguist ,
+      linguistProfile: !isLinguist ,
       customerName: `${user.firstName}` ,
       avatarURL: user.avatarURL,
       comment: "",
@@ -409,6 +410,15 @@ class RatingScreen extends Component {
     );
   };
 
+  reportAbuse () {
+      Alert.alert(I18n.t("actions.confirm"), I18n.t('session.rating.abuse.alert'), [
+        {text: I18n.t('cancel')},
+        {text: I18n.t('actions.confirm'), onPress: () => {
+          console.log("yeah");
+        }}
+      ]);
+  }
+
   renderPagination = () => {
     const { linguistProfile } = this.state;
     const { index } = this.state;
@@ -445,6 +455,16 @@ class RatingScreen extends Component {
     } = this.state;
     return (
       <View style={styles.ratingScreenContainer}>
+          <NavBar
+            rightComponent={
+              <TouchableOpacity activeOpacity={0.8} onPress={() => this.reportAbuse()}>
+                <View style={styles.cancelButton}>
+                  <Text style={styles.cancelStyle}>{I18n.t("session.rating.reportButton")}</Text>
+                </View>
+              </TouchableOpacity>
+            }           
+            navbarTitle={I18n.t("account.title")}
+          />
         <AvatarSection
           avatarURL={avatarURL}
           customerName={customerName}

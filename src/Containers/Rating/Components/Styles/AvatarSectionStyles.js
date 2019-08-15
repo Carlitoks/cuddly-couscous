@@ -41,7 +41,6 @@ export default StyleSheet.create({
   },
   mainAvatarSectionContainer: {
     backgroundColor: "#401674",
-    paddingTop: isIphoneXorAbove() ? 25 : Platform.OS === "ios" ? 10 : 0,
   },
   questionsContainer: {
     marginTop: 40,

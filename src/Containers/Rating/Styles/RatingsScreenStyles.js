@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { ApplicationStyles, Fonts, Metrics } from "../../../Themes";
 import metrics from "../../../Themes/Metrics";
-import { moderateScaleViewports } from "../../../Util/Scaling";
+import { moderateScaleViewports, moderateScale } from "../../../Util/Scaling";
 import { isIphoneXorAbove } from "../../../Util/Devices";
 
 export default StyleSheet.create({
@@ -112,6 +112,12 @@ export default StyleSheet.create({
     marginRight: 3,
     marginTop: 3,
     width: 8,
+  },
+  cancelStyle: {
+    marginRight: 12,
+    color: "#fff",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScale(18, 0)
   },
   swiperContainer: {},
   wrapperContainer: {
