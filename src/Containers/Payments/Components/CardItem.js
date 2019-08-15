@@ -45,7 +45,7 @@ class CardItem extends Component {
           style={styles.itemContainer}
           onPress={() => navigation.dispatch({ type: "EditCardScreen" })}
         >
-          <Text style={styles.itemText}>
+          <Text allowFontScaling={false} style={styles.itemText}>
             {this.mask()}
           </Text>
           <Image

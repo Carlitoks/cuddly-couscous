@@ -68,7 +68,6 @@ export default StyleSheet.create({
     right: moderateScale(-25, 0),
     top: moderateScale(50, 0),
     width: moderateScale(180, 0),
-    height: moderateScale(60, 0),
     backgroundColor: "#007AFF",
     shadowColor: "#000",
     shadowOffset: {
@@ -77,7 +76,7 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-    elevation: 3
+    elevation: 50
   },
   tooltipTextStyle: {
     textAlign: "center",

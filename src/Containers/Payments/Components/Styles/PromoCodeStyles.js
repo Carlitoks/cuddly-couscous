@@ -95,12 +95,17 @@ export default StyleSheet.create({
     fontSize: 14,
     alignItems: 'center',
     color: 'rgba(0, 0, 0, 0.9);',
+    position:"absolute",
+    left:20,
   },
   messageError:{
     fontFamily: Fonts.BaseFont,
     fontSize: 14,
     alignItems: 'center',
     color: '#F53333',
+    position:"absolute",
+    left:20,
+
   },
   inputError:{
     paddingLeft: moderateScaleViewports(5),

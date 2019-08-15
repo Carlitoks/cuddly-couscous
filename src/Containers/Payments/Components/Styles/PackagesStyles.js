@@ -78,16 +78,20 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont, 
     fontSize: 18,
     fontWeight: 'bold',
+    width:'70%'
   },
   price: {
     fontFamily: Fonts.BaseFont, 
     fontSize: 20,
     fontWeight: 'bold',
+    width:'30%'
+
   },
   discountedPrice:{
     fontFamily: Fonts.BaseFont, 
     fontSize: 20,
     fontWeight: 'bold',
+    width:'30%',
     color: 'red'
   },
   pricePromoCode:{
@@ -96,7 +100,8 @@ export default StyleSheet.create({
     textAlign: 'right',
     textDecorationLine: 'line-through',
     textDecorationStyle: 'solid',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    width:'30%',
   },
   select: {
     color:  '#64A901',

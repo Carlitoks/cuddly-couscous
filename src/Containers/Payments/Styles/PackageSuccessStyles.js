@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
 import { moderateScale } from "../../../Util/Scaling";
 import { red } from 'ansi-colors';
-import { moderateScaleViewports } from "../../../Util/Scaling";
+import { moderateScaleViewports, verticalScale } from "../../../Util/Scaling";
 import { isIphoneXorAbove } from "../../../Util/Devices";
 
 const baseButton = {
@@ -13,7 +13,6 @@ const baseButton = {
   borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
   borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
   height: "100%",
-  bottom: 0,
 };
 
 const baseWell = {
@@ -39,13 +38,13 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     height: '100%'
   },
-  itemTextLeftTitle: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute",  fontWeight:"bold" },
-  itemTextLeft: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute"},
-  itemText: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0},
-  itemTextTitle: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0, fontWeight:"bold"},
-  textAddCard: {fontSize: moderateScale(15, 0), color: "#272833", position:"absolute", flexWrap: 'wrap', flex:1},
-  itemTextLeftSale: { left:0, fontSize: moderateScale(15, 0), color: "#FF3B30", position:"absolute"},
-  itemTextSale: { fontSize: moderateScale(15, 0), color:"#FF3B30", position:"absolute", right:0},
+  itemTextLeftTitle: { left:0, fontSize: moderateScale(15, 0), color: "#272833",   fontWeight:"bold" },
+  itemTextLeft: { left:0, fontSize: moderateScale(15, 0), color: "#272833", },
+  itemText: { fontSize: moderateScale(15, 0), color:"#272833",  right:0},
+  itemTextTitle: { fontSize: moderateScale(15, 0), color:"#272833",  right:0, fontWeight:"bold"},
+  textAddCard: {fontSize: moderateScale(15, 0), color: "#272833",  flexWrap: 'wrap', flex:1},
+  itemTextLeftSale: { left:0, fontSize: moderateScale(15, 0), color: "#FF3B30", },
+  itemTextSale: { fontSize: moderateScale(15, 0), color:"#FF3B30",  right:0},
 
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
@@ -60,17 +59,12 @@ export default StyleSheet.create({
     flexGrow: 1,
     flexDirection: "column",
     alignItems: "center",
-    paddingBottom: 20,
-    height:"100%",
     width:"100%",
-    position:"relative",
     backgroundColor: "#FFFFFF",
-
+    paddingBottom:20,
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
   billView: {
-    bottom:0,
-    position: "absolute",
     height:"65%",
     width:"100%",
     backgroundColor:"#FFFFFF"
@@ -78,26 +72,24 @@ export default StyleSheet.create({
   whiteView: {
     left:0,
     top:0,
-    height:"100%",
     width:"100%",
     opacity: 0.5,
     backgroundColor:"#FFFFFF",
-    position:"absolute",
+    
   },
   transparentView: {
   },
   backgroundImage: {
-    marginTop: 31,
-    width: "70%",
-    height: "20%",
-    resizeMode: "cover",
+    marginTop: isIphoneXorAbove() ? 31 : 15,
+    width: moderateScaleViewports(300),
+    height: moderateScaleViewports(200),
+    resizeMode: "center",
   },
   processingView:{
     backgroundColor:"#64A901",
     height:40,
     width:"100%",
-    position:"absolute",
-    top:0,
+    
     alignItems:"center"
   },
   processingText:{
@@ -109,7 +101,6 @@ export default StyleSheet.create({
   },
   billContainer:{
     alignItems: "center",
-    position:"absolute",
     width:"100%",
     flexDirection:"column"
   },
@@ -148,10 +139,8 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     width: Metrics.width * 0.90,
     height: moderateScaleViewports(55),
-    right: "5%",
-    marginBottom: isIphoneXorAbove() ? 44 : 0,
-    position: "absolute",
-    bottom:"13%"
+    marginBottom: isIphoneXorAbove() ? 44 : 20,
+    marginTop: isIphoneXorAbove() ? 44 : 10,
   },
   rowAddCard: {
     marginTop:50,
@@ -183,7 +172,6 @@ export default StyleSheet.create({
   },
   balanceMinutesContainer:{
     width:"80%",
-    height:85,
     marginLeft:"10%",
   },
   balanceTitle:{
@@ -247,13 +235,12 @@ export default StyleSheet.create({
   balanceContainer:{
     marginTop: 20,
     width:"80%",
-    height:85,
   },
   successContainer:{
     marginTop: 20,
     width:"70%",
     alignItems:"center",
-    marginBottom: moderateScaleViewports(20)
+    marginBottom: moderateScaleViewports(20),
   },
   successTitle:{
     color:"#000000",

@@ -44,16 +44,16 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: "#FFFFFF",
-    paddingBottom: 19,
-    paddingTop: 13
+    paddingTop: 13, 
+    marginBottom: 14
   },
   selectedLangViewContainer: {
     height: 48,
     flex: 1,
     justifyContent: "center",
     backgroundColor: "#ECE8F1",
-    paddingBottom: 19,
-    paddingTop: 13
+    paddingTop: 13, 
+    marginBottom: 14
   },
   selectLangButton: {
     flexDirection: "row",

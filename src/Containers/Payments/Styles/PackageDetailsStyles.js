@@ -29,15 +29,15 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     height: '100%'
   },
-  itemTextLeftTitle: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute",  fontWeight:"bold" },
-  itemTextLeft: { left:0, fontSize: moderateScale(15, 0), color: "#272833", position:"absolute"},
-  itemText: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0},
-  itemTextTitle: { fontSize: moderateScale(15, 0), color:"#272833", position:"absolute", right:0, fontWeight:"bold"},
-  textAddCard: {fontSize: moderateScale(15, 0), color: "#272833", position:"absolute", flexWrap: 'wrap', flex:1},
-  itemTextLeftSale: { left:0, fontSize: moderateScale(15, 0), color: "#FF3B30", position:"absolute"},
-  itemTextSale: { fontSize: moderateScale(15, 0), color:"#FF3B30", position:"absolute", right:0},
-  editText: { fontSize: moderateScale(15, 0), color:"#007AFF", position:"absolute", right:0},
-  descriptionAddCard: { flex:1, flexWrap:"wrap", fontSize: moderateScale(15, 0), color: "#272833"},
+  itemTextLeftTitle: {left:0, fontSize: moderateScale(15, 0), color: "#272833",  fontWeight:"bold" },
+  itemTextLeft: {width:'75%', left:0, fontSize: moderateScale(15, 0), color: "#272833"},
+  itemText: {textAlign:"right", flex:1, fontSize: moderateScale(15, 0), color:"#272833"},
+  itemTextTitle: {textAlign:"right", flex:1, fontSize: moderateScale(15, 0), color:"#272833", fontWeight:"bold"},
+  textAddCard: {textAlign:"right",fontSize: moderateScale(15, 0), color: "#272833", flexWrap: 'wrap', flex:1},
+  itemTextLeftSale: { left:0, fontSize: moderateScale(15, 0), color: "#FF3B30"},
+  itemTextSale: {textAlign:"right",flex:1, fontSize: moderateScale(15, 0), color:"#FF3B30"},
+  editText: {textAlign:"right",flex:1, fontSize: moderateScale(15, 0), color:"#007AFF"},
+  descriptionAddCard: { height:'100%', flex:1, flexWrap:"wrap", fontSize: moderateScale(15, 0), color: "#272833"},
 
   height: { height: '100%' },
   flexEndCenter: { justifyContent: 'center', alignItems: 'flex-end' },
@@ -98,21 +98,18 @@ export default StyleSheet.create({
     backgroundColor:"#FFF",
   },
   row: {
-    height: 21,
     width:"90%",
     marginTop:10,
     flexDirection: "row"
   },
   rowBill: {
-    height: 21,
     width:"90%",
     marginTop:25,
     flexDirection: "row"
   },
   rowTitle: {
-    height: 21,
     width:"90%",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   cancelStyle: {
     marginRight: 12,

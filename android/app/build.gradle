@@ -105,7 +105,7 @@ android {
         applicationId "com.newsolo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName "3.3.13"
+        versionName "3.3.14"
         multiDexEnabled true
         dexOptions {
             jumboMode true
