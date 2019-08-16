@@ -68,8 +68,16 @@ export const handleCallEvent = async (evt, store) => {
       store.dispatch(cleanReducerAndUpdateSession(currentSessionState));
 
       if(evt.start != "false") {
-        await store.dispatch(createNewSession(currentSessionState));
-        return navigate(navigation, type, "CustomerMatchingView", null);
+        try {
+          await store.dispatch(createNewSession(currentSessionState));
+          return navigate(navigation, type, "CustomerMatchingView", null);
+        } catch (e) {
+          if(e.response.status === 500){
+            return Alert.alert(I18n.t("error"), I18n.t("session.createSessionFailed"));
+          } else {
+            return Alert.alert(I18n.t("error"), translateApiError(e));
+          }
+        }
       }
     } else {
       Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [

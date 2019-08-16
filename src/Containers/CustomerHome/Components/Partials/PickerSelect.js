@@ -94,13 +94,15 @@ class PickerSelectComponent extends Component {
 
     if (session.scenarioID && session.scenarioID != "custom") {
       const selectedScenario = scenariosList.find(scenario => scenario.id === session.scenarioID);
-      return (
-        <View style={styles.flexView}>
-          <Text nunmberOfLines={1} style={selectedLabelStyle || styles.inputValue}>
-            {translateProperty(selectedScenario, "title")}
-          </Text>
-        </View>
-      );
+      if (selectedScenario) {
+        return (
+          <View style={styles.flexView}>
+            <Text nunmberOfLines={1} style={selectedLabelStyle || styles.inputValue}>
+              {translateProperty(selectedScenario || "", "title")}
+            </Text>
+          </View>
+        );
+      }
     }
     if (session.customScenarioSelected === "custom") {
       return (
