@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { connect } from "react-redux";
 
 import { createNewSession } from "../../Ducks/CurrentSessionReducer";
@@ -8,9 +8,11 @@ import colors from "../../Themes/Colors";
 import TextButton from "../../Components/Widgets/TextButton";
 import I18n, { translateApiError, translateLanguage } from "../../I18n/I18n";
 
+
 import { LanguagesRollover } from "../../Config/Languages";
 
 import sharedStyles from "./styles";
+import { Metrics } from "../../Themes";
 import { SESSION, DURATION } from "../../Util/Constants";
 
 export class CustomerRetryView extends Component {
@@ -191,12 +193,17 @@ export class CustomerRetryView extends Component {
     const { rollover } = this.state;
     return (
       <View style={styles.container}>
+        <ScrollView 
+          automaticallyAdjustContentInsets
+          alwaysBounceVertical={false}
+          contentContainerStyle={styles.scrollViewFlex}
+        >
         <View style={styles.textContainer}>
           <View style={styles.textRow}>
-            <Text style={styles.text}>{this.retryReasonText()}</Text>
+            <Text maxFontSizeMultiplier={2} style={styles.text}>{this.retryReasonText()}</Text>
           </View>
           <View style={styles.textRow}>
-            <Text style={styles.text}>{I18n.t("session.retry.tryAgain")}</Text>
+            <Text maxFontSizeMultiplier={2} style={styles.text}>{I18n.t("session.retry.tryAgain")}</Text>
           </View>
         </View>
         <View style={styles.buttonContainer}>
@@ -230,6 +237,7 @@ export class CustomerRetryView extends Component {
             }}
           />
         </View>
+        </ScrollView>
       </View>
     );
   }
@@ -242,28 +250,30 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundBlue
   },
   textContainer: {
-    marginTop: "33%",
+    marginTop: "30%",
     width: "100%",
     alignItems: "center",
-    paddingLeft: moderateScale(30, 0),
-    paddingRight: moderateScale(30, 0)
   },
   textRow: {
     width: "100%",
-    height: "33%",
     zIndex: 10000,
-    marginBottom: moderateScale(20, 0)
+    marginBottom: moderateScale(20, 0),
+    alignItems: "center",
+    minHeight:'15%'
+
   },
   text: {
     fontSize: moderateFontSize(20),
     textAlign: "center",
-    color: colors.white
+    color: colors.white,
+    width: Metrics.width * 0.9
   },
   buttonContainer: {
     flex: 1,
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-end",
+    paddingTop: moderateScale(30, 0),
     paddingBottom: moderateScale(30, 0)
   },
   orangeButton: {
@@ -273,7 +283,14 @@ const styles = StyleSheet.create({
   blueButton: {
     ...sharedStyles.prominentButtonBase,
     ...sharedStyles.prominentButtonBlue
-  }
+  },
+  scrollViewFlex: {
+    flexGrow: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingBottom: 20,
+  },
 });
 
 const mS = state => {
