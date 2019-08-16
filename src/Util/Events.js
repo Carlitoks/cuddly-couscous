@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import I18n, { translateApiError, translateApiErrorString } from "../I18n/I18n";
 import { createNewSession } from "../Ducks/CurrentSessionReducer";
-import { ensureSessionDefaults, setEvent, sessionSelector, cleanReducerAndKeepLangConfig } from "../Ducks/NewSessionReducer";
+import { ensureSessionDefaults, setEvent, sessionSelector, update as updateSessionReducer, cleanReducerAndUpdateSession } from "../Ducks/NewSessionReducer";
 import NavigationService from '../Util/NavigationService';
 import Permissions from "react-native-permissions";
 import { loadUser } from "../Ducks/AccountReducer";
@@ -61,8 +61,11 @@ export const handleCallEvent = async (evt, store) => {
         session.eventID = evt.eventID;
       }
 
-      store.dispatch(cleanReducerAndKeepLangConfig());
+      store.dispatch(updateSessionReducer({ session }));
+
       const currentSessionState = await store.dispatch(sessionSelector());
+
+      store.dispatch(cleanReducerAndUpdateSession(currentSessionState));
 
       if(evt.start != "false") {
         await store.dispatch(createNewSession(currentSessionState));

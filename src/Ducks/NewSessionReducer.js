@@ -79,6 +79,20 @@ export const cleanReducerAndKeepLangConfig = payload => (dispatch, getState) => 
   dispatch(cleanAndKeep(newState));
 };
 
+export const cleanReducerAndUpdateSession = payload => (dispatch, getState) => {
+  newSession = {
+    ...initState().session,
+    ...payload,
+    type: "immediate_virtual",
+    matchMethod: "first_available"
+  };
+  newState = {
+    ...initState(),
+    session: newSession
+  };
+  dispatch(cleanAndKeep(newState));
+};
+
 export const modifyAdditionalDetails = payload => (dispatch, getState) => {
   currentSessionState = {
     ...getState().newSessionReducer.session,

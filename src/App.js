@@ -259,11 +259,15 @@ class App extends Component {
       console.log('solo.branch-install', params);
       store.dispatch(updateAppState({ installUrlParamsHandled: false, installUrlParams: params }));
       analytics.track("solo.branch-install", params);
-      handleDeepLinkEvent(params, store.dispatch, "INSTALL");
+      if(!this.state.loadingStore){
+        handleDeepLinkEvent(params, store.dispatch, "INSTALL");
+      }
     } else if (params["+clicked_branch_link"]) {
       analytics.track("solo.branch-open", params);
       store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : params }));
-      handleDeepLinkEvent(params, store.dispatch);
+      if(!this.state.loadingStore){
+        handleDeepLinkEvent(params, store.dispatch);
+      }
     }
     // Route link based on data in params.
     console.log("current deep link Params: ", params);
@@ -302,7 +306,9 @@ class App extends Component {
 
       analytics.track("solo.link-open", obj);
       params.store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
-      handleDeepLinkEvent(obj, params.store.dispatch);
+      if(!this.state.loadingStore){
+        handleDeepLinkEvent(obj, params.store.dispatch);
+      }
     }
   }
 
