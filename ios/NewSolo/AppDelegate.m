@@ -75,7 +75,8 @@
   if (![RNBranch.branch application:application openURL:url options:options]) {
     // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
   }
-  return YES;
+  return [RCTLinkingManager application:application openURL:url options:options];
+;
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
