@@ -200,10 +200,10 @@ export class CustomerRetryView extends Component {
         >
         <View style={styles.textContainer}>
           <View style={styles.textRow}>
-            <Text style={styles.text}>{this.retryReasonText()}</Text>
+            <Text maxFontSizeMultiplier={2} style={styles.text}>{this.retryReasonText()}</Text>
           </View>
           <View style={styles.textRow}>
-            <Text style={styles.text}>{I18n.t("session.retry.tryAgain")}</Text>
+            <Text maxFontSizeMultiplier={2} style={styles.text}>{I18n.t("session.retry.tryAgain")}</Text>
           </View>
         </View>
         <View style={styles.buttonContainer}>
