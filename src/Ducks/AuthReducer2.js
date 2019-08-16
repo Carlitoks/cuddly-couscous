@@ -59,6 +59,8 @@ export const init = () => (dispatch, getState) => {
   return Promise.resolve(true);
 };
 
+export const userSelector = () => (dispatch, getState) => getState().auth2;
+
 // create a new device record
 export const authorizeNewDevice = () => (dispatch, getState) => {
 

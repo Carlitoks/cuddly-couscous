@@ -1,12 +1,13 @@
 import { Alert } from "react-native";
 import I18n, { translateApiError, translateApiErrorString } from "../I18n/I18n";
 import { createNewSession } from "../Ducks/CurrentSessionReducer";
-import { ensureSessionDefaults, setEvent, update as updateNewSessionReducer, sessionSelector } from "../Ducks/NewSessionReducer";
+import { ensureSessionDefaults, setEvent, sessionSelector, cleanReducerAndKeepLangConfig } from "../Ducks/NewSessionReducer";
 import NavigationService from '../Util/NavigationService';
 import Permissions from "react-native-permissions";
 import { loadUser } from "../Ducks/AccountReducer";
 import { update as updateAppState } from "../Ducks/AppStateReducer";
 import { Events } from "../Api";
+import { userSelector } from "../Ducks/AuthReducer2";
 
 const navigate = (navigation, type, screenName, params) => {
   if(type === "SERVICE"){
@@ -59,8 +60,10 @@ export const handleCallEvent = async (evt, store) => {
       if (!!evt.eventID) {
         session.eventID = evt.eventID;
       }
-      await store.dispatch(updateNewSessionReducer({ session }));
+
+      store.dispatch(cleanReducerAndKeepLangConfig());
       const currentSessionState = await store.dispatch(sessionSelector());
+
       if(evt.start != "false") {
         await store.dispatch(createNewSession(currentSessionState));
         return navigate(navigation, type, "CustomerMatchingView", null);
@@ -85,7 +88,7 @@ export const handleEvent = async (evt, store) => {
   // any usage error?
   if (!!evt.usageError) {
     // alert usage error, nav to home
-    Alert.alert(
+    return Alert.alert(
       I18n.t("invalidCode"),
       translateApiErrorString(evt.usageError, "api.errEventUnavailable"),
       [{
@@ -107,7 +110,7 @@ export const handleEvent = async (evt, store) => {
         text: I18n.t("actions.ok")
       }]
     );
-    await store.dispatch(loadUser(false));
+    return await store.dispatch(loadUser(false));
   }
 
   try {
@@ -116,16 +119,16 @@ export const handleEvent = async (evt, store) => {
     if (cameraPermission === "authorized" && micPermission === "authorized") {
       return createCall(store, evt, navigation, type);
     } else {
-      Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
+      return Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
         { text: I18n.t("ok") },
       ]);
     }
   }catch (e) {
-    Alert.alert(I18n.t("error"), translateApiError(e));
+    return Alert.alert(I18n.t("error"), translateApiError(e));
   }
 };
 
-export const handleDeepLinkEvent = (user, params, dispatch, type) => {
+export const handleDeepLinkEvent = (params, dispatch, type) => {
   let urlType = null;
   if (params.$deeplink_path) {
     urlType = params.$deeplink_path.split("/")[1];
@@ -134,27 +137,29 @@ export const handleDeepLinkEvent = (user, params, dispatch, type) => {
   } else {
     urlType = "open";
   }
+
   switch (urlType) {
     case "call":
-      handleDeepLinkCall(user, params, dispatch, type);
+      handleDeepLinkCall(params, dispatch, type);
       break;
 
     case "open":
       if (params.eventID) {
-        handleDeepLinkOpen(user, params.eventID, dispatch, type);
+        handleDeepLinkOpen(params.eventID, dispatch, type);
       }
       break;
 
     default:
       if (params.eventID) {
-        handleDeepLinkOpen(user, params.eventID, dispatch, type);
+        handleDeepLinkOpen(params.eventID, dispatch, type);
       }
       break;
   }
 };
 
-export const handleDeepLinkCall = async (user, params, dispatch, type) => {
-  if (user.isLoggedIn && user.userJwtToken) {
+export const handleDeepLinkCall = async (params, dispatch, type) => {
+  const currentUser = await dispatch(userSelector());
+  if (currentUser.isLoggedIn && currentUser.userJwtToken) {
     await handleCallEvent(params, { dispatch });
     if (type === "INSTALL") {
       await dispatch(updateAppState({ installUrlParamsHandled: true }));
@@ -164,9 +169,10 @@ export const handleDeepLinkCall = async (user, params, dispatch, type) => {
   }
 };
 
-export const handleDeepLinkOpen = (user, eventID, dispatch, type) => {
-  if (user.isLoggedIn && user.userJwtToken) {
-    Events.getScan(`${eventID.trim()}`, user.userJwtToken).then(async (evt) => {
+export const handleDeepLinkOpen = async (eventID, dispatch, type) => {
+  const currentUser = await dispatch(userSelector());
+  if (currentUser.isLoggedIn && currentUser.userJwtToken) {
+    Events.getScan(`${eventID.trim()}`, currentUser.userJwtToken).then(async (evt) => {
       await handleEvent(evt.data, { dispatch });
     }).catch((e) => {
       if (e.response.status === 404) {

@@ -45,20 +45,17 @@ class Home extends Component {
 
   checkDeepLinkEvents = () => {
     const {
-      auth2,
       dispatch,
       appState,
     } = this.props;
 
     if (appState.openUrlParams
-      && appState.openUrlParams.eventID
       && !appState.openUrlParamsHandled) {
-      handleDeepLinkEvent(auth2, appState.openUrlParams, dispatch, "OPEN");
+      handleDeepLinkEvent(appState.openUrlParams, dispatch, "OPEN");
     }
     if (appState.installUrlParams
-      && appState.installUrlParams.eventID
       && !appState.installUrlParamsHandled) {
-      handleDeepLinkEvent(auth2, appState.installUrlParams, dispatch, "INSTALL");
+      handleDeepLinkEvent(appState.installUrlParams, dispatch, "INSTALL");
     }
   };
 
@@ -80,7 +77,6 @@ const mS = state => ({
   user: state.account.user,
   linguistProfile: state.account.linguistProfile,
   hasNetworkConnection: state.appState.hasNetworkConnection,
-  auth2: state.auth2,
   appState: state.appState,
 });
 

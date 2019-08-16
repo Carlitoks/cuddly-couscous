@@ -85,13 +85,13 @@ class App extends Component {
 
         const {
           settings: { userLocaleSet, interfaceLocale: storeInterfaceLocale },
-          appState, auth2
+          appState
         } = store.getState();
 
         this.branchInstance = BranchLib.subscribe(({ error, params }) =>
-          this.handleBranchLink(error, params, store, appState, auth2));
+          this.handleBranchLink(error, params, store, appState));
 
-        Linking.addEventListener('url', (event) => this._handleOpenURL(event, {store, appState, auth2}));
+        Linking.addEventListener('url', (event) => this._handleOpenURL(event, {store, appState}));
 
         // set app UI language
         if (!userLocaleSet) {
@@ -248,23 +248,22 @@ class App extends Component {
    * @param error
    * @param params
    * @param store
-   * @param appState
-   * @param auth2
    */
-  handleBranchLink = (error, params, store, appState, auth2) => {
+  handleBranchLink = (error, params, store) => {
     if (error) {
       console.error('Error from Branch: ' + error);
       return
     }
+
     if(params["+is_first_session"]){
       console.log('solo.branch-install', params);
       store.dispatch(updateAppState({ installUrlParamsHandled: false, installUrlParams: params }));
       analytics.track("solo.branch-install", params);
-      handleDeepLinkEvent(auth2, params, store.dispatch, "INSTALL");
+      handleDeepLinkEvent(params, store.dispatch, "INSTALL");
     } else if (params["+clicked_branch_link"]) {
       analytics.track("solo.branch-open", params);
       store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : params }));
-      handleDeepLinkEvent(auth2, params, store.dispatch);
+      handleDeepLinkEvent(params, store.dispatch);
     }
     // Route link based on data in params.
     console.log("current deep link Params: ", params);
@@ -303,7 +302,7 @@ class App extends Component {
 
       analytics.track("solo.link-open", obj);
       params.store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
-      handleDeepLinkEvent(params.auth2, obj, params.store.dispatch);
+      handleDeepLinkEvent(obj, params.store.dispatch);
     }
   }
 
