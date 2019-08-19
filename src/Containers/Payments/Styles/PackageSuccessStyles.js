@@ -81,8 +81,8 @@ export default StyleSheet.create({
   },
   backgroundImage: {
     marginTop: isIphoneXorAbove() ? 31 : 15,
-    width: moderateScaleViewports(300),
-    height: moderateScaleViewports(200),
+    width: moderateScale(300),
+    height: moderateScale(200),
     resizeMode: "center",
   },
   processingView:{
