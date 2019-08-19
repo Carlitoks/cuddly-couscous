@@ -619,6 +619,7 @@ export default (ENG = {
       questionGood: "What was good?",
       questionBetter: "What could be better?",
       customer: "Customer",
+      connection:"What was wrong with the connection?",
       rateCustomer: "Rate Your Customer",
       linguist: "Linguist",
       rateLinguist: "Rate Your Linguist",
