@@ -38,7 +38,7 @@ class RatingScreen extends Component {
       scenarioID: null,
       scenarioNote: "",
       callType: "",
-
+      connection: false,
       // States for icons that belong to What was Good question
       iconWaitTimeFirstList: false,
       iconProfessionalismFirstList: false,
@@ -279,6 +279,8 @@ class RatingScreen extends Component {
         break;
       }
     }
+    this.setState({connection : WhatCouldBetter.indexOf("connection") >= 0  ? true : false});
+
   };
 
   renderSwiper = () => {
@@ -308,6 +310,7 @@ class RatingScreen extends Component {
       iconVoiceClaritySecondList,
       iconDistractionsSecondList,
       comment,
+      connection
     } = this.state;
     const { openSlideMenu } = this.props;
     if (linguistProfile) {
@@ -360,6 +363,7 @@ class RatingScreen extends Component {
             UpdateFlags={this.UpdateFlags}
             ratingComments={comment}
             rating={rating}
+            badConnection={connection}
           />
         </Swiper>
       );
@@ -405,6 +409,7 @@ class RatingScreen extends Component {
           UpdateFlags={this.UpdateFlags}
           ratingComments={comment}
           rating={rating}
+          badConnection={this.state.connection}
         />
       </Swiper>
     );
@@ -414,7 +419,6 @@ class RatingScreen extends Component {
       Alert.alert(I18n.t("actions.confirm"), I18n.t('session.rating.abuse.alert'), [
         {text: I18n.t('cancel')},
         {text: I18n.t('actions.confirm'), onPress: () => {
-          console.log("yeah");
         }}
       ]);
   }
