@@ -25,8 +25,8 @@ export default StyleSheet.create({
   tooltipContainerStyle: {
     position: "absolute",
     right: 0,
-    top: 50,
-    width: moderateScale(278, 0),
+    top: moderateScale(65,0),
+    width: moderateScale(300, 0),
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

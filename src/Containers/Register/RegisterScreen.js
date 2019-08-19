@@ -88,7 +88,6 @@ class RegisterScreen extends Component {
                       <Text style={styles.titleText}>
                         {I18n.t("newCustomerOnboarding.register.title")}
                       </Text>
-                      <View styles={styles.bottomMarginContainer}>
                         <View style={styles.inputContainer}>
                           <FirstNameField setRef={this.setFirstNameRef} nextInput={this.gotoEmail} />
                           <EmailField setRef={this.setEmailRef} nextInput={this.gotoPassword} />
@@ -110,7 +109,6 @@ class RegisterScreen extends Component {
                           </Text>
                         </View>
                         </TouchableOpacity>
-                      </View>
                     </View>
                   </ImageBackground>
                 </View>

@@ -83,7 +83,7 @@ export default StyleSheet.create({
     marginTop: isIphoneXorAbove() ? 31 : 15,
     width: moderateScaleViewports(300),
     height: moderateScaleViewports(200),
-    resizeMode: "center",
+    resizeMode: "contain",
   },
   processingView:{
     backgroundColor:"#64A901",
