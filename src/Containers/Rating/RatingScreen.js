@@ -481,17 +481,19 @@ class RatingScreen extends Component {
   render() {
     const { navigation } = this.props;
     const {
-      customerName, avatarURL, comment, scenarioNote, submitting,
+      customerName, avatarURL, comment, scenarioNote, submitting,linguistProfile,
     } = this.state;
     return (
       <View style={styles.ratingScreenContainer}>
           <NavBar
             rightComponent={
+              linguistProfile ? 
               <TouchableOpacity activeOpacity={0.8} onPress={() => this.reportAbuse()}>
                 <View style={styles.cancelButton}>
                   <Text style={styles.cancelStyle}>{I18n.t("session.rating.reportButton")}</Text>
                 </View>
               </TouchableOpacity>
+              : null
             }           
             navbarTitle={I18n.t("account.title")}
           />
