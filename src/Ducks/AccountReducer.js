@@ -478,6 +478,34 @@ export const updateLinguistProfile = (payload) => (dispatch, getState) => {
   });
 };
 
+// general purpose feedback submission, payload should match API call from server docs
+export const submitFeedback = (payload) => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    if (!payload) {
+      return Promise.reject("no payload");
+    }
+    if (!payload.type) {
+      payload.type = "general";
+    }
+    api.post(`${apiURL}/feedback`, payload)
+    .then(resolve)
+    .catch(reject)
+    .finally(() => {
+      return dispatch(loadUser(false));
+    });
+  });
+};
+
+// submit a specify type of feedback for reporting abuse in a session
+export const submitSessionAbuseReport = (message, aboutUserID, sessionID) => (dispatch, getState) => {
+  return dispatch(submitFeedback({
+    type: "abuse_report",
+    aboutUserID,
+    sessionID,
+    message
+  }));
+};
+
 const ACTIONS = {
   UPDATE: 'account/update', // set the state
   MERGE: 'account/merge', // merge in nested updates to state
