@@ -96,11 +96,29 @@ export default (ENG = {
     tagline: "Language at Your Command"
   },
 
+  // often used as the result of an action
   status: {
+    added: "Added",
+    applied: "Applied",
     available: "Available",
     cancelled: "Cancelled",
+    completed: "Completed",
+    confirmed: "Confirmed",
+    deleted: "Deleted",
+    denied: "Denied",
     error: "Error",
-    unavailable: "Unavailable"
+    failed: "Failed",
+    finished: "Finished",
+    received: "Received",
+    rejected: "Rejected",
+    removed: "Removed",
+    sent: "Sent",
+    started: "Started",
+    stopped: "Stopped",
+    success: "Success",
+    submitted: "Submitted",
+    unavailable: "Unavailable",
+    updated: "Updated"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -173,7 +191,8 @@ export default (ENG = {
     scenarioNote: "Optional Note",
     missedCall: "Missed Call",
     notRated: "Not Rated",
-    addRating: "Add Rating"
+    addRating: "Add Rating",
+    abuseReported: "Abuse Reported"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -612,7 +631,8 @@ export default (ENG = {
         label: "Report",
         title: "Report Abuse",
         alert: "You are about to report abusive or harassing behavior, which may result in the suspension or removal of the customer's account. Do you want to proceed?",
-        placeholder: "Please provide specific details as evidence of the issue."
+        placeholder: "Please provide specific details as evidence of the issue.",
+        submitted: "Your report has been submitted and will be reviewed by the Jeenie team."
       },
       about: {
         label: "Call Details",
