@@ -4,7 +4,7 @@ import styles from "./CircularAvatarStyles";
 import { Avatar } from "react-native-elements";
 
 const CircularAvatar = ( props ) => {
-  const { avatarURL, firstName, lastInitial } = props.sessionInfo;
+  const { avatarURL, firstName, lastInitial } = props;
     if (avatarURL) {
         return <Avatar
           rounded
@@ -19,7 +19,7 @@ const CircularAvatar = ( props ) => {
         rounded
         large
         title={lastInitial ?
-          `${firstName.charAt(0).toUpperCase()}${lastInitial.toUpperCase()}`
+          `${firstName.charAt(0).toUpperCase()}${lastInitial.charAt(0).toUpperCase()}`
           : `${firstName.charAt(0).toUpperCase()}${firstName.charAt(1).toUpperCase()}` }
         height={moderateScaleViewports(56)}
         width={moderateScaleViewports(56)}

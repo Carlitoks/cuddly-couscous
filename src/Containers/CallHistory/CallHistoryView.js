@@ -56,6 +56,7 @@ class CallHistoryView extends Component {
     if (!_isEmpty(allCalls)) {
       return allCalls
         .map((item, i) => {
+          console.tron.log(userType);
           let result = {};
           if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
             result = {
@@ -82,7 +83,12 @@ class CallHistoryView extends Component {
                 ? item.session.customScenarioNote
                 : "",
               avatarURL: item[userType].avatarURL,
-              chevron: false
+              chevron: false,
+              userType,
+              session: item.session,
+              user: this.props.user,
+              isLinguist: this.props.isLinguist,
+              token: this.props.token
             };
           }
           return result;
@@ -103,7 +109,7 @@ class CallHistoryView extends Component {
     }
   };
 
-  filterMissedCalls = missedCalls => {
+  filterMissedCalls = (missedCalls, userType) => {
     if (!_isEmpty(missedCalls)) {
       return missedCalls
         .sort((prev, next) =>
@@ -125,7 +131,12 @@ class CallHistoryView extends Component {
                 "MMM DD, h:mm A"
               ),
               chevron: true,
-              missedCall: this.compareCall(item.accepted, item.responded)
+              missedCall: this.compareCall(item.accepted, item.responded),
+              userType,
+              session: item.session,
+              user: this.props.user,
+              isLinguist: this.props.isLinguist,
+              token: this.props.token
             };
           }
           return result;
@@ -159,7 +170,7 @@ class CallHistoryView extends Component {
       : this.filterAllCalls(allCustomerCalls, userType);
 
     const missedCalls = linguistProfile
-      ? this.filterMissedCalls(missedCallsLinguist)
+      ? this.filterMissedCalls(missedCallsLinguist, userType)
       : [];
 
     return (
@@ -184,14 +195,19 @@ class CallHistoryView extends Component {
               tabsContainerStyle={styles.tabsContainerStyle}
               values={tabValues}
               tabStyle={
-                Iphone6 || Iphone5 ? styles.tabStyleNoBorder : styles.tabStyle
+                styles.tabStyle
               }
               tabTextStyle={styles.tabTextStyle}
               selectedIndex={this.state.selectedIndex}
               onTabPress={this.handleIndexChange}
               activeTabStyle={{
-                backgroundColor: Colors.primarySelectedTabColor
+                width: "40%",
+                borderColor: "#ffffff",
+                borderWidth: 0,
+                borderBottomWidth: 3,
+                backgroundColor: Colors.gradientColor.top
               }}
+              borderRadius={0}
             />
           </View>
         )}
@@ -224,6 +240,9 @@ const mS = state => ({
   allCustomerCalls: state.account.customerCallHistory,
   allLinguistCalls: state.account.linguistCallHistory,
   missedCallsLinguist: state.account.linguistMissedCallHistory,
+  token: state.auth2.userJwtToken,
+  isLinguist: state.account.isLinguist,
+  user: state.account.user,
 });
 
 const mD = {

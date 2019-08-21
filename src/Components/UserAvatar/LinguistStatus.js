@@ -20,27 +20,20 @@ const LinguistStatus =
           <View style={styles.statusContainer}>
             <Text style={styles.statusText}>
               {status ? I18n.t("online")
-                  .toUpperCase()
                 : I18n.t("offline")
-                  .toUpperCase()
               }
             </Text>
-            {loading ? (
-              <View style={styles.switchContainer}>
-                <ActivityIndicator size="large" color="white"/>
-              </View>
-            ) : (
-              <Switch
-                onValueChange={switchOnChange}
-                style={styles.switchContainer}
-                value={switchValue}
-                thumbColor={Colors.thumbTintColor}
-                trackColor={{
-                  true: Colors.onTintColor,
-                  false: Colors.tintColor
-                }}
-              />
-            )}
+            <Switch
+              onValueChange={switchOnChange}
+              disabled={loading}
+              style={styles.switchContainer}
+              value={switchValue}
+              thumbColor={Colors.thumbTintColor}
+              trackColor={{
+                true: "#F39100",
+                false: Colors.tintColor
+              }}
+            />
           </View>
         ) : null}
       </View>

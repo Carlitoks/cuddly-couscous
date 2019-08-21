@@ -5,18 +5,20 @@ import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 
 import { Avatar, List, ListItem } from "react-native-elements";
 import { Col, Grid } from "react-native-easy-grid";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import moment from "moment";
 
 import I18n, { translateLanguage, translateProperty } from "../../I18n/I18n";
 import { styles } from "./styles";
-import { Images } from "../../Themes";
+import { Fonts, Images } from "../../Themes";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NavBar from "../../Components/NavBar/NavBar";
 import UserAvatar from "../../Components/UserAvatar/UserAvatar";
 import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 import { moderateScaleViewports } from "../../Util/Scaling";
 import CircularAvatar from "../../Components/CircularAvatar/CircularAvatar";
+import StarRating from "../../Components/StarRating/StarRating";
 
 class SessionInfoView extends Component {
   render() {
@@ -31,11 +33,27 @@ class SessionInfoView extends Component {
           leftComponent={<GoBackButton navigation={this.props.navigation} />}
         />
         <WavesBackground>
+          <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", marginLeft: moderateScaleViewports(34), paddingBottom: moderateScaleViewports(47) }}>
+            <CircularAvatar avatarURL={sessionInfo.avatarURL} firstName={sessionInfo.firstName} lastInitial={sessionInfo.lastInitial} />
 
-          <View style={styles.userAvatarInfo}>
-            <CircularAvatar sessionInfo={sessionInfo} />
+
+            <View style={{marginLeft: moderateScaleViewports(20)}}>
+              <Text style={{color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16)}}>{ sessionInfo.userType === "linguist" ? I18n.t("session.rating.linguist") : I18n.t("session.rating.customer")}</Text>
+              <Text style={{color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(20), paddingBottom: moderateScaleViewports(11), paddingTop: moderateScaleViewports(8)}}>{`${sessionInfo.firstName} ${sessionInfo.lastInitial ? sessionInfo.lastInitial : ""}`}</Text>
+              { sessionInfo.rating !== "" && (
+                <StarRating fullStarColor={"#F39100"} rating={sessionInfo.rating} containerStyle={{width: moderateScaleViewports(123)}} /> // rating given to target user for the session
+              )}
+              { sessionInfo.rating === "" && (
+                <TouchableOpacity style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", width: moderateScaleViewports(126), borderRadius: moderateScaleViewports(4), backgroundColor: "#F39100", minHeight: moderateScaleViewports(28)}}
+                                  onPress={() => { this.props.navigation.dispatch({type: "RateView", params: { session: sessionInfo.session , user: sessionInfo.user, isLinguist: sessionInfo.isLinguist, token: sessionInfo.token }}) }}>
+                  <Icon name={"pencil-square-o"} color={"#ffffff"} size={moderateScaleViewports(19)} /><Text style={{color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(14)}}>{I18n.t("history.addRating")}</Text>
+                </TouchableOpacity>
+              )}
+              {/* {sessionInfo.ifAbuseReported && (
+              <Text>Abuse Reported</Text>
+            )}*/ }
+            </View>
           </View>
-
         </WavesBackground>
           <ScrollView
             automaticallyAdjustContentInsets={true}
@@ -108,12 +126,12 @@ class SessionInfoView extends Component {
                     {/* CustomScenarioNote */
                       sessionInfo.customScenarioNote ?
                       <ListItem
-                        containerStyle={styles.listItemContainer}
+                        containerStyle={styles.listNoteItemContainer}
                         hideChevron
                         title={I18n.t("history.scenarioNote")}
                         titleStyle={styles.titleStyle}
                         subtitle={sessionInfo.customScenarioNote}
-                        subtitleStyle={styles.languagesText}
+                        subtitleStyle={styles.optionalNoteStyle}
                       /> : null
                     }
 

@@ -37,5 +37,12 @@ export default (styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: moderateScaleViewports(14),
     paddingBottom: moderateScaleViewports(8)
+  },
+  missedCallText: {
+    color: "#FF0000",
+    fontFamily: Fonts.BaseFont,
+    fontWeight: "normal",
+    fontSize: moderateScaleViewports(14),
+    paddingBottom: moderateScaleViewports(8)
   }
 }));

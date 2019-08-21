@@ -43,6 +43,7 @@ export default class CallHistoryComponent extends Component {
                     <UserInfo
                       text={`${item.firstName} ${item.lastInitial}`}
                       rating={item.rating}
+                      missedCall={item.missedTab}
                     />
                   }
                   rightIcon={
@@ -53,7 +54,7 @@ export default class CallHistoryComponent extends Component {
 
                     />}
                   hideChevron={item.chevron}
-                  avatar={<CircularAvatar sessionInfo={item} />}
+                  avatar={<CircularAvatar avatarURL={item.avatarURL} firstName={item.firstName} lastInitial={item.lastInitial} />}
                   subtitle={
                     !item.missedTab
                       ? item.duration >= 60
@@ -63,7 +64,7 @@ export default class CallHistoryComponent extends Component {
                         : `${moment
                             .utc(item.duration * 1000)
                             .format("ss")} ${I18n.t('seconds')}, ${item.createdAt}`
-                      : item.missedCall
+                      : item.createdAt
                   }
                   subtitleStyle={styles.colorStyle}
                   containerStyle={styles.listItem}

@@ -6,7 +6,7 @@ import { Colors } from "../../Themes";
 
 import styles from "./styles";
 
-const UserInfo = ({ text, rating }) => {
+const UserInfo = ({ text, rating, missedCall }) => {
   return (
       <View style={styles.containerStyle}>
         <Text style={styles.userName}>{text.split(' undefined')[0]}.</Text>
@@ -26,7 +26,7 @@ const UserInfo = ({ text, rating }) => {
             fullStarColor={Colors.gradientColorButton.top}
           />
           </View>
-        ) : <Text style={styles.notRatedText}>Not Rated</Text>}
+        ) : missedCall ? <Text style={styles.missedCallText}>Missed Call</Text> : <Text style={styles.notRatedText}>Not Rated</Text>}
       </View>
   );
 };

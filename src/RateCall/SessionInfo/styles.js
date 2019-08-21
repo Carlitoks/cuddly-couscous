@@ -62,9 +62,10 @@ export const styles = StyleSheet.create({
     paddingBottom: moderateScaleViewports(10)
   },
   listSubtitle: {
-    fontSize: moderateScale(20),
-    color: Colors.gray,
-    fontWeight: "normal"
+    fontSize: moderateScale(18),
+    color: "#444444",
+    fontWeight: "normal",
+    fontFamily: Fonts.BaseFont,
   },
   languagesContainer: {
     marginLeft: 10
@@ -82,5 +83,23 @@ export const styles = StyleSheet.create({
   listRightTitle: {
     fontSize: moderateScale(22),
     color: Colors.primaryListRightItem
-  }
+  },
+  userAvatarInfo: {
+  },
+  optionalNoteStyle: {
+    fontSize: moderateScale(14),
+    color: "#444444",
+    fontFamily: Fonts.BaseFont,
+    fontWeight: "normal",
+    backgroundColor: "#F1F1F1",
+    paddingLeft: moderateScaleViewports(21),
+    paddingTop: moderateScaleViewports(11),
+    paddingBottom: moderateScaleViewports(14),
+    borderRadius: moderateScaleViewports(4)
+  },
+  listNoteItemContainer: {
+    minHeight: 60,
+    justifyContent: "flex-start",
+    borderBottomWidth: 0,
+  },
 });

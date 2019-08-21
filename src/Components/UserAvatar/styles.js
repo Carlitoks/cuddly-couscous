@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions, Platform } from "react-native";
 import { Fonts, Colors } from "../../Themes";
-import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
+import { moderateScale, moderateScaleViewports, scale, verticalScale } from "../../Util/Scaling";
 import { Iphone5 } from "../../Util/Devices";
 const { width, height } = Dimensions.get("window");
 
@@ -182,18 +182,16 @@ export default StyleSheet.create({
   statusContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 30
+    alignItems: "center",
+    paddingBottom: moderateScaleViewports(14)
   },
   statusText: {
-    fontSize: 20,
+    fontSize: moderateScaleViewports(17),
     fontFamily: Fonts.BaseFont,
     color: Colors.primaryColor,
-    marginLeft: moderateScale(15),
-    backgroundColor: "rgba(255, 255, 255, 0)"
   },
   switchContainer: {
-    position: "absolute",
-    right: 5
+
   },
   tabTextStyle: {
     fontFamily: Fonts.BaseFont,
@@ -201,14 +199,12 @@ export default StyleSheet.create({
     fontSize: 12
   },
   tabStyle: {
-    backgroundColor: Colors.backgroundBlue,
-    borderWidth: 1,
+    backgroundColor: "transparent",
+    borderWidth: 0,
     borderColor: Colors.primaryColor
   },
   tabStyleNoBorder: {
-    backgroundColor: Colors.backgroundBlue,
-    borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0)"
+    backgroundColor: "transparent",
   },
   tabsContainerStyle: {
     marginLeft: moderateScale(33),
@@ -279,20 +275,13 @@ export default StyleSheet.create({
   },
   card: {
     flex: 1,
-    ...Platform.select({
-      android: {
-        elevation: 4
-      }
-    }),
     alignContent: "space-between",
-    borderRadius: 10,
-    height: 100,
     marginLeft: 0,
     marginRight: 0,
     marginTop: 0,
     borderBottomWidth: 0,
     borderRightWidth: 0,
-    borderTopWidth: 0
+    borderTopWidth: 0,
   },
   TitleText: {
     fontSize: 17,
@@ -301,12 +290,14 @@ export default StyleSheet.create({
     backgroundColor: Colors.transparent
   },
   callNumber: {
-    fontSize: 20,
-    color: "gray",
+    fontSize: moderateScaleViewports(30),
+    color: "#401674",
     alignItems: "center"
   },
   callsText: {
-    fontSize: 12
+    fontSize: moderateScaleViewports(12),
+    fontFamily: Fonts.BaseFont,
+    color: "#444444"
   },
   addrating:{
     marginTop: moderateScale(10),
@@ -323,7 +314,7 @@ export default StyleSheet.create({
   addRatingText: {
     marginLeft: 5,
     color:  'white',
-    fontFamily: Fonts.BaseFont, 
+    fontFamily: Fonts.BaseFont,
     fontSize: 14,
     alignItems: 'center',
     textAlign: 'center',
