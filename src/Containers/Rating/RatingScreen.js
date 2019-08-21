@@ -58,6 +58,13 @@ class RatingScreen extends Component {
       iconVoiceClaritySecondList: false,
       iconDistractionsSecondList: false,
 
+      // Connectio problems 
+      noAudio: false,
+      noVideo: false,
+      poorAudio: false,
+      poorVideo: false,
+      callDropped: false,
+
       // loading status for button
       submitting: false,
     };
@@ -198,6 +205,11 @@ class RatingScreen extends Component {
     return rating > 0;
   };
 
+  checkConnectionProblem = (index) =>{
+    let payload = this.state[index];
+    this.setState({[index]: !payload});
+  }
+
   openSlideMenu = (type) => {
     const { openSlideMenu } = this.props;
     openSlideMenu({ type });
@@ -310,7 +322,12 @@ class RatingScreen extends Component {
       iconVoiceClaritySecondList,
       iconDistractionsSecondList,
       comment,
-      connection
+      connection,
+      noAudio,
+      noVideo,
+      poorAudio,
+      poorVideo,
+      callDropped
     } = this.state;
     const { openSlideMenu } = this.props;
     if (linguistProfile) {
@@ -363,7 +380,13 @@ class RatingScreen extends Component {
             UpdateFlags={this.UpdateFlags}
             ratingComments={comment}
             rating={rating}
+            checkConnectionProblem={this.checkConnectionProblem}
             badConnection={connection}
+            noAudio= {noAudio}
+            noVideo= {noVideo}
+            poorAudio= {poorAudio}
+            poorVideo= {poorVideo}
+            callDropped= {callDropped}
           />
         </Swiper>
       );
@@ -416,9 +439,12 @@ class RatingScreen extends Component {
   };
 
   reportAbuse () {
-      Alert.alert(I18n.t("actions.confirm"), I18n.t('session.rating.abuse.alert'), [
-        {text: I18n.t('cancel')},
+    const { navigation } = this.props;
+
+      Alert.alert(I18n.t("session.rating.abuse.title"), I18n.t('session.rating.abuse.alert'), [
+        {text: I18n.t('cancel'), style: 'destructive'},
         {text: I18n.t('actions.confirm'), onPress: () => {
+            navigation.dispatch({ type: "ReportProblemScreen" });
         }}
       ]);
   }

@@ -8,7 +8,7 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   backContainer: {
     flexGrow: 1,
-    backgroundColor: "#E5E5E5"
+    backgroundColor: "#FFFFFF"
   },
   container: {
     flex: 1,
@@ -54,7 +54,7 @@ export default StyleSheet.create({
     left: 4,
     width: Metrics.width * 0.98,
     borderRadius: 5,
-    height: '50%'
+    height: '40%'
   },
   availableLangContainer: {
     height: 48,

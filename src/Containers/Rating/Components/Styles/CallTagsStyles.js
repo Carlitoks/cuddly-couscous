@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { ApplicationStyles, Fonts } from "../../../../Themes";
 import metrics from "../../../../Themes/Metrics";
-import { moderateScaleViewports } from "../../../../Util/Scaling";
+import { moderateScaleViewports, moderateScale } from "../../../../Util/Scaling";
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
@@ -77,6 +77,13 @@ export default StyleSheet.create({
     backgroundColor: "#fff",
     borderColor: "#401674",
     borderWidth: 1,
+  },
+  additionalInformationInput: {
+    paddingLeft: 10,
+    marginTop: 15,
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScale(14, 0),
+    color: '#333333'
   },
   checkboxInputContainer:{
     backgroundColor: "#FFFFFF",

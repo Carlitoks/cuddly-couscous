@@ -14,6 +14,12 @@ class ReportProblemScreen extends Component {
     super(props);
   }
 
+  submitAbuseReport () {
+    const { navigation } = this.props;
+
+            navigation.dispatch({ type: "Home" });
+  }
+
   render() {
     const { navigation, user,loading, clearPayments } = this.props;
 
@@ -23,7 +29,6 @@ class ReportProblemScreen extends Component {
           <NavBar
             leftComponent={
               <TouchableOpacity activeOpacity={0.8} onPress={() => {
-                clearPayments();
                 navigation.dispatch({type: "back"})
               }}>
                 <View>
@@ -52,7 +57,7 @@ class ReportProblemScreen extends Component {
                 style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
                 disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
                 textStyle = {styles.buttonText} // optional text styles, component should provide defaults
-                onPress = {() => this.purchase()} // function to call when pressed
+                onPress = {() => this.submitAbuseReport()} // function to call when pressed
             />
        </View>
       </View>
