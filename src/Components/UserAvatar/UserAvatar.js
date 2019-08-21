@@ -103,14 +103,9 @@ const UserAvatar = ({
                     fullStarColor={Colors.gradientColorButton.top}
                     starColor={Colors.gradientColorButton.top}
                   />
-                ) : <TouchableOpacity
-                      onPress={ () => {addratings()} }
-                      style={styles.addrating}
-                    >
-                      <Icon name="edit" type="font-awesome" color="white" size={20} />
-                      <Text style={styles.addRatingText}>{I18n.t("history.addRating")}</Text>
-                    </TouchableOpacity>
-                }
+                ) : <TouchableOpacity>
+                  <Text>Add Rating</Text>
+                </TouchableOpacity>}
               </View>
             ) : null}
           </View>

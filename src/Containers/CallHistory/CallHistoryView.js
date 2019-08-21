@@ -78,6 +78,9 @@ class CallHistoryView extends Component {
               title: !_isUndefined(item.session.scenario)
                 ? item.session.scenario.title
                 : "",
+              customScenarioNote: !_isUndefined(item.session.customScenarioNote)
+                ? item.session.customScenarioNote
+                : "",
               avatarURL: item[userType].avatarURL,
               chevron: false
             };

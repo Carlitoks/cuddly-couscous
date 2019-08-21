@@ -1,64 +1,41 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 
-import { List, ListItem } from "react-native-elements";
+import { Avatar, List, ListItem } from "react-native-elements";
 import { Col, Grid } from "react-native-easy-grid";
 
 import moment from "moment";
 
-import I18n, { translateLanguage } from "../../I18n/I18n";
+import I18n, { translateLanguage, translateProperty } from "../../I18n/I18n";
 import { styles } from "./styles";
 import { Images } from "../../Themes";
 import GoBackButton from "../../Components/GoBackButton/GoBackButton";
 import NavBar from "../../Components/NavBar/NavBar";
 import UserAvatar from "../../Components/UserAvatar/UserAvatar";
 import WavesBackground from "../../Components/UserAvatar/WavesBackground";
+import { moderateScaleViewports } from "../../Util/Scaling";
+import CircularAvatar from "../../Components/CircularAvatar/CircularAvatar";
 
 class SessionInfoView extends Component {
-
-  addrating(){
-
-    const params = {
-      session: this.props.navigation.state.params.call,
-      user: this.props.remoteUser,
-      isLinguist: true,
-      token: this.props.token,
-      navigation: this.props.navigation
-    }
-
-    this.props.navigation.dispatch({type: "RatingsScreen", params});
-  }
-
   render() {
     const sessionInfo = this.props.navigation.state.params.call;
     let primaryLang = translateLanguage(sessionInfo.primaryLangCode);
     let secondLang = translateLanguage(sessionInfo.secondaryLangCode);
 
-    console.log(sessionInfo,this.props.token)
-
-    
-    
     return (
       <View style={styles.scrollContainer}>
         <NavBar
+          navbarTitle={I18n.t("history.callTitle")}
           leftComponent={<GoBackButton navigation={this.props.navigation} />}
         />
         <WavesBackground>
-          <UserAvatar
-            avatarSource={
-              sessionInfo.avatarURL
-                ? {
-                  uri: sessionInfo.avatarURL
-                }
-                : Images.avatar
-            }
-            avatarHeight={150}
-            avatarTitle={sessionInfo.firstName + " " + (sessionInfo.lastInitial ? sessionInfo.lastInitial : '')}
-            stars={sessionInfo.rating ? sessionInfo.rating : 0}
-            addratings={()=> this.addrating()}
-          />
+
+          <View style={styles.userAvatarInfo}>
+            <CircularAvatar sessionInfo={sessionInfo} />
+          </View>
+
         </WavesBackground>
           <ScrollView
             automaticallyAdjustContentInsets={true}
@@ -101,44 +78,44 @@ class SessionInfoView extends Component {
                     <ListItem
                       containerStyle={styles.listItemContainer}
                       hideChevron
-                      title={I18n.t("duration")}
+                      title={I18n.t("duration").toUpperCase()}
                       titleStyle={styles.titleStyle}
-                      subtitle={
-                        <View style={styles.languagesContainer}>
-                          <Text style={styles.languagesText}>
-                            {I18n.t("history.durationTime",{num: sessionInfo.duration})}
-                          </Text>
-                        </View>
-                      }
+                      subtitle={!sessionInfo.missedTab
+                        ? sessionInfo.duration >= 60
+                          ? `${moment
+                            .utc(sessionInfo.duration * 1000)
+                            .format("mm")} ${I18n.t('minutes')}`
+                          : `${moment
+                            .utc(sessionInfo.duration * 1000)
+                            .format("ss")} ${I18n.t('seconds')}`
+                        : sessionInfo.missedCall}
+                      subtitleStyle={styles.languagesText}
                     />
-                    {/* Scenario */}
-                    <ListItem
-                      containerStyle={styles.listItemContainer}
-                      hideChevron
-                      title={I18n.t("history.scenario")}
-                      titleStyle={styles.titleStyle}
-                      subtitle={
-                        <View style={styles.languagesContainer}>
-                          <Text style={styles.languagesText}>
-                            {sessionInfo.title}
-                          </Text>
-                        </View>
-                      }
-                    />
-                    {/* Optional Note */}
-                    <ListItem
-                      containerStyle={styles.listItemContainer}
-                      hideChevron
-                      title={I18n.t("history.scenarioNote")}
-                      titleStyle={styles.titleStyle}
-                      subtitle={
-                        <View style={styles.languagesContainer}>
-                          <Text style={styles.languagesText}>
-                            {sessionInfo.customScenarioNote}
-                          </Text>
-                        </View>
-                      }
-                    />
+
+                    {/* Scenario */
+                      sessionInfo.title ?
+                      <ListItem
+                        containerStyle={styles.listItemContainer}
+                        hideChevron
+                        title={I18n.t("history.scenario")}
+                        titleStyle={styles.titleStyle}
+                        subtitle={translateProperty(sessionInfo, "title")}
+                        subtitleStyle={styles.languagesText}
+                      /> : null
+                    }
+
+
+                    {/* CustomScenarioNote */
+                      sessionInfo.customScenarioNote ?
+                      <ListItem
+                        containerStyle={styles.listItemContainer}
+                        hideChevron
+                        title={I18n.t("history.scenarioNote")}
+                        titleStyle={styles.titleStyle}
+                        subtitle={sessionInfo.customScenarioNote}
+                        subtitleStyle={styles.languagesText}
+                      /> : null
+                    }
 
                   </List>
                 </Grid>

@@ -37,7 +37,7 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       appState: AppState.currentState,
       loading: false
@@ -100,7 +100,7 @@ class Home extends Component {
         );
       }
     })
-    
+
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertCancelled
@@ -193,12 +193,16 @@ class Home extends Component {
               title: !_isUndefined(item.session.scenario)
                 ? item.session.scenario.title
                 : "",
+              customScenarioNote: !_isUndefined(item.session.customScenarioNote)
+                ? item.session.customScenarioNote
+                : "",
               createdAt: moment(item.session.createdAt).format(
                 "MMM DD, h:mm A"
               ),
               avatarURL: item[userType].avatarURL,
               chevron: false
             };
+            console.tron.log(result);
           }
           return result;
         })

@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { View, Text, FlatList, ActivityIndicator } from "react-native";
-import { List, ListItem } from "react-native-elements";
+import { List, ListItem, Avatar, Icon } from "react-native-elements";
 import UserInfo from "../UserInfo/UserInfo";
-import { Images } from "../../Themes";
+import { Fonts, Images } from "../../Themes";
 import _isUndefined from "lodash/isUndefined";
 import styles from "./styles";
 import moment from "moment";
 import I18n from "../../I18n/I18n";
 import { Colors } from "../../Themes";
+import { moderateScaleViewports } from "../../Util/Scaling";
+import CircularAvatar from "../CircularAvatar/CircularAvatar";
 
 export default class CallHistoryComponent extends Component {
   constructor(props) {
@@ -26,6 +28,7 @@ export default class CallHistoryComponent extends Component {
   };
 
   render() {
+    console.tron.log(this.state.data);
     const navigation = this.props.navigation;
     return (
       <View containerStyle={styles.containerList}>
@@ -42,43 +45,29 @@ export default class CallHistoryComponent extends Component {
                       rating={item.rating}
                     />
                   }
+                  rightIcon={
+                    <Icon
+                      name={"chevron-right"}
+                      color={"#909090"}
+                      containerStyle={{paddingRight: 10}}
+
+                    />}
                   hideChevron={item.chevron}
-                  subtitle={
-                    item.duration >= 60
-                      ? `${moment
-                          .utc(item.duration * 1000)
-                          .format("mm:ss")} ${I18n.t('minutes')}`
-                      : `${moment
-                          .utc(item.duration * 1000)
-                          .format("mm:ss")} ${I18n.t('seconds')}`
-                  }
-                  avatar={
-                    item.avatarURL
-                      ? {
-                          uri: item.avatarURL
-                        }
-                      : Images.avatar
-                  }
+                  avatar={<CircularAvatar sessionInfo={item} />}
                   subtitle={
                     !item.missedTab
                       ? item.duration >= 60
                         ? `${moment
                             .utc(item.duration * 1000)
-                            .format("mm:ss")} ${I18n.t('minutes')}`
+                            .format("mm")} ${I18n.t('minutes')}, ${item.createdAt}`
                         : `${moment
                             .utc(item.duration * 1000)
-                            .format("mm:ss")} ${I18n.t('seconds')}`
+                            .format("ss")} ${I18n.t('seconds')}, ${item.createdAt}`
                       : item.missedCall
                   }
                   subtitleStyle={styles.colorStyle}
                   containerStyle={styles.listItem}
-                  rightTitle={item.createdAt}
                   rightTitleStyle={styles.textColor}
-                  badge={{
-                    value: item.createdAt,
-                    textStyle: styles.textColor,
-                    containerStyle: { backgroundColor: Colors.transparent }
-                  }}
                   onPress={() => {
                     if (!item.chevron)
                       navigation.dispatch({

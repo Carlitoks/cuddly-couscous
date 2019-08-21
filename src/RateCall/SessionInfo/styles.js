@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../Themes";
-import { moderateScale } from "../../Util/Scaling";
+import { Colors, Fonts } from "../../Themes";
+import { moderateScale, moderateScaleViewports } from "../../Util/Scaling";
 
 export const styles = StyleSheet.create({
   scrollContainer: {
@@ -55,10 +55,11 @@ export const styles = StyleSheet.create({
     justifyContent: "center"
   },
   titleStyle: {
-    fontSize: moderateScale(20),
+    fontSize: moderateScaleViewports(18),
     fontWeight: "bold",
     color: "#444444",
-    marginBottom:moderateScale(10)
+    fontFamily: Fonts.BaseFont,
+    paddingBottom: moderateScaleViewports(10)
   },
   listSubtitle: {
     fontSize: moderateScale(20),
@@ -69,8 +70,10 @@ export const styles = StyleSheet.create({
     marginLeft: 10
   },
   languagesText: {
-    fontSize: moderateScale(20),
-    color: Colors.gray,
+    fontSize: moderateScale(18),
+    color: "#444444",
+    fontFamily: Fonts.BaseFont,
+    paddingBottom: moderateScaleViewports(10),
     fontWeight: "normal"
   },
   listRightTitleContainer: {

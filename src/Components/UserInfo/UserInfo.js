@@ -8,9 +8,6 @@ import styles from "./styles";
 
 const UserInfo = ({ text, rating }) => {
   return (
-    <View style={styles.containerText}>
-      {/* Component used for call history  */}
-
       <View style={styles.containerStyle}>
         <Text style={styles.userName}>{text.split(' undefined')[0]}.</Text>
         {rating ? (
@@ -29,9 +26,8 @@ const UserInfo = ({ text, rating }) => {
             fullStarColor={Colors.gradientColorButton.top}
           />
           </View>
-        ) : null}
+        ) : <Text style={styles.notRatedText}>Not Rated</Text>}
       </View>
-    </View>
   );
 };
 

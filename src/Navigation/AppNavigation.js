@@ -40,7 +40,7 @@ import LinguistIncomingCallView from "../Containers/Session/LinguistIncomingCall
 
 // by default, this is the screen that will
 // be shown first when the app loads
-let initialScreen = "LoadingView";
+let initialScreen = "CallHistory";
 
 // change the initial screen, this must be called before
 // the router is initialized
