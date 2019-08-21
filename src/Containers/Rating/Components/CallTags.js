@@ -228,27 +228,7 @@ class CallTags extends Component {
               />
           </View>
         : 
-           <View style={styles.bottomDividerContainer}>
-          <Divider style={styles.divider} />
-          <TouchableOpacity onPress={() => openSlideMenu("ratingComments")}>
-            <Text
-              style={styles.addComments}
-              numberOfLines={1}
-            >
-              { ratingComments ? I18n.t("session.rating.comment") : `+ ${I18n.t("session.rating.addComment")}`}
-            </Text>
-            {ratingComments
-              ? (
-                <Text
-                  style={styles.comments}
-                >
-                  {ratingComments}
-                </Text>
-              ) : null}
-
-          </TouchableOpacity>
-          <Divider style={styles.divider} />
-        </View>}
+           null}
       </ScrollView>
     );
   }

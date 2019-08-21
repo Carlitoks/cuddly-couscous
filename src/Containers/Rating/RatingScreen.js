@@ -29,7 +29,7 @@ class RatingScreen extends Component {
       session,
       user,
       token,
-      linguistProfile: !isLinguist ,
+      linguistProfile: isLinguist ,
       customerName: `${user.firstName}` ,
       avatarURL: user.avatarURL,
       comment: "",
