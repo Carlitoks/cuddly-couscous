@@ -18,11 +18,28 @@ import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 
 class SessionInfoView extends Component {
 
+  addrating(){
+
+    const params = {
+      session: this.props.navigation.state.params.call,
+      user: this.props.remoteUser,
+      isLinguist: true,
+      token: this.props.token,
+      navigation: this.props.navigation
+    }
+
+    this.props.navigation.dispatch({type: "RatingsScreen", params});
+  }
+
   render() {
     const sessionInfo = this.props.navigation.state.params.call;
     let primaryLang = translateLanguage(sessionInfo.primaryLangCode);
     let secondLang = translateLanguage(sessionInfo.secondaryLangCode);
 
+    console.log(sessionInfo,this.props.token)
+
+    
+    
     return (
       <View style={styles.scrollContainer}>
         <NavBar
@@ -40,6 +57,7 @@ class SessionInfoView extends Component {
             avatarHeight={150}
             avatarTitle={sessionInfo.firstName + " " + (sessionInfo.lastInitial ? sessionInfo.lastInitial : '')}
             stars={sessionInfo.rating ? sessionInfo.rating : 0}
+            addratings={()=> this.addrating()}
           />
         </WavesBackground>
           <ScrollView
@@ -69,7 +87,7 @@ class SessionInfoView extends Component {
                     <ListItem
                       hideChevron
                       containerStyle={styles.listItemContainer}
-                      title={I18n.t("languages").toUpperCase()}
+                      title={I18n.t("languages")}
                       titleStyle={styles.titleStyle}
                       subtitle={
                         <View style={styles.languagesContainer}>
@@ -83,13 +101,43 @@ class SessionInfoView extends Component {
                     <ListItem
                       containerStyle={styles.listItemContainer}
                       hideChevron
-                      subtitle={I18n.t("duration").toUpperCase()}
-                      subtitleStyle={styles.titleStyle}
-                      rightTitle={`${moment
-                        .utc(sessionInfo.duration * 1000)
-                        .format("mm:ss")}`}
-                      rightTitleContainerStyle={styles.listRightTitleContainer}
-                      rightTitleStyle={styles.listRightTitle}
+                      title={I18n.t("duration")}
+                      titleStyle={styles.titleStyle}
+                      subtitle={
+                        <View style={styles.languagesContainer}>
+                          <Text style={styles.languagesText}>
+                            {I18n.t("history.durationTime",{num: sessionInfo.duration})}
+                          </Text>
+                        </View>
+                      }
+                    />
+                    {/* Scenario */}
+                    <ListItem
+                      containerStyle={styles.listItemContainer}
+                      hideChevron
+                      title={I18n.t("history.scenario")}
+                      titleStyle={styles.titleStyle}
+                      subtitle={
+                        <View style={styles.languagesContainer}>
+                          <Text style={styles.languagesText}>
+                            {sessionInfo.title}
+                          </Text>
+                        </View>
+                      }
+                    />
+                    {/* Optional Note */}
+                    <ListItem
+                      containerStyle={styles.listItemContainer}
+                      hideChevron
+                      title={I18n.t("history.scenarioNote")}
+                      titleStyle={styles.titleStyle}
+                      subtitle={
+                        <View style={styles.languagesContainer}>
+                          <Text style={styles.languagesText}>
+                            {sessionInfo.customScenarioNote}
+                          </Text>
+                        </View>
+                      }
                     />
 
                   </List>
@@ -104,6 +152,7 @@ class SessionInfoView extends Component {
 
 // to be used when we have the Endpoint
 const mS = state => ({
+  token: state.auth2.userJwtToken,
 });
 
 const mD = {

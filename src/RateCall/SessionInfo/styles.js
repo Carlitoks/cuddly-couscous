@@ -57,7 +57,8 @@ export const styles = StyleSheet.create({
   titleStyle: {
     fontSize: moderateScale(20),
     fontWeight: "bold",
-    color: Colors.listLabelColor
+    color: "#444444",
+    marginBottom:moderateScale(10)
   },
   listSubtitle: {
     fontSize: moderateScale(20),

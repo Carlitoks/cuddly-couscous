@@ -307,5 +307,25 @@ export default StyleSheet.create({
   },
   callsText: {
     fontSize: 12
-  }
+  },
+  addrating:{
+    marginTop: moderateScale(10),
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderWidth: 2,
+    backgroundColor: '#F39100',
+    borderColor: '#F39100',
+    borderRadius: moderateScale(5),
+    borderStyle: 'solid',
+    width: moderateScale(140),
+    height: moderateScale(32)
+  },
+  addRatingText: {
+    marginLeft: 5,
+    color:  'white',
+    fontFamily: Fonts.BaseFont, 
+    fontSize: 14,
+    alignItems: 'center',
+    textAlign: 'center',
+  },
 });
