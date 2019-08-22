@@ -319,4 +319,8 @@ export default StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
   },
+  monthlySummary: {backgroundColor: "#F1F1F1", width: "100%", minHeight: moderateScaleViewports(44), justifyContent: "center"},
+  monthlySummaryText: { fontSize: moderateScaleViewports(18), color: "#444444", marginLeft: moderateScaleViewports(34), fontFamily: Fonts.BaseFont, fontWeight: "bold" },
+  callNumberContainer: { flexDirection: "row", paddingTop: moderateScaleViewports(18), paddingBottom: moderateScaleViewports(12) },
+  dividerStyle: { height: "90%", width: 1, backgroundColor: "#DCDCDC" },
 });

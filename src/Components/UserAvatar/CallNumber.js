@@ -18,10 +18,10 @@ const CallNumber =
             <View
               style={{ alignContent: "space-between" }}
             >
-              <View style={{backgroundColor: "#F1F1F1", width: "100%", minHeight: moderateScaleViewports(44), justifyContent: "center"}}>
-                <Text style={{ fontSize: moderateScaleViewports(18), color: "#444444", marginLeft: moderateScaleViewports(34), fontFamily: Fonts.BaseFont, fontWeight: "bold" }}>Monthly Summary</Text>
+              <View style={styles.monthlySummary}>
+                <Text style={styles.monthlySummaryText}>Monthly Summary</Text>
               </View>
-              <View style={{ flexDirection: "row", paddingTop: moderateScaleViewports(18), paddingBottom: moderateScaleViewports(12) }}>
+              <View style={styles.callNumberContainer}>
                 <View style={{ width: "50%" }}>
                   <Text
                     style={[styles.TitleText, styles.center, styles.callsText]}
@@ -32,7 +32,7 @@ const CallNumber =
                     {calls}
                   </Text>
                 </View>
-                <Divider style={{ height: "90%", width: 1, backgroundColor: "#DCDCDC" }} />
+                <Divider style={styles.dividerStyle} />
                 <View style={{ width: "50%" }}>
                   <Text
                     style={[styles.TitleText, styles.center, styles.callsText]}

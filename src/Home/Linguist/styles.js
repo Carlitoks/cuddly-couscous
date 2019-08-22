@@ -151,6 +151,8 @@ export default StyleSheet.create({
   toggleContainer: {marginLeft: moderateScaleViewports(20)},
   displayName: {color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(20), paddingBottom: moderateScaleViewports(11), paddingTop: moderateScaleViewports(8)},
   starRatingContainer: {width: moderateScaleViewports(123)},
+  recentCallsContainer: {backgroundColor: "#F1F1F1", width: "100%", minHeight: moderateScaleViewports(44), justifyContent: "center"},
+  recentCallsContainerText: { fontSize: moderateScaleViewports(18), color: "#444444", marginLeft: moderateScaleViewports(34), fontFamily: Fonts.BaseFont, fontWeight: "bold" }
 
 
 });

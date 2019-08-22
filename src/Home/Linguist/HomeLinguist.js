@@ -264,8 +264,8 @@ class Home extends Component {
           calls={allCalls.length}
           amount={amount}
         />
-        <View style={{backgroundColor: "#F1F1F1", width: "100%", minHeight: moderateScaleViewports(44), justifyContent: "center"}}>
-          <Text style={{ fontSize: moderateScaleViewports(18), color: "#444444", marginLeft: moderateScaleViewports(34), fontFamily: Fonts.BaseFont, fontWeight: "bold" }}>{I18n.t("recentCalls")}</Text>
+        <View style={styles.recentCallsContainer}>
+          <Text style={styles.recentCallsContainerText}>{I18n.t("recentCalls")}</Text>
         </View>
           <Grid>
             <Row>

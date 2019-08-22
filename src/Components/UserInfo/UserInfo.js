@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Icon from "react-native-vector-icons/Ionicons";
 import StarRating from "react-native-star-rating";
 import { View, Text } from "react-native";
 import { Colors } from "../../Themes";
+import I18n from "../../I18n/I18n";
 
 import styles from "./styles";
 
@@ -26,7 +26,7 @@ const UserInfo = ({ text, rating, missedCall }) => {
             fullStarColor={Colors.gradientColorButton.top}
           />
           </View>
-        ) : missedCall ? <Text style={styles.missedCallText}>Missed Call</Text> : <Text style={styles.notRatedText}>Not Rated</Text>}
+        ) : missedCall ? <Text style={styles.missedCallText}>{I18n.t("history.missedCall")}</Text> : <Text style={styles.notRatedText}>{I18n.t("history.notRated")}</Text>}
       </View>
   );
 };
