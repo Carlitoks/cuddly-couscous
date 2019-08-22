@@ -7,15 +7,14 @@ import { Col, Grid } from "react-native-easy-grid";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
+import MissedCallHistoryComponent from "../../Components/MissedCallHistoryComponent/MissedCallHistoryComponent";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import Close from "../../Components/Close/Close";
 import NavBar from "../../Components/NavBar/NavBar";
-import { Iphone6, Iphone5 } from "../../Util/Devices";
 
 import moment from "moment";
 
 import styles from "./style";
-import Colors from "../../Themes/Colors";
 import I18n, { translateApiError } from "../../I18n/I18n";
 import {
   loadCustomerCallHistory,
@@ -56,7 +55,6 @@ class CallHistoryView extends Component {
     if (!_isEmpty(allCalls)) {
       return allCalls
         .map((item, i) => {
-          console.tron.log(userType);
           let result = {};
           if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
             result = {
@@ -82,6 +80,9 @@ class CallHistoryView extends Component {
               customScenarioNote: !_isUndefined(item.session.customScenarioNote)
                 ? item.session.customScenarioNote
                 : "",
+              ifAbuseReported: !_isUndefined(item.session.ifAbuseReported)
+                ? item.session.ifAbuseReported
+                : false,
               avatarURL: item[userType].avatarURL,
               chevron: false,
               userType,
@@ -132,6 +133,9 @@ class CallHistoryView extends Component {
               ),
               chevron: true,
               missedCall: this.compareCall(item.accepted, item.responded),
+              ifAbuseReported: !_isUndefined(item.session.ifAbuseReported)
+                ? item.session.ifAbuseReported
+                : false,
               userType,
               session: item.session,
               user: this.props.user,
@@ -200,13 +204,7 @@ class CallHistoryView extends Component {
               tabTextStyle={styles.tabTextStyle}
               selectedIndex={this.state.selectedIndex}
               onTabPress={this.handleIndexChange}
-              activeTabStyle={{
-                width: "40%",
-                borderColor: "#ffffff",
-                borderWidth: 0,
-                borderBottomWidth: 3,
-                backgroundColor: Colors.gradientColor.top
-              }}
+              activeTabStyle={styles.activeTabStyle}
               borderRadius={0}
             />
           </View>
@@ -220,12 +218,16 @@ class CallHistoryView extends Component {
           <Grid>
             <Col>
               <View style={styles.container}>
-                <CallHistoryComponent
-                  data={
-                    this.state.selectedIndex === 0 ? allCalls : missedCalls
-                  }
+                { this.state.selectedIndex === 0
+                  ? (<CallHistoryComponent
+                  data={allCalls}
                   navigation={this.props.navigation}
-                />
+                />)
+                  : (<MissedCallHistoryComponent
+                  data={missedCalls}
+                  navigation={this.props.navigation}
+                />)
+                }
               </View>
             </Col>
           </Grid>

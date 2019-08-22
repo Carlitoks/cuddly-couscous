@@ -79,5 +79,21 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     backgroundColor: Colors.transparent,
     fontWeight: "500"
+  },
+  activeTabStyle: {
+    borderColor: "transparent",
+    borderLeftWidth: 0,
+    borderWidth: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderBottomEndRadius: 0,
+    borderBottomStartRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderBottomWidth: 5,
+    borderBottomColor: "#ffffff",
+    backgroundColor: Colors.gradientColor.top,
+    marginLeft: moderateScaleViewports(10),
+    marginRight: moderateScaleViewports(10)
   }
 });

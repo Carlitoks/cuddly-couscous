@@ -33,25 +33,23 @@ class SessionInfoView extends Component {
           leftComponent={<GoBackButton navigation={this.props.navigation} />}
         />
         <WavesBackground>
-          <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", marginLeft: moderateScaleViewports(34), paddingBottom: moderateScaleViewports(47) }}>
+          <View style={styles.avatarContainer}>
             <CircularAvatar avatarURL={sessionInfo.avatarURL} firstName={sessionInfo.firstName} lastInitial={sessionInfo.lastInitial} />
-
-
-            <View style={{marginLeft: moderateScaleViewports(20)}}>
-              <Text style={{color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16)}}>{ sessionInfo.userType === "linguist" ? I18n.t("session.rating.linguist") : I18n.t("session.rating.customer")}</Text>
-              <Text style={{color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(20), paddingBottom: moderateScaleViewports(11), paddingTop: moderateScaleViewports(8)}}>{`${sessionInfo.firstName} ${sessionInfo.lastInitial ? sessionInfo.lastInitial : ""}`}</Text>
+            <View style={styles.infoContainer}>
+              <Text style={styles.clientType}>{ sessionInfo.userType === "linguist" ? I18n.t("session.rating.linguist") : I18n.t("session.rating.customer")}</Text>
+              <Text style={styles.displayName}>{`${sessionInfo.firstName} ${sessionInfo.lastInitial ? sessionInfo.lastInitial : ""}`}</Text>
               { sessionInfo.rating !== "" && (
-                <StarRating fullStarColor={"#F39100"} rating={sessionInfo.rating} containerStyle={{width: moderateScaleViewports(123)}} /> // rating given to target user for the session
+                <StarRating fullStarColor={"#F39100"} rating={sessionInfo.rating} containerStyle={styles.starRatingContainer} /> // rating given to target user for the session
               )}
               { sessionInfo.rating === "" && (
-                <TouchableOpacity style={{ flexDirection: "row", justifyContent: "center", alignItems: "center", width: moderateScaleViewports(126), borderRadius: moderateScaleViewports(4), backgroundColor: "#F39100", minHeight: moderateScaleViewports(28)}}
+                <TouchableOpacity style={styles.addRatingButton}
                                   onPress={() => { this.props.navigation.dispatch({type: "RateView", params: { session: sessionInfo.session , user: sessionInfo.user, isLinguist: sessionInfo.isLinguist, token: sessionInfo.token }}) }}>
-                  <Icon name={"pencil-square-o"} color={"#ffffff"} size={moderateScaleViewports(19)} /><Text style={{color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(14)}}>{I18n.t("history.addRating")}</Text>
+                  <Icon name={"pencil-square-o"} color={"#ffffff"} size={moderateScaleViewports(19)} /><Text style={styles.addRatingButtonText}>{I18n.t("history.addRating")}</Text>
                 </TouchableOpacity>
               )}
-              {/* {sessionInfo.ifAbuseReported && (
-              <Text>Abuse Reported</Text>
-            )}*/ }
+              {sessionInfo.ifAbuseReported && (
+              <Text style={styles.abuseReportedText}>{I18n.t("history.abuseReported")}</Text>
+              )}
             </View>
           </View>
         </WavesBackground>

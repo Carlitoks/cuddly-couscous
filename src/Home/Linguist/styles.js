@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions, Platform } from "react-native";
 import { Colors, Fonts } from "../../Themes";
-import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
+import { moderateScale, moderateScaleViewports, scale, verticalScale } from "../../Util/Scaling";
 
 const { width, height } = Dimensions.get("window");
 
@@ -146,5 +146,11 @@ export default StyleSheet.create({
   scrollContainer: {
     backgroundColor: "white",
     flex: 1,
-  }
+  },
+  avatarContainer: { flexDirection: "row", justifyContent: "flex-start", alignItems: "center", marginLeft: moderateScaleViewports(34), paddingBottom: moderateScaleViewports(14) },
+  toggleContainer: {marginLeft: moderateScaleViewports(20)},
+  displayName: {color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(20), paddingBottom: moderateScaleViewports(11), paddingTop: moderateScaleViewports(8)},
+  starRatingContainer: {width: moderateScaleViewports(123)},
+
+
 });

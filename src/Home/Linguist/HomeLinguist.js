@@ -12,7 +12,7 @@ import {
 
 import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
 
-import { Alert, AppState, NetInfo, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, AppState, NetInfo, ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
@@ -27,7 +27,6 @@ import { Sessions } from "../../Api";
 import { ensurePermissions } from "../../Util/Permission";
 import { PERMISSIONS } from "../../Util/Constants";
 import NavBar from "../../Components/NavBar/NavBar";
-import UserAvatar from "../../Components/UserAvatar/UserAvatar";
 import LinguistStatus from "../../Components/UserAvatar/LinguistStatus";
 import CallNumber from "../../Components/UserAvatar/CallNumber";
 import WavesBackground from "../../Components/UserAvatar/WavesBackground";
@@ -35,7 +34,6 @@ import { formatTimerSeconds } from "../../Util/Format";
 import { moderateScaleViewports } from "../../Util/Scaling";
 import CircularAvatar from "../../Components/CircularAvatar/CircularAvatar";
 import StarRating from "../../Components/StarRating/StarRating";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 class Home extends Component {
 
@@ -160,14 +158,6 @@ class Home extends Component {
     this.setState({ appState: nextAppState });
   };
 
-  selectImage = () => {
-    return this.props.avatarURL
-      ? {
-          uri: this.props.avatarURL
-        }
-      : Images.avatar;
-  };
-
   componentWillReceiveProps(nextProps) {}
 
   filterAllCalls = (allCalls, userType) => {
@@ -179,7 +169,6 @@ class Home extends Component {
           moment(next.session.createdAt).diff(moment(prev.session.createdAt))
         )
         .map((item, i) => {
-          console.tron.log(userType);
           let result = {};
           if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
             result = {
@@ -205,6 +194,9 @@ class Home extends Component {
                 "MMM DD, h:mm A"
               ),
               avatarURL: item[userType].avatarURL,
+              ifAbuseReported: !_isUndefined(item.session.ifAbuseReported)
+                ? item.session.ifAbuseReported
+                : false,
               chevron: false,
               userType,
               session: item.session,
@@ -212,7 +204,6 @@ class Home extends Component {
               isLinguist: this.props.isLinguist,
               token: this.props.token
             };
-            console.tron.log(result);
           }
           return result;
         })
@@ -238,7 +229,6 @@ class Home extends Component {
       linguistProfile,
       linguistCalls
     } = this.props;
-    console.tron.log(user);
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
     const amount = this.calculateAmount(allCalls);
 
@@ -252,14 +242,12 @@ class Home extends Component {
         />
 
         <WavesBackground>
-          <View style={{ flexDirection: "row", justifyContent: "flex-start", alignItems: "center", marginLeft: moderateScaleViewports(34), paddingBottom: moderateScaleViewports(14) }}>
-            <CircularAvatar avatarURL={user.avatarURL} firstName={user.firstName} lastInitial={user.lastName} />
-
-
-            <View style={{marginLeft: moderateScaleViewports(20)}}>
-              <Text style={{color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(20), paddingBottom: moderateScaleViewports(11), paddingTop: moderateScaleViewports(8)}}>{`${user.firstName} ${user.lastName ? user.lastName : ""}`}</Text>
+          <View style={styles.avatarContainer}>
+              <CircularAvatar photoSelect={avatar => this.uploadAvatar(avatar)} avatarURL={this.props.avatarURL} firstName={user.firstName} lastInitial={user.lastName} />
+            <View style={styles.toggleContainer}>
+              <Text style={styles.displayName}>{`${user.firstName} ${user.lastName ? user.lastName : ""}`}</Text>
               { user.averageStarRating && (
-                <StarRating fullStarColor={"#F39100"} rating={user.averageStarRating} containerStyle={{width: moderateScaleViewports(123)}} /> // rating given to target user for the session
+                <StarRating fullStarColor={"#F39100"} rating={user.averageStarRating} containerStyle={styles.starRatingContainer} />
               )}
               <View>
                 <LinguistStatus
@@ -272,16 +260,6 @@ class Home extends Component {
             </View>
           </View>
         </WavesBackground>
-
-{/*        <WavesBackground>
-          <UserAvatar
-            photoSelect={avatar => this.uploadAvatar(avatar)}
-            avatarSource={this.selectImage()}
-            avatarHeight={150}
-            bigAvatar={true}
-            stars={user.averageStarRating ? user.averageStarRating : 0}
-          />
-        </WavesBackground>*/}
         <CallNumber
           calls={allCalls.length}
           amount={amount}
@@ -323,7 +301,6 @@ const mD = {
   loadUser,
   updateUserProfilePhoto,
   updateLinguistProfile,
-
   loadLinguistCallHistory,
   incomingCallNotification
 };
