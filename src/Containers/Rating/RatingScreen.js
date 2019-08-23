@@ -439,12 +439,13 @@ class RatingScreen extends Component {
   };
 
   reportAbuse () {
+    const {session, user} = this.state;
     const { navigation } = this.props;
 
       Alert.alert(I18n.t("session.rating.abuse.title"), I18n.t('session.rating.abuse.alert'), [
         {text: I18n.t('cancel'), style: 'destructive'},
         {text: I18n.t('actions.confirm'), onPress: () => {
-            navigation.dispatch({ type: "ReportProblemScreen" });
+            navigation.dispatch({type: "ReportProblemScreen", params: { session: session , user: user }})
         }}
       ]);
   }

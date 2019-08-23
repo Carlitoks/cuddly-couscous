@@ -499,7 +499,7 @@ export const submitFeedback = (payload) => (dispatch, getState) => {
 // submit a specify type of feedback for reporting abuse in a session
 export const submitSessionAbuseReport = (message, aboutUserID, sessionID) => (dispatch, getState) => {
   return dispatch(submitFeedback({
-    type: "abuse_report",
+    type: "session_abuse_report",
     aboutUserID,
     sessionID,
     message
