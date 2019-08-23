@@ -13,12 +13,13 @@ export default class TextBlockButton extends Component {
 
   render() {
     const { loading, text, textStyle, style,buttonStyle,disabledStyle, disabled } = this.props;
+    const defaultDisableStyle = disabledStyle ?  {...styles.buttonDisable, ...disabledStyle} : styles.buttonDisable;
 
     return (
       <View style={style? style : styles.buttonContainer}>
             <TouchableOpacity
               disabled={disabled}
-              style={disabled ? disabledStyle ? disabledStyle : styles.buttonDisable : buttonStyle? buttonStyle : styles.button }
+              style={disabled ? defaultDisableStyle : buttonStyle ? buttonStyle : styles.button }
               onPress={this.props.onPress}
             >
               

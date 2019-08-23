@@ -17,7 +17,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: moderateScaleViewports(53),
-    width: metrics.width * 0.90,
+    width: metrics.width * 0.70,
     height: moderateScaleViewports(55),
   },
   baseButtonText: {

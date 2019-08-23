@@ -34,7 +34,7 @@ class ReportProblemScreen extends Component {
     this.setState({loading: true});
 
 
-    submitSessionAbuseReport(comment, "2705b298-e5a5-44de-afb7-442ad352a7e9", session.id)
+    submitSessionAbuseReport(comment, "", "")
     .then(asd => navigation.dispatch({ type: "Home" }))
     .catch((e) => {
       console.log(e);
