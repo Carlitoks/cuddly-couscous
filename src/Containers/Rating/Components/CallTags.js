@@ -32,9 +32,11 @@ class CallTags extends Component {
           item.IconName !== "waitTime"
           && item.IconName !== "professionalism"
           && item.IconName !== "language"
+          && item.IconName !== "distractions"
         ) {
           return couldBeBetter.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) });
         }
+        return null;
       }
       return couldBeBetter.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey)});
     });
@@ -45,9 +47,11 @@ class CallTags extends Component {
           item.IconName !== "waitTime"
           && item.IconName !== "professionalism"
           && item.IconName !== "language"
+          && item.IconName !== "easyUnderstand"
         ) {
           return whatWasGood.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) });
         }
+        return null;
       }
       return whatWasGood.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) });
     });
