@@ -39,6 +39,8 @@ export default StyleSheet.create({
   buttonDisable: {
     ...baseButton,
     backgroundColor: "#979797",
+    borderRadius: moderateScaleViewports(10),
+
     flex: 1
   },
   buttonText: {

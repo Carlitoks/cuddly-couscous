@@ -143,6 +143,8 @@ export default StyleSheet.create({
   buttonDisable: {
     ...baseButton,
     backgroundColor: "#979797",
+    flex: 1
+
   },
   buttonText: {
     color: "white",

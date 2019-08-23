@@ -79,7 +79,7 @@ class ReportProblemScreen extends Component {
         </View>
         <TextBlockButton
                 text = {I18n.t("actions.submit")} // the text in the button
-                disabled = {this.state.loading} // boolean if disabled, prevents taps and show disabled button styles
+                disabled = {this.state.loading || this.state.comment === ""} // boolean if disabled, prevents taps and show disabled button styles
                 loading = {this.state.loading} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
                 style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
                 disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
