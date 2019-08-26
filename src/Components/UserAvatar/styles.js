@@ -191,7 +191,7 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
   },
   switchContainer: {
-
+    marginLeft: Platform.OS !== "android" ? moderateScaleViewports(10) : 0
   },
   tabTextStyle: {
     fontFamily: Fonts.BaseFont,

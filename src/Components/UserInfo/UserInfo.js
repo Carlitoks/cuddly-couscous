@@ -6,7 +6,7 @@ import I18n from "../../I18n/I18n";
 
 import styles from "./styles";
 
-const UserInfo = ({ text, rating, missedCall }) => {
+const UserInfo = ({ text, rating, missedCall, abuseReported }) => {
   return (
       <View style={styles.containerStyle}>
         <Text style={styles.userName}>{text.split(' undefined')[0]}.</Text>
@@ -23,10 +23,10 @@ const UserInfo = ({ text, rating, missedCall }) => {
             rating={rating}
             emptyStarColor={Colors.emptyStarColor}
             starColor={Colors.gradientColorButton.top}
-            fullStarColor={Colors.gradientColorButton.top}
+            fullStarColor={"#F39100"}
           />
           </View>
-        ) : missedCall ? <Text style={styles.missedCallText}>{I18n.t("history.missedCall")}</Text> : <Text style={styles.notRatedText}>{I18n.t("history.notRated")}</Text>}
+        ) : missedCall ? <Text style={styles.missedCallText}>{I18n.t("history.missedCall")}</Text> : abuseReported ? <Text style={styles.notRatedText}>{I18n.t("history.abuseReported")}</Text> : <Text style={styles.notRatedText}>{I18n.t("history.notRated")}</Text>}
       </View>
   );
 };

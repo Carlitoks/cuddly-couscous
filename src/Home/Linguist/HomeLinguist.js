@@ -169,6 +169,12 @@ class Home extends Component {
           moment(next.session.createdAt).diff(moment(prev.session.createdAt))
         )
         .map((item, i) => {
+          let abuseReported = false;
+          if(item.featureFlag){
+            if(item.featureFlag.includes("sessions:linguist-reported-abuse") && this.props.isLinguist){
+              abuseReported = true;
+            }
+          }
           let result = {};
           if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
             result = {
@@ -194,9 +200,7 @@ class Home extends Component {
                 "MMM DD, h:mm A"
               ),
               avatarURL: item[userType].avatarURL,
-              ifAbuseReported: !_isUndefined(item.session.ifAbuseReported)
-                ? item.session.ifAbuseReported
-                : false,
+              ifAbuseReported: abuseReported,
               chevron: false,
               userType,
               session: item.session,

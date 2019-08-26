@@ -55,6 +55,12 @@ class CallHistoryView extends Component {
     if (!_isEmpty(allCalls)) {
       return allCalls
         .map((item, i) => {
+          let abuseReported = false;
+          if(item.featureFlag){
+            if(item.featureFlag.includes("sessions:linguist-reported-abuse") && this.props.isLinguist){
+              abuseReported = true;
+            }
+          }
           let result = {};
           if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
             result = {
@@ -80,9 +86,7 @@ class CallHistoryView extends Component {
               customScenarioNote: !_isUndefined(item.session.customScenarioNote)
                 ? item.session.customScenarioNote
                 : "",
-              ifAbuseReported: !_isUndefined(item.session.ifAbuseReported)
-                ? item.session.ifAbuseReported
-                : false,
+              ifAbuseReported: abuseReported,
               avatarURL: item[userType].avatarURL,
               chevron: false,
               userType,
@@ -182,7 +186,7 @@ class CallHistoryView extends Component {
         <NavBar
           navigation={this.props.navigation}
           leftComponent={
-            <ShowMenuButton navigation={this.props.navigation}/>
+            <ShowMenuButton navigation={this.props.navigation} />
           }
           rightComponent={
             <Close

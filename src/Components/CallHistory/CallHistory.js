@@ -38,6 +38,7 @@ export default class CallHistoryComponent extends Component {
                     <UserInfo
                       text={`${item.firstName} ${item.lastInitial}`}
                       rating={item.rating}
+                      abuseReported={item.ifAbuseReported}
                     />
                   }
                   rightIcon={

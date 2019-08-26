@@ -114,6 +114,5 @@ export const styles = StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontWeight: "bold",
     fontSize: moderateScaleViewports(14),
-    paddingTop: moderateScaleViewports(10)
   },
 });
