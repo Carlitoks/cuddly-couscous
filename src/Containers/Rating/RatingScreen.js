@@ -495,8 +495,8 @@ class RatingScreen extends Component {
                 </View>
               </TouchableOpacity>
               : null
-            }           
-            navbarTitle={I18n.t("account.title")}
+            }
+            navbarTitle={""}
           />
         <AvatarSection
           avatarURL={avatarURL}

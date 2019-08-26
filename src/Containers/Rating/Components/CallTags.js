@@ -8,8 +8,11 @@ import { TagSelect } from "react-native-tag-select";
 import { Divider } from "react-native-elements";
 import { BadIcons, GoodIcons, BadConnectionOptions } from "./RateListIcons";
 import I18n from "../../../I18n/I18n";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 // Styles
 import styles from "./Styles/CallTagsStyles";
+import { moderateScaleViewports } from "../../../Util/Scaling";
 
 
 class CallTags extends Component {
@@ -153,76 +156,77 @@ class CallTags extends Component {
   render() {
     const { openSlideMenu, ratingComments, badConnection, noVideo, noAudio, poorAudio, poorVideo,callDropped } = this.props;
     return (
-      <ScrollView contenContinerStyle={styles.flexEndCenter}>
-        {this.renderWhatWasGood()}
-        {this.renderCouldBeBetter()}
-        { badConnection ? 
-          <View style={styles.checklisContainer}>
-            <Text
-            style={styles.comments}
-          >
-            {I18n.t("session.rating.connection")}
-          </Text>
-          <View style={styles.container}>
-            <CheckBox
-              title={I18n.t("session.rating.technicalFlags.noAudio")}
-              fontFamily={styles.comments.fontFamily}
-              checked={noAudio}
-              checkedIcon={"check-square"}
-              uncheckedColor={"#F39100"}
-              checkedColor={"#F39100"}
-              textStyle={styles.checkboxText}
-              onPress={() => this.checkOptionConnection("noAudio")}
-              containerStyle={styles.checkboxInputContainer}
-            />
-            <CheckBox
-              title={I18n.t("session.rating.technicalFlags.noVideo")}
-              fontFamily={styles.comments.fontFamily}
-              checked={noVideo}
-              checkedIcon={"check-square"}
-              uncheckedColor={"#F39100"}
-              checkedColor={"#F39100"}
-              textStyle={styles.checkboxText}
-              onPress={() => this.checkOptionConnection("noVideo")}
-              containerStyle={styles.checkboxInputContainer}
-            />
-            <CheckBox
-              title={I18n.t("session.rating.technicalFlags.poorAudio")}
-              fontFamily={styles.comments.fontFamily}
-              checked={poorAudio}
-              checkedIcon={"check-square"}
-              uncheckedColor={"#F39100"}
-              checkedColor={"#F39100"}
-              textStyle={styles.checkboxText}
-              onPress={() => this.checkOptionConnection("poorAudio")}
-              containerStyle={styles.checkboxInputContainer}
-            />
-            <CheckBox
-              title={I18n.t("session.rating.technicalFlags.poorVideo")}
-              fontFamily={styles.comments.fontFamily}
-              checked={poorVideo}
-              checkedIcon={"check-square"}
-              uncheckedColor={"#F39100"}
-              checkedColor={"#F39100"}
-              textStyle={styles.checkboxText}
-              onPress={() => this.checkOptionConnection("poorVideo")}
-              containerStyle={styles.checkboxInputContainer}
-            />
-            <CheckBox
-              title={I18n.t("session.rating.technicalFlags.callDropped")}
-              fontFamily={styles.comments.fontFamily}
-              checked={callDropped}
-              checkedIcon={"check-square"}
-              uncheckedColor={"#F39100"}
-              checkedColor={"#F39100"}
-              textStyle={styles.checkboxText}
-              onPress={() => {this.checkOptionConnection("callDropped")}}
-              containerStyle={styles.checkboxInputContainer}
-            />
-          </View>
-          <Divider style={styles.divider} />
-          <Text style={[styles.baseText, styles.paddingTop]}>{I18n.t("session.rating.technical.label")}</Text>
-          <TextInput
+      <KeyboardAwareScrollView extraScrollHeight={moderateScaleViewports(190)}>
+        <ScrollView contenContinerStyle={styles.flexEndCenter}>
+          {this.renderWhatWasGood()}
+          {this.renderCouldBeBetter()}
+          { badConnection ?
+            <View style={styles.checklisContainer}>
+              <Text
+                style={styles.comments}
+              >
+                {I18n.t("session.rating.connection")}
+              </Text>
+              <View style={styles.container}>
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.noAudio")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={noAudio}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => this.checkOptionConnection("noAudio")}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.noVideo")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={noVideo}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => this.checkOptionConnection("noVideo")}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.poorAudio")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={poorAudio}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => this.checkOptionConnection("poorAudio")}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.poorVideo")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={poorVideo}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => this.checkOptionConnection("poorVideo")}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.callDropped")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={callDropped}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => {this.checkOptionConnection("callDropped")}}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+              </View>
+              <Divider style={styles.divider} />
+              <Text style={[styles.baseText, styles.paddingTop]}>{I18n.t("session.rating.technical.label")}</Text>
+              <TextInput
                 style={styles.additionalInformationInput}
                 returnKeyType="done"
                 multiline
@@ -230,10 +234,11 @@ class CallTags extends Component {
                 placeholder={ I18n.t("session.rating.technical.placeholder")}
                 placeholderTextColor="rgba(0, 0, 0, 0.6);"
               />
-          </View>
-        : 
-           null}
-      </ScrollView>
+            </View>
+            :
+            null}
+        </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }

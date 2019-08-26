@@ -613,6 +613,7 @@ export default (ENG = {
 
     // used when rating a session
     rating: {
+      title: "Rating",
       reportButton: "Report",
       comment: "Comment",
       addComment: "Add Comments",
