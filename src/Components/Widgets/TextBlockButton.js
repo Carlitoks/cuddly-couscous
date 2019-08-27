@@ -25,7 +25,7 @@ export default class TextBlockButton extends Component {
               
               {loading
                 ? (<ActivityIndicator color="#ffffff" />)
-                : (<Text style={styles.buttonText}>{text}</Text>)
+                : (<Text style={ textStyle || styles.buttonText}>{text}</Text>)
               }
             </TouchableOpacity>
       </View>

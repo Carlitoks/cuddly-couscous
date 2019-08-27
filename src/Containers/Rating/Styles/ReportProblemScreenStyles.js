@@ -76,7 +76,7 @@ export default StyleSheet.create({
     paddingLeft: 10,
     marginTop: 15,
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScale(14, 0),
+    fontSize: moderateScaleViewports(17),
     color: '#333333'
   },
   buttonContainer: {
@@ -90,4 +90,8 @@ export default StyleSheet.create({
     marginTop: 20,
     marginBottom: isIphoneXorAbove() ? 44 : 0,
   },
+  buttonText: {
+    fontSize: moderateScaleViewports(17),
+    color: "#ffffff"
+  }
 });

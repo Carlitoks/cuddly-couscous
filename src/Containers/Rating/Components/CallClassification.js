@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import {
-  Text, View, TouchableOpacity, ScrollView,
+  Text, View, TouchableOpacity, ScrollView, TextInput,
 } from "react-native";
 import { TagSelect } from "react-native-tag-select";
-import { Divider, Icon } from "react-native-elements";
+import { CheckBox, Divider } from "react-native-elements";
 import { CallClassification as CallClassificationIcons } from "./RateListIcons";
-import I18n from "../../../I18n/I18n";
+import I18n, { translateProperty } from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallClassificationStyles";
-import { moderateScaleViewports } from "../../../Util/Scaling";
-import RenderPicker from "../../CustomerHome/Components/Partials/PickerSelect";
 
 
 class CallClassification extends Component {
@@ -37,9 +35,24 @@ class CallClassification extends Component {
     return openSlideMenu({ type });
   };
 
+  renderScenarioList = () => {
+    const { scenarioID, setScenarioID, scenarioList } = this.props;
+    return scenarioList.map(scenario => (<CheckBox
+      title={translateProperty(scenario, "title")}
+      fontFamily={styles.comments.fontFamily}
+      checked={scenario.id === scenarioID}
+      checkedIcon={"check-square"}
+      uncheckedColor={"#F39100"}
+      checkedColor={"#F39100"}
+      textStyle={styles.checkboxText}
+      onPress={() => setScenarioID(scenario.id)}
+      containerStyle={styles.checkboxInputContainer}
+    />));
+  };
+
   render() {
     const { callClassification } = this.state;
-    const { callType, scenarioID, scenarioNote } = this.props;
+    const { callType, scenarioID, scenarioNote, setScenarioID, scenarioList, setScenarioNote } = this.props;
     return (
       <ScrollView style={styles.paddingTop} contenContinerStyle={styles.flexEndCenter}>
         <Text style={styles.baseText}>{I18n.t("session.rating.classification")}</Text>
@@ -59,41 +72,27 @@ class CallClassification extends Component {
         />
 
         { callType === "help" && (
-        <View style={styles.bottomDividerContainer}>
-          <Text style={styles.baseText}>{I18n.t("session.rating.scenario")}</Text>
-          <RenderPicker
-            openSlideMenu={this.openSlideMenu}
-            title="none"
-            placeholder={I18n.t("actions.select")}
-            currentScenarioId={scenarioID}
-            type="ratingsScenarioSelection"
-            labelStyle={styles.renderPickerLabel}
-            showDivider={false}
-            selectedLabelStyle={styles.renderPickerSelectedLabel}
-            icon={(
-              <Icon
-                color="rgba(0, 0, 0, 0.18)"
-                name="chevron-right"
-                type="evilicon"
-                size={moderateScaleViewports(17)}
-              />
-            )}
-            selectorContainer={styles.renderPickerSelectorContainer}
-          />
-        </View>
+          <View style={styles.checklisContainer}>
+            <Text
+              style={styles.comments}
+            >
+              {I18n.t("session.rating.scenario")}
+            </Text>
+            <View style={styles.container}>
+              { this.renderScenarioList() }
+            </View>
+          </View>
         ) }
-
+        <Divider style={styles.divider} />
         <View style={styles.bottomDividerContainer}>
-          <Divider style={styles.divider} />
+          <Text style={[styles.baseText, styles.callDetails]}>{I18n.t("session.rating.about.label")}</Text>
           <TouchableOpacity onPress={() => this.openSlideMenu("scenarioNote")}>
             <Text
               style={styles.addComments}
-              numberOfLines={1}
             >
-              { scenarioNote || `+ ${I18n.t("session.rating.addComment")}`}
+              { scenarioNote || I18n.t("session.rating.about.placeholder") }
             </Text>
           </TouchableOpacity>
-          <Divider style={styles.divider} />
         </View>
       </ScrollView>
     );

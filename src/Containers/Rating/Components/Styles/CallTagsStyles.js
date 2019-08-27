@@ -5,19 +5,11 @@ import { moderateScaleViewports, moderateScale } from "../../../../Util/Scaling"
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
-  addComments: {
-    color: "#401674",
-    fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(17),
-    paddingBottom: 19,
-    paddingRight: 19,
-    paddingTop: 19,
-  },
   baseTagText: { fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16) },
   baseTagTextSelected: { color: "#FFFFFF" },
   baseTagTextUnselected: { color: "#401674" },
   baseTagsStyle: {
-    borderRadius: 10,
+    borderRadius: 4,
     paddingBottom: metrics.width * 0.0080,
     paddingLeft: metrics.width * 0.06,
     paddingRight: metrics.width * 0.06,
@@ -64,7 +56,7 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(16),
     marginLeft: 10,
   },
-  divider: { backgroundColor: "#979797", height: 1, width: metrics.width * 0.90 },
+  divider: { backgroundColor: "#979797", height: 1, width: metrics.width, marginLeft: -35, marginTop: moderateScaleViewports(30) },
   flexEndCenter: { alignItems: "center", justifyContent: "center" },
   paddingTop: { marginTop: metrics.height * 0.045 },
   starRatingPadding: { paddingBottom: metrics.height * 0.10 },
@@ -93,4 +85,20 @@ export default StyleSheet.create({
   tagsContainer: { alignItems: "center", justifyContent: "center" },
   thumbsContainer: { flexDirection: "row" },
   thumbsPadding: { paddingLeft: 25 },
+  bottomDividerContainer: {
+    //marginLeft: moderateScaleViewports(30),
+  },
+  callDetails: {
+    paddingTop: moderateScaleViewports(20),
+    alignSelf: "flex-start",
+    fontSize: moderateScaleViewports(18)
+  },
+  addComments: {
+    alignSelf: "flex-start",
+    color: "#444444",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    paddingBottom: moderateScaleViewports(40),
+    paddingTop: moderateScaleViewports(10),
+  },
 });

@@ -14,6 +14,9 @@ import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 // Styles
 import styles from "./Styles/RatingsScreenStyles";
 import { Sessions } from "../../Api";
+import CircularAvatar from "../../Components/CircularAvatar/CircularAvatar";
+import WavesBackground from "../../Components/UserAvatar/WavesBackground";
+import { moderateScaleViewports } from "../../Util/Scaling";
 
 const WhatWasGood = [];
 const WhatCouldBetter = [];
@@ -329,7 +332,7 @@ class RatingScreen extends Component {
       poorVideo,
       callDropped
     } = this.state;
-    const { openSlideMenu } = this.props;
+    const { openSlideMenu, scenariosList } = this.props;
     if (linguistProfile) {
       return (
         <Swiper
@@ -358,6 +361,9 @@ class RatingScreen extends Component {
             callType={callType}
             scenarioID={scenarioID}
             linguistProfile={linguistProfile}
+            scenarioList={scenariosList}
+            setScenarioID={this.setScenarioID}
+            setScenarioNote={this.setScenarioNote}
           />
           <CallTags
             linguistProfile={linguistProfile}
@@ -382,11 +388,11 @@ class RatingScreen extends Component {
             rating={rating}
             checkConnectionProblem={this.checkConnectionProblem}
             badConnection={connection}
-            noAudio= {noAudio}
-            noVideo= {noVideo}
-            poorAudio= {poorAudio}
-            poorVideo= {poorVideo}
-            callDropped= {callDropped}
+            noAudio={noAudio}
+            noVideo={noVideo}
+            poorAudio={poorAudio}
+            poorVideo={poorVideo}
+            callDropped={callDropped}
           />
         </Swiper>
       );
@@ -482,27 +488,30 @@ class RatingScreen extends Component {
   render() {
     const { navigation } = this.props;
     const {
-      customerName, avatarURL, comment, scenarioNote, submitting,linguistProfile,
+      customerName, avatarURL, comment, scenarioNote, submitting, linguistProfile,
     } = this.state;
     return (
       <View style={styles.ratingScreenContainer}>
           <NavBar
             rightComponent={
-              linguistProfile ? 
+              linguistProfile ?
               <TouchableOpacity activeOpacity={0.8} onPress={() => this.reportAbuse()}>
-                <View style={styles.cancelButton}>
                   <Text style={styles.cancelStyle}>{I18n.t("session.rating.reportButton")}</Text>
-                </View>
               </TouchableOpacity>
               : null
             }
-            navbarTitle={""}
           />
-        <AvatarSection
-          avatarURL={avatarURL}
-          customerName={customerName}
-          navigation={navigation}
-        />
+
+        <WavesBackground contentContainerStyle={{marginTop: -moderateScaleViewports(15)}}>
+          <View style={styles.avatarContainer}>
+            <CircularAvatar avatarURL={avatarURL} firstName={customerName} />
+            <View style={styles.toggleContainer}>
+              <Text style={styles.customerText}>{linguistProfile ? I18n.t("session.rating.customer") : I18n.t("session.rating.linguist")}</Text>
+              <Text style={styles.displayName}>{`${customerName}`}</Text>
+            </View>
+          </View>
+        </WavesBackground>
+
         {this.renderSwiper()}
         <View style={styles.bottomButtonContainer}>
           <View
@@ -535,7 +544,9 @@ class RatingScreen extends Component {
   }
 }
 
-const mS = state => ({});
+const mS = state => ({
+  scenariosList: state.appConfigReducer.scenarios,
+});
 
 const mD = {
   openSlideMenu,

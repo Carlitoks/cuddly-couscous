@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  TouchableOpacity, View, TextInput, Alert,
+  TouchableOpacity, View, TextInput, Alert, Keyboard
 } from "react-native";
 import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
@@ -23,6 +23,14 @@ class ReportProblemScreen extends Component {
       session,
       user,
     };
+  }
+
+  keyboardRef = null;
+
+  componentDidMount() {
+    if (this.keyboardRef) {
+      this.keyboardRef.focus();
+    }
   }
 
   changeText = (comment) => {
@@ -70,6 +78,7 @@ class ReportProblemScreen extends Component {
             <View style={styles.additionalInformationContainer}>
               <TextInput
                 style={styles.additionalInformationInput}
+                ref={ref => this.keyboardRef = ref}
                 returnKeyType="done"
                 multiline
                 blurOnSubmit

@@ -8,11 +8,8 @@ import { TagSelect } from "react-native-tag-select";
 import { Divider } from "react-native-elements";
 import { BadIcons, GoodIcons, BadConnectionOptions } from "./RateListIcons";
 import I18n from "../../../I18n/I18n";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
 // Styles
 import styles from "./Styles/CallTagsStyles";
-import { moderateScaleViewports } from "../../../Util/Scaling";
 
 
 class CallTags extends Component {
@@ -156,7 +153,6 @@ class CallTags extends Component {
   render() {
     const { openSlideMenu, ratingComments, badConnection, noVideo, noAudio, poorAudio, poorVideo,callDropped } = this.props;
     return (
-      <KeyboardAwareScrollView extraScrollHeight={moderateScaleViewports(190)}>
         <ScrollView contenContinerStyle={styles.flexEndCenter}>
           {this.renderWhatWasGood()}
           {this.renderCouldBeBetter()}
@@ -224,21 +220,22 @@ class CallTags extends Component {
                   containerStyle={styles.checkboxInputContainer}
                 />
               </View>
+
               <Divider style={styles.divider} />
-              <Text style={[styles.baseText, styles.paddingTop]}>{I18n.t("session.rating.technical.label")}</Text>
-              <TextInput
-                style={styles.additionalInformationInput}
-                returnKeyType="done"
-                multiline
-                blurOnSubmit
-                placeholder={ I18n.t("session.rating.technical.placeholder")}
-                placeholderTextColor="rgba(0, 0, 0, 0.6);"
-              />
+              <View style={styles.bottomDividerContainer}>
+                <Text style={[styles.baseText, styles.callDetails]}>{I18n.t("session.rating.technical.label")}</Text>
+                <TouchableOpacity onPress={() => openSlideMenu("ratingComments")}>
+                  <Text
+                    style={styles.addComments}
+                  >
+                    { ratingComments || I18n.t("session.rating.technical.placeholder") }
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
             :
             null}
         </ScrollView>
-      </KeyboardAwareScrollView>
     );
   }
 }

@@ -23,8 +23,6 @@ export default StyleSheet.create({
   baseButtonText: {
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(17),
-    paddingBottom: moderateScaleViewports(Metrics.width * 0.05),
-    paddingTop: moderateScaleViewports(Metrics.width * 0.05),
   },
   baseButtonTextDisabled: {
     color: "#BCBCBC",
@@ -56,7 +54,7 @@ export default StyleSheet.create({
   },
   disabledButton: {
     alignItems: "center",
-    borderRadius: moderateScaleViewports(53),
+    borderRadius: moderateScaleViewports(4),
     justifyContent: "center",
     width: metrics.width * 0.70,
     height: moderateScaleViewports(55),
@@ -66,7 +64,7 @@ export default StyleSheet.create({
   },
   enabledButton: {
     alignItems: "center",
-    borderRadius: moderateScaleViewports(53),
+    borderRadius: moderateScaleViewports(4),
     justifyContent: "center",
     width: metrics.width * 0.70,
     height: moderateScaleViewports(55),
@@ -119,9 +117,15 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(18, 0)
   },
-  swiperContainer: {},
+  swiperContainer: {
+    flexGrow: 1,
+  },
   wrapperContainer: {
     backgroundColor: "white",
     height: "100%",
   },
+  avatarContainer: { flexDirection: "row", justifyContent: "flex-start", alignItems: "center", marginLeft: moderateScaleViewports(34), paddingBottom: moderateScaleViewports(14) },
+  toggleContainer: {marginLeft: moderateScaleViewports(20)},
+  displayName: {fontWeight: "bold", color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(20)},
+  customerText: { fontWeight: "200", color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16), paddingBottom: moderateScaleViewports(2)},
 });
