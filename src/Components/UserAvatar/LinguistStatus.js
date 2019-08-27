@@ -34,6 +34,7 @@ const LinguistStatus =
                 false: Colors.tintColor
               }}
             />
+            {loading && <ActivityIndicator color="white" style={{ marginLeft:5 }} /> }
           </View>
         ) : null}
       </View>
