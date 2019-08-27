@@ -222,7 +222,9 @@ class Home extends Component {
   calculateAmount (calls = []) {
     let seconds = 0;
     calls.forEach((call) => {
-      seconds += call.duration;
+      if(call.session.duration){
+        seconds += call.session.duration;
+      }
     });
     return formatTimerSeconds(seconds);
   }
@@ -234,7 +236,7 @@ class Home extends Component {
       linguistCalls
     } = this.props;
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
-    const amount = this.calculateAmount(allCalls);
+    const amount = this.calculateAmount(linguistCalls);
 
     return (
       <View style={styles.scrollContainer}>
@@ -265,7 +267,7 @@ class Home extends Component {
           </View>
         </WavesBackground>
         <CallNumber
-          calls={allCalls.length}
+          calls={linguistCalls.length}
           amount={amount}
         />
         <View style={styles.recentCallsContainer}>

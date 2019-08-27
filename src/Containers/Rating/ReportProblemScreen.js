@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Icon } from "react-native-elements";
 import NavBar from "../../Components/NavBar/NavBar";
 import TextBlockButton from "../../Components/Widgets/TextBlockButton";
-import { submitSessionAbuseReport } from "../../Ducks/AccountReducer";
+import { loadLinguistCallHistory, submitSessionAbuseReport } from "../../Ducks/AccountReducer";
 
 // Styles
 import styles from "./Styles/ReportProblemScreenStyles";
@@ -39,11 +39,12 @@ class ReportProblemScreen extends Component {
   }
 
   submitAbuseReport = () => {
-    const { navigation, submitSessionAbuseReport } = this.props;
+    const { navigation, submitSessionAbuseReport, loadLinguistCallHistory } = this.props;
     const { comment, user, session } = this.state;
     this.setState({ loading: true });
     submitSessionAbuseReport(comment, user.id, session.id)
       .then(asd => navigation.dispatch({ type: "Home" }))
+      .then(() => loadLinguistCallHistory(false))
       .catch((e) => {
         console.log(e);
         Alert.alert(I18n.t("error"), translateApiError(e, "api.errUnexpected"));
@@ -110,6 +111,7 @@ const mS = state => ({
 
 const mD = {
   submitSessionAbuseReport,
+  loadLinguistCallHistory
 };
 
 export default connect(

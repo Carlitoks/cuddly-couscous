@@ -17,6 +17,7 @@ import { Sessions } from "../../Api";
 import CircularAvatar from "../../Components/CircularAvatar/CircularAvatar";
 import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 import { moderateScaleViewports } from "../../Util/Scaling";
+import { loadLinguistCallHistory } from "../../Ducks/AccountReducer";
 
 const WhatWasGood = [];
 const WhatCouldBetter = [];
@@ -108,7 +109,7 @@ class RatingScreen extends Component {
   };
 
   submit = () => {
-    const { navigation } = this.props;
+    const { navigation, loadLinguistCallHistory } = this.props;
 
     const {
       rating, thumbsUp,
@@ -152,6 +153,7 @@ class RatingScreen extends Component {
       .then((response) => {
         navigation.dispatch({ type: "Home" });
       })
+      .then(() => loadLinguistCallHistory(false))
       .catch((err) => {
         this.submitting = false;
         this.setState({submitting: false}, () => {
@@ -550,6 +552,7 @@ const mS = state => ({
 
 const mD = {
   openSlideMenu,
+  loadLinguistCallHistory
 };
 
 export default connect(
