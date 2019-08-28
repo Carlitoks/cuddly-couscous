@@ -440,7 +440,13 @@ class RatingScreen extends Component {
           UpdateFlags={this.UpdateFlags}
           ratingComments={comment}
           rating={rating}
-          badConnection={this.state.connection}
+          checkConnectionProblem={this.checkConnectionProblem}
+          badConnection={connection}
+          noAudio={noAudio}
+          noVideo={noVideo}
+          poorAudio={poorAudio}
+          poorVideo={poorVideo}
+          callDropped={callDropped}
         />
       </Swiper>
     );
