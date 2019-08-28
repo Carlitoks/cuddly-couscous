@@ -226,7 +226,7 @@ class CallTags extends Component {
                 <Text style={[styles.baseText, styles.callDetails]}>{I18n.t("session.rating.technical.label")}</Text>
                 <TouchableOpacity onPress={() => openSlideMenu("ratingComments")}>
                   <Text
-                    style={styles.addComments}
+                    style={[styles.addComments, ratingComments ? styles.darkGrey : styles.grey] }
                   >
                     { ratingComments || I18n.t("session.rating.technical.placeholder") }
                   </Text>

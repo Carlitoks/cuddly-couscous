@@ -201,11 +201,12 @@ class RatingScreen extends Component {
       callType,
       scenarioID,
       linguistProfile,
+      scenarioNote,
     } = this.state;
 
     if (linguistProfile) {
-      if (callType === "help") return rating > 0 && callType && scenarioID && (thumbsUp || thumbsDown);
-      return rating > 0 && callType && (thumbsUp || thumbsDown);
+      if (callType === "help") return rating > 0 && callType && scenarioID && (thumbsUp || thumbsDown) && scenarioNote;
+      return rating > 0 && callType && (thumbsUp || thumbsDown) && scenarioNote;
     }
     return rating > 0;
   };

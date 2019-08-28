@@ -95,10 +95,11 @@ export default StyleSheet.create({
   },
   addComments: {
     alignSelf: "flex-start",
-    color: "#444444",
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(16),
     paddingBottom: moderateScaleViewports(40),
     paddingTop: moderateScaleViewports(10),
   },
+  grey:{color:"#979797"},
+  darkGrey:{color:"#444444"},
 });

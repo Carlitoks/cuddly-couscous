@@ -47,12 +47,13 @@ export default StyleSheet.create({
   divider: { backgroundColor: "#979797", height: 1, width: metrics.width, marginTop: moderateScaleViewports(30) },
   addComments: {
     alignSelf: "flex-start",
-    color: "#444444",
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(16),
     paddingBottom: moderateScaleViewports(40),
     paddingTop: moderateScaleViewports(10),
   },
+  grey:{color:"#979797"},
+  darkGrey:{color:"#444444"},
   /**
    * RenderPickerLangStyles
    */

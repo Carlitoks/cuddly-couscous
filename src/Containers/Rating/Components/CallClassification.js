@@ -88,7 +88,7 @@ class CallClassification extends Component {
           <Text style={[styles.baseText, styles.callDetails]}>{I18n.t("session.rating.about.label")}</Text>
           <TouchableOpacity onPress={() => this.openSlideMenu("scenarioNote")}>
             <Text
-              style={styles.addComments}
+              style={[styles.addComments, scenarioNote ? styles.darkGrey : styles.grey  ]}
             >
               { scenarioNote || I18n.t("session.rating.about.placeholder") }
             </Text>
