@@ -39,7 +39,6 @@ export const setInterfaceLanguage = (code) => (dispatch, getState) => {
   //  * moment.js
 };
 
-
 const ACTIONS = {
   CLEAR: "appState/clear",
   MERGE: "appState/merge",
@@ -56,7 +55,6 @@ export const clear = () => ({type: ACTIONS.CLEAR});
 
 const reducer = (state = null, action = {}) => {
   const { payload, type } = action;
-  console.log(type, payload);
   //debugger
   switch (type) {
     case ACTIONS.CLEAR: {
