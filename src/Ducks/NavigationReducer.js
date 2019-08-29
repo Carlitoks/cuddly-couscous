@@ -1,9 +1,7 @@
 import { NavigationActions, StateUtils } from "react-navigation";
 import AppNavigation from "../Navigation/AppNavigation";
 import Instabug from "instabug-reactnative";
-import analytics from "@segment/analytics-react-native";
-import { loadState } from "../Config/LocalStorage";
-import { recordNavigationEvent } from "../Util/Forensics";
+import {EVENTS, recordAnalyticsEvent, recordNavigationEvent} from "../Util/Analytics";
 
 const initialState = AppNavigation.router.getStateForAction(
   AppNavigation.router.getActionForPathAndParams("")
@@ -21,7 +19,6 @@ export default (reducer = (state, action) => {
 
   switch (action.type) {
     case "back":
-      analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(NavigationActions.back(), state);
       break;
@@ -38,7 +35,6 @@ export default (reducer = (state, action) => {
     // When that happens the app state is cleared, so if the Home screen is loaded
     // in the background it will re-render with null references to the user
     case "SettingsView": 
-      analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
@@ -54,7 +50,6 @@ export default (reducer = (state, action) => {
       break;
 
     case "Home":
-      analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
@@ -70,9 +65,8 @@ export default (reducer = (state, action) => {
       break;
 
     case "RateView":
-      analytics.screen(action.type.toString());
-      analytics.track("Order Completed");
       recordNavigationEvent(action.type.toString());
+      recordAnalyticsEvent(EVENTS.SESSION_END);
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 0,
@@ -82,7 +76,6 @@ export default (reducer = (state, action) => {
       break;
 
     case "SelectRoleView/Reset":
-      analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
@@ -93,7 +86,6 @@ export default (reducer = (state, action) => {
       break;
 
     case "NameCustomerView":
-      analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
@@ -104,7 +96,6 @@ export default (reducer = (state, action) => {
       break;
 
     case "LoginView":
-      analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
@@ -118,9 +109,8 @@ export default (reducer = (state, action) => {
       break;
 
     case "RegisterView":
-      analytics.screen(action.type.toString());
-      analytics.track("Product Added");
       recordNavigationEvent(action.type.toString());
+      recordAnalyticsEvent(EVENTS.REGISTRATION_BEGAN);
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
           index: 1,
@@ -133,7 +123,6 @@ export default (reducer = (state, action) => {
       break;
 
     case "SessionView":
-      analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
       // NOTE: setting the stack to 2 actions here (Home -> SessionView) caused instability for both
       // the Linguist and Customer side... so don't do that.
@@ -148,7 +137,6 @@ export default (reducer = (state, action) => {
       break;
 
     case "LinguistIncomingCallView":
-      analytics.screen(action.type.toString());
       recordNavigationEvent(action.type.toString());
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.reset({
@@ -161,9 +149,8 @@ export default (reducer = (state, action) => {
       break;
 
     case "CustomerMatchingView":
-      analytics.screen(action.type.toString());
-      analytics.track("Checkout Started");
       recordNavigationEvent(action.type.toString());
+      recordAnalyticsEvent(EVENTS.SESSION_ATTEMPTED);
 
       // the user could arrive at this screen from another session ("try another Jeenie" option) - so if that happens, we
       // want to ensure that the previous session views are no longer present in the stack, which prevents them
@@ -178,10 +165,9 @@ export default (reducer = (state, action) => {
       );
       break;
 
-      default:
+    default:
       if (!action.payload && (action.type.indexOf("View") != -1 || action.type.indexOf("Screen") != -1)) {
         recordNavigationEvent(action.type.toString());
-        analytics.screen(action.type.toString());
       }
       newState = AppNavigation.router.getStateForAction(
         NavigationActions.navigate({
