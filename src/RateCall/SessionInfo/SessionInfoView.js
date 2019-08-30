@@ -42,8 +42,9 @@ class SessionInfoView extends Component {
                 <StarRating fullStarColor={"#F39100"} rating={sessionInfo.rating} containerStyle={styles.starRatingContainer} /> // rating given to target user for the session
               )}
               { sessionInfo.rating === "" && !sessionInfo.ifAbuseReported && (
+                
                 <TouchableOpacity style={styles.addRatingButton}
-                                  onPress={() => { this.props.navigation.dispatch({type: "RateView", params: { session: sessionInfo.session , user: sessionInfo.user, isLinguist: sessionInfo.isLinguist, token: sessionInfo.token }}) }}>
+                                  onPress={() => { this.props.navigation.dispatch({type: "RateView", params: { session: sessionInfo.session , user: { firstName: sessionInfo.firstName, avatarURL: sessionInfo.avatarURL }, isLinguist: sessionInfo.isLinguist, token: sessionInfo.token }}) }}>
                   <Icon name={"pencil-square-o"} color={"#ffffff"} size={moderateScaleViewports(19)} /><Text style={styles.addRatingButtonText}>{I18n.t("history.addRating")}</Text>
                 </TouchableOpacity>
               )}

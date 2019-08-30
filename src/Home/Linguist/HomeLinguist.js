@@ -221,8 +221,9 @@ class Home extends Component {
 
   calculateAmount (calls = []) {
     let seconds = 0;
+    const firstDay = moment().startOf('month').format();
     calls.forEach((call) => {
-      if(call.session.duration){
+      if(call.session.duration && moment(firstDay).isAfter(call.session.createdAt)){
         seconds += call.session.duration;
       }
     });
