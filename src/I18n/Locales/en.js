@@ -363,7 +363,7 @@ export default (ENG = {
       remove: "Remove",
       more: "View More Packages",
       description: "Purchase more minutes for less.  With autoreload, you won't ever run out of time.",
-      confirmRemove: "Are you sure you want to stop reloading this package?  When you exceed your balance, you will be charged the standard per-minute rate."
+      confirmRemove: "Are you sure you want to stop reloading this package?  If you exceed your balance, you will be charged the standard per-minute rate."
     },
   },
 
