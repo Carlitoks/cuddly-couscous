@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import {
-  ScrollView, Text, TouchableOpacity, View,
+  ScrollView, Text, TouchableOpacity, View, TextInput
 } from "react-native";
+import { CheckBox } from 'react-native-elements'
+
 import { TagSelect } from "react-native-tag-select";
 import { Divider } from "react-native-elements";
-import { BadIcons, GoodIcons } from "./RateListIcons";
+import { BadIcons, GoodIcons, BadConnectionOptions } from "./RateListIcons";
 import I18n from "../../../I18n/I18n";
 // Styles
 import styles from "./Styles/CallTagsStyles";
@@ -16,6 +18,7 @@ class CallTags extends Component {
     this.state = {
       whatWasGood: [],
       couldBeBetter: [],
+      checked: false
     };
   }
 
@@ -29,9 +32,11 @@ class CallTags extends Component {
           item.IconName !== "waitTime"
           && item.IconName !== "professionalism"
           && item.IconName !== "language"
+          && item.IconName !== "distractions"
         ) {
           return couldBeBetter.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) });
         }
+        return null;
       }
       return couldBeBetter.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey)});
     });
@@ -42,9 +47,11 @@ class CallTags extends Component {
           item.IconName !== "waitTime"
           && item.IconName !== "professionalism"
           && item.IconName !== "language"
+          && item.IconName !== "easyUnderstand"
         ) {
           return whatWasGood.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) });
         }
+        return null;
       }
       return whatWasGood.push({ ...item, id: i + 1, label: I18n.t(item.i18nKey) });
     });
@@ -85,10 +92,16 @@ class CallTags extends Component {
     );
   };
 
+  checkOptionConnection = (Key) => {
+    const { checkConnectionProblem } = this.props;
+
+    checkConnectionProblem(Key);
+  };
+
   renderWhatWasGood = () => {
     const { rating } = this.props;
     const { whatWasGood } = this.state;
-    if (rating >= 4) {
+    if (rating > 4) {
       return (
         <View>
           <Text style={[styles.baseText, styles.paddingTop]}>{I18n.t("session.rating.questionGood")}</Text>
@@ -114,7 +127,7 @@ class CallTags extends Component {
   renderCouldBeBetter = () => {
     const { rating } = this.props;
     const { couldBeBetter } = this.state;
-    if (rating <= 3) {
+    if (rating <= 4) {
       return (
         <View>
           <Text style={[styles.baseText, styles.paddingTop]}>{I18n.t("session.rating.questionBetter")}</Text>
@@ -138,33 +151,91 @@ class CallTags extends Component {
   };
 
   render() {
-    const { openSlideMenu, ratingComments } = this.props;
+    const { openSlideMenu, ratingComments, badConnection, noVideo, noAudio, poorAudio, poorVideo,callDropped } = this.props;
     return (
-      <ScrollView contenContinerStyle={styles.flexEndCenter}>
-        {this.renderWhatWasGood()}
-        {this.renderCouldBeBetter()}
-        <View style={styles.bottomDividerContainer}>
-          <Divider style={styles.divider} />
-          <TouchableOpacity onPress={() => openSlideMenu("ratingComments")}>
-            <Text
-              style={styles.addComments}
-              numberOfLines={1}
-            >
-              { ratingComments ? I18n.t("session.rating.comment") : `+ ${I18n.t("session.rating.addComment")}`}
-            </Text>
-            {ratingComments
-              ? (
-                <Text
-                  style={styles.comments}
-                >
-                  {ratingComments}
-                </Text>
-              ) : null}
+        <ScrollView contenContinerStyle={styles.flexEndCenter}>
+          {this.renderWhatWasGood()}
+          {this.renderCouldBeBetter()}
+          { badConnection ?
+            <View style={styles.checklisContainer}>
+              <Text
+                style={styles.comments}
+              >
+                {I18n.t("session.rating.connection")}
+              </Text>
+              <View style={styles.container}>
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.noAudio")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={noAudio}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => this.checkOptionConnection("noAudio")}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.noVideo")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={noVideo}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => this.checkOptionConnection("noVideo")}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.poorAudio")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={poorAudio}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => this.checkOptionConnection("poorAudio")}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.poorVideo")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={poorVideo}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => this.checkOptionConnection("poorVideo")}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+                <CheckBox
+                  title={I18n.t("session.rating.technicalFlags.callDropped")}
+                  fontFamily={styles.comments.fontFamily}
+                  checked={callDropped}
+                  checkedIcon={"check-square"}
+                  uncheckedColor={"#F39100"}
+                  checkedColor={"#F39100"}
+                  textStyle={styles.checkboxText}
+                  onPress={() => {this.checkOptionConnection("callDropped")}}
+                  containerStyle={styles.checkboxInputContainer}
+                />
+              </View>
 
-          </TouchableOpacity>
-          <Divider style={styles.divider} />
-        </View>
-      </ScrollView>
+              <Divider style={styles.divider} />
+              <View style={styles.bottomDividerContainer}>
+                <Text style={[styles.baseText, styles.callDetails]}>{I18n.t("session.rating.technical.label")}</Text>
+                <TouchableOpacity onPress={() => openSlideMenu("ratingComments")}>
+                  <Text
+                    style={[styles.addComments, ratingComments ? styles.darkGrey : styles.grey] }
+                  >
+                    { ratingComments || I18n.t("session.rating.technical.placeholder") }
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            :
+            null}
+        </ScrollView>
     );
   }
 }

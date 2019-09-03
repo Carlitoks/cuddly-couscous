@@ -9,8 +9,6 @@ const baseButton = {
   justifyContent: "center",
   alignItems: "center",
   borderRadius: moderateScaleViewports(10),
-  borderBottomLeftRadius: isIphoneXorAbove() ? 10 : 0,
-  borderBottomRightRadius: isIphoneXorAbove() ? 10 : 0,
   height: "100%",
   bottom: 0,
 };
@@ -143,6 +141,8 @@ export default StyleSheet.create({
   buttonDisable: {
     ...baseButton,
     backgroundColor: "#979797",
+    flex: 1
+
   },
   buttonText: {
     color: "white",

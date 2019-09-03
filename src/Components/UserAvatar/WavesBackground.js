@@ -7,7 +7,9 @@ const WavesBackground = ({
 NoWaves,
 NoBackground,
 isScrollable,
-children }) => {
+children,
+  contentContainerStyle
+                         }) => {
   const { width } = Dimensions.get("window");
 
   return (
@@ -15,7 +17,8 @@ children }) => {
       <View
         style={[
           styles.outerView,
-          NoBackground ? null : styles.outerViewBackground
+          NoBackground ? null : styles.outerViewBackground,
+          contentContainerStyle
         ]}
       >
 

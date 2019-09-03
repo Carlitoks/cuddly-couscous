@@ -11,7 +11,7 @@ export default StyleSheet.create({
     paddingTop: moderateScaleViewports(metrics.height * 0.045),
   },
   baseText: {
-    color: "#000",
+    color: "#000000",
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(20),
     paddingBottom: moderateScaleViewports(metrics.height * 0.02),
@@ -21,7 +21,7 @@ export default StyleSheet.create({
   starRatingPadding: { paddingBottom: moderateScaleViewports(metrics.height * 0.10) },
   thumbsPadding: { paddingLeft: moderateScaleViewports(25) },
   baseTagsStyle: {
-    borderRadius: 10,
+    borderRadius: 4,
     paddingBottom: moderateScaleViewports(metrics.width * 0.0080),
     paddingLeft: moderateScaleViewports(metrics.width * 0.06),
     paddingRight: moderateScaleViewports(metrics.width * 0.06),
@@ -42,20 +42,18 @@ export default StyleSheet.create({
   baseTagTextSelected: { color: "#FFFFFF" },
   tagsContainer: { alignItems: "center", justifyContent: "center" },
   bottomDividerContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    marginLeft: moderateScaleViewports(20),
-    paddingTop: moderateScaleViewports(metrics.height * 0.03),
+    marginLeft: moderateScaleViewports(30),
   },
-  divider: { backgroundColor: "#979797", height: 1, width: metrics.width * 0.90 },
+  divider: { backgroundColor: "#979797", height: 1, width: metrics.width, marginTop: moderateScaleViewports(30) },
   addComments: {
-    color: "#401674",
+    alignSelf: "flex-start",
     fontFamily: Fonts.BaseFont,
-    fontSize: moderateScaleViewports(24),
-    paddingBottom: moderateScaleViewports(19),
-    paddingRight: moderateScaleViewports(19),
-    paddingTop: moderateScaleViewports(19),
+    fontSize: moderateScaleViewports(16),
+    paddingBottom: moderateScaleViewports(40),
+    paddingTop: moderateScaleViewports(10),
   },
+  grey:{color:"#979797"},
+  darkGrey:{color:"#444444"},
   /**
    * RenderPickerLangStyles
    */
@@ -98,4 +96,67 @@ export default StyleSheet.create({
     marginTop: moderateScaleViewports(10),
     paddingBottom: moderateScaleViewports(15),
   },
+
+  checkContainer: {
+    alignItems: "flex-start",
+    justifyContent: "center",
+    marginLeft: 20,
+    paddingTop: metrics.height * 0.03,
+  },
+  checklisContainer: {
+    alignItems: "flex-start",
+    justifyContent: "center",
+    marginLeft: 35,
+    paddingTop: moderateScaleViewports(25),
+  },
+  checkboxContainer:{
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 10,
+    backgroundColor: '#ecf0f1',
+  },
+  comments: {
+    color: "#000000",
+    fontFamily: Fonts.BaseFont,
+    fontWeight:"normal",
+    fontSize: moderateScaleViewports(16),
+    textAlign: "center",
+    alignSelf: "center"
+  },
+  checkboxText:{
+    color: "#000000",
+    fontFamily: Fonts.BaseFont,
+    fontWeight:"normal",
+    fontSize: moderateScaleViewports(16),
+    marginLeft: 10,
+  },
+  checkboxInputContainer:{
+    backgroundColor: "#FFFFFF",
+    borderWidth: 0,
+    borderColor: "#FFFFFF",
+  },
+  container: {
+    paddingTop: moderateScaleViewports(23)
+  },
+  callTextPadding: {
+    alignSelf: "flex-start",
+    paddingTop: moderateScaleViewports(20),
+  },
+  additionalInformationInput: {
+    paddingLeft: 10,
+    paddingTop: moderateScaleViewports(10),
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    color: '#444444'
+  },
+  commentContainer: {
+    alignSelf: "flex-start",
+    marginLeft: moderateScaleViewports(30)
+  },
+  callDetails: {
+    paddingTop: moderateScaleViewports(20),
+    alignSelf: "flex-start",
+    fontSize: moderateScaleViewports(18)
+  }
 });

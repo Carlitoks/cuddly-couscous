@@ -12,7 +12,7 @@ import {
 
 import { incomingCallNotification } from "../../Ducks/PushNotificationReducer";
 
-import { Alert, AppState, NetInfo, ScrollView, Text, View } from "react-native";
+import { Alert, AppState, NetInfo, ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
@@ -21,23 +21,25 @@ import _isUndefined from "lodash/isUndefined";
 
 
 import styles from "./styles";
-import { Images } from "../../Themes";
+import { Fonts, Images } from "../../Themes";
 import I18n, { translateApiError } from "../../I18n/I18n";
 import { Sessions } from "../../Api";
 import { ensurePermissions } from "../../Util/Permission";
 import { PERMISSIONS } from "../../Util/Constants";
 import NavBar from "../../Components/NavBar/NavBar";
-import UserAvatar from "../../Components/UserAvatar/UserAvatar";
 import LinguistStatus from "../../Components/UserAvatar/LinguistStatus";
 import CallNumber from "../../Components/UserAvatar/CallNumber";
 import WavesBackground from "../../Components/UserAvatar/WavesBackground";
 import { formatTimerSeconds } from "../../Util/Format";
+import { moderateScaleViewports } from "../../Util/Scaling";
+import CircularAvatar from "../../Components/CircularAvatar/CircularAvatar";
+import StarRating from "../../Components/StarRating/StarRating";
 
 class Home extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       appState: AppState.currentState,
       loading: false
@@ -100,7 +102,7 @@ class Home extends Component {
         );
       }
     })
-    
+
     if (
       this.props.navigation.state.params &&
       this.props.navigation.state.params.alertCancelled
@@ -156,14 +158,6 @@ class Home extends Component {
     this.setState({ appState: nextAppState });
   };
 
-  selectImage = () => {
-    return this.props.avatarURL
-      ? {
-          uri: this.props.avatarURL
-        }
-      : Images.avatar;
-  };
-
   componentWillReceiveProps(nextProps) {}
 
   filterAllCalls = (allCalls, userType) => {
@@ -175,6 +169,12 @@ class Home extends Component {
           moment(next.session.createdAt).diff(moment(prev.session.createdAt))
         )
         .map((item, i) => {
+          let abuseReported = false;
+          if(item.featureFlag){
+            if(item.featureFlag.includes("sessions:linguist-reported-abuse") && this.props.isLinguist){
+              abuseReported = true;
+            }
+          }
           let result = {};
           if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
             result = {
@@ -193,11 +193,20 @@ class Home extends Component {
               title: !_isUndefined(item.session.scenario)
                 ? item.session.scenario.title
                 : "",
+              customScenarioNote: !_isUndefined(item.session.customScenarioNote)
+                ? item.session.customScenarioNote
+                : "",
               createdAt: moment(item.session.createdAt).format(
                 "MMM DD, h:mm A"
               ),
               avatarURL: item[userType].avatarURL,
-              chevron: false
+              ifAbuseReported: abuseReported,
+              chevron: false,
+              userType,
+              session: item.session,
+              user: this.props.user,
+              isLinguist: this.props.isLinguist,
+              token: this.props.token
             };
           }
           return result;
@@ -212,10 +221,17 @@ class Home extends Component {
 
   calculateAmount (calls = []) {
     let seconds = 0;
+    let numberCalls = 0;
+    const firstDay = moment().startOf('month').format();
     calls.forEach((call) => {
-      seconds += call.duration;
+      if(moment(call.session.createdAt).isAfter(firstDay)){
+        numberCalls++;
+        if(call.session.duration){
+          seconds += call.session.duration;
+        }
+      }
     });
-    return formatTimerSeconds(seconds);
+    return { amount: formatTimerSeconds(seconds), numberCalls };
   }
 
   render() {
@@ -224,9 +240,9 @@ class Home extends Component {
       linguistProfile,
       linguistCalls
     } = this.props;
-
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
-    const amount = this.calculateAmount(allCalls);
+    const { amount, numberCalls } = this.calculateAmount(linguistCalls);
+    
 
     return (
       <View style={styles.scrollContainer}>
@@ -234,28 +250,35 @@ class Home extends Component {
           leftComponent={
             <ShowMenuButton navigation={this.props.navigation} />
           }
-          navbarTitle={user.firstName + " " + user.lastName}
+          navbarTitle={I18n.t("home")}
         />
+
         <WavesBackground>
-          <UserAvatar
-            photoSelect={avatar => this.uploadAvatar(avatar)}
-            avatarSource={this.selectImage()}
-            avatarHeight={150}
-            bigAvatar={true}
-            stars={user.averageStarRating ? user.averageStarRating : 0}
-          />
-          <LinguistStatus
-            status={linguistProfile.available}
-            switchOnChange={status => this.changeStatus(status)}
-            switchValue={linguistProfile.available}
-            loading={this.state.loading}
-          />
+          <View style={styles.avatarContainer}>
+              <CircularAvatar photoSelect={avatar => this.uploadAvatar(avatar)} avatarURL={this.props.avatarURL} firstName={user.firstName} lastInitial={user.lastName} />
+            <View style={styles.toggleContainer}>
+              <Text style={styles.displayName}>{`${user.firstName} ${user.lastName ? user.lastName : ""}`}</Text>
+              { user.averageStarRating && (
+                <StarRating fullStarColor={"#F39100"} rating={user.averageStarRating} containerStyle={styles.starRatingContainer} />
+              )}
+              <View>
+                <LinguistStatus
+                  status={linguistProfile.available}
+                  switchOnChange={status => this.changeStatus(status)}
+                  switchValue={linguistProfile.available}
+                  loading={this.state.loading}
+                />
+              </View>
+            </View>
+          </View>
         </WavesBackground>
         <CallNumber
-          calls={allCalls.length}
+          calls={numberCalls}
           amount={amount}
         />
-          <Text style={styles.recentCallsTitle}>{I18n.t("recentCalls")}</Text>
+        <View style={styles.recentCallsContainer}>
+          <Text style={styles.recentCallsContainerText}>{I18n.t("recentCalls")}</Text>
+        </View>
           <Grid>
             <Row>
               <ScrollView
@@ -277,19 +300,19 @@ class Home extends Component {
 }
 
 const mS = state => ({
-  user: state.account.user,
   linguistProfile: state.account.linguistProfile,
   avatarURL: state.account.userAvatarURL,
   linguistCalls: state.account.linguistCallHistory,
   uuid: state.auth2.userID,
   token: state.auth2.userJwtToken,
+  isLinguist: state.account.isLinguist,
+  user: state.account.user,
 });
 
 const mD = {
   loadUser,
   updateUserProfilePhoto,
   updateLinguistProfile,
-
   loadLinguistCallHistory,
   incomingCallNotification
 };

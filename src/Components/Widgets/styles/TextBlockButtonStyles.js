@@ -22,10 +22,7 @@ export default StyleSheet.create({
     borderRadius: moderateScaleViewports(10),
     width: metrics.width * 0.90,
     height: moderateScaleViewports(55),
-    right: "5%",
-    marginBottom: isIphoneXorAbove() ? 44 : 0,
-    position: "absolute",
-    bottom:"25%"
+    marginTop: 15,
   },
   creatingButtonPlaceholder: {
     ...baseButton,
@@ -42,6 +39,8 @@ export default StyleSheet.create({
   buttonDisable: {
     ...baseButton,
     backgroundColor: "#979797",
+    borderRadius: moderateScaleViewports(10),
+
     flex: 1
   },
   buttonText: {

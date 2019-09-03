@@ -12,19 +12,20 @@ import styles from "./styles/TextBlockButtonStyles";
 export default class TextBlockButton extends Component {
 
   render() {
-    const { loading, text, textStyle, style, disabled } = this.props;
+    const { loading, text, textStyle, style,buttonStyle,disabledStyle, disabled } = this.props;
+    const defaultDisableStyle = disabledStyle ?  {...styles.buttonDisable, ...disabledStyle} : styles.buttonDisable;
 
     return (
-      <View style={style}>
+      <View style={style? style : styles.buttonContainer}>
             <TouchableOpacity
               disabled={disabled}
-              style={disabled ? styles.buttonDisable : styles.button }
+              style={disabled ? defaultDisableStyle : buttonStyle ? buttonStyle : styles.button }
               onPress={this.props.onPress}
             >
               
               {loading
                 ? (<ActivityIndicator color="#ffffff" />)
-                : (<Text style={styles.buttonText}>{text}</Text>)
+                : (<Text style={ textStyle || styles.buttonText}>{text}</Text>)
               }
             </TouchableOpacity>
       </View>

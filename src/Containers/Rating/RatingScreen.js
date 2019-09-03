@@ -1,17 +1,23 @@
 import React, { Component } from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import Swiper from "react-native-swiper";
 import SlideUpPanel from "../../Components/SlideUpModal/SlideUpPanel";
 import AvatarSection from "./Components/AvatarSection";
 import RateComponent from "./Components/RateComponent";
 import CallClassification from "./Components/CallClassification";
+import NavBar from "../../Components/NavBar/NavBar";
 import CallTags from "./Components/CallTags";
 import { openSlideMenu } from "../../Ducks/LogicReducer";
 import I18n, { translateApiError } from "../../I18n/I18n";
+import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 // Styles
 import styles from "./Styles/RatingsScreenStyles";
 import { Sessions } from "../../Api";
+import CircularAvatar from "../../Components/CircularAvatar/CircularAvatar";
+import WavesBackground from "../../Components/UserAvatar/WavesBackground";
+import { moderateScaleViewports } from "../../Util/Scaling";
+import { loadLinguistCallHistory } from "../../Ducks/AccountReducer";
 
 const WhatWasGood = [];
 const WhatCouldBetter = [];
@@ -36,7 +42,7 @@ class RatingScreen extends Component {
       scenarioID: null,
       scenarioNote: "",
       callType: "",
-
+      connection: false,
       // States for icons that belong to What was Good question
       iconWaitTimeFirstList: false,
       iconProfessionalismFirstList: false,
@@ -55,6 +61,13 @@ class RatingScreen extends Component {
       iconBackgroundNoiseSecondList: false,
       iconVoiceClaritySecondList: false,
       iconDistractionsSecondList: false,
+
+      // Connectio problems 
+      noAudio: false,
+      noVideo: false,
+      poorAudio: false,
+      poorVideo: false,
+      callDropped: false,
 
       // loading status for button
       submitting: false,
@@ -96,7 +109,7 @@ class RatingScreen extends Component {
   };
 
   submit = () => {
-    const { navigation } = this.props;
+    const { navigation, loadLinguistCallHistory } = this.props;
 
     const {
       rating, thumbsUp,
@@ -140,6 +153,7 @@ class RatingScreen extends Component {
       .then((response) => {
         navigation.dispatch({ type: "Home" });
       })
+      .then(() => loadLinguistCallHistory(false))
       .catch((err) => {
         this.submitting = false;
         this.setState({submitting: false}, () => {
@@ -187,14 +201,20 @@ class RatingScreen extends Component {
       callType,
       scenarioID,
       linguistProfile,
+      scenarioNote,
     } = this.state;
 
     if (linguistProfile) {
-      if (callType === "help") return rating > 0 && callType && scenarioID && (thumbsUp || thumbsDown);
-      return rating > 0 && callType && (thumbsUp || thumbsDown);
+      if (callType === "help") return rating > 0 && callType && scenarioID && (thumbsUp || thumbsDown) && scenarioNote;
+      return rating > 0 && callType && (thumbsUp || thumbsDown) && scenarioNote;
     }
     return rating > 0;
   };
+
+  checkConnectionProblem = (index) =>{
+    let payload = this.state[index];
+    this.setState({[index]: !payload});
+  }
 
   openSlideMenu = (type) => {
     const { openSlideMenu } = this.props;
@@ -277,6 +297,8 @@ class RatingScreen extends Component {
         break;
       }
     }
+    this.setState({connection : WhatCouldBetter.indexOf("connection") >= 0  ? true : false});
+
   };
 
   renderSwiper = () => {
@@ -306,8 +328,14 @@ class RatingScreen extends Component {
       iconVoiceClaritySecondList,
       iconDistractionsSecondList,
       comment,
+      connection,
+      noAudio,
+      noVideo,
+      poorAudio,
+      poorVideo,
+      callDropped
     } = this.state;
-    const { openSlideMenu } = this.props;
+    const { openSlideMenu, scenariosList } = this.props;
     if (linguistProfile) {
       return (
         <Swiper
@@ -336,6 +364,9 @@ class RatingScreen extends Component {
             callType={callType}
             scenarioID={scenarioID}
             linguistProfile={linguistProfile}
+            scenarioList={scenariosList}
+            setScenarioID={this.setScenarioID}
+            setScenarioNote={this.setScenarioNote}
           />
           <CallTags
             linguistProfile={linguistProfile}
@@ -358,6 +389,13 @@ class RatingScreen extends Component {
             UpdateFlags={this.UpdateFlags}
             ratingComments={comment}
             rating={rating}
+            checkConnectionProblem={this.checkConnectionProblem}
+            badConnection={connection}
+            noAudio={noAudio}
+            noVideo={noVideo}
+            poorAudio={poorAudio}
+            poorVideo={poorVideo}
+            callDropped={callDropped}
           />
         </Swiper>
       );
@@ -403,10 +441,29 @@ class RatingScreen extends Component {
           UpdateFlags={this.UpdateFlags}
           ratingComments={comment}
           rating={rating}
+          checkConnectionProblem={this.checkConnectionProblem}
+          badConnection={connection}
+          noAudio={noAudio}
+          noVideo={noVideo}
+          poorAudio={poorAudio}
+          poorVideo={poorVideo}
+          callDropped={callDropped}
         />
       </Swiper>
     );
   };
+
+  reportAbuse () {
+    const {session, user} = this.state;
+    const { navigation } = this.props;
+
+      Alert.alert(I18n.t("session.rating.abuse.title"), I18n.t('session.rating.abuse.alert'), [
+        {text: I18n.t('cancel'), style: 'destructive'},
+        {text: I18n.t('actions.confirm'), onPress: () => {
+            navigation.dispatch({type: "ReportProblemScreen", params: { session: session , user: user }})
+        }}
+      ]);
+  }
 
   renderPagination = () => {
     const { linguistProfile } = this.state;
@@ -440,15 +497,30 @@ class RatingScreen extends Component {
   render() {
     const { navigation } = this.props;
     const {
-      customerName, avatarURL, comment, scenarioNote, submitting,
+      customerName, avatarURL, comment, scenarioNote, submitting, linguistProfile,
     } = this.state;
     return (
       <View style={styles.ratingScreenContainer}>
-        <AvatarSection
-          avatarURL={avatarURL}
-          customerName={customerName}
-          navigation={navigation}
-        />
+          <NavBar
+            rightComponent={
+              linguistProfile ?
+              <TouchableOpacity activeOpacity={0.8} onPress={() => this.reportAbuse()}>
+                  <Text style={styles.cancelStyle}>{I18n.t("session.rating.reportButton")}</Text>
+              </TouchableOpacity>
+              : null
+            }
+          />
+
+        <WavesBackground contentContainerStyle={{marginTop: -moderateScaleViewports(15)}}>
+          <View style={styles.avatarContainer}>
+            <CircularAvatar avatarURL={avatarURL} firstName={customerName} />
+            <View style={styles.toggleContainer}>
+              <Text style={styles.customerText}>{linguistProfile ? I18n.t("session.rating.customer") : I18n.t("session.rating.linguist")}</Text>
+              <Text style={styles.displayName}>{`${customerName}`}</Text>
+            </View>
+          </View>
+        </WavesBackground>
+
         {this.renderSwiper()}
         <View style={styles.bottomButtonContainer}>
           <View
@@ -456,24 +528,18 @@ class RatingScreen extends Component {
           >
             {this.renderPagination()}
           </View>
-          <TouchableOpacity
-            style={[
-              styles.baseButton,
-              this.canContinue() ? styles.enabledButton : styles.disabledButton]}
-            disabled={submitting || !this.canContinue()}
-            onPress={() => this.nextSlide()}
-          >
-            {submitting && (<ActivityIndicator color="#ffffff" />)}
-            {!submitting && (
-            <Text
-              style={[
-                styles.baseButtonText,
-                this.canContinue() ? styles.baseButtonTextEnabled : styles.baseButtonTextDisabled]}
-            >
-              {this.isLastSection() ? I18n.t("actions.submit") : I18n.t("actions.next") }
-            </Text>
-            )}
-          </TouchableOpacity>
+          <TextBlockButton
+                text = {this.isLastSection() ? I18n.t("actions.submit") : I18n.t("actions.next")} // the text in the button
+                disabled = {submitting || !this.canContinue()} // boolean if disabled, prevents taps and show disabled button styles
+                loading = {submitting} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
+                style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
+                disabledStyle = { styles.disabledButton} // container style object when disabled, component should provide defaults
+                buttonStyle={ styles.enabledButton }
+                textStyle = {[
+                  styles.baseButtonText,
+                  this.canContinue() ? styles.baseButtonTextEnabled : styles.baseButtonTextDisabled]} // optional text styles, component should provide defaults
+                  onPress={() => this.nextSlide()} // function to call when pressed
+            />
         </View>
         <SlideUpPanel
           scenarioNote={scenarioNote}
@@ -487,10 +553,13 @@ class RatingScreen extends Component {
   }
 }
 
-const mS = state => ({});
+const mS = state => ({
+  scenariosList: state.appConfigReducer.scenarios,
+});
 
 const mD = {
   openSlideMenu,
+  loadLinguistCallHistory
 };
 
 export default connect(

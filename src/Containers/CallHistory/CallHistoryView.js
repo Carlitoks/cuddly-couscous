@@ -7,15 +7,14 @@ import { Col, Grid } from "react-native-easy-grid";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
+import MissedCallHistoryComponent from "../../Components/MissedCallHistoryComponent/MissedCallHistoryComponent";
 import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import Close from "../../Components/Close/Close";
 import NavBar from "../../Components/NavBar/NavBar";
-import { Iphone6, Iphone5 } from "../../Util/Devices";
 
 import moment from "moment";
 
 import styles from "./style";
-import Colors from "../../Themes/Colors";
 import I18n, { translateApiError } from "../../I18n/I18n";
 import {
   loadCustomerCallHistory,
@@ -56,6 +55,12 @@ class CallHistoryView extends Component {
     if (!_isEmpty(allCalls)) {
       return allCalls
         .map((item, i) => {
+          let abuseReported = false;
+          if(item.featureFlag){
+            if(item.featureFlag.includes("sessions:linguist-reported-abuse") && this.props.isLinguist){
+              abuseReported = true;
+            }
+          }
           let result = {};
           if (!_isUndefined(item[userType]) && !_isUndefined(item.session)) {
             result = {
@@ -78,8 +83,17 @@ class CallHistoryView extends Component {
               title: !_isUndefined(item.session.scenario)
                 ? item.session.scenario.title
                 : "",
+              customScenarioNote: !_isUndefined(item.session.customScenarioNote)
+                ? item.session.customScenarioNote
+                : "",
+              ifAbuseReported: abuseReported,
               avatarURL: item[userType].avatarURL,
-              chevron: false
+              chevron: false,
+              userType,
+              session: item.session,
+              user: this.props.user,
+              isLinguist: this.props.isLinguist,
+              token: this.props.token
             };
           }
           return result;
@@ -100,7 +114,7 @@ class CallHistoryView extends Component {
     }
   };
 
-  filterMissedCalls = missedCalls => {
+  filterMissedCalls = (missedCalls, userType) => {
     if (!_isEmpty(missedCalls)) {
       return missedCalls
         .sort((prev, next) =>
@@ -122,7 +136,15 @@ class CallHistoryView extends Component {
                 "MMM DD, h:mm A"
               ),
               chevron: true,
-              missedCall: this.compareCall(item.accepted, item.responded)
+              missedCall: this.compareCall(item.accepted, item.responded),
+              ifAbuseReported: !_isUndefined(item.session.ifAbuseReported)
+                ? item.session.ifAbuseReported
+                : false,
+              userType,
+              session: item.session,
+              user: this.props.user,
+              isLinguist: this.props.isLinguist,
+              token: this.props.token
             };
           }
           return result;
@@ -156,7 +178,7 @@ class CallHistoryView extends Component {
       : this.filterAllCalls(allCustomerCalls, userType);
 
     const missedCalls = linguistProfile
-      ? this.filterMissedCalls(missedCallsLinguist)
+      ? this.filterMissedCalls(missedCallsLinguist, userType)
       : [];
 
     return (
@@ -164,7 +186,7 @@ class CallHistoryView extends Component {
         <NavBar
           navigation={this.props.navigation}
           leftComponent={
-            <ShowMenuButton navigation={this.props.navigation}/>
+            <ShowMenuButton navigation={this.props.navigation} />
           }
           rightComponent={
             <Close
@@ -181,14 +203,13 @@ class CallHistoryView extends Component {
               tabsContainerStyle={styles.tabsContainerStyle}
               values={tabValues}
               tabStyle={
-                Iphone6 || Iphone5 ? styles.tabStyleNoBorder : styles.tabStyle
+                styles.tabStyle
               }
               tabTextStyle={styles.tabTextStyle}
               selectedIndex={this.state.selectedIndex}
               onTabPress={this.handleIndexChange}
-              activeTabStyle={{
-                backgroundColor: Colors.primarySelectedTabColor
-              }}
+              activeTabStyle={styles.activeTabStyle}
+              borderRadius={0}
             />
           </View>
         )}
@@ -201,12 +222,16 @@ class CallHistoryView extends Component {
           <Grid>
             <Col>
               <View style={styles.container}>
-                <CallHistoryComponent
-                  data={
-                    this.state.selectedIndex === 0 ? allCalls : missedCalls
-                  }
+                { this.state.selectedIndex === 0
+                  ? (<CallHistoryComponent
+                  data={allCalls}
                   navigation={this.props.navigation}
-                />
+                />)
+                  : (<MissedCallHistoryComponent
+                  data={missedCalls}
+                  navigation={this.props.navigation}
+                />)
+                }
               </View>
             </Col>
           </Grid>
@@ -221,6 +246,9 @@ const mS = state => ({
   allCustomerCalls: state.account.customerCallHistory,
   allLinguistCalls: state.account.linguistCallHistory,
   missedCallsLinguist: state.account.linguistMissedCallHistory,
+  token: state.auth2.userJwtToken,
+  isLinguist: state.account.isLinguist,
+  user: state.account.user,
 });
 
 const mD = {

@@ -1,10 +1,12 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, TouchableOpacity } from "react-native";
 import PhotoUpload from "react-native-photo-upload";
 import { moderateScale } from "../../Util/Scaling";
 import { Colors } from "../../Themes";
 import StarRating from "react-native-star-rating";
 import styles from "./styles";
+import I18n from "../../I18n/I18n";
+import { Icon } from "react-native-elements";
 
 const UserAvatar = ({
   avatarSource,
@@ -17,6 +19,7 @@ const UserAvatar = ({
   bigAvatar,
   photoSelect,
   stars,
+  addratings,
 }) => {
   return  (
     <React.Fragment>
@@ -86,7 +89,7 @@ const UserAvatar = ({
                 >
                   {avatarTitle}
                 </Text>
-                {stars != null ? (
+                {stars != null && stars != "" ? (
                   <StarRating
                     emptyStar={"ios-star-outline"}
                     fullStar={"ios-star"}
@@ -100,7 +103,9 @@ const UserAvatar = ({
                     fullStarColor={Colors.gradientColorButton.top}
                     starColor={Colors.gradientColorButton.top}
                   />
-                ) : null}
+                ) : <TouchableOpacity>
+                  <Text>Add Rating</Text>
+                </TouchableOpacity>}
               </View>
             ) : null}
           </View>

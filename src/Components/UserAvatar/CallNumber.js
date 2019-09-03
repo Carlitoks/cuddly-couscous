@@ -2,7 +2,9 @@ import React from "react";
 import I18n from "../../I18n/I18n";
 import { Text, View } from "react-native";
 import styles from "./styles";
-import { Card } from "react-native-elements";
+import { Card, Divider } from "react-native-elements";
+import { moderateScaleViewports } from "../../Util/Scaling";
+import { Fonts } from "../../Themes";
 
 const CallNumber =
   ({
@@ -12,13 +14,14 @@ const CallNumber =
     return (
       <View>
         {calls != null && !!amount != null ? (
-          <View style={{ height: 70 }}>
-            <Card
-              style={{ alignContent: "space-between", height: 50 }}
-              wrapperStyle={{ flex: 1, alignContent: "space-around" }}
-              containerStyle={styles.card}
+          <View>
+            <View
+              style={{ alignContent: "space-between" }}
             >
-              <View style={{ flexDirection: "row" }}>
+              <View style={styles.monthlySummary}>
+                <Text style={styles.monthlySummaryText}>Monthly Summary</Text>
+              </View>
+              <View style={styles.callNumberContainer}>
                 <View style={{ width: "50%" }}>
                   <Text
                     style={[styles.TitleText, styles.center, styles.callsText]}
@@ -29,6 +32,7 @@ const CallNumber =
                     {calls}
                   </Text>
                 </View>
+                <Divider style={styles.dividerStyle} />
                 <View style={{ width: "50%" }}>
                   <Text
                     style={[styles.TitleText, styles.center, styles.callsText]}
@@ -42,7 +46,7 @@ const CallNumber =
                   </Text>
                 </View>
               </View>
-            </Card>
+            </View>
           </View>
         ) : null}
       </View>

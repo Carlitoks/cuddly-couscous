@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { Colors } from "../../Themes";
-import { moderateScale } from "../../Util/Scaling";
+import { Colors, Fonts } from "../../Themes";
+import { moderateScale, moderateScaleViewports } from "../../Util/Scaling";
 
 export const styles = StyleSheet.create({
   scrollContainer: {
@@ -55,21 +55,26 @@ export const styles = StyleSheet.create({
     justifyContent: "center"
   },
   titleStyle: {
-    fontSize: moderateScale(20),
+    fontSize: moderateScaleViewports(18),
     fontWeight: "bold",
-    color: Colors.listLabelColor
+    color: "#444444",
+    fontFamily: Fonts.BaseFont,
+    paddingBottom: moderateScaleViewports(10)
   },
   listSubtitle: {
-    fontSize: moderateScale(20),
-    color: Colors.gray,
-    fontWeight: "normal"
+    fontSize: moderateScale(18),
+    color: "#444444",
+    fontWeight: "normal",
+    fontFamily: Fonts.BaseFont,
   },
   languagesContainer: {
     marginLeft: 10
   },
   languagesText: {
-    fontSize: moderateScale(20),
-    color: Colors.gray,
+    fontSize: moderateScale(18),
+    color: "#444444",
+    fontFamily: Fonts.BaseFont,
+    paddingBottom: moderateScaleViewports(10),
     fontWeight: "normal"
   },
   listRightTitleContainer: {
@@ -78,5 +83,36 @@ export const styles = StyleSheet.create({
   listRightTitle: {
     fontSize: moderateScale(22),
     color: Colors.primaryListRightItem
-  }
+  },
+  userAvatarInfo: {
+  },
+  optionalNoteStyle: {
+    fontSize: moderateScale(14),
+    color: "#444444",
+    fontFamily: Fonts.BaseFont,
+    fontWeight: "normal",
+    backgroundColor: "#F1F1F1",
+    paddingLeft: moderateScaleViewports(21),
+    paddingTop: moderateScaleViewports(11),
+    paddingBottom: moderateScaleViewports(14),
+    borderRadius: moderateScaleViewports(4)
+  },
+  listNoteItemContainer: {
+    minHeight: 60,
+    justifyContent: "flex-start",
+    borderBottomWidth: 0,
+  },
+  avatarContainer: { flexDirection: "row", justifyContent: "flex-start", alignItems: "center", marginLeft: moderateScaleViewports(34), paddingBottom: moderateScaleViewports(47) },
+  infoContainer: {marginLeft: moderateScaleViewports(20)},
+  clientType: {color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16)},
+  displayName: {color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(20), paddingBottom: moderateScaleViewports(11), paddingTop: moderateScaleViewports(8)},
+  starRatingContainer: {width: moderateScaleViewports(123)},
+  addRatingButton: { flexDirection: "row", justifyContent: "center", alignItems: "center", width: moderateScaleViewports(126), borderRadius: moderateScaleViewports(4), backgroundColor: "#F39100", minHeight: moderateScaleViewports(28)},
+  addRatingButtonText: {color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(14)},
+  abuseReportedText: {
+    color: "#F39100",
+    fontFamily: Fonts.BaseFont,
+    fontWeight: "bold",
+    fontSize: moderateScaleViewports(14),
+  },
 });

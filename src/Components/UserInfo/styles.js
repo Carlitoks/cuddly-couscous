@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../Themes";
+import { Colors, Fonts } from "../../Themes";
+import { moderateScaleViewports } from "../../Util/Scaling";
 export default (styles = StyleSheet.create({
   containerText: {
-    flexDirection: "row",
-    flexWrap: "wrap"
+    flexDirection: "column",
   },
   titleList: {
     marginLeft: 10
@@ -13,8 +13,11 @@ export default (styles = StyleSheet.create({
   },
   userName: {
     marginRight: 5,
-    marginTop: 2,
-    color: Colors.black
+    paddingBottom: moderateScaleViewports(8),
+    color: "#444444",
+    fontSize: moderateScaleViewports(16),
+    fontFamily: Fonts.BaseFont,
+    fontWeight: "bold"
   },
   iconStyle: {
     marginLeft: 5,
@@ -22,11 +25,24 @@ export default (styles = StyleSheet.create({
   },
   containerStyle: {
     marginLeft: 10,
-    flexDirection: "row",
-    width: "200%"
+    flexDirection: "column",
   },
   stars: {
-    position: "absolute",
-    right: 11
+    width: moderateScaleViewports(123),
+    paddingBottom: moderateScaleViewports(7)
+  },
+  notRatedText: {
+    color: "#F39100",
+    fontFamily: Fonts.BaseFont,
+    fontWeight: "bold",
+    fontSize: moderateScaleViewports(14),
+    paddingBottom: moderateScaleViewports(8)
+  },
+  missedCallText: {
+    color: "#FF0000",
+    fontFamily: Fonts.BaseFont,
+    fontWeight: "normal",
+    fontSize: moderateScaleViewports(14),
+    paddingBottom: moderateScaleViewports(8)
   }
 }));

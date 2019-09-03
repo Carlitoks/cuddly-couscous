@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { ApplicationStyles, Fonts, Metrics } from "../../../Themes";
 import metrics from "../../../Themes/Metrics";
-import { moderateScaleViewports } from "../../../Util/Scaling";
+import { moderateScaleViewports, moderateScale } from "../../../Util/Scaling";
 import { isIphoneXorAbove } from "../../../Util/Devices";
 
 export default StyleSheet.create({
@@ -12,11 +12,17 @@ export default StyleSheet.create({
     justifyContent: "center",
     width: metrics.width * 0.70,
   },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(53),
+    width: metrics.width * 0.70,
+    height: moderateScaleViewports(55),
+  },
   baseButtonText: {
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(17),
-    paddingBottom: moderateScaleViewports(Metrics.width * 0.05),
-    paddingTop: moderateScaleViewports(Metrics.width * 0.05),
   },
   baseButtonTextDisabled: {
     color: "#BCBCBC",
@@ -47,10 +53,21 @@ export default StyleSheet.create({
     paddingBottom: moderateScaleViewports(Metrics.baseMargin),
   },
   disabledButton: {
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(4),
+    justifyContent: "center",
+    width: metrics.width * 0.70,
+    height: moderateScaleViewports(55),
     borderColor: "#BCBCBC",
+    backgroundColor: "#979797",
     borderWidth: 2,
   },
   enabledButton: {
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(4),
+    justifyContent: "center",
+    width: metrics.width * 0.70,
+    height: moderateScaleViewports(55),
     backgroundColor: "#F39100", borderColor: "#FFF", borderWidth: 2,
   },
   flexEndCenter: { alignItems: "center", justifyContent: "flex-end" },
@@ -94,9 +111,21 @@ export default StyleSheet.create({
     marginTop: 3,
     width: 8,
   },
-  swiperContainer: {},
+  cancelStyle: {
+    marginRight: 12,
+    color: "#fff",
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScale(18, 0)
+  },
+  swiperContainer: {
+    flexGrow: 1,
+  },
   wrapperContainer: {
     backgroundColor: "white",
     height: "100%",
   },
+  avatarContainer: { flexDirection: "row", justifyContent: "flex-start", alignItems: "center", marginLeft: moderateScaleViewports(34), paddingBottom: moderateScaleViewports(14) },
+  toggleContainer: {marginLeft: moderateScaleViewports(20)},
+  displayName: {fontWeight: "bold", color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(20)},
+  customerText: { fontWeight: "200", color: "#ffffff", fontFamily: Fonts.BaseFont, fontSize: moderateScaleViewports(16), paddingBottom: moderateScaleViewports(2)},
 });

@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { Colors, Fonts } from "../../Themes";
-import { moderateScale, scale, verticalScale } from "../../Util/Scaling";
+import { moderateScale, moderateScaleViewports, scale, verticalScale } from "../../Util/Scaling";
 
 const width = Dimensions.get("window").width;
 
@@ -20,8 +20,9 @@ export default StyleSheet.create({
   },
   tabTextStyle: {
     fontFamily: Fonts.BaseFont,
-    color: Colors.primaryLightFillColor,
-    fontSize: 12
+    color: Colors.primaryColor,
+    fontWeight: "bold",
+    fontSize: moderateScaleViewports(17)
   },
   tabBackgroundContainer: {
     width: "100%",
@@ -29,9 +30,9 @@ export default StyleSheet.create({
     backgroundColor: Colors.gradientColor.top
   },
   tabStyle: {
-    backgroundColor: Colors.transparent,
-    borderWidth: 1,
-    borderColor: Colors.primaryColor
+    backgroundColor: Colors.gradientColor.top,
+    borderWidth: 0,
+    borderColor: 'transparent',
   },
   containerTab: {
     flex: 1
@@ -39,8 +40,9 @@ export default StyleSheet.create({
   tabsContainerStyle: {
     marginLeft: moderateScale(33),
     marginRight: moderateScale(33),
-    width: 300,
-    alignSelf: "center"
+    width: "100%",
+    alignSelf: "center",
+    backgroundColor: Colors.gradientColor.top
   },
   scrollContainer: {
     flex: 1,
@@ -77,5 +79,21 @@ export default StyleSheet.create({
     color: Colors.primaryColor,
     backgroundColor: Colors.transparent,
     fontWeight: "500"
+  },
+  activeTabStyle: {
+    borderColor: "transparent",
+    borderLeftWidth: 0,
+    borderWidth: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderBottomEndRadius: 0,
+    borderBottomStartRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderBottomWidth: 5,
+    borderBottomColor: "#ffffff",
+    backgroundColor: Colors.gradientColor.top,
+    marginLeft: moderateScaleViewports(10),
+    marginRight: moderateScaleViewports(10)
   }
 });
