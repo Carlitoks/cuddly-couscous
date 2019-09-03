@@ -221,13 +221,17 @@ class Home extends Component {
 
   calculateAmount (calls = []) {
     let seconds = 0;
+    let numberCalls = 0;
     const firstDay = moment().startOf('month').format();
     calls.forEach((call) => {
-      if(call.session.duration && moment(firstDay).isAfter(call.session.createdAt)){
-        seconds += call.session.duration;
+      if(moment(call.session.createdAt).isAfter(firstDay)){
+        numberCalls++;
+        if(call.session.duration){
+          seconds += call.session.duration;
+        }
       }
     });
-    return formatTimerSeconds(seconds);
+    return { amount: formatTimerSeconds(seconds), numberCalls };
   }
 
   render() {
@@ -237,7 +241,8 @@ class Home extends Component {
       linguistCalls
     } = this.props;
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
-    const amount = this.calculateAmount(linguistCalls);
+    const { amount, numberCalls } = this.calculateAmount(linguistCalls);
+    
 
     return (
       <View style={styles.scrollContainer}>
@@ -268,7 +273,7 @@ class Home extends Component {
           </View>
         </WavesBackground>
         <CallNumber
-          calls={linguistCalls.length}
+          calls={numberCalls}
           amount={amount}
         />
         <View style={styles.recentCallsContainer}>

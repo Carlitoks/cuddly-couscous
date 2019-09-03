@@ -45,7 +45,7 @@ class AccountDetailsView extends Component {
   remove(){
     Alert.alert(
       I18n.t("removePayment"),
-      I18n.t("logOutConfirmation"),
+      I18n.t("account.package.confirmRemove"),
       [
         {
           text: I18n.t("actions.confirm"),
