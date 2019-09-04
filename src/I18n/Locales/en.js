@@ -337,6 +337,37 @@ export default (ENG = {
     }
   },
 
+  permissions: {
+    title: "Permission Request",
+    missing: "Missing Required Permissions",
+    missingDescription: "Please modify your permissions in order to use the app.",
+    gotoSettings: "Go to Settings",
+    later: "Ask me later",
+    title: {
+      camera: "Camera",
+      mic: "Microphone",
+      location: "Location",
+      notifications: "Notifications",
+      photos: "Photos"
+    },
+    description: {
+      customer: {
+        camera: "Required to make a Jeenie call.",
+        mic: "Required to make a Jeenie call.",
+        location: "This allows us to optimize your connection with Jeenie.",
+        notifications: "This allows us to notify you when Jeenies are available.",
+        photos: "This allows you to select a profile picture from your library."
+      },
+      linguist: {
+        camera: "Required to receive a customer call.",
+        mic: "Required to receive a customer call.",
+        location: "This allows us to optimize your connection with your customer.",
+        notifications: "Required to receive a customer call.",
+        photos: "This allows you to select a profile picture from your library."
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "Account Details",
