@@ -146,7 +146,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: moderateScaleViewports(10),
+    fontSize: moderateScaleViewports(15),
     fontFamily: Fonts.BaseFont,
     marginLeft: moderateScaleViewports(10),
     marginRight: moderateScaleViewports(30),
