@@ -30,6 +30,7 @@ export default StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingBottom: 20,
+    marginTop: 30,
     backgroundColor: "#DBDBDB"
   },
   arrowContainer:{
@@ -47,10 +48,15 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(18, 0)
   },
-  creditCardTitle:{
+  permissionTitle:{
     fontWeight:"bold",
     color: "#272833",
     fontSize: 18,
+    fontFamily: Fonts.BaseFont,
+  },
+  permissionDescription:{
+    color: "rgba(0, 0, 0, 0.7)",
+    fontSize: 16,
     fontFamily: Fonts.BaseFont,
   },
   permissionsDescription:{
@@ -62,8 +68,6 @@ export default StyleSheet.create({
   },
   creditCardContainer:{
     paddingTop:10,
-    marginTop:30,
-    paddingBottom:20,
     width:"80%",
     justifyContent: "center",
      alignItems: "center"
@@ -71,6 +75,13 @@ export default StyleSheet.create({
   row:{
     flexDirection:"row",
     width:"90%",
+    marginBottom:20,
+    marginLeft:20,
+    position:"relative"    
+  },
+  column:{
+    flexDirection: "column",
+    width:"70%",
     marginBottom:20,
     marginLeft:20,
     position:"relative"    
