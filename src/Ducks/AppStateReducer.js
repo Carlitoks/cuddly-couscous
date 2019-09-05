@@ -23,12 +23,44 @@ const initState = () => {
     installUrlParams: {},
 
     // TODO: app state (background/foreground, etc)
+
+    // device permission status
+    permissions: {}
   }
 };
 
 // TODO: ensure app state is restored properly
 export const init = () => (dispatch, getState) => {
   // TODO: init app locale stuff
+  dispatch(update(_merge({}, getState().appState, {
+    permissions: {
+      camera: {
+        requestedThisSession: false,
+      },
+      mic: {
+        requestedThisSession: false,
+      },
+      location: {
+        requestedThisSession: false,
+      },
+      photos: {
+        requestedThisSession: false,
+      },
+      notifications: {
+        requestedThisSession: false,
+      }
+    }
+  })));
+};
+
+// trigger OS permission request dialogues, they are activated in the order specified
+export const requestPermissions = (perms) => (dispatch, getState) => {
+
+};
+
+// detect & set OS permission status in state
+export const detectPermissions = () => (dispatch, getState) => {
+
 };
 
 // TODO: validate, record code, choose default if necessary, configure i18n
