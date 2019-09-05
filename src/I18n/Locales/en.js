@@ -343,7 +343,7 @@ export default (ENG = {
     missingDescription: "Please modify your permissions in order to use the app.",
     gotoSettings: "Go to Settings",
     later: "Ask me later",
-    title: {
+    name: {
       camera: "Camera",
       mic: "Microphone",
       location: "Location",
