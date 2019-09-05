@@ -32,16 +32,25 @@ class MissingRequiredPermissionsView extends Component {
             contentContainerStyle={styles.scrollViewFlex}
           >
 
-            <Text style={styles.creditCardTitle}>{I18n.t("permissions.missing")}</Text>
+            <Text style={styles.permissionTitle}>{I18n.t("permissions.missing")}</Text>
             <View style={styles.creditCardContainer}>  
                 <View style={styles.row}>  
-                <Text style={styles.creditCardTitle}>{I18n.t("permissions.name.camera")}</Text>
+                <Icon name="camera" type="font-awesome" color="#401674" size={25} />
+                  <View style={styles.column}>  
+                    <Text style={styles.permissionTitle}>{I18n.t("permissions.name.camera")}</Text>
+                    <Text style={styles.permissionDescription}>{I18n.t("permissions.description.customer.camera")}</Text>
+                  </View>
+
 
                 </View>
               </View>
               <View style={styles.creditCardContainer}>  
                 <View style={styles.row}>  
-                <Text style={styles.creditCardTitle}>{I18n.t("permissions.name.mic")}</Text>
+                  <Icon name="microphone" type="font-awesome" color="#401674" size={25} />
+                  <View style={styles.column}>  
+                    <Text style={styles.permissionTitle}>{I18n.t("permissions.name.mic")}</Text>
+                    <Text style={styles.permissionDescription}>{I18n.t("permissions.description.customer.mic")}</Text>
+                  </View>
 
                 </View>
               </View>
@@ -49,7 +58,7 @@ class MissingRequiredPermissionsView extends Component {
               <View style={styles.creditCardContainer}>  
               <Text style={styles.permissionsDescription}>{I18n.t("permissions.missingDescription")}</Text>
               <TextBlockButton
-                text = {I18n.t("packages.checkout.purchase")} // the text in the button
+                text = {I18n.t("permissions.gotoSettings")} // the text in the button
                 disabled = {false} // boolean if disabled, prevents taps and show disabled button styles
                 loading = {this.state.loading} // boolean for "loading" state, in the loading state, display an ActivitySpinner instead of the button text
                 style = {styles.buttonContainer} // main container style, component should provide some defaults, like width at 100%
