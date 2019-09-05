@@ -10,6 +10,7 @@ import {
   initializeUser,
   clear as clearAccount,
   init as initAccount,
+  update as updateAccount,
   initializeDevice
 } from "./AccountReducer";
 import {
@@ -140,7 +141,10 @@ export const registerNewUser = (user) => (dispatch, getState) => {
       .then((res) => {
         return dispatch(logIn(user.email, user.password))
       })
-      .then(resolve)
+      .then((res) => {
+        dispatch(updateAccount({newAccountCreated: true}));
+        resolve(res);
+      })
       .catch(reject)
     };
 
