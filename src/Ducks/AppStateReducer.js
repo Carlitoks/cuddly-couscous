@@ -25,7 +25,38 @@ const initState = () => {
     // TODO: app state (background/foreground, etc)
 
     // device permission status
-    permissions: {}
+    permissions: {
+      camera: {
+        granted: false,
+        status: 'undetermined',
+        requestedThisSession: false,
+        lastRequestedAt: null
+      },
+      mic: {
+        granted: false,
+        status: 'undetermined',
+        requestedThisSession: false,
+        lastRequestedAt: null
+      },
+      location: {
+        granted: false,
+        status: 'undetermined',
+        requestedThisSession: false,
+        lastRequestedAt: null
+      },
+      photos: {
+        granted: false,
+        status: 'undetermined',
+        requestedThisSession: false,
+        lastRequestedAt: null
+      },
+      notifications: {
+        granted: false,
+        status: 'undetermined',
+        requestedThisSession: false,
+        lastRequestedAt: null
+      }
+    }
   }
 };
 
@@ -51,6 +82,7 @@ export const init = () => (dispatch, getState) => {
       }
     }
   })));
+  dispatch(detectPermissions());
 };
 
 // trigger OS permission request dialogues, they are activated in the order specified
