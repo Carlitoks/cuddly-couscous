@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Metrics, ApplicationStyles, Fonts, Colors } from "../../../Themes";
-import { moderateScale } from "../../../Util/Scaling";
-
+import { moderateScale, moderateScaleViewports } from "../../../Util/Scaling";
+import metrics from "../../../Themes/Metrics";
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
@@ -27,13 +27,13 @@ export default StyleSheet.create({
   scrollViewFlex: {
     flexGrow: 1,
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingBottom: 20,
     backgroundColor: "#DBDBDB"
   },
   arrowContainer:{
-    marginTop: 20,
+    marginTop: 30,
     alignItems: "flex-start"
   },
   noCardText: { fontFamily: Fonts.BaseFont, color: Colors.gradientColor.top, fontSize: 16, marginTop: 30, textAlign: 'center' },
@@ -46,5 +46,51 @@ export default StyleSheet.create({
     color: "#fff",
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(18, 0)
+  },
+  creditCardTitle:{
+    fontWeight:"bold",
+    color: "#272833",
+    fontSize: 18,
+    fontFamily: Fonts.BaseFont,
+  },
+  permissionsDescription:{
+    color: "#272833",
+    fontSize: 18,
+    fontFamily: Fonts.BaseFont,
+    justifyContent: "center", 
+    alignItems: "center"
+  },
+  creditCardContainer:{
+    paddingTop:10,
+    marginTop:30,
+    paddingBottom:20,
+    width:"80%",
+    justifyContent: "center",
+     alignItems: "center"
+  },
+  row:{
+    flexDirection:"row",
+    width:"90%",
+    marginBottom:20,
+    marginLeft:20,
+    position:"relative"    
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(10),
+    width: Metrics.width * 0.90,
+    height: moderateScaleViewports(55),
+    marginTop: 15,
+    backgroundColor: "#401674"
+  },
+  enabledButton: {
+    alignItems: "center",
+    borderRadius: moderateScaleViewports(4),
+    justifyContent: "center",
+    width: metrics.width * 0.70,
+    height: moderateScaleViewports(55),
+    backgroundColor: "#401674", borderColor: "#401674", borderWidth: 2,
   },
 });
