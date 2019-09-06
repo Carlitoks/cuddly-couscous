@@ -824,6 +824,29 @@ export default (ENG = {
     }
   },
 
+  units: {
+    time: {
+      second: "second",
+      secondAbbr: "s",
+      secondShort: "s",
+      seconds: "seconds",
+      secondsAbbr: "s",
+      secondsShort: "s",
+      minute: "minute",
+      minuteAbbr: "m",
+      minuteShort: "min",
+      minutes: "minutes",
+      minutesAbbr: "m",
+      minutesShort: "mins",
+      hour: "hour",
+      hourAbbr: "h",
+      hourShort: "hr",
+      hours: "hours",
+      hoursAbbr: "h",
+      hoursShort: "hrs"
+    }
+  },
+
   // for localizing currency
   cost: {
     usd: "US${{num}}",
