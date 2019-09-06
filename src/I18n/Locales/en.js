@@ -302,6 +302,10 @@ export default (ENG = {
     }
   },
 
+  linguistHome: {
+    summary: "Monthly Summary"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "I need help with:",
