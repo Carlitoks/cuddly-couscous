@@ -7,6 +7,7 @@ import styles from "./Styles/MissingRequiredPermissionsViewStyles";
 import { Icon } from "react-native-elements";
 import I18n from "../../I18n/I18n";
 import TextBlockButton from "../../Components/Widgets/TextBlockButton";
+import OpenAppSettings from 'react-native-app-settings'
 
 class MissingRequiredPermissionsView extends Component {
   constructor(props) {
@@ -15,6 +16,10 @@ class MissingRequiredPermissionsView extends Component {
     this.state = {
       loading: false,
     };
+  }
+  goSettings(){
+    OpenAppSettings.open();
+
   }
 
   render() {
@@ -65,7 +70,7 @@ class MissingRequiredPermissionsView extends Component {
                 disabledStyle = {styles.buttonDisable} // container style object when disabled, component should provide defaults
                 buttonStyle={ styles.enabledButton }
                 textStyle = {styles.buttonText} // optional text styles, component should provide defaults
-                onPress = {this.props.purchase} // function to call when pressed
+                onPress = {this.goSettings} // function to call when pressed
             />
               </View>
 

@@ -3,6 +3,7 @@ package com.newsolo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.krazylabs.OpenAppSettingsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.segment.analytics.reactnative.core.RNAnalyticsPackage;
 import io.branch.rnbranch.RNBranchPackage;
@@ -58,6 +59,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new OpenAppSettingsPackage(),
             new SplashScreenReactPackage(),
             new RNAnalyticsPackage(),
             new RNBranchPackage(),
