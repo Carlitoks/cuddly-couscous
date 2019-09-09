@@ -10,6 +10,7 @@ import OnboardingButtons from "./Components/OnboardingButtons";
 import I18n, { localizePrice } from "../../I18n/I18n";
 import { isIphoneXorAbove } from "../../Util/Devices";
 import DotSteps from "./Components/DotSteps";
+import PermissionRequestModal from "./Components/PermissionRequestModal"
 
 const backgroundImage = () => {
   if (isIphoneXorAbove()) {
@@ -45,6 +46,16 @@ class OnboardingScreen extends Component {
           translucent
           hidden={false}
           backgroundColor="transparent"
+        />
+        <PermissionRequestModal
+          visible={true} // true/false
+          role='customer' // customer|linguist
+          askLater={true} // true|false
+          perms={['camera','mic','notifications','location','photos']} // [camera|mic|location|notifications|photos]
+          onClose={(state) => {
+              // this should fire when the modal is closed by the user, or if OS permissions
+              // dialogues were triggered, then after they have all closed
+          }}
         />
         <View style={[styles.mainOnboardingContainer]} collapsable={false}>
           <Image style={styles.backgroundImage} source={backgroundImage()} />
