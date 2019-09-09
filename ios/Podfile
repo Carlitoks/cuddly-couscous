@@ -50,6 +50,8 @@ pod 'AppCenter/Crashes', '~> 1.6.1'
 
   pod 'RNAnalytics', :path => '../node_modules/@segment/analytics-react-native'
 
+  pod 'RNOpenAppSettings', :path => '../node_modules/react-native-app-settings'
+
 end
 
 post_install do |installer|
