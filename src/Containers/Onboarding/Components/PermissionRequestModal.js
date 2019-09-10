@@ -11,6 +11,7 @@ import Modal from 'react-native-modal';
 
 import { moderateScale } from "../../../Util/Scaling";
 
+import { requestPermissions } from "../../../Ducks/AppStateReducer";
 
 // Styles
 import styles from "./Styles/PermissionRequestModalStyles";
@@ -27,6 +28,16 @@ class PermissionRequestModal extends Component {
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
+  }
+
+  requestPerms(){
+    this.setModalVisible(!this.state.modalVisible);
+    const { perms } = this.props;
+    requestPermissions(perms)
+    .then(res => console.log(res))
+    .catch(error => console.log(res))
+    
+    
   }
 
   renderIcon(key)
@@ -100,7 +111,10 @@ class PermissionRequestModal extends Component {
                 </TouchableHighlight>
 
                 <TouchableOpacity
-                  onPress={() => alert("RegisterView")}
+                  onPress={() => {
+                    
+                    this.requestPerms();
+                  }}
                   style={styles.continueButton}
                   >
                   <Text style={styles.continueButtonText}>
@@ -117,7 +131,9 @@ class PermissionRequestModal extends Component {
 
 const mS = state => ({});
 
-const mD = {};
+const mD = {
+  requestPermissions
+};
 
 export default connect(
   mS,
