@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, View, Text, StyleSheet} from "react-native";
+import { Button, View, Text, StyleSheet, Alert } from "react-native";
 import api from "../../../Config/AxiosConfig";
 import colors from "../../../Themes/Colors";
 import { moderateScale, moderateFontSize } from "../../../Util/Scaling";
@@ -43,7 +43,7 @@ export class UserConnecting extends Component {
     this.pollIntervalID = setInterval(() => {
       this.handleStatusPollInterval();
     }, 3000);
-    
+
     console.log("UserConnecting.componentDidMount");
   }
 
@@ -100,7 +100,7 @@ export class UserConnecting extends Component {
     });
 
     // did we timeout?
-    if (this.countdown <= 0) {  
+    if (this.countdown <= 0) {
       const {localUserState, remoteUserState} = this.props;
       const lc = localUserState.connection;
       const rc = remoteUserState.connection
@@ -131,8 +131,13 @@ export class UserConnecting extends Component {
   }
 
   cancel () {
-    this.cleanup();
-    this.props.onCancel();
+    Alert.alert(I18n.t("actions.confirm"), I18n.t('session.confirmEnd'), [
+      {text: I18n.t('actions.yes'), onPress: () => {
+          this.cleanup();
+          this.props.onCancel();
+        }},
+      {text: I18n.t('actions.no')}
+    ]);
   }
 
   error (reason) {
@@ -148,7 +153,7 @@ export class UserConnecting extends Component {
     if (!mc.connected && mc.connecting) {
       return I18n.t("session.connecting.self", {name: ru.firstName});
     }
-    
+
     // other person is connecting
     return I18n.t("session.connecting.user", {name: ru.firstName});
   }
