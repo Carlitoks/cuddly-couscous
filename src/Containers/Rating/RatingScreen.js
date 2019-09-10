@@ -62,7 +62,7 @@ class RatingScreen extends Component {
       iconVoiceClaritySecondList: false,
       iconDistractionsSecondList: false,
 
-      // Connectio problems 
+      // Connectio problems
       noAudio: false,
       noVideo: false,
       poorAudio: false,
@@ -204,7 +204,14 @@ class RatingScreen extends Component {
       scenarioNote,
     } = this.state;
 
+    const {
+      index,
+    } = this.state;
+
     if (linguistProfile) {
+      if (index === 0) {
+        return rating > 0 && (thumbsUp || thumbsDown);
+      }
       if (callType === "help") return rating > 0 && callType && scenarioID && (thumbsUp || thumbsDown) && scenarioNote;
       return rating > 0 && callType && (thumbsUp || thumbsDown) && scenarioNote;
     }
