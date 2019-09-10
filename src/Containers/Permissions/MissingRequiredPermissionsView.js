@@ -8,7 +8,7 @@ import { Icon } from "react-native-elements";
 import I18n from "../../I18n/I18n";
 import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 import OpenAppSettings from 'react-native-app-settings'
-
+import {  detectPermissions } from "../../Ducks/AppStateReducer";
 class MissingRequiredPermissionsView extends Component {
   constructor(props) {
     super(props);
@@ -17,13 +17,19 @@ class MissingRequiredPermissionsView extends Component {
       loading: false,
     };
   }
+componentWillMount(){
+  const { detectPermissions } = this.props;
+  detectPermissions()    
+  .then(res => console.log(res))
+  .catch(error => console.log(error))
+}
+
   goSettings(){
     OpenAppSettings.open();
 
   }
 
   render() {
-    const { navigation, user,loading, clearPayments } = this.props;
 
     return (
       <View style={styles.wrapperContainer}>
@@ -86,6 +92,7 @@ const mS = state => ({
 });
 
 const mD = {
+  detectPermissions
 };
 
 export default connect(

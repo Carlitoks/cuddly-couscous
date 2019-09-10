@@ -1,7 +1,7 @@
 import _merge from "lodash/merge";
 import {requestPermissions as requestPermissionsUtil} from "../Util/Permission";
 import Permissions from "react-native-permissions";
-
+import {Platform} from "react-native";
 // The purpose of this is to manage app UI & config state that is either
 // determined or modifiable by the user.
 
@@ -127,6 +127,13 @@ export const detectPermissions = () => (dispatch, getState) => {
     Permissions.checkMultiple(perms)
     .then((res) => {
       let updates = {permissions: {}};
+      // Set the updates object 
+      perms.forEach((perm) => {
+        updates.permissions[perm] = {
+          status: '', granted: false
+        };
+      });
+
       // update state
       perms.forEach((perm) => {
         if (!!res && !!res[perm]) {
