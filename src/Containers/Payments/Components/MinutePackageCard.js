@@ -37,6 +37,10 @@ export default class MinutePackageCard extends Component {
 
     const styles = {...defaultStyles, ...style};
 
+    const subscriptionPeriodDuration = minutePackage.subscriptionPeriodDuration && minutePackage.subscriptionPeriodDuration.split(":");
+
+    console.tron.log(minutePackage);
+
     return (
       <View style={styles.topContainer}>
         { special ?
@@ -83,7 +87,7 @@ export default class MinutePackageCard extends Component {
             </View>
             { minutePackage.subscriptionPeriodDuration
               ? <Text style={styles.subscriptionDuration}>
-                {I18n.t("minutePackage.validThrough", {date: moment(minutePackage.subscriptionPeriodEndAt).format("MMM DD") })}
+                {I18n.t("minutePackage.validThrough", {date: moment().add(subscriptionPeriodDuration[0], subscriptionPeriodDuration[1] === "m" ? subscriptionPeriodDuration[1].toUpperCase() : subscriptionPeriodDuration[1]).format("MMM DD") })}
               </Text>
               : minutePackage.subscriptionPeriod ?
               <Text style={styles.subscriptionDuration}>

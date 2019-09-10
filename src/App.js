@@ -306,6 +306,13 @@ class App extends Component {
 
       analytics.track("solo.link-open", obj);
       params.store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
+
+      if(!this.state.loadingStore){
+        handleDeepLinkEvent(obj, params.store.dispatch);
+      }
+    } else {
+      analytics.track("solo.link-open", obj);
+      params.store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
       if(!this.state.loadingStore){
         handleDeepLinkEvent(obj, params.store.dispatch);
       }
