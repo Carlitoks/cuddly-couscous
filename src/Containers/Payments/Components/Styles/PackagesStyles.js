@@ -48,7 +48,7 @@ export default StyleSheet.create({
   },
   specialText: {
     color:  '#FFF',
-    fontFamily: Fonts.BaseFont, 
+    fontFamily: Fonts.BaseFont,
     fontSize: 17,
     textAlign: 'center',
   },
@@ -75,28 +75,46 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    fontFamily: Fonts.BaseFont, 
-    fontSize: 18,
-    fontWeight: 'bold',
-    width:'70%'
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(20),
+    fontWeight: '500',
+    width: "70%",
+    color: "#000000",
   },
   price: {
-    fontFamily: Fonts.BaseFont, 
-    fontSize: 20,
-    fontWeight: 'bold',
-    width:'30%'
-
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(18),
+    fontWeight: "500",
+    color: "#000000"
+  },
+  packageDescription: {
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    color: "#000000",
+    paddingTop: moderateScaleViewports(20)
+  },
+  subscriptionDuration: {
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    color: "#000000",
+    paddingTop: moderateScaleViewports(20)
+  },
+  currencyPrice: {
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    fontWeight: "500",
+    color: "rgba(0, 0, 0, 0.9)",
   },
   discountedPrice:{
-    fontFamily: Fonts.BaseFont, 
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    fontWeight: "500",
     width:'30%',
     color: 'red'
   },
   pricePromoCode:{
-    fontFamily: Fonts.BaseFont, 
-    fontSize: 20, 
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
     textAlign: 'right',
     textDecorationLine: 'line-through',
     textDecorationStyle: 'solid',
@@ -105,7 +123,7 @@ export default StyleSheet.create({
   },
   select: {
     color:  '#64A901',
-    fontFamily: Fonts.BaseFont, 
+    fontFamily: Fonts.BaseFont,
     fontSize: 17,
     alignItems: 'center',
     textAlign: 'center',
@@ -126,7 +144,7 @@ export default StyleSheet.create({
     height: moderateScaleViewports(30)
   },
   checkBox: {
-    fontFamily: Fonts.BaseFont, 
+    fontFamily: Fonts.BaseFont,
     fontSize: 12,
     fontWeight:"normal",
   },
