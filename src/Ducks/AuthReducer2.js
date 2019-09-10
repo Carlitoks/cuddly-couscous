@@ -61,6 +61,26 @@ export const init = () => (dispatch, getState) => {
 
 export const userSelector = () => (dispatch, getState) => getState().auth2;
 
+// clean, is basically the same as logging out, but it only affects local
+// device state - no call to the API server
+export const clean = () => (dispatch, getState) => {
+  dispatch(clear());
+  dispatch(clearAccount()); // clear account reducer
+  dispatch(clearCurrentSession()); // clear current session reducer
+  dispatch(clearNewSession()); // clear new session reducer
+  dispatch(computePayAsYouGoRate());
+
+  setApiAuthToken(null);
+  setForensicsAuthToken(null);
+
+  // clear depreacted reducers, TODO: remove this once feasible
+  dispatch(clearOnboarding());
+
+  // reconfigure other stuff in the system
+  analytics.reset();
+  branch.logout();
+};
+
 // create a new device record
 export const authorizeNewDevice = () => (dispatch, getState) => {
 
@@ -119,7 +139,10 @@ export const logIn = (email, password) => (dispatch, getState) => {
         return dispatch(initializeUser(userID));
       })
       .then(resolve)
-      .catch(reject);
+      .catch((e) => {
+        dispatch(clean());
+        reject(e);
+      });
     };
 
     // if there's no device, ensure one is created first
@@ -127,7 +150,7 @@ export const logIn = (email, password) => (dispatch, getState) => {
     if (!!deviceJwtToken) {
       login();
     } else {
-      dispatch(authorizeNewDevice()).then(() => { login() });
+      dispatch(authorizeNewDevice()).finally(() => { login() });
     }
   });
 };
