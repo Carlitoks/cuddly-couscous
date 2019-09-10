@@ -1889,13 +1889,13 @@ export const AllowedLanguagePairs = {
   eng: ["cmn","yue","jpn","spa","por","fra","ita","deu", "kor"],
   cmn: ["eng","jpn"],
   yue: ["eng"],
-  jpn: ["eng","cmn"],
-  spa: ["eng"],
-  por: ["eng"],
-  fra: ["eng"],
-  ita: ["eng"],
-  deu: ["eng"],
-  kor: ["eng"]
+  jpn: ["eng","cmn","kor","spa","ita","por","fra","deu"],
+  spa: ["eng","por","jpn"],
+  por: ["eng","spa","jpn"],
+  fra: ["eng","jpn"],
+  ita: ["eng","jpn"],
+  deu: ["eng","jpn"],
+  kor: ["eng","jpn"]
 };
 
 // raw map of which language is the default selection for which countries
