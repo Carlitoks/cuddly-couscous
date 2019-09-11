@@ -39,8 +39,6 @@ export default class MinutePackageCard extends Component {
 
     const subscriptionPeriodDuration = minutePackage.subscriptionPeriodDuration && minutePackage.subscriptionPeriodDuration.split(":");
 
-    console.tron.log(minutePackage);
-
     return (
       <View style={styles.topContainer}>
         { special ?
