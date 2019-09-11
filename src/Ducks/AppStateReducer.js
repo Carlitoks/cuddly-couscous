@@ -1,7 +1,7 @@
 import _merge from "lodash/merge";
-import {requestPermissions} from "../Util/Permission";
+import {requestPermissions as requestPermissionsUtil} from "../Util/Permission";
 import Permissions from "react-native-permissions";
-
+import {Platform} from "react-native";
 // The purpose of this is to manage app UI & config state that is either
 // determined or modifiable by the user.
 
@@ -100,7 +100,7 @@ export const init = () => (dispatch, getState) => {
 
 // trigger OS permission request dialogues, they are activated in the order specified
 export const requestPermissions = (perms) => (dispatch, getState) => {
-  return requestPermissions(perms).finally(() => {
+  return requestPermissionsUtil(perms).finally(() => {
     let updates = {permissions: {}};
     perms.forEach((perm) => {
       updates.permissions[perm] = {
@@ -127,6 +127,13 @@ export const detectPermissions = () => (dispatch, getState) => {
     Permissions.checkMultiple(perms)
     .then((res) => {
       let updates = {permissions: {}};
+      // Set the updates object 
+      perms.forEach((perm) => {
+        updates.permissions[perm] = {
+          status: '', granted: false
+        };
+      });
+
       // update state
       perms.forEach((perm) => {
         if (!!res && !!res[perm]) {
