@@ -96,11 +96,29 @@ export default (KO = {
     tagline: "Language at Your Command"
   },
 
+  // often used as the result of an action
   status: {
+    added: "추가됨",
+    applied: "적용됨",
     available: "사용할 수 있음",
     cancelled: "취소됨",
+    completed: "완료됨",
+    confirmed: "확인됨",
+    deleted: "삭제됨",
+    denied: "거부됨",
     error: "오류",
-    unavailable: "사용할 수 없음"
+    failed: "실패",
+    finished: "마침",
+    received: "수신됨",
+    rejected: "거절됨",
+    removed: "제거됨",
+    sent: "전송됨",
+    started: "시작됨",
+    stopped: "중지됨",
+    success: "성공",
+    submitted: "제출됨",
+    unavailable: "사용할 수 없음",
+    updated: "업데이트됨"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -173,7 +191,8 @@ export default (KO = {
     scenarioNote: "메모(선택 사항)",
     missedCall: "부재 중 전화",
     notRated: "평가하지 않음",
-    addRating: "평가 추가"
+    addRating: "평가 추가",
+    abuseReported: "악용사례 신고됨"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -283,6 +302,10 @@ export default (KO = {
     }
   },
 
+  linguistHome: {
+    summary: "월별 요약"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "도움 필요:",
@@ -318,6 +341,37 @@ export default (KO = {
     }
   },
 
+  permissions: {
+    title: "사용 권한 요청",
+    missing: "필요한 사용 권한 없음",
+    missingDescription: "앱을 사용하려면 사용 권한을 수정하세요.",
+    gotoSettings: "설정으로 이동",
+    later: "나중에 확인",
+    name: {
+      camera: "카메라",
+      mic: "마이크",
+      location: "위치",
+      notifications: "알림",
+      photos: "사진"
+    },
+    description: {
+      customer: {
+        camera: "Jeenie 통화에 필요합니다.",
+        mic: "Jeenie 통화에 필요합니다.",
+        location: "Jeenie와의 연결을 최적화할 수 있습니다.",
+        notifications: "Jeenie를 이용할 수 있을 때 알려드립니다.",
+        photos: "라이브러리에서 프로필 사진을 선택할 수 있습니다."
+      },
+      linguist: {
+        camera: "고객 전화를 받기 위해 필요합니다.",
+        mic: "고객 전화를 받기 위해 필요합니다.",
+        location: "고객과의 연결을 최적화할 수 있습니다.",
+        notifications: "고객 전화를 받기 위해 필요합니다.",
+        photos: "라이브러리에서 프로필 사진을 선택할 수 있습니다."
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "계정 상세정보",
@@ -343,7 +397,8 @@ export default (KO = {
       add: "패키지 추가",
       remove: "제거",
       more: "패키지 더 보기",
-      description: "적은 요금에 더 많은 통화시간을 구입하세요.  자동 다시 로드 기능을 사용하면 통화시간이 소진되지 않습니다."
+      description: "적은 요금에 더 많은 통화시간을 구입하세요.  자동 다시 로드 기능을 사용하면 통화시간이 소진되지 않습니다.",
+      confirmRemove: "이 패키지의 다시 로드를 중지하시겠습니까?  남은 시간보다 오래 통화하면 분당 표준 요금이 부과됩니다."
     },
   },
 
@@ -594,12 +649,14 @@ export default (KO = {
 
     // used when rating a session
     rating: {
+      title: "평가",
       reportButton: "신고하기",
       comment: "코멘트",
       addComment: "코멘트 추가",
       questionGood: "좋았던 점은 무엇입니까?",
       questionBetter: "개선할 점은?",
       customer: "고객",
+      connection:"연결 문제가 있었습니까?",
       rateCustomer: "고객 점수 매기기",
       linguist: "링귀스트",
       rateLinguist: "링귀스트 점수 매기기",
@@ -611,8 +668,9 @@ export default (KO = {
       abuse: {
         label: "신고하기",
         title: "악용사례 신고",
-        alert: "모욕적인 행위 또는 괴롭히는 행위를 신고하려고 합니다. 신고하면 해당 고객의 계정에서 정지 또는 제거될 수 있습니다. 원하는 작업: to proceed?",
-        placeholder: "해당 문제에 대한 증거로 구체적인 정보를 제공해 주세요."
+        alert: "모욕적인 행위 또는 괴롭히는 행위를 신고하려고 합니다. 신고하면 해당 고객의 계정에서 정지 또는 제거될 수 있습니다. 계속하시겠습니까?",
+        placeholder: "해당 문제에 대한 증거로 구체적인 정보를 제공해 주세요.",
+        submitted: "신고 내용이 제출되었으므로 곧 Jeenie 팀에서 검토하도록 하겠습니다."
       },
       about: {
         label: "통화 상세정보",
@@ -763,6 +821,29 @@ export default (KO = {
       takenEmail:
         "입력된 이메일 주소를 사용하는 계정이 이미 있습니다.\n다른 이메일을 입력하거나\n해당 계정에 로그인하세요.",
       emailAndPassword: "이메일 및 암호 조합이 올바르지 않습니다.\n다시 시도하세요."
+    }
+  },
+
+  units: {
+    time: {
+      second: "초",
+      secondAbbr: "초",
+      secondShort: "초",
+      seconds: "초",
+      secondsAbbr: "초",
+      secondsShort: "초",
+      minute: "분",
+      minuteAbbr: "분",
+      minuteShort: "분",
+      minutes: "분",
+      minutesAbbr: "분",
+      minutesShort: "분",
+      hour: "시간",
+      hourAbbr: "시간",
+      hourShort: "시간",
+      hours: "시간",
+      hoursAbbr: "시간",
+      hoursShort: "시간"
     }
   },
 

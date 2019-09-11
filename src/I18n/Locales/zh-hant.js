@@ -96,11 +96,29 @@
     tagline: "您要求的語言"
   },
 
+  // often used as the result of an action
   status: {
+    added: "已新增",
+    applied: "已套用",
     available: "可通話",
     cancelled: "已取消",
+    completed: "已完成",
+    confirmed: "已確認",
+    deleted: "已刪除",
+    denied: "已拒絕",
     error: "錯誤",
-    unavailable: "忙線中"
+    failed: "失敗",
+    finished: "結束",
+    received: "已接",
+    rejected: "拒接",
+    removed: "已移除",
+    sent: "已傳送",
+    started: "已開始",
+    stopped: "已停止",
+    success: "成功",
+    submitted: "已送出",
+    unavailable: "忙線中",
+    updated: "已更新"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -173,7 +191,8 @@
     scenarioNote: "非必填備註",
     missedCall: "未接來電",
     notRated: "無評分",
-    addRating: "新增評分"
+    addRating: "新增評分",
+    abuseReported: "已檢舉濫用"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -283,6 +302,10 @@
     }
   },
 
+  linguistHome: {
+    summary: "每月摘要"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "我需要這個語言的協助：",
@@ -318,6 +341,37 @@
     }
   },
 
+  permissions: {
+    title: "申請權限",
+    missing: "少了必要的權限",
+    missingDescription: "請修改權限以利使用本應用程式。",
+    gotoSettings: "進入設定",
+    later: "以後再問我",
+    name: {
+      camera: "相機",
+      mic: "麥克風",
+      location: "位置",
+      notifications: "通知",
+      photos: "相片"
+    },
+    description: {
+      customer: {
+        camera: "使用翻譯精靈通話的必要項目。",
+        mic: "使用翻譯精靈通話的必要項目。",
+        location: "這項功能讓我們能夠提供更好的翻譯精靈連線品質。",
+        notifications: "這項功能讓我們能夠發送翻譯精靈可用通知給您。",
+        photos: "這項功能讓您能夠從圖庫中選擇個人資料相片。"
+      },
+      linguist: {
+        camera: "接聽客戶來電的必要項目。",
+        mic: "接聽客戶來電的必要項目。",
+        location: "這項功能讓我們能為您和您的客戶提供更好的通訊品質。",
+        notifications: "接聽客戶來電的必要項目。",
+        photos: "這項功能讓您能夠從圖庫中選擇個人資料相片。"
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "帳戶詳細資料",
@@ -343,7 +397,8 @@
       add: "新增套餐",
       remove: "移除",
       more: "查看更多套餐",
-      description: "購買更多分鐘數可享折扣。  使用自動儲值功能，通話時長永無限制。"
+      description: "購買更多分鐘數可享折扣。  使用自動儲值功能，通話時長永無限制。",
+      confirmRemove: "您確定不再為此套餐充值？  若您超出餘額，必須按每分鐘的標準費率付費。"
     },
   },
 
@@ -594,12 +649,14 @@
 
     // used when rating a session
     rating: {
+      title: "評分",
       reportButton: "報告",
       comment: "留言",
       addComment: "新增留言",
       questionGood: "有哪些不錯的地方？",
       questionBetter: "還能更好嗎？",
       customer: "客戶",
+      connection:"連線出了什麼問題？",
       rateCustomer: "為客戶評分",
       linguist: "語言專員",
       rateLinguist: "為語言專員評分",
@@ -611,8 +668,9 @@
       abuse: {
         label: "報告",
         title: "檢舉濫用",
-        alert: "您將要檢舉濫用或騷擾行為，我們可能會因此暫停或移除該客戶的帳戶。您要 to proceed?",
-        placeholder: "請提供能證明事實的具體細節。"
+        alert: "您將要檢舉濫用或騷擾行為，我們可能會因此暫停或移除該客戶的帳戶。您要繼續嗎？",
+        placeholder: "請提供能證明事實的具體細節。",
+        submitted: "已送出您的報告，翻譯精靈團隊將會進行審查。"
       },
       about: {
         label: "通話明細",
@@ -763,6 +821,29 @@
       takenEmail:
         "已有另一個帳戶使用您所輸入的電子郵件地址。\n請輸入另一個電子郵件或\n登入您的帳戶。",
       emailAndPassword: "電子郵件和密碼組合不正確。\n請再試一次。"
+    }
+  },
+
+  units: {
+    time: {
+      second: "秒",
+      secondAbbr: "秒",
+      secondShort: "秒",
+      seconds: "秒",
+      secondsAbbr: "秒",
+      secondsShort: "秒",
+      minute: "分鐘",
+      minuteAbbr: "分",
+      minuteShort: "分鐘",
+      minutes: "分鐘",
+      minutesAbbr: "分",
+      minutesShort: "分鐘",
+      hour: "小時",
+      hourAbbr: "小時",
+      hourShort: "小時",
+      hours: "小時",
+      hoursAbbr: "小時",
+      hoursShort: "小時"
     }
   },
 

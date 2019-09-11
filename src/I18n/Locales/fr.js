@@ -96,11 +96,29 @@ export default (FR = {
     tagline: "Les langues à votre service"
   },
 
+  // often used as the result of an action
   status: {
+    added: "Ajouté",
+    applied: "Appliqué",
     available: "Disponible",
     cancelled: "Annulé",
+    completed: "Terminé",
+    confirmed: "Confirmé",
+    deleted: "Supprimé",
+    denied: "Refusé",
     error: "Erreur",
-    unavailable: "Indisponible"
+    failed: "Échoué",
+    finished: "Terminé",
+    received: "Reçu",
+    rejected: "Rejeté",
+    removed: "Supprimé",
+    sent: "Envoyé",
+    started: "Commencé",
+    stopped: "Arrêté",
+    success: "Opération effectuée",
+    submitted: "Soumis",
+    unavailable: "Indisponible",
+    updated: "Mis à jour"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -173,7 +191,8 @@ export default (FR = {
     scenarioNote: "Remarque facultative",
     missedCall: "Appel manqué",
     notRated: "Non évalué",
-    addRating: "Ajouter une note"
+    addRating: "Ajouter une note",
+    abuseReported: "Abus signalé"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -283,6 +302,10 @@ export default (FR = {
     }
   },
 
+  linguistHome: {
+    summary: "Résumé mensuel"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "J'ai besoin d'aide avec :",
@@ -318,6 +341,37 @@ export default (FR = {
     }
   },
 
+  permissions: {
+    title: "Demande d'autorisation",
+    missing: "Autorisations requises manquantes",
+    missingDescription: "Modifiez vos autorisations pour utiliser l'application.",
+    gotoSettings: "Accéder aux paramètres",
+    later: "Me le demander plus tard",
+    name: {
+      camera: "Caméra",
+      mic: "Appareil photo",
+      location: "Emplacement",
+      notifications: "Notifications",
+      photos: "Photos"
+    },
+    description: {
+      customer: {
+        camera: "Requis pour passer un appel avec Jeenie.",
+        mic: "Requis pour passer un appel avec Jeenie.",
+        location: "Cela vous permet d'optimiser votre connexion avec Jeenie.",
+        notifications: "Cela nous permet de vous alerter lorsque des Jeenie sont disponibles.",
+        photos: "Cela vous permet de sélectionner une photo de profil dans votre bibliothèque."
+      },
+      linguist: {
+        camera: "Requis pour recevoir un appel d'un client.",
+        mic: "Requis pour recevoir un appel d'un client.",
+        location: "Cela nous permet d'optimiser votre connexion avec votre client.",
+        notifications: "Requis pour recevoir un appel d'un client.",
+        photos: "Cela vous permet de sélectionner une photo de profil dans votre bibliothèque."
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "Détails du compte",
@@ -343,7 +397,8 @@ export default (FR = {
       add: "Ajouter un forfait",
       remove: "Supprimer",
       more: "Afficher plus de forfaits",
-      description: "Achetez plus de minutes et payez moins.  Avec le rechargement automatique, votre crédit n'est jamais épuisé."
+      description: "Achetez plus de minutes et payez moins.  Avec le rechargement automatique, votre crédit n'est jamais épuisé.",
+      confirmRemove: "Voulez-vous vraiment arrêter de recharger ce forfait ?  Si vous dépassez votre solde, vous serez facturé au tarif standard par minute."
     },
   },
 
@@ -594,12 +649,14 @@ export default (FR = {
 
     // used when rating a session
     rating: {
+      title: "Tarif",
       reportButton: "Compte-rendu",
       comment: "Commentaire",
       addComment: "Ajouter des commentaires",
       questionGood: "Ça s'est bien passé ?",
       questionBetter: "Que pouvons-nous améliorer ?",
       customer: "Client",
+      connection:"Qu'est-ce qui n'allait pas avec la connexion ?",
       rateCustomer: "Évaluez votre client",
       linguist: "Linguiste",
       rateLinguist: "Évaluez votre linguiste",
@@ -611,8 +668,9 @@ export default (FR = {
       abuse: {
         label: "Compte-rendu",
         title: "Signaler un abus",
-        alert: "Vous êtes sur le point de signaler un abus ou un comportement inapproprié pouvant entraîner la suspension ou la suppression du compte client. Souhaitez-vous to proceed?",
-        placeholder: "Veuillez donner des détails précis attestant ce problème."
+        alert: "Vous êtes sur le point de signaler un abus ou un comportement inapproprié pouvant entraîner la suspension ou la suppression du compte client. Voulez-vous continuer ?",
+        placeholder: "Veuillez donner des détails précis attestant ce problème.",
+        submitted: "Votre rapport a été envoyé et il sera examiné par l'équipe Jeenie."
       },
       about: {
         label: "Détails de l’appel",
@@ -698,7 +756,7 @@ export default (FR = {
     errors: {
       invalidEmail: "Saisissez une adresse e-mail valide",
       takenEmail:
-        "Un compte a déjà été créé avec l'adresse e-mail que vous avez saisie. Saisissez une autre adresse e-mail ou connectez-vous à votre compte.",
+        "Un compte a déjà été créé avec l’adresse e-mail que vous avez saisie. Saisissez une autre adresse e-mail ou connectez-vous à votre compte.",
       emailAndPassword: "L'adresse e-mail et le mot de passe ne correspondent pas.\nMerci de réessayer.",
       signInto: "Connectez-vous à votre compte."
     }
@@ -761,8 +819,31 @@ export default (FR = {
     },
     errors: {
       takenEmail:
-        "Un compte a déjà été créé avec l’adresse e-mail que vous avez saisie. Saisissez une autre adresse e-mail ou connectez-vous à votre compte.",
+        "Un compte a déjà été créé avec l'adresse e-mail que vous avez saisie.\nSaisissez une autre adresse e-mail ou\nconnectez-vous à votre compte.",
       emailAndPassword: "L'adresse e-mail et le mot de passe ne correspondent pas.\nMerci de réessayer."
+    }
+  },
+
+  units: {
+    time: {
+      second: "seconde",
+      secondAbbr: "s",
+      secondShort: "s",
+      seconds: "secondes",
+      secondsAbbr: "s",
+      secondsShort: "s",
+      minute: "minute",
+      minuteAbbr: "m",
+      minuteShort: "min",
+      minutes: "minutes",
+      minutesAbbr: "m",
+      minutesShort: "min",
+      hour: "heure",
+      hourAbbr: "h",
+      hourShort: "h",
+      hours: "heures",
+      hoursAbbr: "h",
+      hoursShort: "h"
     }
   },
 

@@ -96,11 +96,29 @@ export default (IT = {
     tagline: "Lingua al tuo servizio"
   },
 
+  // often used as the result of an action
   status: {
+    added: "Aggiunto",
+    applied: "Applicato",
     available: "Disponibile",
     cancelled: "Annullato",
+    completed: "Completato",
+    confirmed: "Confermato",
+    deleted: "Eliminato",
+    denied: "Negato",
     error: "Errore",
-    unavailable: "Non disponibile"
+    failed: "Non riuscito",
+    finished: "Finito",
+    received: "Ricevuto",
+    rejected: "Rifiutato",
+    removed: "Rimosso",
+    sent: "Inviato",
+    started: "Avviato",
+    stopped: "Interrotto",
+    success: "Riuscito",
+    submitted: "Inviato",
+    unavailable: "Non disponibile",
+    updated: "Aggiornato"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -173,7 +191,8 @@ export default (IT = {
     scenarioNote: "Nota facoltativa",
     missedCall: "Chiamata persa",
     notRated: "Non valutata",
-    addRating: "Aggiungi valutazione"
+    addRating: "Aggiungi valutazione",
+    abuseReported: "Abuso segnalato"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -283,6 +302,10 @@ export default (IT = {
     }
   },
 
+  linguistHome: {
+    summary: "Riepilogo mensile"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "Ho bisogno di aiuto su:",
@@ -318,6 +341,37 @@ export default (IT = {
     }
   },
 
+  permissions: {
+    title: "Richiesta di autorizzazione",
+    missing: "Autorizzazioni richieste mancanti",
+    missingDescription: "Modificare le autorizzazioni per poter utilizzare l'app.",
+    gotoSettings: "Vai a Impostazioni",
+    later: "Chiedimelo più avanti",
+    name: {
+      camera: "Webcam",
+      mic: "Microfono",
+      location: "Posizione",
+      notifications: "Notifiche",
+      photos: "Foto"
+    },
+    description: {
+      customer: {
+        camera: "Necessario per effettuare una chiamata Jeenie.",
+        mic: "Necessario per effettuare una chiamata Jeenie.",
+        location: "Ci consente di ottimizzare il collegamento con Jeenie.",
+        notifications: "Ci consente di informarti quando sono disponibili Jeenie.",
+        photos: "Ci consente di selezionare un'immagine del profilo dalla tua libreria."
+      },
+      linguist: {
+        camera: "Necessario per ricevere la chiamata di un cliente.",
+        mic: "Necessario per ricevere la chiamata di un cliente.",
+        location: "Ci consente di ottimizzare il collegamento con il tuo cliente.",
+        notifications: "Necessario per ricevere la chiamata di un cliente.",
+        photos: "Ci consente di selezionare un'immagine del profilo dalla tua libreria."
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "Dettagli account",
@@ -343,7 +397,8 @@ export default (IT = {
       add: "Aggiungi pacchetto",
       remove: "Rimuovi",
       more: "Visualizza altri pacchetti",
-      description: "Acquista altri minuti a meno.  Con la ricarica automatica, non rimarrai mai a corto di minuti."
+      description: "Acquista altri minuti a meno.  Con la ricarica automatica, non rimarrai mai a corto di minuti.",
+      confirmRemove: "Interrompere la ricarica di questo pacchetto?  Se superi il saldo, ti verrà addebitata la tariffa standard al minuto."
     },
   },
 
@@ -594,12 +649,14 @@ export default (IT = {
 
     // used when rating a session
     rating: {
+      title: "Valutazione",
       reportButton: "Segnala",
       comment: "Commento",
       addComment: "Aggiungi commenti",
       questionGood: "Cosa ti è piaciuto?",
       questionBetter: "Cosa potremmo migliorare?",
       customer: "Cliente",
+      connection:"Qual è stato il problema con il collegamento",
       rateCustomer: "Valuta il tuo cliente",
       linguist: "Linguista",
       rateLinguist: "Valuta il tuo linguista",
@@ -611,8 +668,9 @@ export default (IT = {
       abuse: {
         label: "Segnala",
         title: "Segnala abuso",
-        alert: "Stai per segnalare un abuso o un comportamento offensivo che potrebbe comportare la sospensione o la rimozione dell'account del cliente. Desideri to proceed?",
-        placeholder: "Ti preghiamo di fornire dettagli specifici come testimonianza del problema."
+        alert: "Stai per segnalare un abuso o un comportamento offensivo che potrebbe comportare la sospensione o la rimozione dell'account del cliente. Continuare?",
+        placeholder: "Ti preghiamo di fornire dettagli specifici come testimonianza del problema.",
+        submitted: "La tua segnalazione è stata inviata e sarà esaminata dal team Jeenie."
       },
       about: {
         label: "Dettagli chiamata",
@@ -721,7 +779,7 @@ export default (IT = {
     descriptionSuccess:
       'Il tuo indirizzo e-mail è stato aggiornato. Puoi accedere a Jeenie con il nuovo indirizzo e-mail "{{email}}"',
     descriptionTaken:
-      'L\'indirizzo e-mail "{email}" è già registrato.  Puoi accedere con questo indirizzo e-mail oppure specificare un nuovo indirizzo e-mail.'
+      'L\'indirizzo e-mail \"{email}\" è già registrato.  Puoi accedere con questo indirizzo e-mail oppure specificare un nuovo indirizzo e-mail.'
   },
 
   newCustomerOnboarding: {
@@ -763,6 +821,29 @@ export default (IT = {
       takenEmail:
         "Esiste già un account con l'indirizzo e-mail inserito.\nInserisci un indirizzo e-mail differente o\naccedi al tuo account.",
       emailAndPassword: "L'indirizzo e-mail o la password non sono corretti.\nRiprova."
+    }
+  },
+
+  units: {
+    time: {
+      second: "secondo",
+      secondAbbr: "s",
+      secondShort: "s",
+      seconds: "secondi",
+      secondsAbbr: "s",
+      secondsShort: "s",
+      minute: "minuto",
+      minuteAbbr: "m",
+      minuteShort: "min.",
+      minutes: "minuti",
+      minutesAbbr: "m",
+      minutesShort: "min.",
+      hour: "ora",
+      hourAbbr: "h",
+      hourShort: "h",
+      hours: "ore",
+      hoursAbbr: "h",
+      hoursShort: "h"
     }
   },
 

@@ -29,7 +29,7 @@ export default (DE = {
   female: "Weiblich",
   firstname: "Vorname",
   gender: "Geschlecht",
-  genderAlert: "Linguisten haben die Möglichkeit, sich einem Kunden eines bestimmten Geschlechts zuordnen zu lassen. Wenn Sie Ihr Geschlecht nicht angeben möchten, werden Sie keinen Übersetzern zugeordnet, die eine Präferenz angegeben haben.",
+  genderAlert: "Linguisten haben die Möglichkeit, sich einem Kunden eines bestimmten Geschlechts zuordnen zu lassen. Wenn Sie es vorziehen, Ihr Geschlecht nicht offenzulegen, werden Sie keinem Linguisten mit einer Präferenz zugeordnet.",
   genderNotice: "Warum fragen wir danach?",
   genderName: "Wählen Sie Ihr Geschlecht",
   historyNotFound: "Kein Verlauf gefunden",
@@ -96,11 +96,29 @@ export default (DE = {
     tagline: "Sprache zu Ihren Diensten"
   },
 
+  // often used as the result of an action
   status: {
+    added: "Hinzugefügt",
+    applied: "Übernommen",
     available: "Verfügbar",
     cancelled: "Abgebrochen",
+    completed: "Abgeschlossen",
+    confirmed: "Bestätigt",
+    deleted: "Gelöscht",
+    denied: "Verweigert",
     error: "Fehler",
-    unavailable: "Nicht verfügbar"
+    failed: "Fehlgeschlagen",
+    finished: "Beendet",
+    received: "Empfangen",
+    rejected: "Abgelehnt",
+    removed: "Entfernt",
+    sent: "Gesendet",
+    started: "Gestartet",
+    stopped: "Angehalten",
+    success: "Erfolg",
+    submitted: "Abgesendet",
+    unavailable: "Nicht verfügbar",
+    updated: "Aktualisiert"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -173,7 +191,8 @@ export default (DE = {
     scenarioNote: "Optionale Anmerkung",
     missedCall: "Verpasster Anruf",
     notRated: "Ohne Bewertung",
-    addRating: "Bewertung hinzufügen"
+    addRating: "Bewertung hinzufügen",
+    abuseReported: "Missbrauch gemeldet"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -283,6 +302,10 @@ export default (DE = {
     }
   },
 
+  linguistHome: {
+    summary: "Monatliche Zusammenfassung"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "Ich brauche Hilfe bei:",
@@ -318,6 +341,37 @@ export default (DE = {
     }
   },
 
+  permissions: {
+    title: "Berechtigungsanfrage",
+    missing: "Erforderliche Berechtigungen nicht erteilt",
+    missingDescription: "Bitte aktualisieren Sie die Berechtigungen, damit Sie die App nutzen können.",
+    gotoSettings: "Einstellungen aufrufen",
+    later: "Später",
+    name: {
+      camera: "Kamera",
+      mic: "Mikrofon",
+      location: "Standort",
+      notifications: "Benachrichtigungen",
+      photos: "Fotos"
+    },
+    description: {
+      customer: {
+        camera: "Erforderlich für Jeenie-Anrufe.",
+        mic: "Erforderlich für Jeenie-Anrufe.",
+        location: "Ermöglicht die Optimierung der Verbindung mit Jeenie.",
+        notifications: "Ermöglicht die Benachrichtigung über die Verfügbarkeit von Jeenies.",
+        photos: "Ermöglicht die Auswahl eines Profilbilds aus Ihren gespeicherten Bildern."
+      },
+      linguist: {
+        camera: "Erforderlich für Kunden-Anrufe.",
+        mic: "Erforderlich für Kunden-Anrufe.",
+        location: "Ermöglicht die Optimierung der Verbindung mit dem Kunden.",
+        notifications: "Erforderlich für Kunden-Anrufe.",
+        photos: "Ermöglicht die Auswahl eines Profilbilds aus Ihren gespeicherten Bildern."
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "Kontoinformationen",
@@ -343,7 +397,8 @@ export default (DE = {
       add: "Paket hinzufügen",
       remove: "Löschen",
       more: "Weitere Pakete anzeigen",
-      description: "Erhalten Sie mehr Minuten günstiger.  Mit der automatischen Aufladung haben Sie stets Guthaben."
+      description: "Erhalten Sie mehr Minuten günstiger.  Mit der automatischen Aufladung haben Sie stets Guthaben.",
+      confirmRemove: "Möchten Sie die Aufladung dieses Paket wirklich beenden?  Sobald Sie Ihr Guthaben aufgebraucht haben, wird der normale Minutenpreis abgerechnet."
     },
   },
 
@@ -594,12 +649,14 @@ export default (DE = {
 
     // used when rating a session
     rating: {
+      title: "Bewertung",
       reportButton: "Bericht",
       comment: "Kommentar",
       addComment: "Kommentare hinzufügen",
       questionGood: "Was war gut?",
       questionBetter: "Was könnte besser sein?",
       customer: "Kunde",
+      connection:"Was war mit der Verbindung nicht in Ordnung?",
       rateCustomer: "Bewerten Sie Ihren Kunden",
       linguist: "Linguist",
       rateLinguist: "Bewerten Sie Ihren Linguisten",
@@ -611,8 +668,9 @@ export default (DE = {
       abuse: {
         label: "Bericht",
         title: "Beleidigendes Verhalten melden",
-        alert: "Sie möchten beleidigendes oder belästigendes Verhalten melden. Dies kann dazu führen, dass das Konto des Kunden gesperrt und gelöscht wird. Möchten Sie to proceed?",
-        placeholder: "Beschreiben Sie das Problem präzise."
+        alert: "Sie möchten beleidigendes oder belästigendes Verhalten melden. Dies kann dazu führen, dass das Konto des Kunden gesperrt und gelöscht wird. Möchten Sie fortfahren?",
+        placeholder: "Beschreiben Sie das Problem präzise.",
+        submitted: "Ihr Bericht wurde gesendet und wird von Jeenie ausgewertet."
       },
       about: {
         label: "Anrufdetails",
@@ -763,6 +821,29 @@ export default (DE = {
       takenEmail:
         "Ein Konto mit der von Ihnen eingegebenen E-Mail-Adresse ist bereits vorhanden.\nBitte geben Sie eine andere E-Mail-Adresse ein oder\nmelden Sie sich bei Ihrem Konto an.",
       emailAndPassword: "Falsche Kombination aus E-Mail und Passwort.\nBitte versuchen Sie es erneut."
+    }
+  },
+
+  units: {
+    time: {
+      second: "Sekunde",
+      secondAbbr: "s",
+      secondShort: "s",
+      seconds: "Sekunden",
+      secondsAbbr: "s",
+      secondsShort: "s",
+      minute: "Minute",
+      minuteAbbr: "m",
+      minuteShort: "Min.",
+      minutes: "Minuten",
+      minutesAbbr: "m",
+      minutesShort: "Min.",
+      hour: "Stunde",
+      hourAbbr: "h",
+      hourShort: "Std.",
+      hours: "Stunden",
+      hoursAbbr: "h",
+      hoursShort: "Std."
     }
   },
 

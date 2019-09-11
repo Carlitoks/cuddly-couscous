@@ -96,11 +96,29 @@ export default (ESP = {
     tagline: "Language at Your Command"
   },
 
+  // often used as the result of an action
   status: {
+    added: "Agregado",
+    applied: "Aplicado",
     available: "Disponible",
     cancelled: "Cancelado",
+    completed: "Completado",
+    confirmed: "Confirmado",
+    deleted: "Borrado",
+    denied: "Denegado",
     error: "Error",
-    unavailable: "No disponible"
+    failed: "Ha fallado",
+    finished: "Finalizado",
+    received: "Recibido",
+    rejected: "Rechazado",
+    removed: "Eliminado",
+    sent: "Enviado",
+    started: "Iniciado",
+    stopped: "Detenido",
+    success: "Correcto",
+    submitted: "Enviado",
+    unavailable: "No disponible",
+    updated: "Actualizado"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -173,7 +191,8 @@ export default (ESP = {
     scenarioNote: "Nota opcional",
     missedCall: "Llamada perdida",
     notRated: "Sin calificación",
-    addRating: "Agregar calificación"
+    addRating: "Agregar calificación",
+    abuseReported: "Abuso informado"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -283,6 +302,10 @@ export default (ESP = {
     }
   },
 
+  linguistHome: {
+    summary: "Resumen mensual"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "Necesito ayuda con:",
@@ -318,6 +341,37 @@ export default (ESP = {
     }
   },
 
+  permissions: {
+    title: "Solicitud de permiso",
+    missing: "Faltan los permisos requeridos",
+    missingDescription: "Modifique sus permisos para poder utilizar la aplicación.",
+    gotoSettings: "Ir a Configuración",
+    later: "Pregúntame luego",
+    name: {
+      camera: "Cámara",
+      mic: "Micrófono",
+      location: "Ubicación",
+      notifications: "Notificaciones",
+      photos: "Fotos"
+    },
+    description: {
+      customer: {
+        camera: "Obligatorio para hacer una llamada con Jeenie.",
+        mic: "Obligatorio para hacer una llamada con Jeenie.",
+        location: "Esto nos permite optimizar su conexión con Jeenie.",
+        notifications: "Esto nos permite notificarle cuando hay Jeenies disponibles.",
+        photos: "Esto le permite seleccionar una imagen de perfil de su biblioteca."
+      },
+      linguist: {
+        camera: "Obligatorio para recibir una llamada de un cliente.",
+        mic: "Obligatorio para recibir una llamada de un cliente.",
+        location: "Esto nos permite optimizar su conexión con su cliente.",
+        notifications: "Obligatorio para recibir una llamada de un cliente.",
+        photos: "Esto le permite seleccionar una imagen de perfil de su biblioteca."
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "Detalles de la cuenta",
@@ -343,7 +397,8 @@ export default (ESP = {
       add: "Agregar paquete",
       remove: "Eliminar",
       more: "Ver más paquetes",
-      description: "Compre más minutos por menos.  Con la recarga automática, nunca se quedará sin tiempo."
+      description: "Compre más minutos por menos.  Con la recarga automática, nunca se quedará sin tiempo.",
+      confirmRemove: "¿Está seguro de que desea dejar de recargar este paquete?  Si excede su saldo, se le cobrará la tarifa estándar por minuto."
     },
   },
 
@@ -392,7 +447,7 @@ export default (ESP = {
   minutePackage: {
     balance: "{{}} min",
     balanceUnlimited: "Uso ilimitado",
-    validBetween: "Validez: {{date1}} - {{date2}}",
+    validBetween: "Validez: {{date1}} y el {{date2}}",
     validThrough: "Válido hasta el: {{date}}",
     special: "Especial"
   },
@@ -594,12 +649,14 @@ export default (ESP = {
 
     // used when rating a session
     rating: {
+      title: "Calificación",
       reportButton: "Informar",
       comment: "Comentario",
       addComment: "Agregar comentarios",
       questionGood: "¿Qué le gustó?",
       questionBetter: "¿Qué podría ser mejor?",
       customer: "Cliente",
+      connection:"¿Qué no funcionó correctamente en la llamada?",
       rateCustomer: "Califique a su cliente",
       linguist: "Lingüista",
       rateLinguist: "Califique a su lingüista",
@@ -611,8 +668,9 @@ export default (ESP = {
       abuse: {
         label: "Informar",
         title: "Informar abuso",
-        alert: "Usted está a punto de informar un comportamiento abusivo o intimidante, lo que podría provocar la suspensión o eliminación de la cuenta del cliente. Desea to proceed?",
-        placeholder: "Proporcione detalles específicos como prueba de este problema."
+        alert: "Usted está a punto de informar un comportamiento abusivo o intimidante, lo que podría provocar la suspensión o eliminación de la cuenta del cliente. ¿Desea continuar?",
+        placeholder: "Proporcione detalles específicos como prueba de este problema.",
+        submitted: "Su informe ha sido enviado y será revisado por el equipo de Jeenie."
       },
       about: {
         label: "Detalles de la llamada",
@@ -761,8 +819,31 @@ export default (ESP = {
     },
     errors: {
       takenEmail:
-        "Ya existe una cuenta con la dirección de correo electrónico que ingresó. Ingrese un correo electrónico diferente o inicie sesión en su cuenta.",
+        "Ya existe una cuenta con la dirección de correo electrónico que ingreso.\nIngrese un correo electrónico diferente o\n inicie sesión en su cuenta.",
       emailAndPassword: "Combinación incorrecta de correo electrónico y contraseña.\nVuela a intentarlo."
+    }
+  },
+
+  units: {
+    time: {
+      second: "segundo",
+      secondAbbr: "s",
+      secondShort: "s",
+      seconds: "segundos",
+      secondsAbbr: "s",
+      secondsShort: "s",
+      minute: "minuto",
+      minuteAbbr: "m",
+      minuteShort: "min",
+      minutes: "minutos",
+      minutesAbbr: "m",
+      minutesShort: "min",
+      hour: "hora",
+      hourAbbr: "h",
+      hourShort: "h",
+      hours: "horas",
+      hoursAbbr: "h",
+      hoursShort: "h"
     }
   },
 
