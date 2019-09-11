@@ -23,19 +23,19 @@ componentWillMount(){
   .then(res => console.log(res))
   .catch(error => console.log(error))
 }
-
   goSettings(){
     OpenAppSettings.open();
-
   }
 
   render() {
-
+    const {
+      navigation,
+    } = this.props;
     return (
       <View style={styles.wrapperContainer}>
-          <View style={styles.arrowContainer} >
+          <TouchableOpacity  onPress={() => navigation.dispatch({ type: "back" })}  style={styles.arrowContainer} >
             <Icon name="chevron-left" type="evilicon" color="#3F1674" size={50} />
-          </View>
+          </TouchableOpacity>
 
           <ScrollView
             automaticallyAdjustContentInsets

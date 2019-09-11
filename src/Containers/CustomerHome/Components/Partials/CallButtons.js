@@ -62,9 +62,7 @@ class CallButtons extends Component {
             || response.camera === "denied"
             || response.microphone === "denied"
           ) {
-            return Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
-              { text: I18n.t("ok") },
-            ]);
+            navigation.dispatch({ type: "MissingRequiredPermissionsView" });
           }
           if (completedMicAndCamera) {
             await checkCallPermissions((valueToUpdate) => {
