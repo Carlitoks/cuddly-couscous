@@ -78,7 +78,6 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(20),
     fontWeight: '500',
-    width: "70%",
     color: "#000000",
   },
   price: {
@@ -87,6 +86,13 @@ export default StyleSheet.create({
     fontWeight: "500",
     color: "#000000"
   },
+  minutes:{
+    fontFamily: Fonts.BaseFont,
+    fontSize: moderateScaleViewports(16),
+    color: "#606060"
+  },
+  minutesContainer: {flexDirection: "column", justifyContent: "center", alignItems: "center"},
+  nameContainer: {flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start"},
   packageDescription: {
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(16),

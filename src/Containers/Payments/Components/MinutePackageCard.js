@@ -63,28 +63,36 @@ export default class MinutePackageCard extends Component {
         </View>
         <View style={styles.mainContainer}>
           <View style={styles.headerContainer}>
-            <Text style={styles.title}>
-              {minutePackage.name}
-            </Text>
-            <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
-              { minutePackage.unlimitedUse
-                ? I18n.t("account.balanceUnlimited")
-                : I18n.t("minutesAbbreviation",{minutes: minutePackage.minutes})}
-            </Text>
-          </View>
-          <View>
-            <View style={styles.headerContainer}>
+            <View style={styles.nameContainer}>
+              <Text style={styles.title}>
+                {minutePackage.name}
+              </Text>
               <Text style={styles.currencyPrice}>
                 {this.renderPrice(minutePackage.cost, minutePackage.currency)}
               </Text>
               { discountedPrice ?
                 <Text style={styles.discountedPrice}>
-                {this.renderPrice(minutePackage.adjustedCost, minutePackage.currency)}
+                  {this.renderPrice(minutePackage.adjustedCost, minutePackage.currency)}
                 </Text>
-              :
+                :
                 null
               }
             </View>
+
+            { minutePackage.unlimitedUse && <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
+                {I18n.t("account.balanceUnlimited")}
+              </Text> }
+
+            { !minutePackage.unlimitedUse && <View style={styles.minutesContainer}>
+              <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
+                {minutePackage.minutes}
+              </Text>
+              <Text style={styles.minutes}>
+                {I18n.t("minutes")}
+              </Text>
+            </View>}
+          </View>
+          <View>
             { minutePackage.subscriptionPeriodDuration
               ? <Text style={styles.subscriptionDuration}>
                 {I18n.t("minutePackage.validThrough", {date: moment().add(subscriptionPeriodDuration[0], subscriptionPeriodDuration[1] === "m" ? subscriptionPeriodDuration[1].toUpperCase() : subscriptionPeriodDuration[1]).format("MMM DD") })}
