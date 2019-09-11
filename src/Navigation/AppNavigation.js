@@ -41,7 +41,7 @@ import LinguistIncomingCallView from "../Containers/Session/LinguistIncomingCall
 
 // by default, this is the screen that will
 // be shown first when the app loads
-let initialScreen = "MissingRequiredPermissionsView";
+let initialScreen = "LoadingView";
 
 // change the initial screen, this must be called before
 // the router is initialized
