@@ -12,7 +12,7 @@ class OnboardingButtons extends Component {
   handleTouch = async (goto) => {
     const { navigation } = this.props;
     const LocationPermission = await Permission.check("location");
-    if (Platform.OS === "android"){
+    /*if (Platform.OS === "android"){
       if (LocationPermission === "undetermined" || LocationPermission === "denied")
         return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
     }else {
@@ -25,7 +25,7 @@ class OnboardingButtons extends Component {
       if (NotificationPermission === "undetermined") {
         return navigation.dispatch({ type: "NotificationPermissionView", params: { redirectTo: goto } });
       }
-    }
+    } */
     return navigation.dispatch({ type: goto });
   };
   render() {
