@@ -22,7 +22,7 @@ class PermissionRequestModal extends Component {
     super(props);
 
     this.state = {
-      modalVisible: true,
+      modalVisible: props.visible,
     };
   }
 
@@ -31,55 +31,60 @@ class PermissionRequestModal extends Component {
   }
 
   requestPerms(){
-    this.setModalVisible(!this.state.modalVisible);
-    const { perms } = this.props;
+    const { perms, requestPermissions, onClose} = this.props;
     requestPermissions(perms)
-    .then(res => console.log(res))
-    .catch(error => console.log(res))
-    
-    
-  }
-
-  renderIcon(key)
-  {
-    switch(key) { 
-      case 'camera': { 
-        return<IconSimpleLineIcons style={styles.icon} name={'camera'} size={moderateScale(40)} color={ 'purple' } />
-      } 
-      case 'mic': { 
-        return<IconSimpleLineIcons style={styles.icon} name={'microphone'} size={moderateScale(40)} color={ 'purple' } />         
-      }
-      case 'notifications': { 
-        return<IconMaterialIcons style={styles.icon} name={'notifications-active'} size={moderateScale(40)} color={ 'purple' } />         
-      } 
-      case 'location': { 
-        return<IconSimpleLineIcons style={styles.icon} name={'location-pin'} size={moderateScale(40)} color={ 'purple' } />         
-      } 
-      case 'photos': { 
-        return<IconIonicons style={styles.icon} name={'md-photos'} size={moderateScale(40)} color={ 'purple' } />         
-      } 
-      default: { 
-         //statements; 
-         break; 
-      } 
-   } 
+    .then(res => {
+      this.setModalVisible(!this.state.modalVisible);
+      onclose(res);
+    })
+    .catch(error => console.log(error)) 
   }
 
   renderContent(){
     const { perms, role } = this.props;
-    return perms.map( perm => 
-      <View key={perm} style={styles.perms}>
-        {this.renderIcon(perm)}
-        <View style={styles.permsContent}>
-          <Text style= {styles.permsTitle}>{I18n.t(`permissions.name.${perm}`)}</Text>
-          <Text style= {styles.permsDescription}>{I18n.t(`permissions.description.${role}.${perm}`)}</Text>
-        </View>
-      </View>
-    );
+    return perms.map( perm =>{
+      let icon = null;
+      let name = null;
+      switch(perm) { 
+        case 'camera': { 
+          icon = <IconSimpleLineIcons style={styles.icon} name={'camera'} size={moderateScale(40)} color={ 'purple' } />
+          break; 
+        } 
+        case 'microphone': { 
+          icon = <IconSimpleLineIcons style={styles.icon} name={'microphone'} size={moderateScale(40)} color={ 'purple' } />
+          name  = 'mic';        
+          break; 
+        }
+        case 'notification': { 
+          icon = <IconMaterialIcons style={styles.icon} name={'notifications-active'} size={moderateScale(40)} color={ 'purple' } />         
+          name =  'notifications';
+          break; 
+        } 
+        case 'location': { 
+          icon = <IconSimpleLineIcons style={styles.icon} name={'location-pin'} size={moderateScale(40)} color={ 'purple' } />         
+          break; 
+        } 
+        case 'photo': { 
+          icon = <IconIonicons style={styles.icon} name={'md-photos'} size={moderateScale(40)} color={ 'purple' } />
+          name =  'photos';
+          break; 
+        } 
+     }
+
+     return <View key={perm} style={styles.perms}>
+              {icon}
+              <View style={styles.permsContent}>
+                <Text style= {styles.permsTitle}>{I18n.t(`permissions.name.${name || perm}`)}</Text>
+                <Text style= {styles.permsDescription}>{I18n.t(`permissions.description.${role}.${name || perm}`)}</Text>
+              </View>
+            </View>
+    });
  
   }
 
   render() {
+    const { askLater } = this.props;
+
     return (
         <Modal
           animationType="fade"
@@ -92,7 +97,6 @@ class PermissionRequestModal extends Component {
           propagateSwipe={true}
         >
           <View style={styles.modalView}>
-            <View>
               <Text style= {styles.title}>{I18n.t("permissions.title")}</Text>
               <ScrollView 
                 automaticallyAdjustContentInsets
@@ -102,14 +106,14 @@ class PermissionRequestModal extends Component {
                 {this.renderContent()}
               </ScrollView>
               <View style={styles.buttonsContainer}>
-
-                <TouchableHighlight
-                  onPress={() => {
-                    this.setModalVisible(!this.state.modalVisible);
-                  }}>
-                  <Text style={styles.askLater}>{I18n.t("permissions.later")}</Text>
-                </TouchableHighlight>
-
+                { askLater &&
+                  <TouchableHighlight
+                    onPress={() => {
+                      this.setModalVisible(!this.state.modalVisible);
+                    }}>
+                    <Text style={styles.askLater}>{I18n.t("permissions.later")}</Text>
+                  </TouchableHighlight>
+                }
                 <TouchableOpacity
                   onPress={() => {
                     
@@ -122,7 +126,6 @@ class PermissionRequestModal extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-            </View>
           </View>
         </Modal>
     );
