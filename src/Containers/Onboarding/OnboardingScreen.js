@@ -47,7 +47,6 @@ class OnboardingScreen extends Component {
           hidden={false}
           backgroundColor="transparent"
         />
-        
         <View style={[styles.mainOnboardingContainer]} collapsable={false}>
           <Image style={styles.backgroundImage} source={backgroundImage()} />
           <View style={styles.bodyContainer}>
