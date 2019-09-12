@@ -57,7 +57,6 @@ class OnboardingScreen extends Component {
               {I18n.t("newCustomerOnboarding.intro.descriptionRate", { rate })}
             </Text>
             <View>
-              <DotSteps navigation={navigation} />
               <OnboardingButtons navigation={navigation} />
             </View>
           </View>
