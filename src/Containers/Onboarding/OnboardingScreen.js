@@ -51,7 +51,7 @@ class OnboardingScreen extends Component {
           visible={true} // true/false
           role='customer' // customer|linguist
           askLater={true} // true|false
-          perms={['camera','mic','notifications','location','photos']} // [camera|mic|location|notifications|photos]
+          perms={['camera','microphone','location']} // [camera|microphone|location|notification|photo]
           onClose={(state) => {
               // this should fire when the modal is closed by the user, or if OS permissions
               // dialogues were triggered, then after they have all closed
