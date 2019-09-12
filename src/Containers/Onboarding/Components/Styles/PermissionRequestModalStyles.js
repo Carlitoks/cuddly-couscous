@@ -19,13 +19,14 @@ export default StyleSheet.create({
   modalView: {
     backgroundColor: "white",
     borderRadius: moderateScaleViewports(10),
-    maxHeight: Metrics.height * 0.8,
+    maxHeight: Metrics.height * 0.65,
     padding: moderateScaleViewports(20),
   },
   title: {
     fontFamily: Fonts.BaseFont, 
     fontSize: 20,
     fontWeight: 'bold',
+    marginBottom: moderateScaleViewports(15),
   },
   perms:{
     marginTop: moderateScaleViewports(20),
@@ -56,12 +57,12 @@ export default StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     paddingBottom: 20,
-    height: '80%'
   },
   buttonsContainer:{
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: 'center',
+    marginTop: moderateScaleViewports(20),
   },
   continueButtonContainer: {
     flexDirection: 'column',
