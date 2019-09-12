@@ -11,6 +11,16 @@ import defaultStyles from "./Styles/PackagesStyles";
 export default class MinutePackageCard extends Component {
   constructor(props) {
     super(props);
+    const { minutePackage } = props;
+    const subscriptionPeriodDuration = minutePackage && minutePackage.subscriptionPeriodDuration && minutePackage.subscriptionPeriodDuration.split(":");
+    if(subscriptionPeriodDuration) {
+      this.state = {
+        subscriptionPeriodDuration,
+        subscriptionPeriodDurationType: subscriptionPeriodDuration[1] === "m" ? subscriptionPeriodDuration[1].toUpperCase() : subscriptionPeriodDuration[1]
+      };
+
+    }
+
     this.state = {
       checked: props.reloadNoticeValue,
     };
@@ -37,7 +47,7 @@ export default class MinutePackageCard extends Component {
 
     const styles = {...defaultStyles, ...style};
 
-    const subscriptionPeriodDuration = minutePackage.subscriptionPeriodDuration && minutePackage.subscriptionPeriodDuration.split(":");
+    const { subscriptionPeriodDuration, subscriptionPeriodDurationType } = this.state;
 
     return (
       <View style={styles.topContainer}>
@@ -76,28 +86,29 @@ export default class MinutePackageCard extends Component {
                 null
               }
             </View>
-
-            { minutePackage.unlimitedUse && <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
+            <View style={styles.minutesContainer}>
+              { minutePackage.unlimitedUse && <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
                 {I18n.t("account.balanceUnlimited")}
               </Text> }
 
-            { !minutePackage.unlimitedUse && <View style={styles.minutesContainer}>
-              <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
-                {minutePackage.minutes}
-              </Text>
-              <Text style={styles.minutes}>
-                {I18n.t("minutes")}
-              </Text>
-            </View>}
+              { !minutePackage.unlimitedUse && <React.Fragment>
+                <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
+                  {minutePackage.minutes}
+                </Text>
+                <Text style={styles.minutes}>
+                  {I18n.t("minutes")}
+                </Text>
+              </React.Fragment>}
+            </View>
           </View>
           <View>
             { minutePackage.subscriptionPeriodDuration
               ? <Text style={styles.subscriptionDuration}>
-                {I18n.t("minutePackage.validThrough", {date: moment().add(subscriptionPeriodDuration[0], subscriptionPeriodDuration[1] === "m" ? subscriptionPeriodDuration[1].toUpperCase() : subscriptionPeriodDuration[1]).format("MMM DD") })}
+                {I18n.t("minutePackage.validThrough", {date: moment().add(subscriptionPeriodDuration, subscriptionPeriodDurationType).format("MMM DD") })}
               </Text>
               : minutePackage.subscriptionPeriod ?
               <Text style={styles.subscriptionDuration}>
-                {I18n.t("minutePackage.validBetween", {date1: moment(minutePackage.subscriptionPeriodBeginAt).format("MMM DD, YYYY"), date2: moment(minutePackage.subscriptionPeriodEndAt).format("MMM DD, YYYY")})}
+                {I18n.t("minutePackage.validBetween", {date1: moment(minutePackage.subscriptionPeriodBeginAt).format("ll"), date2: moment(minutePackage.subscriptionPeriodEndAt).format("ll")})}
               </Text> :
               null
             }

@@ -91,8 +91,8 @@ export default StyleSheet.create({
     fontSize: moderateScaleViewports(16),
     color: "#606060"
   },
-  minutesContainer: {flexDirection: "column", justifyContent: "center", alignItems: "center"},
-  nameContainer: {flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start"},
+  minutesContainer: {flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-end", width: "30%"},
+  nameContainer: {flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", width: "70%"},
   packageDescription: {
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScaleViewports(16),
