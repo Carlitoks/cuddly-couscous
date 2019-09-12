@@ -16,14 +16,15 @@ export default class MinutePackageCard extends Component {
     if(subscriptionPeriodDuration) {
       this.state = {
         subscriptionPeriodDuration,
-        subscriptionPeriodDurationType: subscriptionPeriodDuration[1] === "m" ? subscriptionPeriodDuration[1].toUpperCase() : subscriptionPeriodDuration[1]
+        subscriptionPeriodDurationType: subscriptionPeriodDuration[1] === "m" ? subscriptionPeriodDuration[1].toUpperCase() : subscriptionPeriodDuration[1],
+        checked: props.reloadNoticeValue,
       };
 
+    } else {
+      this.state = {
+        checked: props.reloadNoticeValue,
+      };
     }
-
-    this.state = {
-      checked: props.reloadNoticeValue,
-    };
   }
 
   renderPrice(amount, currency) {
