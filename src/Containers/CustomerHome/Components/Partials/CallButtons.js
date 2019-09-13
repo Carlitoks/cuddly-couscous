@@ -15,7 +15,7 @@ import {
   checkCallPermissions
 } from "../../../../Util/Permission";
 import { SESSION } from "../../../../Util/Constants";
-import{createNewSession} from "../../../../Ducks/CurrentSessionReducer";
+import { createNewSession } from "../../../../Ducks/CurrentSessionReducer";
 
 // Styles
 import styles from "./Styles/CallButtonsStyles";
@@ -62,15 +62,28 @@ class CallButtons extends Component {
             || response.camera === "denied"
             || response.microphone === "denied"
           ) {
-            return Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
-              { text: I18n.t("ok") },
-            ]);
+            let camera = response.camera === "restricted" || response.camera === "denied" ? true : false;
+            let microphone = response.microphone === "restricted" || response.microphone === "denied" ? true : false;
+
+            navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
           }
           if (completedMicAndCamera) {
             await checkCallPermissions((valueToUpdate) => {
               Permissions.checkMultiple(["camera", "microphone"]).then((response) => {
                 if (response.camera == "authorized" && response.microphone == "authorized") {
                   this.createCall();
+                }
+                if (
+                  (response.camera === "restricted"
+                    || response.microphone === "restricted"
+                    || response.camera === "denied"
+                    || response.microphone === "denied")
+                ) {
+
+                  let camera = response.camera != "authorized" ? true : false;
+                  let microphone = response.microphone != "authorized" ? true : false;
+                  navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
+                } else {
                 }
               });
             });
@@ -86,39 +99,39 @@ class CallButtons extends Component {
     }
   };
 
-  createCall () {
+  createCall() {
     if (this.state.createDisabled) {
       return;
     }
-    this.setState({createDisabled: true, creating: true}, () => {
+    this.setState({ createDisabled: true, creating: true }, () => {
       this.props.createNewSession({
         ...this.props.session,
         reason: SESSION.START.NORMAL
       })
-      .then(() => {
-        this.props.navigation.dispatch({type: "CustomerMatchingView"});
-      }).catch((e) => {
-        this.setState({createDisabled: false, creating: false});
-        console.log("error", e)
-        Alert.alert(
-          I18n.t('error'),
-          translateApiError(e, "session.createSessionFailed"),
-          [
-            {text: 'OK'},
-          ],
-        );
-      });
+        .then(() => {
+          this.props.navigation.dispatch({ type: "CustomerMatchingView" });
+        }).catch((e) => {
+          this.setState({ createDisabled: false, creating: false });
+          console.log("error", e)
+          Alert.alert(
+            I18n.t('error'),
+            translateApiError(e, "session.createSessionFailed"),
+            [
+              { text: 'OK' },
+            ],
+          );
+        });
     });
   }
 
   isDisabled = () => {
     const { session } = this.props;
-    const {creating} = this.state;
+    const { creating } = this.state;
     return creating || session.primaryLangCode === "" || session.secondaryLangCode === "";
   };
 
   render() {
-    const {creating} = this.state;
+    const { creating } = this.state;
     return (
       <View style={styles.callButtonContainer}>
 
@@ -153,7 +166,7 @@ class CallButtons extends Component {
             <TouchableOpacity
               disabled={this.isDisabled()}
               onPress={() => this.checkAvailableMinutes("video")}
-              style={this.isDisabled() ? styles.videoCallButtonDisable : styles.videoCallButton }
+              style={this.isDisabled() ? styles.videoCallButtonDisable : styles.videoCallButton}
             >
               <Icon
                 name="ios-videocam"
