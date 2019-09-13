@@ -105,6 +105,9 @@ class RatingScreen extends Component {
     } catch (err) {
       console.log(err);
       return Promise.reject(err);
+    } finally {
+      WhatCouldBetter.length = 0;
+      WhatWasGood.length = 0;
     }
   };
 
@@ -304,6 +307,7 @@ class RatingScreen extends Component {
         break;
       }
     }
+
     this.setState({connection : WhatCouldBetter.indexOf("connection") >= 0  ? true : false});
 
   };
