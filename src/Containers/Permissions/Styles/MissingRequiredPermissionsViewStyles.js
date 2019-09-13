@@ -33,7 +33,7 @@ export default StyleSheet.create({
     marginTop: 30,
     backgroundColor: "#DBDBDB"
   },
-  arrowContainer:{
+  arrowContainer: {
     marginTop: 30,
     alignItems: "flex-start"
   },
@@ -48,43 +48,57 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(18, 0)
   },
-  permissionTitle:{
-    fontWeight:"bold",
+  permissionTitle: {
+    fontWeight: "bold",
     color: "#272833",
     fontSize: 18,
     fontFamily: Fonts.BaseFont,
   },
-  permissionDescription:{
+  permissionDescription: {
     color: "rgba(0, 0, 0, 0.7)",
     fontSize: 16,
     fontFamily: Fonts.BaseFont,
   },
-  permissionsDescription:{
+  permissionsDescription: {
     color: "#272833",
     fontSize: 18,
     fontFamily: Fonts.BaseFont,
-    justifyContent: "center", 
+    justifyContent: "center",
     alignItems: "center"
   },
-  creditCardContainer:{
-    paddingTop:10,
-    width:"80%",
+  creditCardContainer: {
+    marginTop: metrics.width * 0.10,
+    width: "80%",
     justifyContent: "center",
-     alignItems: "center"
+    alignItems: "center",
+    marginBottom: metrics.width * 0.40,
+    marginLeft: '10%'
   },
-  row:{
-    flexDirection:"row",
-    width:"90%",
-    marginBottom:20,
-    marginLeft:20,
-    position:"relative"    
+  firstCardContainer: {
+    marginTop: metrics.width * 0.10,
+    width: "80%",
+    justifyContent: "center",
+    alignItems: "center"
   },
-  column:{
+  cardContainer: {
+    marginTop: 20,
+    width: "80%",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  row: {
+    flexDirection: "row",
+    width: "90%",
+    marginBottom: 20,
+    marginLeft: 20,
+    position: "relative"
+  },
+  column: {
     flexDirection: "column",
-    width:"70%",
-    marginBottom:20,
-    marginLeft:20,
-    position:"relative"    
+    width: "70%",
+    marginBottom: 20,
+    marginLeft: 20,
+    position: "relative"
   },
   buttonContainer: {
     flexDirection: "row",
