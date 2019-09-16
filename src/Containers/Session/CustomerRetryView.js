@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { Alert, View, Text, StyleSheet, ScrollView } from "react-native";
 import { connect } from "react-redux";
 
 import { createNewSession } from "../../Ducks/CurrentSessionReducer";
@@ -9,7 +9,7 @@ import TextButton from "../../Components/Widgets/TextButton";
 import I18n, { translateApiError, translateLanguage } from "../../I18n/I18n";
 
 
-import { LanguagesRollover } from "../../Config/Languages";
+import { LangRolloverMap } from "../../Config/Languages";
 
 import sharedStyles from "./styles";
 import { Metrics } from "../../Themes";
@@ -45,27 +45,39 @@ export class CustomerRetryView extends Component {
 
   getRolloverConfig() {
     const { session } = this.props;
+    const currentPair = `${session.primaryLangCode}.${session.secondaryLangCode}`;
+    let exists = false;
+    let targetPrimaryCode = false;
+    let targetSecondaryCode = false;
+    let changedCode = false;
+    let changedCodeField = '';
+    if (!!LangRolloverMap[currentPair]) {
+      const pair = LangRolloverMap[currentPair];
+      const parts = pair.split(".");
+      if (parts.length == 2) {
+        exists = true;
+        targetPrimaryCode = parts[0];
+        targetSecondaryCode = parts[1];
+        if (targetPrimaryCode == session.primaryLangCode) {
+          changedCode = targetSecondaryCode;
+          changedCodeField = "secondary"
+        } else {
+          changedCode = targetPrimaryCode;
+          changedCodeField = "primary"
+        }
+      }
+    }
 
     // prefer rollover for target language first
-    if (session.endReason == SESSION.END.TIMEOUT) {
-      if (!!LanguagesRollover[session.secondaryLangCode]) {
-        return {
-          exists: true,
-          code: LanguagesRollover[session.secondaryLangCode],
-          name: translateLanguage(LanguagesRollover[session.secondaryLangCode]),
-          field: "secondary"
-        };
-      }
-
-      // otherwise check for primary language
-      if (!!LanguagesRollover[session.primaryLangCode]) {
-        return {
-          exists: true,
-          code: LanguagesRollover[session.primaryLangCode],
-          name: translateLanguage(LanguagesRollover[session.primaryLangCode]),
-          field: "primary"
-        };
-      }
+    if (exists && session.endReason == SESSION.END.TIMEOUT) {
+      return {
+        exists: true,
+        code: changedCode,
+        name: translateLanguage(changedCode),
+        field: changedCodeField,
+        targetPrimaryCode,
+        targetSecondaryCode,
+      };
     }
 
     return {
@@ -141,15 +153,11 @@ export class CustomerRetryView extends Component {
 
   retryRollover() {
     // TODO: check for retry_cancel
-    const { session } = this.props;
     const { rollover } = this.state;
-    const primaryLangCode = rollover.field == "primary" ? rollover.code : session.primaryLangCode;
-    const secondaryLangCode =
-      rollover.field == "secondary" ? rollover.code : session.secondaryLangCode;
     this.createSession({
       reason: SESSION.START.RETRY_TIMEOUT,
-      primaryLangCode,
-      secondaryLangCode
+      primaryLangCode: rollover.targetPrimaryCode,
+      secondaryLangCode: rollover.targetSecondaryCode,
     });
   }
 

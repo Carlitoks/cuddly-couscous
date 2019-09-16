@@ -2,7 +2,6 @@ import {
   SupportedLanguages,
   ComingSoonLanguages,
   AllowedLanguagePairs,
-  LanguagesRollover,
   getLangForCity, supportedLangCodes, LocaleLangMap
 } from "../Config/Languages";
 import { Alert } from "react-native";

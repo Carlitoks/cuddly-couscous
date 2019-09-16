@@ -1929,6 +1929,34 @@ export const LocaleLangMap = {
   ko: "kor"
 };
 
+// note that I'm using the format `primary.secondary`, so as not to confuse
+// with the langpair format of a `code+code` used by the server
+export const LangRolloverMap = {
+  // jpn pairs
+  "jpn.fra": "jpn.eng",
+  "jpn.deu": "jpn.eng",
+  "jpn.ita": "jpn.eng",
+  "jpn.kor": "jpn.eng",
+  "jpn.cmn": "jpn.eng",
+  "jpn.por": "jpn.eng",
+  "jpn.spa": "jpn.eng",
+  "fra.jpn": "eng.jpn",
+  "deu.jpn": "eng.jpn",
+  "ita.jpn": "eng.jpn",
+  "kor.jpn": "eng.kor",
+  "cmn.jpn": "eng.jpn",
+  "por.jpn": "eng.jpn",
+  "spa.jpn": "eng.jpn",
+
+  // spa pairs
+  "spa.por": "spa.eng",
+  "por.spa": "por.eng",
+
+  // cantonese pairs
+  "yue.eng": "cmn.eng",
+  "eng.yue": "eng.cmn",
+};
+
 function buildCountryLangMap() {
   let m = {};
 
@@ -2154,7 +2182,3 @@ export const InterfaceSupportedLanguages = [
     name: "Português"
   }
 ];
-
-export const LanguagesRollover = {
-  "yue": "cmn"
-};
