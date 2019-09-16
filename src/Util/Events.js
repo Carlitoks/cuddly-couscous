@@ -11,9 +11,9 @@ import { userSelector } from "../Ducks/AuthReducer2";
 
 const navigate = (navigation, type, screenName, params) => {
   if(type === "SERVICE"){
-    return navigation.dispatch(screenName);
+    return navigation.dispatch(screenName, params);
   }
-  return navigation.dispatch({type: screenName, params});
+  return navigation.dispatch({type: "Navigation/NAVIGATE", ...params});
 };
 
 export const createCall = async (store, evt, navigation, type) => {
@@ -160,11 +160,69 @@ export const handleDeepLinkEvent = (params, dispatch, type) => {
       }
       break;
 
+    case "scan-qr": {
+      handleNavLink("ScanScreenView", dispatch, type);
+      break;
+    }
+
+    case "event-code": {
+      handleNavLink("PromoCodeView", dispatch, type);
+      break;
+    }
+
+    case "packages": {
+      handleNavLink("AvailablePackagesView", dispatch, type, params);
+      break;
+    }
+
+    case "account/history": {
+      handleNavLink("CallHistory", dispatch, type);
+      break;
+    }
+
+    case "account/home": {
+      handleNavLink("Home", dispatch, type);
+      break;
+    }
+
+    case "account/details": {
+      handleNavLink("AccountDetailsView", dispatch, type);
+      break;
+    }
+
+    case "account/settings": {
+      handleNavLink("SettingsView", dispatch, type);
+      break;
+    }
+
+    case "account/profile": {
+      handleNavLink("UserProfileView", dispatch, type);
+      break;
+    }
+
     default:
       if (params.eventID) {
         handleDeepLinkOpen(params.eventID, dispatch, type);
       }
       break;
+  }
+};
+
+export const handleNavLink = async (screen, dispatch, type, params) => {
+  const currentUser = await dispatch(userSelector());
+  let navigation = dispatch.navigation;
+  let navType = "STORE";
+  if(!navigation){
+    navigation = NavigationService;
+    navType = "SERVICE";
+  };
+  if (currentUser.isLoggedIn && currentUser.userJwtToken) {
+    await navigate(navigation, navType, screen, params);
+    if (type === "INSTALL") {
+      await dispatch(updateAppState({ installUrlParamsHandled: true }));
+    } else {
+      await dispatch(updateAppState({ openUrlParamsHandled: true }));
+    }
   }
 };
 

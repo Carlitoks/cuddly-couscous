@@ -215,11 +215,19 @@ class App extends Component {
         this.setState({loadingStore: false});
 
         // should user update?
-        if (promptUpdate) {
+        const { store } = this.state;
+        if (
+          promptUpdate
+          || (
+            !!store
+            && !!store.getState().appConfigReducer
+            && !!store.getState().appConfigReducer.config
+            && store.getState().appConfigReducer.config.clientRequiresUpdate === true
+          )
+        ) {
           displayUpdateAvailableAlert();
         }
 
-        const {store} = this.state;
         if (!store) {
           return;
         }
@@ -304,6 +312,13 @@ class App extends Component {
         obj[decodeURIComponent(key)] = decodeURIComponent(value);
       });
 
+      analytics.track("solo.link-open", obj);
+      params.store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
+
+      if(!this.state.loadingStore){
+        handleDeepLinkEvent(obj, params.store.dispatch);
+      }
+    } else {
       analytics.track("solo.link-open", obj);
       params.store.dispatch(updateAppState({ openUrlParamsHandled: false, openUrlParams : obj }));
       if(!this.state.loadingStore){

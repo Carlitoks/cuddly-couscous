@@ -136,7 +136,7 @@ export class CustomerMatchingView extends Component {
   linguistIdentified (user = null) {
     this.cleanup();
     if (!!user) {
-      this.props.setRemoteUser(user);  
+      this.props.setRemoteUser(user);
     }
     this.props.navigation.dispatch({type: "SessionView"});
   }
@@ -182,13 +182,19 @@ export class CustomerMatchingView extends Component {
     if (this.props.status.ending) {
       return;
     }
-    this.cleanup();
-    this.props.endSession(SESSION.END.CANCEL)
-    .catch((e) => {
-      Alert.alert(I18n.t("status.error"), translateApiError(e));
-    }).finally(() => {
-      this.props.navigation.dispatch({type: "Home"});
-    });
+
+    Alert.alert(I18n.t("actions.confirm"), I18n.t('session.confirmEnd'), [
+      {text: I18n.t('actions.yes'), onPress: () => {
+          this.cleanup();
+          this.props.endSession(SESSION.END.CANCEL)
+            .catch((e) => {
+              Alert.alert(I18n.t("status.error"), translateApiError(e));
+            }).finally(() => {
+            this.props.navigation.dispatch({type: "Home"});
+          });
+        }},
+      {text: I18n.t('actions.no')}
+    ]);
   }
 
   render () {
@@ -205,7 +211,7 @@ export class CustomerMatchingView extends Component {
           {elapsed >= 10 && (
             <Text style={styles.text}>{ formatTimerSeconds(remaining) }</Text>
           )}
-          
+
           <Text style = {styles.text}>{ I18n.t("session.matching.description") }</Text>
         </View>
         <View style={styles.buttonContainer}>

@@ -34,13 +34,17 @@ export const recordNavigationEvent = (screenName) => {
 // nav.  Events referenced here should be defined in the `EVENTS`
 // constants above
 export const recordAnalyticsEvent = (name, params = null) => {
+  // send custom event to Branch
   try {
-    // send custom event to Branch
     if (!!EVENTS[name] && !!EVENTS[name].BRANCH) {
       new BranchEvent(EVENTS[name].BRANCH, null, params).logEvent();
     }
+  } catch (e) {
+    console.log(e);
+  }
 
-    // send custom event to Segment
+  // send custom event to Segment
+  try {
     if (!!EVENTS[name] && !!EVENTS[name].SEGMENT) {
       segment.track(EVENTS[name].SEGMENT, params);
     }

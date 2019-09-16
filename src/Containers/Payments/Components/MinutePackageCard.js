@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import I18n, { localizePrice } from "../../../I18n/I18n";
 import { CheckBox } from 'react-native-elements'
 import LinearGradient from "react-native-linear-gradient";
+import moment from 'moment';
 
 // Styles
 import defaultStyles from "./Styles/PackagesStyles";
@@ -10,9 +11,20 @@ import defaultStyles from "./Styles/PackagesStyles";
 export default class MinutePackageCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      checked: props.reloadNoticeValue,
-    };
+    const { minutePackage } = props;
+    const subscriptionPeriodDuration = minutePackage && minutePackage.subscriptionPeriodDuration && minutePackage.subscriptionPeriodDuration.split(":");
+    if(subscriptionPeriodDuration) {
+      this.state = {
+        subscriptionPeriodDuration,
+        subscriptionPeriodDurationType: subscriptionPeriodDuration[1] === "m" ? subscriptionPeriodDuration[1].toUpperCase() : subscriptionPeriodDuration[1],
+        checked: props.reloadNoticeValue,
+      };
+
+    } else {
+      this.state = {
+        checked: props.reloadNoticeValue,
+      };
+    }
   }
 
   renderPrice(amount, currency) {
@@ -20,8 +32,8 @@ export default class MinutePackageCard extends Component {
   }
 
   render() {
-    const { 
-      minutePackage, 
+    const {
+      minutePackage,
       selectable,
       onSelect,
       displayReloadNotice,
@@ -34,9 +46,10 @@ export default class MinutePackageCard extends Component {
       style
     } = this.props;
 
-    const styles = {...defaultStyles, ...style}
+    const styles = {...defaultStyles, ...style};
 
-    
+    const { subscriptionPeriodDuration, subscriptionPeriodDurationType } = this.state;
+
     return (
       <View style={styles.topContainer}>
         { special ?
@@ -56,36 +69,51 @@ export default class MinutePackageCard extends Component {
             style={styles.grandient}
             locations={[0, 1]}
           />
-        </View> 
+        </View>
         <View style={styles.mainContainer}>
           <View style={styles.headerContainer}>
-            <Text style={styles.title}>
-              {minutePackage.name}
-            </Text> 
-            <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
-              {this.renderPrice(minutePackage.cost, minutePackage.currency)}
-            </Text>
-          </View>
-          <View>
-            <View style={styles.headerContainer}>
-              <Text>
-                {I18n.t("minutesAbbreviation",{minutes: minutePackage.minutes})}
+            <View style={styles.nameContainer}>
+              <Text style={styles.title}>
+                {minutePackage.name}
               </Text>
-              { discountedPrice ? 
+              <Text style={discountedPrice ? styles.pricePromoCode : styles.currencyPrice}>
+                {this.renderPrice(minutePackage.cost, minutePackage.currency)}
+              </Text>
+              { discountedPrice ?
                 <Text style={styles.discountedPrice}>
-                {this.renderPrice(minutePackage.adjustedCost, minutePackage.currency)}
+                  {this.renderPrice(minutePackage.adjustedCost, minutePackage.currency)}
                 </Text>
-              : 
-                null 
+                :
+                null
               }
             </View>
-            { minutePackage.subscriptionPeriod ? 
-              <Text>
-                {minutePackage.subscriptionPeriodBeginAt} {minutePackage.subscriptionPeriodEndAt}
-              </Text> : 
+            <View style={styles.minutesContainer}>
+              { minutePackage.unlimitedUse && <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
+                {I18n.t("account.balanceUnlimited")}
+              </Text> }
+
+              { !minutePackage.unlimitedUse && <React.Fragment>
+                <Text style={ styles.price }>
+                  {minutePackage.minutes}
+                </Text>
+                <Text style={styles.minutes}>
+                  {I18n.t("minutes")}
+                </Text>
+              </React.Fragment>}
+            </View>
+          </View>
+          <View>
+            { minutePackage.subscriptionPeriodDuration
+              ? <Text style={styles.subscriptionDuration}>
+                {I18n.t("minutePackage.validThrough", {date: moment().add(subscriptionPeriodDuration, subscriptionPeriodDurationType).format("MMM DD") })}
+              </Text>
+              : minutePackage.subscriptionPeriod ?
+              <Text style={styles.subscriptionDuration}>
+                {I18n.t("minutePackage.validBetween", {date1: moment(minutePackage.subscriptionPeriodBeginAt).format("ll"), date2: moment(minutePackage.subscriptionPeriodEndAt).format("ll")})}
+              </Text> :
               null
             }
-            <Text>
+            <Text style={styles.packageDescription}>
               {minutePackage.description}
             </Text>
           </View>
@@ -100,13 +128,13 @@ export default class MinutePackageCard extends Component {
             />
           </View>
           :
-          null 
+          null
         }
-        {selectable ?             
+        {selectable ?
           <View style={styles.scenarioInputContainer}>
             <TouchableOpacity
               style={styles.button }
-              activeOpacity={0.8} 
+              activeOpacity={0.8}
               onPress={onSelect}
             >
               <Text allowFontScaling={false} style={styles.select}>

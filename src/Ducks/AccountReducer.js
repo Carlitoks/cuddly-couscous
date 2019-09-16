@@ -388,6 +388,10 @@ export const purchaseMinutePackage = (payload) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     api.post(apiURL+"/billing/minute-packages", payload)
     .then((res) => {
+      // not waiting on this on purpose, just want to reload the packages
+      // in the background
+      dispatch(clearMinutePackagePromoCode());
+      // reload the user because their balance probably changed
       return dispatch(loadUser(false));
     })
     .then(resolve)

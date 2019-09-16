@@ -20,12 +20,18 @@ class AvailablePackagesView extends Component {
     this.state = {
       loading: true,
       promoCodeError: false,
+      promoCode: this.props.navigation.state.params && this.props.navigation.state.params.promoCode
     }
+
+    if(this.state.promoCode){
+      this.applyPromocode(this.state.promoCode)
+    }
+
   }
-  
+
   componentDidMount(){
     this.props.loadMinutePackages(false)
-    .then(()  => this.setState({loading: false})); 
+    .then(()  => this.setState({loading: false}));
   }
 
   sort(a, b) {
@@ -50,16 +56,16 @@ class AvailablePackagesView extends Component {
 
     const styleMinutePackageCard = {
       topContainer: {
-        marginTop: 0, 
-        marginBottom: 10, 
+        marginTop: 0,
+        marginBottom: 10,
         alignItems: 'center',
         width: metrics.width * 0.9,
       }
     }
 
-    return this.props.minutePackages.sort(this.sort).map( minutePackage => 
+    return this.props.minutePackages.sort(this.sort).map( minutePackage =>
       <MinutePackageCard
-        key={minutePackage.id}  
+        key={minutePackage.id}
         minutePackage = {minutePackage}
         style={styleMinutePackageCard}
         selectable={true} // show the select button
@@ -87,7 +93,7 @@ class AvailablePackagesView extends Component {
     .finally(() => {
       this.setState({loading: false});
     })
-    
+
   }
 
   render() {
@@ -112,28 +118,28 @@ class AvailablePackagesView extends Component {
           }
           navbarTitle={I18n.t("packages.browse.title")}
         />
-        
+
           <ScrollView
             automaticallyAdjustContentInsets
             alwaysBounceVertical={false}
             contentContainerStyle={styles.scrollViewFlex}
             >
-            <Promocode 
-              navigation={navigation} 
+            <Promocode
+              navigation={navigation}
               loading={this.state.loading}
-              promoCode={this.props.minutePackagePromoCode ? this.props.minutePackagePromoCode : ''}
+              promoCode={this.props.minutePackagePromoCode ? this.props.minutePackagePromoCode : this.state.promoCode ? this.state.promoCode : ''}
               error={this.state.promoCodeError}
               applaied={!!this.props.minutePackagePromoCode}
               apply={(promoCode) => this.applyPromocode(promoCode)}
               remove={() => {this.applyPromocode(null)}}
             />
-            {this.state.loading ? 
-              <ActivityIndicator size="large" color="purple" style={{ zIndex: 100000, top: 150 }} />  
+            {this.state.loading ?
+              <ActivityIndicator size="large" color="purple" style={{ zIndex: 100000, top: 150 }} />
             :
               this.props.minutePackages ? this.packageRender() : null
             }
           </ScrollView>
-        
+
       </View>
     );
   }
@@ -152,42 +158,3 @@ export default connect(
   mS,
   mD
 )(AvailablePackagesView);
-
-/*
-<MinutePackageCard 
-minutePackage = {dummyList[0]}
-selectable={true} // show the select button
-onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-displayReloadNotice={false} // display the reload notice or not
-reloadNoticeValue={false} // whether or not the checkbox is selected
-onReloadNoticeSelect={(val) => { alert (val)}} // func called when reload notice is selected, or unselected, `val` is a boolean
-promoCodeActive={true}
-discountedPrice={40}
-special={I18n.t("minutePackage.special")}
-specialColors={["#F39100", "#FCB753"]}
-/>
-<MinutePackageCard 
-minutePackage = {dummyList[0]}
-selectable={false} // show the select button
-onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-displayReloadNotice={true} // display the reload notice or not
-reloadNoticeValue={false} // whether or not the checkbox is selected
-onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-/>
-<MinutePackageCard 
-minutePackage = {dummyList[0]}
-selectable={true} // show the select button
-onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-displayReloadNotice={false} // display the reload notice or not
-reloadNoticeValue={false} // whether or not the checkbox is selected
-onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-/>
-<MinutePackageCard 
-minutePackage = {dummyList[0]}
-selectable={false} // show the select button
-onSelect={ () => navigation.dispatch({type: "back"}) } // func to call if select button pressed
-displayReloadNotice={true} // display the reload notice or not
-reloadNoticeValue={false} // whether or not the checkbox is selected
-onReloadNoticeSelect={(val) => {}} // func called when reload notice is selected, or unselected, `val` is a boolean
-
-/> */

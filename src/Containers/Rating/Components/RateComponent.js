@@ -16,7 +16,6 @@ class RateComponent extends Component {
     } else {
       await setThumbs("down");
     }
-    this.goToNextSlide();
   };
 
   renderThumbsComponents = () => {
@@ -51,20 +50,6 @@ class RateComponent extends Component {
     );
   };
 
-  goToNextSlide = () => {
-    const {
-      linguistProfile, thumbsUp, thumbsDown, nextSlide, rating,
-    } = this.props;
-    if (linguistProfile) {
-      if (rating > 0 && (thumbsDown || thumbsUp)) {
-        return nextSlide();
-      }
-    } else if (rating > 0) {
-      return nextSlide();
-    }
-    return null;
-  };
-
   render() {
     const {
       linguistProfile, rating, setRating,
@@ -81,7 +66,7 @@ class RateComponent extends Component {
           iconSet="Ionicons"
           disabled={false}
           rating={rating}
-          selectedStar={async (rating) => { await setRating(rating); this.goToNextSlide(); }}
+          selectedStar={async (rating) => { await setRating(rating); }}
           maxStars={5}
           starSize={moderateScaleViewports(60)}
           emptyStarColor={Colors.emptyStarColor}
