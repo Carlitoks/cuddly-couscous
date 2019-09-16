@@ -215,11 +215,19 @@ class App extends Component {
         this.setState({loadingStore: false});
 
         // should user update?
-        if (promptUpdate) {
+        const { store } = this.state;
+        if (
+          promptUpdate
+          || (
+            !!store
+            && !!store.getState().appConfigReducer
+            && !!store.getState().appConfigReducer.config
+            && store.getState().appConfigReducer.config.clientRequiresUpdate === true
+          )
+        ) {
           displayUpdateAvailableAlert();
         }
 
-        const {store} = this.state;
         if (!store) {
           return;
         }

@@ -76,7 +76,7 @@ export default class MinutePackageCard extends Component {
               <Text style={styles.title}>
                 {minutePackage.name}
               </Text>
-              <Text style={styles.currencyPrice}>
+              <Text style={discountedPrice ? styles.pricePromoCode : styles.currencyPrice}>
                 {this.renderPrice(minutePackage.cost, minutePackage.currency)}
               </Text>
               { discountedPrice ?
@@ -93,7 +93,7 @@ export default class MinutePackageCard extends Component {
               </Text> }
 
               { !minutePackage.unlimitedUse && <React.Fragment>
-                <Text style={ discountedPrice ? styles.pricePromoCode : styles.price}>
+                <Text style={ styles.price }>
                   {minutePackage.minutes}
                 </Text>
                 <Text style={styles.minutes}>

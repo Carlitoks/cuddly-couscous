@@ -104,5 +104,8 @@ export default StyleSheet.create({
     alignItems: "center",
     paddingLeft: 40
   },
-  fullWidthOnItems: { width: metrics.width }
+  fullWidthOnItems: {
+    maxHeight: metrics.height - 200,
+    width: metrics.width
+  }
 });
