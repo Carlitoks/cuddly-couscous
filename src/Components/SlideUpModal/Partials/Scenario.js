@@ -99,29 +99,6 @@ class Scenario extends Component {
     });
   };
 
-  renderCustomOption = () => {
-    const customScenario = {
-      id: "custom",
-      active: true,
-      category: "custom",
-      title: I18n.t("other"),
-      eventID: null
-    };
-    return (
-      <React.Fragment>
-        <TouchableOpacity
-          style={styles.LangViewContainer}
-          onPress={() => this.changeLangCode(customScenario.id)}
-        >
-          <View style={styles.selectLangButton}>
-            {this.renderScenarioListButtonContent(customScenario)}
-          </View>
-        </TouchableOpacity>
-        <Divider style={styles.dividerStyle} />
-      </React.Fragment>
-    );
-  };
-
   changeLangCode = langCode => {
     const { changeLangCode, selection, updateSelectedScenario, closeSlideMenu, setScenarioID } = this.props;
     if (selection === "scenarioSelection") {
