@@ -11,35 +11,35 @@ import { Bus, Dinning, Layers, Shopping, Teamwork, Translator } from "../../../A
 import metrics from "../../../Themes/Metrics";
 
 class Scenario extends Component {
-  renderCheck = currentLang => {
+  renderCheck = scenario => {
     const { selection, scenarioID } = this.props;
     let ButtonStyle = {
       ...styles.availableLangText,
       color: "#1C1B1B"
     };
     if (selection !== null && selection === "scenarioSelection") {
-      if (scenarioID != null && scenarioID === currentLang.id) {
+      if (scenarioID != null && scenarioID === scenario.id) {
         return (
           <View style={styles.iconNameContainer}>
-            {this.renderIcon(currentLang.id, "#3F1674")}
+            {this.renderIcon(scenario.id, "#3F1674")}
             <Text style={{ ...ButtonStyle, color: "#3F1674", fontFamily: Fonts.BoldFont }}>
               {" "}
-              {translateProperty(currentLang, "title")}{" "}
+              {translateProperty(scenario, "title")}{" "}
             </Text>
           </View>
         );
       }
       return (
         <View style={styles.iconNameContainer}>
-          {this.renderIcon(currentLang.id, "black")}
-          <Text style={ButtonStyle}> {translateProperty(currentLang, "title")}</Text>
+          {this.renderIcon(scenario.id, "black")}
+          <Text style={ButtonStyle}> {translateProperty(scenario, "title")}</Text>
         </View>
       );
     }
     return (
       <View style={styles.iconNameContainer}>
-        {this.renderIcon(currentLang.id, "black")}
-        <Text style={ButtonStyle}>{translateProperty(currentLang, "title")}</Text>
+        {this.renderIcon(scenario.id, "black")}
+        <Text style={ButtonStyle}>{translateProperty(scenario, "title")}</Text>
       </View>
     );
   };
@@ -70,6 +70,34 @@ class Scenario extends Component {
 
   renderScenariosList = () => {
     const { scenariosList, scenarioID } = this.props;
+    scenariosList
+    .sort((a, b) => {
+
+      // if scenario has a weight value, and it is heavier, it goes lower
+      if (!!a.weight && !!b.weight) {
+        if (a.weight < b.weight) {
+          return -1;
+        }
+        if (a.weight > b.weight) {
+          return 1;
+        }
+      }
+
+      // otherwise sort alphabetically
+      if (!!a.title && !!b.title) {
+        const at = a.title.toUpperCase();
+        const bt = b.title.toUpperCase();
+        if (at < bt) {
+          return -1;
+        }
+        if (at > bt) {
+          return 1;
+        }
+      }
+
+      // otherwise, no effect
+      return 0;
+    });
     return scenariosList.map((scenario, current) => {
       if (scenario.active) {
         return (
