@@ -5,6 +5,9 @@ import NavBar from "../../Components/NavBar/NavBar";
 // Styles
 import styles from "./Styles/MissingRequiredPermissionsViewStyles";
 import { Icon } from "react-native-elements";
+import IconSimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { moderateScale } from "../../Util/Scaling";
 import I18n from "../../I18n/I18n";
 import TextBlockButton from "../../Components/Widgets/TextBlockButton";
 import OpenAppSettings from 'react-native-app-settings'
@@ -34,13 +37,13 @@ class MissingRequiredPermissionsView extends Component {
     const {
       navigation,
     } = this.props;
-    const { camera, microphone } = this.props.navigation.state.params;
-
+    const { camera, microphone, location, notifications, isLinguist } = this.props.navigation.state.params;
     return (
       <View style={styles.wrapperContainer}>
         <TouchableOpacity onPress={() => navigation.dispatch({ type: "back" })} style={styles.arrowContainer} >
           <Icon name="chevron-left" type="evilicon" color="#3F1674" size={50} />
         </TouchableOpacity>
+        <Text style={styles.permissionMissingTitle}>{I18n.t("permissions.missing")}</Text>
 
         <ScrollView
           automaticallyAdjustContentInsets
@@ -48,13 +51,12 @@ class MissingRequiredPermissionsView extends Component {
           contentContainerStyle={styles.scrollViewFlex}
         >
 
-          <Text style={styles.permissionTitle}>{I18n.t("permissions.missing")}</Text>
           {camera && <View style={styles.firstCardContainer}>
             <View style={styles.row}>
-              <Icon name="camera" type="font-awesome" color="#401674" size={25} />
+              <Icon name="camera" type="font-awesome" color="#401674" size={moderateScale(25)} />
               <View style={styles.column}>
                 <Text style={styles.permissionTitle}>{I18n.t("permissions.name.camera")}</Text>
-                <Text style={styles.permissionDescription}>{I18n.t("permissions.description.customer.camera")}</Text>
+                <Text style={styles.permissionDescription}> { isLinguist? I18n.t("permissions.description.linguist.camera") :  I18n.t("permissions.description.customer.camera")}</Text>
               </View>
 
 
@@ -62,10 +64,32 @@ class MissingRequiredPermissionsView extends Component {
           </View>}
           {microphone && <View style={camera ? styles.cardContainer : styles.firstCardContainer}>
             <View style={styles.row}>
-              <Icon name="microphone" type="font-awesome" color="#401674" size={25} />
+              <Icon name="microphone" type="font-awesome" color="#401674" size={moderateScale(30)} />
               <View style={styles.column}>
                 <Text style={styles.permissionTitle}>{I18n.t("permissions.name.mic")}</Text>
-                <Text style={styles.permissionDescription}>{I18n.t("permissions.description.customer.mic")}</Text>
+                <Text style={styles.permissionDescription}>{isLinguist?  I18n.t("permissions.description.linguist.mic") :  I18n.t("permissions.description.customer.mic")}</Text>
+              </View>
+
+            </View>
+          </View>}
+
+          {location && <View style={camera || microphone ? styles.cardContainer : styles.firstCardContainer}>
+            <View style={styles.row}>
+              <IconSimpleLineIcons style={styles.icon} name={'location-pin'} size={moderateScale(30)} color={ "#401674" } />
+              <View style={styles.column}>
+                <Text style={styles.permissionTitle}>{I18n.t("permissions.name.location")}</Text>
+                <Text style={styles.permissionDescription}>{ isLinguist? I18n.t("permissions.description.linguist.location") : I18n.t("permissions.description.customer.location")}</Text>
+              </View>
+
+            </View>
+          </View>}
+
+          {notifications && <View style={camera || microphone || location ? styles.cardContainer : styles.firstCardContainer}>
+            <View style={styles.row}>
+            <IconMaterialIcons style={styles.icon} name={'notifications-active'} size={moderateScale(40)} color={ "#401674" } />
+              <View style={styles.column}>
+                <Text style={styles.permissionTitle}>{I18n.t("permissions.name.notifications")}</Text>
+                <Text style={styles.permissionDescription}>{ isLinguist? I18n.t("permissions.description.linguist.notifications") :  I18n.t("permissions.description.customer.notifications")}</Text>
               </View>
 
             </View>

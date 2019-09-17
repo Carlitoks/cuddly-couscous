@@ -48,6 +48,16 @@ export default StyleSheet.create({
     fontFamily: Fonts.BaseFont,
     fontSize: moderateScale(18, 0)
   },
+  icon:{
+    paddingTop: moderateScale(10,0),
+  },
+  permissionMissingTitle: {
+    fontWeight: "bold",
+    color: "#272833",
+    fontSize: 18,
+    fontFamily: Fonts.BaseFont,
+    textAlign: 'center'
+  },
   permissionTitle: {
     fontWeight: "bold",
     color: "#272833",
