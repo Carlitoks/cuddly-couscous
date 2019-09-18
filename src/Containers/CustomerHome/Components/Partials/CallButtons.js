@@ -16,7 +16,7 @@ import {
 } from "../../../../Util/Permission";
 import { SESSION } from "../../../../Util/Constants";
 import { createNewSession } from "../../../../Ducks/CurrentSessionReducer";
-
+import PermissionRequestModal from "../../../Onboarding/Components/PermissionRequestModal";
 // Styles
 import styles from "./Styles/CallButtonsStyles";
 import { moderateScaleViewports } from "../../../../Util/Scaling";
@@ -28,7 +28,9 @@ class CallButtons extends Component {
     this.state = {
       createDisabled: false,
       creating: false,
-      rate: localizePrice(props.rate)
+      rate: localizePrice(props.rate),
+      modalShow: false,
+      permissions: []
     };
   }
 
@@ -39,6 +41,7 @@ class CallButtons extends Component {
       hasUnlimitedUse,
       modifyAVModePreference,
       completedMicAndCamera,
+      permissions
     } = this.props;
     const { rate } = this.state;
 
@@ -53,49 +56,10 @@ class CallButtons extends Component {
           }
         }
       ]);
-    } else {
-      Permissions.checkMultiple(["camera", "microphone"]).then(async (response) => {
-        if (response.camera !== "authorized" || response.microphone !== "authorized") {
-          if (
-            response.camera === "restricted"
-            || response.microphone === "restricted"
-            || response.camera === "denied"
-            || response.microphone === "denied"
-          ) {
-            let camera = response.camera === "restricted" || response.camera === "denied" ? true : false;
-            let microphone = response.microphone === "restricted" || response.microphone === "denied" ? true : false;
-
-            navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
-          }
-          if (completedMicAndCamera) {
-            await checkCallPermissions((valueToUpdate) => {
-              Permissions.checkMultiple(["camera", "microphone"]).then((response) => {
-                if (response.camera == "authorized" && response.microphone == "authorized") {
-                  this.createCall();
-                }
-                if (
-                  (response.camera === "restricted"
-                    || response.microphone === "restricted"
-                    || response.camera === "denied"
-                    || response.microphone === "denied")
-                ) {
-
-                  let camera = response.camera != "authorized" ? true : false;
-                  let microphone = response.microphone != "authorized" ? true : false;
-                  navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
-                } else {
-                }
-              });
-            });
-          } else {
-            navigation.dispatch({ type: "CameraMicPermissionView" });
-          }
-        }
-        if (response.camera == "authorized" && response.microphone == "authorized") {
-          this.createCall();
-        }
-        return null;
-      });
+    } else if (!permissions.camera.granted || !permissions.microphone.granted) {
+      this.setState({modalShow: true, permissions: ['camera', 'microphone']})
+    }else{
+      this.createCall();
     }
   };
 
@@ -122,6 +86,26 @@ class CallButtons extends Component {
           );
         });
     });
+  }
+
+  checkPermissions = () => {
+    const {
+      navigation,
+      permissions
+    } = this.props;
+      this.setState({modalShow: false, permissions:[]});
+
+      if (!permissions.camera.granted || !permissions.microphone.granted) {
+
+          let camera = permissions.camera.granted? false : true;
+          let microphone = permissions.microphone.granted? false : true;
+
+          navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
+      }
+      if (permissions.camera.granted && permissions.microphone.granted) {
+        this.createCall();
+      }
+      return null;
   }
 
   isDisabled = () => {
@@ -184,7 +168,13 @@ class CallButtons extends Component {
 
           </React.Fragment>
         )}
-
+        <PermissionRequestModal
+          visible={this.state.modalShow} // true/false
+          role='customer' // customer|linguist
+          askLater={true} // true|false
+          perms={this.state.permissions} // [camera|microphone|location|notification|photo]
+          onClose={(res) => this.checkPermissions(res)}
+        />
 
       </View>
     );
@@ -197,6 +187,8 @@ const mS = state => ({
   session: state.newSessionReducer.session,
   completedMicAndCamera: state.onboardingReducer.completedMicAndCamera,
   rate: state.appConfigReducer.payAsYouGoRate,
+  permissions: state.appState.permissions,
+
 });
 
 const mD = {
