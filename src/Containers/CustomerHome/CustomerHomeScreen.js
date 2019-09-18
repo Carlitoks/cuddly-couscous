@@ -14,6 +14,7 @@ import {
   ensureSessionDefaults,
   updateLocation,
 } from "../../Ducks/NewSessionReducer";
+import PermissionRequestModal from "../Onboarding/Components/PermissionRequestModal";
 
 import { openSlideMenu } from "../../Ducks/LogicReducer";
 import UpdateEmail from "../../Components/UpdateEmail/UpdateEmail";
@@ -40,6 +41,8 @@ class CustomerHomeScreen extends Component {
 
     this.state = {
       loading: true,
+      modalShow: false,
+      permissions: []
     };
 
     ensureSessionDefaults();
@@ -53,9 +56,20 @@ class CustomerHomeScreen extends Component {
   componentDidMount() {
     const {
       loadUser,
+      newAccount,
+      permissions,
+      updateAppState,
       loadSessionScenarios,
       loadActiveSubscriptionPeriods,
     } = this.props;
+
+   if(newAccount){
+     this.setState({modalShow: true, permissions : ['camera', 'microphone','location']})
+   }
+
+   if(!newAccount && !permissions.location.requestedThisSession && !permissions.location.granted){
+     this.setState({modalShow: true, permissions : ['location']})
+   }
 
     Promise.all([
       loadSessionScenarios(true),
@@ -70,6 +84,9 @@ class CustomerHomeScreen extends Component {
     const { openSlideMenu } = this.props;
     return openSlideMenu({ type });
   };
+  modalClose = () => {
+    this.setState({ modalShow : false});
+  }
 
   render() {
     const {
@@ -78,6 +95,7 @@ class CustomerHomeScreen extends Component {
       newSession,
       jeenieCounts,
     } = this.props;
+
 
     return (
       <View style={styles.wrapperContainer}>
@@ -111,6 +129,13 @@ class CustomerHomeScreen extends Component {
           <SlideUpPanel />
           { user.emailBounced && <View style={{ position: "absolute" }}><UpdateEmail navigation={navigation} emailBounced={user.emailBounced} /></View>}
         </View>
+        <PermissionRequestModal
+          visible={this.state.modalShow} // true/false
+          role='customer' // customer|linguist
+          askLater={true} // true|false
+          perms={this.state.permissions} // [camera|microphone|location|notification|photo]
+          onClose={(res) => this.modalClose(res)}
+        />
       </View>
     );
   }
@@ -121,6 +146,8 @@ const mS = state => ({
   newSession: state.newSessionReducer.session,
   completedLocation: state.onboardingReducer.completedLocation,
   jeenieCounts: state.appConfigReducer.jeenieCounts,
+  permissions: state.appState.permissions,
+  newAccount: state.account.newAccountCreated
 });
 
 function mD(dispatch) {
