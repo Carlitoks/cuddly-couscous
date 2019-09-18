@@ -18,6 +18,7 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
+import _get from "lodash/get";
 
 
 import styles from "./styles";
@@ -133,26 +134,53 @@ class Home extends Component {
     this.setState({loading: true})
 
     const permissionsToAsk = [];
-    const { permissions } = this.props;
-    
-    // ensure linguist permissions are set  "camera","mic"
-    if(!permissions.camera.grated && permissions.camera.status === "undetermined"){
-      permissionsToAsk.push(PERMISSIONS.CAMERA)  
-    }
-    if(!permissions.microphone.grated && permissions.microphone.status === "undetermined"){
-      permissionsToAsk.push(PERMISSIONS.MIC)  
-    }
+    const { permissions, navigation } = this.props;
 
-    if(!status || permissionsToAsk._isEmpty){
+    const cameraStatus = _get(permissions,'camera.status',"undetermined");
+    const camera = _get(permissions,'camera.granted',false);
+
+    const microphoneStatus = _get(permissions,'microphone.status',"undetermined");
+    const microphone = _get(permissions,'microphone.granted',false);
+    
+    const locationStatus = _get(permissions,'location.status',"undetermined");
+    const location = _get(permissions,'location.granted',false);
+
+    if( camera && 
+        cameraStatus == "authorized" && 
+        microphone && 
+        microphoneStatus == "authorized" && 
+        location && 
+        locationStatus == "authorized"){
       this.props.updateLinguistProfile({available: status}).finally(() => {
         this.setState({loading: false});
       });
       return;
     }
-    
-    this.setState({permissionsModalVisible: true, permissions: permissionsToAsk, loading: false});
-      
 
+    if(cameraStatus == "denied" || microphoneStatus == "denied" || locationStatus === "denied"){
+      navigation.dispatch({ 
+        type: "MissingRequiredPermissionsView", 
+        params: { 
+          camera: !camera, 
+          microphone: !microphone,
+          location: !location,
+          isLinguist: true
+        } 
+      });
+      this.setState({loading: false});
+      return;
+    }
+
+    if(!camera && cameraStatus === "undetermined"){
+      permissionsToAsk.push(PERMISSIONS.CAMERA)  
+    }
+    if(!microphone && microphoneStatus === "undetermined"){
+      permissionsToAsk.push(PERMISSIONS.MIC)  
+    }
+    if(!location && locationStatus === "undetermined"){
+      permissionsToAsk.push(PERMISSIONS.LOCATION)  
+    }
+    this.setState({permissionsModalVisible: true, permissions: permissionsToAsk, loading: false});
   }
 
   uploadAvatar(avatar) {
@@ -254,7 +282,7 @@ class Home extends Component {
       this.setState({ permissionsModalVisible: false });
 
       if(res) { // do sommething
-
+        console.log(res);
       }
   }
 
@@ -268,9 +296,7 @@ class Home extends Component {
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
     const { amount, numberCalls } = this.calculateAmount(linguistCalls);
     
-    //console.log(permissions);
-    //console.log(this.state.permissionsModalVisible);
-
+    console.log(permissions);
     return (
       <View style={styles.scrollContainer}>
         <NavBar
