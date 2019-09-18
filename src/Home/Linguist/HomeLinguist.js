@@ -35,6 +35,9 @@ import { moderateScaleViewports } from "../../Util/Scaling";
 import CircularAvatar from "../../Components/CircularAvatar/CircularAvatar";
 import StarRating from "../../Components/StarRating/StarRating";
 
+import PermissionRequestModal from "../../Containers/Onboarding/Components/PermissionRequestModal"
+import { modifyAdditionalDetails } from "../../Ducks/NewSessionReducer";
+
 class Home extends Component {
 
   constructor(props) {
@@ -42,7 +45,9 @@ class Home extends Component {
 
     this.state = {
       appState: AppState.currentState,
-      loading: false
+      loading: false,
+      permissionsModalVisible: false,
+      permissions: [],
     }
   }
 
@@ -87,21 +92,13 @@ class Home extends Component {
     NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
     InCallManager.stop();
 
-    this.reloadUser();
+    const { permissions } = this.props;
 
-    // ensure linguist permissions are set
-    ensurePermissions([PERMISSIONS.CAMERA, PERMISSIONS.MIC]).then((response) => {
-      if (
-        response[PERMISSIONS.CAMERA] !== 'authorized'
-        || response[PERMISSIONS.MIC] !== 'authorized'
-      ) {
-        Alert.alert(
-          I18n.t('notification'),
-          I18n.t('acceptAllPermissionsLinguist'),
-          [{text: I18n.t('actions.ok')}]
-        );
-      }
-    })
+    //!permissions.location.grated && permissions.location.status === "undetermined" ? PERMISSIONS.LOCATION : 
+    if(!permissions.location.grated && permissions.location.status === "undetermined"){
+      this.setState({permissionsModalVisible: true, permissions: [PERMISSIONS.LOCATION]})
+    }
+    this.reloadUser();
 
     if (
       this.props.navigation.state.params &&
@@ -134,9 +131,28 @@ class Home extends Component {
 
   changeStatus (status) {
     this.setState({loading: true})
-    this.props.updateLinguistProfile({available: status}).finally(() => {
-      this.setState({loading: false});
-    });
+
+    const permissionsToAsk = [];
+    const { permissions } = this.props;
+    
+    // ensure linguist permissions are set  "camera","mic"
+    if(!permissions.camera.grated && permissions.camera.status === "undetermined"){
+      permissionsToAsk.push(PERMISSIONS.CAMERA)  
+    }
+    if(!permissions.microphone.grated && permissions.microphone.status === "undetermined"){
+      permissionsToAsk.push(PERMISSIONS.MIC)  
+    }
+
+    if(!status || permissionsToAsk._isEmpty){
+      this.props.updateLinguistProfile({available: status}).finally(() => {
+        this.setState({loading: false});
+      });
+      return;
+    }
+    
+    this.setState({permissionsModalVisible: true, permissions: permissionsToAsk, loading: false});
+      
+
   }
 
   uploadAvatar(avatar) {
@@ -234,15 +250,26 @@ class Home extends Component {
     return { amount: formatTimerSeconds(seconds), numberCalls };
   }
 
+  modalClose(res){
+      this.setState({ permissionsModalVisible: false });
+
+      if(res) { // do sommething
+
+      }
+  }
+
   render() {
     const {
       user,
       linguistProfile,
-      linguistCalls
+      linguistCalls,
+      permissions,
     } = this.props;
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
     const { amount, numberCalls } = this.calculateAmount(linguistCalls);
     
+    //console.log(permissions);
+    //console.log(this.state.permissionsModalVisible);
 
     return (
       <View style={styles.scrollContainer}>
@@ -252,7 +279,13 @@ class Home extends Component {
           }
           navbarTitle={I18n.t("home")}
         />
-
+        <PermissionRequestModal
+          visible={this.state.permissionsModalVisible} // true/false
+          role='linguist' // customer|linguist
+          askLater={true} // true|false
+          perms={this.state.permissions} // [camera|microphone|location|notification|photo]
+          onClose={(res) => this.modalClose(res)}
+        />
         <WavesBackground>
           <View style={styles.avatarContainer}>
               <CircularAvatar photoSelect={avatar => this.uploadAvatar(avatar)} avatarURL={this.props.avatarURL} firstName={user.firstName} lastInitial={user.lastName} />
@@ -272,6 +305,7 @@ class Home extends Component {
             </View>
           </View>
         </WavesBackground>
+        
         <CallNumber
           calls={numberCalls}
           amount={amount}
@@ -307,6 +341,7 @@ const mS = state => ({
   token: state.auth2.userJwtToken,
   isLinguist: state.account.isLinguist,
   user: state.account.user,
+  permissions: state.appState.permissions,
 });
 
 const mD = {
@@ -314,7 +349,7 @@ const mD = {
   updateUserProfilePhoto,
   updateLinguistProfile,
   loadLinguistCallHistory,
-  incomingCallNotification
+  incomingCallNotification,
 };
 
 export default connect(

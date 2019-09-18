@@ -20,23 +20,12 @@ class PermissionRequestModal extends Component {
   
   constructor(props) {
     super(props);
-
-    this.state = {
-      modalVisible: props.visible,
-    };
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
   }
 
   requestPerms(){
     const { perms, requestPermissions, onClose} = this.props;
     requestPermissions(perms)
-    .then(res => {
-      this.setModalVisible(!this.state.modalVisible);
-      onclose(res);
-    })
+    .then(res => onClose())
     .catch(error => console.log(error)) 
   }
 
@@ -83,17 +72,14 @@ class PermissionRequestModal extends Component {
   }
 
   render() {
-    const { askLater } = this.props;
-
+    const { askLater, visible, onClose } = this.props;
     return (
         <Modal
           animationType="fade"
           transparent={true}
-          isVisible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}
-          onBackdropPress={() => this.setModalVisible(!this.state.modalVisible)}
+          isVisible={visible}
+          onRequestClose={() => Alert.alert('Modal has been closed.') }
+          onBackdropPress={onClose}
           propagateSwipe={true}
         >
           <View style={styles.modalView}>
@@ -108,17 +94,12 @@ class PermissionRequestModal extends Component {
               <View style={styles.buttonsContainer}>
                 { askLater &&
                   <TouchableHighlight
-                    onPress={() => {
-                      this.setModalVisible(!this.state.modalVisible);
-                    }}>
+                    onPress={onClose}>
                     <Text style={styles.askLater}>{I18n.t("permissions.later")}</Text>
                   </TouchableHighlight>
                 }
                 <TouchableOpacity
-                  onPress={() => {
-                    
-                    this.requestPerms();
-                  }}
+                  onPress={() => this.requestPerms()}
                   style={styles.continueButton}
                   >
                   <Text style={styles.continueButtonText}>
