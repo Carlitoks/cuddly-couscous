@@ -25,7 +25,7 @@ class PermissionRequestModal extends Component {
   requestPerms(){
     const { perms, requestPermissions, onClose} = this.props;
     requestPermissions(perms)
-    .then(res => onClose())
+    .then(res => onClose(perms))
     .catch(error => console.log(error)) 
   }
 
@@ -79,7 +79,7 @@ class PermissionRequestModal extends Component {
           transparent={true}
           isVisible={visible}
           onRequestClose={() => Alert.alert('Modal has been closed.') }
-          onBackdropPress={onClose}
+          onBackdropPress={() => onClose(false)}
           propagateSwipe={true}
         >
           <View style={styles.modalView}>
@@ -94,7 +94,7 @@ class PermissionRequestModal extends Component {
               <View style={styles.buttonsContainer}>
                 { askLater &&
                   <TouchableHighlight
-                    onPress={onClose}>
+                    onPress={() => onClose(false)}>
                     <Text style={styles.askLater}>{I18n.t("permissions.later")}</Text>
                   </TouchableHighlight>
                 }
