@@ -31,28 +31,6 @@ const JeenieLogo = require("../../Assets/Images/jeenieLogo.png");
 const BG = require("../../Assets/Images/BG.png");
 
 class RegisterScreen extends Component {
-  handleTouch = async (goto) => {
-    const { navigation } = this.props;
-    const LocationPermission = await Permission.check("location");
-
-    if (Platform.OS === "android"){
-      if (LocationPermission === "undetermined" || LocationPermission === "denied")
-        return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
-    }else {
-      if (LocationPermission === "undetermined") {
-        return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
-      }
-    }
-
-    if (Platform.OS !== "android") {
-      const NotificationPermission = await Permission.check("notification");
-      if (NotificationPermission === "undetermined") {
-        return navigation.dispatch({ type: "NotificationPermissionView", params: { redirectTo: goto } });
-      }
-    }
-    return navigation.dispatch({ type: goto });
-  };
-
   setFirstNameRef = (ref) => {
     this.firstNameInput = ref;
   };
@@ -97,7 +75,7 @@ class RegisterScreen extends Component {
                           <SubmitButton navigation={navigation} />
                         </View>
                         <TouchableOpacity
-                          onPress={() => this.handleTouch("LoginView")}
+                          onPress={() => navigation.dispatch({ type: "LoginView" }) }
                           style={{ justifyContent: "center", alignItems: "center" }}
                         >
                           <View style={styles.textContainerRow}>
