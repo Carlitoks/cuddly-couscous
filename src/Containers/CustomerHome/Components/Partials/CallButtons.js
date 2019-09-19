@@ -44,7 +44,6 @@ class CallButtons extends Component {
       permissions
     } = this.props;
     const { rate } = this.state;
-
     modifyAVModePreference({ avModePreference: type });
 
     if (!hasUnlimitedUse && user.availableMinutes === 0 && !user.stripePaymentToken) {
@@ -56,7 +55,12 @@ class CallButtons extends Component {
           }
         }
       ]);
-    } else if (!permissions.camera.granted || !permissions.microphone.granted) {
+    } else if(permissions.camera.status==='denied' || permissions.camera.status==='denied'){
+      let camera = permissions.camera.granted ? false : true;
+      let microphone = permissions.microphone.granted ? false : true; 
+
+      navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
+    }else if (!permissions.camera.granted || !permissions.microphone.granted) {
       this.setState({modalShow: true, permissions: ['camera', 'microphone']})
     }else{
       this.createCall();
