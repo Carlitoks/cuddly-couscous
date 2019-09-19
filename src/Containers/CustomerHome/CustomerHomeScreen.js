@@ -27,6 +27,7 @@ import { moderateScaleViewports } from "../../Util/Scaling";
 import HeaderMinutesLeft from "./Components/Partials/HeaderMinutesLeft";
 import { Colors } from "../../Themes";
 import { loadUser, loadActiveSubscriptionPeriods } from "../../Ducks/AccountReducer";
+import { update as updateAppState } from "../../Ducks/AppStateReducer";
 
 const imgBackground = require("../../Assets/Images/Background.png");
 
@@ -63,12 +64,22 @@ class CustomerHomeScreen extends Component {
       loadActiveSubscriptionPeriods,
     } = this.props;
 
-   if(newAccount){
-     this.setState({modalShow: true, permissions : ['camera', 'microphone','location']})
+   if(newAccount && !permissions.location.requestedThisSession){
+     this.setState({modalShow: true, permissions : ['camera', 'microphone','location']});
+     let newPermissions = {...permissions};
+     let location = {...permissions.location};
+     location.requestedThisSession = true;
+     newPermissions.location = location;
+     updateAppState({permissions: newPermissions}) ;
    }
 
    if(!newAccount && !permissions.location.requestedThisSession && !permissions.location.granted){
-     this.setState({modalShow: true, permissions : ['location']})
+     this.setState({modalShow: true, permissions : ['location']});
+     let newPermissions = {...permissions};
+     let location = {...permissions.location};
+     location.requestedThisSession = true;
+     newPermissions.location = location;
+     updateAppState({permissions: newPermissions}) ;
    }
 
     Promise.all([
@@ -92,6 +103,7 @@ class CustomerHomeScreen extends Component {
     const {
       navigation,
       user,
+      newAccount,
       newSession,
       jeenieCounts,
     } = this.props;
@@ -132,7 +144,7 @@ class CustomerHomeScreen extends Component {
         <PermissionRequestModal
           visible={this.state.modalShow} // true/false
           role='customer' // customer|linguist
-          askLater={true} // true|false
+          askLater={!newAccount} // true|false
           perms={this.state.permissions} // [camera|microphone|location|notification|photo]
           onClose={(res) => this.modalClose(res)}
         />
@@ -159,6 +171,7 @@ function mD(dispatch) {
       ensureSessionDefaults,
       loadSessionScenarios,
       loadUser,
+      updateAppState,
       loadActiveSubscriptionPeriods,
     }, dispatch),
   };
