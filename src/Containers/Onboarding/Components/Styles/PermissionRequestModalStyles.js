@@ -60,8 +60,8 @@ export default StyleSheet.create({
   },
   buttonsContainer:{
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "stretch",
     marginTop: moderateScaleViewports(20),
   },
   continueButtonContainer: {
@@ -78,11 +78,13 @@ export default StyleSheet.create({
     elevation: 8,
     paddingRight: moderateScaleViewports(15),
     paddingLeft: moderateScaleViewports(15),
+    marginLeft: "15%",
+    marginRight: moderateScaleViewports(10),
   },
   continueButtonText: {
     ...setTextProperties('#fff', Fonts.BaseFont, moderateScaleViewports(16), '600'),
-    paddingTop: moderateScaleViewports(10),
-    paddingBottom: moderateScaleViewports(10),
+    paddingTop: moderateScaleViewports(3),
+    paddingBottom: moderateScaleViewports(3),
   },
   askLater:{
     ...setTextProperties('#fff', Fonts.BaseFont, moderateScaleViewports(16), '600'),

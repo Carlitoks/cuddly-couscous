@@ -296,7 +296,6 @@ class Home extends Component {
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
     const { amount, numberCalls } = this.calculateAmount(linguistCalls);
     
-    console.log(permissions);
     return (
       <View style={styles.scrollContainer}>
         <NavBar
