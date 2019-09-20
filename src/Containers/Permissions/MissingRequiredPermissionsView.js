@@ -53,7 +53,7 @@ class MissingRequiredPermissionsView extends Component {
 
           {camera && <View style={styles.firstCardContainer}>
             <View style={styles.row}>
-              <Icon name="camera" type="font-awesome" color="#401674" size={moderateScale(25)} />
+              <IconSimpleLineIcons name={'camera'} size={moderateScale(30)} color={ 'purple' } />
               <View style={styles.column}>
                 <Text style={styles.permissionTitle}>{I18n.t("permissions.name.camera")}</Text>
                 <Text style={styles.permissionDescription}> { isLinguist? I18n.t("permissions.description.linguist.camera") :  I18n.t("permissions.description.customer.camera")}</Text>
@@ -64,7 +64,7 @@ class MissingRequiredPermissionsView extends Component {
           </View>}
           {microphone && <View style={camera ? styles.cardContainer : styles.firstCardContainer}>
             <View style={styles.row}>
-              <Icon name="microphone" type="font-awesome" color="#401674" size={moderateScale(30)} />
+            <IconSimpleLineIcons style={styles.icon} name={'microphone'} size={moderateScale(30)} color={ 'purple' } />
               <View style={styles.column}>
                 <Text style={styles.permissionTitle}>{I18n.t("permissions.name.mic")}</Text>
                 <Text style={styles.permissionDescription}>{isLinguist?  I18n.t("permissions.description.linguist.mic") :  I18n.t("permissions.description.customer.mic")}</Text>
