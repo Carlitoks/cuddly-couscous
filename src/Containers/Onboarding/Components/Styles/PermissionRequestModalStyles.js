@@ -71,11 +71,6 @@ export default StyleSheet.create({
   continueButton: {
     ...primaryButton,
     backgroundColor: "#391367",
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOpacity: 0.38,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 0 },
-    elevation: 8,
     paddingRight: moderateScaleViewports(15),
     paddingLeft: moderateScaleViewports(15),
     marginLeft: "15%",
