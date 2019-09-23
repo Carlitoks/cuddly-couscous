@@ -64,6 +64,9 @@ export default StyleSheet.create({
     alignItems: "stretch",
     marginTop: moderateScaleViewports(20),
   },
+  buttonsContainer:{
+    justifyContent: "center",    
+  },
   continueButtonContainer: {
     flexDirection: 'column',
     alignSelf: 'center',
