@@ -63,7 +63,6 @@ class CustomerHomeScreen extends Component {
       loadSessionScenarios,
       loadActiveSubscriptionPeriods,
     } = this.props;
-
    if(newAccount && !permissions.location.requestedThisSession){
      this.setState({modalShow: true, permissions : ['camera', 'microphone','location']});
      let newPermissions = {...permissions};
@@ -73,7 +72,7 @@ class CustomerHomeScreen extends Component {
      updateAppState({permissions: newPermissions}) ;
    }
 
-   if(!newAccount && !permissions.location.requestedThisSession && !permissions.location.granted){
+   if(!newAccount && !permissions.location.requestedThisSession && (!permissions.location.granted && permissions.location.status!='denied')){
      this.setState({modalShow: true, permissions : ['location']});
      let newPermissions = {...permissions};
      let location = {...permissions.location};
