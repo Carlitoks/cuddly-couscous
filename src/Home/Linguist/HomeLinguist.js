@@ -95,8 +95,7 @@ class Home extends Component {
 
     const { permissions } = this.props;
 
-    //!permissions.location.grated && permissions.location.status === "undetermined" ? PERMISSIONS.LOCATION : 
-    if(!permissions.location.grated && permissions.location.status === "undetermined"){
+    if(!permissions.location.granted && permissions.location.status === "undetermined"){
       this.setState({permissionsModalVisible: true, permissions: [PERMISSIONS.LOCATION]})
     }
     this.reloadUser();

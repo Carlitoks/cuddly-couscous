@@ -64,8 +64,11 @@ export default StyleSheet.create({
     alignItems: "stretch",
     marginTop: moderateScaleViewports(20),
   },
-  buttonsContainer:{
-    justifyContent: "center",    
+  buttonsContainerCenter:{
+    flexDirection: "row",
+    justifyContent: "center", 
+    alignItems: "stretch",
+    marginTop: moderateScaleViewports(20),   
   },
   continueButtonContainer: {
     flexDirection: 'column',
@@ -78,6 +81,12 @@ export default StyleSheet.create({
     paddingLeft: moderateScaleViewports(15),
     marginLeft: "15%",
     marginRight: moderateScaleViewports(10),
+  },
+  continueButtonCenter: {
+    ...primaryButton,
+    backgroundColor: "#391367",
+    paddingRight: moderateScaleViewports(15),
+    paddingLeft: moderateScaleViewports(15),
   },
   continueButtonText: {
     ...setTextProperties('#fff', Fonts.BaseFont, moderateScaleViewports(16), '600'),
