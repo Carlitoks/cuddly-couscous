@@ -276,6 +276,7 @@ export default (ENG = {
 
   // new customer home screen designs
   newCustomerHome: {
+    currentBalance: "Current Balance: {{num}}m",
     addCard: "Add Card",
     balance: "{{num}}m",
     linguists: "Our Jeenies are standing by...",

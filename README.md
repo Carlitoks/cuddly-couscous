@@ -10,6 +10,7 @@ The mobile app will depend on having access to the API server.  To get that runn
 * copy the `api.config.yml.dist` to `api.config.yml`, and modify accordingly for your local dev environment (if necessary), in most cases the default values should work
 * run `make setup` - authorizes via gcloud and logs into GCR, so you can pull down images of the api server
 * run `docker-compose up` - starts the api server and supporting services (postgres, redis, etc...)
+* run `make reload-fixtures` - shortcut command to load the database fixtures included with the api server docker image
 
 Once it's up, go to [http://localhost:5112/](http://localhost:5112/) to view the API docs.  Connect to the api server in your own code via `http://solo-api-server:5110/`.  You should be able to hit that URL in browser to see that the api server is up and running.
 
