@@ -93,10 +93,10 @@ class PermissionRequestModal extends Component {
               </ScrollView>
               <View style={ askLater ? styles.buttonsContainer : styles.buttonsContainerCenter}>
                 { askLater &&
-                  <TouchableHighlight
+                  <TouchableOpacity
                     onPress={() => onClose(false)}>
                     <Text style={styles.askLater}>{I18n.t("permissions.later")}</Text>
-                  </TouchableHighlight>
+                  </TouchableOpacity>
                 }
                 <TouchableOpacity
                   onPress={() => this.requestPerms()}
