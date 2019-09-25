@@ -1,11 +1,35 @@
-# copy this file to "config.yml" and modify as needed for your local dev environment
+# copy this file to "api.config.yml" and modify as needed for your local dev environment
 
 APP_ENV: dev # dev|prod
 APP_ROOT: /app
 APP_URL: http://localhost:5110
-APP_LINGUIST_LANGS: ["eng","cmn","yue","jpn"]
-APP_LINGUIST_LANG_PAIRS: ["cmn-eng","eng-yue","eng-jpn"]
-APP_LOCALIZATIONS: ["en","zh-hans","zh-hant","ja","es"] # note that "en" should always be first in the list, as it is the default fallback
+APP_LOCALIZATIONS: ["en","zh-hans","zh-hant","ja","es","fr","pt","de","it","ko"] # note that "en" should always be first in the list, as it is the default fallback
+
+SESSION_LANG_PAIRS:
+  default:
+    inviterBatchSize: 1
+    inviterInterval: 2
+    atWill: true
+    atWillMissedCallTrigger: 2 # how many calls in a row trigger kicking a linguist offline`
+    atWillMissedCallTimeThreshold: 30 # time in seconds the linguist should have to answer before the missed invite counts against them`
+    atWillMissedCallPeriod: 7200 # the interval in which the missed calls are counted (number in seconds)`
+    public: true
+  "rus+swe":
+    inviterBatchSize: 1
+    inviterInterval: 1
+    atWill: true
+    atWillMissedCallTrigger: 1
+    atWillMissedCallTimeThreshold: 1
+    atWillMissedCallPeriod: 1
+    public: false
+  "rus+yue":
+    inviterInterval: 0
+    atWill: false
+    atWillMissedCallTrigger: 1
+    public: false        
+  "eng+yue": ~
+  "eng+jpn": ~
+  "cmn+eng": ~
 
 #CURRENCY
 CURRENCY_SUPPORTED: ["jpy", "usd"]
@@ -19,8 +43,8 @@ SURVEY_MONKEY_LINGUIST_SURVEY: "protocol://fqdn.url"
 CLUSTER_LOADBALANCER_SOURCE_IP_ADDRESSES: [] #leave this alone for dev
 COUNTRY_CODE_BLACKLIST: []
 
-LOG_LEVEL: debug # debug|info|warn|error
-LOG_FORMAT: json # json|logfmt
+LOG_LEVEL: info # debug|info|warn|error
+LOG_FORMAT: logfmt # json|logfmt
 
 POSTGRES_USER: solo-platform
 POSTGRES_PASS: solo-platform
@@ -64,10 +88,6 @@ GOOGLE_PLAY_STORE_URL: https://play.google.com/store/apps/details?id=com.newsolo
 
 PROBLEM_REPORT_EMAIL: no-reply@example.com
 
-INVITER_BATCH_SIZE: 1 # num invites to send at once
-INVITER_INTERVAL: 2 # seconds
-INVITER_QUEUE_TIMEOUT: 10 # seconds
-
 SESSION_TIMEOUT_INTERVAL: 60
 
 FCM_ENABLED: false
@@ -89,7 +109,16 @@ SLACK_WEBHOOKS:
   devops: http://example.com/foo
   ondemand: http://example.com/foo
   sessionstatus: http://example.com/foo
-  
+  # new slack SLACK_WEBHOOKS
+  # jeenie
+  jeenie_call_began: http://example.com/foo
+  jeenie_call_reports: http://example.com/foo
+  # jeenie_japan
+  jeenie_japan_call_began: http://example.com/foo
+  jeenie_japan_call_reports: http://example.com/foo
+  # temp points to old jeenie slack
+  jeenie_call_reports_old: http://example.com/foo
+
 STRIPE_APIKEY: sk_test_hHVA79Oxm42hi0WnL41BmSRz
 
 ZENDESK_ENABLED: false
@@ -99,13 +128,7 @@ ZENDESK_PASS: api-token-for-user
 ZENDESK_GROUPS:
   engineering: 360001778213
   billing: 360001788134
-
-# settings for "at will" languages
-AT_WILL_LANG_PAIRS: ["cmn-eng","eng-yue","eng-jpn"]
-AT_WILL_MISSED_CALL_TRIGGER: 2            # how many calls in a row trigger kicking a linguist offline
-AT_WILL_MISSED_CALL_TIME_THRESHOLD: 30    # time in seconds the linguist should have to answer before the missed invite counts against them
-AT_WILL_MISSED_CALL_PERIOD: 7200          # the interval in which the missed calls are counted (number in seconds)
-
+  
 IPSTACK_API_KEY: dfe6c79f51e7e14f5d3cab950525db0d
 
 #GOOGLE SHEETS
@@ -115,3 +138,26 @@ DAR_TEST: ["Google Sheet ID","TAB ID"]
 DAILY_CUSTOMER_CALL_REPORT: ["Google Sheet ID", "TAB ID"]
 LINGUIST_HOURLY_REPORT: ["Google Sheet ID","TAB ID"]
 USER_EMAIL_CAMPAIGNS_REPORT: ["Google Sheet ID","TAB ID"]
+
+#Mutex Promo Code Hack 619
+HACK_619: [            
+            {
+             "org": "ACME",
+             "eventReferralID": "00000000-0000-0000-0000-000000000001",
+             "referralIDs": 
+                [
+                  "00000000-0000-0000-0000-000000000001",
+                  "00000000-0000-0000-0000-000000000002",
+                  "00000000-0000-0000-0000-000000000003",
+                  "00000000-0000-0000-0000-000000000004",
+                  "00000000-0000-0000-0000-000000000005"
+                ],
+             "eventIDs": 
+                [
+                  "21111111-1111-1111-1111-111111111111",
+                  "21111111-1111-1111-1111-111111111112",
+                  "21111111-1111-1111-1111-111111111113",
+                  "21111111-1111-1111-1111-111111111114"
+                ]
+            }
+          ]
