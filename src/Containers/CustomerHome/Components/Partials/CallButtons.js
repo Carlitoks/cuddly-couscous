@@ -63,7 +63,26 @@ class CallButtons extends Component {
     }else if (!permissions.camera.granted || !permissions.microphone.granted) {
       this.setState({modalShow: true, permissions: ['camera', 'microphone']})
     }else{
-      this.createCall();
+      if (!hasUnlimitedUse && user.availableMinutes <= 60 && !user.stripePaymentToken){
+        Alert.alert(
+          I18n.t('pricingScreen.balance.title') +" "+I18n.t('newCustomerHome.balance', {num: user.availableMinutes}),
+          I18n.t("pricingScreen.paymentInfo.descriptionLowMinutes"),
+          [
+            {
+              text: I18n.t("pricingModal.buttons.addCard"),
+              onPress: () => navigation.dispatch({ type: "EditCardScreen" })
+            },
+            {
+              text: I18n.t("actions.continue"),
+              onPress: () => this.createCall()
+            }
+          ],
+          { cancelable: false }
+        );
+
+      }else{
+        this.createCall();
+      }
     }
   };
 
