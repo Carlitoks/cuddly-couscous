@@ -55,14 +55,20 @@ class CallButtons extends Component {
           }
         }
       ]);
-    } else if(permissions.camera.status==='denied' || permissions.camera.status==='denied'){
+    } else if(permissions.microphone.status==='denied' || permissions.camera.status==='denied'){
+      console.log("digo que 2");
+
       let camera = permissions.camera.granted ? false : true;
       let microphone = permissions.microphone.granted ? false : true; 
 
       navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
     }else if (!permissions.camera.granted || !permissions.microphone.granted) {
+
+      console.log("digo que 1", permissions);
       this.setState({modalShow: true, permissions: ['camera', 'microphone']})
     }else{
+      console.log("digo que 3");
+
       if (!hasUnlimitedUse && user.availableMinutes <= 60 && !user.stripePaymentToken){
         Alert.alert(
           I18n.t('pricingScreen.balance.title') +" "+I18n.t('newCustomerHome.balance', {num: user.availableMinutes}),
