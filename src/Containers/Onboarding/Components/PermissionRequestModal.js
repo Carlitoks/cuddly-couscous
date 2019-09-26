@@ -79,7 +79,7 @@ class PermissionRequestModal extends Component {
           transparent={true}
           isVisible={visible}
           onRequestClose={() => Alert.alert('Modal has been closed.') }
-          onBackdropPress={() => onClose(false)}
+          onBackdropPress={() => askLater ? onClose(false) : null}
           propagateSwipe={true}
         >
           <View style={styles.modalView}>

@@ -35,12 +35,7 @@ class LoadingView extends React.Component {
           return navigation.dispatch({ type: "Home" });
         });
       } else {
-        Permission.check("location").then((permission) => {
-          if (permission === "undetermined") {
-            return navigation.dispatch({ type: "LocationPermissionView" });
-          }
-          return navigation.dispatch({ type: "Home" });
-        });
+        return navigation.dispatch({ type: "Home" });
       }
     } else {
       return navigation.dispatch({ type: "IntroView" });

@@ -20,7 +20,6 @@ import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import OnboardingScreen from "../Containers/Onboarding/OnboardingScreen";
 import LoginScreen from "../Containers/Login/LoginScreen";
 import RegisterScreen from "../Containers/Register/RegisterScreen";
-import LocationPermissionView from "../Containers/Permissions/LocationPermissionView";
 import NotificationPermissionView from "../Containers/Permissions/NotificationPermissionView";
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
 import PackageCheckoutView from "../Containers/Payments/PackageCheckoutView";
@@ -205,14 +204,7 @@ const Navigation = StackNavigator(
           drawerLockMode: "locked-closed"
         }
       }
-    },
-    LocationPermissionView: {
-      screen: LocationPermissionView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
+    },    
     NotificationPermissionView: {
       screen: NotificationPermissionView,
       navigationOptions: {
