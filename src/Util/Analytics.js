@@ -1,4 +1,4 @@
-import branch, {BranchEvent} from "react-native-branch";
+import {BranchEvent} from "react-native-branch";
 import segment from "@segment/analytics-react-native";
 import {recordNavigationEvent as forensicsNavEvent} from "./Forensics"
 
@@ -33,11 +33,21 @@ export const recordNavigationEvent = (screenName) => {
 // use this for any general analytics event not related to 
 // nav.  Events referenced here should be defined in the `EVENTS`
 // constants above
-export const recordAnalyticsEvent = (name, params = null) => {
+export const recordAnalyticsEvent = (map, params = null) => {
   // send custom event to Branch
   try {
-    if (!!EVENTS[name] && !!EVENTS[name].BRANCH) {
-      new BranchEvent(EVENTS[name].BRANCH, null, params).logEvent();
+    if (!!map.BRANCH) {
+      const evt = new BranchEvent(map.BRANCH);
+      // branch custom data MUST be strings, so casting any 
+      // received params to strings
+      if (!!params) {
+        let d = {};
+        for (let i in params) {
+          d[i] = String(params[i]);
+        }
+        evt.customData = d;  
+      }
+      evt.logEvent();
     }
   } catch (e) {
     console.log(e);
@@ -45,11 +55,14 @@ export const recordAnalyticsEvent = (name, params = null) => {
 
   // send custom event to Segment
   try {
-    if (!!EVENTS[name] && !!EVENTS[name].SEGMENT) {
-      segment.track(EVENTS[name].SEGMENT, params);
+    if (map.SEGMENT) {
+      if (!!params) {
+        segment.track(map.SEGMENT, params);
+      } else {
+        segment.track(map.SEGMENT);
+      }
     }
   } catch (err) {
     console.log(err);
   }
 };
-
