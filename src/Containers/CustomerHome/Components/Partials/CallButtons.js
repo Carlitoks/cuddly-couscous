@@ -63,7 +63,7 @@ class CallButtons extends Component {
     }else if (!permissions.camera.granted || !permissions.microphone.granted) {
       this.setState({modalShow: true, permissions: ['camera', 'microphone']})
     }else{
-      if (!hasUnlimitedUse && user.availableMinutes <= 160 && !user.stripePaymentToken){
+      if (!hasUnlimitedUse && user.availableMinutes <= 60 && !user.stripePaymentToken){
         Alert.alert(
           I18n.t('pricingScreen.balance.title') +" "+I18n.t('newCustomerHome.balance', {num: user.availableMinutes}),
           I18n.t("pricingScreen.paymentInfo.descriptionLowMinutes"),
