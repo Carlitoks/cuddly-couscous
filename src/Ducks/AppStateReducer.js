@@ -1,7 +1,7 @@
 import _merge from "lodash/merge";
 import {requestPermissions as requestPermissionsUtil} from "../Util/Permission";
 import Permissions from "react-native-permissions";
-import {Platform} from "react-native";
+import {NetInfo, Platform} from "react-native";
 // The purpose of this is to manage app UI & config state that is either
 // determined or modifiable by the user.
 
@@ -145,6 +145,19 @@ export const detectPermissions = () => (dispatch, getState) => {
       });
       dispatch(update(_merge({}, getState().appState, updates)));
       resolve(res);
+    })
+    .catch(reject);
+  });
+};
+
+// detect network connection status from device
+export const detectNetworkStatus = () => (dispatch, getState) => {
+  return new Promise((resolve, reject) => {
+    NetInfo.getConnectionInfo()
+    .then((connectionInfo) => {
+      const hasNetworkConnection = connectionInfo.type != "none"
+      dispatch(update({ connectionInfo, hasNetworkConnection }));
+      resolve(connectionInfo);
     })
     .catch(reject);
   });
