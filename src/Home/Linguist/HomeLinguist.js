@@ -306,7 +306,7 @@ class Home extends Component {
         <PermissionRequestModal
           visible={this.state.permissionsModalVisible} // true/false
           role='linguist' // customer|linguist
-          askLater={true} // true|false
+          askLater={false} // true|false
           perms={this.state.permissions} // [camera|microphone|location|notification|photo]
           onClose={(res) => this.modalClose(res)}
         />
