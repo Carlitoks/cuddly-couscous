@@ -93,12 +93,33 @@ class Home extends Component {
     NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
     InCallManager.stop();
 
-    const { permissions } = this.props;
-
-    if(!permissions.location.granted && permissions.location.status === "undetermined"){
+    const { permissions, linguistProfile, navigation } = this.props;
+    if(linguistProfile.available ){
+      this.checkPermissions(
+        () => {},
+        (permissions) => {
+          this.changeStatus (false);
+          navigation.dispatch({ 
+            type: "MissingRequiredPermissionsView", 
+            params: {
+              camera: !permissions.camera, 
+              microphone: !permissions.microphone,
+              location: !permissions.location,
+              isLinguist: true
+            } 
+          });
+        },
+        (permissions) => {
+          this.changeStatus (false);
+          this.setState({permissionsModalVisible: true, permissions, loading: false})
+        }
+      );
+    } else if(!permissions.location.granted && permissions.location.status === "undetermined"){
       this.setState({permissionsModalVisible: true, permissions: [PERMISSIONS.LOCATION]})
     }
+    
     this.reloadUser();
+
 
     if (
       this.props.navigation.state.params &&
@@ -129,11 +150,10 @@ class Home extends Component {
     });
   }
 
-  changeStatus (status) {
-    this.setState({loading: true})
-
+  checkPermissions(authorized, denied, undetermined){
     const permissionsToAsk = [];
-    const { permissions, navigation } = this.props;
+
+    const { permissions } = this.props;
 
     const cameraStatus = _get(permissions,'camera.status',"undetermined");
     const camera = _get(permissions,'camera.granted',false);
@@ -145,28 +165,17 @@ class Home extends Component {
     const location = _get(permissions,'location.granted',false);
 
     if( camera && 
-        cameraStatus == "authorized" && 
-        microphone && 
-        microphoneStatus == "authorized" && 
-        location && 
-        locationStatus == "authorized"){
-      this.props.updateLinguistProfile({available: status}).finally(() => {
-        this.setState({loading: false});
-      });
+      cameraStatus == "authorized" && 
+      microphone && 
+      microphoneStatus == "authorized" && 
+      location && 
+      locationStatus == "authorized"){
+        authorized();
       return;
     }
 
     if(cameraStatus == "denied" || microphoneStatus == "denied" || locationStatus === "denied"){
-      navigation.dispatch({ 
-        type: "MissingRequiredPermissionsView", 
-        params: { 
-          camera: !camera, 
-          microphone: !microphone,
-          location: !location,
-          isLinguist: true
-        } 
-      });
-      this.setState({loading: false});
+      denied({camera, microphone, location});
       return;
     }
 
@@ -179,7 +188,42 @@ class Home extends Component {
     if(!location && locationStatus === "undetermined"){
       permissionsToAsk.push(PERMISSIONS.LOCATION)  
     }
-    this.setState({permissionsModalVisible: true, permissions: permissionsToAsk, loading: false});
+
+    undetermined(permissionsToAsk);
+  }
+
+  changeStatus (status) {
+    this.setState({loading: true})
+    const { navigation } = this.props;
+
+    if( !status ){    
+      this.props.updateLinguistProfile({available: status}).finally(() => {
+        this.setState({loading: false});
+      });
+      return;
+    }
+
+    this.checkPermissions(
+      () => {
+        this.props.updateLinguistProfile({available: status}).finally(() => {
+          this.setState({loading: false});
+        });
+      },
+      (permissions) => {
+        this.setState({loading: false});
+        console.log('permissions',permissions)
+        navigation.dispatch({ 
+          type: "MissingRequiredPermissionsView", 
+          params: { 
+            camera: !permissions.camera, 
+            microphone: !permissions.microphone,
+            location: !permissions.location,
+            isLinguist: true
+          } 
+        });
+      },
+      (permissions) => this.setState({permissionsModalVisible: true, permissions, loading: false})
+    );
   }
 
   uploadAvatar(avatar) {
