@@ -56,7 +56,6 @@ class CallButtons extends Component {
         }
       ]);
     } else if(permissions.microphone.status==='denied' || permissions.camera.status==='denied'){
-      console.log("digo que 2");
 
       let camera = permissions.camera.granted ? false : true;
       let microphone = permissions.microphone.granted ? false : true; 
@@ -64,10 +63,8 @@ class CallButtons extends Component {
       navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
     }else if (!permissions.camera.granted || !permissions.microphone.granted) {
 
-      console.log("digo que 1", permissions);
       this.setState({modalShow: true, permissions: ['camera', 'microphone']})
     }else{
-      console.log("digo que 3");
 
       if (!hasUnlimitedUse && user.availableMinutes <= 60 && !user.stripePaymentToken){
         Alert.alert(
@@ -200,7 +197,7 @@ class CallButtons extends Component {
         <PermissionRequestModal
           visible={this.state.modalShow} // true/false
           role='customer' // customer|linguist
-          askLater={true} // true|false
+          askLater={false} // true|false
           perms={this.state.permissions} // [camera|microphone|location|notification|photo]
           onClose={(res) => this.checkPermissions(res)}
         />
