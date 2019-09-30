@@ -18,6 +18,7 @@ import ShowMenuButton from "../../Components/ShowMenuButton/ShowMenuButton";
 import CallHistoryComponent from "../../Components/CallHistory/CallHistory";
 import _isEmpty from "lodash/isEmpty";
 import _isUndefined from "lodash/isUndefined";
+import _get from "lodash/get";
 
 
 import styles from "./styles";
@@ -35,6 +36,9 @@ import { moderateScaleViewports } from "../../Util/Scaling";
 import CircularAvatar from "../../Components/CircularAvatar/CircularAvatar";
 import StarRating from "../../Components/StarRating/StarRating";
 
+import PermissionRequestModal from "../../Containers/Onboarding/Components/PermissionRequestModal"
+import { modifyAdditionalDetails } from "../../Ducks/NewSessionReducer";
+
 class Home extends Component {
 
   constructor(props) {
@@ -42,7 +46,9 @@ class Home extends Component {
 
     this.state = {
       appState: AppState.currentState,
-      loading: false
+      loading: false,
+      permissionsModalVisible: false,
+      permissions: [],
     }
   }
 
@@ -87,21 +93,32 @@ class Home extends Component {
     NetInfo.addEventListener("connectionChange", this.monitorConnectivity);
     InCallManager.stop();
 
+    const { permissions, linguistProfile, navigation } = this.props;
+    if(linguistProfile.available ){
+      this.checkPermissions(
+        () => {},
+        (permissions) => {
+          this.changeStatus (false);
+          navigation.dispatch({ 
+            type: "MissingRequiredPermissionsView", 
+            params: {
+              camera: !permissions.camera, 
+              microphone: !permissions.microphone,
+              isLinguist: true
+            } 
+          });
+        },
+        (permissions) => {
+          this.changeStatus (false);
+          this.setState({permissionsModalVisible: true, permissions, loading: false})
+        }
+      );
+    } else if(permissions.location.status === "undetermined"){
+      this.setState({permissionsModalVisible: true, permissions: [PERMISSIONS.LOCATION]})
+    }
+    
     this.reloadUser();
 
-    // ensure linguist permissions are set
-    ensurePermissions([PERMISSIONS.CAMERA, PERMISSIONS.MIC]).then((response) => {
-      if (
-        response[PERMISSIONS.CAMERA] !== 'authorized'
-        || response[PERMISSIONS.MIC] !== 'authorized'
-      ) {
-        Alert.alert(
-          I18n.t('notification'),
-          I18n.t('acceptAllPermissionsLinguist'),
-          [{text: I18n.t('actions.ok')}]
-        );
-      }
-    })
 
     if (
       this.props.navigation.state.params &&
@@ -132,11 +149,83 @@ class Home extends Component {
     });
   }
 
+  checkPermissions(authorized, denied, undetermined){
+
+    const { permissions } = this.props;
+
+    const cameraStatus = _get(permissions,'camera.status',"undetermined");
+    const camera = _get(permissions,'camera.granted',false);
+    const microphoneStatus = _get(permissions,'microphone.status',"undetermined");
+    const microphone = _get(permissions,'microphone.granted',false);
+    const locationStatus = _get(permissions,'location.status',"undetermined");
+    const location = _get(permissions,'location.granted',false);
+
+    // first check for required permissions that were denied
+    if(cameraStatus == "denied" || microphoneStatus == "denied"){
+      denied({camera, microphone});
+      return;
+    }
+
+    // next check for any permissions that we want to ask for.  Note that we *want*
+    // the location permission, but it's not required.
+    const permissionsToAsk = [];
+    if(!camera && cameraStatus === "undetermined"){
+      permissionsToAsk.push(PERMISSIONS.CAMERA)  
+    }
+    if(!microphone && microphoneStatus === "undetermined"){
+      permissionsToAsk.push(PERMISSIONS.MIC)  
+    }
+    if(!location && locationStatus === "undetermined"){
+      permissionsToAsk.push(PERMISSIONS.LOCATION)  
+    }
+
+    if (permissionsToAsk.length > 0) {
+      undetermined(permissionsToAsk);
+      return;
+    }
+
+    // otherwise if the required permissions were granted, all good
+    if( camera && 
+      cameraStatus == "authorized" && 
+      microphone && 
+      microphoneStatus == "authorized"
+    ){
+        authorized();
+      return;
+    }
+  }
+
   changeStatus (status) {
     this.setState({loading: true})
-    this.props.updateLinguistProfile({available: status}).finally(() => {
-      this.setState({loading: false});
-    });
+    const { navigation } = this.props;
+
+    if( !status ){    
+      this.props.updateLinguistProfile({available: status}).finally(() => {
+        this.setState({loading: false});
+      });
+      return;
+    }
+
+    this.checkPermissions(
+      () => {
+        this.props.updateLinguistProfile({available: status}).finally(() => {
+          this.setState({loading: false});
+        });
+      },
+      (permissions) => {
+        this.setState({loading: false});
+        console.log('permissions',permissions)
+        navigation.dispatch({ 
+          type: "MissingRequiredPermissionsView", 
+          params: { 
+            camera: !permissions.camera, 
+            microphone: !permissions.microphone,
+            isLinguist: true
+          } 
+        });
+      },
+      (permissions) => this.setState({permissionsModalVisible: true, permissions, loading: false})
+    );
   }
 
   uploadAvatar(avatar) {
@@ -234,16 +323,24 @@ class Home extends Component {
     return { amount: formatTimerSeconds(seconds), numberCalls };
   }
 
+  modalClose(res){
+      this.setState({ permissionsModalVisible: false });
+
+      if(res) { // do sommething
+        console.log(res);
+      }
+  }
+
   render() {
     const {
       user,
       linguistProfile,
-      linguistCalls
+      linguistCalls,
+      permissions,
     } = this.props;
     const allCalls = this.filterAllCalls(linguistCalls, "createdBy");
     const { amount, numberCalls } = this.calculateAmount(linguistCalls);
     
-
     return (
       <View style={styles.scrollContainer}>
         <NavBar
@@ -252,7 +349,13 @@ class Home extends Component {
           }
           navbarTitle={I18n.t("home")}
         />
-
+        <PermissionRequestModal
+          visible={this.state.permissionsModalVisible} // true/false
+          role='linguist' // customer|linguist
+          askLater={false} // true|false
+          perms={this.state.permissions} // [camera|microphone|location|notification|photo]
+          onClose={(res) => this.modalClose(res)}
+        />
         <WavesBackground>
           <View style={styles.avatarContainer}>
               <CircularAvatar photoSelect={avatar => this.uploadAvatar(avatar)} avatarURL={this.props.avatarURL} firstName={user.firstName} lastInitial={user.lastName} />
@@ -272,6 +375,7 @@ class Home extends Component {
             </View>
           </View>
         </WavesBackground>
+        
         <CallNumber
           calls={numberCalls}
           amount={amount}
@@ -307,6 +411,7 @@ const mS = state => ({
   token: state.auth2.userJwtToken,
   isLinguist: state.account.isLinguist,
   user: state.account.user,
+  permissions: state.appState.permissions,
 });
 
 const mD = {
@@ -314,7 +419,7 @@ const mD = {
   updateUserProfilePhoto,
   updateLinguistProfile,
   loadLinguistCallHistory,
-  incomingCallNotification
+  incomingCallNotification,
 };
 
 export default connect(

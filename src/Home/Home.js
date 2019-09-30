@@ -7,6 +7,7 @@ import CustomerHomeScreenRedesign from "../Containers/CustomerHome/CustomerHomeS
 import { flushEvents } from "../Util/Forensics";
 import { displayNoNetworkConnectionAlert } from "../Util/Alerts";
 import { handleDeepLinkEvent } from "../Util/Events";
+import {detectNetworkStatus} from "../Ducks/AppStateReducer";
 
 class Home extends Component {
   constructor(props) {
@@ -39,7 +40,11 @@ class Home extends Component {
 
     // check for network connection, alert if no connection
     if (!this.props.hasNetworkConnection) {
-      displayNoNetworkConnectionAlert();
+      this.props.detectNetworkStatus().then(() => {
+        if (!this.props.hasNetworkConnection) {
+          displayNoNetworkConnectionAlert();
+        }
+      });
     }
   }
 
@@ -80,10 +85,10 @@ const mS = state => ({
   appState: state.appState,
 });
 
-
 function mD(dispatch) {
   return {
     dispatch,
+    detectNetworkStatus: () => dispatch(detectNetworkStatus()),
   };
 }
 

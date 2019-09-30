@@ -36,26 +36,6 @@ class LoginScreen extends Component {
     updateOnboarding({ password: text });
   };
 
-  handleTouch = async (goto) => {
-    const { navigation } = this.props;
-    const LocationPermission = await Permission.check("location");
-    if (Platform.OS === "android"){
-      if (LocationPermission === "undetermined" || LocationPermission === "denied")
-        return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
-    }else {
-      if (LocationPermission === "undetermined") {
-        return navigation.dispatch({ type: "LocationPermissionView", params: { redirectTo: goto } });
-      }
-    }
-    if (Platform.OS !== "android") {
-      const NotificationPermission = await Permission.check("notification");
-      if (NotificationPermission === "undetermined") {
-        return navigation.dispatch({ type: "NotificationPermissionView", params: { redirectTo: goto } });
-      }
-    }
-    return navigation.dispatch({ type: goto });
-  };
-
   setEmailRef = (ref) => {
     this.emailInput = ref;
   };
@@ -116,7 +96,7 @@ class LoginScreen extends Component {
                             <Divider style={styles.divider} />
                           </View>
                           <TouchableOpacity
-                            onPress={() => this.handleTouch("RegisterView")}
+                            onPress={() => navigation.dispatch({ type: "RegisterView" }) }
                             style={styles.createAccountButtonTransition}
                           >
                             <Text style={styles.transitionCreateButtonText}>

@@ -19,7 +19,7 @@ const CallNumber =
               style={{ alignContent: "space-between" }}
             >
               <View style={styles.monthlySummary}>
-                <Text style={styles.monthlySummaryText}>Monthly Summary</Text>
+                <Text style={styles.monthlySummaryText}>{I18n.t('linguistHome.summary')}</Text>
               </View>
               <View style={styles.callNumberContainer}>
                 <View style={{ width: "50%" }}>

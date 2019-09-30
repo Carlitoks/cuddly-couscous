@@ -10,6 +10,7 @@ import OnboardingButtons from "./Components/OnboardingButtons";
 import I18n, { localizePrice } from "../../I18n/I18n";
 import { isIphoneXorAbove } from "../../Util/Devices";
 import DotSteps from "./Components/DotSteps";
+import PermissionRequestModal from "./Components/PermissionRequestModal"
 
 const backgroundImage = () => {
   if (isIphoneXorAbove()) {
@@ -56,7 +57,6 @@ class OnboardingScreen extends Component {
               {I18n.t("newCustomerOnboarding.intro.descriptionRate", { rate })}
             </Text>
             <View>
-              <DotSteps navigation={navigation} />
               <OnboardingButtons navigation={navigation} />
             </View>
           </View>

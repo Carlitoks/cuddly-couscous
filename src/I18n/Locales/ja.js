@@ -29,7 +29,7 @@
   female: "女性",
   firstname: "名前（名）",
   gender: "性別",
-  genderAlert: "通訳スタッフには、お客様の性別を指定できるオプションがあります。性別の公開を希望しない場合、希望の性別の通訳スタッフは割り当てられません。th linguists with a preference.",
+  genderAlert: "通訳スタッフには、お客様の性別を指定できるオプションがあります。性別の公開を希望しない場合、性別を指定していない通訳スタッフが割り当てられます。",
   genderNotice: "この情報をお伺いする理由：",
   genderName: "性別を選択",
   historyNotFound: "履歴が見つかりません",
@@ -96,11 +96,29 @@
     tagline: "必要な時に使える言語サービス"
   },
 
+  // often used as the result of an action
   status: {
+    added: "追加されました",
+    applied: "適用されました",
     available: "対応可能",
     cancelled: "キャンセルされました",
+    completed: "完了しました",
+    confirmed: "確定されました",
+    deleted: "削除されました",
+    denied: "拒否されました",
     error: "エラー",
-    unavailable: "対応不可"
+    failed: "失敗しました",
+    finished: "終了",
+    received: "受信しました",
+    rejected: "拒否されました",
+    removed: "削除されました",
+    sent: "送信されました",
+    started: "開始されました",
+    stopped: "停止されました",
+    success: "正常に処理されました",
+    submitted: "送信されました",
+    unavailable: "対応不可",
+    updated: "更新されました"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -173,7 +191,8 @@
     scenarioNote: "オプションメモ",
     missedCall: "不在着信",
     notRated: "評価されていません",
-    addRating: "評価を追加"
+    addRating: "評価を追加",
+    abuseReported: "不正行為が報告されました"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -283,6 +302,10 @@
     }
   },
 
+  linguistHome: {
+    summary: "月別の概要"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "必要なサポート：",
@@ -318,6 +341,37 @@
     }
   },
 
+  permissions: {
+    title: "許可のリクエスト",
+    missing: "必要な許可がありません",
+    missingDescription: "アプリを使用するには許可を変更してください。",
+    gotoSettings: "設定にアクセス",
+    later: "後で",
+    name: {
+      camera: "カメラ",
+      mic: "マイク",
+      location: "場所",
+      notifications: "通知",
+      photos: "写真"
+    },
+    description: {
+      customer: {
+        camera: "Jeenieで通話する必要があります。",
+        mic: "Jeenieで通話する必要があります。",
+        location: "これにより当社はJeenieとの接続を最適化できます。",
+        notifications: "これにより当社はJeenieがが利用できる場合にお客様に通知できます。",
+        photos: "これにより、ライブラリからプロフィール写真を選択できます。"
+      },
+      linguist: {
+        camera: "Jeenieでお客様からの着信に応答する必要があります。",
+        mic: "Jeenieでお客様からの着信に応答する必要があります。",
+        location: "これにより当社はお客様との接続を最適化できます。",
+        notifications: "Jeenieでお客様からの着信に応答する必要があります。",
+        photos: "これにより、ライブラリからプロフィール写真を選択できます。"
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "アカウントの詳細",
@@ -343,7 +397,8 @@
       add: "パッケージを追加",
       remove: "削除",
       more: "さらにパッケージを表示",
-      description: "お得な料金で時間（分）を購入できます。  自動補充のため、時間がなくなることがありません。"
+      description: "お得な料金で時間（分）を購入できます。  自動補充のため、時間がなくなることがありません。",
+      confirmRemove: "このパッケージの再読み込みを停止しますか？  残高がなくなると、1分あたり標準料金で通話料が請求されるようになります。"
     },
   },
 
@@ -594,12 +649,14 @@
 
     // used when rating a session
     rating: {
+      title: "評価",
       reportButton: "報告",
       comment: "コメント",
       addComment: "コメントを追加",
       questionGood: "気に入った点をお聞かせください。",
       questionBetter: "改善点をお聞かせください。",
       customer: "お客様",
+      connection:"接続の問題をお聞かせください。",
       rateCustomer: "お客様を評価してください",
       linguist: "通訳スタッフ",
       rateLinguist: "通訳スタッフを評価してください",
@@ -611,8 +668,9 @@
       abuse: {
         label: "報告",
         title: "不正使用を報告",
-        alert: "不正使用または迷惑行為について報告しようとしています。この種の報告は、お客様のアカウントの停止またが削除につながる可能性があります。希望の操作を選択してください： to proceed?",
-        placeholder: "問題の証拠として具体的な詳細を提供してください。"
+        alert: "不正使用または迷惑行為について報告しようとしています。この種の報告は、お客様のアカウントの停止またが削除につながる可能性があります。操作を続けますか？",
+        placeholder: "問題の証拠として具体的な詳細を提供してください。",
+        submitted: "報告が送信されました。Jeenieチームが報告内容を確認させていただきます。"
       },
       about: {
         label: "通話の詳細",
@@ -763,6 +821,29 @@
       takenEmail:
         "入力したメールアドレスのアカウントはすでに存在しています。\n別のメールアドレスを入力するか、\nご自身のアカウントにサインインしてください。",
       emailAndPassword: "メールアドレスとパスワードの組み合わせが誤っています。\nもう一度お試しください。"
+    }
+  },
+
+  units: {
+    time: {
+      second: "秒",
+      secondAbbr: "秒",
+      secondShort: "秒",
+      seconds: "秒",
+      secondsAbbr: "秒",
+      secondsShort: "秒",
+      minute: "分",
+      minuteAbbr: "分",
+      minuteShort: "分",
+      minutes: "分",
+      minutesAbbr: "分",
+      minutesShort: "分",
+      hour: "時間",
+      hourAbbr: "時間",
+      hourShort: "時間",
+      hours: "時間",
+      hoursAbbr: "時間",
+      hoursShort: "時間"
     }
   },
 

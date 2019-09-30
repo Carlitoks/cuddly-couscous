@@ -96,11 +96,29 @@
     tagline: "您要求的语言"
   },
 
+  // often used as the result of an action
   status: {
+    added: "已添加",
+    applied: "已应用",
     available: "空闲",
     cancelled: "已取消",
+    completed: "已完成",
+    confirmed: "已确认",
+    deleted: "已删除",
+    denied: "已拒绝",
     error: "错误",
-    unavailable: "通话中"
+    failed: "失败",
+    finished: "结束",
+    received: "已接",
+    rejected: "已拒绝",
+    removed: "已移除",
+    sent: "已发送",
+    started: "已开始",
+    stopped: "已停止",
+    success: "成功",
+    submitted: "已提交",
+    unavailable: "通话中",
+    updated: "已更新"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -173,7 +191,8 @@
     scenarioNote: "可选备注",
     missedCall: "未接来电",
     notRated: "未评分",
-    addRating: "新增评分"
+    addRating: "新增评分",
+    abuseReported: "已报告滥用行为"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -283,6 +302,10 @@
     }
   },
 
+  linguistHome: {
+    summary: "每月汇总"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "我需要获取帮助的语言是：",
@@ -318,6 +341,37 @@
     }
   },
 
+  permissions: {
+    title: "申请权限",
+    missing: "缺少必要权限",
+    missingDescription: "请修改权限以使用这款 App",
+    gotoSettings: "转至设置",
+    later: "稍后提醒",
+    name: {
+      camera: "相机",
+      mic: "麦克风",
+      location: "定位",
+      notifications: "通知",
+      photos: "照片"
+    },
+    description: {
+      customer: {
+        camera: "使用翻译精灵所必须的条件",
+        mic: "使用翻译精灵所必须的条件",
+        location: "这将使我们能够优化您与翻译精灵的连接。",
+        notifications: "这将使我们在翻译精灵可用时通知到您。",
+        photos: "这将使您能够在相册中选择个人资料照片。"
+      },
+      linguist: {
+        camera: "接听客户电话所必须的条件",
+        mic: "接听客户电话所必须的条件",
+        location: "这将使我们能够优化您与客户之间的连接。",
+        notifications: "接听客户电话所必须的条件",
+        photos: "这将使您能够在相册中选择个人资料照片。"
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "帐户详情",
@@ -343,7 +397,8 @@
       add: "添加套餐",
       remove: "移除",
       more: "查看更多套餐",
-      description: "以超值价购买更多分钟数。  启用自动充值功能，通话时间永无限制。"
+      description: "以超值价购买更多分钟数。  启用自动充值功能，通话时间永无限制。",
+      confirmRemove: "确认不再充值此套餐？  若您超出使用余额，我们将按照每分钟标准费率收费。"
     },
   },
 
@@ -594,12 +649,14 @@
 
     // used when rating a session
     rating: {
+      title: "评价",
       reportButton: "报告",
       comment: "留言",
       addComment: "留言",
       questionGood: "有哪些不错的方面？",
       questionBetter: "哪些方面还有改善空间？",
       customer: "顾客",
+      connection:"连接出现什么问题？",
       rateCustomer: "评价您的客户",
       linguist: "语言专家",
       rateLinguist: "评价您的语言专家",
@@ -611,8 +668,9 @@
       abuse: {
         label: "报告",
         title: "报告滥用行为",
-        alert: "您即将报告滥用或骚扰行为，这可能导致该客户的帐户被冻结或删除。您确认要 to proceed?",
-        placeholder: "请提供更多可作为证据的具体细节。"
+        alert: "您即将报告滥用或骚扰行为，这可能导致该客户的帐户被冻结或删除。是否继续？",
+        placeholder: "请提供更多可作为证据的具体细节。",
+        submitted: "您的报告已提交，翻译精灵团队将会进行查实。"
       },
       about: {
         label: "通话详情",
@@ -763,6 +821,29 @@
       takenEmail:
         "您输入的电子邮件地址已被注册。\n请输入其他电子邮件或\n登录您的帐户。",
       emailAndPassword: "电子邮件或密码错误。\n请重试。"
+    }
+  },
+
+  units: {
+    time: {
+      second: "秒",
+      secondAbbr: "秒",
+      secondShort: "秒",
+      seconds: "秒",
+      secondsAbbr: "秒",
+      secondsShort: "秒",
+      minute: "分钟",
+      minuteAbbr: "分钟",
+      minuteShort: "分钟",
+      minutes: "分钟",
+      minutesAbbr: "分钟",
+      minutesShort: "分钟",
+      hour: "小时",
+      hourAbbr: "小时",
+      hourShort: "小时",
+      hours: "小时",
+      hoursAbbr: "小时",
+      hoursShort: "小时"
     }
   },
 

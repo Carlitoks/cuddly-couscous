@@ -20,7 +20,6 @@ import PromoCodeView from "../Containers/PromoCode/PromoCodeView";
 import OnboardingScreen from "../Containers/Onboarding/OnboardingScreen";
 import LoginScreen from "../Containers/Login/LoginScreen";
 import RegisterScreen from "../Containers/Register/RegisterScreen";
-import LocationPermissionView from "../Containers/Permissions/LocationPermissionView";
 import NotificationPermissionView from "../Containers/Permissions/NotificationPermissionView";
 import CameraMicPermissionView from "../Containers/Permissions/CameraMicPermissionView";
 import PackageCheckoutView from "../Containers/Payments/PackageCheckoutView";
@@ -29,6 +28,7 @@ import AccountDetailsView from "../Containers/Payments/AccountDetailsView";
 import AvailablePackagesView from "../Containers/Payments/AvailablePackagesView";
 import ReportProblemScreen from "../Containers/Rating/ReportProblemScreen";
 import EditCardScreen from "../Containers/Payments/EditCardScreen";
+import MissingRequiredPermissionsView from "../Containers/Permissions/MissingRequiredPermissionsView";
 import RatingsScreen from "../Containers/Rating/RatingScreen";
 import ForgotPasswordScreen from "../Containers/ForgotPassword/ForgotPasswordScreen";
 import LanguageListScreen from "../Containers/Register/Components/LanguageListScreen";
@@ -92,6 +92,12 @@ const Navigation = StackNavigator(
     },
     EditCardScreen: {
       screen: EditCardScreen,
+      navigationOptions: {
+        gesturesEnabled: false
+      }
+    },
+    MissingRequiredPermissionsView: {
+      screen: MissingRequiredPermissionsView,
       navigationOptions: {
         gesturesEnabled: false
       }
@@ -198,14 +204,7 @@ const Navigation = StackNavigator(
           drawerLockMode: "locked-closed"
         }
       }
-    },
-    LocationPermissionView: {
-      screen: LocationPermissionView,
-      navigationOptions: {
-        gesturesEnabled: false,
-        drawerLockMode: "locked-closed"
-      }
-    },
+    },    
     NotificationPermissionView: {
       screen: NotificationPermissionView,
       navigationOptions: {

@@ -7,7 +7,19 @@ import { Fonts } from "../../../Themes";
 import { changeLangCode, updateSelectedScenario } from "../../../Ducks/NewSessionReducer";
 import { closeSlideMenu } from "../../../Ducks/LogicReducer";
 import I18n, { translateProperty } from "../../../I18n/I18n";
-import { Bus, Dinning, Layers, Shopping, Teamwork, Translator } from "../../../Assets/SVG";
+import { 
+  Bus, 
+  Dinning, 
+  Layers, 
+  Shopping, 
+  Teamwork, 
+  Translator, 
+  Emergency,
+  SocialConversation,
+  Medical,
+  CustomerService,
+  Legal
+} from "../../../Assets/SVG";
 import metrics from "../../../Themes/Metrics";
 
 class Scenario extends Component {
@@ -56,6 +68,16 @@ class Scenario extends Component {
         return <Translator fill={selected} />;
       case "00000000-0000-0000-0000-000000000010":
         return <Teamwork fill={selected} />;
+      case "00000000-0000-0000-0000-000000000011":
+        return <Emergency fill={selected} />;
+      case "00000000-0000-0000-0000-000000000012":
+        return <SocialConversation fill={selected} />;
+      case "00000000-0000-0000-0000-000000000013":
+        return <Medical fill={selected} />;
+      case "00000000-0000-0000-0000-000000000014":
+        return <CustomerService fill={selected} />;
+      case "00000000-0000-0000-0000-000000000015":
+        return <Legal fill={selected} />;
       case "00000000-0000-0000-0000-000000000100":
         return <Layers fill={selected} />;
       default:

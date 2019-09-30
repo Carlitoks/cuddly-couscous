@@ -27,7 +27,7 @@ import { clear as clearAccount, initializeUser, refreshDevice } from "./Ducks/Ac
 import { init as initAuth, clear as clearAuth, authorizeNewDevice } from "./Ducks/AuthReducer2";
 import PushNotification from "./Util/PushNotification";
 import { setInitialScreen } from "./Navigation/AppNavigation";
-import { update as updateAppState } from "./Ducks/AppStateReducer";
+import { init as initAppState, update as updateAppState } from "./Ducks/AppStateReducer";
 import { displayNoNetworkConnectionAlert, displayUpdateAvailableAlert } from "./Util/Alerts";
 import BranchLib from "react-native-branch";
 import { handleDeepLinkEvent } from "./Util/Events";
@@ -82,6 +82,9 @@ class App extends Component {
       // initialize app state: ui language and analytics
       .then(store => {
         this.setState({store});
+
+        // basic app state init - detecting local device state
+        store.dispatch(initAppState());
 
         const {
           settings: { userLocaleSet, interfaceLocale: storeInterfaceLocale },

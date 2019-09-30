@@ -303,6 +303,10 @@ export default (ENG = {
     }
   },
 
+  linguistHome: {
+    summary: "Monthly Summary"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "I need help with:",
@@ -335,6 +339,37 @@ export default (ENG = {
       errInvalid: "Invalid CVV",
       description:
         'The CVV ("Card Verification Value") on your credit or debit card is a 3 digit number for VISA, MasterCard and Discover cards.  On American Express cards it is a 4 digit number.'
+    }
+  },
+
+  permissions: {
+    title: "Permission Request",
+    missing: "Missing Required Permissions",
+    missingDescription: "Please modify your permissions in order to use the app.",
+    gotoSettings: "Go to Settings",
+    later: "Ask me later",
+    name: {
+      camera: "Camera",
+      mic: "Microphone",
+      location: "Location",
+      notifications: "Notifications",
+      photos: "Photos"
+    },
+    description: {
+      customer: {
+        camera: "Required to make a Jeenie call.",
+        mic: "Required to make a Jeenie call.",
+        location: "This allows us to optimize your connection with Jeenie.",
+        notifications: "This allows us to notify you when Jeenies are available.",
+        photos: "This allows you to select a profile picture from your library."
+      },
+      linguist: {
+        camera: "Required to receive a customer call.",
+        mic: "Required to receive a customer call.",
+        location: "This allows us to optimize your connection with your customer.",
+        notifications: "Required to receive a customer call.",
+        photos: "This allows you to select a profile picture from your library."
+      }
     }
   },
 
@@ -787,6 +822,29 @@ export default (ENG = {
       takenEmail:
         "An account already exists with the email address you entered.\nPlease enter a different email or\nsign in to your account.",
       emailAndPassword: "Incorrect email and password combination.\nPlease try again."
+    }
+  },
+
+  units: {
+    time: {
+      second: "second",
+      secondAbbr: "s",
+      secondShort: "s",
+      seconds: "seconds",
+      secondsAbbr: "s",
+      secondsShort: "s",
+      minute: "minute",
+      minuteAbbr: "m",
+      minuteShort: "min",
+      minutes: "minutes",
+      minutesAbbr: "m",
+      minutesShort: "mins",
+      hour: "hour",
+      hourAbbr: "h",
+      hourShort: "hr",
+      hours: "hours",
+      hoursAbbr: "h",
+      hoursShort: "hrs"
     }
   },
 

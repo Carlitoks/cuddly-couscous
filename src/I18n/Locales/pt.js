@@ -96,11 +96,29 @@ export default (PT = {
     tagline: "Idiomas ao seu dispor"
   },
 
+  // often used as the result of an action
   status: {
+    added: "Adicionado",
+    applied: "Aplicado",
     available: "Disponível",
     cancelled: "Cancelado",
+    completed: "Completado",
+    confirmed: "Confirmado",
+    deleted: "Excluído",
+    denied: "Negado",
     error: "Erro",
-    unavailable: "Indisponível"
+    failed: "Falhou",
+    finished: "Concluído",
+    received: "Recebido",
+    rejected: "Rejeitado",
+    removed: "Removido",
+    sent: "Enviado",
+    started: "Iniciado",
+    stopped: "Parado",
+    success: "Sucesso",
+    submitted: "Enviado",
+    unavailable: "Indisponível",
+    updated: "Atualizado"
   },
 
   // generic language often used in navigation, forms, dialogs, and buttons
@@ -165,7 +183,7 @@ export default (PT = {
     missed: "Perdida",
     none: "Nenhum histórico disponível",
     listTitle: "Histórico de chamadas",
-    callTitle: "Informações de chamadas",
+    callTitle: "Informações de chamada",
     languages: "Idiomas",
     duration: "Duração",
     durationTime: "{{num}} minutos",
@@ -173,7 +191,8 @@ export default (PT = {
     scenarioNote: "Observação opcional",
     missedCall: "Chamada perdida",
     notRated: "Não classificado",
-    addRating: "Adicionar classificação"
+    addRating: "Adicionar classificação",
+    abuseReported: "Reportar abuso"
   },
 
   // DEPRECATED: block should be removed in the future, any strings currently in use
@@ -283,6 +302,10 @@ export default (PT = {
     }
   },
 
+  linguistHome: {
+    summary: "Resumo mensal"
+  },
+
   // for use in session language selection
   sessionLang: {
     selections: "Preciso de ajuda com:",
@@ -318,6 +341,37 @@ export default (PT = {
     }
   },
 
+  permissions: {
+    title: "Requisição de permissão",
+    missing: "Permissões requeridas faltando",
+    missingDescription: "Modifique suas permissões para utilizar o aplicativo.",
+    gotoSettings: "Ir para Configurações",
+    later: "Pergunte-me mais tarde",
+    name: {
+      camera: "Câmera",
+      mic: "Microfone",
+      location: "Localização",
+      notifications: "Notificações",
+      photos: "Fotos"
+    },
+    description: {
+      customer: {
+        camera: "Necessário para uma chamada Jeenie.",
+        mic: "Necessário para uma chamada Jeenie.",
+        location: "Isto nos permitirá otimizar sua conexão com o Jeenie.",
+        notifications: "Isto nos permitirá notificá-lo quando houver Jeenies disponíveis.",
+        photos: "Isto lhe permitirá selecionar uma foto de perfil de sua biblioteca."
+      },
+      linguist: {
+        camera: "Necessário para receber uma chamada de cliente.",
+        mic: "Necessário para receber uma chamada de cliente.",
+        location: "Isto nos permitirá otimizar sua conexão com seu cliente.",
+        notifications: "Necessário para receber uma chamada de cliente.",
+        photos: "Isto lhe permitirá selecionar uma foto de perfil de sua biblioteca."
+      }
+    }
+  },
+
   // displayed in account details section
   account: {
     title: "Informações de conta",
@@ -343,7 +397,8 @@ export default (PT = {
       add: "Adicionar pacote",
       remove: "Remover",
       more: "Visualizar mais pacotes",
-      description: "Compre mais minutos por menos.  Com a autorrecarga, você nunca ficará sem tempo."
+      description: "Compre mais minutos por menos.  Com a autorrecarga, você nunca ficará sem tempo.",
+      confirmRemove: "Você tem certeza de que deseja parar de recarregar este pacote?  Se você exceder seu saldo, será cobrado pela taxa padrão por minuto."
     },
   },
 
@@ -594,12 +649,14 @@ export default (PT = {
 
     // used when rating a session
     rating: {
+      title: "Tarifa",
       reportButton: "Denúncia",
       comment: "Comentário",
       addComment: "Adicionar comentários",
       questionGood: "O que foi positivo?",
       questionBetter: "O que pode melhorar?",
       customer: "Cliente",
+      connection:"O que houve de errado com a conexão?",
       rateCustomer: "Classifique seu cliente",
       linguist: "Linguista",
       rateLinguist: "Classifique seu linguista",
@@ -611,8 +668,9 @@ export default (PT = {
       abuse: {
         label: "Denúncia",
         title: "Denunciar abuso",
-        alert: "Você está prestes a denunciar um comportamento abusivo ou de assédio, que poderá resultar no cancelamento ou na remoção da conta do cliente. Você deseja to proceed?",
-        placeholder: "Forneça informações específicas como prova do problema."
+        alert: "Você está prestes a denunciar um comportamento abusivo ou de assédio, que poderá resultar no cancelamento ou na remoção da conta do cliente. Você deseja proceder?",
+        placeholder: "Forneça informações específicas como prova do problema.",
+        submitted: "Seu relatório foi enviado e será analisado pela Equipe Jeenie."
       },
       about: {
         label: "Informações de chamada",
@@ -763,6 +821,29 @@ export default (PT = {
       takenEmail:
         "Já existe uma conta com o endereço de e-mail inserido.\nInsira um e-mail diferente ou\ninicie sessão em sua conta.",
       emailAndPassword: "Combinação incorreta de e-mail e senha.\nTente novamente."
+    }
+  },
+
+  units: {
+    time: {
+      second: "segundo",
+      secondAbbr: "s",
+      secondShort: "s",
+      seconds: "segundos",
+      secondsAbbr: "s",
+      secondsShort: "s",
+      minute: "minuto",
+      minuteAbbr: "m",
+      minuteShort: "min",
+      minutes: "minutos",
+      minutesAbbr: "m",
+      minutesShort: "minutos",
+      hour: "hora",
+      hourAbbr: "h",
+      hourShort: "h",
+      hours: "horas",
+      hoursAbbr: "h",
+      hoursShort: "h"
     }
   },
 
@@ -1045,7 +1126,7 @@ export default (PT = {
     "pl": "Polônia",
     "pt": "Portugal",
     "pr": "Porto Rico",
-    "qa": "Brasil",
+    "qa": "Qatar",
     "re": "Ilha da Reunião",
     "ro": "Romênia",
     "ru": "Federação Russa",

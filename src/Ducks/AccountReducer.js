@@ -25,6 +25,7 @@ const initState = () => ({
   isTravelling: false,
 
   // info about the current user, or dericved directly from the current user
+  newAccountCreated: false,
   userID: null,
   user: null, // exact data structure from api: GET /users/{id}
   userLoadedAt: null, // last time user was reloaded from server
@@ -97,6 +98,7 @@ export const hasUnlimitedUseUntil = (periods) => {
 // init key fields and set the api url if necessary
 export const init = (payload) => (dispatch, getState) => {
   dispatch(update(payload));
+  dispatch(update({newAccountCreated: false}));
   if (!!payload.userID) {
     apiURL = `/users/${payload.userID}`;
   }

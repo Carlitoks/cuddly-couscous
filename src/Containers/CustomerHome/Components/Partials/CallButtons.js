@@ -15,8 +15,8 @@ import {
   checkCallPermissions
 } from "../../../../Util/Permission";
 import { SESSION } from "../../../../Util/Constants";
-import{createNewSession} from "../../../../Ducks/CurrentSessionReducer";
-
+import { createNewSession } from "../../../../Ducks/CurrentSessionReducer";
+import PermissionRequestModal from "../../../Onboarding/Components/PermissionRequestModal";
 // Styles
 import styles from "./Styles/CallButtonsStyles";
 import { moderateScaleViewports } from "../../../../Util/Scaling";
@@ -28,7 +28,9 @@ class CallButtons extends Component {
     this.state = {
       createDisabled: false,
       creating: false,
-      rate: localizePrice(props.rate)
+      rate: localizePrice(props.rate),
+      modalShow: false,
+      permissions: []
     };
   }
 
@@ -39,9 +41,9 @@ class CallButtons extends Component {
       hasUnlimitedUse,
       modifyAVModePreference,
       completedMicAndCamera,
+      permissions
     } = this.props;
     const { rate } = this.state;
-
     modifyAVModePreference({ avModePreference: type });
 
     if (!hasUnlimitedUse && user.availableMinutes === 0 && !user.stripePaymentToken) {
@@ -53,72 +55,93 @@ class CallButtons extends Component {
           }
         }
       ]);
-    } else {
-      Permissions.checkMultiple(["camera", "microphone"]).then(async (response) => {
-        if (response.camera !== "authorized" || response.microphone !== "authorized") {
-          if (
-            response.camera === "restricted"
-            || response.microphone === "restricted"
-            || response.camera === "denied"
-            || response.microphone === "denied"
-          ) {
-            return Alert.alert(I18n.t("appPermissions"), I18n.t("acceptAllPermissionsCustomer"), [
-              { text: I18n.t("ok") },
-            ]);
-          }
-          if (completedMicAndCamera) {
-            await checkCallPermissions((valueToUpdate) => {
-              Permissions.checkMultiple(["camera", "microphone"]).then((response) => {
-                if (response.camera == "authorized" && response.microphone == "authorized") {
-                  this.createCall();
-                }
-              });
-            });
-          } else {
-            navigation.dispatch({ type: "CameraMicPermissionView" });
-          }
-        }
-        if (response.camera == "authorized" && response.microphone == "authorized") {
-          this.createCall();
-        }
-        return null;
-      });
+    } else if(permissions.microphone.status==='denied' || permissions.camera.status==='denied'){
+
+      let camera = permissions.camera.granted ? false : true;
+      let microphone = permissions.microphone.granted ? false : true; 
+
+      navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
+    }else if (!permissions.camera.granted || !permissions.microphone.granted) {
+
+      this.setState({modalShow: true, permissions: ['camera', 'microphone']})
+    }else{
+
+      if (!hasUnlimitedUse && user.availableMinutes <= 60 && !user.stripePaymentToken){
+        Alert.alert(
+          I18n.t('pricingScreen.balance.title') +" "+I18n.t('newCustomerHome.balance', {num: user.availableMinutes}),
+          I18n.t("pricingScreen.paymentInfo.descriptionLowMinutes"),
+          [
+            {
+              text: I18n.t("pricingModal.buttons.addCard"),
+              onPress: () => navigation.dispatch({ type: "EditCardScreen" })
+            },
+            {
+              text: I18n.t("actions.continue"),
+              onPress: () => this.createCall()
+            }
+          ],
+          { cancelable: false }
+        );
+
+      }else{
+        this.createCall();
+      }
     }
   };
 
-  createCall () {
+  createCall() {
     if (this.state.createDisabled) {
       return;
     }
-    this.setState({createDisabled: true, creating: true}, () => {
+    this.setState({ createDisabled: true, creating: true }, () => {
       this.props.createNewSession({
         ...this.props.session,
         reason: SESSION.START.NORMAL
       })
-      .then(() => {
-        this.props.navigation.dispatch({type: "CustomerMatchingView"});
-      }).catch((e) => {
-        this.setState({createDisabled: false, creating: false});
-        console.log("error", e)
-        Alert.alert(
-          I18n.t('error'),
-          translateApiError(e, "session.createSessionFailed"),
-          [
-            {text: 'OK'},
-          ],
-        );
-      });
+        .then(() => {
+          this.props.navigation.dispatch({ type: "CustomerMatchingView" });
+        }).catch((e) => {
+          this.setState({ createDisabled: false, creating: false });
+          console.log("error", e)
+          Alert.alert(
+            I18n.t('error'),
+            translateApiError(e, "session.createSessionFailed"),
+            [
+              { text: 'OK' },
+            ],
+          );
+        });
     });
+  }
+
+  checkPermissions = () => {
+    const {
+      navigation,
+      permissions
+    } = this.props;
+      this.setState({modalShow: false, permissions:[]});
+
+      if (!permissions.camera.granted || !permissions.microphone.granted) {
+
+          let camera = permissions.camera.granted? false : true;
+          let microphone = permissions.microphone.granted? false : true;
+
+          navigation.dispatch({ type: "MissingRequiredPermissionsView", params: { camera, microphone } });
+      }
+      if (permissions.camera.granted && permissions.microphone.granted) {
+        this.createCall();
+      }
+      return null;
   }
 
   isDisabled = () => {
     const { session } = this.props;
-    const {creating} = this.state;
+    const { creating } = this.state;
     return creating || session.primaryLangCode === "" || session.secondaryLangCode === "";
   };
 
   render() {
-    const {creating} = this.state;
+    const { creating } = this.state;
     return (
       <View style={styles.callButtonContainer}>
 
@@ -153,7 +176,7 @@ class CallButtons extends Component {
             <TouchableOpacity
               disabled={this.isDisabled()}
               onPress={() => this.checkAvailableMinutes("video")}
-              style={this.isDisabled() ? styles.videoCallButtonDisable : styles.videoCallButton }
+              style={this.isDisabled() ? styles.videoCallButtonDisable : styles.videoCallButton}
             >
               <Icon
                 name="ios-videocam"
@@ -171,7 +194,13 @@ class CallButtons extends Component {
 
           </React.Fragment>
         )}
-
+        <PermissionRequestModal
+          visible={this.state.modalShow} // true/false
+          role='customer' // customer|linguist
+          askLater={false} // true|false
+          perms={this.state.permissions} // [camera|microphone|location|notification|photo]
+          onClose={(res) => this.checkPermissions(res)}
+        />
 
       </View>
     );
@@ -184,6 +213,8 @@ const mS = state => ({
   session: state.newSessionReducer.session,
   completedMicAndCamera: state.onboardingReducer.completedMicAndCamera,
   rate: state.appConfigReducer.payAsYouGoRate,
+  permissions: state.appState.permissions,
+
 });
 
 const mD = {
