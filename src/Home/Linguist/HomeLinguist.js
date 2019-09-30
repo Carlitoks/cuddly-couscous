@@ -104,7 +104,6 @@ class Home extends Component {
             params: {
               camera: !permissions.camera, 
               microphone: !permissions.microphone,
-              location: !permissions.location,
               isLinguist: true
             } 
           });
@@ -114,7 +113,7 @@ class Home extends Component {
           this.setState({permissionsModalVisible: true, permissions, loading: false})
         }
       );
-    } else if(!permissions.location.granted && permissions.location.status === "undetermined"){
+    } else if(permissions.location.status === "undetermined"){
       this.setState({permissionsModalVisible: true, permissions: [PERMISSIONS.LOCATION]})
     }
     
@@ -151,34 +150,25 @@ class Home extends Component {
   }
 
   checkPermissions(authorized, denied, undetermined){
-    const permissionsToAsk = [];
 
     const { permissions } = this.props;
 
     const cameraStatus = _get(permissions,'camera.status',"undetermined");
     const camera = _get(permissions,'camera.granted',false);
-
     const microphoneStatus = _get(permissions,'microphone.status',"undetermined");
     const microphone = _get(permissions,'microphone.granted',false);
-    
     const locationStatus = _get(permissions,'location.status',"undetermined");
     const location = _get(permissions,'location.granted',false);
 
-    if( camera && 
-      cameraStatus == "authorized" && 
-      microphone && 
-      microphoneStatus == "authorized" && 
-      location && 
-      locationStatus == "authorized"){
-        authorized();
+    // first check for required permissions that were denied
+    if(cameraStatus == "denied" || microphoneStatus == "denied"){
+      denied({camera, microphone});
       return;
     }
 
-    if(cameraStatus == "denied" || microphoneStatus == "denied" || locationStatus === "denied"){
-      denied({camera, microphone, location});
-      return;
-    }
-
+    // next check for any permissions that we want to ask for.  Note that we *want*
+    // the location permission, but it's not required.
+    const permissionsToAsk = [];
     if(!camera && cameraStatus === "undetermined"){
       permissionsToAsk.push(PERMISSIONS.CAMERA)  
     }
@@ -189,7 +179,20 @@ class Home extends Component {
       permissionsToAsk.push(PERMISSIONS.LOCATION)  
     }
 
-    undetermined(permissionsToAsk);
+    if (permissionsToAsk.length > 0) {
+      undetermined(permissionsToAsk);
+      return;
+    }
+
+    // otherwise if the required permissions were granted, all good
+    if( camera && 
+      cameraStatus == "authorized" && 
+      microphone && 
+      microphoneStatus == "authorized"
+    ){
+        authorized();
+      return;
+    }
   }
 
   changeStatus (status) {
@@ -217,7 +220,6 @@ class Home extends Component {
           params: { 
             camera: !permissions.camera, 
             microphone: !permissions.microphone,
-            location: !permissions.location,
             isLinguist: true
           } 
         });
