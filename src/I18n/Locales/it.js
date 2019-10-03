@@ -278,7 +278,7 @@ export default (IT = {
   newCustomerHome: {
     addCard: "Aggiungi carta",
     balance: "{{num}}m",
-    linguists: "I nostri Jennie sono in attesa",
+    linguists: "I nostri Jeenie sono in attesa",
     numLinguists: "{{num}} Jeenie in attesa...",
     primaryLang: {
       label: "Parlo"

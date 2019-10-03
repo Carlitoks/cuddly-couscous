@@ -557,7 +557,7 @@ export default (PT = {
 
   // for use in session-related screens
   session: {
-    errFailedToConnect: "Perdeu a conexão com o Jennie.  Tente novamente.",
+    errFailedToConnect: "Perdeu a conexão com o Jeenie.  Tente novamente.",
     confirmEnd: "Você tem certeza de que deseja finalizar a chamada?",
     callTime: "Tempo da chamada: {{time}}",
     callFailCustomer: "Houve um problema ao conectar-se com seu Language Jeenie.",

@@ -388,14 +388,14 @@ export default (ENG = {
       hasSubscription: "Your subscription renews on {{date}}"
     },
     card: {
-      title: "Credit Card",
+      title: "Payment Details",
       add: "Add Card",
       edit: "Edit",
       description: "Enter your card to talk as long as you like, or purchase a package.  Standard per-minute rate: {{rate}}"
     },
     package: {
-      title: "Package",
-      add: "Add Package",
+      title: "Packages",
+      add: "View Packages",
       remove: "Remove",
       more: "View More Packages",
       description: "Purchase more minutes for less.  With autoreload, you won't ever run out of time.",
@@ -411,14 +411,15 @@ export default (ENG = {
     event: "Event Code",
     action: "Action Code",
     universal: "Universal Code",
+    package: "Package Code"
   },
 
   // shown on checkout screen when purchasing a package
   packages: {
     noExpire: "Your minutes never expire.",
     browse: {
-      title: "Package",
-      promo: "Have a Promo Code?",
+      title: "Packages",
+      promo: "Have a Package Code?",
       promoPlaceholder: "Enter Code Here",
       promoApplied: "Code applied"
     },
@@ -870,6 +871,7 @@ export default (ENG = {
   // for use during primary language selection
   languagesList: {
     eng: "English",
+    ase: "American Sign Language (ASL)",
     cmn: "Chinese (Mandarin)",
     yue: "Chinese (Cantonese)",
     "zho-cn-shang": "Chinese (Shanghainese)",
