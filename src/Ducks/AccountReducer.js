@@ -220,7 +220,9 @@ export const setUser = (user) => (dispatch, getState) => {
     d.user.stripePaymentToken = null;
     d.user.StripePaymentSourceMeta = isEmpty(d.user.StripePaymentSourceMeta) ? null : d.user.StripePaymentSourceMeta;
   }
-  d.linguistProfile = !!user.linguistProfile ? user.linguistProfile : null;
+  if (!!user.linguistProfile) {
+    d.linguistProfile = user.linguistProfile;
+  }
   d.isLinguist = !!d.linguistProfile;
   if (!!user.avatarURL) {
     d.userAvatarURL = user.avatarURL+"?"+(new Date('now')).getTime();
