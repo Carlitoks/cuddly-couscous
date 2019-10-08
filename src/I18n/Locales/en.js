@@ -291,7 +291,7 @@ export default (ENG = {
     },
     scenario: {
       label: "What do you need help with?",
-      placeholder: "Select a scenario (Optional)"
+      placeholder: "Select a scenario (required)"
     },
     buttons: {
       audio: "Audio Call",

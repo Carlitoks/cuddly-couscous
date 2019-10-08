@@ -288,7 +288,7 @@
     },
     scenario: {
       label: "必要なサポートをお聞かせください。",
-      placeholder: "シナリオを選択（オプション）"
+      placeholder: "シナリオを選択（必須）"
     },
     buttons: {
       audio: "音声通話",

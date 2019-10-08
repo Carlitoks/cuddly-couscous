@@ -137,7 +137,7 @@ class CallButtons extends Component {
   isDisabled = () => {
     const { session } = this.props;
     const { creating } = this.state;
-    return creating || session.primaryLangCode === "" || session.secondaryLangCode === "";
+    return creating || session.primaryLangCode === "" || session.secondaryLangCode === "" || !session.scenarioID;
   };
 
   render() {

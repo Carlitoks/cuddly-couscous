@@ -288,7 +288,7 @@
     },
     scenario: {
       label: "您需要什么帮助？",
-      placeholder: "选择一个场景（可选）"
+      placeholder: "选择一个场景（必需选项）"
     },
     buttons: {
       audio: "音频通话",

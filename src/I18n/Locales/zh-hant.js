@@ -288,7 +288,7 @@
     },
     scenario: {
       label: "您需要哪一方面的協助？",
-      placeholder: "請選取一種情境 (可選)"
+      placeholder: "請選取一種情境 (必需選項)"
     },
     buttons: {
       audio: "語音通話",

@@ -288,7 +288,7 @@ export default (DE = {
     },
     scenario: {
       label: "Wobei benötigen Sie Hilfe?",
-      placeholder: "Wählen Sie ein Szenario aus (optional)"
+      placeholder: "Wählen Sie ein Szenario aus (erforderlich)"
     },
     buttons: {
       audio: "Audioanruf",

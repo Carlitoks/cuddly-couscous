@@ -288,7 +288,7 @@ export default (KO = {
     },
     scenario: {
       label: "어떤 도움이 필요하세요?",
-      placeholder: "시나리오 선택(선택 사항)"
+      placeholder: "시나리오 선택"
     },
     buttons: {
       audio: "음성 통화",
