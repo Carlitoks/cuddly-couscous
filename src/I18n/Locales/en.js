@@ -109,9 +109,11 @@ export default (ENG = {
     error: "Error",
     failed: "Failed",
     finished: "Finished",
+    optional: "Optional",
     received: "Received",
     rejected: "Rejected",
     removed: "Removed",
+    required: "Required",
     sent: "Sent",
     started: "Started",
     stopped: "Stopped",
@@ -289,7 +291,7 @@ export default (ENG = {
     },
     scenario: {
       label: "What do you need help with?",
-      placeholder: "Select a scenario (Optional)"
+      placeholder: "Select a scenario (required)"
     },
     buttons: {
       audio: "Audio Call",
@@ -388,14 +390,14 @@ export default (ENG = {
       hasSubscription: "Your subscription renews on {{date}}"
     },
     card: {
-      title: "Credit Card",
+      title: "Payment Details",
       add: "Add Card",
       edit: "Edit",
       description: "Enter your card to talk as long as you like, or purchase a package.  Standard per-minute rate: {{rate}}"
     },
     package: {
-      title: "Package",
-      add: "Add Package",
+      title: "Packages",
+      add: "View Packages",
       remove: "Remove",
       more: "View More Packages",
       description: "Purchase more minutes for less.  With autoreload, you won't ever run out of time.",
@@ -411,14 +413,15 @@ export default (ENG = {
     event: "Event Code",
     action: "Action Code",
     universal: "Universal Code",
+    package: "Package Code"
   },
 
   // shown on checkout screen when purchasing a package
   packages: {
     noExpire: "Your minutes never expire.",
     browse: {
-      title: "Package",
-      promo: "Have a Promo Code?",
+      title: "Packages",
+      promo: "Have a Package Code?",
       promoPlaceholder: "Enter Code Here",
       promoApplied: "Code applied"
     },
@@ -651,7 +654,7 @@ export default (ENG = {
     // used when rating a session
     rating: {
       title: "Rating",
-      reportButton: "Report",
+      reportButton: "Report Abuse",
       comment: "Comment",
       addComment: "Add Comments",
       questionGood: "What was good?",
@@ -791,8 +794,9 @@ export default (ENG = {
     createAccount: "Create Account",
     intro: {
       title: "Real-time Assistance",
+      // note, this string previously received an argument which was removed, hence the name
       descriptionRate:
-        "24/7 access to live, human translators for language help at the tap of a button.  Rate: {{rate}} per min.",
+        "24/7 access to live, human translators for language help at the tap of a button.",
       button: "Get Started"
     },
     location: {
@@ -870,6 +874,7 @@ export default (ENG = {
   // for use during primary language selection
   languagesList: {
     eng: "English",
+    ase: "American Sign Language (ASL)",
     cmn: "Chinese (Mandarin)",
     yue: "Chinese (Cantonese)",
     "zho-cn-shang": "Chinese (Shanghainese)",

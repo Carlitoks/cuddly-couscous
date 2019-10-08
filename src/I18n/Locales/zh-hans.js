@@ -288,7 +288,7 @@
     },
     scenario: {
       label: "您需要什么帮助？",
-      placeholder: "选择一个场景（可选）"
+      placeholder: "选择一个场景（必需选项）"
     },
     buttons: {
       audio: "音频通话",
@@ -791,7 +791,7 @@
     intro: {
       title: "实时帮助",
       descriptionRate:
-        "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助。  费率：每分钟 {{rate}}。",
+        "轻轻一点，24 小时全天候真人译员实时在线提供语言帮助。",
       button: "开始使用"
     },
     location: {

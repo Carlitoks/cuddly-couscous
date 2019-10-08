@@ -288,7 +288,7 @@ export default (PT = {
     },
     scenario: {
       label: "Com o que você precisa de ajuda?",
-      placeholder: "Selecione um cenário (opcional)"
+      placeholder: "Selecione um cenário (necessário)"
     },
     buttons: {
       audio: "Chamada de áudio",
@@ -557,7 +557,7 @@ export default (PT = {
 
   // for use in session-related screens
   session: {
-    errFailedToConnect: "Perdeu a conexão com o Jennie.  Tente novamente.",
+    errFailedToConnect: "Perdeu a conexão com o Jeenie.  Tente novamente.",
     confirmEnd: "Você tem certeza de que deseja finalizar a chamada?",
     callTime: "Tempo da chamada: {{time}}",
     callFailCustomer: "Houve um problema ao conectar-se com seu Language Jeenie.",
@@ -791,7 +791,7 @@ export default (PT = {
     intro: {
       title: "Ajuda em tempo real",
       descriptionRate:
-        "Acesso a tradutores humanos em tempo real 24 horas por dia, 7 dias por semana, para ajuda linguística em questão de segundos.  Taxa: {{rate}} por minuto.",
+        "Acesso a tradutores humanos em tempo real 24 horas por dia, 7 dias por semana, para ajuda linguística em questão de segundos.",
       button: "Como começar"
     },
     location: {

@@ -1789,6 +1789,7 @@ export const Languages = [
 // languages available for native lang selection
 export const primaryCodes = [
   "eng",
+  "ase",
   "cmn",
   "yue",
   "zho-cn-shang",

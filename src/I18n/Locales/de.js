@@ -288,7 +288,7 @@ export default (DE = {
     },
     scenario: {
       label: "Wobei benötigen Sie Hilfe?",
-      placeholder: "Wählen Sie ein Szenario aus (optional)"
+      placeholder: "Wählen Sie ein Szenario aus (erforderlich)"
     },
     buttons: {
       audio: "Audioanruf",
@@ -791,7 +791,7 @@ export default (DE = {
     intro: {
       title: "Echtzeit-Unterstützung",
       descriptionRate:
-        "Per Knopfdruck rund um die Uhr Zugang zu menschlichen Übersetzern für Sprachhilfe in Echtzeit.  Tarif: {{rate}} pro Minute.",
+        "Per Knopfdruck rund um die Uhr Zugang zu menschlichen Übersetzern für Sprachhilfe in Echtzeit.",
       button: "Erste Schritte"
     },
     location: {

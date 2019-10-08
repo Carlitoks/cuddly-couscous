@@ -278,7 +278,7 @@ export default (IT = {
   newCustomerHome: {
     addCard: "Aggiungi carta",
     balance: "{{num}}m",
-    linguists: "I nostri Jennie sono in attesa",
+    linguists: "I nostri Jeenie sono in attesa",
     numLinguists: "{{num}} Jeenie in attesa...",
     primaryLang: {
       label: "Parlo"
@@ -288,7 +288,7 @@ export default (IT = {
     },
     scenario: {
       label: "Su cosa hai bisogno di aiuto?",
-      placeholder: "Seleziona uno scenario (facoltativo)"
+      placeholder: "Seleziona uno scenario (necessario)"
     },
     buttons: {
       audio: "Chiamata audio",
@@ -791,7 +791,7 @@ export default (IT = {
     intro: {
       title: "Assistenza in tempo reale",
       descriptionRate:
-        "Accesso 24/7 a traduttori umani in tempo reale per assistenza linguistica semplicemente un pulsante.  Tariffa: {{rate}} al minuto",
+        "Accesso 24/7 a traduttori umani in tempo reale per assistenza linguistica semplicemente un pulsante.",
       button: "Inizia"
     },
     location: {

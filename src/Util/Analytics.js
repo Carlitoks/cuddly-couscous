@@ -16,8 +16,18 @@ export const EVENTS = {
     BRANCH: BranchEvent.AddToCart,
     SEGMENT: "Product Added"
   },
-  // todo: implement in authreducer2.registerNewUser
-  REGISTRATION_COMPLETED: {}
+  REGISTRATION_COMPLETED: {
+    BRANCH: BranchEvent.CompleteRegistration,
+    SEGMENT: "Registration Completed",
+  },
+  PACKAGE_PURCHASED: {
+    BRANCH: "solo_package_purchased",
+    SEGMENT: "solo_package_purchased"
+  },
+  PAYMENT_DETAILS_ADDED: {
+    BRANCH: BranchEvent.AddPaymentInfo,
+    SEGMENT: "Payment Info Entered",
+  },
 };
 
 // only use this for navigation events

@@ -288,7 +288,7 @@
     },
     scenario: {
       label: "您需要哪一方面的協助？",
-      placeholder: "請選取一種情境 (可選)"
+      placeholder: "請選取一種情境 (必需選項)"
     },
     buttons: {
       audio: "語音通話",
@@ -791,7 +791,7 @@
     intro: {
       title: "即時協助",
       descriptionRate:
-        "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助。  費率：每分鐘 {{rate}}。",
+        "只要按一下按鈕，全天 24 小時隨時有真人譯者提供語言協助。",
       button: "開始使用"
     },
     location: {

@@ -288,7 +288,7 @@ export default (KO = {
     },
     scenario: {
       label: "어떤 도움이 필요하세요?",
-      placeholder: "시나리오 선택(선택 사항)"
+      placeholder: "시나리오 선택"
     },
     buttons: {
       audio: "음성 통화",
@@ -791,7 +791,7 @@ export default (KO = {
     intro: {
       title: "실시간 지원",
       descriptionRate:
-        "버튼 하나만 누르면 하루 24시간 액세스 가능한 실제 통역사가 언어 관련하여 도와드립니다.  요금: 분당 {{rate}}.",
+        "버튼 하나만 누르면 하루 24시간 액세스 가능한 실제 통역사가 언어 관련하여 도와드립니다.",
       button: "시작하기"
     },
     location: {

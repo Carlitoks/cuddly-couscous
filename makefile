@@ -14,12 +14,21 @@ setup:
 	make gcp-setproject && \
 	make docker-login
 
+cli:
+	docker-compose run --rm --entrypoint "/bin/sh" solo-api
+
+migrate:
+	docker-compose run --rm solo-api db:migrate up
+
 run-cmd:
 	docker-compose run --rm solo-api $(CMD)
 
 reload-fixtures:
 	docker-compose run --rm solo-api dev:load-fixtures
 	docker-compose run --rm solo-api linguists:reindex
+
+restart-server:
+	docker-compose restart solo-api-server
 
 npm-install:
 	docker-compose run --rm appcenter npm install
