@@ -21,8 +21,8 @@ export const EVENTS = {
     SEGMENT: "Registration Completed",
   },
   PACKAGE_PURCHASED: {
-    BRANCH: "solo_purchase_package",
-    SEGMENT: "solo_purchase_package"
+    BRANCH: "solo_package_purchased",
+    SEGMENT: "solo_package_purchased"
   },
   PAYMENT_DETAILS_ADDED: {
     BRANCH: BranchEvent.AddPaymentInfo,
