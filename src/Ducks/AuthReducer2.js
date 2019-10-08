@@ -22,6 +22,7 @@ import { clear as clearNewSession } from "./NewSessionReducer";
 // deprecated reducers
 import { clear as clearOnboarding } from './OnboardingReducer';
 import branch from "react-native-branch";
+import { recordAnalyticsEvent, EVENTS } from "../Util/Analytics";
 
 // The purpose of this is to manage the core actions of registering a device
 // and logging a user in and out.
@@ -162,7 +163,8 @@ export const registerNewUser = (user) => (dispatch, getState) => {
     const register = () => {
       api.post("/users", user)
       .then((res) => {
-        return dispatch(logIn(user.email, user.password))
+        recordAnalyticsEvent(EVENTS.REGISTRATION_COMPLETED);
+        return dispatch(logIn(user.email, user.password));
       })
       .then((res) => {
         dispatch(updateAccount({newAccountCreated: true}));

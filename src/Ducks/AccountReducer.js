@@ -12,6 +12,7 @@ import api, { uploadFormData, uploadBase64File } from "../Config/AxiosConfig";
 import { getGeolocationCoords } from "../Util/Helpers";
 import analytics from "@segment/analytics-react-native";
 import branch from "react-native-branch";
+import { recordAnalyticsEvent, EVENTS } from "../Util/Analytics";
 
 // base api url - requires initializing a user in order to be set
 let apiURL = "";
@@ -320,6 +321,7 @@ export const updateUserPaymentDetails = (payload) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     api.put(`${apiURL}/billing/payment-details`, payload)
     .then((res) => {
+      recordAnalyticsEvent(EVENTS.PAYMENT_DETAILS_ADDED);
       dispatch(setUser(res.data));
       resolve(res.data);
     })
@@ -392,6 +394,7 @@ export const purchaseMinutePackage = (payload) => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     api.post(apiURL+"/billing/minute-packages", payload)
     .then((res) => {
+      recordAnalyticsEvent(EVENTS.PACKAGE_PURCHASED);
       // not waiting on this on purpose, just want to reload the packages
       // in the background
       dispatch(clearMinutePackagePromoCode());
