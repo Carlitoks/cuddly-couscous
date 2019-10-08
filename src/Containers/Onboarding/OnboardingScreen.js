@@ -54,7 +54,7 @@ class OnboardingScreen extends Component {
               <Text style={styles.titleText}>{I18n.t("newCustomerOnboarding.intro.title")}</Text>
             </View>
             <Text style={styles.subtitleText}>
-              {I18n.t("newCustomerOnboarding.intro.descriptionRate", { rate })}
+              {I18n.t("newCustomerOnboarding.intro.descriptionRate")}
             </Text>
             <View>
               <OnboardingButtons navigation={navigation} />

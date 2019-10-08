@@ -794,8 +794,9 @@ export default (ENG = {
     createAccount: "Create Account",
     intro: {
       title: "Real-time Assistance",
+      // note, this string previously received an argument which was removed, hence the name
       descriptionRate:
-        "24/7 access to live, human translators for language help at the tap of a button.  Rate: {{rate}} per min.",
+        "24/7 access to live, human translators for language help at the tap of a button.",
       button: "Get Started"
     },
     location: {

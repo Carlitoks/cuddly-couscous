@@ -791,7 +791,7 @@ export default (ESP = {
     intro: {
       title: "Asistencia en tiempo real",
       descriptionRate:
-        "Acceda las 24 horas del día, los 7 días de la semana, a traductores en vivo para obtener ayuda con idiomas con solo tocar un botón.  Tarifa: {{rate}} por minuto.",
+        "Acceda las 24 horas del día, los 7 días de la semana, a traductores en vivo para obtener ayuda con idiomas con solo tocar un botón.",
       button: "Empezar"
     },
     location: {

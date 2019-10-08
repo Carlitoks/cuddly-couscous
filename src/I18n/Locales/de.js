@@ -791,7 +791,7 @@ export default (DE = {
     intro: {
       title: "Echtzeit-Unterstützung",
       descriptionRate:
-        "Per Knopfdruck rund um die Uhr Zugang zu menschlichen Übersetzern für Sprachhilfe in Echtzeit.  Tarif: {{rate}} pro Minute.",
+        "Per Knopfdruck rund um die Uhr Zugang zu menschlichen Übersetzern für Sprachhilfe in Echtzeit.",
       button: "Erste Schritte"
     },
     location: {

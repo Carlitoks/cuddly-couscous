@@ -791,7 +791,7 @@ export default (FR = {
     intro: {
       title: "Aide en temps réel",
       descriptionRate:
-        "Obtenez, en un clic, l'aide linguistique de traducteurs humains en direct, 24 h/24 et 7 j/7.  Tarif : {{rate}}/min.",
+        "Obtenez, en un clic, l'aide linguistique de traducteurs humains en direct, 24 h/24 et 7 j/7.",
       button: "Commencer"
     },
     location: {

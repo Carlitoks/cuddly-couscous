@@ -791,7 +791,7 @@ export default (IT = {
     intro: {
       title: "Assistenza in tempo reale",
       descriptionRate:
-        "Accesso 24/7 a traduttori umani in tempo reale per assistenza linguistica semplicemente un pulsante.  Tariffa: {{rate}} al minuto",
+        "Accesso 24/7 a traduttori umani in tempo reale per assistenza linguistica semplicemente un pulsante.",
       button: "Inizia"
     },
     location: {
